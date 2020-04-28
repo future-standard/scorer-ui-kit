@@ -22,7 +22,7 @@ const GrabHandle = styled.circle<{hide: boolean}>`
   stroke: hsla(205deg, 45%, 100%, 100%);
   opacity: 1;
   transition: opacity 250ms ease;
-  pointer: grab;
+  cursor: grab;
   // pointer: grabbing;
 
   ${props => props.hide && css`
