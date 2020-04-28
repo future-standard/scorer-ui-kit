@@ -7,7 +7,14 @@
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
     "react-scripts": "file:../node_modules/react-scripts",
-    "scorer-ui-kit": "file:.."
+    "scorer-ui-kit": "file:..",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.36",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "@types/styled-components": "^5.1.0",
+    "i18next": "^19.4.2",
+    "i18next-browser-languagedetector": "^4.1.1"
   },
   "scripts": {
     "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
