@@ -14,7 +14,7 @@ function App() {
   return (
     <Container >
       {/* <Header /> */}
-
+      <LineUI/>
       {/* <Footer /> */}
     </Container>
   );
