@@ -1,4 +1,5 @@
 export default {
+  fontFamily: 'Helvetica, Arial, sans-serif',
   colors: {
     button: {
       backgroundColor: '#efefef',

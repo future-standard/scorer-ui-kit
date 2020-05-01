@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
+    font-family: ${props => props.theme.fontFamily};
     background-color: ${props => props.theme.colors.button.backgroundColor};
     color: ${props => props.theme.colors.button.color};
     border: 2px solid ${props => props.theme.colors.button.borderColor};
