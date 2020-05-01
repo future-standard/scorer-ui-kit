@@ -5,6 +5,12 @@ export default {
       backgroundColor: '#666666',
       color: '#efefef',
       borderColor: '#efefef'
+    },
+    exampleCard: {
+      backgroundColor: '#666666',
+      color: 'hsla(205, 15%, 95%, 100%)',
+      borderColor: 'hsla(205, 90%, 65%, 100%)',
+      shadowColor: 'hsla(205, 90%, 65%, 15%)'
     }
   }
 };
