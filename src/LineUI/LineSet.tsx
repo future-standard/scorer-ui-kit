@@ -16,7 +16,7 @@ interface ILineSetProps {
 }
 
 const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, lineSetId, options }) => {
-  console.log("Unit " + lineSetId + ", reporting in...")
+  // console.log("Unit " + lineSetId + ", reporting in...")
 
   const {state, dispatch} = useContext(LineSetContext);
   const lineSetData = state[lineSetId];
@@ -123,7 +123,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     return degrees;
   };
 
-  // Usecallback maybe to reduce unchanged deals?
+  // useCallback maybe to reduce unchanged deals?
   const updateHandleAngles = useCallback((inputHandleData: IPointSet) => {
     const { points } = inputHandleData;
     let outputData : number[] = [];

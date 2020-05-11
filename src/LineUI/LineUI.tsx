@@ -6,15 +6,13 @@ import { IBoundary, IPointSet, IVector2 } from './typings';
 import { LineSetContext } from './Contexts';
 
 import LineSet from './LineSet';
-import Control from './Control';
 
 const MasterContainer = styled.div`
-  background: hsl(205deg, 15%, 15%);
-  padding: 10px 200px 10px 10px;
+  /* padding: 10px 200px 10px 10px;
   margin: 0;
   // touch-action: none;
-  height: 100vh;
-  width: 100%;
+  hanging-punctuation
+  width: 100%; */
   position: relative;
   box-sizing: border-box;
 `;
@@ -24,22 +22,17 @@ const Container = styled.div`
   line-height: 0;
   user-select: none;
   touch-action: none;
-  box-shadow: 0 10px 20px hsla(195deg, 65%, 5%, 35%);
-  border: 10px solid hsla(195deg, 45%, 35%, 45%);
-  border-radius:3px;
+  /* box-shadow: 0 10px 20px hsla(195deg, 65%, 5%, 35%); */
+  /* border: 10px solid hsla(195deg, 45%, 35%, 45%); */
+  /* border-radius:3px; */
   max-height: 80vh;
   max-width: 100%;
   width: auto;
-  display: inline-block;
-  margin-top: 40%;
-  margin-right: 100px;
-  transform: translateY(-70%);
+  /* transform: translateY(-70%); */
 
   img {
-    width: auto;
-    height: auto;
-    max-height: inherit;
-    max-width: inherit;
+    width:  100%;
+    height: 100%;
   }
 `;
 
@@ -65,24 +58,6 @@ const Frame = styled.svg<{transculent?: boolean}>`
   `}
 
 `;
-
-const initialDataSet : IPointSet[] = [
-  {
-    name: "First",
-    points: [
-      { x: 100, y: 400 },
-      { x: 254, y: 102 }
-    ],
-  },
-  {
-    name: "Second",
-    points: [
-      { x: 600, y: 300 },
-      { x: 640, y: 480 },
-      { x: 500, y: 400 }
-    ],
-  }
-];
 
 interface IReducerActions {
   type: string,
@@ -110,13 +85,7 @@ const reducer = (state : IPointSet[], action: IReducerActions) => {
       return [...newState];
 
     case "ADD_SET":
-      return [...state, {
-        name: "",
-        points: [
-          { x: 300, y: 300 },
-          { x: 640, y: 480 },
-        ],
-      }];
+      return [...state, action.data];
 
     case "REMOVE_SET":
       newState = [...state];
@@ -142,7 +111,11 @@ const reducer = (state : IPointSet[], action: IReducerActions) => {
   }
 };
 
-const LineUI : React.FC = () => {
+interface LineUIProps {
+  src: string;
+  lines: IPointSet[];
+}
+const LineUI : React.FC<LineUIProps> = ({src,lines}) => {
 
   const frame : any =  useRef();
 
@@ -151,16 +124,17 @@ const LineUI : React.FC = () => {
 
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
 
-  const [state, dispatch] = useReducer(reducer, initialDataSet);
+  const initState = (state: IPointSet[]) => state;
+  const [state, dispatch] = useReducer(reducer, lines, initState);
 
   // Scale Code
   const [imgSize, setImgSize] = useState({ h: 1, w: 1 });
   const [unit, setUnit] = useState(1);
   const imgRef = useRef<HTMLImageElement>(null);
-  const [url, setUrl] = useState("https://via.placeholder.com/400");
 
 
-  // Initialisation functions.
+
+  // Initialization functions.
   const getCanvasBounds = () => {
     const { viewBox } = frame.current;
 
@@ -206,8 +180,6 @@ const LineUI : React.FC = () => {
   }, [imgSize]);
 
   useEffect(() => {
-    // Default handle data.
-    setUrl("https://loremflickr.com/640/480/traffic");
 
     // Make sure we always keep scale up to date on resize.
     window.addEventListener("resize", initScaleAndBounds);
@@ -215,6 +187,13 @@ const LineUI : React.FC = () => {
       window.removeEventListener("resize", initScaleAndBounds);
     };
   }, [initScaleAndBounds]);
+
+  useEffect(()=>{
+    console.log('rerender');
+    console.log(lines);
+    initState(lines);
+  },
+  [lines])
 
   const options = {
     handleFinderActive: handleFinder,
@@ -227,16 +206,13 @@ const LineUI : React.FC = () => {
       <LineSetContext.Provider value={{state, dispatch}}>
 
         <Container>
-          <img ref={imgRef} onLoad={initScaleAndBounds} src={url} alt="" />
+          <img ref={imgRef} onLoad={initScaleAndBounds} src={src} alt="" />
           <Frame ref={ frame } viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version="1.1" xmlns="http://www.w3.org/2000/svg" onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
             {state.map((lineSet, index) => (
               <LineSet key={index} lineSetId={index} lineData={ lineSet } screenCTM={ screenCTM } boundaries={ boundaries } unit={ unit } size={ 30 } options={ options } />
               ))}
           </Frame>
         </Container>
-
-        <Control />
-
       </LineSetContext.Provider>
 
     </MasterContainer>
