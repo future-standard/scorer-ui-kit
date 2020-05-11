@@ -26,7 +26,8 @@
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^16.0.0",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.3.18",
@@ -54,14 +55,13 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
-    "storybook-dark-mode": "^0.4.1"
+    "storybook-dark-mode": "^0.4.1",
+    "@storybook/addon-knobs": "^5.3.18",
+    "@types/styled-components": "^5.1.0",
+    "styled-components": "^5.1.0"
   },
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "@storybook/addon-knobs": "^5.3.18",
-    "@types/styled-components": "^5.1.0",
-    "styled-components": "^5.1.0"
-  }
+  "dependencies": {}
 }
