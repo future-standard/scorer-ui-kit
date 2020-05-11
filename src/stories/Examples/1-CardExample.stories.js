@@ -1,10 +1,10 @@
 import React from 'react';
-import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
-import { ExampleCard } from '../ExampleCard';
+import { withKnobs, text, boolean } from "@storybook/addon-knobs";
+import { ExampleCard } from '../../ExampleCard';
 
 
 export default {
-  title: 'Example Card',
+  title: 'Examples/Example Card',
   component: ExampleCard,
   decorators: [withKnobs]
 };

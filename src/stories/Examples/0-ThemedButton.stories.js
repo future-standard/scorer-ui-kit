@@ -1,10 +1,10 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { ThemedButton } from '../ThemedButton';
+import { ThemedButton } from '../../ThemedButton';
 
 
 export default {
-  title: 'Themed Button',
+  title: 'Examples/Themed Button',
   component: ThemedButton,
 };
 
