@@ -20,7 +20,7 @@ function App() {
     <Container >
       {/* <Header /> */}
       <LineContainer>
-        <LineUI src="https://picsum.photos/640/480" lines={[]} />
+        <LineUI src="https://picsum.photos/640/480" lines={[{x: 0,y:0}, {x: 200, y: 200}]} />
       </LineContainer>
       {/* <Footer /> */}
     </Container>
