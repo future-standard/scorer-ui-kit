@@ -1,5 +1,10 @@
 import LineUI from './LineUI/LineUI';
+
+
 import  { ThemedButton } from './ThemedButton'
 import { useInterval } from './hooks';
 import  { resetButtonStyles } from './common';
-export { LineUI, ThemedButton, useInterval, resetButtonStyles};
+
+import Form from './Form/Form';
+
+export { LineUI, Form, ThemedButton, useInterval, resetButtonStyles};
