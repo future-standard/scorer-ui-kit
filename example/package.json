@@ -15,7 +15,8 @@
     "react-dom": "file:../node_modules/react-dom",
     "react-i18next": "^11.4.0",
     "react-scripts": "file:../node_modules/react-scripts",
-    "scorer-ui-kit": "file:.."
+    "scorer-ui-kit": "file:..",
+    "styled-components": "file:../node_modules/styled-components"
   },
   "scripts": {
     "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",

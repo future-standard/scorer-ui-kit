@@ -8,11 +8,6 @@ import { LineSetContext } from './Contexts';
 import LineSet from './LineSet';
 
 const MasterContainer = styled.div`
-  /* padding: 10px 200px 10px 10px;
-  margin: 0;
-  // touch-action: none;
-  hanging-punctuation
-  width: 100%; */
   position: relative;
   box-sizing: border-box;
 `;
