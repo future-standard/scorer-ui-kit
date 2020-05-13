@@ -6,11 +6,7 @@ import { IBoundary, IPointSet, IVector2 } from './typings';
 import { LineSetContext } from './Contexts';
 
 import LineSet from './LineSet';
-
-const MasterContainer = styled.div`
-  position: relative;
-  box-sizing: border-box;
-`;
+import lineReducer from './LineReducer';
 
 const Container = styled.div`
   position: relative;
@@ -20,8 +16,7 @@ const Container = styled.div`
   /* box-shadow: 0 10px 20px hsla(195deg, 65%, 5%, 35%); */
   /* border: 10px solid hsla(195deg, 45%, 35%, 45%); */
   /* border-radius:3px; */
-  max-height: 80vh;
-  max-width: 100%;
+
   width: auto;
   /* transform: translateY(-70%); */
 
@@ -54,95 +49,13 @@ const Frame = styled.svg<{transculent?: boolean}>`
 
 `;
 
-type IReducerActions =
-  | UpdateAction
-  | LoadAction
-  | AddSetAction
-  | RemoveAction
-  | AddPointAction
-  | RemovePointAction;
-
-interface AddSetAction{
-  type: 'ADD_SET';
-  index: number;
-  data: IPointSet;
-}
-interface UpdateAction {
-  type: 'UPDATE';
-  index: number;
-  data: IPointSet;
-}
-interface RemoveAction {
-  type: 'REMOVE_SET';
-  index: number;
-}
-interface LoadAction {
-    type: 'LOAD';
-    state: IPointSet[];
-}
-interface AddPointAction {
-  type: 'ADD_POINT';
-  index: number;
-}
-interface RemovePointAction {
-  type: 'REMOVE_POINT';
-  index: number;
-}
-
-const getMidpoint = (pointA : IVector2, pointB : IVector2) => {
-  return({
-    x: pointA.x + (pointB.x - pointA.x) * 0.5,
-    y: pointA.y + (pointB.y - pointA.y) * 0.5
-  });
-};
-
-const reducer = (state : IPointSet[], action: IReducerActions) => {
-
-  let newState : IPointSet[];
-  let newPosition : IVector2;
-
-  switch(action.type){
-
-    case "UPDATE":
-      newState = [...state];
-      newState[action.index] = action.data;
-      return [...newState];
-
-    case "ADD_SET":
-      return [...state, action.data];
-
-    case "REMOVE_SET":
-      newState = [...state];
-      newState.splice(action.index, 1);
-      return newState;
-
-    case "ADD_POINT":
-      newState = [...state];
-      newPosition = getMidpoint(newState[action.index].points[0], newState[action.index].points[1]);
-      newState[action.index].points.splice(1, 0, newPosition);
-      return newState;
-
-    case "REMOVE_POINT":
-      if(state[action.index].points.length <= 2){ return state; };
-
-      newState = [...state];
-      newState[action.index].points.splice( newState[action.index].points.length - 1, 1);
-      return newState;
-
-    case 'LOAD':
-      return [...action.state];
-
-    default:
-      console.error(`Action ${action['type']} not registered.`);
-      return state;
-  }
-};
 
 interface LineUIProps {
   src: string;
   lines: IPointSet[];
+  onSizeChange?: (size: {h: number; w: number}) => void;
 }
-const LineUI : React.FC<LineUIProps> = ({src,lines}) => {
+const LineUI : React.FC<LineUIProps> = ({src,lines, onSizeChange = ()=>{}}) => {
 
   const frame : any =  useRef();
 
@@ -151,8 +64,7 @@ const LineUI : React.FC<LineUIProps> = ({src,lines}) => {
 
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
 
-  const initState = (state: IPointSet[]) => state;
-  const [state, dispatch] = useReducer(reducer, lines, initState);
+  const [state, dispatch] = useReducer(lineReducer, lines);
 
   // Scale Code
   const [imgSize, setImgSize] = useState({ h: 1, w: 1 });
@@ -185,9 +97,14 @@ const LineUI : React.FC<LineUIProps> = ({src,lines}) => {
     }
 
     const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
-    setImgSize({ h: naturalHeight, w: naturalWidth });
-    setUnit(naturalHeight / clientHeight);
-  }, []);
+    if(naturalHeight !== imgSize.h || naturalWidth !== imgSize.w) {
+      setImgSize({ h: naturalHeight, w: naturalWidth });
+      onSizeChange({ h: naturalHeight, w: naturalWidth });
+    }
+    if(naturalHeight / clientHeight !== unit) {
+      setUnit(naturalHeight / clientHeight);
+    }
+  }, [imgSize, unit]);
 
   const handlePositionTipShow = (e: any) => {
     if(e.target === frame.current){
@@ -226,7 +143,7 @@ const LineUI : React.FC<LineUIProps> = ({src,lines}) => {
   };
 
   return (
-    <MasterContainer>
+    <React.Fragment>
 
       <LineSetContext.Provider value={{state, dispatch}}>
 
@@ -240,7 +157,7 @@ const LineUI : React.FC<LineUIProps> = ({src,lines}) => {
         </Container>
       </LineSetContext.Provider>
 
-    </MasterContainer>
+    </React.Fragment>
   );
 
 };
