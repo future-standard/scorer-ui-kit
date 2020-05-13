@@ -54,10 +54,39 @@ const Frame = styled.svg<{transculent?: boolean}>`
 
 `;
 
-interface IReducerActions {
-  type: string,
-  index: number,
-  data: IPointSet
+type IReducerActions =
+  | UpdateAction
+  | LoadAction
+  | AddSetAction
+  | RemoveAction
+  | AddPointAction
+  | RemovePointAction;
+
+interface AddSetAction{
+  type: 'ADD_SET';
+  index: number;
+  data: IPointSet;
+}
+interface UpdateAction {
+  type: 'UPDATE';
+  index: number;
+  data: IPointSet;
+}
+interface RemoveAction {
+  type: 'REMOVE_SET';
+  index: number;
+}
+interface LoadAction {
+    type: 'LOAD';
+    state: IPointSet[];
+}
+interface AddPointAction {
+  type: 'ADD_POINT';
+  index: number;
+}
+interface RemovePointAction {
+  type: 'REMOVE_POINT';
+  index: number;
 }
 
 const getMidpoint = (pointA : IVector2, pointB : IVector2) => {
@@ -100,8 +129,11 @@ const reducer = (state : IPointSet[], action: IReducerActions) => {
       newState[action.index].points.splice( newState[action.index].points.length - 1, 1);
       return newState;
 
+    case 'LOAD':
+      return [...action.state];
+
     default:
-      console.error(`Action ${action.type} not registered.`);
+      console.error(`Action ${action['type']} not registered.`);
       return state;
   }
 };
@@ -184,9 +216,7 @@ const LineUI : React.FC<LineUIProps> = ({src,lines}) => {
   }, [initScaleAndBounds]);
 
   useEffect(()=>{
-    console.log('rerender');
-    console.log(lines);
-    initState(lines);
+    dispatch({type: 'LOAD', state: lines})
   },
   [lines])
 
