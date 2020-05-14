@@ -51,7 +51,7 @@ export default (state : IPointSet[], action: IReducerActions) => {
 
     case "UPDATE":
       newState = [...state];
-      newState[action.index] = action.data;
+      newState[action.index] = {...action.data};
       return [...newState];
 
     case "ADD_SET":
@@ -76,6 +76,7 @@ export default (state : IPointSet[], action: IReducerActions) => {
       return newState;
 
     case 'LOAD':
+      newState = [ ...(action.state.map(({...cords}) => ({...cords})))]
       return [...action.state];
 
     default:

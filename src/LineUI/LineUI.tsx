@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback, useRef, useReducer } from 'react';
 import styled, { css } from 'styled-components';
 
-import { IBoundary, IPointSet, IVector2 } from './typings';
+import { IBoundary, IPointSet } from './typings';
 import { LineSetContext } from './Contexts';
 
 import LineSet from './LineSet';

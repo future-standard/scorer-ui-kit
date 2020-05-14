@@ -23,7 +23,6 @@ const GrabHandle = styled.circle<{hide: boolean}>`
   opacity: 1;
   transition: opacity 250ms ease;
   cursor: grab;
-  // pointer: grabbing;
 
   ${props => props.hide && css`
     pointer-events: none;

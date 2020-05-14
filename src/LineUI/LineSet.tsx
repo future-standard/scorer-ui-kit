@@ -130,8 +130,9 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
     // Update all handle angles in data set.
     inputHandleData.points.forEach((handle, index) => {
-      const comparisonIndex = ( index + 2 > points.length ) ? 0 : index + 1 ;
-      const angle = calcAngle(handle.x, handle.y, points[comparisonIndex].x, points[comparisonIndex].y);
+      const nextIndex = ( index + 2 > points.length ) ? 0 : index + 1 ;
+      const nextHandle =  points[nextIndex];
+      const angle = calcAngle(handle.x, handle.y, nextHandle.x, nextHandle.y);
       outputData.push(angle);
     });
 
@@ -147,18 +148,22 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
   }, [lineSetData, updateHandleAngles, handleUsesAngles])
 
 
-  const handles = lineSetData.points.map((handle, index) => {
-    return (<HandleUnit key={ index } lineSetId={ lineSetId } index={ index } unit={ unit } size={ size } useAngles={ handleUsesAngles } angle={ handleAngles[index] } x={ handle.x } y={handle.y} moveCallback={ handleMoveCallback } />)
+  const handles = lineSetData.points.map(({x,y}, index) => {
+    return (<HandleUnit key={ index } lineSetId={ lineSetId } index={ index } unit={ unit } size={ size } useAngles={ handleUsesAngles } angle={ handleAngles[index] } x={x} y={y} moveCallback={ handleMoveCallback } />)
   }
   )
 
-  const lines = lineSetData.points.map((_handle, index) => {
+  const lines = lineSetData.points.map(({x:x1,y:y1}, index) => {
     const {points} = lineSetData;
-    const comparisonIndex = ( index + 2 > points.length ) ? 0 : index + 1 ;
-    if(index === 1 && comparisonIndex === 0){
+    //nextIndex  index is next Point's index
+    const nextIndex = ( index + 1 >= points.length ) ? 0 : index + 1 ;
+    //in the case of a line don't draw line back from second point
+    if(index === 1 && nextIndex === 0){
       return null;
     }
-    return <LineUnit key={index} lineSetId={ lineSetId } options={ options } x1={points[index].x} y1={points[index].y} x2={points[comparisonIndex].x} y2={ points[comparisonIndex].y } unit={ unit } lineMoveCallback={ lineDragUpdate } lineMoveStartCallback={ lineDragStart } />
+    const {x:x2,y:y2} = points[nextIndex];
+
+    return <LineUnit key={index} lineSetId={ lineSetId } options={ options } x1={x1} y1={y1} x2={x2} y2={y2} unit={ unit } lineMoveCallback={ lineDragUpdate } lineMoveStartCallback={ lineDragStart } />
   }
   )
 
