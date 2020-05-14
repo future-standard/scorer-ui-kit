@@ -1,19 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-
-// import { LineUI } from 'scorer-ui-kit'
 import FormPage from './pages/FormPage';
 
 
-const Container = styled.div`
-  margin: auto;
-  background-image: radial-gradient(circle at 55% 1%, #303335, #212427 117%), url(./noise.png);
-  background-repeat: no-repeat, repeat;
-`
+const Container = styled.div``
+
 
 function App() {
+
   return (
-    <Container >
+    <Container>
       {/* <Header /> */}
 
       {/* <LineContainer>

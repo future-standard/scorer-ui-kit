@@ -10,6 +10,7 @@ const Container = styled.div`
   border: 1px solid #f00;
   display: flex;
   margin-bottom: 24px;
+  background: ${props => props.theme.tmp.body.backgroundColor};
 `
 
 const InputContainer = styled.div`
@@ -21,12 +22,10 @@ const ActionContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  background: #0f0;
 `
 
 const FeedbackContainer = styled.div`
   flex: 0 0 40px;
-  border: 3px solid #f0f;
 `
 
 const StyledInput = styled.input<{hasAction?: boolean}>`

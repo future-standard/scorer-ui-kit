@@ -1,4 +1,14 @@
-export default {
+import { fontFamily } from './common';
+
+const colors = {
+
+}
+
+const tmp = {
+  body: {
+    backgroundColor: '#f00',
+    backgroundImage: 'radial-gradient(circle at 55% 1%, #303335, #212427 117%), url(./noise.png)'
+  },
   fontFamily: 'Helvetica, Arial, sans-serif',
   colors: {
     button: {
@@ -13,4 +23,10 @@ export default {
       shadowColor: 'hsla(205, 60%, 75%, 55%)'
     }
   }
+}
+
+export default {
+  fontFamily,
+  colors,
+  tmp
 };
