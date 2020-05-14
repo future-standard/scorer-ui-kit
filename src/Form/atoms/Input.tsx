@@ -15,11 +15,21 @@ const ActionContainer = styled.div`
   top: 0;
 `
 
-const FeedbackContainer = styled.div`
+const FeedbackContainer = styled.div<{ feedback?: string }>`
   flex: 0 0 40px;
+  background-color: hsl(0, 0%, 99%);
+  border: 1px solid rgb(217, 218, 217);
+  border-left: none;
+  border-radius: 0 3px 3px 0;
+  overflow: hidden;
+
+  ${props => props.feedback == 'example' && css`
+    background: #f0f;
+  `}
+
 `
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<{ feedback?: string }>`
   height: ${props => props.theme.dimensions.input.height };
   width: 100%;
   border-radius: 3px;
@@ -36,6 +46,11 @@ const StyledInput = styled.input`
     color: hsla(0, 0%, 46%, 0.5);
     font-style: italic;
   }
+
+  ${props => props.feedback && css`
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  `}
 
 `
 
@@ -54,31 +69,36 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 
 `
 
-
-
-
-
-
 interface IProps {
   type: string
   placeholder?: string
-  value: string,
+  value: string
   useActionButton?: boolean
+  feedback?: string
 }
 
-const Input : React.FC<IProps> = ({ type, placeholder, value, useActionButton }) => {
+const Input : React.FC<IProps> = ({ type, placeholder, value, useActionButton, feedback }) => {
 
   const actionButton = (useActionButton) ? <ActionContainer><InputActionButton /></ActionContainer> : null;
 
+  const renderFeedback = () => {
+    if(!feedback){ return };
+
+    return (
+      <FeedbackContainer feedback={ feedback }>
+        <InputFeedback />
+      </FeedbackContainer>
+    );
+  }
+
   return <Container>
     <InputContainer hasAction={useActionButton}>
-      <StyledInput type={type} placeholder={ placeholder } defaultValue={ value } />
+      <StyledInput type={type} placeholder={ placeholder } defaultValue={ value } feedback={ feedback } />
       {actionButton}
     </InputContainer>
 
-    <FeedbackContainer>
-      <InputFeedback />
-    </FeedbackContainer>
+    { renderFeedback() }
+
   </Container>
 }
 

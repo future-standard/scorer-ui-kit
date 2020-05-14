@@ -9,7 +9,7 @@ interface IProps {
 
 const TextField : React.FC<IProps> = ({ name, label }) => {
   return <Label htmlFor={ name } labelText={ label }>
-    <Input type={ 'text' } placeholder={ 'Placehold me closer Tony Danza...'} value={ 'asdasdasdasd' } useActionButton={ true } />
+    <Input type={ 'text' } placeholder={ 'Placehold me closer Tony Danza...'} value={ 'asdasdasdasd' } useActionButton={ true } feedback={ 'example' } />
   </Label>
 }
 
