@@ -5,6 +5,18 @@ const colors = {
 }
 
 const tmp = {
+  input: {
+    states: {
+      default: {
+        borderColor: '#fff',
+        backgroundColor: '#fff'
+      },
+      example: {
+        borderColor: '#f0f',
+        backgroundColor: '#f0f'
+      }
+    }
+  },
   body: {
     backgroundColor: '#f00',
     backgroundImage: 'radial-gradient(circle at 55% 1%, #303335, #212427 117%), url(./noise.png)'

@@ -23,8 +23,12 @@ const FeedbackContainer = styled.div<{ feedback?: string }>`
   border-radius: 0 3px 3px 0;
   overflow: hidden;
 
-  ${props => props.feedback == 'example' && css`
-    background: #f0f;
+  background-color: ${props => props.theme.tmp.input.states['default'].backgroundColor};
+  border-color: ${props => props.theme.tmp.input.states['default'].borderColor};
+
+  ${({ feedback }) => feedback && css`
+    background-color: ${props => props.theme.tmp.input.states[feedback].backgroundColor};
+    border-color: ${props => props.theme.tmp.input.states[feedback].borderColor};
   `}
 
 `
@@ -47,7 +51,9 @@ const StyledInput = styled.input<{ feedback?: string }>`
     font-style: italic;
   }
 
-  ${props => props.feedback && css`
+  ${({ feedback }) => feedback && css`
+    border-color: ${props => props.theme.tmp.input.states[feedback].borderColor};
+
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   `}
