@@ -4,7 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import './i18n';
-import Fonts from './Fonts';
+import Fonts from './fonts';
 import Style from './style';
 
 
