@@ -1,4 +1,4 @@
-import { fontFamily } from './common';
+import { fontFamily, dimensions } from './common';
 
 const colors = {
 
@@ -27,6 +27,7 @@ const tmp = {
 
 export default {
   fontFamily,
+  dimensions,
   colors,
   tmp
 };

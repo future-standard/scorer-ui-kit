@@ -5,16 +5,7 @@ import InputActionButton from './InputActionButton';
 import InputFeedback from './InputFeedback';
 
 const Container = styled.div`
-  position: relative;
-  // padding-right: 40px;
-  border: 1px solid #f00;
   display: flex;
-  margin-bottom: 24px;
-  background: ${props => props.theme.tmp.body.backgroundColor};
-`
-
-const InputContainer = styled.div`
-  flex: 1;
   position: relative;
 `
 
@@ -28,12 +19,12 @@ const FeedbackContainer = styled.div`
   flex: 0 0 40px;
 `
 
-const StyledInput = styled.input<{hasAction?: boolean}>`
-  height: 40px;
+const StyledInput = styled.input`
+  height: ${props => props.theme.dimensions.input.height };
   width: 100%;
   border-radius: 3px;
   border: 1px solid rgb(217, 218, 217);
-  padding: 0 ${props => props.hasAction ? '155px' : '15px'} 0 15px;
+  padding: 0 15px 0 15px;
   box-sizing: border-box;
 
   color: hsl(207, 5%, 57%);
@@ -46,8 +37,24 @@ const StyledInput = styled.input<{hasAction?: boolean}>`
     font-style: italic;
   }
 
+`
+
+const InputContainer = styled.div<{hasAction?: boolean}>`
+  flex: 1;
+  position: relative;
+
+  ${({ hasAction }) => hasAction && css`
+    ${StyledInput}{
+      padding-right: 200px;
+
+      // Used to control password manager injection.
+      background-position: calc(100% - 50px) 50% !important;
+    }
+  `}
 
 `
+
+
 
 
 
@@ -56,19 +63,17 @@ interface IProps {
   type: string
   placeholder?: string
   value: string,
-  actionButton?: string
+  useActionButton?: boolean
 }
 
-const Input : React.FC<IProps> = ({ type, placeholder, value }) => {
+const Input : React.FC<IProps> = ({ type, placeholder, value, useActionButton }) => {
+
+  const actionButton = (useActionButton) ? <ActionContainer><InputActionButton /></ActionContainer> : null;
 
   return <Container>
-    <InputContainer>
-      <StyledInput hasAction={true} type={type} placeholder={ placeholder } defaultValue={ value } />
-
-      <ActionContainer>
-        <InputActionButton />
-      </ActionContainer>
-
+    <InputContainer hasAction={useActionButton}>
+      <StyledInput type={type} placeholder={ placeholder } defaultValue={ value } />
+      {actionButton}
     </InputContainer>
 
     <FeedbackContainer>
