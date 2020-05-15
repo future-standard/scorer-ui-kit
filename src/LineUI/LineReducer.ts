@@ -76,7 +76,19 @@ export default (state : IPointSet[], action: IReducerActions) => {
       return newState;
 
     case 'LOAD':
-      newState = [ ...(action.state.map(({...cords}) => ({...cords})))]
+      newState = [ ...(
+        action.state.map(
+          ({name, points}) => ({
+            name,
+            points: [
+              ...points.map( ({x,y}) => ({
+                x,
+                y
+              }))
+            ]
+          })
+        )
+      )]
       return [...action.state];
 
     default:
