@@ -1,12 +1,11 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect, useCallback, useRef, useReducer } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useReducer, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
 import { IBoundary, IPointSet } from './typings';
+import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 
-import LineSet from './LineSet';
-import lineReducer from './LineReducer';
 
 const Container = styled.div`
   position: relative;
@@ -52,19 +51,18 @@ const Frame = styled.svg<{transculent?: boolean}>`
 
 interface LineUIProps {
   src: string;
-  lines: IPointSet[];
   onSizeChange?: (size: {h: number; w: number}) => void;
 }
-const LineUI : React.FC<LineUIProps> = ({src,lines, onSizeChange = ()=>{}}) => {
+const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}}) => {
 
   const frame : any =  useRef();
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
   const [screenCTM, setScreenCTM] = useState<SVGMatrix>();
+  const {state, dispatch} = useContext(LineSetContext);
 
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
 
-  const [state, dispatch] = useReducer(lineReducer, lines);
 
   // Scale Code
   const [imgSize, setImgSize] = useState({ h: 1, w: 1 });
@@ -132,32 +130,20 @@ const LineUI : React.FC<LineUIProps> = ({src,lines, onSizeChange = ()=>{}}) => {
     };
   }, [initScaleAndBounds]);
 
-  useEffect(()=>{
-    dispatch({type: 'LOAD', state: lines})
-  },
-  [lines])
-
   const options = {
     handleFinderActive: handleFinder,
     revealSetIndex: state.length > 1
   };
 
   return (
-    <React.Fragment>
-
-      <LineSetContext.Provider value={{state, dispatch}}>
-
-        <Container>
-          <img ref={imgRef} onLoad={initScaleAndBounds} src={src} alt="" />
-          <Frame ref={ frame } viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version="1.1" xmlns="http://www.w3.org/2000/svg" onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
-            {state.map((lineSet, index) => (
-              <LineSet key={index} lineSetId={index} lineData={ lineSet } screenCTM={ screenCTM } boundaries={ boundaries } unit={ unit } size={ 30 } options={ options } />
-              ))}
-          </Frame>
-        </Container>
-      </LineSetContext.Provider>
-
-    </React.Fragment>
+    <Container>
+      <img ref={imgRef} onLoad={initScaleAndBounds} src={src} alt="" />
+      <Frame ref={ frame } viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version="1.1" xmlns="http://www.w3.org/2000/svg" onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
+        {state.map((lineSet, index) => (
+          <LineSet key={index} lineSetId={index} lineData={ lineSet } screenCTM={ screenCTM } boundaries={ boundaries } unit={ unit } size={ 30 } options={ options } />
+          ))}
+      </Frame>
+    </Container>
   );
 
 };
