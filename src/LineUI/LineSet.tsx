@@ -13,9 +13,10 @@ interface ILineSetProps {
   unit: number,
   lineData: IPointSet,
   options: IDragLineUISharedOptions,
+  onLineMoveEnd: ()=> void;
 }
 
-const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, lineSetId, options }) => {
+const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, lineSetId, options , onLineMoveEnd}) => {
   // console.log("Unit " + lineSetId + ", reporting in...")
 
   const {state, dispatch} = useContext(LineSetContext);
@@ -105,8 +106,8 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
       const {offsetX, offsetY} = handleRelation.current[index];
 
       return enforceBoundaries({
-        x: pointer.x - offsetX,
-        y: pointer.y - offsetY
+        x: Math.round(pointer.x - offsetX),
+        y: Math.round(pointer.y - offsetY)
       });
 
     });
@@ -149,7 +150,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
 
   const handles = lineSetData.points.map(({x,y}, index) => {
-    return (<HandleUnit key={ index } lineSetId={ lineSetId } index={ index } unit={ unit } size={ size } useAngles={ handleUsesAngles } angle={ handleAngles[index] } x={x} y={y} moveCallback={ handleMoveCallback } />)
+    return (<HandleUnit key={ index } moveEndCB={onLineMoveEnd} lineSetId={ lineSetId } index={ index } unit={ unit } size={ size } useAngles={ handleUsesAngles } angle={ handleAngles[index] } x={x} y={y} moveCallback={ handleMoveCallback } />)
   }
   )
 
@@ -163,7 +164,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     }
     const {x:x2,y:y2} = points[nextIndex];
 
-    return <LineUnit key={index} lineSetId={ lineSetId } options={ options } x1={x1} y1={y1} x2={x2} y2={y2} unit={ unit } lineMoveCallback={ lineDragUpdate } lineMoveStartCallback={ lineDragStart } />
+    return <LineUnit key={index} moveEndCB={onLineMoveEnd} lineSetId={ lineSetId } options={ options } x1={x1} y1={y1} x2={x2} y2={y2} unit={ unit } lineMoveCallback={ lineDragUpdate } lineMoveStartCallback={ lineDragStart } />
   }
   )
 

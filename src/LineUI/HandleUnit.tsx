@@ -89,12 +89,13 @@ interface IHandleUnitProps {
   size: number
   x: number
   y: number
-  moveCallback: any
+  moveCallback: any;
+  moveEndCB?: ()=>void;
 }
 
 const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   // console.log(props.lineSetId, typeof props.lineSetId)
-  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback } = props
+  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{} } = props
   // console.log("Handle "+ index +" from set "+ lineSetId + " :: " + x, ", " + y)
 
   let handleInstance : any = React.createRef();
@@ -120,6 +121,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   const handleTouchEnd = (_e: any) => {
     setTouchDragging(false);
     setTouchIndex(null);
+    moveEndCB();
   }
 
   const handleTouchMove = (e: any) => {
@@ -143,6 +145,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
     window.removeEventListener("mousemove", handleMouseMove);
     window.removeEventListener("mouseup", handleMouseUp);
     moveCallback({ x: e.pageX, y: e.pageY}, index);
+    moveEndCB();
     e.preventDefault();
   }
 

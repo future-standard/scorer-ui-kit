@@ -85,12 +85,13 @@ interface ILineUnitProps {
   unit: number,
   lineMoveCallback: any,
   lineMoveStartCallback: any
+  moveEndCB?: () => void;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId } = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, moveEndCB=()=>{}} = props;
   const { handleFinderActive, revealSetIndex } = options;
 
   const a = x1 - x2;
@@ -106,6 +107,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
         lineMoveCallback({ x: e.touches[i].pageX, y: e.touches[i].pageY});
       // }
     }
+    moveEndCB();
   }
 
   const grabTouchStart = (e: any) => {
@@ -129,6 +131,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     window.removeEventListener("mousemove", handleMouseMove);
     window.removeEventListener("mouseup", handleMouseUp);
     lineMoveCallback({ x: e.pageX, y: e.pageY });
+    moveEndCB();
     e.preventDefault();
   }
 
