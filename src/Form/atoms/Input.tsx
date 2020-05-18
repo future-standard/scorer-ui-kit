@@ -1,24 +1,14 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+import { PasswordShowIcon } from '../../svg';
+
+// const test = styled(PasswordShowIcon)`
+//   fill: #f0f;
+// `
+
 import InputActionButton from './InputActionButton';
-import InputFeedback from './InputFeedback';
-
-
-const inputStateValue = ( props : any ) => {
-  const { theme, fieldState } = props;
-  console.log(props, theme, fieldState);
-
-  const feedbackState = fieldState && theme.tmp.input.states[fieldState] ? theme.tmp.input.states[fieldState] : 'default'
-
-  // input.states. default.borderColor: '#fff',
-
-  const string = 'rotate(0deg)';
-  return css`
-    ${string}
-  `
-}
-
+// import InputFeedback from './InputFeedback';
 
 
 const ActionContainer = styled.div`
@@ -28,23 +18,19 @@ const ActionContainer = styled.div`
 `
 
 const FeedbackContainer = styled.div`
-
-  // --backgroundColor: ;
-
   flex: 0 0 40px;
   background-color: hsl(0, 0%, 99%);
   border: 1px solid rgb(217, 218, 217);
   border-left: none;
   border-radius: 0 3px 3px 0;
   overflow: hidden;
-
-  background-color: ${props => props.theme.tmp.input.states['default'].backgroundColor};
-  border-color: ${props => props.theme.tmp.input.states['default'].borderColor};
-
 `
 
+const FeedbackIcon = styled.div``
+const FeedbackMessage = styled.div``
+
 const StyledInput = styled.input`
-  height: ${props => props.theme.dimensions.input.height };
+  height: ${({ theme }) => theme.dimensions.input.height };
   width: 100%;
   border-radius: 3px;
   border: 1px solid rgb(217, 218, 217);
@@ -81,13 +67,13 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 
 const Container = styled.div<{ fieldState: string }>`
 
+  --state-icon: ${(props) => props.theme.tmp.input.states[props.fieldState].icon};
   --state-icon-color: ${(props) => props.theme.tmp.input.states[props.fieldState].iconColor};
   --state-border-color: ${(props) => props.theme.tmp.input.states[props.fieldState].borderColor};
   --state-background-color: ${(props) => props.theme.tmp.input.states[props.fieldState].backgroundColor};
 
   display: flex;
   position: relative;
-
 
   ${StyledInput}{
 
@@ -101,6 +87,7 @@ const Container = styled.div<{ fieldState: string }>`
   }
 
   ${FeedbackContainer} {
+    background-image: var(--state-icon);
     border-color: var(--state-border-color);
     background-color: var(--state-background-color);
   }
@@ -132,7 +119,8 @@ const Input : React.FC<IProps> = ({ type, placeholder, value, useActionButton, f
 
     { fieldState ? (
       <FeedbackContainer>
-        <InputFeedback />
+        <FeedbackIcon />
+        <FeedbackMessage />
       </FeedbackContainer>
     ) : null}
 

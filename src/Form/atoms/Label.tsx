@@ -7,6 +7,7 @@ const StyledLabel = styled.label`
   font-size: 14px;
   font-family: Monorale;
   font-weight: 500;
+  margin-bottom: 20px
 
 `
 
