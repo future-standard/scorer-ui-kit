@@ -1,16 +1,16 @@
 import React from 'react';
 import Input from '../atoms/Input';
 import Label from '../atoms/Label';
-import { number } from '@storybook/addon-knobs';
 
 interface IProps {
   name: string
   label: string
+  fieldState: string
 }
 
-const TextField : React.FC<IProps> = ({ name, label }) => {
+const TextField : React.FC<IProps> = ({ name, label, fieldState }) => {
   return <Label htmlFor={ name } labelText={ label }>
-    <Input type={ 'text' } placeholder={ 'Placehold me closer Tony Danza...'} value={ 'asdasdasdasd' } fieldState={ 'required' } />
+    <Input type={ 'text' } placeholder={ 'Placehold me closer Tony Danza...'} value={ 'asdasdasdasd' } fieldState={ fieldState } />
   </Label>
 }
 

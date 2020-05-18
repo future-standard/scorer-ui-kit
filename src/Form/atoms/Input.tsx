@@ -8,13 +8,11 @@ import InputFeedback from './InputFeedback';
 const inputStateValue = ( props : any ) => {
   const { theme, fieldState } = props;
   console.log(props, theme, fieldState);
+
   const feedbackState = fieldState && theme.tmp.input.states[fieldState] ? theme.tmp.input.states[fieldState] : 'default'
-  // input: {
-  //   states: {
-  //     default: {
-  //       borderColor: '#fff',
-  //       backgroundColor: '#fff'
-  //     },
+
+  // input.states. default.borderColor: '#fff',
+
   const string = 'rotate(0deg)';
   return css`
     ${string}
@@ -66,7 +64,7 @@ const StyledInput = styled.input`
 `
 
 const InputContainer = styled.div<{hasAction?: boolean}>`
-  transform: ${inputStateValue};
+
   flex: 1;
   position: relative;
 
@@ -81,24 +79,32 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 
 `
 
-const Container = styled.div<{ fieldState?: string }>`
+const Container = styled.div<{ fieldState: string }>`
+
+  --state-icon-color: ${(props) => props.theme.tmp.input.states[props.fieldState].iconColor};
+  --state-border-color: ${(props) => props.theme.tmp.input.states[props.fieldState].borderColor};
+  --state-background-color: ${(props) => props.theme.tmp.input.states[props.fieldState].backgroundColor};
+
   display: flex;
   position: relative;
 
-  ${StyledInput}{
-      ${({ fieldState }) => fieldState && css`
-      border-color: ${props => props.theme.tmp.input.states[fieldState].borderColor};
 
+  ${StyledInput}{
+
+    // icon-color: --state-icon-color;
+    border-color: --state-border-color;
+    background-color: --state-background-color;
+
+    ${({ fieldState }) => fieldState !== 'default' && css`
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     `}
   }
 
   ${FeedbackContainer} {
-    ${({ fieldState }) => fieldState && css`
-      background-color: ${props => props.theme.tmp.input.states[fieldState].backgroundColor};
-      border-color: ${props => props.theme.tmp.input.states[fieldState].borderColor};
-    `}
+
+    border-color: --state-border-color;
+
   }
 
 `
@@ -115,26 +121,17 @@ const Input : React.FC<IProps> = ({ type, placeholder, value, useActionButton, f
 
   const actionButton = (useActionButton) ? <ActionContainer><InputActionButton /></ActionContainer> : null;
 
-  fieldState = fieldState || 'default';
-  console.log(fieldState);
-
-  const renderFeedback = () => {
-    if(!fieldState){ return };
-
-    return (
-      <FeedbackContainer>
-        <InputFeedback />
-      </FeedbackContainer>
-    );
-  }
-
-  return <Container fieldState={ fieldState }>
+  return <Container fieldState={ fieldState || 'default' }>
     <InputContainer hasAction={useActionButton}>
       <StyledInput type={type} placeholder={ placeholder } defaultValue={ value } />
       {actionButton}
     </InputContainer>
 
-    { renderFeedback() }
+    { fieldState ? (
+      <FeedbackContainer>
+        <InputFeedback />
+      </FeedbackContainer>
+    ) : null}
 
   </Container>
 }

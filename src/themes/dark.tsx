@@ -8,22 +8,27 @@ const tmp = {
   input: {
     states: {
       default: {
-        borderColor: '#fff',
-        backgroundColor: '#fff'
+        iconColor: '#000',
+        borderColor: 'grey',
+        backgroundColor: 'grey'
       },
       required: {
-        borderColor: '#f0f',
-        backgroundColor: '#f0f'
+        iconColor: '#000',
+        borderColor: 'pink',
+        backgroundColor: 'pink'
       },
       loading: {
+        iconColor: '#000',
         borderColor: 'blue',
         backgroundColor: 'blue'
       },
       valid: {
+        iconColor: '#000',
         borderColor: 'green',
         backgroundColor: 'green'
       },
       error: {
+        iconColor: '#000',
         borderColor: 'red',
         backgroundColor: 'red'
       }
