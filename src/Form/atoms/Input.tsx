@@ -91,9 +91,8 @@ const Container = styled.div<{ fieldState: string }>`
 
   ${StyledInput}{
 
-    // icon-color: --state-icon-color;
-    border-color: --state-border-color;
-    background-color: --state-background-color;
+    // icon-color: var(--state-icon-color);
+    border-color: var(--state-border-color);
 
     ${({ fieldState }) => fieldState !== 'default' && css`
       border-top-right-radius: 0;
@@ -102,9 +101,8 @@ const Container = styled.div<{ fieldState: string }>`
   }
 
   ${FeedbackContainer} {
-
-    border-color: --state-border-color;
-
+    border-color: var(--state-border-color);
+    background-color: var(--state-background-color);
   }
 
 `
@@ -119,12 +117,17 @@ interface IProps {
 
 const Input : React.FC<IProps> = ({ type, placeholder, value, useActionButton, fieldState }) => {
 
-  const actionButton = (useActionButton) ? <ActionContainer><InputActionButton /></ActionContainer> : null;
-
   return <Container fieldState={ fieldState || 'default' }>
+
     <InputContainer hasAction={useActionButton}>
       <StyledInput type={type} placeholder={ placeholder } defaultValue={ value } />
-      {actionButton}
+
+      { (useActionButton) ? (
+        <ActionContainer>
+          <InputActionButton />
+        </ActionContainer>
+      ) : null }
+
     </InputContainer>
 
     { fieldState ? (
