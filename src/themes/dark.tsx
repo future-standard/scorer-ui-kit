@@ -11,10 +11,23 @@ const tmp = {
         borderColor: '#fff',
         backgroundColor: '#fff'
       },
-      example: {
+      required: {
         borderColor: '#f0f',
         backgroundColor: '#f0f'
+      },
+      loading: {
+        borderColor: 'blue',
+        backgroundColor: 'blue'
+      },
+      valid: {
+        borderColor: 'green',
+        backgroundColor: 'green'
+      },
+      error: {
+        borderColor: 'red',
+        backgroundColor: 'red'
       }
+
     }
   },
   body: {
