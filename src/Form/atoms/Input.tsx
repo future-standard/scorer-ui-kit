@@ -36,7 +36,9 @@ const FeedbackContainer = styled.div`
 // const FeedbackIcon = styled.div``;
 // FIXME: just for example
 const FeedbackIcon = styled(PasswordShow)`
- stroke: hsl(207, 5%, 57%);;
+  stroke: hsl(24, 78%, 52%);
+  margin: 7px;
+  display: block;
 `
 const FeedbackMessage = styled.div``
 

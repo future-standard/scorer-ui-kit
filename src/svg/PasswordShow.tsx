@@ -6,7 +6,6 @@ function SvgPasswordShow(props: React.SVGProps<SVGSVGElement>) {
       <g
         fill="none"
         fillRule="evenodd"
-        stroke="#000"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={1.5}
