@@ -9,9 +9,9 @@ interface IProps {
   fieldState: string
 }
 
-const TextField : React.FC<IProps> = ({ name, label, fieldState }) => {
+const TextField : React.FC<IProps> = ({ name, label, placeholder, fieldState }) => {
   return <Label htmlFor={ name } labelText={ label }>
-    <Input type={ 'text' } placeholder={ 'Placehold me closer Tony Danza...'} value={ 'asdasdasdasd' } fieldState={ fieldState } />
+    <Input type={ 'text' } placeholder={ placeholder } value={ 'asdasdasdasd' } fieldState={ fieldState } />
   </Label>
 }
 
