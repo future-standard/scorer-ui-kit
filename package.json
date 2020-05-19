@@ -20,6 +20,7 @@
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
+    "svgr": "svgr --typescript -d src/svg/ src/svg",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build",
     "storybook": "start-storybook -p 9009",
@@ -32,13 +33,16 @@
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addon-links": "^5.3.18",
     "@storybook/addons": "^5.3.18",
     "@storybook/preset-create-react-app": "^2.1.1",
     "@storybook/react": "^5.3.18",
+    "@svgr/cli": "^5.4.0",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.13.4",
     "@types/react": "^16.9.34",
+    "@types/styled-components": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "babel-eslint": "^10.0.3",
@@ -57,8 +61,6 @@
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
     "storybook-dark-mode": "^0.4.1",
-    "@storybook/addon-knobs": "^5.3.18",
-    "@types/styled-components": "^5.1.0",
     "styled-components": "^5.1.0"
   },
   "files": [
