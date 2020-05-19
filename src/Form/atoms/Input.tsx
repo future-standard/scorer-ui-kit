@@ -33,7 +33,11 @@ const FeedbackContainer = styled.div`
   overflow: hidden;
 `
 
-const FeedbackIcon = styled.div``
+// const FeedbackIcon = styled.div``;
+// FIXME: just for example
+const FeedbackIcon = styled(PasswordShow)`
+ stroke: hsl(207, 5%, 57%);;
+`
 const FeedbackMessage = styled.div``
 
 const StyledInput = styled.input`
