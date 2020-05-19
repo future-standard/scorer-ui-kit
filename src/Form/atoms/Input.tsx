@@ -1,11 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-// import PasswordHideIcon from '../../svg';
+import { PasswordShow } from '../../svg';
 
-// const test = styled(PasswordShow)`
-//   fill: #f0f;
-// `
 
 // import InputActionButton from './InputActionButton';
 // import InputFeedback from './InputFeedback';
@@ -115,13 +112,13 @@ interface IProps {
 
 const Input : React.FC<IProps> = ({ type, placeholder, value, fieldState, actionCallback, actionIcon }) => {
 
-  const useActionButton = actionCallback !== undefined;
+  const isActionButton = actionCallback !== undefined;
 
   return <Container fieldState={ fieldState || 'default' }>
 
-    <InputContainer hasAction={ useActionButton }>
+    <InputContainer hasAction={ isActionButton }>
       <StyledInput type={type} placeholder={ placeholder } defaultValue={ value } />
-      { (useActionButton) ? (
+      { (isActionButton) ? (
         <ActionContainer>
           <InputActionButton onClick={ actionCallback } />
           { actionIcon }
