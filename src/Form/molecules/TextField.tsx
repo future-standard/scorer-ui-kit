@@ -5,6 +5,7 @@ import Label from '../atoms/Label';
 interface IProps {
   name: string
   label: string
+  placeholder?: string
   fieldState: string
 }
 

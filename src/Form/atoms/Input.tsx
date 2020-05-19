@@ -1,13 +1,13 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { PasswordShowIcon } from '../../svg';
+// import PasswordHideIcon from '../../svg';
 
-// const test = styled(PasswordShowIcon)`
+// const test = styled(PasswordShow)`
 //   fill: #f0f;
 // `
 
-import InputActionButton from './InputActionButton';
+// import InputActionButton from './InputActionButton';
 // import InputFeedback from './InputFeedback';
 
 
@@ -15,6 +15,16 @@ const ActionContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
+`
+
+const InputActionButton = styled.button.attrs({ type: "button" })`
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  background: blue;
 `
 
 const FeedbackContainer = styled.div`
@@ -98,20 +108,23 @@ interface IProps {
   type: string
   placeholder?: string
   value: string
-  useActionButton?: boolean
   fieldState?: string | null
+  actionCallback?: any
+  actionIcon?: string
 }
 
-const Input : React.FC<IProps> = ({ type, placeholder, value, useActionButton, fieldState }) => {
+const Input : React.FC<IProps> = ({ type, placeholder, value, fieldState, actionCallback, actionIcon }) => {
+
+  const useActionButton = actionCallback !== undefined;
 
   return <Container fieldState={ fieldState || 'default' }>
 
-    <InputContainer hasAction={useActionButton}>
+    <InputContainer hasAction={ useActionButton }>
       <StyledInput type={type} placeholder={ placeholder } defaultValue={ value } />
-
       { (useActionButton) ? (
         <ActionContainer>
-          <InputActionButton />
+          <InputActionButton onClick={ actionCallback } />
+          { actionIcon }
         </ActionContainer>
       ) : null }
 
