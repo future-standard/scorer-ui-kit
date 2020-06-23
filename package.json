@@ -3,8 +3,11 @@
   "version": "1.0.7",
   "description": "Made with create-react-library",
   "author": "JoshLipps",
-  "license": "",
-  "repository": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/future-standard/scorer-ui-kit.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
@@ -66,5 +69,12 @@
   "files": [
     "dist"
   ],
-  "dependencies": {}
+  "dependencies": {},
+  "directories": {
+    "example": "example"
+  },
+  "bugs": {
+    "url": "https://github.com/future-standard/scorer-ui-kit/issues"
+  },
+  "homepage": "https://github.com/future-standard/scorer-ui-kit#readme"
 }
