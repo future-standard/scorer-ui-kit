@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, VideoHTMLAttributes, HtmlHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-// interface WebRTCStatus {
-//     status: string;
-//     error?: string;
-// }
 const Video = styled.video`
   /* width: 800px; */
 `
@@ -75,14 +71,15 @@ const WebRTCPlayer: React.FC<Props> = ({
       return;
     }
 
-
+    // what is this case?
     if (sdp.type !== 'offer') {
       return;
     }
+
     setStatus('Creating Answer');
     try {
       const answer = await peerConnection.current.createAnswer()
-      console.debug('Got local description: ' + JSON.stringify(answer));
+      console.log('Got local description: ' + JSON.stringify(answer));
       await peerConnection.current.setLocalDescription(answer);
     } catch (error){
       console.error('Error:', error.message);
@@ -157,6 +154,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     setStatus('Disconnected from server');
     closePeerConnection();
     // Do not retry when WebRTC is disabled (Toggle is OFF)
+    //TODO: todo FIx this to clear on close
     if (event !== null && event.code !== 1000) {
       window.setTimeout(connectToPeer, 3000);
     }
@@ -199,7 +197,7 @@ const WebRTCPlayer: React.FC<Props> = ({
 
   function onRemoteTrack(event: RTCTrackEvent) {
     if (videoRef.current && videoRef.current.srcObject !== event.streams[0]) {
-      console.log('Incoming stream');
+      console.debug('Incoming stream');
       videoRef.current.srcObject = event.streams[0];
       setStatus('Adding Track');
     }
@@ -208,10 +206,10 @@ const WebRTCPlayer: React.FC<Props> = ({
   function createCall(msg: WebRTCMessage) {
     // Reset connection attempts because we connected successfully
     setConnectionAttempts(0);
-    console.log('Creating RTCPeerConnection');
+    console.debug('Creating RTCPeerConnection');
 
     if (!msg.sdp) {
-      console.log('WARNING: First message wasn\'t an SDP message!?');
+      console.debug('WARNING: First message wasn\'t an SDP message!?');
       return;
     }
 
@@ -230,7 +228,7 @@ const WebRTCPlayer: React.FC<Props> = ({
         webSocket.current.send(JSON.stringify({ 'ice': candidate }));
         //TODO: try catch here?
       } else {
-        console.log('no WS found on peer connection \'icecandidate\' event... how?')
+        console.debug('no WS found on peer connection \'icecandidate\' event... how?')
       }
     });
 
@@ -238,7 +236,7 @@ const WebRTCPlayer: React.FC<Props> = ({
   }
 
   const closeWebSocket = () => {
-    console.log('closeWebSocket')
+    console.debug('closeWebSocket')
     closePeerConnection();
     if(webSocket.current){
       webSocket.current.close();
@@ -247,7 +245,7 @@ const WebRTCPlayer: React.FC<Props> = ({
   }
 
   const closePeerConnection = () => {
-    console.log('closePeerConnection')
+    console.debug('closePeerConnection')
     if (peerConnection.current) {
       peerConnection.current.close();
       peerConnection.current = null;
