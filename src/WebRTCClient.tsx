@@ -1,35 +1,57 @@
-import React, { useState, useEffect, useRef } from 'react';
-
+import React, { useState, useEffect, useRef, useCallback, VideoHTMLAttributes, HtmlHTMLAttributes } from 'react';
+import styled from 'styled-components';
 
 // interface WebRTCStatus {
 //     status: string;
 //     error?: string;
 // }
-interface Props {
+const Video = styled.video`
+  /* width: 800px; */
+`
+interface WebRTCMessage {
+  sdp?: RTCSessionDescriptionInit;
+  ice?: RTCIceCandidate;
+}
+interface OwnProps {
   enabled: boolean;
   peerAddress: string;
   maxConnectionAttempts?: number;
-  id: string;
-  setStatus: (status: string) => void;
-  setError: (error: string | null) => void;
+  rtcConfiguration?: RTCConfiguration
+  id: string; //Why is this required ??? just for uuid? can be internal if we want...
+  setStatus?: (status: string) => void;
+  setError?: (error: string | null) => void;
 }
-const WebRTCPlayer: React.FC<Props> = ({ id, enabled, peerAddress, maxConnectionAttempts = 30, setStatus = () => { }, setError = () => { } }) => {
+type Props = OwnProps & VideoHTMLAttributes<HTMLVideoElement>
 
-  const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
+const WebRTCPlayer: React.FC<Props> = ({
+  id,
+  enabled,
+  peerAddress,
+  maxConnectionAttempts = 30,
+  rtcConfiguration = {},
+  setStatus = () => {},
+  setError = () => {},
+  // Video element defaults
+  autoPlay = true,
+  muted = true,
+  ...props
+  }) => {
+
   const [connectionAttempts, setConnectionAttempts] = useState(0);
-  const rtcConfiguration = {};
-  const videoRef = useRef<HTMLVideoElement>();
-  const [webSocket, setWebSocket] = useState<WebSocket>();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const webSocket = useRef<WebSocket|null>(null);
+  const peerConnection = useRef<RTCPeerConnection|null>(null);
 
   useEffect(() => {
     if (enabled === true) {
-      // videoContainer.style.display = 'block';
       connectToPeer();
     } else {
-      // videoContainer.style.display = 'none';
-      if (webSocket) {
-        webSocket.close(1000, 'WebRTC Disabled');
+      if (webSocket.current) {
+        webSocket.current.close(1000, 'WebRTC Disabled');
       }
+    }
+    return ()=>{
+      closeWebSocket();
     }
   }, [enabled]);
 
@@ -40,92 +62,94 @@ const WebRTCPlayer: React.FC<Props> = ({ id, enabled, peerAddress, maxConnection
   }
 
   // SDP offer received from peer, set remote description and create an answer
-  const onIncomingSDP = async (sdp) => {
-    if (!peerConnection || !webSocket) {
+  const onIncomingSDP = async (sdp: RTCSessionDescriptionInit) => {
+    if (!peerConnection.current || !webSocket.current) {
       return;
     }
-    await peerConnection.setRemoteDescription(sdp)
-    setStatus('Remote Description set');
+    try {
+      await peerConnection.current.setRemoteDescription(sdp);
+      setStatus('Remote Description set');
+    } catch (error){
+      console.error('Error:', error.message);
+      setError('Error Setting remote description');
+      return;
+    }
+
+
     if (sdp.type !== 'offer') {
       return;
     }
-    setStatus('Sending Answer');
+    setStatus('Creating Answer');
+    try {
+      const answer = await peerConnection.current.createAnswer()
+      console.debug('Got local description: ' + JSON.stringify(answer));
+      await peerConnection.current.setLocalDescription(answer);
+    } catch (error){
+      console.error('Error:', error.message);
+      setError('Error Creating Answer');
+      return;
+    }
 
-    const answer = await peerConnection.createAnswer()
-    console.log('Got local description: ' + JSON.stringify(answer));
-    await peerConnection.setLocalDescription(answer);
+    // TODO: Why was this being set to null and why AFTER setting it??
+    // peerConnection.current.localDescription['ice-option'] = null
     const message = {
-      sdp: {
-        ...peerConnection.localDescription,
-        'ice-option': null
-      }
+      sdp: peerConnection.current.localDescription
     }
     setStatus('Sending Local Description');
-    console.log('Local Description:' + JSON.stringify(message));
+    // console.log('Local Description:' + JSON.stringify(message));
     try {
-      await webSocket.send(JSON.stringify(message));
+      await webSocket.current.send(JSON.stringify(message));
       setStatus('Connected');
     } catch (error) {
-      console.log(error.name + ': ' + error.message);
+      console.error(error.name + ': ' + error.message);
       setError(error.message)
     }
-
-
-
-
   };
 
   // ICE candidate received from peer, add it to the peer connection
   function onIncomingICE(ice:RTCIceCandidateInit) {
-    if(!peerConnection){
+    if(!peerConnection.current){
+      console.error('peerConnection.current not found onIncomingICE ')
       return;
     }
     const candidate = new RTCIceCandidate(ice);
-    peerConnection.addIceCandidate(candidate).catch(setError);
+    peerConnection.current.addIceCandidate(candidate).catch(setError);
   }
 
-  function onServerMessage(event: { data: string }) {
-    switch (event.data) {
-      case 'HELLO':
-        console.log('Received HELLO');
-        setStatus('Registered with server, waiting for offer.');
-        return;
-      default:
-        if (event.data.startsWith('ERROR')) {
-          console.error('Received ' + event.data);
-          handleIncomingError(event.data);
-          return;
-        }
-        // Handle incoming JSON SDP and ICE messages
-        let msg: {
-          sdp?: any;
-          ice?: any;
-        };
-        try {
-          msg = JSON.parse(event.data);
-        } catch (e) {
-          if (e instanceof SyntaxError) {
-            handleIncomingError('Error parsing incoming JSON: ' + event.data);
-          } else {
-            handleIncomingError('Unknown error parsing response: ' + event.data);
-          }
-          return;
-        }
-
-        // Incoming JSON signals the beginning of a call
-        if (!peerConnection) {
-          createCall(msg);
-        }
-
-        if (msg.sdp != null) {
-          console.log('Received Remote SDP:' + JSON.stringify(msg.sdp));
-          onIncomingSDP(msg.sdp);
-        } else if (msg.ice != null) {
-          console.debug('Received Remote ICE:' + JSON.stringify(msg.ice));
-          onIncomingICE(msg.ice);
+  const onServerMessage = ({data = ''}: MessageEvent) => {
+    if(data ==='HELLO') {
+      console.debug('Received HELLO');
+      setStatus('Registered with server, waiting for offer.');
+    } else if (data.startsWith('ERROR')) {
+      console.error('Received ' + data);
+      handleIncomingError(data);
+    } else {
+      // Handle incoming JSON SDP and ICE messages
+      let msg: WebRTCMessage;
+      try {
+        msg = JSON.parse(data);
+      } catch (e) {
+        if (e instanceof SyntaxError) {
+          handleIncomingError('Error parsing incoming JSON: ' + data);
         } else {
-          handleIncomingError('Unknown incoming JSON: ' + msg);
+          handleIncomingError('Unknown error parsing response: ' + data);
         }
+        return;
+      }
+      // Incoming JSON signals the beginning of a call
+      if (!peerConnection.current) {
+        createCall(msg);
+      }
+
+      if (msg.sdp != null) {
+        console.log('Received Remote SDP:' + JSON.stringify(msg.sdp));
+        onIncomingSDP(msg.sdp);
+      } else if (msg.ice != null) {
+        console.debug('Received Remote ICE:' + JSON.stringify(msg.ice));
+        onIncomingICE(msg.ice);
+      } else {
+        handleIncomingError('Unknown incoming JSON: ' + msg);
+      }
     }
   }
 
@@ -144,20 +168,17 @@ const WebRTCPlayer: React.FC<Props> = ({ id, enabled, peerAddress, maxConnection
   }
 
   function connectToPeer() {
-    if (connectionAttempts > maxConnectionAttempts) {
+    console.log('connectToPeer', connectionAttempts)
+    if (connectionAttempts >= maxConnectionAttempts) {
       setError('Too many connection attempts, aborting. Refresh page to try again');
       return;
     }
-    // // Clear errors in the status span
-    // const span = document.getElementById('status');
-    // if(span !== null){
-    //     span.classList.remove('error');
-    //     span.textContent = '';
-    // }
+    setError(null);
 
     const peerId = getPeerId(id);
     setStatus('Connecting to server ' + peerAddress);
     const ws = new WebSocket(peerAddress);
+    webSocket.current = ws;
     /* When connected, immediately register with the server */
     ws.addEventListener('open', (event) => {
       const interval = setInterval(() => {
@@ -173,7 +194,6 @@ const WebRTCPlayer: React.FC<Props> = ({ id, enabled, peerAddress, maxConnection
     ws.addEventListener('error', onServerError);
     ws.addEventListener('message', onServerMessage);
     ws.addEventListener('close', onServerClose);
-    setWebSocket(ws);
     setConnectionAttempts(connectionAttempts + 1);
   }
 
@@ -181,56 +201,61 @@ const WebRTCPlayer: React.FC<Props> = ({ id, enabled, peerAddress, maxConnection
     if (videoRef.current && videoRef.current.srcObject !== event.streams[0]) {
       console.log('Incoming stream');
       videoRef.current.srcObject = event.streams[0];
+      setStatus('Adding Track');
     }
   }
 
-  function createCall(msg) {
+  function createCall(msg: WebRTCMessage) {
     // Reset connection attempts because we connected successfully
     setConnectionAttempts(0);
     console.log('Creating RTCPeerConnection');
 
-    const pc = new RTCPeerConnection(rtcConfiguration);
-    pc.ontrack = onRemoteTrack;
-
     if (!msg.sdp) {
       console.log('WARNING: First message wasn\'t an SDP message!?');
+      return;
     }
 
-    pc.onicecandidate = (event) => {
-      if (event.candidate == null) {
+    const pc = new RTCPeerConnection(rtcConfiguration);
+    peerConnection.current = pc;
+    pc.addEventListener('track', onRemoteTrack);
+
+    pc.addEventListener('icecandidate', ({candidate = null}) => {
+
+      if (!candidate) {
         console.log('All local ICE Candidates sent.');
         return;
       }
       // We have a local ICE candidate, send it to the remote party with the same uuid
-      console.debug('Sending ICE Candidate:', event.candidate, event);
-      if(webSocket){
-        webSocket.send(JSON.stringify({ 'ice': event.candidate }));
+      if(webSocket.current){
+        webSocket.current.send(JSON.stringify({ 'ice': candidate }));
         //TODO: try catch here?
       } else {
-        console.log('no WS found on pc.icecandidate? how?')
+        console.log('no WS found on peer connection \'icecandidate\' event... how?')
       }
-    };
+    });
 
     setStatus('RTCPeerConnection created, waiting for SDP');
-    setPeerConnection(pc);
   }
 
   const closeWebSocket = () => {
+    console.log('closeWebSocket')
     closePeerConnection();
-    if(webSocket){
-      webSocket.close();
+    if(webSocket.current){
+      webSocket.current.close();
+      webSocket.current = null;
     }
   }
 
   const closePeerConnection = () => {
-    if (peerConnection) {
-      peerConnection.close();
-      setPeerConnection(null);
+    console.log('closePeerConnection')
+    if (peerConnection.current) {
+      peerConnection.current.close();
+      peerConnection.current = null;
     }
   }
 
   return (
-    <video ref={videoRef}></video>
+    <Video {...props} autoPlay={autoPlay} muted={muted} ref={videoRef}></Video>
   )
 }
 

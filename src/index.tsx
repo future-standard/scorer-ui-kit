@@ -19,6 +19,8 @@ import  { ThemedButton } from './ThemedButton'
 import { useInterval } from './hooks';
 import  { resetButtonStyles } from './common';
 
+import WebRTCClient from './WebRTCClient';
+
 
 
 export {
@@ -34,6 +36,7 @@ export {
   PasswordField,
   ThemedButton,
   useInterval,
-  resetButtonStyles
+  resetButtonStyles,
+  WebRTCClient
 };
 
