@@ -1,0 +1,36 @@
+{
+  "name": "scorer-ui-kit-example",
+  "homepage": "https://JoshLipps.github.io/scorer-ui-kit",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.36",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "@types/styled-components": "^5.1.0",
+    "i18next": "^19.4.2",
+    "i18next-browser-languagedetector": "^4.1.1",
+    "react": "file:../node_modules/react",
+    "react-dom": "file:../node_modules/react-dom",
+    "react-i18next": "^11.4.0",
+    "react-scripts": "file:../node_modules/react-scripts",
+    "scorer-ui-kit": "file:..",
+    "styled-components": "file:../node_modules/styled-components"
+  },
+  "scripts": {
+    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
+    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
+    "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
+    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

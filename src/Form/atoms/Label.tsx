@@ -1,0 +1,30 @@
+import React from 'react';
+import styled from 'styled-components';
+
+const StyledLabel = styled.label`
+  font-family: ${({theme}) => theme.fontFamily.ui };
+  display: block;
+  color: hsl(207, 5%, 57%);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+`
+
+const LabelText = styled.span`
+  display: block;
+  margin-bottom: 10px;
+`
+
+interface IPropsB {
+  htmlFor: string
+  labelText: string
+}
+
+const Label : React.FC<IPropsB> = ({ htmlFor, labelText, children }) => {
+  return <StyledLabel htmlFor={htmlFor}>
+    <LabelText>{ labelText }</LabelText>
+    {children}
+  </StyledLabel>
+}
+
+export default Label;
