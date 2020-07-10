@@ -38,19 +38,6 @@ const WebRTCPlayer: React.FC<Props> = ({
   const webSocket = useRef<WebSocket|null>(null);
   const peerConnection = useRef<RTCPeerConnection|null>(null);
 
-  useEffect(() => {
-    if (enabled === true) {
-      connectToPeer();
-    } else {
-      if (webSocket.current) {
-        webSocket.current.close(1000, 'WebRTC Disabled');
-      }
-    }
-    return ()=>{
-      closeWebSocket();
-    }
-  }, [enabled]);
-
 
   function handleIncomingError(error: string) {
     setError(error);
@@ -76,7 +63,7 @@ const WebRTCPlayer: React.FC<Props> = ({
           // seems to use [codec] H264 (96, level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f)
           description.sdp = description.sdp.replace('profile-level-id=640028;','')
         }
-        await peerConnection.current.setRemoteDescription(new RTCSessionDescription(description));
+        await peerConnection.current.setRemoteDescription(new RTCSessionDescription(description))
         setStatus('Remote Description set');
       }
     } catch (error){
@@ -165,16 +152,19 @@ const WebRTCPlayer: React.FC<Props> = ({
   }
 
   function onServerClose(event: any) {
-    setStatus('Disconnected from server');
-    closePeerConnection();
-    // Do not retry when WebRTC is disabled (Toggle is OFF)
-    //TODO: todo FIx this to clear on close
-    if (event !== null && event.code !== 1000) {
-      window.setTimeout(connectToPeer, 3000);
+    console.debug('serverClose')
+    if(webSocket.current){
+      setStatus('Disconnected from server');
+      closePeerConnection();
+      //TODO: todo Fix this to clear on close
+      if (event !== null && event.code !== 1000 && enabled) {
+        window.setTimeout(connectToPeer, 3000);
+      }
     }
   }
 
   function onServerError(event: any) {
+    console.debug(event);
     setError('Unable to connect to server')
     closeWebSocket();
   }
@@ -250,22 +240,36 @@ const WebRTCPlayer: React.FC<Props> = ({
     setStatus('RTCPeerConnection created, waiting for SDP');
   }
 
-  const closeWebSocket = () => {
+  const closeWebSocket = async () => {
     console.debug('closeWebSocket')
-    closePeerConnection();
+    await closePeerConnection();
     if(webSocket.current){
-      webSocket.current.close();
+      await webSocket.current.close();
       webSocket.current = null;
     }
   }
 
-  const closePeerConnection = () => {
+  const closePeerConnection = async() => {
     console.debug('closePeerConnection')
     if (peerConnection.current) {
-      peerConnection.current.close();
+      await peerConnection.current.close();
       peerConnection.current = null;
     }
   }
+
+  useEffect(() => {
+    if (enabled === true) {
+      connectToPeer();
+    } else {
+      if (webSocket.current) {
+        webSocket.current.close(1000, 'WebRTC Disabled');
+      }
+    }
+    return ()=>{
+      console.log('cleanup')
+      closeWebSocket();
+    }
+  }, [enabled]);
 
   return (
     <Video {...props} autoPlay={autoPlay} muted={muted} ref={videoRef}></Video>
