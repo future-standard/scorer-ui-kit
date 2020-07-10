@@ -13,14 +13,14 @@ interface OwnProps {
   peerAddress: string;
   maxConnectionAttempts?: number;
   rtcConfiguration?: RTCConfiguration
-  id: string; //Why is this required ??? just for uuid? can be internal if we want...
+  id?: string;
   setStatus?: (status: string) => void;
   setError?: (error: string | null) => void;
 }
 type Props = OwnProps & VideoHTMLAttributes<HTMLVideoElement>
 
 const WebRTCPlayer: React.FC<Props> = ({
-  id,
+  id = "1",
   enabled,
   peerAddress,
   maxConnectionAttempts = 30,
@@ -58,21 +58,35 @@ const WebRTCPlayer: React.FC<Props> = ({
   }
 
   // SDP offer received from peer, set remote description and create an answer
-  const onIncomingSDP = async (sdp: RTCSessionDescriptionInit) => {
+  const onIncomingSDP = async (description: RTCSessionDescriptionInit) => {
     if (!peerConnection.current || !webSocket.current) {
       return;
     }
+
     try {
-      await peerConnection.current.setRemoteDescription(sdp);
-      setStatus('Remote Description set');
+      if (description.type === "offer" && peerConnection.current.signalingState !== "stable") {
+        await Promise.all([
+          peerConnection.current.setLocalDescription({type: "rollback"}),
+          peerConnection.current.setRemoteDescription(description)
+        ]);
+
+      } else {
+        if(description.sdp){
+          //HACK: this seems to allow more clients to negotiate.
+          // seems to use [codec] H264 (96, level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f)
+          description.sdp = description.sdp.replace('profile-level-id=640028;','')
+        }
+        await peerConnection.current.setRemoteDescription(new RTCSessionDescription(description));
+        setStatus('Remote Description set');
+      }
     } catch (error){
-      console.error('Error:', error.message);
+      console.error('Error:', error);
       setError('Error Setting remote description');
       return;
     }
 
     // what is this case?
-    if (sdp.type !== 'offer') {
+    if (description.type !== 'offer') {
       return;
     }
 
@@ -231,6 +245,7 @@ const WebRTCPlayer: React.FC<Props> = ({
         console.debug('no WS found on peer connection \'icecandidate\' event... how?')
       }
     });
+    // pc.addEventListener('negotiationneeded', ()=>{console.log('negotiationneeded')})
 
     setStatus('RTCPeerConnection created, waiting for SDP');
   }
