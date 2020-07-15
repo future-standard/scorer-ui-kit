@@ -139,6 +139,7 @@ interface OwnProps {
   fieldState?: TypeFieldState
   actionCallback?: ()=>void;
   actionIcon?: any
+  postfix?: string; 
 }
 
 type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
@@ -148,8 +149,9 @@ const Input : React.FC<Props> = ({
   placeholder = '', 
   defaultValue, 
   fieldState = 'default', 
-  actionCallback = ()=>{}, 
+  actionCallback, 
   actionIcon,
+  postfix,
   ...props
 }) => {
 
@@ -175,7 +177,7 @@ const Input : React.FC<Props> = ({
   return <Container fieldState={ fieldState || 'default' }>
 
     <InputContainer hasAction={ isActionButton }>
-      <StyledInput fieldState={ fieldState || 'default' } type={type} placeholder={ placeholder } defaultValue={ defaultValue } {...props}/>
+      <StyledInput fieldState={ fieldState || 'default' } type={ type } placeholder={ placeholder } defaultValue={ defaultValue } { ...props } />
       { (isActionButton) ? (
         <ActionContainer>
           <InputActionButton onClick={ actionCallback }>
