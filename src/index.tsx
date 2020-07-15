@@ -13,6 +13,7 @@ import PasswordField from './Form/molecules/PasswordField';
 
 // Components - Line UI
 import LineUI from './LineUI/LineUI';
+import LineUIRTC from './LineUI/LineUIRTC';
 import { LineSetContext} from './LineUI/Contexts';
 import LineReducer from './LineUI/LineReducer';
 // Other
@@ -27,6 +28,7 @@ export {
   darkTheme,
   lightTheme,
   LineUI,
+  LineUIRTC,
   LineSetContext,
   LineReducer,
   Form,
