@@ -19,10 +19,6 @@ const Container = styled.div`
   width: auto;
   /* transform: translateY(-70%); */
 
-  img {
-    width:  100%;
-    height: 100%;
-  }
 `;
 
 const Frame = styled.svg<{transculent?: boolean}>`
@@ -47,6 +43,11 @@ const Frame = styled.svg<{transculent?: boolean}>`
   `}
 
 `;
+const Image = styled.img`
+  object-fit: contain;
+  width:  100%;
+  height: 100%;
+`
 
 
 interface LineUIProps {
@@ -138,7 +139,7 @@ const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveE
 
   return (
     <Container>
-      <img ref={imgRef} onLoad={initScaleAndBounds} src={src} alt="" />
+      <Image ref={imgRef} onLoad={initScaleAndBounds} src={src} alt="" />
       <Frame ref={ frame } viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version="1.1" xmlns="http://www.w3.org/2000/svg" onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
         {state.map((lineSet, index) => (
           <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={ lineSet } screenCTM={ screenCTM } boundaries={ boundaries } unit={ unit } size={ 30 } options={ options } />

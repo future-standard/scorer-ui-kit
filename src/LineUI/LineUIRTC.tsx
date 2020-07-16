@@ -66,7 +66,7 @@ const LineUI : React.FC<LineUIProps> = ({ws, onSizeChange = ()=>{}, onLineMoveEn
 
 
   // Scale Code
-  const [videoSize, setVideoSize] = useState({ h: 1, w: 1 });
+  const [videoSize, setVideoSize] = useState({ h: 768, w: 1024 });
   const [unit, setUnit] = useState(1);
   // const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -93,6 +93,7 @@ const LineUI : React.FC<LineUIProps> = ({ws, onSizeChange = ()=>{}, onLineMoveEn
   const initScaleAndBounds = useCallback((target) => {
 
     const { videoHeight, videoWidth, clientHeight } = target;
+    console.log(initScaleAndBounds, target)
     if(videoHeight !== videoSize.h || videoWidth !== videoSize.w) {
       setVideoSize({ h: videoHeight, w: videoWidth });
       onSizeChange({ h: videoHeight, w: videoWidth });
