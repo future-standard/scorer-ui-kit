@@ -10,7 +10,6 @@ type IReducerActions =
 
 interface AddSetAction{
   type: 'ADD_SET';
-  index: number;
   data: IPointSet;
 }
 interface UpdateAction {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 
 import { Required, Success, Invalid } from '../../svg';
@@ -134,16 +134,26 @@ const Container = styled.div<{ fieldState: string }>`
 
 `
 
-interface IProps {
-  type: string
-  placeholder?: string
+interface OwnProps {
   defaultValue?: string
   fieldState?: TypeFieldState
-  actionCallback?: any
+  actionCallback?: ()=>void;
   actionIcon?: any
+  postfix?: string; 
 }
 
-const Input : React.FC<IProps> = ({ type, placeholder, defaultValue, fieldState, actionCallback, actionIcon }) => {
+type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
+
+const Input : React.FC<Props> = ({ 
+  type = 'text', 
+  placeholder = '', 
+  defaultValue, 
+  fieldState = 'default', 
+  actionCallback, 
+  actionIcon,
+  postfix,
+  ...props
+}) => {
 
   const isActionButton = actionCallback !== undefined;
 
@@ -167,7 +177,7 @@ const Input : React.FC<IProps> = ({ type, placeholder, defaultValue, fieldState,
   return <Container fieldState={ fieldState || 'default' }>
 
     <InputContainer hasAction={ isActionButton }>
-      <StyledInput fieldState={ fieldState || 'default' } type={type} placeholder={ placeholder } defaultValue={ defaultValue } />
+      <StyledInput fieldState={ fieldState || 'default' } type={ type } placeholder={ placeholder } defaultValue={ defaultValue } { ...props } />
       { (isActionButton) ? (
         <ActionContainer>
           <InputActionButton onClick={ actionCallback }>
@@ -187,11 +197,6 @@ const Input : React.FC<IProps> = ({ type, placeholder, defaultValue, fieldState,
   </Container>
 }
 
-Input.defaultProps = {
-  placeholder: '',
-  defaultValue: 'xyz',
-  type: 'text',
-  fieldState: 'default'
-}
+
 
 export default Input;
