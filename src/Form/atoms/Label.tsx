@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { LabelHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const StyledLabel = styled.label`
@@ -15,13 +15,14 @@ const LabelText = styled.span`
   margin-bottom: 10px;
 `
 
-interface IPropsB {
+interface OwnProps {
   htmlFor: string
   labelText: string
 }
+type Props = OwnProps & LabelHTMLAttributes<HTMLLabelElement>
 
-const Label : React.FC<IPropsB> = ({ htmlFor, labelText, children }) => {
-  return <StyledLabel htmlFor={htmlFor}>
+const Label : React.FC<Props> = ({ htmlFor, labelText, children, ...props }) => {
+  return <StyledLabel htmlFor={htmlFor} {...props} >
     <LabelText>{ labelText }</LabelText>
     {children}
   </StyledLabel>

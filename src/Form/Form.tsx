@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { FormHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const FormContainer = styled.form`
   border: 1px dotted #f00;
 `
 
-interface IProps {
+interface OwnProps {
 
 }
 
-const Form : React.FC<IProps> = ({ children }) => {
-  return <FormContainer>
+type Props = OwnProps & FormHTMLAttributes<HTMLFormElement>
+
+const Form : React.FC<Props> = ({ children, ...props }) => {
+  return <FormContainer {...props} >
     {children}
   </FormContainer>
 }

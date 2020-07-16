@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import { IBoundary, IPointSet } from './typings';
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
+import WebRTCClient from '../WebRTCClient';
 
 
 const Container = styled.div`
@@ -18,10 +19,13 @@ const Container = styled.div`
 
   width: auto;
   /* transform: translateY(-70%); */
-
 `;
+const Video = styled(WebRTCClient)`
+  width:  100%;
+  height: 100%;
+`
 
-const Frame = styled.svg<{transculent?: boolean}>`
+const Frame = styled.svg<{transcalent?: boolean}>`
   touch-action: none;
   user-select: none;
   margin: 0;
@@ -38,24 +42,19 @@ const Frame = styled.svg<{transculent?: boolean}>`
   transition: background 250ms ease;
   background: hsla(0deg, 0%, 0%, 0%);
 
-  ${props => props.transculent && css`
+  ${props => props.transcalent && css`
     background: hsla(0deg, 0%, 0%, 35%);
   `}
 
 `;
-const Image = styled.img`
-  object-fit: contain;
-  width:  100%;
-  height: 100%;
-`
 
 
 interface LineUIProps {
-  src: string;
+  ws: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
 }
-const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveEnd = ()=>{}}) => {
+const LineUI : React.FC<LineUIProps> = ({ws, onSizeChange = ()=>{}, onLineMoveEnd = ()=>{}}) => {
 
   const frame : any =  useRef();
 
@@ -67,9 +66,9 @@ const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveE
 
 
   // Scale Code
-  const [imgSize, setImgSize] = useState({ h: 1, w: 1 });
+  const [videoSize, setVideoSize] = useState({ h: 768, w: 1024 });
   const [unit, setUnit] = useState(1);
-  const imgRef = useRef<HTMLImageElement>(null);
+  // const videoRef = useRef<HTMLVideoElement>(null);
 
 
 
@@ -91,20 +90,20 @@ const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveE
     return bounds;
   };
 
-  const initScaleAndBounds = useCallback(() => {
-    if (!imgRef.current) {
-      return;
+  const initScaleAndBounds = useCallback((target) => {
+
+    const { videoHeight, videoWidth, clientHeight } = target;
+    console.log(initScaleAndBounds, target)
+    if(videoHeight !== videoSize.h || videoWidth !== videoSize.w) {
+      setVideoSize({ h: videoHeight, w: videoWidth });
+      onSizeChange({ h: videoHeight, w: videoWidth });
+    }
+    if(videoHeight / clientHeight !== unit) {
+      setUnit(videoHeight / clientHeight);
     }
 
-    const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
-    if(naturalHeight !== imgSize.h || naturalWidth !== imgSize.w) {
-      setImgSize({ h: naturalHeight, w: naturalWidth });
-      onSizeChange({ h: naturalHeight, w: naturalWidth });
-    }
-    if(naturalHeight / clientHeight !== unit) {
-      setUnit(naturalHeight / clientHeight);
-    }
-  }, [imgSize, unit]);
+
+  }, [videoSize, unit]);
 
   const handlePositionTipShow = (e: any) => {
     if(e.target === frame.current){
@@ -121,16 +120,20 @@ const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveE
     let ctm = frame.current.getScreenCTM();
     setScreenCTM(ctm);
     setBoundaries(getCanvasBounds());
-  }, [imgSize]);
+  }, [videoSize]);
 
-  useEffect(() => {
+  const loaded = useCallback(({target}) =>{
+    initScaleAndBounds(target);
+  },[initScaleAndBounds]);
 
-    // Make sure we always keep scale up to date on resize.
-    window.addEventListener("resize", initScaleAndBounds);
-    return () => {
-      window.removeEventListener("resize", initScaleAndBounds);
-    };
-  }, [initScaleAndBounds]);
+  // useEffect(() => {
+
+  //   // Make sure we always keep scale up to date on resize.
+  //   window.addEventListener("resize", initScaleAndBounds);
+  //   return () => {
+  //     window.removeEventListener("resize", initScaleAndBounds);
+  //   };
+  // }, [initScaleAndBounds]);
 
   const options = {
     handleFinderActive: handleFinder,
@@ -139,8 +142,8 @@ const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveE
 
   return (
     <Container>
-      <Image ref={imgRef} onLoad={initScaleAndBounds} src={src} alt="" />
-      <Frame ref={ frame } viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version="1.1" xmlns="http://www.w3.org/2000/svg" onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
+      <Video onLoadedMetadata={loaded} peerAddress={ws} id="1" enabled={true}> </Video>
+      <Frame ref={ frame } viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version="1.1" xmlns="http://www.w3.org/2000/svg" onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
         {state.map((lineSet, index) => (
           <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={ lineSet } screenCTM={ screenCTM } boundaries={ boundaries } unit={ unit } size={ 30 } options={ options } />
           ))}

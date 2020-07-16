@@ -13,14 +13,14 @@ interface OwnProps {
   peerAddress: string;
   maxConnectionAttempts?: number;
   rtcConfiguration?: RTCConfiguration
-  id: string; //Why is this required ??? just for uuid? can be internal if we want...
+  id?: string;
   setStatus?: (status: string) => void;
   setError?: (error: string | null) => void;
 }
 type Props = OwnProps & VideoHTMLAttributes<HTMLVideoElement>
 
 const WebRTCPlayer: React.FC<Props> = ({
-  id,
+  id = "1",
   enabled,
   peerAddress,
   maxConnectionAttempts = 30,
@@ -38,19 +38,6 @@ const WebRTCPlayer: React.FC<Props> = ({
   const webSocket = useRef<WebSocket|null>(null);
   const peerConnection = useRef<RTCPeerConnection|null>(null);
 
-  useEffect(() => {
-    if (enabled === true) {
-      connectToPeer();
-    } else {
-      if (webSocket.current) {
-        webSocket.current.close(1000, 'WebRTC Disabled');
-      }
-    }
-    return ()=>{
-      closeWebSocket();
-    }
-  }, [enabled]);
-
 
   function handleIncomingError(error: string) {
     setError(error);
@@ -58,21 +45,35 @@ const WebRTCPlayer: React.FC<Props> = ({
   }
 
   // SDP offer received from peer, set remote description and create an answer
-  const onIncomingSDP = async (sdp: RTCSessionDescriptionInit) => {
+  const onIncomingSDP = async (description: RTCSessionDescriptionInit) => {
     if (!peerConnection.current || !webSocket.current) {
       return;
     }
+
     try {
-      await peerConnection.current.setRemoteDescription(sdp);
-      setStatus('Remote Description set');
+      if (description.type === "offer" && peerConnection.current.signalingState !== "stable") {
+        await Promise.all([
+          peerConnection.current.setLocalDescription({type: "rollback"}),
+          peerConnection.current.setRemoteDescription(description)
+        ]);
+
+      } else {
+        if(description.sdp){
+          //HACK: this seems to allow more clients to negotiate.
+          // seems to use [codec] H264 (96, level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f)
+          description.sdp = description.sdp.replace(/profile-level-id=(640028|64001f);/,'')
+        }
+        await peerConnection.current.setRemoteDescription(new RTCSessionDescription(description))
+        setStatus('Remote Description set');
+      }
     } catch (error){
-      console.error('Error:', error.message);
+      console.error('Error:', error);
       setError('Error Setting remote description');
       return;
     }
 
     // what is this case?
-    if (sdp.type !== 'offer') {
+    if (description.type !== 'offer') {
       return;
     }
 
@@ -151,16 +152,19 @@ const WebRTCPlayer: React.FC<Props> = ({
   }
 
   function onServerClose(event: any) {
-    setStatus('Disconnected from server');
-    closePeerConnection();
-    // Do not retry when WebRTC is disabled (Toggle is OFF)
-    //TODO: todo FIx this to clear on close
-    if (event !== null && event.code !== 1000) {
-      window.setTimeout(connectToPeer, 3000);
+    console.debug('serverClose')
+    if(webSocket.current){
+      setStatus('Disconnected from server');
+      closePeerConnection();
+      //TODO: todo Fix this to clear on close
+      if (event !== null && event.code !== 1000 && enabled) {
+        window.setTimeout(connectToPeer, 3000);
+      }
     }
   }
 
   function onServerError(event: any) {
+    console.debug(event);
     setError('Unable to connect to server')
     closeWebSocket();
   }
@@ -231,26 +235,41 @@ const WebRTCPlayer: React.FC<Props> = ({
         console.debug('no WS found on peer connection \'icecandidate\' event... how?')
       }
     });
+    // pc.addEventListener('negotiationneeded', ()=>{console.log('negotiationneeded')})
 
     setStatus('RTCPeerConnection created, waiting for SDP');
   }
 
-  const closeWebSocket = () => {
+  const closeWebSocket = async () => {
     console.debug('closeWebSocket')
-    closePeerConnection();
+    await closePeerConnection();
     if(webSocket.current){
-      webSocket.current.close();
+      await webSocket.current.close();
       webSocket.current = null;
     }
   }
 
-  const closePeerConnection = () => {
+  const closePeerConnection = async() => {
     console.debug('closePeerConnection')
     if (peerConnection.current) {
-      peerConnection.current.close();
+      await peerConnection.current.close();
       peerConnection.current = null;
     }
   }
+
+  useEffect(() => {
+    if (enabled === true) {
+      connectToPeer();
+    } else {
+      if (webSocket.current) {
+        webSocket.current.close(1000, 'WebRTC Disabled');
+      }
+    }
+    return ()=>{
+      console.log('cleanup')
+      closeWebSocket();
+    }
+  }, [enabled]);
 
   return (
     <Video {...props} autoPlay={autoPlay} muted={muted} ref={videoRef}></Video>
