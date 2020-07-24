@@ -1,8 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
-import { Required, Success, Invalid } from '../../svg';
 import styled, { css } from 'styled-components';
 
-// import { Required, Success, Invalid } from '../../svg';
 import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 
@@ -149,6 +147,7 @@ const Container = styled.div<{ fieldState: string }>`
 
 interface OwnProps {
   fieldState?: TypeFieldState
+  feedbackMessage?: string;
   actionCallback?: ()=>void;
   actionIcon?: any
   postfix?: string; 
@@ -161,20 +160,12 @@ const Input : React.FC<Props> = ({
   placeholder = '', 
   defaultValue, 
   fieldState = 'default', 
+  feedbackMessage,
   actionCallback, 
   actionIcon,
   postfix,
   ...props
 }) => {
-interface IProps {
-  type: string
-  placeholder?: string
-  defaultValue?: string
-  fieldState?: TypeFieldState
-  feedbackMessage?: string
-  actionCallback?: any
-  actionIcon?: any
-}
 
   const isActionButton = actionCallback !== undefined;
 
