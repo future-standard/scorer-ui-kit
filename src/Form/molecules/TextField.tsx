@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import Input from '../atoms/Input';
 import Label from '../atoms/Label';
 
-interface IProps {
+interface OwnProps {
   name: string
   label: string
   fieldState: TypeFieldState
-  defaultValue?: string
-  placeholder?: string
+  feedbackMessage?: string
 }
 
-const TextField : React.FC<IProps> = ({ name, label, placeholder, fieldState, defaultValue }) => {
+type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
+
+
+const TextField : React.FC<Props> = ({ name, label, fieldState='default', feedbackMessage, type:_type , ...props }) => {
   return <Label htmlFor={ name } labelText={ label }>
-    <Input type={ 'text' } {...{ placeholder, defaultValue, fieldState}} />
+    <Input type={ 'text' } {...{fieldState, feedbackMessage, ...props }} />
   </Label>
 }
 
-TextField.defaultProps = {
-  fieldState: 'default'
-}
 
 export default TextField;

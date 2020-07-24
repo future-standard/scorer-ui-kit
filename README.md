@@ -25,9 +25,12 @@ Now, anytime you make a change to your library in `src/` or to the example app's
 To compile SVGs...
 
 ```bash
-npm run svgr
+#npm run svgr
+npx @svgr/cli ./Icons/stroked/svg --out-dir ./Icons/stroked/ --template ./Icons/stroked/SVGRtemplate.js --typescript
 ```
 
-## License
+## Image Credits
 
- © [JoshLipps](https://github.com/JoshLipps)
+Some stock photos were used as placeholders in this UI Kit. These were sourced through Unsplash.com and we give credit for the following photographs and their photographers.
+
+Photo by [Van Thanh](https://unsplash.com/@vanthanh2608?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/cafe?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)

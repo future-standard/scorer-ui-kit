@@ -2,7 +2,6 @@ import React, { FormHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const FormContainer = styled.form`
-  border: 1px dotted #f00;
 `
 
 interface OwnProps {

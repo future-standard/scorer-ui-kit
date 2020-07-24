@@ -1,33 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, InputHTMLAttributes } from 'react';
 import Input from '../atoms/Input';
 import Label from '../atoms/Label';
 
-import { PasswordShow, PasswordHide } from '../../svg';
-
-
-interface IProps {
-  name: string
+interface OwnProps {
+  name: string;
   label: string
   fieldState: TypeFieldState
-  defaultValue?: string
-  placeholder?: string
+  feedbackMessage?: string
 }
+type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
 
-const PasswordField : React.FC<IProps> = ({ name, label, placeholder, defaultValue, fieldState }) => {
 
-  let [ showValue, setShowValue ] = useState<boolean>(false);
-  let [ actionIcon, setActionIcon ] = useState<any>(PasswordHide);
+const PasswordField : React.FC<Props> = ({ name, label, fieldState, feedbackMessage, ...props}) => {
+
+  const [ showValue, setShowValue ] = useState<boolean>(false);
+  const [ actionIcon, setActionIcon ] = useState<string>('PasswordHide');
 
   const actionCallback = () => {
     // Toggle show / hide and replace icon.
     const newValue : boolean = !showValue;
 
     setShowValue(newValue);
-    setActionIcon(newValue ? PasswordShow : PasswordHide);
+    setActionIcon(newValue ? 'PasswordShow' : 'PasswordHide');
   }
 
   return <Label htmlFor={ name } labelText={ label }>
-    <Input type={ showValue ? 'text' : 'password' } actionCallback={ actionCallback } actionIcon={ actionIcon } {...{ placeholder, defaultValue, fieldState}} />
+    <Input type={ showValue ? 'text' : 'password' } actionCallback={ actionCallback } actionIcon={ actionIcon } {...{ name, fieldState, feedbackMessage, ...props}} />
   </Label>
 
 }

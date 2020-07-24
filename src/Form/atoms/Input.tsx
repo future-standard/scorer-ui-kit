@@ -1,7 +1,9 @@
 import React, { InputHTMLAttributes } from 'react';
+import { Required, Success, Invalid } from '../../svg';
 import styled, { css } from 'styled-components';
 
-import { Required, Success, Invalid } from '../../svg';
+// import { Required, Success, Invalid } from '../../svg';
+import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 
 
@@ -21,25 +23,19 @@ const InputActionButton = styled.button.attrs({ type: "button" })`
   border: none;
   cursor: pointer;
   outline: none;
-
-  svg {
-    circle, path {
-      stroke: ${({theme}) => theme.colors.icons.stroke["1.5"].blue.borderColor };
-      stroke-width: 1.5;
-    }
-  }
 `
 
 const FeedbackContainer = styled.div`
-  flex: 0 0 40px;
+  flex: 1 0;
   background-color: hsl(0, 0%, 99%);
   border: 1px solid rgb(217, 218, 217);
   border-left: none;
   border-radius: 0 3px 3px 0;
   overflow: hidden;
+  padding: 0 10px 0 0;
 
   display:flex;
-  justify-content:center;
+  justify-content:left;
   align-items:center;
 
   svg {
@@ -50,10 +46,26 @@ const FeedbackContainer = styled.div`
   }
 `
 
-const FeedbackMessage = styled.div``
+const FeedbackMessage = styled.div`
+  flex: 0 1 400px;
+  color: white;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 0px;
+`
+
+const FeedbackIcon = styled.div`
+  flex: 0 0 40px;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+`
 
 const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
-  height: ${({ theme }) => theme.dimensions.form.input.height };
+  height: 100%;
+  min-height: ${({ theme }) => theme.dimensions.form.input.height };
   font-family: ${({ theme }) => theme.fontFamily.data };
 
   width: 100%;
@@ -124,7 +136,8 @@ const Container = styled.div<{ fieldState: string }>`
     background-color: var(--state-background-color);
 
     ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) !== -1 && css`
-      visibility: hidden;
+      // visibility: hidden;
+      display:none;
     `}
   }
 
@@ -135,7 +148,6 @@ const Container = styled.div<{ fieldState: string }>`
 `
 
 interface OwnProps {
-  defaultValue?: string
   fieldState?: TypeFieldState
   actionCallback?: ()=>void;
   actionIcon?: any
@@ -154,6 +166,15 @@ const Input : React.FC<Props> = ({
   postfix,
   ...props
 }) => {
+interface IProps {
+  type: string
+  placeholder?: string
+  defaultValue?: string
+  fieldState?: TypeFieldState
+  feedbackMessage?: string
+  actionCallback?: any
+  actionIcon?: any
+}
 
   const isActionButton = actionCallback !== undefined;
 
@@ -164,24 +185,24 @@ const Input : React.FC<Props> = ({
       case 'disabled':
         break;
       case 'required':
-        return Required({});
+        return <Icon icon={'Required'} />;
       case 'valid':
-        return Success({});
+        return <Icon icon={'Success'} />;
       case 'invalid':
-        return Invalid({});
+        return <Icon icon={'Invalid'} />;
       case 'processing':
-        return <Spinner size={ 24 } />
+        return <Spinner size={ 'medium' } styling={ 'primary' } />
     }
   }
 
   return <Container fieldState={ fieldState || 'default' }>
 
     <InputContainer hasAction={ isActionButton }>
-      <StyledInput fieldState={ fieldState || 'default' } type={ type } placeholder={ placeholder } defaultValue={ defaultValue } { ...props } />
+      <StyledInput fieldState={ fieldState || 'default' } type={type} placeholder={ placeholder } defaultValue={ defaultValue } { ...props } />
       { (isActionButton) ? (
         <ActionContainer>
           <InputActionButton onClick={ actionCallback }>
-            { actionIcon }
+          <Icon icon={actionIcon} color={ 'primary' } />
           </InputActionButton>
         </ActionContainer>
       ) : null }
@@ -189,14 +210,15 @@ const Input : React.FC<Props> = ({
 
     { fieldState ? (
       <FeedbackContainer>
-        { feedbackIcon(fieldState) }
-        <FeedbackMessage />
+        <FeedbackIcon>{ feedbackIcon(fieldState) }</FeedbackIcon>
+        { feedbackMessage ? (
+          <FeedbackMessage>{ feedbackMessage }</FeedbackMessage>
+        ) : null }
       </FeedbackContainer>
     ) : null}
 
   </Container>
 }
-
 
 
 export default Input;

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useCallback, useRef, useReducer, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -139,7 +138,7 @@ const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveE
 
   return (
     <Container>
-      <Image ref={imgRef} onLoad={initScaleAndBounds} src={src} alt="" />
+      <Image ref={ imgRef } onLoad={initScaleAndBounds} src={src} alt="" />
       <Frame ref={ frame } viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version="1.1" xmlns="http://www.w3.org/2000/svg" onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
         {state.map((lineSet, index) => (
           <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={ lineSet } screenCTM={ screenCTM } boundaries={ boundaries } unit={ unit } size={ 30 } options={ options } />

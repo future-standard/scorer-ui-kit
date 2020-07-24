@@ -1,41 +1,75 @@
 import React from "react";
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const circumference = (radius : number) => {
+  return 2 * 3.1416 * radius;
+}
+
+const animation = (radius : number) => {
+  const c = circumference(radius);
+
+  return keyframes`
+    0% {
+      stroke-dashoffset: -${c * 0.85};
+    }
+    50% {
+      stroke-dashoffset: -${c * 0.5};
+    }
+    100% {
+      stroke-dashoffset: -${c * 0.85};
+    }
+  `
+}
 
 const rotate = keyframes`
-  from {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
-`;
-
-const RotatingCircle = styled.circle<{ }>`
-  animation: ${rotate} 1s linear infinite;
 `
 
-interface IProps {
-  size: number
+const BaseCircle = styled.circle<{ styling: string }>`
+  stroke: ${({theme, styling}) => theme.colors.indicators.spinner[styling].base.borderColor};
+  fill: none;
+`
+
+const RotatingCircle = styled.circle<{ r: number, styling: string }>`
+  stroke: ${({theme, styling}) => theme.colors.indicators.spinner[styling].top.borderColor};
+  fill: none;
+  stroke-dasharray: ${({r}) => circumference(r)};
+  stroke-dashoffset: ${({r}) => 2 * 3.1416 * r / 2};
+  animation:
+    ${({r}) => animation(r) } 4s linear infinite,
+    ${rotate} 1s linear infinite;
+  stroke-linecap: round;
+`
+
+type SpinnerSize = 'small' | 'medium' | 'large' | 'xlarge';
+
+const sizeGuide = {
+  small: 16,
+  medium: 24,
+  large: 36,
+  xlarge: 48
 }
 
-const Spinner : React.FC<IProps> = ({ size }) => {
+interface IProps {
+  size: SpinnerSize
+  styling: string
+}
 
-  const strokeWidth = size / 5.333;
-  const circleRadius = (size / 2) - (strokeWidth / 2);
+const Spinner : React.FC<IProps> = ({ size = 'medium', styling = 'primary' }) => {
+  const sizeVal = sizeGuide[size];
+  const strokeWidth = sizeVal / 5.333;
+  const circleRadius = (sizeVal / 2) - (strokeWidth / 2);
 
-  return <svg viewBox={`-${size/2} -${size/2} ${size} ${size}`} width={ size } height={ size } xmlns="http://www.w3.org/2000/svg">
-    <mask id={ 'maskID' }>
-      <rect width={ '110%' } height={ '110%' } fill="black" stroke="none" />
-      <polygon points={`-${size},${size/2} 0,0 ${size},${size/2}`} fill="white" />
-    </mask>
-    <circle cx="0" cy="0" r={ circleRadius }  stroke="#fff" strokeWidth={ strokeWidth } fill="none" />
-    <RotatingCircle cx="0" cy="0" r={ circleRadius }  stroke="#A6E5FA" strokeWidth={ strokeWidth } fill="none" mask="url(#maskID)" />
+  return <svg viewBox={`-${sizeVal/2} -${sizeVal/2} ${sizeVal} ${sizeVal}`} width={ sizeVal } height={ sizeVal } xmlns="http://www.w3.org/2000/svg">
+    <BaseCircle cx="0" cy="0" r={ circleRadius } strokeWidth={ strokeWidth } styling={ styling } />
+    <RotatingCircle cx="0" cy="0" r={ circleRadius } strokeWidth={ strokeWidth } styling={ styling } />
 </svg>
 
-}
-
-Spinner.defaultProps = {
-  size: 24
 }
 
 export default Spinner;

@@ -1,25 +1,21 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-interface IProps {
-  size: TypeButtonSizes
-  design: TypeButtonDesigns
-  disabled?: boolean
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
-}
 
 interface IStyledComponentProps {
   size: TypeButtonSizes
   design: TypeButtonDesigns
 }
 
+
+
 const StyledButton = styled.button<IStyledComponentProps>`
-
-  height: ${ props => props.theme.dimensions.form.button[ props.size ] };
-  background: ${props => props.theme.colors.form.button[ props.design ].default.backgroundColor};
+  ${props => props.theme.colors.form.button[ props.design ].default};
+  height: ${ ({size='normal', theme }) => theme.dimensions.form.button[ size ] };
   color: ${props => props.theme.colors.form.button[ props.design ].default.textColor};
-  font-size: ${props => props.theme.typography.form.button.generic[ props.size ].size};
+  font-size: ${({size='normal', theme}) => theme.typography.form.button.generic[ size ].fontSize};
 
+  overflow: hidden;
   border: none;
   cursor: pointer;
   border-radius: 3px;
@@ -39,12 +35,16 @@ const StyledButton = styled.button<IStyledComponentProps>`
   }
 `
 
-StyledButton.defaultProps = {
-  size: 'normal'
+
+interface OwnProps {
+  size: TypeButtonSizes
+  design: TypeButtonDesigns
 }
 
-const Button : React.FC<IProps> = ({ design, size, disabled, onClick, children }) => {
-  return <StyledButton type={'button'} {...{design, size, disabled, onClick}}>{ children }</StyledButton>
+type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>
+
+const Button : React.FC<IButtonProps> = ({ design, size, children, ...props }) => {
+  return <StyledButton type={'button'} {...{design, size}} {...props} >{ children }</StyledButton>
 }
 
 Button.defaultProps = {

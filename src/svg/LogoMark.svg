@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="35px" height="41px" viewBox="0 0 35 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>LogoMark</title>
+    <defs>
+        <radialGradient cx="6.22358572%" cy="137.134861%" fx="6.22358572%" fy="137.134861%" r="327.858718%" gradientTransform="translate(0.062236,1.371349),scale(0.592285,1.000000),translate(-0.062236,-1.371349)" id="radialGradient-1">
+            <stop stop-color="#80FFFF" offset="0%"></stop>
+            <stop stop-color="#7CF8FD" offset="5.03%"></stop>
+            <stop stop-color="#4CA1EB" offset="70.34%"></stop>
+            <stop stop-color="#397FE3" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="-22.9354265%" cy="-106.479334%" fx="-22.9354265%" fy="-106.479334%" r="387.936054%" gradientTransform="translate(-0.229354,-1.064793),scale(0.589977,1.000000),translate(0.229354,1.064793)" id="radialGradient-2">
+            <stop stop-color="#80FFFF" offset="0%"></stop>
+            <stop stop-color="#7CF8FD" offset="5.03%"></stop>
+            <stop stop-color="#4CA1EB" offset="70.34%"></stop>
+            <stop stop-color="#397FE3" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="-65.1359664%" cy="146.73953%" fx="-65.1359664%" fy="146.73953%" r="489.857687%" gradientTransform="translate(-0.651360,1.467395),scale(1.000000,0.854770),translate(0.651360,-1.467395)" id="radialGradient-3">
+            <stop stop-color="#80FFFF" offset="0%"></stop>
+            <stop stop-color="#7CF8FD" offset="5.03%"></stop>
+            <stop stop-color="#4CA1EB" offset="70.34%"></stop>
+            <stop stop-color="#397FE3" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="6.22363869%" cy="137.134003%" fx="6.22363869%" fy="137.134003%" r="330.104747%" gradientTransform="translate(0.062236,1.371340),scale(0.588041,1.000000),translate(-0.062236,-1.371340)" id="radialGradient-4">
+            <stop stop-color="#80FFFF" offset="0%"></stop>
+            <stop stop-color="#7CF8FD" offset="5.03%"></stop>
+            <stop stop-color="#4CA1EB" offset="70.34%"></stop>
+            <stop stop-color="#397FE3" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Main-Menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Global/Main-Menu/Desktop/Ω---Parts/Logo-(Scorer-Cloud)" transform="translate(0.000000, -3.000000)" fill-rule="nonzero">
+            <g id="Logo" style="mix-blend-mode: luminosity;" transform="translate(0.000000, 3.000000)">
+                <g id="LogoMark" transform="translate(-0.000000, -0.000000)">
+                    <path d="M0.558006673,29.6786074 L17.2199246,19.9321985 L33.8818425,29.6786921 C33.9766683,29.7341506 34.0350853,29.8366554 34.0350853,29.9475883 C34.0350853,30.0585212 33.9766683,30.161026 33.8818425,30.2164846 L17.5771057,39.7539166 C17.3560942,39.8831991 17.0837968,39.8831991 16.8627853,39.7539166 L0.558006673,30.2163152 C0.46322172,30.1608456 0.404836293,30.0583639 0.404836293,29.9474613 C0.404836293,29.8365586 0.46322172,29.734077 0.558006673,29.6786074 Z" id="Path" fill="url(#radialGradient-1)" opacity="0.5"></path>
+                    <path d="M0.0984275122,19.9321985 L17.2199246,9.91672397 L33.9045373,19.6765989 C33.9946471,19.7292953 34.0501596,19.8266999 34.0501596,19.9321138 C34.0501596,20.0375277 33.9946471,20.1349323 33.9045373,20.1876288 L17.2199246,29.9474613 L0.0984275122,19.9321985 Z" id="Path" fill="url(#radialGradient-2)" opacity="0.79"></path>
+                    <polygon id="Path" fill="url(#radialGradient-3)" opacity="0.95" points="0.0982185366 19.9321985 0.0982185366 9.91655459 17.2200082 19.9321985 17.2200082 29.9474189"></polygon>
+                    <path d="M0.0984275122,9.91672397 L16.9016548,0.0875289023 C17.0985962,-0.027693775 17.341253,-0.027693775 17.5381945,0.0875289023 L33.8179796,9.61052102 C33.9259445,9.67368689 33.9924516,9.7904086 33.9924516,9.91672397 C33.9924516,10.0430393 33.9259445,10.1597611 33.8179796,10.2229269 L17.2199246,19.9321985 L0.0984275122,9.91672397 Z" id="Path" fill="url(#radialGradient-4)" opacity="0.9"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
