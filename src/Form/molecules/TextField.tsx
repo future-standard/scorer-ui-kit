@@ -1,6 +1,7 @@
 import React, { InputHTMLAttributes } from 'react';
 import Input from '../atoms/Input';
 import Label from '../atoms/Label';
+import { TypeFieldState } from '..';
 
 interface OwnProps {
   name: string

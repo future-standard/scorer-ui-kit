@@ -4,40 +4,80 @@ import lightTheme from './themes/light/light';
 import darkTheme from './themes/dark';
 
 // Components - Form
-import Form from './Form/Form';
-import Input from './Form/atoms/Input';
-import Label from './Form/atoms/Label';
-
-import TextField from './Form/molecules/TextField';
-import PasswordField from './Form/molecules/PasswordField';
+import {    
+  Form,
+  Button,
+  ButtonWithIcon,
+  ButtonWithLoading,
+  Input,
+  InputActionButton,
+  InputFeedback,
+  Label,
+  Switch,
+  PasswordField,
+  TextField
+} from './Form';
 
 // Components - Line UI
-import LineUI from './LineUI/LineUI';
-import LineUIRTC from './LineUI/LineUIRTC';
-import { LineSetContext} from './LineUI/Contexts';
-import LineReducer from './LineUI/LineReducer';
+import {
+  LineUI, 
+  LineUIRTC, 
+  LineSetContext, 
+  LineReducer 
+} from './LineUI';
+
+// Pages
+import {
+  IntroductionText,
+  PageHeader,
+  PageTitle
+} from './Pages'
+
 // Other
 import { useInterval } from './hooks';
 import  { resetButtonStyles } from './common';
 
+import Spinner from './Indicators/Spinner'
 import WebRTCClient from './WebRTCClient';
 
-
+import MainMenu from './Global/MainMenu'
 
 export {
+  // Theme
   darkTheme,
   lightTheme,
+
+  // LineUI
   LineUI,
   LineUIRTC,
   LineSetContext,
   LineReducer,
+  
+  // Form
   Form,
+  Button,
+  ButtonWithIcon,
+  ButtonWithLoading,
   Input,
+  InputActionButton,
+  InputFeedback,
   Label,
-  TextField,
+  Switch,
   PasswordField,
+  TextField,
+
+  //Pages
+  IntroductionText,
+  PageHeader,
+  PageTitle,
+
+  // Common && hooks
   useInterval,
   resetButtonStyles,
-  WebRTCClient
+  Spinner,
+  WebRTCClient,
+
+  // Global
+  MainMenu
 };
 

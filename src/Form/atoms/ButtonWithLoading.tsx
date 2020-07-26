@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Button from './Button';
 import Spinner from '../../Indicators/Spinner';
+import { TypeButtonDesigns, IButtonProps } from '..';
 
 
 const TextContainer = styled.div`

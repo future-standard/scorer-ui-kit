@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Button from './Button';
 import Icon from '../../Icons/Icon';
+import { IButtonProps } from '..';
 
 
 const TextContainer = styled.div`

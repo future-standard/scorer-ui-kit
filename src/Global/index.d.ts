@@ -1,20 +1,20 @@
-interface IMenuTop {
+export interface IMenuTop {
   items: IMenuItemTop[]
 }
 
-interface IMenuItemTop {
+export interface IMenuItemTop {
   title: string
   icon?: any,
   href?: string
   submenu?: IMenuItemSubmenu[]
 }
 
-interface IMenuItemSubmenu {
+export interface IMenuItemSubmenu {
   title: string
   href?: string
 }
 
-interface IMenu {
+export interface IMenu {
   content: IMenuTop
   home?: string
   openWidth?: number

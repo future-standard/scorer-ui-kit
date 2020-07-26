@@ -4,8 +4,9 @@ import styled, { css } from 'styled-components';
 import NavigationItem from './atoms/NavigationItem';
 import ContextItem from './atoms/ContextItem';
 
-import {ReactComponent as SvgLogoMark} from '../svg/LogoMark.svg';
-import {ReactComponent as SvgLogoText} from '../svg/LogoText.svg';
+import SvgLogoMark from '../svg/LogoMark';
+import SvgLogoText from '../svg/LogoText';
+import { IMenu } from '.';
 
 const Logo = styled.a`
   height: 50px;
@@ -91,7 +92,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
   // Set the active context on load.
   console.log("TODO: Get the current URI, match it to a menu item and set it's index to setActiveContext", activeContext);
   useEffect(() => {
-    // Unsure of URL structures at this point so can't set this initialisation up yet.
+    // Unsure of URL structures at this point so can't set this initialization up yet.
     setActiveContext(0);
   }, [setActiveContext]);
 
@@ -131,7 +132,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
   }, [checkedInItems, content])
 
 
-  return <Container open={isMenuOpen} onPointerEnter={ autoMenuOpen } onTouchStart={ () => console.log('toch')} onMouseLeave={ autoMenuClose }>
+  return <Container open={isMenuOpen} onPointerEnter={ autoMenuOpen } onTouchStart={ () => console.log('touch')} onMouseLeave={ autoMenuClose }>
     <ContainerInner>
       <Logo href={ home }>
         <LogoMark><SvgLogoMark /></LogoMark>
