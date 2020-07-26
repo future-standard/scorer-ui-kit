@@ -28,7 +28,7 @@
     "deploy": "gh-pages -d example/build",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook",
-    "link": "npm link"
+    "link": "npm link && npm link react && npm link react-dom && npm link styled-components"
   },
   "peerDependencies": {
     "react": "^16.0.0",
