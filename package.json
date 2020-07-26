@@ -1,6 +1,6 @@
 {
   "name": "scorer-ui-kit",
-  "version": "1.1.4",
+  "version": "1.1.2",
   "description": "SCORER UI Components",
   "author": "JoshLipps",
   "license": "MIT",
@@ -70,7 +70,8 @@
     "styled-components": "^5.1.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "link-ui-kit.sh"
   ],
   "dependencies": {},
   "directories": {
@@ -79,5 +80,6 @@
   "bugs": {
     "url": "https://github.com/future-standard/scorer-ui-kit/issues"
   },
-  "homepage": "https://github.com/future-standard/scorer-ui-kit#readme"
+  "homepage": "https://github.com/future-standard/scorer-ui-kit#readme",
+  "bin" : { "link-ui-kit" : "./link-ui-kit.sh" }
 }
