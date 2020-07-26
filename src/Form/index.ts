@@ -9,6 +9,7 @@ import Switch from './atoms/Switch';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import Form from './Form';
+import { ButtonHTMLAttributes } from 'react';
 
 
 export {
@@ -29,9 +30,9 @@ export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'in
 export type TypeButtonDesigns = 'primary' | 'secondary' | 'danger';
 export type TypeButtonSizes = 'small' | 'normal' | 'large';
 
-export interface IButtonProps {
-  size: TypeButtonSizes
-  design: TypeButtonDesigns
-  disabled?: boolean
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
+interface ButtonProps {
+  size?: TypeButtonSizes
+  design?: TypeButtonDesigns
 }
+
+export type IButtonProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>

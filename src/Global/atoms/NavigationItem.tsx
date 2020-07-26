@@ -78,7 +78,7 @@ const SubmenuContainer = styled.div`
 
 `
 
-const ContextContainer = styled.div<{ open: boolean, maxHeight: number, loading: boolean }>`
+const ContextContainer = styled.div<{ open: boolean, maxHeight: number, loading: 'true'|'false' }>`
   min-height: 70px;
   width: inherit;
 
@@ -96,7 +96,7 @@ const ContextContainer = styled.div<{ open: boolean, maxHeight: number, loading:
     }
   `};
 
-  ${({loading}) => loading && css`
+  ${({loading}) => loading === 'true' && css`
     ${SubmenuContainer}{
       max-height: none !important;
       opacity: 1;
@@ -133,7 +133,7 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
 
   }, [refSubmenu, setSubmenuHeight, readyCallback, contextKey])
 
-  return <ContextContainer open={ submenuOpen } loading={loading ? true : false} maxHeight={ submenuHeight }>
+  return <ContextContainer open={ submenuOpen } loading={loading ? 'true': 'false'} maxHeight={ submenuHeight }>
     <ContextItem {...{title, href, icon, hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey}} />
     { hasSubmenu ? <SubmenuContainer ref={ refSubmenu }>{submenus}</SubmenuContainer> : null }
   </ContextContainer>
