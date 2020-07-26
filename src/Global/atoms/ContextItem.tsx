@@ -143,13 +143,13 @@ interface IProps {
 
 const ContextItem : React.FC<IProps> = ({ hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey, title, href, icon, compact, isActive }) => {
 
-  const internal = <>
+  const internal = <React.Fragment>
     <ContextIcon {...{compact}}>
       <Icon icon={ icon } color={ isActive ? 'inverse' : 'dimmed' } size={ 20 } />
     </ContextIcon>
     <ContextTitle {...{compact}}>{title}</ContextTitle>
     { hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} /></ContextIndicator> : null }
-  </>;
+  </React.Fragment>;
 
   if(hasSubmenu){
     return <ContextActionButton menuOpen={ menuOpen } onClick={ () => onClickCallback && onClickCallback(contextKey) }>

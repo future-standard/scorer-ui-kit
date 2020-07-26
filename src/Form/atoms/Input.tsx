@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
+import { TypeFieldState } from '..';
 
 
 // import InputActionButton from './InputActionButton';
@@ -146,7 +147,7 @@ const Container = styled.div<{ fieldState: string }>`
 `
 
 interface OwnProps {
-  fieldState?: TypeFieldState
+  fieldState?: TypeFieldState;
   feedbackMessage?: string;
   actionCallback?: ()=>void;
   actionIcon?: any

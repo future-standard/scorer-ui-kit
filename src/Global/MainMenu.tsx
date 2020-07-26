@@ -4,10 +4,12 @@ import styled, { css } from 'styled-components';
 import NavigationItem from './atoms/NavigationItem';
 import ContextItem from './atoms/ContextItem';
 
-import {ReactComponent as SvgLogoMark} from '../svg/LogoMark.svg';
-import {ReactComponent as SvgLogoText} from '../svg/LogoText.svg';
+import SvgLogoMark from '../svg/LogoMark';
+import SvgLogoText from '../svg/LogoText';
+import { IMenu } from '.';
+import { Link } from 'react-router-dom';
 
-const Logo = styled.a`
+const Logo = styled(Link)`
   height: 50px;
   margin: 0 20px 40px 15px;
   display: flex;
@@ -24,7 +26,6 @@ const LogoMark = styled.div`
 const LogoType = styled.div`
   opacity: 0;
   flex: 1;
-
   height: 50px;
   display: flex;
   justify-content: left;
@@ -39,12 +40,10 @@ const MenuFooter = styled.div`
   ${({theme}) => theme && css`
     ${theme.colors.global.mainMenu.footerBackground}
   `};
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: inherit;
-
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: flex-end;
 `
 
 const FooterItemContainer = styled.div`
@@ -56,8 +55,8 @@ const Container = styled.div<{ open : boolean }>`
   ${({theme, open}) => theme && css`
     ${theme.colors.global.mainMenu.background}
     border-right: 1px solid ${theme.colors.global.mainMenu.lines.backgroundColor};
-    transition: width ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
-    width: ${open ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed };
+    transition: flex-basis ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
+    flex-basis: ${open ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed };
 
     ${LogoType}{
       transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
@@ -66,16 +65,16 @@ const Container = styled.div<{ open : boolean }>`
   `}
 
   box-sizing: border-box;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  padding: 20px 0;
+  height: 100%;
+  padding: 20px 0 0 0;
   overflow: hidden;
 `
 
 const ContainerInner = styled.div`
   width: ${({theme}) => theme.dimensions.global.mainMenu.width.open };
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `
 
 const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
@@ -91,7 +90,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
   // Set the active context on load.
   console.log("TODO: Get the current URI, match it to a menu item and set it's index to setActiveContext", activeContext);
   useEffect(() => {
-    // Unsure of URL structures at this point so can't set this initialisation up yet.
+    // Unsure of URL structures at this point so can't set this initialization up yet.
     setActiveContext(0);
   }, [setActiveContext]);
 
@@ -131,9 +130,9 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
   }, [checkedInItems, content])
 
 
-  return <Container open={isMenuOpen} onPointerEnter={ autoMenuOpen } onTouchStart={ () => console.log('toch')} onMouseLeave={ autoMenuClose }>
+  return <Container open={isMenuOpen} onPointerEnter={ autoMenuOpen } onTouchStart={ () => console.log('touch')} onMouseLeave={ autoMenuClose }>
     <ContainerInner>
-      <Logo href={ home }>
+      <Logo to={ home }>
         <LogoMark><SvgLogoMark /></LogoMark>
         <LogoType><SvgLogoText /></LogoType>
       </Logo>

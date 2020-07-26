@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { TypeButtonSizes, TypeButtonDesigns, IButtonProps } from '..';
 
 
 interface IStyledComponentProps {

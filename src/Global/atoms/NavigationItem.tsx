@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-
+import {Link} from 'react-router-dom'; 
 import ContextItem from './ContextItem';
+import { IMenuItemTop, IMenuItemSubmenu } from '..';
 
 const Submenu = styled.ul`
   display: block;
@@ -45,7 +46,7 @@ const SubmenuItemTitle = styled.span`
 
 `
 
-const SubmenuItemLink = styled.a`
+const SubmenuItemLink = styled(Link)`
   display: block;
   ${({theme}) => theme && css`
     font-family: ${theme.fontFamily.ui};
@@ -157,7 +158,7 @@ const generateSubmenus = (submenu? : IMenuItemSubmenu[]) => {
     const {title, href} = item;
     if(href){
       // Treat as menu item/
-      grouping[grouping.length - 1].push(<SubmenuItem key={key}><SubmenuItemLink href={ href }>{title}</SubmenuItemLink></SubmenuItem>)
+      grouping[grouping.length - 1].push(<SubmenuItem key={key}><SubmenuItemLink to={ href }>{title}</SubmenuItemLink></SubmenuItem>)
     } else {
       // Assume this is a grouping header.
       if(grouping[grouping.length - 1].length > 1){ grouping.push([]) };
