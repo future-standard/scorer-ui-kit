@@ -7,8 +7,9 @@ import ContextItem from './atoms/ContextItem';
 import SvgLogoMark from '../svg/LogoMark';
 import SvgLogoText from '../svg/LogoText';
 import { IMenu } from '.';
+import { Link } from 'react-router-dom';
 
-const Logo = styled.a`
+const Logo = styled(Link)`
   height: 50px;
   margin: 0 20px 40px 15px;
   display: flex;
@@ -65,7 +66,7 @@ const Container = styled.div<{ open : boolean }>`
 
   box-sizing: border-box;
   height: 100%;
-  padding: 20px 0;
+  padding: 20px 0 0 0;
   overflow: hidden;
 `
 
@@ -73,6 +74,7 @@ const ContainerInner = styled.div`
   width: ${({theme}) => theme.dimensions.global.mainMenu.width.open };
   display: flex;
   flex-direction: column;
+  height: 100%;
 `
 
 const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
@@ -130,7 +132,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
 
   return <Container open={isMenuOpen} onPointerEnter={ autoMenuOpen } onTouchStart={ () => console.log('touch')} onMouseLeave={ autoMenuClose }>
     <ContainerInner>
-      <Logo href={ home }>
+      <Logo to={ home }>
         <LogoMark><SvgLogoMark /></LogoMark>
         <LogoType><SvgLogoText /></LogoType>
       </Logo>
