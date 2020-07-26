@@ -6,7 +6,7 @@ export const Layout = styled.div`
   height: 100%;
 `
 export const Content = styled.div<{ maxWidth?: string }>`
-  padding: 29px 21px 0 21px;
+  padding: 70px 90px 0 90px;
   background-color: hsl(202, 33%, 95%);
   flex: 1;
   overflow: auto;

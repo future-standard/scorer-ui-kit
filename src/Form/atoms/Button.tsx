@@ -38,18 +38,14 @@ const StyledButton = styled.button<IStyledComponentProps>`
 
 
 interface OwnProps {
-  size: TypeButtonSizes
-  design: TypeButtonDesigns
+  size?: TypeButtonSizes
+  design?: TypeButtonDesigns
 }
 
 type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button : React.FC<IButtonProps> = ({ design, size, children, ...props }) => {
+const Button : React.FC<OwnProps> = ({ design = 'primary', size='normal', children, ...props }) => {
   return <StyledButton type={'button'} {...{design, size}} {...props} >{ children }</StyledButton>
-}
-
-Button.defaultProps = {
-  size: 'normal'
 }
 
 export default Button;

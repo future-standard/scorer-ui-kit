@@ -88,8 +88,8 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
   let checkedInItems : number = 0;
 
   // Set the active context on load.
-  console.log("TODO: Get the current URI, match it to a menu item and set it's index to setActiveContext", activeContext);
   useEffect(() => {
+    console.log("TODO: Get the current URI, match it to a menu item and set it's index to setActiveContext", activeContext);
     // Unsure of URL structures at this point so can't set this initialization up yet.
     setActiveContext(0);
   }, [setActiveContext]);
