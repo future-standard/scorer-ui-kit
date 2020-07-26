@@ -44,7 +44,7 @@ interface OwnProps {
 
 type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button : React.FC<OwnProps> = ({ design = 'primary', size='normal', children, ...props }) => {
+const Button : React.FC<Props> = ({ design = 'primary', size='normal', children, ...props }) => {
   return <StyledButton type={'button'} {...{design, size}} {...props} >{ children }</StyledButton>
 }
 
