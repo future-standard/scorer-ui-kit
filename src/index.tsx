@@ -40,7 +40,11 @@ import  { resetButtonStyles } from './common';
 import Spinner from './Indicators/Spinner'
 import WebRTCClient from './WebRTCClient';
 
-import MainMenu from './Global/MainMenu'
+import {
+  MainMenu, 
+  Content,
+  Layout
+} from './Global'
 
 export {
   // Theme
@@ -78,6 +82,8 @@ export {
   WebRTCClient,
 
   // Global
-  MainMenu
+  MainMenu,
+  Layout,
+  Content
 };
 

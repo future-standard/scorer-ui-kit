@@ -25,7 +25,6 @@ const LogoMark = styled.div`
 const LogoType = styled.div`
   opacity: 0;
   flex: 1;
-
   height: 50px;
   display: flex;
   justify-content: left;
@@ -40,12 +39,10 @@ const MenuFooter = styled.div`
   ${({theme}) => theme && css`
     ${theme.colors.global.mainMenu.footerBackground}
   `};
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: inherit;
-
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: flex-end;
 `
 
 const FooterItemContainer = styled.div`
@@ -57,8 +54,8 @@ const Container = styled.div<{ open : boolean }>`
   ${({theme, open}) => theme && css`
     ${theme.colors.global.mainMenu.background}
     border-right: 1px solid ${theme.colors.global.mainMenu.lines.backgroundColor};
-    transition: width ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
-    width: ${open ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed };
+    transition: flex-basis ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
+    flex-basis: ${open ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed };
 
     ${LogoType}{
       transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
@@ -67,16 +64,15 @@ const Container = styled.div<{ open : boolean }>`
   `}
 
   box-sizing: border-box;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  height: 100%;
   padding: 20px 0;
   overflow: hidden;
 `
 
 const ContainerInner = styled.div`
   width: ${({theme}) => theme.dimensions.global.mainMenu.width.open };
+  display: flex;
+  flex-direction: column;
 `
 
 const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
