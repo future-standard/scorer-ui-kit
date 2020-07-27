@@ -23,7 +23,6 @@ const Icon : React.FC<IProps> = ({icon, size = 24, weight = 'regular', color = '
 
   const iconWeight : number = dimensions.icons.weights[weight];
   const IconSVG = getKeyValue<keyof any, any>(icon)(IconSVGs);
-
   if(icon in IconSVGs && IconSVG){
 
     return <IconWrapper color={color}>
