@@ -49,7 +49,8 @@ import {
   SidebarHeading,
   Logo,
   SidebarLinkHeading,
-  BackLink
+  BackLink,
+  Sidebar
 } from './Global'
 
 export {

@@ -1,6 +1,6 @@
 import {Content, Layout} from './atoms/Layout';
 import MainMenu from './MainMenu';
-export {SidebarBox,SidebarLink,SidebarHeading,Logo,SidebarLinkHeading,BackLink} from './Sidebar'
+export {SidebarBox,SidebarLink,SidebarHeading,Logo,SidebarLinkHeading,BackLink, default as Sidebar} from './Sidebar'
 
 export {
     Content,
