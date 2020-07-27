@@ -4,7 +4,7 @@ import lightTheme from './themes/light/light';
 import darkTheme from './themes/dark';
 
 // Components - Form
-import {    
+import {
   Form,
   Button,
   ButtonWithIcon,
@@ -20,10 +20,10 @@ import {
 
 // Components - Line UI
 import {
-  LineUI, 
-  LineUIRTC, 
-  LineSetContext, 
-  LineReducer 
+  LineUI,
+  LineUIRTC,
+  LineSetContext,
+  LineReducer
 } from './LineUI';
 
 // Pages
@@ -41,9 +41,15 @@ import Spinner from './Indicators/Spinner'
 import WebRTCClient from './WebRTCClient';
 
 import {
-  MainMenu, 
+  MainMenu,
   Content,
-  Layout
+  Layout,
+  SidebarBox,
+  SidebarLink,
+  SidebarHeading,
+  Logo,
+  SidebarLinkHeading,
+  BackLink
 } from './Global'
 
 export {
@@ -56,7 +62,7 @@ export {
   LineUIRTC,
   LineSetContext,
   LineReducer,
-  
+
   // Form
   Form,
   Button,
@@ -84,6 +90,12 @@ export {
   // Global
   MainMenu,
   Layout,
-  Content
+  Content,
+  SidebarBox,
+  SidebarLink,
+  SidebarHeading,
+  Logo,
+  SidebarLinkHeading,
+  BackLink
 };
 
