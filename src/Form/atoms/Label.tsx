@@ -1,7 +1,7 @@
 import React, { LabelHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-const StyledLabel = styled.label`
+export const StyledLabel = styled.label`
   font-family: ${({theme}) => theme.fontFamily.ui };
   display: block;
   color: hsl(207, 5%, 57%);
