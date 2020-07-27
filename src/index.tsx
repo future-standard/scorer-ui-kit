@@ -97,6 +97,7 @@ export {
   SidebarHeading,
   Logo,
   SidebarLinkHeading,
-  BackLink
+  BackLink,
+  Sidebar
 };
 
