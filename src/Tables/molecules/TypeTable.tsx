@@ -64,32 +64,6 @@ const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, rows, hasStatu
         return <TypeTableRow key={ key } {...{rowData, selectable, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />
       })}
 
-{/*
-
-      <ContentRow>
-        <ContentItem><input type={'checkbox'} /></ContentItem>
-        <ContentItem>Break Room</ContentItem>
-        <ContentItem>Shinjuku Station</ContentItem>
-        <ContentItem>A, B, C, D</ContentItem>
-      </ContentRow>
-      <ContentRow>
-        <ContentItem><input type={'checkbox'} /></ContentItem>
-        <ContentItem>Break Room</ContentItem>
-        <ContentItem>Shinjuku Station</ContentItem>
-        <ContentItem>A, B, C, D</ContentItem>
-      </ContentRow>
-      <ContentRow>
-        <ContentItem><input type={'checkbox'} /></ContentItem>
-        <ContentItem>Break Room</ContentItem>
-        <ContentItem>Shinjuku Station</ContentItem>
-        <ContentItem>A, B, C, D</ContentItem>
-      </ContentRow>
-      <ContentRow>
-        <ContentItem><input type={'checkbox'} /></ContentItem>
-        <ContentItem>Break Room</ContentItem>
-        <ContentItem>Shinjuku Station</ContentItem>
-        <ContentItem>A, B, C, D</ContentItem>
-      </ContentRow> */}
     </TableContainer>
 
   </Container>

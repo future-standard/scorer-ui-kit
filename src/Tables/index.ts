@@ -27,6 +27,7 @@ export interface ITableColumnConfig {
 // }
 export interface ICellData {
   text: string
+  href?: string
   unit?: string
 }
 export type IRowData = ICellData[]

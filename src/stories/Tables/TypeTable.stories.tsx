@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { withKnobs, object, boolean } from "@storybook/addon-knobs";
 
 import TypeTable from '../../Tables/molecules/TypeTable';
+import {ITableColumnConfig, ITypeTableData} from '../../Tables';
 
 const Container = styled.div`
   margin: 100px;
@@ -48,25 +49,25 @@ const columnConfigSample : ITableColumnConfig[] = [
 
 const rowDataSample : ITypeTableData = [
   [
-    { text: 'Device Name' },
+    { text: 'Device Name', href: '#' },
     { text: 'Just Now' },
     { text: '200', unit: 'Tb' },
     { text: '¥20,000'}
   ],
   [
-    { text: 'Another Device' },
+    { text: 'Another Device', href: '#' },
     { text: '1st October 2019' },
     { text: '200', unit: 'Tb' },
     { text: '¥4,000'}
   ],
   [
-    { text: 'Old Device' },
+    { text: 'Old Device', href: '#' },
     { text: '22nd March 2020' },
     { text: '200', unit: 'Tb' },
     { text: '¥7,000'}
   ],
   [
-    { text: 'Magic Edge Cloud' },
+    { text: 'Magic Edge Cloud', href: '#' },
     { text: '2nd April 2020' },
     { text: '200', unit: 'Tb' },
     { text: '¥25,000' }

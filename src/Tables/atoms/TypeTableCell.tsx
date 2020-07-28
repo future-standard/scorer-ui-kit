@@ -7,19 +7,27 @@ import {TypeCellStyle, TypeCellAlignment} from '..';
 const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCellAlignment }>`
   display: table-cell;
   height: 35px;
+
   font-family: ${p => p.theme.fontFamily.data};
 
-  ${({theme, cellStyle}) => cellStyle ? css`
+  &, a {
+    ${({theme, cellStyle}) => cellStyle ? css`
     ${theme.typography.table.columns[cellStyle]};
-  ` : css`
+    ` : css`
     ${theme.typography.table.columns['normalImportance']};
-  `}
+    `}
 
-  ${({alignment}) => alignment ? css`
+    ${({alignment}) => alignment ? css`
     text-align: ${alignment};
-  ` : css`
+    ` : css`
     text-align: left;
-  `}
+    `}
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
 `
 
 const UnitText = styled.span`
@@ -49,11 +57,12 @@ const CopyToClipboard = styled.button`
 interface IProps {
   cellStyle?: TypeCellStyle
   alignment?: TypeCellAlignment
+  href?: string
   showUnit?: boolean
   hasCopyButton?: boolean
 }
 
-const TypeTableCell : React.FC<IProps> = ({ children, cellStyle = 'normalImportance', alignment = 'left', hasCopyButton, showUnit = false }) => {
+const TypeTableCell : React.FC<IProps> = ({ children, href, cellStyle = 'normalImportance', alignment = 'left', hasCopyButton, showUnit = false }) => {
 
   const copyValue = useCallback(() => {
     // Probably best to make this in a universal, re-usable way.
@@ -62,7 +71,7 @@ const TypeTableCell : React.FC<IProps> = ({ children, cellStyle = 'normalImporta
   }, [])
 
   return <CellContainer {...{cellStyle, alignment}}>
-    {children}
+    { href ? <a href={href}>{children}</a> : children }
     { showUnit ? <UnitText>Mb</UnitText> : null }
     { hasCopyButton ? <CopyToClipboard onClick={ copyValue }><Icon icon={'Invalid'} size={ 16 } /></CopyToClipboard> : null }
   </CellContainer>
