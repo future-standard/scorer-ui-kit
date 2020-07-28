@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
+import { Link } from 'react-router-dom';
 
 
 const Container = styled.div`
@@ -33,7 +34,7 @@ const Title = styled.h1`
   margin: 0 0 20px;
 `
 
-const AreaTitle = styled.a`
+const AreaTitle = styled(Link)`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
   `}
@@ -62,7 +63,7 @@ interface IProps {
 const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref}) => {
   return <Container>
     { areaTitle && areaHref ?
-      <AreaTitle href={ areaHref }>{ areaTitle }</AreaTitle>
+      <AreaTitle to={ areaHref }>{ areaTitle }</AreaTitle>
     : null }
     <Title>{title}</Title>
     { icon ?
