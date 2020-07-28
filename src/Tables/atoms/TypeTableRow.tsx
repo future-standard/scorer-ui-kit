@@ -1,9 +1,10 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import TableRowThumbnail from './TableRowThumbnail';
 import TypeTableDeviceStatus from './TypeTableDeviceStatus';
 import TypeTableCell from './TypeTableCell';
+import { ITableColumnConfig, IRowData } from '..';
 
 
 const RowContainer = styled.div`

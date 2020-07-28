@@ -81,7 +81,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
 
   const [isMenuOpen, setMenuOpen] = useState<boolean>(true);
   const [isMenuPinned, setMenuPinned] = useState<boolean>(true);
-  const [activeContext, setActiveContext] = useState<number>(-1);
+  const [, setActiveContext] = useState<number>(-1);
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -89,7 +89,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
 
   // Set the active context on load.
   useEffect(() => {
-    console.log("TODO: Get the current URI, match it to a menu item and set it's index to setActiveContext", activeContext);
+    // console.log("TODO: Get the current URI, match it to a menu item and set it's index to setActiveContext", activeContext);
     // Unsure of URL structures at this point so can't set this initialization up yet.
     setActiveContext(0);
   }, [setActiveContext]);

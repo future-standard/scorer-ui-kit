@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
+import {TypeCellStyle, TypeCellAlignment} from '..';
 
 const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCellAlignment }>`
   display: table-cell;

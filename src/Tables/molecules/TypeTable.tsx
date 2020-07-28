@@ -2,6 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 
 import TypeTableRow from '../atoms/TypeTableRow';
+import { TypeCellAlignment, ITableColumnConfig, ITypeTableData } from '..';
 
 const Container = styled.div`
 
