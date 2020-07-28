@@ -2,6 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 
 import TypeTableRow from '../atoms/TypeTableRow';
+import { TypeCellAlignment, ITableColumnConfig, ITypeTableData } from '..';
 
 const Container = styled.div`
 
@@ -63,32 +64,6 @@ const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, rows, hasStatu
         return <TypeTableRow key={ key } {...{rowData, selectable, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />
       })}
 
-{/*
-
-      <ContentRow>
-        <ContentItem><input type={'checkbox'} /></ContentItem>
-        <ContentItem>Break Room</ContentItem>
-        <ContentItem>Shinjuku Station</ContentItem>
-        <ContentItem>A, B, C, D</ContentItem>
-      </ContentRow>
-      <ContentRow>
-        <ContentItem><input type={'checkbox'} /></ContentItem>
-        <ContentItem>Break Room</ContentItem>
-        <ContentItem>Shinjuku Station</ContentItem>
-        <ContentItem>A, B, C, D</ContentItem>
-      </ContentRow>
-      <ContentRow>
-        <ContentItem><input type={'checkbox'} /></ContentItem>
-        <ContentItem>Break Room</ContentItem>
-        <ContentItem>Shinjuku Station</ContentItem>
-        <ContentItem>A, B, C, D</ContentItem>
-      </ContentRow>
-      <ContentRow>
-        <ContentItem><input type={'checkbox'} /></ContentItem>
-        <ContentItem>Break Room</ContentItem>
-        <ContentItem>Shinjuku Station</ContentItem>
-        <ContentItem>A, B, C, D</ContentItem>
-      </ContentRow> */}
     </TableContainer>
 
   </Container>

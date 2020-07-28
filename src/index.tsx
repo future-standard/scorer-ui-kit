@@ -33,6 +33,11 @@ import {
   PageTitle
 } from './Pages'
 
+// Tables
+import {
+  TypeTable
+} from './Tables';
+
 // Other
 import { useInterval } from './hooks';
 import  { resetButtonStyles } from './common';
@@ -81,6 +86,9 @@ export {
   IntroductionText,
   PageHeader,
   PageTitle,
+
+  // Tables
+  TypeTable,
 
   // Common && hooks
   useInterval,

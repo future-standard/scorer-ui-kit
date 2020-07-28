@@ -1,9 +1,10 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import TableRowThumbnail from './TableRowThumbnail';
 import TypeTableDeviceStatus from './TypeTableDeviceStatus';
 import TypeTableCell from './TypeTableCell';
+import { ITableColumnConfig, IRowData } from '..';
 
 
 const RowContainer = styled.div`
@@ -28,7 +29,7 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, hasStatus, hasThum
 
     { rowData.map((cell, key) => {
       const {cellStyle, alignment, showUnit, hasCopyButton} = columnConfig[key];
-      return <TypeTableCell key={key} {...{cellStyle, alignment, showUnit, hasCopyButton}}>{cell.text}</TypeTableCell>
+      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, hasCopyButton}}>{cell.text}</TypeTableCell>
     })}
 
   </RowContainer>

@@ -186,7 +186,7 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
     }
   }, [state, setPosition, positionSwitch])
 
-  return <Container onChange={ customOnChange } activeTheming={ activeTheming } loading={ state === 'loading' } useIntent={ state === 'default' || state == 'failure'} themeState={ switchState } position={ position } checked={inputRef.current?.checked}>
+  return <Container onChange={ customOnChange } activeTheming={ activeTheming } loading={ state === 'loading' } useIntent={ state === 'default' || state === 'failure'} themeState={ switchState } position={ position } checked={inputRef.current?.checked}>
     <SwitchOuter>
       <SwitchInner>
         { state === 'failure' ? <IconWrapper><Icon icon={'Exclamation'} color={'danger'} size={18} weight={'regular'} /></IconWrapper> : null}
