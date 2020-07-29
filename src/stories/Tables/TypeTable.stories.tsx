@@ -4,6 +4,7 @@ import { withKnobs, object, boolean } from "@storybook/addon-knobs";
 
 import TypeTable from '../../Tables/molecules/TypeTable';
 import {ITableColumnConfig, ITypeTableData} from '../../Tables';
+import photo from '../assets/placeholder.jpg';
 
 const Container = styled.div`
   margin: 100px;
@@ -48,30 +49,58 @@ const columnConfigSample : ITableColumnConfig[] = [
 ];
 
 const rowDataSample : ITypeTableData = [
-  [
-    { text: 'Device Name', href: '#' },
-    { text: 'Just Now' },
-    { text: '200', unit: 'Tb' },
-    { text: '¥20,000'}
-  ],
-  [
-    { text: 'Another Device', href: '#' },
-    { text: '1st October 2019' },
-    { text: '200', unit: 'Tb' },
-    { text: '¥4,000'}
-  ],
-  [
-    { text: 'Old Device', href: '#' },
-    { text: '22nd March 2020' },
-    { text: '200', unit: 'Tb' },
-    { text: '¥7,000'}
-  ],
-  [
-    { text: 'Magic Edge Cloud', href: '#' },
-    { text: '2nd April 2020' },
-    { text: '200', unit: 'Tb' },
-    { text: '¥25,000' }
-  ]
+  {
+    header: {
+      image: photo,
+      icon: 'Zone'
+    },
+    columns:
+    [
+      { text: 'Device Name', href: '#' },
+      { text: 'Just Now' },
+      { text: '200', unit: 'Tb' },
+      { text: '¥20,000'}
+    ]
+  },
+  {
+    header: {
+      image: photo,
+      icon: 'Location'
+    },
+    columns:
+    [
+      { text: 'Another Device', href: '#' },
+      { text: '1st October 2019' },
+      { text: '200', unit: 'Tb' },
+      { text: '¥4,000'}
+    ],
+  },
+  {
+    header: {
+      image: photo,
+      icon: 'Location'
+    },
+    columns:
+    [
+      { text: 'Old Device', href: '#' },
+      { text: '22nd March 2020' },
+      { text: '200', unit: 'Tb' },
+      { text: '¥7,000'}
+    ],
+  },
+  {
+    header: {
+      image: photo,
+      icon: 'Location'
+    },
+    columns:
+    [
+      { text: 'Magic Edge Cloud', href: '#' },
+      { text: '2nd April 2020' },
+      { text: '200', unit: 'Tb' },
+      { text: '¥25,000' }
+    ]
+  }
 ];
 
 export const _TypeTable = () => {

@@ -7,6 +7,8 @@ import {TypeCellStyle, TypeCellAlignment} from '..';
 const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCellAlignment }>`
   display: table-cell;
   height: 35px;
+  padding: 6px 0 8px;
+  vertical-align: middle;
 
   font-family: ${p => p.theme.fontFamily.data};
 
@@ -62,7 +64,7 @@ interface IProps {
   hasCopyButton?: boolean
 }
 
-const TypeTableCell : React.FC<IProps> = ({ children, href, cellStyle = 'normalImportance', alignment = 'left', hasCopyButton, showUnit = false }) => {
+const TypeTableCell : React.FC<IProps> = ({ showUnit = false, cellStyle = 'normalImportance', alignment = 'left', hasCopyButton, href, children }) => {
 
   const copyValue = useCallback(() => {
     // Probably best to make this in a universal, re-usable way.
