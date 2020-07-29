@@ -16,23 +16,23 @@ const intentPosition = (left: string, checked?: boolean) : string => {
   let intentLeft = (parseInt(left) + offset).toString();
 
   return `${intentLeft}px`;
-}
+};
 
 const RealInput = styled.input`
   display: none;
-`
+`;
 const SwitchOuter = styled.div`
   border: 1px solid #DDD;
   box-sizing: border-box;
   cursor: pointer;
   position: relative;
-`
+`;
 const getPositionKey = (switchPos : SwitchPosition) => {
   switch (switchPos) {
     case SwitchPosition.Off:
-      return 'off'
+      return 'off';
     case SwitchPosition.On:
-      return 'on'
+      return 'on';
     case SwitchPosition.Neutral:
       return 'neutral';
     case SwitchPosition.Locked:
@@ -41,12 +41,12 @@ const getPositionKey = (switchPos : SwitchPosition) => {
       return 'off';
   }
 
-}
+};
 
 const SwitchInner = styled.div`
   position: absolute;
   box-sizing: border-box;
-`
+`;
 const LabelText = styled.span`
   flex: 1;
   display: flex;
@@ -58,7 +58,7 @@ const LabelText = styled.span`
   font-weight: 500;
   line-height: ${ p => p.theme.dimensions.form.switch.outer.height };
   margin-left: 10px;
-`
+`;
 
 const IconWrapper = styled.div`
   position: absolute;
@@ -70,10 +70,10 @@ const IconWrapper = styled.div`
   svg {
     display: block;
   }
-`
+`;
 const SpinnerWrapper = styled.div`
   margin-top: 1px;
-`
+`;
 
 const Container = styled.label<{activeTheming: string, loading: boolean, useIntent: boolean, themeState: string, position: SwitchPosition, checked?: boolean}>`
   user-select: none;
@@ -115,7 +115,7 @@ const Container = styled.label<{activeTheming: string, loading: boolean, useInte
       left: ${p => p.useIntent && intentPosition(p.theme.dimensions.form.switch.positions[getPositionKey(p.position)], p.checked)};
     }
   }
-`
+`;
 
 type TypeSwitchState = 'default' | 'loading' | 'locked' | 'disabled' | 'failure';
 
@@ -148,8 +148,8 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
 
   const customOnChange = (e: any) => {
     positionSwitch();
-    if(onChange){ onChange(e) };
-  }
+    if(onChange){ onChange(e); }
+  };
 
   /**
    * updateThemeChoice()
@@ -162,12 +162,12 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
     } else if(position === SwitchPosition.Off){
       setActiveTheming(leftTheme);
     }
-  }, [position, rightTheme, leftTheme])
+  }, [position, rightTheme, leftTheme]);
 
   /** Watch for that theme change.  */
   useEffect(() => {
     updateThemeChoice();
-  }, [leftTheme, rightTheme, updateThemeChoice])
+  }, [leftTheme, rightTheme, updateThemeChoice]);
 
   useEffect(() => {
     setSwitchState( stateCheck(state) );
@@ -177,28 +177,28 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
   useEffect(() => {
     if(state === 'locked'){
       setPosition(SwitchPosition.Locked);
-      setActiveTheming('locked')
+      setActiveTheming('locked');
     } else if(state === 'failure'){
       setPosition(SwitchPosition.Neutral);
       setActiveTheming('failure');
     } else {
       positionSwitch();
     }
-  }, [state, setPosition, positionSwitch])
+  }, [state, setPosition, positionSwitch]);
 
-  return <Container onChange={ customOnChange } activeTheming={ activeTheming } loading={ state === 'loading' } useIntent={ state === 'default' || state === 'failure'} themeState={ switchState } position={ position } checked={inputRef.current?.checked}>
+  return <Container onChange={customOnChange} activeTheming={activeTheming} loading={state === 'loading'} useIntent={state === 'default' || state === 'failure'} themeState={switchState} position={position} checked={inputRef.current?.checked}>
     <SwitchOuter>
       <SwitchInner>
-        { state === 'failure' ? <IconWrapper><Icon icon={'Exclamation'} color={'danger'} size={18} weight={'regular'} /></IconWrapper> : null}
-        { state === 'locked' ? <IconWrapper><Icon icon={'Locked'} color={'dimmed'} size={10} weight={'heavy'} /></IconWrapper> : null}
-        { state === 'loading' ? <SpinnerWrapper><Spinner size={'small'} styling={ 'simple' } /></SpinnerWrapper> : null}
+        {state === 'failure' ? <IconWrapper><Icon icon='Exclamation' color='danger' size={18} weight='regular' /></IconWrapper> : null}
+        {state === 'locked' ? <IconWrapper><Icon icon='Locked' color='dimmed' size={10} weight='heavy' /></IconWrapper> : null}
+        {state === 'loading' ? <SpinnerWrapper><Spinner size='small' styling='simple' /></SpinnerWrapper> : null}
       </SwitchInner>
     </SwitchOuter>
-    { labelText ? <LabelText>{ labelText }</LabelText> : null }
-    <RealInput ref={inputRef} type={'checkbox'} disabled={ state !== 'default' && state !== 'failure' } />
-  </Container>
+    {labelText ? <LabelText>{labelText}</LabelText> : null}
+    <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} />
+  </Container>;
 
-}
+};
 
 const stateCheck = (state: TypeSwitchState) : TypeSwitchState => {
   switch(state){

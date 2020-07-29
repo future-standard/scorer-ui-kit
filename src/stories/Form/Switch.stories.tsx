@@ -11,11 +11,11 @@ export default {
 
 export const _Switch = () => {
 
-  const labelText = text("Label Text", "The Label")
+  const labelText = text("Label Text", "The Label");
   const state = select("State", { Default: "default", Disabled: "disabled", Locked: "locked", Loading: "loading", Failure: "failure" }, "default");
   const leftTheme = select("Left Theme", { Off: "off", On: "on", Danger: "danger" }, "off");
   const rightTheme = select("Right Theme", { Off: "off", On: "on", Danger: "danger" }, "on");
   const onChange = action('value-changed');
 
-  return <Switch {...{state, leftTheme, rightTheme, labelText, onChange}} />
-}
+  return <Switch {...{state, leftTheme, rightTheme, labelText, onChange}} />;
+};

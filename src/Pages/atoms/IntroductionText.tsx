@@ -9,14 +9,14 @@ const Container = styled.p`
   font-style: italic;
   line-height: 25px;
   color: #8b9196;
-`
+`;
 
 interface IProps {}
 
 const IntroductionText : React.FC<IProps> = ({children}) => {
   return <Container>
     {children}
-  </Container>
-}
+  </Container>;
+};
 
 export default IntroductionText;

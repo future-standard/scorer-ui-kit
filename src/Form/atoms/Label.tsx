@@ -8,12 +8,12 @@ export const StyledLabel = styled.label`
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 20px;
-`
+`;
 
 const LabelText = styled.span`
   display: block;
   margin-bottom: 10px;
-`
+`;
 
 interface OwnProps {
   htmlFor: string
@@ -22,10 +22,10 @@ interface OwnProps {
 type Props = OwnProps & LabelHTMLAttributes<HTMLLabelElement>
 
 const Label : React.FC<Props> = ({ htmlFor, labelText, children, ...props }) => {
-  return <StyledLabel htmlFor={htmlFor} {...props} >
-    <LabelText>{ labelText }</LabelText>
+  return <StyledLabel htmlFor={htmlFor} {...props}>
+    <LabelText>{labelText}</LabelText>
     {children}
-  </StyledLabel>
-}
+  </StyledLabel>;
+};
 
 export default Label;

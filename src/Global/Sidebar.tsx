@@ -9,7 +9,7 @@ const Container = styled.div`
   width: 286px;
   border-right: 1px solid hsla(0, 0%, 84%, 50%);
   height: 100%;
-`
+`;
 const LogoContainer = styled.div`
   height: 84px;
   color: hsl(205, 7%, 35%);
@@ -20,7 +20,7 @@ const LogoContainer = styled.div`
   justify-content: center;
   padding-top: 18px;
   padding-bottom: 15px;
-`
+`;
 const LogoTopText = styled.div`
   height: 31px;
   font-family: Monorale;
@@ -29,7 +29,7 @@ const LogoTopText = styled.div`
   line-height: 1.72;
   letter-spacing: 4.5px;
   text-align: center;
-`
+`;
 const LogoBottomText = styled.div`
   height: 19px;
   font-family: Monorale;
@@ -38,13 +38,13 @@ const LogoBottomText = styled.div`
   line-height: normal;
   letter-spacing: 14.11px;
   text-align: center;
-`
+`;
 
 export const SidebarBox = styled.div`
   position: relative;
   border-bottom: 1px solid hsla(0, 0%, 84%, 50%);
   padding: 22px 20px 21px 20px;
-`
+`;
 export const SidebarHeading = styled.div`
   font-size: 14px;
   font-weight: 500;
@@ -65,7 +65,7 @@ export const BackLink = styled(Link)`
   font-weight: 500;
   letter-spacing: 0.35px;
   color: hsl(0, 0%, 50%);
-`
+`;
 
 const SLink = styled(Link)`
   position: absolute;
@@ -81,7 +81,7 @@ const SLink = styled(Link)`
   background-color: hsl(206, 70%, 96%);
   text-decoration: none;
   padding: 7px 20px;
-`
+`;
 
 export const SidebarLink : React.FC<{title: string; to: string}> = ({title,to}) => {
   return (
@@ -89,7 +89,7 @@ export const SidebarLink : React.FC<{title: string; to: string}> = ({title,to}) 
       <SidebarLinkHeading>{title}</SidebarLinkHeading>
       <SLink to={to}>Setup</SLink>
     </SidebarBox>
-  )
+  );
 };
 
 interface LogoProps{
@@ -102,14 +102,14 @@ export const Logo: React.FC<LogoProps> = ({logoTextTop,logoTextBottom}) => (
     <LogoTopText>{logoTextTop}</LogoTopText>
     <LogoBottomText>•{logoTextBottom}•</LogoBottomText>
   </LogoContainer>
-)
+);
 
 const Sidebar: React.FC = ({children}) => {
   return (
-    <Container >
-      { children }
+    <Container>
+      {children}
     </Container>
   );
-}
+};
 
 export default Sidebar;

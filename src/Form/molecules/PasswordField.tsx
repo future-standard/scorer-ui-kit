@@ -23,12 +23,12 @@ const PasswordField : React.FC<Props> = ({ name, label, fieldState, feedbackMess
 
     setShowValue(newValue);
     setActionIcon(newValue ? 'PasswordShow' : 'PasswordHide');
-  }
+  };
 
-  return <Label htmlFor={ name } labelText={ label }>
-    <Input type={ showValue ? 'text' : 'password' } actionCallback={ actionCallback } actionIcon={ actionIcon } {...{ name, fieldState, feedbackMessage, ...props}} />
-  </Label>
+  return <Label htmlFor={name} labelText={label}>
+    <Input type={showValue ? 'text' : 'password'} actionCallback={actionCallback} actionIcon={actionIcon} {...{ name, fieldState, feedbackMessage, ...props}} />
+  </Label>;
 
-}
+};
 
 export default PasswordField;

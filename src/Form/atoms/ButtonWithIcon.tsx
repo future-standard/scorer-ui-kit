@@ -19,7 +19,7 @@ const TextContainer = styled.div`
     transition: padding ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
   `}
 
-`
+`;
 
 const IconContainer = styled.div<{ position?: string }>`
   height: inherit;
@@ -36,7 +36,7 @@ const IconContainer = styled.div<{ position?: string }>`
   svg {
     display:block;
   }
-`
+`;
 
 const InnerContainer = styled.div<{position?: string}>`
   display: flex;
@@ -49,7 +49,7 @@ const InnerContainer = styled.div<{position?: string}>`
     margin-left: -20px;
   `}
 
-`
+`;
 
 interface IProps extends IButtonProps {
   icon: string
@@ -57,14 +57,14 @@ interface IProps extends IButtonProps {
 }
 
 const ButtonWithIcon : React.FC<IProps> = ({design, size, onClick, disabled, position, icon, children}) => {
-  return <Button disabled={ disabled } {...{ design, size, onClick, disabled }}>
+  return <Button disabled={disabled} {...{ design, size, onClick, disabled }}>
     <InnerContainer>
       <TextContainer>{children}</TextContainer>
       <IconContainer {...{ design, position }}>
         <Icon icon={icon} size={12} />
       </IconContainer>
     </InnerContainer>
-  </Button>
-}
+  </Button>;
+};
 
 export default ButtonWithIcon;

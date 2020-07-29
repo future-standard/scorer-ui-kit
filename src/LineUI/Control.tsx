@@ -36,7 +36,7 @@ const DebugContainer = styled.div`
     flex: 0;
     border-radius: 2px;
   }
-`
+`;
 
 const DebugOutput = styled.pre`
   color: #fff;
@@ -47,7 +47,7 @@ const DebugOutput = styled.pre`
   border-radius: 2px;
   flex: 1;
 
-`
+`;
 
 interface IControlProps {
 
@@ -60,24 +60,24 @@ export const Control : React.FC<IControlProps> = () => {
   return <DebugContainer>
 
     <div>
-      <button onClick={ () => dispatch({type: "ADD_SET"}) }>Add Set</button>
+      <button onClick={() => dispatch({type: "ADD_SET"})}>Add Set</button>
 
       {state.map((_lineSet, index) => (
         <div key={index}>
           <h5>Set {index}</h5>
-          <button onClick={ () => dispatch({type: "REMOVE_SET", index: index}) }>Remove Set</button>
-          <button onClick={ () => dispatch({type: "ADD_POINT", index: index}) }>Add Point</button>
-          <button onClick={ () => dispatch({type: "REMOVE_POINT", index: index}) }>Remove Point</button>
+          <button onClick={() => dispatch({type: "REMOVE_SET", index: index})}>Remove Set</button>
+          <button onClick={() => dispatch({type: "ADD_POINT", index: index})}>Add Point</button>
+          <button onClick={() => dispatch({type: "REMOVE_POINT", index: index})}>Remove Point</button>
         </div>
       ))}
 
     </div>
 
     <DebugOutput>
-      { JSON.stringify(state, null, 2) }
+      {JSON.stringify(state, null, 2)}
     </DebugOutput>
 
-  </DebugContainer>
+  </DebugContainer>;
 
 };
 

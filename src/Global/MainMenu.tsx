@@ -13,7 +13,7 @@ const Logo = styled(Link)`
   height: 50px;
   margin: 0 20px 40px 15px;
   display: flex;
-`
+`;
 const LogoMark = styled.div`
   height: 50px;
   flex: 0 0 50px;
@@ -22,7 +22,7 @@ const LogoMark = styled.div`
   justify-content: center;
   align-items: center;
 
-`
+`;
 const LogoType = styled.div`
   opacity: 0;
   flex: 1;
@@ -32,9 +32,9 @@ const LogoType = styled.div`
   align-items: center;
 
 
-`
+`;
 
-const NavigationContainer = styled.div``
+const NavigationContainer = styled.div``;
 
 const MenuFooter = styled.div`
   ${({theme}) => theme && css`
@@ -44,11 +44,11 @@ const MenuFooter = styled.div`
   flex-direction: column;
   flex: 1;
   justify-content: flex-end;
-`
+`;
 
 const FooterItemContainer = styled.div`
   min-height: 70px;
-`
+`;
 
 const Container = styled.div<{ open : boolean }>`
 
@@ -68,14 +68,14 @@ const Container = styled.div<{ open : boolean }>`
   height: 100%;
   padding: 20px 0 0 0;
   overflow: hidden;
-`
+`;
 
 const ContainerInner = styled.div`
   width: ${({theme}) => theme.dimensions.global.mainMenu.width.open };
   display: flex;
   flex-direction: column;
   height: 100%;
-`
+`;
 
 const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
 
@@ -111,13 +111,13 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
     if(e.pointerType === 'touch'){ return; }
     setMenuOpen(!isMenuOpen);
     setMenuPinned(!isMenuPinned);
-  }, [isMenuPinned, setMenuPinned, isMenuOpen, setMenuOpen])
+  }, [isMenuPinned, setMenuPinned, isMenuOpen, setMenuOpen]);
 
 
   /** Manage which context is open. */
   const setFocusedContextCb = useCallback(contextKey => {
     setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
-  }, [setFocusedContext, focusedContext])
+  }, [setFocusedContext, focusedContext]);
 
 
   /** Manage the loading cycle. */
@@ -127,35 +127,35 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
     if(checkedInItems === content.items.length){
       setLoading(false);
     }
-  }, [checkedInItems, content])
+  }, [checkedInItems, content]);
 
 
-  return <Container open={isMenuOpen} onPointerEnter={ autoMenuOpen } onTouchStart={ () => console.log('touch')} onMouseLeave={ autoMenuClose }>
+  return <Container open={isMenuOpen} onPointerEnter={autoMenuOpen} onTouchStart={() => console.log('touch')} onMouseLeave={autoMenuClose}>
     <ContainerInner>
-      <Logo to={ home }>
+      <Logo to={home}>
         <LogoMark><SvgLogoMark /></LogoMark>
         <LogoType><SvgLogoText /></LogoType>
       </Logo>
 
       <NavigationContainer>
-        { content.items.map((item, key) => {
-          return <NavigationItem key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={ key === focusedContext && isMenuOpen} onClickCallback={ setFocusedContextCb } {...{item, loading, focusedContext, readyCallback}} />
+        {content.items.map((item, key) => {
+          return <NavigationItem key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
         })}
       </NavigationContainer>
 
       <MenuFooter>
 
         <FooterItemContainer>
-          <ContextItem icon={'Question'} title={'Help & Support'} href={'#'} menuOpen={isMenuOpen} />
+          <ContextItem icon='Question' title='Help & Support' href='#' menuOpen={isMenuOpen} />
         </FooterItemContainer>
 
         <FooterItemContainer>
-          <ContextItem icon={ isMenuOpen && isMenuPinned ? 'CloseCompact' : 'Menu' } title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact={ true } onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
+          <ContextItem icon={isMenuOpen && isMenuPinned ? 'CloseCompact' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
         </FooterItemContainer>
 
       </MenuFooter>
     </ContainerInner>
-  </Container>
-}
+  </Container>;
+};
 
 export default MainMenu;

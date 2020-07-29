@@ -18,9 +18,9 @@ const containerBackgroundKey = (styling)  => {
     case 'danger':
       return 'invalid';
     default:
-      return 'basic'
+      return 'basic';
   }
-}
+};
 
 const Container = styled.div`
   padding: 12px 24px;
@@ -33,13 +33,13 @@ const Container = styled.div`
   align-items:center;
 
   ${({theme, styling}) => theme.colors.form.feedback[containerBackgroundKey(styling)]};
-`
+`;
 
 export const LoadingSpinner = () => {
-  const spinnerSize = select("Size", { Small: "small", Medium: "medium", Large: "large", XLarge: "xlarge" }, "medium")
-  const spinnerType = select("Style", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary")
+  const spinnerSize = select("Size", { Small: "small", Medium: "medium", Large: "large", XLarge: "xlarge" }, "medium");
+  const spinnerType = select("Style", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
 
-  return <Container size={ spinnerSize } styling={spinnerType}>
-    <Spinner size={ spinnerSize } styling={ spinnerType } />
-  </Container>
-}
+  return <Container size={spinnerSize} styling={spinnerType}>
+    <Spinner size={spinnerSize} styling={spinnerType} />
+  </Container>;
+};

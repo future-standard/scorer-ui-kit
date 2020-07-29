@@ -5,7 +5,7 @@ import PasswordField from '../../Form/molecules/PasswordField';
 
 const Container = styled.div`
     margin: 20px;
-`
+`;
 
 export default {
   title: 'Form/Input',
@@ -19,8 +19,8 @@ export const PasswordInput = () => {
   const inputLabel = text("Label", "My Input");
   const inputValue = text("Value", "Test");
   const inputPlaceholder = text("Placeholder", "Placeholder...");
-  const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "disabled")
+  const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "disabled");
 
-  return <Container><PasswordField name={ inputName } label={ inputLabel } defaultValue={ inputValue } placeholder={ inputPlaceholder } fieldState={ inputState } /></Container>
+  return <Container><PasswordField name={inputName} label={inputLabel} defaultValue={inputValue} placeholder={inputPlaceholder} fieldState={inputState} /></Container>;
 
-}
+};

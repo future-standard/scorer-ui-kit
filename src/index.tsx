@@ -31,7 +31,7 @@ import {
   IntroductionText,
   PageHeader,
   PageTitle
-} from './Pages'
+} from './Pages';
 
 // Tables
 import {
@@ -42,7 +42,7 @@ import {
 import { useInterval } from './hooks';
 import  { resetButtonStyles } from './common';
 
-import Spinner from './Indicators/Spinner'
+import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
 
 import {
@@ -56,7 +56,7 @@ import {
   SidebarLinkHeading,
   BackLink,
   Sidebar
-} from './Global'
+} from './Global';
 
 export {
   // Theme

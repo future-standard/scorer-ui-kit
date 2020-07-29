@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   position: relative;
-`
+`;
 
 const IconContainer = styled.div`
   position: absolute;
@@ -21,7 +21,7 @@ const IconContainer = styled.div`
   svg {
     display: block;
   }
-`
+`;
 
 const Title = styled.h1`
   ${({theme}) => css`
@@ -32,7 +32,7 @@ const Title = styled.h1`
   font-weight: 500;
   color: #5b636a;
   margin: 0 0 20px;
-`
+`;
 
 const AreaTitle = styled(Link)`
   ${({theme}) => css`
@@ -51,7 +51,7 @@ const AreaTitle = styled(Link)`
     text-decoration: underline;
   }
 
-`
+`;
 
 interface IProps {
   title: string
@@ -62,14 +62,14 @@ interface IProps {
 
 const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref}) => {
   return <Container>
-    { areaTitle && areaHref ?
-      <AreaTitle to={ areaHref }>{ areaTitle }</AreaTitle>
-    : null }
+    {areaTitle && areaHref ?
+      <AreaTitle to={areaHref}>{areaTitle}</AreaTitle>
+    : null}
     <Title>{title}</Title>
-    { icon ?
-      <IconContainer><Icon size={24} color={'dimmed'} {...{icon}} /></IconContainer>
-    : null }
+    {icon ?
+      <IconContainer><Icon size={24} color='dimmed' {...{icon}} /></IconContainer>
+    : null}
   </Container>;
-}
+};
 
 export default PageTitle;

@@ -23,7 +23,7 @@ const Container = styled.div`
 const Video = styled(WebRTCClient)`
   width:  100%;
   height: 100%;
-`
+`;
 
 const Frame = styled.svg<{transcalent?: boolean}>`
   touch-action: none;
@@ -93,7 +93,7 @@ const LineUI : React.FC<LineUIProps> = ({ws, onSizeChange = ()=>{}, onLineMoveEn
   const initScaleAndBounds = useCallback((target) => {
 
     const { videoHeight, videoWidth, clientHeight } = target;
-    console.log(initScaleAndBounds, target)
+    console.log(initScaleAndBounds, target);
     if(videoHeight !== videoSize.h || videoWidth !== videoSize.w) {
       setVideoSize({ h: videoHeight, w: videoWidth });
       onSizeChange({ h: videoHeight, w: videoWidth });
@@ -142,10 +142,10 @@ const LineUI : React.FC<LineUIProps> = ({ws, onSizeChange = ()=>{}, onLineMoveEn
 
   return (
     <Container>
-      <Video onLoadedMetadata={loaded} peerAddress={ws} id="1" enabled={true}> </Video>
-      <Frame ref={ frame } viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version="1.1" xmlns="http://www.w3.org/2000/svg" onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
+      <Video onLoadedMetadata={loaded} peerAddress={ws} id='1' enabled> </Video>
+      <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
         {state.map((lineSet, index) => (
-          <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={ lineSet } screenCTM={ screenCTM } boundaries={ boundaries } unit={ unit } size={ 30 } options={ options } />
+          <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} screenCTM={screenCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
           ))}
       </Frame>
     </Container>

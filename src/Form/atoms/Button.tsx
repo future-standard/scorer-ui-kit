@@ -34,7 +34,7 @@ const StyledButton = styled.button<IStyledComponentProps>`
   &:disabled {
     background: ${props => props.theme.colors.form.button[props.design].disabled.backgroundColor};
   }
-`
+`;
 
 
 interface OwnProps {
@@ -45,7 +45,7 @@ interface OwnProps {
 type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button : React.FC<Props> = ({ design='primary', size='normal', children, ...props }) => {
-  return <StyledButton type={'button'} {...{design, size}} {...props} >{ children }</StyledButton>
-}
+  return <StyledButton type='button' {...{design, size}} {...props}>{children}</StyledButton>;
+};
 
 export default Button;

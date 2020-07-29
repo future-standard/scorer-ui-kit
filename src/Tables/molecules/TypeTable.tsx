@@ -6,17 +6,17 @@ import { TypeCellAlignment, ITableColumnConfig, ITypeTableData } from '..';
 
 const Container = styled.div`
 
-`
+`;
 
 const TableContainer = styled.div`
   display: table;
   width: 100%;
-`
+`;
 
 const HeaderRow = styled.div`
   display: table-row;
   height: 50px;
-`
+`;
 const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment}>`
   display: table-cell;
   height: inherit;
@@ -33,7 +33,7 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
   ` : css`
     text-align: left;
   `}
-`
+`;
 
 interface IProps {
   columnConfig: ITableColumnConfig[]
@@ -49,24 +49,24 @@ const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, rows, hasStatu
     <TableContainer>
 
       <HeaderRow>
-        { selectable ? <HeaderItem fixedWidth={40}><input type={'checkbox'} /></HeaderItem> : null }
-        { hasStatus ? <HeaderItem fixedWidth={40}></HeaderItem> : null }
-        { hasThumbnail ? <HeaderItem fixedWidth={40}></HeaderItem> : null }
-        { hasTypeIcon ? <HeaderItem fixedWidth={40}></HeaderItem> : null }
+        {selectable ? <HeaderItem fixedWidth={40}><input type='checkbox' /></HeaderItem> : null}
+        {hasStatus ? <HeaderItem fixedWidth={40} /> : null}
+        {hasThumbnail ? <HeaderItem fixedWidth={40} /> : null}
+        {hasTypeIcon ? <HeaderItem fixedWidth={40} /> : null}
 
         {columnConfig.map((column, key) => {
           const {alignment, header} = column;
-          return <HeaderItem key={ key } alignment={alignment}>{header}</HeaderItem>
+          return <HeaderItem key={key} alignment={alignment}>{header}</HeaderItem>;
         })}
       </HeaderRow>
 
       {rows.map((rowData, key) => {
-        return <TypeTableRow key={ key } {...{rowData, selectable, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />
+        return <TypeTableRow key={key} {...{rowData, selectable, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
       })}
 
     </TableContainer>
 
-  </Container>
-}
+  </Container>;
+};
 
 export default TypeTable;

@@ -7,7 +7,7 @@ import {ITableColumnConfig, ITypeTableData} from '../../Tables';
 
 const Container = styled.div`
   margin: 100px;
-`
+`;
 
 export default {
   title: 'Tables/molecules',
@@ -45,7 +45,7 @@ const columnConfigSample : ITableColumnConfig[] = [
   //   cellStyle: 'action',
   //   alignment: 'right',
   // }
-]
+];
 
 const rowDataSample : ITypeTableData = [
   [
@@ -72,7 +72,7 @@ const rowDataSample : ITypeTableData = [
     { text: '200', unit: 'Tb' },
     { text: '¥25,000' }
   ]
-]
+];
 
 export const _TypeTable = () => {
 
@@ -82,8 +82,8 @@ export const _TypeTable = () => {
   const hasTypeIcon = boolean("Has Device Type Icon", false);
 
   const selectable = boolean("Selectable Rows", true);
-  const columnConfig = object("Column Configuration", columnConfigSample)
+  const columnConfig = object("Column Configuration", columnConfigSample);
   const rows = object("Row Data", rowDataSample);
 
-  return <Container><TypeTable {...{columnConfig, selectable, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>
-}
+  return <Container><TypeTable {...{columnConfig, selectable, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>;
+};

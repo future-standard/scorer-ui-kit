@@ -7,7 +7,7 @@ import * as IconSVGs from  '../../Icons/stroked';
 
 const Container = styled.div`
   margin: 100px;
-`
+`;
 
 export default {
   title: 'Pages/molecules',
@@ -25,16 +25,16 @@ export const _PageHeader = () => {
   const pageIcon = select("Icon", iconList, null);
   const introductionText = text("Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.");
 
-  return <Container><PageHeader icon={ pageIcon } introductionText={ introductionText } title={ pageTitle } areaTitle={ pageAreaText } areaHref={ pageAreaHref } /></Container>
+  return <Container><PageHeader icon={pageIcon} introductionText={introductionText} title={pageTitle} areaTitle={pageAreaText} areaHref={pageAreaHref} /></Container>;
 
-}
+};
 
 const generateIconList = () => {
-  let iconList = {}
+  let iconList = {};
 
   for(const key in IconSVGs){
     iconList[key] = key;
   }
 
   return iconList;
-}
+};

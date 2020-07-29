@@ -8,7 +8,7 @@ import * as IconSVGs from  '../../Icons/stroked';
 
 const Container = styled.div`
   margin: 100px;
-`
+`;
 
 export default {
   title: 'Pages/atoms',
@@ -22,19 +22,19 @@ export const _PageTitle = () => {
 
   const title = text("Title", "My Page Title");
   const icon = select("Icon", iconList, null);
-  const areaTitle = text("Area Title", "Area Title")
+  const areaTitle = text("Area Title", "Area Title");
   const areaHref = ("Area Href", "#");
 
-  return <Container><PageTitle {...{title, icon, areaTitle, areaHref}} /></Container>
+  return <Container><PageTitle {...{title, icon, areaTitle, areaHref}} /></Container>;
 
-}
+};
 
 const generateIconList = () => {
-  let iconList = {}
+  let iconList = {};
 
   for(const key in IconSVGs){
     iconList[key] = key;
   }
 
   return iconList;
-}
+};

@@ -14,7 +14,7 @@ const ContextTitle = styled.div<{compact?: boolean}>`
   ${({compact}) => compact && css`
     font-size:14px;
   `}
-`
+`;
 
 const ContextIcon = styled.div<{compact?: boolean}>`
   ${({theme}) => css`
@@ -48,7 +48,7 @@ const ContextIcon = styled.div<{compact?: boolean}>`
     }
   `}
 
-`
+`;
 const ContextIndicator = styled.div`
   width: 12px;
   height: 12px;
@@ -70,7 +70,7 @@ const ContextIndicator = styled.div`
     transition: opacity 0 ${theme.animation.easing.primary.easeInOut};
   `}
 
-`
+`;
 const ContextActionBaseCSS = css`
   border: none;
   background: none;
@@ -83,7 +83,7 @@ const ContextActionBaseCSS = css`
   outline: none;
   padding: 0;
   text-decoration: none;
-`
+`;
 
 const ContextActionA = styled.a<{menuOpen?:boolean}>`
   ${ContextActionBaseCSS}
@@ -102,7 +102,7 @@ const ContextActionA = styled.a<{menuOpen?:boolean}>`
     opacity: 1;
     ${({theme}) => theme.colors.global.mainMenu.iconBackground.hover};
   }
-`
+`;
 const ContextActionButton = styled.button<{menuOpen?:boolean}>`
   ${ContextActionBaseCSS}
 
@@ -126,7 +126,7 @@ const ContextActionButton = styled.button<{menuOpen?:boolean}>`
     opacity: 1;
     ${({theme}) => theme.colors.global.mainMenu.iconBackground.hover};
   }
-`
+`;
 
 interface IProps {
   title: string
@@ -145,28 +145,28 @@ const ContextItem : React.FC<IProps> = ({ hasSubmenu, submenuOpen, menuOpen, onC
 
   const internal = <React.Fragment>
     <ContextIcon {...{compact}}>
-      <Icon icon={ icon } color={ isActive ? 'inverse' : 'dimmed' } size={ 20 } />
+      <Icon icon={icon} color={isActive ? 'inverse' : 'dimmed'} size={20} />
     </ContextIcon>
     <ContextTitle {...{compact}}>{title}</ContextTitle>
-    { hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} /></ContextIndicator> : null }
+    {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} /></ContextIndicator> : null}
   </React.Fragment>;
 
   if(hasSubmenu){
-    return <ContextActionButton menuOpen={ menuOpen } onClick={ () => onClickCallback && onClickCallback(contextKey) }>
+    return <ContextActionButton menuOpen={menuOpen} onClick={() => onClickCallback && onClickCallback(contextKey)}>
       {internal}
-    </ContextActionButton>
+    </ContextActionButton>;
   } else {
-    return <ContextActionA menuOpen={ menuOpen } href={ href } onClick={ () => onClickCallback && onClickCallback(contextKey) }>
+    return <ContextActionA menuOpen={menuOpen} href={href} onClick={() => onClickCallback && onClickCallback(contextKey)}>
       {internal}
-    </ContextActionA>
+    </ContextActionA>;
   }
 
-}
+};
 
 
 ContextItem.defaultProps = {
   hasSubmenu: false,
   contextKey: -1
-}
+};
 
 export default ContextItem;
