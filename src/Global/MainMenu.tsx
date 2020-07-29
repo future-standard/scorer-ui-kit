@@ -32,10 +32,7 @@ const LogoType = styled.div`
   align-items: center;
 `;
 
-const SVGObject = styled.object``
-
-
-`;
+const SVGObject = styled.object``;
 
 const NavigationContainer = styled.div``;
 
@@ -133,32 +130,34 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth, logoMark, lo
   }, [checkedInItems, content]);
 
 
-  return <Container open={isMenuOpen} onPointerEnter={autoMenuOpen} onTouchStart={() => console.log('touch')} onMouseLeave={autoMenuClose}>
-    <ContainerInner>
-      <Logo to={home}>
-        <LogoMark>{ logoMark ? <SVGObject type={'image/svg+xml'} data={ logoMark } /> : <SvgLogoMark /> }</LogoMark>
-        <LogoType>{ logoText ? <SVGObject type={'image/svg+xml'} data={ logoText } /> : <SvgLogoText /> }</LogoType>
-      </Logo>
+  return (
+    <Container open={isMenuOpen} onPointerEnter={autoMenuOpen} onTouchStart={() => console.log('touch')} onMouseLeave={autoMenuClose}>
+      <ContainerInner>
+        <Logo to={home}>
+          <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
+          <LogoType>{logoText ? <SVGObject type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
+        </Logo>
 
-      <NavigationContainer>
-        {content.items.map((item, key) => {
-          return <NavigationItem key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
-        })}
-      </NavigationContainer>
+        <NavigationContainer>
+          {content.items.map((item, key) => {
+            return <NavigationItem key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
+          })}
+        </NavigationContainer>
 
-      <MenuFooter>
+        <MenuFooter>
 
-        <FooterItemContainer>
-          <ContextItem icon='Question' title='Help & Support' href='#' menuOpen={isMenuOpen} />
-        </FooterItemContainer>
+          <FooterItemContainer>
+            <ContextItem icon='Question' title='Help & Support' href='#' menuOpen={isMenuOpen} />
+          </FooterItemContainer>
 
-        <FooterItemContainer>
-          <ContextItem icon={isMenuOpen && isMenuPinned ? 'CloseCompact' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
-        </FooterItemContainer>
+          <FooterItemContainer>
+            <ContextItem icon={isMenuOpen && isMenuPinned ? 'CloseCompact' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
+          </FooterItemContainer>
 
-      </MenuFooter>
-    </ContainerInner>
-  </Container>;
+        </MenuFooter>
+      </ContainerInner>
+    </Container>
+  );
 };
 
 export default MainMenu;
