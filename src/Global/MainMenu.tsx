@@ -30,6 +30,9 @@ const LogoType = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
+`;
+
+const SVGObject = styled.object``
 
 
 `;
@@ -77,7 +80,7 @@ const ContainerInner = styled.div`
   height: 100%;
 `;
 
-const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
+const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth, logoMark, logoText }) => {
 
   const [isMenuOpen, setMenuOpen] = useState<boolean>(true);
   const [isMenuPinned, setMenuPinned] = useState<boolean>(true);
@@ -133,8 +136,8 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth }) => {
   return <Container open={isMenuOpen} onPointerEnter={autoMenuOpen} onTouchStart={() => console.log('touch')} onMouseLeave={autoMenuClose}>
     <ContainerInner>
       <Logo to={home}>
-        <LogoMark><SvgLogoMark /></LogoMark>
-        <LogoType><SvgLogoText /></LogoType>
+        <LogoMark>{ logoMark ? <SVGObject type={'image/svg+xml'} data={ logoMark } /> : <SvgLogoMark /> }</LogoMark>
+        <LogoType>{ logoText ? <SVGObject type={'image/svg+xml'} data={ logoText } /> : <SvgLogoText /> }</LogoType>
       </Logo>
 
       <NavigationContainer>

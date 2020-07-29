@@ -28,4 +28,6 @@ export interface IMenuTop {
     content: IMenuTop
     home?: string
     openWidth?: number
+    logoMark?: string
+    logoText?: string
   }
