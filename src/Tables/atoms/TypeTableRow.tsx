@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import TableRowThumbnail from './TableRowThumbnail';
 import TypeTableDeviceStatus from './TypeTableDeviceStatus';
 import TypeTableCell from './TypeTableCell';
+import Icon from '../../Icons/Icon'
 import { ITableColumnConfig, IRowData } from '..';
 
 
@@ -24,10 +25,10 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, hasStatus, hasThum
   return <RowContainer>
     {selectable ? <TypeTableCell><input type='checkbox' /></TypeTableCell> : null}
     {hasStatus ?  <TypeTableCell><TypeTableDeviceStatus /></TypeTableCell> : null}
-    {hasThumbnail ? <TypeTableCell><TableRowThumbnail /></TypeTableCell> : null}
-    {hasTypeIcon ? <TypeTableCell>Type Icon</TypeTableCell> : null}
+    {hasThumbnail ? <TypeTableCell><TableRowThumbnail image={ rowData.header?.image } /></TypeTableCell> : null}
+    {hasTypeIcon ? <TypeTableCell><Icon icon={ rowData.header?.icon || '' } size={16} /></TypeTableCell> : null}
 
-    {rowData.map((cell, key) => {
+    {rowData.columns.map((cell, key) => {
       const {cellStyle, alignment, showUnit, hasCopyButton} = columnConfig[key];
       return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, hasCopyButton}}>{cell.text}</TypeTableCell>;
     })}

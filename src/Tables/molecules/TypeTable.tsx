@@ -17,7 +17,7 @@ const HeaderRow = styled.div`
   display: table-row;
   height: 50px;
 `;
-const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment}>`
+const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment }>`
   display: table-cell;
   height: inherit;
 
@@ -49,10 +49,10 @@ const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, rows, hasStatu
     <TableContainer>
 
       <HeaderRow>
-        {selectable ? <HeaderItem fixedWidth={40}><input type='checkbox' /></HeaderItem> : null}
+        {selectable ? <HeaderItem fixedWidth={30}><input type='checkbox' /></HeaderItem> : null}
         {hasStatus ? <HeaderItem fixedWidth={40} /> : null}
-        {hasThumbnail ? <HeaderItem fixedWidth={40} /> : null}
-        {hasTypeIcon ? <HeaderItem fixedWidth={40} /> : null}
+        {hasThumbnail ? <HeaderItem fixedWidth={60} /> : null}
+        {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
 
         {columnConfig.map((column, key) => {
           const {alignment, header} = column;

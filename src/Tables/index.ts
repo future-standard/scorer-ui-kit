@@ -30,7 +30,18 @@ export interface ICellData {
   href?: string
   unit?: string
 }
-export type IRowData = ICellData[]
+
+export interface IRowHeader {
+  status?: any
+  image?: string
+  icon?: string
+}
+
+export interface IRowData {
+  header?: IRowHeader
+  columns: ICellData[]
+}
+
 export type ITypeTableData = IRowData[]
 
 
