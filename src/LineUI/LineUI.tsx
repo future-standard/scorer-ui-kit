@@ -53,7 +53,7 @@ interface LineUIProps {
   src: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
-  options: {
+  options?: {
     showHandleFinder?: boolean;
     showSetIndex?: boolean;
     showPointLabel?: boolean;
