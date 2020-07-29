@@ -24,7 +24,7 @@ const Container = styled.div<{ hoverZoom?: boolean }>`
     `}
   }
 
-`
+`;
 const Image = styled.div<{ image?: string }>`
   position: absolute;
   left: 0;
@@ -35,7 +35,7 @@ const Image = styled.div<{ image?: string }>`
   background-size: contain;
 
   display: ${p => p.image ? 'block' : 'none'};
-`
+`;
 
 interface IProps {
   image?: string
@@ -48,7 +48,7 @@ interface IProps {
 const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image}) => {
   return <Container {...{hoverZoom}}>
     <Image {...{image}} />
-  </Container>
-}
+  </Container>;
+};
 
 export default TableRowThumbnail;

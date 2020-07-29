@@ -28,13 +28,13 @@ const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCe
     text-decoration: underline;
   }
 
-`
+`;
 
 const UnitText = styled.span`
   ${({theme}) => css`
     ${theme.typography.table.columns['unit']};
   `}
-`
+`;
 
 const CopyToClipboard = styled.button`
 
@@ -52,7 +52,7 @@ const CopyToClipboard = styled.button`
   svg {
     display: block;
   }
-`
+`;
 
 interface IProps {
   cellStyle?: TypeCellStyle
@@ -68,13 +68,13 @@ const TypeTableCell : React.FC<IProps> = ({ children, href, cellStyle = 'normalI
     // Probably best to make this in a universal, re-usable way.
     // Value -> special div with text in -> copy the contents.
     console.log("Feature not implemented yet, sorry!");
-  }, [])
+  }, []);
 
   return <CellContainer {...{cellStyle, alignment}}>
-    { href ? <a href={href}>{children}</a> : children }
-    { showUnit ? <UnitText>Mb</UnitText> : null }
-    { hasCopyButton ? <CopyToClipboard onClick={ copyValue }><Icon icon={'Invalid'} size={ 16 } /></CopyToClipboard> : null }
-  </CellContainer>
-}
+    {href ? <a href={href}>{children}</a> : children}
+    {showUnit ? <UnitText>Mb</UnitText> : null}
+    {hasCopyButton ? <CopyToClipboard onClick={copyValue}><Icon icon='Invalid' size={16} /></CopyToClipboard> : null}
+  </CellContainer>;
+};
 
 export default TypeTableCell;

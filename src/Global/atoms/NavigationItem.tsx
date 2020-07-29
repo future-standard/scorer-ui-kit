@@ -10,12 +10,12 @@ const Submenu = styled.ul`
   margin-left: 40px;
   padding: 0;
 
-`
+`;
 const SubmenuHeader = styled.div`
   display: block;
   height: 40px;
   margin-left: 40px;
-`
+`;
 
 const SubmenuItem = styled.li`
   display: block;
@@ -35,7 +35,7 @@ const SubmenuItem = styled.li`
     top: 10px;
   }
 
-`
+`;
 
 const SubmenuItemTitle = styled.span`
   display: block;
@@ -44,7 +44,7 @@ const SubmenuItemTitle = styled.span`
     ${theme.typography.global.mainMenu.subheader}
   `};
 
-`
+`;
 
 const SubmenuItemLink = styled(Link)`
   display: block;
@@ -53,7 +53,7 @@ const SubmenuItemLink = styled(Link)`
     ${theme.typography.global.mainMenu.subMenuItem.default};
   `};
 
-`
+`;
 
 const SubmenuContainer = styled.div`
   ${({theme}) => theme && css`
@@ -76,7 +76,7 @@ const SubmenuContainer = styled.div`
     bottom: 35px;
   }
 
-`
+`;
 
 const ContextContainer = styled.div<{ open: boolean, maxHeight: number, loading: 'true'|'false' }>`
   min-height: 70px;
@@ -103,7 +103,7 @@ const ContextContainer = styled.div<{ open: boolean, maxHeight: number, loading:
     }
   `};
 
-`
+`;
 
 interface IProps {
   item: IMenuItemTop
@@ -131,14 +131,14 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
 
     if(readyCallback){ readyCallback(contextKey); }
 
-  }, [refSubmenu, setSubmenuHeight, readyCallback, contextKey])
+  }, [refSubmenu, setSubmenuHeight, readyCallback, contextKey]);
 
-  return <ContextContainer open={ submenuOpen } loading={loading ? 'true': 'false'} maxHeight={ submenuHeight }>
+  return <ContextContainer open={submenuOpen} loading={loading ? 'true': 'false'} maxHeight={submenuHeight}>
     <ContextItem {...{title, href, icon, hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey}} />
-    { hasSubmenu ? <SubmenuContainer ref={ refSubmenu }>{submenus}</SubmenuContainer> : null }
-  </ContextContainer>
+    {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>{submenus}</SubmenuContainer> : null}
+  </ContextContainer>;
 
-}
+};
 
 /**
  * Generate the submenu component structure.
@@ -146,7 +146,7 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
  */
 const generateSubmenus = (submenu? : IMenuItemSubmenu[]) => {
 
-  if(!submenu){ return }
+  if(!submenu){ return; }
 
   let grouping : any[] = [];
   let output : any = [];
@@ -158,21 +158,21 @@ const generateSubmenus = (submenu? : IMenuItemSubmenu[]) => {
     const {title, href} = item;
     if(href){
       // Treat as menu item/
-      grouping[grouping.length - 1].push(<SubmenuItem key={key}><SubmenuItemLink to={ href }>{title}</SubmenuItemLink></SubmenuItem>)
+      grouping[grouping.length - 1].push(<SubmenuItem key={key}><SubmenuItemLink to={href}>{title}</SubmenuItemLink></SubmenuItem>);
     } else {
       // Assume this is a grouping header.
-      if(grouping[grouping.length - 1].length > 1){ grouping.push([]) };
-      grouping[grouping.length - 1].push(<SubmenuHeader key={key}><SubmenuItemTitle>{title}</SubmenuItemTitle></SubmenuHeader>)
+      if(grouping[grouping.length - 1].length > 1){ grouping.push([]); }
+      grouping[grouping.length - 1].push(<SubmenuHeader key={key}><SubmenuItemTitle>{title}</SubmenuItemTitle></SubmenuHeader>);
     }
   });
 
   grouping.forEach((group, key) => {
-    output.push(<Submenu key={key}>{group}</Submenu>)
-  })
+    output.push(<Submenu key={key}>{group}</Submenu>);
+  });
 
   return output;
 
-}
+};
 
 
 

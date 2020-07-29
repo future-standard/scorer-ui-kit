@@ -8,7 +8,7 @@ const IconWrapper = styled.div<{color:string}>`
   [stroke]{
     stroke: ${({theme, color}) => theme.colors.icons[color].backgroundColor};
   }
-`
+`;
 
 interface IProps {
   icon: string
@@ -27,20 +27,20 @@ const Icon : React.FC<IProps> = ({icon, size = 24, weight = 'regular', color = '
 
     return <IconWrapper color={color}>
       {IconSVG({ size: size, weight: iconWeight, color: '#666' })}
-    </IconWrapper>
+    </IconWrapper>;
 
   } else {
 
     const capitalizedIconName = icon.charAt(0).toUpperCase() + icon.slice(1);
     const tip = capitalizedIconName in IconSVGs
       ? `Did you mean '${capitalizedIconName}'?`
-      : ``
+      : ``;
 
     console.error(`Missing SVG: No SVG found for reference '${icon}'. ${tip}`);
     return null;
 
   }
 
-}
+};
 
 export default Icon;

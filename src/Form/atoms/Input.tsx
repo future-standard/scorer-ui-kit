@@ -13,7 +13,7 @@ const ActionContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-`
+`;
 
 const InputActionButton = styled.button.attrs({ type: "button" })`
   width: 40px;
@@ -22,7 +22,7 @@ const InputActionButton = styled.button.attrs({ type: "button" })`
   border: none;
   cursor: pointer;
   outline: none;
-`
+`;
 
 const FeedbackContainer = styled.div`
   flex: 1 0;
@@ -43,7 +43,7 @@ const FeedbackContainer = styled.div`
       stroke: white;
     }
   }
-`
+`;
 
 const FeedbackMessage = styled.div`
   flex: 0 1 400px;
@@ -53,14 +53,14 @@ const FeedbackMessage = styled.div`
   font-size: 14px;
   line-height: 20px;
   padding: 0px;
-`
+`;
 
 const FeedbackIcon = styled.div`
   flex: 0 0 40px;
   display: flex;
   justify-content:center;
   align-items:center;
-`
+`;
 
 const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   height: 100%;
@@ -83,7 +83,7 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
     font-style: italic;
   }
 
-`
+`;
 
 const InputContainer = styled.div<{hasAction?: boolean}>`
 
@@ -99,7 +99,7 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
     }
   `}
 
-`
+`;
 
 const Container = styled.div<{ fieldState: string }>`
 
@@ -144,7 +144,7 @@ const Container = styled.div<{ fieldState: string }>`
     box-shadow: var(--state-focused-box-shadow);
   }
 
-`
+`;
 
 interface OwnProps {
   fieldState?: TypeFieldState;
@@ -177,40 +177,40 @@ const Input : React.FC<Props> = ({
       case 'disabled':
         break;
       case 'required':
-        return <Icon icon={'Required'} />;
+        return <Icon icon='Required' />;
       case 'valid':
-        return <Icon icon={'Success'} />;
+        return <Icon icon='Success' />;
       case 'invalid':
-        return <Icon icon={'Invalid'} />;
+        return <Icon icon='Invalid' />;
       case 'processing':
-        return <Spinner size={ 'medium' } styling={ 'primary' } />
+        return <Spinner size='medium' styling='primary' />;
     }
-  }
+  };
 
-  return <Container fieldState={ fieldState || 'default' }>
+  return <Container fieldState={fieldState || 'default'}>
 
-    <InputContainer hasAction={ isActionButton }>
-      <StyledInput fieldState={ fieldState || 'default' } type={type} placeholder={ placeholder } defaultValue={ defaultValue } { ...props } />
-      { (isActionButton) ? (
+    <InputContainer hasAction={isActionButton}>
+      <StyledInput fieldState={fieldState || 'default'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
+      {(isActionButton) ? (
         <ActionContainer>
-          <InputActionButton onClick={ actionCallback }>
-          <Icon icon={actionIcon} color={ 'primary' } />
+          <InputActionButton onClick={actionCallback}>
+            <Icon icon={actionIcon} color='primary' />
           </InputActionButton>
         </ActionContainer>
-      ) : null }
+      ) : null}
     </InputContainer>
 
-    { fieldState ? (
+    {fieldState ? (
       <FeedbackContainer>
-        <FeedbackIcon>{ feedbackIcon(fieldState) }</FeedbackIcon>
-        { feedbackMessage ? (
-          <FeedbackMessage>{ feedbackMessage }</FeedbackMessage>
-        ) : null }
+        <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
+        {feedbackMessage ? (
+          <FeedbackMessage>{feedbackMessage}</FeedbackMessage>
+        ) : null}
       </FeedbackContainer>
     ) : null}
 
-  </Container>
-}
+  </Container>;
+};
 
 
 export default Input;

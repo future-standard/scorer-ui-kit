@@ -17,11 +17,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 const ContainerInner = styled.div`
   flex: 0;
   height: 35px;
-`
+`;
 
 
 export const _RowThumbnail = () => {
@@ -33,5 +33,5 @@ export const _RowThumbnail = () => {
     <ContainerInner>
       <TableRowThumbnail {...{hoverZoom, image}} />
     </ContainerInner>
-  </Container>
-}
+  </Container>;
+};

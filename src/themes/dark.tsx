@@ -2,7 +2,7 @@ import { fontFamily, dimensions } from './common';
 
 const colors = {
 
-}
+};
 
 const tmp = {
   input: {
@@ -58,7 +58,7 @@ const tmp = {
       shadowColor: 'hsla(205, 90%, 65%, 15%)'
     }
   }
-}
+};
 
 export default {
   fontFamily,

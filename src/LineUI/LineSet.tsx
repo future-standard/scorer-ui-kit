@@ -49,7 +49,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
     return position;
 
-  }, [boundaries])
+  }, [boundaries]);
 
 
   const handleMoveCallback = useCallback((pointerPosition: IVector2, index: number) => {
@@ -59,7 +59,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     let pointer = enforceBoundaries({
       x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a),
       y: ((pointerPosition.y - screenCTM.f ) / screenCTM.d)
-    })
+    });
 
     let newLineSetData = {...lineSetData};
     newLineSetData.points[index] = {
@@ -78,7 +78,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     let pointer = {
       x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a) - handleRadius,
       y: ((pointerPosition.y - screenCTM.f ) / screenCTM.d) - handleRadius
-    }
+    };
 
     handleRelation.current = lineSetData.points.map((handle) => {
       const xDiff = pointer.x - handle.x;
@@ -86,10 +86,10 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
       return {
         offsetX: xDiff,
         offsetY: yDiff
-      }
+      };
     });
 
-  }
+  };
 
   const lineDragUpdate = useCallback((pointerPosition: IVector2) => {
 
@@ -100,7 +100,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     let pointer = {
       x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a) - handleRadius,
       y: ((pointerPosition.y - screenCTM.f ) / screenCTM.d) - handleRadius
-    }
+    };
 
     let newPoints = points.map((_handle, index) => {
       const {offsetX, offsetY} = handleRelation.current[index];
@@ -114,7 +114,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
     dispatch({type: "UPDATE", index: lineSetId, data: { ...lineSetData, points: [...newPoints] } });
 
-  }, [lineSetData, dispatch, screenCTM, enforceBoundaries, handleRadius, lineSetId])
+  }, [lineSetData, dispatch, screenCTM, enforceBoundaries, handleRadius, lineSetId]);
 
 
 
@@ -146,13 +146,13 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     if(handleUsesAngles){
       updateHandleAngles(lineSetData);
     }
-  }, [lineSetData, updateHandleAngles, handleUsesAngles])
+  }, [lineSetData, updateHandleAngles, handleUsesAngles]);
 
 
   const handles = lineSetData.points.map(({x,y}, index) => {
-    return (<HandleUnit key={ index } moveEndCB={onLineMoveEnd} lineSetId={ lineSetId } index={ index } unit={ unit } size={ size } useAngles={ handleUsesAngles } angle={ handleAngles[index] } x={x} y={y} moveCallback={ handleMoveCallback } />)
+    return (<HandleUnit key={index} moveEndCB={onLineMoveEnd} lineSetId={lineSetId} index={index} unit={unit} size={size} useAngles={handleUsesAngles} angle={handleAngles[index]} x={x} y={y} moveCallback={handleMoveCallback} />);
   }
-  )
+  );
 
   const lines = lineSetData.points.map(({x:x1,y:y1}, index) => {
     const {points} = lineSetData;
@@ -164,16 +164,16 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     }
     const {x:x2,y:y2} = points[nextIndex];
 
-    return <LineUnit key={index} moveEndCB={onLineMoveEnd} lineSetId={ lineSetId } options={ options } x1={x1} y1={y1} x2={x2} y2={y2} unit={ unit } lineMoveCallback={ lineDragUpdate } lineMoveStartCallback={ lineDragStart } />
+    return <LineUnit key={index} moveEndCB={onLineMoveEnd} lineSetId={lineSetId} options={options} x1={x1} y1={y1} x2={x2} y2={y2} unit={unit} lineMoveCallback={lineDragUpdate} lineMoveStartCallback={lineDragStart} />;
   }
-  )
+  );
 
   return (
     <g>
-      { lines }
-      { handles }
+      {lines}
+      {handles}
     </g>
   );
-}
+};
 
 export default LineSet;

@@ -7,14 +7,14 @@ const StyledButton = styled.button.attrs({ type: "button" })`
   background: transparent;
   border: none;
   cursor: pointer;
-`
+`;
 
 interface IProps {
 
 }
 
 const InputActionButton : React.FC<IProps> = () => {
-  return <StyledButton>A</StyledButton>
-}
+  return <StyledButton>A</StyledButton>;
+};
 
 export default InputActionButton;

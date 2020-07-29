@@ -18,7 +18,7 @@ const TextContainer = styled.div`
     transition: padding ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
   `}
 
-`
+`;
 
 const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean, position?: string }>`
   height: inherit;
@@ -38,7 +38,7 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   svg {
     display:block;
   }
-`
+`;
 
 const InnerContainer = styled.div<{position?: string, loading: boolean}>`
   display: flex;
@@ -67,7 +67,7 @@ const InnerContainer = styled.div<{position?: string, loading: boolean}>`
       flex: 0 0 0px;
     }
   `}
-`
+`;
 
 interface IProps extends IButtonProps {
   position?: 'left' | 'right'
@@ -75,14 +75,14 @@ interface IProps extends IButtonProps {
 }
 
 const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', onClick, disabled, position, loading, children}) => {
-  return <Button disabled={ disabled || loading } {...{ design, size, onClick }}>
+  return <Button disabled={disabled || loading} {...{ design, size, onClick }}>
     <InnerContainer {...{loading}}>
       <TextContainer>{children}</TextContainer>
       <LoadingContainer {...{ design, position }}>
-        <Spinner size={'small'} styling={ design } />
+        <Spinner size='small' styling={design} />
       </LoadingContainer>
     </InnerContainer>
-  </Button>
-}
+  </Button>;
+};
 
 export default ButtonWithLoading;

@@ -9,7 +9,7 @@ import { ITableColumnConfig, IRowData } from '..';
 
 const RowContainer = styled.div`
   display: table-row;
-`
+`;
 
 interface IProps {
   selectable?: boolean
@@ -22,18 +22,18 @@ interface IProps {
 
 const TypeTableRow : React.FC<IProps> = ({selectable = false, hasStatus, hasThumbnail, hasTypeIcon, rowData, columnConfig }) => {
   return <RowContainer>
-    { selectable ? <TypeTableCell><input type={'checkbox'} /></TypeTableCell> : null }
-    { hasStatus ?  <TypeTableCell><TypeTableDeviceStatus /></TypeTableCell> : null }
-    { hasThumbnail ? <TypeTableCell><TableRowThumbnail /></TypeTableCell> : null }
-    { hasTypeIcon ? <TypeTableCell>Type Icon</TypeTableCell> : null }
+    {selectable ? <TypeTableCell><input type='checkbox' /></TypeTableCell> : null}
+    {hasStatus ?  <TypeTableCell><TypeTableDeviceStatus /></TypeTableCell> : null}
+    {hasThumbnail ? <TypeTableCell><TableRowThumbnail /></TypeTableCell> : null}
+    {hasTypeIcon ? <TypeTableCell>Type Icon</TypeTableCell> : null}
 
-    { rowData.map((cell, key) => {
+    {rowData.map((cell, key) => {
       const {cellStyle, alignment, showUnit, hasCopyButton} = columnConfig[key];
-      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, hasCopyButton}}>{cell.text}</TypeTableCell>
+      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, hasCopyButton}}>{cell.text}</TypeTableCell>;
     })}
 
-  </RowContainer>
-}
+  </RowContainer>;
+};
 
 
 export default TypeTableRow;

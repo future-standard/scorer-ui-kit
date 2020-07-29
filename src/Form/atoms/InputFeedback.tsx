@@ -5,7 +5,7 @@ interface IProps {
 }
 
 const InputFeedback : React.FC<IProps> = () => {
-  return <div>Feedback</div>
-}
+  return <div>Feedback</div>;
+};
 
 export default InputFeedback;

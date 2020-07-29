@@ -1,7 +1,7 @@
 export const fontFamily = {
   ui: 'Monorale',
   data: 'Lato'
-}
+};
 
 export const dimensions = {
   icons: {
@@ -48,7 +48,7 @@ export const dimensions = {
       }
     }
   }
-}
+};
 
 export const animation = {
   easing: {
@@ -63,4 +63,4 @@ export const animation = {
     normal: '0.35s',
     slow: '0.7s'
   }
-}
+};

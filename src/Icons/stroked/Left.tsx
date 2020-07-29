@@ -5,17 +5,17 @@ function SvgLeft(props: ISvgIcons) {
     <svg
       width={props.size}
       height={props.size}
-      viewBox={"0 0 24 24"}
+      viewBox='0 0 24 24'
       {...props}
     >
       <path
-        fill="none"
+        fill='none'
         stroke={props.color}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeLinecap='round'
+        strokeLinejoin='round'
         strokeWidth={props.weight}
-        d="M17.25 23.25L6.53 12.53a.751.751 0 010-1.06L17.25.75"
-        vectorEffect={"non-scaling-stroke"}
+        d='M17.25 23.25L6.53 12.53a.751.751 0 010-1.06L17.25.75'
+        vectorEffect='non-scaling-stroke'
       />
     </svg>
   );

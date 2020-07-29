@@ -5,7 +5,7 @@ import TextField from '../../Form/molecules/TextField';
 
 const Container = styled.div`
     margin: 20px;
-`
+`;
 
 export default {
   title: 'Form/Input',
@@ -19,8 +19,8 @@ export const TextInput = () => {
   const inputLabel = text("Label", "My Input");
   const inputFeedback = text("Input Feedback", "This is a feedback message.");
   const inputPlaceholder = text("Placeholder", "Placeholder...");
-  const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "disabled")
+  const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "disabled");
 
-  return <Container><TextField name={ inputName } label={ inputLabel } placeholder={ inputPlaceholder } fieldState={ inputState } feedbackMessage={ inputFeedback } /></Container>
+  return <Container><TextField name={inputName} label={inputLabel} placeholder={inputPlaceholder} fieldState={inputState} feedbackMessage={inputFeedback} /></Container>;
 
-}
+};

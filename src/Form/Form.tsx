@@ -8,7 +8,7 @@ const FormContainer = styled.form<{spacing: string}>`
         margin-bottom: ${spacing};
       }
   `}
-`
+`;
 
 interface OwnProps {
   spacing?: string;
@@ -17,9 +17,9 @@ interface OwnProps {
 type Props = OwnProps & FormHTMLAttributes<HTMLFormElement>
 
 const Form : React.FC<Props> = ({ children, spacing = '45px;' ,...props }) => {
-  return <FormContainer spacing={spacing} {...props} >
+  return <FormContainer spacing={spacing} {...props}>
     {children}
-  </FormContainer>
-}
+  </FormContainer>;
+};
 
 export default Form;
