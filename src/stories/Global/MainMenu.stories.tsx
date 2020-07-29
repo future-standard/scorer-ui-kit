@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import { withKnobs, object, text } from "@storybook/addon-knobs";
 import MainMenu from '../../Global/MainMenu';
 
+import logoMarkSvg from '../assets/logo-mark.svg';
+import logoTextSvg from '../assets/logo-text.svg';
+
+
 const Container = styled.div``;
 
 export default {
@@ -13,6 +17,8 @@ export default {
 
 export const _MainMenu = () => {
 
+  const logoMark = text("Logo Mark SVG", logoMarkSvg);
+  const logoText = text("Logo Text SVG", logoTextSvg);
   const menuHomeLink = text("Home Link", "#");
   const menuConfig = object("Menu Config", {
     items: [
@@ -76,6 +82,6 @@ export const _MainMenu = () => {
     ]
   });
 
-  return <Container><MainMenu content={menuConfig} home={menuHomeLink} /></Container>;
+  return <Container><MainMenu content={menuConfig} home={menuHomeLink} {...{logoMark, logoText}} /></Container>;
 
 };
