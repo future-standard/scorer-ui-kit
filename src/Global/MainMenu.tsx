@@ -34,6 +34,9 @@ const LogoType = styled.div`
 
 const SVGObject = styled.object``
 
+
+`;
+
 const NavigationContainer = styled.div``;
 
 const MenuFooter = styled.div`
