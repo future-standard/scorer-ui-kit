@@ -53,8 +53,22 @@ interface LineUIProps {
   src: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
+  options: {
+    showHandleFinder?: boolean;
+    showSetIndex?: boolean;
+    showPointLabel?: boolean;
+  }
 }
-const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveEnd = ()=>{}}) => {
+const LineUI : React.FC<LineUIProps> = ({
+  src,
+  onSizeChange = ()=>{},
+  onLineMoveEnd = ()=>{},
+  options: {
+    showHandleFinder,
+    showSetIndex,
+    showPointLabel = false
+  }={}
+}) => {
 
   const frame : any =  useRef();
 
@@ -107,12 +121,12 @@ const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveE
 
   const handlePositionTipShow = (e: any) => {
     if(e.target === frame.current){
-      setHandleFinder(true);
+      setHandleFinder((!handleFinder === false) && true);
     }
   };
 
   const handlePositionTipHide = () => {
-    setHandleFinder(false);
+    setHandleFinder(showHandleFinder ||false);
   };
 
   useEffect(() => {
@@ -133,7 +147,8 @@ const LineUI : React.FC<LineUIProps> = ({src, onSizeChange = ()=>{}, onLineMoveE
 
   const options = {
     handleFinderActive: handleFinder,
-    revealSetIndex: state.length > 1
+    revealSetIndex:  showSetIndex || state.length > 1,
+    showPointLabel
   };
 
   return (
