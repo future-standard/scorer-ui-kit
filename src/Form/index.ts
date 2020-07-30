@@ -2,6 +2,7 @@ import Button from './atoms/Button';
 import ButtonWithIcon from './atoms/ButtonWithIcon';
 import ButtonWithLoading from './atoms/ButtonWithLoading';
 import Input from './atoms/Input';
+import SmallInput from './atoms/SmallInput';
 import InputActionButton from './atoms/InputActionButton';
 import InputFeedback from './atoms/InputFeedback';
 import Label from './atoms/Label';
@@ -17,6 +18,7 @@ export {
     Button,
     ButtonWithIcon,
     ButtonWithLoading,
+    SmallInput,
     Input,
     InputActionButton,
     InputFeedback,
