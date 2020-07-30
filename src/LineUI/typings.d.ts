@@ -22,4 +22,6 @@ export interface IBoundary {
 export interface IDragLineUISharedOptions {
   revealSetIndex: boolean,
   handleFinderActive: boolean
+  showHandle: boolean;
+  showPointLabel: boolean;
 }

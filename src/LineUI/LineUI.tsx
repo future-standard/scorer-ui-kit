@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef, useReducer, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
-import { IBoundary, IPointSet } from './typings';
+import { IBoundary } from './typings';
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 
@@ -57,6 +57,7 @@ interface LineUIProps {
     showHandleFinder?: boolean;
     showSetIndex?: boolean;
     showPointLabel?: boolean;
+    showHandle?: boolean;
   }
 }
 const LineUI : React.FC<LineUIProps> = ({
@@ -66,7 +67,8 @@ const LineUI : React.FC<LineUIProps> = ({
   options: {
     showHandleFinder,
     showSetIndex,
-    showPointLabel = false
+    showPointLabel = false,
+    showHandle = true
   }={}
 }) => {
 
@@ -74,7 +76,7 @@ const LineUI : React.FC<LineUIProps> = ({
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
   const [screenCTM, setScreenCTM] = useState<SVGMatrix>();
-  const {state, dispatch} = useContext(LineSetContext);
+  const {state} = useContext(LineSetContext);
 
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
 
@@ -148,7 +150,8 @@ const LineUI : React.FC<LineUIProps> = ({
   const options = {
     handleFinderActive: handleFinder,
     revealSetIndex:  showSetIndex || state.length > 1,
-    showPointLabel
+    showPointLabel,
+    showHandle
   };
 
   return (

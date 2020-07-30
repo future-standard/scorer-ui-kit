@@ -171,7 +171,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
   return (
     <g>
       {lines}
-      {handles}
+      {options.showHandle && handles}
     </g>
   );
 };

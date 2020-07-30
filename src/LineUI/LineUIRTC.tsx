@@ -1,8 +1,7 @@
-/* eslint-disable prettier/prettier */
-import React, { useState, useEffect, useCallback, useRef, useReducer, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
-import { IBoundary, IPointSet } from './typings';
+import { IBoundary } from './typings';
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 import WebRTCClient from '../WebRTCClient';
@@ -53,14 +52,30 @@ interface LineUIProps {
   ws: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
+  options?: {
+    showHandleFinder?: boolean;
+    showSetIndex?: boolean;
+    showPointLabel?: boolean;
+    showHandle?: boolean;
+  }
 }
-const LineUI : React.FC<LineUIProps> = ({ws, onSizeChange = ()=>{}, onLineMoveEnd = ()=>{}}) => {
+const LineUI : React.FC<LineUIProps> = ({
+  ws,
+  onSizeChange = ()=>{},
+  onLineMoveEnd = ()=>{},
+  options: {
+    showHandleFinder,
+    showSetIndex,
+    showPointLabel = false,
+    showHandle = true
+  }={}
+}) => {
 
   const frame : any =  useRef();
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
   const [screenCTM, setScreenCTM] = useState<SVGMatrix>();
-  const {state, dispatch} = useContext(LineSetContext);
+  const {state} = useContext(LineSetContext);
 
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
 
@@ -107,12 +122,12 @@ const LineUI : React.FC<LineUIProps> = ({ws, onSizeChange = ()=>{}, onLineMoveEn
 
   const handlePositionTipShow = (e: any) => {
     if(e.target === frame.current){
-      setHandleFinder(true);
+      setHandleFinder((!handleFinder === false) && true);
     }
   };
 
   const handlePositionTipHide = () => {
-    setHandleFinder(false);
+    setHandleFinder(showHandleFinder ||false);
   };
 
   useEffect(() => {
@@ -137,7 +152,9 @@ const LineUI : React.FC<LineUIProps> = ({ws, onSizeChange = ()=>{}, onLineMoveEn
 
   const options = {
     handleFinderActive: handleFinder,
-    revealSetIndex: state.length > 1
+    revealSetIndex:  showSetIndex || state.length > 1,
+    showPointLabel,
+    showHandle
   };
 
   return (
