@@ -15,8 +15,8 @@ const App: React.FC<{}> = () => {
 
       <Router>
         <Switch>
-          <Route path="/" component={FormPage}/>
-          <Route path="/forms" exact={true} component={LinePage}/>
+          <Route path="/" component={LinePage}/>
+          <Route path="/forms" exact={true} component={FormPage}/>
         </Switch>
       </Router>
   )
