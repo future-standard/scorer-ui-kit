@@ -12,9 +12,10 @@ const FormPage : React.FC = () => {
     <Form>
       <TextField name={'my_field'} label={'Basic'} placeholder={'Placeholder...'} fieldState={ 'default' } />
       <TextField name={'my_field'} label={'Required'} placeholder={''} fieldState={ 'required' } />
-      <TextField name={'my_field'} label={'Loading'} placeholder={''} fieldState={ 'loading' } />
+      <TextField name={'my_field'} label={'Loading'} placeholder={''} fieldState={ 'processing' } />
       <TextField name={'my_field'} label={'Valid'} placeholder={''} fieldState={ 'valid' } />
-      <TextField name={'my_field'} label={'Error'} placeholder={''} fieldState={ 'error' } />
+      <TextField name={'my_field'} label={'Error'} placeholder={''} fieldState={ 'invalid' } />
+      <TextField name={'my_field'} label={'Error'} placeholder={''} fieldState={ 'invalid' } feedbackMessage={'Error: Oh noes!!!'}/>
       <PasswordField name={'my_field'} label={'My Field'} placeholder={''} fieldState={ 'default' } />
     </Form>
   </Container>

@@ -1,26 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
+//pages
 import FormPage from './pages/FormPage';
+import LinePage from './pages/LinePage'
 
 
-const Container = styled.div``
-
-
-function App() {
-
+const App: React.FC<{}> = () => {
   return (
-    <Container>
-      {/* <Header /> */}
 
-      {/* <LineContainer>
-        <LineUI src="https://picsum.photos/640/480" lines={[{x: 0,y:0}, {x: 200, y: 200}]} />
-      </LineContainer> */}
-
-      <FormPage />
-
-      {/* <Footer /> */}
-    </Container>
-  );
+      <Router>
+        <Switch>
+          <Route path="/" component={FormPage}/>
+          <Route path="/forms" exact={true} component={LinePage}/>
+        </Switch>
+      </Router>
+  )
 }
 
 export default App;
