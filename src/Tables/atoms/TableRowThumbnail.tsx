@@ -33,7 +33,7 @@ const Image = styled.div<{ image?: string }>`
   bottom: 0;
   background-image: url(${p => p.image});
   background-size: contain;
-
+  background-repeat: no-repeat;
   display: ${p => p.image ? 'block' : 'none'};
 `;
 
@@ -46,9 +46,11 @@ interface IProps {
 // No Image Placeholder
 
 const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image}) => {
-  return <Container {...{hoverZoom}}>
-    <Image {...{image}} />
-  </Container>;
+  return (
+    <Container {...{hoverZoom}}>
+      <Image {...{image}} />
+    </Container>
+  );
 };
 
 export default TableRowThumbnail;
