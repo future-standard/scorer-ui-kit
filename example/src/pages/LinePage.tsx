@@ -28,8 +28,8 @@ const Line: React.FC<{}> = () => {
     //   const {points} = await response.json();
       const shape = {
           points: [
-              {x: 100, y: 100},
-              {x: 200, y: 200}
+              {x: 1000, y: 2000},
+              {x: 2000, y: 2000}
           ]
       }
       dispatch({
@@ -85,7 +85,7 @@ const Line: React.FC<{}> = () => {
       <Content>
         { error && <div>{error}</div>}
         <LineSetContext.Provider value={{state, dispatch}}>
-          <LineUI src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
+          <LineUI options={{showSetIndex: true}} src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
         </LineSetContext.Provider>
       </Content>
     </Layout>

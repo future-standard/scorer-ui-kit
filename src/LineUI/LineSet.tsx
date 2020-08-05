@@ -24,7 +24,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
   const [handleAngles, setHandleAngles] = useState<number[]>([]);
 
-  const handleRelation : any = useRef();
+  const handleRelation = useRef<{offsetX: number, offsetY: number}[]>([]);
   const handleRadius : number = size / 2;
   const handleUsesAngles : boolean = lineSetData.points.length === 2;
 
@@ -97,13 +97,13 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
     const { points } = lineSetData;
 
-    let pointer = {
+    const pointer = {
       x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a) - handleRadius,
       y: ((pointerPosition.y - screenCTM.f ) / screenCTM.d) - handleRadius
     };
 
-    let newPoints = points.map((_handle, index) => {
-      const {offsetX, offsetY} = handleRelation.current[index];
+    const newPoints = points.map((_handle, index) => {
+      const {offsetX=0, offsetY=0} = handleRelation.current[index]||{};
 
       return enforceBoundaries({
         x: Math.round(pointer.x - offsetX),
