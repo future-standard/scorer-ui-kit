@@ -80,7 +80,7 @@ const Drawer = styled.div<{ isOpen : boolean }>`
   border-left: hsla(0, 0%, 84%, 50%) 1px solid;
   width: 200px;
   opacity: 0;
-  display: none;
+  visibility: hidden;
 
 
   ${({theme}) => css`
@@ -93,7 +93,7 @@ const Drawer = styled.div<{ isOpen : boolean }>`
   ${({isOpen}) => isOpen && css`
     right: 0;
     opacity: 1;
-    display: block;
+    visibility: visible;
   `}
 `
 
