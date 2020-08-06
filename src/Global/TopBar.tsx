@@ -49,7 +49,7 @@ const ButtonArea = styled.div`
   padding-right: 10px;
 `
 
-const DrawerToggle = styled.button.attrs({ type: 'button' })`
+const DrawerToggle = styled.button.attrs({ type: 'button' })<{ isActive: boolean }>`
   width: 60px;
   margin: 0 5px;
   height: inherit;
@@ -58,6 +58,14 @@ const DrawerToggle = styled.button.attrs({ type: 'button' })`
   border-bottom: 5px solid hsla(0, 0%, 84%, 50%);
   outline: none;
   cursor: pointer;
+
+  ${({theme}) => css`
+    transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
+  `};
+
+  ${({isActive}) => isActive && css`
+    border-bottom-color: hsla(210, 91.4%, 77.3%, 1.000);
+  `}
 `
 
 const Drawer = styled.div<{ isOpen : boolean }>`
@@ -143,6 +151,7 @@ interface IProps {
 const TopBar : React.FC<IProps> = () => {
 
   const [isUserMenuOpen, setUserMenuOpen] = useState<boolean>(false);
+  const [isNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);
 
   return (
     <Container>
@@ -152,11 +161,13 @@ const TopBar : React.FC<IProps> = () => {
         </IconWrapper>
         <SearchInput placeholder={'Search for devices, analysis tasks, etc.'} />
       </SearchBar>
+
       <ButtonArea>
-        <DrawerToggle onClick={ () => setUserMenuOpen(!isUserMenuOpen) }><Icon icon={'Invalid'} size={18} color={'dimmed'} /></DrawerToggle>
-        <DrawerToggle onClick={ () => setUserMenuOpen(!isUserMenuOpen) }><Icon icon={'Success'} size={18} color={'dimmed'} /></DrawerToggle>
+        <DrawerToggle isActive={isNotificationsOpen} onClick={ () => setNotificationsOpen(!isNotificationsOpen) }><Icon icon={'Invalid'} size={18} color={'dimmed'} /></DrawerToggle>
+        <DrawerToggle isActive={isUserMenuOpen} onClick={ () => setUserMenuOpen(!isUserMenuOpen) }><Icon icon={'Success'} size={18} color={'dimmed'} /></DrawerToggle>
       </ButtonArea>
 
+      {/* User Menu */}
       <Drawer isOpen={ isUserMenuOpen }>
         <CurrentUser>
           <DrawerHeader>Current User</DrawerHeader>
@@ -175,6 +186,13 @@ const TopBar : React.FC<IProps> = () => {
             <LinkMenuItem><LinkMenuItemA href="#">Logout</LinkMenuItemA></LinkMenuItem>
           </LinkMenu>
         </Logout>
+      </Drawer>
+
+      {/* Notifications */}
+      <Drawer isOpen={ isNotificationsOpen }>
+        <CurrentUser>
+          <em>Feature Pending Development.</em>
+        </CurrentUser>
       </Drawer>
 
     </Container>
