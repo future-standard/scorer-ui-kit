@@ -44,14 +44,11 @@ const GrabHandleIndexText = styled.text<{showIndex: boolean}>`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   fill: hsla(205deg, 80%, 25%, 100%);
   text-align: center;
-  opacity: 0;
+
   font-weight: bold;
   transition: opacity 250ms ease;
   pointer-events: none;
 
-  ${props => props.showIndex && css`
-    opacity: 1;
-  `};
 
 `;
 
@@ -86,18 +83,19 @@ interface ILineUnitProps {
   lineMoveCallback: any,
   lineMoveStartCallback: any
   moveEndCB?: () => void;
+  showGrabHandle? :boolean;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, moveEndCB=()=>{}} = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, showGrabHandle, moveEndCB=()=>{}} = props;
   const { handleFinderActive, revealSetIndex } = options;
 
   const a = x1 - x2;
   const b = y1 - y2;
   const distance = Math.sqrt( a*a + b*b );
-  const hideGrabHandle = distance < 60;
+  const hideGrabHandle = showGrabHandle || distance < 60;
 
 
   /** --- Toucher Events Section --- */
@@ -139,22 +137,25 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     lineMoveCallback({ x: e.pageX, y: e.pageY });
     e.preventDefault();
   };
-
+  const midpoint = {
+    x: (x2 + x1) / 2,
+    y: (y2 + y1) / 2
+  };
   return (
     <g>
       <ContrastLine x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
       <HighlightLine x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
       <GrabHandleGroup showIndex={handleFinderActive && revealSetIndex} originalRadius={8 * unit}>
-        <GrabHandleContrast r={8 * unit} strokeWidth={4 * unit} cx={((x2 + x1) / 2)} cy={((y2 + y1) / 2)} hide={hideGrabHandle} />
-        <GrabHandle textAnchor='middle' r={8 * unit} strokeWidth={1 * unit} cx={((x2 + x1) / 2)} cy={((y2 + y1) / 2)} hide={hideGrabHandle} onTouchMove={grabTouchMove} onTouchStart={grabTouchStart} onMouseDown={handleMouseDown} />
+        <GrabHandleContrast r={8 * unit} strokeWidth={4 * unit} cx={midpoint.x} cy={midpoint.y} hide={hideGrabHandle} />
+        <GrabHandle textAnchor='middle' r={8 * unit} strokeWidth={1 * unit} cx={midpoint.x} cy={midpoint.y} hide={hideGrabHandle} onTouchMove={grabTouchMove} onTouchStart={grabTouchStart} onMouseDown={handleMouseDown} />
       </GrabHandleGroup>
 
       <circle r={1* unit} cx={x1} cy={y1} fill='white' />
       <circle r={1* unit} cx={x2} cy={y2} fill='white' />
 
-      <GrabHandleIndexGroup showIndex={handleFinderActive && revealSetIndex}>
-        <GrabHandleIndexText x={((x2 + x1) / 2) - 6 * unit} y={((y2 + y1) / 2) + 6 * unit} showIndex={handleFinderActive}>
+      <GrabHandleIndexGroup showIndex={handleFinderActive || revealSetIndex}>
+        <GrabHandleIndexText fontSize={`${unit * 10}px`} x={midpoint.x - (6 * unit)} y={midpoint.y + (4 * unit)} showIndex={revealSetIndex || handleFinderActive}>
           {lineSetId}
         </GrabHandleIndexText>
       </GrabHandleIndexGroup>

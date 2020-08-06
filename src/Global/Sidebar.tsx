@@ -10,6 +10,8 @@ const Container = styled.div`
   border-right: 1px solid hsla(0, 0%, 84%, 50%);
   height: 100%;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 `;
 const LogoContainer = styled.div`
   height: 84px;

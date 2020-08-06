@@ -14,9 +14,11 @@ type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
 
 
 const TextField : React.FC<Props> = ({ name, label, fieldState='default', feedbackMessage, type:_type , ...props }) => {
-  return <Label htmlFor={name} labelText={label}>
-    <Input type='text' {...{fieldState, feedbackMessage, ...props }} />
-  </Label>;
+  return (
+    <Label htmlFor={name} labelText={label}>
+      <Input type='text' {...{fieldState, feedbackMessage, ...props }} />
+    </Label>
+  );
 };
 
 

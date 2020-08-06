@@ -16,10 +16,11 @@
     "react-i18next": "^11.4.0",
     "react-scripts": "file:../node_modules/react-scripts",
     "scorer-ui-kit": "file:..",
-    "styled-components": "file:../node_modules/styled-components"
+    "styled-components": "file:../node_modules/styled-components",
+    "react-router-dom": "file:../node_modules/react-router-dom"
   },
   "scripts": {
-    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
+    "start": "react-scripts start",
     "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
     "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"

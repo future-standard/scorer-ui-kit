@@ -25,13 +25,14 @@ const InputActionButton = styled.button.attrs({ type: "button" })`
 `;
 
 const FeedbackContainer = styled.div`
-  flex: 1 0;
+  /* flex-grow: 0; */
+  flex-shrink: 0;
   background-color: hsl(0, 0%, 99%);
   border: 1px solid rgb(217, 218, 217);
   border-left: none;
   border-radius: 0 3px 3px 0;
   overflow: hidden;
-  padding: 0 10px 0 0;
+  /* padding: 0 10px 0 0; */
 
   display:flex;
   justify-content:left;
@@ -52,11 +53,12 @@ const FeedbackMessage = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
-  padding: 0px;
+  padding: 0 10px 0 0;
 `;
 
 const FeedbackIcon = styled.div`
   flex: 0 0 40px;
+  width: 40px;
   display: flex;
   justify-content:center;
   align-items:center;
@@ -151,18 +153,18 @@ interface OwnProps {
   feedbackMessage?: string;
   actionCallback?: ()=>void;
   actionIcon?: any
-  postfix?: string; 
+  postfix?: string;
 }
 
 type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
 
-const Input : React.FC<Props> = ({ 
-  type = 'text', 
-  placeholder = '', 
-  defaultValue, 
-  fieldState = 'default', 
+const Input : React.FC<Props> = ({
+  type = 'text',
+  placeholder = '',
+  defaultValue,
+  fieldState = 'default',
   feedbackMessage,
-  actionCallback, 
+  actionCallback,
   actionIcon,
   postfix,
   ...props
@@ -187,29 +189,31 @@ const Input : React.FC<Props> = ({
     }
   };
 
-  return <Container fieldState={fieldState || 'default'}>
+  return (
+    <Container fieldState={fieldState || 'default'}>
 
-    <InputContainer hasAction={isActionButton}>
-      <StyledInput fieldState={fieldState || 'default'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
-      {(isActionButton) ? (
-        <ActionContainer>
-          <InputActionButton onClick={actionCallback}>
-            <Icon icon={actionIcon} color='primary' />
-          </InputActionButton>
-        </ActionContainer>
-      ) : null}
-    </InputContainer>
-
-    {fieldState ? (
-      <FeedbackContainer>
-        <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
-        {feedbackMessage ? (
-          <FeedbackMessage>{feedbackMessage}</FeedbackMessage>
+      <InputContainer hasAction={isActionButton}>
+        <StyledInput fieldState={fieldState || 'default'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
+        {(isActionButton) ? (
+          <ActionContainer>
+            <InputActionButton onClick={actionCallback}>
+              <Icon icon={actionIcon} color='primary' />
+            </InputActionButton>
+          </ActionContainer>
         ) : null}
-      </FeedbackContainer>
-    ) : null}
+      </InputContainer>
 
-  </Container>;
+      {fieldState ? (
+        <FeedbackContainer>
+          <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
+          {feedbackMessage ? (
+            <FeedbackMessage>{feedbackMessage}</FeedbackMessage>
+          ) : null}
+        </FeedbackContainer>
+      ) : null}
+
+    </Container>
+  );
 };
 
 

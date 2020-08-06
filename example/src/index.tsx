@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme } from 'scorer-ui-kit';
+import { lightTheme } from 'scorer-ui-kit';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -10,13 +10,11 @@ import './i18n';
 import Fonts from './fonts';
 import Style from './style';
 
-const useDarkMode = () => {
-  return true;
-}
+
 
 ReactDOM.render(
   <React.StrictMode>
-   <ThemeProvider theme={useDarkMode() ? darkTheme : lightTheme}>
+   <ThemeProvider theme={ lightTheme}>
       <App />
       <Fonts />
       <Style />
