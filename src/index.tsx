@@ -48,6 +48,7 @@ import WebRTCClient from './WebRTCClient';
 
 import {
   MainMenu,
+  TopBar,
   Content,
   Layout,
   SidebarBox,
@@ -100,6 +101,7 @@ export {
 
   // Global
   MainMenu,
+  TopBar,
   Layout,
   Content,
   SidebarBox,
