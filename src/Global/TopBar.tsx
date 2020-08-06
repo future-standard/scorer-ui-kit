@@ -80,6 +80,7 @@ const Drawer = styled.div<{ isOpen : boolean }>`
   border-left: hsla(0, 0%, 84%, 50%) 1px solid;
   width: 200px;
   opacity: 0;
+  display: none;
 
 
   ${({theme}) => css`
@@ -92,6 +93,7 @@ const Drawer = styled.div<{ isOpen : boolean }>`
   ${({isOpen}) => isOpen && css`
     right: 0;
     opacity: 1;
+    display: block;
   `}
 `
 
@@ -145,25 +147,38 @@ const LinkMenuItemA = styled.a`
 `
 
 interface IProps {
-
+  useNotifications?: boolean
+  userSubmenu: any[]
+  logoutLink?: string
+  loggedInUser: string
+  useSearch?: boolean
+  searchPlaceholder?: string
 }
 
-const TopBar : React.FC<IProps> = () => {
+const TopBar : React.FC<IProps> = ({
+  useNotifications = false,
+  logoutLink = '/logout',
+  useSearch = false,
+  searchPlaceholder = 'Search for devices, analysis tasks, etc.',
+  userSubmenu = [],
+  loggedInUser
+}) => {
 
   const [isUserMenuOpen, setUserMenuOpen] = useState<boolean>(false);
   const [isNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);
 
   return (
     <Container>
-      <SearchBar>
-        <IconWrapper>
-          <Icon icon={'Search'} size={18} color={'dimmed'} />
-        </IconWrapper>
-        <SearchInput placeholder={'Search for devices, analysis tasks, etc.'} />
-      </SearchBar>
+      { useSearch ?
+        <SearchBar>
+          <IconWrapper>
+            <Icon icon={'Search'} size={18} color={'dimmed'} />
+          </IconWrapper>
+          <SearchInput placeholder={searchPlaceholder} />
+        </SearchBar> : <div></div> }
 
       <ButtonArea>
-        <DrawerToggle isActive={isNotificationsOpen} onClick={ () => { setNotificationsOpen(!isNotificationsOpen); setUserMenuOpen(false) } }><Icon icon={'Notifications'} size={18} color={'dimmed'} /></DrawerToggle>
+        { useNotifications ? <DrawerToggle isActive={isNotificationsOpen} onClick={ () => { setNotificationsOpen(!isNotificationsOpen); setUserMenuOpen(false) } }><Icon icon={'Notifications'} size={18} color={'dimmed'} /></DrawerToggle> : null }
         <DrawerToggle isActive={isUserMenuOpen} onClick={ () => { setUserMenuOpen(!isUserMenuOpen); setNotificationsOpen(false) } }><Icon icon={'UserProfile'} size={18} color={'dimmed'} /></DrawerToggle>
       </ButtonArea>
 
@@ -171,29 +186,34 @@ const TopBar : React.FC<IProps> = () => {
       <Drawer isOpen={ isUserMenuOpen }>
         <CurrentUser>
           <DrawerHeader>Current User</DrawerHeader>
-          leonard.burton@futurestandard.co.jp
+          { loggedInUser }
         </CurrentUser>
-        <UserMenu>
-          <DrawerHeader>Account Options</DrawerHeader>
-          <LinkMenu>
-            <LinkMenuItem><LinkMenuItemA href="#">Accounts</LinkMenuItemA></LinkMenuItem>
-            <LinkMenuItem><LinkMenuItemA href="#">Billing</LinkMenuItemA></LinkMenuItem>
-            <LinkMenuItem><LinkMenuItemA href="#">Payments</LinkMenuItemA></LinkMenuItem>
-          </LinkMenu>
-        </UserMenu>
+
+        { userSubmenu.length > 0 ?
+          <UserMenu>
+            <DrawerHeader>Account Options</DrawerHeader>
+            <LinkMenu>
+              {userSubmenu.map(({text, href}) => {
+                return <LinkMenuItem><LinkMenuItemA href={ href }>{ text }</LinkMenuItemA></LinkMenuItem>
+              })}
+            </LinkMenu>
+          </UserMenu>
+        : null }
+
         <Logout>
           <LinkMenu>
-            <LinkMenuItem><LinkMenuItemA href="#">Logout</LinkMenuItemA></LinkMenuItem>
+            <LinkMenuItem><LinkMenuItemA href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
           </LinkMenu>
         </Logout>
       </Drawer>
 
       {/* Notifications */}
-      <Drawer isOpen={ isNotificationsOpen }>
-        <CurrentUser>
-          <em>Feature Pending Development.</em>
-        </CurrentUser>
-      </Drawer>
+      { useNotifications ?
+        <Drawer isOpen={ isNotificationsOpen }>
+          <CurrentUser>
+            <em>Feature Pending Development.</em>
+          </CurrentUser>
+        </Drawer> : null }
 
     </Container>
   )
