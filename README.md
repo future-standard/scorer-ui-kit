@@ -22,10 +22,11 @@ Now, anytime you make a change to your library in `src/` or to the example app's
 
 ### SVGs
 
-To compile SVGs...
+To compile SVGs..
 
 ```bash
 #npm run svgr
+cd ./src
 npx @svgr/cli ./Icons/stroked/svg --out-dir ./Icons/stroked/ --template ./Icons/stroked/SVGRtemplate.js --typescript
 ```
 

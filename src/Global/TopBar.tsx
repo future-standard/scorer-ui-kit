@@ -157,14 +157,14 @@ const TopBar : React.FC<IProps> = () => {
     <Container>
       <SearchBar>
         <IconWrapper>
-          <Icon icon={'Invalid'} size={18} color={'dimmed'} />
+          <Icon icon={'Search'} size={18} color={'dimmed'} />
         </IconWrapper>
         <SearchInput placeholder={'Search for devices, analysis tasks, etc.'} />
       </SearchBar>
 
       <ButtonArea>
-        <DrawerToggle isActive={isNotificationsOpen} onClick={ () => setNotificationsOpen(!isNotificationsOpen) }><Icon icon={'Invalid'} size={18} color={'dimmed'} /></DrawerToggle>
-        <DrawerToggle isActive={isUserMenuOpen} onClick={ () => setUserMenuOpen(!isUserMenuOpen) }><Icon icon={'Success'} size={18} color={'dimmed'} /></DrawerToggle>
+        <DrawerToggle isActive={isNotificationsOpen} onClick={ () => { setNotificationsOpen(!isNotificationsOpen); setUserMenuOpen(false) } }><Icon icon={'Notifications'} size={18} color={'dimmed'} /></DrawerToggle>
+        <DrawerToggle isActive={isUserMenuOpen} onClick={ () => { setUserMenuOpen(!isUserMenuOpen); setNotificationsOpen(false) } }><Icon icon={'UserProfile'} size={18} color={'dimmed'} /></DrawerToggle>
       </ButtonArea>
 
       {/* User Menu */}
