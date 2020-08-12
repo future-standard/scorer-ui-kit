@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { StyledComponent } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 
@@ -9,7 +9,8 @@ const Container = styled.div`
   width: 286px;
   border-right: 1px solid hsla(0, 0%, 84%, 50%);
   height: 100%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 `;

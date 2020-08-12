@@ -74,15 +74,17 @@ interface IProps extends IButtonProps {
   loading: boolean
 }
 
-const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', onClick, disabled, position, loading, children}) => {
-  return <Button disabled={disabled || loading} {...{ design, size, onClick }}>
-    <InnerContainer {...{loading}}>
-      <TextContainer>{children}</TextContainer>
-      <LoadingContainer {...{ design, position }}>
-        <Spinner size='small' styling={design} />
-      </LoadingContainer>
-    </InnerContainer>
-  </Button>;
+const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', onClick, disabled, position, loading, children,...rest}) => {
+  return (
+    <Button disabled={disabled || loading} {...{ design, size, onClick}} {...rest}>
+      <InnerContainer {...{loading}}>
+        <TextContainer>{children}</TextContainer>
+        <LoadingContainer {...{ design, position }}>
+          <Spinner size='small' styling={design} />
+        </LoadingContainer>
+      </InnerContainer>
+    </Button>
+  );
 };
 
 export default ButtonWithLoading;

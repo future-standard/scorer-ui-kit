@@ -68,7 +68,7 @@ export default (state : IPointSet[], action: IReducerActions) => {
       return newState;
 
     case "REMOVE_POINT":
-      if(state[action.index].points.length <= 2){ return state; };
+      if(state[action.index].points.length <= 2){ return state; }
 
       newState = [...state];
       newState[action.index].points.splice( newState[action.index].points.length - 1, 1);
@@ -77,17 +77,18 @@ export default (state : IPointSet[], action: IReducerActions) => {
     case 'LOAD':
       newState = [ ...(
         action.state.map(
-          ({name, points}) => ({
+          ({name, points, ...rest}) => ({
             name,
             points: [
               ...points.map( ({x,y}) => ({
                 x,
                 y
               }))
-            ]
+            ],
+            ...rest
           })
         )
-      )]
+      )];
       return [...action.state];
 
     default:

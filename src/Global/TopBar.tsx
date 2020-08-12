@@ -10,7 +10,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   box-shadow: 5px 7px 10px 0 hsla(205, 16%, 77%, 0.1);
-`
+`;
 
 const SearchBar = styled.div`
   flex: 0 1 500px;
@@ -18,7 +18,7 @@ const SearchBar = styled.div`
   justify-content: center;
   align-items: center;
 
-`
+`;
 
 const IconWrapper = styled.div`
   flex: 0 35px;
@@ -27,7 +27,7 @@ const IconWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-`
+`;
 
 const SearchInput = styled.input`
   font-family: ${({theme}) => theme.fontFamily.data};
@@ -42,12 +42,12 @@ const SearchInput = styled.input`
     font-style: italic;
     color: hsla(0,0%,57.6%,1.000);
   }
-`
+`;
 
 const ButtonArea = styled.div`
   height: inherit;
   padding-right: 10px;
-`
+`;
 
 const DrawerToggle = styled.button.attrs({ type: 'button' })<{ isActive: boolean }>`
   width: 60px;
@@ -66,7 +66,7 @@ const DrawerToggle = styled.button.attrs({ type: 'button' })<{ isActive: boolean
   ${({isActive}) => isActive && css`
     border-bottom-color: hsla(210, 91.4%, 77.3%, 1.000);
   `}
-`
+`;
 
 const Drawer = styled.div<{ isOpen : boolean }>`
 
@@ -95,7 +95,7 @@ const Drawer = styled.div<{ isOpen : boolean }>`
     opacity: 1;
     visibility: visible;
   `}
-`
+`;
 
 const DrawerHeader = styled.h2`
   text-transform: uppercase;
@@ -104,47 +104,47 @@ const DrawerHeader = styled.h2`
   color: hsla(0, 0%, 34%, 75%);
   padding: 0;
   margin: 0 0 5px;
-`
+`;
 
 const CurrentUser = styled.div`
   font-size: 12px;
   font-weight: 500;
   color: hsla(0, 0%, 34%, 75%);
   padding: 20px 20px 15px;
-  whitespace: no-wrap;
+  word-break: no-wrap;
   overflow: hidden;
   text-overflow: ellipsis;
   border-bottom: hsla(0, 0%, 84%, 50%) 1px solid;
 
-`
+`;
 
 const UserMenu = styled.div`
   padding: 20px 20px 0;
   border-bottom: hsla(0, 0%, 84%, 50%) 1px solid;
 
-`
+`;
 
 const Logout = styled.div`
   padding: 0 20px;
-`
+`;
 
 const LinkMenu = styled.ul`
   padding: 0;
   margin: 22px 0 0 0;
   list-style: none;
-`
+`;
 
 const LinkMenuItem = styled.li`
   padding: 0;
   margin: 0 0 21px;
 
-`
+`;
 const LinkMenuItemA = styled.a`
   font-size: 16px;
   font-weight: 400;
   color: hsl(0, 0%, 34%);
   text-decoration: none;
-`
+`;
 
 interface IProps {
   useNotifications?: boolean
@@ -169,36 +169,36 @@ const TopBar : React.FC<IProps> = ({
 
   return (
     <Container>
-      { useSearch ?
+      {useSearch ?
         <SearchBar>
           <IconWrapper>
-            <Icon icon={'Search'} size={18} color={'dimmed'} />
+            <Icon icon='Search' size={18} color='dimmed' />
           </IconWrapper>
           <SearchInput placeholder={searchPlaceholder} />
-        </SearchBar> : <div></div> }
+        </SearchBar> : <div />}
 
       <ButtonArea>
-        { useNotifications ? <DrawerToggle isActive={isNotificationsOpen} onClick={ () => { setNotificationsOpen(!isNotificationsOpen); setUserMenuOpen(false) } }><Icon icon={'Notifications'} size={18} color={'dimmed'} /></DrawerToggle> : null }
-        <DrawerToggle isActive={isUserMenuOpen} onClick={ () => { setUserMenuOpen(!isUserMenuOpen); setNotificationsOpen(false) } }><Icon icon={'UserProfile'} size={18} color={'dimmed'} /></DrawerToggle>
+        {useNotifications ? <DrawerToggle isActive={isNotificationsOpen} onClick={() => { setNotificationsOpen(!isNotificationsOpen); setUserMenuOpen(false); }}><Icon icon='Notifications' size={18} color='dimmed' /></DrawerToggle> : null}
+        <DrawerToggle isActive={isUserMenuOpen} onClick={() => { setUserMenuOpen(!isUserMenuOpen); setNotificationsOpen(false); }}><Icon icon='UserProfile' size={18} color='dimmed' /></DrawerToggle>
       </ButtonArea>
 
       {/* User Menu */}
-      <Drawer isOpen={ isUserMenuOpen }>
+      <Drawer isOpen={isUserMenuOpen}>
         <CurrentUser>
           <DrawerHeader>Current User</DrawerHeader>
-          { loggedInUser }
+          {loggedInUser}
         </CurrentUser>
 
-        { userSubmenu.length > 0 ?
+        {userSubmenu.length > 0 ?
           <UserMenu>
             <DrawerHeader>Account Options</DrawerHeader>
             <LinkMenu>
-              {userSubmenu.map(({text, href}) => {
-                return <LinkMenuItem><LinkMenuItemA href={ href }>{ text }</LinkMenuItemA></LinkMenuItem>
+              {userSubmenu.map(({text, href}, index) => {
+                return <LinkMenuItem key={index}><LinkMenuItemA href={href}>{text}</LinkMenuItemA></LinkMenuItem>;
               })}
             </LinkMenu>
           </UserMenu>
-        : null }
+        : null}
 
         <Logout>
           <LinkMenu>
@@ -208,15 +208,15 @@ const TopBar : React.FC<IProps> = ({
       </Drawer>
 
       {/* Notifications */}
-      { useNotifications ?
-        <Drawer isOpen={ isNotificationsOpen }>
+      {useNotifications ?
+        <Drawer isOpen={isNotificationsOpen}>
           <CurrentUser>
             <em>Feature Pending Development.</em>
           </CurrentUser>
-        </Drawer> : null }
+        </Drawer> : null}
 
     </Container>
-  )
+  );
 
 };
 

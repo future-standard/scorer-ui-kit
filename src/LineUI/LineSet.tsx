@@ -150,7 +150,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
 
   const handles = lineSetData.points.map(({x,y}, index) => {
-    return (<HandleUnit key={index} moveEndCB={onLineMoveEnd} lineSetId={lineSetId} index={index} unit={unit} size={size} useAngles={handleUsesAngles} angle={handleAngles[index]} x={x} y={y} moveCallback={handleMoveCallback} />);
+    return (<HandleUnit key={index} moveEndCB={onLineMoveEnd} lineSetId={lineSetId} rotate={lineSetData.rotate} Icon={lineSetData.icon} index={index} unit={unit} size={size} useAngles={handleUsesAngles} angle={handleAngles[index]} x={x} y={y} moveCallback={handleMoveCallback} />);
   }
   );
 

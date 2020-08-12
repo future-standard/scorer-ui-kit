@@ -4,9 +4,9 @@ import { IDragLineUISharedOptions } from './typings';
 
 
 const ContrastLine = styled.line`
-pointer-events: none;
-stroke: hsla(205deg, 80%, 45%, 100%);
-mix-blend-mode: multiply;
+  pointer-events: none;
+  stroke: hsla(205deg, 80%, 45%, 100%);
+  mix-blend-mode: multiply;
 `;
 
 const HighlightLine = styled.line`
@@ -83,19 +83,18 @@ interface ILineUnitProps {
   lineMoveCallback: any,
   lineMoveStartCallback: any
   moveEndCB?: () => void;
-  showGrabHandle? :boolean;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, showGrabHandle, moveEndCB=()=>{}} = props;
-  const { handleFinderActive, revealSetIndex } = options;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, moveEndCB=()=>{}} = props;
+  const { handleFinderActive, revealSetIndex, showGrabHandle } = options;
 
   const a = x1 - x2;
   const b = y1 - y2;
   const distance = Math.sqrt( a*a + b*b );
-  const hideGrabHandle = showGrabHandle || distance < 60;
+  const hideGrabHandle = !showGrabHandle || distance < 60;
 
 
   /** --- Toucher Events Section --- */
@@ -143,7 +142,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   };
   return (
     <g>
-      <ContrastLine x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
+      <ContrastLine strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
       <HighlightLine x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
       <GrabHandleGroup showIndex={handleFinderActive && revealSetIndex} originalRadius={8 * unit}>
@@ -154,8 +153,8 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
       <circle r={1* unit} cx={x1} cy={y1} fill='white' />
       <circle r={1* unit} cx={x2} cy={y2} fill='white' />
 
-      <GrabHandleIndexGroup showIndex={handleFinderActive || revealSetIndex}>
-        <GrabHandleIndexText fontSize={`${unit * 10}px`} x={midpoint.x - (6 * unit)} y={midpoint.y + (4 * unit)} showIndex={revealSetIndex || handleFinderActive}>
+      <GrabHandleIndexGroup showIndex={!hideGrabHandle && (handleFinderActive || revealSetIndex)}>
+        <GrabHandleIndexText fontSize={`${unit * 10}px`} x={midpoint.x - (3 * unit)} y={midpoint.y + (4 * unit)} showIndex={revealSetIndex || handleFinderActive}>
           {lineSetId}
         </GrabHandleIndexText>
       </GrabHandleIndexGroup>

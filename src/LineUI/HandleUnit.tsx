@@ -80,6 +80,31 @@ const HandleShadowLayer = styled.circle<{fillID: string}>`
     fill: url(#${props => (props.fillID)});
 `;
 
+const GrabHandleIndexGroup = styled.g<{showIndex: boolean}>`
+  opacity: 0;
+  pointer-events: none;
+  ${props => props.showIndex && css`
+    opacity: 1;
+  `};
+
+`;
+
+const GrabHandleIndexText = styled.text<{showIndex: boolean}>`
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  fill: hsla(205deg, 80%, 25%, 100%);
+  text-align: center;
+
+  font-weight: bold;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+
+
+`;
+
+const IconGroup = styled.g`
+
+`;
+
 interface IHandleUnitProps {
   lineSetId: number
   index: number
@@ -87,15 +112,17 @@ interface IHandleUnitProps {
   useAngles: boolean
   unit: number
   size: number
-  x: number
-  y: number
+  x: number;
+  y: number;
+  Icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>> & {rotate?: number};
+  rotate?: number;
   moveCallback: any;
   moveEndCB?: ()=>void;
 }
 
 const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   // console.log(props.lineSetId, typeof props.lineSetId)
-  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{} } = props;
+  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0 } = props;
   // console.log("Handle "+ index +" from set "+ lineSetId + " :: " + x, ", " + y)
 
   let handleInstance : any = React.createRef();
@@ -173,18 +200,34 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
         </radialGradient>
       </defs>
 
-      <g transform={`scale(${ unit })`}>
+      {
+        Icon ?
+          <IconGroup transform={`scale(${unit * 2 }) translate(-21 -21) rotate(${rotate}, 21, 21 )`}>
+            <Icon height='42' width='42' />
+          </IconGroup>
+        :
+          <g transform={`scale(${ unit })`}>
 
-        <HandleShadowLayer r={size * 1} fillID={shadowGradientID} />
-        <HandleContrastLayer r={size / 2.4} strokeWidth={size / 3} />
+            <HandleShadowLayer r={size * 1} fillID={shadowGradientID} />
+            <HandleContrastLayer r={size / 2.4} strokeWidth={size / 3} />
 
-        <HandleReactiveGroup touchDragging={touchDragging} mouseDragging={mouseDragging}>
-          <HandleReactiveFill r={size / 1.8} />
-          <HandleReactiveRing r={size / 2.25} strokeWidth={size / 3} />
-        </HandleReactiveGroup>
+            <HandleReactiveGroup touchDragging={touchDragging} mouseDragging={mouseDragging}>
+              <HandleReactiveFill r={size / 1.8} />
+              <HandleReactiveRing r={size / 2.25} strokeWidth={size / 3} />
+            </HandleReactiveGroup>
 
-        <HandleRingLayer r={size / 2} strokeWidth={size / 6} maskID={maskID} />
-      </g>
+            <HandleRingLayer r={size / 2} strokeWidth={size / 6} maskID={maskID} />
+
+            <GrabHandleIndexGroup showIndex>
+              <GrabHandleIndexText fontSize='10px' showIndex>
+                {index}
+              </GrabHandleIndexText>
+            </GrabHandleIndexGroup>
+
+          </g>
+      }
+
+
 
     </HandleBase>
   );

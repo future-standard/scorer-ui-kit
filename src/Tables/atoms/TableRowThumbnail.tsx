@@ -32,7 +32,7 @@ const Image = styled.div<{ image?: string }>`
   right: 0;
   bottom: 0;
   background-image: url(${p => p.image});
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   display: ${p => p.image ? 'block' : 'none'};
 `;

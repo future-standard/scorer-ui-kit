@@ -26,7 +26,7 @@ export {
     Switch,
     PasswordField,
     TextField
-}
+};
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
 export type TypeButtonDesigns = 'primary' | 'secondary' | 'danger';

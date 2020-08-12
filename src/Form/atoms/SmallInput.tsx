@@ -58,8 +58,7 @@ const UnitKey = styled.div`
   font-size: 12px;
   color: #99a1a3;
   line-height:30px;
-
-`
+`;
 
 const Container = styled.div<{ fieldState: string }>`
 
@@ -111,6 +110,7 @@ const SmallInput : React.FC<Props> = ({
   placeholder = '',
   defaultValue,
   fieldState = 'default',
+  className,
   ...props
 }) => {
 
@@ -121,17 +121,19 @@ const SmallInput : React.FC<Props> = ({
     if(unitElement && unitElement.current){
       setUnitElementWidth(unitElement.current.clientWidth || 0);
     }
-  }, [unitElement, setUnitElementWidth, unit])
+  }, [unitElement, setUnitElementWidth, unit]);
 
-  return <Container fieldState={fieldState || 'default'}>
-    <Label labelText={label} htmlFor={name || ''}>
-      <InputContainer>
-        <StyledInput padRight={unitElementWidth} fieldState={fieldState || 'default'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
-        { unit ? <UnitKey ref={ unitElement }>{unit}</UnitKey> : null }
-      </InputContainer>
-    </Label>
+  return (
+    <Container className={className} fieldState={fieldState || 'default'}>
+      <Label labelText={label} htmlFor={name || ''}>
+        <InputContainer>
+          <StyledInput padRight={unitElementWidth} fieldState={fieldState || 'default'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
+          {unit ? <UnitKey ref={unitElement}>{unit}</UnitKey> : null}
+        </InputContainer>
+      </Label>
 
-  </Container>;
+    </Container>
+  );
 
 };
 

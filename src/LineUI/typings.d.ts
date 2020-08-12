@@ -5,8 +5,11 @@ export interface IVector2 {
 }
 
 export interface IPointSet {
-  name?: string,
-  points: IVector2[],
+  name?: string;
+  points: IVector2[];
+  readOnly?: boolean;
+  icon: React.FunctionComponent;
+  rotate?: number;
 }
 
 export interface IMinMax {
@@ -24,4 +27,5 @@ export interface IDragLineUISharedOptions {
   handleFinderActive: boolean
   showHandle: boolean;
   showPointLabel: boolean;
+  showGrabHandle?: boolean;
 }

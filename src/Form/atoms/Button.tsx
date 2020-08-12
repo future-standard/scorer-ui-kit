@@ -23,6 +23,10 @@ const StyledButton = styled.button<IStyledComponentProps>`
   padding: 0 20px;
   outline: none;
 
+  button + button {
+    margin-left: 20px;
+  }
+
   &:hover {
     background: ${props => props.theme.colors.form.button[props.design].hover.backgroundColor};
   }
