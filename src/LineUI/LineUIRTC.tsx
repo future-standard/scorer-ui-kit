@@ -57,6 +57,7 @@ interface LineUIProps {
     showSetIndex?: boolean;
     showPointLabel?: boolean;
     showHandle?: boolean;
+    showGrabHandle?: boolean;
   }
 }
 const LineUI : React.FC<LineUIProps> = ({
@@ -67,7 +68,8 @@ const LineUI : React.FC<LineUIProps> = ({
     showHandleFinder,
     showSetIndex,
     showPointLabel = false,
-    showHandle = true
+    showHandle = true,
+    showGrabHandle
   }={}
 }) => {
 
@@ -154,7 +156,8 @@ const LineUI : React.FC<LineUIProps> = ({
     handleFinderActive: handleFinder,
     revealSetIndex:  showSetIndex || state.length > 1,
     showPointLabel,
-    showHandle
+    showHandle,
+    showGrabHandle
   };
 
   return (
