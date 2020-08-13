@@ -148,10 +148,24 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     }
   }, [lineSetData, updateHandleAngles, handleUsesAngles]);
 
-
-  const handles = lineSetData.points.map(({x,y}, index) => {
-    return (<HandleUnit key={index} moveEndCB={onLineMoveEnd} lineSetId={lineSetId} rotate={lineSetData.rotate} Icon={lineSetData.icon} index={index} unit={unit} size={size} useAngles={handleUsesAngles} angle={handleAngles[index]} x={x} y={y} moveCallback={handleMoveCallback} />);
-  }
+  const handles = lineSetData.points.map(({x,y}, index) =>
+    <HandleUnit
+      key={index}
+      lineSetId={lineSetId}
+      rotate={lineSetData.rotate}
+      Icon={lineSetData.icon}
+      index={index}
+      unit={unit}
+      size={size}
+      useAngles={handleUsesAngles}
+      angle={handleAngles[index]}
+      x={x}
+      y={y}
+      moveEndCB={onLineMoveEnd}
+      moveCallback={handleMoveCallback}
+      options={options}
+      readOnly={lineSetData.readOnly}
+    />
   );
 
   const lines = lineSetData.points.map(({x:x1,y:y1}, index) => {
@@ -164,14 +178,26 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     }
     const {x:x2,y:y2} = points[nextIndex];
 
-    return <LineUnit key={index} moveEndCB={onLineMoveEnd} lineSetId={lineSetId} options={options} x1={x1} y1={y1} x2={x2} y2={y2} unit={unit} lineMoveCallback={lineDragUpdate} lineMoveStartCallback={lineDragStart} />;
-  }
-  );
+  return (
+    <LineUnit
+      key={index}
+      moveEndCB={onLineMoveEnd}
+      lineSetId={lineSetId}
+      options={options}
+      x1={x1}
+      y1={y1}
+      x2={x2}
+      y2={y2}
+      unit={unit}
+      lineMoveCallback={lineDragUpdate}
+      lineMoveStartCallback={lineDragStart}
+    />
+  )});
 
   return (
     <g>
       {lines}
-      {options.showHandle && handles}
+      {handles}
     </g>
   );
 };

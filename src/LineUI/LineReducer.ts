@@ -50,7 +50,7 @@ export default (state : IPointSet[], action: IReducerActions) => {
 
     case "UPDATE":
       newState = [...state];
-      newState[action.index] = {...action.data};
+      newState[action.index] = {...state[action.index],...action.data};
       return [...newState];
 
     case "ADD_SET":

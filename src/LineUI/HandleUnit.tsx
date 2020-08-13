@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import { IDragLineUISharedOptions } from './typings';
 
 
 const HandleTouchReactionKeyframes = keyframes`
@@ -118,11 +119,13 @@ interface IHandleUnitProps {
   rotate?: number;
   moveCallback: any;
   moveEndCB?: ()=>void;
+  options?: IDragLineUISharedOptions;
+  readOnly?: boolean;
 }
 
 const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   // console.log(props.lineSetId, typeof props.lineSetId)
-  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0 } = props;
+  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0, options = {}, readOnly = false} = props;
   // console.log("Handle "+ index +" from set "+ lineSetId + " :: " + x, ", " + y)
 
   let handleInstance : any = React.createRef();
@@ -134,6 +137,8 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
   /** --- Toucher Events Section --- */
   const handleTouchStart = (e: any) => {
+    e.preventDefault();
+    if (readOnly) { return; }
     // Remember what touch event index is for this handle.
     for (let i = 0; i < e.touches.length; i++) {
       const touch = e.touches[i];
@@ -142,49 +147,56 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
         setTouchIndex(i);
       }
     }
-    e.preventDefault();
   };
 
-  const handleTouchEnd = (_e: any) => {
+
+  const handleTouchEnd = useCallback(() => {
+    if (readOnly) { return; }
     setTouchDragging(false);
     setTouchIndex(null);
     moveEndCB();
-  };
+  },[]);
 
-  const handleTouchMove = (e: any) => {
+  const handleTouchMove = useCallback((e: React.TouchEvent<SVGSVGElement>) => {
     for (let i = 0; i < e.touches.length; i++) {
       if(i === touchIndex){
         moveCallback({ x: e.touches[i].pageX, y: e.touches[i].pageY}, index);
       }
     }
-  };
+  },[]);
 
   /** --- Mouse Events Section --- */
-  const handleMouseDown = (e: any) => {
+  const handleMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    e.preventDefault();
+    if (readOnly) { return; }
     setMouseDragging(true);
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
-    e.preventDefault();
-  };
 
-  const handleMouseUp = (e: any) => {
+  },[]);
+
+  const handleMouseUp = useCallback((e) => {
+    e.preventDefault();
+    if (readOnly) { return; }
     setMouseDragging(false);
     window.removeEventListener("mousemove", handleMouseMove);
     window.removeEventListener("mouseup", handleMouseUp);
     moveCallback({ x: e.pageX, y: e.pageY}, index);
     moveEndCB();
-    e.preventDefault();
-  };
 
-  const handleMouseMove = (e: any) => {
-    moveCallback({ x: e.pageX, y: e.pageY}, index);
+  },[]);
+
+  const handleMouseMove = useCallback((e) => {
     e.preventDefault();
-  };
+    if (readOnly) { return; }
+    moveCallback({ x: e.pageX, y: e.pageY}, index);
+  },[]);
 
 
 
   let maskID = useAngles ? "mask-" + lineSetId + '-' + index : '';
   let shadowGradientID = "shadowGradient-" + lineSetId + '-' + index;
+  const {showGrabHandle = true} = options as IDragLineUISharedOptions;
 
   return (
 
@@ -206,7 +218,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
             <Icon height='42' width='42' />
           </IconGroup>
         :
-          <g transform={`scale(${ unit })`}>
+          showGrabHandle && <g transform={`scale(${ unit })`}>
 
             <HandleShadowLayer r={size * 1} fillID={shadowGradientID} />
             <HandleContrastLayer r={size / 2.4} strokeWidth={size / 3} />

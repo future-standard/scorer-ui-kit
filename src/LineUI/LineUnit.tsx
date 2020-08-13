@@ -94,7 +94,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   const a = x1 - x2;
   const b = y1 - y2;
   const distance = Math.sqrt( a*a + b*b );
-  const hideGrabHandle = !showGrabHandle || distance < 60;
+  const hideGrabHandle = !showGrabHandle && distance < 60;
 
 
   /** --- Toucher Events Section --- */

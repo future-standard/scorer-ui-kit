@@ -6,6 +6,8 @@
   "extends": [
     "standard-react",
     "eslint:recommended",
+    "react-app",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/eslint-recommended"
   ],
   "env": {
