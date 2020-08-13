@@ -196,7 +196,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
   let maskID = useAngles ? "mask-" + lineSetId + '-' + index : '';
   let shadowGradientID = "shadowGradient-" + lineSetId + '-' + index;
-  const {showGrabHandle = true} = options as IDragLineUISharedOptions;
+  const {showGrabHandle = true, showPointLabel= false} = options as IDragLineUISharedOptions;
 
   return (
 
@@ -214,7 +214,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
       {
         Icon ?
-          <IconGroup transform={`scale(${unit * 2 }) translate(-21 -21) rotate(${rotate}, 21, 21 )`}>
+          <IconGroup transform={`scale(${unit * 1.5 }) translate(-21 -21) rotate(${rotate}, 21, 21 )`}>
             <Icon height='42' width='42' />
           </IconGroup>
         :
@@ -230,11 +230,13 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
             <HandleRingLayer r={size / 2} strokeWidth={size / 6} maskID={maskID} />
 
-            <GrabHandleIndexGroup showIndex>
-              <GrabHandleIndexText fontSize='10px' showIndex>
-                {index}
-              </GrabHandleIndexText>
-            </GrabHandleIndexGroup>
+            { showPointLabel &&
+              <GrabHandleIndexGroup showIndex>
+                <GrabHandleIndexText fontSize='10px' showIndex>
+                  {index}
+                </GrabHandleIndexText>
+              </GrabHandleIndexGroup>
+              }
 
           </g>
       }
