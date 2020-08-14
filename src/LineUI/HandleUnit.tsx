@@ -92,7 +92,7 @@ const GrabHandleIndexGroup = styled.g<{showIndex: boolean}>`
 
 const GrabHandleIndexText = styled.text<{showIndex: boolean}>`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  fill: hsla(205deg, 80%, 25%, 100%);
+  fill: #fff;
   text-align: center;
 
   font-weight: bold;
@@ -232,7 +232,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
             { showPointLabel &&
               <GrabHandleIndexGroup showIndex>
-                <GrabHandleIndexText fontSize='10px' showIndex>
+                <GrabHandleIndexText transform='translate(-5,6)' fontSize='20px' showIndex>
                   {index}
                 </GrabHandleIndexText>
               </GrabHandleIndexGroup>
