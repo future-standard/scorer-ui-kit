@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback, useContext, useRef } from 'react';
 import HandleUnit from './HandleUnit';
 import LineUnit from './LineUnit';
+import update from 'immutability-helper';
+
 
 import { LineSetContext } from './Contexts';
 import { IPointSet, IDragLineUISharedOptions, IVector2 } from './typings';
@@ -56,16 +58,15 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
     if(typeof screenCTM === 'undefined'){ return; }
 
-    let pointer = enforceBoundaries({
+    const pointer = enforceBoundaries({
       x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a),
       y: ((pointerPosition.y - screenCTM.f ) / screenCTM.d)
     });
-
-    let newLineSetData = {...lineSetData};
-    newLineSetData.points[index] = {
+    const point ={
       x: Math.round(pointer.x),
       y: Math.round(pointer.y)
     };
+    const newLineSetData = update(lineSetData, {points:{[index]: {$merge: point}}});
 
     dispatch({type: "UPDATE", index: lineSetId, data: newLineSetData });
 
@@ -150,7 +151,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
   const handles = lineSetData.points.map(({x,y}, index) =>
     <HandleUnit
-      key={index}
+      key={index+lineSetId}
       lineSetId={lineSetId}
       rotate={lineSetData.rotate}
       Icon={lineSetData.icon}
@@ -164,7 +165,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
       moveEndCB={onLineMoveEnd}
       moveCallback={handleMoveCallback}
       options={options}
-      readOnly={lineSetData.readOnly}
+      readOnlyHandle={lineSetData.readOnly}
     />
   );
 
@@ -192,7 +193,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
     />
-  )});
+  );});
 
   return (
     <g>

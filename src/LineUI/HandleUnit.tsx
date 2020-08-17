@@ -120,15 +120,15 @@ interface IHandleUnitProps {
   moveCallback: any;
   moveEndCB?: ()=>void;
   options?: IDragLineUISharedOptions;
-  readOnly?: boolean;
+  readOnlyHandle?: boolean;
 }
 
 const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   // console.log(props.lineSetId, typeof props.lineSetId)
-  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0, options = {}, readOnly = false} = props;
+  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0, options = {}, readOnlyHandle = false} = props;
   // console.log("Handle "+ index +" from set "+ lineSetId + " :: " + x, ", " + y)
 
-  let handleInstance : any = React.createRef();
+  let handleInstance = React.createRef<SVGSVGElement>();
 
   const [ touchDragging, setTouchDragging ] = useState(false);
   const [ mouseDragging, setMouseDragging ] = useState(false);
@@ -136,9 +136,9 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
 
   /** --- Toucher Events Section --- */
-  const handleTouchStart = (e: any) => {
+  const handleTouchStart = useCallback((e: any) => {
     e.preventDefault();
-    if (readOnly) { return; }
+    if (readOnlyHandle) { return; }
     // Remember what touch event index is for this handle.
     for (let i = 0; i < e.touches.length; i++) {
       const touch = e.touches[i];
@@ -147,52 +147,52 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
         setTouchIndex(i);
       }
     }
-  };
+  },[handleInstance, readOnlyHandle]);
 
 
   const handleTouchEnd = useCallback(() => {
-    if (readOnly) { return; }
+    if (readOnlyHandle) { return; }
     setTouchDragging(false);
     setTouchIndex(null);
     moveEndCB();
-  },[]);
+  },[moveEndCB, readOnlyHandle]);
 
   const handleTouchMove = useCallback((e: React.TouchEvent<SVGSVGElement>) => {
+    if (readOnlyHandle) { return; }
     for (let i = 0; i < e.touches.length; i++) {
       if(i === touchIndex){
         moveCallback({ x: e.touches[i].pageX, y: e.touches[i].pageY}, index);
       }
     }
-  },[]);
+  },[index, moveCallback, readOnlyHandle, touchIndex]);
 
   /** --- Mouse Events Section --- */
-  const handleMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    e.preventDefault();
-    if (readOnly) { return; }
-    setMouseDragging(true);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
 
-  },[]);
+  const handleMouseMove = useCallback((e) => {
+    e.preventDefault();
+    if (readOnlyHandle) { return; }
+    moveCallback({ x: e.pageX, y: e.pageY}, index);
+  },[index, moveCallback, readOnlyHandle]);
 
   const handleMouseUp = useCallback((e) => {
     e.preventDefault();
-    if (readOnly) { return; }
+    if (readOnlyHandle) { return; }
     setMouseDragging(false);
     window.removeEventListener("mousemove", handleMouseMove);
     window.removeEventListener("mouseup", handleMouseUp);
     moveCallback({ x: e.pageX, y: e.pageY}, index);
     moveEndCB();
 
-  },[]);
+  },[handleMouseMove, index, moveCallback, moveEndCB, readOnlyHandle]);
 
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.preventDefault();
-    if (readOnly) { return; }
-    moveCallback({ x: e.pageX, y: e.pageY}, index);
-  },[]);
+    if (readOnlyHandle) { return; }
+    setMouseDragging(true);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
 
-
+  },[handleMouseMove, handleMouseUp, readOnlyHandle]);
 
   let maskID = useAngles ? "mask-" + lineSetId + '-' + index : '';
   let shadowGradientID = "shadowGradient-" + lineSetId + '-' + index;
@@ -200,7 +200,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
   return (
 
-    <HandleBase ref={(ref) => handleInstance = ref} x={x} y={y} mouseDragging={mouseDragging} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouchMove} onMouseDown={handleMouseDown}>
+    <HandleBase ref={handleInstance} x={x} y={y} mouseDragging={mouseDragging} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouchMove} onMouseDown={handleMouseDown}>
       <defs>
         <mask id={maskID}>
           <rect width='100%' height='100%' x='-50%' y='-50%' fill='white' />
@@ -218,27 +218,27 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
             <Icon height='42' width='42' />
           </IconGroup>
         :
-          showGrabHandle && <g transform={`scale(${ unit })`}>
+          showGrabHandle &&
+            <g transform={`scale(${ unit })`}>
 
-            <HandleShadowLayer r={size * 1} fillID={shadowGradientID} />
-            <HandleContrastLayer r={size / 2.4} strokeWidth={size / 3} />
+              <HandleShadowLayer r={size * 1} fillID={shadowGradientID} />
+              <HandleContrastLayer r={size / 2.4} strokeWidth={size / 3} />
 
-            <HandleReactiveGroup touchDragging={touchDragging} mouseDragging={mouseDragging}>
-              <HandleReactiveFill r={size / 1.8} />
-              <HandleReactiveRing r={size / 2.25} strokeWidth={size / 3} />
-            </HandleReactiveGroup>
+              <HandleReactiveGroup touchDragging={touchDragging} mouseDragging={mouseDragging}>
+                <HandleReactiveFill r={size / 1.8} />
+                <HandleReactiveRing r={size / 2.25} strokeWidth={size / 3} />
+              </HandleReactiveGroup>
 
-            <HandleRingLayer r={size / 2} strokeWidth={size / 6} maskID={maskID} />
+              <HandleRingLayer r={size / 2} strokeWidth={size / 6} maskID={maskID} />
 
-            { showPointLabel &&
-              <GrabHandleIndexGroup showIndex>
-                <GrabHandleIndexText transform='translate(-5,6)' fontSize='20px' showIndex>
-                  {index}
-                </GrabHandleIndexText>
-              </GrabHandleIndexGroup>
-              }
+              {showPointLabel &&
+                <GrabHandleIndexGroup showIndex>
+                  <GrabHandleIndexText transform='translate(-5,6)' fontSize='20px' showIndex>
+                    {index}
+                  </GrabHandleIndexText>
+                </GrabHandleIndexGroup>}
 
-          </g>
+            </g>
       }
 
 

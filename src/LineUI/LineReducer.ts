@@ -1,4 +1,5 @@
 import { IPointSet, IVector2 } from "./typings";
+import update from 'immutability-helper';
 
 type IReducerActions =
   | UpdateAction
@@ -43,39 +44,28 @@ const getMidpoint = (pointA : IVector2, pointB : IVector2) => {
 
 export default (state : IPointSet[], action: IReducerActions) => {
 
-  let newState : IPointSet[];
-  let newPosition : IVector2;
-
   switch(action.type){
 
     case "UPDATE":
-      newState = [...state];
-      newState[action.index] = {...state[action.index],...action.data};
-      return [...newState];
+      return update(state, {[action.index]: {$merge: action.data}});
 
     case "ADD_SET":
       return [...state, action.data];
 
     case "REMOVE_SET":
-      newState = [...state];
-      newState.splice(action.index, 1);
-      return newState;
+      return update(state, { $splice: [[action.index,1]]});
 
-    case "ADD_POINT":
-      newState = [...state];
-      newPosition = getMidpoint(newState[action.index].points[0], newState[action.index].points[1]);
-      newState[action.index].points.splice(1, 0, newPosition);
-      return newState;
+    case "ADD_POINT": {
+      const newPoint: IVector2 = getMidpoint(state[action.index].points[0], state[action.index].points[1]);
+      return update(state, {[action.index]: {points: {$splice: [[1, 0, newPoint]]}}});
+    }
 
     case "REMOVE_POINT":
       if(state[action.index].points.length <= 2){ return state; }
+      return update(state, {[action.index]: {points: {$splice: [[state[action.index].points.length - 1, 1]]}}});
 
-      newState = [...state];
-      newState[action.index].points.splice( newState[action.index].points.length - 1, 1);
-      return newState;
-
-    case 'LOAD':
-      newState = [ ...(
+    case 'LOAD': {
+      const newState = [ ...(
         action.state.map(
           ({name, points, ...rest}) => ({
             name,
@@ -89,7 +79,8 @@ export default (state : IPointSet[], action: IReducerActions) => {
           })
         )
       )];
-      return [...action.state];
+      return newState;
+    }
 
     default:
       console.error(`Action ${action['type']} not registered.`);
