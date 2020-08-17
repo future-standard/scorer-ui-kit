@@ -24,10 +24,8 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "svgr": "svgr --typescript -d src/svg/ src/svg",
-    "predeploy": "cd example && npm install && npm run build",
+    "predeploy": "cd example && npm install && npm run build && npm run build-storybook",
     "deploy": "gh-pages -d example/build",
-    "storybook": "start-storybook -p 9009",
-    "build-storybook": "build-storybook",
     "link": "npm link && npm link react && npm link react-dom && npm link react-router-dom && npm link styled-components"
   },
   "peerDependencies": {
@@ -37,12 +35,6 @@
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.3.19",
-    "@storybook/addon-knobs": "^5.3.18",
-    "@storybook/addon-links": "^5.3.18",
-    "@storybook/addons": "^5.3.18",
-    "@storybook/preset-create-react-app": "^2.1.1",
-    "@storybook/react": "^5.3.18",
     "@svgr/cli": "^5.4.0",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.13.4",
@@ -68,7 +60,6 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
-    "storybook-dark-mode": "^0.4.1",
     "styled-components": "^5.1.0"
   },
   "files": [

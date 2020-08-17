@@ -45,9 +45,10 @@ const getMidpoint = (pointA : IVector2, pointB : IVector2) => {
 export default (state : IPointSet[], action: IReducerActions) => {
 
   switch(action.type){
-
-    case "UPDATE":
-      return update(state, {[action.index]: {$merge: action.data}});
+    case "UPDATE": {
+      const points = action.data.points.map((point)=> ({...point}));
+      return update(state, {[action.index]: { points: {$set: points}}});
+    }
 
     case "ADD_SET":
       return [...state, action.data];
@@ -70,10 +71,10 @@ export default (state : IPointSet[], action: IReducerActions) => {
           ({name, points, ...rest}) => ({
             name,
             points: [
-              ...points.map( ({x,y}) => ({
+              ...(points.map( ({x,y}) => ({
                 x,
                 y
-              }))
+              })))
             ],
             ...rest
           })

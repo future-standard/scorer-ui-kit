@@ -1,3 +1,6 @@
+import TypeTable from './molecules/TypeTable';
+import TableRowThumbnail from './atoms/TableRowThumbnail';
+
 export type TypeCellStyle = 'firstColumn' | 'lowImportance' | 'normalImportance' | 'highImportance' ;
 export type TypeCellAlignment = 'left' | 'center' | 'right';
 
@@ -48,10 +51,10 @@ export type ITypeTableData = IRowData[]
 
 // import PageTitle from './atoms/PageTitle';
 // import IntroductionText from './atoms/IntroductionText';
-import TypeTable from './molecules/TypeTable';
 
 export {
     // PageTitle,
     // IntroductionText,
-    TypeTable
+    TypeTable,
+    TableRowThumbnail
 };

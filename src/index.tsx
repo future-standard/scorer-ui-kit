@@ -19,6 +19,7 @@ import {
   TextField
 } from './Form';
 
+import Icon, {IconSVGs} from  './Icons/Icon';
 // Components - Line UI
 import {
   LineUI,
@@ -36,7 +37,8 @@ import {
 
 // Tables
 import {
-  TypeTable
+  TypeTable,
+  TableRowThumbnail
 } from './Tables';
 
 // Other
@@ -85,6 +87,9 @@ export {
   PasswordField,
   TextField,
 
+  //Icon
+  Icon,
+  IconSVGs,
   //Pages
   IntroductionText,
   PageHeader,
@@ -92,6 +97,7 @@ export {
 
   // Tables
   TypeTable,
+  TableRowThumbnail,
 
   // Common && hooks
   useInterval,

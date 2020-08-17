@@ -17,13 +17,23 @@
     "react-scripts": "file:../node_modules/react-scripts",
     "scorer-ui-kit": "file:..",
     "styled-components": "file:../node_modules/styled-components",
-    "react-router-dom": "file:../node_modules/react-router-dom"
+    "react-router-dom": "file:../node_modules/react-router-dom",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-knobs": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/preset-create-react-app": "^2.1.1",
+    "@storybook/react": "^5.3.18",
+    "storybook-dark-mode": "^0.4.1",
+    "storybook-react-router": "^1.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
     "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
-    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
+    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject",
+    "storybook": "start-storybook -p 9009",
+    "build-storybook": "build-storybook --output-dir build/storybook"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -33,5 +43,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@types/storybook-react-router": "^1.0.1"
+  }
 }
