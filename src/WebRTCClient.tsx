@@ -59,9 +59,9 @@ const WebRTCPlayer: React.FC<Props> = ({
 
       } else {
         if(description.sdp){
-          //HACK: this seems to allow more clients to negotiate.
+          //HACK: this seems to allow more clients to negotiate.64002a
           // seems to use [codec] H264 (96, level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f)
-          description.sdp = description.sdp.replace(/profile-level-id=(640028|64001f);/,'');
+          description.sdp = description.sdp.replace(/profile-level-id=(640028|64001f|64002a);/,'');
         }
         await peerConnection.current.setRemoteDescription(new RTCSessionDescription(description));
         setStatus('Remote Description set');
