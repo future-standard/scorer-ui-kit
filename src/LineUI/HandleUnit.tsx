@@ -181,8 +181,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
     window.removeEventListener("mousemove", handleMouseMove);
     window.removeEventListener("mouseup", handleMouseUp);
     moveCallback({ x: e.pageX, y: e.pageY}, index);
-    moveEndCB();
-
+    setTimeout(moveEndCB());
   },[handleMouseMove, index, moveCallback, moveEndCB, readOnlyHandle]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {

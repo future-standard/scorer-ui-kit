@@ -1,7 +1,7 @@
 import { IPointSet, IVector2 } from "./typings";
 import update from 'immutability-helper';
 
-type IReducerActions =
+export type IReducerActions =
   | UpdateAction
   | LoadAction
   | AddSetAction
@@ -46,7 +46,7 @@ export default (state : IPointSet[], action: IReducerActions) => {
 
   switch(action.type){
     case "UPDATE": {
-      const points = action.data.points.map((point)=> ({...point}));
+      const points = action.data.points.map((point) => ({...point}));
       return update(state, {[action.index]: { points: {$set: points}}});
     }
 
@@ -66,20 +66,13 @@ export default (state : IPointSet[], action: IReducerActions) => {
       return update(state, {[action.index]: {points: {$splice: [[state[action.index].points.length - 1, 1]]}}});
 
     case 'LOAD': {
-      const newState = [ ...(
-        action.state.map(
+      const newState = action.state.map(
           ({name, points, ...rest}) => ({
             name,
-            points: [
-              ...(points.map( ({x,y}) => ({
-                x,
-                y
-              })))
-            ],
+            points: points.map( ({x,y}) => ({x,y}) ),
             ...rest
           })
-        )
-      )];
+        );
       return newState;
     }
 

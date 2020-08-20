@@ -22,6 +22,8 @@ const Container = styled.div`
 const Video = styled(WebRTCClient)`
   width:  100%;
   height: 100%;
+  border-radius: 3px;
+  background-color: hsla(0deg, 0%, 0%, 35%);
 `;
 
 const Frame = styled.svg<{transcalent?: boolean}>`
