@@ -87,7 +87,7 @@ const LineUI : React.FC<LineUIProps> = ({
   // Scale Code
   const [videoSize, setVideoSize] = useState({ h: 768, w: 1024 });
   const [unit, setUnit] = useState(1);
-  // const videoRef = useRef<HTMLVideoElement>(null);
+  const [loaded, setLoaded] = useState(false);
 
 
 
@@ -112,7 +112,6 @@ const LineUI : React.FC<LineUIProps> = ({
   const initScaleAndBounds = useCallback((target) => {
 
     const { videoHeight, videoWidth, clientHeight } = target;
-    console.log(initScaleAndBounds, target);
     if(videoHeight !== videoSize.h || videoWidth !== videoSize.w) {
       setVideoSize({ h: videoHeight, w: videoWidth });
       onSizeChange({ h: videoHeight, w: videoWidth });
@@ -136,13 +135,18 @@ const LineUI : React.FC<LineUIProps> = ({
 
   useEffect(() => {
     // Redefine boundaries and screen matrix when the loaded image changes our svg viewbox.
-    let ctm = frame.current.getScreenCTM();
-    setScreenCTM(ctm);
-    setBoundaries(getCanvasBounds());
-  }, [videoSize]);
+    if(loaded){
+      const ctm = frame.current.getScreenCTM();
+      setScreenCTM(ctm);
+      setBoundaries(getCanvasBounds());
+    }
+  }, [videoSize, loaded]);
 
-  const loaded = useCallback(({target}) =>{
-    initScaleAndBounds(target);
+  const onLoaded = useCallback(({target}) =>{
+    if(target){
+      setLoaded(true);
+      initScaleAndBounds(target);
+    }
   },[initScaleAndBounds]);
 
   // useEffect(() => {
@@ -164,12 +168,15 @@ const LineUI : React.FC<LineUIProps> = ({
 
   return (
     <Container>
-      <Video onLoadedMetadata={loaded} peerAddress={ws} id='1' enabled> </Video>
-      <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
-        {state.map((lineSet, index) => (
-          <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} screenCTM={screenCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
-          ))}
-      </Frame>
+      <Video onLoadedMetadata={onLoaded} peerAddress={ws} id='1' enabled> </Video>
+      {
+        loaded &&
+          <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
+            {state.map((lineSet, index) => (
+              <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} screenCTM={screenCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
+              ))}
+          </Frame>
+      }
     </Container>
   );
 

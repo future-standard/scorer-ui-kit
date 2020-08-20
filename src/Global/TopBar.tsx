@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../Icons/Icon';
@@ -81,7 +81,7 @@ const Drawer = styled.div<{ isOpen : boolean }>`
   width: 200px;
   opacity: 0;
   visibility: hidden;
-
+  z-index: 100;
 
   ${({theme}) => css`
     transition:
@@ -147,12 +147,13 @@ const LinkMenuItemA = styled.a`
 `;
 
 interface IProps {
-  useNotifications?: boolean
-  userSubmenu: any[]
-  logoutLink?: string
-  loggedInUser: string
-  useSearch?: boolean
-  searchPlaceholder?: string
+  useNotifications?: boolean;
+  userSubmenu?: any[];
+  logoutLink?: string;
+  loggedInUser: string;
+  useSearch?: boolean;
+  searchPlaceholder?: string;
+  onLogout?: ()=>void;
 }
 
 const TopBar : React.FC<IProps> = ({
@@ -161,11 +162,18 @@ const TopBar : React.FC<IProps> = ({
   useSearch = false,
   searchPlaceholder = 'Search for devices, analysis tasks, etc.',
   userSubmenu = [],
-  loggedInUser
+  loggedInUser,
+  onLogout = ()=>{}
 }) => {
 
   const [isUserMenuOpen, setUserMenuOpen] = useState<boolean>(false);
   const [isNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);
+
+  const logoutHandler = useCallback(async(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>)=>{
+    e.preventDefault();
+    await onLogout();
+    location.assign(logoutLink);
+  },[onLogout])
 
   return (
     <Container>
@@ -202,7 +210,7 @@ const TopBar : React.FC<IProps> = ({
 
         <Logout>
           <LinkMenu>
-            <LinkMenuItem><LinkMenuItemA href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
+            <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
           </LinkMenu>
         </Logout>
       </Drawer>
