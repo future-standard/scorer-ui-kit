@@ -13,8 +13,8 @@ const IconWrapper = styled.div<{color:string}>`
 `;
 
 interface IProps {
-  icon: string
-  size?: number
+  icon: string;
+  size?: number;
   weight?: 'light' | 'regular' | 'heavy'
   color?: ISvgIcons['color']
 }
