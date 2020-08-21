@@ -56,18 +56,11 @@ export const _Icons = () => {
    * Generate a grid of all the icons for easy browsing and hovering to find names.
    */
   const generateIconGrid = (props: { color: "mono" | "dimmed" | "subtle" | "inverse" | "primary"; weight: string; size: string; }) => {
-    let output = [];
-    let key = 0;
-
-    for(const property in IconSVGs) {
-      // @ts-ignore
-      if(typeof IconSVGs[property] === "function"){
-        // @ts-ignore
-        output.push(<div title={property} key={key}>{IconSVGs[property](props)}</div>);
-        key++;
-      }
-    }
-    return output;
+    return Object.entries(IconSVGs).map(([property, Icon]) => (
+      <div title={property} key={property}>
+        <Icon {...props} ></Icon>
+      </div>
+    ));
   };
 
   return <Container>

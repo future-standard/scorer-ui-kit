@@ -27,7 +27,7 @@ To compile SVGs..
 ```bash
 #npm run svgr
 cd ./src
-npx @svgr/cli ./Icons/stroked/svg --out-dir ./Icons/stroked/ --template ./Icons/stroked/SVGRtemplate.js --typescript
+npx @svgr/cli ./Icons/stroked/svg --out-dir ./Icons/stroked/ --template ./Icons/stroked/SVGRTemplate.js --typescript
 ```
 
 ## Image Credits
