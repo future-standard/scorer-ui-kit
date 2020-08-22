@@ -1,14 +1,23 @@
-import {Content, Layout} from './atoms/Layout';
+import {Content, Layout, MainContainer} from './atoms/Layout';
 import MainMenu from './MainMenu';
 import TopBar from './TopBar';
-export {SidebarBox,SidebarLink,SidebarHeading,Logo,SidebarLinkHeading,BackLink, default as Sidebar} from './Sidebar'
+export {
+  SidebarBox,
+  SidebarLink,
+  SidebarHeading,
+  Logo,
+  SidebarLinkHeading,
+  BackLink,
+\  default as Sidebar
+} from './Sidebar';
 
 export {
     Content,
     Layout,
     MainMenu,
-    TopBar
-}
+    TopBar,
+    MainContainer
+};
 
 export interface IMenuTop {
     items: IMenuItemTop[]

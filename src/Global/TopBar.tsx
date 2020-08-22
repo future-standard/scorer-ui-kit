@@ -172,8 +172,8 @@ const TopBar : React.FC<IProps> = ({
   const logoutHandler = useCallback(async(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>)=>{
     e.preventDefault();
     await onLogout();
-    location.assign(logoutLink);
-  },[onLogout])
+    window.location.assign(logoutLink);
+  },[logoutLink, onLogout]);
 
   return (
     <Container>

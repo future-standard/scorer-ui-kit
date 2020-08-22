@@ -18,3 +18,8 @@ export const Content = styled.div<{ maxWidth?: string }>`
     `
   }
 `;
+export const MainContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
