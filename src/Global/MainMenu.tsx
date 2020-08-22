@@ -80,7 +80,7 @@ const ContainerInner = styled.div`
   height: 100%;
 `;
 
-const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth, logoMark, logoText }) => {
+const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText }) => {
 
   const [isMenuOpen, setMenuOpen] = useState<boolean>(true);
   const [isMenuPinned, setMenuPinned] = useState<boolean>(true);
@@ -126,7 +126,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth, logoMark, lo
 
 
   /** Manage the loading cycle. */
-  const readyCallback = useCallback(contextKey => {
+  const readyCallback = useCallback(() => {
     // Basic count of menu items (that need to measure height) that have checked in.
     checkedInItems++;
     if(checkedInItems === content.items.length){
@@ -156,7 +156,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth, logoMark, lo
           </FooterItemContainer> */}
 
           <FooterItemContainer>
-            <ContextItem icon={isMenuOpen && isMenuPinned ? 'CloseCompact' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
+            <ContextItem icon={isMenuOpen && isMenuPinned ? 'Left' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
           </FooterItemContainer>
 
         </MenuFooter>
