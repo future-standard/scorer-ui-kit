@@ -55,7 +55,7 @@ import {
   TopBar,
   Content,
   Layout,
-  MainContainer
+  MainContainer,
   SidebarBox,
   SidebarLink,
   SidebarHeading,
