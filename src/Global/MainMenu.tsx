@@ -33,6 +33,9 @@ const LogoType = styled.div`
 `;
 
 const SVGObject = styled.object``;
+const SVGObjectText = styled.object`
+  width: 180px;
+`;
 
 const NavigationContainer = styled.div``;
 
@@ -109,7 +112,9 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth, logoMark, lo
 
   const toggleMenuPin = useCallback((e: any) => {
     if(e.pointerType === 'touch'){ return; }
-    setMenuOpen(!isMenuOpen);
+    if(isMenuPinned){
+      setMenuOpen(!isMenuOpen);
+    }
     setMenuPinned(!isMenuPinned);
   }, [isMenuPinned, setMenuPinned, isMenuOpen, setMenuOpen]);
 
@@ -135,7 +140,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth, logoMark, lo
       <ContainerInner>
         <Logo to={home}>
           <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
-          <LogoType>{logoText ? <SVGObject type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
+          <LogoType>{logoText ? <SVGObjectText type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
         </Logo>
 
         <NavigationContainer>
@@ -146,9 +151,9 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", openWidth, logoMark, lo
 
         <MenuFooter>
 
-          <FooterItemContainer>
+          {/* <FooterItemContainer>
             <ContextItem icon='Question' title='Help & Support' href='#' menuOpen={isMenuOpen} />
-          </FooterItemContainer>
+          </FooterItemContainer> */}
 
           <FooterItemContainer>
             <ContextItem icon={isMenuOpen && isMenuPinned ? 'CloseCompact' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />

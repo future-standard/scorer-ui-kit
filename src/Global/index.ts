@@ -8,7 +8,7 @@ export {
   Logo,
   SidebarLinkHeading,
   BackLink,
-\  default as Sidebar
+  default as Sidebar
 } from './Sidebar';
 
 export {

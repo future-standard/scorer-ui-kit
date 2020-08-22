@@ -113,6 +113,7 @@ export {
   // Global
   MainMenu,
   TopBar,
+  MainContainer,
   Layout,
   Content,
   SidebarBox,
