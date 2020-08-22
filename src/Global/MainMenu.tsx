@@ -34,7 +34,7 @@ const LogoType = styled.div`
 
 const SVGObject = styled.object``;
 const SVGObjectText = styled.object`
-  width: 180px;
+  max-width: 180px;
 `;
 
 const NavigationContainer = styled.div``;
