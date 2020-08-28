@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withKnobs, text } from "@storybook/addon-knobs";
+import {  text } from "@storybook/addon-knobs";
 
 import {IntroductionText} from 'scorer-ui-kit';
 
@@ -11,7 +11,7 @@ const Container = styled.div`
 export default {
   title: 'Pages/atoms',
   component: IntroductionText,
-  decorators: [withKnobs]
+  decorators: []
 };
 
 export const _IntroductionText = () => {

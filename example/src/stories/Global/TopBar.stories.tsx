@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withKnobs, object, text, boolean } from "@storybook/addon-knobs";
+import {  object, text, boolean } from "@storybook/addon-knobs";
 import {TopBar} from 'scorer-ui-kit';
 
 const Container = styled.div``;
@@ -8,7 +8,7 @@ const Container = styled.div``;
 export default {
   title: 'Global',
   component: TopBar,
-  decorators: [withKnobs]
+  decorators: []
 };
 
 export const _TopBar = () => {

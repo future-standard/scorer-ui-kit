@@ -1,5 +1,5 @@
 import React from 'react';
-import { withKnobs, boolean, text } from "@storybook/addon-knobs";
+import {  boolean, text } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 
 import photo from '../../assets/placeholder.jpg';
@@ -8,7 +8,7 @@ import {TableRowThumbnail} from 'scorer-ui-kit';
 export default {
   title: 'Tables/atoms',
   component: TableRowThumbnail,
-  decorators: [withKnobs]
+  decorators: []
 };
 
 const Container = styled.div`

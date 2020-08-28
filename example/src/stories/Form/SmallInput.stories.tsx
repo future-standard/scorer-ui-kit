@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withKnobs, text, select } from "@storybook/addon-knobs";
+import {  text, select } from "@storybook/addon-knobs";
 import {SmallInput} from 'scorer-ui-kit';
 
 export default {
   title: 'Form/atoms',
   component: SmallInput,
-  decorators: [withKnobs]
+  decorators: []
 };
 
 const Container = styled.div`

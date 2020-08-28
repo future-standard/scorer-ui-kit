@@ -1,13 +1,13 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text, select, boolean } from "@storybook/addon-knobs";
+import {  text, select, boolean } from "@storybook/addon-knobs";
 import {ButtonWithLoading} from 'scorer-ui-kit';
 
 
 export default {
   title: 'Form/Buttons',
   component: ButtonWithLoading,
-  decorators: [withKnobs]
+  decorators: []
 };
 
 export const _WithLoading = () => {

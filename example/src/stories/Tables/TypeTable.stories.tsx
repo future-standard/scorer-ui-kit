@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withKnobs, object, boolean } from "@storybook/addon-knobs";
+import { object, boolean } from "@storybook/addon-knobs";
 
 import {TypeTable} from 'scorer-ui-kit';
 import photo from '../assets/placeholder.jpg';
@@ -13,7 +13,7 @@ const Container = styled.div`
 export default {
   title: 'Tables/molecules',
   component: TypeTable,
-  decorators: [withKnobs]
+  decorators: []
 };
 
 const columnConfigSample : ITableColumnConfig[] = [

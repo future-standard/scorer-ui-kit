@@ -1,12 +1,12 @@
 import React from 'react';
-import { withKnobs, select } from "@storybook/addon-knobs";
+import {  select } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {Spinner} from 'scorer-ui-kit';
 
 export default {
   title: 'Misc',
   component: Spinner,
-  decorators: [withKnobs]
+  decorators: []
 };
 
 const containerBackgroundKey = (styling: string)  => {

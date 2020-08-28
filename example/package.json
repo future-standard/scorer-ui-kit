@@ -9,29 +9,21 @@
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "@types/styled-components": "^5.1.0",
+    "history": "^5.0.0",
     "i18next": "^19.4.2",
     "i18next-browser-languagedetector": "^4.1.1",
-    "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
     "react-i18next": "^11.4.0",
+    "react-router-dom": "file:../node_modules/react-router-dom",
     "react-scripts": "file:../node_modules/react-scripts",
     "scorer-ui-kit": "file:..",
     "styled-components": "file:../node_modules/styled-components",
-    "react-router-dom": "file:../node_modules/react-router-dom",
-    "@storybook/addon-actions": "^5.3.19",
-    "@storybook/addon-knobs": "^5.3.18",
-    "@storybook/addon-links": "^5.3.18",
-    "@storybook/addons": "^5.3.18",
-    "@storybook/preset-create-react-app": "^2.1.1",
-    "@storybook/react": "^5.3.18",
-    "storybook-dark-mode": "^0.4.1",
-    "storybook-react-router": "^1.0.8"
+    "typescript": "^4.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
-    "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
-    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook --output-dir build/storybook"
   },
@@ -45,6 +37,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/storybook-react-router": "^1.0.1"
+    "@storybook/addon-actions": "^6.0.20",
+    "@storybook/addon-knobs": "^6.0.20",
+    "@storybook/addon-links": "^6.0.20",
+    "@storybook/addons": "^6.0.20",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^6.0.20",
+    "storybook-dark-mode": "^1.0.0"
   }
 }
