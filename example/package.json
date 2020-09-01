@@ -12,17 +12,27 @@
     "history": "^5.0.0",
     "i18next": "^19.4.2",
     "i18next-browser-languagedetector": "^4.1.1",
-    "react-dom": "file:../node_modules/react-dom",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "react-i18next": "^11.4.0",
-    "react-router-dom": "file:../node_modules/react-router-dom",
-    "react-scripts": "file:../node_modules/react-scripts",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.1",
     "scorer-ui-kit": "file:..",
     "styled-components": "file:../node_modules/styled-components",
     "typescript": "^4.0.2"
   },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.0.20",
+    "@storybook/addon-knobs": "^6.0.20",
+    "@storybook/addon-links": "^6.0.20",
+    "@storybook/addons": "^6.0.20",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^6.0.20",
+    "storybook-dark-mode": "^1.0.0"
+  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "node ../node_modules/.bin/react-scripts build",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook --output-dir build/storybook"
@@ -35,14 +45,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "@storybook/addon-actions": "^6.0.20",
-    "@storybook/addon-knobs": "^6.0.20",
-    "@storybook/addon-links": "^6.0.20",
-    "@storybook/addons": "^6.0.20",
-    "@storybook/preset-create-react-app": "^3.1.4",
-    "@storybook/react": "^6.0.20",
-    "storybook-dark-mode": "^1.0.0"
-  }
+  ]
 }
