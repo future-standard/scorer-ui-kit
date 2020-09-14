@@ -5,6 +5,7 @@ import { IBoundary } from './typings';
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 import WebRTCClient from '../WebRTCClient';
+import Spinner from '../Indicators/Spinner';
 
 
 const Container = styled.div`
@@ -24,6 +25,17 @@ const Video = styled(WebRTCClient)`
   height: 100%;
   border-radius: 3px;
   background-color: hsla(0deg, 0%, 0%, 35%);
+`;
+const LoadingOverlay =styled.div`
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Frame = styled.svg<{transcalent?: boolean}>`
@@ -121,7 +133,7 @@ const LineUI : React.FC<LineUIProps> = ({
     }
 
 
-  }, [videoSize, unit]);
+  }, [videoSize.h, videoSize.w, unit, onSizeChange]);
 
   const handlePositionTipShow = (e: any) => {
     if(e.target === frame.current){
@@ -169,6 +181,7 @@ const LineUI : React.FC<LineUIProps> = ({
   return (
     <Container>
       <Video onLoadedMetadata={onLoaded} peerAddress={ws} id='1' enabled> </Video>
+      {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {
         loaded &&
           <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
