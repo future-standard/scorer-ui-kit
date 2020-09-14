@@ -66,6 +66,7 @@ interface LineUIProps {
   ws: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
+  onLoaded?: (metadata: {height: number; width: number; }) => void;
   options?: {
     showHandleFinder?: boolean;
     showSetIndex?: boolean;
@@ -78,6 +79,7 @@ const LineUI : React.FC<LineUIProps> = ({
   ws,
   onSizeChange = ()=>{},
   onLineMoveEnd = ()=>{},
+  onLoaded = ()=>{},
   options: {
     showHandleFinder,
     showSetIndex,
@@ -154,12 +156,14 @@ const LineUI : React.FC<LineUIProps> = ({
     }
   }, [videoSize, loaded]);
 
-  const onLoaded = useCallback(({target}) =>{
+  const onLoadedMetadata = useCallback(({target}) =>{
     if(target){
       setLoaded(true);
       initScaleAndBounds(target);
+      const {videoHeight=1, videoWidth=1} = target;
+      onLoaded({height: videoHeight, width: videoWidth});
     }
-  },[initScaleAndBounds]);
+  },[initScaleAndBounds, onLoaded]);
 
   // useEffect(() => {
 
@@ -180,7 +184,7 @@ const LineUI : React.FC<LineUIProps> = ({
 
   return (
     <Container>
-      <Video onLoadedMetadata={onLoaded} peerAddress={ws} id='1' enabled> </Video>
+      <Video onLoadedMetadata={onLoadedMetadata} peerAddress={ws} id='1' enabled> </Video>
       {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {
         loaded &&
