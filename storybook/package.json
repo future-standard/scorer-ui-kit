@@ -1,5 +1,5 @@
 {
-  "name": "scorer-ui-kit-example",
+  "name": "scorer-ui-kit-storybook",
   "homepage": "https://future-standard.github.io/scorer-ui-kit/",
   "version": "0.0.0",
   "private": true,
@@ -12,20 +12,28 @@
     "history": "^5.0.0",
     "i18next": "^19.4.2",
     "i18next-browser-languagedetector": "^4.1.1",
-    "react": "file:../node_modules/react",
-    "react-dom": "file:../node_modules/react-dom",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "react-i18next": "^11.4.0",
-    "react-router": "file:../node_modules/react-router",
     "react-router-dom": "file:../node_modules/react-router-dom",
-    "react-scripts": "^3.4.3",
+    "react-router": "file:../node_modules/react-router",
+    "react-scripts": "^3.4.1",
     "scorer-ui-kit": "file:..",
     "styled-components": "file:../node_modules/styled-components",
     "typescript": "^4.0.2"
   },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.0.21",
+    "@storybook/addon-knobs": "^6.0.21",
+    "@storybook/addon-links": "^6.0.21",
+    "@storybook/addons": "^6.0.21",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^6.0.21",
+    "storybook-dark-mode": "^1.0.3"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test"
+    "storybook": "start-storybook -p 9009",
+    "build-storybook": "build-storybook --output-dir ../example/build/storybook"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,5 +43,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "resolutions": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }
