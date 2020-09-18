@@ -358,5 +358,15 @@ export const colors = {
         "danger": {
             "backgroundImage": "linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)"
         }
+    },
+    "lines":{
+        "primary": {
+            text: {
+                fill: "#fff"//"hsla(205deg, 80%, 25%, 100%)"
+            }
+        },
+        "secondary": {
+
+        }
     }
-}
+};

@@ -170,7 +170,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
   );
 
   const lines = lineSetData.points.map(({x:x1,y:y1}, index) => {
-    const {points} = lineSetData;
+    const {points, name, styling = 'primary'} = lineSetData;
     //nextIndex  index is next Point's index
     const nextIndex = ( index + 1 >= points.length ) ? 0 : index + 1 ;
     //in the case of a line don't draw line back from second point
@@ -190,6 +190,8 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
       x2={x2}
       y2={y2}
       unit={unit}
+      label={name}
+      styling={styling}
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
     />

@@ -10,6 +10,8 @@ export interface IPointSet {
   readOnly?: boolean;
   icon: React.FunctionComponent;
   rotate?: number;
+  showOrientation?: boolean;
+  styling?: string;
 }
 
 export interface IMinMax {

@@ -52,6 +52,15 @@ const GrabHandleIndexText = styled.text<{showIndex: boolean}>`
 
 `;
 
+const LabelText = styled.text<{showIndex: boolean, styling: string}>`
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
+  text-align: center;
+  fill: ${({theme, styling}) => theme.colors.lines[styling].text.fill};
+  font-weight: bold;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+`;
+
 const GrabHandleContrast = styled(GrabHandle)`
   fill: none;
   stroke: hsla(205deg, 80%, 45%, 100%);
@@ -83,12 +92,14 @@ interface ILineUnitProps {
   lineMoveCallback: any,
   lineMoveStartCallback: any
   moveEndCB?: () => void;
+  label?: string;
+  styling?: string;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, moveEndCB=()=>{}} = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}} = props;
   const { handleFinderActive, revealSetIndex, showGrabHandle } = options;
 
   const a = x1 - x2;
@@ -157,8 +168,15 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
         <GrabHandleIndexText fontSize={`${unit * 10}px`} x={midpoint.x - (3 * unit)} y={midpoint.y + (4 * unit)} showIndex={revealSetIndex || handleFinderActive}>
           {lineSetId}
         </GrabHandleIndexText>
+
       </GrabHandleIndexGroup>
 
+      {
+        label &&
+          <LabelText styling={styling} fontSize={`${unit * 14}px`} x={midpoint.x - (16 * unit)} y={midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive}>
+            {label}
+          </LabelText>
+      }
     </g>
   );
 

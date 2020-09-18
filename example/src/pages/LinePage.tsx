@@ -6,7 +6,6 @@ import {
   LineSetContext,
   Sidebar,
   SidebarBox,
-  BackLink,
   Layout,
   Content,
   LineUI,
@@ -17,7 +16,7 @@ import {
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
-  const [error, setError] = useState<string|null>('');
+  const [error] = useState<string|null>('');
 
   const fetchLine = useCallback(async () => {
     // try{
@@ -30,7 +29,10 @@ const Line: React.FC<{}> = () => {
           points: [
               {x: 1000, y: 2000},
               {x: 2000, y: 2000}
-          ]
+          ],
+          readOnly: false,
+          name: 'Line 1',
+          theme: 'primary'
       }
       dispatch({
         type: 'LOAD',
