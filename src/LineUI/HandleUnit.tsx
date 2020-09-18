@@ -32,19 +32,19 @@ const HandleMouseReactionKeyframes = keyframes`
 `;
 
 
-const HandleBase = styled.svg<{ mouseDragging: boolean }>`
+const HandleBase = styled.svg<{ mouseDragging: boolean, styling: string}>`
   touch-action: none;
   user-select: none;
   overflow: visible;
   cursor: pointer;
-  fill: hsla(235deg, 100%, 80%, 100%);
+  fill: ${({theme, styling}) => theme.colors.lines[styling].handleBase.fill};
   appearance: none;
 `;
 
-const HandleRingLayer = styled.circle<{maskID: string}>`
-    fill: none;
-    stroke: hsla(205deg, 100%, 89%, 100%);
-    mask: url(#${props => (props.maskID)});
+const HandleRingLayer = styled.circle<{maskID: string, styling: string}>`
+  fill: none;
+  stroke: ${({theme, styling}) => theme.colors.lines[styling].handleRingLayer.stroke};
+  mask: url(#${props => (props.maskID)});
 `;
 const HandleReactiveGroup = styled.g<{touchDragging: boolean, mouseDragging: boolean}>`
   opacity: 0.65;
@@ -60,21 +60,21 @@ const HandleReactiveGroup = styled.g<{touchDragging: boolean, mouseDragging: boo
   `}
 
 `;
-const HandleReactiveFill = styled.circle`
+const HandleReactiveFill = styled.circle<{styling: string}>`
   mix-blend-mode: multiply;
-  fill: hsla(192deg, 100%, 45%, 100%);
+  fill: ${({theme, styling}) => theme.colors.lines[styling].handleReactiveFill.fill};
   stroke: none;
 `;
-const HandleReactiveRing = styled.circle`
-    fill: none;
-    stroke: hsla(205deg, 100%, 36%, 27%);
+const HandleReactiveRing = styled.circle<{styling: string}>`
+  fill: none;
+  stroke: ${({theme, styling}) => theme.colors.lines[styling].handleReactiveRing.stroke};
 `;
 
-const HandleContrastLayer = styled.circle`
-    overflow: visible;
-    mix-blend-mode: multiply;
-    fill: none;
-    stroke: hsla(205deg, 100%, 36%, 15%);
+const HandleContrastLayer = styled.circle<{styling: string}>`
+  overflow: visible;
+  mix-blend-mode: multiply;
+  fill: none;
+  stroke: ${({theme, styling}) => theme.colors.lines[styling].handleContrastLayer.stroke};
 `;
 const HandleShadowLayer = styled.circle<{fillID: string}>`
     mix-blend-mode: multiply;
@@ -90,9 +90,17 @@ const GrabHandleIndexGroup = styled.g<{showIndex: boolean}>`
 
 `;
 
-const GrabHandleIndexText = styled.text<{showIndex: boolean}>`
+const StopStart = styled.stop<{styling: string}>`
+  stop-color: ${({theme, styling}) => theme.colors.lines[styling].stopStart.stopColor };
+`;
+const StopEnd = styled.stop<{styling: string}>`
+  stop-color: ${({theme, styling}) => theme.colors.lines[styling].stopEnd.stopColor };
+`;
+
+
+const GrabHandleIndexText = styled.text<{showIndex: boolean, styling: string}>`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  fill: #fff;
+  stroke: ${({theme, styling}) => theme.colors.lines[styling].grabHandleText.stroke};
   text-align: center;
 
   font-weight: bold;
@@ -121,11 +129,12 @@ interface IHandleUnitProps {
   moveEndCB?: ()=>void;
   options?: IDragLineUISharedOptions;
   readOnlyHandle?: boolean;
+  styling?: string;
 }
 
 const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   // console.log(props.lineSetId, typeof props.lineSetId)
-  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0, options = {}, readOnlyHandle = false} = props;
+  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0, options = {}, readOnlyHandle = false, styling='primary'} = props;
   // console.log("Handle "+ index +" from set "+ lineSetId + " :: " + x, ", " + y)
 
   let handleInstance = React.createRef<SVGSVGElement>();
@@ -199,15 +208,15 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
   return (
 
-    <HandleBase ref={handleInstance} x={x} y={y} mouseDragging={mouseDragging} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouchMove} onMouseDown={handleMouseDown}>
+    <HandleBase ref={handleInstance} styling={styling} x={x} y={y} mouseDragging={mouseDragging} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouchMove} onMouseDown={handleMouseDown}>
       <defs>
         <mask id={maskID}>
           <rect width='100%' height='100%' x='-50%' y='-50%' fill='white' />
           <rect width={size / 3} height={size / 0.9} x={-((size / 3) /2)} y={-((size / 0.9) + 5)} fill='black' transform={`rotate(${angle || 0} 0 0)`} />
         </mask>
         <radialGradient id={shadowGradientID}>
-          <stop offset='0%' stopColor='hsla(205deg, 100%, 15%, 35%)' />
-          <stop offset='80%' stopColor='hsla(205deg, 100%, 15%, 0%)' />
+          <StopStart styling={styling} offset='0%' />
+          <StopEnd styling={styling} offset='80%' />
         </radialGradient>
       </defs>
 
@@ -221,18 +230,18 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
             <g transform={`scale(${ unit })`}>
 
               <HandleShadowLayer r={size * 1} fillID={shadowGradientID} />
-              <HandleContrastLayer r={size / 2.4} strokeWidth={size / 3} />
+              <HandleContrastLayer styling={styling} r={size / 2.4} strokeWidth={size / 3} />
 
               <HandleReactiveGroup touchDragging={touchDragging} mouseDragging={mouseDragging}>
-                <HandleReactiveFill r={size / 1.8} />
-                <HandleReactiveRing r={size / 2.25} strokeWidth={size / 3} />
+                <HandleReactiveFill styling={styling} r={size / 1.8} />
+                <HandleReactiveRing styling={styling} r={size / 2.25} strokeWidth={size / 3} />
               </HandleReactiveGroup>
 
-              <HandleRingLayer r={size / 2} strokeWidth={size / 6} maskID={maskID} />
+              <HandleRingLayer styling={styling} r={size / 2} strokeWidth={size / 6} maskID={maskID} />
 
               {showPointLabel &&
                 <GrabHandleIndexGroup showIndex>
-                  <GrabHandleIndexText transform='translate(-5,6)' fontSize='20px' showIndex>
+                  <GrabHandleIndexText styling={styling} transform='translate(-5,6)' fontSize='20px' showIndex>
                     {index}
                   </GrabHandleIndexText>
                 </GrabHandleIndexGroup>}

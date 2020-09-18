@@ -165,6 +165,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
       moveEndCB={onLineMoveEnd}
       moveCallback={handleMoveCallback}
       options={options}
+      styling={lineSetData.styling}
       readOnlyHandle={lineSetData.readOnly}
     />
   );

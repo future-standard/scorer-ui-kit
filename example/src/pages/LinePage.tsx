@@ -25,18 +25,38 @@ const Line: React.FC<{}> = () => {
     //     throw await response.json()
     //   }
     //   const {points} = await response.json();
-      const shape = {
+      const state = [
+        {
           points: [
               {x: 1000, y: 2000},
               {x: 2000, y: 2000}
           ],
           readOnly: false,
           name: 'Line 1',
-          theme: 'primary'
-      }
+          styling: 'primary'
+        },
+        {
+          points: [
+              {x: 1500, y: 1500},
+              {x: 2500, y: 2500}
+          ],
+          readOnly: false,
+          name: 'Line 2',
+          styling: 'secondary'
+        },
+        {
+          points: [
+              {x: 500, y: 500},
+              {x: 1000, y: 1000}
+          ],
+          readOnly: false,
+          name: 'Yikes!',
+          styling: 'danger'
+        }
+      ]
       dispatch({
         type: 'LOAD',
-        state: [shape]
+        state
       });
     // } catch (error) {
     //   setError(error.message);
@@ -66,7 +86,6 @@ const Line: React.FC<{}> = () => {
     fetchLine();
   },[fetchLine])
 
-  const [points] = state;
   return (
     <Layout >
       <Sidebar>
@@ -76,7 +95,7 @@ const Line: React.FC<{}> = () => {
         </SidebarBox> */}
         <SidebarBox style={{flex: '1'}} >
           <pre>
-            {JSON.stringify(points,null,2)}
+            {JSON.stringify(state,null,2)}
           </pre>
         </SidebarBox>
         <SidebarBox>

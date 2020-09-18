@@ -3,23 +3,22 @@ import styled, { css } from 'styled-components';
 import { IDragLineUISharedOptions } from './typings';
 
 
-const ContrastLine = styled.line`
+const ContrastLine = styled.line<{styling: string}>`
   pointer-events: none;
-  stroke: hsla(205deg, 80%, 45%, 100%);
+  stroke: ${({theme, styling}) => theme.colors.lines[styling].contrastLine.stroke};
   mix-blend-mode: multiply;
 `;
 
-const HighlightLine = styled.line`
+const HighlightLine = styled.line<{styling: string}>`
   pointer-events: none;
-  stroke: hsla(205deg, 45%, 90%, 90%);
-  // mix-blend-mode: multiply;
+  stroke: ${({theme, styling}) => theme.colors.lines[styling].highlightLine.stroke};
 `;
 
 
 
-const GrabHandle = styled.circle<{hide: boolean}>`
-  fill: hsla(205deg, 45%, 90%, 100%);
-  stroke: hsla(205deg, 45%, 100%, 100%);
+const GrabHandle = styled.circle<{hide: boolean, styling: string}>`
+  fill: ${({theme, styling}) => theme.colors.lines[styling].grabHandle.fill};
+  stroke: ${({theme, styling}) => theme.colors.lines[styling].grabHandle.stroke};
   opacity: 1;
   transition: opacity 250ms ease;
   cursor: grab;
@@ -40,22 +39,18 @@ const GrabHandleIndexGroup = styled.g<{showIndex: boolean}>`
 
 `;
 
-const GrabHandleIndexText = styled.text<{showIndex: boolean}>`
+const GrabHandleIndexText = styled.text<{showIndex: boolean, styling: string}>`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  fill: hsla(205deg, 80%, 25%, 100%);
   text-align: center;
-
+  fill: ${({theme, styling}) => theme.colors.lines[styling].grabHandleText.stroke};
   font-weight: bold;
   transition: opacity 250ms ease;
   pointer-events: none;
-
-
 `;
 
 const LabelText = styled.text<{showIndex: boolean, styling: string}>`
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
   text-align: center;
-  fill: ${({theme, styling}) => theme.colors.lines[styling].text.fill};
+  fill: ${({theme, styling}) => theme.colors.lines[styling].label.fill};
   font-weight: bold;
   transition: opacity 250ms ease;
   pointer-events: none;
@@ -63,11 +58,10 @@ const LabelText = styled.text<{showIndex: boolean, styling: string}>`
 
 const GrabHandleContrast = styled(GrabHandle)`
   fill: none;
-  stroke: hsla(205deg, 80%, 45%, 100%);
-
+  stroke: ${({theme, styling}) => theme.colors.lines[styling].grabHandleContrast.stroke};
 `;
 
-const GrabHandleGroup = styled.g<{ showIndex: boolean, originalRadius: number}>`
+const GrabHandleGroup = styled.g<{ showIndex: boolean, originalRadius: number, styling: string}>`
 
   ${GrabHandle}, ${GrabHandleContrast} {
     transition: r 250ms ease;
@@ -153,22 +147,21 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   };
   return (
     <g>
-      <ContrastLine strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
-      <HighlightLine x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
+      <ContrastLine styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
+      <HighlightLine styling={styling} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
-      <GrabHandleGroup showIndex={handleFinderActive && revealSetIndex} originalRadius={8 * unit}>
-        <GrabHandleContrast r={8 * unit} strokeWidth={4 * unit} cx={midpoint.x} cy={midpoint.y} hide={hideGrabHandle} />
-        <GrabHandle textAnchor='middle' r={8 * unit} strokeWidth={1 * unit} cx={midpoint.x} cy={midpoint.y} hide={hideGrabHandle} onTouchMove={grabTouchMove} onTouchStart={grabTouchStart} onMouseDown={handleMouseDown} />
+      <GrabHandleGroup styling={styling} showIndex={handleFinderActive && revealSetIndex} originalRadius={8 * unit}>
+        <GrabHandleContrast styling={styling} r={8 * unit} strokeWidth={4 * unit} cx={midpoint.x} cy={midpoint.y} hide={hideGrabHandle} />
+        <GrabHandle styling={styling} textAnchor='middle' r={8 * unit} strokeWidth={1 * unit} cx={midpoint.x} cy={midpoint.y} hide={hideGrabHandle} onTouchMove={grabTouchMove} onTouchStart={grabTouchStart} onMouseDown={handleMouseDown} />
       </GrabHandleGroup>
 
       <circle r={1* unit} cx={x1} cy={y1} fill='white' />
       <circle r={1* unit} cx={x2} cy={y2} fill='white' />
 
       <GrabHandleIndexGroup showIndex={!hideGrabHandle && (handleFinderActive || revealSetIndex)}>
-        <GrabHandleIndexText fontSize={`${unit * 10}px`} x={midpoint.x - (3 * unit)} y={midpoint.y + (4 * unit)} showIndex={revealSetIndex || handleFinderActive}>
+        <GrabHandleIndexText styling={styling} fontSize={`${unit * 10}px`} x={midpoint.x - (3 * unit)} y={midpoint.y + (4 * unit)} showIndex={revealSetIndex || handleFinderActive}>
           {lineSetId}
         </GrabHandleIndexText>
-
       </GrabHandleIndexGroup>
 
       {
