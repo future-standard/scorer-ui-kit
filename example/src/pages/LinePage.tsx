@@ -25,35 +25,52 @@ const Line: React.FC<{}> = () => {
     //     throw await response.json()
     //   }
     //   const {points} = await response.json();
-      const state = [
-        {
-          points: [
-              {x: 1000, y: 2000},
-              {x: 2000, y: 2000}
-          ],
-          readOnly: false,
-          name: 'Line 1',
-          styling: 'primary'
-        },
-        {
-          points: [
-              {x: 1500, y: 1500},
-              {x: 2500, y: 2500}
-          ],
-          readOnly: false,
-          name: 'Line 2',
-          styling: 'secondary'
-        },
-        {
-          points: [
-              {x: 500, y: 500},
-              {x: 1000, y: 1000}
-          ],
-          readOnly: false,
-          name: 'Yikes!',
-          styling: 'danger'
-        }
-      ]
+      const state = [{
+        name: "Line 1",
+        points: [
+          {
+            x: 1407,
+            y: 869
+          },
+          {
+            x: 2293,
+            y: 531
+          }
+        ],
+        readOnly: false,
+        styling: "primary"
+      },
+      {
+        name: "Line 2",
+        points: [
+          {
+            x: 1426,
+            y: 254
+          },
+          {
+            x: 2260,
+            y: 283
+          }
+        ],
+        "readOnly": false,
+        "styling": "secondary"
+      },
+      {
+        name: "Yikes!",
+        points: [
+          {
+            x: 500,
+            y: 500
+          },
+          {
+            x: 1000,
+            y: 1000
+          }
+        ],
+        readOnly: false,
+        styling: "danger"
+      }
+    ]
       dispatch({
         type: 'LOAD',
         state
