@@ -1,7 +1,7 @@
 import React from 'react';
-import { createContext } from "react";
+import { createContext } from 'react';
 import { PTZReducerActions, PTZState } from "./PTZReducer";
-import usePTZ from "./usePTZ";
+import usePTZ from './usePTZ';
 
 export interface IPTZContext {
   state: PTZState,
@@ -20,10 +20,10 @@ export const PTZContext = createContext<IPTZContext>({state: {} as PTZState, dis
 
 interface Props {
   socketUrl?: string;
-  imageRefresh: number
+  imageRefresh?: number
 }
 
-const PTZProvider: React.FC<Props> = ({socketUrl ='ws://localhost/wsapp/', imageRefresh = 500, children}) => {
+const PTZProvider: React.FC<Props> = ({socketUrl ='ws://localhost/wsapp/', imageRefresh = 1000, children}) => {
 
   const {state, dispatch, actions} = usePTZ({socketUrl, imageRefresh});
 

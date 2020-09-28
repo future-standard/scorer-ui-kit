@@ -9,16 +9,19 @@ import Base from '../molecules/Base';
 import ZoomBase from '../molecules/ZoomBase';
 import ZoomIn from '../atoms/ZoomIn';
 import ZoomOut from '../atoms/ZoomOut';
+import styled from 'styled-components';
 
 interface Props {
 
 }
 
-
+const Container = styled.div`
+  user-select: none;
+`;
 
 const Controls: React.FC<Props> = () => {
   return (
-    <div>
+    <Container>
       <Base>
         <Up />
         <Down />
@@ -29,7 +32,7 @@ const Controls: React.FC<Props> = () => {
         <ZoomOut />
         <ZoomIn />
       </ZoomBase>
-    </div>
+    </Container>
   );
 };
 

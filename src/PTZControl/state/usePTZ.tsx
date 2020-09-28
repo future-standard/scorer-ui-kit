@@ -2,7 +2,7 @@ import { useCallback, useEffect, useReducer } from 'react';
 import useWebSocket from 'react-use-websocket';
 import reducer from './PTZReducer';
 
-const usePTZ = ({socketUrl='', imageRefresh = 500}) => {
+const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
   const {
     sendJsonMessage,
     lastMessage,
@@ -35,6 +35,7 @@ const usePTZ = ({socketUrl='', imageRefresh = 500}) => {
   },[sendJsonMessage]);
 
   const move = useCallback(async ({direction}: {direction: 'up'|'down'|'left'|'right'}) => {
+    console.debug('move', direction);
     const speed = {
       x: 0,
       y: 0,
@@ -68,7 +69,8 @@ const usePTZ = ({socketUrl='', imageRefresh = 500}) => {
     });
   },[sendJsonMessage, address]);
 
-  const zoom = useCallback(async ({zooming}: {zooming: 'in'|'out'})=>{
+  const zoom = useCallback(async ({zooming}: {zooming: 'in'|'out'}) => {
+    console.debug('zoom', zooming);
     const speed = {
       x: 0,
       y: 0,
@@ -145,7 +147,7 @@ const usePTZ = ({socketUrl='', imageRefresh = 500}) => {
   useEffect(()=>{
     if(!lastMessage){ return; }
     const {id ='', result=null, error} = JSON.parse(lastMessage.data);
-    if(error){
+    if(error && id !== 'fetchSnapshot'){
       dispatch({
         type: 'PTZ_ERROR',
         errorMessage: error
@@ -169,7 +171,6 @@ const usePTZ = ({socketUrl='', imageRefresh = 500}) => {
         type: 'STOP'
       });
     }
-    //TOF
   },[address, getImage, lastMessage]);
   return {state, dispatch, actions: { connect, getImage, disconnect, zoom, stop, move} };
 };

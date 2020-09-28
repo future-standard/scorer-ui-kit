@@ -30,8 +30,8 @@ const Down: React.FC<Props> = () => {
   const { state: {moving}, actions: {move, stop} } = useContext(PTZContext);
 
   const activeStart = useCallback(()=>{
-    setHover(false);
     move({direction: 'down'});
+    setHover(false);
   },[move]);
   const activeEnd = useCallback(()=>{
     stop();
