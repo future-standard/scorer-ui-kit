@@ -18,7 +18,7 @@ interface Props {
 
 const Controls: React.FC<Props> = () => {
   return (
-    <>
+    <div>
       <Base>
         <Up />
         <Down />
@@ -29,7 +29,7 @@ const Controls: React.FC<Props> = () => {
         <ZoomOut />
         <ZoomIn />
       </ZoomBase>
-    </>
+    </div>
   );
 };
 

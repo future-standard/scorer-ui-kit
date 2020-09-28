@@ -9,10 +9,11 @@ export interface IPTZContext {
   actions: PTZActions
 }
 interface PTZActions {
-  disconnect: () => void;
   move: ({direction}:{direction: 'up'|'down'|'left'|'right'}) => void;
   zoom: ({zooming}: {zooming: 'in'|'out'}) => void;
   stop: () => void;
+  connect: (params: {username: string, password: string, host: string, port?: number}) => void;
+  disconnect: () => void;
 }
 
 export const PTZContext = createContext<IPTZContext>({state: {} as PTZState, dispatch: ()=>{}, actions: {} as PTZActions});

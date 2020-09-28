@@ -86,7 +86,8 @@ export default (state : PTZState, action: PTZReducerActions): PTZState => {
         ...state,
         connection: 'connecting',
         address: action.address,
-        loading: true
+        loading: true,
+        errorMessage: ''
       };
     }
     case 'CONNECTED': {
