@@ -29,7 +29,7 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   overflow: hidden;
   opacity: 0;
 
-  ${({ theme, position, show, design }) => css`
+  ${({ theme, position, design }) => css`
     transition: flex ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut} ${theme.animation.speed.slow}, opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
     order: ${ position && position === 'left' ? 0 : 2 };
     background: ${ theme.colors.form.button[design].loadingSegment.backgroundColor };
@@ -40,18 +40,18 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   }
 `;
 
-const InnerContainer = styled.div<{position?: string, loading: boolean}>`
+const InnerContainer = styled.div<{position?: string, loading: string}>`
   display: flex;
   height: inherit;
 
 
   ${({ position, loading }) => position && position === 'left' ? css`
-  margin-right: ${ loading ? '-20px' : '0' };
+  margin-right: ${ loading === 'true' ? '-20px' : '0' };
   ` : css`
-  margin-left: ${ loading ? '-20px' : '0' };
+  margin-left: ${ loading === 'true' ? '-20px' : '0' };
   `}
 
-  ${({ loading, theme }) => loading ? css`
+  ${({ loading, theme }) => loading === 'true' ? css`
 
     transition: margin ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
 
@@ -77,7 +77,7 @@ interface IProps extends IButtonProps {
 const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', onClick, disabled, position, loading, children,...rest}) => {
   return (
     <Button disabled={disabled || loading} {...{ design, size, onClick}} {...rest}>
-      <InnerContainer {...{loading}}>
+      <InnerContainer loading={loading.toString()}>
         <TextContainer>{children}</TextContainer>
         <LoadingContainer {...{ design, position }}>
           <Spinner size='small' styling={design} />

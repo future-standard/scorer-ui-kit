@@ -1,3 +1,3 @@
 import {useInterval} from './useInterval';
-
-export {useInterval};
+import {useTo} from './useTo';
+export {useInterval, useTo};
