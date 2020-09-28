@@ -43,6 +43,14 @@ import {
   TableRowThumbnail
 } from './Tables';
 
+import {
+  Controls,
+  PTZProvider,
+  PTZReducer,
+  usePTZ,
+  PTZContext
+} from './PTZControl';
+
 // Other
 import {
   useInterval,
@@ -98,10 +106,18 @@ export {
   //Icon
   Icon,
   IconSVGs,
+
   //Pages
   IntroductionText,
   PageHeader,
   PageTitle,
+
+  // ptz PTZ Controls
+  Controls,
+  PTZProvider,
+  PTZContext,
+  PTZReducer, //shouldn't be needed usually; use provider instead
+  usePTZ, //shouldn't be needed usually; use provider instead
 
   // Tables
   TypeTable,
