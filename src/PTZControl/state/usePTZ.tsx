@@ -5,8 +5,7 @@ import reducer from './PTZReducer';
 const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
   const {
     sendJsonMessage,
-    lastMessage,
-    // readyState,
+    lastMessage
   } = useWebSocket(socketUrl);
 
   const [state, dispatch ] = useReducer(reducer, {
@@ -34,17 +33,19 @@ const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
     });
   },[sendJsonMessage]);
 
-  const move = useCallback(async ({direction}: {direction: 'up'|'down'|'left'|'right'}) => {
+  const move = useCallback(({direction}: {direction: 'up'|'down'|'left'|'right'}) => {
     console.debug('move', direction);
     const speed = {
       x: 0,
       y: 0,
       z: 0
     };
+
     dispatch({
       type: 'MOVE_START',
       direction
     });
+
     switch (direction){
       case 'up':
         speed.y = 1;
@@ -59,7 +60,8 @@ const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
         speed.x = 1;
         break;
     }
-    await sendJsonMessage({
+
+    sendJsonMessage({
       method: 'ptzMove',
       params: {
         address,
@@ -69,7 +71,7 @@ const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
     });
   },[sendJsonMessage, address]);
 
-  const zoom = useCallback(async ({zooming}: {zooming: 'in'|'out'}) => {
+  const zoom = useCallback(({zooming}: {zooming: 'in'|'out'}) => {
     console.debug('zoom', zooming);
     const speed = {
       x: 0,
@@ -80,7 +82,7 @@ const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
       type: 'ZOOM_START',
       zooming
     });
-    switch (zooming){
+    switch (zooming) {
       case 'in':
         speed.z = 1;
         break;
@@ -88,7 +90,7 @@ const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
         speed.z = -1;
         break;
     }
-    await sendJsonMessage({
+    sendJsonMessage({
       method: 'ptzMove',
       params: {
         address,
@@ -98,12 +100,8 @@ const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
     });
   },[sendJsonMessage, address]);
 
-  const stop = useCallback(async ()=>{
-    dispatch({
-      type: 'STOP',
-    });
-
-    await sendJsonMessage({
+  const stop = useCallback(()=>{
+    sendJsonMessage({
       method: 'ptzStop',
       params: {
         address
@@ -115,15 +113,6 @@ const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
     dispatch({
       type: 'DISCONNECTED',
     });
-    // await sendJsonMessage({
-    //   method: 'connect',
-    //   params: {
-    //     address,
-    //     port,
-    //     user,
-    //     pass
-    //   }
-    // });
   },[]);
 
   const getImage = useCallback(async ()=>{
@@ -172,6 +161,7 @@ const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
       });
     }
   },[address, getImage, lastMessage]);
+
   return {state, dispatch, actions: { connect, getImage, disconnect, zoom, stop, move} };
 };
 

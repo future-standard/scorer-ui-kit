@@ -138,6 +138,7 @@ export default (state : PTZState, action: PTZReducerActions): PTZState => {
       };
     }
     case 'MOVE_START': {
+      console.log('MOVE_START');
       return {
         ...state,
         moving: action.direction,

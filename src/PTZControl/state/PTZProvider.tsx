@@ -26,7 +26,6 @@ interface Props {
 const PTZProvider: React.FC<Props> = ({socketUrl ='ws://localhost/wsapp/', imageRefresh = 1000, children}) => {
 
   const {state, dispatch, actions} = usePTZ({socketUrl, imageRefresh});
-
   return (
     <PTZContext.Provider value={{state, dispatch, actions}}>
       {children}
