@@ -44,7 +44,10 @@ import {
 } from './Tables';
 
 // Other
-import { useInterval } from './hooks';
+import {
+  useInterval,
+  useTo
+} from './hooks';
 import  { resetButtonStyles } from './common';
 
 import Spinner from './Indicators/Spinner';
@@ -106,6 +109,7 @@ export {
 
   // Common && hooks
   useInterval,
+  useTo,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
