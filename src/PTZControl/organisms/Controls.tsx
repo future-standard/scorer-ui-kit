@@ -18,6 +18,8 @@ interface Props {
 
 const Container = styled.div`
   user-select: none;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Controls: React.FC<Props> = ({debug = false}) => {

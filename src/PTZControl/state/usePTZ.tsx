@@ -13,7 +13,8 @@ const usePTZ = ({socketUrl='', imageRefresh = 1000}) => {
     moving: null,
     zooming: null,
     image: '',
-    loading: false
+    loading: false,
+    stateID: Math.floor(Math.random() * 1000)
   });
   const {address=null} = state;
 
