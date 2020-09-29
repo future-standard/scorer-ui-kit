@@ -50,7 +50,7 @@ const PTZ: React.FC<Props> = () => {
           <BackLink to="/" >Back</BackLink>
           <SidebarHeading>Camera Controls</SidebarHeading>
         </SidebarBox>
-        {connection === 'connected' && <Controls></Controls>}
+        {connection === 'connected' && <Controls debug={true} ></Controls>}
       </Sidebar>
       <Content>
         { errorMessage && <AlertBar message={errorMessage} type='error' ></AlertBar> }

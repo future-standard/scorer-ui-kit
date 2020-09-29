@@ -75,6 +75,7 @@ export interface PTZState {
   image: string;
   address?: string;
   errorMessage?: string;
+  stateID: number;
 }
 
 
@@ -125,7 +126,8 @@ export default (state : PTZState, action: PTZReducerActions): PTZState => {
         connection: 'disconnected',
         moving: null,
         zooming: null,
-        loading: false
+        loading: false,
+        stateID: state.stateID
       };
     }
     // case 'DISCONNECT_FAIL': {
@@ -138,7 +140,6 @@ export default (state : PTZState, action: PTZReducerActions): PTZState => {
       };
     }
     case 'MOVE_START': {
-
       return {
         ...state,
         moving: action.direction,

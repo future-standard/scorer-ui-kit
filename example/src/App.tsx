@@ -21,7 +21,7 @@ const App: React.FC<{}> = () => {
           <Route path={`/line`} exact={true} component={LinePage}/>
           <Route path={`/forms`} exact={true} component={FormPage}/>
           <Route path={`/ptz`} exact={true}>
-            <PTZProvider socketUrl='ws://localhost/wsapp/' imageRefresh={500}>
+            <PTZProvider socketUrl='ws://localhost/wsapp/' imageRefresh={2000}>
               <PTZPage/>
             </PTZProvider>
           </Route>
