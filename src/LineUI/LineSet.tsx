@@ -9,16 +9,16 @@ import { IPointSet, IDragLineUISharedOptions, IVector2 } from '.';
 
 interface ILineSetProps {
   lineSetId: number,
-  screenCTM: any//SVGMatrix | null
   boundaries: any,
   size: number,
   unit: number,
   lineData: IPointSet,
   options: IDragLineUISharedOptions,
-  onLineMoveEnd: ()=> void;
+  onLineMoveEnd: () => void;
+  getCTM: () => DOMMatrix | null;
 }
 
-const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, lineSetId, options , onLineMoveEnd}) => {
+const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options , onLineMoveEnd}) => {
   // console.log("Unit " + lineSetId + ", reporting in...")
 
   const {state, dispatch} = useContext(LineSetContext);
@@ -55,8 +55,8 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
 
   const handleMoveCallback = useCallback((pointerPosition: IVector2, index: number) => {
-
-    if(typeof screenCTM === 'undefined'){ return; }
+    const screenCTM = getCTM();
+    if(!screenCTM){ return; }
 
     const pointer = enforceBoundaries({
       x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a),
@@ -70,11 +70,11 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
     dispatch({type: "UPDATE", index: lineSetId, data: newLineSetData });
 
-  }, [lineSetData, dispatch, screenCTM, enforceBoundaries, lineSetId]);
+  }, [getCTM, enforceBoundaries, lineSetData, dispatch, lineSetId]);
 
-  const lineDragStart = (pointerPosition: IVector2) => {
-
-    if(typeof screenCTM === 'undefined'){ return; }
+  const lineDragStart = useCallback((pointerPosition: IVector2) => {
+    const screenCTM = getCTM();
+    if(!screenCTM){ return; }
 
     let pointer = {
       x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a) - handleRadius,
@@ -90,11 +90,11 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
       };
     });
 
-  };
+  },[handleRadius, lineSetData.points, getCTM]);
 
   const lineDragUpdate = useCallback((pointerPosition: IVector2) => {
-
-    if(typeof screenCTM === 'undefined'){ return; }
+    const screenCTM = getCTM();
+    if(!screenCTM){ return; }
 
     const { points } = lineSetData;
 
@@ -115,7 +115,7 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
 
     dispatch({type: "UPDATE", index: lineSetId, data: { ...lineSetData, points: [...newPoints] } });
 
-  }, [lineSetData, dispatch, screenCTM, enforceBoundaries, handleRadius, lineSetId]);
+  }, [getCTM, lineSetData, handleRadius, dispatch, lineSetId, enforceBoundaries]);
 
 
 

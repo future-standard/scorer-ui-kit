@@ -85,10 +85,10 @@ const LineUI : React.FC<LineUIProps> = ({
   }={}
 }) => {
 
-  const frame : any =  useRef();
+  const frame =  useRef<SVGSVGElement>(null);
+  const videoRef = useRef<HTMLVideoElement>();
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
-  const [screenCTM, setScreenCTM] = useState<SVGMatrix>();
   const {state} = useContext(LineSetContext);
 
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
@@ -99,38 +99,19 @@ const LineUI : React.FC<LineUIProps> = ({
   const [unit, setUnit] = useState(1);
   const [loaded, setLoaded] = useState(false);
 
-
-
   // Initialization functions.
-  const getCanvasBounds = () => {
-    const { viewBox } = frame.current;
+  const initScaleAndBounds = useCallback(() => {
+    if(!videoRef.current) {return;}
+    const { videoHeight, videoWidth, clientHeight } = videoRef.current;
 
-    let bounds = {
-      x: {
-        min: viewBox.baseVal.x,
-        max: viewBox.baseVal.x + viewBox.baseVal.width
-      },
-      y: {
-        min: viewBox.baseVal.y,
-        max: viewBox.baseVal.y + viewBox.baseVal.height
-      },
-    };
-
-    return bounds;
-  };
-
-  const initScaleAndBounds = useCallback((target) => {
-
-    const { videoHeight, videoWidth, clientHeight } = target;
     if(videoHeight !== videoSize.h || videoWidth !== videoSize.w) {
       setVideoSize({ h: videoHeight, w: videoWidth });
       onSizeChange({ h: videoHeight, w: videoWidth });
     }
+
     if(videoHeight / clientHeight !== unit) {
       setUnit(videoHeight / clientHeight);
     }
-
-
   }, [videoSize.h, videoSize.w, unit, onSizeChange]);
 
   const handlePositionTipShow = (e: any) => {
@@ -143,32 +124,46 @@ const LineUI : React.FC<LineUIProps> = ({
     setHandleFinder(showHandleFinder ||false);
   };
 
+  const calculateCTM = useCallback(()=>{
+    if(!frame.current) {return null;}
+    //On size change make sure to refresh CTM
+    return frame.current.getScreenCTM();
+  },[]);
+
   useEffect(() => {
-    // Redefine boundaries and screen matrix when the loaded image changes our svg viewbox.
-    if(loaded){
-      const ctm = frame.current.getScreenCTM();
-      setScreenCTM(ctm);
-      setBoundaries(getCanvasBounds());
-    }
+    // Redefine boundaries and screen matrix when the loaded video changes our svg viewbox.
+    if(!frame.current || !loaded) {return;}
+    const { viewBox } = frame.current;
+    const bounds = {
+      x: {
+        min: viewBox.baseVal.x,
+        max: viewBox.baseVal.x + viewBox.baseVal.width
+      },
+      y: {
+        min: viewBox.baseVal.y,
+        max: viewBox.baseVal.y + viewBox.baseVal.height
+      },
+    };
+    setBoundaries(bounds);
   }, [videoSize, loaded]);
 
   const onLoadedMetadata = useCallback(({target}) =>{
     if(target){
       setLoaded(true);
-      initScaleAndBounds(target);
+      videoRef.current = target;
+      initScaleAndBounds();
       const {videoHeight=1, videoWidth=1} = target;
       onLoaded({height: videoHeight, width: videoWidth});
     }
   },[initScaleAndBounds, onLoaded]);
 
-  // useEffect(() => {
-
-  //   // Make sure we always keep scale up to date on resize.
-  //   window.addEventListener("resize", initScaleAndBounds);
-  //   return () => {
-  //     window.removeEventListener("resize", initScaleAndBounds);
-  //   };
-  // }, [initScaleAndBounds]);
+  useEffect(() => {
+    // Make sure we always keep scale up to date on resize.
+    window.addEventListener('resize', initScaleAndBounds);
+    return () => {
+      window.removeEventListener('resize', initScaleAndBounds);
+    };
+  }, [initScaleAndBounds]);
 
   const options = {
     handleFinderActive: handleFinder,
@@ -187,7 +182,7 @@ const LineUI : React.FC<LineUIProps> = ({
         loaded &&
           <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
             {state.map((lineSet, index) => (
-              <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} screenCTM={screenCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
+              <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
               ))}
           </Frame>
       }

@@ -8,15 +8,19 @@ import {
   SidebarBox,
   Layout,
   Content,
-  LineUI,
+  TextField,
+  LineUIRTC,
   Logo,
   Button,
+  AlertBar
 } from 'scorer-ui-kit';
 import { LineUIOptions } from '../../../dist/LineUI';
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
+  const [ws, setWS] = useState('localhost/wsapp');
+  const [wsURL, setWsURL] = useState('');
 
   const options : LineUIOptions = {
     showSetIndex: true,
@@ -82,7 +86,12 @@ const Line: React.FC<{}> = () => {
 
   useEffect(() => {
     fetchLine();
-  }, [fetchLine])
+  }, [fetchLine]);
+
+  const connect = useCallback(()=>{
+    if(!ws){return;}
+    setWsURL(ws);
+  },[ws]);
 
   return (
     <Layout >
@@ -99,10 +108,15 @@ const Line: React.FC<{}> = () => {
         </SidebarBox>
       </Sidebar>
       <Content>
-        {error && <div>{error}</div>}
-        <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUI options={options} src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
-        </LineSetContext.Provider>
+        {error && <AlertBar message={error} type='error' /> }
+        <TextField label='Host' name='host' fieldState='default' value={ws} onChange={({target:{value}})=> setWS(value)} ></TextField>
+        <Button onClick={connect}>Connect</Button>
+        {
+          wsURL &&
+            <LineSetContext.Provider value={{ state, dispatch }}>
+              <LineUIRTC options={options} ws={`ws://${wsURL}/`} />
+            </LineSetContext.Provider>
+        }
       </Content>
     </Layout>
   );

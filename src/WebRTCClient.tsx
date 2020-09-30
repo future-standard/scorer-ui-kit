@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, VideoHTMLAttributes, HtmlHTMLAttributes } from 'react';
+import React, { useState, useEffect, useRef, VideoHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const Video = styled.video`
@@ -182,7 +182,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     const ws = new WebSocket(peerAddress);
     webSocket.current = ws;
     /* When connected, immediately register with the server */
-    ws.addEventListener('open', (event) => {
+    ws.addEventListener('open', () => {
       const interval = setInterval(() => {
         try {
           ws.send('HELLO ' + peerId);

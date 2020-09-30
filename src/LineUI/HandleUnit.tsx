@@ -176,18 +176,18 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
   /** --- Mouse Events Section --- */
 
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     e.preventDefault();
     if (readOnlyHandle) { return; }
     moveCallback({ x: e.pageX, y: e.pageY}, index);
   },[index, moveCallback, readOnlyHandle]);
 
-  const handleMouseUp = useCallback((e) => {
+  const handleMouseUp = useCallback((e: MouseEvent) => {
     e.preventDefault();
     if (readOnlyHandle) { return; }
     setMouseDragging(false);
-    window.removeEventListener("mousemove", handleMouseMove);
-    window.removeEventListener("mouseup", handleMouseUp);
+    window.removeEventListener('mousemove', handleMouseMove);
+    window.removeEventListener('mouseup', handleMouseUp);
     moveCallback({ x: e.pageX, y: e.pageY}, index);
     setTimeout(moveEndCB());
   },[handleMouseMove, index, moveCallback, moveEndCB, readOnlyHandle]);
@@ -196,8 +196,8 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
     e.preventDefault();
     if (readOnlyHandle) { return; }
     setMouseDragging(true);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
 
   },[handleMouseMove, handleMouseUp, readOnlyHandle]);
 
