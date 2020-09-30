@@ -12,14 +12,15 @@ import {
   Logo,
   Button,
 } from 'scorer-ui-kit';
-
+import { LineUIOptions } from '../../../dist/LineUI';
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
 
-  const options = {
-    showSetIndex: false
+  const options : LineUIOptions = {
+    showSetIndex: true,
+    setIndexOffset: 1
   }
 
   const fetchLine = useCallback(async () => {
