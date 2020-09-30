@@ -151,7 +151,7 @@ const LineUI : React.FC<LineUIProps> = ({
 
   const options = {
     handleFinderActive: handleFinder,
-    revealSetIndex:  showSetIndex || state.length > 1,
+    revealSetIndex: showSetIndex !== false && (showSetIndex || state.length > 1),
     showPointLabel,
     showHandle,
     showGrabHandle
