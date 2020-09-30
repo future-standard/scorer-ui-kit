@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
-import { IBoundary } from './typings';
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
+import { LineUIOptions, IBoundary } from '.';
 
 
 const Container = styled.div`
@@ -53,13 +53,7 @@ interface LineUIProps {
   src: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
-  options?: {
-    showHandleFinder?: boolean;
-    showSetIndex?: boolean;
-    showPointLabel?: boolean;
-    showHandle?: boolean;
-    showGrabHandle?: boolean;
-  }
+  options?: LineUIOptions;
 }
 const LineUI : React.FC<LineUIProps> = ({
   src,
@@ -70,7 +64,8 @@ const LineUI : React.FC<LineUIProps> = ({
     showSetIndex,
     showPointLabel = false,
     showHandle = true,
-    showGrabHandle
+    showGrabHandle,
+    setIndexOffset = 0
   }={}
 }) => {
 
@@ -121,7 +116,7 @@ const LineUI : React.FC<LineUIProps> = ({
     if(naturalHeight / clientHeight !== unit) {
       setUnit(naturalHeight / clientHeight);
     }
-  }, [imgSize, unit]);
+  }, [imgSize.h, imgSize.w, onSizeChange, unit]);
 
   const handlePositionTipShow = (e: any) => {
     if(e.target === frame.current){
@@ -154,7 +149,8 @@ const LineUI : React.FC<LineUIProps> = ({
     revealSetIndex: showSetIndex !== false && (showSetIndex || state.length > 1),
     showPointLabel,
     showHandle,
-    showGrabHandle
+    showGrabHandle,
+    setIndexOffset
   };
 
   return (

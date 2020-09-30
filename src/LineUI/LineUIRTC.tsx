@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
-import { IBoundary } from './typings';
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 import WebRTCClient from '../WebRTCClient';
 import Spinner from '../Indicators/Spinner';
+import { LineUIOptions, IBoundary } from '.';
 
 
 const Container = styled.div`
@@ -62,18 +62,13 @@ const Frame = styled.svg<{transcalent?: boolean}>`
 `;
 
 
+
 interface LineUIProps {
   ws: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
   onLoaded?: (metadata: {height: number; width: number; }) => void;
-  options?: {
-    showHandleFinder?: boolean;
-    showSetIndex?: boolean;
-    showPointLabel?: boolean;
-    showHandle?: boolean;
-    showGrabHandle?: boolean;
-  }
+  options?: LineUIOptions;
 }
 const LineUI : React.FC<LineUIProps> = ({
   ws,
@@ -85,7 +80,8 @@ const LineUI : React.FC<LineUIProps> = ({
     showSetIndex,
     showPointLabel = false,
     showHandle = true,
-    showGrabHandle
+    showGrabHandle,
+    setIndexOffset = 0
   }={}
 }) => {
 
@@ -176,10 +172,11 @@ const LineUI : React.FC<LineUIProps> = ({
 
   const options = {
     handleFinderActive: handleFinder,
-    revealSetIndex:  showSetIndex || state.length > 1,
+    revealSetIndex: showSetIndex !== false && (showSetIndex || state.length > 1),
     showPointLabel,
     showHandle,
-    showGrabHandle
+    showGrabHandle,
+    setIndexOffset
   };
 
   return (

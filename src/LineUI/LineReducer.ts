@@ -1,4 +1,4 @@
-import { IPointSet, IVector2 } from "./typings";
+import { IPointSet, IVector2 } from './';
 import update from 'immutability-helper';
 
 export type IReducerActions =

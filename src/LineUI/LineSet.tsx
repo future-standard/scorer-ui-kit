@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 
 
 import { LineSetContext } from './Contexts';
-import { IPointSet, IDragLineUISharedOptions, IVector2 } from './typings';
+import { IPointSet, IDragLineUISharedOptions, IVector2 } from '.';
 
 interface ILineSetProps {
   lineSetId: number,

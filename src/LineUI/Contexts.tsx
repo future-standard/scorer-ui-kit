@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { IPointSet } from './typings';
+import { IPointSet } from '.';
 
 interface IContextProps {
     state: IPointSet[]// IState;

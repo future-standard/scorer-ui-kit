@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { IDragLineUISharedOptions } from './typings';
+import { IDragLineUISharedOptions } from '.';
 
 
 const ContrastLine = styled.line<{styling: string}>`
@@ -94,7 +94,7 @@ interface ILineUnitProps {
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
   const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}} = props;
-  const { handleFinderActive, revealSetIndex, showGrabHandle } = options;
+  const { handleFinderActive, revealSetIndex, showGrabHandle, setIndexOffset } = options;
 
   const a = x1 - x2;
   const b = y1 - y2;
@@ -160,7 +160,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
 
       <GrabHandleIndexGroup showIndex={!hideGrabHandle && (handleFinderActive || revealSetIndex)}>
         <GrabHandleIndexText styling={styling} fontSize={`${unit * 10}px`} x={midpoint.x - (3 * unit)} y={midpoint.y + (4 * unit)} showIndex={revealSetIndex || handleFinderActive}>
-          {lineSetId}
+          {lineSetId + setIndexOffset}
         </GrabHandleIndexText>
       </GrabHandleIndexGroup>
 

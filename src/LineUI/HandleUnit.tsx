@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { IDragLineUISharedOptions } from './typings';
+import { IDragLineUISharedOptions } from '.';
 
 
 const HandleTouchReactionKeyframes = keyframes`
@@ -127,16 +127,15 @@ interface IHandleUnitProps {
   rotate?: number;
   moveCallback: any;
   moveEndCB?: ()=>void;
-  options?: IDragLineUISharedOptions;
+  options: IDragLineUISharedOptions;
   readOnlyHandle?: boolean;
   styling?: string;
 }
 
 const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   // console.log(props.lineSetId, typeof props.lineSetId)
-  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0, options = {}, readOnlyHandle = false, styling='primary'} = props;
+  const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0, options, readOnlyHandle = false, styling='primary'} = props;
   // console.log("Handle "+ index +" from set "+ lineSetId + " :: " + x, ", " + y)
-
   let handleInstance = React.createRef<SVGSVGElement>();
 
   const [ touchDragging, setTouchDragging ] = useState(false);
