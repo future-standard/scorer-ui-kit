@@ -80,7 +80,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     setStatus('Creating Answer');
     try {
       const answer = await peerConnection.current.createAnswer();
-      console.log('Got local description: ' + JSON.stringify(answer));
+      console.debug('Got local description: ' + JSON.stringify(answer));
       await peerConnection.current.setLocalDescription(answer);
     } catch (error){
       console.error('Error:', error.message);
@@ -94,7 +94,7 @@ const WebRTCPlayer: React.FC<Props> = ({
       sdp: peerConnection.current.localDescription
     };
     setStatus('Sending Local Description');
-    // console.log('Local Description:' + JSON.stringify(message));
+    // console.debug('Local Description:' + JSON.stringify(message));
     try {
       await webSocket.current.send(JSON.stringify(message));
       setStatus('Connected');
@@ -140,7 +140,7 @@ const WebRTCPlayer: React.FC<Props> = ({
       }
 
       if (msg.sdp != null) {
-        console.log('Received Remote SDP:' + JSON.stringify(msg.sdp));
+        console.debug('Received Remote SDP:' + JSON.stringify(msg.sdp));
         onIncomingSDP(msg.sdp);
       } else if (msg.ice != null) {
         console.debug('Received Remote ICE:' + JSON.stringify(msg.ice));
@@ -170,7 +170,7 @@ const WebRTCPlayer: React.FC<Props> = ({
   }
 
   function connectToPeer() {
-    console.log('connectToPeer', connectionAttempts);
+    console.debug('connectToPeer', connectionAttempts);
     if (connectionAttempts >= maxConnectionAttempts) {
       setError('Too many connection attempts, aborting. Refresh page to try again');
       return;
@@ -189,7 +189,7 @@ const WebRTCPlayer: React.FC<Props> = ({
           clearInterval(interval);
           setStatus('Registering with server (sent HELLO) for peer id: ' + peerId);
         } catch (error) {
-          console.log(error);
+          console.debug(error);
         }
       }, 3000);
     });
@@ -224,7 +224,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     pc.addEventListener('icecandidate', ({candidate = null}) => {
 
       if (!candidate) {
-        console.log('All local ICE Candidates sent.');
+        console.debug('All local ICE Candidates sent.');
         return;
       }
       // We have a local ICE candidate, send it to the remote party with the same uuid
@@ -235,7 +235,7 @@ const WebRTCPlayer: React.FC<Props> = ({
         console.debug('no WS found on peer connection \'icecandidate\' event... how?');
       }
     });
-    // pc.addEventListener('negotiationneeded', ()=>{console.log('negotiationneeded')})
+    // pc.addEventListener('negotiationneeded', ()=>{console.debug('negotiationneeded')})
 
     setStatus('RTCPeerConnection created, waiting for SDP');
   }
@@ -266,7 +266,7 @@ const WebRTCPlayer: React.FC<Props> = ({
       }
     }
     return ()=>{
-      console.log('cleanup');
+      console.debug('cleanup');
       closeWebSocket();
     };
   }, [enabled]);
