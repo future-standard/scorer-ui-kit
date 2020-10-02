@@ -20,7 +20,7 @@ const Container = styled.div`
 
 `;
 
-const Frame = styled.svg<{transculent?: boolean}>`
+const Frame = styled.svg<{ transculent?: boolean }>`
   touch-action: none;
   user-select: none;
   margin: 0;
@@ -51,14 +51,14 @@ const Image = styled.img`
 
 interface LineUIProps {
   src: string;
-  onSizeChange?: (size: {h: number; w: number}) => void;
-  onLineMoveEnd?: ()=> void;
+  onSizeChange?: (size: { h: number; w: number }) => void;
+  onLineMoveEnd?: () => void;
   options?: LineUIOptions;
 }
-const LineUI : React.FC<LineUIProps> = ({
+const LineUI: React.FC<LineUIProps> = ({
   src,
-  onSizeChange = ()=>{},
-  onLineMoveEnd = ()=>{},
+  onSizeChange = () => { },
+  onLineMoveEnd = () => { },
   options: {
     showHandleFinder,
     showSetIndex,
@@ -66,12 +66,12 @@ const LineUI : React.FC<LineUIProps> = ({
     showHandle = true,
     showGrabHandle,
     setIndexOffset = 0
-  }={}
+  } = {}
 }) => {
 
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
-  const {state} = useContext(LineSetContext);
+  const { state } = useContext(LineSetContext);
 
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
 
@@ -80,7 +80,7 @@ const LineUI : React.FC<LineUIProps> = ({
   const [imgSize, setImgSize] = useState({ h: 1, w: 1 });
   const [unit, setUnit] = useState(1);
   const imgRef = useRef<HTMLImageElement>(null);
-  const frame =  useRef<SVGSVGElement>(null);
+  const frame = useRef<SVGSVGElement>(null);
 
 
 
@@ -91,34 +91,37 @@ const LineUI : React.FC<LineUIProps> = ({
     }
 
     const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
-    if(naturalHeight !== imgSize.h || naturalWidth !== imgSize.w) {
+    if (naturalHeight !== imgSize.h || naturalWidth !== imgSize.w) {
       setImgSize({ h: naturalHeight, w: naturalWidth });
       onSizeChange({ h: naturalHeight, w: naturalWidth });
+      console.debug('image size:', { naturalHeight, naturalWidth, clientHeight, unit: naturalHeight / clientHeight });
     }
 
-    if(naturalHeight / clientHeight !== unit) {
+    if (naturalHeight / clientHeight !== unit) {
       setUnit(naturalHeight / clientHeight);
     }
   }, [imgSize, onSizeChange, unit]);
 
-  const calculateCTM = useCallback(()=>{
-    if(!frame.current) {return null;}
+  const calculateCTM = useCallback(() => {
+    if (!frame.current) { return null; }
     //On size change make sure to refresh CTM
-    return frame.current.getScreenCTM();
-  },[]);
+    const ctm = frame.current.getScreenCTM();
+    console.debug('calculateCTM', ctm);
+    return ctm;
+  }, []);
 
   const handlePositionTipShow = (e: any) => {
-    if(e.target === frame.current){
+    if (e.target === frame.current) {
       setHandleFinder((!handleFinder === false) && true);
     }
   };
 
   const handlePositionTipHide = () => {
-    setHandleFinder(showHandleFinder ||false);
+    setHandleFinder(showHandleFinder || false);
   };
 
   useEffect(() => {
-    if(!frame.current) {return;}
+    if (!frame.current) { return; }
 
     // Redefine boundaries loaded image changes our svg viewbox.
     const { viewBox } = frame.current;
@@ -132,7 +135,7 @@ const LineUI : React.FC<LineUIProps> = ({
         max: viewBox.baseVal.y + viewBox.baseVal.height
       },
     };
-
+    console.debug('setBoundaries', bounds);
     setBoundaries(bounds);
   }, [imgSize]);
 
@@ -161,7 +164,7 @@ const LineUI : React.FC<LineUIProps> = ({
       <Frame ref={frame} viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
         {state.map((lineSet, index) => (
           <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
-          ))}
+        ))}
       </Frame>
     </Container>
   );
