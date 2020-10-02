@@ -99,7 +99,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   const a = x1 - x2;
   const b = y1 - y2;
   const distance = Math.sqrt( a*a + b*b );
-  const hideGrabHandle = !showGrabHandle && distance < 60;
+  const hideGrabHandle = showGrabHandle === false ||  (showGrabHandle !== true  && distance < 60);
 
 
   /** --- Toucher Events Section --- */
@@ -155,14 +155,14 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
         <GrabHandle styling={styling} textAnchor='middle' r={8 * unit} strokeWidth={1 * unit} cx={midpoint.x} cy={midpoint.y} hide={hideGrabHandle} onTouchMove={grabTouchMove} onTouchStart={grabTouchStart} onMouseDown={handleMouseDown} />
       </GrabHandleGroup>
 
-      <circle r={1* unit} cx={x1} cy={y1} fill='white' />
-      <circle r={1* unit} cx={x2} cy={y2} fill='white' />
-
       <GrabHandleIndexGroup showIndex={!hideGrabHandle && (handleFinderActive || revealSetIndex)}>
         <GrabHandleIndexText styling={styling} fontSize={`${unit * 10}px`} x={midpoint.x - (3 * unit)} y={midpoint.y + (4 * unit)} showIndex={revealSetIndex || handleFinderActive}>
           {lineSetId + setIndexOffset}
         </GrabHandleIndexText>
       </GrabHandleIndexGroup>
+
+      {/* <circle r={1* unit} cx={x1} cy={y1} fill='white' /> */}
+      {/* <circle r={1* unit} cx={x2} cy={y2} fill='white' /> */}
 
       {
         label &&
