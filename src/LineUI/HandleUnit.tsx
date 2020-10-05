@@ -254,4 +254,4 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   );
 };
 
-export default React.memo(HandleUnit);
+export default HandleUnit;
