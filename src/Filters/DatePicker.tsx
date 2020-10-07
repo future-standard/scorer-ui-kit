@@ -1,21 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import {format, startOfMonth, endOfMonth, eachDayOfInterval, eachWeekOfInterval, startOfWeek, endOfWeek, getDay, isSameMonth } from 'date-fns'
-
-
-// Start of month.
-// End of month.
-// Each week of month.
-
-// Start minus one day, week.
-// End plus one day, week.
-
-// Put data together with next month / prev month flag.
-//
-
-
-
+import {format, startOfMonth, endOfMonth, eachDayOfInterval, eachWeekOfInterval, addMonths, endOfWeek, isSameMonth } from 'date-fns'
 
 
 const Container = styled.div`
@@ -55,33 +41,20 @@ const DayGuide : string[] = [
 const DatePicker : React.FC<IProps> = () => {
 
   // useState later on.
-  let activeDate = new Date();
-
-  console.log( DayGuide[ startOfWeek(activeDate).getDay() ] )
-  console.log(eachDayOfInterval(
-    { start: startOfMonth(activeDate), end: endOfMonth(activeDate) }
-  ));
+  let [focusedMonth, setFocusedMonth] = useState(new Date());
 
   const x = eachWeekOfInterval({
-    start: startOfMonth(activeDate),
-    end: endOfMonth(activeDate)
+    start: startOfMonth(focusedMonth),
+    end: endOfMonth(focusedMonth)
   })
 
-  // console.log(x, x[0])
-  // console.log(endOfWeek(x[0]))
-
-  // x.forEach((week)=>{
-
-  //   eachDayOfInterval({
-  //     start: week,
-  //     end: endOfWeek(week)
-  //   }).forEach((day) => {
-  //     return day;
-  //   })
-
-  // })
-
   return <Container>
+
+    <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>Prev</button>
+    <h3>{format(focusedMonth, "yyyy/MM")}</h3>
+    <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>Next</button>
+    <button onClick={ () => setFocusedMonth( new Date() ) }>This Month</button>
+
     <CalRow>
       {DayGuide.map((day) => {
         return <CalCell>{day}</CalCell>;
@@ -97,7 +70,11 @@ const DatePicker : React.FC<IProps> = () => {
 
       return <CalRow>
         { days.map((day) => {
-          return <CalCell>{format(day, "d")}</CalCell>
+          if(!isSameMonth(day, focusedMonth)){
+            return <CalCell><Fade>{format(day, "d")}</Fade></CalCell>
+          } else {
+            return <CalCell>{format(day, "d")}</CalCell>
+          }
         })}
       </CalRow>
 
