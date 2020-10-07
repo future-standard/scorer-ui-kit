@@ -21,6 +21,11 @@ import {
   TextField
 } from './Form';
 
+// Components - Filter
+import {
+  DatePicker
+} from './Filters'
+
 import Icon, {IconSVGs} from  './Icons/Icon';
 // Components - Line UI
 import {
@@ -102,6 +107,9 @@ export {
   Switch,
   PasswordField,
   TextField,
+
+  // Filters
+  DatePicker,
 
   //Icon
   Icon,
