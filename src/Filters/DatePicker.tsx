@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import {format, startOfMonth, endOfMonth, eachDayOfInterval, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
+import {format, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
 
-type CellStates = "off" | "single" | "start" | "end" | "inside" ;
+type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
+type SelectionType = "single" | "interval";
 
 const Container = styled.div``;
 
@@ -15,21 +16,38 @@ const CalCell = styled.div<{ thisMonth?: boolean, isToday?: boolean, state?: Cel
   flex: 0 0 40px;
   padding: 10px;
   border-radius: 5px;
+  cursor: pointer;
 
   ${({thisMonth}) => !thisMonth  && css`
     opacity: 0.5;
   `}
 
   ${({isToday}) => isToday  && css`
-    font-style: italic;
+    border: 2px solid #111;
   `}
 
   ${({state}) => (state === 'single' || state === 'start' || state === 'end') && css`
-    background: #aaf;
+    background: hsla(205deg, 85%, 50%, 100%);
+    opacity: 1;
+  `}
+
+  ${({state}) => (state === 'start') && css`
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  `}
+
+  ${({state}) => (state === 'end') && css`
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  `}
+
+  ${({state}) => (state === 'insideHover') && css`
+    background: #f00 !important;
   `}
 
   ${({state}) => (state === 'inside') && css`
-    background: #aaf;
+    background: hsla(205deg, 85%, 65%, 50%);
+    border-radius: 0;
   `}
 
 `
@@ -41,7 +59,7 @@ const DayGuide : string[] = [
 
 interface IProps {
   initialDates?: Date | Date[]
-  selectionType?: "single" | "interval"
+  selectionType?: SelectionType
   useTime?: boolean
 }
 
@@ -50,12 +68,59 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
   const now = new Date();
 
   const [focusedMonth, setFocusedMonth] = useState( now );
+  const [hoverDay, setHoverDay] = useState<Date | null>(null);
   const [selectedRange, setSelectedRange] = useState<Interval>( singleDayToInterval(now) );
+  const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
+  const [pickerMode, setPickerMode] = useState<SelectionType>('interval');
 
   const weeksOfMonth = eachWeekOfInterval({
     start: startOfMonth(focusedMonth),
     end: endOfMonth(focusedMonth)
   })
+
+  const onCellClick = (day: Date) => {
+
+    if(pickerMode === 'single'){
+      setSelectedRange(singleDayToInterval(day));
+    } else {
+
+      if(targetedDate === 'start'){
+        if(isBefore(day, selectedRange.end)){
+          setSelectedRange({
+            start: startOfDay(day),
+            end: selectedRange.end
+          });
+        } else {
+          setSelectedRange({
+            start: startOfDay(day),
+            end: endOfDay(day)
+          });
+        }
+        setTargetedDate('end');
+
+      } else if(targetedDate === 'end'){
+
+        if(isAfter(day, selectedRange.start)){
+          setSelectedRange({
+            start: selectedRange.start,
+            end: endOfDay(day)
+          });
+
+        setTargetedDate('done');
+
+      } else {
+
+          // Jump back to set first date.
+          setSelectedRange({
+            start: startOfDay(day),
+            end: selectedRange.end
+          });
+          setTargetedDate('end');
+
+        }
+      }
+    }
+  }
 
   return <Container>
 
@@ -63,6 +128,10 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
     <h3>{format(focusedMonth, "yyyy/MM")}</h3>
     <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>Next</button>
     <button onClick={ () => setFocusedMonth( now ) }>This Month</button>
+
+    <div>From: { format(selectedRange.start, "yyyy/MM/dd") }</div>
+    <div>To: { format(selectedRange.end, "yyyy/MM/dd") }</div>
+    <div>Hover: { hoverDay && format(hoverDay, "yyyy/MM/dd") }</div>
 
     <CalRow>
       {DayGuide.map((day) => {
@@ -78,7 +147,7 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
 
       return <CalRow>
         { days.map((day) => {
-          return <CalCell onClick={ () => setSelectedRange(singleDayToInterval(day)) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCell>
+          return <CalCell onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCell>
         })}
       </CalRow>
 
@@ -94,7 +163,7 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
  * @param day Date - The date of the cell in the calendar.
  * @param interval Interval - The date range that is active in the calendar.
  */
-const cellState = (day: Date, interval: Interval) : CellStates => {
+const cellState = (day: Date, interval: Interval, hoverDate? : Date) : CellStates => {
 
   let state : CellStates = "off";
 
@@ -108,6 +177,11 @@ const cellState = (day: Date, interval: Interval) : CellStates => {
       state = "start";
     } else if(isSameDay(interval.end, day)){
       state = "end";
+    } else if(hoverDate && isAfter(hoverDate, interval.start)){
+      state = "insideHover";
+
+    //} else if(??? hover) {
+      // state = hover
     } else {
       state = "inside";
     }
