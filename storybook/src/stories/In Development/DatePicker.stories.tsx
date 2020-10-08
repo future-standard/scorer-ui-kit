@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select } from "@storybook/addon-knobs";
+// import {  text, select } from "@storybook/addon-knobs";
 import { DatePicker } from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -15,6 +15,6 @@ export default {
 
 export const _DatePicker = () => {
 
-  return <DatePicker />;
+  return <Container><DatePicker /></Container>;
 
 };
