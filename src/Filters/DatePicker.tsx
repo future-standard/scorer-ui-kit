@@ -121,6 +121,9 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
 
   const updateTimeInDate = useCallback((target : 'start'|'end', unit : 'hours'|'minutes', newValue : number) => {
 
+    // TODO: Check if they're on the same day that it doesn't end before it starts.
+
+    // Update the state that manages the time range in the UI and allow for 24:00
     let newTimeRange = { ...timeRange };
 
     if(target === 'end' && unit === 'hours' && newValue === 24){
@@ -130,6 +133,7 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
     newTimeRange[target][unit] = newValue;
     setTimeRange(newTimeRange);
 
+    // Update the state of the actual time value for date picking use.
     let cleanTimeRange = {
       start: {
         hours: newTimeRange.start.hours,
@@ -142,8 +146,6 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
         milliseconds: newTimeRange.end.hours === 24 ? 999 : 0
       }
     }
-
-    // TODO: Check if they're on the same day that it doesn't end before it starts.
 
     setSelectedRange({
       start: setHours( setMinutes( setMilliseconds(selectedRange.start, cleanTimeRange.start.milliseconds), cleanTimeRange.start.minutes), cleanTimeRange.start.hours),
