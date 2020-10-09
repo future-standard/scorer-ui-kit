@@ -134,8 +134,8 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
     <div>Hover: { hoverDay && format(hoverDay, "yyyy/MM/dd") }</div>
 
     <CalRow>
-      {DayGuide.map((day) => {
-        return <CalCell>{day}</CalCell>;
+      {DayGuide.map((day, index) => {
+        return <CalCell key={index}>{day}</CalCell>;
       })}
     </CalRow>
 
@@ -146,8 +146,8 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
       })
 
       return <CalRow>
-        { days.map((day) => {
-          return <CalCell onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCell>
+        { days.map((day, index) => {
+          return <CalCell key={index} onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCell>
         })}
       </CalRow>
 
