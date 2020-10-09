@@ -48,6 +48,8 @@ const CalCell = styled.div<{ thisMonth?: boolean, isToday?: boolean, state?: Cel
   ${({state}) => (state === 'inside') && css`
     background: hsla(205deg, 85%, 65%, 50%);
     border-radius: 0;
+    opacity: 1;
+
   `}
 
 `
@@ -84,40 +86,35 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
       setSelectedRange(singleDayToInterval(day));
     } else {
 
+      // === Setting the interval start. ===
       if(targetedDate === 'start'){
-        if(isBefore(day, selectedRange.end)){
-          setSelectedRange({
-            start: startOfDay(day),
-            end: selectedRange.end
-          });
-        } else {
-          setSelectedRange({
-            start: startOfDay(day),
-            end: endOfDay(day)
-          });
-        }
+
+        setSelectedRange({
+          start: startOfDay(day),
+          end: isBefore(day, selectedRange.end) ? selectedRange.end : endOfDay(day)
+        });
+
         setTargetedDate('end');
 
-      } else if(targetedDate === 'end'){
+      // --- Setting the interval end. --
+      } else if(targetedDate === 'end' && isAfter(day, selectedRange.start)){
 
-        if(isAfter(day, selectedRange.start)){
           setSelectedRange({
             start: selectedRange.start,
             end: endOfDay(day)
           });
 
-        setTargetedDate('done');
+          setTargetedDate('done');
 
-      } else {
+      // --- Restart journey if another interaction started. --
+      } else if(targetedDate === 'end' || targetedDate === 'done'){
 
-          // Jump back to set first date.
-          setSelectedRange({
-            start: startOfDay(day),
-            end: selectedRange.end
-          });
-          setTargetedDate('end');
+        setSelectedRange({
+          start: startOfDay(day),
+          end: endOfDay(day)
+        });
+        setTargetedDate('end');
 
-        }
       }
     }
   }
@@ -139,13 +136,13 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
       })}
     </CalRow>
 
-    { weeksOfMonth.map((week)=>{
+    { weeksOfMonth.map((week, index)=>{
       const days = eachDayOfInterval({
         start: week,
         end: endOfWeek(week)
       })
 
-      return <CalRow>
+      return <CalRow key={index}>
         { days.map((day, index) => {
           return <CalCell key={index} onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCell>
         })}
@@ -177,11 +174,6 @@ const cellState = (day: Date, interval: Interval, hoverDate? : Date) : CellState
       state = "start";
     } else if(isSameDay(interval.end, day)){
       state = "end";
-    } else if(hoverDate && isAfter(hoverDate, interval.start)){
-      state = "insideHover";
-
-    //} else if(??? hover) {
-      // state = hover
     } else {
       state = "inside";
     }
