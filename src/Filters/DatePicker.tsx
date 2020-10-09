@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import {format, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
+import {format, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, getMinutes, setMinutes, endOfMinute, getHours, setHours } from 'date-fns'
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
 type SelectionType = "single" | "interval";
@@ -10,7 +10,6 @@ const Container = styled.div``;
 
 const CalRow = styled.div`
   display: flex;
-
 `
 const CalCell = styled.div<{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
   flex: 0 0 40px;
@@ -121,13 +120,24 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
 
   return <Container>
 
+    <button onClick={ () => pickerMode === 'single' ? setPickerMode('interval') : setPickerMode('single') }>Mode: {pickerMode}</button>
     <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>Prev</button>
     <h3>{format(focusedMonth, "yyyy/MM")}</h3>
     <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>Next</button>
     <button onClick={ () => setFocusedMonth( now ) }>This Month</button>
 
-    <div>From: { format(selectedRange.start, "yyyy/MM/dd") }</div>
-    <div>To: { format(selectedRange.end, "yyyy/MM/dd") }</div>
+    <div>From: { format(selectedRange.start, "yyyy/MM/dd HH:mm") }</div>
+    <div>
+      <input type="number" min="0" max="24" value={ getHours(selectedRange.start) } onChange={ (e) => { setSelectedRange({ start: setHours(selectedRange.start, parseInt(e.target.value)), end: selectedRange.end }) }} />
+      <input type="number" min="0" max="59" value={ getMinutes(selectedRange.start) } onChange={ (e) => { setSelectedRange({ start: setMinutes(selectedRange.start, parseInt(e.target.value)), end: selectedRange.end }) }} />
+    </div>
+
+    <div>To: { format(selectedRange.end, "yyyy/MM/dd HH:mm") }</div>
+    <div>
+      <input type="number" min="0" max="24" value={ getHours(selectedRange.end) } onChange={ (e) => { setSelectedRange({ end: setHours(selectedRange.end, parseInt(e.target.value)), start: selectedRange.start }) }} />
+      <input type="number" min="0" max="59" value={ getMinutes(selectedRange.end) } onChange={ (e) => { setSelectedRange({ end: setMinutes(selectedRange.end, parseInt(e.target.value)), start: selectedRange.start }) }} />
+    </div>
+
     <div>Hover: { hoverDay && format(hoverDay, "yyyy/MM/dd") }</div>
 
     <CalRow>
