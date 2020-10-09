@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import {format, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, getMinutes, setMinutes, endOfMinute, getHours, setHours } from 'date-fns'
+import {format, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, getMinutes, setMinutes, endOfMinute, setMilliseconds, getHours, setHours } from 'date-fns'
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
 type SelectionType = "single" | "interval";
@@ -71,7 +71,8 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
   const [focusedMonth, setFocusedMonth] = useState( now );
   const [hoverDay, setHoverDay] = useState<Date | null>(null);
   const [selectedRange, setSelectedRange] = useState<Interval>( singleDayToInterval(now) );
-  const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
+  const [timeRange, setTimeRange] = useState<any>({ start: { hours: 0, minutes: 0, milliseconds: 0 }, end: { hours: 23, minutes: 59, milliseconds: 999 } });
+  const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
   const [pickerMode, setPickerMode] = useState<SelectionType>('interval');
 
   const weeksOfMonth = eachWeekOfInterval({
@@ -118,6 +119,39 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
     }
   }
 
+  const updateTimeInDate = useCallback((target : 'start'|'end', unit : 'hours'|'minutes', newValue : number) => {
+
+    let newTimeRange = { ...timeRange };
+
+    if(target === 'end' && unit === 'hours' && newValue === 24){
+      newTimeRange.end.minutes = 0;
+    }
+
+    newTimeRange[target][unit] = newValue;
+    setTimeRange(newTimeRange);
+
+    let cleanTimeRange = {
+      start: {
+        hours: newTimeRange.start.hours,
+        minutes: newTimeRange.start.minutes,
+        milliseconds: 0
+      },
+      end: {
+        hours: newTimeRange.end.hours === 24 ? 23 : newTimeRange.end.hours,
+        minutes: newTimeRange.end.hours === 24 ? 59 : newTimeRange.end.minutes,
+        milliseconds: newTimeRange.end.hours === 24 ? 999 : 0
+      }
+    }
+
+    // TODO: Check if they're on the same day that it doesn't end before it starts.
+
+    setSelectedRange({
+      start: setHours( setMinutes( setMilliseconds(selectedRange.start, cleanTimeRange.start.milliseconds), cleanTimeRange.start.minutes), cleanTimeRange.start.hours),
+      end:   setHours( setMinutes( setMilliseconds(selectedRange.end, cleanTimeRange.end.milliseconds), cleanTimeRange.end.minutes), cleanTimeRange.end.hours)
+    });
+
+  }, [selectedRange, setSelectedRange, setTimeRange])
+
   return <Container>
 
     <button onClick={ () => pickerMode === 'single' ? setPickerMode('interval') : setPickerMode('single') }>Mode: {pickerMode}</button>
@@ -126,16 +160,16 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
     <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>Next</button>
     <button onClick={ () => setFocusedMonth( now ) }>This Month</button>
 
-    <div>From: { format(selectedRange.start, "yyyy/MM/dd HH:mm") }</div>
+    <div>From: { format(selectedRange.start, "yyyy/MM/dd HH:mm.SSS") }</div>
     <div>
-      <input type="number" min="0" max="24" value={ getHours(selectedRange.start) } onChange={ (e) => { setSelectedRange({ start: setHours(selectedRange.start, parseInt(e.target.value)), end: selectedRange.end }) }} />
-      <input type="number" min="0" max="59" value={ getMinutes(selectedRange.start) } onChange={ (e) => { setSelectedRange({ start: setMinutes(selectedRange.start, parseInt(e.target.value)), end: selectedRange.end }) }} />
+      <input type="number" min="0" max="23" value={ clockFormatNumber(timeRange.start.hours) } onChange={ ({target}) => { updateTimeInDate( 'start', 'hours', parseInt(target.value) ) }} />
+      <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.start.minutes) } onChange={ ({target}) => { updateTimeInDate( 'start', 'minutes', parseInt(target.value) ) }} />
     </div>
 
-    <div>To: { format(selectedRange.end, "yyyy/MM/dd HH:mm") }</div>
+    <div>To: { format(selectedRange.end, "yyyy/MM/dd HH:mm.SSS") }</div>
     <div>
-      <input type="number" min="0" max="24" value={ getHours(selectedRange.end) } onChange={ (e) => { setSelectedRange({ end: setHours(selectedRange.end, parseInt(e.target.value)), start: selectedRange.start }) }} />
-      <input type="number" min="0" max="59" value={ getMinutes(selectedRange.end) } onChange={ (e) => { setSelectedRange({ end: setMinutes(selectedRange.end, parseInt(e.target.value)), start: selectedRange.start }) }} />
+      <input type="number" min="0" max="24" value={ clockFormatNumber(timeRange.end.hours) } onChange={ ({target}) => { updateTimeInDate( 'end', 'hours', parseInt(target.value) ) }} />
+      <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.end.minutes) } onChange={ ({target}) => { updateTimeInDate( 'end', 'minutes', parseInt(target.value) ) }} />
     </div>
 
     <div>Hover: { hoverDay && format(hoverDay, "yyyy/MM/dd") }</div>
@@ -204,5 +238,10 @@ const singleDayToInterval = (day: Date) : Interval => {
   }
 }
 
+const clockFormatNumber = (value : number) => {
+  const valAsString = value.toString();
+
+  return (valAsString.length === 1) ? '0' + value : value;
+}
 
 export default DatePicker;
