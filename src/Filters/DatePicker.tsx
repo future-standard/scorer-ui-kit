@@ -96,6 +96,7 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
     end: endOfMonth(focusedMonth)
   })
 
+
   /**
    * Handler for updating picked dates when a calendar day has been selected.
    * @param day The day of the cell that has been clicked / actioned.
@@ -143,63 +144,58 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
     }
   }, [timeRange, selectedRange, setSelectedRange, targetedDate, setTargetedDate, startOfDay, endOfDay, isBefore, isAfter, singleDayToInterval])
 
+
   /**
    * Used to enforce rules on time selection in dateRange, reflect those in timeRange that powers the UI time
    * and apply it to the date intended for integration, selectedRange.
    * @param target Which end of the interval we are updating.
    * @param unit The unit we are updating, either the hour or minute.
-   * @param newValue The new value that will be set in the update.
+   * @param value The new value that will be set in the update.
    */
-  const updateTimeInDate = useCallback((target : 'start'|'end', unit : 'hours'|'minutes', newValue : number) => {
+  const updateTimeInDate = useCallback((target : 'start'|'end', unit : 'hours'|'minutes', value : number) => {
 
-    // Enforce upper time limit.
-    if(unit === 'minutes' && timeRange[target].hours === 24 && newValue > 0){
-      newValue == 0
+    const {start, end} = timeRange;
+    const originalValue : number = timeRange[target][unit];
+
+    if(target === 'start'){
+      start[unit] = value
+    } else {
+      end[unit] = value
     }
-
-    // Update the state that manages the time range in the UI and allow for 24:00
-    let newTimeRange : TimeRange = { ...timeRange };
-    newTimeRange[target][unit] = newValue;
 
     // === Enforce time limitations. ===
-    // Nothing over 24:00.
-    if(target === 'end'){
-      if(unit === 'hours' && newValue === 24){
-        newTimeRange.end.minutes = 0;
-      } else if(unit === 'minutes' && newTimeRange.end.hours === 24){
-        newValue = 0; // TODO: This should be done in newTimeRange if we already used newValue to set.
+    // No minute above 24:00 for end time.
+    end.minutes = (end.hours === 24 && end.minutes > 0) ? 0 : end.minutes;
+
+    // Time interval should be at least one minute - if not, revert back.
+    if(timeLaterOrSame(start, end)){
+      if(target === 'start'){
+        start[unit] = originalValue
+      } else {
+        end[unit] = originalValue
       }
     }
 
-    // TODO: Can't start after we end.
-    if(
-      newTimeRange.start.hours <= newTimeRange.end.hours
-      && newTimeRange.start.minutes < newTimeRange.end.minutes){
-
-    } else {
-      if(target === 'end'){
-        // Bump down time to minute below.
-      }
-    }
-
-    //
-    setTimeRange(newTimeRange);
-
-    // Update the state of the actual time value for date picking use.
+    // === Process values for actual usage ===
+    // Prepared values for API use. Midnight is always 24:00 minus 1ms.
     const processedTimeRange : TimeRange = {
       start: {
-        hours: newTimeRange.start.hours,
-        minutes: newTimeRange.start.minutes,
+        hours: start.hours,
+        minutes: start.minutes,
         seconds: 0,
         milliseconds: 0
       },
       end: {
-        hours: newTimeRange.end.hours === 24 ? 23 : newTimeRange.end.hours,
-        minutes: newTimeRange.end.hours === 24 ? 59 : newTimeRange.end.minutes,
-        seconds: newTimeRange.end.hours === 24 ? 59 : 0,
-        milliseconds: newTimeRange.end.hours === 24 ? 999 : 0
+        hours: end.hours === 24 ? 23 : end.hours,
+        minutes: end.hours === 24 ? 59 : end.minutes,
+        seconds: end.hours === 24 ? 59 : 0,
+        milliseconds: end.hours === 24 ? 999 : 0
       }
     }
+
+    // === Finish Up. ===
+    // Commit changes to timeRange that powers UI.
+    setTimeRange({...{start, end}});
 
     // Apply time to the selected ranges Interval the date-fns way.
     setSelectedRange({
@@ -208,6 +204,7 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
     });
 
   }, [selectedRange, setSelectedRange, setTimeRange])
+
 
   return <Container>
 
@@ -302,6 +299,14 @@ const clockFormatNumber = (value : number) => {
   const valAsString = value.toString();
 
   return (valAsString.length === 1) ? '0' + value : value;
+}
+
+const timeLaterOrSame = (startTime : TimeProperties, endTime : TimeProperties ) : boolean => {
+
+  const start = (startTime.hours * 3600) + (startTime.minutes * 60) + startTime.seconds;
+  const end = (endTime.hours * 3600) + (endTime.minutes * 60) + endTime.seconds;
+
+  return start >= end;
 }
 
 export default DatePicker;
