@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import {format, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, getMinutes, setMinutes, endOfMinute, setMilliseconds, getHours, setSeconds, setHours } from 'date-fns'
@@ -72,30 +72,40 @@ const DayGuide : string[] = [
 
 interface IProps {
   initialDates?: Date | Date[]
-  selectionType?: SelectionType
+  mode?: SelectionType
   useTime?: boolean
 }
 
-const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = false }) => {
+const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
+
+  // TODO: Make useTime toggle.
+  // TODO: Allow for single <-> interval changing.
 
   const now = new Date();
   const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, end: { hours: 24, minutes: 0, seconds: 0, milliseconds: 0 } };
 
-
   const [focusedMonth, setFocusedMonth] = useState( now );
   const [hoverDay, setHoverDay] = useState<Date | null>(null);
   const [selectedRange, setSelectedRange] = useState<Interval>( singleDayToInterval(now) );
+  const [timeRange, setTimeRange] = useState<TimeRange>(defaultTimeRange);
   const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
-  const [pickerMode, setPickerMode] = useState<SelectionType>('interval');
+  const [mode, setMode] = useState<SelectionType>('interval');
+
 
   const weeksOfMonth = eachWeekOfInterval({
     start: startOfMonth(focusedMonth),
     end: endOfMonth(focusedMonth)
   })
 
+  /**
+   * Handler for updating picked dates when a calendar day has been selected.
+   * @param day The day of the cell that has been clicked / actioned.
+   */
   const onCellClick = (day: Date) => {
 
-    if(pickerMode === 'single'){
+    // Sync time from time range
+
+    if(mode === 'single'){
       setSelectedRange(singleDayToInterval(day));
     } else {
 
@@ -132,9 +142,14 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
     }
   }
 
+  /**
+   * Used to enforce rules on time selection in dateRange, reflect those in timeRange that powers the UI time
+   * and apply it to the date intended for integration, selectedRange.
+   * @param target Which end of the interval we are updating.
+   * @param unit The unit we are updating, either the hour or minute.
+   * @param newValue The new value that will be set in the update.
+   */
   const updateTimeInDate = useCallback((target : 'start'|'end', unit : 'hours'|'minutes', newValue : number) => {
-
-    // TODO: Check if they're on the same day that it doesn't end before it starts.
 
     // Enforce upper time limit.
     if(unit === 'minutes' && timeRange[target].hours === 24 && newValue > 0){
@@ -151,11 +166,11 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
       if(unit === 'hours' && newValue === 24){
         newTimeRange.end.minutes = 0;
       } else if(unit === 'minutes' && newTimeRange.end.hours === 24){
-        newValue = 0;
+        newValue = 0; // TODO: This should be done in newTimeRange if we already used newValue to set.
       }
     }
 
-    // Can't start after we end.
+    // TODO: Can't start after we end.
     if(
       newTimeRange.start.hours <= newTimeRange.end.hours
       && newTimeRange.start.minutes < newTimeRange.end.minutes){
@@ -192,15 +207,6 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
     });
 
   }, [selectedRange, setSelectedRange, setTimeRange])
-
-
-  useEffect(() => {
-    if(mode === 'interval'){
-
-    } else {
-
-    }
-  }, [mode]);
 
   return <Container>
 
