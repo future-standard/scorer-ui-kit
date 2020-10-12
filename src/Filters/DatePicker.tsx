@@ -79,11 +79,12 @@ interface IProps {
 const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = false }) => {
 
   const now = new Date();
+  const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, end: { hours: 24, minutes: 0, seconds: 0, milliseconds: 0 } };
+
 
   const [focusedMonth, setFocusedMonth] = useState( now );
   const [hoverDay, setHoverDay] = useState<Date | null>(null);
   const [selectedRange, setSelectedRange] = useState<Interval>( singleDayToInterval(now) );
-  const [timeRange, setTimeRange] = useState<any>({ start: { hours: 0, minutes: 0, milliseconds: 0 }, end: { hours: 23, minutes: 59, milliseconds: 999 } });
   const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
   const [pickerMode, setPickerMode] = useState<SelectionType>('interval');
 
@@ -135,55 +136,83 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
 
     // TODO: Check if they're on the same day that it doesn't end before it starts.
 
-    // Update the state that manages the time range in the UI and allow for 24:00
-    let newTimeRange = { ...timeRange };
-
-    if(target === 'end' && unit === 'hours' && newValue === 24){
-      newTimeRange.end.minutes = 0;
+    // Enforce upper time limit.
+    if(unit === 'minutes' && timeRange[target].hours === 24 && newValue > 0){
+      newValue == 0
     }
 
+    // Update the state that manages the time range in the UI and allow for 24:00
+    let newTimeRange : TimeRange = { ...timeRange };
     newTimeRange[target][unit] = newValue;
+
+    // === Enforce time limitations. ===
+    // Nothing over 24:00.
+    if(target === 'end'){
+      if(unit === 'hours' && newValue === 24){
+        newTimeRange.end.minutes = 0;
+      } else if(unit === 'minutes' && newTimeRange.end.hours === 24){
+        newValue = 0;
+      }
+    }
+
+    // Can't start after we end.
+    if(
+      newTimeRange.start.hours <= newTimeRange.end.hours
+      && newTimeRange.start.minutes < newTimeRange.end.minutes){
+
+    } else {
+      if(target === 'end'){
+        // Bump down time to minute below.
+      }
+    }
+
+    //
     setTimeRange(newTimeRange);
 
     // Update the state of the actual time value for date picking use.
-    let cleanTimeRange = {
+    const cleanTimeRange : TimeRange = {
       start: {
         hours: newTimeRange.start.hours,
         minutes: newTimeRange.start.minutes,
+        seconds: 0,
         milliseconds: 0
       },
       end: {
         hours: newTimeRange.end.hours === 24 ? 23 : newTimeRange.end.hours,
         minutes: newTimeRange.end.hours === 24 ? 59 : newTimeRange.end.minutes,
+        seconds: newTimeRange.end.hours === 24 ? 59 : 0,
         milliseconds: newTimeRange.end.hours === 24 ? 999 : 0
       }
     }
 
+    // Apply time to the selected ranges Interval the date-fns way.
     setSelectedRange({
-      start: setHours( setMinutes( setMilliseconds(selectedRange.start, cleanTimeRange.start.milliseconds), cleanTimeRange.start.minutes), cleanTimeRange.start.hours),
-      end:   setHours( setMinutes( setMilliseconds(selectedRange.end, cleanTimeRange.end.milliseconds), cleanTimeRange.end.minutes), cleanTimeRange.end.hours)
+      start: setHours( setMinutes( setSeconds( setMilliseconds(selectedRange.start, cleanTimeRange.start.milliseconds), cleanTimeRange.start.seconds), cleanTimeRange.start.minutes), cleanTimeRange.start.hours),
+      end:   setHours( setMinutes( setSeconds( setMilliseconds(selectedRange.end, cleanTimeRange.end.milliseconds), cleanTimeRange.end.seconds), cleanTimeRange.end.minutes), cleanTimeRange.end.hours)
     });
 
   }, [selectedRange, setSelectedRange, setTimeRange])
 
   return <Container>
 
-    <button onClick={ () => pickerMode === 'single' ? setPickerMode('interval') : setPickerMode('single') }>Mode: {pickerMode}</button>
+    <button onClick={ () => mode === 'single' ? setMode('interval') : setMode('single') }>Mode: {mode}</button>
     <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>Prev</button>
     <h3>{format(focusedMonth, "yyyy/MM")}</h3>
     <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>Next</button>
     <button onClick={ () => setFocusedMonth( now ) }>This Month</button>
 
-    <div>From: { format(selectedRange.start, "yyyy/MM/dd HH:mm.SSS") }</div>
-    <div>
+    <div>From: { format(selectedRange.start, "yyyy/MM/dd HH:mm:ss.SSS") }</div>
+    {useTime && <div>
       <input type="number" min="0" max="23" value={ clockFormatNumber(timeRange.start.hours) } onChange={ ({target}) => { updateTimeInDate( 'start', 'hours', parseInt(target.value) ) }} />
       <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.start.minutes) } onChange={ ({target}) => { updateTimeInDate( 'start', 'minutes', parseInt(target.value) ) }} />
-    </div>
+    </div>}
 
-    <div>To: { format(selectedRange.end, "yyyy/MM/dd HH:mm.SSS") }</div>
-    <div>
-      <input type="number" min="0" max="24" value={ clockFormatNumber(timeRange.end.hours) } onChange={ ({target}) => { updateTimeInDate( 'end', 'hours', parseInt(target.value) ) }} />
-      <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.end.minutes) } onChange={ ({target}) => { updateTimeInDate( 'end', 'minutes', parseInt(target.value) ) }} />
+    {mode === 'interval' && <div>
+      <div>To: { format(selectedRange.end, "yyyy/MM/dd HH:mm:ss.SSS") }</div>
+      {useTime && <div>
+        <input type="number" min="0" max="24" value={ clockFormatNumber(timeRange.end.hours) } onChange={ ({target}) => { updateTimeInDate( 'end', 'hours', parseInt(target.value) ) }} />
+        <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.end.minutes) } onChange={ ({target}) => { updateTimeInDate( 'end', 'minutes', parseInt(target.value) ) }} />
+      </div>}
     </div>
 
     <div>Hover: { hoverDay && format(hoverDay, "yyyy/MM/dd") }</div>
