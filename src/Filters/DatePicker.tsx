@@ -193,6 +193,15 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
 
   }, [selectedRange, setSelectedRange, setTimeRange])
 
+
+  useEffect(() => {
+    if(mode === 'interval'){
+
+    } else {
+
+    }
+  }, [mode]);
+
   return <Container>
 
     <button onClick={ () => mode === 'single' ? setMode('interval') : setMode('single') }>Mode: {mode}</button>
@@ -214,6 +223,7 @@ const DatePicker : React.FC<IProps> = ({ selectionType = "single", useTime = fal
         <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.end.minutes) } onChange={ ({target}) => { updateTimeInDate( 'end', 'minutes', parseInt(target.value) ) }} />
       </div>}
     </div>
+    }
 
     <div>Hover: { hoverDay && format(hoverDay, "yyyy/MM/dd") }</div>
 
