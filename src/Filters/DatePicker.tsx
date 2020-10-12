@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import {format, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, getMinutes, setMinutes, endOfMinute, setMilliseconds, getHours, setSeconds, setHours } from 'date-fns'
+import {format, set, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
 type SelectionType = "single" | "interval";
@@ -91,7 +91,6 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
   const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
   const [mode, setMode] = useState<SelectionType>('interval');
 
-
   const weeksOfMonth = eachWeekOfInterval({
     start: startOfMonth(focusedMonth),
     end: endOfMonth(focusedMonth)
@@ -101,10 +100,12 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
    * Handler for updating picked dates when a calendar day has been selected.
    * @param day The day of the cell that has been clicked / actioned.
    */
-  const onCellClick = (day: Date) => {
+  const onCellClick = useCallback((day: Date) => {
 
-    // Sync time from time range
+    // Sync time from time range.
 
+
+    //
     if(mode === 'single'){
       setSelectedRange(singleDayToInterval(day));
     } else {
@@ -140,7 +141,7 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
 
       }
     }
-  }
+  }, [timeRange, selectedRange, setSelectedRange, targetedDate, setTargetedDate, startOfDay, endOfDay, isBefore, isAfter, singleDayToInterval])
 
   /**
    * Used to enforce rules on time selection in dateRange, reflect those in timeRange that powers the UI time
@@ -185,7 +186,7 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
     setTimeRange(newTimeRange);
 
     // Update the state of the actual time value for date picking use.
-    const cleanTimeRange : TimeRange = {
+    const processedTimeRange : TimeRange = {
       start: {
         hours: newTimeRange.start.hours,
         minutes: newTimeRange.start.minutes,
@@ -202,8 +203,8 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
 
     // Apply time to the selected ranges Interval the date-fns way.
     setSelectedRange({
-      start: setHours( setMinutes( setSeconds( setMilliseconds(selectedRange.start, cleanTimeRange.start.milliseconds), cleanTimeRange.start.seconds), cleanTimeRange.start.minutes), cleanTimeRange.start.hours),
-      end:   setHours( setMinutes( setSeconds( setMilliseconds(selectedRange.end, cleanTimeRange.end.milliseconds), cleanTimeRange.end.seconds), cleanTimeRange.end.minutes), cleanTimeRange.end.hours)
+      start: set(selectedRange.start, processedTimeRange.start),
+      end: set(selectedRange.end, processedTimeRange.end)
     });
 
   }, [selectedRange, setSelectedRange, setTimeRange])
