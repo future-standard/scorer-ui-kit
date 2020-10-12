@@ -1,10 +1,22 @@
 import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import {format, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, getMinutes, setMinutes, endOfMinute, setMilliseconds, getHours, setHours } from 'date-fns'
+import {format, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, getMinutes, setMinutes, endOfMinute, setMilliseconds, getHours, setSeconds, setHours } from 'date-fns'
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
 type SelectionType = "single" | "interval";
+
+interface TimeProperties {
+  hours: number
+  minutes: number
+  seconds: number
+  milliseconds: number
+}
+
+interface TimeRange {
+  start: TimeProperties
+  end: TimeProperties
+}
 
 const Container = styled.div``;
 
