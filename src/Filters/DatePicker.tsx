@@ -212,7 +212,7 @@ const cellState = (day: Date, interval: Interval, hoverDate? : Date) : CellState
 
   const singleDayRange : boolean = intervalToDuration(interval).days === 0;
 
-  if( isWithinInterval(day, interval) ){
+  if( isWithinInterval(day, interval) || isSameDay(interval.start, day) ){
 
     if(singleDayRange){
       state = "single";
