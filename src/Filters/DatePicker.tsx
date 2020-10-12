@@ -115,8 +115,8 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
       if(targetedDate === 'start'){
 
         setSelectedRange({
-          start: startOfDay(day),
-          end: isBefore(day, selectedRange.end) ? selectedRange.end : endOfDay(day)
+          start: set(day, timeRange.start),
+          end: set(day, timeRange.end)//isBefore(day, selectedRange.end) ? selectedRange.end : endOfDay(day)
         });
 
         setTargetedDate('end');
@@ -125,8 +125,8 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
       } else if(targetedDate === 'end' && isAfter(day, selectedRange.start)){
 
           setSelectedRange({
-            start: selectedRange.start,
-            end: endOfDay(day)
+            start: set(selectedRange.start, timeRange.start),
+            end: set(day, timeRange.end)
           });
 
           setTargetedDate('done');
@@ -135,8 +135,8 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
       } else if(targetedDate === 'end' || targetedDate === 'done'){
 
         setSelectedRange({
-          start: startOfDay(day),
-          end: endOfDay(day)
+          start: set(day, timeRange.start),
+          end: set(day, timeRange.end)
         });
         setTargetedDate('end');
 
@@ -301,6 +301,11 @@ const clockFormatNumber = (value : number) => {
   return (valAsString.length === 1) ? '0' + value : value;
 }
 
+/**
+ * Check that the end time is later than the start.
+ * @param startTime The start time.
+ * @param endTime The end time.
+ */
 const timeLaterOrSame = (startTime : TimeProperties, endTime : TimeProperties ) : boolean => {
 
   const start = (startTime.hours * 3600) + (startTime.minutes * 60) + startTime.seconds;
