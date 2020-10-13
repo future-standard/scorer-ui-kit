@@ -80,6 +80,8 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
 
   // TODO: Make useTime toggle.
   // TODO: Allow for single <-> interval changing.
+  // TODO: useTime should allow for off, single time and range.
+  // TODO: UI should reflect a single date but two times.
 
   const now = new Date();
   const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, end: { hours: 24, minutes: 0, seconds: 0, milliseconds: 0 } };
@@ -103,46 +105,37 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
    */
   const onCellClick = useCallback((day: Date) => {
 
-    // Sync time from time range.
-
-
-    //
     if(mode === 'single'){
+
+      // === Single Mode ===
       setSelectedRange(singleDayToInterval(day));
+
     } else {
 
-      // === Setting the interval start. ===
-      if(targetedDate === 'start'){
-
-        setSelectedRange({
-          start: set(day, timeRange.start),
-          end: set(day, timeRange.end)//isBefore(day, selectedRange.end) ? selectedRange.end : endOfDay(day)
-        });
-
-        setTargetedDate('end');
-
-      // --- Setting the interval end. --
-      } else if(targetedDate === 'end' && isAfter(day, selectedRange.start)){
+      // === Interval Mode ===
+      // Setting the interval end (assuming it's later than the start).
+      if(targetedDate === 'end' && isAfter(day, selectedRange.start)){
 
           setSelectedRange({
-            start: set(selectedRange.start, timeRange.start),
-            end: set(day, timeRange.end)
+            start: set(selectedRange.start, timeRules(timeRange.start)),
+            end: set(day, timeRules(timeRange.end))
           });
 
           setTargetedDate('done');
 
-      // --- Restart journey if another interaction started. --
-      } else if(targetedDate === 'end' || targetedDate === 'done'){
+      // For first interaction || setting the end date correctly || if completed and restarting.
+      } else if(targetedDate === 'start' || targetedDate === 'end' || targetedDate === 'done'){
 
         setSelectedRange({
-          start: set(day, timeRange.start),
-          end: set(day, timeRange.end)
+          start: set(day, timeRules(timeRange.start)),
+          end: set(day, timeRules(timeRange.end))
         });
+
         setTargetedDate('end');
 
       }
     }
-  }, [timeRange, selectedRange, setSelectedRange, targetedDate, setTargetedDate, startOfDay, endOfDay, isBefore, isAfter, singleDayToInterval])
+  }, [timeRange, selectedRange, setSelectedRange, targetedDate, setTargetedDate, isAfter, singleDayToInterval])
 
 
   /**
@@ -176,31 +169,14 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
       }
     }
 
-    // === Process values for actual usage ===
-    // Prepared values for API use. Midnight is always 24:00 minus 1ms.
-    const processedTimeRange : TimeRange = {
-      start: {
-        hours: start.hours,
-        minutes: start.minutes,
-        seconds: 0,
-        milliseconds: 0
-      },
-      end: {
-        hours: end.hours === 24 ? 23 : end.hours,
-        minutes: end.hours === 24 ? 59 : end.minutes,
-        seconds: end.hours === 24 ? 59 : 0,
-        milliseconds: end.hours === 24 ? 999 : 0
-      }
-    }
-
     // === Finish Up. ===
     // Commit changes to timeRange that powers UI.
     setTimeRange({...{start, end}});
 
-    // Apply time to the selected ranges Interval the date-fns way.
+    // Apply time to the selected range Interval.
     setSelectedRange({
-      start: set(selectedRange.start, processedTimeRange.start),
-      end: set(selectedRange.end, processedTimeRange.end)
+      start: set(selectedRange.start, timeRules(start)),
+      end: set(selectedRange.end, timeRules(end))
     });
 
   }, [selectedRange, setSelectedRange, setTimeRange])
@@ -313,5 +289,26 @@ const timeLaterOrSame = (startTime : TimeProperties, endTime : TimeProperties ) 
 
   return start >= end;
 }
+
+
+/**
+ * Convert the time shown in UI to something practical for integration.
+ * @param time TimeProperties to apply rules for use in output data.
+ */
+const timeRules = (time : TimeProperties) : TimeProperties => {
+
+  // Adjust 24:00 to minus 1ms for data usage.
+  // Note: Start time limited to 23 by element max attr.
+  const processed : TimeProperties = {
+    hours: time.hours === 24 ? 23 : time.hours,
+    minutes: time.hours === 24 ? 59 : time.minutes,
+    seconds: time.hours === 24 ? 59 : 0,
+    milliseconds: time.hours === 24 ? 999 : 0
+  }
+
+  return processed;
+
+}
+
 
 export default DatePicker;
