@@ -4,7 +4,8 @@ import styled, { css } from 'styled-components';
 import {format, set, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
-type SelectionType = "single" | "interval";
+type DateMode = "single" | "interval";
+type TimeMode = "off" | "single" | "interval";
 
 interface TimeProperties {
   hours: number
@@ -72,16 +73,18 @@ const DayGuide : string[] = [
 
 interface IProps {
   initialDates?: Date | Date[]
-  mode?: SelectionType
-  useTime?: boolean
+  dateMode: DateMode
+  timeMode: TimeMode
 }
 
-const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
+const DatePicker : React.FC<IProps> = (props) => {
 
-  // TODO: Make useTime toggle.
-  // TODO: Allow for single <-> interval changing.
-  // TODO: useTime should allow for off, single time and range.
-  // TODO: UI should reflect a single date but two times.
+  // TODO: Have a function to output tidied up data for the configuration.
+  // TODO: Intitialise an initial date set.
+
+  // Bug checking
+  // - Allow for single <-> interval changing.
+  // - UI correctly reflects timeMode and dateMode
 
   const now = new Date();
   const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, end: { hours: 24, minutes: 0, seconds: 0, milliseconds: 0 } };
@@ -91,13 +94,19 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
   const [selectedRange, setSelectedRange] = useState<Interval>( singleDayToInterval(now) );
   const [timeRange, setTimeRange] = useState<TimeRange>(defaultTimeRange);
   const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
-  const [mode, setMode] = useState<SelectionType>('interval');
+  const [dateMode, setDateMode] = useState<DateMode>('interval');
+  const [timeMode, setTimeMode] = useState<TimeMode>(props.timeMode);
 
   const weeksOfMonth = eachWeekOfInterval({
     start: startOfMonth(focusedMonth),
     end: endOfMonth(focusedMonth)
   })
 
+  useEffect(()=>{
+
+    setTimeRange(defaultTimeRange);
+
+  }, [timeMode, setTimeRange])
 
   /**
    * Handler for updating picked dates when a calendar day has been selected.
@@ -105,7 +114,7 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
    */
   const onCellClick = useCallback((day: Date) => {
 
-    if(mode === 'single'){
+    if(dateMode === 'single'){
 
       // === Single Mode ===
       setSelectedRange(singleDayToInterval(day));
@@ -184,26 +193,29 @@ const DatePicker : React.FC<IProps> = ({ useTime = false, ...props }) => {
 
   return <Container>
 
-    <button onClick={ () => mode === 'single' ? setMode('interval') : setMode('single') }>Mode: {mode}</button>
+    <button onClick={ () => dateMode === 'single' ? setDateMode('interval') : setDateMode('single') }>Mode: {dateMode}</button>
+    <button onClick={ () => timeMode === 'single' ? setTimeMode('interval') : setTimeMode('single') }>Mode: {timeMode}</button>
+    <button onClick={ () => setTimeMode('off') }>No Time</button>
+
     <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>Prev</button>
     <h3>{format(focusedMonth, "yyyy/MM")}</h3>
     <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>Next</button>
     <button onClick={ () => setFocusedMonth( now ) }>This Month</button>
 
     <div>From: { format(selectedRange.start, "yyyy/MM/dd HH:mm:ss.SSS") }</div>
-    {useTime && <div>
+    {timeMode != 'off' && <div>
       <input type="number" min="0" max="23" value={ clockFormatNumber(timeRange.start.hours) } onChange={ ({target}) => { updateTimeInDate( 'start', 'hours', parseInt(target.value) ) }} />
       <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.start.minutes) } onChange={ ({target}) => { updateTimeInDate( 'start', 'minutes', parseInt(target.value) ) }} />
     </div>}
 
-    {mode === 'interval' && <div>
-      <div>To: { format(selectedRange.end, "yyyy/MM/dd HH:mm:ss.SSS") }</div>
-      {useTime && <div>
+    <div>
+      {dateMode === 'interval' && <div>To: { format(selectedRange.end, "yyyy/MM/dd HH:mm:ss.SSS") }</div>}
+      {timeMode == 'interval' && <div>
         <input type="number" min="0" max="24" value={ clockFormatNumber(timeRange.end.hours) } onChange={ ({target}) => { updateTimeInDate( 'end', 'hours', parseInt(target.value) ) }} />
         <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.end.minutes) } onChange={ ({target}) => { updateTimeInDate( 'end', 'minutes', parseInt(target.value) ) }} />
       </div>}
     </div>
-    }
+
 
     <div>Hover: { hoverDay && format(hoverDay, "yyyy/MM/dd") }</div>
 
