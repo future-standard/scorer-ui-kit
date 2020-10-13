@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+import Icon from '../Icons/Icon';
 
-import {format, set, startOfMonth, endOfMonth, eachDayOfInterval, isBefore, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
+import {format, set, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
 type DateMode = "single" | "interval";
@@ -19,16 +20,133 @@ interface TimeRange {
   end: TimeProperties
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 5px 25px 0 rgba(39, 118, 197, 0.12);
+  width: 470px;
+  height: 320px;
+  position: relative;
+  // display: flex;
+
+  &::before {
+    content: '';
+    display: block;
+    background: #70c3ff;
+    height: 5px;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+
+`;
+
+const ContainerInner = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+`
+
+const DateTimeArea = styled.div`
+  flex: 0 0 170px;
+  height: 100%;
+  border-right: #f1f1f1 1px solid;
+`
+
+const CalendarArea = styled.div`
+  flex: 1;
+  user-select: none;
+`
+
+const CalendarHeader = styled.div`
+
+  display: flex;
+  height: 70px;
+  border-bottom: #f1f1f1 1px solid;
+
+  color: #8ea0b9;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+
+  span {
+    display: block;
+    font-size: 10px;
+  }
+`
+const CurrentMonth = styled.div`
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    display: block;
+    flex: 0;
+  }
+`
+
+const PaginateMonth = styled.button`
+  cursor: pointer;
+  flex: 0 0 90px;
+
+  border: none;
+  background: transparent;
+  outline: none;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  flex: 0 0 90px;
+  color: #c1c1c1;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  &:hover {
+    color: #fff;
+    background: transparent;
+    background-image: linear-gradient(315deg, #59b1ef, #2bbbec);
+  }
+
+`
 
 const CalRow = styled.div`
   display: flex;
+  height: 40px;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0 10px;
 `
-const CalCell = styled.div<{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
+
+const CalHRow = styled(CalRow)`
+  border-bottom: #f1f1f1 1px solid;
+
+`
+
+const CalCell = styled.div`
+  flex: 0 0 40px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: #767f86;
+  font-weight: 500;
+`
+
+const CalHCell = styled(CalCell)`
+  display: flex;
+  color: #C9C9C9;
+
+
+`
+
+const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
   flex: 0 0 40px;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+
 
   ${({thisMonth}) => !thisMonth  && css`
     opacity: 0.5;
@@ -39,7 +157,7 @@ const CalCell = styled.div<{ thisMonth?: boolean, isToday?: boolean, state?: Cel
   `}
 
   ${({state}) => (state === 'single' || state === 'start' || state === 'end') && css`
-    background: hsla(205deg, 85%, 50%, 100%);
+    background-image: linear-gradient(315deg, #59b1ef, #2bbbec);
     opacity: 1;
   `}
 
@@ -58,7 +176,7 @@ const CalCell = styled.div<{ thisMonth?: boolean, isToday?: boolean, state?: Cel
   `}
 
   ${({state}) => (state === 'inside') && css`
-    background: hsla(205deg, 85%, 65%, 50%);
+    background: #ebf8fe;
     border-radius: 0;
     opacity: 1;
 
@@ -193,6 +311,55 @@ const DatePicker : React.FC<IProps> = (props) => {
 
   return <Container>
 
+    <ContainerInner>
+      <DateTimeArea>
+
+      </DateTimeArea>
+      <CalendarArea>
+
+        <CalendarHeader>
+
+          <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>
+            <Icon icon={'Left'} color={'dimmed'} size={10} />
+            { format(addMonths(focusedMonth, -1), "MMM") }
+          </PaginateMonth>
+
+          <CurrentMonth>
+            <span>{ format(focusedMonth, "yyyy") }</span>
+            <span></span>{ format(focusedMonth, "MMMM") }
+          </CurrentMonth>
+
+          <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>
+            { format(addMonths(focusedMonth, 1), "MMM") }
+            <Icon icon={'Right'} color={'dimmed'} size={10} />
+          </PaginateMonth>
+
+        </CalendarHeader>
+
+        <CalHRow>
+          {DayGuide.map((day, index) => {
+            return <CalHCell key={index}>{day}</CalHCell>;
+          })}
+        </CalHRow>
+
+        { weeksOfMonth.map((week, index)=>{
+          const days = eachDayOfInterval({
+            start: week,
+            end: endOfWeek(week)
+          })
+
+        return <CalRow key={index}>
+          {days.map((day, index) => {
+            return <CalCellB key={index} onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCellB>
+          })}
+        </CalRow>
+
+    }) }
+      </CalendarArea>
+    </ContainerInner>
+
+
+    {/*}
     <button onClick={ () => dateMode === 'single' ? setDateMode('interval') : setDateMode('single') }>Mode: {dateMode}</button>
     <button onClick={ () => timeMode === 'single' ? setTimeMode('interval') : setTimeMode('single') }>Mode: {timeMode}</button>
     <button onClick={ () => setTimeMode('off') }>No Time</button>
@@ -216,28 +383,10 @@ const DatePicker : React.FC<IProps> = (props) => {
       </div>}
     </div>
 
-
     <div>Hover: { hoverDay && format(hoverDay, "yyyy/MM/dd") }</div>
 
-    <CalRow>
-      {DayGuide.map((day, index) => {
-        return <CalCell key={index}>{day}</CalCell>;
-      })}
-    </CalRow>
 
-    { weeksOfMonth.map((week, index)=>{
-      const days = eachDayOfInterval({
-        start: week,
-        end: endOfWeek(week)
-      })
-
-      return <CalRow key={index}>
-        { days.map((day, index) => {
-          return <CalCell key={index} onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCell>
-        })}
-      </CalRow>
-
-    }) }
+    */}
 
   </Container>
 
