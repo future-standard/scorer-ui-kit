@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { boolean, select } from "@storybook/addon-knobs";
+import { select } from "@storybook/addon-knobs";
 import { DatePicker } from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -15,9 +15,9 @@ export default {
 
 export const _DatePicker = () => {
 
-  const useTime = boolean("Use Time", true);
-  const mode = select("Mode", {single: "Single", interval: "interval"}, "interval");
+  const dateMode = select("Date Mode", {single: "single", interval: "interval"}, "interval");
+  const timeMode = select("Time Mode", {off: "off", single: "single", interval: "interval"}, "interval");
 
-  return <Container><DatePicker {...{useTime, mode}} /></Container>;
+  return <Container><DatePicker {...{timeMode, dateMode}} /></Container>;
 
 };
