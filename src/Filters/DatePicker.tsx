@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Icon from '../Icons/Icon';
+import DateTimeBlock from './DateTimeBlock';
 
 import {format, set, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
 
@@ -312,9 +313,12 @@ const DatePicker : React.FC<IProps> = (props) => {
   return <Container>
 
     <ContainerInner>
-      <DateTimeArea>
 
+      <DateTimeArea>
+        <DateTimeBlock title={"From"} hasDate={ true } hasTime={ timeMode != 'off' } />
+        <DateTimeBlock title={"To"} hasDate={ dateMode == 'interval' } hasTime={ timeMode == 'interval' } />
       </DateTimeArea>
+
       <CalendarArea>
 
         <CalendarHeader>
