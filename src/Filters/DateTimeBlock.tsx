@@ -44,6 +44,7 @@ const Input = styled.input<{ readOnly? : boolean }>`
   outline: none;
   flex: 1;
   justify-content: space-between;
+  border-radius: 3px;
 
   &:focus, &:hover {
     border-color: blue;
@@ -54,18 +55,33 @@ const Input = styled.input<{ readOnly? : boolean }>`
   `}
 `
 
-const InputWrap = styled.div`
-  display: flex;
-  flex: 1;
-
-  &:focus-within ${Input} {
-    border-color: #ccc;
-  }
-`
-
 const TimeColon = styled.div`
   flex: 0 0 20px;
 `
+
+const InputWrap = styled.div`
+  display: flex;
+  flex: 1;
+  box-sizing: border-box;
+  border-radius: 3px;
+
+  &:focus-within {
+
+    background: hsla(205deg, 70%, 75%, 100%);
+    box-shadow: 0px 0px 0px 5px hsla(205deg, 70%, 75%, 100%);
+
+    ${Input} {
+      border-color: #ccc;
+    }
+
+    ${TimeColon}{
+      color: #fff;
+      text-align: center;
+    }
+  }
+`
+
+
 
 interface IProps {
   title: string
