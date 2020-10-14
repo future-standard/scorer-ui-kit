@@ -26,14 +26,11 @@ const Container = styled.div`
 `;
 
 const DateTimeArea = styled.div`
-  flex: 0 0 170px;
-  height: 100%;
   border-right: #f1f1f1 1px solid;
   width: 170px;
 `
 
 const CalendarArea = styled.div`
-  flex: 1;
   user-select: none;
 `
 
@@ -92,47 +89,39 @@ const PaginateMonth = styled.button`
 `
 
 const CalRow = styled.div`
-  // display: flex;
+  display: grid;
+  grid-template-columns: repeat(7, 40px);
+  height: 40px;
+  box-sizing: border-box;
+
   font-size: 12px;
   font-weight: 400;
-  margin: 0 10px;
-  display: grid;
-  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px;
-  width: calc(40px * 7);
-  height: 40px;
+  padding: 0 10px;
 `
 
 const CalHRow = styled(CalRow)`
   border-bottom: #f1f1f1 1px solid;
-
 `
 
 const CalCell = styled.div`
-  // flex-shrink: 0 0 40px;
-  // width: 40px;
-  // height: 40px;
+
+  display: flex;
   text-align: center;
-  // justify-content: center;
-  // align-items: center;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px;
   color: #767f86;
   font-weight: 500;
-
 `
 
 const CalHCell = styled(CalCell)`
-  // display: flex;
   color: #C9C9C9;
-
-
 `
 
 const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
-  // flex: 0 0 40px;
-  // padding: 10px;
-  border-radius: 5px;
   cursor: pointer;
   position: relative;
-
 
   ${({thisMonth}) => !thisMonth  && css`
     opacity: 0.5;
@@ -392,9 +381,6 @@ const DatePicker : React.FC<IProps> = (props) => {
     <button onClick={ () => timeMode === 'single' ? setTimeMode('interval') : setTimeMode('single') }>Mode: {timeMode}</button>
     <button onClick={ () => setTimeMode('off') }>No Time</button>
 
-    <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>Prev</button>
-    <h3>{format(focusedMonth, "yyyy/MM")}</h3>
-    <button onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>Next</button>
     <button onClick={ () => setFocusedMonth( now ) }>This Month</button>
 
     <div>From: { format(selectedRange.start, "yyyy/MM/dd HH:mm:ss.SSS") }</div>
