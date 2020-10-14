@@ -31,9 +31,6 @@ const Item = styled.div`
 const IconWrap = styled.div`
   flex: 0 0 40px;
 `
-const InputWrap = styled.div`
-  flex: 1;
-`
 
 const Input = styled.input<{ readOnly? : boolean }>`
   ${({theme}) => css`
@@ -44,10 +41,33 @@ const Input = styled.input<{ readOnly? : boolean }>`
   font-size: 14px;
   color: #8ea0b9;
   width: 100%;
+  border: none;
+  border: transparent 1px solid;
+  outline: none;
+  flex: 1;
+  justify-content: space-between;
+
+
+  &:focus, &:hover {
+    border-color: blue;
+  }
 
   ${({readOnly}) => readOnly && css`
-    border: none;
+    border-color: transparent;
   `}
+`
+
+const InputWrap = styled.div`
+  display: flex;
+  flex: 1;
+
+  &:focus-within ${Input} {
+    border-color: #ccc;
+  }
+`
+
+const TimeColon = styled.div`
+  flex: 0 0 20px;
 `
 
 interface IProps {
@@ -70,7 +90,7 @@ const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, h
           <Icon icon={'Left'} color={'dimmed'} size={10} />
         </IconWrap>
         <InputWrap>
-          <Input type="text" readOnly={false} value={ format(date || new Date(), "yyyy/MM/dd") } onChange={ ({target}) => setDateCallback() } />
+          <Input type="text" readOnly={ true } value={ format(date || new Date(), "yyyy/MM/dd") } onChange={ ({target}) => setDateCallback() } />
         </InputWrap>
 
       </Item>}
@@ -81,8 +101,7 @@ const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, h
         </IconWrap>
         <InputWrap>
           <Input type="number" min="0" max={ allowAfterMidnight ? 24: 23 } value={ clockFormatNumber(time.hours || 0) } onChange={ ({target}) => setTimeCallback( 'hours', parseInt(target.value)) } />
-        </InputWrap>
-        <InputWrap>
+          <TimeColon>:</TimeColon>
            <Input type="number" min="0" max="59" value={ clockFormatNumber(time.minutes || 0) } onChange={ ({target}) => setTimeCallback( 'minutes', parseInt(target.value)) } />
         </InputWrap>
       </Item>}
