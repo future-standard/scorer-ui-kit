@@ -22,31 +22,8 @@ interface TimeRange {
 }
 
 const Container = styled.div`
-  background: #fff;
-  border-radius: 3px;
-  box-shadow: 0 5px 25px 0 rgba(39, 118, 197, 0.12);
-  width: 470px;
-  height: 320px;
-  position: relative;
-  // display: flex;
-
-  &::before {
-    content: '';
-    display: block;
-    background: #70c3ff;
-    height: 5px;
-    left: 0;
-    right: 0;
-    top: 0;
-  }
-
-`;
-
-const ContainerInner = styled.div`
   display: flex;
-  flex-direction: row;
-  height: 100%;
-`
+`;
 
 const DateTimeArea = styled.div`
   flex: 0 0 170px;
@@ -312,8 +289,6 @@ const DatePicker : React.FC<IProps> = (props) => {
 
   return <Container>
 
-    <ContainerInner>
-
       <DateTimeArea>
         <DateTimeBlock title={"From"} hasDate={ true } hasTime={ timeMode != 'off' } />
         <DateTimeBlock title={"To"} hasDate={ dateMode == 'interval' } hasTime={ timeMode == 'interval' } />
@@ -360,7 +335,6 @@ const DatePicker : React.FC<IProps> = (props) => {
 
     }) }
       </CalendarArea>
-    </ContainerInner>
 
 
     {/*}
