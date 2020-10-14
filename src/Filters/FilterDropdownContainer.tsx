@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Container = styled.div<{ height?: string }>`
 
-  ${({height}) => height ? height : '320px'};
+  // height: ${({height}) => height ? height : '320px'};
 
   background: #fff;
   border-radius: 3px;
