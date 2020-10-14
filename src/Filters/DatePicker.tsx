@@ -303,11 +303,13 @@ const DatePicker : React.FC<IProps> = (props) => {
 
 
   const updateStartDate = useCallback(() => {
-    // TODO
+    // Currently we do not allow updating the date by typing.
+    // We can add this easily with date-fns later.
   }, []);
 
   const updateEndDate = useCallback(() => {
-    // TODO
+    // Currently we do not allow updating the date by typing.
+    // We can add this easily with date-fns later.
   }, []);
 
 
