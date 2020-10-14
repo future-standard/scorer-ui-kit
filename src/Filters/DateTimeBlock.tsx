@@ -4,7 +4,6 @@ import {format } from 'date-fns'
 
 import Icon from '../Icons/Icon';
 
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,7 +18,6 @@ const Label = styled.label`
   font-weight: 600;
   color: #57b1fa;
   border-bottom: #f1f1f1 1px solid;
-
 `
 
 const Item = styled.div`
@@ -46,7 +44,6 @@ const Input = styled.input<{ readOnly? : boolean }>`
   outline: none;
   flex: 1;
   justify-content: space-between;
-
 
   &:focus, &:hover {
     border-color: blue;

@@ -88,6 +88,10 @@ const PaginateMonth = styled.button`
 
 `
 
+const CalBody = styled.div`
+  padding: 10px 0;
+`
+
 const CalRow = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 40px);
@@ -360,18 +364,20 @@ const DatePicker : React.FC<IProps> = (props) => {
         })}
       </CalHRow>
 
-      { weeksOfMonth.map((week, index)=>{
-        const days = eachDayOfInterval({
-          start: week,
-          end: endOfWeek(week)
-        })
+      <CalBody>
+        { weeksOfMonth.map((week, index)=>{
+          const days = eachDayOfInterval({
+            start: week,
+            end: endOfWeek(week)
+          })
 
-        return <CalRow key={index}>
-          {days.map((day, index) => {
-            return <CalCellB key={index} onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCellB>
-          })}
-        </CalRow>
-      }) }
+          return <CalRow key={index}>
+            {days.map((day, index) => {
+              return <CalCellB key={index} onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCellB>
+            })}
+          </CalRow>
+        }) }
+      </CalBody>
 
     </CalendarArea>
       {/* { format(selectedRange.start, "yyyy/MM/dd HH:mm:ss.SSS") } */}
