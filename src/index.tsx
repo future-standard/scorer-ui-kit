@@ -24,7 +24,8 @@ import {
 
 // Components - Filter
 import {
-  DatePicker
+  DatePicker,
+  FilterDropdownContainer
 } from './Filters'
 
 import Icon, {IconSVGs} from  './Icons/Icon';
@@ -114,6 +115,7 @@ export {
 
   // Filters
   DatePicker,
+  FilterDropdownContainer,
 
   //Icon
   Icon,
