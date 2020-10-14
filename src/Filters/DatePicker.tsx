@@ -29,6 +29,7 @@ const DateTimeArea = styled.div`
   flex: 0 0 170px;
   height: 100%;
   border-right: #f1f1f1 1px solid;
+  width: 170px;
 `
 
 const CalendarArea = styled.div`
@@ -91,11 +92,14 @@ const PaginateMonth = styled.button`
 `
 
 const CalRow = styled.div`
-  display: flex;
-  height: 40px;
+  // display: flex;
   font-size: 12px;
   font-weight: 400;
-  padding: 0 10px;
+  margin: 0 10px;
+  display: grid;
+  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px;
+  width: calc(40px * 7);
+  height: 40px;
 `
 
 const CalHRow = styled(CalRow)`
@@ -104,26 +108,30 @@ const CalHRow = styled(CalRow)`
 `
 
 const CalCell = styled.div`
-  flex: 0 0 40px;
+  // flex-shrink: 0 0 40px;
+  // width: 40px;
+  // height: 40px;
   text-align: center;
-  justify-content: center;
-  align-items: center;
+  // justify-content: center;
+  // align-items: center;
   color: #767f86;
   font-weight: 500;
+
 `
 
 const CalHCell = styled(CalCell)`
-  display: flex;
+  // display: flex;
   color: #C9C9C9;
 
 
 `
 
 const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
-  flex: 0 0 40px;
-  padding: 10px;
+  // flex: 0 0 40px;
+  // padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  position: relative;
 
 
   ${({thisMonth}) => !thisMonth  && css`
@@ -158,6 +166,23 @@ const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state
     border-radius: 0;
     opacity: 1;
 
+    &:nth-child(7n+1), &:nth-child(7n){
+      &::after {
+        background: #ebf8fe;
+        display: block;
+        content: '';
+        position: absolute;
+        left: -10px;
+        width: 10px;
+        top: 0;
+        height: 40px;
+      }
+    }
+
+    &:nth-child(7n)::after {
+      left: auto;
+      right: -10px;
+    }
   `}
 
 `
@@ -315,53 +340,52 @@ const DatePicker : React.FC<IProps> = (props) => {
 
   return <Container>
 
-      <DateTimeArea>
-        <DateTimeBlock title={"From"} hasDate={ true } hasTime={ timeMode != 'off' } date={ selectedRange.start } time={ timeRange.start } setTimeCallback={ updateStartTime } setDateCallback={ updateStartDate } />
-        <DateTimeBlock title={"To"} hasDate={ dateMode == 'interval' } hasTime={ timeMode == 'interval' } date={ selectedRange.end } time={ timeRange.end } allowAfterMidnight={ true } setTimeCallback={ updateEndTime } setDateCallback={ updateEndDate } />
-      </DateTimeArea>
+    <DateTimeArea>
+      <DateTimeBlock title={"From"} hasDate={ true } hasTime={ timeMode != 'off' } date={ selectedRange.start } time={ timeRange.start } setTimeCallback={ updateStartTime } setDateCallback={ updateStartDate } />
+      <DateTimeBlock title={"To"} hasDate={ dateMode == 'interval' } hasTime={ timeMode == 'interval' } date={ selectedRange.end } time={ timeRange.end } allowAfterMidnight={ true } setTimeCallback={ updateEndTime } setDateCallback={ updateEndDate } />
+    </DateTimeArea>
 
-      <CalendarArea>
+    <CalendarArea>
+      <CalendarHeader>
 
-        <CalendarHeader>
+        <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>
+          <Icon icon={'Left'} color={'dimmed'} size={10} />
+          { format(addMonths(focusedMonth, -1), "MMM") }
+        </PaginateMonth>
 
-          <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>
-            <Icon icon={'Left'} color={'dimmed'} size={10} />
-            { format(addMonths(focusedMonth, -1), "MMM") }
-          </PaginateMonth>
+        <CurrentMonth>
+          <span>{ format(focusedMonth, "yyyy") }</span>
+          <span></span>{ format(focusedMonth, "MMMM") }
+        </CurrentMonth>
 
-          <CurrentMonth>
-            <span>{ format(focusedMonth, "yyyy") }</span>
-            <span></span>{ format(focusedMonth, "MMMM") }
-          </CurrentMonth>
+        <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>
+          { format(addMonths(focusedMonth, 1), "MMM") }
+          <Icon icon={'Right'} color={'dimmed'} size={10} />
+        </PaginateMonth>
 
-          <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>
-            { format(addMonths(focusedMonth, 1), "MMM") }
-            <Icon icon={'Right'} color={'dimmed'} size={10} />
-          </PaginateMonth>
+      </CalendarHeader>
 
-        </CalendarHeader>
+      <CalHRow>
+        {DayGuide.map((day, index) => {
+          return <CalHCell key={index}>{day}</CalHCell>;
+        })}
+      </CalHRow>
 
-        <CalHRow>
-          {DayGuide.map((day, index) => {
-            return <CalHCell key={index}>{day}</CalHCell>;
-          })}
-        </CalHRow>
-
-        { weeksOfMonth.map((week, index)=>{
-          const days = eachDayOfInterval({
-            start: week,
-            end: endOfWeek(week)
-          })
+      { weeksOfMonth.map((week, index)=>{
+        const days = eachDayOfInterval({
+          start: week,
+          end: endOfWeek(week)
+        })
 
         return <CalRow key={index}>
           {days.map((day, index) => {
             return <CalCellB key={index} onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCellB>
           })}
         </CalRow>
+      }) }
 
-    }) }
-      { format(selectedRange.start, "yyyy/MM/dd HH:mm:ss.SSS") }
-      </CalendarArea>
+    </CalendarArea>
+      {/* { format(selectedRange.start, "yyyy/MM/dd HH:mm:ss.SSS") } */}
 
     {/*}
     <button onClick={ () => dateMode === 'single' ? setDateMode('interval') : setDateMode('single') }>Mode: {dateMode}</button>
