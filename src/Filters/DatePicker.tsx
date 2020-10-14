@@ -287,11 +287,35 @@ const DatePicker : React.FC<IProps> = (props) => {
   }, [selectedRange, setSelectedRange, setTimeRange])
 
 
+  /**
+   * Alias for callback use of updateTimeInDate for start of range.
+   */
+  const updateStartTime = useCallback((unit : 'hours'|'minutes', value : number) => {
+    updateTimeInDate('start', unit, value);
+  }, [updateTimeInDate]);
+
+  /**
+   * Alias for callback use of updateTimeInDate for end of range.
+   */
+  const updateEndTime = useCallback((unit : 'hours'|'minutes', value : number) => {
+    updateTimeInDate('end', unit, value);
+  }, [updateTimeInDate]);
+
+
+  const updateStartDate = useCallback(() => {
+    // TODO
+  }, []);
+
+  const updateEndDate = useCallback(() => {
+    // TODO
+  }, []);
+
+
   return <Container>
 
       <DateTimeArea>
-        <DateTimeBlock title={"From"} hasDate={ true } hasTime={ timeMode != 'off' } />
-        <DateTimeBlock title={"To"} hasDate={ dateMode == 'interval' } hasTime={ timeMode == 'interval' } />
+        <DateTimeBlock title={"From"} hasDate={ true } hasTime={ timeMode != 'off' } date={ selectedRange.start } time={ timeRange.start } setTimeCallback={ updateStartTime } setDateCallback={ updateStartDate } />
+        <DateTimeBlock title={"To"} hasDate={ dateMode == 'interval' } hasTime={ timeMode == 'interval' } date={ selectedRange.end } time={ timeRange.end } allowAfterMidnight={ true } setTimeCallback={ updateEndTime } setDateCallback={ updateEndDate } />
       </DateTimeArea>
 
       <CalendarArea>
@@ -334,8 +358,8 @@ const DatePicker : React.FC<IProps> = (props) => {
         </CalRow>
 
     }) }
+      { format(selectedRange.start, "yyyy/MM/dd HH:mm:ss.SSS") }
       </CalendarArea>
-
 
     {/*}
     <button onClick={ () => dateMode === 'single' ? setDateMode('interval') : setDateMode('single') }>Mode: {dateMode}</button>
@@ -408,12 +432,6 @@ const singleDayToInterval = (day: Date) : Interval => {
     start: startOfDay(day),
     end: endOfDay(day)
   }
-}
-
-const clockFormatNumber = (value : number) => {
-  const valAsString = value.toString();
-
-  return (valAsString.length === 1) ? '0' + value : value;
 }
 
 /**
