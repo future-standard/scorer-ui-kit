@@ -28,6 +28,34 @@ const Container = styled.div`
 const DateTimeArea = styled.div`
   border-right: #f1f1f1 1px solid;
   width: 170px;
+  display: flex;
+  flex-direction: column;
+
+`
+
+const TimeZoneOption = styled.div`
+  border-top: #f1f1f1 1px solid;
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // height: 30px;
+  padding: 10px;
+  box-sizing: border-box;
+`
+const TimeZoneLabel = styled.div`
+  ${({theme}) => css`
+    font-family: ${theme.fontFamily.ui};
+  `}
+  font-size: 12px;
+  color: #767676;
+`
+const TimeZoneValue = styled.div`
+  ${({theme}) => css`
+    font-family: ${theme.fontFamily.data};
+  `}
+  font-size: 13px;
+  color: #babfc2;
 `
 
 const CalendarArea = styled.div`
@@ -89,7 +117,7 @@ const PaginateMonth = styled.button`
 `
 
 const CalBody = styled.div`
-  padding: 10px 0;
+  padding: 5px 0;
 `
 
 const CalRow = styled.div`
@@ -117,6 +145,12 @@ const CalCell = styled.div`
   border-radius: 5px;
   color: #767f86;
   font-weight: 500;
+  font-size: 14px;
+
+  ${({theme}) => css`
+    font-family: ${theme.fontFamily.data};
+  `}
+
 `
 
 const CalHCell = styled(CalCell)`
@@ -132,12 +166,13 @@ const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state
   `}
 
   ${({isToday}) => isToday  && css`
-    border: 2px solid #111;
+    border: 2px solid hsla(0deg, 0%, 80%, 50%);
   `}
 
   ${({state}) => (state === 'single' || state === 'start' || state === 'end') && css`
     background-image: linear-gradient(315deg, #59b1ef, #2bbbec);
     opacity: 1;
+    color: #ffffff;
   `}
 
   ${({state}) => (state === 'start') && css`
@@ -336,6 +371,12 @@ const DatePicker : React.FC<IProps> = (props) => {
     <DateTimeArea>
       <DateTimeBlock title={"From"} hasDate={ true } hasTime={ timeMode != 'off' } date={ selectedRange.start } time={ timeRange.start } setTimeCallback={ updateStartTime } setDateCallback={ updateStartDate } />
       <DateTimeBlock title={"To"} hasDate={ dateMode == 'interval' } hasTime={ timeMode == 'interval' } date={ selectedRange.end } time={ timeRange.end } allowAfterMidnight={ true } setTimeCallback={ updateEndTime } setDateCallback={ updateEndDate } />
+
+      <TimeZoneOption>
+        <TimeZoneLabel>Timezone</TimeZoneLabel>
+        <TimeZoneValue>JST</TimeZoneValue>
+      </TimeZoneOption>
+
     </DateTimeArea>
 
     <CalendarArea>
@@ -484,6 +525,5 @@ const timeRules = (time : TimeProperties) : TimeProperties => {
   return processed;
 
 }
-
 
 export default DatePicker;
