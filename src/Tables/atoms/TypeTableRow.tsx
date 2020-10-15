@@ -13,6 +13,7 @@ const RowContainer = styled.div`
 `;
 
 interface IProps {
+  isLastRow?: boolean
   selectable?: boolean
   hasStatus?: boolean
   hasThumbnail?: boolean
@@ -21,17 +22,17 @@ interface IProps {
   rowData: IRowData
 }
 
-const TypeTableRow : React.FC<IProps> = ({selectable = false, hasStatus, hasThumbnail, hasTypeIcon, rowData, columnConfig }) => {
+const TypeTableRow : React.FC<IProps> = ({selectable = false, hasStatus, hasThumbnail, hasTypeIcon, rowData, isLastRow, columnConfig }) => {
   return <RowContainer>
-    {selectable ? <TypeTableCell><input type='checkbox' /></TypeTableCell> : null}
-    {hasStatus ?  <TypeTableCell><TypeTableDeviceStatus /></TypeTableCell> : null}
-    {hasThumbnail ? <TypeTableCell><TableRowThumbnail image={ rowData.header?.image } /></TypeTableCell> : null}
-    {hasTypeIcon ? <TypeTableCell><Icon icon={ rowData.header?.icon || '' } size={16} /></TypeTableCell> : null}
+    {selectable ? <TypeTableCell hideDivider={true}><input type='checkbox' /></TypeTableCell> : null}
+    {hasStatus ?  <TypeTableCell hideDivider={true}><TypeTableDeviceStatus /></TypeTableCell> : null}
+    {hasThumbnail ? <TypeTableCell hideDivider={true}><TableRowThumbnail image={ rowData.header?.image } /></TypeTableCell> : null}
+    {hasTypeIcon ? <TypeTableCell hideDivider={true}><Icon icon={ rowData.header?.icon || '' } size={16} /></TypeTableCell> : null}
 
     {rowData.columns.map((cell, key) => {
       const {cellStyle, alignment, showUnit, hasCopyButton} = columnConfig[key];
       const {unit, text} = cell;
-      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, hasCopyButton, unit}}>{text}</TypeTableCell>;
+      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, hasCopyButton, unit, isLastRow}}>{text}</TypeTableCell>;
     })}
 
   </RowContainer>;

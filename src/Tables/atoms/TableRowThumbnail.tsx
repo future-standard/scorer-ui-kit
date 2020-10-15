@@ -1,14 +1,27 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const Container = styled.div<{ hoverZoom?: boolean }>`
+type VideoAspects = '4:3' | '16:9';
+
+const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects }>`
   position: relative;
   height: inherit;
   background: grey;
   border-radius: 3px;
   overflow: hidden;
-  width: 40px;
+  width: 55px;
+  height: auto;
   opacity: 0.65;
+  margin-right: 10px;
+
+  &::after {
+    content: '';
+    display: block;
+    padding-bottom: 75%;
+    ${({aspect}) => aspect === '16:9' && css`
+      padding-left: 56.25%;
+    `}
+  }
 
   ${({theme}) => theme && css`
     transition:
@@ -40,7 +53,8 @@ const Image = styled.div<{ image?: string }>`
 
 interface IProps {
   image?: string
-  hoverZoom?: boolean
+  hoverZoom?: boolean,
+  aspect?: VideoAspects
 }
 
 // Image
@@ -48,7 +62,7 @@ interface IProps {
 
 const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image}) => {
   return (
-    <Container {...{hoverZoom}}>
+    <Container {...{hoverZoom}} aspect='16:9'>
       <Image {...{image}} />
     </Container>
   );
