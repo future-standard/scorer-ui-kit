@@ -30,7 +30,8 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, hasStatus, hasThum
 
     {rowData.columns.map((cell, key) => {
       const {cellStyle, alignment, showUnit, hasCopyButton} = columnConfig[key];
-      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, hasCopyButton}}>{cell.text}</TypeTableCell>;
+      const {unit, text} = cell;
+      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, hasCopyButton, unit}}>{text}</TypeTableCell>;
     })}
 
   </RowContainer>;

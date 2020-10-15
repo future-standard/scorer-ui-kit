@@ -32,6 +32,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     header: 'Usage',
     sortable: false,
     cellStyle: 'normalImportance',
+    alignment: 'right',
     showUnit: true
   },
   {
@@ -58,7 +59,7 @@ const rowDataSample : ITypeTableData = [
     [
       { text: 'Device Name', href: '#' },
       { text: 'Just Now' },
-      { text: '200', unit: 'Tb' },
+      { text: '242', unit: 'mb' },
       { text: '¥20,000'}
     ]
   },
@@ -71,7 +72,7 @@ const rowDataSample : ITypeTableData = [
     [
       { text: 'Another Device', href: '#' },
       { text: '1st October 2019' },
-      { text: '200', unit: 'Tb' },
+      { text: '2.1', unit: 'gb' },
       { text: '¥4,000'}
     ],
   },
@@ -84,7 +85,7 @@ const rowDataSample : ITypeTableData = [
     [
       { text: 'Old Device', href: '#' },
       { text: '22nd March 2020' },
-      { text: '200', unit: 'Tb' },
+      { text: '2.1', unit: 'tb' },
       { text: '¥7,000'}
     ],
   },
@@ -97,7 +98,7 @@ const rowDataSample : ITypeTableData = [
     [
       { text: 'Magic Edge Cloud', href: '#' },
       { text: '2nd April 2020' },
-      { text: '200', unit: 'Tb' },
+      { text: '153', unit: 'mb' },
       { text: '¥25,000' }
     ]
   }

@@ -61,10 +61,11 @@ interface IProps {
   alignment?: TypeCellAlignment
   href?: string
   showUnit?: boolean
+  unit?: string
   hasCopyButton?: boolean
 }
 
-const TypeTableCell : React.FC<IProps> = ({ showUnit = false, cellStyle = 'normalImportance', alignment = 'left', hasCopyButton, href, children }) => {
+const TypeTableCell : React.FC<IProps> = ({ showUnit = false, unit = '', cellStyle = 'normalImportance', alignment = 'left', hasCopyButton, href, children }) => {
 
   const copyValue = useCallback(() => {
     // Probably best to make this in a universal, re-usable way.
@@ -74,7 +75,7 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, cellStyle = 'norma
 
   return <CellContainer {...{cellStyle, alignment}}>
     {href ? <a href={href}>{children}</a> : children}
-    {showUnit ? <UnitText>Mb</UnitText> : null}
+    {showUnit ? <UnitText>{unit}</UnitText> : null}
     {hasCopyButton ? <CopyToClipboard onClick={copyValue}><Icon icon='Invalid' size={16} /></CopyToClipboard> : null}
   </CellContainer>;
 };
