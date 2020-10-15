@@ -9,6 +9,11 @@ export const Content = styled.div<{ maxWidth?: string }>`
   padding: 70px 90px 0 90px;
   flex: 1;
   overflow: auto;
+
+  & > div {
+    max-width: 1400px;
+  }
+
   ${
     ({ maxWidth }) =>
     maxWidth && css`
