@@ -1,5 +1,5 @@
-import DatePicker from './DatePicker';
-import FilterDropdownContainer from './FilterDropdownContainer';
+import DatePicker from './molecules/DatePicker';
+import FilterDropdownContainer from './atoms/FilterDropdownContainer';
 
 export {
     DatePicker,

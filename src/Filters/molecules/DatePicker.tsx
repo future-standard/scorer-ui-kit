@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import Icon from '../Icons/Icon';
-import DateTimeBlock from './DateTimeBlock';
+import Icon from '../../Icons/Icon';
+import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import {format, set, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
 

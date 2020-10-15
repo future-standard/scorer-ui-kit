@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 export default {
-  title: 'In Development',
+  title: 'Filters/molecules',
   component: DatePicker,
   decorators: []
 };
