@@ -4,11 +4,12 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import {TypeCellStyle, TypeCellAlignment} from '..';
 
-const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCellAlignment }>`
+const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCellAlignment, hideDivider?: boolean }>`
   display: table-cell;
-  height: 35px;
-  padding: 6px 0 8px;
+  height: 50px;
   vertical-align: middle;
+  position: relative;
+  line-height: 30px;
 
   font-family: ${p => p.theme.fontFamily.data};
 
@@ -29,6 +30,22 @@ const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCe
   a:hover {
     text-decoration: underline;
   }
+
+  ${({hideDivider}) => !hideDivider && css`
+    &::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background: #afa9a9;
+      opacity: 0.25;
+      left: 0;
+      right: 0;
+      width: 100%;
+      bottom: 0px;
+      position: absolute;
+
+    }
+  `}
 
 `;
 
@@ -57,6 +74,8 @@ const CopyToClipboard = styled.button`
 `;
 
 interface IProps {
+  isLastRow?: boolean
+  hideDivider?: boolean
   cellStyle?: TypeCellStyle
   alignment?: TypeCellAlignment
   href?: string
@@ -65,7 +84,10 @@ interface IProps {
   hasCopyButton?: boolean
 }
 
-const TypeTableCell : React.FC<IProps> = ({ showUnit = false, unit = '', cellStyle = 'normalImportance', alignment = 'left', hasCopyButton, href, children }) => {
+const TypeTableCell : React.FC<IProps> = ({ showUnit = false, unit = '', cellStyle = 'normalImportance', alignment = 'left', hideDivider, isLastRow, hasCopyButton, href, children }) => {
+
+  // No divider on the last row.
+  hideDivider = isLastRow ? true : hideDivider;
 
   const copyValue = useCallback(() => {
     // Probably best to make this in a universal, re-usable way.
@@ -73,7 +95,7 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, unit = '', cellSty
     console.log("Feature not implemented yet, sorry!");
   }, []);
 
-  return <CellContainer {...{cellStyle, alignment}}>
+  return <CellContainer {...{cellStyle, alignment, hideDivider}}>
     {href ? <a href={href}>{children}</a> : children}
     {showUnit ? <UnitText>{unit}</UnitText> : null}
     {hasCopyButton ? <CopyToClipboard onClick={copyValue}><Icon icon='Invalid' size={16} /></CopyToClipboard> : null}
