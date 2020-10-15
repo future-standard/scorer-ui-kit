@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 const Logo = styled(Link)`
   height: 50px;
-  margin: 0 20px 40px 15px;
+  margin: 0 20px 55px 15px;
   display: flex;
 `;
 const LogoMark = styled.div`
