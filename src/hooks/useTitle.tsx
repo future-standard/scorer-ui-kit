@@ -2,16 +2,11 @@ import { useEffect } from 'react';
 
 export const useTitle = (productTitle: string, title : string, area? : string, delimiter?: string) => {
   useEffect(() => {
-
-    // Make the title.
-    let titleParts : string[] = [];
-
-    if(title){ titleParts.push(title) };
-    if(area){ titleParts.push(area) };
-    if(productTitle){ titleParts.push(productTitle) };
-
-    document.title = makeTitle(titleParts, delimiter);
-
+    document.title = makeTitle([
+      ...(title ? [title] : []),
+      ...(area ? [area] : []),
+      ...(productTitle ? [productTitle] : [])
+    ], delimiter);
   },[title, area]);
 };
 
