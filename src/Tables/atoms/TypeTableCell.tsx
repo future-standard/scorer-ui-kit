@@ -5,6 +5,34 @@ import Icon from '../../Icons/Icon';
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
 import {TypeCellStyle, TypeCellAlignment} from '..';
 
+const CopyToClipboard = styled.button`
+
+  cursor: pointer;
+  opacity: 0;
+
+  position: absolute;
+  right: -20px;
+  top: 14px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  ${({theme}) => theme && css`
+    transition: ${theme.animation.speed.normal} ${theme.animation.easing.easeOut};
+  `}
+
+  svg {
+    display: block;
+  }
+
+  &:hover {
+    opacity: 1 !important;
+  }
+
+`;
+
 const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCellAlignment, hideDivider?: boolean }>`
   display: table-cell;
   height: 50px;
@@ -13,6 +41,10 @@ const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCe
   line-height: 30px;
 
   font-family: ${p => p.theme.fontFamily.data};
+
+  &:hover ${CopyToClipboard}{
+    opacity: 0.5;
+  }
 
   &, a {
     ${({theme, cellStyle}) => cellStyle ? css`
@@ -30,6 +62,8 @@ const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCe
 
   a:hover {
     text-decoration: underline;
+
+
   }
 
   ${({hideDivider}) => !hideDivider && css`
@@ -56,23 +90,7 @@ const UnitText = styled.span`
   `}
 `;
 
-const CopyToClipboard = styled.button`
 
-  position: relative;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border: none;
-  outline: none;
-
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-
-  svg {
-    display: block;
-  }
-`;
 
 interface IProps {
   isLastRow?: boolean
@@ -99,7 +117,7 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, unit = '', cellSty
   return <CellContainer {...{cellStyle, alignment, hideDivider}}>
     {href ? <a href={href}>{children}</a> : children}
     {showUnit ? <UnitText>{unit}</UnitText> : null}
-    {hasCopyButton ? <CopyToClipboard onClick={ () => typeof children === 'string' && copyValue(children) }><Icon icon='Invalid' size={16} /></CopyToClipboard> : null}
+    {hasCopyButton ? <CopyToClipboard onClick={ () => typeof children === 'string' && copyValue(children) }><Icon icon='Copy' size={16} /></CopyToClipboard> : null}
   </CellContainer>;
 };
 
