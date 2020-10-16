@@ -1,18 +1,5 @@
-import {useCallback, useEffect, useState} from 'react';
-
 export const useCopyToClipboard = (text : string) => {
   return copyToClipboard(text)
-  // const [copied, setCopied] = useState(false);
-
-  // const copy = useCallback(() => {
-    // if (!copied) setCopied(copyToClipboard(text));
-  // }, [text]);
-
-  // useEffect(() => () => {
-    // setCopied(false), [text]
-  // });
-
-  // return [copied, copy];
 };
 
 const copyToClipboard = (str : string) : boolean => {
