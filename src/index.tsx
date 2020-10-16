@@ -55,7 +55,8 @@ import {
 import {
   useInterval,
   useTo,
-  useTitle
+  useTitle,
+  useCopyToClipboard
 } from './hooks';
 import  { resetButtonStyles } from './common';
 
@@ -128,6 +129,7 @@ export {
   useInterval,
   useTo,
   useTitle,
+  useCopyToClipboard,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
