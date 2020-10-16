@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
 import { Link } from 'react-router-dom';
+import { useTitle } from '../../hooks/useTitle'
 
 
 const Container = styled.div`
@@ -58,9 +59,15 @@ interface IProps {
   icon?: string
   areaTitle?: string
   areaHref?: string
+  updateDocTitle?: boolean
 }
 
-const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref}) => {
+const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true}) => {
+  // Set <title> attribute automagically.
+  if(updateDocTitle){
+    useTitle(title, areaTitle || "");
+  }
+
   return <Container>
     {areaTitle && areaHref ?
       <AreaTitle to={areaHref}>{areaTitle}</AreaTitle>
