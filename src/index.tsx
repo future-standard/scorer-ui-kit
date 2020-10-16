@@ -54,7 +54,8 @@ import {
 // Other
 import {
   useInterval,
-  useTo
+  useTo,
+  useTitle
 } from './hooks';
 import  { resetButtonStyles } from './common';
 
@@ -126,6 +127,7 @@ export {
   // Common && hooks
   useInterval,
   useTo,
+  useTitle,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
