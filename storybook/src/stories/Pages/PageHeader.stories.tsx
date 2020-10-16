@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select } from "@storybook/addon-knobs";
+import {  text, select, boolean } from "@storybook/addon-knobs";
 
 import {PageHeader, IconSVGs} from 'scorer-ui-kit';
 
@@ -23,8 +23,13 @@ export const _PageHeader = () => {
   const pageAreaHref = text("Page Area Href", "#");
   const pageIcon = select("Icon", iconList, undefined);
   const introductionText = text("Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.");
+  const updateDocTitle = boolean("Update Doc Title", true);
 
-  return <Container><PageHeader icon={pageIcon} introductionText={introductionText} title={pageTitle} areaTitle={pageAreaText} areaHref={pageAreaHref} /></Container>;
+  if(updateDocTitle){
+    console.info("Note: Updating document.title in Storybook has no effect though it should work in projects.")
+  }
+
+  return <Container><PageHeader icon={pageIcon} introductionText={introductionText} title={pageTitle} areaTitle={pageAreaText} areaHref={pageAreaHref} updateDocTitle={updateDocTitle} /></Container>;
 
 };
 
