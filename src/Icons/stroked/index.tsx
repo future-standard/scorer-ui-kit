@@ -1,6 +1,7 @@
 export { default as BigWarning } from './BigWarning'
 export { default as CloseCompact } from './CloseCompact'
 export { default as Close } from './Close'
+export { default as Copy } from './Copy'
 export { default as Critical } from './Critical'
 export { default as Detection } from './Detection'
 export { default as Down } from './Down'
