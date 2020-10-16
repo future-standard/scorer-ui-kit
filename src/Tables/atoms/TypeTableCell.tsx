@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
+import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
 import {TypeCellStyle, TypeCellAlignment} from '..';
 
 const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCellAlignment, hideDivider?: boolean }>`
@@ -89,16 +90,16 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, unit = '', cellSty
   // No divider on the last row.
   hideDivider = isLastRow ? true : hideDivider;
 
-  const copyValue = useCallback(() => {
-    // Probably best to make this in a universal, re-usable way.
-    // Value -> special div with text in -> copy the contents.
-    console.log("Feature not implemented yet, sorry!");
-  }, []);
+  const copyValue = useCallback((copyText : string) => {
+    useCopyToClipboard(copyText);
+  }, [useCopyToClipboard]);
+
+  console.log(typeof children, children)
 
   return <CellContainer {...{cellStyle, alignment, hideDivider}}>
     {href ? <a href={href}>{children}</a> : children}
     {showUnit ? <UnitText>{unit}</UnitText> : null}
-    {hasCopyButton ? <CopyToClipboard onClick={copyValue}><Icon icon='Invalid' size={16} /></CopyToClipboard> : null}
+    {hasCopyButton ? <CopyToClipboard onClick={ () => typeof children === 'string' && copyValue(children) }><Icon icon='Invalid' size={16} /></CopyToClipboard> : null}
   </CellContainer>;
 };
 
