@@ -7,6 +7,7 @@ import InputActionButton from './atoms/InputActionButton';
 import InputFeedback from './atoms/InputFeedback';
 import Label from './atoms/Label';
 import Switch from './atoms/Switch';
+import Checkbox from './atoms/Checkbox';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import Form from './Form';
@@ -23,6 +24,7 @@ export {
     InputActionButton,
     InputFeedback,
     Label,
+    Checkbox,
     Switch,
     PasswordField,
     TextField
