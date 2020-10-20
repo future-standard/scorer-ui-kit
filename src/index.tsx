@@ -17,6 +17,7 @@ import {
   InputFeedback,
   Label,
   Switch,
+  Checkbox,
   PasswordField,
   TextField
 } from './Form';
@@ -102,6 +103,7 @@ export {
   InputFeedback,
   Label,
   Switch,
+  Checkbox,
   PasswordField,
   TextField,
 
