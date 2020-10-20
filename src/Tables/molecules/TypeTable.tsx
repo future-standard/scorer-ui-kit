@@ -2,6 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 
 import TypeTableRow from '../atoms/TypeTableRow';
+import Checkbox from '../../Form/atoms/Checkbox';
 import { TypeCellAlignment, ITableColumnConfig, ITypeTableData } from '..';
 
 const Container = styled.div`
@@ -42,14 +43,15 @@ interface IProps {
   hasStatus?: boolean
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
+  selectCallback? : any
 }
 
-const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
+const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
   return <Container>
     <TableContainer>
 
       <HeaderRow>
-        {selectable ? <HeaderItem fixedWidth={30}><input type='checkbox' /></HeaderItem> : null}
+        {selectable ? <HeaderItem fixedWidth={30}><Checkbox /></HeaderItem> : null}
         {hasStatus ? <HeaderItem fixedWidth={40} /> : null}
         {hasThumbnail ? <HeaderItem fixedWidth={60} /> : null}
         {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
@@ -62,7 +64,7 @@ const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, rows, hasStatu
 
       {rows.map((rowData, key) => {
         const isLastRow = (rowData.columns.length - 1 === key) ? true : false;
-        return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
+        return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
       })}
 
     </TableContainer>
