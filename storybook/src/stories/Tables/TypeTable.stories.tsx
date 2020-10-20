@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { action } from "@storybook/addon-actions";
 import { object, boolean } from "@storybook/addon-knobs";
 
 import {TypeTable} from 'scorer-ui-kit';
@@ -115,5 +116,9 @@ export const _TypeTable = () => {
   const columnConfig = object("Column Configuration", columnConfigSample);
   const rows = object("Row Data", rowDataSample);
 
-  return <Container><TypeTable {...{columnConfig, selectable, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>;
+  const selectCallback = () => {
+    action('select-toggled');
+  }
+
+  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>;
 };
