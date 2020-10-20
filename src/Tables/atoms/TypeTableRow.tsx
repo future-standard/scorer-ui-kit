@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Checkbox from '../../Form/atoms/Checkbox';
 import TableRowThumbnail from './TableRowThumbnail';
 import TypeTableDeviceStatus from './TypeTableDeviceStatus';
 import TypeTableCell from './TypeTableCell';
@@ -20,11 +21,12 @@ interface IProps {
   hasTypeIcon?: boolean
   columnConfig: ITableColumnConfig[]
   rowData: IRowData
+  selectCallback? : any
 }
 
-const TypeTableRow : React.FC<IProps> = ({selectable = false, hasStatus, hasThumbnail, hasTypeIcon, rowData, isLastRow, columnConfig }) => {
+const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, hasStatus, hasThumbnail, hasTypeIcon, rowData, isLastRow, columnConfig }) => {
   return <RowContainer>
-    {selectable ? <TypeTableCell hideDivider={true}><input type='checkbox' /></TypeTableCell> : null}
+    {selectable ? <TypeTableCell hideDivider={true}><Checkbox onChange={ selectCallback } /></TypeTableCell> : null}
     {hasStatus ?  <TypeTableCell hideDivider={true}><TypeTableDeviceStatus /></TypeTableCell> : null}
     {hasThumbnail ? <TypeTableCell hideDivider={true}><TableRowThumbnail image={ rowData.header?.image } /></TypeTableCell> : null}
     {hasTypeIcon ? <TypeTableCell hideDivider={true}><Icon icon={ rowData.header?.icon || '' } size={16} /></TypeTableCell> : null}
