@@ -21,6 +21,9 @@ const HeaderRow = styled.div`
 const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment }>`
   display: table-cell;
   height: inherit;
+  vertical-align:top;
+  line-height: 20px;
+
 
   font-family: ${p => p.theme.fontFamily.ui };
   ${p => p.theme.typography.table.header }
@@ -44,24 +47,25 @@ interface IProps {
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
   selectCallback? : any
+  toggleAllCallback? : any
 }
 
-const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
+const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
 
-  const ToggleAll = useCallback((e) => {
-    console.log(e.target.checked)
-    rows.forEach((row) => {
-      const {id} = row;
-      selectCallback(e, id);
+  // const [allChecked, selectAllChecked] = useState<boolean>(false);
 
-    })
+  const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
+    if(toggleAllCallback){ toggleAllCallback(checked) }
+  }, [])
+
+  const allChecked = useCallback(() => {
+    return rows.filter((row) => { return row._checked === true }).length === rows.length
   }, [])
 
   return <Container>
     <TableContainer>
-
       <HeaderRow>
-        {selectable ? <HeaderItem fixedWidth={30}><Checkbox onChangeCallback={ToggleAll} /></HeaderItem> : null}
+        {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={ allChecked() } onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
         {hasStatus ? <HeaderItem fixedWidth={40} /> : null}
         {hasThumbnail ? <HeaderItem fixedWidth={60} /> : null}
         {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}

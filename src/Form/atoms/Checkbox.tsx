@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
@@ -45,10 +45,10 @@ const IconWrapper = styled.div`
   }
 `;
 
-const Container = styled.label<{checkedState?: CheckboxState, disabled?: boolean}>`
+const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}>`
   user-select: none;
 
-  ${({checkedState, disabled}) => checkedState === CheckboxState.Off && css`
+  ${({visualState, disabled}) => visualState === CheckboxState.Off && css`
     ${CheckboxOuter}{
       border: solid 2px hsl(208, 25%, 78%);
     }
@@ -65,7 +65,7 @@ const Container = styled.label<{checkedState?: CheckboxState, disabled?: boolean
     `}
   `}
 
-  ${({checkedState, disabled}) => checkedState === CheckboxState.On && css`
+  ${({visualState, disabled}) => visualState === CheckboxState.On && css`
     ${CheckboxOuter}{
       box-shadow: inset 0 1px 5px 0 hsla(205, 50%, 30%, 0.05);
       background-color: hsl(207, 95%, 66%);
@@ -86,46 +86,56 @@ const Container = styled.label<{checkedState?: CheckboxState, disabled?: boolean
     `}
   `}
 
-  ${({checkedState, disabled}) => checkedState === CheckboxState.Indeterminate && css`
+  ${({visualState, disabled}) => visualState === CheckboxState.Indeterminate && css`
     ${CheckboxOuter}{
       box-shadow: inset 0 1px 5px 0 hsla(205, 50%, 30%, 0.05);
       background-color: hsl(207, 95%, 66%);
     }
   `}
 
-
-
 `;
 
 interface IProps {
+  checked?: boolean
   disabled?: boolean
   indeterminate?: boolean
-  onChangeCallback?: (event: any, id: string | number) => void;
+  onChangeCallback?: (checked: boolean) => void;
 }
 
-const Switch : React.FC<IProps> = ({ indeterminate, disabled, onChangeCallback }) => {
+const Switch : React.FC<IProps> = ({ indeterminate, disabled, checked = false, onChangeCallback }) => {
 
-  const initialState = CheckboxState.Off;
-
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [ checkedState, setCheckedState ] = useState<CheckboxState>(initialState);
+  // const inputRef = useRef<HTMLInputElement>(null);
+  const [ isChecked, setIsChecked ] = useState<boolean>(checked);
+  const [ visualState, setVisualState ] = useState<CheckboxState>(checked ? CheckboxState.On : CheckboxState.Off);
 
   const customOnChange = (e: any) => {
-    let state = inputRef.current?.checked ? CheckboxState.On : CheckboxState.Off;
-    state = inputRef.current?.indeterminate ? CheckboxState.Indeterminate : state;
+    const checked = e.target.checked
 
-    setCheckedState( state );
-    if(onChangeCallback){ onChangeCallback(e, 123); }
+    // state = e.target.indeterminate ? CheckboxState.Indeterminate : state;
+
+    setIsChecked(checked);
+    if(onChangeCallback){ onChangeCallback(checked); }
   };
 
-  return <Container onChange={customOnChange} {...{indeterminate, disabled, checkedState}}>
-    {/* C - {checkedState} - {indeterminate ? 'Y':'N'} */}
+  useEffect(() => {
+    // setIsChecked(checked);console.log("B")
+
+    let state = checked ? CheckboxState.On : CheckboxState.Off;
+    setVisualState( state );
+
+  }, [isChecked, setVisualState])
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked, setIsChecked]);
+
+  return <Container onChange={customOnChange} {...{indeterminate, disabled, visualState}}>
     <CheckboxOuter>
       <CheckboxInner>
-        {checkedState === CheckboxState.On ? <IconWrapper><Icon icon='CloseCompact' color='inverse' size={18} weight='regular' /></IconWrapper> : null}
+        {visualState === CheckboxState.On ? <IconWrapper><Icon icon='CloseCompact' color='inverse' size={18} weight='regular' /></IconWrapper> : null}
       </CheckboxInner>
     </CheckboxOuter>
-    <RealInput ref={inputRef} type='checkbox' {...{disabled, indeterminate}} /> {/* disabled={state !== 'default' && state !== 'failure'} */}
+    <RealInput type='checkbox' checked={isChecked} readOnly={true} {...{disabled, indeterminate}} /> {/* disabled={state !== 'default' && state !== 'failure'} */}
   </Container>;
 
 };
