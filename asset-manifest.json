@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "/scorer-ui-kit/static/js/main.d480d6cb.chunk.js",
-    "main.js.map": "/scorer-ui-kit/static/js/main.d480d6cb.chunk.js.map",
+    "main.js": "/scorer-ui-kit/static/js/main.472b8b03.chunk.js",
+    "main.js.map": "/scorer-ui-kit/static/js/main.472b8b03.chunk.js.map",
     "runtime-main.js": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js",
     "runtime-main.js.map": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js.map",
-    "static/js/2.3de0dbda.chunk.js": "/scorer-ui-kit/static/js/2.3de0dbda.chunk.js",
-    "static/js/2.3de0dbda.chunk.js.map": "/scorer-ui-kit/static/js/2.3de0dbda.chunk.js.map",
+    "static/js/2.1a35f4c3.chunk.js": "/scorer-ui-kit/static/js/2.1a35f4c3.chunk.js",
+    "static/js/2.1a35f4c3.chunk.js.map": "/scorer-ui-kit/static/js/2.1a35f4c3.chunk.js.map",
     "index.html": "/scorer-ui-kit/index.html",
-    "precache-manifest.fcad6866880d5d8862bfdfe93539dd96.js": "/scorer-ui-kit/precache-manifest.fcad6866880d5d8862bfdfe93539dd96.js",
+    "precache-manifest.e8234e502eb4fa8fa3dfe75c7604f548.js": "/scorer-ui-kit/precache-manifest.e8234e502eb4fa8fa3dfe75c7604f548.js",
     "service-worker.js": "/scorer-ui-kit/service-worker.js",
-    "static/js/2.3de0dbda.chunk.js.LICENSE.txt": "/scorer-ui-kit/static/js/2.3de0dbda.chunk.js.LICENSE.txt",
+    "static/js/2.1a35f4c3.chunk.js.LICENSE.txt": "/scorer-ui-kit/static/js/2.1a35f4c3.chunk.js.LICENSE.txt",
     "static/media/Lato-Bold.ttf": "/scorer-ui-kit/static/media/Lato-Bold.2d15decc.ttf",
     "static/media/Lato-Light.ttf": "/scorer-ui-kit/static/media/Lato-Light.0f73589a.ttf",
     "static/media/Lato-Regular.ttf": "/scorer-ui-kit/static/media/Lato-Regular.c5eb5440.ttf",
@@ -31,11 +31,15 @@
     "static/media/Monorale-SemiBold.woff": "/scorer-ui-kit/static/media/Monorale-SemiBold.a914a148.woff",
     "static/media/Monorale-SemiBoldItalic.woff": "/scorer-ui-kit/static/media/Monorale-SemiBoldItalic.62a3bd14.woff",
     "static/media/Monorale-Thin.woff": "/scorer-ui-kit/static/media/Monorale-Thin.ad1820a1.woff",
-    "static/media/Monorale-ThinItalic.woff": "/scorer-ui-kit/static/media/Monorale-ThinItalic.70996eb1.woff"
+    "static/media/Monorale-ThinItalic.woff": "/scorer-ui-kit/static/media/Monorale-ThinItalic.70996eb1.woff",
+    "static/media/ghost-logo.svg": "/scorer-ui-kit/static/media/ghost-logo.b349b992.svg",
+    "static/media/login-screen.219b21cc.svg": "/scorer-ui-kit/static/media/login-screen.219b21cc.svg",
+    "static/media/logo-mark.f6d05a3c.svg": "/scorer-ui-kit/static/media/logo-mark.f6d05a3c.svg",
+    "static/media/logo-text.02fd7cf3.svg": "/scorer-ui-kit/static/media/logo-text.02fd7cf3.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.1ec9fcf8.js",
-    "static/js/2.3de0dbda.chunk.js",
-    "static/js/main.d480d6cb.chunk.js"
+    "static/js/2.1a35f4c3.chunk.js",
+    "static/js/main.472b8b03.chunk.js"
   ]
 }

@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "da06911bd16ed812e01ab143447a4bd2",
+    "revision": "fbec405f456f289f5e188610ba791adf",
     "url": "/scorer-ui-kit/index.html"
   },
   {
-    "revision": "ec412b68e6266acb4a9f",
-    "url": "/scorer-ui-kit/static/js/2.3de0dbda.chunk.js"
+    "revision": "6a4e2a5d5600a965da05",
+    "url": "/scorer-ui-kit/static/js/2.1a35f4c3.chunk.js"
   },
   {
     "revision": "c64c486544348f10a6d6c716950bc223",
-    "url": "/scorer-ui-kit/static/js/2.3de0dbda.chunk.js.LICENSE.txt"
+    "url": "/scorer-ui-kit/static/js/2.1a35f4c3.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "21aaea8e3d3e4b35383a",
-    "url": "/scorer-ui-kit/static/js/main.d480d6cb.chunk.js"
+    "revision": "d29e76120b1c617f197a",
+    "url": "/scorer-ui-kit/static/js/main.472b8b03.chunk.js"
   },
   {
     "revision": "283cd069f47daaf60567",
@@ -106,5 +106,21 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "70996eb1788219f4f294a4066dc8b312",
     "url": "/scorer-ui-kit/static/media/Monorale-ThinItalic.70996eb1.woff"
+  },
+  {
+    "revision": "b349b99262f90a5297ecdfa13c0c430e",
+    "url": "/scorer-ui-kit/static/media/ghost-logo.b349b992.svg"
+  },
+  {
+    "revision": "219b21cca8373bd1d22fe20e39f0b691",
+    "url": "/scorer-ui-kit/static/media/login-screen.219b21cc.svg"
+  },
+  {
+    "revision": "f6d05a3cdbec8ba528917fb4509cb823",
+    "url": "/scorer-ui-kit/static/media/logo-mark.f6d05a3c.svg"
+  },
+  {
+    "revision": "02fd7cf32e2fb6641b556ec43f6b8507",
+    "url": "/scorer-ui-kit/static/media/logo-text.02fd7cf3.svg"
   }
 ]);
