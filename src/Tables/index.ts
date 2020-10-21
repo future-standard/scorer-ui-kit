@@ -41,6 +41,7 @@ export interface IRowHeader {
 }
 
 export interface IRowData {
+  id?: number | string
   header?: IRowHeader
   columns: ICellData[]
 }

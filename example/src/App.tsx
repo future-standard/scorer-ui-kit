@@ -12,6 +12,7 @@ import LinePage from './pages/LinePage';
 import LineRTCPage from './pages/LineRTCPage';
 import LinksPage from './pages/LinksPage';
 import PTZPage  from './pages/PTZPage';
+import TablePage from './pages/TablePage';
 
 const App: React.FC<{}> = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC<{}> = () => {
           <Route path={`/line`} exact={true} component={LinePage}/>
           <Route path={`/linertc`} exact={true} component={LineRTCPage}/>
           <Route path={`/forms`} exact={true} component={FormPage}/>
+          <Route path={`/table`} exact={true} component={TablePage}/>
           <Route path={`/ptz`} exact={true}>
             <PTZProvider socketUrl='ws://localhost/wsapp/' imageRefresh={2000}>
               <PTZPage/>

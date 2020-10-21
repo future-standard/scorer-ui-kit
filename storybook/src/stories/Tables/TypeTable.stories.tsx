@@ -116,9 +116,7 @@ export const _TypeTable = () => {
   const columnConfig = object("Column Configuration", columnConfigSample);
   const rows = object("Row Data", rowDataSample);
 
-  const selectCallback = () => {
-    action('select-toggled');
-  }
+  const selectCallback = action('select-toggled');
 
   return <Container><TypeTable {...{columnConfig, selectable, selectCallback, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>;
 };
