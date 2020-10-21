@@ -94,7 +94,7 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 
   ${({ hasAction }) => hasAction && css`
     ${StyledInput}{
-      padding-right: 200px;
+      padding-right: 60px;
 
       // Used to control password manager injection.
       background-position: calc(100% - 50px) 50% !important;
