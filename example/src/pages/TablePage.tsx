@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer, useEffect} from 'react';
+import React, {useCallback, useState} from 'react';
 import styled from 'styled-components';
 import { TypeTable, PageHeader, Content } from 'scorer-ui-kit';
 import { ITableColumnConfig, ITypeTableData } from '../../../src/Tables';
@@ -44,7 +44,7 @@ const columnConfig : ITableColumnConfig[] = [
   }
 ];
 
-const rows : ITypeTableData = [
+const initialRows : ITypeTableData = [
   {
     id: 'device-id-1',
     columns:
@@ -56,6 +56,7 @@ const rows : ITypeTableData = [
     ]
   },
   {
+    _checked: true,
     id: 'device-id-2',
     columns:
     [
@@ -87,50 +88,53 @@ const rows : ITypeTableData = [
   }
 ];
 
-const initialState = {selected: []};
-
-const reducer = (state : any, action : any) => {
-  const {type, id} = action;
-  const {selected} = state;
-
-  switch (type) {
-    case 'add':
-      if( selected.indexOf(id) === -1 ){
-        selected.push(id);
-      }
-      break;
-    case 'remove':
-      if( selected.indexOf(id) !== -1 ){
-        selected.splice( selected.indexOf(id), 1 );
-      }
-      break;
-    default:
-      throw new Error();
-  }
-
-  return {selected: selected};
-}
 
 const TablePage : React.FC = () => {
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [rows, setRows] = useState<ITypeTableData>(initialRows)
 
   // Sent to checkbox in TableRow via Table component.
-  const selectCallback = useCallback((event: any, id?: string | number) => {
-    if(event.target.checked){
-      dispatch({type: 'add', ...{id}})
-    } else {
-      dispatch({type: 'remove', ...{id}})
-    }
-  }, [dispatch]);
+  const selectCallback = useCallback((checked:boolean, id?: string | number) => {
+
+    const newRows = [...rows];
+    const targetRowIndex = newRows.findIndex(row => row.id === id)
+    newRows[targetRowIndex]._checked = checked;
+
+    setRows(newRows);
+
+  }, [rows, setRows]);
+
+
+  const toggleAllCallback = useCallback((checked:boolean) => {
+    const newRows = [...rows];
+
+    newRows.forEach((row) => {
+      row._checked = checked;
+    });
+
+    setRows(newRows);
+  }, [rows, setRows]);
 
   return <Container>
     <Content>
       <PageHeader title="Table Example" />
-      <TypeTable selectable={true} {...{columnConfig, rows, selectCallback}} />
-      <SelectRows>Selected IDs: [{state.selected.toString()}]</SelectRows>
+      <TypeTable selectable={true} {...{columnConfig, rows, selectCallback, toggleAllCallback}} />
+      <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
     </Content>
   </Container>
 };
+
+const checkedRowIDs = (rows : ITypeTableData) => {
+  const ids : number|string[] = [];
+
+  rows.forEach((row) => {
+    if(row._checked && row.id){
+      ids.push(row.id.toString());
+    }
+  });
+
+  return ids;
+
+}
 
 export default TablePage;
