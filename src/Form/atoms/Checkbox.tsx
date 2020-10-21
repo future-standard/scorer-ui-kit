@@ -100,10 +100,10 @@ const Container = styled.label<{checkedState?: CheckboxState, disabled?: boolean
 interface IProps {
   disabled?: boolean
   indeterminate?: boolean
-  onChange?: (event: any) => void;
+  onChangeCallback?: (event: any, id: string | number) => void;
 }
 
-const Switch : React.FC<IProps> = ({ indeterminate, disabled, onChange }) => {
+const Switch : React.FC<IProps> = ({ indeterminate, disabled, onChangeCallback }) => {
 
   const initialState = CheckboxState.Off;
 
@@ -115,7 +115,7 @@ const Switch : React.FC<IProps> = ({ indeterminate, disabled, onChange }) => {
     state = inputRef.current?.indeterminate ? CheckboxState.Indeterminate : state;
 
     setCheckedState( state );
-    if(onChange){ onChange(e); }
+    if(onChangeCallback){ onChangeCallback(e, 123); }
   };
 
   return <Container onChange={customOnChange} {...{indeterminate, disabled, checkedState}}>
