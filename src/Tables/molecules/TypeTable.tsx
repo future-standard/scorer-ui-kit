@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, {css} from 'styled-components';
 
 import TypeTableRow from '../atoms/TypeTableRow';
@@ -38,8 +38,8 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
 
 interface IProps {
   columnConfig: ITableColumnConfig[]
-  selectable?: boolean
   rows: ITypeTableData
+  selectable?: boolean
   hasStatus?: boolean
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
@@ -47,11 +47,21 @@ interface IProps {
 }
 
 const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
+
+  const ToggleAll = useCallback((e) => {
+    console.log(e.target.checked)
+    rows.forEach((row) => {
+      const {id} = row;
+      selectCallback(e, id);
+
+    })
+  }, [])
+
   return <Container>
     <TableContainer>
 
       <HeaderRow>
-        {selectable ? <HeaderItem fixedWidth={30}><Checkbox /></HeaderItem> : null}
+        {selectable ? <HeaderItem fixedWidth={30}><Checkbox onChangeCallback={ToggleAll} /></HeaderItem> : null}
         {hasStatus ? <HeaderItem fixedWidth={40} /> : null}
         {hasThumbnail ? <HeaderItem fixedWidth={60} /> : null}
         {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
