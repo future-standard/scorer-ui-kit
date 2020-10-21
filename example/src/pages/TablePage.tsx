@@ -11,6 +11,9 @@ const Container = styled.div`
 const SelectRows = styled.pre`
   color: #666;
   margin-top: 75px;
+  background: #eee;
+  padding: 10px;
+  white-space: normal;
 `
 
 const columnConfig : ITableColumnConfig[] = [
