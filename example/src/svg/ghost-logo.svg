@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1076" height="1076" viewBox="0 0 1076 1076">
+    <defs>
+        <linearGradient id="a" x1="19.655%" x2="80.649%" y1="39.035%" y2="55.792%">
+            <stop offset="0%" stop-color="#FFF" stop-opacity=".84"/>
+            <stop offset="100%" stop-color="#FFF" stop-opacity=".5"/>
+        </linearGradient>
+        <linearGradient id="b" x1="-51.504%" x2="143.512%" y1="-10.887%" y2="120.691%">
+            <stop offset="0%" stop-color="#FFF" stop-opacity=".84"/>
+            <stop offset="100%" stop-color="#FFF" stop-opacity=".5"/>
+        </linearGradient>
+        <linearGradient id="c" x1="25.133%" x2="83.065%" y1="38.102%" y2="61.898%">
+            <stop offset="0%" stop-color="#FFF"/>
+            <stop offset="100%" stop-color="#FFF" stop-opacity=".364"/>
+        </linearGradient>
+        <linearGradient id="d" x1="90.238%" x2="44.369%" y1="106.126%" y2="-19.277%">
+            <stop offset="0%" stop-color="#FFF"/>
+            <stop offset="100%" stop-color="#FFF" stop-opacity=".772"/>
+        </linearGradient>
+        <linearGradient id="e" x1="20.916%" x2="83.944%" y1="39.373%" y2="61.232%">
+            <stop offset="0%" stop-color="#FFF"/>
+            <stop offset="100%" stop-color="#FFF" stop-opacity=".648"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="nonzero" opacity=".2" style="mix-blend-mode:overlay">
+        <path fill="url(#a)" d="M36.923 804.572L538 551.122l538 262.439v1.54l-518.664 258.264c-7.056 3.513-15.748 3.513-22.804 0l-497.61-247.78c-4.352-2.167-7.033-6.172-7.033-10.506 0-4.335 2.681-8.34 7.034-10.507z" opacity=".746"/>
+        <path fill="url(#b)" d="M538 551.122v-262.44l538 262.44v262.439z" opacity=".4"/>
+        <path fill="url(#c)" d="M0 551.122l538-262.44 538 262.44-538 262.439z" opacity=".799"/>
+        <path fill="url(#d)" d="M.357 260.627L538 524.878v288.683L0 551.122z"/>
+        <path fill="url(#e)" d="M0 261.124L518.618 2.276c6.078-3.035 13.568-3.035 19.646 0l502.461 250.784c3.333 1.664 5.386 4.738 5.386 8.065 0 3.327-2.053 6.401-5.386 8.065L538 524.878 0 261.124z" opacity=".9"/>
+    </g>
+</svg>

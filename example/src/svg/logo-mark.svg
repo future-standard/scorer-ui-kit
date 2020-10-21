@@ -1,0 +1,23 @@
+<svg width="35" height="35" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="prefix__a">
+            <stop stop-color="#7DB8DB" offset="0%"/>
+            <stop stop-color="#5CA0D1" offset="100%"/>
+        </linearGradient>
+        <style>
+            @font-face {
+                font-family: Monorale;
+                font-weight: 700;
+                font-style: normal;
+                src: url('/fonts/Monorale-Bold.woff') format('woff');
+                font-display: fallback;
+            }
+        </style>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <rect fill="url(#prefix__a)" width="35" height="35" rx="5"/>
+        <text font-family="Monorale" font-size="26" font-weight="bold" letter-spacing="2.167" fill="#FFF">
+            <tspan x="8.604" y="27">S</tspan>
+        </text>
+    </g>
+</svg>
