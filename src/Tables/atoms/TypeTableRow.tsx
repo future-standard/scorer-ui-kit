@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
 import Checkbox from '../../Form/atoms/Checkbox';
@@ -21,12 +21,17 @@ interface IProps {
   hasTypeIcon?: boolean
   columnConfig: ITableColumnConfig[]
   rowData: IRowData
-  selectCallback? : any
+  selectCallback? : (event: any, id?: string | number) => void
 }
 
 const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, hasStatus, hasThumbnail, hasTypeIcon, rowData, isLastRow, columnConfig }) => {
+
+  const wrappedSelectCallback = useCallback((e) => {
+    if(selectCallback){ selectCallback(e, rowData.id) }
+  }, [])
+
   return <RowContainer>
-    {selectable ? <TypeTableCell hideDivider={true}><Checkbox onChange={ selectCallback } /></TypeTableCell> : null}
+    {selectable ? <TypeTableCell hideDivider={true}><Checkbox onChangeCallback={ wrappedSelectCallback } /></TypeTableCell> : null}
     {hasStatus ?  <TypeTableCell hideDivider={true}><TypeTableDeviceStatus /></TypeTableCell> : null}
     {hasThumbnail ? <TypeTableCell hideDivider={true}><TableRowThumbnail image={ rowData.header?.image } /></TypeTableCell> : null}
     {hasTypeIcon ? <TypeTableCell hideDivider={true}><Icon icon={ rowData.header?.icon || '' } size={16} /></TypeTableCell> : null}

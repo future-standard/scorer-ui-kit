@@ -112,8 +112,6 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, unit = '', cellSty
     useCopyToClipboard(copyText);
   }, [useCopyToClipboard]);
 
-  console.log(typeof children, children)
-
   return <CellContainer {...{cellStyle, alignment, hideDivider}}>
     {href ? <a href={href}>{children}</a> : children}
     {showUnit ? <UnitText>{unit}</UnitText> : null}
