@@ -26,12 +26,12 @@ interface IProps {
 
 const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, hasStatus, hasThumbnail, hasTypeIcon, rowData, isLastRow, columnConfig }) => {
 
-  const wrappedSelectCallback = useCallback((e) => {
-    if(selectCallback){ selectCallback(e, rowData.id) }
+  const wrappedSelectCallback = useCallback((checked) => {
+    if(selectCallback){ selectCallback(checked, rowData.id) }
   }, [])
 
   return <RowContainer>
-    {selectable ? <TypeTableCell hideDivider={true}><Checkbox onChangeCallback={ wrappedSelectCallback } /></TypeTableCell> : null}
+    {selectable ? <TypeTableCell hideDivider={true}><Checkbox checked={rowData._checked} onChangeCallback={ wrappedSelectCallback } /></TypeTableCell> : null}
     {hasStatus ?  <TypeTableCell hideDivider={true}><TypeTableDeviceStatus /></TypeTableCell> : null}
     {hasThumbnail ? <TypeTableCell hideDivider={true}><TableRowThumbnail image={ rowData.header?.image } /></TypeTableCell> : null}
     {hasTypeIcon ? <TypeTableCell hideDivider={true}><Icon icon={ rowData.header?.icon || '' } size={16} /></TypeTableCell> : null}

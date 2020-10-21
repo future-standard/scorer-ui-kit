@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 import { action } from "@storybook/addon-actions";
 import { object, boolean } from "@storybook/addon-knobs";
@@ -50,8 +50,9 @@ const columnConfigSample : ITableColumnConfig[] = [
   // }
 ];
 
-const rowDataSample : ITypeTableData = [
+const initialRows : ITypeTableData = [
   {
+    id: 'device-1',
     header: {
       image: photo,
       icon: 'Zone'
@@ -65,6 +66,7 @@ const rowDataSample : ITypeTableData = [
     ]
   },
   {
+    id: 'device-2',
     header: {
       image: photo,
       icon: 'Location'
@@ -78,6 +80,7 @@ const rowDataSample : ITypeTableData = [
     ],
   },
   {
+    id: 'device-3',
     header: {
       image: photo,
       icon: 'Location'
@@ -91,6 +94,7 @@ const rowDataSample : ITypeTableData = [
     ],
   },
   {
+    id: 'device-4',
     header: {
       image: photo,
       icon: 'Location'
@@ -107,6 +111,31 @@ const rowDataSample : ITypeTableData = [
 
 export const _TypeTable = () => {
 
+  const [rows, setRows] = useState<ITypeTableData>(initialRows)
+
+  // Sent to checkbox in TableRow via Table component.
+  const selectCallback = useCallback((checked:boolean, id?: string | number) => {
+    const newRows = [...rows];
+    const targetRowIndex = newRows.findIndex(row => row.id === id)
+    newRows[targetRowIndex]._checked = checked;
+
+    setRows(newRows);
+
+  }, [rows, setRows]);
+
+
+  const toggleAllCallback = useCallback((checked:boolean) => {
+    const newRows = [...rows];
+
+    newRows.forEach((row) => {
+      row._checked = checked;
+    });
+
+    setRows(newRows);
+  }, [rows, setRows]);
+
+
+
   // To implement...
   const hasStatus = boolean("Has Device Status", false);
   const hasThumbnail = boolean("Has Thumbnail", false);
@@ -114,9 +143,15 @@ export const _TypeTable = () => {
 
   const selectable = boolean("Selectable Rows", true);
   const columnConfig = object("Column Configuration", columnConfigSample);
-  const rows = object("Row Data", rowDataSample);
+  const customRowData = object("Row Data", rows);
 
-  const selectCallback = action('select-toggled');
+  useEffect(() => {
+    setRows(customRowData);
+  }, [customRowData])
 
-  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>;
+
+
+  // const selectCallback = action('select-toggled');
+
+  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>;
 };
