@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import styled from 'styled-components';
 import { TypeTable, PageHeader, Content } from 'scorer-ui-kit';
-import { ITableColumnConfig, ITypeTableData } from '../../../src/Tables';
+import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 
 
 const Container = styled.div`
