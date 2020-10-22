@@ -117,7 +117,7 @@ const TablePage : React.FC = () => {
 
   return <Container>
     <Content>
-      <PageHeader title="Table Example" />
+      <PageHeader title="Table Example" areaTitle="Examples" areaHref={'/'} />
       <TypeTable selectable={true} {...{columnConfig, rows, selectCallback, toggleAllCallback}} />
       <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
     </Content>
