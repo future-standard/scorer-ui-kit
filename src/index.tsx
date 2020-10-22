@@ -22,6 +22,12 @@ import {
   TextField
 } from './Form';
 
+// Components - Filter
+import {
+  DatePicker,
+  FilterDropdownContainer
+} from './Filters'
+
 import Icon, {IconSVGs} from  './Icons/Icon';
 // Components - Line UI
 import {
@@ -106,6 +112,10 @@ export {
   Checkbox,
   PasswordField,
   TextField,
+
+  // Filters
+  DatePicker,
+  FilterDropdownContainer,
 
   //Icon
   Icon,
