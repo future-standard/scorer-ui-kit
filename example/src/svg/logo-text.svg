@@ -1,0 +1,15 @@
+<svg width="138" height="35" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <style>
+            @font-face{font-family:Monorale;font-weight:400;font-style:normal;src:url(/fonts/Monorale-Regular.woff) format(&apos;woff&apos;);font-display:fallback}@font-face{font-family:Monorale;font-weight:500;font-style:normal;src:url(/fonts/Monorale-Medium.woff) format(&apos;woff&apos;);font-display:fallback}
+        </style>
+    </defs>
+    <g fill="#93A5B2" fill-rule="evenodd" font-family="Monorale">
+        <text font-size="16" font-weight="400" letter-spacing="1.333">
+            <tspan x="0" y="16">SCORER</tspan>
+        </text>
+        <text font-size="10" letter-spacing=".833">
+            <tspan x="0" y="31">UI KIT</tspan>
+        </text>
+    </g>
+</svg>
