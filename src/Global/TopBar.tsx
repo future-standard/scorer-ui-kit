@@ -145,6 +145,11 @@ const LinkMenuItemA = styled.a`
   color: hsl(0, 0%, 34%);
   text-decoration: none;
 `;
+const LanguageMenu = styled.div`
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+`;
 
 interface IProps {
   useNotifications?: boolean;
@@ -212,6 +217,9 @@ const TopBar : React.FC<IProps> = ({
           <LinkMenu>
             <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
           </LinkMenu>
+          <LanguageMenu>
+            <Icon icon='Language' />
+          </LanguageMenu>
         </Logout>
       </Drawer>
 
