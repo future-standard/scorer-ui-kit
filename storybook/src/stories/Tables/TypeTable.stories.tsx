@@ -1,6 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import { action } from "@storybook/addon-actions";
 import { object, boolean } from "@storybook/addon-knobs";
 
 import {TypeTable} from 'scorer-ui-kit';
@@ -113,6 +112,14 @@ export const _TypeTable = () => {
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows)
 
+  const hasStatus = boolean("Has Device Status", false);
+  const hasThumbnail = boolean("Has Thumbnail", false);
+  const hasTypeIcon = boolean("Has Device Type Icon", false);
+
+  const selectable = boolean("Selectable Rows", true);
+  const columnConfig = object("Column Configuration", columnConfigSample);
+  const customRowData = object("Row Data", rows);
+
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked:boolean, id?: string | number) => {
     const newRows = [...rows];
@@ -136,22 +143,9 @@ export const _TypeTable = () => {
 
 
 
-  // To implement...
-  const hasStatus = boolean("Has Device Status", false);
-  const hasThumbnail = boolean("Has Thumbnail", false);
-  const hasTypeIcon = boolean("Has Device Type Icon", false);
-
-  const selectable = boolean("Selectable Rows", true);
-  const columnConfig = object("Column Configuration", columnConfigSample);
-  const customRowData = object("Row Data", rows);
-
   useEffect(() => {
     setRows(customRowData);
   }, [customRowData])
-
-
-
-  // const selectCallback = action('select-toggled');
 
   return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>;
 };
