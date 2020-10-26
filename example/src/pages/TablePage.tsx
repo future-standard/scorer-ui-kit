@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import styled from 'styled-components';
 import { TypeTable, PageHeader, Content } from 'scorer-ui-kit';
-import { ITableColumnConfig, ITypeTableData } from '../../../src/Tables';
+import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 
 
 const Container = styled.div`
@@ -63,7 +63,7 @@ const initialRows : ITypeTableData = [
       { text: 'Another Device', href: '#' },
       { text: '1st October 2019' },
       { text: '2.1', unit: 'gb' },
-      { text: '¥4,000'}
+      { text: '¥4,000' }
     ],
   },
   {

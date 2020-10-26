@@ -52,15 +52,15 @@ interface IProps {
 
 const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
 
-  // const [allChecked, selectAllChecked] = useState<boolean>(false);
-
   const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
     if(toggleAllCallback){ toggleAllCallback(checked) }
   }, [])
 
+  const isChecked = (currentValue : any) => currentValue._checked === true;
+
   const allChecked = useCallback(() => {
-    return rows.filter((row) => { return row._checked === true }).length === rows.length
-  }, [])
+    return rows.every(isChecked);
+  }, [rows])
 
   return <Container>
     <TableContainer>
