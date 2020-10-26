@@ -24,10 +24,6 @@ export interface ITableColumnConfig {
   hasCopyButton?: boolean
   width?: number // TODO: This!
 }
-// interface ITableRow {
-//   text: string
-//   unit?: string
-// }
 export interface ICellData {
   text: string
   href?: string
@@ -49,14 +45,7 @@ export interface IRowData {
 
 export type ITypeTableData = IRowData[]
 
-
-
-// import PageTitle from './atoms/PageTitle';
-// import IntroductionText from './atoms/IntroductionText';
-
 export {
-    // PageTitle,
-    // IntroductionText,
-    TypeTable,
-    TableRowThumbnail
+  TypeTable,
+  TableRowThumbnail
 };
