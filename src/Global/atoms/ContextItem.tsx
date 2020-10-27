@@ -85,7 +85,7 @@ const ContextActionBaseCSS = css`
   text-decoration: none;
 `;
 
-const ContextActionA = styled.a<{menuOpen?:boolean}>`
+const ContextActionA = styled.a<{menuOpen?:boolean, isActive:boolean}>`
   ${ContextActionBaseCSS}
   ${({theme}) => theme && css`
     font-family: ${theme.fontFamily.ui};
@@ -102,8 +102,15 @@ const ContextActionA = styled.a<{menuOpen?:boolean}>`
     opacity: 1;
     ${({theme}) => theme.colors.global.mainMenu.iconBackground.hover};
   }
+
+  ${({isActive}) => isActive && css`
+    ${ContextIcon},
+    &:hover ${ContextIcon}{
+      ${({theme}) => theme.colors.global.mainMenu.iconBackground.active};
+    }
+  `}
 `;
-const ContextActionButton = styled.button<{menuOpen?:boolean}>`
+const ContextActionButton = styled.button<{menuOpen?:boolean, isActive:boolean}>`
   ${ContextActionBaseCSS}
 
   ${({theme}) => theme && css`
@@ -126,6 +133,14 @@ const ContextActionButton = styled.button<{menuOpen?:boolean}>`
     opacity: 1;
     ${({theme}) => theme.colors.global.mainMenu.iconBackground.hover};
   }
+
+  ${({isActive}) => isActive && css`
+    ${ContextIcon},
+    &:hover ${ContextIcon}{
+      ${({theme}) => theme.colors.global.mainMenu.iconBackground.active};
+    }
+  `}
+
 `;
 
 interface IProps {
@@ -141,32 +156,37 @@ interface IProps {
   onClickCallback?: (...args: any[]) => void
 }
 
-const ContextItem : React.FC<IProps> = ({ hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey, title, href, icon, compact, isActive }) => {
+const ContextItem : React.FC<IProps> = ({ hasSubmenu = false, contextKey = -1, submenuOpen, menuOpen, onClickCallback, title, href, icon, compact, isActive }) => {
+
+  const segments = urlMatchSegments();
 
   const internal = <React.Fragment>
     <ContextIcon {...{compact}}>
-      <Icon icon={icon} color={isActive ? 'inverse' : 'dimmed'} size={20} />
+      <Icon icon={icon} color={segments.first === href ? 'inverse' : 'dimmed'} size={20} />
     </ContextIcon>
     <ContextTitle {...{compact}}>{title}</ContextTitle>
     {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} /></ContextIndicator> : null}
   </React.Fragment>;
 
   if(hasSubmenu){
-    return <ContextActionButton menuOpen={menuOpen} onClick={() => onClickCallback && onClickCallback(contextKey)}>
+    return <ContextActionButton menuOpen={menuOpen} isActive={segments.first === href} onClick={() => onClickCallback && onClickCallback(contextKey)}>
       {internal}
     </ContextActionButton>;
   } else {
-    return <ContextActionA menuOpen={menuOpen} href={href} onClick={() => onClickCallback && onClickCallback(contextKey)}>
+    return <ContextActionA menuOpen={menuOpen} href={href} isActive={segments.first === href} onClick={() => onClickCallback && onClickCallback(contextKey)}>
       {internal}
     </ContextActionA>;
   }
 
 };
 
+const urlMatchSegments = () => {
+  const segments = location.pathname.split("/").filter((item) => { return item.length > 0 });
 
-ContextItem.defaultProps = {
-  hasSubmenu: false,
-  contextKey: -1
-};
+  return {
+    first: segments[0],
+    second: segments.length > 1 ? segments[1] : null
+  }
+}
 
 export default ContextItem;
