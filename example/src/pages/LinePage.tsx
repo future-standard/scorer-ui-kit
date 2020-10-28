@@ -11,6 +11,8 @@ import {
   LineUI,
   Logo,
   Button,
+  TextField,
+  Label,
 } from 'scorer-ui-kit';
 import { LineUIOptions } from '../../../dist/LineUI';
 
@@ -18,14 +20,15 @@ const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
 
-  const options : LineUIOptions = {
+  const [options, setOptions] = useState<LineUIOptions>({
     showSetIndex: true,
-    setIndexOffset: 1
-  }
+    setIndexOffset: 1,
+    showGrabHandle: true
+  });
 
   const fetchLine = useCallback(async () => {
     const state = [{
-      name: "Line 1",
+      name: 'Line 1',
       points: [
           {
             x: 1407,
@@ -77,8 +80,32 @@ const Line: React.FC<{}> = () => {
     });
   }, []);
 
-  const saveLine = useCallback(async () => {
+  const renameLine = useCallback( ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'RENAME_SET',
+      index: 0,
+      data: {
+        name: value
+      }
+    });
   }, []);
+
+  const toggleReadOnly = useCallback((index=0) => () => {
+    dispatch({
+      type: 'UPDATE_SET_OPTIONS',
+      index,
+      data: {
+        readOnly: !(state[0]?.readOnly)
+      }
+    });
+  }, [state]);
+
+  const toggleOptions = useCallback((option: keyof LineUIOptions) => () => {
+    setOptions({...options, [option]: !options[option]});
+  }, [options]);
+
+  // const saveLine = useCallback(async () => {
+  // }, []);
 
   useEffect(() => {
     fetchLine();
@@ -94,8 +121,22 @@ const Line: React.FC<{}> = () => {
           </pre>
         </SidebarBox>
         <SidebarBox>
-          <Button design="secondary" onClick={fetchLine} >Cancel</Button>
-          <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button>
+          <Label labelText='Show Grab Handles' htmlFor='showGrabHandle' >
+            <input type='checkbox' name='showGrabHandle' checked={options.showGrabHandle} onChange={toggleOptions('showGrabHandle')}/>
+          </Label>
+          <Label labelText='Show Point Handle' htmlFor='showPointHandle' >
+            <input type='checkbox' name='showPointHandle' checked={options.showPointHandle} onChange={toggleOptions('showPointHandle')}/>
+          </Label>
+          <Label labelText='Show Move Handle' htmlFor='showMoveHandle' >
+            <input type='checkbox' name='showMoveHandle' checked={options.showMoveHandle} onChange={toggleOptions('showMoveHandle')}/>
+          </Label>
+        </SidebarBox>
+        <SidebarBox>
+          <TextField label='Rename Line' fieldState='default' name='rename' value={state[0]?.name ||''} onChange={renameLine}/>
+        </SidebarBox>
+        <SidebarBox>
+          <Button design="secondary" onClick={toggleReadOnly()} >Toggle Read Only</Button>
+          {/* <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button> */}
         </SidebarBox>
       </Sidebar>
       <Content>

@@ -61,7 +61,7 @@ const getMidpoint = (pointA : IVector2, pointB : IVector2) => {
 export default (state : IPointSet[], action: IReducerActions) => {
 
   switch(action.type){
-    //This UPDATE is better named
+    //This UPDATE is better named 'UPDATE_SET_POINTS'
     case "UPDATE_SET_POINTS":
     case "UPDATE": {
       const points = action.data.points.map((point) => ({...point}));
