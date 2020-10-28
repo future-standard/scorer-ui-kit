@@ -79,7 +79,7 @@
   "bugs": {
     "url": "https://github.com/future-standard/scorer-ui-kit/issues"
   },
-  "homepage": "https://github.com/future-standard/scorer-ui-kit#readme",
+  "homepage": "https://future-standard.github.io/scorer-ui-kit/#/",
   "bin": {
     "link-ui-kit": "./link-ui-kit.sh"
   }
