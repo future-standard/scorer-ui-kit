@@ -32,8 +32,9 @@ export const _TopBar = () => {
 
   const useSearch = boolean("Use Search", true);
   const useNotifications = boolean("Use Notifications", true);
+  const showLanguage = boolean("Show Language", true);
   const logoutLink = text("Logout Url", "#")
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
 
-  return <Container><TopBar {...{loggedInUser, userSubmenu, useSearch, useNotifications, logoutLink, searchPlaceholder}}/></Container>;
+  return <Container><TopBar {...{loggedInUser, userSubmenu, useSearch, useNotifications, logoutLink, searchPlaceholder, showLanguage}}/></Container>;
 };

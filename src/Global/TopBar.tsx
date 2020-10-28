@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
+import { resetButtonStyles } from '../common';
 
 import Icon from '../Icons/Icon';
 
@@ -26,6 +27,11 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
 `;
 
@@ -82,6 +88,9 @@ const Drawer = styled.div<{ isOpen : boolean }>`
   opacity: 0;
   visibility: hidden;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   ${({theme}) => css`
     transition:
@@ -95,6 +104,14 @@ const Drawer = styled.div<{ isOpen : boolean }>`
     opacity: 1;
     visibility: visible;
   `}
+`;
+
+const DrawerTop = styled.div`
+
+`;
+
+const DrawerBottom = styled.div`
+
 `;
 
 const DrawerHeader = styled.h2`
@@ -121,7 +138,6 @@ const CurrentUser = styled.div`
 const UserMenu = styled.div`
   padding: 20px 20px 0;
   border-bottom: hsla(0, 0%, 84%, 50%) 1px solid;
-
 `;
 
 const Logout = styled.div`
@@ -145,6 +161,23 @@ const LinkMenuItemA = styled.a`
   color: hsl(0, 0%, 34%);
   text-decoration: none;
 `;
+const LanguageMenu = styled.button`
+  ${resetButtonStyles};
+  text-transform: uppercase;
+  font-family: ${({theme}) => theme.fontFamily.ui};
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+
+  border-top: hsla(0, 0%, 84%, 50%) 1px solid;
+  padding: 20px 20px 15px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.34px;
+  color: hsl(0, 0%, 34%, 76%);
+  align-items: center;
+  width: 100%;
+`;
 
 interface IProps {
   useNotifications?: boolean;
@@ -153,7 +186,9 @@ interface IProps {
   loggedInUser: string;
   useSearch?: boolean;
   searchPlaceholder?: string;
+  showLanguage?: boolean;
   onLogout?: ()=>void;
+  onLanguageToggle?: ()=>void;
 }
 
 const TopBar : React.FC<IProps> = ({
@@ -163,7 +198,9 @@ const TopBar : React.FC<IProps> = ({
   searchPlaceholder = 'Search for devices, analysis tasks, etc.',
   userSubmenu = [],
   loggedInUser,
-  onLogout = ()=>{}
+  onLogout = ()=>{},
+  showLanguage = false,
+  onLanguageToggle = ()=>{}
 }) => {
 
   const [isUserMenuOpen, setUserMenuOpen] = useState<boolean>(false);
@@ -192,27 +229,41 @@ const TopBar : React.FC<IProps> = ({
 
       {/* User Menu */}
       <Drawer isOpen={isUserMenuOpen}>
-        <CurrentUser>
-          <DrawerHeader>Current User</DrawerHeader>
-          {loggedInUser}
-        </CurrentUser>
+        <DrawerTop>
+          <CurrentUser>
+            <DrawerHeader>Current User</DrawerHeader>
+            {loggedInUser}
+          </CurrentUser>
 
-        {userSubmenu.length > 0 ?
-          <UserMenu>
-            <DrawerHeader>Account Options</DrawerHeader>
+          {userSubmenu.length > 0 ?
+            <UserMenu>
+              <DrawerHeader>Account Options</DrawerHeader>
+              <LinkMenu>
+                {userSubmenu.map(({text, href}, index) => {
+                  return <LinkMenuItem key={index}><LinkMenuItemA href={href}>{text}</LinkMenuItemA></LinkMenuItem>;
+                })}
+              </LinkMenu>
+            </UserMenu>
+          : null}
+
+          <Logout>
             <LinkMenu>
-              {userSubmenu.map(({text, href}, index) => {
-                return <LinkMenuItem key={index}><LinkMenuItemA href={href}>{text}</LinkMenuItemA></LinkMenuItem>;
-              })}
+              <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
             </LinkMenu>
-          </UserMenu>
-        : null}
+          </Logout>
+        </DrawerTop>
+        <DrawerBottom>
+          {
+            showLanguage &&
+              <LanguageMenu onClick={onLanguageToggle}>
+                <IconWrapper>
+                  <Icon icon='Language' size={18} color='dimmed' />
+                </IconWrapper>
+                Language / 言語
+              </LanguageMenu>
+          }
+        </DrawerBottom>
 
-        <Logout>
-          <LinkMenu>
-            <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
-          </LinkMenu>
-        </Logout>
       </Drawer>
 
       {/* Notifications */}
