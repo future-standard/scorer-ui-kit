@@ -79,7 +79,8 @@ const LineUI : React.FC<LineUIProps> = ({
     showHandleFinder,
     showSetIndex,
     showPointLabel = false,
-    showHandle = true,
+    showPointHandle,
+    showMoveHandle,
     showGrabHandle,
     setIndexOffset = 0
   }={}
@@ -169,8 +170,8 @@ const LineUI : React.FC<LineUIProps> = ({
     handleFinderActive: handleFinder,
     revealSetIndex: showSetIndex !== false && (showSetIndex || state.length > 1),
     showPointLabel,
-    showHandle,
-    showGrabHandle,
+    showPointHandle:  showPointHandle || (showPointHandle !== false && showGrabHandle !== false),
+    showMoveHandle:  showMoveHandle || (showMoveHandle !== false && showGrabHandle !== false),
     setIndexOffset
   };
 
