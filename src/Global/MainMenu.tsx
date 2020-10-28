@@ -7,7 +7,7 @@ import ContextItem from './atoms/ContextItem';
 import SvgLogoMark from '../svg/LogoMark';
 import SvgLogoText from '../svg/LogoText';
 import { IMenu } from '.';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Logo = styled(Link)`
   height: 50px;
@@ -84,18 +84,16 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText }) =
 
   const [isMenuOpen, setMenuOpen] = useState<boolean>(true);
   const [isMenuPinned, setMenuPinned] = useState<boolean>(true);
-  const [, setActiveContext] = useState<number>(-1);
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const location = useLocation();
+
   let checkedInItems : number = 0;
 
-  // Set the active context on load.
   useEffect(() => {
-    // console.log("TODO: Get the current URI, match it to a menu item and set it's index to setActiveContext", activeContext);
-    // Unsure of URL structures at this point so can't set this initialization up yet.
-    setActiveContext(0);
-  }, [setActiveContext]);
+    console.log('Changed', location.pathname, location);
+  },[location]);
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
@@ -145,18 +143,18 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText }) =
 
         <NavigationContainer>
           {content.items.map((item, key) => {
-            return <NavigationItem key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
+            return <NavigationItem topLevelPath={location.pathname} key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
           })}
         </NavigationContainer>
 
         <MenuFooter>
 
           {/* <FooterItemContainer>
-            <ContextItem icon='Question' title='Help & Support' href='#' menuOpen={isMenuOpen} />
+            <ContextItem isActive={false} icon='Question' title='Help & Support' href='#' menuOpen={isMenuOpen} />
           </FooterItemContainer> */}
 
           <FooterItemContainer>
-            <ContextItem icon={isMenuOpen && isMenuPinned ? 'Left' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
+            <ContextItem isActive={false} icon={isMenuOpen && isMenuPinned ? 'Left' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
           </FooterItemContainer>
 
         </MenuFooter>

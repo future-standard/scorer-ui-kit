@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import {Link} from 'react-router-dom'; 
+import {Link} from 'react-router-dom';
 import ContextItem from './ContextItem';
 import { IMenuItemTop, IMenuItemSubmenu } from '..';
 
@@ -17,7 +17,21 @@ const SubmenuHeader = styled.div`
   margin-left: 40px;
 `;
 
-const SubmenuItem = styled.li`
+const SubmenuItemTitle = styled.span`
+  display: block;
+  ${({theme}) => theme && css`
+    font-family: ${theme.fontFamily.ui};
+    ${theme.typography.global.mainMenu.subheader}
+  `};
+
+`;
+
+const SubmenuItemLink = styled(Link)`
+  display: block;
+
+`;
+
+const SubmenuItem = styled.li<{isActive?: boolean}>`
   display: block;
   height: 30px;
   padding-left: 40px;
@@ -35,23 +49,26 @@ const SubmenuItem = styled.li`
     top: 10px;
   }
 
-`;
+  ${SubmenuItemLink}{
 
-const SubmenuItemTitle = styled.span`
-  display: block;
-  ${({theme}) => theme && css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.global.mainMenu.subheader}
-  `};
+    ${({theme}) => theme && css`
+      font-family: ${theme.fontFamily.ui};
+      ${theme.typography.global.mainMenu.subMenuItem.default};
+    `};
 
-`;
+    &:hover {
+      font-weight: 500;
+    }
 
-const SubmenuItemLink = styled(Link)`
-  display: block;
-  ${({theme}) => theme && css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.global.mainMenu.subMenuItem.default};
-  `};
+    ${({isActive}) => isActive && css`
+      &, &:hover {
+        font-weight: 500;
+      }
+    `}
+
+  }
+
+
 
 `;
 
@@ -111,12 +128,14 @@ interface IProps {
   submenuOpen: boolean
   loading: boolean
   menuOpen?: boolean
+  topLevelPath: string
   onClickCallback?: (...args: any[]) => void
   readyCallback?: (...args: any[]) => void
 }
 
-const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, loading, onClickCallback, readyCallback}) => {
+const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, loading, topLevelPath, onClickCallback, readyCallback}) => {
   const { icon, title, href, submenu } = item;
+  const isActive = topLevelPath === href;
 
   const refSubmenu = useRef<any>(null);
   const [submenuHeight, setSubmenuHeight] = useState<number>(0);
@@ -134,7 +153,7 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
   }, [refSubmenu, setSubmenuHeight, readyCallback, contextKey]);
 
   return <ContextContainer open={submenuOpen} loading={loading ? 'true': 'false'} maxHeight={submenuHeight}>
-    <ContextItem {...{title, href, icon, hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey}} />
+    <ContextItem {...{title, href, isActive, icon, hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey}} />
     {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>{submenus}</SubmenuContainer> : null}
   </ContextContainer>;
 
@@ -158,7 +177,7 @@ const generateSubmenus = (submenu? : IMenuItemSubmenu[]) => {
     const {title, href} = item;
     if(href){
       // Treat as menu item/
-      grouping[grouping.length - 1].push(<SubmenuItem key={key}><SubmenuItemLink to={href}>{title}</SubmenuItemLink></SubmenuItem>);
+      grouping[grouping.length - 1].push(<SubmenuItem key={key} isActive={true}><SubmenuItemLink to={href}>{title}</SubmenuItemLink></SubmenuItem>);
     } else {
       // Assume this is a grouping header.
       if(grouping[grouping.length - 1].length > 1){ grouping.push([]); }

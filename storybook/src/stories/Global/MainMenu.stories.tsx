@@ -38,11 +38,11 @@ export const _MainMenu = () => {
       {
         icon: 'PasswordShow',
         title: 'With Children',
-        href: '#',
+        href: '/',
         submenu: [
           {
             title: 'Child One',
-            href: '#'
+            href: '/'
           },
           {
             title: 'Child Two',
