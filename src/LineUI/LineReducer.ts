@@ -7,16 +7,32 @@ export type IReducerActions =
   | AddSetAction
   | RemoveAction
   | AddPointAction
-  | RemovePointAction;
+  | RemovePointAction
+  | UpdateSetOptions
+  | RenameSetAction
+  ;
 
 interface AddSetAction{
   type: 'ADD_SET';
   data: IPointSet;
 }
 interface UpdateAction {
-  type: 'UPDATE';
+  type: 'UPDATE'|'UPDATE_SET_POINTS';
   index: number;
   data: IPointSet;
+}
+
+interface RenameSetAction {
+  type: 'RENAME_SET';
+  index: number;
+  data: {
+    name: string;
+  };
+}
+interface UpdateSetOptions {
+  type: 'UPDATE_SET_OPTIONS';
+  index: number;
+  data: Partial<IPointSet>;
 }
 interface RemoveAction {
   type: 'REMOVE_SET';
@@ -45,9 +61,21 @@ const getMidpoint = (pointA : IVector2, pointB : IVector2) => {
 export default (state : IPointSet[], action: IReducerActions) => {
 
   switch(action.type){
+    //This UPDATE is better named
+    case "UPDATE_SET_POINTS":
     case "UPDATE": {
       const points = action.data.points.map((point) => ({...point}));
       return update(state, {[action.index]: { points: {$set: points}}});
+    }
+
+    case "RENAME_SET": {
+      const set = { ...state[action.index], name: action.data.name};
+      return update(state, {[action.index]: {$set: set}});
+    }
+
+    case "UPDATE_SET_OPTIONS": {
+      const set = { ...state[action.index], ...action.data};
+      return update(state, {[action.index]: {$set: set}});
     }
 
     case "ADD_SET":

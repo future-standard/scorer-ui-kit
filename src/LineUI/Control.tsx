@@ -57,27 +57,29 @@ export const Control : React.FC<IControlProps> = () => {
 
   const {state, dispatch} = useContext(LineSetContext);
 
-  return <DebugContainer>
+  return (
+    <DebugContainer>
 
-    <div>
-      <button onClick={() => dispatch({type: "ADD_SET"})}>Add Set</button>
+      <div>
+        <button onClick={() => dispatch({type: "ADD_SET"})}>Add Set</button>
 
-      {state.map((_lineSet, index) => (
-        <div key={index}>
-          <h5>Set {index}</h5>
-          <button onClick={() => dispatch({type: "REMOVE_SET", index: index})}>Remove Set</button>
-          <button onClick={() => dispatch({type: "ADD_POINT", index: index})}>Add Point</button>
-          <button onClick={() => dispatch({type: "REMOVE_POINT", index: index})}>Remove Point</button>
-        </div>
-      ))}
+        {state.map((_lineSet, index) => (
+          <div key={index}>
+            <h5>Set {index}</h5>
+            <button onClick={() => dispatch({type: "REMOVE_SET", index: index})}>Remove Set</button>
+            <button onClick={() => dispatch({type: "ADD_POINT", index: index})}>Add Point</button>
+            <button onClick={() => dispatch({type: "REMOVE_POINT", index: index})}>Remove Point</button>
+          </div>
+        ))}
 
-    </div>
+      </div>
 
-    <DebugOutput>
-      {JSON.stringify(state, null, 2)}
-    </DebugOutput>
+      <DebugOutput>
+        {JSON.stringify(state, null, 2)}
+      </DebugOutput>
 
-  </DebugContainer>;
+    </DebugContainer>)
+  ;
 
 };
 
