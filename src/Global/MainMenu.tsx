@@ -92,8 +92,8 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText }) =
   let checkedInItems : number = 0;
 
   useEffect(() => {
-    console.log("Changed", location)
-  },[location])
+    console.log('Changed', location.pathname, location);
+  },[location]);
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
@@ -143,7 +143,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText }) =
 
         <NavigationContainer>
           {content.items.map((item, key) => {
-            return <NavigationItem topLevelPath={'/'} key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
+            return <NavigationItem topLevelPath={location.pathname} key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
           })}
         </NavigationContainer>
 

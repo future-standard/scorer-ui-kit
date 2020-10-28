@@ -135,7 +135,7 @@ interface IProps {
 
 const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, loading, topLevelPath, onClickCallback, readyCallback}) => {
   const { icon, title, href, submenu } = item;
-  const isActive : boolean = topLevelPath === href;
+  const isActive = topLevelPath === href;
 
   const refSubmenu = useRef<any>(null);
   const [submenuHeight, setSubmenuHeight] = useState<number>(0);
