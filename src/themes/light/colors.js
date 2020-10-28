@@ -2,6 +2,11 @@ export const colors = {
     "generic": {
         "transparent": {}
     },
+    "filterBar": {
+        "divider": {
+            "backgroundColor": "hsla(0, 0%, 89.4%, 1.000)"
+        }
+    },
     "form": {
         "input": {
             "default": {
@@ -77,74 +82,62 @@ export const colors = {
         "button": {
             "primary": {
                 "default": {
-                    "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)",
-                    "textColor": "hsla(0, 0%, 100%, 1.000)"
+                    "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)"
                 },
                 "hover": {
-                    "backgroundColor": "hsla(207, 88.2%, 60%, 1.000)",
-                    "textColor": "hsla(0, 0%, 100%, 1.000)"
+                    "backgroundColor": "hsla(207, 88.2%, 60%, 1.000)"
                 },
                 "active": {
-                    "backgroundColor": "hsla(195, 79.5%, 71.4%, 1.000)",
-                    "textColor": "hsla(0, 0%, 100%, 1.000)"
+                    "backgroundColor": "hsla(195, 79.5%, 71.4%, 1.000)"
                 },
-                "loadingSegment": {
-                    "backgroundColor": "hsla(195, 72.8%, 66.9%, 1.000)"
-                },
-                "internalDivider": {
-                    "backgroundColor": "hsla(200, 87.5%, 71.8%, 1.000)"
+                "divider": {
+                    "backgroundColor": "hsla(202, 70.4%, 62.9%, 1.000)"
                 },
                 "disabled": {
-                    "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)",
-                    "textColor": "hsla(0, 0%, 100%, 1.000)"
+                    "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)"
+                },
+                "actionArea": {
+                    "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)"
                 }
             },
             "secondary": {
                 "default": {
-                    "backgroundColor": "hsla(0, 0%, 94.9%, 1.000)",
-                    "textColor": "hsla(0, 0%, 55.3%, 1.000)"
+                    "backgroundColor": "hsla(0, 0%, 94.9%, 1.000)"
                 },
                 "hover": {
-                    "backgroundColor": "hsla(206, 10.8%, 87.3%, 1.000)",
-                    "textColor": "hsla(0, 0%, 55.3%, 1.000)"
+                    "backgroundColor": "hsla(0, 0%, 85.9%, 1.000)"
                 },
                 "active": {
-                    "backgroundColor": "hsla(204, 18.2%, 78.4%, 1.000)",
-                    "textColor": "hsla(0, 0%, 55.3%, 1.000)"
+                    "backgroundColor": "hsla(204, 18.2%, 78.4%, 1.000)"
                 },
                 "disabled": {
-                    "backgroundColor": "hsla(0, 0%, 97.6%, 1.000)",
-                    "textColor": "hsla(0, 0%, 55.3%, 1.000)"
+                    "backgroundColor": "hsla(0, 0%, 97.3%, 1.000)"
                 },
-                "loadingSegment": {
-                    "backgroundColor": "hsla(203, 18.8%, 72.9%, 1.000)"
+                "divider": {
+                    "backgroundColor": "hsla(204, 18.2%, 78.4%, 0.302)"
                 },
-                "internalDivider": {
-                    "backgroundColor": "hsla(0, 4.9%, 88%, 1.000)"
+                "actionArea": {
+                    "backgroundColor": "hsla(0, 0%, 94.9%, 0.302)"
                 }
             },
             "danger": {
                 "default": {
-                    "backgroundImage": "linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)",
-                    "textColor": "hsla(0, 0%, 100%, 1.000)"
+                    "backgroundImage": "linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)"
                 },
                 "hover": {
-                    "backgroundColor": "hsla(0, 88.4%, 66.3%, 1.000)",
-                    "textColor": "hsla(0, 0%, 100%, 1.000)"
+                    "backgroundColor": "hsla(0, 88.4%, 66.3%, 1.000)"
                 },
                 "active": {
-                    "backgroundColor": "hsla(5, 75.9%, 69%, 1.000)",
-                    "textColor": "hsla(0, 0%, 100%, 1.000)"
+                    "backgroundColor": "hsla(0, 78.8%, 70.4%, 1.000)"
                 },
                 "disabled": {
-                    "backgroundColor": "hsla(0, 78.7%, 85.3%, 1.000)",
-                    "textColor": "hsla(0, 0%, 100%, 1.000)"
+                    "backgroundColor": "hsla(0, 78.7%, 85.3%, 1.000)"
                 },
-                "loadingSegment": {
-                    "backgroundColor": "hsla(5, 64.2%, 62.7%, 1.000)"
+                "divider": {
+                    "backgroundColor": "hsla(0, 62.1%, 61.8%, 1.000)"
                 },
-                "internalDivider": {
-                    "backgroundColor": "hsla(5, 52%, 55.9%, 1.000)"
+                "actionArea": {
+                    "backgroundImage": "linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)"
                 }
             }
         },
@@ -163,7 +156,7 @@ export const colors = {
                 "backgroundColor": "hsla(120, 35.2%, 71.6%, 1.000)"
             },
             "invalid": {
-                "backgroundColor": "hsla(0, 78.8%, 70.4%, 1.000)"
+                "backgroundColor": "hsla(0, 0%, 94.9%, 1.000)"
             }
         },
         "switch": {
@@ -183,7 +176,7 @@ export const colors = {
                         "borderColor": "hsla(208, 22.7%, 85.3%, 0.651)"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(0, 0%, 85.9%, 1.000)"
+                        "backgroundColor": "hsla(120, 1.3%, 85.3%, 1.000)"
                     }
                 },
                 "loading": {
@@ -258,7 +251,7 @@ export const colors = {
                 "disabled": {
                     "outer": {
                         "backgroundImage": "linear-gradient(317.51deg, hsla(0, 57%, 81.8%, 1.000) 0%, hsla(19, 100%, 84.9%, 1.000) 100%)",
-                        "borderColor": "hsla(0, 55.4%, 78%, 1.000)"
+                        "borderColor": "hsla(0, 78.7%, 85.3%, 1.000)"
                     },
                     "inner": {
                         "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
@@ -272,23 +265,41 @@ export const colors = {
                         "borderColor": "hsla(208, 22.7%, 85.3%, 0.651)"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(0, 0%, 89%, 1.000)"
+                        "backgroundColor": "hsla(0, 0%, 89.4%, 1.000)"
                     }
                 }
             }
+        }
+    },
+    "feedbackMessages": {
+        "neutral": {
+            "backgroundColor": "hsla(205, 22.1%, 66.3%, 1.000)"
+        },
+        "error": {
+            "backgroundColor": "hsla(0, 78.8%, 70.4%, 1.000)"
+        },
+        "information": {
+            "backgroundColor": "hsla(205, 77.4%, 63.5%, 1.000)"
+        },
+        "success": {
+            "backgroundColor": "hsla(136, 49.5%, 57.3%, 1.000)"
+        },
+        "warning": {
+            "backgroundColor": "hsla(30, 91%, 61%, 1.000)"
         }
     },
     "global": {
         "mainMenu": {
             "iconBackground": {
                 "active": {
-                    "backgroundColor": "hsla(210, 91.4%, 77.3%, 1.000)"
+                    "backgroundColor": "hsla(215, 100%, 75.1%, 1.000)",
+                    "opacity": 0.7495349702380952
                 },
                 "hover": {
-                    "backgroundColor": "hsla(204, 94.6%, 92.7%, 1.000)"
+                    "backgroundColor": "hsla(200, 77.8%, 77.1%, 1.000)"
                 },
                 "default": {
-                    "backgroundColor": "hsla(0, 0%, 95.3%, 0.000)"
+                    "backgroundColor": "hsla(0, 0%, 99.6%, 1.000)"
                 }
             },
             "background": {
@@ -296,18 +307,21 @@ export const colors = {
                 "backgroundColor": "hsla(0, 0%, 99.6%, 1.000)"
             },
             "lines": {
-                "backgroundColor": "hsla(240, 2%, 90%, 0.851)"
+                "backgroundColor": "hsla(0, 0%, 93.3%, 1.000)"
             },
             "footerBackground": {
                 "backgroundColor": "hsla(0, 0%, 99.6%, 0.851)"
             }
+        },
+        "background": {
+            "backgroundImage": "linear-gradient(180.00deg, hsla(210, 20%, 98%, 1.000) 0%, hsla(210, 20%, 96.1%, 1.000) 100%)"
         }
     },
     "indicators": {
         "spinner": {
             "danger": {
                 "base": {
-                    "borderColor": "hsla(5, 77.2%, 70.8%, 1.000)"
+                    "borderColor": "hsla(0, 78.8%, 70.4%, 1.000)"
                 },
                 "top": {
                     "borderColor": "hsla(0, 0%, 100%, 1.000)"
@@ -318,7 +332,7 @@ export const colors = {
                     "borderColor": "hsla(0, 0%, 100%, 1.000)"
                 },
                 "base": {
-                    "borderColor": "hsla(202, 15.1%, 79.2%, 1.000)"
+                    "borderColor": "hsla(0, 0%, 75.7%, 1.000)"
                 }
             },
             "primary": {
@@ -334,162 +348,45 @@ export const colors = {
                     "borderColor": "hsla(0, 0%, 100%, 1.000)"
                 },
                 "base": {
-                    "backgroundColor": "hsla(0, 0%, 100%, 0.000)"
+                    "borderColor": "hsla(0, 0%, 76.9%, 0.329)"
                 }
             }
         }
     },
-    "icons": {
-        "mono": {
-            "backgroundColor": "hsla(0, 0%, 27.1%, 1.000)"
-        },
-        "dimmed": {
-            "backgroundColor": "hsla(0, 0%, 57.6%, 1.000)"
-        },
-        "subtle": {
-            "backgroundColor": "hsla(0, 0%, 82.7%, 1.000)"
-        },
-        "inverse": {
-            "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
-        },
-        "primary": {
-            "backgroundColor": "hsla(205, 100%, 64.3%, 1.000)"
-        },
-        "danger": {
-            "backgroundImage": "linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)"
+    "statusColours": {
+        "devices": {
+            "danger": {
+                "backgroundColor": "hsla(0, 63.5%, 64.5%, 1.000)"
+            },
+            "good": {
+                "backgroundColor": "hsla(126, 48.1%, 68.2%, 1.000)"
+            },
+            "caution": {
+                "backgroundColor": "hsla(57, 57.7%, 62.9%, 1.000)"
+            },
+            "transparent": {},
+            "folder": {
+                "backgroundColor": "hsla(207, 95.3%, 66.5%, 1.000)"
+            },
+            "neutral": {
+                "backgroundColor": "hsla(0, 0%, 91.8%, 1.000)"
+            }
         }
     },
-    "lines":{
-        "primary": {
-            label: {
-                fill: "#fff"//"hsla(205deg, 80%, 25%, 100%)"
-            },
-            contrastLine: {
-                stroke: 'hsla(205deg, 80%, 45%, 100%);'
-            },
-            highlightLine: {
-                stroke: 'hsla(205deg, 45%, 90%, 90%);'
-            },
-            grabHandle: {
-                fill: 'hsla(205deg, 45%, 90%, 100%)',
-                stroke: 'hsla(205deg, 45%, 100%, 100%)'
-            },
-            grabHandleContrast:{
-                stroke: 'hsla(205deg, 80%, 45%, 100%)'
-            },
-            grabHandleText:{
-                fill: 'hsla(205deg, 80%, 25%, 100%);'
-
-            },
-            handleBase: {
-                fill: 'hsla(235deg, 100%, 80%, 100%);'
-            },
-            handleRingLayer: {
-                stroke: 'hsla(205deg, 100%, 89%, 100%);'
-            },
-            handleReactiveFill:{
-                fill: 'hsla(192deg, 100%, 45%, 100%);'
-            },
-            handleReactiveRing:{
-                stroke: 'hsla(205deg, 100%, 36%, 27%);'
-            },
-            handleContrastLayer:{
-                stroke: 'hsla(205deg, 100%, 36%, 15%);'
-            },
-            stopStart:{
-                stopColor:' hsla(205deg, 100%, 15%, 35%);'
-            },
-            stopEnd:{
-                stopColor: 'hsla(205deg, 100%, 15%, 0%)'
-
-            }
-
+    "filterDropdown": {
+        "container": {
+            "boxShadow": "0px 5px 25px 0px hsla(210, 66.9%, 46.3%, 0.122)",
+            "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
+            "opacity": 0.990215
         },
-        "secondary": {
-            label: {
-                fill: "#fff"//"hsla(205deg, 80%, 25%, 100%)"
-            },
-            contrastLine: {
-                stroke: 'hsla(120deg, 80%, 45%, 100%);'
-            },
-            highlightLine: {
-                stroke: 'hsla(120deg, 45%, 90%, 90%);'
-            },
-            grabHandle: {
-                fill: 'hsla(120deg, 45%, 90%, 100%)',
-                stroke: 'hsla(120deg, 45%, 100%, 100%)'
-            },
-            grabHandleContrast:{
-                stroke: 'hsla(120deg, 80%, 45%, 100%)'
-            },
-            grabHandleText:{
-                fill: 'hsla(120deg, 80%, 25%, 100%);'
-
-            },
-            handleBase: {
-                fill: 'hsla(150deg, 100%, 80%, 100%);'
-            },
-            handleRingLayer: {
-                stroke: 'hsla(120deg, 100%, 89%, 100%);'
-            },
-            handleReactiveFill:{
-                fill: 'hsla(108deg, 100%, 45%, 100%);'
-            },
-            handleReactiveRing:{
-                stroke: 'hsla(120deg, 100%, 36%, 27%);'
-            },
-            handleContrastLayer:{
-                stroke: 'hsla(120deg, 100%, 36%, 15%);'
-            },
-            stopStart:{
-                stopColor:' hsla(120deg, 100%, 15%, 35%);'
-            },
-            stopEnd:{
-                stopColor: 'hsla(120deg, 100%, 15%, 0%)'
-
-            }
-        },
-        "danger": {
-            label: {
-                fill: "#fff"//"hsla(205deg, 80%, 25%, 100%)"
-            },
-            contrastLine: {
-                stroke: 'hsla(0, 80%, 45%, 100%);'
-            },
-            highlightLine: {
-                stroke: 'hsla(0, 45%, 90%, 90%);'
-            },
-            grabHandle: {
-                fill: 'hsla(0, 45%, 90%, 100%)',
-                stroke: 'hsla(0, 45%, 100%, 100%)'
-            },
-            grabHandleText:{
-                fill: 'hsla(0, 80%, 25%, 100%);'
-            },
-            grabHandleContrast:{
-                stroke: 'hsla(0, 80%, 45%, 100%)'
-            },
-            handleBase: {
-                fill: 'hsla(30deg, 100%, 80%, 100%);'
-            },
-            handleRingLayer: {
-                stroke: 'hsla(0, 100%, 89%, 100%);'
-            },
-            handleReactiveFill:{
-                fill: 'hsla(348deg, 100%, 45%, 100%);'
-            },
-            handleReactiveRing:{
-                stroke: 'hsla(0deg, 100%, 36%, 27%);'
-            },
-            handleContrastLayer:{
-                stroke: 'hsla(0deg, 100%, 36%, 15%);'
-            },
-            stopStart:{
-                stopColor:' hsla(0, 100%, 15%, 35%);'
-            },
-            stopEnd:{
-                stopColor: 'hsla(0, 100%, 15%, 0%);'
-            }
+        "topBorder": {
+            "backgroundColor": "hsla(205, 100%, 72%, 1.000)",
+            "opacity": 0.990215
+        }
+    },
+    "general": {
+        "divider": {
+            "backgroundColor": "hsla(0, 0%, 93.3%, 1.000)"
         }
     }
-};
+}
