@@ -163,13 +163,4 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText }) =
   );
 };
 
-// const urlMatchSegments = () => {
-//   const segments = location.pathname.split("/").filter((item) => { return item.length > 0 });
-
-//   return {
-//     first: segments[0],
-//     second: segments.length > 1 ? segments[1] : null
-//   }
-// }
-
 export default MainMenu;
