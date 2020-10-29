@@ -4,11 +4,8 @@ import styled, { css } from 'styled-components';
 const Container = styled.p`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
+    ${theme.typography.pageHeader.introduction};
   `}
-  font-size: 14px;
-  font-style: italic;
-  line-height: 25px;
-  color: #8b9196;
 `;
 
 interface IProps {}
