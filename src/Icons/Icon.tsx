@@ -8,7 +8,7 @@ export {IconSVGs};
 
 const IconWrapper = styled.div<{color:string}>`
   [stroke]{
-    stroke: ${({theme, color}) => theme.colors.icons[color].backgroundColor};
+    stroke: ${({theme, color}) => theme.colors.icons[color]};
   }
 `;
 
