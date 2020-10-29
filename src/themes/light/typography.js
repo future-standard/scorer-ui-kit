@@ -461,7 +461,7 @@ export const typography = {
     },
     "global": {
         "mainMenu": {
-            "topLevel": {
+            "subItem": {
                 "default": {
                     "textAlign": "left",
                     "fontSize": "16px",
@@ -500,7 +500,7 @@ export const typography = {
                 "textDecoration": "none",
                 "color": "hsla(0, 0%, 34.5%, 1.000)"
             },
-            "subLevel": {
+            "menuItem": {
                 "default": {
                     "textAlign": "left",
                     "fontSize": "14px",
