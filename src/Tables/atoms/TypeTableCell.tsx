@@ -33,7 +33,7 @@ const CopyToClipboard = styled.button`
 
 `;
 
-const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCellAlignment, hideDivider?: boolean }>`
+const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCellAlignment, hideDivider?: boolean }>`
   display: table-cell;
   height: 50px;
   vertical-align: middle;
@@ -47,16 +47,10 @@ const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCe
   }
 
   &, a {
-    ${({theme, cellStyle}) => cellStyle ? css`
-    ${theme.typography.table.columns[cellStyle]};
+    ${({theme, cellStyle, alignment}) => cellStyle === 'firstColumn' ? css`
+      ${theme.typography.table.columnData[cellStyle]};
     ` : css`
-    ${theme.typography.table.columns['normalImportance']};
-    `}
-
-    ${({alignment}) => alignment ? css`
-    text-align: ${alignment};
-    ` : css`
-    text-align: left;
+      ${theme.typography.table.columnData[cellStyle][alignment]};
     `}
   }
 
@@ -86,7 +80,7 @@ const CellContainer = styled.div<{ cellStyle?: TypeCellStyle, alignment?: TypeCe
 
 const UnitText = styled.span`
   ${({theme}) => css`
-    ${theme.typography.table.columns['unit']};
+    ${theme.typography.table.columnData['unit']};
   `}
 `;
 
