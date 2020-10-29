@@ -24,19 +24,18 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
   vertical-align:top;
   line-height: 20px;
 
-
   font-family: ${p => p.theme.fontFamily.ui };
-  ${p => p.theme.typography.table.header }
+
+  ${({theme, alignment}) => alignment ? css`
+    ${theme.typography.table.header[alignment]};
+  ` : css`
+    ${theme.typography.table.header['left']};
+  `}
 
   ${p => p.fixedWidth && css`
     width: ${p.fixedWidth}px;
   `}
 
-  ${({alignment}) => alignment ? css`
-    text-align: ${alignment};
-  ` : css`
-    text-align: left;
-  `}
 `;
 
 interface IProps {

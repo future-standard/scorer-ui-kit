@@ -436,7 +436,7 @@ export const typography = {
             "center": {
                 "textAlign": "center",
                 "fontSize": "14px",
-                "fontWeight": 800,
+                "fontWeight": 600,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
                 "color": "hsla(204, 2.4%, 59%, 1.000)"
@@ -444,7 +444,7 @@ export const typography = {
             "left": {
                 "textAlign": "left",
                 "fontSize": "14px",
-                "fontWeight": 800,
+                "fontWeight": 600,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
                 "color": "hsla(204, 2.4%, 59%, 1.000)"
@@ -452,7 +452,7 @@ export const typography = {
             "right": {
                 "textAlign": "right",
                 "fontSize": "14px",
-                "fontWeight": 800,
+                "fontWeight": 600,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
                 "color": "hsla(204, 2.4%, 59%, 1.000)"
