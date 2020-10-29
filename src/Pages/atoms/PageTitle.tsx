@@ -27,26 +27,19 @@ const IconContainer = styled.div`
 const Title = styled.h1`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
+    ${theme.typography.pageHeader.mainTitle};
   `}
-
-  font-size: 26px;
-  font-weight: 500;
-  color: #5b636a;
   margin: 0 0 20px;
 `;
 
 const AreaTitle = styled(Link)`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
+    ${theme.typography.pageHeader.areaTitle};
   `}
-  font-size: 12px;
-  font-weight: 500;
-  color: #7c8793;
   margin: 0;
-  line-height: 12px;
-  text-decoration: none;
   position: absolute;
-  top: -17px;
+  top: -18px;
 
   &:hover {
     text-decoration: underline;

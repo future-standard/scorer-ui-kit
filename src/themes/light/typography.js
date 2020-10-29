@@ -1,13 +1,13 @@
 export const typography = {
-    "content": {
-        "mainHeader": {
+    "pageHeader": {
+        "mainTitle": {
             "textAlign": "left",
             "fontSize": "26px",
-            "fontWeight": 700,
+            "fontWeight": 500,
             "textDecoration": "none",
             "color": "hsla(208, 7.7%, 38.2%, 1.000)"
         },
-        "viewIntroduction": {
+        "introduction": {
             "textAlign": "left",
             "fontStyle": "italic",
             "fontSize": "14px",
@@ -16,47 +16,12 @@ export const typography = {
             "textDecoration": "none",
             "color": "hsla(207, 5%, 56.7%, 1.000)"
         },
-        "section-H2": {
+        "areaTitle": {
             "textAlign": "left",
-            "fontSize": "20px",
+            "fontSize": "12px",
             "fontWeight": 500,
             "textDecoration": "none",
-            "color": "hsla(208, 7.7%, 38.2%, 1.000)"
-        },
-        "sectionH3": {
-            "textAlign": "left",
-            "fontSize": "16px",
-            "fontWeight": 500,
-            "textDecoration": "none",
-            "color": "hsla(208, 7.7%, 38.2%, 1.000)"
-        },
-        "actionParagraph": {
-            "textAlign": "left",
-            "fontSize": "14px",
-            "fontWeight": 400,
-            "lineHeight": "25px",
-            "textDecoration": "none",
-            "color": "hsla(207, 5%, 56.7%, 1.000)"
-        },
-        "hyperlink": {
-            "hover": {
-                "textAlign": "left",
-                "fontStyle": "italic",
-                "fontSize": "14px",
-                "fontWeight": 600,
-                "lineHeight": "25px",
-                "textDecoration": "none",
-                "color": "hsla(195, 98.3%, 45.1%, 1.000)"
-            },
-            "base": {
-                "textAlign": "left",
-                "fontStyle": "italic",
-                "fontSize": "14px",
-                "fontWeight": 600,
-                "lineHeight": "25px",
-                "textDecoration": "none",
-                "color": "hsla(205, 62.3%, 55.3%, 1.000)"
-            }
+            "color": "hsla(0, 0%, 46.3%, 1.000)"
         }
     },
     "form": {
@@ -287,6 +252,50 @@ export const typography = {
             }
         }
     },
+    "content": {
+        "section-H2": {
+            "textAlign": "left",
+            "fontSize": "20px",
+            "fontWeight": 500,
+            "textDecoration": "none",
+            "color": "hsla(208, 7.7%, 38.2%, 1.000)"
+        },
+        "sectionH3": {
+            "textAlign": "left",
+            "fontSize": "16px",
+            "fontWeight": 500,
+            "textDecoration": "none",
+            "color": "hsla(208, 7.7%, 38.2%, 1.000)"
+        },
+        "actionParagraph": {
+            "textAlign": "left",
+            "fontSize": "14px",
+            "fontWeight": 400,
+            "lineHeight": "25px",
+            "textDecoration": "none",
+            "color": "hsla(207, 5%, 56.7%, 1.000)"
+        },
+        "hyperlink": {
+            "hover": {
+                "textAlign": "left",
+                "fontStyle": "italic",
+                "fontSize": "14px",
+                "fontWeight": 600,
+                "lineHeight": "25px",
+                "textDecoration": "none",
+                "color": "hsla(195, 98.3%, 45.1%, 1.000)"
+            },
+            "base": {
+                "textAlign": "left",
+                "fontStyle": "italic",
+                "fontSize": "14px",
+                "fontWeight": 600,
+                "lineHeight": "25px",
+                "textDecoration": "none",
+                "color": "hsla(205, 62.3%, 55.3%, 1.000)"
+            }
+        }
+    },
     "searchBar": {
         "placeholder": {
             "textAlign": "left",
@@ -436,7 +445,7 @@ export const typography = {
             "center": {
                 "textAlign": "center",
                 "fontSize": "14px",
-                "fontWeight": 600,
+                "fontWeight": 800,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
                 "color": "hsla(204, 2.4%, 59%, 1.000)"
@@ -444,7 +453,7 @@ export const typography = {
             "left": {
                 "textAlign": "left",
                 "fontSize": "14px",
-                "fontWeight": 600,
+                "fontWeight": 800,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
                 "color": "hsla(204, 2.4%, 59%, 1.000)"
@@ -452,7 +461,7 @@ export const typography = {
             "right": {
                 "textAlign": "right",
                 "fontSize": "14px",
-                "fontWeight": 600,
+                "fontWeight": 800,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
                 "color": "hsla(204, 2.4%, 59%, 1.000)"
@@ -542,15 +551,6 @@ export const typography = {
                     "color": "hsla(0, 0%, 65.5%, 1.000)"
                 }
             }
-        }
-    },
-    "pageHeader": {
-        "sectionName": {
-            "textAlign": "left",
-            "fontSize": "12px",
-            "fontWeight": 500,
-            "textDecoration": "none",
-            "color": "hsla(0, 0%, 46.3%, 1.000)"
         }
     },
     "datepicker": {
