@@ -292,14 +292,13 @@ export const styles = {
         "mainMenu": {
             "iconBackground": {
                 "active": {
-                    "backgroundColor": "hsla(215, 100%, 75.1%, 1.000)",
-                    "opacity": 0.7495349702380952
+                    "backgroundColor": "hsla(215, 100%, 75.1%, 1.000)"
                 },
                 "hover": {
                     "backgroundColor": "hsla(200, 77.8%, 77.1%, 1.000)"
                 },
                 "default": {
-                    "backgroundColor": "hsla(0, 0%, 99.6%, 1.000)"
+                    "backgroundColor": "hsla(200, 77.8%, 77.1%, 0.000)"
                 }
             },
             "background": {

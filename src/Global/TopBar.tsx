@@ -7,13 +7,18 @@ import Icon from '../Icons/Icon';
 const Container = styled.div`
   height: 65px;
   width: 100%;
-  border-bottom: hsla(0, 0%, 84%, 50%) 1px solid;
   display: flex;
   justify-content: space-between;
-  box-shadow: 5px 7px 10px 0 hsla(205, 16%, 77%, 0.1);
+
+  ${({theme: {colors}}) => colors && css`
+    border-bottom: ${colors.divider} 1px solid;
+    box-shadow: 5px 7px 10px 0 hsla(205, 16%, 77%, 0.1);
+  `}
+
 `;
 
 const SearchBar = styled.div`
+  margin-left: 25px;
   flex: 0 1 500px;
   display: flex;
   justify-content: center;
@@ -22,7 +27,7 @@ const SearchBar = styled.div`
 `;
 
 const IconWrapper = styled.div`
-  flex: 0 35px;
+  flex: 0 40px;
   width: 5px;
   display: flex;
   justify-content: center;
@@ -42,11 +47,12 @@ const SearchInput = styled.input`
   line-height: 35px;
   border: none;
   outline: none;
-  font-size: 14px;
+
+  ${ ({theme: {typography}}) => typography.global.topBar.search.value };
 
   &::placeholder {
     font-style: italic;
-    color: hsla(0,0%,57.6%,1.000);
+    ${ ({theme: {typography}}) => typography.global.topBar.search.placeholder };
   }
 `;
 
@@ -61,16 +67,24 @@ const DrawerToggle = styled.button.attrs({ type: 'button' })<{ isActive: boolean
   height: inherit;
   background: none;
   border: none;
-  border-bottom: 5px solid hsla(0, 0%, 84%, 50%);
   outline: none;
   cursor: pointer;
 
   ${({theme}) => css`
-    transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
+    border-bottom: 5px solid ${theme.colors.menu.indicator};
+
+    &:hover {
+      border-bottom-color: ${theme.colors.menu.hover};
+    }
+
+    transition: border ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
+
   `};
 
-  ${({isActive}) => isActive && css`
-    border-bottom-color: hsla(210, 91.4%, 77.3%, 1.000);
+  ${({isActive, theme}) => isActive && css`
+    &, &:hover {
+      border-bottom-color: ${theme.colors.menu.active};
+    }
   `}
 `;
 
@@ -80,10 +94,10 @@ const Drawer = styled.div<{ isOpen : boolean }>`
 
   position: fixed;
   right: -10px;
-  top: 74px;
+  top: 65px;
   bottom: 0;
-  background: white;
-  border-left: hsla(0, 0%, 84%, 50%) 1px solid;
+  background: ${({theme}) => theme.styles.global.mainMenu.background};
+  border-left: ${({theme: {colors}}) => colors.divider} 1px solid;
   width: 200px;
   opacity: 0;
   visibility: hidden;
@@ -115,29 +129,23 @@ const DrawerBottom = styled.div`
 `;
 
 const DrawerHeader = styled.h2`
-  text-transform: uppercase;
-  font-size: 14px;
-  font-weight: 500;
-  color: hsla(0, 0%, 34%, 75%);
+  ${({theme}) => theme.typography.global.mainMenu.subheader};
   padding: 0;
   margin: 0 0 5px;
 `;
 
 const CurrentUser = styled.div`
-  font-size: 12px;
-  font-weight: 500;
-  color: hsla(0, 0%, 34%, 75%);
   padding: 20px 20px 15px;
   word-break: no-wrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: hsla(0, 0%, 84%, 50%) 1px solid;
-
+  border-bottom: ${({theme: {colors}}) => colors.divider} 1px solid;
+  ${({theme}) => theme.typography.global.mainMenu.identity};
 `;
 
 const UserMenu = styled.div`
   padding: 20px 20px 0;
-  border-bottom: hsla(0, 0%, 84%, 50%) 1px solid;
+  border-bottom: ${({theme: {colors}}) => colors.divider} 1px solid;
 `;
 
 const Logout = styled.div`
@@ -155,28 +163,48 @@ const LinkMenuItem = styled.li`
   margin: 0 0 21px;
 
 `;
-const LinkMenuItemA = styled.a`
-  font-size: 16px;
-  font-weight: 400;
-  color: hsl(0, 0%, 34%);
-  text-decoration: none;
+const LinkMenuItemA = styled.a<{isActive?:boolean}>`
+  ${({theme}) => css`
+    ${theme.typography.global.mainMenu.subItem.default};
+
+    &:hover {
+      ${theme.typography.global.mainMenu.subItem.hover};
+    }
+
+  `};
+
+  ${({theme, isActive}) => isActive && css`
+    &, &:hover {
+      ${theme.typography.global.mainMenu.subItem.active};
+    }
+  `};
+
+
+
+
+
+
 `;
 const LanguageMenu = styled.button`
   ${resetButtonStyles};
-  text-transform: uppercase;
+
   font-family: ${({theme}) => theme.fontFamily.ui};
   margin-top: auto;
   display: flex;
   flex-direction: row;
 
-  border-top: hsla(0, 0%, 84%, 50%) 1px solid;
-  padding: 20px 20px 15px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.34px;
-  color: hsl(0, 0%, 34%, 76%);
+  border-top: ${({theme: {colors}}) => colors.divider} 1px solid;
+  ${({theme}) => css`
+    ${theme.typography.global.mainMenu.subItem.default};
+    &:hover { ${theme.typography.global.mainMenu.subItem.hover}; }
+    &:active { ${theme.typography.global.mainMenu.subItem.active}; }
+  `};
+
+  padding: 20px 10px 15px;
   align-items: center;
   width: 100%;
+
+
 `;
 
 interface IProps {

@@ -11,7 +11,7 @@ export const typography = {
             "textAlign": "left",
             "fontStyle": "italic",
             "fontSize": "14px",
-            "fontWeight": 500,
+            "fontWeight": 300,
             "lineHeight": "25px",
             "textDecoration": "none",
             "color": "hsla(207, 5%, 56.7%, 1.000)"
@@ -19,7 +19,7 @@ export const typography = {
         "areaTitle": {
             "textAlign": "left",
             "fontSize": "12px",
-            "fontWeight": 600,
+            "fontWeight": 400,
             "textDecoration": "none",
             "color": "hsla(0, 0%, 46.3%, 1.000)"
         }
@@ -65,7 +65,7 @@ export const typography = {
             "label": {
                 "textAlign": "left",
                 "fontSize": "14px",
-                "fontWeight": 600,
+                "fontWeight": 400,
                 "textDecoration": "none",
                 "color": "hsla(207, 5%, 56.7%, 1.000)"
             }
@@ -74,28 +74,28 @@ export const typography = {
             "default": {
                 "textAlign": "left",
                 "fontSize": "16px",
-                "fontWeight": 500,
+                "fontWeight": 300,
                 "textDecoration": "none",
                 "color": "hsla(0, 0%, 46.3%, 1.000)"
             },
             "disabled": {
                 "textAlign": "left",
                 "fontSize": "16px",
-                "fontWeight": 500,
+                "fontWeight": 300,
                 "textDecoration": "none",
                 "color": "hsla(0, 0%, 46.3%, 0.651)"
             },
             "failure": {
                 "textAlign": "left",
                 "fontSize": "16px",
-                "fontWeight": 600,
+                "fontWeight": 400,
                 "textDecoration": "none",
                 "color": "hsla(0, 67.9%, 67.1%, 1.000)"
             },
             "meta": {
                 "textAlign": "left",
                 "fontSize": "14px",
-                "fontWeight": 500,
+                "fontWeight": 300,
                 "textDecoration": "none",
                 "color": "hsla(215, 23.5%, 64.1%, 1.000)"
             },
@@ -111,7 +111,7 @@ export const typography = {
             "textAlign": "left",
             "fontStyle": "italic",
             "fontSize": "14px",
-            "fontWeight": 500,
+            "fontWeight": 300,
             "lineHeight": "25px",
             "textDecoration": "none",
             "color": "hsla(207, 5%, 56.7%, 1.000)"
@@ -173,7 +173,7 @@ export const typography = {
             "primaryMessage": {
                 "textAlign": "left",
                 "fontSize": "14px",
-                "fontWeight": 600,
+                "fontWeight": 400,
                 "lineHeight": "15px",
                 "letterSpacing": "-0.2px",
                 "textDecoration": "none",
@@ -256,21 +256,21 @@ export const typography = {
         "section-H2": {
             "textAlign": "left",
             "fontSize": "20px",
-            "fontWeight": 600,
+            "fontWeight": 400,
             "textDecoration": "none",
             "color": "hsla(208, 7.7%, 38.2%, 1.000)"
         },
         "sectionH3": {
             "textAlign": "left",
             "fontSize": "16px",
-            "fontWeight": 600,
+            "fontWeight": 400,
             "textDecoration": "none",
             "color": "hsla(208, 7.7%, 38.2%, 1.000)"
         },
         "actionParagraph": {
             "textAlign": "left",
             "fontSize": "14px",
-            "fontWeight": 500,
+            "fontWeight": 300,
             "lineHeight": "25px",
             "textDecoration": "none",
             "color": "hsla(207, 5%, 56.7%, 1.000)"
@@ -474,21 +474,21 @@ export const typography = {
                 "default": {
                     "textAlign": "left",
                     "fontSize": "16px",
-                    "fontWeight": 500,
+                    "fontWeight": 300,
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 34.5%, 0.847)"
                 },
                 "active": {
                     "textAlign": "left",
                     "fontSize": "16px",
-                    "fontWeight": 500,
+                    "fontWeight": 300,
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 34.5%, 0.851)"
                 },
                 "hover": {
                     "textAlign": "left",
                     "fontSize": "16px",
-                    "fontWeight": 500,
+                    "fontWeight": 300,
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 34.5%, 0.851)"
                 }
@@ -505,7 +505,7 @@ export const typography = {
             "hidePrompt": {
                 "textAlign": "left",
                 "fontSize": "14px",
-                "fontWeight": 500,
+                "fontWeight": 300,
                 "textDecoration": "none",
                 "color": "hsla(0, 0%, 34.5%, 1.000)"
             },
@@ -513,7 +513,7 @@ export const typography = {
                 "default": {
                     "textAlign": "left",
                     "fontSize": "14px",
-                    "fontWeight": 500,
+                    "fontWeight": 300,
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 34.5%, 0.647)"
                 },
@@ -527,7 +527,7 @@ export const typography = {
                 "hover": {
                     "textAlign": "left",
                     "fontSize": "14px",
-                    "fontWeight": 500,
+                    "fontWeight": 300,
                     "textDecoration": "none",
                     "color": "hsla(214, 14.4%, 46.3%, 1.000)"
                 }
@@ -535,9 +535,9 @@ export const typography = {
             "identity": {
                 "textAlign": "left",
                 "fontSize": "12px",
-                "fontWeight": 600,
+                "fontWeight": 400,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 34.1%, 1.000)"
+                "color": "hsla(0, 0%, 34.1%, 0.749)"
             }
         },
         "topBar": {
@@ -546,9 +546,16 @@ export const typography = {
                     "textAlign": "left",
                     "fontStyle": "italic",
                     "fontSize": "14px",
-                    "fontWeight": 500,
+                    "fontWeight": 300,
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 65.5%, 1.000)"
+                },
+                "value": {
+                    "textAlign": "left",
+                    "fontSize": "14px",
+                    "fontWeight": 300,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 34.9%, 1.000)"
                 }
             }
         }
@@ -580,7 +587,7 @@ export const typography = {
         "label": {
             "textAlign": "left",
             "fontSize": "14px",
-            "fontWeight": 600,
+            "fontWeight": 400,
             "textDecoration": "none",
             "color": "hsla(0, 0%, 50.2%, 1.000)"
         }
