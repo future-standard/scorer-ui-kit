@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import {  object, text, boolean } from "@storybook/addon-knobs";
 import {TopBar} from 'scorer-ui-kit';
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
 
 export default {
   title: 'Global',
