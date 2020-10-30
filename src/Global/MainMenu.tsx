@@ -13,6 +13,10 @@ const Logo = styled(Link)`
   height: 50px;
   margin: 0 20px 55px 15px;
   display: flex;
+
+  object {
+    pointer-events: none;
+  }
 `;
 const LogoMark = styled.div`
   height: 50px;
