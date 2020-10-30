@@ -37,39 +37,38 @@ const SubmenuItem = styled.li<{isActive?: boolean}>`
   padding-left: 40px;
   position: relative;
 
-
   &::after {
     display: block;
     content: '';
-    background: #ccc;
     height: 1px;
     width: 14px;
     position: absolute;
     left: 0;
     top: 10px;
+    background: ${({theme: {colors}}) => colors.divider};
   }
 
   ${SubmenuItemLink}{
 
-    ${({theme}) => theme && css`
+    ${({theme, isActive}) => theme && css`
       font-family: ${theme.fontFamily.ui};
-      ${theme.typography.global.mainMenu.subMenuItem.default};
+      ${theme.typography.global.mainMenu.subItem.default};
+
+      &:hover {
+        ${theme.typography.global.mainMenu.subItem.hover};
+      }
+
+      ${isActive && css`
+        &, &:hover {
+          ${theme.typography.global.mainMenu.subItem.active};
+        }
+      `}
+
     `};
 
-    &:hover {
-      font-weight: 500;
-    }
 
-    ${({isActive}) => isActive && css`
-      &, &:hover {
-        font-weight: 500;
-      }
-    `}
 
   }
-
-
-
 `;
 
 const SubmenuContainer = styled.div`
@@ -85,12 +84,12 @@ const SubmenuContainer = styled.div`
   &::after {
     display: block;
     content: '';
-    background: #ccc;
     width: 1px;
     position: absolute;
     left: 40px;
     top: 0;
     bottom: 35px;
+    background: ${({theme: {colors}}) => colors.divider};
   }
 
 `;
@@ -177,7 +176,7 @@ const generateSubmenus = (submenu? : IMenuItemSubmenu[]) => {
     const {title, href} = item;
     if(href){
       // Treat as menu item/
-      grouping[grouping.length - 1].push(<SubmenuItem key={key} isActive={true}><SubmenuItemLink to={href}>{title}</SubmenuItemLink></SubmenuItem>);
+      grouping[grouping.length - 1].push(<SubmenuItem key={key} isActive={false}><SubmenuItemLink to={href}>{title}</SubmenuItemLink></SubmenuItem>);
     } else {
       // Assume this is a grouping header.
       if(grouping[grouping.length - 1].length > 1){ grouping.push([]); }

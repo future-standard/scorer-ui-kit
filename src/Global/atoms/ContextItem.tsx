@@ -18,7 +18,7 @@ const ContextTitle = styled.div<{compact?: boolean}>`
 
 const ContextIcon = styled.div<{compact?: boolean}>`
   ${({theme}) => css`
-    ${theme.colors.global.mainMenu.iconBackground.default};
+    ${theme.styles.global.mainMenu.iconBackground.default};
     transition: background ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
   `};
 
@@ -41,11 +41,6 @@ const ContextIcon = styled.div<{compact?: boolean}>`
     height: 24px;
     flex: 0 0 24px;
     margin: 0 28px 0 28px;
-
-    svg {
-      // width: 16px;
-      // height: 16px;
-    }
   `}
 
 `;
@@ -100,13 +95,13 @@ const ContextActionA = styled.a<{menuOpen?:boolean, isActive:boolean}>`
 
   &:hover ${ContextIcon}{
     opacity: 1;
-    ${({theme}) => theme.colors.global.mainMenu.iconBackground.hover};
+    ${({theme}) => theme.styles.global.mainMenu.iconBackground.hover};
   }
 
   ${({isActive}) => isActive && css`
     ${ContextIcon},
     &:hover ${ContextIcon}{
-      ${({theme}) => theme.colors.global.mainMenu.iconBackground.active};
+      ${({theme}) => theme.styles.global.mainMenu.iconBackground.active};
     }
   `}
 `;
@@ -131,13 +126,13 @@ const ContextActionButton = styled.button<{menuOpen?:boolean, isActive:boolean}>
 
   &:hover ${ContextIcon}{
     opacity: 1;
-    ${({theme}) => theme.colors.global.mainMenu.iconBackground.hover};
+    ${({theme}) => theme.styles.global.mainMenu.iconBackground.hover};
   }
 
   ${({isActive}) => isActive && css`
     ${ContextIcon},
     &:hover ${ContextIcon}{
-      ${({theme}) => theme.colors.global.mainMenu.iconBackground.active};
+      ${({theme}) => theme.styles.global.mainMenu.iconBackground.active};
     }
   `}
 
@@ -163,7 +158,7 @@ const ContextItem : React.FC<IProps> = ({ hasSubmenu = false, contextKey = -1, s
       <Icon icon={icon} color={isActive ? 'inverse' : 'dimmed'} size={20} />
     </ContextIcon>
     <ContextTitle {...{compact}}>{title}</ContextTitle>
-    {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} /></ContextIndicator> : null}
+    {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} color={'dimmed'} /></ContextIndicator> : null}
   </React.Fragment>;
 
   if(hasSubmenu){
