@@ -2,12 +2,7 @@ import * as React from "react";
 
 function SvgDown(props: ISvgIcons) {
   return (
-    <svg
-      width={props.size}
-      height={props.size}
-      viewBox={"0 0 24 24"}
-      {...props}
-    >
+    <svg width={props.size} height={props.size} viewBox="0 0 24 24" {...props}>
       <path
         fill="none"
         stroke={props.color}

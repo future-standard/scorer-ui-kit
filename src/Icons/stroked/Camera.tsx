@@ -2,12 +2,7 @@ import * as React from "react";
 
 function SvgCamera(props: ISvgIcons) {
   return (
-    <svg
-      width={props.size}
-      height={props.size}
-      viewBox={"0 0 24 24"}
-      {...props}
-    >
+    <svg width={props.size} height={props.size} viewBox="0 0 24 24" {...props}>
       <defs>
         <filter id="camera_svg__a">
           <feColorMatrix

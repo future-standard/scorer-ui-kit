@@ -6,23 +6,22 @@ const scaleStrokes = false;
 const parentReplacements = {
   "height": 'props.size',
   "width": 'props.size'
-}
+};
 
 // Replace these when found in child elements.
 const childReplacements = {
   "stroke": 'props.color',
   "strokeWidth": 'props.weight',
-}
+};
 
 const propTypesTemplate = ({ template }, opts, { imports, interfaces, componentName, props, jsx, exports }) => {
-  const plugins = ['jsx', 'typescript']
-  const typeScriptTpl = template.smart({ plugins })
-
+  const plugins = ['jsx', 'typescript' ];
+  const typeScriptTpl = template.smart({ plugins });
   // Replace parent attributes.
   jsx = replaceAttributes(jsx, parentReplacements);
 
   // Add viewBox
-  jsx = addAttribute(jsx, "viewBox", "0 0 24 24");
+  // jsx = addAttribute(jsx, "viewBox", "0 0 24 24");
 
   jsx.children.forEach((child, index) => {
     // Replace attributes in children
@@ -30,7 +29,7 @@ const propTypesTemplate = ({ template }, opts, { imports, interfaces, componentN
 
     // ...and stop scaling stroke if relevant.
     jsx.children[index] = !scaleStrokes ? disableStrokeScale(child) : jsx.children[index];
-  })
+  });
 
 
   return typeScriptTpl.ast`${imports}
@@ -41,8 +40,8 @@ function ${componentName}(props: ISvgIcons) {
 }
 
 ${exports}
-  `
-}
+  `;
+};
 
 const replaceAttributes = (element, guide) => {
   element.openingElement.attributes.forEach((attr, attrIndex) => {
@@ -53,13 +52,13 @@ const replaceAttributes = (element, guide) => {
           type: 'NumericLiteral', // HACK: Seems to work but value isn't numeric.
           value: guide[attr.name.name]
         }
-      }
+      };
       element.openingElement.attributes[attrIndex] = attr;
     }
-  })
+  });
 
   return element;
-}
+};
 
 
 const addAttribute = (jsx, name, value) => {
@@ -77,12 +76,12 @@ const addAttribute = (jsx, name, value) => {
         value: value
       }
     }
-  }
+  };
 
   jsx.openingElement.attributes.push(attrJsx);
   return jsx;
 
-}
+};
 
 const disableStrokeScale = (element) => {
   let hasStroke = false;
@@ -90,13 +89,13 @@ const disableStrokeScale = (element) => {
     if(attr.name.name === 'stroke'){
       hasStroke = true;
     }
-  })
+  });
 
   if(!scaleStrokes && hasStroke){
     element = addAttribute(element, "vectorEffect", "non-scaling-stroke");
   }
 
-  return element
-}
+  return element;
+};
 
-module.exports = propTypesTemplate
+module.exports = propTypesTemplate;
