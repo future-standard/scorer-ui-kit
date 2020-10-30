@@ -45,7 +45,7 @@ const NavigationContainer = styled.div``;
 
 const MenuFooter = styled.div`
   ${({theme}) => theme && css`
-    ${theme.colors.global.mainMenu.footerBackground}
+    ${theme.styles.global.mainMenu.footerBackground}
   `};
   display: flex;
   flex-direction: column;
@@ -60,8 +60,9 @@ const FooterItemContainer = styled.div`
 const Container = styled.div<{ open : boolean }>`
 
   ${({theme, open}) => theme && css`
-    ${theme.colors.global.mainMenu.background}
-    border-right: 1px solid ${theme.colors.global.mainMenu.lines.backgroundColor};
+    ${theme.styles.global.mainMenu.background}
+
+    border-right: 1px solid ${theme.styles.global.mainMenu.lines.backgroundColor};
     transition: flex-basis ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
     flex-basis: ${open ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed };
 
@@ -95,9 +96,9 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText }) =
 
   let checkedInItems : number = 0;
 
-  useEffect(() => {
-    console.log('Changed', location.pathname, location);
-  },[location]);
+  // useEffect(() => {
+  //   console.log('Changed', location.pathname, location);
+  // },[location]);
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
