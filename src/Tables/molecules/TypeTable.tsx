@@ -65,8 +65,8 @@ const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback
     <TableContainer>
       <HeaderRow>
         {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={ allChecked() } onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
-        {hasStatus ? <HeaderItem fixedWidth={40} /> : null}
-        {hasThumbnail ? <HeaderItem fixedWidth={60} /> : null}
+        {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
+        {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
         {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
 
         {columnConfig.map((column, key) => {

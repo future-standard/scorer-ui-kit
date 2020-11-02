@@ -54,7 +54,8 @@ const initialRows : ITypeTableData = [
     id: 'device-1',
     header: {
       image: photo,
-      icon: 'Zone'
+      icon: 'Zone',
+      status: 'neutral'
     },
     columns:
     [
@@ -68,7 +69,8 @@ const initialRows : ITypeTableData = [
     id: 'device-2',
     header: {
       image: photo,
-      icon: 'Location'
+      icon: 'Location',
+      status: 'good'
     },
     columns:
     [
@@ -82,7 +84,8 @@ const initialRows : ITypeTableData = [
     id: 'device-3',
     header: {
       image: photo,
-      icon: 'Location'
+      icon: 'Location',
+      status: 'good'
     },
     columns:
     [
@@ -96,7 +99,8 @@ const initialRows : ITypeTableData = [
     id: 'device-4',
     header: {
       image: photo,
-      icon: 'Location'
+      icon: 'Location',
+      status: 'danger'
     },
     columns:
     [
@@ -113,9 +117,9 @@ export const _TypeTable = () => {
   const [rows, setRows] = useState<ITypeTableData>(initialRows)
 
   // To implement...
-  const hasStatus = boolean("Has Device Status", false);
-  const hasThumbnail = boolean("Has Thumbnail", false);
-  const hasTypeIcon = boolean("Has Device Type Icon", false);
+  const hasStatus = boolean("Has Device Status", true);
+  const hasThumbnail = boolean("Has Thumbnail", true);
+  const hasTypeIcon = boolean("Has Device Type Icon", true);
 
   const selectable = boolean("Selectable Rows", true);
   const columnConfig = object("Column Configuration", columnConfigSample);

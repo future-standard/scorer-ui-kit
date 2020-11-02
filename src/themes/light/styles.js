@@ -352,26 +352,6 @@ export const styles = {
             }
         }
     },
-    "statusColours": {
-        "devices": {
-            "danger": {
-                "backgroundColor": "hsla(0, 63.5%, 64.5%, 1.000)"
-            },
-            "good": {
-                "backgroundColor": "hsla(126, 48.1%, 68.2%, 1.000)"
-            },
-            "caution": {
-                "backgroundColor": "hsla(57, 57.7%, 62.9%, 1.000)"
-            },
-            "transparent": {},
-            "folder": {
-                "backgroundColor": "hsla(207, 95.3%, 66.5%, 1.000)"
-            },
-            "neutral": {
-                "backgroundColor": "hsla(0, 0%, 91.8%, 1.000)"
-            }
-        }
-    },
     "filterDropdown": {
         "container": {
             "boxShadow": "0px 5px 25px 0px hsla(210, 66.9%, 46.3%, 0.122)",
