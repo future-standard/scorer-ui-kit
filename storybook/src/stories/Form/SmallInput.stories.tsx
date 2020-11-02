@@ -20,7 +20,7 @@ export const _SmallInput = () => {
   const inputLabel = text("Label", "My Input");
   const inputUnit = text("Unit", "º");
   const inputPlaceholder = text("Placeholder", "Placeholder...");
-  const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "disabled");
+  const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
 
   return <Container><SmallInput type={inputType} unit={inputUnit} name={inputName} label={inputLabel} placeholder={inputPlaceholder} fieldState={inputState} /></Container>;
 

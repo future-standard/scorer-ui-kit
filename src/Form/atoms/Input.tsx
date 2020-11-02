@@ -107,7 +107,8 @@ const Container = styled.div<{ fieldState: string }>`
   }
 
   ${FeedbackContainer} {
-    ${({theme, fieldState}) => theme.styles.form.feedback[fieldState]};
+    background: ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal.borderColor};
+    border-color: ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal.borderColor};
 
     ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) !== -1 && css`
       display:none;
@@ -151,11 +152,11 @@ const Input : React.FC<Props> = ({
       case 'disabled':
         break;
       case 'required':
-        return <Icon icon='Required' color='inverse' />;
+        return <Icon icon='Required' size={20} color='inverse' />;
       case 'valid':
-        return <Icon icon='Success' color='inverse' />;
+        return <Icon icon='Success' size={20} color='inverse' />;
       case 'invalid':
-        return <Icon icon='Invalid' color='inverse' />;
+        return <Icon icon='Invalid' size={20} color='inverse' />;
       case 'processing':
         return <Spinner size='medium' styling='primary' />;
     }
