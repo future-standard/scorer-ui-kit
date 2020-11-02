@@ -12,13 +12,13 @@ export default {
 const containerBackgroundKey = (styling: string)  => {
   switch(styling){
     case 'primary':
-      return 'processing';
+      return 'info';
     case 'secondary':
-      return 'basic';
+      return 'neutral';
     case 'danger':
-      return 'invalid';
+      return 'error';
     default:
-      return 'basic';
+      return 'neutral';
   }
 };
 
@@ -32,7 +32,7 @@ const Container = styled.div<{styling: string}>`
   justify-content:center;
   align-items:center;
 
-  ${({theme, styling}) => theme.styles.form.feedback[containerBackgroundKey(styling)]};
+  ${({theme, styling}) => theme.styles.feedbackBar[containerBackgroundKey(styling)]};
 `;
 
 export const LoadingSpinner = () => {
