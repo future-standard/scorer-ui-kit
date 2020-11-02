@@ -160,24 +160,6 @@ export const typography = {
                 "lineHeight": "20px",
                 "textDecoration": "none",
                 "color": "hsla(0, 0%, 100%, 1.000)"
-            },
-            "message(Multi-Line)": {
-                "textAlign": "left",
-                "fontStyle": "italic",
-                "fontSize": "14px",
-                "fontWeight": 500,
-                "lineHeight": "20px",
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 100%, 1.000)"
-            },
-            "primaryMessage": {
-                "textAlign": "left",
-                "fontSize": "14px",
-                "fontWeight": 400,
-                "lineHeight": "15px",
-                "letterSpacing": "-0.2px",
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 100%, 1.000)"
             }
         },
         "button": {
@@ -294,6 +276,17 @@ export const typography = {
                 "textDecoration": "none",
                 "color": "hsla(205, 62.3%, 55.3%, 1.000)"
             }
+        }
+    },
+    "feedbackBar": {
+        "message": {
+            "textAlign": "left",
+            "fontSize": "14px",
+            "fontWeight": 400,
+            "lineHeight": "15px",
+            "letterSpacing": "-0.2px",
+            "textDecoration": "none",
+            "color": "hsla(0, 0%, 100%, 1.000)"
         }
     },
     "searchBar": {

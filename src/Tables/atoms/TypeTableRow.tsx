@@ -32,7 +32,7 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, ha
 
   return <RowContainer>
     {selectable ? <TypeTableCell hideDivider={true}><Checkbox checked={rowData._checked} onChangeCallback={ wrappedSelectCallback } /></TypeTableCell> : null}
-    {hasStatus ?  <TypeTableCell hideDivider={true}><TypeTableDeviceStatus /></TypeTableCell> : null}
+    {hasStatus ?  <TypeTableCell hideDivider={true}><TypeTableDeviceStatus status={ rowData.header?.status } /></TypeTableCell> : null}
     {hasThumbnail ? <TypeTableCell hideDivider={true}><TableRowThumbnail image={ rowData.header?.image } /></TypeTableCell> : null}
     {hasTypeIcon ? <TypeTableCell hideDivider={true}><Icon icon={ rowData.header?.icon || '' } size={16} /></TypeTableCell> : null}
 

@@ -141,24 +141,6 @@ export const styles = {
                 }
             }
         },
-        "feedback": {
-            "basic": {
-                "backgroundColor": "hsla(0, 0%, 98.8%, 1.000)",
-                "borderColor": "hsla(120, 1.3%, 85.3%, 1.000)"
-            },
-            "basic(Focused)": {
-                "backgroundColor": "hsla(205, 58.9%, 71.4%, 1.000)"
-            },
-            "processing": {
-                "backgroundColor": "hsla(195, 79.5%, 71.4%, 1.000)"
-            },
-            "valid": {
-                "backgroundColor": "hsla(120, 35.2%, 71.6%, 1.000)"
-            },
-            "invalid": {
-                "backgroundColor": "hsla(0, 0%, 94.9%, 1.000)"
-            }
-        },
         "switch": {
             "off": {
                 "default": {
@@ -271,21 +253,24 @@ export const styles = {
             }
         }
     },
-    "feedbackMessages": {
-        "neutral": {
-            "backgroundColor": "hsla(205, 22.1%, 66.3%, 1.000)"
-        },
-        "error": {
-            "backgroundColor": "hsla(0, 78.8%, 70.4%, 1.000)"
-        },
-        "information": {
-            "backgroundColor": "hsla(205, 77.4%, 63.5%, 1.000)"
-        },
-        "success": {
-            "backgroundColor": "hsla(136, 49.5%, 57.3%, 1.000)"
-        },
-        "warning": {
-            "backgroundColor": "hsla(30, 91%, 61%, 1.000)"
+    "_Deprecated": {
+        "feedback": {
+            "basic": {
+                "backgroundColor": "hsla(0, 0%, 98.8%, 1.000)",
+                "borderColor": "hsla(120, 1.3%, 85.3%, 1.000)"
+            },
+            "basic(Focused)": {
+                "backgroundColor": "hsla(205, 58.9%, 71.4%, 1.000)"
+            },
+            "processing": {
+                "backgroundColor": "hsla(195, 79.5%, 71.4%, 1.000)"
+            },
+            "valid": {
+                "backgroundColor": "hsla(120, 35.2%, 71.6%, 1.000)"
+            },
+            "invalid": {
+                "backgroundColor": "hsla(0, 0%, 94.9%, 1.000)"
+            }
         }
     },
     "global": {
@@ -366,6 +351,23 @@ export const styles = {
     "general": {
         "divider": {
             "backgroundColor": "hsla(0, 0%, 93.3%, 1.000)"
+        }
+    },
+    "feedbackBar": {
+        "neutral": {
+            "backgroundColor": "hsla(205, 22.1%, 66.3%, 1.000)"
+        },
+        "error": {
+            "backgroundColor": "hsla(0, 78.8%, 70.4%, 1.000)"
+        },
+        "info": {
+            "backgroundColor": "hsla(205, 77.4%, 63.5%, 1.000)"
+        },
+        "success": {
+            "backgroundColor": "hsla(136, 49.5%, 57.3%, 1.000)"
+        },
+        "warning": {
+            "backgroundColor": "hsla(30, 91%, 61%, 1.000)"
         }
     }
 }

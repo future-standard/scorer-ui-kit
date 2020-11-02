@@ -16,7 +16,7 @@ export default {
 
 export const _AlertBar = () => {
   const message = text("Message", 'Look Out!');
-  const type = select("Type", { Error: 'error', Warning: 'warning', Info: 'info', Success:'success'}, 'error');
+  const type = select("Type", { Error: 'error', Warning: 'warning', Info: 'info', Success:'success', Neutral:'neutral'}, 'error');
 
   return <Container><AlertBar message={message} type={type}></AlertBar></Container>;
 

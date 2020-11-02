@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import Icon, { IconSVGs } from '../../Icons/Icon';
+import Icon from '../../Icons/Icon';
 import { resetButtonStyles } from '../../common/index';
-import { Success, Information } from '../../Icons/stroked';
-
-
 
 const IconButton = styled.button<{selected?: boolean}>`
   ${resetButtonStyles};
@@ -29,50 +26,25 @@ const IconButton = styled.button<{selected?: boolean}>`
 const Container = styled.div<{type: AlertType}>`
   height: 50px;
   border-radius: 3px;
-  text-shadow: 0 2px 4px hsla(120, 32%, 46%, 0.65);
-  font-size: 14px;
-  line-height: 1.07;
-  letter-spacing: -0.2px;
-  color: hsl(0, 0%, 100%);
-
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 
-  /* margin: 10px; */
   padding: 0 14px;
+
   font-family: ${({ theme }) => theme.fontFamily.ui };
+  ${({type, theme}) => theme.styles.feedbackBar[type] };
+  ${({theme}) => theme.typography.feedbackBar.message };
 
-
-  ${({type}) => {
-     switch(type) {
-      case 'success':
-        return css`
-          background-color: hsl(136, 50%, 57%);
-        `
-      case 'error':
-        return css`
-          background-color: hsl(0, 79%, 70%);
-        `
-      case 'warning':
-        return css`
-          background-color: hsl(30, 91%, 61%);
-        `
-      case 'info':
-      default:
-        return css`
-          background-color: hsl(205, 77%, 64%);
-        `
-    }
-  }}
 `;
 
 const IconNames = {
   error: 'Critical',
   warning: 'BigWarning',
   success: 'Success',
-  info: 'Information'
+  info: 'Information',
+  neutral: 'Information'
 }
 
 const MessageBox = styled.div`
@@ -84,7 +56,7 @@ export interface IAlert {
   alertType: AlertType;
 }
 
-export type AlertType = 'error'|'warning'|'info'|'success';
+export type AlertType = 'error'|'warning'|'info'|'success'|'neutral';
 
 interface Props {
   type?: AlertType
