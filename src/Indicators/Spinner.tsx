@@ -31,12 +31,12 @@ const rotate = keyframes`
 `;
 
 const BaseCircle = styled.circle<{ styling: string }>`
-  stroke: ${({theme, styling}) => theme.colors.indicators.spinner[styling].base.borderColor};
+  stroke: ${({theme, styling}) => theme.styles.indicators.spinner[styling].base.borderColor};
   fill: none;
 `;
 
 const RotatingCircle = styled.circle<{ r: number, styling: string }>`
-  stroke: ${({theme, styling}) => theme.colors.indicators.spinner[styling].top.borderColor};
+  stroke: ${({theme, styling}) => theme.styles.indicators.spinner[styling].top.borderColor};
   fill: none;
   stroke-dasharray: ${({r}) => circumference(r)};
   stroke-dashoffset: ${({r}) => 2 * 3.1416 * r / 2};
