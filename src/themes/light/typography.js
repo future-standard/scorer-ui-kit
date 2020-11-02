@@ -27,15 +27,15 @@ export const typography = {
     "form": {
         "input": {
             "placeholder": {
-                "normal(Left)": {
+                "normal": {
                     "textAlign": "left",
                     "fontStyle": "italic",
                     "fontSize": "16px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 46.3%, 1.000)"
+                    "color": "hsla(0, 0%, 46.3%, 0.502)"
                 },
-                "compact(Left)": {
+                "compact": {
                     "textAlign": "left",
                     "fontStyle": "italic",
                     "fontSize": "14px",
@@ -45,7 +45,7 @@ export const typography = {
                 }
             },
             "value": {
-                "normal(Left)": {
+                "normal": {
                     "textAlign": "left",
                     "fontSize": "16px",
                     "fontWeight": 500,
@@ -53,7 +53,7 @@ export const typography = {
                     "textDecoration": "none",
                     "color": "hsla(207, 5%, 56.7%, 1.000)"
                 },
-                "compact(Left)": {
+                "compact": {
                     "textAlign": "left",
                     "fontSize": "14px",
                     "fontWeight": 500,
