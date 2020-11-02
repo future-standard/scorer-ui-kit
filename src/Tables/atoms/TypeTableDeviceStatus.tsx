@@ -1,17 +1,27 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Container = styled.div<{ hoverZoom?: boolean }>`
-  height: inherit;
-  width: 3px;
+type TypeDeviceStatus = 'caution' | 'danger' | 'folder' | 'good' | 'neutral';
+
+const Container = styled.div<{ status: TypeDeviceStatus }>`
+  height: 42px;
+  width: 4px;
   border-radius: 3px;
-  background: blue;
+  display: block;
+
+  ${({status, theme: {colors}}) => css`
+    background: ${colors.status[status]};
+    content:'${status}';
+  `}
+
 `;
 
-interface IProps {}
+interface IProps {
+  status: TypeDeviceStatus
+}
 
-const TypeTableDeviceStatus : React.FC<IProps> = () => {
-  return <Container>Status</Container>;
+const TypeTableDeviceStatus : React.FC<IProps> = ({status = 'neutral'}) => {
+  return <Container status={status}></Container>;
 };
 
 export default TypeTableDeviceStatus;
