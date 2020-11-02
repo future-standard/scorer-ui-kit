@@ -32,7 +32,7 @@ const Container = styled.div<{styling: string}>`
   justify-content:center;
   align-items:center;
 
-  ${({theme, styling}) => theme.colors.form.feedback[containerBackgroundKey(styling)]};
+  ${({theme, styling}) => theme.styles.form.feedback[containerBackgroundKey(styling)]};
 `;
 
 export const LoadingSpinner = () => {
