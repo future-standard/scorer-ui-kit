@@ -22,7 +22,7 @@ const RealInput = styled.input`
   display: none;
 `;
 const SwitchOuter = styled.div`
-  border: 1px solid #DDD;
+  border: 1px solid transparent;
   box-sizing: border-box;
   cursor: pointer;
   position: relative;
@@ -47,17 +47,17 @@ const SwitchInner = styled.div`
   position: absolute;
   box-sizing: border-box;
 `;
-const LabelText = styled.span`
-  flex: 1;
-  display: flex;
 
+const LabelText = styled.span`
   font-family: ${({theme}) => theme.fontFamily.ui };
-  display: block;
-  color: hsl(207, 5%, 57%);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: ${ p => p.theme.dimensions.form.switch.outer.height };
+
+  flex: 1;
   margin-left: 10px;
+  display: block;
+
+  line-height: ${ p => p.theme.dimensions.form.switch.outer.height };
+
+  ${ p => p.theme.typography.form.input.label };
 `;
 
 const IconWrapper = styled.div`
@@ -89,7 +89,7 @@ const Container = styled.label<{activeTheming: string, loading: boolean, useInte
         border ${theme.animation.speed.normal} ${theme.animation.easing.primary.out},
         width ${theme.animation.speed.normal} ${theme.animation.easing.primary.out};
 
-      ${theme.colors.form.switch[activeTheming][themeState].inner}
+      ${theme.styles.form.switch[activeTheming][themeState].inner}
     `}
 
     ${p => p.activeTheming === 'locked' && css`
@@ -104,7 +104,7 @@ const Container = styled.label<{activeTheming: string, loading: boolean, useInte
 
   ${SwitchOuter}{
     ${({theme, activeTheming, themeState}) => theme && css`
-      ${theme.colors.form.switch[activeTheming][themeState].outer};
+      ${theme.styles.form.switch[activeTheming][themeState].outer};
       ${theme.dimensions.form.switch.outer}};
       flex: 0 0 ${theme.dimensions.form.switch.outer.width}};
     `}
