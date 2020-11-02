@@ -20,8 +20,8 @@ const CheckboxOuter = styled.div`
   width: 18px;
   height: 18px;
   border-radius: 5px;
-
-}
+  border-width: 2px;
+  border-style: solid;
 `;
 
 const CheckboxInner = styled.div<{}>`
@@ -48,49 +48,52 @@ const IconWrapper = styled.div`
 const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}>`
   user-select: none;
 
-  ${({visualState, disabled}) => visualState === CheckboxState.Off && css`
+
+  ${({visualState, disabled, theme: { styles }}) => visualState === CheckboxState.Off && css`
     ${CheckboxOuter}{
-      border: solid 2px hsl(208, 25%, 78%);
+      ${styles.form.checkbox.unchecked.default};
     }
 
     &:hover ${CheckboxOuter} {
-      border: solid 2px hsl(195, 94%, 66%);
+      ${styles.form.checkbox.unchecked.hover};
     }
 
     ${disabled && css`
       ${CheckboxOuter}{
-        box-shadow: inset 0 1px 5px 0 hsla(205, 50%, 30%, 0.05);
-        background-color: hsl(210, 20%, 90%);
+        ${styles.form.checkbox.unchecked.disabled};
       }
     `}
   `}
 
-  ${({visualState, disabled}) => visualState === CheckboxState.On && css`
+  ${({visualState, disabled, theme: { styles }}) => visualState === CheckboxState.On && css`
     ${CheckboxOuter}{
-      box-shadow: inset 0 1px 5px 0 hsla(205, 50%, 30%, 0.05);
-      background-color: hsl(207, 95%, 66%);
+      ${styles.form.checkbox.checked.default};
       border: none;
     }
 
     &:hover ${CheckboxOuter}{
-      box-shadow: inset 0 1px 5px 0 hsla(205, 50%, 30%, 0.05);
-      background-color: hsl(195, 99%, 64%);
+      ${styles.form.checkbox.checked.hover};
       border: none;
     }
 
     ${disabled && css`
       ${CheckboxOuter}{
-        border: solid 2px hsl(210, 20%, 90%);
-        background-color: hsl(0, 0%, 97%);
+        ${styles.form.checkbox.checked.disabled};
       }
     `}
   `}
 
-  ${({visualState, disabled}) => visualState === CheckboxState.Indeterminate && css`
+  ${({visualState, theme: { styles }}) => visualState === CheckboxState.Indeterminate && css`
     ${CheckboxOuter}{
-      box-shadow: inset 0 1px 5px 0 hsla(205, 50%, 30%, 0.05);
-      background-color: hsl(207, 95%, 66%);
+      ${styles.form.checkbox.indeterminate.default};
     }
+
+    &:hover ${CheckboxOuter}{
+      ${styles.form.checkbox.indeterminate.hover};
+    }
+
+
+
   `}
 
 `;
@@ -99,28 +102,26 @@ interface IProps {
   checked?: boolean
   disabled?: boolean
   indeterminate?: boolean
-  onChangeCallback?: (checked: boolean) => void;
+  onChangeCallback?: (checked: boolean, indeterminate?: boolean) => void;
 }
 
-const Switch : React.FC<IProps> = ({ indeterminate, disabled, checked = false, onChangeCallback }) => {
+const Switch : React.FC<IProps> = ({ indeterminate = false, disabled, checked = false, onChangeCallback }) => {
 
-  // const inputRef = useRef<HTMLInputElement>(null);
   const [ isChecked, setIsChecked ] = useState<boolean>(checked);
   const [ visualState, setVisualState ] = useState<CheckboxState>(checked ? CheckboxState.On : CheckboxState.Off);
 
   const customOnChange = (e: any) => {
     const checked = e.target.checked
 
-    // state = e.target.indeterminate ? CheckboxState.Indeterminate : state;
-
     setIsChecked(checked);
     if(onChangeCallback){ onChangeCallback(checked); }
   };
 
   useEffect(() => {
-    // setIsChecked(checked);console.log("B")
 
     let state = checked ? CheckboxState.On : CheckboxState.Off;
+    // state = indeterminate ? CheckboxState.Indeterminate : state;
+
     setVisualState( state );
 
   }, [isChecked, setVisualState])
@@ -135,7 +136,7 @@ const Switch : React.FC<IProps> = ({ indeterminate, disabled, checked = false, o
         {visualState === CheckboxState.On ? <IconWrapper><Icon icon='CloseCompact' color='inverse' size={18} weight='regular' /></IconWrapper> : null}
       </CheckboxInner>
     </CheckboxOuter>
-    <RealInput type='checkbox' checked={isChecked} readOnly={true} {...{disabled, indeterminate}} /> {/* disabled={state !== 'default' && state !== 'failure'} */}
+    <RealInput type='checkbox' checked={isChecked} readOnly={true} {...{disabled}} /> {/* disabled={state !== 'default' && state !== 'failure'} */}
   </Container>;
 
 };
