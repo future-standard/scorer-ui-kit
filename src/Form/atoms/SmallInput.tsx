@@ -7,25 +7,26 @@ import { TypeFieldState } from '..';
 
 
 const StyledInput = styled.input<{ fieldState : TypeFieldState, padRight?: number }>`
-  height: 100%;
-  min-height: 30px; // THEME
-  font-family: ${({ theme }) => theme.fontFamily.data };
+  ${({theme, fieldState}) => css`
+    min-height: 30px;
+    font-family: ${theme.fontFamily.data};
+    border: 1px solid ${theme.styles.form.input[fieldState].normal.borderColor};
+  `};
 
+  height: 100%;
   width: 100%;
   border-radius: 3px;
-  border: 1px solid rgb(217, 218, 217);
-  padding: 0 10px 0 10px;
+
+  padding: 0 22px 0 10px;
   box-sizing: border-box;
   outline: none;
 
-  color: hsl(207, 5%, 57%);
-  font-size: 14px; // THEME
-  font-weight: 400;
-
-  &::placeholder {
-    color: hsla(0, 0%, 46%, 0.5);
-    font-style: italic;
-  }
+  ${({theme: {typography}}) => css`
+    ${typography.form.input.value.compact};
+    &::placeholder {
+      ${typography.form.input.placeholder.compact};
+    }
+  `};
 
   ${p => p.padRight  && css`
     padding-right: ${p.padRight + 17}px;
@@ -62,25 +63,13 @@ const UnitKey = styled.div`
 
 const Container = styled.div<{ fieldState: string }>`
 
-  --state-icon: ${(props) => props.theme.tmp?.input.states[props.fieldState].icon || 'TODO!'};
-  --state-icon-color: ${(props) => props.theme.tmp?.input.states[props.fieldState].iconColor || '#F0F'};
-
-  --state-background-color: ${({ theme, fieldState }) => theme.colors.form.feedback[fieldState]?.backgroundColor || theme.colors.form.feedback.basic.backgroundColor};
-  --state-border-color: ${({ theme, fieldState }) => theme.colors.form.input[fieldState].normal.borderColor};
-  --state-focused-border-color: ${({ theme, fieldState }) => theme.colors.form.input[fieldState].focused?.borderColor || 'none'};
-  --state-focused-box-shadow: ${({ theme, fieldState }) => theme.colors.form.input[fieldState].focused?.boxShadow || 'none'};
-
   display: flex;
   position: relative;
 
   ${StyledInput}{
+    ${({theme, fieldState}) => theme.styles.form.input[fieldState].compact};
 
-    // icon-color: var(--state-icon-color);
-    border-color: var(--state-border-color);
-
-    &:focus {
-      border-color: var(--state-focused-border-color);
-    }
+    &:focus {}
 
     ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
       border-top-right-radius: 0px;
@@ -89,7 +78,7 @@ const Container = styled.div<{ fieldState: string }>`
   }
 
   &:focus-within ${InputContainer} {
-    box-shadow: var(--state-focused-box-shadow);
+    border-color: ${({theme, fieldState}) => theme.styles.form.input[fieldState].focused.borderColor};
   }
 
 `;
