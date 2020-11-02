@@ -251,25 +251,43 @@ export const styles = {
                     }
                 }
             }
-        }
-    },
-    "_Deprecated": {
-        "feedback": {
-            "basic": {
-                "backgroundColor": "hsla(0, 0%, 98.8%, 1.000)",
-                "borderColor": "hsla(120, 1.3%, 85.3%, 1.000)"
+        },
+        "checkbox": {
+            "unchecked": {
+                "disabled": {
+                    "backgroundColor": "hsla(0, 0%, 98.8%, 1.000)",
+                    "borderColor": "hsla(210, 20%, 90.2%, 1.000)"
+                },
+                "default": {
+                    "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)"
+                },
+                "hover": {
+                    "borderColor": "hsla(195, 94.2%, 66.1%, 1.000)"
+                }
             },
-            "basic(Focused)": {
-                "backgroundColor": "hsla(205, 58.9%, 71.4%, 1.000)"
+            "checked": {
+                "disabled": {
+                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
+                    "backgroundColor": "hsla(210, 20%, 90.2%, 1.000)"
+                },
+                "default": {
+                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
+                    "backgroundColor": "hsla(207, 95.3%, 66.5%, 1.000)"
+                },
+                "hover": {
+                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
+                    "backgroundColor": "hsla(195, 95.3%, 66.5%, 1.000)"
+                }
             },
-            "processing": {
-                "backgroundColor": "hsla(195, 79.5%, 71.4%, 1.000)"
-            },
-            "valid": {
-                "backgroundColor": "hsla(120, 35.2%, 71.6%, 1.000)"
-            },
-            "invalid": {
-                "backgroundColor": "hsla(0, 0%, 94.9%, 1.000)"
+            "indeterminate": {
+                "hover": {
+                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
+                    "backgroundColor": "hsla(195, 85.4%, 73.1%, 1.000)"
+                },
+                "default": {
+                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
+                    "backgroundColor": "hsla(205, 89.5%, 77.6%, 1.000)"
+                }
             }
         }
     },
