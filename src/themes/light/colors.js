@@ -16,6 +16,13 @@ export const colors = {
         "default": "hsla(200, 77.8%, 77.1%, 0.000)",
         "indicator": "hsla(240, 1.2%, 84.1%, 0.502)"
     },
+    "feedback": {
+        "error": "hsla(0, 78.8%, 70.4%, 1.000)",
+        "info": "hsla(205, 77.4%, 63.5%, 1.000)",
+        "neutral": "hsla(205, 22.1%, 66.3%, 1.000)",
+        "success": "hsla(136, 49.5%, 57.3%, 1.000)",
+        "warning": "hsla(30, 91%, 61%, 1.000)"
+    },
     "status": {
         "caution": "hsla(57, 57.7%, 62.9%, 1.000)",
         "danger": "hsla(0, 63.5%, 64.5%, 1.000)",
