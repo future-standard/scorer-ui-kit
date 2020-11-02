@@ -30,9 +30,12 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   opacity: 0;
 
   ${({ theme, position, design }) => css`
-    transition: flex ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut} ${theme.animation.speed.slow}, opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
+    transition:
+      flex ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut} ${theme.animation.speed.slow},
+      opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
+
     order: ${ position && position === 'left' ? 0 : 2 };
-    background: ${ theme.colors.form.button[design].loadingSegment.backgroundColor };
+    background: ${ theme.styles.form.button[design].actionArea };
   `}
 
   svg {

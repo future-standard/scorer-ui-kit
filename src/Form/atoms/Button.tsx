@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { TypeButtonSizes, TypeButtonDesigns } from '..';
 
 
@@ -11,10 +11,30 @@ interface IStyledComponentProps {
 
 
 const StyledButton = styled.button<IStyledComponentProps>`
-  ${props => props.theme.colors.form.button[ props.design ].default};
-  height: ${ ({size='normal', theme }) => theme.dimensions.form.button[ size ] };
-  color: ${props => props.theme.colors.form.button[ props.design ].default.textColor};
-  font-size: ${({size='normal', theme}) => theme.typography.form.button.generic[ size ].fontSize};
+  ${({theme, design, size}) => css`
+
+    ${theme.styles.form.button[design].default};
+    height: ${theme.dimensions.form.button[ size ]};
+
+    ${theme.typography.form.button[ design ][ size ]};
+    font-family: ${theme.fontFamily.ui};
+
+    // No transition at this time as we're using a gradient in the default view. Requires work to make smooth.
+    // transition: background ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
+
+    &:hover {
+      background: ${theme.styles.form.button[design].hover.backgroundColor};
+    }
+
+    &:active {
+      background: ${theme.styles.form.button[design].active.backgroundColor};
+    }
+
+    &:disabled {
+      background: ${theme.styles.form.button[design].disabled.backgroundColor};
+    }
+
+  `};
 
   overflow: hidden;
   border: none;
@@ -27,17 +47,6 @@ const StyledButton = styled.button<IStyledComponentProps>`
     margin-left: 20px;
   }
 
-  &:hover {
-    background: ${props => props.theme.colors.form.button[props.design].hover.backgroundColor};
-  }
-
-  &:active {
-    background: ${props => props.theme.colors.form.button[props.design].active.backgroundColor};
-  }
-
-  &:disabled {
-    background: ${props => props.theme.colors.form.button[props.design].disabled.backgroundColor};
-  }
 `;
 
 
