@@ -97,7 +97,7 @@ export const typography = {
                 "fontSize": "14px",
                 "fontWeight": 300,
                 "textDecoration": "none",
-                "color": "hsla(215, 23.5%, 64.1%, 1.000)"
+                "color": "hsla(0, 0%, 56.1%, 1.000)"
             },
             "meta(Selected)": {
                 "textAlign": "left",
@@ -553,36 +553,126 @@ export const typography = {
             }
         }
     },
-    "datepicker": {
-        "day(Selected)": {
-            "textAlign": "center",
-            "fontSize": "14px",
-            "fontWeight": 600,
-            "textDecoration": "none",
-            "color": "hsla(0, 0%, 100%, 1.000)"
+    "filters": {
+        "datepicker": {
+            "metaHeader": {
+                "default": {
+                    "textAlign": "left",
+                    "fontSize": "14px",
+                    "fontWeight": 300,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 56.1%, 1.000)"
+                },
+                "active": {
+                    "textAlign": "left",
+                    "fontSize": "14px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(207, 94.2%, 66.1%, 1.000)"
+                }
+            },
+            "calendar": {
+                "active": {
+                    "textAlign": "center",
+                    "fontSize": "14px",
+                    "fontWeight": 400,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                },
+                "otherMonth": {
+                    "textAlign": "center",
+                    "fontSize": "14px",
+                    "fontWeight": 400,
+                    "textDecoration": "none",
+                    "color": "hsla(206, 6.3%, 49.4%, 0.502)"
+                },
+                "default": {
+                    "textAlign": "center",
+                    "fontSize": "14px",
+                    "fontWeight": 400,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 46.3%, 1.000)"
+                },
+                "header": {
+                    "textAlign": "center",
+                    "fontSize": "12px",
+                    "fontWeight": 700,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 82%, 1.000)"
+                }
+            },
+            "monthLink": {
+                "default": {
+                    "textAlign": "center",
+                    "fontSize": "12px",
+                    "fontWeight": 700,
+                    "lineHeight": "20px",
+                    "textTransform": "uppercase",
+                    "letterSpacing": "0.4px",
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 75.7%, 1.000)"
+                },
+                "hover": {
+                    "textAlign": "center",
+                    "fontSize": "12px",
+                    "fontWeight": 700,
+                    "lineHeight": "20px",
+                    "textTransform": "uppercase",
+                    "letterSpacing": "0.4px",
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                }
+            },
+            "focusedMonth": {
+                "textAlign": "center",
+                "fontSize": "20px",
+                "fontWeight": 400,
+                "lineHeight": "20px",
+                "letterSpacing": "0.5px",
+                "textDecoration": "none",
+                "color": "hsla(215, 23.5%, 64.1%, 1.000)"
+            },
+            "focusedYear": {
+                "textAlign": "center",
+                "fontSize": "10px",
+                "fontWeight": 700,
+                "lineHeight": "20px",
+                "textTransform": "uppercase",
+                "letterSpacing": "0.3333333px",
+                "textDecoration": "none",
+                "color": "hsla(215, 23.5%, 64.1%, 1.000)"
+            }
         },
-        "day(Inactive)": {
-            "textAlign": "center",
-            "fontSize": "14px",
-            "fontWeight": 600,
-            "textDecoration": "none",
-            "color": "hsla(206, 6.3%, 49.4%, 1.000)"
-        },
-        "day": {
-            "textAlign": "center",
-            "fontSize": "14px",
-            "fontWeight": 600,
-            "textDecoration": "none",
-            "color": "hsla(0, 0%, 46.3%, 1.000)"
-        }
-    },
-    "filterButton": {
-        "label": {
+        "value": {
             "textAlign": "left",
             "fontSize": "14px",
-            "fontWeight": 400,
+            "fontWeight": 500,
+            "letterSpacing": "0.2px",
             "textDecoration": "none",
-            "color": "hsla(0, 0%, 50.2%, 1.000)"
+            "color": "hsla(0, 0%, 56.1%, 1.000)"
+        },
+        "subOption": {
+            "label": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 300,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 46.3%, 1.000)"
+            },
+            "value": {
+                "textAlign": "left",
+                "fontSize": "13px",
+                "fontWeight": 500,
+                "textDecoration": "none",
+                "color": "hsla(202, 6.2%, 74.5%, 1.000)"
+            }
+        },
+        "presetAction": {
+            "textAlign": "left",
+            "fontSize": "13px",
+            "fontWeight": 500,
+            "textDecoration": "none",
+            "color": "hsla(202, 6.2%, 74.5%, 1.000)"
         }
     }
 }

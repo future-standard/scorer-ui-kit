@@ -26,7 +26,7 @@ const Container = styled.div`
 `;
 
 const DateTimeArea = styled.div`
-  border-right: #f1f1f1 1px solid;
+  border-right: ${({theme}) => theme.colors.divider} 1px solid;
   width: 170px;
   display: flex;
   flex-direction: column;
@@ -34,28 +34,26 @@ const DateTimeArea = styled.div`
 `
 
 const TimeZoneOption = styled.div`
-  border-top: #f1f1f1 1px solid;
+  border-top: ${({theme}) => theme.colors.divider} 1px solid;
   margin-top: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // height: 30px;
   padding: 10px;
   box-sizing: border-box;
 `
 const TimeZoneLabel = styled.div`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
+    ${theme.typography.filters.subOption.label};
   `}
-  font-size: 12px;
-  color: #767676;
+
 `
 const TimeZoneValue = styled.div`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.data};
+    ${theme.typography.filters.subOption.value};
   `}
-  font-size: 13px;
-  color: #babfc2;
 `
 
 const CalendarArea = styled.div`
@@ -63,20 +61,10 @@ const CalendarArea = styled.div`
 `
 
 const CalendarHeader = styled.div`
-
   display: flex;
   height: 70px;
-  border-bottom: #f1f1f1 1px solid;
-
-  color: #8ea0b9;
-  font-weight: 500;
-  font-size: 20px;
+  border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
   text-align: center;
-
-  span {
-    display: block;
-    font-size: 10px;
-  }
 `
 const CurrentMonth = styled.div`
   flex: 1;
@@ -85,9 +73,11 @@ const CurrentMonth = styled.div`
   align-items: center;
   justify-content: center;
 
+  ${({theme})=> theme.typography.filters.datepicker.focusedMonth};
   span {
     display: block;
     flex: 0;
+    ${({theme})=> theme.typography.filters.datepicker.focusedYear};
   }
 `
 
@@ -98,20 +88,17 @@ const PaginateMonth = styled.button`
   border: none;
   background: transparent;
   outline: none;
-  font-weight: 500;
-  text-transform: uppercase;
 
-  flex: 0 0 90px;
-  color: #c1c1c1;
+  ${({theme})=> theme.typography.filters.datepicker.monthLink.default};
 
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   &:hover {
-    color: #fff;
     background: transparent;
     background-image: linear-gradient(315deg, #59b1ef, #2bbbec);
+    ${({theme})=> theme.typography.filters.datepicker.monthLink.hover};
   }
 
 `
@@ -126,13 +113,11 @@ const CalRow = styled.div`
   height: 40px;
   box-sizing: border-box;
 
-  font-size: 12px;
-  font-weight: 400;
   padding: 0 10px;
 `
 
 const CalHRow = styled(CalRow)`
-  border-bottom: #f1f1f1 1px solid;
+  border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
 `
 
 const CalCell = styled.div`
@@ -143,9 +128,7 @@ const CalCell = styled.div`
   align-items: center;
 
   border-radius: 5px;
-  color: #767f86;
-  font-weight: 500;
-  font-size: 14px;
+  ${({theme})=> theme.typography.filters.datepicker.calendar.default};
 
   ${({theme}) => css`
     font-family: ${theme.fontFamily.data};
@@ -154,7 +137,7 @@ const CalCell = styled.div`
 `
 
 const CalHCell = styled(CalCell)`
-  color: #C9C9C9;
+  ${({theme})=> theme.typography.filters.datepicker.calendar.header};
 `
 
 const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
@@ -162,17 +145,16 @@ const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state
   position: relative;
 
   ${({thisMonth}) => !thisMonth  && css`
-    opacity: 0.5;
+    ${({theme})=> theme.typography.filters.datepicker.calendar.otherMonth};
   `}
 
   ${({isToday}) => isToday  && css`
     border: 2px solid hsla(0deg, 0%, 80%, 50%);
   `}
 
-  ${({state}) => (state === 'single' || state === 'start' || state === 'end') && css`
+  ${({state, theme}) => (state === 'single' || state === 'start' || state === 'end') && css`
     background-image: linear-gradient(315deg, #59b1ef, #2bbbec);
-    opacity: 1;
-    color: #ffffff;
+    ${theme.typography.filters.datepicker.calendar.active};
   `}
 
   ${({state}) => (state === 'start') && css`
@@ -186,7 +168,7 @@ const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state
   `}
 
   ${({state}) => (state === 'insideHover') && css`
-    background: #f00 !important;
+    background: ${({theme}) => theme.colors.divider} !important;
   `}
 
   ${({state}) => (state === 'inside') && css`
@@ -217,7 +199,6 @@ const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state
 
 const DayGuide : string[] = [
   "S", "M", "T", "W", "T", "F", "S"
-  // "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 ]
 
 interface IProps {
@@ -395,7 +376,7 @@ const DatePicker : React.FC<IProps> = (props) => {
 
         <CurrentMonth>
           <span>{ format(focusedMonth, "yyyy") }</span>
-          <span></span>{ format(focusedMonth, "MMMM") }
+          { format(focusedMonth, "MMMM") }
         </CurrentMonth>
 
         <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>
