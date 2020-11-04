@@ -16,12 +16,13 @@ const Container = styled.div<{hide:boolean}>`
 const Label = styled.label`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
+    ${({theme})=> theme.typography.filters.datepicker.metaHeader.default};
   `}
   padding: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #57b1fa;
   border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
+
+  // ${({theme})=> theme.typography.filters.datepicker.metaHeader.active};
+
 `
 
 const Item = styled.div`
@@ -39,9 +40,8 @@ const Input = styled.input<{ readOnly? : boolean }>`
     font-family: ${theme.fontFamily.data};
   `}
 
-  font-family: Lato;
-  font-size: 14px;
-  color: #8ea0b9;
+  ${({theme})=> theme.typography.filters.value};
+
   width: 100%;
   border: none;
   border: transparent 1px solid;
