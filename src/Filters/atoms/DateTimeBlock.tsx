@@ -4,9 +4,13 @@ import {format } from 'date-fns'
 
 import Icon from '../../Icons/Icon';
 
-const Container = styled.div`
+const Container = styled.div<{hide:boolean}>`
   display: flex;
   flex-direction: column;
+
+  ${({hide}) => hide && css`
+    display: none;
+  `}
 `
 
 const Label = styled.label`
@@ -17,7 +21,7 @@ const Label = styled.label`
   font-size: 14px;
   font-weight: 600;
   color: #57b1fa;
-  border-bottom: #f1f1f1 1px solid;
+  border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
 `
 
 const Item = styled.div`
@@ -95,7 +99,7 @@ interface IProps {
 }
 
 const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, hasDate, hasTime, date, time, setTimeCallback, setDateCallback }) => {
-  return <Container>
+  return <Container hide={ !hasDate && !hasTime }>
     <Label>{title}</Label>
 
       {hasDate && <Item>
