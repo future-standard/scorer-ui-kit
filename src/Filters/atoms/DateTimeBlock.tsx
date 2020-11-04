@@ -71,15 +71,15 @@ const InputWrap = styled.div`
 
   &:focus-within {
 
-    background: hsla(205deg, 70%, 75%, 100%);
-    box-shadow: 0px 0px 0px 5px hsla(205deg, 70%, 75%, 100%);
+    background: ${({theme}) => theme.colors.menu.passive};
+    box-shadow: 0px 0px 0px 5px ${({theme}) => theme.colors.menu.passive};
 
     ${Input} {
-      border-color: #ccc;
+      border-color: ${({theme}) => theme.colors.divider};
     }
 
     ${TimeColon}{
-      color: #fff;
+      color: ${({theme}) => theme.colors.pureTop};
       text-align: center;
     }
   }
