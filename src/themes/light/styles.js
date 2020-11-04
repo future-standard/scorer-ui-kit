@@ -355,15 +355,15 @@ export const styles = {
             }
         }
     },
-    "filterDropdown": {
-        "container": {
-            "boxShadow": "0px 5px 25px 0px hsla(210, 66.9%, 46.3%, 0.122)",
-            "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-            "opacity": 0.990215
-        },
-        "topBorder": {
-            "backgroundColor": "hsla(205, 100%, 72%, 1.000)",
-            "opacity": 0.990215
+    "filters": {
+        "dropdownContainer": {
+            "background": {
+                "boxShadow": "0px 5px 25px 0px hsla(210, 66.9%, 46.3%, 0.122)",
+                "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
+            },
+            "topBorder": {
+                "backgroundColor": "hsla(205, 100%, 72%, 1.000)"
+            }
         }
     },
     "general": {

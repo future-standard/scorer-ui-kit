@@ -3,20 +3,19 @@ import styled from 'styled-components';
 
 const Container = styled.div<{ height?: string }>`
 
-  // height: ${({height}) => height ? height : '320px'};
+  ${({theme}) => theme.styles.filters.dropdownContainer.background};
 
-  background: #fff;
   border-radius: 3px;
-  box-shadow: 0 5px 25px 0 rgba(39, 118, 197, 0.12);
   position: relative;
   display: inline-flex;
   overflow: hidden;
   padding-top: 5px;
 
   &::before {
+    ${({theme}) => theme.styles.filters.dropdownContainer.topBorder};
     content: '';
+
     display: block;
-    background: #70c3ff;
     height: 5px;
     position: absolute;
     left: 0;
