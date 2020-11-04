@@ -224,16 +224,15 @@ interface IProps {
   initialDates?: Date | Date[]
   dateMode: DateMode
   timeMode: TimeMode
+  updateCallback?: any
 }
 
 const DatePicker : React.FC<IProps> = (props) => {
 
+  const {updateCallback} = props;
+
   // TODO: Have a function to output tidied up data for the configuration.
   // TODO: Intitialise an initial date set.
-
-  // Bug checking
-  // - Allow for single <-> interval changing.
-  // - UI correctly reflects timeMode and dateMode
 
   const now = new Date();
   const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, end: { hours: 24, minutes: 0, seconds: 0, milliseconds: 0 } };
@@ -252,10 +251,17 @@ const DatePicker : React.FC<IProps> = (props) => {
   })
 
   useEffect(()=>{
-
     setTimeRange(defaultTimeRange);
-
   }, [timeMode, setTimeRange])
+
+  useEffect(()=>{
+    setTimeMode(props.timeMode);
+    setDateMode(props.dateMode);
+  }, [props, setTimeMode, setDateMode])
+
+  useEffect(() => {
+    updateCallback(selectedRange);
+  }, [selectedRange, updateCallback])
 
   /**
    * Handler for updating picked dates when a calendar day has been selected.
