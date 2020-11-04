@@ -81,6 +81,8 @@ const CurrentMonth = styled.div`
   }
 `
 
+const IconWrap = styled.div``
+
 const PaginateMonth = styled.button`
   cursor: pointer;
   flex: 0 0 90px;
@@ -101,6 +103,12 @@ const PaginateMonth = styled.button`
       background: ${theme.colors.menu.active};
       ${theme.typography.filters.datepicker.monthLink.hover}
     `};
+
+    ${IconWrap}{
+      [stroke]{
+        stroke: ${({theme}) => theme.colors.pureBase};
+      }
+    }
   }
 
 `
@@ -372,7 +380,7 @@ const DatePicker : React.FC<IProps> = (props) => {
       <CalendarHeader>
 
         <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>
-          <Icon icon={'Left'} color={'dimmed'} size={10} />
+          <IconWrap><Icon icon={'Left'} color={'dimmed'} size={10} /></IconWrap>
           { format(addMonths(focusedMonth, -1), "MMM") }
         </PaginateMonth>
 
@@ -383,7 +391,7 @@ const DatePicker : React.FC<IProps> = (props) => {
 
         <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>
           { format(addMonths(focusedMonth, 1), "MMM") }
-          <Icon icon={'Right'} color={'dimmed'} size={10} />
+          <IconWrap><Icon icon={'Right'} color={'dimmed'} size={10} /></IconWrap>
         </PaginateMonth>
 
       </CalendarHeader>
