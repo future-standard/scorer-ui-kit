@@ -1,6 +1,6 @@
 export const colors = {
-    "pureTop": "hsla(0, 0%, 100%, 1.000)",
-    "pureBlack": "hsla(0, 0%, 0%, 1.000)",
+    "pureBase": "hsla(0, 0%, 100%, 1.000)",
+    "pureTop": "hsla(0, 0%, 0%, 1.000)",
     "divider": "hsla(0, 0%, 93.3%, 1.000)",
     "icons": {
         "inverse": "hsla(0, 0%, 100%, 1.000)",
@@ -14,7 +14,8 @@ export const colors = {
         "active": "hsla(215, 100%, 75.1%, 1.000)",
         "hover": "hsla(200, 77.8%, 77.1%, 1.000)",
         "default": "hsla(200, 77.8%, 77.1%, 0.000)",
-        "indicator": "hsla(240, 1.2%, 84.1%, 0.502)"
+        "indicator": "hsla(240, 1.2%, 84.1%, 0.502)",
+        "passive": "hsla(215, 100%, 75.1%, 0.149)"
     },
     "feedback": {
         "error": "hsla(0, 78.8%, 70.4%, 1.000)",

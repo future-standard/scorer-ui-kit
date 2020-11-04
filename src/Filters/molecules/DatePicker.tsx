@@ -97,8 +97,10 @@ const PaginateMonth = styled.button`
 
   &:hover {
     background: transparent;
-    background-image: linear-gradient(315deg, #59b1ef, #2bbbec);
-    ${({theme})=> theme.typography.filters.datepicker.monthLink.hover};
+    ${({theme})=> css`
+      background: ${theme.colors.menu.active};
+      ${theme.typography.filters.datepicker.monthLink.hover}
+    `};
   }
 
 `
@@ -149,11 +151,11 @@ const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state
   `}
 
   ${({isToday}) => isToday  && css`
-    border: 2px solid hsla(0deg, 0%, 80%, 50%);
+    border: 2px solid ${({theme}) => theme.colors.menu.passive};
   `}
 
   ${({state, theme}) => (state === 'single' || state === 'start' || state === 'end') && css`
-    background-image: linear-gradient(315deg, #59b1ef, #2bbbec);
+    background: ${theme.colors.menu.active};
     ${theme.typography.filters.datepicker.calendar.active};
   `}
 
@@ -172,13 +174,13 @@ const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state
   `}
 
   ${({state}) => (state === 'inside') && css`
-    background: #ebf8fe;
+    background: ${({theme}) => theme.colors.menu.passive};
     border-radius: 0;
     opacity: 1;
 
     &:nth-child(7n+1), &:nth-child(7n){
       &::after {
-        background: #ebf8fe;
+        background: ${({theme}) => theme.colors.menu.passive};
         display: block;
         content: '';
         position: absolute;
