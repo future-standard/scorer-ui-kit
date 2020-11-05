@@ -2,12 +2,7 @@ import * as React from "react";
 
 function SvgLanguage(props: ISvgIcons) {
   return (
-    <svg
-      width={props.size}
-      height={props.size}
-      viewBox={"0 0 24 24"}
-      {...props}
-    >
+    <svg width={props.size} height={props.size} viewBox="0 0 24 24" {...props}>
       <g
         stroke={props.color}
         strokeWidth={props.weight}
