@@ -5,20 +5,20 @@ import { IDragLineUISharedOptions } from '.';
 
 const ContrastLine = styled.line<{styling: string}>`
   pointer-events: none;
-  stroke: ${({theme, styling}) => theme.colors.lines[styling].contrastLine.stroke};
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].contrastLine.stroke};
   mix-blend-mode: multiply;
 `;
 
 const HighlightLine = styled.line<{styling: string}>`
   pointer-events: none;
-  stroke: ${({theme, styling}) => theme.colors.lines[styling].highlightLine.stroke};
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].highlightLine.stroke};
 `;
 
 
 
 const GrabHandle = styled.circle<{hide: boolean, styling: string}>`
-  fill: ${({theme, styling}) => theme.colors.lines[styling].grabHandle.fill};
-  stroke: ${({theme, styling}) => theme.colors.lines[styling].grabHandle.stroke};
+  fill: ${({theme, styling}) => theme.custom.lines[styling].grabHandle.fill};
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].grabHandle.stroke};
   opacity: 1;
   transition: opacity 250ms ease;
   cursor: grab;
@@ -42,7 +42,7 @@ const GrabHandleIndexGroup = styled.g<{showIndex: boolean}>`
 const GrabHandleIndexText = styled.text<{showIndex: boolean, styling: string}>`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   text-align: center;
-  fill: ${({theme, styling}) => theme.colors.lines[styling].grabHandleText.stroke};
+  fill: ${({theme, styling}) => theme.custom.lines[styling].grabHandleText.stroke};
   font-weight: bold;
   transition: opacity 250ms ease;
   pointer-events: none;
@@ -50,7 +50,7 @@ const GrabHandleIndexText = styled.text<{showIndex: boolean, styling: string}>`
 
 const LabelText = styled.text<{showIndex: boolean, styling: string}>`
   text-align: center;
-  fill: ${({theme, styling}) => theme.colors.lines[styling].label.fill};
+  fill: ${({theme, styling}) => theme.custom.lines[styling].label.fill};
   font-weight: bold;
   transition: opacity 250ms ease;
   pointer-events: none;
@@ -58,7 +58,7 @@ const LabelText = styled.text<{showIndex: boolean, styling: string}>`
 
 const GrabHandleContrast = styled(GrabHandle)`
   fill: none;
-  stroke: ${({theme, styling}) => theme.colors.lines[styling].grabHandleContrast.stroke};
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].grabHandleContrast.stroke};
 `;
 
 const GrabHandleGroup = styled.g<{ showIndex: boolean, originalRadius: number, styling: string}>`

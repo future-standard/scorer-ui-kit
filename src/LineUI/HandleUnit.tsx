@@ -37,13 +37,13 @@ const HandleBase = styled.svg<{ mouseDragging: boolean, styling: string}>`
   user-select: none;
   overflow: visible;
   cursor: pointer;
-  fill: ${({theme, styling}) => theme.colors.lines[styling].handleBase.fill};
+  fill: ${({theme, styling}) => theme.custom.lines[styling].handleBase.fill};
   appearance: none;
 `;
 
 const HandleRingLayer = styled.circle<{maskID: string, styling: string}>`
   fill: none;
-  stroke: ${({theme, styling}) => theme.colors.lines[styling].handleRingLayer.stroke};
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].handleRingLayer.stroke};
   mask: url(#${props => (props.maskID)});
 `;
 const HandleReactiveGroup = styled.g<{touchDragging: boolean, mouseDragging: boolean}>`
@@ -62,19 +62,19 @@ const HandleReactiveGroup = styled.g<{touchDragging: boolean, mouseDragging: boo
 `;
 const HandleReactiveFill = styled.circle<{styling: string}>`
   mix-blend-mode: multiply;
-  fill: ${({theme, styling}) => theme.colors.lines[styling].handleReactiveFill.fill};
+  fill: ${({theme, styling}) => theme.custom.lines[styling].handleReactiveFill.fill};
   stroke: none;
 `;
 const HandleReactiveRing = styled.circle<{styling: string}>`
   fill: none;
-  stroke: ${({theme, styling}) => theme.colors.lines[styling].handleReactiveRing.stroke};
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].handleReactiveRing.stroke};
 `;
 
 const HandleContrastLayer = styled.circle<{styling: string}>`
   overflow: visible;
   mix-blend-mode: multiply;
   fill: none;
-  stroke: ${({theme, styling}) => theme.colors.lines[styling].handleContrastLayer.stroke};
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].handleContrastLayer.stroke};
 `;
 const HandleShadowLayer = styled.circle<{fillID: string}>`
     mix-blend-mode: multiply;
@@ -91,16 +91,16 @@ const GrabHandleIndexGroup = styled.g<{showIndex: boolean}>`
 `;
 
 const StopStart = styled.stop<{styling: string}>`
-  stop-color: ${({theme, styling}) => theme.colors.lines[styling].stopStart.stopColor };
+  stop-color: ${({theme, styling}) => theme.custom.lines[styling].stopStart.stopColor };
 `;
 const StopEnd = styled.stop<{styling: string}>`
-  stop-color: ${({theme, styling}) => theme.colors.lines[styling].stopEnd.stopColor };
+  stop-color: ${({theme, styling}) => theme.custom.lines[styling].stopEnd.stopColor };
 `;
 
 
 const GrabHandleIndexText = styled.text<{showIndex: boolean, styling: string}>`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  stroke: ${({theme, styling}) => theme.colors.lines[styling].grabHandleText.stroke};
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].grabHandleText.stroke};
   text-align: center;
 
   font-weight: bold;
