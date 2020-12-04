@@ -125,11 +125,10 @@ interface IProps {
   rightTheme?: string
   state?: TypeSwitchState
   onChange?: (event: any) => void;
+  initialPosition?: SwitchPosition.On | SwitchPosition.Off;
 }
 
-const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', rightTheme = 'on', labelText, onChange }) => {
-
-  const initialPosition = SwitchPosition.Off;
+const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', rightTheme = 'on', labelText, onChange, initialPosition = SwitchPosition.Off}) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [ position, setPosition ] = useState<SwitchPosition>(initialPosition);
