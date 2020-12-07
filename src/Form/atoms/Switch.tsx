@@ -124,14 +124,14 @@ interface IProps {
   leftTheme?: string
   rightTheme?: string
   state?: TypeSwitchState
-  onChange?: (event: any) => void;
-  initialPosition?: SwitchPosition.On | SwitchPosition.Off;
+  checked?: boolean
+  onChangeCallback?: (checked: boolean, indeterminate?: boolean) => void;
 }
 
-const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', rightTheme = 'on', labelText, onChange, initialPosition = SwitchPosition.Off}) => {
+const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', rightTheme = 'on', labelText, onChangeCallback, checked = false}) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [ position, setPosition ] = useState<SwitchPosition>(initialPosition);
+  const [ position, setPosition ] = useState<SwitchPosition>(checked ? SwitchPosition.On : SwitchPosition.Off);
   const [ activeTheming, setActiveTheming ] = useState<string>( leftTheme );
   const [ switchState, setSwitchState ] = useState<TypeSwitchState>('default');
 
@@ -147,7 +147,7 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
 
   const customOnChange = (e: any) => {
     positionSwitch();
-    if(onChange){ onChange(e); }
+    if(onChangeCallback){ onChangeCallback(inputRef.current?.checked || false); }
   };
 
   /**
@@ -194,7 +194,7 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
       </SwitchInner>
     </SwitchOuter>
     {labelText ? <LabelText>{labelText}</LabelText> : null}
-    <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} />
+    <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} defaultChecked={ checked } />
   </Container>;
 
 };
