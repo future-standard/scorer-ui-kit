@@ -105,7 +105,7 @@ interface IProps {
   onChangeCallback?: (checked: boolean, indeterminate?: boolean) => void;
 }
 
-const Switch : React.FC<IProps> = ({ indeterminate = false, disabled, checked = false, onChangeCallback }) => {
+const Checkbox : React.FC<IProps> = ({ indeterminate = false, disabled, checked = false, onChangeCallback }) => {
 
   const [ isChecked, setIsChecked ] = useState<boolean>(checked);
   const [ visualState, setVisualState ] = useState<CheckboxState>(checked ? CheckboxState.On : CheckboxState.Off);
@@ -141,5 +141,5 @@ const Switch : React.FC<IProps> = ({ indeterminate = false, disabled, checked = 
 
 };
 
-export default Switch;
+export default Checkbox;
 export { CheckboxState };
