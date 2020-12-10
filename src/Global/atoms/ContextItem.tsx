@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import Icon from '../../Icons/Icon';
+import Icon, { IconWrapper } from '../../Icons/Icon';
 
 
 const ContextTitle = styled.div<{compact?: boolean}>`
@@ -42,7 +42,6 @@ const ContextIcon = styled.div<{compact?: boolean}>`
     flex: 0 0 24px;
     margin: 0 28px 0 28px;
   `}
-
 `;
 const ContextIndicator = styled.div`
   width: 12px;
@@ -96,6 +95,11 @@ const ContextActionA = styled.a<{menuOpen?:boolean, isActive:boolean}>`
   &:hover ${ContextIcon}{
     opacity: 1;
     ${({theme}) => theme.styles.global.mainMenu.iconBackground.hover};
+    ${IconWrapper}{
+      [stroke]{
+        stroke: ${({theme}) => theme.colors.icons['inverse']};
+      }
+    }
   }
 
   ${({isActive}) => isActive && css`
@@ -127,6 +131,11 @@ const ContextActionButton = styled.button<{menuOpen?:boolean, isActive:boolean}>
   &:hover ${ContextIcon}{
     opacity: 1;
     ${({theme}) => theme.styles.global.mainMenu.iconBackground.hover};
+    ${IconWrapper}{
+      [stroke]{
+        stroke: ${({theme}) => theme.colors.icons['inverse']};
+      }
+    }
   }
 
   ${({isActive}) => isActive && css`

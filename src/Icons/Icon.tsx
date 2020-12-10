@@ -4,13 +4,14 @@ import * as IconSVGs from  './stroked';
 
 import { dimensions } from '../themes/common';
 
-export {IconSVGs};
 
 const IconWrapper = styled.div<{color:string}>`
-  [stroke]{
-    stroke: ${({theme, color}) => theme.colors.icons[color]};
-  }
+[stroke]{
+  stroke: ${({theme, color}) => theme.colors.icons[color]};
+}
 `;
+
+export {IconSVGs, IconWrapper};
 
 interface IProps {
   icon: string;
