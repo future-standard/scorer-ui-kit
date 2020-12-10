@@ -76,7 +76,7 @@ const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback
       </HeaderRow>
 
       {rows.map((rowData, key) => {
-        const isLastRow = (rowData.columns.length - 1 === key) ? true : false;
+        const isLastRow = (rows.length - 1 === key) ? true : false;
         return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
       })}
 
