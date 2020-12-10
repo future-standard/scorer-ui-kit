@@ -5,8 +5,8 @@ export const Layout = styled.div`
   flex-direction: row;
   height: 100%;
 `;
-export const Content = styled.div<{ maxWidth?: string }>`
-  padding: 70px 90px 0 90px;
+export const Content = styled.div<{ maxWidth?: string, padBottom?: boolean }>`
+  padding: ${({padBottom = true}) => padBottom ? '70px 90px' : '70px 90px 0'};
   flex: 1;
   overflow: auto;
 

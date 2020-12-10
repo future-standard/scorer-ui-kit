@@ -139,7 +139,7 @@ const Line: React.FC<{}> = () => {
           {/* <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button> */}
         </SidebarBox>
       </Sidebar>
-      <Content>
+      <Content padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
           <LineUI options={options} src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
