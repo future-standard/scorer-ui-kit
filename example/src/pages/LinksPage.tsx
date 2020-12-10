@@ -12,6 +12,7 @@ const LinksPage : React.FC = () => {
     <div><Link to={`/linertc`}>Line WebRTC</Link></div>
     <div><Link to={`/forms`}>Forms</Link></div>
     <div><Link to={`/table`}>Table Example</Link></div>
+    <div><Link to={`/customdrawer`}>Custom User Drawer</Link></div>
     <div><Link to={`/ptz`}>PTZ</Link></div>
     <div><Link to={`/login`}>Login</Link></div>
     <div><a href='/scorer-ui-kit/storybook'>Storybook</a></div>
