@@ -7,7 +7,7 @@ import photo from '../assets/placeholder.jpg';
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 
 const Container = styled.div`
-  margin: 100px;
+  padding: 100px;
 `;
 
 export default {
@@ -94,6 +94,111 @@ const initialRows : ITypeTableData = [
       { text: '2.1', unit: 'tb' },
       { text: '¥7,000'}
     ],
+  },
+  {
+    id: 'device-4',
+    header: {
+      image: photo,
+      icon: 'Location',
+      status: 'danger'
+    },
+    columns:
+    [
+      { text: 'Magic Edge Cloud', href: '#' },
+      { text: '2nd April 2020' },
+      { text: '153', unit: 'mb' },
+      { text: '¥25,000' }
+    ]
+  },
+  {
+    id: 'device-5',
+    header: {
+      image: photo,
+      icon: 'Location',
+      status: 'danger'
+    },
+    columns:
+    [
+      { text: 'Magic Edge Cloud', href: '#' },
+      { text: '2nd April 2020' },
+      { text: '153', unit: 'mb' },
+      { text: '¥25,000' }
+    ]
+  },
+  {
+    id: 'device-6',
+    header: {
+      image: photo,
+      icon: 'Location',
+      status: 'danger'
+    },
+    columns:
+    [
+      { text: 'Magic Edge Cloud', href: '#' },
+      { text: '2nd April 2020' },
+      { text: '153', unit: 'mb' },
+      { text: '¥25,000' }
+    ]
+  },
+  {
+    id: 'device-7',
+    header: {
+      image: photo,
+      icon: 'Location',
+      status: 'danger'
+    },
+    columns:
+    [
+      { text: 'Magic Edge Cloud', href: '#' },
+      { text: '2nd April 2020' },
+      { text: '153', unit: 'mb' },
+      { text: '¥25,000' }
+    ]
+  },
+  {
+    id: 'device-8',
+    header: {
+      image: photo,
+      icon: 'Location',
+      status: 'danger'
+    },
+    columns:
+    [
+      { text: 'Magic Edge Cloud', href: '#' },
+      { text: '2nd April 2020' },
+      { text: '153', unit: 'mb' },
+      { text: '¥25,000' }
+    ]
+  },
+  {
+    id: 'device-9',
+    header: {
+      image: photo,
+      icon: 'Location',
+      status: 'danger'
+    },
+    columns:
+    [
+      { text: 'Magic Edge Cloud', href: '#' },
+      { text: '2nd April 2020' },
+      { text: '153', unit: 'mb' },
+      { text: '¥25,000' }
+    ]
+  },
+  {
+    id: 'device-10',
+    header: {
+      image: photo,
+      icon: 'Location',
+      status: 'danger'
+    },
+    columns:
+    [
+      { text: 'Magic Edge Cloud', href: '#' },
+      { text: '2nd April 2020' },
+      { text: '153', unit: 'mb' },
+      { text: '¥25,000' }
+    ]
   },
   {
     id: 'device-4',
