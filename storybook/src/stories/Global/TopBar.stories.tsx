@@ -41,5 +41,7 @@ export const _TopBar = () => {
   const logoutLink = text("Logout Url", "#")
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
 
+  // userDrawerBespoke: See examples for implementation of this prop.
+
   return <Container><TopBar {...{loggedInUser, userSubmenu, useSearch, useNotifications, logoutLink, searchPlaceholder, showLanguage}}/></Container>;
 };

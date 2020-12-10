@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, ReactElement } from 'react';
 import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../common';
 
@@ -215,6 +215,7 @@ interface IProps {
   useSearch?: boolean;
   searchPlaceholder?: string;
   showLanguage?: boolean;
+  userDrawerBespoke?: ReactElement;
   onLogout?: ()=>void;
   onLanguageToggle?: ()=>void;
 }
@@ -225,6 +226,7 @@ const TopBar : React.FC<IProps> = ({
   useSearch = false,
   searchPlaceholder = 'Search for devices, analysis tasks, etc.',
   userSubmenu = [],
+  userDrawerBespoke,
   loggedInUser,
   onLogout = ()=>{},
   showLanguage = false,
@@ -273,6 +275,8 @@ const TopBar : React.FC<IProps> = ({
               </LinkMenu>
             </UserMenu>
           : null}
+
+          {userDrawerBespoke ? userDrawerBespoke : null}
 
           <Logout>
             <LinkMenu>

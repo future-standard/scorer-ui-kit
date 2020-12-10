@@ -14,6 +14,8 @@ import LinksPage from './pages/LinksPage';
 import PTZPage  from './pages/PTZPage';
 import LoginPage from './pages/Login';
 import TablePage from './pages/TablePage';
+import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
+
 
 const App: React.FC<{}> = () => {
   return (
@@ -26,6 +28,7 @@ const App: React.FC<{}> = () => {
           <Route path={`/login`} exact={true} component={LoginPage}/>
           <Route path={`/forms`} exact={true} component={FormPage}/>
           <Route path={`/table`} exact={true} component={TablePage}/>
+          <Route path={`/customdrawer`} exact={true} component={CustomUserDrawerPage}/>
           <Route path={`/ptz`} exact={true}>
             <PTZProvider socketUrl='ws://localhost/wsapp/' imageRefresh={2000}>
               <PTZPage/>
