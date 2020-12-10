@@ -27,6 +27,8 @@ export const _MainMenu = () => {
   const logoMark = text("Logo Mark SVG", logoMarkSvg);
   const logoText = text("Logo Text SVG", logoTextSvg);
 
+  const supportUrl = text("Support Url", "#");
+
   const menuHomeLink = text("Home Link", "#");
   const menuConfig = object("Menu Config", {
     items: [
@@ -92,7 +94,7 @@ export const _MainMenu = () => {
 
   return (
     <Layout>
-      <MainMenu content={menuConfig} home={menuHomeLink} {...{logoMark, logoText}} />
+      <MainMenu content={menuConfig} home={menuHomeLink} {...{logoMark, logoText, supportUrl}} />
     </Layout>
   );
 };

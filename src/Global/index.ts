@@ -41,4 +41,5 @@ export interface IMenuTop {
     openWidth?: number
     logoMark?: string
     logoText?: string
+    supportUrl?: string
   }

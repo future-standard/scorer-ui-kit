@@ -85,7 +85,7 @@ const ContainerInner = styled.div`
   height: 100%;
 `;
 
-const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText }) => {
+const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, supportUrl }) => {
 
   const [isMenuOpen, setMenuOpen] = useState<boolean>(true);
   const [isMenuPinned, setMenuPinned] = useState<boolean>(true);
@@ -154,9 +154,9 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText }) =
 
         <MenuFooter>
 
-          {/* <FooterItemContainer>
-            <ContextItem isActive={false} icon='Question' title='Help & Support' href='#' menuOpen={isMenuOpen} />
-          </FooterItemContainer> */}
+          {supportUrl && <FooterItemContainer>
+            <ContextItem isActive={false} icon='Question' title='Help &amp; Support' href={supportUrl} menuOpen={isMenuOpen} />
+          </FooterItemContainer>}
 
           <FooterItemContainer>
             <ContextItem isActive={false} icon={isMenuOpen && isMenuPinned ? 'Left' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
