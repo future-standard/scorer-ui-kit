@@ -155,11 +155,11 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, sup
         <MenuFooter>
 
           {supportUrl && <FooterItemContainer>
-            <ContextItem isActive={false} icon='Question' title='Help &amp; Support' href={supportUrl} menuOpen={isMenuOpen} />
+            <ContextItem compact isActive={false} icon='Question' title='Help &amp; Support' href={supportUrl} menuOpen={isMenuOpen} />
           </FooterItemContainer>}
 
           <FooterItemContainer>
-            <ContextItem isActive={false} icon={isMenuOpen && isMenuPinned ? 'Left' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} compact onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
+            <ContextItem compact isActive={false} icon={isMenuOpen && isMenuPinned ? 'Left' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
           </FooterItemContainer>
 
         </MenuFooter>

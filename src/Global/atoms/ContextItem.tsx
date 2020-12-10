@@ -37,10 +37,10 @@ const ContextIcon = styled.div<{compact?: boolean}>`
   }
 
   ${({compact}) => compact && css`
-    width: 24px;
-    height: 24px;
-    flex: 0 0 24px;
-    margin: 0 28px 0 28px;
+    // width: 24px;
+    // height: 24px;
+    // flex: 0 0 24px;
+    // margin: 0 28px 0 28px;
   `}
 `;
 const ContextIndicator = styled.div`
