@@ -91,14 +91,9 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, sup
   const [isMenuPinned, setMenuPinned] = useState<boolean>(true);
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-
   const location = useLocation();
 
   let checkedInItems : number = 0;
-
-  // useEffect(() => {
-  //   console.log('Changed', location.pathname, location);
-  // },[location]);
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
@@ -137,7 +132,6 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, sup
     }
   }, [checkedInItems, content]);
 
-
   return (
     <Container open={isMenuOpen} onPointerEnter={autoMenuOpen} onTouchStart={() => console.log('touch')} onMouseLeave={autoMenuClose}>
       <ContainerInner>
@@ -148,7 +142,7 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, sup
 
         <NavigationContainer>
           {content.items.map((item, key) => {
-            return <NavigationItem topLevelPath={location.pathname} key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
+            return <NavigationItem topLevelPath={ getTopLevelPath(location.pathname) } key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
           })}
         </NavigationContainer>
 
@@ -167,5 +161,10 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, sup
     </Container>
   );
 };
+
+const getTopLevelPath = (pathname : string) => {
+  const parts = pathname.split('/').filter(String);
+  return parts.length > 0 ? "/" + parts[0] : "/";
+}
 
 export default MainMenu;
