@@ -37,9 +37,9 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, ha
     {hasTypeIcon ? <TypeTableCell hideDivider={true}><Icon icon={ rowData.header?.icon || '' } size={16} /></TypeTableCell> : null}
 
     {rowData.columns.map((cell, key) => {
-      const {cellStyle, alignment, showUnit, hasCopyButton} = columnConfig[key];
-      const {unit, text} = cell;
-      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, hasCopyButton, unit, isLastRow}}>{text}</TypeTableCell>;
+      const {cellStyle, alignment, showUnit, showStatus, hasCopyButton} = columnConfig[key];
+      const {unit, status, text} = cell;
+      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, showStatus, hasCopyButton, unit, status, isLastRow}}>{text}</TypeTableCell>;
     })}
 
   </RowContainer>;

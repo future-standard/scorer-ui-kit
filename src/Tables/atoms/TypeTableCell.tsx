@@ -75,7 +75,6 @@ const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCell
 
     }
   `}
-
 `;
 
 const UnitText = styled.span`
@@ -84,8 +83,16 @@ const UnitText = styled.span`
   `}
 `;
 
-
-
+const StatusBlip = styled.div<{status?:string}>`
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  ${({status = 'neutral', theme: {colors}}) => css`
+    background: ${colors.status[status]};
+  `}
+`;
 interface IProps {
   isLastRow?: boolean
   hideDivider?: boolean
@@ -93,11 +100,13 @@ interface IProps {
   alignment?: TypeCellAlignment
   href?: string
   showUnit?: boolean
+  showStatus?: boolean
   unit?: string
+  status?: string
   hasCopyButton?: boolean
 }
 
-const TypeTableCell : React.FC<IProps> = ({ showUnit = false, unit = '', cellStyle = 'normalImportance', alignment = 'left', hideDivider, isLastRow, hasCopyButton, href, children }) => {
+const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false, status, unit = '', cellStyle = 'normalImportance', alignment = 'left', hideDivider, isLastRow, hasCopyButton, href, children }) => {
 
   // No divider on the last row.
   hideDivider = isLastRow ? true : hideDivider;
@@ -107,6 +116,7 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, unit = '', cellSty
   }, [useCopyToClipboard]);
 
   return <CellContainer {...{cellStyle, alignment, hideDivider}}>
+    {showStatus ? <StatusBlip {...{status}}></StatusBlip> : null}
     {href ? <a href={href}>{children}</a> : children}
     {showUnit ? <UnitText>{unit}</UnitText> : null}
     {hasCopyButton ? <CopyToClipboard onClick={ () => typeof children === 'string' && copyValue(children) }><Icon icon='Copy' size={16} /></CopyToClipboard> : null}

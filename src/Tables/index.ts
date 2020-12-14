@@ -21,6 +21,7 @@ export interface ITableColumnConfig {
   cellStyle: TypeCellStyle
   alignment?: TypeCellAlignment
   showUnit?: boolean
+  showStatus?: boolean
   hasCopyButton?: boolean
   width?: number // TODO: This!
 }
@@ -28,8 +29,8 @@ export interface ICellData {
   text: string
   href?: string
   unit?: string
+  status?: 'caution' | 'danger' | 'folder' | 'good' | 'neutral';
 }
-
 export interface IRowHeader {
   status?: any
   image?: string

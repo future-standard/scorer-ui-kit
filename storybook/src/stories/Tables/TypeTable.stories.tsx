@@ -23,6 +23,12 @@ const columnConfigSample : ITableColumnConfig[] = [
     cellStyle: 'firstColumn',
   },
   {
+    header: 'Status',
+    sortable: true,
+    showStatus: true,
+    cellStyle: 'normalImportance',
+  },
+  {
     header: 'Created',
     sortable: false,
     cellStyle: 'lowImportance',
@@ -60,6 +66,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Device Name', href: '#' },
+      { text: 'OK', status: 'good' },
       { text: 'Just Now' },
       { text: '242', unit: 'mb' },
       { text: '¥20,000'}
@@ -75,6 +82,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Another Device', href: '#' },
+      { text: 'Warning', status: 'danger' },
       { text: '1st October 2019' },
       { text: '2.1', unit: 'gb' },
       { text: '¥4,000'}
@@ -90,6 +98,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Old Device', href: '#' },
+      { text: 'Warning', status: 'danger' },
       { text: '22nd March 2020' },
       { text: '2.1', unit: 'tb' },
       { text: '¥7,000'}
@@ -105,6 +114,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Magic Edge Cloud', href: '#' },
+      { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' }
@@ -120,6 +130,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Magic Edge Cloud', href: '#' },
+      { text: 'Caution', status: 'caution' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' }
@@ -135,6 +146,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Magic Edge Cloud', href: '#' },
+      { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' }
@@ -150,6 +162,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Magic Edge Cloud', href: '#' },
+      { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' }
@@ -165,6 +178,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Magic Edge Cloud', href: '#' },
+      { text: 'Offline', status: 'neutral' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' }
@@ -180,6 +194,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Magic Edge Cloud', href: '#' },
+      { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' }
@@ -195,6 +210,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Magic Edge Cloud', href: '#' },
+      { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' }
@@ -210,6 +226,7 @@ const initialRows : ITypeTableData = [
     columns:
     [
       { text: 'Magic Edge Cloud', href: '#' },
+      { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' }
