@@ -10,12 +10,12 @@ function SvgSuccess(props: ISvgIcons) {
       {...props}
     >
       <g
+        stroke={props.color}
+        strokeWidth={props.weight}
         fill="none"
         fillRule="evenodd"
-        stroke={props.color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
         vectorEffect={"non-scaling-stroke"}
       >
         <path d="M6 13.223L8.45 16.7a1.049 1.049 0 001.707.051L18 6.828" />

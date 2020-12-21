@@ -1,6 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-    <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-        <path d="M10 15.625a.312.312 0 1 0 0 .625.312.312 0 0 0 0-.625M10 13.125v-6.25"/>
-        <path d="M11.35 1.467a1.505 1.505 0 0 0-2.7 0L.754 17.548a1.268 1.268 0 0 0 1.138 1.827h16.214a1.268 1.268 0 0 0 1.138-1.827L11.351 1.467z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke="#000" stroke-width="1.5">
+            <g>
+                <path d="M12 18.75c-.207 0-.375.168-.375.375s.168.375.375.375.375-.168.375-.375-.168-.375-.375-.375h0M12 15.75L12 8.25" transform="translate(-222 -222) translate(222 222)"/>
+                <path d="M13.621 1.76C13.317 1.142 12.689.75 12 .75s-1.317.392-1.621 1.01L.906 21.058c-.232.472-.204 1.03.074 1.475.278.446.767.717 1.292.717h19.456c.525 0 1.014-.27 1.292-.717.278-.446.306-1.003.074-1.475L13.621 1.76z" transform="translate(-222 -222) translate(222 222)"/>
+            </g>
+        </g>
     </g>
 </svg>

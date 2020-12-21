@@ -10,12 +10,13 @@ function SvgUp(props: ISvgIcons) {
       {...props}
     >
       <path
-        fill="none"
+        d="M.75 17.189L11.47 6.47a.751.751 0 011.06 0l10.72 10.719"
         stroke={props.color}
+        strokeWidth={props.weight}
+        fill="none"
+        fillRule="evenodd"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
-        d="M.75 17.189L11.47 6.47a.751.751 0 011.06 0l10.72 10.719"
         vectorEffect={"non-scaling-stroke"}
       />
     </svg>

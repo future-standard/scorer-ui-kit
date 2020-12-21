@@ -3,19 +3,19 @@ import * as React from "react";
 function SvgUserProfile(props: ISvgIcons) {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
       width={props.size}
       height={props.size}
       viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <g
+        stroke={props.color}
+        strokeWidth={props.weight}
         fill="none"
         fillRule="evenodd"
-        stroke={props.color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
         vectorEffect={"non-scaling-stroke"}
       >
         <circle cx={12} cy={6} r={5.25} />

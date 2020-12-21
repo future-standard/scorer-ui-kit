@@ -3,22 +3,23 @@ import * as React from "react";
 function SvgCloseCompact(props: ISvgIcons) {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
       width={props.size}
       height={props.size}
       viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path
-        d="M5 18.999l14-14m0 14l-14-14"
+      <g
+        stroke={props.color}
+        strokeWidth={props.weight}
         fill="none"
         fillRule="evenodd"
-        stroke={props.color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
         vectorEffect={"non-scaling-stroke"}
-      />
+      >
+        <path d="M5 18.999l14-14M19 18.999l-14-14" />
+      </g>
     </svg>
   );
 }

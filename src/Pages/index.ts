@@ -3,7 +3,7 @@ import IntroductionText from './atoms/IntroductionText';
 import PageHeader from './molecules/PageHeader';
 
 export {
-    PageTitle, 
-    IntroductionText, 
+    PageTitle,
+    IntroductionText,
     PageHeader
 };

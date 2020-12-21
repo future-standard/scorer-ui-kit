@@ -1,5 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <g fill="none" fill-rule="evenodd" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-        <path d="M5 18.999L19 4.999M19 18.999L5 4.999"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>2931A75C-EB5B-4E98-B22D-2EBCC0837961</title>
+    <g id="Export-Set" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Icon-Export-Set" transform="translate(-276.000000, -330.000000)" stroke="#000000" stroke-width="1.5">
+            <g id="_Master/Icon/Action/CloseCompact" transform="translate(276.000000, 330.000000)">
+                <line x1="5" y1="18.999" x2="19" y2="4.999" id="Path"></line>
+                <line x1="19" y1="18.999" x2="5" y2="4.999" id="Path"></line>
+            </g>
+        </g>
     </g>
 </svg>

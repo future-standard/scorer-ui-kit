@@ -10,12 +10,12 @@ function SvgInvalid(props: ISvgIcons) {
       {...props}
     >
       <g
+        stroke={props.color}
+        strokeWidth={props.weight}
         fill="none"
         fillRule="evenodd"
-        stroke={props.color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
         vectorEffect={"non-scaling-stroke"}
       >
         <circle cx={11.998} cy={12} r={11.25} />

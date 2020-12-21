@@ -6,20 +6,20 @@ function SvgCritical(props: ISvgIcons) {
       xmlns="http://www.w3.org/2000/svg"
       width={props.size}
       height={props.size}
-      viewBox="0 0 20 20"
+      viewBox="0 0 24 24"
       {...props}
     >
       <g
+        stroke={props.color}
+        strokeWidth={props.weight}
         fill="none"
         fillRule="evenodd"
-        stroke={props.color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
         vectorEffect={"non-scaling-stroke"}
       >
-        <path d="M10 15.625a.312.312 0 100 .625.312.312 0 000-.625m0-2.5v-6.25" />
-        <path d="M11.35 1.467a1.505 1.505 0 00-2.7 0L.754 17.548a1.268 1.268 0 001.138 1.827h16.214a1.268 1.268 0 001.138-1.827L11.351 1.467z" />
+        <path d="M12 18.75a.375.375 0 100 .75.375.375 0 000-.75h0m0-3v-7.5" />
+        <path d="M13.621 1.76a1.806 1.806 0 00-3.242 0L.906 21.058a1.52 1.52 0 001.366 2.192h19.456a1.52 1.52 0 001.366-2.192L13.621 1.76z" />
       </g>
     </svg>
   );

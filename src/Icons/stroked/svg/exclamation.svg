@@ -1,5 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <g fill="none" fill-rule="evenodd" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-        <path d="M12 16.5c-.207 0-.375.168-.375.375s.168.375.375.375.375-.168.375-.375-.168-.375-.375-.375h0M12 13.5L12 5.25"/>
+    <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke="#000" stroke-width="1.5">
+            <g>
+                <path d="M12 16.5c-.207 0-.375.168-.375.375s.168.375.375.375.375-.168.375-.375-.168-.375-.375-.375h0M12 13.5L12 5.25" transform="translate(-384 -222) translate(384 222)"/>
+            </g>
+        </g>
     </g>
 </svg>
