@@ -6,23 +6,21 @@ function SvgLocation(props: ISvgIcons) {
       xmlns="http://www.w3.org/2000/svg"
       width={props.size}
       height={props.size}
-      viewBox="0 0 20 20"
+      viewBox="0 0 24 24"
       {...props}
     >
       <g
+        stroke={props.color}
+        strokeWidth={props.weight}
         fill="none"
         fillRule="evenodd"
-        stroke={props.color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
-        opacity={0.653}
-        transform="translate(.25 .25)"
         vectorEffect={"non-scaling-stroke"}
       >
-        <circle cx={9.75} cy={6.094} r={2.438} />
-        <path d="M9.75.61a5.484 5.484 0 015.484 5.484c0 2.641-4.17 8.553-5.237 10.024a.306.306 0 01-.494 0C8.435 14.647 4.266 8.735 4.266 6.094A5.483 5.483 0 019.75.609z" />
-        <path d="M14.608 14.45c2.22.44 3.673 1.173 3.673 2.003 0 1.346-3.818 2.438-8.531 2.438-4.713 0-8.531-1.092-8.531-2.438 0-.829 1.447-1.56 3.656-2.001" />
+        <circle cx={12} cy={7.5} r={3} />
+        <path d="M12 .75a6.75 6.75 0 016.75 6.75c0 3.251-5.132 10.527-6.446 12.337a.377.377 0 01-.608 0C10.382 18.027 5.25 10.751 5.25 7.5A6.75 6.75 0 0112 .75z" />
+        <path d="M17.979 17.784c2.732.541 4.521 1.444 4.521 2.466 0 1.657-4.7 3-10.5 3s-10.5-1.343-10.5-3c0-1.02 1.781-1.921 4.5-2.463" />
       </g>
     </svg>
   );

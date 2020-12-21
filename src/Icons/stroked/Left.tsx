@@ -10,12 +10,13 @@ function SvgLeft(props: ISvgIcons) {
       {...props}
     >
       <path
-        fill="none"
+        d="M17.25 23.25L6.53 12.53a.751.751 0 010-1.06L17.25.75"
         stroke={props.color}
+        strokeWidth={props.weight}
+        fill="none"
+        fillRule="evenodd"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
-        d="M17.25 23.25L6.53 12.53a.751.751 0 010-1.06L17.25.75"
         vectorEffect={"non-scaling-stroke"}
       />
     </svg>

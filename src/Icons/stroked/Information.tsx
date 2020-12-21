@@ -6,20 +6,20 @@ function SvgInformation(props: ISvgIcons) {
       xmlns="http://www.w3.org/2000/svg"
       width={props.size}
       height={props.size}
-      viewBox="0 0 20 20"
+      viewBox="0 0 24 24"
       {...props}
     >
       <g
+        stroke={props.color}
+        strokeWidth={props.weight}
         fill="none"
         fillRule="evenodd"
-        stroke={props.color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
         vectorEffect={"non-scaling-stroke"}
       >
-        <path d="M11.875 13.75h-.625c-.69 0-1.25-.56-1.25-1.25V9.375a.625.625 0 00-.625-.625H8.75m.938-3.125a.313.313 0 100 .625.313.313 0 000-.625" />
-        <circle cx={10} cy={10} r={9.375} />
+        <path d="M14.25 16.5h-.75A1.5 1.5 0 0112 15v-3.75a.75.75 0 00-.75-.75h-.75m1.125-3.75a.375.375 0 100 .75.375.375 0 000-.75h0" />
+        <circle cx={12} cy={12} r={11.25} />
       </g>
     </svg>
   );

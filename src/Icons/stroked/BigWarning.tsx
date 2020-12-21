@@ -10,12 +10,12 @@ function SvgBigWarning(props: ISvgIcons) {
       {...props}
     >
       <g
+        stroke={props.color}
+        strokeWidth={props.weight}
         fill="none"
         fillRule="evenodd"
-        stroke={props.color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
         vectorEffect={"non-scaling-stroke"}
       >
         <path d="M12 16.5a.375.375 0 100 .75.375.375 0 000-.75h0m0-3V6" />

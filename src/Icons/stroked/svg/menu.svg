@@ -1,5 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <g fill="none" fill-rule="evenodd" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-        <path d="M2.25 18.003L21.75 18.003M2.25 12.003L21.75 12.003M2.25 6.003L21.75 6.003"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>65EAC9F5-2D64-4E15-B072-461F83356ED2</title>
+    <g id="Export-Set" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Icon-Export-Set" transform="translate(-168.000000, -330.000000)" stroke="#000000" stroke-width="1.5">
+            <g id="_Master/Icon/Global/Menu" transform="translate(168.000000, 330.000000)">
+                <line x1="2.25" y1="18.003" x2="21.75" y2="18.003" id="Path"></line>
+                <line x1="2.25" y1="12.003" x2="21.75" y2="12.003" id="Path"></line>
+                <line x1="2.25" y1="6.003" x2="21.75" y2="6.003" id="Path"></line>
+            </g>
+        </g>
     </g>
 </svg>

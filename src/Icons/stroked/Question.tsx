@@ -10,12 +10,12 @@ function SvgQuestion(props: ISvgIcons) {
       {...props}
     >
       <g
+        stroke={props.color}
+        strokeWidth={props.weight}
         fill="none"
         fillRule="evenodd"
-        stroke={props.color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={props.weight}
         vectorEffect={"non-scaling-stroke"}
       >
         <path d="M9 9a2.999 2.999 0 015.923-.673A3 3 0 0113 11.829a1.5 1.5 0 00-1 1.415v1.006m0 3a.375.375 0 100 .75.375.375 0 000-.75h0" />
