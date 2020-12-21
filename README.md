@@ -30,8 +30,23 @@ cd ./src
 npx @svgr/cli ./Icons/stroked/svg --svgo-config '{"plugins": [{"removeViewBox": false}]}' --out-dir ./Icons/stroked/ --template ./Icons/stroked/SVGRTemplate.js --typescript
 ```
 
+
+## Icons
+
+The icons used in this UI Kit are licensed from [Streamline Icons](https://streamlineicons.com/). We are able to provide a limited set in this kit with as per our license agreement. If you wish to extend the icons included in this kit yourself, we highly recommend checking those out if you want to keep a consistent style.
+
+We tend to use the regular weighted icons and process them first to ungroup them. Then we use the above command to process them for inclusion in the UI Kit.
+
+
 ## Image Credits
 
 Some stock photos were used as placeholders in this UI Kit. These were sourced through Unsplash.com and we give credit for the following photographs and their photographers.
 
 Photo by [Van Thanh](https://unsplash.com/@vanthanh2608?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/cafe?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
+
+
+## License
+
+The Scorer UI Kit is released under the MIT license.
+
+Please note however that the icon set included in this software is included under license and remains property of Webalys LLC. These icons can be used only in the context of this open source project. For more information regarding this license, see [Streamline Icons Premium License](https://help.streamlineicons.com/license-premium).
