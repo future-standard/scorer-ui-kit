@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>178E8C6B-5706-42E8-9004-E41011F242E8</title>
+    <g id="Export-Set" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Icon-Export-Set" transform="translate(-60.000000, -330.000000)" stroke="#000000" stroke-width="1.5">
+            <g id="_Master/Icon/Meta/Enabled-State" transform="translate(60.000000, 330.000000)">
+                <path d="M18.376,10.5 L5.626,10.5 C2.93657624,10.4928567 0.758143262,8.31442376 0.751,5.625 L0.751,5.625 C0.758689743,2.93580348 2.93680348,0.757689743 5.626,0.75 L18.376,0.75 C21.0649694,0.758235799 23.2427642,2.93603061 23.251,5.625 L23.251,5.625 C23.2433103,8.31419652 21.0651965,10.4923103 18.376,10.5 Z" id="Path"></path>
+                <path d="M18.376,23.25 L5.626,23.25 C2.93657624,23.2428567 0.758143262,21.0644238 0.751,18.375 L0.751,18.375 C0.758689743,15.6858035 2.93680348,13.5076897 5.626,13.5 L18.376,13.5 C21.0649694,13.5082358 23.2427642,15.6860306 23.251,18.375 L23.251,18.375 C23.2433103,21.0641965 21.0651965,23.2423103 18.376,23.25 L18.376,23.25 Z" id="Path"></path>
+                <circle id="Oval" cx="5.626" cy="5.625" r="1.875"></circle>
+                <circle id="Oval" cx="18.376" cy="18.375" r="1.875"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

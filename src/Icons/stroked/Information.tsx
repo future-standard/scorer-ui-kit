@@ -2,7 +2,13 @@ import * as React from "react";
 
 function SvgInformation(props: ISvgIcons) {
   return (
-    <svg width={props.size} height={props.size} viewBox="0 0 20 20" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.size}
+      height={props.size}
+      viewBox="0 0 20 20"
+      {...props}
+    >
       <g
         fill="none"
         fillRule="evenodd"

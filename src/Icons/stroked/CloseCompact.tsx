@@ -2,7 +2,13 @@ import * as React from "react";
 
 function SvgCloseCompact(props: ISvgIcons) {
   return (
-    <svg width={props.size} height={props.size} viewBox="0 0 24 24" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.size}
+      height={props.size}
+      viewBox="0 0 24 24"
+      {...props}
+    >
       <path
         d="M5 18.999l14-14m0 14l-14-14"
         fill="none"
