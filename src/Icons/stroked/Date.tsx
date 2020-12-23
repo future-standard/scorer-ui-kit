@@ -1,12 +1,12 @@
 import * as React from "react";
 
-function SvgDatePicker(props: ISvgIcons) {
+function SvgDate(props: ISvgIcons) {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
       width={props.size}
       height={props.size}
       viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <g
@@ -18,12 +18,11 @@ function SvgDatePicker(props: ISvgIcons) {
         strokeLinejoin="round"
         vectorEffect={"non-scaling-stroke"}
       >
-        <path d="M8.25 17.25h-6a1.5 1.5 0 01-1.5-1.5v-12a1.5 1.5 0 011.5-1.5h13.5a1.5 1.5 0 011.5 1.5v4.5M.75 6.75h16.5m-12-3v-3m7.5 3v-3" />
-        <circle cx={17.25} cy={17.25} r={6} />
-        <path d="M19.902 17.25H17.25v-2.651" />
+        <rect x={0.752} y={3.75} width={22.5} height={19.5} rx={1.5} />
+        <path d="M.752 9.75h22.5M6.752 6V.75M17.252 6V.75" />
       </g>
     </svg>
   );
 }
 
-export default SvgDatePicker;
+export default SvgDate;
