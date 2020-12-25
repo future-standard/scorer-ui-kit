@@ -15,6 +15,7 @@ import PTZPage  from './pages/PTZPage';
 import LoginPage from './pages/Login';
 import TablePage from './pages/TablePage';
 import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
+import TabsPage from './pages/TabsPage';
 
 
 const App: React.FC<{}> = () => {
@@ -34,6 +35,7 @@ const App: React.FC<{}> = () => {
               <PTZPage/>
             </PTZProvider>
           </Route>
+          <Route path={`/tabs`} exact={true} component={TabsPage}/>
         </Switch>
       </Router>
   )
