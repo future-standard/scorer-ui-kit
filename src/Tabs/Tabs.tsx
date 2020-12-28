@@ -13,10 +13,9 @@ type Props = HTMLAttributes<HTMLDivElement>
 
 const Tabs: React.FC<Props> = ({ children }) => {
   const [selected, setSelected] = useState('');
-  const value = { selected, setSelected };
 
   return (
-    <TabContext.Provider value={value}>
+    <TabContext.Provider value={{ selected, setSelected }}>
       {children}
     </TabContext.Provider>
   );
