@@ -1,5 +1,5 @@
 import React, { useContext, HTMLAttributes, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { TabContext, ContextProps } from './Tabs';
 
 const TabComponent = styled.div`
@@ -10,7 +10,9 @@ const TabComponent = styled.div`
 
 const TabLabel = styled.label<{ active: boolean }>`
   height: 40px;
-  font-family: Monorale;
+  ${({theme}) => css`
+    font-family: ${theme.fontFamily.ui};
+  `}
   font-size: 15px;
   font-weight: ${({ active }) => active ? '600' : '500'};
   letter-spacing: 0.09px;
