@@ -13,7 +13,7 @@ interface OwnProps {
 
 type Props = OwnProps & HTMLAttributes<HTMLDivElement>
 
-const TabList: React.FC<Props> = ({ children, defaultTabId, ...props }) => {
+const TabList: React.FC<Props> = ({ children, defaultTabId}) => {
   const { setSelected }: ContextProps = useContext(TabContext);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const TabList: React.FC<Props> = ({ children, defaultTabId, ...props }) => {
   }, [defaultTabId, setSelected]);
 
   return (
-    <TabListComponent {...props}>
+    <TabListComponent>
       {children}
     </TabListComponent>
   );

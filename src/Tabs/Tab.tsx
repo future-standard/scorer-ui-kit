@@ -29,7 +29,7 @@ interface OwnProps {
 
 type Props = OwnProps & HTMLAttributes<HTMLDivElement>
 
-const Tab: React.FC<Props> = ({ children, tabFor }) => {
+const Tab: React.FC<Props> = ({ children, tabFor, ...props }) => {
   const { selected, setSelected }: ContextProps = useContext(TabContext);
 
   const onChangeTab = useCallback((tabId: string) => {
@@ -37,7 +37,7 @@ const Tab: React.FC<Props> = ({ children, tabFor }) => {
   }, [setSelected]);
 
   return (
-    <TabComponent onClick={() => onChangeTab(tabFor)}>
+    <TabComponent {...props} onClick={() => onChangeTab(tabFor)}>
       <TabLabel active={selected === tabFor}>
         {children}
       </TabLabel>

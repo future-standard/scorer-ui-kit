@@ -11,12 +11,12 @@ interface OwnProps {
 
 type Props = OwnProps & HTMLAttributes<HTMLDivElement>
 
-const TabContent: React.FC<Props> = ({ children, tabId}) => {
+const TabContent: React.FC<Props> = ({ children, tabId, ...props }) => {
   const { selected }: ContextProps = useContext(TabContext);
 
   return (
     selected === tabId ?
-      <Container>
+      <Container {...props}>
         {children}
       </Container> :
       null
