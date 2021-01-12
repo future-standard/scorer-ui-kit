@@ -85,6 +85,14 @@ import {
   Sidebar
 } from './Global';
 
+// Tabs
+import {
+  Tabs,
+  Tab,
+  TabList,
+  TabContent
+} from './Tabs';
+
 export {
   // Theme
   darkTheme,
@@ -158,6 +166,12 @@ export {
   Logo,
   SidebarLinkHeading,
   BackLink,
-  Sidebar
+  Sidebar,
+
+  // Tabs
+  Tabs,
+  Tab,
+  TabList,
+  TabContent
 };
 
