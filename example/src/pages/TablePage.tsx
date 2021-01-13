@@ -26,7 +26,8 @@ const columnConfig : ITableColumnConfig[] = [
     header: 'Created',
     sortable: false,
     cellStyle: 'lowImportance',
-    alignment: 'center'
+    alignment: 'center',
+    hasCopyButton: true
   },
   {
     header: 'Usage',

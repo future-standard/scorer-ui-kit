@@ -11,7 +11,7 @@ const CopyToClipboard = styled.button`
   opacity: 0;
 
   position: absolute;
-  right: -20px;
+  right: 0;
   top: 14px;
   width: 20px;
   height: 20px;
@@ -33,13 +33,12 @@ const CopyToClipboard = styled.button`
 
 `;
 
-const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCellAlignment, hideDivider?: boolean }>`
+const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCellAlignment, hideDivider?: boolean, hasCopyButton?:boolean }>`
   display: table-cell;
   height: 50px;
   vertical-align: middle;
   position: relative;
   line-height: 30px;
-
   font-family: ${p => p.theme.fontFamily.data};
 
   &:hover ${CopyToClipboard}{
@@ -56,9 +55,11 @@ const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCell
 
   a:hover {
     text-decoration: underline;
-
-
   }
+
+  ${({hasCopyButton}) => hasCopyButton && css`
+    padding-right: 20px;
+  `};
 
   ${({hideDivider}) => !hideDivider && css`
     &::after {
@@ -72,7 +73,6 @@ const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCell
       width: 100%;
       bottom: 0px;
       position: absolute;
-
     }
   `}
 `;
@@ -115,7 +115,7 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false
     useCopyToClipboard(copyText);
   }, [useCopyToClipboard]);
 
-  return <CellContainer {...{cellStyle, alignment, hideDivider}}>
+  return <CellContainer {...{cellStyle, alignment, hideDivider, hasCopyButton}}>
     {showStatus ? <StatusBlip {...{status}}></StatusBlip> : null}
     {href ? <a href={href}>{children}</a> : children}
     {showUnit ? <UnitText>{unit}</UnitText> : null}
