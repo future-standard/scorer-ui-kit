@@ -18,13 +18,17 @@ const HeaderRow = styled.div`
   display: table-row;
   height: 50px;
 `;
-const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment }>`
+const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean }>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
   line-height: 20px;
 
   font-family: ${p => p.theme.fontFamily.ui };
+
+  ${({hasCopyButton}) => hasCopyButton && css`
+    padding-right: 20px;
+  `};
 
   ${({theme, alignment}) => alignment ? css`
     ${theme.typography.table.header[alignment]};
@@ -70,8 +74,8 @@ const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback
         {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
 
         {columnConfig.map((column, key) => {
-          const {alignment, header} = column;
-          return <HeaderItem key={key} alignment={alignment}>{header}</HeaderItem>;
+          const {alignment, header, hasCopyButton} = column;
+          return <HeaderItem key={key} alignment={alignment} hasCopyButton={hasCopyButton}>{header}</HeaderItem>;
         })}
       </HeaderRow>
 
