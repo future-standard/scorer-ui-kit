@@ -10,7 +10,52 @@ import './i18n';
 import Fonts from './fonts';
 import Style from './style';
 
-
+//@ts-ignore
+lightTheme.custom.lines['weird'] = {
+  label: {
+      fill: "#fff"
+  },
+  contrastLine: {
+      stroke:  'transparent;'
+  },
+  highlightLine: {
+      stroke:  'transparent;'
+  },
+  grabHandle: {
+    fill: 'transparent;',
+    stroke: 'transparent;'
+  },
+  point:{
+    fill: 'hsla(205deg, 45%, 90%, 100%)',
+  },
+  grabHandleText:{
+    fill: 'transparent'
+  },
+  grabHandleContrast:{
+    fill: 'transparent'
+  },
+  handleBase: {
+    fill: 'transparent'
+  },
+  handleRingLayer: {
+    stroke: 'hsla(205deg, 100%, 89%, 100%);'
+  },
+  handleReactiveFill:{
+    stroke: 'transparent;'
+  },
+  handleReactiveRing:{
+    stroke: 'transparent;'
+  },
+  handleContrastLayer:{
+    stroke: 'transparent;'
+  },
+  stopStart:{
+      stopColor:' hsla(0, 100%, 15%, 35%);'
+  },
+  stopEnd:{
+      stopColor: 'hsla(0, 100%, 15%, 0%);'
+  }
+};
 
 ReactDOM.render(
   <React.StrictMode>

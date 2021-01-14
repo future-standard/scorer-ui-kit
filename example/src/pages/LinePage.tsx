@@ -71,6 +71,30 @@ const Line: React.FC<{}> = () => {
         ],
         readOnly: false,
         styling: "danger"
+      },
+      {
+        name: "Get to the Point",
+        points: [
+          {
+            x: 555,
+            y: 555
+          },
+
+        ],
+        readOnly: false,
+        styling: "danger"
+      },
+      {
+        name: "Weird Point",
+        points: [
+          {
+            x: 777,
+            y: 777
+          },
+
+        ],
+        readOnly: false,
+        styling: 'weird'
       }
     ];
 
@@ -129,6 +153,9 @@ const Line: React.FC<{}> = () => {
           </Label>
           <Label labelText='Show Move Handle' htmlFor='showMoveHandle' >
             <input type='checkbox' name='showMoveHandle' checked={options.showMoveHandle} onChange={toggleOptions('showMoveHandle')}/>
+          </Label>
+          <Label labelText='Show Point' htmlFor='showPoint' >
+            <input type='checkbox' name='showPoint' checked={options.showPoint} onChange={toggleOptions('showPoint')}/>
           </Label>
         </SidebarBox>
         <SidebarBox>

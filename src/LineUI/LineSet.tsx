@@ -2,10 +2,13 @@ import React, { useState, useEffect, useCallback, useContext, useRef } from 'rea
 import HandleUnit from './HandleUnit';
 import LineUnit from './LineUnit';
 import update from 'immutability-helper';
-
-
 import { LineSetContext } from './Contexts';
 import { IPointSet, IDragLineUISharedOptions, IVector2 } from '.';
+import styled from 'styled-components';
+
+const Point = styled.circle<{styling: string}>`
+  fill: ${({theme, styling}) => theme.custom.lines[styling].point.fill};
+`;
 
 interface ILineSetProps {
   lineSetId: number,
@@ -170,6 +173,8 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
     />
   );
 
+  const points = options.showPoint && (lineSetData.points.map(({x,y}, index) => <Point styling={lineSetData.styling||'primary'} key={index} r={2*unit} cx={x} cy={y} />));
+
   const lines = lineSetData.points.map(({x:x1,y:y1}, index) => {
     const {points, name, styling = 'primary'} = lineSetData;
     //nextIndex  index is next Point's index
@@ -202,6 +207,8 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
     <g>
       {lines}
       {handles}
+      {points}
+
     </g>
   );
 };

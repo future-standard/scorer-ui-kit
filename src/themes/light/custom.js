@@ -14,6 +14,9 @@ export const custom = {
           fill: 'hsla(205deg, 45%, 90%, 100%)',
           stroke: 'hsla(205deg, 45%, 100%, 100%)'
       },
+      point:{
+        fill: 'hsla(205deg, 45%, 90%, 100%)',
+      },
       grabHandleContrast:{
           stroke: 'hsla(205deg, 80%, 45%, 100%)'
       },
@@ -58,12 +61,14 @@ export const custom = {
           fill: 'hsla(120deg, 45%, 90%, 100%)',
           stroke: 'hsla(120deg, 45%, 100%, 100%)'
       },
+      point:{
+        fill: 'hsla(120deg, 45%, 90%, 100%)',
+      },
       grabHandleContrast:{
           stroke: 'hsla(120deg, 80%, 45%, 100%)'
       },
       grabHandleText:{
           fill: 'hsla(120deg, 80%, 25%, 100%);'
-
       },
       handleBase: {
           fill: 'hsla(150deg, 100%, 80%, 100%);'
@@ -102,6 +107,9 @@ export const custom = {
           fill: 'hsla(0, 45%, 90%, 100%)',
           stroke: 'hsla(0, 45%, 100%, 100%)'
       },
+      point:{
+        fill: 'hsla(0, 45%, 90%, 100%)',
+      },
       grabHandleText:{
           fill: 'hsla(0, 80%, 25%, 100%);'
       },
@@ -131,4 +139,4 @@ export const custom = {
       }
     }
   }
-}
+};
