@@ -1,17 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import {  text } from "@storybook/addon-knobs";
 import { TextArea } from 'scorer-ui-kit';
 
 const Container = styled.div``;
 
 export default {
-  title: 'Form/Input',
+  title: 'Form/atoms',
   component: TextArea,
   decorators: []
 };
 
-export const TextareaInput = () => {
+const placeholderTxt = text("Placeholder", "Placeholder...");
+
+export const Textarea = () => {
     return <Container>
-      <TextArea></TextArea>
+      <TextArea
+        placeholder = {placeholderTxt}
+      ></TextArea>
     </Container>
 };

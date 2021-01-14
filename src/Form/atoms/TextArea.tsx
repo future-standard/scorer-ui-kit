@@ -1,18 +1,38 @@
-import React from 'react'
-import styled from  'styled-components';
+import React, { TextareaHTMLAttributes } from 'react'
+import styled, { css } from  'styled-components';
 
 const Container =  styled.div``;
 
-const StyledTextarea = styled.textarea``;
+const StyledTextarea = styled.textarea`
+  padding: 0 15px 0 15px;
+  box-sizing: border-box;
+  outline: none;
 
-interface IProps {
-}
+  ${({theme}) => css`
+  font-family: ${theme.fontFamily.data};
+  `};
 
+  ${({theme: {typography}}) => css`
+  ${typography.form.input.value.normal};
+  &::placeholder {
+    ${typography.form.input.placeholder.normal};
+  }
+`};
+`;
 
-const TextArea : React.FC<IProps> = ({children}) => {
+type Props = TextareaHTMLAttributes<HTMLTextAreaElement>
+
+const TextArea : React.FC<Props> = ({
+  placeholder ='',
+  children,
+  ...props
+}) => {
   return (
     <Container>
-      <StyledTextarea>{children}</StyledTextarea>
+      <StyledTextarea
+        placeholder={placeholder}
+        {...props}
+      >{children}</StyledTextarea>
     </Container>
   );
 }
