@@ -19,7 +19,8 @@ import {
   Switch,
   Checkbox,
   PasswordField,
-  TextField
+  TextField,
+  TextArea,
 } from './Form';
 
 // Components - Filter
@@ -120,6 +121,7 @@ export {
   Checkbox,
   PasswordField,
   TextField,
+  TextArea,
 
   // Filters
   DatePicker,
