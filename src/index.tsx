@@ -21,6 +21,7 @@ import {
   PasswordField,
   TextField,
   TextArea,
+  TextareaField,
 } from './Form';
 
 // Components - Filter
@@ -122,6 +123,7 @@ export {
   PasswordField,
   TextField,
   TextArea,
+  TextareaField,
 
   // Filters
   DatePicker,
@@ -176,4 +178,3 @@ export {
   TabList,
   TabContent
 };
-

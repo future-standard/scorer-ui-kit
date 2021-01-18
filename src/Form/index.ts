@@ -11,6 +11,7 @@ import Checkbox from './atoms/Checkbox';
 import TextArea from './atoms/TextArea';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
+import TextareaField from './molecules/TextareaField';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 
@@ -30,6 +31,7 @@ export {
     PasswordField,
     TextField,
     TextArea,
+    TextareaField,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
