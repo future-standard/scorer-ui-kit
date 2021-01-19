@@ -13,7 +13,7 @@ interface OwnProps {
 
 type Props = OwnProps & TextareaHTMLAttributes<HTMLTextAreaElement>
 
-const TextareaField : React.FC<Props> = ({
+const TextAreaField : React.FC<Props> = ({
   name,
   label,
   fieldState='default',
@@ -28,4 +28,4 @@ const TextareaField : React.FC<Props> = ({
   );
 };
 
-export default TextareaField;
+export default TextAreaField;

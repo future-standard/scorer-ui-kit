@@ -7,13 +7,13 @@ import { TypeFieldState } from '..';
 const FeedbackIcon = styled.div`
   flex: 0 0 40px;
   width: 40px;
-  padding-top:6px;
+  padding-top: 4px;
   display: flex;
   justify-content:center;
   align-items:center;
 `;
 
-const StyledTextarea = styled.textarea<{ fieldState : TypeFieldState}>`
+const StyledTextArea = styled.textarea<{ fieldState : TypeFieldState}>`
 
 ${({theme, fieldState}) => css`
   font-family: ${theme.fontFamily.data};
@@ -59,13 +59,16 @@ const FeedbackMessage = styled.div`
 `;
 
 const Container =  styled.div<{ fieldState: string }>`
-  ${StyledTextarea}{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  ${StyledTextArea}{
     ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal};
 
     &:focus {}
 
     ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
-      border-top-right-radius: 0px;
+      border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
     `}
   }
@@ -118,12 +121,12 @@ const TextArea : React.FC<Props> = ({
 
   return (
     <Container fieldState={fieldState || 'default'}>
-      <StyledTextarea
+      <StyledTextArea
         fieldState={fieldState || 'default'} 
         placeholder={placeholder}
         disabled={fieldState === 'disabled' || fieldState === 'processing'}
         {...props}
-      >{children}</StyledTextarea>
+      >{children}</StyledTextArea>
       { fieldState && (
         <FeedbackContainer>
           <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
