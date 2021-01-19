@@ -173,7 +173,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
     />
   );
 
-  const points = options.showPoint && (lineSetData.points.map(({x,y}, index) => <Point styling={lineSetData.styling||'primary'} key={index} r={2*unit} cx={x} cy={y} />));
+  const points = options.showPoint && (lineSetData.points.map(({x,y}, index) => <Point styling={lineSetData.styling||'primary'} key={index} r={unit} cx={x} cy={y} />));
 
   const lines = lineSetData.points.map(({x:x1,y:y1}, index) => {
     const {points, name, styling = 'primary'} = lineSetData;
