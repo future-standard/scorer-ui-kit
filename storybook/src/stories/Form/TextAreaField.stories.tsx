@@ -13,6 +13,8 @@ export default {
   decorators: []
 };
 
+
+export const TextareaField = () => {
   const fieldName = text("Textarea Name", "example_area");
   const fieldLabel = text("Label", "Example Textarea");
   const fieldFeedback = text("Feedback", "This is a feedback message.");
@@ -26,7 +28,6 @@ export default {
       Processing: 'processing'
     }, "default");
 
-export const TextareaField = () => {
     return <Container>
       <TextAreaField
         name={fieldName}
