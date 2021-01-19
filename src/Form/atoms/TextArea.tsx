@@ -7,10 +7,10 @@ import { TypeFieldState } from '..';
 const FeedbackIcon = styled.div`
   flex: 0 0 40px;
   width: 40px;
-  padding-top: 4px;
   display: flex;
   justify-content:center;
   align-items:center;
+  padding-top: 2px;
 `;
 
 const StyledTextArea = styled.textarea<{ fieldState : TypeFieldState}>`
@@ -20,7 +20,7 @@ ${({theme, fieldState}) => css`
   border: 1px solid ${theme.styles.form.input[fieldState].normal.borderColor};
 `};
 
-  padding: 0 15px 0 15px;
+  padding: 8px 15px;
   box-sizing: border-box;
   outline: none;
   height: 100%;
@@ -37,7 +37,7 @@ ${({theme, fieldState}) => css`
 
 const FeedbackContainer = styled.div`
   flex-shrink: 0;
-
+  padding: 8px 0;
   background-color: transparent;
   ${({theme}) => css`
     border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
