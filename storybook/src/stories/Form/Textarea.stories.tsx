@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {  text, select } from "@storybook/addon-knobs";
-import {TextareaField} from 'scorer-ui-kit';
+import { TextAreaField } from 'scorer-ui-kit';
 
 const Container = styled.div`
   margin: 20px;
@@ -9,7 +9,7 @@ const Container = styled.div`
 
 export default {
   title: 'Form/molecules',
-  component: TextareaField,
+  component: TextAreaField,
   decorators: []
 };
 
@@ -26,14 +26,14 @@ export default {
       Processing: 'processing'
     }, "default");
 
-export const TextAreaField = () => {
+export const TextareaField = () => {
     return <Container>
-      <TextareaField
+      <TextAreaField
         name={fieldName}
         label={fieldLabel}
         placeholder = {fieldPlaceholder}
         feedbackMessage = {fieldFeedback}
-        fieldState="required"
-      ></TextareaField>
+        fieldState={currentState}
+      ></TextAreaField>
     </Container>
 };
