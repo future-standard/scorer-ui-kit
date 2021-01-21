@@ -81,10 +81,6 @@ const Container =  styled.div<{ fieldState: string }>`
       display:none;
     `}
   }
-
-  &:focus-within ${FeedbackContainer} {
-    ${({theme, fieldState}) => theme.styles.form.input[fieldState].focused};
-  }
 `;
 
 interface OwnProps {
