@@ -65,7 +65,9 @@ const Container =  styled.div<{ fieldState: string }>`
   ${StyledTextArea}{
     ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal};
 
-    &:focus {}
+    &:focus {
+      box-shadow: 0px 3px 7px 0px hsla(207, 65.8%, 31%, 0.078);
+    }
 
     ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
       border-bottom-left-radius: 0px;
@@ -81,6 +83,23 @@ const Container =  styled.div<{ fieldState: string }>`
       display:none;
     `}
   }
+
+  &:focus-within ${FeedbackContainer} {
+    ${({ fieldState }) =>
+
+    fieldState === 'required' ? `
+      box-shadow: 0px 3px 7px 0px hsla(207, 67.8%, 35.3%, 0.071);
+    ` : null};
+
+    ${({ fieldState }) => fieldState === 'valid' ? `
+      box-shadow: 0px 3px 5px 0px hsla(120, 76.6%, 15.1%, 0.071);
+    ` : null};
+
+    ${({ fieldState }) => fieldState === 'invalid' ? `
+      box-shadow: 0px 3px 7px 0px hsla(0, 100%, 50%, 0.102);
+    ` : null};
+  }
+
 `;
 
 interface OwnProps {
