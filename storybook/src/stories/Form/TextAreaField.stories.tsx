@@ -14,9 +14,9 @@ export default {
 };
 
 
-export const TextareaField = () => {
-  const fieldName = text("Textarea Name", "example_area");
-  const fieldLabel = text("Label", "Example Textarea");
+export const _TextAreaField = () => {
+  const fieldName = text("Textarea Name", "example_texarea");
+  const fieldLabel = text("Label", "Textarea Example");
   const fieldFeedback = text("Feedback", "This is a feedback message.");
   const fieldPlaceholder = text("Placeholder", "Placeholder...");
   const currentState = select("State",
