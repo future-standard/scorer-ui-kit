@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 export default {
-  title: 'Form/molecules',
+  title: 'Form/Input',
   component: TextAreaField,
   decorators: []
 };
