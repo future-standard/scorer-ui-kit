@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import styled from 'styled-components'
+import React, { useState, useEffect } from 'react';
+import styled, { css } from 'styled-components'
 import Icon from '../../Icons/Icon';
-import {AlertType} from '..'
+import { AlertType } from '..'
+import { resetButtonStyles } from '../../common/index';
 
 const Container = styled.div<{type: AlertType}>`
   height: 50px;
@@ -22,6 +23,7 @@ const Container = styled.div<{type: AlertType}>`
   ${({theme}) => theme.typography.feedbackBar.message };
 
 `;
+
 export const IconNames = {
   error: 'Critical',
   warning: 'BigWarning',
@@ -30,31 +32,75 @@ export const IconNames = {
   neutral: 'Information'
 }
 
-const IconButton = styled.div``;
+const IconButton = styled.div<{selected?: boolean}>`
+  ${resetButtonStyles};
+  ${({selected=false}) => selected && css`
+    border-bottom: 5px solid hsl(207, 80%, 64%);
+  `}
+  &:focus {
+    outline: none;
+  }
+ 
+  &:hover {
+    opacity: .8;
+  }
+  &:active:enabled {
+    opacity: .9;
+  }
+  &:disabled {
+    opacity: 0.1;
+  }
+`;
 
-export interface IAlert {
-  alertMessage?: string;
-  alertType: AlertType;
-}
+const TextButton = styled.button`
+  ${resetButtonStyles};
+  font-family: ${({ theme }) => theme.fontFamily.ui };
+  ${({theme}) => theme.typography.feedbackBar.message };
+  font-weight: 700;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover:enabled {
+    ${({theme}) => theme && css`
+      transform: scale(1.1);
+      opacity: 1;
+      transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
+    `}
+  }
+  &:active:enabled {
+    opacity: .9;
+  }
+  &:disabled {
+    opacity: 0.1;
+  }
+`;
 
 interface Props {
   type?: AlertType
   message?: string;
+  actionText?: string;
 }
 
-const Notification : React.FC<Props> = ({type ='info', message}) => {
+const Notification : React.FC<Props> = ({type ='info', message, actionText}) => {
   const [dismiss, setDismiss] = useState(false);
 
   useEffect(()=>{
     setDismiss(false);
   },[message]);
   
-  return(
-    <Container type={type}>
+  return( (message && !dismiss)
+  ? <Container type={type}>
       <Icon icon={IconNames[type]} color='inverse' />
       {message}
-      <IconButton onClick={() => setDismiss(true)}><Icon icon='CloseCompact' color='inverse' /></IconButton>
+      {actionText
+        ? <TextButton onClick={() => setDismiss(true)}>{actionText} </TextButton>
+        : <IconButton onClick={() => setDismiss(true)}>
+            <Icon icon='CloseCompact' color='inverse' />
+          </IconButton>}
     </Container>
+  : null
   );
 }
 

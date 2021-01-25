@@ -16,14 +16,15 @@ export default {
 
 export const _Notification = () => {
 
-  const message = text("Message", 'This notification requires you take action.');
+  const message = text("Message", 'This notification requires you to take action.');
   const type = select("Type", { Error: 'error', Warning: 'warning', Info: 'info', Success:'success', Neutral:'neutral'}, 'error');
-
+  const actionText = text("Text action btn", '');
   return(
     <Container>
       <Notification
         message = {message}
         type = {type}
+        actionText = {actionText}
       ></Notification>
     </Container>
   );
