@@ -1,46 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import React, {useState, useEffect} from 'react';
+import styled from 'styled-components'
 import Icon from '../../Icons/Icon';
-import { AlertType } from '..'
-import { resetButtonStyles } from '../../common/index';
-
-const IconButton = styled.button<{selected?: boolean}>`
-  ${resetButtonStyles};
-  ${({selected=false}) => selected && css`
-    border-bottom: 5px solid hsl(207, 80%, 64%);
-  `}
-  &:focus {
-    outline: none;
-  }
-
-  &:hover:enabled {
-    opacity: .8;
-  }
-  &:active:enabled {
-    opacity: .9;
-  }
-  &:disabled {
-    opacity: 0.1;
-  }
-`;
+import {AlertType} from '..'
 
 const Container = styled.div<{type: AlertType}>`
   height: 50px;
-  border-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
   padding: 0 14px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto
 
   font-family: ${({ theme }) => theme.fontFamily.ui };
   ${({type, theme}) => theme.styles.feedbackBar[type] };
   ${({theme}) => theme.typography.feedbackBar.message };
 
 `;
-
-const IconNames = {
+export const IconNames = {
   error: 'Critical',
   warning: 'BigWarning',
   success: 'Success',
@@ -48,10 +30,8 @@ const IconNames = {
   neutral: 'Information'
 }
 
-const MessageBox = styled.div`
-  margin-left: 15px;
-  flex: 1;
-`;
+const IconButton = styled.div``;
+
 export interface IAlert {
   alertMessage?: string;
   alertType: AlertType;
@@ -61,24 +41,21 @@ interface Props {
   type?: AlertType
   message?: string;
 }
-const AlertBar: React.FC<Props> = ({type='info', message}) => {
+
+const Notification : React.FC<Props> = ({type ='info', message}) => {
   const [dismiss, setDismiss] = useState(false);
 
   useEffect(()=>{
     setDismiss(false);
   },[message]);
-
-
-  return ( (message && !dismiss)?
+  
+  return(
     <Container type={type}>
       <Icon icon={IconNames[type]} color='inverse' />
-      <MessageBox>{message}</MessageBox>
-
+      {message}
       <IconButton onClick={() => setDismiss(true)}><Icon icon='CloseCompact' color='inverse' /></IconButton>
     </Container>
-    :
-    null
   );
-};
+}
 
-export default AlertBar;
+export default Notification;

@@ -3,7 +3,12 @@
 import lightTheme from './themes/light/light';
 import darkTheme from './themes/dark';
 
-import AlertBar from './Alerts/atom/AlertBar';
+
+//Components Alerts
+import {
+  AlertBar,
+  Notification
+}from './Alerts';
 
 // Components - Form
 import {
@@ -100,7 +105,9 @@ export {
   darkTheme,
   lightTheme,
 
+  // Alerts
   AlertBar,
+  Notification,
 
   // LineUI
   LineUI,
