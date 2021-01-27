@@ -114,11 +114,12 @@ const Notification : React.FC<Props> = ({type ='info', message, autoDismiss = fa
   },[message]);
 
   const handleDismiss = useCallback(() => {
+
     if(actionHandler) {
       actionHandler();
     }
     setSlideUp(true);
-  },[])
+  },[actionHandler])
 
   const animationEndTest = () => {
     if(slideUp){
