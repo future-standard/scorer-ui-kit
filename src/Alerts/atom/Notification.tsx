@@ -1,27 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled, { css, keyframes } from 'styled-components'
 import Icon from '../../Icons/Icon';
 import { AlertType } from '..'
 import { resetButtonStyles } from '../../common/index';
-
-  // Is there a better way to link speed with css animation?
-  const TIMEOUT_SPEED = {
-    fast: 175,
-    normal: 350,
-    slow: 700
-  }
 
 const closeAnimation = keyframes`
   0% {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-1000%);
+    transform: translateY(-100%);
   }
 `;
 
 const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
-  height: 50px;
+  min-height: 50px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   display: flex;
@@ -29,11 +22,9 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   align-items: center;
   justify-content: space-between;
   padding: 0 14px;
-  position: absolute;
+  max-width: 900px;
+  position: fixed;  
   top: 0;
-  left: 0;
-  right: 0;
-  margin: auto
   z-index: 999;
 
   font-family: ${({ theme }) => theme.fontFamily.ui };
@@ -41,7 +32,7 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   ${({theme}) => theme.typography.feedbackBar.message };
 
   ${({theme, isClosing}) => isClosing && css`
-    animation: ${closeAnimation} ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
+    animation: ${closeAnimation} ${theme.animation.speed.slower} ${theme.animation.easing.primary.easeInOut};
     `
   };
 
@@ -88,7 +79,7 @@ const TextButton = styled.button`
   &:hover:enabled {
     ${({theme}) => theme && css`
       opacity: .8;
-      transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
+      transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.inOut};
     `}
   }
   &:active:enabled {
@@ -99,14 +90,18 @@ const TextButton = styled.button`
   }
 `;
 
+const MainMessage = styled.div`
+  padding: 12px;
+`;
+
 interface Props {
   type?: AlertType
   message?: string;
-  actionText?: string;
+  actionTextButton?: string;
   actionHandler?: () => void;
 }
 
-const Notification : React.FC<Props> = ({type ='info', message, actionText, actionHandler}) => {
+const Notification : React.FC<Props> = ({type ='info', message, actionTextButton, actionHandler}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
 
@@ -115,23 +110,25 @@ const Notification : React.FC<Props> = ({type ='info', message, actionText, acti
     setSlideUp(false);
   },[message]);
 
-  const handleDissmiss = () => {
+  const handleDissmiss = useCallback(() => {
     if(actionHandler) {
       actionHandler();
     }
     setSlideUp(true);
-    setTimeout(() =>  {
+  },[])
+
+  const animationEndTest = () => {
+    if(slideUp){
       setDismiss(true);
-      console.log("executed");
-    }, TIMEOUT_SPEED.slow)
+    }
   }
   
   return( (message && !dismiss)
-  ? <Container type={type} isClosing={slideUp}>
+  ? <Container type={type} isClosing={slideUp} onAnimationEnd={animationEndTest}>
       <Icon icon={IconNames[type]} color='inverse' />
-      {message}
-      {actionText
-        ? <TextButton onClick={() => handleDissmiss()}>{actionText} </TextButton>
+      <MainMessage>{message}</MainMessage>
+      {actionTextButton
+        ? <TextButton onClick={() => handleDissmiss()}>{actionTextButton} </TextButton>
         : <IconButton onClick={() => handleDissmiss()}>
             <Icon icon='CloseCompact' color='inverse' />
           </IconButton>}
