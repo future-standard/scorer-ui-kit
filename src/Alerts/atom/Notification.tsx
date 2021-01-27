@@ -6,10 +6,10 @@ import { resetButtonStyles } from '../../common/index';
 
 const closeAnimation = keyframes`
   0% {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
   100% {
-    transform: translateY(-100%);
+    transform: translate(-50%, -100%);
   }
 `;
 
@@ -25,6 +25,8 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   max-width: 900px;
   position: fixed;  
   top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 999;
 
   font-family: ${({ theme }) => theme.fontFamily.ui };
@@ -97,11 +99,12 @@ const MainMessage = styled.div`
 interface Props {
   type?: AlertType
   message?: string;
+  autoDismiss?: boolean;
   actionTextButton?: string;
   actionHandler?: () => void;
 }
 
-const Notification : React.FC<Props> = ({type ='info', message, actionTextButton, actionHandler}) => {
+const Notification : React.FC<Props> = ({type ='info', message, autoDismiss = false, actionTextButton, actionHandler}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
 
@@ -110,7 +113,7 @@ const Notification : React.FC<Props> = ({type ='info', message, actionTextButton
     setSlideUp(false);
   },[message]);
 
-  const handleDissmiss = useCallback(() => {
+  const handleDismiss = useCallback(() => {
     if(actionHandler) {
       actionHandler();
     }
@@ -122,14 +125,23 @@ const Notification : React.FC<Props> = ({type ='info', message, actionTextButton
       setDismiss(true);
     }
   }
+
+  // https://ux.stackexchange.com/questions/85882/for-how-long-should-alerts-be-displayed
+  useEffect(() => {
+    if(autoDismiss) {
+      setTimeout( () => {
+        handleDismiss();
+      }, message ? (message.length * 50) : 1000);
+    }
+  },[autoDismiss])
   
   return( (message && !dismiss)
   ? <Container type={type} isClosing={slideUp} onAnimationEnd={animationEndTest}>
       <Icon icon={IconNames[type]} color='inverse' />
       <MainMessage>{message}</MainMessage>
       {actionTextButton
-        ? <TextButton onClick={() => handleDissmiss()}>{actionTextButton} </TextButton>
-        : <IconButton onClick={() => handleDissmiss()}>
+        ? <TextButton onClick={() => handleDismiss()}>{actionTextButton} </TextButton>
+        : <IconButton onClick={() => handleDismiss()}>
             <Icon icon='CloseCompact' color='inverse' />
           </IconButton>}
     </Container>
