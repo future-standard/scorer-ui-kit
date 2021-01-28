@@ -22,7 +22,7 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   align-items: center;
   justify-content: space-between;
   padding: 0 14px;
-  max-width: 900px;
+  width: 900px; 
   position: fixed;  
   top: 0;
   left: 50%;
@@ -93,7 +93,8 @@ const TextButton = styled.button`
 `;
 
 const MainMessage = styled.div`
-  padding: 12px;
+  padding: 12px 6px 12px 12px;
+  line-height: 20px;
 `;
 
 interface Props {
@@ -127,12 +128,11 @@ const Notification : React.FC<Props> = ({type ='info', message, autoDismiss = fa
     }
   }
 
-  // https://ux.stackexchange.com/questions/85882/for-how-long-should-alerts-be-displayed
   useEffect(() => {
     if(autoDismiss) {
       setTimeout( () => {
         handleDismiss();
-      }, message ? (message.length * 50) : 1000);
+      }, 7000);
     }
   },[autoDismiss])
   

@@ -1,4 +1,3 @@
-import { type } from 'os';
 import AlertBar from './atom/AlertBar';
 import Notification from './atom/Notification';
 
