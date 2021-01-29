@@ -4,6 +4,15 @@ import Icon from '../../Icons/Icon';
 import { AlertType } from '..'
 import { resetButtonStyles } from '../../common/index';
 
+const initAnimation = keyframes`
+  0% {
+    transform: translate(-50%, -100%);
+  }
+  100% {
+    transform: translate(-50%, 0%);
+  }
+`;
+
 const closeAnimation = keyframes`
   0% {
     transform: translate(-50%, 0);
@@ -32,6 +41,11 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   font-family: ${({ theme }) => theme.fontFamily.ui };
   ${({type, theme}) => theme.styles.feedbackBar[type] };
   ${({theme}) => theme.typography.feedbackBar.message };
+
+  ${({theme}) => css`
+    animation: ${initAnimation} ${theme.animation.speed.slower} ${theme.animation.easing.primary.easeInOut};
+    `
+  };
 
   ${({theme, isClosing}) => isClosing && css`
     animation: ${closeAnimation} ${theme.animation.speed.slower} ${theme.animation.easing.primary.easeInOut};
