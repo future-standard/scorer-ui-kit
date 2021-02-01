@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ReactDom from 'react-dom';
 import styled, { css, keyframes } from 'styled-components'
 import Icon from '../../Icons/Icon';
 import { AlertType } from '..'
@@ -51,7 +52,7 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
     animation: ${closeAnimation} ${theme.animation.speed.slower} ${theme.animation.easing.primary.easeInOut};
     `
   };
-
+  
 `;
 
 export const IconNames = {
@@ -111,15 +112,15 @@ const MainMessage = styled.div`
   line-height: 20px;
 `;
 
-interface Props {
-  type?: AlertType
-  message?: string;
-  autoDismiss?: boolean;
+export interface INotificationProps {
+  type: AlertType
+  message: string;
   actionTextButton?: string;
-  actionHandler?: () => void;
+  closeCallback?: () => void;
+  autoDismiss?: boolean;
 }
 
-const Notification : React.FC<Props> = ({type ='info', message, autoDismiss = false, actionTextButton, actionHandler}) => {
+const Notification : React.FC<INotificationProps> = ({type ='info', message, autoDismiss = false, actionTextButton, closeCallback}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
 
@@ -130,11 +131,11 @@ const Notification : React.FC<Props> = ({type ='info', message, autoDismiss = fa
 
   const handleDismiss = useCallback(() => {
 
-    if(actionHandler) {
-      actionHandler();
+    if(closeCallback) {
+      closeCallback();
     }
     setSlideUp(true);
-  },[actionHandler])
+  },[closeCallback])
 
   const animationEndTest = () => {
     if(slideUp){
@@ -151,7 +152,7 @@ const Notification : React.FC<Props> = ({type ='info', message, autoDismiss = fa
   },[autoDismiss])
   
   return( (message && !dismiss)
-  ? <Container type={type} isClosing={slideUp} onAnimationEnd={animationEndTest}>
+  ? ReactDom.createPortal(<Container type={type} isClosing={slideUp} onAnimationEnd={animationEndTest}>
       <Icon icon={IconNames[type]} color='inverse' />
       <MainMessage>{message}</MainMessage>
       {actionTextButton
@@ -160,6 +161,7 @@ const Notification : React.FC<Props> = ({type ='info', message, autoDismiss = fa
             <Icon icon='CloseCompact' color='inverse' />
           </IconButton>}
     </Container>
+    , document.body)
   : null
   );
 }

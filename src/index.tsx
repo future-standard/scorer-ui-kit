@@ -65,6 +65,13 @@ import {
   PTZContext
 } from './PTZControl';
 
+// context
+import {
+  NotificationProvider,
+  useNotification
+} from './Alerts';
+
+
 // Other
 import {
   useInterval,
@@ -183,5 +190,9 @@ export {
   Tabs,
   Tab,
   TabList,
-  TabContent
+  TabContent,
+
+  //Context
+  NotificationProvider,
+  useNotification
 };
