@@ -68,7 +68,7 @@ import {
 // context
 import {
   NotificationProvider,
-  useNotification
+  NotificationContext
 } from './Alerts';
 
 
@@ -194,5 +194,5 @@ export {
 
   //Context
   NotificationProvider,
-  useNotification
+  NotificationContext
 };

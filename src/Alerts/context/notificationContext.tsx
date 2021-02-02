@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Notification, { INotificationProps } from '../atom/Notification';
 
-type NotificationContextType = {
+export type NotificationContextType = {
   notificationValues : INotificationProps,
   sendNotification: (newNotification : INotificationProps) => void;
 };
@@ -14,10 +14,10 @@ const defaultProps : INotificationProps = {
   autoDismiss: false,
 };
 
-const defaultContext: NotificationContextType = {
-  notificationValues: defaultProps,
-  sendNotification : () => console.log("Yes, I'm Calling the context, but the default one :("),
-}
+// const defaultContext: NotificationContextType = {
+//   notificationValues: defaultProps,
+//   sendNotification : () => console.log("Yes, I'm Calling the context, but the default one :("),
+// }
 
 /**
  * A way to create empty context with typescript
@@ -33,7 +33,7 @@ const defaultContext: NotificationContextType = {
 //   return [useCtx, ctx.Provider] as const;
 // }
 
-const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
+let NotificationContext = React.createContext<Partial<NotificationContextType>>({});
 
 
 const NotificationProvider : React.FC = ({ children }) => {
@@ -74,4 +74,4 @@ const NotificationProvider : React.FC = ({ children }) => {
 };
 const useNotification = () => React.useContext(NotificationContext)
 
-export { useNotification, NotificationProvider };
+export { NotificationProvider, NotificationContext};
