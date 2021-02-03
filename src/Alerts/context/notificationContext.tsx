@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Notification, { INotificationProps } from '../atom/Notification';
 
 export type NotificationContextType = {
-  notificationValues : INotificationProps,
   sendNotification: (newNotification : INotificationProps) => void;
 };
 
@@ -15,57 +14,53 @@ const defaultProps : INotificationProps = {
 };
 
 const defaultContext: NotificationContextType = {
-  notificationValues: defaultProps,
-  sendNotification : () => console.log("Yes, I'm Calling the context, but the default one :("),
+  sendNotification : () => console.log("This is default Notification context and should not appear"),
 }
 
-/**
- * A way to create empty context with typescript
- * https://www.carlrippon.com/react-context-with-typescript-p4/
- */
-// export function createCtx<ContextType>() {
-//   const ctx = React.createContext<ContextType | undefined>({undefined});
-//   function useCtx() {
-//     const c = React.useContext(ctx);
-//     if (!c) throw new Error("useCtx must be inside a Provider with a value");
-//     return c;
-//   }
-//   return [useCtx, ctx.Provider] as const;
-// }
 const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
-
 
 const NotificationProvider : React.FC = ({ children }) => {
 
-    const [notificationProps, setNotificationProps] = useState<INotificationProps>(defaultProps);
-
+    const [notificationList, setNotificationList] = useState<INotificationProps[]>([])
+    const [activeNotification, setActiveNotification] = useState<INotificationProps>(defaultProps);
 
     const sendNotification = (newNotification: INotificationProps ) => {
 
-      console.log("arrived at context");
-      const updateNotification : INotificationProps = {
+      console.log("arrived at context", newNotification.message);
+      const validNotification : INotificationProps = {
         message : newNotification.message,
         type :  newNotification.type,
       }
 
       if(newNotification.actionTextButton) {
-        updateNotification.actionTextButton = newNotification.actionTextButton;
+        validNotification.actionTextButton = newNotification.actionTextButton;
       }
 
-      if(newNotification.closeCallback) {
-        updateNotification.closeCallback = newNotification.closeCallback;
+      if(newNotification.onTextButtonClick) {
+        validNotification.onTextButtonClick = newNotification.onTextButtonClick;
       }
+
+      // Adds send next notification callback
+        if(newNotification.closeCallback) {
+          validNotification.closeCallback = newNotification.closeCallback
+        }
 
       if(newNotification.autoDismiss) {
-        updateNotification.autoDismiss = newNotification.autoDismiss;
+        validNotification.autoDismiss = newNotification.autoDismiss;
       }
 
-      setNotificationProps(updateNotification)
+      setNotificationList([...notificationList, validNotification]);
     };
 
+    const renderNotifications = () => (
+      notificationList.map((notificationSettings, index) => {
+        return <Notification key={`notification-${index}`} {...notificationSettings} />
+      })
+    );
+
   return (
-    <NotificationContext.Provider value={{notificationValues: notificationProps, sendNotification}}>
-      <Notification {...notificationProps} />
+    <NotificationContext.Provider value={{sendNotification}}>
+        {renderNotifications()}
         {children}
     </NotificationContext.Provider>
   );

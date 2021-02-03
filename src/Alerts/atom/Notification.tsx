@@ -116,11 +116,12 @@ export interface INotificationProps {
   type: AlertType
   message: string;
   actionTextButton?: string;
+  onTextButtonClick?: () => void;
   closeCallback?: () => void;
   autoDismiss?: boolean;
 }
 
-const Notification : React.FC<INotificationProps> = ({type ='info', message, autoDismiss = false, actionTextButton, closeCallback}) => {
+const Notification : React.FC<INotificationProps> = ({type ='info', message, autoDismiss = false, actionTextButton, closeCallback, onTextButtonClick}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
 
@@ -130,18 +131,22 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, aut
   },[message]);
 
   const handleDismiss = useCallback(() => {
+    if(onTextButtonClick) {
+      onTextButtonClick();
+    }
 
     if(closeCallback) {
       closeCallback();
     }
-    setSlideUp(true);
-  },[closeCallback])
 
-  const animationEndTest = () => {
+    setSlideUp(true);
+  },[onTextButtonClick, closeCallback])
+
+  const animationEnded = useCallback(() => {
     if(slideUp){
       setDismiss(true);
     }
-  }
+  }, [slideUp])
 
   useEffect(() => {
     if(autoDismiss) {
@@ -152,7 +157,7 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, aut
   },[autoDismiss])
   
   return( (message && !dismiss)
-  ? ReactDom.createPortal(<Container type={type} isClosing={slideUp} onAnimationEnd={animationEndTest}>
+  ? ReactDom.createPortal(<Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>
       <Icon icon={IconNames[type]} color='inverse' />
       <MainMessage>{message}</MainMessage>
       {actionTextButton

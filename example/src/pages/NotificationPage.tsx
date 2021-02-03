@@ -19,7 +19,11 @@ const NotificationPage : React.FC = ({}) => {
     console.log('I have succesfully deliver the message mate');
   }
 
-  const redirectAtClose = () => {
+  const processAtClose2 = () => {
+    console.log('I have tell the user about that error');
+  }
+
+  const openDocumentation = () => {
     window.open('https://nihongoipsum.com/', '_blank');
   }
 
@@ -33,13 +37,13 @@ const NotificationPage : React.FC = ({}) => {
     type: 'warning',
     message: 'Those settings might be very expensive. You can learn about different settings',
     actionTextButton: 'SHOW DOCUMENTATION',
-    closeCallback: () => redirectAtClose(),
+    onTextButtonClick: () => openDocumentation(),
   }
 
   const notiErrorSettings : INotificationProps = {
     type: 'error',
     message: 'There was a problem starting that process consult support',
-    closeCallback: () => processAtClose(),
+    closeCallback: () => processAtClose2(),
   }
 
   const notiSucessSettings : INotificationProps = {
@@ -48,17 +52,14 @@ const NotificationPage : React.FC = ({}) => {
     autoDismiss: true,
   }
 
-  const notiNeutralSettings : INotificationProps = {
-    type: 'neutral',
-    message: 'Try our new pinaple pizza',
-    closeCallback: () => processAtClose(),
-  }
-
 
   return(
     <Container>
       <Button
-        onClick = {() => sendNotification(notiInfoSettings)}
+        onClick = {() => {
+          sendNotification(notiInfoSettings)
+        }
+      }
       >Send information notification</Button>
             <Button
         onClick = {() => sendNotification(notiSucessSettings)}
