@@ -16,6 +16,7 @@ import LoginPage from './pages/Login';
 import TablePage from './pages/TablePage';
 import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import TabsPage from './pages/TabsPage';
+import NotificationPage from './pages/NotificationPage';
 
 
 const App: React.FC<{}> = () => {
@@ -30,6 +31,7 @@ const App: React.FC<{}> = () => {
           <Route path={`/forms`} exact={true} component={FormPage}/>
           <Route path={`/table`} exact={true} component={TablePage}/>
           <Route path={`/customdrawer`} exact={true} component={CustomUserDrawerPage}/>
+          <Route path={`/notification`} exact={true} component={NotificationPage} />
           <Route path={`/ptz`} exact={true}>
             <PTZProvider socketUrl='ws://localhost/wsapp/' imageRefresh={2000}>
               <PTZPage/>
