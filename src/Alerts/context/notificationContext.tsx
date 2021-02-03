@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import Notification, { INotificationProps } from '../atom/Notification';
 
 export type NotificationContextType = {
@@ -14,10 +14,10 @@ const defaultProps : INotificationProps = {
   autoDismiss: false,
 };
 
-// const defaultContext: NotificationContextType = {
-//   notificationValues: defaultProps,
-//   sendNotification : () => console.log("Yes, I'm Calling the context, but the default one :("),
-// }
+const defaultContext: NotificationContextType = {
+  notificationValues: defaultProps,
+  sendNotification : () => console.log("Yes, I'm Calling the context, but the default one :("),
+}
 
 /**
  * A way to create empty context with typescript
@@ -32,8 +32,7 @@ const defaultProps : INotificationProps = {
 //   }
 //   return [useCtx, ctx.Provider] as const;
 // }
-
-let NotificationContext = React.createContext<Partial<NotificationContextType>>({});
+const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
 
 
 const NotificationProvider : React.FC = ({ children }) => {
@@ -41,7 +40,7 @@ const NotificationProvider : React.FC = ({ children }) => {
     const [notificationProps, setNotificationProps] = useState<INotificationProps>(defaultProps);
 
 
-    const sendNotification = useCallback((newNotification: INotificationProps ) => {
+    const sendNotification = (newNotification: INotificationProps ) => {
 
       console.log("arrived at context");
       const updateNotification : INotificationProps = {
@@ -62,7 +61,7 @@ const NotificationProvider : React.FC = ({ children }) => {
       }
 
       setNotificationProps(updateNotification)
-    }, [])
+    };
 
   return (
     <NotificationContext.Provider value={{notificationValues: notificationProps, sendNotification}}>
@@ -74,4 +73,4 @@ const NotificationProvider : React.FC = ({ children }) => {
 };
 const useNotification = () => React.useContext(NotificationContext)
 
-export { NotificationProvider, NotificationContext};
+export { NotificationProvider, useNotification};

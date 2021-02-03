@@ -1,6 +1,6 @@
 import AlertBar from './atom/AlertBar';
 import Notification, { INotificationProps } from './atom/Notification';
-import { NotificationProvider, NotificationContext } from './context/notificationContext';
+import { NotificationProvider, useNotification} from './context/notificationContext';
 
 // Components
 export {
@@ -11,7 +11,7 @@ export {
 // Contexts
 export {
   NotificationProvider,
-  NotificationContext,
+  useNotification,
 } 
 
 export type AlertType = 'error'|'warning'|'info'|'success'|'neutral';
