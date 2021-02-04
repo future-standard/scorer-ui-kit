@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Notification } from 'scorer-ui-kit';
+import { Button, useNotification} from 'scorer-ui-kit';
 import {  text, select, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-top: 100px;
+`;
 
 export default {
   title: 'Alerts/atoms',
-  component: Notification,
   decorators: [],
 };
 
@@ -22,16 +23,29 @@ export const _Notification = () => {
   const autoDismiss = boolean("autoDismiss", false);
 
   const notificationProps : any = {
-    message,
     type,
+    message,
     actionTextButton: actionText,
+    closeCallback: actionText === '' ? closeIconAction : actionCallback,
     autoDismiss,
-    actionHandler: actionText === '' ? closeIconAction : actionCallback
   }
 
+  const { notificationValues, sendNotification } = useNotification();
+
+  console.log(notificationValues);
+
+
+
   return(
-    <Container>
-      <Notification {...notificationProps}></Notification>
-    </Container>
+        <Container>
+          <Button
+            onClick = {
+              () =>
+              {
+                sendNotification(notificationProps);
+              }
+            }
+          >Send Notification</Button>
+        </Container>
   );
 }
