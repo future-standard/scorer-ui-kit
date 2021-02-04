@@ -30,11 +30,7 @@ export const _Notification = () => {
     autoDismiss,
   }
 
-  const { notificationValues, sendNotification } = useNotification();
-
-  console.log(notificationValues);
-
-
+  const { sendNotification } = useNotification();
 
   return(
         <Container>

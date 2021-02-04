@@ -7,7 +7,7 @@ import darkTheme from './themes/dark';
 //Components Alerts
 import {
   AlertBar,
-  Notification
+  Notification,
 }from './Alerts';
 
 // Components - Form
@@ -16,7 +16,7 @@ import {
   Button,
   ButtonWithIcon,
   ButtonWithLoading,
-  SmallInput,
+  SmallInput, 
   Input,
   InputActionButton,
   InputFeedback,
@@ -65,20 +65,19 @@ import {
   PTZContext
 } from './PTZControl';
 
-// context
-import {
-  NotificationProvider,
-  useNotification
-} from './Alerts';
-
-
 // Other
 import {
   useInterval,
   useTo,
   useTitle,
-  useCopyToClipboard
+  useCopyToClipboard,
 } from './hooks';
+
+import {
+  NotificationProvider,
+  useNotification,
+} from './context/NotificationContext';
+
 import  { resetButtonStyles } from './common';
 
 import Spinner from './Indicators/Spinner';
@@ -194,5 +193,5 @@ export {
 
   //Context
   NotificationProvider,
-  useNotification
+  useNotification,
 };
