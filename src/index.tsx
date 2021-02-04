@@ -7,7 +7,9 @@ import darkTheme from './themes/dark';
 //Components Alerts
 import {
   AlertBar,
-  Notification
+  Notification,
+  NotificationProvider,
+  useNotification
 }from './Alerts';
 
 // Components - Form
@@ -16,7 +18,7 @@ import {
   Button,
   ButtonWithIcon,
   ButtonWithLoading,
-  SmallInput,
+  SmallInput, 
   Input,
   InputActionButton,
   InputFeedback,
@@ -64,13 +66,6 @@ import {
   usePTZ,
   PTZContext
 } from './PTZControl';
-
-// context
-import {
-  NotificationProvider,
-  useNotification
-} from './Alerts';
-
 
 // Other
 import {
