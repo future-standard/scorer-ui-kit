@@ -110,6 +110,8 @@ const TextButton = styled.button`
 const MainMessage = styled.div`
   padding: 12px 6px 12px 12px;
   line-height: 20px;
+  text-align: left;
+  flex-grow: 2;
 `;
 
 export interface INotificationProps {
@@ -118,10 +120,10 @@ export interface INotificationProps {
   actionTextButton?: string;
   onTextButtonClick?: () => void;
   closeCallback?: () => void;
-  autoDismiss?: boolean;
+  isPinned?: boolean;
 }
 
-const Notification : React.FC<INotificationProps> = ({type ='info', message, autoDismiss = false, actionTextButton, closeCallback, onTextButtonClick}) => {
+const Notification : React.FC<INotificationProps> = ({type ='info', message, isPinned = false, actionTextButton, closeCallback, onTextButtonClick}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
 
@@ -130,17 +132,20 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, aut
     setSlideUp(false);
   },[message]);
 
-  const handleDismiss = useCallback(() => {
+  const handleTextClick = useCallback(() => {
     if(onTextButtonClick) {
-      onTextButtonClick();
+      onTextButtonClick()
     }
+    handleDismiss();
+  },[onTextButtonClick])
 
+  const handleDismiss = useCallback(() => {
     if(closeCallback) {
       closeCallback();
     }
 
     setSlideUp(true);
-  },[onTextButtonClick, closeCallback])
+  },[closeCallback])
 
   const animationEnded = useCallback(() => {
     if(slideUp){
@@ -149,19 +154,19 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, aut
   }, [slideUp])
 
   useEffect(() => {
-    if(autoDismiss) {
+    if(!isPinned) {
       setTimeout( () => {
         handleDismiss();
       }, 7000);
     }
-  },[autoDismiss])
+  },[isPinned])
   
   return( (message && !dismiss)
   ? ReactDom.createPortal(<Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>
       <Icon icon={IconNames[type]} color='inverse' />
       <MainMessage>{message}</MainMessage>
       {actionTextButton
-        ? <TextButton onClick={() => handleDismiss()}>{actionTextButton} </TextButton>
+        ? <TextButton onClick={() => handleTextClick()}>{actionTextButton} </TextButton>
         : <IconButton onClick={() => handleDismiss()}>
             <Icon icon='CloseCompact' color='inverse' />
           </IconButton>}

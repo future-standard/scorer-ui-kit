@@ -7,7 +7,7 @@ import { INotificationProps } from '../../../dist/Alerts/atom/Notification';
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
   display: grid;
-  grid-template-columns: 600px;
+  grid-template-columns: 200px;
   row-gap: 15px;
 `;
 
@@ -44,33 +44,57 @@ const NotificationPage : React.FC = ({}) => {
     type: 'error',
     message: 'There was a problem starting that process consult support',
     closeCallback: () => processAtClose2(),
+    isPinned: true,
   }
 
   const notiSucessSettings : INotificationProps = {
     type: 'success',
-    message: 'You have sucessfully bought a new camera',
-    autoDismiss: true,
+    message: 'You have sucessfully bought a new camera'
   }
 
+  const notiNeutralSettings : INotificationProps = {
+    type: 'neutral',
+    message: 'Running job in the background'
+  }
 
   return(
     <Container>
       <Button
+      design = 'secondary'
+      size = 'small'
         onClick = {() => {
           sendNotification(notiInfoSettings)
         }
       }
-      >Send information notification</Button>
-            <Button
-        onClick = {() => sendNotification(notiSucessSettings)}
-      >Send success with auto dismiss</Button>
+      >Send notification</Button>
       <Button
-        onClick = {() => sendNotification(notiWarningSettings)}
-      >Send warning notification with action</Button>
+        design = 'secondary'
+        size = 'small'
+        onClick = {() => {
+          sendNotification(notiSucessSettings)
+          }}
+      >Send success</Button>
       <Button
-        design = 'danger'
-        onClick = {() => sendNotification(notiErrorSettings)}
-      >Send Error notification</Button>
+        design = 'secondary'
+        size = 'small'
+        onClick = {() => {
+          sendNotification(notiWarningSettings)
+        }}
+      >Send warning</Button>
+      <Button
+        design = 'secondary'
+        size = 'small'
+        onClick = {() => {
+          sendNotification(notiNeutralSettings)
+        }}
+      >Send neutral message</Button>
+      <Button
+        design = 'secondary'
+        size = 'small'
+        onClick = {() => {
+          sendNotification(notiErrorSettings)
+        }}
+      >Send pinned Error</Button>
     </Container>
   );
 }

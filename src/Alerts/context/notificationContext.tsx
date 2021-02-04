@@ -10,7 +10,7 @@ const defaultProps : INotificationProps = {
   message: '',
   actionTextButton: '',
   closeCallback: undefined,
-  autoDismiss: false,
+  isPinned: false,
 };
 
 const defaultContext: NotificationContextType = {
@@ -22,7 +22,6 @@ const NotificationContext = React.createContext<NotificationContextType>(default
 const NotificationProvider : React.FC = ({ children }) => {
 
     const [notificationList, setNotificationList] = useState<INotificationProps[]>([])
-    const [activeNotification, setActiveNotification] = useState<INotificationProps>(defaultProps);
 
     const sendNotification = (newNotification: INotificationProps ) => {
 
@@ -45,8 +44,8 @@ const NotificationProvider : React.FC = ({ children }) => {
           validNotification.closeCallback = newNotification.closeCallback
         }
 
-      if(newNotification.autoDismiss) {
-        validNotification.autoDismiss = newNotification.autoDismiss;
+      if(newNotification.isPinned) {
+        validNotification.isPinned = newNotification.isPinned;
       }
 
       setNotificationList([...notificationList, validNotification]);
