@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, NotificationContext } from 'scorer-ui-kit';
+import { Button, useNotification } from 'scorer-ui-kit';
 import { INotificationProps } from '../../../dist/Alerts/atom/Notification';
 
 
@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const NotificationPage : React.FC = ({}) => {
   
-  const {sendNotification } = React.useContext(NotificationContext); 
+  const {sendNotification } = useNotification();
 
   const processAtClose = () => {
     console.log('I have succesfully deliver the message mate');

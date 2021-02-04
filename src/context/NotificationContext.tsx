@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Notification, { INotificationProps } from '../Alerts/atom/Notification';
 
 export type NotificationContextType = {
@@ -57,4 +57,6 @@ const NotificationProvider : React.FC = ({ children }) => {
 
 };
 
-export { NotificationProvider, NotificationContext};
+const useNotification = () => React.useContext(NotificationContext);
+
+export { NotificationProvider, useNotification};

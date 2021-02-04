@@ -75,7 +75,7 @@ import {
 
 import {
   NotificationProvider,
-  NotificationContext,
+  useNotification,
 } from './context/NotificationContext';
 
 import  { resetButtonStyles } from './common';
@@ -193,5 +193,5 @@ export {
 
   //Context
   NotificationProvider,
-  NotificationContext,
+  useNotification,
 };
