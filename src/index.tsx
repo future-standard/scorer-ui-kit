@@ -8,8 +8,6 @@ import darkTheme from './themes/dark';
 import {
   AlertBar,
   Notification,
-  NotificationProvider,
-  useNotification
 }from './Alerts';
 
 // Components - Form
@@ -72,8 +70,14 @@ import {
   useInterval,
   useTo,
   useTitle,
-  useCopyToClipboard
+  useCopyToClipboard,
 } from './hooks';
+
+import {
+  NotificationProvider,
+  NotificationContext,
+} from './context/NotificationContext';
+
 import  { resetButtonStyles } from './common';
 
 import Spinner from './Indicators/Spinner';
@@ -189,5 +193,5 @@ export {
 
   //Context
   NotificationProvider,
-  useNotification
+  NotificationContext,
 };

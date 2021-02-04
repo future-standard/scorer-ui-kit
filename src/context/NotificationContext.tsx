@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Notification, { INotificationProps } from '../atom/Notification';
+import Notification, { INotificationProps } from '../Alerts/atom/Notification';
 
 export type NotificationContextType = {
   sendNotification: (newNotification : INotificationProps) => void;
-};
-
-const defaultProps : INotificationProps = {
-  type: 'info',
-  message: '',
-  actionTextButton: '',
-  closeCallback: undefined,
-  isPinned: false,
 };
 
 const defaultContext: NotificationContextType = {
@@ -25,7 +17,6 @@ const NotificationProvider : React.FC = ({ children }) => {
 
     const sendNotification = (newNotification: INotificationProps ) => {
 
-      console.log("arrived at context", newNotification.message);
       const validNotification : INotificationProps = {
         message : newNotification.message,
         type :  newNotification.type,
@@ -65,6 +56,5 @@ const NotificationProvider : React.FC = ({ children }) => {
   );
 
 };
-const useNotification = () => React.useContext(NotificationContext)
 
-export { NotificationProvider, useNotification};
+export { NotificationProvider, NotificationContext};

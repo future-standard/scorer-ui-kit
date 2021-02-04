@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, useNotification} from 'scorer-ui-kit';
+import { Button, NotificationContext} from 'scorer-ui-kit';
 import {  text, select, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
@@ -30,11 +30,7 @@ export const _Notification = () => {
     autoDismiss,
   }
 
-  const { notificationValues, sendNotification } = useNotification();
-
-  console.log(notificationValues);
-
-
+  const { sendNotification } = React.useContext(NotificationContext);
 
   return(
         <Container>

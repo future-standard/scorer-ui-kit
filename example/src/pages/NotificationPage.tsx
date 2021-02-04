@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, useNotification } from 'scorer-ui-kit';
+import { Button, NotificationContext } from 'scorer-ui-kit';
 import { INotificationProps } from '../../../dist/Alerts/atom/Notification';
+
 
 
 const Container = styled.div`
@@ -13,7 +14,7 @@ const Container = styled.div`
 
 const NotificationPage : React.FC = ({}) => {
   
-  const {sendNotification } = useNotification(); 
+  const {sendNotification } = React.useContext(NotificationContext); 
 
   const processAtClose = () => {
     console.log('I have succesfully deliver the message mate');
@@ -33,26 +34,26 @@ const NotificationPage : React.FC = ({}) => {
     closeCallback: () => processAtClose(),
   }
 
-  const notiWarningSettings : INotificationProps = {
+  const notiWarningSettings : INotificationProps  = {
     type: 'warning',
     message: 'Those settings might be very expensive. You can learn about different settings',
     actionTextButton: 'SHOW DOCUMENTATION',
     onTextButtonClick: () => openDocumentation(),
   }
 
-  const notiErrorSettings : INotificationProps = {
+  const notiErrorSettings : INotificationProps  = {
     type: 'error',
     message: 'There was a problem starting that process consult support',
     closeCallback: () => processAtClose2(),
     isPinned: true,
   }
 
-  const notiSucessSettings : INotificationProps = {
+  const notiSucessSettings : INotificationProps  = {
     type: 'success',
     message: 'You have sucessfully bought a new camera'
   }
 
-  const notiNeutralSettings : INotificationProps = {
+  const notiNeutralSettings : INotificationProps  = {
     type: 'neutral',
     message: 'Running job in the background'
   }
