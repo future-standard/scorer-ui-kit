@@ -61,6 +61,8 @@ export const animation = {
   speed: {
     fast: '0.175s',
     normal: '0.35s',
-    slow: '0.7s'
+    slow: '0.7s',
+    slower: '1.4s',
+    slowest: '2.8s'
   }
 };

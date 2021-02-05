@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
+import { AlertType } from '..'
 import { resetButtonStyles } from '../../common/index';
 
 const IconButton = styled.button<{selected?: boolean}>`
@@ -55,8 +56,6 @@ export interface IAlert {
   alertMessage?: string;
   alertType: AlertType;
 }
-
-export type AlertType = 'error'|'warning'|'info'|'success'|'neutral';
 
 interface Props {
   type?: AlertType

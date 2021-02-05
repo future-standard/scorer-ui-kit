@@ -3,7 +3,12 @@
 import lightTheme from './themes/light/light';
 import darkTheme from './themes/dark';
 
-import AlertBar from './Alerts/atom/AlertBar';
+
+//Components Alerts
+import {
+  AlertBar,
+  Notification,
+}from './Alerts';
 
 // Components - Form
 import {
@@ -11,7 +16,7 @@ import {
   Button,
   ButtonWithIcon,
   ButtonWithLoading,
-  SmallInput,
+  SmallInput, 
   Input,
   InputActionButton,
   InputFeedback,
@@ -65,8 +70,14 @@ import {
   useInterval,
   useTo,
   useTitle,
-  useCopyToClipboard
+  useCopyToClipboard,
 } from './hooks';
+
+import {
+  NotificationProvider,
+  useNotification,
+} from './context/NotificationContext';
+
 import  { resetButtonStyles } from './common';
 
 import Spinner from './Indicators/Spinner';
@@ -100,7 +111,9 @@ export {
   darkTheme,
   lightTheme,
 
+  // Alerts
   AlertBar,
+  Notification,
 
   // LineUI
   LineUI,
@@ -176,5 +189,9 @@ export {
   Tabs,
   Tab,
   TabList,
-  TabContent
+  TabContent,
+
+  //Context
+  NotificationProvider,
+  useNotification,
 };
