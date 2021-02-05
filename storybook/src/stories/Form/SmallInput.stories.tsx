@@ -4,7 +4,7 @@ import {  text, select } from "@storybook/addon-knobs";
 import {SmallInput} from 'scorer-ui-kit';
 
 export default {
-  title: 'Form/atoms',
+  title: 'Form/Input',
   component: SmallInput,
   decorators: []
 };

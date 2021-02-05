@@ -8,7 +8,7 @@ interface OwnProps {
   name: string
   label: string
   fieldState: TypeFieldState
-  feedbackMessage?: string 
+  feedbackMessage?: string
 }
 
 type Props = OwnProps & TextareaHTMLAttributes<HTMLTextAreaElement>
@@ -23,7 +23,7 @@ const TextAreaField : React.FC<Props> = ({
 }) => {
   return(
     <Label htmlFor={name} labelText={label}>
-      <TextArea {...{ fieldState, feedbackMessage, ...props }}></TextArea>
+      <TextArea {...{ fieldState, feedbackMessage, name, ...props }} />
     </Label>
   );
 };
