@@ -56,12 +56,12 @@ interface IProps extends IButtonProps {
   position?: 'left' | 'right'
 }
 
-const ButtonWithIcon : React.FC<IProps> = ({design, size, onClick, disabled, position, icon, children}) => {
+const ButtonWithIcon : React.FC<IProps> = ({design, size, onClick, disabled, position, icon, children, ...props}) => {
 
   const iconSize = size === 'large' ? 20 : 16;
   const iconColor = design === 'secondary' ? 'dimmed' : 'inverse';
 
-  return <Button disabled={disabled} {...{ design, size, onClick, disabled }}>
+  return <Button disabled={disabled} {...{ design, size, onClick, disabled }} {...props}>
     <InnerContainer>
       <TextContainer>{children}</TextContainer>
       <IconContainer {...{ design, position }}>
