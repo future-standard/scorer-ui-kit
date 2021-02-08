@@ -126,39 +126,52 @@ export interface INotificationProps {
 const Notification : React.FC<INotificationProps> = ({type ='info', message, isPinned = false, actionTextButton, closeCallback, onTextButtonClick}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
+  const [textClicked, setTextClicked] = useState(false);
 
   useEffect(()=>{
     setDismiss(false);
     setSlideUp(false);
+    setTextClicked(false);
   },[message]);
 
-  const handleTextClick = useCallback(() => {
-    if(onTextButtonClick) {
-      onTextButtonClick()
-    }
+  const handleTextClick = useCallback(async () => {
+    setTextClicked(true);
     handleDismiss();
-  },[onTextButtonClick])
+  },[])
 
   const handleDismiss = useCallback(() => {
     setSlideUp(true);
   },[])
 
   const animationEnded = useCallback(() => {
+    // Will only trigger if the animation triggered was clossing one
     if(slideUp){
       setDismiss(true);
+
+      if(onTextButtonClick && textClicked) {
+        onTextButtonClick();
+      }
+
+      if(closeCallback) {
+        closeCallback();
+      }
     }
-    if(closeCallback) {
-      closeCallback();
-    }
-  }, [slideUp, closeCallback])
+  }, [slideUp, closeCallback, onTextButtonClick])
 
   useEffect(() => {
+    let mounted = true;
     if(!isPinned) {
       setTimeout( () => {
-        handleDismiss();
+        if(mounted) {
+          handleDismiss();
+        }
       }, 7000);
     }
-  },[isPinned])
+
+    return () => {
+      mounted = false;
+    }
+  },[isPinned, message])
   
   return( (message && !dismiss)
   ? ReactDom.createPortal(<Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>
