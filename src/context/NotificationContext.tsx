@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Notification, { INotificationProps } from '../Alerts/atom/Notification';
 
 export type NotificationContextType = {
@@ -12,10 +12,29 @@ const defaultContext: NotificationContextType = {
 const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
 
 const NotificationProvider : React.FC = ({ children }) => {
+    const [activeNotification, setActiveNotification] = useState<INotificationProps | null>(null);
+    const [notificationList, setNotificationList] = useState<INotificationProps[]>([]);
 
-    const [notificationList, setNotificationList] = useState<INotificationProps[]>([])
+    const showNotification = () => {
+      const updatedList = [...notificationList];
+      const firstNotification = updatedList.shift();
+      
+      if(!firstNotification) return;
 
-    const sendNotification = (newNotification: INotificationProps ) => {
+      const onClose = () => {
+        if(firstNotification.closeCallback) {
+          firstNotification.closeCallback();
+        }
+        setActiveNotification(null);
+        setNotificationList(updatedList);
+        showNotification();
+      }
+
+      const displayedNotification = {...firstNotification, closeCallback: onClose}
+      setActiveNotification(displayedNotification);
+    }
+
+    const sendNotification = async( newNotification: INotificationProps ) => {
 
       const validNotification : INotificationProps = {
         message : newNotification.message,
@@ -39,18 +58,23 @@ const NotificationProvider : React.FC = ({ children }) => {
         validNotification.isPinned = newNotification.isPinned;
       }
 
-      setNotificationList([...notificationList, validNotification]);
+      setNotificationList((notificationList) => [...notificationList, validNotification]);
     };
 
-    const renderNotifications = () => (
-      notificationList.map((notificationSettings, index) => {
-        return <Notification key={`notification-${index}`} {...notificationSettings} />
-      })
-    );
+  useEffect(() => {
+    if(activeNotification === null && notificationList.length === 1) {
+      showNotification();
+    }
+    return () => {
+      setActiveNotification(null);
+    }
+  }, [notificationList])
 
   return (
     <NotificationContext.Provider value={{sendNotification}}>
-        {renderNotifications()}
+        {activeNotification
+        ? <Notification {...activeNotification}/>
+        : null}
         {children}
     </NotificationContext.Provider>
   );

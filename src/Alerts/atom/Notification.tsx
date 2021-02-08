@@ -140,18 +140,17 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
   },[onTextButtonClick])
 
   const handleDismiss = useCallback(() => {
-    if(closeCallback) {
-      closeCallback();
-    }
-
     setSlideUp(true);
-  },[closeCallback])
+  },[])
 
   const animationEnded = useCallback(() => {
     if(slideUp){
       setDismiss(true);
     }
-  }, [slideUp])
+    if(closeCallback) {
+      closeCallback();
+    }
+  }, [slideUp, closeCallback])
 
   useEffect(() => {
     if(!isPinned) {
