@@ -75,6 +75,4 @@ const NotificationProvider : React.FC = ({ children }) => {
 
 };
 
-const useNotification = () => React.useContext(NotificationContext);
-
-export { NotificationProvider, useNotification};
+export { NotificationProvider, NotificationContext};
