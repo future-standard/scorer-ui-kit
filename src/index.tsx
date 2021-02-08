@@ -71,11 +71,11 @@ import {
   useTo,
   useTitle,
   useCopyToClipboard,
+  useNotification,
 } from './hooks';
 
 import {
   NotificationProvider,
-  useNotification,
 } from './context/NotificationContext';
 
 import  { resetButtonStyles } from './common';
