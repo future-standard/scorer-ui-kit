@@ -35,6 +35,7 @@ export interface IDragLineUISharedOptions {
   showPointHandle: boolean;
   showMoveHandle: boolean;
   setIndexOffset: number;
+  pointIndexOffset: number;
   showPoint: boolean;
 }
 
@@ -48,8 +49,11 @@ export interface LineUIOptions {
   showMoveHandle?: boolean;
   // Show all handles (this is true by default)
   showGrabHandle?: boolean;
-  // Note this is display only (noes not apply to state indices)
+  // Note this is display only (does not apply to state indices)
   setIndexOffset?: number;
+  // Note this is display only (does not apply to state indices)
+  pointIndexOffset?: number;
+
   showPoint?: boolean;
 }
 
