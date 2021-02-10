@@ -107,7 +107,6 @@ const LineUI: React.FC<LineUIProps> = ({
     if (!imgRef.current) {
       return;
     }
-    setLoaded(true);
 
     const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
     if (naturalHeight !== imgSize.h || naturalWidth !== imgSize.w) {
@@ -119,6 +118,7 @@ const LineUI: React.FC<LineUIProps> = ({
     if (naturalHeight / clientHeight !== unit) {
       setUnit(naturalHeight / clientHeight);
     }
+    setLoaded(true);
   }, [imgSize, onSizeChange, unit]);
 
   const calculateCTM = useCallback(() => {
@@ -182,14 +182,15 @@ const LineUI: React.FC<LineUIProps> = ({
   return (
     <Container>
       <Image ref={imgRef} onLoad={initScaleAndBounds} src={src} alt='' />
-      {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {
-        loaded &&
+        (loaded && boundaries) ?
           <Frame ref={frame} viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
             {state.map((lineSet, index) => (
               <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
             ))}
           </Frame>
+          :
+          <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>
       }
     </Container>
   );
