@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 import { LineUIOptions, IBoundary } from '.';
+import Spinner from '../Indicators/Spinner';
 
 
 const Container = styled.div`
@@ -18,6 +19,18 @@ const Container = styled.div`
   width: auto;
   /* transform: translateY(-70%); */
 
+`;
+
+const LoadingOverlay =styled.div`
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Frame = styled.svg<{ transculent?: boolean }>`
@@ -78,6 +91,8 @@ const LineUI: React.FC<LineUIProps> = ({
 
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
 
+  const [loaded, setLoaded] = useState(false);
+
 
   // Scale Code
   const [imgSize, setImgSize] = useState({ h: 1, w: 1 });
@@ -92,6 +107,7 @@ const LineUI: React.FC<LineUIProps> = ({
     if (!imgRef.current) {
       return;
     }
+    setLoaded(true);
 
     const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
     if (naturalHeight !== imgSize.h || naturalWidth !== imgSize.w) {
@@ -166,11 +182,15 @@ const LineUI: React.FC<LineUIProps> = ({
   return (
     <Container>
       <Image ref={imgRef} onLoad={initScaleAndBounds} src={src} alt='' />
-      <Frame ref={frame} viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
-        {state.map((lineSet, index) => (
-          <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
-        ))}
-      </Frame>
+      {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
+      {
+        loaded &&
+          <Frame ref={frame} viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
+            {state.map((lineSet, index) => (
+              <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
+            ))}
+          </Frame>
+      }
     </Container>
   );
 
