@@ -8,6 +8,7 @@ import darkTheme from './themes/dark';
 import {
   AlertBar,
   Notification,
+  Modal,
 }from './Alerts';
 
 // Components - Form
@@ -71,12 +72,15 @@ import {
   useTo,
   useTitle,
   useCopyToClipboard,
+  useModal,
 } from './hooks';
 
 import {
   NotificationProvider,
   useNotification,
-} from './context/NotificationContext';
+  ModalContext,
+  ModalProvider,
+} from './context';
 
 import  { resetButtonStyles } from './common';
 
@@ -194,4 +198,7 @@ export {
   //Context
   NotificationProvider,
   useNotification,
+  ModalContext,
+  ModalProvider,
+  useModal,
 };

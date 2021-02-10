@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'scorer-ui-kit';
-import { stripLeadingSlash } from 'history/PathUtils';
+import { Button, useModal } from 'scorer-ui-kit';
 
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
@@ -10,16 +9,23 @@ const Container = styled.div`
   row-gap: 15px;
 `;
 
-
-//const {setIsOpen, updateCloseText, closeCallback, updateContent} = useModal();
-
 const ModalPage : React.FC = ({}) => {
 
+  // This is how I imagine that the hook is going to end
+//const {setIsOpen, updateCloseText, closeCallback, updateContent} = useModal();
+
+// This is currently working hook
+const { setIsOpen } = useModal();
+
+const handleOpenModal = () => {
+  setIsOpen(true);
+}
 
   return(
     <Container>
         <Button
           design='secondary'
+          onClick = { () =>  handleOpenModal()}
           >Empty Modal
         </Button>
         <Button

@@ -115,7 +115,7 @@ const MainMessage = styled.div`
 `;
 
 export interface INotificationProps {
-  type: AlertType
+  type: AlertType;
   message: string;
   actionTextButton?: string;
   onTextButtonClick?: () => void;
