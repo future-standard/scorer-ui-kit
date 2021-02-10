@@ -44,12 +44,12 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   ${({theme}) => theme.typography.feedbackBar.message };
 
   ${({theme}) => css`
-    animation: ${initAnimation} ${theme.animation.speed.slower} ${theme.animation.easing.primary.easeInOut};
+    animation: ${initAnimation} ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
     `
   };
 
   ${({theme, isClosing}) => isClosing && css`
-    animation: ${closeAnimation} ${theme.animation.speed.slower} ${theme.animation.easing.primary.easeInOut};
+    animation: ${closeAnimation} ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
     `
   };
   
