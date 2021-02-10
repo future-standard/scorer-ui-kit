@@ -22,8 +22,10 @@ const Line: React.FC<{}> = () => {
 
   const [options, setOptions] = useState<LineUIOptions>({
     showSetIndex: true,
+    pointIndexOffset: 1,
+    showPointLabel: true,
     setIndexOffset: 1,
-    showGrabHandle: true
+    showMoveHandle: false
   });
 
   const fetchLine = useCallback(async () => {
@@ -76,8 +78,8 @@ const Line: React.FC<{}> = () => {
         name: "Get to the Point",
         points: [
           {
-            x: 555,
-            y: 555
+            x: 2063,
+            y: 1175
           },
 
         ],
@@ -88,8 +90,8 @@ const Line: React.FC<{}> = () => {
         name: "Weird Point",
         points: [
           {
-            x: 777,
-            y: 777
+            x: 900,
+            y: 1400
           },
 
         ],
@@ -145,9 +147,6 @@ const Line: React.FC<{}> = () => {
           </pre>
         </SidebarBox>
         <SidebarBox>
-          <Label labelText='Show Grab Handles' htmlFor='showGrabHandle' >
-            <input type='checkbox' name='showGrabHandle' checked={options.showGrabHandle} onChange={toggleOptions('showGrabHandle')}/>
-          </Label>
           <Label labelText='Show Point Handle' htmlFor='showPointHandle' >
             <input type='checkbox' name='showPointHandle' checked={options.showPointHandle} onChange={toggleOptions('showPointHandle')}/>
           </Label>
