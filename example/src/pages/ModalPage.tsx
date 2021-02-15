@@ -25,7 +25,9 @@ const handleOpenModal = () => {
     <Container>
         <Button
           design='secondary'
-          onClick = { () =>  handleOpenModal()}
+          onClick = { 
+            handleOpenModal
+          }
           >Empty Modal
         </Button>
         <Button

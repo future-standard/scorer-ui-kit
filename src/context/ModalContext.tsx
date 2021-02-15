@@ -22,6 +22,7 @@ const ModalProvider : React.FC = ({children}) => {
   const [modalProps, setProps] =   useState<IModalProps>(defaultModalProps);
 
   const setModalProps = (newProps: IModalProps) => {
+    console.log(`Updating modal isOpen [ModalContext]`);
     setProps(newProps);
   }
 
