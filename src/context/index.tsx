@@ -1,6 +1,5 @@
 import {
   NotificationProvider,
-  useNotification,
 } from './NotificationContext';
 
 import {
@@ -10,7 +9,6 @@ import {
 
 export {
   NotificationProvider,
-  useNotification,
   ModalContext,
   ModalProvider,
 }

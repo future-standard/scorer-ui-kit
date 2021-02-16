@@ -44,12 +44,12 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   ${({theme}) => theme.typography.feedbackBar.message };
 
   ${({theme}) => css`
-    animation: ${initAnimation} ${theme.animation.speed.slower} ${theme.animation.easing.primary.easeInOut};
+    animation: ${initAnimation} ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
     `
   };
 
   ${({theme, isClosing}) => isClosing && css`
-    animation: ${closeAnimation} ${theme.animation.speed.slower} ${theme.animation.easing.primary.easeInOut};
+    animation: ${closeAnimation} ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
     `
   };
   
@@ -126,40 +126,52 @@ export interface INotificationProps {
 const Notification : React.FC<INotificationProps> = ({type ='info', message, isPinned = false, actionTextButton, closeCallback, onTextButtonClick}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
+  const [textClicked, setTextClicked] = useState(false);
 
   useEffect(()=>{
     setDismiss(false);
     setSlideUp(false);
+    setTextClicked(false);
   },[message]);
 
-  const handleTextClick = useCallback(() => {
-    if(onTextButtonClick) {
-      onTextButtonClick()
-    }
+  const handleTextClick = useCallback(async () => {
+    setTextClicked(true);
     handleDismiss();
-  },[onTextButtonClick])
+  },[])
 
   const handleDismiss = useCallback(() => {
-    if(closeCallback) {
-      closeCallback();
-    }
-
     setSlideUp(true);
-  },[closeCallback])
+  },[])
 
   const animationEnded = useCallback(() => {
+    // Will only trigger if the animation triggered was clossing one
     if(slideUp){
       setDismiss(true);
+
+      if(onTextButtonClick && textClicked) {
+        onTextButtonClick();
+      }
+
+      if(closeCallback) {
+        closeCallback();
+      }
     }
-  }, [slideUp])
+  }, [slideUp, closeCallback, onTextButtonClick])
 
   useEffect(() => {
+    let mounted = true;
     if(!isPinned) {
       setTimeout( () => {
-        handleDismiss();
+        if(mounted) {
+          handleDismiss();
+        }
       }, 7000);
     }
-  },[isPinned])
+
+    return () => {
+      mounted = false;
+    }
+  },[isPinned, message])
   
   return( (message && !dismiss)
   ? ReactDom.createPortal(<Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>

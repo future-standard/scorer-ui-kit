@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Notification, { INotificationProps } from '../Alerts/atom/Notification';
 
 export type NotificationContextType = {
@@ -6,16 +6,35 @@ export type NotificationContextType = {
 };
 
 const defaultContext: NotificationContextType = {
-  sendNotification : () => console.log("This is default Notification context and should not appear"),
+  sendNotification : () => console.log("This is the context initialization should not appear"),
 }
 
 const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
 
+const notificationList: INotificationProps[] = [];
+
 const NotificationProvider : React.FC = ({ children }) => {
+    const [activeNotification, setActiveNotification] = useState<INotificationProps | null>(null);
 
-    const [notificationList, setNotificationList] = useState<INotificationProps[]>([])
+    const showNotification = useCallback(() => {
+      const nextNotification = notificationList.shift();
+      
+      if(!nextNotification) { return; }
 
-    const sendNotification = (newNotification: INotificationProps ) => {
+      const updateOnClose = () => {
+        if(nextNotification.closeCallback) {
+          nextNotification.closeCallback();
+        }
+        setActiveNotification(null);
+        showNotification();
+      }
+
+      const displayedNotification = {...nextNotification, closeCallback: updateOnClose}
+
+      setActiveNotification(displayedNotification);
+    },[notificationList]);
+
+    const sendNotification = async( newNotification: INotificationProps ) => {
 
       const validNotification : INotificationProps = {
         message : newNotification.message,
@@ -30,33 +49,30 @@ const NotificationProvider : React.FC = ({ children }) => {
         validNotification.onTextButtonClick = newNotification.onTextButtonClick;
       }
 
-      // Adds send next notification callback
-        if(newNotification.closeCallback) {
-          validNotification.closeCallback = newNotification.closeCallback
-        }
+      if(newNotification.closeCallback) {
+        validNotification.closeCallback = newNotification.closeCallback
+      }
 
       if(newNotification.isPinned) {
         validNotification.isPinned = newNotification.isPinned;
       }
 
-      setNotificationList([...notificationList, validNotification]);
-    };
+      notificationList.push(validNotification)
 
-    const renderNotifications = () => (
-      notificationList.map((notificationSettings, index) => {
-        return <Notification key={`notification-${index}`} {...notificationSettings} />
-      })
-    );
+      if(notificationList.length === 1 && activeNotification === null) {
+        showNotification();
+      }
+    };
 
   return (
     <NotificationContext.Provider value={{sendNotification}}>
-        {renderNotifications()}
+        {activeNotification
+        ? <Notification {...activeNotification}/>
+        : null}
         {children}
     </NotificationContext.Provider>
   );
 
 };
 
-const useNotification = () => React.useContext(NotificationContext);
-
-export { NotificationProvider, useNotification};
+export { NotificationProvider, NotificationContext};

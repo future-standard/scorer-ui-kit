@@ -73,11 +73,11 @@ import {
   useTitle,
   useCopyToClipboard,
   useModal,
+  useNotification,
 } from './hooks';
 
 import {
   NotificationProvider,
-  useNotification,
   ModalContext,
   ModalProvider,
 } from './context';
