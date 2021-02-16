@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { Button, useModal } from 'scorer-ui-kit';
 
@@ -9,34 +9,59 @@ const Container = styled.div`
   row-gap: 15px;
 `;
 
-const ModalPage : React.FC = () => {
+const ModalPage: React.FC = () => {
 
   // This is how I imagine that the hook is going to end
-//const {setIsOpen, updateCloseText, closeCallback, updateContent} = useModal();
+  //const {setIsOpen, updateCloseText, closeCallback, updateContent} = useModal();
 
-// This is currently working hook
-const { setIsOpen } = useModal();
+  // This is currently working hook
+  const { setIsOpen, createModal } = useModal();
 
-const handleOpenModal = () => {
-  setIsOpen(true);
-}
+  const openEmptyModal = () => {
+    createModal();
+  }
 
-  return(
+  const templateModal: ReactElement = (
+    <div>
+      <div>Is your order correctly?</div>
+      <Button
+        onClick={() => {
+          console.log('User accepted')
+          setIsOpen(false);
+        }}
+      >Accept</Button>
+      <Button design='danger'
+        onClick={() => {
+          console.log('User canceled')
+          setIsOpen(false);
+        }}
+      >Cancel</Button>
+    </div>
+  )
+
+  const openTemplate1 = () => {
+    createModal('', templateModal);
+  }
+
+  return (
     <Container>
-        <Button
-          design='secondary'
-          onClick = { 
-            handleOpenModal
-          }
-          >Empty Modal
+      <Button
+        design='secondary'
+        onClick={
+          openEmptyModal
+        }
+      >Empty Modal
         </Button>
-        <Button
-          design='secondary'
-          >Template Modal
+      <Button
+        design='secondary'
+        onClick={
+          openTemplate1
+        }
+      >Template Modal
         </Button>
-        <Button
-          design='secondary'
-          >Custom Modal
+      <Button
+        design='secondary'
+      >Custom Modal
         </Button>
     </Container>
   );

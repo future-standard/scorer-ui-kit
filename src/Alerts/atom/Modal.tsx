@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback } from 'react';
 import ReactDom from 'react-dom';
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
 import { resetButtonStyles } from '../../common';
 import Icon from '../../Icons/Icon';
 
@@ -20,23 +20,23 @@ const CloseIcon = styled(Icon)`
   display: flex;
 `;
 
-const CloseButton = styled.button<{selected?: boolean}>`
+const CloseButton = styled.button<{ selected?: boolean }>`
   ${resetButtonStyles};
-  font-family: ${({ theme }) => theme.fontFamily.ui };
+  font-family: ${({ theme }) => theme.fontFamily.ui};
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
   right: 0;
   top: -30px;
-  color: ${({theme}) => theme.colors.icons['dimmed']};
+  color: ${({ theme }) => theme.colors.icons['dimmed']};
   font-size: 14px;
   font-weight: 500;
 
   ${CloseIcon} {
     margin-left: 12px;
   }
-  ${({selected=false}) => selected && css`
+  ${({ selected = false }) => selected && css`
     border-bottom: 5px solid hsl(207, 80%, 64%);
   `}
   &:focus {
@@ -44,7 +44,7 @@ const CloseButton = styled.button<{selected?: boolean}>`
   }
  
   &:hover:enabled {
-    ${({theme}) => theme && css`
+    ${({ theme }) => theme && css`
       opacity: .8;
       transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.inOut};
     `}
@@ -75,28 +75,27 @@ export interface IModalProps {
   isOpen: boolean;
   closeText?: string;
   onDismiss: () => void;
-  customComponent? : ReactElement;
+  customComponent?: ReactElement;
 }
 
-const Modal : React.FC <IModalProps> = ({isOpen = false, closeText='', onDismiss, customComponent}) => {
+const Modal: React.FC<IModalProps> = ({ isOpen = false, closeText = '', onDismiss, customComponent }) => {
 
   const dissmiss = useCallback(() => {
     onDismiss();
-  },[onDismiss]);
-  
-  return ( isOpen 
+  }, [onDismiss]);
+
+  return (isOpen
     ? ReactDom.createPortal(
       <Container>
         <LightBox>
           <CloseButton
-            onClick = {() => dissmiss()}
-            >
-            CLOSE
-            {/* {closeText ? closeText : null} */}
-            <CloseIcon icon='CloseCompact' size={15} color={'dimmed'} weight={'heavy'}/>
+            onClick={() => dissmiss()}
+          >
+            {closeText ? closeText : null}
+            <CloseIcon icon='CloseCompact' size={15} color={'dimmed'} weight={'heavy'} />
           </CloseButton>
+          {customComponent}
         </LightBox>
-        {customComponent}
       </Container>, document.body)
     : null
   );

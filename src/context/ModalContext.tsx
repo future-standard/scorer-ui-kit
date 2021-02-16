@@ -1,37 +1,37 @@
 import React, { useState } from 'react';
-import Modal, {IModalProps} from '../Alerts/atom/Modal';
+import Modal, { IModalProps } from '../Alerts/atom/Modal';
 
-const defaultModalProps : IModalProps = {
+const defaultModalProps: IModalProps = {
   isOpen: false,
-  onDismiss: () => {},
+  onDismiss: () => { },
 }
 
 export type ModalContextType = {
-  modalProps : IModalProps,
-  setModalProps : (newProps: IModalProps) => void
+  modalProps: IModalProps,
+  setModalProps: (newProps: IModalProps) => void
 };
 
-const defaultContext : ModalContextType  = { 
+const defaultContext: ModalContextType = {
   modalProps: defaultModalProps,
-  setModalProps: (newProps: IModalProps) => {},
+  setModalProps: (newProps: IModalProps) => { },
 };
 
 const ModalContext = React.createContext<ModalContextType>(defaultContext);
 
-const ModalProvider : React.FC = ({children}) => {
+const ModalProvider: React.FC = ({ children }) => {
 
-  const [modalProps, setProps] =   useState<IModalProps>(defaultModalProps);
+  const [modalProps, setProps] = useState<IModalProps>(defaultModalProps);
 
   const setModalProps = (newProps: IModalProps) => {
     setProps(newProps);
   }
 
   return (
-    <ModalContext.Provider value={{modalProps, setModalProps}}>
-      <Modal {...modalProps}/>
+    <ModalContext.Provider value={{ modalProps, setModalProps }}>
+      <Modal {...modalProps} />
       {children}
     </ModalContext.Provider>
   )
 }
 
-export {ModalContext, ModalProvider};
+export { ModalContext, ModalProvider };

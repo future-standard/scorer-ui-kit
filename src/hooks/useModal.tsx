@@ -1,26 +1,44 @@
-import { useCallback, useContext } from 'react';
-import { ModalContext, ModalContextType } from '../context/ModalContext';
+import { ReactElement, useCallback, useContext, useEffect } from 'react';
+import { ModalContext } from '../context/ModalContext';
 import { IModalProps } from '../Alerts/atom/Modal';
 
 const useModal = () => {
   const { modalProps, setModalProps } = useContext(ModalContext);
 
   const onDismiss = useCallback(() => {
-      setIsOpen(false);
-  },[])
+    setIsOpen(false);
+  }, []);
 
   const setIsOpen = useCallback((newStatus: boolean) => {
-    if(newStatus === undefined) { return };
+    if (newStatus === undefined) { return };
 
-    const updateProps : IModalProps = {
+    const updateProps: IModalProps = {
       ...modalProps,
       isOpen: newStatus,
-      onDismiss,
-    } 
+    }
     setModalProps(updateProps);
-  },[modalProps]);
+  }, [modalProps]);
+
+  const createModal = (closeText?: string, customComponent?: ReactElement) => {
+    const updateProps = {
+      ...modalProps,
+      isOpen: true,
+      onDismiss,
+    };
+
+    if (closeText) {
+      updateProps.closeText = closeText;
+    }
+
+    if (customComponent) {
+      updateProps.customComponent = customComponent;
+    }
+
+    setModalProps(updateProps);
+  }
 
   return {
+    createModal,
     setIsOpen,
   }
 };
