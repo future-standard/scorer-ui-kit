@@ -12,7 +12,7 @@ const Container = styled.div`
   row-gap: 15px;
 `;
 
-const NotificationPage : React.FC = ({}) => {
+const NotificationPage : React.FC = () => {
   
   const {sendNotification } = useNotification();
 

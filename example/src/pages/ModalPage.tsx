@@ -9,7 +9,7 @@ const Container = styled.div`
   row-gap: 15px;
 `;
 
-const ModalPage : React.FC = ({}) => {
+const ModalPage : React.FC = () => {
 
   // This is how I imagine that the hook is going to end
 //const {setIsOpen, updateCloseText, closeCallback, updateContent} = useModal();

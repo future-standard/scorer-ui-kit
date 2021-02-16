@@ -3,6 +3,7 @@ import Modal, {IModalProps} from '../Alerts/atom/Modal';
 
 const defaultModalProps : IModalProps = {
   isOpen: false,
+  onDismiss: () => {},
 }
 
 export type ModalContextType = {
@@ -22,7 +23,6 @@ const ModalProvider : React.FC = ({children}) => {
   const [modalProps, setProps] =   useState<IModalProps>(defaultModalProps);
 
   const setModalProps = (newProps: IModalProps) => {
-    console.log(`Updating modal isOpen [ModalContext]`);
     setProps(newProps);
   }
 

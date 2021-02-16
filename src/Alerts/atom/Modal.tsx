@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import ReactDom from 'react-dom';
 import styled, {css} from 'styled-components'
 import { resetButtonStyles } from '../../common';
@@ -74,28 +74,22 @@ const LightBox = styled.div`
 export interface IModalProps {
   isOpen: boolean;
   closeText?: string;
+  onDismiss: () => void;
   customComponent? : ReactElement;
 }
 
-const Modal : React.FC <IModalProps> = ({isOpen = false, closeText='', customComponent}) => {
-  const [showModal, setShowModal] = useState(isOpen);
+const Modal : React.FC <IModalProps> = ({isOpen = false, closeText='', onDismiss, customComponent}) => {
 
-  useEffect(() => {
-    setShowModal(isOpen)
-    console.log(`updating the change of hook [Modal useEffect]`);
-  }, [isOpen])
-
-  const closeModal = () => {
-    setShowModal(false);
-    console.log(`I'm closing [Modal Component]`);
-  }
+  const dissmiss = useCallback(() => {
+    onDismiss();
+  },[onDismiss]);
   
-  return ( showModal 
+  return ( isOpen 
     ? ReactDom.createPortal(
       <Container>
         <LightBox>
           <CloseButton
-            onClick = {() => closeModal()}
+            onClick = {() => dissmiss()}
             >
             CLOSE
             {/* {closeText ? closeText : null} */}
