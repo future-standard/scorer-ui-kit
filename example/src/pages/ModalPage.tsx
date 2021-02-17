@@ -40,7 +40,7 @@ const ModalPage: React.FC = () => {
   )
 
   const openTemplate1 = () => {
-    createModal('', templateModal);
+    createModal('', false, templateModal);
   }
 
   return (

@@ -1,8 +1,9 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, useRef } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components'
 import { resetButtonStyles } from '../../common';
 import Icon from '../../Icons/Icon';
+import { useClickOutside } from '../../hooks/';
 
 
 const Container = styled.div`
@@ -14,6 +15,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: hsl(0, 0%, 0%, 0.2);
 `;
 
 const CloseIcon = styled(Icon)`
@@ -69,16 +71,29 @@ const LightBox = styled.div`
   box-shadow: 0 10px 15px 0 hsla(205, 42%, 60%, 0.15);
   border: solid 1px hsl(0, 14%, 90%);
   background-color: hsl(0, 0%, 100%);
+  z-index: 99;
 `;
 
 export interface IModalProps {
   isOpen: boolean;
+  isCloseEnable?: boolean;
   closeText?: string;
   onDismiss: () => void;
   customComponent?: ReactElement;
 }
 
-const Modal: React.FC<IModalProps> = ({ isOpen = false, closeText = '', onDismiss, customComponent }) => {
+const Modal: React.FC<IModalProps> = ({ isOpen = false, isCloseEnable = true, closeText = '', onDismiss, customComponent }) => {
+
+  const lightBoxRef = useRef<HTMLDivElement>(null);
+
+  const onClickOutside = () => {
+    if(isCloseEnable) {
+      dissmiss();
+    }
+  };
+
+  useClickOutside(lightBoxRef, onClickOutside);
+  
 
   const dissmiss = useCallback(() => {
     onDismiss();
@@ -87,13 +102,14 @@ const Modal: React.FC<IModalProps> = ({ isOpen = false, closeText = '', onDismis
   return (isOpen
     ? ReactDom.createPortal(
       <Container>
-        <LightBox>
-          <CloseButton
-            onClick={() => dissmiss()}
-          >
-            {closeText ? closeText : null}
-            <CloseIcon icon='CloseCompact' size={15} color={'dimmed'} weight={'heavy'} />
-          </CloseButton>
+        <LightBox ref={lightBoxRef}>
+          {isCloseEnable
+            ? <CloseButton onClick={() => dissmiss()}>
+              {closeText ? closeText : 'CLOSE'}
+              <CloseIcon icon='CloseCompact' size={15} color={'dimmed'} weight={'heavy'} />
+            </CloseButton>
+            : null
+          }
           {customComponent}
         </LightBox>
       </Container>, document.body)

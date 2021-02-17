@@ -19,15 +19,19 @@ const useModal = () => {
     setModalProps(updateProps);
   }, [modalProps]);
 
-  const createModal = (closeText?: string, customComponent?: ReactElement) => {
+  const createModal = (closeText?: string, isCloseEnable?: boolean, customComponent?: ReactElement) => {
     const updateProps = {
       ...modalProps,
       isOpen: true,
       onDismiss,
     };
 
-    if (closeText) {
+    if ((closeText !== '') && (closeText !== undefined)) {
       updateProps.closeText = closeText;
+    }
+
+    if (isCloseEnable !== undefined) {
+      updateProps.isCloseEnable = isCloseEnable;
     }
 
     if (customComponent) {
