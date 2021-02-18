@@ -20,23 +20,15 @@ const useModal = () => {
   }, [modalProps]);
 
   const createModal = (closeText?: string, isCloseEnable?: boolean, customComponent?: ReactElement) => {
+    console.log('creating new modal');
     const updateProps = {
       ...modalProps,
       isOpen: true,
+      closeText,
+      isCloseEnable,
+      customComponent,
       onDismiss,
     };
-
-    if ((closeText !== '') && (closeText !== undefined)) {
-      updateProps.closeText = closeText;
-    }
-
-    if (isCloseEnable !== undefined) {
-      updateProps.isCloseEnable = isCloseEnable;
-    }
-
-    if (customComponent) {
-      updateProps.customComponent = customComponent;
-    }
 
     setModalProps(updateProps);
   }

@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components'
 import { resetButtonStyles } from '../../common';
 import Icon from '../../Icons/Icon';
-import { useClickOutside } from '../../hooks/';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 
 const Container = styled.div`

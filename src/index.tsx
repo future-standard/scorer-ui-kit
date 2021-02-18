@@ -8,7 +8,7 @@ import darkTheme from './themes/dark';
 import {
   AlertBar,
   Notification,
-  Modal,
+  ConfirmationModal,
 }from './Alerts';
 
 // Components - Form
@@ -118,6 +118,7 @@ export {
   // Alerts
   AlertBar,
   Notification,
+  ConfirmationModal,
 
   // LineUI
   LineUI,

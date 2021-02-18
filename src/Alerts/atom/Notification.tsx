@@ -52,7 +52,6 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
     animation: ${closeAnimation} ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
     `
   };
-  
 `;
 
 export const IconNames = {

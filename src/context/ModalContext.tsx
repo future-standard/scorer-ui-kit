@@ -3,17 +3,17 @@ import Modal, { IModalProps } from '../Alerts/atom/Modal';
 
 const defaultModalProps: IModalProps = {
   isOpen: false,
-  onDismiss: () => { },
+  onDismiss: () => null,
 }
 
-export type ModalContextType = {
-  modalProps: IModalProps,
-  setModalProps: (newProps: IModalProps) => void
+interface ModalContextType  {
+  modalProps: IModalProps;
+  setModalProps: (newProps: IModalProps) => void;
 };
 
 const defaultContext: ModalContextType = {
   modalProps: defaultModalProps,
-  setModalProps: (newProps: IModalProps) => { },
+  setModalProps: (newProps: IModalProps) => null,
 };
 
 const ModalContext = React.createContext<ModalContextType>(defaultContext);

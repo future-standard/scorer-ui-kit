@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { Button, useModal } from 'scorer-ui-kit';
+import { Button, useModal, ConfirmationModal } from 'scorer-ui-kit';
 
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
@@ -17,13 +17,35 @@ const ModalPage: React.FC = () => {
   // This is currently working hook
   const { setIsOpen, createModal } = useModal();
 
+
+  // Empty modal config
   const openEmptyModal = () => {
     createModal();
   }
 
-  const templateModal: ReactElement = (
+  //// ---- ConfirmationModal  Template ---- ////
+  const addPersonModal: ReactElement = <ConfirmationModal
+    title={'Add Person'}
+    message={`When adding a new profile it will take time to synchronize to all your Zones so it may take time for newly added people to be recognized.
+    
+    You can see the status of a Zone’s synchorization can be found in the Zones listing or the Zone view itself.`}
+    leftButtonText='Back'
+    leftButtonDesign='secondary'
+    leftButtonCallback={() => { console.log('Action Canceled [Back] clicked') }}
+    rightButtonDesign='primary'
+    rightButtonText='I understand'
+    rightButtonCallback={() => { console.log('Action Confirmed [I understand] clicked') }}
+  />
+
+  const openConfirmationModal = () => {
+    createModal('', false, addPersonModal)
+  }
+
+  /// --------- Custom Modal  Usage ----- ///
+
+  const custom: ReactElement = (
     <div>
-      <div>Is your order correctly?</div>
+      <div>Is your Pizza order correctly?</div>
       <Button
         onClick={() => {
           console.log('User accepted')
@@ -39,8 +61,8 @@ const ModalPage: React.FC = () => {
     </div>
   )
 
-  const openTemplate1 = () => {
-    createModal('', false, templateModal);
+  const customModal = () => {
+    createModal('', false, custom);
   }
 
   return (
@@ -55,12 +77,15 @@ const ModalPage: React.FC = () => {
       <Button
         design='secondary'
         onClick={
-          openTemplate1
+          openConfirmationModal
         }
       >Template Modal
         </Button>
       <Button
         design='secondary'
+        onClick={
+          customModal
+        }
       >Custom Modal
         </Button>
     </Container>
