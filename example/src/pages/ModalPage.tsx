@@ -129,16 +129,16 @@ const ModalPage: React.FC = () => {
      <CardCover>
      </CardCover>
      <CardContent>
-       <CardTitle>Welcome To Web Gate</CardTitle>
-       <p>This feature will allow you to remotely access and configure your SCORER Edge devices securely through our special secured VPN.</p>
-       <p>This is a paid feature that is billed by usage so please ensure that you have your payment details configured in SCORER Cloud.</p>
+       <CardTitle>Welcome To Modal</CardTitle>
+       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra porta mi, eget sollicitudin orci blandit eget. Morbi risus tortor.</p>
+       <p>Vivamus condimentum mi ac nibh faucibus, ac vehicula libero fermentum. Aenean et nisl non enim elementum vestibulum sed sit.</p>
       <ButtonGroup>
         <Button
           onClick={() => {
             console.log('Enabling Web Gate');
             setIsOpen(false);
           }}
-        >Enable Web Gate Now</Button>
+        >Enable Now</Button>
         <StyledButton
           onClick={() => {
             console.log(``);
