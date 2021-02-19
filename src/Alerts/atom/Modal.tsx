@@ -63,7 +63,7 @@ const CloseButton = styled.button<{ selected?: boolean }>`
 
 const LightBox = styled.div`
   position: relative;
-  height: 300px;
+  min-height: 300px;
   width: 580px;
   margin: 27px 0 0;
   padding: 30px 40px;

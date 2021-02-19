@@ -61,9 +61,9 @@ const ModalPage: React.FC = () => {
     </div>
   )
 
-  const customModal = () => {
-    createModal('', false, custom);
-  }
+  // const customModal = () => {
+  //   createModal('', false, custom);
+  // }
 
   return (
     <Container>
@@ -81,13 +81,13 @@ const ModalPage: React.FC = () => {
         }
       >Template Modal
         </Button>
-      <Button
+      {/* <Button
         design='secondary'
         onClick={
           customModal
         }
       >Custom Modal
-        </Button>
+        </Button> */}
     </Container>
   );
 }
