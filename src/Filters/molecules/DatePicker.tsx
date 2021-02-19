@@ -418,33 +418,7 @@ const DatePicker : React.FC<IProps> = (props) => {
       </CalBody>
 
     </CalendarArea>
-      {/* { format(selectedRange.start, "yyyy/MM/dd HH:mm:ss.SSS") } */}
 
-    {/*}
-    <button onClick={ () => dateMode === 'single' ? setDateMode('interval') : setDateMode('single') }>Mode: {dateMode}</button>
-    <button onClick={ () => timeMode === 'single' ? setTimeMode('interval') : setTimeMode('single') }>Mode: {timeMode}</button>
-    <button onClick={ () => setTimeMode('off') }>No Time</button>
-
-    <button onClick={ () => setFocusedMonth( now ) }>This Month</button>
-
-    <div>From: { format(selectedRange.start, "yyyy/MM/dd HH:mm:ss.SSS") }</div>
-    {timeMode != 'off' && <div>
-      <input type="number" min="0" max="23" value={ clockFormatNumber(timeRange.start.hours) } onChange={ ({target}) => { updateTimeInDate( 'start', 'hours', parseInt(target.value) ) }} />
-      <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.start.minutes) } onChange={ ({target}) => { updateTimeInDate( 'start', 'minutes', parseInt(target.value) ) }} />
-    </div>}
-
-    <div>
-      {dateMode === 'interval' && <div>To: { format(selectedRange.end, "yyyy/MM/dd HH:mm:ss.SSS") }</div>}
-      {timeMode == 'interval' && <div>
-        <input type="number" min="0" max="24" value={ clockFormatNumber(timeRange.end.hours) } onChange={ ({target}) => { updateTimeInDate( 'end', 'hours', parseInt(target.value) ) }} />
-        <input type="number" min="0" max="59" value={ clockFormatNumber(timeRange.end.minutes) } onChange={ ({target}) => { updateTimeInDate( 'end', 'minutes', parseInt(target.value) ) }} />
-      </div>}
-    </div>
-
-    <div>Hover: { hoverDay && format(hoverDay, "yyyy/MM/dd") }</div>
-
-
-    */}
 
   </Container>
 
