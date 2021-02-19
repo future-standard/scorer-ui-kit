@@ -33,6 +33,7 @@ const Item = styled.div`
 
 const IconWrap = styled.div`
   flex: 0 0 40px;
+  padding-top: 2px;
 `
 
 const Input = styled.input<{ readOnly? : boolean }>`
@@ -104,7 +105,7 @@ const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, h
 
       {hasDate && <Item>
         <IconWrap>
-          <Icon icon={'Left'} color={'dimmed'} size={10} />
+          <Icon icon={'Date'} color={'dimmed'} size={14} weight={'regular'} />
         </IconWrap>
         <InputWrap>
           <Input type="text" readOnly={ true } value={ format(date || new Date(), "yyyy/MM/dd") } onChange={ ({target}) => setDateCallback() } />
@@ -114,7 +115,7 @@ const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, h
 
       {hasTime && <Item>
         <IconWrap>
-          <Icon icon={'Left'} color={'dimmed'} size={10} />
+          <Icon icon={'Time'} color={'dimmed'} size={14} weight={'regular'} />
         </IconWrap>
         <InputWrap>
           <Input type="number" min="0" max={ allowAfterMidnight ? 24: 23 } value={ clockFormatNumber(time.hours || 0) } onChange={ ({target}) => setTimeCallback( 'hours', parseInt(target.value)) } />
