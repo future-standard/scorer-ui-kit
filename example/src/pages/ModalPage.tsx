@@ -5,7 +5,9 @@ import { Button,
   useModal,
   ConfirmationModal,
   resetButtonStyles,
+  useNotification,
 } from 'scorer-ui-kit';
+import { INotificationProps } from '../../../dist/Alerts/atom/Notification';
 
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
@@ -124,6 +126,13 @@ const ModalPage: React.FC = () => {
 
   /// --------- Custom Modal  Usage ----- ///
 
+  // Notification to tell the user it was updates
+  const {sendNotification } = useNotification();
+  const notiInfoSettings : INotificationProps = {
+    type: 'info',
+    message: 'You have enabled that requested process',
+  }
+
   const custom: ReactElement = (
    <CardModal>
      <CardCover>
@@ -135,13 +144,13 @@ const ModalPage: React.FC = () => {
       <ButtonGroup>
         <Button
           onClick={() => {
-            console.log('Enabling Web Gate');
+            sendNotification(notiInfoSettings);
             setIsOpen(false);
           }}
         >Enable Now</Button>
         <StyledButton
           onClick={() => {
-            console.log(``);
+            console.log(`User didn't enable`);
             setIsOpen(false);
           }}
         >Enable Later</StyledButton>
