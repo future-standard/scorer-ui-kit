@@ -16,6 +16,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background-color: hsl(0, 0%, 0%, 0.2);
+  font-family: ${({ theme }) => theme.fontFamily.ui};
 `;
 
 const CloseIcon = styled(Icon)`
@@ -24,7 +25,6 @@ const CloseIcon = styled(Icon)`
 
 const CloseButton = styled.button<{ selected?: boolean }>`
   ${resetButtonStyles};
-  font-family: ${({ theme }) => theme.fontFamily.ui};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,40 +60,59 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
-
-const LightBox = styled.div`
+const LightBox = styled.div<{ padding?: string, width?: string, borderRadius?: string, border?: string }>`
   position: relative;
   min-height: 300px;
-  width: 580px;
   margin: 27px 0 0;
-  padding: 30px 40px;
-  border-radius: 10px;
   box-shadow: 0 10px 15px 0 hsla(205, 42%, 60%, 0.15);
-  border: solid 1px hsl(0, 14%, 90%);
   background-color: hsl(0, 0%, 100%);
   z-index: 99;
+  width: ${({ width }) => width ? width : `580px`};
+  padding: ${({ padding }) => padding ? padding : `30px 40px`};
+  border-radius: ${({ borderRadius }) => borderRadius ? borderRadius : `10px`};
+  border: ${({border}) => border ? border : `solid 1px hsl(0, 14%, 90%)`};
 `;
+
+// export interface IModalStyleProps {
+
+// }
 
 export interface IModalProps {
   isOpen: boolean;
   isCloseEnable?: boolean;
   closeText?: string;
-  onDismiss: () => void;
+  padding?: string;
+  width?: string;
+  borderRadius? :string;
+  border? :string;
+  boxShadow?: string,
   customComponent?: ReactElement;
+  onDismiss: () => void;
 }
 
-const Modal: React.FC<IModalProps> = ({ isOpen = false, isCloseEnable = true, closeText = '', onDismiss, customComponent }) => {
+const Modal: React.FC<IModalProps> = ({
+  isOpen = false,
+  isCloseEnable = true,
+  closeText = '',
+  padding = '',
+  width = '',
+  borderRadius,
+  border = '',
+  boxShadow = '',
+  customComponent,
+  onDismiss,
+}) => {
 
   const lightBoxRef = useRef<HTMLDivElement>(null);
 
   const onClickOutside = () => {
-    if(isCloseEnable) {
+    if (isCloseEnable) {
       dissmiss();
     }
   };
 
   useClickOutside(lightBoxRef, onClickOutside);
-  
+
 
   const dissmiss = useCallback(() => {
     onDismiss();
@@ -102,7 +121,7 @@ const Modal: React.FC<IModalProps> = ({ isOpen = false, isCloseEnable = true, cl
   return (isOpen
     ? ReactDom.createPortal(
       <Container>
-        <LightBox ref={lightBoxRef}>
+        <LightBox ref={lightBoxRef} width={width} padding={padding} borderRadius={borderRadius} border={border}>
           {isCloseEnable
             ? <CloseButton onClick={() => dissmiss()}>
               {closeText ? closeText : 'CLOSE'}

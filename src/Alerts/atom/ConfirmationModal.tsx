@@ -4,9 +4,7 @@ import Button from '../../Form/atoms/Button';
 import { TypeButtonDesigns } from '../../Form';
 import { useModal } from '../../hooks';
 
-const Container = styled.div`
-  font-family: ${({ theme }) => theme.fontFamily.ui };
-`;
+const Container = styled.div``;
 
 const Title = styled.div`
   text-shadow: 0 0 10px hsla(0, 0%, 100%, 0.8);
