@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import GhostLogo from '../svg/ghost-logo.svg';
+import {LoginScreen} from '../svg';
+
 import { Button,
   useModal,
   ConfirmationModal,
@@ -9,6 +11,8 @@ import { Button,
 } from 'scorer-ui-kit';
 import { INotificationProps } from '../../../dist/Alerts/atom/Notification';
 
+const widthDesk = 480;
+
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
   display: grid;
@@ -16,21 +20,23 @@ const Container = styled.div`
   row-gap: 15px;
 `;
 
-
 const LogoBackground = styled.img`
-  width: 480px;
-  height: 210px;
-  margin: 0 0 31px;
-  padding: 75.5px 80px 75.5px 100px;
+  position: absolute;
+  top: -545px;
+  left: -570px;
+  width: 1076px;
+  height: auto;
   object-fit: contain;
-  opacity: 0.2;
   mix-blend-mode: overlay;
 `;
 
-const CenteredLogo = styled.div`
+const Logo = styled(LoginScreen)`
   width: 300px;
-  height: 59px;
   object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 65%;
+  transform: translate(-50%, -50%);
 `;
 
 const StyledButton = styled.button`
@@ -53,14 +59,13 @@ const ButtonGroup = styled.div`
   }
 `;
 
-const NotSureWhere = styled.div`
-  background-image: linear-gradient(127deg, #ffffff 19%, rgba(255, 255, 255, 0.36) 87%);
-`;
-
 const CardCover = styled.div`
-  height: 210px;
-  opacity: 0.16;
-  background-image: linear-gradient(114deg, hsl(250, 60%, 62%), hsl(0, 46%, 54%));
+    height: 210px;
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    z-index:99;
+    background-image: linear-gradient(114deg, hsl(250, 60%, 62%), hsl(0, 46%, 54%));
+    overflow: hidden;
   `;
 
 const CardTitle = styled.div`
@@ -89,7 +94,7 @@ const CardContent = styled.div`
 
 const CardModal = styled.div`
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
 `;
 
 const ModalPage: React.FC = () => {
@@ -136,6 +141,8 @@ const ModalPage: React.FC = () => {
   const custom: ReactElement = (
    <CardModal>
      <CardCover>
+        <Logo/>
+        <LogoBackground src={GhostLogo}/>
      </CardCover>
      <CardContent>
        <CardTitle>Welcome To Modal</CardTitle>
@@ -164,8 +171,8 @@ const ModalPage: React.FC = () => {
       false,
       '480px',
       '0','5px',
-      'solid 1px #e8e8e8',
-      '0 20px 30px 0 rgba(51, 70, 84, 0.15)',
+      'none',
+      '0 20px 30px 0 hsla(205, 24%, 26%, 0.15)',
       custom)
       ;
   }
