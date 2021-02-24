@@ -60,7 +60,7 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
-const LightBox = styled.div<{ padding?: string, width?: string, borderRadius?: string, border?: string }>`
+const LightBox = styled.div<{ padding?: boolean, width?: string}>`
   position: relative;
   min-height: 300px;
   margin: 27px 0 0;
@@ -68,24 +68,16 @@ const LightBox = styled.div<{ padding?: string, width?: string, borderRadius?: s
   background-color: hsl(0, 0%, 100%);
   z-index: 99;
   width: ${({ width }) => width ? width : `580px`};
-  padding: ${({ padding }) => padding ? padding : `30px 40px`};
-  border-radius: ${({ borderRadius }) => borderRadius ? borderRadius : `10px`};
-  border: ${({border}) => border ? border : `solid 1px hsl(0, 14%, 90%)`};
+  padding: ${({ padding }) => padding ? `30px 40px` : `0`};
+  border-radius: 5px;
 `;
-
-// export interface IModalStyleProps {
-
-// }
 
 export interface IModalProps {
   isOpen: boolean;
   isCloseEnable?: boolean;
   closeText?: string;
-  padding?: string;
   width?: string;
-  borderRadius? :string;
-  border? :string;
-  boxShadow?: string,
+  padding?: boolean;
   customComponent?: ReactElement;
   onDismiss: () => void;
 }
@@ -94,11 +86,8 @@ const Modal: React.FC<IModalProps> = ({
   isOpen = false,
   isCloseEnable = true,
   closeText = '',
-  padding = '',
   width = '',
-  borderRadius,
-  border = '',
-  boxShadow = '',
+  padding = true,
   customComponent,
   onDismiss,
 }) => {
@@ -121,7 +110,7 @@ const Modal: React.FC<IModalProps> = ({
   return (isOpen
     ? ReactDom.createPortal(
       <Container>
-        <LightBox ref={lightBoxRef} width={width} padding={padding} borderRadius={borderRadius} border={border}>
+        <LightBox ref={lightBoxRef} width={width} padding={padding}>
           {isCloseEnable
             ? <CloseButton onClick={() => dissmiss()}>
               {closeText ? closeText : 'CLOSE'}

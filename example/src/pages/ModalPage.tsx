@@ -11,8 +11,6 @@ import { Button,
 } from 'scorer-ui-kit';
 import { INotificationProps } from '../../../dist/Alerts/atom/Notification';
 
-const widthDesk = 480;
-
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
   display: grid;
@@ -126,7 +124,7 @@ const ModalPage: React.FC = () => {
   />
 
   const openConfirmationModal = () => {
-    createModal('', false,'','','','','', addPersonModal);
+    createModal('', false,'',true, addPersonModal);
   }
 
   /// --------- Custom Modal  Usage ----- ///
@@ -167,12 +165,11 @@ const ModalPage: React.FC = () => {
   )
 
   const customModal = () => {
-    createModal('',
+    createModal(
+      '',
       false,
       '480px',
-      '0','5px',
-      'none',
-      '0 20px 30px 0 hsla(205, 24%, 26%, 0.15)',
+      false,
       custom)
       ;
   }

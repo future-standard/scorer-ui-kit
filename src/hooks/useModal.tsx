@@ -1,7 +1,6 @@
 import { ReactElement, useCallback, useContext, useEffect } from 'react';
 import { ModalContext } from '../context/ModalContext';
 import { IModalProps } from '../Alerts/atom/Modal';
-import { stringify } from 'querystring';
 
 const useModal = () => {
   const { modalProps, setModalProps } = useContext(ModalContext);
@@ -24,10 +23,7 @@ const useModal = () => {
     closeText?: string,
     isCloseEnable?: boolean,
     width?: string,
-    padding?: string,
-    borderRadius? :string,
-    border? :string,
-    boxShadow?: string,
+    padding?: boolean,
     customComponent?: ReactElement
     ) => {
     console.log('creating new modal');
@@ -38,9 +34,6 @@ const useModal = () => {
       isCloseEnable,
       width,
       padding,
-      borderRadius,
-      border,
-      boxShadow,
       customComponent,
       onDismiss,
     };
