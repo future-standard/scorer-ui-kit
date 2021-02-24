@@ -6,10 +6,10 @@ const useModal = () => {
   const { modalProps, setModalProps } = useContext(ModalContext);
 
   const onDismiss = useCallback(() => {
-    setIsOpen(false);
+    setModalOpen(false);
   }, []);
 
-  const setIsOpen = useCallback((newStatus: boolean) => {
+  const setModalOpen = useCallback((newStatus: boolean) => {
     if (newStatus === undefined) { return };
 
     const updateProps: IModalProps = {
@@ -43,7 +43,7 @@ const useModal = () => {
 
   return {
     createModal,
-    setIsOpen,
+    setModalOpen,
   }
 };
 

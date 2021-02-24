@@ -59,16 +59,16 @@ const ConfirmationModal: React.FC<IConfirmationModal> = ({
   rightButtonCallback = () => { },
 }) => {
 
-  const { setIsOpen } = useModal();
+  const { setModalOpen } = useModal();
 
   const handlePrimaryBtn = () => {
     leftButtonCallback();
-    setIsOpen(false);
+    setModalOpen(false);
   }
 
   const handleSecondaryBtn = () => {
     rightButtonCallback();
-    setIsOpen(false);
+    setModalOpen(false);
   }
 
   return (

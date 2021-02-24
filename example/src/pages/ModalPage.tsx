@@ -98,10 +98,10 @@ const CardModal = styled.div`
 const ModalPage: React.FC = () => {
 
   // This is how I imagine that the hook is going to end
-  //const {setIsOpen, updateCloseText, closeCallback, updateContent} = useModal();
+  //const {setModalOpen, updateCloseText, closeCallback, updateContent} = useModal();
 
   // This is currently working hook
-  const { setIsOpen, createModal } = useModal();
+  const { setModalOpen, createModal } = useModal();
 
 
   // Empty modal config
@@ -150,13 +150,13 @@ const ModalPage: React.FC = () => {
         <Button
           onClick={() => {
             sendNotification(notiInfoSettings);
-            setIsOpen(false);
+            setModalOpen(false);
           }}
         >Enable Now</Button>
         <StyledButton
           onClick={() => {
             console.log(`User didn't enable`);
-            setIsOpen(false);
+            setModalOpen(false);
           }}
         >Enable Later</StyledButton>
       </ButtonGroup>
