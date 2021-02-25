@@ -8,8 +8,8 @@ import { Button,
   ConfirmationModal,
   resetButtonStyles,
   useNotification,
+  INotificationProps,
 } from 'scorer-ui-kit';
-import { INotificationProps } from '../../../dist/Alerts/atom/Notification';
 
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
@@ -109,6 +109,23 @@ const ModalPage: React.FC = () => {
     createModal();
   }
 
+
+  const dismissNotification : INotificationProps = {
+      type: 'info',
+      message: 'The modal was dismissed by the user',
+    };
+
+  const dismissCustom : ReactElement = <h2> This is a dismiss example</h2>
+  // Empty modal with dismiss alert
+  const openDismissedModal = () => {
+    createModal({
+        customComponent: dismissCustom,
+        dismissCallback: () => {
+          sendNotification(dismissNotification);
+        }
+    });
+  }
+
   //// ---- ConfirmationModal  Template ---- ////
   const addPersonModal: ReactElement = <ConfirmationModal
     title={'Add Person'}
@@ -124,7 +141,7 @@ const ModalPage: React.FC = () => {
   />
 
   const openConfirmationModal = () => {
-    createModal('', false,'',true, addPersonModal);
+    createModal({isCloseEnable: false, customComponent: addPersonModal});
   }
 
   /// --------- Custom Modal  Usage ----- ///
@@ -165,13 +182,12 @@ const ModalPage: React.FC = () => {
   )
 
   const customModal = () => {
-    createModal(
-      '',
-      false,
-      '480px',
-      false,
-      custom)
-      ;
+    createModal({
+      isCloseEnable: false,
+      width: '480px',
+      padding: false,
+      customComponent: custom,
+    })
   }
 
   return (
@@ -182,7 +198,13 @@ const ModalPage: React.FC = () => {
           openEmptyModal
         }
       >Empty Modal
-        </Button>
+      </Button>
+      <Button
+        design='secondary'
+        onClick={
+          openDismissedModal
+        }> Dissmis Modal
+      </Button>
       <Button
         design='secondary'
         onClick={

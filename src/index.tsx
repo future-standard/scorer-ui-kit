@@ -9,6 +9,7 @@ import {
   AlertBar,
   Notification,
   ConfirmationModal,
+  INotificationProps,
 }from './Alerts';
 
 // Components - Form
@@ -74,6 +75,7 @@ import {
   useCopyToClipboard,
   useModal,
   useNotification,
+  IModal,
 } from './hooks';
 
 import {
@@ -201,5 +203,10 @@ export {
   useNotification,
   ModalContext,
   ModalProvider,
-  useModal,
+  useModal
+};
+
+export type { 
+  IModal,
+  INotificationProps,
 };

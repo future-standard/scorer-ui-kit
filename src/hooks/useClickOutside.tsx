@@ -1,12 +1,12 @@
 import react, {useEffect, useRef } from 'react';
 
 export type outClickType = (eve: MouseEvent) => void;
-export function useClickOutside(elRef : any , callback : outClickType) {
+export function useClickOutside(elRef : any , elCallback : outClickType) {
 
-  if(!callback) {return};
+  if(!elCallback) {return};
 
-  const callbackRef = useRef<outClickType>(callback);
-  callbackRef.current = callback;
+  const callbackRef = useRef<outClickType>(elCallback);
+  callbackRef.current = elCallback;
   
   useEffect(() => {
     const handleClickOutside = (eve : MouseEvent)  => {
@@ -19,5 +19,5 @@ export function useClickOutside(elRef : any , callback : outClickType) {
     return () => {
       document.removeEventListener('click',  handleClickOutside, true);
     }
-  }, [callback, elRef])
+  }, [elCallback, elRef])
 }

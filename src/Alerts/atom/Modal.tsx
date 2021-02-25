@@ -80,6 +80,7 @@ export interface IModalProps {
   padding?: boolean;
   customComponent?: ReactElement;
   onDismiss: () => void;
+  dismissCallback?: () => void;
 }
 
 const Modal: React.FC<IModalProps> = ({
@@ -90,20 +91,25 @@ const Modal: React.FC<IModalProps> = ({
   padding = true,
   customComponent,
   onDismiss,
+  dismissCallback,
 }) => {
 
   const lightBoxRef = useRef<HTMLDivElement>(null);
-
   const onClickOutside = () => {
     if (isCloseEnable) {
-      dissmiss();
+      if(dismissCallback) {
+        dismissCallback();
+      }
+      dismiss();
     }
   };
 
   useClickOutside(lightBoxRef, onClickOutside);
 
-
-  const dissmiss = useCallback(() => {
+  const dismiss = useCallback(() => {
+    if(dismissCallback) {
+      dismissCallback();
+    }
     onDismiss();
   }, [onDismiss]);
 
@@ -112,7 +118,7 @@ const Modal: React.FC<IModalProps> = ({
       <Container>
         <LightBox ref={lightBoxRef} width={width} padding={padding}>
           {isCloseEnable
-            ? <CloseButton onClick={() => dissmiss()}>
+            ? <CloseButton onClick={() => dismiss()}>
               {closeText ? closeText : 'CLOSE'}
               <CloseIcon icon='CloseCompact' size={15} color={'dimmed'} weight={'heavy'} />
             </CloseButton>

@@ -113,7 +113,7 @@ const MainMessage = styled.div`
   flex-grow: 2;
 `;
 
-export interface INotificationProps {
+export type INotificationProps = {
   type: AlertType;
   message: string;
   actionTextButton?: string;
