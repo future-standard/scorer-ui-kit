@@ -97,9 +97,6 @@ const CardModal = styled.div`
 
 const ModalPage: React.FC = () => {
 
-  // This is how I imagine that the hook is going to end
-  //const {setModalOpen, updateCloseText, closeCallback, updateContent} = useModal();
-
   // This is currently working hook
   const { setModalOpen, createModal } = useModal();
 
