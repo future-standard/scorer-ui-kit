@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useRef } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components'
 import { resetButtonStyles } from '../../common';
-import Icon from '../../Icons/Icon';
+import Icon, {IconWrapper} from '../../Icons/Icon';
 import { useClickOutside } from '../../hooks/useClickOutside';
 
 
@@ -19,9 +19,7 @@ const Container = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
 `;
 
-const CloseIcon = styled(Icon)`
-  display: flex;
-`;
+const CloseIcon = styled(Icon)``;
 
 const CloseButton = styled.button<{ selected?: boolean }>`
   ${resetButtonStyles};
@@ -35,7 +33,8 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   font-size: 14px;
   font-weight: 500;
 
-  ${CloseIcon} {
+  ${IconWrapper} {
+    display: flex;
     margin-left: 12px;
   }
   ${({ selected = false }) => selected && css`

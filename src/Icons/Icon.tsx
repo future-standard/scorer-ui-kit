@@ -13,18 +13,14 @@ const IconWrapper = styled.div<{color:string}>`
 
 export {IconSVGs, IconWrapper};
 
-// Added Class name because close Icon seems not to be perfectly square
-// had to use flex to align it to its center but didn't wanted to do it for the base component
-
 interface IProps {
   icon: string;
   size?: number;
   weight?: 'light' | 'regular' | 'heavy'
   color?: ISvgIcons['color']
-  className?: string;
 }
 
-const Icon : React.FC<IProps> = ({icon, size = 24, weight = 'regular', color = 'mono', className}) => {
+const Icon : React.FC<IProps> = ({icon, size = 24, weight = 'regular', color = 'mono'}) => {
 
   const getKeyValue = <U extends keyof T, T extends object>(key: U) => (obj: T) => obj[key];
 
@@ -32,7 +28,7 @@ const Icon : React.FC<IProps> = ({icon, size = 24, weight = 'regular', color = '
   const IconSVG = getKeyValue<keyof any, any>(icon)(IconSVGs);
   if(icon in IconSVGs && IconSVG){
 
-    return <IconWrapper className={className} color={color}>
+    return <IconWrapper color={color}>
       {IconSVG({ size: size, weight: iconWeight, color: '#666' })}
     </IconWrapper>;
 
