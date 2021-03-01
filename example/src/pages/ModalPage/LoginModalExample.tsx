@@ -55,7 +55,7 @@ const LoginModalExample : React.FC = () => {
     if(params.username === 'user' && params.password === 'fakepass123') {
       return true;
     }
-    throw Error(`The username: ${params.username}  and password provider does not match`)
+    throw Error(`The username: ${params.username}  and password provided does not match`)
   },[]);
 
   const onSubmit = useCallback(async (params: { username: string; password: string }) => {
