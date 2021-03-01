@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
 import ReactDom from 'react-dom';
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, {IconWrapper} from '../../Icons/Icon';
 import { useClickOutside } from '../../hooks/useClickOutside';
@@ -110,24 +110,24 @@ const Modal: React.FC<IModalProps> = ({
       dismissCallback();
     }
     onDismiss();
-  }, [onDismiss]);
+  }, [onDismiss, dismissCallback]);
 
   return (isOpen
     ? ReactDom.createPortal(
       <Container>
         <LightBox ref={lightBoxRef} width={width} padding={padding}>
           {isCloseEnable
-            ? <CloseButton onClick={() => dismiss()}>
-              {closeText ? closeText : 'CLOSE'}
-              <CloseIcon icon='CloseCompact' size={15} color={'dimmed'} weight={'heavy'} />
-            </CloseButton>
-            : null
-          }
+            ? 
+              <CloseButton onClick={() => dismiss()}>
+                {closeText ? closeText : 'CLOSE'}
+                <CloseIcon icon='CloseCompact' size={15} color='dimmed' weight='heavy' />
+              </CloseButton>
+            : null}
           {customComponent}
         </LightBox>
       </Container>, document.body)
     : null
   );
-}
+};
 
 export default Modal;

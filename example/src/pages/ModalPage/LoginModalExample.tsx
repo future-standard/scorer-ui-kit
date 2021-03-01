@@ -50,8 +50,11 @@ const LoginModalExample : React.FC = () => {
 
   const { setModalOpen } = useModal();
   
-  // Fake login for the example that always fails.
+  // Fake login for the example
   const onLogin = useCallback((params: { username: string; password: string })  => {
+    if(params.username === 'user' && params.password === 'fakepass123') {
+      return true;
+    }
     throw Error(`The username: ${params.username}  and password provider does not match`)
   },[]);
 

@@ -35,7 +35,7 @@ import {
 import {
   DatePicker,
   FilterDropdownContainer
-} from './Filters'
+} from './Filters';
 
 import Icon, {IconSVGs} from  './Icons/Icon';
 // Components - Line UI

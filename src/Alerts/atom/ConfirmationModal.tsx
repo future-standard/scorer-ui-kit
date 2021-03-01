@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import Button from '../../Form/atoms/Button';
 import { TypeButtonDesigns } from '../../Form';
 import { useModal } from '../../hooks';
@@ -64,12 +64,12 @@ const ConfirmationModal: React.FC<IConfirmationModal> = ({
   const handlePrimaryBtn = () => {
     leftButtonCallback();
     setModalOpen(false);
-  }
+  };
 
   const handleSecondaryBtn = () => {
     rightButtonCallback();
     setModalOpen(false);
-  }
+  };
 
   return (
     <Container>
@@ -78,17 +78,19 @@ const ConfirmationModal: React.FC<IConfirmationModal> = ({
       <ButtonsGroup>
         <StyledButton
           design={leftButtonDesign}
-          onClick={handlePrimaryBtn}>
+          onClick={handlePrimaryBtn}
+        >
           {leftButtonText}
         </StyledButton>
         <StyledButton
           design={rightButtonDesign}
-          onClick={handleSecondaryBtn}>
+          onClick={handleSecondaryBtn}
+        >
           {rightButtonText}
         </StyledButton>
       </ButtonsGroup>
     </Container>
   );
-}
+};
 
 export default ConfirmationModal;

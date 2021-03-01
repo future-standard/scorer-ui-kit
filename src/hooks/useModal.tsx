@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useContext, useEffect } from 'react';
+import { ReactElement, useCallback, useContext} from 'react';
 import { ModalContext } from '../context/ModalContext';
 import { IModalProps } from '../Alerts/atom/Modal';
 
@@ -18,19 +18,19 @@ export type IModal = {
 export const useModal = () => {
   const { modalProps, setModalProps } = useContext(ModalContext);
 
-  const onDismiss = useCallback(() => {
-    setModalOpen(false);
-  }, [modalProps]);
-
   const setModalOpen = useCallback((newStatus: boolean) => {
-    if (newStatus === undefined) { return };
+    if (newStatus === undefined) { return;}
 
     const updateProps: IModalProps = {
       ...modalProps,
       isOpen: newStatus,
-    }
+    };
     setModalProps(updateProps);
-  }, [modalProps]);
+  }, [modalProps, setModalProps]);
+
+  const onDismiss = useCallback(() => {
+    setModalOpen(false);
+  }, [setModalOpen]);
 
   const createModal = useCallback((modal?: IModal) => {
 
@@ -50,10 +50,10 @@ export const useModal = () => {
     };
 
     setModalProps(updateProps);
-  },[modalProps])
+  }, [onDismiss, setModalProps]);
 
   return {
     createModal,
     setModalOpen,
-  }
+  };
 };
