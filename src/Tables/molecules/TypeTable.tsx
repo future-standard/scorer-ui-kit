@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components';
 
 import TypeTableRow from '../atoms/TypeTableRow';
 import Checkbox from '../../Form/atoms/Checkbox';
-import { TypeCellAlignment, ITableColumnConfig, ITypeTableData } from '..';
+import { TypeCellAlignment, ITableColumnConfig, ITypeTableData, IRowData } from '..';
 
 const Container = styled.div`
 
@@ -49,17 +49,24 @@ interface IProps {
   hasStatus?: boolean
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
-  selectCallback? : any
-  toggleAllCallback? : any
+  selectCallback? : (checked:boolean, id?: string | number)=>void
+  toggleAllCallback? : (checked: boolean)=>void
 }
 
-const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
+const TypeTable : React.FC<IProps> = ({
+  columnConfig,
+  selectable,
+  selectCallback = ()=>{},
+  toggleAllCallback = ()=>{},
+  rows = [],
+  hasStatus = false,
+  hasThumbnail = false,
+  hasTypeIcon = false
+}) => {
   const [allChecked, setAllChecked] = useState(false);
   const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
-    if(toggleAllCallback){ toggleAllCallback(checked); }
+    toggleAllCallback(checked);
   }, [toggleAllCallback]);
-
-  const isChecked = (currentValue : any) => currentValue._checked === true;
 
   useEffect(() => {
     setAllChecked(rows.every(isChecked) && rows.length > 0);
@@ -92,3 +99,7 @@ const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback
 };
 
 export default TypeTable;
+
+function isChecked({_checked=false} : IRowData){
+  return _checked === true;
+}
