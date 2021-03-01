@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
