@@ -1,5 +1,5 @@
-import React, { InputHTMLAttributes } from 'react';
-import Input from '../atoms/Input';
+import React from 'react';
+import Input, { InputProps } from '../atoms/Input';
 import Label from '../atoms/Label';
 import { TypeFieldState } from '..';
 
@@ -10,7 +10,7 @@ interface OwnProps {
   feedbackMessage?: string
 }
 
-type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
+type Props = OwnProps & InputProps
 
 
 const TextField : React.FC<Props> = ({ name, label, fieldState='default', feedbackMessage, type:_type , ...props }) => {
