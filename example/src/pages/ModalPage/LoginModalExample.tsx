@@ -104,7 +104,7 @@ const LoginModalExample : React.FC = () => {
     const areInputsValid = validateFields(form);
   
     // if inputs are not valid return to allow user to correct before submiting
-    if(!areInputsValid) { return }
+    if(!areInputsValid) { return; }
 
     const loginSuccess = await onSubmit(form);
 

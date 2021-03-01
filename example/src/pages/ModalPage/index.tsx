@@ -193,6 +193,9 @@ const ModalPage: React.FC = () => {
   /**
    * Please review this example inside the LoginModalExample Component
    * Note the usage of "setModalOpen" with the useModal hook
+   * This form will only log with
+   * username: user
+   * password: 'fakepass123'
    */
   const FormModal: ReactElement = <LoginModalExample />
 
