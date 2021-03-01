@@ -65,6 +65,7 @@ const Container = styled.div<{ open : boolean }>`
     border-right: 1px solid ${theme.styles.global.mainMenu.lines.backgroundColor};
     transition: flex-basis ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
     flex-basis: ${open ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed };
+    flex-shrink: 0;
 
     ${LogoType}{
       transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
