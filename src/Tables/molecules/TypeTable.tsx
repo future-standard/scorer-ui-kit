@@ -56,37 +56,39 @@ interface IProps {
 const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
 
   const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
-    if(toggleAllCallback){ toggleAllCallback(checked) }
-  }, [])
+    if(toggleAllCallback){ toggleAllCallback(checked); }
+  }, [toggleAllCallback]);
 
   const isChecked = (currentValue : any) => currentValue._checked === true;
 
   const allChecked = useCallback(() => {
     return rows.every(isChecked);
-  }, [rows])
+  }, [rows]);
 
-  return <Container>
-    <TableContainer>
-      <HeaderRow>
-        {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={ allChecked() } onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
-        {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
-        {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
-        {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
+  return (
+    <Container>
+      <TableContainer>
+        <HeaderRow>
+          {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={ allChecked() } onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
+          {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
+          {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
+          {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
 
-        {columnConfig.map((column, key) => {
-          const {alignment, header, hasCopyButton} = column;
-          return <HeaderItem key={key} alignment={alignment} hasCopyButton={hasCopyButton}>{header}</HeaderItem>;
+          {columnConfig.map((column, key) => {
+            const {alignment, header, hasCopyButton} = column;
+            return <HeaderItem key={key} alignment={alignment} hasCopyButton={hasCopyButton}>{header}</HeaderItem>;
+          })}
+        </HeaderRow>
+
+        {rows.map((rowData, key) => {
+          const isLastRow = (rows.length - 1 === key) ? true : false;
+          return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
         })}
-      </HeaderRow>
 
-      {rows.map((rowData, key) => {
-        const isLastRow = (rows.length - 1 === key) ? true : false;
-        return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
-      })}
+      </TableContainer>
 
-    </TableContainer>
-
-  </Container>;
+    </Container>
+  );
 };
 
 export default TypeTable;
