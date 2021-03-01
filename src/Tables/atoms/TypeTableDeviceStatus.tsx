@@ -21,7 +21,7 @@ interface IProps {
 }
 
 const TypeTableDeviceStatus : React.FC<IProps> = ({status = 'neutral'}) => {
-  return <Container status={status}></Container>;
+  return <Container status={status} />;
 };
 
 export default TypeTableDeviceStatus;

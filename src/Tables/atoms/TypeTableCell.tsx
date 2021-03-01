@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
@@ -111,16 +111,17 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false
   // No divider on the last row.
   hideDivider = isLastRow ? true : hideDivider;
 
-  const copyValue = useCallback((copyText : string) => {
-    useCopyToClipboard(copyText);
-  }, [useCopyToClipboard]);
+  const {copyToClipboard} = useCopyToClipboard();
 
-  return <CellContainer {...{cellStyle, alignment, hideDivider, hasCopyButton}}>
-    {showStatus ? <StatusBlip {...{status}}></StatusBlip> : null}
-    {href ? <a href={href}>{children}</a> : children}
-    {showUnit ? <UnitText>{unit}</UnitText> : null}
-    {hasCopyButton ? <CopyToClipboard onClick={ () => typeof children === 'string' && copyValue(children) }><Icon icon='Copy' size={16} /></CopyToClipboard> : null}
-  </CellContainer>;
+
+  return (
+    <CellContainer {...{cellStyle, alignment, hideDivider, hasCopyButton}}>
+      {showStatus ? <StatusBlip {...{status}} /> : null}
+      {href ? <a href={href}>{children}</a> : children}
+      {showUnit ? <UnitText>{unit}</UnitText> : null}
+      {hasCopyButton ? <CopyToClipboard onClick={() => typeof children === 'string' && copyToClipboard(children)}><Icon icon='Copy' size={16} /></CopyToClipboard> : null}
+    </CellContainer>
+  );
 };
 
 export default TypeTableCell;

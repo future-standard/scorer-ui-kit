@@ -5,7 +5,7 @@ import Checkbox from '../../Form/atoms/Checkbox';
 import TableRowThumbnail from './TableRowThumbnail';
 import TypeTableDeviceStatus from './TypeTableDeviceStatus';
 import TypeTableCell from './TypeTableCell';
-import Icon from '../../Icons/Icon'
+import Icon from '../../Icons/Icon';
 import { ITableColumnConfig, IRowData } from '..';
 
 
@@ -27,22 +27,24 @@ interface IProps {
 const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, hasStatus, hasThumbnail, hasTypeIcon, rowData, isLastRow, columnConfig }) => {
 
   const wrappedSelectCallback = useCallback((checked) => {
-    if(selectCallback){ selectCallback(checked, rowData.id) }
-  }, [])
+    if(selectCallback){ selectCallback(checked, rowData.id); }
+  }, [rowData.id, selectCallback]);
 
-  return <RowContainer>
-    {selectable ? <TypeTableCell hideDivider={true}><Checkbox checked={rowData._checked} onChangeCallback={ wrappedSelectCallback } /></TypeTableCell> : null}
-    {hasStatus ?  <TypeTableCell hideDivider={true}><TypeTableDeviceStatus status={ rowData.header?.status } /></TypeTableCell> : null}
-    {hasThumbnail ? <TypeTableCell hideDivider={true}><TableRowThumbnail image={ rowData.header?.image } /></TypeTableCell> : null}
-    {hasTypeIcon ? <TypeTableCell hideDivider={true}><Icon icon={ rowData.header?.icon || '' } size={16} /></TypeTableCell> : null}
+  return (
+    <RowContainer>
+      {selectable ? <TypeTableCell hideDivider><Checkbox checked={rowData._checked} onChangeCallback={wrappedSelectCallback} /></TypeTableCell> : null}
+      {hasStatus ?  <TypeTableCell hideDivider><TypeTableDeviceStatus status={rowData.header?.status} /></TypeTableCell> : null}
+      {hasThumbnail ? <TypeTableCell hideDivider><TableRowThumbnail image={rowData.header?.image} /></TypeTableCell> : null}
+      {hasTypeIcon ? <TypeTableCell hideDivider><Icon icon={rowData.header?.icon || ''} size={16} /></TypeTableCell> : null}
 
-    {rowData.columns.map((cell, key) => {
-      const {cellStyle, alignment, showUnit, showStatus, hasCopyButton} = columnConfig[key];
-      const {unit, status, text} = cell;
-      return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, showStatus, hasCopyButton, unit, status, isLastRow}}>{text}</TypeTableCell>;
-    })}
+      {rowData.columns.map((cell, key) => {
+        const {cellStyle, alignment, showUnit, showStatus, hasCopyButton} = columnConfig[key];
+        const {unit, status, text} = cell;
+        return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, showStatus, hasCopyButton, unit, status, isLastRow}}>{text}</TypeTableCell>;
+      })}
 
-  </RowContainer>;
+    </RowContainer>
+  );
 };
 
 

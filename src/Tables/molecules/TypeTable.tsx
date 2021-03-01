@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
 
 import TypeTableRow from '../atoms/TypeTableRow';
 import Checkbox from '../../Form/atoms/Checkbox';
-import { TypeCellAlignment, ITableColumnConfig, ITypeTableData } from '..';
+import { TypeCellAlignment, ITableColumnConfig, ITypeTableData, IRowData } from '..';
 
 const Container = styled.div`
 
@@ -49,44 +49,57 @@ interface IProps {
   hasStatus?: boolean
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
-  selectCallback? : any
-  toggleAllCallback? : any
+  selectCallback? : (checked:boolean, id?: string | number)=>void
+  toggleAllCallback? : (checked: boolean)=>void
 }
 
-const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
-
+const TypeTable : React.FC<IProps> = ({
+  columnConfig,
+  selectable,
+  selectCallback = ()=>{},
+  toggleAllCallback = ()=>{},
+  rows = [],
+  hasStatus = false,
+  hasThumbnail = false,
+  hasTypeIcon = false
+}) => {
+  const [allChecked, setAllChecked] = useState(false);
   const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
-    if(toggleAllCallback){ toggleAllCallback(checked) }
-  }, [])
+    toggleAllCallback(checked);
+  }, [toggleAllCallback]);
 
-  const isChecked = (currentValue : any) => currentValue._checked === true;
+  useEffect(() => {
+    setAllChecked(rows.every(isChecked) && rows.length > 0);
+  }, [rows]);
 
-  const allChecked = useCallback(() => {
-    return rows.every(isChecked);
-  }, [rows])
+  return (
+    <Container>
+      <TableContainer>
+        <HeaderRow>
+          {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={allChecked} onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
+          {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
+          {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
+          {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
 
-  return <Container>
-    <TableContainer>
-      <HeaderRow>
-        {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={ allChecked() } onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
-        {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
-        {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
-        {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
+          {columnConfig.map((column, key) => {
+            const {alignment, header, hasCopyButton} = column;
+            return <HeaderItem key={key} alignment={alignment} hasCopyButton={hasCopyButton}>{header}</HeaderItem>;
+          })}
+        </HeaderRow>
 
-        {columnConfig.map((column, key) => {
-          const {alignment, header, hasCopyButton} = column;
-          return <HeaderItem key={key} alignment={alignment} hasCopyButton={hasCopyButton}>{header}</HeaderItem>;
+        {rows.map((rowData, key) => {
+          const isLastRow = (rows.length - 1 === key) ? true : false;
+          return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
         })}
-      </HeaderRow>
 
-      {rows.map((rowData, key) => {
-        const isLastRow = (rows.length - 1 === key) ? true : false;
-        return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
-      })}
+      </TableContainer>
 
-    </TableContainer>
-
-  </Container>;
+    </Container>
+  );
 };
 
 export default TypeTable;
+
+function isChecked({_checked=false} : IRowData){
+  return _checked === true;
+}
