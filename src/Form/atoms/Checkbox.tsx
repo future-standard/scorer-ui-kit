@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
@@ -111,7 +111,7 @@ const Checkbox : React.FC<IProps> = ({ indeterminate = false, disabled, checked 
   const [ visualState, setVisualState ] = useState<CheckboxState>(checked ? CheckboxState.On : CheckboxState.Off);
 
   const customOnChange = (e: any) => {
-    const checked = e.target.checked
+    const checked = e.target.checked;
 
     setIsChecked(checked);
     if(onChangeCallback){ onChangeCallback(checked); }
@@ -124,20 +124,22 @@ const Checkbox : React.FC<IProps> = ({ indeterminate = false, disabled, checked 
 
     setVisualState( state );
 
-  }, [isChecked, setVisualState])
+  }, [checked, isChecked, setVisualState]);
 
   useEffect(() => {
     setIsChecked(checked);
   }, [checked, setIsChecked]);
 
-  return <Container onChange={customOnChange} {...{indeterminate, disabled, visualState}}>
-    <CheckboxOuter>
-      <CheckboxInner>
-        {visualState === CheckboxState.On ? <IconWrapper><Icon icon='CloseCompact' color='inverse' size={18} weight='regular' /></IconWrapper> : null}
-      </CheckboxInner>
-    </CheckboxOuter>
-    <RealInput type='checkbox' checked={isChecked} readOnly={true} {...{disabled}} /> {/* disabled={state !== 'default' && state !== 'failure'} */}
-  </Container>;
+  return (
+    <Container onChange={customOnChange} {...{indeterminate, disabled, visualState}}>
+      <CheckboxOuter>
+        <CheckboxInner>
+          {visualState === CheckboxState.On ? <IconWrapper><Icon icon='CloseCompact' color='inverse' size={18} weight='regular' /></IconWrapper> : null}
+        </CheckboxInner>
+      </CheckboxOuter>
+      <RealInput type='checkbox' checked={isChecked} readOnly {...{disabled}} /> {/* disabled={state !== 'default' && state !== 'failure'} */}
+    </Container>
+  );
 
 };
 
