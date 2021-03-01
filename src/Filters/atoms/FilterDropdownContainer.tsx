@@ -28,18 +28,20 @@ const Container = styled.div<{ height?: string }>`
 const Inner = styled.div`
   display: inline-flex;
   flex-direction: row;
-`
+`;
 
 interface IProps {
   height?: string
 }
 
 const FilterDropdownContainer : React.FC<IProps> = ({height, children}) => {
-  return <Container {...height}>
-    <Inner>
-      { children }
-    </Inner>
-  </Container>;
+  return (
+    <Container {...height}>
+      <Inner>
+        {children}
+      </Inner>
+    </Container>
+  );
 };
 
 export default FilterDropdownContainer;
