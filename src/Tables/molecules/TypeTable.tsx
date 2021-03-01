@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
 
 import TypeTableRow from '../atoms/TypeTableRow';
@@ -54,22 +54,22 @@ interface IProps {
 }
 
 const TypeTable : React.FC<IProps> = ({ columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus = false, hasThumbnail = false, hasTypeIcon = false }) => {
-
+  const [allChecked, setAllChecked] = useState(false);
   const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
     if(toggleAllCallback){ toggleAllCallback(checked); }
   }, [toggleAllCallback]);
 
   const isChecked = (currentValue : any) => currentValue._checked === true;
 
-  const allChecked = useCallback(() => {
-    return rows.every(isChecked);
+  useEffect(() => {
+    setAllChecked(rows.every(isChecked) && rows.length > 0);
   }, [rows]);
 
   return (
     <Container>
       <TableContainer>
         <HeaderRow>
-          {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={ allChecked() } onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
+          {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={allChecked} onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
           {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
           {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
