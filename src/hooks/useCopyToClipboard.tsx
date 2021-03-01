@@ -1,32 +1,34 @@
-export const useCopyToClipboard = (text : string) => {
-  return copyToClipboard(text)
-};
+import { useCallback } from 'react';
 
-const copyToClipboard = (str : string) : boolean => {
+export const useCopyToClipboard = () => {
+  const copyToClipboard = useCallback((str : string) : boolean => {
 
-  // Make an area to allow for copying.
-  const el = document.createElement('textarea');
-  el.value = str;
-  el.setAttribute('readonly', '');
-  el.style.position = 'absolute';
-  el.style.left = '-9999px';
-  document.body.appendChild(el);
+      // Make an area to allow for copying.
+      const el = document.createElement('textarea');
+      el.value = str;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
 
-  const selection = document.getSelection()
+      const selection = document.getSelection();
 
-  if(selection){
-    const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
-    el.select();
+      if(selection){
+        const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+        el.select();
 
-    const success = document.execCommand('copy');
-    document.body.removeChild(el);
-    if(selected) {
-      selection.removeAllRanges();
-      selection.addRange(selected);
-    }
-    return success;
-  }
+        const success = document.execCommand('copy');
+        document.body.removeChild(el);
+        if(selected) {
+          selection.removeAllRanges();
+          selection.addRange(selected);
+        }
+        return success;
+      }
 
-  return false;
+      return false;
 
+  },[]);
+
+  return {copyToClipboard};
 };
