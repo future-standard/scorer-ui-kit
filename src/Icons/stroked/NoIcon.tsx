@@ -6,7 +6,6 @@ function SvgNoIcon(props: ISvgIcons) {
       width={props.size}
       height={props.size}
       viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
       {...props}
     />
   );
