@@ -216,7 +216,7 @@ const ModalPage: React.FC = () => {
         design='secondary'
         onClick={
           openDismissedModal
-        }> Dissmis Modal
+        }> Dismiss Modal
       </Button>
       <Button
         design='secondary'
