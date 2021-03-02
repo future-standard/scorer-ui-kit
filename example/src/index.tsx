@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme, NotificationProvider } from 'scorer-ui-kit';
+import { lightTheme,
+          NotificationProvider,
+          ModalProvider
+        } from 'scorer-ui-kit';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -60,11 +63,13 @@ lightTheme.custom.lines['weird'] = {
 ReactDOM.render(
   <React.StrictMode>
    <ThemeProvider theme={ lightTheme}>
-     <NotificationProvider>
+    <ModalProvider>
+      <NotificationProvider>
         <App />
         <Fonts />
         <Style />
       </NotificationProvider>
+    </ModalProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

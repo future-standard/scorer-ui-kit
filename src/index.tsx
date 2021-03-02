@@ -8,6 +8,8 @@ import darkTheme from './themes/dark';
 import {
   AlertBar,
   Notification,
+  ConfirmationModal,
+  INotificationProps,
 }from './Alerts';
 
 // Components - Form
@@ -33,7 +35,7 @@ import {
 import {
   DatePicker,
   FilterDropdownContainer
-} from './Filters'
+} from './Filters';
 
 import Icon, {IconSVGs} from  './Icons/Icon';
 // Components - Line UI
@@ -71,12 +73,16 @@ import {
   useTo,
   useTitle,
   useCopyToClipboard,
+  useModal,
   useNotification,
+  IModal,
 } from './hooks';
 
 import {
   NotificationProvider,
-} from './context/NotificationContext';
+  ModalContext,
+  ModalProvider,
+} from './context';
 
 import  { resetButtonStyles } from './common';
 
@@ -114,6 +120,7 @@ export {
   // Alerts
   AlertBar,
   Notification,
+  ConfirmationModal,
 
   // LineUI
   LineUI,
@@ -194,4 +201,12 @@ export {
   //Context
   NotificationProvider,
   useNotification,
+  ModalContext,
+  ModalProvider,
+  useModal
+};
+
+export type { 
+  IModal,
+  INotificationProps,
 };

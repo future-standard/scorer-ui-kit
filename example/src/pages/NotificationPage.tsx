@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, useNotification } from 'scorer-ui-kit';
-import { INotificationProps } from '../../../dist/Alerts/atom/Notification';
-
-
+import { Button,
+  useNotification,
+  INotificationProps
+} from 'scorer-ui-kit';
 
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
@@ -12,7 +12,7 @@ const Container = styled.div`
   row-gap: 15px;
 `;
 
-const NotificationPage : React.FC = ({}) => {
+const NotificationPage : React.FC = () => {
   
   const {sendNotification } = useNotification();
 
