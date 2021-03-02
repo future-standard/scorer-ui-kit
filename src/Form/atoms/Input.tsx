@@ -125,13 +125,13 @@ interface OwnProps {
   fieldState?: TypeFieldState;
   feedbackMessage?: string;
   actionCallback?: ()=>void;
-  actionIcon?: any
+  actionIcon?: string
   postfix?: string;
 }
 
-type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
+export type InputProps = OwnProps & InputHTMLAttributes<HTMLInputElement>
 
-const Input : React.FC<Props> = ({
+const Input : React.FC<InputProps> = ({
   type = 'text',
   placeholder = '',
   defaultValue,
