@@ -170,7 +170,7 @@ const Input : React.FC<InputProps> = ({
         {(isActionButton) ? (
           <ActionContainer>
             <InputActionButton onClick={actionCallback}>
-              <Icon icon={actionIcon} color='primary' />
+              <Icon icon={actionIcon || 'NoIcon'} color='primary' />
             </InputActionButton>
           </ActionContainer>
         ) : null}
