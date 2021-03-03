@@ -212,7 +212,7 @@ const DayGuide : string[] = [
 ];
 
 interface IProps {
-  initialDates?: Date | Date[]
+  initialValue?: Interval
   dateMode?: DateMode
   timeMode?: TimeMode
   updateCallback?: (range:Interval) => void
@@ -223,17 +223,16 @@ const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0
 const DatePicker : React.FC<IProps> = ({
   dateMode = 'interval',
   timeMode = 'interval',
-  updateCallback = () => {}
+  updateCallback = () => {},
+  initialValue = singleDayToInterval(new Date())
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
   // TODO: Intitialise an initial date set.
 
-  const now = new Date();
-
-  const [focusedMonth, setFocusedMonth] = useState( now );
   const [_hoverDay, setHoverDay] = useState<Date | null>(null);
-  const [selectedRange, setSelectedRange] = useState<Interval>( singleDayToInterval(now) );
+  const [selectedRange, setSelectedRange] = useState<Interval>({...initialValue});
+  const [focusedMonth, setFocusedMonth] = useState( initialValue.start );
   const [timeRange, setTimeRange] = useState<TimeRange>(defaultTimeRange);
   const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
 
