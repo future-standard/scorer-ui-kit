@@ -1,6 +1,8 @@
 import Button from './atoms/Button';
 import ButtonWithIcon from './atoms/ButtonWithIcon';
 import ButtonWithLoading from './atoms/ButtonWithLoading';
+import IconButton, {IconButtonData} from './atoms/IconButton';
+import ActionButtons from './molecules/ActionButtons';
 import Input from './atoms/Input';
 import SmallInput from './atoms/SmallInput';
 import InputActionButton from './atoms/InputActionButton';
@@ -15,12 +17,13 @@ import TextAreaField from './molecules/TextAreaField';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 
-
 export {
     Form,
     Button,
     ButtonWithIcon,
     ButtonWithLoading,
+    IconButton,
+    ActionButtons,
     SmallInput,
     Input,
     InputActionButton,
@@ -44,3 +47,5 @@ interface ButtonProps {
 }
 
 export type IButtonProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
+
+export type { IconButtonData };

@@ -13,14 +13,14 @@ const IconWrapper = styled.div<{color:string}>`
 
 export {IconSVGs, IconWrapper};
 
-interface IProps {
+export interface IconProps {
   icon: string;
   size?: number;
   weight?: 'light' | 'regular' | 'heavy'
   color?: ISvgIcons['color']
 }
 
-const Icon : React.FC<IProps> = ({icon, size = 24, weight = 'regular', color = 'mono'}) => {
+const Icon : React.FC<IconProps> = ({icon, size = 24, weight = 'regular', color = 'mono'}) => {
 
   const getKeyValue = <U extends keyof T, T extends object>(key: U) => (obj: T) => obj[key];
 

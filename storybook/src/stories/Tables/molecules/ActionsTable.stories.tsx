@@ -4,7 +4,9 @@ import { object, boolean } from "@storybook/addon-knobs";
 
 import {
 TypeTable as TypeTableCustom,
-Button} from 'scorer-ui-kit';
+ActionButtons,
+IconButtonData
+} from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
 import { 
   ITableColumnConfig,
@@ -50,17 +52,33 @@ const columnConfigSample : ITableColumnConfig[] = [
 
 ];
 
-interface IDeleteProps {
-  deviceId: string
-}
-
-const DeleteButton : React.FC<IDeleteProps> = ({ deviceId, children}) => {  
-  const handleDeleteDevice = (deviceId : string) => {
-    console.log(`deleting ${deviceId}`);
-  }
-
-  return (<Button onClick={() => handleDeleteDevice(deviceId)}>{children}</Button>)
-}
+/**
+ * March 3
+ * TODO: 
+ * Update onClick actions to ve displayed in Storybook actions
+ * Asign values depending ID
+ * Update IconButtons Styling
+ *  - lets reduce styling options? (remove color option)
+ *  - Add hover styling
+ */
+const actionButtonsConfig : IconButtonData[] = [
+  {
+    icon: 'RetryJob',
+    onClick: () => {console.log('clicked on RetryJob')},
+  },
+  {
+    icon: 'Delete',
+    onClick: () => {console.log('clicked on Delete')},
+  },
+  {
+    icon: 'DownloadVideo',
+    onClick: () => {console.log('clicked on DownloadVideo')},
+  },
+  {
+    icon: 'Download',
+    onClick: () => {console.log('clicked on Download')},
+  },
+]
 
 const initialRows : ITypeTableData = [
   {
@@ -73,7 +91,7 @@ const initialRows : ITypeTableData = [
       {text: `2020/07/12 - 16:00`},
       {text: `00:00:12`},
       {text: `Complete`},
-      { customComponent: <DeleteButton deviceId='device-1'>Delete</DeleteButton>},
+      { customComponent: <ActionButtons buttonsConfig = {actionButtonsConfig}/>},
     ]
   },
   {
@@ -86,7 +104,7 @@ const initialRows : ITypeTableData = [
       {text: `2020/07/12 - 16:00`},
       {text: `00:00:12`},
       {text: `Complete`},
-      { customComponent: <DeleteButton deviceId='device-1'>Delete</DeleteButton>},
+      { customComponent: <ActionButtons buttonsConfig = {actionButtonsConfig}/>},
     ]
   }
 ];

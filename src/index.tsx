@@ -18,6 +18,9 @@ import {
   Button,
   ButtonWithIcon,
   ButtonWithLoading,
+  IconButton,
+  IconButtonData,
+  ActionButtons,
   SmallInput, 
   Input,
   InputActionButton,
@@ -133,6 +136,8 @@ export {
   Button,
   ButtonWithIcon,
   ButtonWithLoading,
+  IconButton,
+  ActionButtons,
   Input,
   SmallInput,
   InputActionButton,
@@ -209,4 +214,5 @@ export {
 export type { 
   IModal,
   INotificationProps,
+  IconButtonData,
 };
