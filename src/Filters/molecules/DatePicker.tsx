@@ -235,11 +235,14 @@ const DatePicker : React.FC<IProps> = ({
   const [focusedMonth, setFocusedMonth] = useState( initialValue.start );
   const [timeRange, setTimeRange] = useState<TimeRange>(defaultTimeRange);
   const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
+  const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
 
-  const weeksOfMonth = eachWeekOfInterval({
-    start: startOfMonth(focusedMonth),
-    end: endOfMonth(focusedMonth)
-  });
+  useEffect(() => {
+    setWeeksOfMonth(eachWeekOfInterval({
+      start: startOfMonth(focusedMonth),
+      end: endOfMonth(focusedMonth)
+    }));
+  },[focusedMonth]);
 
   useEffect(()=>{
     setTimeRange(defaultTimeRange);
