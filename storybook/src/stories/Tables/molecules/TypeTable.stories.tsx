@@ -2,8 +2,8 @@ import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 import { object, boolean } from "@storybook/addon-knobs";
 
-import {TypeTable, Button} from 'scorer-ui-kit';
-import photo from '../assets/placeholder.jpg';
+import {TypeTable} from 'scorer-ui-kit';
+import photo from '../../assets/placeholder.jpg';
 import { 
   ITableColumnConfig,
   ITypeTableData
@@ -51,34 +51,8 @@ const columnConfigSample : ITableColumnConfig[] = [
     cellStyle: 'highImportance',
     alignment: 'right',
     hasCopyButton: true
-  },
-  {
-    header: 'Delete Device',
-    sortable: true,
-    cellStyle: 'normalImportance',
-    alignment: 'right',
-  },
-  
-  // {
-  //   // TODO: For things like buttons
-  //   cellStyle: 'action',
-  //   alignment: 'right',
-  // }
-];
-
-
-
-interface IDeleteProps {
-  deviceId: string
-}
-
-const DeleteButton : React.FC<IDeleteProps> = ({ deviceId, children}) => {  
-  const handleDeleteDevice = (deviceId : string) => {
-    console.log(`deleting ${deviceId}`);
   }
-
-  return (<Button onClick={() => handleDeleteDevice(deviceId)}>{children}</Button>)
-}
+];
 
 const initialRows : ITypeTableData = [
   {
@@ -95,7 +69,6 @@ const initialRows : ITypeTableData = [
       { text: 'Just Now' },
       { text: '242', unit: 'mb' },
       { text: '¥20,000'},
-      { customComponent: <DeleteButton deviceId='device-1'>Delete</DeleteButton>},
     ]
   },
   {
@@ -112,7 +85,6 @@ const initialRows : ITypeTableData = [
       { text: '1st October 2019' },
       { text: '2.1', unit: 'gb' },
       { text: '¥4,000'},
-      { customComponent: <DeleteButton deviceId='device-2'>Delete</DeleteButton>},
     ],
   },
   {
@@ -129,7 +101,6 @@ const initialRows : ITypeTableData = [
       { text: '22nd March 2020' },
       { text: '2.1', unit: 'tb' },
       { text: '¥7,000'},
-      { customComponent: <DeleteButton deviceId='device-3'>Delete</DeleteButton>},
     ],
   },
   {
@@ -146,7 +117,6 @@ const initialRows : ITypeTableData = [
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' },
-      { customComponent: <DeleteButton deviceId='device-4'>Delete</DeleteButton>},
     ]
   },
   {
@@ -163,7 +133,6 @@ const initialRows : ITypeTableData = [
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' },
-      { customComponent: <DeleteButton deviceId='device-5'>Delete</DeleteButton>},
     ]
   },
   {
@@ -180,7 +149,6 @@ const initialRows : ITypeTableData = [
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' },
-      { customComponent: <DeleteButton deviceId='device-6'>Delete</DeleteButton>},
     ]
   },
   {
@@ -197,7 +165,6 @@ const initialRows : ITypeTableData = [
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' },
-      { customComponent: <DeleteButton deviceId='device-7'>Delete</DeleteButton>},
     ]
   },
   {
@@ -214,7 +181,6 @@ const initialRows : ITypeTableData = [
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' },
-      { customComponent: <DeleteButton deviceId='device-8'>Delete</DeleteButton>},
     ]
   },
   {
@@ -231,7 +197,6 @@ const initialRows : ITypeTableData = [
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' },
-      { customComponent: <DeleteButton deviceId='device-9'>Delete</DeleteButton>},
     ]
   },
   {
@@ -248,7 +213,6 @@ const initialRows : ITypeTableData = [
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' },
-      { customComponent: <DeleteButton deviceId='device-10'>Delete</DeleteButton>},
     ]
   },
   {
@@ -265,7 +229,6 @@ const initialRows : ITypeTableData = [
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' },
-      { customComponent: <DeleteButton deviceId='device-4'>Delete</DeleteButton>},
     ]
   }
 ];
