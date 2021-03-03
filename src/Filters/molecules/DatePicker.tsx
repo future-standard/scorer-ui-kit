@@ -213,16 +213,18 @@ const DayGuide : string[] = [
 
 interface IProps {
   initialDates?: Date | Date[]
-  dateMode: DateMode
-  timeMode: TimeMode
-  updateCallback?: any
+  dateMode?: DateMode
+  timeMode?: TimeMode
+  updateCallback?: (range:Interval) => void
 }
 const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, end: { hours: 24, minutes: 0, seconds: 0, milliseconds: 0 } };
 
 
-const DatePicker : React.FC<IProps> = (props) => {
-
-  const {updateCallback} = props;
+const DatePicker : React.FC<IProps> = ({
+  dateMode = 'interval',
+  timeMode = 'interval',
+  updateCallback = () => {}
+}) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
   // TODO: Intitialise an initial date set.
@@ -234,8 +236,6 @@ const DatePicker : React.FC<IProps> = (props) => {
   const [selectedRange, setSelectedRange] = useState<Interval>( singleDayToInterval(now) );
   const [timeRange, setTimeRange] = useState<TimeRange>(defaultTimeRange);
   const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
-  const [dateMode, setDateMode] = useState<DateMode>('interval');
-  const [timeMode, setTimeMode] = useState<TimeMode>(props.timeMode);
 
   const weeksOfMonth = eachWeekOfInterval({
     start: startOfMonth(focusedMonth),
@@ -245,11 +245,6 @@ const DatePicker : React.FC<IProps> = (props) => {
   useEffect(()=>{
     setTimeRange(defaultTimeRange);
   }, [timeMode, setTimeRange]);
-
-  useEffect(()=>{
-    setTimeMode(props.timeMode);
-    setDateMode(props.dateMode);
-  }, [props, setTimeMode, setDateMode]);
 
   useEffect(() => {
     updateCallback(selectedRange);
