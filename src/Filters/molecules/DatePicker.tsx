@@ -381,7 +381,7 @@ const DatePicker : React.FC<IProps> = (props) => {
       <CalendarArea>
         <CalendarHeader>
 
-          <PaginateMonth onClick={() => setFocusedMonth( addMonths(focusedMonth, -1) )}>
+          <PaginateMonth type='button' onClick={() => setFocusedMonth( addMonths(focusedMonth, -1) )}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
             {format(addMonths(focusedMonth, -1), "MMM")}
           </PaginateMonth>
@@ -391,7 +391,7 @@ const DatePicker : React.FC<IProps> = (props) => {
             {format(focusedMonth, "MMMM")}
           </CurrentMonth>
 
-          <PaginateMonth onClick={() => setFocusedMonth( addMonths(focusedMonth, 1) )}>
+          <PaginateMonth type='button' onClick={() => setFocusedMonth( addMonths(focusedMonth, 1) )}>
             {format(addMonths(focusedMonth, 1), "MMM")}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
