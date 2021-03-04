@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import {format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, setDayOfYear, getDayOfYear, add } from 'date-fns';
+import {format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, setDayOfYear, getDayOfYear, add, set } from 'date-fns';
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
 type DateMode = "single" | "interval";
@@ -226,7 +226,7 @@ const DatePicker : React.FC<IProps> = ({
   dateMode = 'interval',
   timeMode = 'interval',
   updateCallback = () => {},
-  initialValue = initializeInterval(new Date())
+  initialValue = initializeInterval(startOfDay(new Date()))
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -414,7 +414,7 @@ const cellState = (day: Date, interval: Interval, _hoverDate? : Date) : CellStat
  */
 const initializeInterval = (day: Date) : DateInterval => {
   return {
-    start: startOfDay(day),
+    start: set(day, {seconds: 0, milliseconds: 0}),
     end: endOfDay(day)
   };
 };
