@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import {format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, setDayOfYear, getDayOfYear } from 'date-fns';
+import {format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, setDayOfYear, getDayOfYear, add } from 'date-fns';
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
 type DateMode = "single" | "interval";
@@ -239,7 +239,6 @@ const DatePicker : React.FC<IProps> = ({
 
 
   useEffect(()=>{
-    console.log('init');
     const now = new Date();
     setSelectedRange(initializeInterval(now));
     setFocusedMonth(now);
@@ -299,18 +298,17 @@ const DatePicker : React.FC<IProps> = ({
     }
   }, [dateMode, selectedRange, targetedDate]);
 
-  /**
-   * Alias for callback use of updateTimeInDate for start of range.
-   */
+
   const updateStartDate = useCallback((start: Date) => {
-    if(start)
-    setSelectedRange({...selectedRange, start });
+    const {end} = selectedRange;
+    if(isAfter(add(start, {minutes: 1}), end)) return;
+    setSelectedRange({start, end});
   }, [selectedRange]);
-  /**
-   * Alias for callback use of updateTimeInDate for end of range.
-   */
+
   const updateEndDate = useCallback((end: Date) => {
-    setSelectedRange({...selectedRange, end });
+    const {start} = selectedRange;
+    if(isAfter(add(start, {minutes: 1}), end)) return;
+    setSelectedRange({start, end });
   }, [selectedRange]);
 
 
