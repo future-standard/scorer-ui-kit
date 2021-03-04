@@ -126,7 +126,6 @@ const DateTimeBlock : React.FC<IProps> = ({
   }, [date, displayMinutes, setDateCallback]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(value, Number(value));
     setDateCallback(
       min([
         endOfDay(date),
