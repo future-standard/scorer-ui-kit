@@ -1,6 +1,8 @@
 import React, {useState, useCallback} from 'react';
 import styled from 'styled-components';
 import { object, boolean } from "@storybook/addon-knobs";
+import { action } from '@storybook/addon-actions';
+
 
 import {
 TypeTable as TypeTableCustom,
@@ -52,33 +54,64 @@ const columnConfigSample : ITableColumnConfig[] = [
 
 ];
 
-/**
- * March 3
- * TODO: 
- * Update onClick actions to ve displayed in Storybook actions
- * Asign values depending ID
- * Update IconButtons Styling
- *  - lets reduce styling options? (remove color option)
- *  - Add hover styling
- */
-const actionButtonsConfig : IconButtonData[] = [
-  {
-    icon: 'RetryJob',
-    onClick: () => {console.log('clicked on RetryJob')},
-  },
-  {
-    icon: 'Delete',
-    onClick: () => {console.log('clicked on Delete')},
-  },
-  {
-    icon: 'DownloadVideo',
-    onClick: () => {console.log('clicked on DownloadVideo')},
-  },
-  {
-    icon: 'Download',
-    onClick: () => {console.log('clicked on Download')},
-  },
-]
+const onDelete = action('Deleting..');
+const onDownloadVideo = action('Downloading video..');
+const onDownloadLogs = action('Downloading logs');
+const onRetry = action('Retry');
+const onConfig = action('Going to config page');
+
+const handleDelete = (deviceId: string) => {
+  console.log(`Running deleting job log for device:  ${deviceId}`);
+  onDelete();
+};
+
+const handleRetry = (deviceId: string) => {
+  console.log(`Retrying job for device:  ${deviceId}`);
+  onRetry();
+};
+
+const handleDownloadVideo = (deviceId: string) => {
+  console.log(`Download video of device:  ${deviceId}`);
+  onDownloadVideo();
+};
+
+const handleDownloadLogs = (deviceId: string) => {
+  console.log(`Dowload job log for device:  ${deviceId}`);
+  onDownloadLogs();
+};
+
+const handleConfigJob = (deviceId: string) => {
+  console.log(`Config analysis job for device:  ${deviceId}`);
+  onConfig();
+};
+
+
+const generateConfigButtons  = (rowId: string) : IconButtonData[] => {
+  return (
+    [
+      {
+        icon: 'RetryJob',
+        onClick: () => {handleRetry(rowId)},
+      },
+      {
+        icon: 'Delete',
+        onClick: () => {handleDelete(rowId)},
+      },
+      {
+        icon: 'DownloadVideo',
+        onClick: () => {handleDownloadVideo(rowId)},
+      },
+      {
+        icon: 'Download',
+        onClick: () => {handleDownloadLogs(rowId)},
+      },
+      {
+        icon: 'ViewSettings',
+        onClick: () => {handleConfigJob(rowId)},
+      },
+    ]
+  )
+}
 
 const initialRows : ITypeTableData = [
   {
@@ -91,7 +124,7 @@ const initialRows : ITypeTableData = [
       {text: `2020/07/12 - 16:00`},
       {text: `00:00:12`},
       {text: `Complete`},
-      { customComponent: <ActionButtons buttonsConfig = {actionButtonsConfig}/>},
+      { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device1')}/>},
     ]
   },
   {
@@ -104,7 +137,7 @@ const initialRows : ITypeTableData = [
       {text: `2020/07/12 - 16:00`},
       {text: `00:00:12`},
       {text: `Complete`},
-      { customComponent: <ActionButtons buttonsConfig = {actionButtonsConfig}/>},
+      { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device2')}/>},
     ]
   }
 ];
@@ -112,9 +145,8 @@ const initialRows : ITypeTableData = [
 export const ActionsTable = () => {
 
   const columnConfig = object("Column Configuration", columnConfigSample);
-  const [rows, setRows] = useState<ITypeTableData>(initialRows);
   const selectable = boolean("Selectable Rows", true);
-
+  const [rows, setRows] = useState<ITypeTableData>(initialRows);
   const toggleAllCallback = useCallback((checked:boolean) => {
     const newRows = [...rows];
 
@@ -133,6 +165,7 @@ export const ActionsTable = () => {
     setRows(newRows);
 
   }, [rows, setRows]);
+  
 
   return (
       <Container>

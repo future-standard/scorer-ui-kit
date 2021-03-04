@@ -7,32 +7,32 @@ const StyledIconButton = styled(IconButton)``;
 const Container = styled.div`
   display: flex;
   ${StyledIconButton} {
-    margin-left: 12px;
+    margin-left: 15px;
   }
   ${StyledIconButton}:first-child {
     margin-left: 0px;
   }
 `;
 
-
-
 export type IGroupButtonsData = {
   buttonsConfig: IconButtonData []
 }
 
 const ActionButtons : React.FC<IGroupButtonsData> = ({buttonsConfig}) => {
+  
   return(
     <Container>
       {
         buttonsConfig.map((btn) => {
-          const {icon, size, weight, color, onClick} = btn;
+          const {icon, size, weight, color, hoverColor, onClick} = btn;
           return (
             <StyledIconButton
               key={`${icon}-${size}`}
               icon={icon}
               size={size}
               weight={weight}
-              color={color} 
+              color={color}
+              hoverColor={hoverColor}
               onClick={onClick}
             />
           );
