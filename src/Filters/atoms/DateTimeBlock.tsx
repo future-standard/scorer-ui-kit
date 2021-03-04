@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import {format } from 'date-fns';
+import {endOfDay, format,min,set } from 'date-fns';
 
 import Icon from '../../Icons/Icon';
 
@@ -92,14 +92,64 @@ interface IProps {
   title: string
   hasDate: boolean
   hasTime: boolean
-  date?: number | Date
-  time?: any
-  setDateCallback?: any
-  setTimeCallback?: any
-  allowAfterMidnight?: boolean
+  date?: Date
+  setDateCallback?: (date: Date) => void
+  setTimeCallback?: (date: Date) => void
+  allowAfterMidnight?: boolean,
 }
 
-const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, hasDate, hasTime, date, time, setTimeCallback, setDateCallback }) => {
+const DateTimeBlock : React.FC<IProps> = ({
+  allowAfterMidnight = false,
+  title,
+  hasDate,
+  hasTime,
+  date = new Date(),
+  setDateCallback = ()=>{},
+}) => {
+
+
+  const [displayHours, setDisplayHours] = useState<string>(format(date, "mm"));
+  const [displayMinutes, setDisplayMinutes] = useState<string>(format(date,'HH'));
+
+  const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    setDateCallback(
+      min([
+        endOfDay(date),
+        set(date, {
+          hours: Number(value),
+          minutes: Number(displayMinutes),
+          seconds: 0,
+          milliseconds: 0
+        })
+      ])
+    );
+  }, [date, displayMinutes, setDateCallback]);
+
+  const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(value, Number(value));
+    setDateCallback(
+      min([
+        endOfDay(date),
+        set(date, {
+          hours: displayHours === '24' ? 23 : Number(displayHours),
+          minutes: Number(value) % 60,
+          seconds: 0,
+          milliseconds: 0
+        })
+      ])
+    );
+  }, [date, displayHours, setDateCallback]);
+
+  useEffect(()=>{
+    if(allowAfterMidnight && date.valueOf() === endOfDay(date).valueOf()){
+      setDisplayHours('24');
+      setDisplayMinutes('00');
+    } else {
+      setDisplayMinutes(format(date, "mm"));
+      setDisplayHours(format(date,'HH'));
+    }
+  },[date, allowAfterMidnight]);
+
   return (
     <Container hide={!hasDate && !hasTime}>
       <Label>{title}</Label>
@@ -110,7 +160,7 @@ const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, h
             <Icon icon='Date' color='dimmed' size={14} weight='regular' />
           </IconWrap>
           <InputWrap>
-            <Input type='text' readOnly value={format(date || new Date(), "yyyy/MM/dd")} onChange={({target: _}) => setDateCallback()} />
+            <Input type='text' readOnly value={format(date, "yyyy/MM/dd")} />
           </InputWrap>
         </Item>
       )}
@@ -121,9 +171,9 @@ const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, h
             <Icon icon='Time' color='dimmed' size={14} weight='regular' />
           </IconWrap>
           <InputWrap>
-            <Input type='number' min='0' max={allowAfterMidnight ? 24: 23} value={clockFormatNumber(time.hours || 0)} onChange={({target}) => setTimeCallback( 'hours', parseInt(target.value))} />
+            <Input name='hours' type='number' min='0' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} />
             <TimeColon>:</TimeColon>
-            <Input type='number' min='0' max='59' value={clockFormatNumber(time.minutes || 0)} onChange={({target}) => setTimeCallback( 'minutes', parseInt(target.value))} />
+            <Input name='minutes' type='number' min='0' max='59' value={displayMinutes} onChange={setDateMinutes} />
           </InputWrap>
         </Item>
       )}
@@ -132,14 +182,7 @@ const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, h
   );
 };
 
-/**
- * Puts a 0 in front of single digit digits to keep it 24H format.
- * @param value The hour or minute value
- */
-const clockFormatNumber = (value : number) => {
-  const valAsString = value.toString();
 
-  return (valAsString.length === 1) ? '0' + value : value;
-};
 
 export default DateTimeBlock;
+

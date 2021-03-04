@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import {format, set, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns';
+import {format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, setDayOfYear, getDayOfYear } from 'date-fns';
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
 type DateMode = "single" | "interval";
@@ -211,31 +211,41 @@ const DayGuide : string[] = [
   "S", "M", "T", "W", "T", "F", "S"
 ];
 
+interface DateInterval {
+  start: Date;
+  end: Date;
+}
 interface IProps {
-  initialValue?: Interval
+  initialValue?: Date|DateInterval
   dateMode?: DateMode
   timeMode?: TimeMode
-  updateCallback?: (range:Interval) => void
+  updateCallback?: (data:DateInterval|Date) => void
 }
-const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, end: { hours: 24, minutes: 0, seconds: 0, milliseconds: 0 } };
-
 
 const DatePicker : React.FC<IProps> = ({
   dateMode = 'interval',
   timeMode = 'interval',
   updateCallback = () => {},
-  initialValue = singleDayToInterval(new Date())
+  initialValue = initializeInterval(new Date())
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
-  // TODO: Intitialise an initial date set.
 
   const [_hoverDay, setHoverDay] = useState<Date | null>(null);
-  const [selectedRange, setSelectedRange] = useState<Interval>({...initialValue});
-  const [focusedMonth, setFocusedMonth] = useState( initialValue.start );
-  const [timeRange, setTimeRange] = useState<TimeRange>(defaultTimeRange);
+  const [selectedRange, setSelectedRange] = useState<DateInterval>(() => initialValue instanceof Date ? initializeInterval(initialValue) : initialValue );
+  const [focusedMonth, setFocusedMonth] = useState( selectedRange.start );
   const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
+
+  const reInitialize = useCallback(()=>{
+    const selectedRange = initialValue instanceof Date ? initializeInterval(initialValue) : initialValue;
+    setSelectedRange(selectedRange);
+    setFocusedMonth(selectedRange.start);
+  },[initialValue]);
+
+  useEffect(()=>{
+    reInitialize();
+  },[dateMode, reInitialize, timeMode]);
 
   useEffect(() => {
     setWeeksOfMonth(eachWeekOfInterval({
@@ -244,13 +254,9 @@ const DatePicker : React.FC<IProps> = ({
     }));
   },[focusedMonth]);
 
-  useEffect(()=>{
-    setTimeRange(defaultTimeRange);
-  }, [timeMode, setTimeRange]);
-
   useEffect(() => {
-    updateCallback(selectedRange);
-  }, [selectedRange, updateCallback]);
+    updateCallback( (dateMode === 'interval'||timeMode === 'interval') ? selectedRange : selectedRange.start);
+  }, [dateMode, selectedRange, timeMode, updateCallback]);
 
   /**
    * Handler for updating picked dates when a calendar day has been selected.
@@ -261,17 +267,21 @@ const DatePicker : React.FC<IProps> = ({
     if(dateMode === 'single'){
 
       // === Single Mode ===
-      setSelectedRange(singleDayToInterval(day));
-
+      const start = setDay(selectedRange.start,day);
+      const end = setDay(selectedRange.end,day);
+      setSelectedRange({
+        start,
+        end
+      });
     } else {
 
       // === Interval Mode ===
       // Setting the interval end (assuming it's later than the start).
       if(targetedDate === 'end' && isAfter(day, selectedRange.start)){
-
+          const end = setDay(selectedRange.end,day);
           setSelectedRange({
-            start: set(selectedRange.start, timeRules(timeRange.start)),
-            end: set(day, timeRules(timeRange.end))
+            ...selectedRange,
+            end
           });
 
           setTargetedDate('done');
@@ -279,94 +289,39 @@ const DatePicker : React.FC<IProps> = ({
       // For first interaction || setting the end date correctly || if completed and restarting.
       } else if(targetedDate === 'start' || targetedDate === 'end' || targetedDate === 'done'){
 
+        const start = setDay(selectedRange.start,day);
+        const end = setDay(selectedRange.end,day);
         setSelectedRange({
-          start: set(day, timeRules(timeRange.start)),
-          end: set(day, timeRules(timeRange.end))
+          start,
+          end
         });
-
         setTargetedDate('end');
 
       }
     }
-  }, [dateMode, targetedDate, selectedRange.start, timeRange.start, timeRange.end]);
-
-
-  /**
-   * Used to enforce rules on time selection in dateRange, reflect those in timeRange that powers the UI time
-   * and apply it to the date intended for integration, selectedRange.
-   * @param target Which end of the interval we are updating.
-   * @param unit The unit we are updating, either the hour or minute.
-   * @param value The new value that will be set in the update.
-   */
-  const updateTimeInDate = useCallback((target : 'start'|'end', unit : 'hours'|'minutes', value : number) => {
-
-    const {start, end} = timeRange;
-    const originalValue : number = timeRange[target][unit];
-
-    if(target === 'start'){
-      start[unit] = value;
-    } else {
-      end[unit] = value;
-    }
-
-    // === Enforce time limitations. ===
-    // No minute above 24:00 for end time.
-    end.minutes = (end.hours === 24 && end.minutes > 0) ? 0 : end.minutes;
-
-    // Time interval should be at least one minute - if not, revert back.
-    if(timeLaterOrSame(start, end)){
-      if(target === 'start'){
-        start[unit] = originalValue;
-      } else {
-        end[unit] = originalValue;
-      }
-    }
-
-    // === Finish Up. ===
-    // Commit changes to timeRange that powers UI.
-    setTimeRange({...{start, end}});
-
-    // Apply time to the selected range Interval.
-    setSelectedRange({
-      start: set(selectedRange.start, timeRules(start)),
-      end: set(selectedRange.end, timeRules(end))
-    });
-
-  }, [selectedRange.end, selectedRange.start, timeRange]);
-
+  }, [dateMode, selectedRange, targetedDate]);
 
   /**
    * Alias for callback use of updateTimeInDate for start of range.
    */
-  const updateStartTime = useCallback((unit : 'hours'|'minutes', value : number) => {
-    updateTimeInDate('start', unit, value);
-  }, [updateTimeInDate]);
-
+  const updateStartDate = useCallback((start: Date) => {
+    if(start)
+    setSelectedRange({...selectedRange, start });
+  }, [selectedRange]);
   /**
    * Alias for callback use of updateTimeInDate for end of range.
    */
-  const updateEndTime = useCallback((unit : 'hours'|'minutes', value : number) => {
-    updateTimeInDate('end', unit, value);
-  }, [updateTimeInDate]);
-
-
-  const updateStartDate = useCallback(() => {
-    // Currently we do not allow updating the date by typing.
-    // We can add this easily with date-fns later.
-  }, []);
-
-  const updateEndDate = useCallback(() => {
-    // Currently we do not allow updating the date by typing.
-    // We can add this easily with date-fns later.
-  }, []);
+  const updateEndDate = useCallback((end: Date) => {
+    setSelectedRange({...selectedRange, end });
+  }, [selectedRange]);
 
 
   return (
     <Container>
 
       <DateTimeArea>
-        <DateTimeBlock title='From' hasDate hasTime={timeMode !== 'off'} date={selectedRange.start} time={timeRange.start} setTimeCallback={updateStartTime} setDateCallback={updateStartDate} />
-        <DateTimeBlock title='To' hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange.end} time={timeRange.end} allowAfterMidnight setTimeCallback={updateEndTime} setDateCallback={updateEndDate} />
+        <DateTimeBlock title='From' hasDate hasTime={timeMode !== 'off'} date={selectedRange.start} setDateCallback={updateStartDate} />
+        <DateTimeBlock title='To' hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>
           <TimeZoneLabel>Timezone</TimeZoneLabel>
@@ -426,6 +381,8 @@ const DatePicker : React.FC<IProps> = ({
 
 };
 
+export default DatePicker;
+
 /**
  * Used to work out the state of the calendar cell in regards to selection or position in
  * the date range.
@@ -459,44 +416,11 @@ const cellState = (day: Date, interval: Interval, _hoverDate? : Date) : CellStat
  * Convert a single days duration to an interval.
  * @param day The day to convert to an interval
  */
-const singleDayToInterval = (day: Date) : Interval => {
+const initializeInterval = (day: Date) : DateInterval => {
   return {
     start: startOfDay(day),
     end: endOfDay(day)
   };
 };
 
-/**
- * Check that the end time is later than the start.
- * @param startTime The start time.
- * @param endTime The end time.
- */
-const timeLaterOrSame = (startTime : TimeProperties, endTime : TimeProperties ) : boolean => {
-
-  const start = (startTime.hours * 3600) + (startTime.minutes * 60) + startTime.seconds;
-  const end = (endTime.hours * 3600) + (endTime.minutes * 60) + endTime.seconds;
-
-  return start >= end;
-};
-
-
-/**
- * Convert the time shown in UI to something practical for integration.
- * @param time TimeProperties to apply rules for use in output data.
- */
-const timeRules = (time : TimeProperties) : TimeProperties => {
-
-  // Adjust 24:00 to minus 1ms for data usage.
-  // Note: Start time limited to 23 by element max attr.
-  const processed : TimeProperties = {
-    hours: time.hours === 24 ? 23 : time.hours,
-    minutes: time.hours === 24 ? 59 : time.minutes,
-    seconds: time.hours === 24 ? 59 : 0,
-    milliseconds: time.hours === 24 ? 999 : 0
-  };
-
-  return processed;
-
-};
-
-export default DatePicker;
+const setDay = (date: Date, target:Date) =>  setDayOfYear(date, getDayOfYear(target));
