@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import {endOfDay, format,min,set } from 'date-fns';
+import {endOfDay, format,isEqual,min,set } from 'date-fns';
 
 import Icon from '../../Icons/Icon';
 
@@ -140,11 +140,11 @@ const DateTimeBlock : React.FC<IProps> = ({
   }, [date, displayHours, setDateCallback]);
 
   useEffect(()=>{
-    if(allowAfterMidnight && date.valueOf() === endOfDay(date).valueOf()){
+    if(allowAfterMidnight && isEqual(date, endOfDay(date))){
       setDisplayHours('24');
       setDisplayMinutes('00');
     } else {
-      setDisplayMinutes(format(date, "mm"));
+      setDisplayMinutes(format(date, 'mm'));
       setDisplayHours(format(date,'HH'));
     }
   },[date, allowAfterMidnight]);
