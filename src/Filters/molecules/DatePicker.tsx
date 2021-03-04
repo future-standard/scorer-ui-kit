@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import {format, set, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns'
+import {format, set, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval } from 'date-fns';
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover" ;
 type DateMode = "single" | "interval";
@@ -31,7 +31,7 @@ const DateTimeArea = styled.div`
   display: flex;
   flex-direction: column;
 
-`
+`;
 
 const TimeZoneOption = styled.div`
   border-top: ${({theme}) => theme.colors.divider} 1px solid;
@@ -41,31 +41,31 @@ const TimeZoneOption = styled.div`
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
-`
+`;
 const TimeZoneLabel = styled.div`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
     ${theme.typography.filters.subOption.label};
   `}
 
-`
+`;
 const TimeZoneValue = styled.div`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.data};
     ${theme.typography.filters.subOption.value};
   `}
-`
+`;
 
 const CalendarArea = styled.div`
   user-select: none;
-`
+`;
 
 const CalendarHeader = styled.div`
   display: flex;
   height: 70px;
   border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
   text-align: center;
-`
+`;
 const CurrentMonth = styled.div`
   flex: 1;
   flex-direction: column;
@@ -79,9 +79,9 @@ const CurrentMonth = styled.div`
     flex: 0;
     ${({theme})=> theme.typography.filters.datepicker.focusedYear};
   }
-`
+`;
 
-const IconWrap = styled.div``
+const IconWrap = styled.div``;
 
 const PaginateMonth = styled.button`
   cursor: pointer;
@@ -111,11 +111,11 @@ const PaginateMonth = styled.button`
     }
   }
 
-`
+`;
 
 const CalBody = styled.div`
   padding: 5px 0;
-`
+`;
 
 const CalRow = styled.div`
   display: grid;
@@ -124,11 +124,11 @@ const CalRow = styled.div`
   box-sizing: border-box;
 
   padding: 0 10px;
-`
+`;
 
 const CalHRow = styled(CalRow)`
   border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
-`
+`;
 
 const CalCell = styled.div`
 
@@ -144,11 +144,11 @@ const CalCell = styled.div`
     font-family: ${theme.fontFamily.data};
   `}
 
-`
+`;
 
 const CalHCell = styled(CalCell)`
   ${({theme})=> theme.typography.filters.datepicker.calendar.header};
-`
+`;
 
 const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
   cursor: pointer;
@@ -205,54 +205,52 @@ const CalCellB = styled(CalCell)<{ thisMonth?: boolean, isToday?: boolean, state
     }
   `}
 
-`
+`;
 
 const DayGuide : string[] = [
   "S", "M", "T", "W", "T", "F", "S"
-]
+];
 
 interface IProps {
-  initialDates?: Date | Date[]
-  dateMode: DateMode
-  timeMode: TimeMode
-  updateCallback?: any
+  initialValue?: Interval
+  dateMode?: DateMode
+  timeMode?: TimeMode
+  updateCallback?: (range:Interval) => void
 }
+const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, end: { hours: 24, minutes: 0, seconds: 0, milliseconds: 0 } };
 
-const DatePicker : React.FC<IProps> = (props) => {
 
-  const {updateCallback} = props;
+const DatePicker : React.FC<IProps> = ({
+  dateMode = 'interval',
+  timeMode = 'interval',
+  updateCallback = () => {},
+  initialValue = singleDayToInterval(new Date())
+}) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
   // TODO: Intitialise an initial date set.
 
-  const now = new Date();
-  const defaultTimeRange : TimeRange = { start: { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, end: { hours: 24, minutes: 0, seconds: 0, milliseconds: 0 } };
-
-  const [focusedMonth, setFocusedMonth] = useState( now );
-  const [hoverDay, setHoverDay] = useState<Date | null>(null);
-  const [selectedRange, setSelectedRange] = useState<Interval>( singleDayToInterval(now) );
+  const [_hoverDay, setHoverDay] = useState<Date | null>(null);
+  const [selectedRange, setSelectedRange] = useState<Interval>({...initialValue});
+  const [focusedMonth, setFocusedMonth] = useState( initialValue.start );
   const [timeRange, setTimeRange] = useState<TimeRange>(defaultTimeRange);
   const [targetedDate, setTargetedDate] = useState<'start'|'end'|'done'>('start');
-  const [dateMode, setDateMode] = useState<DateMode>('interval');
-  const [timeMode, setTimeMode] = useState<TimeMode>(props.timeMode);
+  const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
 
-  const weeksOfMonth = eachWeekOfInterval({
-    start: startOfMonth(focusedMonth),
-    end: endOfMonth(focusedMonth)
-  })
+  useEffect(() => {
+    setWeeksOfMonth(eachWeekOfInterval({
+      start: startOfMonth(focusedMonth),
+      end: endOfMonth(focusedMonth)
+    }));
+  },[focusedMonth]);
 
   useEffect(()=>{
     setTimeRange(defaultTimeRange);
-  }, [timeMode, setTimeRange])
-
-  useEffect(()=>{
-    setTimeMode(props.timeMode);
-    setDateMode(props.dateMode);
-  }, [props, setTimeMode, setDateMode])
+  }, [timeMode, setTimeRange]);
 
   useEffect(() => {
     updateCallback(selectedRange);
-  }, [selectedRange, updateCallback])
+  }, [selectedRange, updateCallback]);
 
   /**
    * Handler for updating picked dates when a calendar day has been selected.
@@ -290,7 +288,7 @@ const DatePicker : React.FC<IProps> = (props) => {
 
       }
     }
-  }, [timeRange, selectedRange, setSelectedRange, targetedDate, setTargetedDate, isAfter, singleDayToInterval])
+  }, [dateMode, targetedDate, selectedRange.start, timeRange.start, timeRange.end]);
 
 
   /**
@@ -306,9 +304,9 @@ const DatePicker : React.FC<IProps> = (props) => {
     const originalValue : number = timeRange[target][unit];
 
     if(target === 'start'){
-      start[unit] = value
+      start[unit] = value;
     } else {
-      end[unit] = value
+      end[unit] = value;
     }
 
     // === Enforce time limitations. ===
@@ -318,9 +316,9 @@ const DatePicker : React.FC<IProps> = (props) => {
     // Time interval should be at least one minute - if not, revert back.
     if(timeLaterOrSame(start, end)){
       if(target === 'start'){
-        start[unit] = originalValue
+        start[unit] = originalValue;
       } else {
-        end[unit] = originalValue
+        end[unit] = originalValue;
       }
     }
 
@@ -334,7 +332,7 @@ const DatePicker : React.FC<IProps> = (props) => {
       end: set(selectedRange.end, timeRules(end))
     });
 
-  }, [selectedRange, setSelectedRange, setTimeRange])
+  }, [selectedRange.end, selectedRange.start, timeRange]);
 
 
   /**
@@ -363,64 +361,68 @@ const DatePicker : React.FC<IProps> = (props) => {
   }, []);
 
 
-  return <Container>
+  return (
+    <Container>
 
-    <DateTimeArea>
-      <DateTimeBlock title={"From"} hasDate={ true } hasTime={ timeMode != 'off' } date={ selectedRange.start } time={ timeRange.start } setTimeCallback={ updateStartTime } setDateCallback={ updateStartDate } />
-      <DateTimeBlock title={"To"} hasDate={ dateMode == 'interval' } hasTime={ timeMode == 'interval' } date={ selectedRange.end } time={ timeRange.end } allowAfterMidnight={ true } setTimeCallback={ updateEndTime } setDateCallback={ updateEndDate } />
+      <DateTimeArea>
+        <DateTimeBlock title='From' hasDate hasTime={timeMode !== 'off'} date={selectedRange.start} time={timeRange.start} setTimeCallback={updateStartTime} setDateCallback={updateStartDate} />
+        <DateTimeBlock title='To' hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange.end} time={timeRange.end} allowAfterMidnight setTimeCallback={updateEndTime} setDateCallback={updateEndDate} />
 
-      <TimeZoneOption>
-        <TimeZoneLabel>Timezone</TimeZoneLabel>
-        <TimeZoneValue>JST</TimeZoneValue>
-      </TimeZoneOption>
+        <TimeZoneOption>
+          <TimeZoneLabel>Timezone</TimeZoneLabel>
+          <TimeZoneValue>JST</TimeZoneValue>
+        </TimeZoneOption>
 
-    </DateTimeArea>
+      </DateTimeArea>
 
-    <CalendarArea>
-      <CalendarHeader>
+      <CalendarArea>
+        <CalendarHeader>
 
-        <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, -1) ) }>
-          <IconWrap><Icon icon={'Left'} color={'dimmed'} size={10} /></IconWrap>
-          { format(addMonths(focusedMonth, -1), "MMM") }
-        </PaginateMonth>
+          <PaginateMonth type='button' onClick={() => setFocusedMonth( addMonths(focusedMonth, -1) )}>
+            <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
+            {format(addMonths(focusedMonth, -1), "MMM")}
+          </PaginateMonth>
 
-        <CurrentMonth>
-          <span>{ format(focusedMonth, "yyyy") }</span>
-          { format(focusedMonth, "MMMM") }
-        </CurrentMonth>
+          <CurrentMonth>
+            <span>{format(focusedMonth, "yyyy")}</span>
+            {format(focusedMonth, "MMMM")}
+          </CurrentMonth>
 
-        <PaginateMonth onClick={ () => setFocusedMonth( addMonths(focusedMonth, 1) ) }>
-          { format(addMonths(focusedMonth, 1), "MMM") }
-          <IconWrap><Icon icon={'Right'} color={'dimmed'} size={10} /></IconWrap>
-        </PaginateMonth>
+          <PaginateMonth type='button' onClick={() => setFocusedMonth( addMonths(focusedMonth, 1) )}>
+            {format(addMonths(focusedMonth, 1), "MMM")}
+            <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
+          </PaginateMonth>
 
-      </CalendarHeader>
+        </CalendarHeader>
 
-      <CalHRow>
-        {DayGuide.map((day, index) => {
-          return <CalHCell key={index}>{day}</CalHCell>;
-        })}
-      </CalHRow>
+        <CalHRow>
+          {DayGuide.map((day, index) => {
+            return <CalHCell key={index}>{day}</CalHCell>;
+          })}
+        </CalHRow>
 
-      <CalBody>
-        { weeksOfMonth.map((week, index)=>{
-          const days = eachDayOfInterval({
-            start: week,
-            end: endOfWeek(week)
-          })
+        <CalBody>
+          {weeksOfMonth.map((week, index)=>{
+            const days = eachDayOfInterval({
+              start: week,
+              end: endOfWeek(week)
+            });
 
-          return <CalRow key={index}>
-            {days.map((day, index) => {
-              return <CalCellB key={index} onClick={ () => onCellClick(day) } onMouseEnter={ () => setHoverDay(day) } onMouseLeave={ () => setHoverDay(null) } state={ cellState(day, selectedRange) } thisMonth={ isSameMonth(day, focusedMonth) } isToday={ isToday(day) }>{format(day, "d")}</CalCellB>
-            })}
-          </CalRow>
-        }) }
-      </CalBody>
+            return (
+              <CalRow key={index}>
+                {days.map((day, index) => {
+                  return <CalCellB key={index} onClick={() => onCellClick(day)} onMouseEnter={() => setHoverDay(day)} onMouseLeave={() => setHoverDay(null)} state={cellState(day, selectedRange)} thisMonth={isSameMonth(day, focusedMonth)} isToday={isToday(day)}>{format(day, "d")}</CalCellB>;
+                })}
+              </CalRow>
+            );
+          })}
+        </CalBody>
 
-    </CalendarArea>
+      </CalendarArea>
 
 
-  </Container>
+    </Container>
+  );
 
 };
 
@@ -430,7 +432,7 @@ const DatePicker : React.FC<IProps> = (props) => {
  * @param day Date - The date of the cell in the calendar.
  * @param interval Interval - The date range that is active in the calendar.
  */
-const cellState = (day: Date, interval: Interval, hoverDate? : Date) : CellStates => {
+const cellState = (day: Date, interval: Interval, _hoverDate? : Date) : CellStates => {
 
   let state : CellStates = "off";
 
@@ -451,7 +453,7 @@ const cellState = (day: Date, interval: Interval, hoverDate? : Date) : CellState
   }
 
   return state;
-}
+};
 
 /**
  * Convert a single days duration to an interval.
@@ -461,8 +463,8 @@ const singleDayToInterval = (day: Date) : Interval => {
   return {
     start: startOfDay(day),
     end: endOfDay(day)
-  }
-}
+  };
+};
 
 /**
  * Check that the end time is later than the start.
@@ -475,7 +477,7 @@ const timeLaterOrSame = (startTime : TimeProperties, endTime : TimeProperties ) 
   const end = (endTime.hours * 3600) + (endTime.minutes * 60) + endTime.seconds;
 
   return start >= end;
-}
+};
 
 
 /**
@@ -491,10 +493,10 @@ const timeRules = (time : TimeProperties) : TimeProperties => {
     minutes: time.hours === 24 ? 59 : time.minutes,
     seconds: time.hours === 24 ? 59 : 0,
     milliseconds: time.hours === 24 ? 999 : 0
-  }
+  };
 
   return processed;
 
-}
+};
 
 export default DatePicker;

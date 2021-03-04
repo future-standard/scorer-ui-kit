@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import {format } from 'date-fns'
+import {format } from 'date-fns';
 
 import Icon from '../../Icons/Icon';
 
@@ -11,7 +11,7 @@ const Container = styled.div<{hide:boolean}>`
   ${({hide}) => hide && css`
     display: none;
   `}
-`
+`;
 
 const Label = styled.label`
   ${({theme}) => css`
@@ -23,18 +23,18 @@ const Label = styled.label`
 
   // ${({theme})=> theme.typography.filters.datepicker.metaHeader.active};
 
-`
+`;
 
 const Item = styled.div`
   padding: 12px;
   display: flex;
   justify-content: left;
-`
+`;
 
 const IconWrap = styled.div`
   flex: 0 0 40px;
   padding-top: 2px;
-`
+`;
 
 const Input = styled.input<{ readOnly? : boolean }>`
   ${({theme}) => css`
@@ -58,11 +58,11 @@ const Input = styled.input<{ readOnly? : boolean }>`
   ${({readOnly}) => readOnly && css`
     border-color: transparent;
   `}
-`
+`;
 
 const TimeColon = styled.div`
   flex: 0 0 20px;
-`
+`;
 
 const InputWrap = styled.div`
   display: flex;
@@ -84,7 +84,7 @@ const InputWrap = styled.div`
       text-align: center;
     }
   }
-`
+`;
 
 
 
@@ -100,31 +100,36 @@ interface IProps {
 }
 
 const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, hasDate, hasTime, date, time, setTimeCallback, setDateCallback }) => {
-  return <Container hide={ !hasDate && !hasTime }>
-    <Label>{title}</Label>
+  return (
+    <Container hide={!hasDate && !hasTime}>
+      <Label>{title}</Label>
 
-      {hasDate && <Item>
-        <IconWrap>
-          <Icon icon={'Date'} color={'dimmed'} size={14} weight={'regular'} />
-        </IconWrap>
-        <InputWrap>
-          <Input type="text" readOnly={ true } value={ format(date || new Date(), "yyyy/MM/dd") } onChange={ ({target}) => setDateCallback() } />
-        </InputWrap>
+      {hasDate && (
+        <Item>
+          <IconWrap>
+            <Icon icon='Date' color='dimmed' size={14} weight='regular' />
+          </IconWrap>
+          <InputWrap>
+            <Input type='text' readOnly value={format(date || new Date(), "yyyy/MM/dd")} onChange={({target: _}) => setDateCallback()} />
+          </InputWrap>
+        </Item>
+      )}
 
-      </Item>}
+      {hasTime && (
+        <Item>
+          <IconWrap>
+            <Icon icon='Time' color='dimmed' size={14} weight='regular' />
+          </IconWrap>
+          <InputWrap>
+            <Input type='number' min='0' max={allowAfterMidnight ? 24: 23} value={clockFormatNumber(time.hours || 0)} onChange={({target}) => setTimeCallback( 'hours', parseInt(target.value))} />
+            <TimeColon>:</TimeColon>
+            <Input type='number' min='0' max='59' value={clockFormatNumber(time.minutes || 0)} onChange={({target}) => setTimeCallback( 'minutes', parseInt(target.value))} />
+          </InputWrap>
+        </Item>
+      )}
 
-      {hasTime && <Item>
-        <IconWrap>
-          <Icon icon={'Time'} color={'dimmed'} size={14} weight={'regular'} />
-        </IconWrap>
-        <InputWrap>
-          <Input type="number" min="0" max={ allowAfterMidnight ? 24: 23 } value={ clockFormatNumber(time.hours || 0) } onChange={ ({target}) => setTimeCallback( 'hours', parseInt(target.value)) } />
-          <TimeColon>:</TimeColon>
-           <Input type="number" min="0" max="59" value={ clockFormatNumber(time.minutes || 0) } onChange={ ({target}) => setTimeCallback( 'minutes', parseInt(target.value)) } />
-        </InputWrap>
-      </Item>}
-
-  </Container>;
+    </Container>
+  );
 };
 
 /**
@@ -135,6 +140,6 @@ const clockFormatNumber = (value : number) => {
   const valAsString = value.toString();
 
   return (valAsString.length === 1) ? '0' + value : value;
-}
+};
 
 export default DateTimeBlock;
