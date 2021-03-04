@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div<{ height?: string }>`
@@ -34,9 +34,11 @@ interface IProps {
   height?: string
 }
 
-const FilterDropdownContainer : React.FC<IProps> = ({height, children}) => {
+type Props = IProps & HTMLAttributes<HTMLDivElement>
+
+const FilterDropdownContainer : React.FC<Props> = ({children,...props}) => {
   return (
-    <Container {...height}>
+    <Container {...props}>
       <Inner>
         {children}
       </Inner>

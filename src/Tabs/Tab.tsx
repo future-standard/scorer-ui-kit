@@ -4,8 +4,8 @@ import { TabContext, ContextProps } from './Tabs';
 
 const TabComponent = styled.div`
   margin-right: 39px;
-  display: flex; 
-  align-items: center;  
+  display: flex;
+  align-items: center;
 `;
 
 const TabLabel = styled.label<{ active: boolean }>`
@@ -21,6 +21,7 @@ const TabLabel = styled.label<{ active: boolean }>`
   border-bottom: ${({ active }) => active ? '2px solid #0097ce' : '2px solid transparent'};
   padding-top: 6px;
   padding-bottom: 14px;
+  flex-shrink: 0;
 `;
 
 interface OwnProps {
