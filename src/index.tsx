@@ -53,7 +53,8 @@ import {
 import {
   IntroductionText,
   PageHeader,
-  PageTitle
+  PageTitle,
+  MultilineContent,
 } from './Pages';
 
 // Tables
@@ -162,6 +163,7 @@ export {
   IntroductionText,
   PageHeader,
   PageTitle,
+  MultilineContent,
 
   // ptz PTZ Controls
   Controls,

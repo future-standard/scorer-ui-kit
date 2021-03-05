@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, ReactElement} from 'react';
 import styled from 'styled-components';
 import { object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
@@ -7,7 +7,8 @@ import { action } from '@storybook/addon-actions';
 import {
 TypeTable as TypeTableCustom,
 ActionButtons,
-IconButtonData
+IconButtonData,
+MultilineContent,
 } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
 import { 
@@ -17,6 +18,13 @@ import {
 
 const Container = styled.div`
   padding: 100px;
+`;
+
+const TimeText = styled.div`
+  font-size: 12px;
+  span {
+    font-style: italic;
+  }
 `;
 
 export default {
@@ -113,6 +121,15 @@ const generateConfigButtons  = (rowId: string) : IconButtonData[] => {
   )
 }
 
+const generateTimeRows = (initTime: string, endTime: string) : ReactElement[] =>  {
+  return (
+    [ 
+      <TimeText>{`${initTime} ${String.fromCharCode(160)} →`}</TimeText>,
+      <TimeText>{endTime}<span>{` JST`}</span></TimeText>
+    ]
+  )
+}
+
 const initialRows : ITypeTableData = [
   {
     id: 'row1',
@@ -120,8 +137,8 @@ const initialRows : ITypeTableData = [
       image: photo,
     },
     columns: [
-      {text: `2020/06/11 - 16:00  → 2020/06/11 - 21:30`},
-      {text: `2020/07/12 - 16:00`},
+      {customComponent: <MultilineContent contentArray={generateTimeRows('2020/06/11 - 16:00','2020/06/11 - 21:30')}/>},
+      {customComponent: <div style={{fontStyle:'italic'}}>Just Now</div>},
       {text: `00:00:12`},
       {text: `Complete`},
       { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device1')}/>},
@@ -133,8 +150,21 @@ const initialRows : ITypeTableData = [
       image: photo,
     },
     columns: [
-      {text: `2020/06/11 - 16:00  → 2020/06/11 - 21:30`},
-      {text: `2020/07/12 - 16:00`},
+      {customComponent: <MultilineContent contentArray={generateTimeRows('2020/06/11 - 13:00','2020/06/11 - 17:30')}/>},
+      {text: `2020/06/11 - 17:30`},
+      {text: `00:00:12`},
+      {text: `Complete`},
+      { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device2')}/>},
+    ]
+  },
+  {
+    id: 'row3',
+    header: {
+      image: photo,
+    },
+    columns: [
+      {customComponent: <MultilineContent contentArray={generateTimeRows('2020/05/10 - 10:00','2020/05/10 - 12:30')}/>},
+      {text: `2020/05/10 - 12:30`},
       {text: `00:00:12`},
       {text: `Complete`},
       { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device2')}/>},
@@ -143,9 +173,9 @@ const initialRows : ITypeTableData = [
 ];
 
 export const ActionsTable = () => {
-
-  const columnConfig = object("Column Configuration", columnConfigSample);
+  const hasThumbnail = boolean("Has Thumbnail", true);
   const selectable = boolean("Selectable Rows", true);
+  const columnConfig = object("Column Configuration", columnConfigSample);
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
   const toggleAllCallback = useCallback((checked:boolean) => {
     const newRows = [...rows];
@@ -175,7 +205,8 @@ export const ActionsTable = () => {
               rows,
               selectable,
               selectCallback,
-              toggleAllCallback
+              toggleAllCallback,
+              hasThumbnail,
             }
           } 
         />

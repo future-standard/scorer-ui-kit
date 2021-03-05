@@ -14,7 +14,7 @@ const Container = styled.div`
   }
 `;
 
-export type IGroupButtonsData = {
+type IGroupButtonsData = {
   buttonsConfig: IconButtonData []
 }
 
