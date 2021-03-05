@@ -23,8 +23,6 @@ import {
   ActionButtons,
   SmallInput, 
   Input,
-  InputActionButton,
-  InputFeedback,
   Label,
   Switch,
   Checkbox,
@@ -141,8 +139,6 @@ export {
   ActionButtons,
   Input,
   SmallInput,
-  InputActionButton,
-  InputFeedback,
   Label,
   Switch,
   Checkbox,
@@ -213,7 +209,7 @@ export {
   useModal
 };
 
-export type { 
+export type {
   IModal,
   INotificationProps,
   IconButtonData,

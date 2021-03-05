@@ -5,8 +5,6 @@ import IconButton, {IconButtonData} from './atoms/IconButton';
 import ActionButtons from './molecules/ActionButtons';
 import Input from './atoms/Input';
 import SmallInput from './atoms/SmallInput';
-import InputActionButton from './atoms/InputActionButton';
-import InputFeedback from './atoms/InputFeedback';
 import Label from './atoms/Label';
 import Switch from './atoms/Switch';
 import Checkbox from './atoms/Checkbox';
@@ -26,8 +24,6 @@ export {
     ActionButtons,
     SmallInput,
     Input,
-    InputActionButton,
-    InputFeedback,
     Label,
     Checkbox,
     Switch,
