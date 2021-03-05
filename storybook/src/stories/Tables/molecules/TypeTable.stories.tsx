@@ -68,7 +68,7 @@ const initialRows : ITypeTableData = [
       { text: 'OK', status: 'good' },
       { text: 'Just Now' },
       { text: '242', unit: 'mb' },
-      { text: '¥20,000'},
+      { text: '¥20,000'}
     ]
   },
   {
@@ -116,7 +116,7 @@ const initialRows : ITypeTableData = [
       { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
-      { text: '¥25,000' },
+      { text: '¥25,000' }
     ]
   },
   {
@@ -148,7 +148,7 @@ const initialRows : ITypeTableData = [
       { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
-      { text: '¥25,000' },
+      { text: '¥25,000' }
     ]
   },
   {
@@ -180,7 +180,7 @@ const initialRows : ITypeTableData = [
       { text: 'Offline', status: 'neutral' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
-      { text: '¥25,000' },
+      { text: '¥25,000' }
     ]
   },
   {
@@ -196,7 +196,7 @@ const initialRows : ITypeTableData = [
       { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
-      { text: '¥25,000' },
+      { text: '¥25,000' }
     ]
   },
   {
@@ -212,7 +212,7 @@ const initialRows : ITypeTableData = [
       { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
-      { text: '¥25,000' },
+      { text: '¥25,000' }
     ]
   },
   {
@@ -228,7 +228,7 @@ const initialRows : ITypeTableData = [
       { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
-      { text: '¥25,000' },
+      { text: '¥25,000' }
     ]
   }
 ];

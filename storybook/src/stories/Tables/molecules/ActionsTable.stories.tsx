@@ -35,7 +35,7 @@ export default {
 
 const columnConfigSample : ITableColumnConfig[] = [
   {
-    header: 'Analyse Range',
+    header: 'Analysed Range',
     sortable: false,
     cellStyle: 'normalImportance',
   },
