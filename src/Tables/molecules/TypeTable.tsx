@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
-import Spiner from '../../Indicators/Spinner'
-;import TypeTableRow from '../atoms/TypeTableRow';
+import Spiner from '../../Indicators/Spinner';
+import TypeTableRow from '../atoms/TypeTableRow';
 import Checkbox from '../../Form/atoms/Checkbox';
 import { TypeCellAlignment, ITableColumnConfig, ITypeTableData, IRowData } from '..';
 
