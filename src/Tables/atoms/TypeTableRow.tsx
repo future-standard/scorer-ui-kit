@@ -30,6 +30,7 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, ha
     if(selectCallback){ selectCallback(checked, rowData.id); }
   }, [rowData.id, selectCallback]);
 
+  if(rowData?.columns?.length === 0) { return null;}
   return (
     <RowContainer>
       {selectable ? <TypeTableCell hideDivider><Checkbox checked={rowData._checked} onChangeCallback={wrappedSelectCallback} /></TypeTableCell> : null}
