@@ -20,6 +20,7 @@ const HeaderRow = styled.div`
   display: table-row;
   height: ${HEADER_HEIGHT};
 `;
+
 const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean }>`
   display: table-cell;
   height: inherit;
@@ -69,6 +70,22 @@ const LoadingBox = styled.div`
   }
 `;
 
+const EmptyTableBox = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  margin-top: ${HEADER_HEIGHT};
+  width: 100%;
+  min-height: 100px;
+  text-align: center;
+  h3 {
+    font-weight: 500;
+    color: hsl(208, 8%, 38%);
+  }
+  color: hsl(207, 5%, 57%);
+`;
+
 interface IProps {
   columnConfig: ITableColumnConfig[]
   rows: ITypeTableData
@@ -77,7 +94,9 @@ interface IProps {
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
   isLoading?: boolean
-  loadingText? : string
+  loadingText?: string
+  emptyTableTitle?: string
+  emptyTableText?: string
   selectCallback? : (checked:boolean, id?: string | number)=>void
   toggleAllCallback? : (checked: boolean)=>void
 }
@@ -85,14 +104,16 @@ interface IProps {
 const TypeTable : React.FC<IProps> = ({
   columnConfig,
   selectable,
-  selectCallback = ()=>{},
-  toggleAllCallback = ()=>{},
   rows = [],
   hasStatus = false,
   hasThumbnail = false,
   hasTypeIcon = false,
   isLoading = false,
   loadingText = 'Loading Data...',
+  emptyTableTitle = 'No Data Available',
+  emptyTableText = 'There is currently no data',
+  selectCallback = ()=>{},
+  toggleAllCallback = ()=>{},
 }) => {
   const [allChecked, setAllChecked] = useState(false);
   const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
@@ -102,6 +123,14 @@ const TypeTable : React.FC<IProps> = ({
   useEffect(() => {
     setAllChecked(rows.every(isChecked) && rows.length > 0);
   }, [rows]);
+
+  /* Currenlty IRowData Type enforces user to send columns
+   so rows length will always be at least 1
+   I wasn't sure if I should edit IRowData to have columns optional
+   If we allow columns to be optional, previous implementations
+   wont be able to have "No data" Message
+  */
+  const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
 
   return (
     <Container>
@@ -123,11 +152,15 @@ const TypeTable : React.FC<IProps> = ({
               <LoadingText>{loadingText}</LoadingText>
             </LoadingBox>
           ) : null}
-        {
-          rows.map((rowData, key) => {
-            const isLastRow = (rows.length - 1 === key) ? true : false;
-            return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
-          })
+        {isEmptyTable
+          ? <EmptyTableBox>
+              <h3>{emptyTableTitle}</h3>
+              <p>{emptyTableText}</p>
+            </EmptyTableBox>
+          : rows.map((rowData, key) => {
+              const isLastRow = (rows.length - 1 === key) ? true : false;
+              return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
+            })
         }
       </TableContainer>
     </Container>

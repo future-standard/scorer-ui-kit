@@ -44,9 +44,6 @@ const columnConfigSample : ITableColumnConfig[] = [
 
 const initialRows : ITypeTableData = [
   {
-    id: 'row1',
-    header: {
-    },
     columns: [
     ]
   }
