@@ -18,7 +18,10 @@ import {
   Button,
   ButtonWithIcon,
   ButtonWithLoading,
-  SmallInput,
+  IconButton,
+  IconButtonData,
+  ActionButtons,
+  SmallInput, 
   Input,
   Label,
   Switch,
@@ -48,7 +51,8 @@ import {
 import {
   IntroductionText,
   PageHeader,
-  PageTitle
+  PageTitle,
+  MultilineContent,
 } from './Pages';
 
 // Tables
@@ -131,6 +135,8 @@ export {
   Button,
   ButtonWithIcon,
   ButtonWithLoading,
+  IconButton,
+  ActionButtons,
   Input,
   SmallInput,
   Label,
@@ -153,6 +159,7 @@ export {
   IntroductionText,
   PageHeader,
   PageTitle,
+  MultilineContent,
 
   // ptz PTZ Controls
   Controls,
@@ -205,4 +212,5 @@ export {
 export type {
   IModal,
   INotificationProps,
+  IconButtonData,
 };

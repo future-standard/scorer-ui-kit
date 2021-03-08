@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import { object, boolean } from "@storybook/addon-knobs";
 
 import {TypeTable} from 'scorer-ui-kit';
-import photo from '../assets/placeholder.jpg';
-import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
+import photo from '../../assets/placeholder.jpg';
+import { 
+  ITableColumnConfig,
+  ITypeTableData
+} from 'scorer-ui-kit/dist/Tables';
 
 const Container = styled.div`
   padding: 100px;
@@ -48,12 +51,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     cellStyle: 'highImportance',
     alignment: 'right',
     hasCopyButton: true
-  },
-  // {
-  //   // TODO: For things like buttons
-  //   cellStyle: 'action',
-  //   alignment: 'right',
-  // }
+  }
 ];
 
 const initialRows : ITypeTableData = [
@@ -86,7 +84,7 @@ const initialRows : ITypeTableData = [
       { text: 'Warning', status: 'danger' },
       { text: '1st October 2019' },
       { text: '2.1', unit: 'gb' },
-      { text: '¥4,000'}
+      { text: '¥4,000'},
     ],
   },
   {
@@ -102,7 +100,7 @@ const initialRows : ITypeTableData = [
       { text: 'Warning', status: 'danger' },
       { text: '22nd March 2020' },
       { text: '2.1', unit: 'tb' },
-      { text: '¥7,000'}
+      { text: '¥7,000'},
     ],
   },
   {
@@ -134,7 +132,7 @@ const initialRows : ITypeTableData = [
       { text: 'Caution', status: 'caution' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
+      { text: '¥25,000' },
     ]
   },
   {
@@ -166,7 +164,7 @@ const initialRows : ITypeTableData = [
       { text: 'OK', status: 'good' },
       { text: '2nd April 2020' },
       { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
+      { text: '¥25,000' },
     ]
   },
   {
