@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 import Spinner from '../Indicators/Spinner';
-import { LineUIOptions, IBoundary } from '.';
+import { LineUIOptions, IBoundary, LineUIVideoOptions } from '.';
 
 
 const Container = styled.div`
@@ -68,16 +68,19 @@ interface LineUIProps {
   onLineMoveEnd?: ()=> void;
   onLoaded?: (metadata: {height: number; width: number; }) => void;
   options?: LineUIOptions;
+  videoOptions: LineUIVideoOptions;
 }
-const LineUI : React.FC<LineUIProps> = ({
+const LineUIVideo : React.FC<LineUIProps> = ({
   src,
   onSizeChange = ()=>{},
   onLineMoveEnd = ()=>{},
   onLoaded = ()=>{},
   videoOptions: {
     loop = false,
-    autoplay = false
-    controls = false
+    autoPlay = false,
+    controls = false,
+    muted = true,
+    ...videoOptions
   },
   options: {
     showHandleFinder,
@@ -93,7 +96,7 @@ const LineUI : React.FC<LineUIProps> = ({
 }) => {
 
   const frame =  useRef<SVGSVGElement>(null);
-  const videoRef = useRef<HTMLVideoElement>();
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
   const {state} = useContext(LineSetContext);
@@ -184,7 +187,7 @@ const LineUI : React.FC<LineUIProps> = ({
 
   return (
     <Container>
-      <Video ref={videoRef} onLoadedMetadata={onLoadedMetadata} src={src} id='1' enabled> </Video>
+      <Video ref={videoRef} controls={controls} muted={muted} autoPlay={autoPlay} loop={loop} {...videoOptions} onLoadedMetadata={onLoadedMetadata} src={src} id='1'> </Video>
       {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {
         loaded &&
@@ -199,4 +202,4 @@ const LineUI : React.FC<LineUIProps> = ({
 
 };
 
-export default LineUI;
+export default LineUIVideo;
