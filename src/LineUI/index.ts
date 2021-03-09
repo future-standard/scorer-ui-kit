@@ -1,7 +1,9 @@
-import LineUI from "./LineUI";
-import LineUIRTC from "./LineUIRTC";
-import LineReducer from "./LineReducer";
+import LineUI from './LineUI';
+import LineUIVideo from './LineUIVideo';
+import LineUIRTC from './LineUIRTC';
+import LineReducer from './LineReducer';
 import { LineSetContext } from './Contexts';
+import { VideoHTMLAttributes } from 'react';
 
 export interface IVector2 {
   x: number,
@@ -57,9 +59,12 @@ export interface LineUIOptions {
   showPoint?: boolean;
 }
 
+export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>
+
 export {
   LineUI,
+  LineUIVideo,
   LineUIRTC,
   LineReducer,
-  LineSetContext,
+  LineSetContext
 };

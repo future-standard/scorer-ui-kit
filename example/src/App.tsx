@@ -10,6 +10,7 @@ import { PTZProvider } from 'scorer-ui-kit';
 import FormPage from './pages/FormPage';
 import LinePage from './pages/LinePage';
 import LineRTCPage from './pages/LineRTCPage';
+import LineVideoPage from './pages/LineVideoPage';
 import LinksPage from './pages/LinksPage';
 import PTZPage from './pages/PTZPage';
 import LoginPage from './pages/Login';
@@ -27,6 +28,7 @@ const App: React.FC<{}> = () => {
       <Switch>
         <Route path={`/`} exact={true} component={LinksPage} />
         <Route path={`/line`} exact={true} component={LinePage} />
+        <Route path={`/linevideo`} exact={true} component={LineVideoPage} />
         <Route path={`/linertc`} exact={true} component={LineRTCPage} />
         <Route path={`/login`} exact={true} component={LoginPage} />
         <Route path={`/forms`} exact={true} component={FormPage} />
