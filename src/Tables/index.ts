@@ -1,5 +1,6 @@
 import TypeTable from './molecules/TypeTable';
 import TableRowThumbnail from './atoms/TableRowThumbnail';
+import { ReactElement } from 'react';
 
 export type TypeCellStyle = 'firstColumn' | 'lowImportance' | 'normalImportance' | 'highImportance' ;
 export type TypeCellAlignment = 'left' | 'center' | 'right';
@@ -26,10 +27,11 @@ export interface ITableColumnConfig {
   width?: number // TODO: This!
 }
 export interface ICellData {
-  text: string
+  text?: string
   href?: string
   unit?: string
   status?: 'caution' | 'danger' | 'folder' | 'good' | 'neutral';
+  customComponent?: ReactElement
 }
 export interface IRowHeader {
   status?: any

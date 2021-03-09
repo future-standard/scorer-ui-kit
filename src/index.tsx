@@ -8,6 +8,8 @@ import darkTheme from './themes/dark';
 import {
   AlertBar,
   Notification,
+  ConfirmationModal,
+  INotificationProps,
 }from './Alerts';
 
 // Components - Form
@@ -16,10 +18,11 @@ import {
   Button,
   ButtonWithIcon,
   ButtonWithLoading,
+  IconButton,
+  IconButtonData,
+  ActionButtons,
   SmallInput, 
   Input,
-  InputActionButton,
-  InputFeedback,
   Label,
   Switch,
   Checkbox,
@@ -33,7 +36,7 @@ import {
 import {
   DatePicker,
   FilterDropdownContainer
-} from './Filters'
+} from './Filters';
 
 import Icon, {IconSVGs} from  './Icons/Icon';
 // Components - Line UI
@@ -48,7 +51,8 @@ import {
 import {
   IntroductionText,
   PageHeader,
-  PageTitle
+  PageTitle,
+  MultilineContent,
 } from './Pages';
 
 // Tables
@@ -71,12 +75,16 @@ import {
   useTo,
   useTitle,
   useCopyToClipboard,
+  useModal,
   useNotification,
+  IModal,
 } from './hooks';
 
 import {
   NotificationProvider,
-} from './context/NotificationContext';
+  ModalContext,
+  ModalProvider,
+} from './context';
 
 import  { resetButtonStyles } from './common';
 
@@ -114,6 +122,7 @@ export {
   // Alerts
   AlertBar,
   Notification,
+  ConfirmationModal,
 
   // LineUI
   LineUI,
@@ -126,10 +135,10 @@ export {
   Button,
   ButtonWithIcon,
   ButtonWithLoading,
+  IconButton,
+  ActionButtons,
   Input,
   SmallInput,
-  InputActionButton,
-  InputFeedback,
   Label,
   Switch,
   Checkbox,
@@ -150,6 +159,7 @@ export {
   IntroductionText,
   PageHeader,
   PageTitle,
+  MultilineContent,
 
   // ptz PTZ Controls
   Controls,
@@ -194,4 +204,13 @@ export {
   //Context
   NotificationProvider,
   useNotification,
+  ModalContext,
+  ModalProvider,
+  useModal
+};
+
+export type {
+  IModal,
+  INotificationProps,
+  IconButtonData,
 };

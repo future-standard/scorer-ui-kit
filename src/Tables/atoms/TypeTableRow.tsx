@@ -39,8 +39,8 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, ha
 
       {rowData.columns.map((cell, key) => {
         const {cellStyle, alignment, showUnit, showStatus, hasCopyButton} = columnConfig[key];
-        const {unit, status, text} = cell;
-        return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, showStatus, hasCopyButton, unit, status, isLastRow}}>{text}</TypeTableCell>;
+        const {unit, status, text, customComponent} = cell;
+        return <TypeTableCell key={key} href={cell.href} {...{cellStyle, alignment, showUnit, showStatus, hasCopyButton, unit, status, isLastRow}}>{customComponent ? customComponent : text}</TypeTableCell>;
       })}
 
     </RowContainer>

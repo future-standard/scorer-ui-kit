@@ -2,13 +2,7 @@ import * as React from "react";
 
 function SvgMetaCategories(props: ISvgIcons) {
   return (
-    <svg
-      width={props.size}
-      height={props.size}
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg width={props.size} height={props.size} viewBox="0 0 24 24" {...props}>
       <g
         stroke={props.color}
         strokeWidth={props.weight}

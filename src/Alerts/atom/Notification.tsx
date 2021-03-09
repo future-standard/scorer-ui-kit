@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDom from 'react-dom';
-import styled, { css, keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components';
 import Icon from '../../Icons/Icon';
-import { AlertType } from '..'
+import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
 
 const initAnimation = keyframes`
@@ -52,7 +52,6 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
     animation: ${closeAnimation} ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
     `
   };
-  
 `;
 
 export const IconNames = {
@@ -61,7 +60,7 @@ export const IconNames = {
   success: 'Success',
   info: 'Information',
   neutral: 'Information'
-}
+};
 
 const IconButton = styled.div<{selected?: boolean}>`
   ${resetButtonStyles};
@@ -114,8 +113,8 @@ const MainMessage = styled.div`
   flex-grow: 2;
 `;
 
-export interface INotificationProps {
-  type: AlertType
+export type INotificationProps = {
+  type: AlertType;
   message: string;
   actionTextButton?: string;
   onTextButtonClick?: () => void;
@@ -134,14 +133,14 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
     setTextClicked(false);
   },[message]);
 
+  const handleDismiss = useCallback(() => {
+    setSlideUp(true);
+  },[]);
+
   const handleTextClick = useCallback(async () => {
     setTextClicked(true);
     handleDismiss();
-  },[])
-
-  const handleDismiss = useCallback(() => {
-    setSlideUp(true);
-  },[])
+  },[handleDismiss]);
 
   const animationEnded = useCallback(() => {
     // Will only trigger if the animation triggered was clossing one
@@ -156,7 +155,7 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
         closeCallback();
       }
     }
-  }, [slideUp, closeCallback, onTextButtonClick])
+  }, [slideUp, closeCallback, onTextButtonClick, textClicked]);
 
   useEffect(() => {
     let mounted = true;
@@ -170,22 +169,24 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
 
     return () => {
       mounted = false;
-    }
-  },[isPinned, message])
+    };
+  },[isPinned, message, handleDismiss]);
   
   return( (message && !dismiss)
-  ? ReactDom.createPortal(<Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>
+  ? ReactDom.createPortal(
+    <Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>
       <Icon icon={IconNames[type]} color='inverse' />
       <MainMessage>{message}</MainMessage>
       {actionTextButton
         ? <TextButton onClick={() => handleTextClick()}>{actionTextButton} </TextButton>
-        : <IconButton onClick={() => handleDismiss()}>
-            <Icon icon='CloseCompact' color='inverse' />
-          </IconButton>}
+        : 
+        <IconButton onClick={() => handleDismiss()}>
+          <Icon icon='CloseCompact' color='inverse' />
+        </IconButton>}
     </Container>
     , document.body)
   : null
   );
-}
+};
 
 export default Notification;

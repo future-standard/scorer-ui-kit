@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import {format } from 'date-fns'
+import {endOfDay, format,isEqual,min,set } from 'date-fns';
 
 import Icon from '../../Icons/Icon';
 
@@ -11,7 +11,7 @@ const Container = styled.div<{hide:boolean}>`
   ${({hide}) => hide && css`
     display: none;
   `}
-`
+`;
 
 const Label = styled.label`
   ${({theme}) => css`
@@ -23,18 +23,18 @@ const Label = styled.label`
 
   // ${({theme})=> theme.typography.filters.datepicker.metaHeader.active};
 
-`
+`;
 
 const Item = styled.div`
   padding: 12px;
   display: flex;
   justify-content: left;
-`
+`;
 
 const IconWrap = styled.div`
   flex: 0 0 40px;
   padding-top: 2px;
-`
+`;
 
 const Input = styled.input<{ readOnly? : boolean }>`
   ${({theme}) => css`
@@ -58,11 +58,11 @@ const Input = styled.input<{ readOnly? : boolean }>`
   ${({readOnly}) => readOnly && css`
     border-color: transparent;
   `}
-`
+`;
 
 const TimeColon = styled.div`
   flex: 0 0 20px;
-`
+`;
 
 const InputWrap = styled.div`
   display: flex;
@@ -84,7 +84,7 @@ const InputWrap = styled.div`
       text-align: center;
     }
   }
-`
+`;
 
 
 
@@ -92,49 +92,96 @@ interface IProps {
   title: string
   hasDate: boolean
   hasTime: boolean
-  date?: number | Date
-  time?: any
-  setDateCallback?: any
-  setTimeCallback?: any
-  allowAfterMidnight?: boolean
+  date?: Date
+  setDateCallback?: (date: Date) => void
+  setTimeCallback?: (date: Date) => void
+  allowAfterMidnight?: boolean,
 }
 
-const DateTimeBlock : React.FC<IProps> = ({ allowAfterMidnight = false, title, hasDate, hasTime, date, time, setTimeCallback, setDateCallback }) => {
-  return <Container hide={ !hasDate && !hasTime }>
-    <Label>{title}</Label>
+const DateTimeBlock : React.FC<IProps> = ({
+  allowAfterMidnight = false,
+  title,
+  hasDate,
+  hasTime,
+  date = new Date(),
+  setDateCallback = ()=>{},
+}) => {
 
-      {hasDate && <Item>
-        <IconWrap>
-          <Icon icon={'Date'} color={'dimmed'} size={14} weight={'regular'} />
-        </IconWrap>
-        <InputWrap>
-          <Input type="text" readOnly={ true } value={ format(date || new Date(), "yyyy/MM/dd") } onChange={ ({target}) => setDateCallback() } />
-        </InputWrap>
 
-      </Item>}
+  const [displayHours, setDisplayHours] = useState<string>(format(date, "mm"));
+  const [displayMinutes, setDisplayMinutes] = useState<string>(format(date,'HH'));
 
-      {hasTime && <Item>
-        <IconWrap>
-          <Icon icon={'Time'} color={'dimmed'} size={14} weight={'regular'} />
-        </IconWrap>
-        <InputWrap>
-          <Input type="number" min="0" max={ allowAfterMidnight ? 24: 23 } value={ clockFormatNumber(time.hours || 0) } onChange={ ({target}) => setTimeCallback( 'hours', parseInt(target.value)) } />
-          <TimeColon>:</TimeColon>
-           <Input type="number" min="0" max="59" value={ clockFormatNumber(time.minutes || 0) } onChange={ ({target}) => setTimeCallback( 'minutes', parseInt(target.value)) } />
-        </InputWrap>
-      </Item>}
+  const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    setDateCallback(
+      min([
+        endOfDay(date),
+        set(date, {
+          hours: Number(value),
+          minutes: Number(displayMinutes),
+          seconds: 0,
+          milliseconds: 0
+        })
+      ])
+    );
+  }, [date, displayMinutes, setDateCallback]);
 
-  </Container>;
+  const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    setDateCallback(
+      min([
+        endOfDay(date),
+        set(date, {
+          hours: displayHours === '24' ? 23 : Number(displayHours),
+          minutes: Number(value) % 60,
+          seconds: 0,
+          milliseconds: 0
+        })
+      ])
+    );
+  }, [date, displayHours, setDateCallback]);
+
+  useEffect(()=>{
+    if(allowAfterMidnight && isEqual(date, endOfDay(date))){
+      setDisplayHours('24');
+      setDisplayMinutes('00');
+    } else {
+      setDisplayMinutes(format(date, 'mm'));
+      setDisplayHours(format(date,'HH'));
+    }
+  },[date, allowAfterMidnight]);
+
+  return (
+    <Container hide={!hasDate && !hasTime}>
+      <Label>{title}</Label>
+
+      {hasDate && (
+        <Item>
+          <IconWrap>
+            <Icon icon='Date' color='dimmed' size={14} weight='regular' />
+          </IconWrap>
+          <InputWrap>
+            <Input type='text' readOnly value={format(date, "yyyy/MM/dd")} />
+          </InputWrap>
+        </Item>
+      )}
+
+      {hasTime && (
+        <Item>
+          <IconWrap>
+            <Icon icon='Time' color='dimmed' size={14} weight='regular' />
+          </IconWrap>
+          <InputWrap>
+            <Input name='hours' type='number' min='0' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} />
+            <TimeColon>:</TimeColon>
+            <Input name='minutes' type='number' min='0' max='59' value={displayMinutes} onChange={setDateMinutes} />
+          </InputWrap>
+        </Item>
+      )}
+
+    </Container>
+  );
 };
 
-/**
- * Puts a 0 in front of single digit digits to keep it 24H format.
- * @param value The hour or minute value
- */
-const clockFormatNumber = (value : number) => {
-  const valAsString = value.toString();
 
-  return (valAsString.length === 1) ? '0' + value : value;
-}
 
 export default DateTimeBlock;
+
