@@ -1,5 +1,6 @@
 import TypeTable from './molecules/TypeTable';
 import TableRowThumbnail from './atoms/TableRowThumbnail';
+import EditCell from './molecules/EditCell';
 import { ReactElement } from 'react';
 
 export type TypeCellStyle = 'firstColumn' | 'lowImportance' | 'normalImportance' | 'highImportance' ;
@@ -27,11 +28,14 @@ export interface ITableColumnConfig {
   width?: number // TODO: This!
   minWidth?: number
 }
+
+export type IStatus = 'caution' | 'danger' | 'folder' | 'good' | 'neutral';
+
 export interface ICellData {
   text?: string
   href?: string
   unit?: string
-  status?: 'caution' | 'danger' | 'folder' | 'good' | 'neutral';
+  status?: IStatus;
   customComponent?: ReactElement
 }
 export interface IRowHeader {
@@ -51,5 +55,6 @@ export type ITypeTableData = IRowData[]
 
 export {
   TypeTable,
-  TableRowThumbnail
+  TableRowThumbnail,
+  EditCell,
 };
