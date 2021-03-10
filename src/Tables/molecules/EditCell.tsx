@@ -10,6 +10,8 @@ const Container = styled.div`
 const StyledButton = styled(Button)``;
 
 const EditContainer = styled.div`
+  min-width: 320px;
+  z-index: 99;
   position: absolute;
   bottom: -15px;
   left:0;
