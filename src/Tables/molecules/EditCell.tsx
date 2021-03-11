@@ -76,7 +76,6 @@ const EditCell : React.FC<IEditableCell> = ({
   const [updatedValue, setUpdatedValue] = useState(defaultValue);
 
   const handleSave = useCallback((value: string) => {
-    console.log(`saving.. ${value}`);
     if(saveCallback) {
       saveCallback(value, rowKey);
     }
