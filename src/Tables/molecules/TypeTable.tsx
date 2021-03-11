@@ -157,11 +157,22 @@ const TypeTable : React.FC<IProps> = ({
               <h3>{emptyTableTitle}</h3>
               <p>{emptyTableText}</p>
             </EmptyTableBox>
-          : rows.map((rowData, key) => {
+            : null
+          }
+          {rows.map((rowData, key) => {
               const isLastRow = (rows.length - 1 === key) ? true : false;
-              return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
+              return <TypeTableRow key={key} {...{
+                rowData,
+                isLastRow,
+                selectable,
+                selectCallback,
+                columnConfig,
+                hasStatus,
+                hasThumbnail,
+                hasTypeIcon
+              }} />;
             })
-        }
+          }
       </TableContainer>
     </Container>
   );
