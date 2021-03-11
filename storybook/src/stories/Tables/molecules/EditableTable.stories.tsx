@@ -149,11 +149,9 @@ export const _EditableTable = () => {
   const updateCameraName = useCallback((name: string, rowKey: string) => {
     const updatedData = [...data];
     const updatedRow = updatedData.find(({id}) =>  id === rowKey);
-    if(updatedRow) {
+    if(updatedRow && name.length > 0) {
       updatedRow.cameraName = name;
       setData(updatedData);
-      const newRows = buildDataRows(updatedData);
-      setRows(newRows);
     }
   },[data]);
 
@@ -178,13 +176,16 @@ export const _EditableTable = () => {
     return newRows;
   },[updateCameraName])
 
+  /**
+   * If data is updated the table will be rebuild
+   */
   useEffect(() => {
-    const dataRows : ITypeTableData = buildDataRows(sampleData);
+    const dataRows : ITypeTableData = buildDataRows(data);
     setRows(dataRows);
     return () => {
       setRows([])
     }
-  }, [buildDataRows]);
+  }, [data, buildDataRows]);
 
   return(
     <Container>
