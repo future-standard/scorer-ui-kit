@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import { object, boolean, text } from "@storybook/addon-knobs";
+import { object, text } from "@storybook/addon-knobs";
 
 import {TypeTable as EditableTable,
   EditCell,
@@ -85,74 +85,29 @@ const sampleData: IExampleData[] = [
   }
 ];
 
-//  [
-//   {
-//     id: 'device-1',
-//     header: {
-//       image: photo,
-//     },
-//     columns:
-//     [
-//       {customComponent: <EditCell defaultValue={'Camera1'} rowKey={'device-1'}/>},
-//       { text: 'JustNow'},
-//       { text: 'OK', status: 'good' },
-//       { text: '38.2ºC' },
-//     ]
-//   },
-//   {
-//     id: 'device-2',
-//     header: {
-//       image: photo,
-//     },
-//     columns:
-//     [
-//       {customComponent: <EditCell defaultValue={'Camera2'} rowKey={'device-2'}/>},
-//       { text: '3 mins ago'},
-//       { text: 'Warning', status: 'danger' },
-//       { text: '38.2ºC' },
-//     ]
-//   },
-//   {
-//     id: 'device-3',
-//     header: {
-//       image: photo,
-//     },
-//     columns:
-//     [
-//       {customComponent: <EditCell defaultValue={'Camera3'} rowKey={'device-3'}/>},
-//       { text: '12 mins ago'},
-//       { text: 'OK', status: 'good' },
-//       { text: '38.2ºC' },
-//     ]
-//   },
-//   {
-//     id: 'device-4',
-//     header: {
-//       image: photo,
-//     },
-//     columns:
-//     [
-//       {customComponent: <EditCell defaultValue={'Camera4'} rowKey={'device-4'}/>},
-//       { text: '1 hour ago'},
-//       { text: 'OK', status: 'good' },
-//       { text: '38.2ºC' },
-//     ]
-//   },
-// ];
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(() => {console.log('DataBaseUpdated')}  , ms));
+}
 
 export const _EditableTable = () => {
   const loadingText = text("loadingText", 'Loading Data..')
   const columnConfig = object("Column Configuration", columnConfigSample);
   const [data, setData] = useState<IExampleData[]>(sampleData);
   const [rows, setRows] = useState<ITypeTableData>([]);
+  const [loading, setLoading] = useState(false);
 
-  const updateCameraName = useCallback((name: string, rowKey: string) => {
+  const updateCameraName = useCallback(async (name: string, rowKey: string) => {
+    setLoading(true);
     const updatedData = [...data];
     const updatedRow = updatedData.find(({id}) =>  id === rowKey);
     if(updatedRow && name.length > 0) {
+
       updatedRow.cameraName = name;
+      // Database wait example
+      await sleep(2000);
       setData(updatedData);
     }
+    setLoading(false);
   },[data]);
 
   const buildDataRows = useCallback((data : IExampleData[]) : ITypeTableData =>  {
@@ -164,7 +119,7 @@ export const _EditableTable = () => {
         },
         columns:
         [
-          {customComponent: <EditCell defaultValue={cameraName} rowKey={id} saveCallback={updateCameraName}/>},
+          {customComponent: <EditCell defaultValue={cameraName} rowKey={id} saveCallback={updateCameraName} loading={loading}/>},
           { text: jobTime},
           { text: statusText, status },
           { text: temperature },
@@ -174,11 +129,12 @@ export const _EditableTable = () => {
     })
   
     return newRows;
-  },[updateCameraName])
+  },[updateCameraName, loading])
 
   /**
    * If data is updated the table will be rebuild
    */
+
   useEffect(() => {
     const dataRows : ITypeTableData = buildDataRows(data);
     setRows(dataRows);
