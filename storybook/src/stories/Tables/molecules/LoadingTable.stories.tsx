@@ -26,7 +26,6 @@ const columnConfigSample : ITableColumnConfig[] = [
     header: 'When',
     sortable: false,
     cellStyle: 'normalImportance',
-    showStatus: true,
   },
   {
     header: 'Status',
@@ -38,7 +37,6 @@ const columnConfigSample : ITableColumnConfig[] = [
     header: 'Temperature',
     sortable: false,
     cellStyle: 'normalImportance',
-    showStatus: true,
   },
 ];
 
