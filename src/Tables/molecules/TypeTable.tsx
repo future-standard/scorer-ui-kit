@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
-import Spiner from '../../Indicators/Spinner';
+import Spinner from '../../Indicators/Spinner';
 import TypeTableRow from '../atoms/TypeTableRow';
 import Checkbox from '../../Form/atoms/Checkbox';
 import { TypeCellAlignment, ITableColumnConfig, ITypeTableData, IRowData } from '..';
@@ -47,8 +47,8 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
 
 const LoadingText = styled.div`
   color: hsla(195, 10%, 52%, 0.72);
-}
 `;
+
 const LoadingBox = styled.div`
   position: absolute;
   top: 0;
@@ -148,7 +148,7 @@ const TypeTable : React.FC<IProps> = ({
         </HeaderRow>
         {isLoading ? (
             <LoadingBox>
-              <Spiner size='large' styling='primary'/>
+              <Spinner size='large' styling='primary'/>
               <LoadingText>{loadingText}</LoadingText>
             </LoadingBox>
           ) : null}
