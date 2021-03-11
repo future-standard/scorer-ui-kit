@@ -1,8 +1,10 @@
-import React, { InputHTMLAttributes, useState, useCallback } from 'react';
-import styled from 'styled-components';
+import React, { InputHTMLAttributes, useState, useCallback, useRef } from 'react';
+import styled, {css} from 'styled-components';
 import SmallInput from '../../Form/atoms/SmallInput';
 import Button from '../../Form/atoms/Button';
 import {StyledLabel} from '../../Form/atoms/Label';
+import IconButton from '../../Form/atoms/IconButton';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 const Container = styled.div`
   position: relative;
@@ -11,6 +13,7 @@ const StyledButton = styled(Button)``;
 
 const EditContainer = styled.div`
   min-width: 320px;
+  background-color: hsl(0, 0%, 100%);
   z-index: 99;
   position: absolute;
   bottom: -15px;
@@ -29,8 +32,26 @@ const EditContainer = styled.div`
   }
 `;
 
+const StyledIconButton = styled(IconButton)``;
+
 const TextContainer = styled.div`
-  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 16px;
+  align-items: center;
+  ${({theme}) => theme && css`
+    transition: ${theme.animation.speed.normal} ${theme.animation.easing.easeOut};
+  `}
+
+  ${StyledIconButton} {
+    opacity: 0;
+  };
+
+  &:hover {
+    ${StyledIconButton} {
+      opacity: 1;
+    };
+  }
 `;
 
 export interface OwnProps {
@@ -78,11 +99,22 @@ const EditCell : React.FC<IEditableCell> = ({
     }
 
   },[updatedValue, handleSave, isEditMode]);
+
+  const editContainerRef = useRef<HTMLDivElement>(null);
+
+  const onClickOutsideEdit = () => {
+    setUpdatedValue(defaultValue);
+    setIsEditMode(false);
+  };
+
+  useClickOutside(editContainerRef, onClickOutsideEdit);
   
   return(
     <Container> 
       {isEditMode
-      ? <EditContainer>
+      ? <EditContainer
+          ref={editContainerRef}
+        >
           <SmallInput
             autoFocus
             label=''
@@ -108,8 +140,9 @@ const EditCell : React.FC<IEditableCell> = ({
             size="small"
             >Cancel</StyledButton>}
         </EditContainer>
-      : <TextContainer onClick={() => setIsEditMode(true)}>
+      : <TextContainer>
           {updatedValue}
+          <StyledIconButton icon='Edit' size={16} onClick={() => setIsEditMode(true)} />
         </TextContainer>
       }
     </Container>
