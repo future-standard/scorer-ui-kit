@@ -48,13 +48,13 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
 const LoadingText = styled.div`
   color: hsla(195, 10%, 52%, 0.72);
 `;
-
 const LoadingBox = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   z-index: 99;
-  background-color: hsla(210, 14%, 97%, 0.85);
+  background-color: ${({theme}) => theme.colors["pureBase"]};
+  opacity: 85%;
   width: 100%;
   min-height: 100px;
   height: calc(100% - ${HEADER_HEIGHT});
@@ -110,8 +110,8 @@ const TypeTable : React.FC<IProps> = ({
   hasTypeIcon = false,
   isLoading = false,
   loadingText = 'Loading Data...',
-  emptyTableTitle = 'No Data Available',
-  emptyTableText = 'There is currently no data',
+  emptyTableTitle = '',
+  emptyTableText = '',
   selectCallback = ()=>{},
   toggleAllCallback = ()=>{},
 }) => {

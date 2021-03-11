@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import { object, boolean, text } from "@storybook/addon-knobs";
+import {boolean, text } from "@storybook/addon-knobs";
 
 import {TypeTable as LoadingTable } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
@@ -102,8 +102,9 @@ const dataRows : ITypeTableData = [
 export const _LoadingTable = () => {
   const isLoading = boolean("IsLoading", true);
   const emptyTable = boolean("Show Empty Table", true);
+  const emptyTableTitle = text("emptyTableTitle","No Data Available"); 
+  const emptyTableText = text("emptyTableText", 'There is currently no data');
   const loadingText = text("loadingText", 'Loading Data..')
-  const columnConfig = object("Column Configuration", columnConfigSample);
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
   const toggleAllCallback = useCallback((checked:boolean) => {
@@ -131,12 +132,14 @@ export const _LoadingTable = () => {
     <Container>
       <LoadingTable {
         ...{
-          columnConfig,
+          columnConfig: columnConfigSample,
           rows,
           toggleAllCallback,
           isLoading,
           loadingText,
           hasThumbnail: true,
+          emptyTableTitle,
+          emptyTableText
         }
       }/>
     </Container>
