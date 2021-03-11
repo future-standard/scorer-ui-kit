@@ -1,6 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import { object, text } from "@storybook/addon-knobs";
 
 import {TypeTable as EditableTable,
   EditCell,
@@ -90,8 +89,6 @@ function sleep(ms: number) {
 }
 
 export const _EditableTable = () => {
-  const loadingText = text("loadingText", 'Loading Data..')
-  const columnConfig = object("Column Configuration", columnConfigSample);
   const [data, setData] = useState<IExampleData[]>(sampleData);
   const [rows, setRows] = useState<ITypeTableData>([]);
   const [loading, setLoading] = useState(false);
@@ -147,9 +144,8 @@ export const _EditableTable = () => {
     <Container>
       <EditableTable {
         ...{
-          columnConfig,
+          columnConfig: columnConfigSample,
           rows,
-          loadingText,
           hasThumbnail: true,
         }
       }/>
