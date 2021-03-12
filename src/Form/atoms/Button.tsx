@@ -26,7 +26,7 @@ const StyledButton = styled.button<IStyledComponentProps>`
       background: ${theme.styles.form.button[design].hover.backgroundColor};
     }
 
-    &:active {
+    &:active:enabled {
       background: ${theme.styles.form.button[design].active.backgroundColor};
     }
 
