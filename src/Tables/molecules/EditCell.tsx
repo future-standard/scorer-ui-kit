@@ -2,6 +2,7 @@ import React, { InputHTMLAttributes, useState, useCallback, useRef } from 'react
 import styled, {css} from 'styled-components';
 import SmallInput from '../../Form/atoms/SmallInput';
 import Button from '../../Form/atoms/Button';
+import ButtonWithLoading from '../../Form/atoms/ButtonWithLoading';
 import {StyledLabel} from '../../Form/atoms/Label';
 import IconButton from '../../Form/atoms/IconButton';
 import { useClickOutside } from '../../hooks/useClickOutside';
@@ -10,6 +11,8 @@ const Container = styled.div`
   position: relative;
 `;
 const StyledButton = styled(Button)``;
+
+const StyledLoadingButton = styled(ButtonWithLoading)``;
 
 const EditContainer = styled.div`
   min-width: 320px;
@@ -30,6 +33,9 @@ const EditContainer = styled.div`
   ${StyledButton} {
     margin-left: 5px;
   }
+  ${StyledLoadingButton} {
+    margin-left: 5px;
+  }
 `;
 
 const StyledIconButton = styled(IconButton)``;
@@ -39,9 +45,6 @@ const TextContainer = styled.div`
   justify-content: space-between;
   margin-right: 16px;
   align-items: center;
-  ${({theme}) => theme && css`
-    transition: ${theme.animation.speed.normal} ${theme.animation.easing.easeOut};
-  `}
 
   ${StyledIconButton} {
     opacity: 0;
@@ -125,14 +128,15 @@ const EditCell : React.FC<IEditableCell> = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setUpdatedValue(e.target.value);}} 
             {...props}
           />
-          <StyledButton
+          <StyledLoadingButton
             onClick = {() => {
               handleSave(updatedValue);
             }}
             size="small"
+            loading={loading}
           >
             {loading ? 'Saving' : 'Save'}
-          </StyledButton>
+          </StyledLoadingButton>
           {!loading && <StyledButton 
             onClick={() => setIsEditMode(false)}
             design='secondary'
