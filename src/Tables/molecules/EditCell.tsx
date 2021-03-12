@@ -15,7 +15,7 @@ const StyledButton = styled(Button)``;
 const StyledLoadingButton = styled(ButtonWithLoading)``;
 
 const EditContainer = styled.div`
-  min-width: 320px;
+  min-width: 380px;
   background-color: hsl(0, 0%, 100%);
   z-index: 99;
   position: absolute;
