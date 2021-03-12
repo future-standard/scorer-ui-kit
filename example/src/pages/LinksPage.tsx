@@ -10,6 +10,7 @@ const LinksPage : React.FC = () => {
   return <Container>
     <div><Link to={`/line`}>Line</Link></div>
     <div><Link to={`/linertc`}>Line WebRTC</Link></div>
+    <div><Link to={`/linevideo`}>Line Video</Link></div>
     <div><Link to={`/forms`}>Forms</Link></div>
     <div><Link to={`/table`}>Table Example</Link></div>
     <div><Link to={`/customdrawer`}>Custom User Drawer</Link></div>

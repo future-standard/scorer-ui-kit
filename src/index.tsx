@@ -21,7 +21,7 @@ import {
   IconButton,
   IconButtonData,
   ActionButtons,
-  SmallInput, 
+  SmallInput,
   Input,
   Label,
   Switch,
@@ -42,6 +42,7 @@ import Icon, {IconSVGs} from  './Icons/Icon';
 // Components - Line UI
 import {
   LineUI,
+  LineUIVideo,
   LineUIRTC,
   LineSetContext,
   LineReducer
@@ -127,6 +128,7 @@ export {
 
   // LineUI
   LineUI,
+  LineUIVideo,
   LineUIRTC,
   LineSetContext,
   LineReducer,
