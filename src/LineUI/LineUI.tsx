@@ -81,7 +81,8 @@ const LineUI: React.FC<LineUIProps> = ({
     showGrabHandle,
     setIndexOffset = 0,
     pointIndexOffset = 0,
-    showPoint = false
+    showPoint = false,
+    fixedImgDimensions
   } = {}
 }) => {
 
@@ -109,17 +110,19 @@ const LineUI: React.FC<LineUIProps> = ({
     }
 
     const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
-    if (naturalHeight !== imgSize.h || naturalWidth !== imgSize.w) {
-      setImgSize({ h: naturalHeight, w: naturalWidth });
-      onSizeChange({ h: naturalHeight, w: naturalWidth });
+    const h = fixedImgDimensions?.y ?? naturalHeight;
+    const w = fixedImgDimensions?.x ?? naturalWidth;
+    if (h !== imgSize.h || w !== imgSize.w) {
+      setImgSize({ h, w });
+      onSizeChange({ h, w });
       console.debug('image size:', { naturalHeight, naturalWidth, clientHeight, unit: naturalHeight / clientHeight });
     }
 
-    if (naturalHeight / clientHeight !== unit) {
-      setUnit(naturalHeight / clientHeight);
+    if (h / clientHeight !== unit) {
+      setUnit(h / clientHeight);
     }
     setLoaded(true);
-  }, [imgSize, onSizeChange, unit]);
+  }, [fixedImgDimensions?.x, fixedImgDimensions?.y, imgSize.h, imgSize.w, onSizeChange, unit]);
 
   const calculateCTM = useCallback(() => {
     if (!frame.current) { return null; }
