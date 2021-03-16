@@ -19,19 +19,38 @@ export default {
   decorators: []
 };
 
+const sortInitConfig = [
+  {
+    columnId: 'col-1',
+    ascending: true,
+    active: true
+  },
+  {
+    columnId: 'col-2',
+    ascending: true,
+  },
+  {
+    columnId: 'col-5',
+    ascending: true,
+  }
+]
+
 const columnConfigSample : ITableColumnConfig[] = [
   {
+    columnId: 'col-1',
     header: 'Device Name',
     sortable: true,
     cellStyle: 'firstColumn',
   },
   {
+    columnId: 'col-2',
     header: 'Status',
     sortable: true,
     showStatus: true,
     cellStyle: 'normalImportance',
   },
   {
+    columnId: 'col-3',
     header: 'Created',
     sortable: false,
     cellStyle: 'lowImportance',
@@ -39,6 +58,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     hasCopyButton: true
   },
   {
+    columnId: 'col-4',
     header: 'Usage',
     sortable: false,
     cellStyle: 'normalImportance',
@@ -46,6 +66,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     showUnit: true
   },
   {
+    columnId: 'col-5',
     header: 'Cost',
     sortable: true,
     cellStyle: 'highImportance',
@@ -243,6 +264,7 @@ export const _TypeTable = () => {
   const hasTypeIcon = boolean("Has Device Type Icon", true);
 
   const selectable = boolean("Selectable Rows", true);
+  const sortConfig = object("Initial Sort config", sortInitConfig)
   const columnConfig = object("Column Configuration", columnConfigSample);
   const customRowData = object("Row Data", rows);
 
@@ -271,5 +293,5 @@ export const _TypeTable = () => {
     setRows(customRowData);
   }, [customRowData])
 
-  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>;
+  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon, sortConfig}} /></Container>;
 };

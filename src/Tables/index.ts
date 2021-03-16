@@ -17,6 +17,7 @@ export interface TableHeaderItem {
 }
 
 export interface ITableColumnConfig {
+  columnId: string
   header: string
   sortable: boolean
   cellStyle: TypeCellStyle
