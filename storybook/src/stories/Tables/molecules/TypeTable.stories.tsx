@@ -23,11 +23,12 @@ const sortInitConfig = [
   {
     columnId: 'col-1',
     ascending: true,
-    active: true
+    active: true,
   },
   {
     columnId: 'col-2',
     ascending: true,
+    active: false,
   },
   {
     columnId: 'col-5',

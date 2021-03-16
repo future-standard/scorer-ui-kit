@@ -3,29 +3,6 @@ import styled, {css}from 'styled-components';
 import { TypeCellAlignment, ITableColumnConfig } from '..';
 import Icon, {IconWrapper} from '../../Icons/Icon';
 
-const Container = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean}>`
-  display: table-cell;
-  height: inherit;
-  vertical-align:top;
-  line-height: 20px;
-  position: relative;
-  font-family: ${p => p.theme.fontFamily.ui };
-
-  ${({hasCopyButton}) => hasCopyButton && css`
-    padding-right: 20px;
-  `};
-
-  ${({theme, alignment}) => alignment ? css`
-    ${theme.typography.table.header[alignment]};
-  ` : css`
-    ${theme.typography.table.header['left']};
-  `}
-
-  ${p => p.fixedWidth && css`
-    width: ${p.fixedWidth}px;
-  `}
-`;
-
 const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, ascending?:boolean}>`
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
@@ -74,39 +51,14 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
   `}
 `;
 
-
-
-interface IEasySort {
-  [colId: string] : ISortConfig
-}
-const defaultSort = (sortingValues: ISortConfig[] ) : IEasySort => { 
-  let initialSortedCol : null | string = null;
-  const convertedSort : IEasySort = {};
-  sortingValues.forEach(({columnId, ascending, active}) => { 
-    if(active && (initialSortedCol === null)) { initialSortedCol = columnId }
-    convertedSort[columnId] = { columnId, ascending, active } ;
-  });
-  console.log(convertedSort,'sorting values');
-  return convertedSort;
-}
-
-interface ISortConfig {
-  columnId: string
-  ascending?: boolean
-  active?: boolean
-}
-
-
 interface IHeaderProps extends ITableColumnConfig {
-  isSortActive: boolean
-  ascending: boolean
+  isSortActive?: boolean
+  ascending?: boolean
   toggleSort: (columnId: string) => void
 }
 
-const TableHeaderItem : React.FC<IHeaderProps> = ({
-  alignment,
+const TableHeaderTitle : React.FC<IHeaderProps> = ({
   header,
-  hasCopyButton,
   sortable,
   columnId,
   isSortActive,
@@ -114,7 +66,6 @@ const TableHeaderItem : React.FC<IHeaderProps> = ({
   toggleSort
 }) => {
   return(
-    <Container>
       <HeaderTitle
         sortable={sortable}
         isSortActive={isSortActive}
@@ -124,8 +75,7 @@ const TableHeaderItem : React.FC<IHeaderProps> = ({
         {sortable && <Icon icon={'FilterSorting'} size={14} color='dimmed'/>}
         {header}
       </HeaderTitle>
-    </Container>
   );
 }
 
-export default TableHeaderItem;
+export default TableHeaderTitle;

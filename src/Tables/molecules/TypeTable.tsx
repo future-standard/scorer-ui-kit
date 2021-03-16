@@ -4,11 +4,9 @@ import styled, {css} from 'styled-components';
 import TypeTableRow from '../atoms/TypeTableRow';
 import Checkbox from '../../Form/atoms/Checkbox';
 import { TypeCellAlignment, ITableColumnConfig, ITypeTableData, IRowData } from '..';
-import Icon, {IconWrapper} from '../../Icons/Icon';
+import TableHeaderTitle from '../atoms/TableHeaderTitle';
 
-const Container = styled.div`
-
-`;
+const Container = styled.div``;
 
 const TableContainer = styled.div`
   display: table;
@@ -18,54 +16,6 @@ const TableContainer = styled.div`
 const HeaderRow = styled.div`
   display: table-row;
   height: 50px;
-`;
-
-const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, ascending?:boolean}>`
-  border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-  display: inline-flex;
-  justify-content: center;
-  align-content: center;
-  position: relative;
-  padding: 0 2px;
-  user-select: none;
-
-  ${IconWrapper} {
-    position: absolute;
-    top: 0px;
-    left: -15px;
-    display: none;
-    border-bottom-left-radius: 3px;
-    border-top-left-radius: 3px;
-    padding: 3px 1px;
-    ${({ascending}) => !ascending && css`
-      transform: rotate(180deg);
-      border-bottom-right-radius: 3px;
-      border-top-right-radius: 3px;
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-      top: 0;
-    `}
-  }
-  
-  ${({isSortActive}) => isSortActive && css`
-    &:not(hover) {
-      ${IconWrapper} {
-        display: inline-flex;
-      }  
-    }
-  `}
-
-  ${({sortable}) => sortable && css`
-    &:hover {
-      background-color: hsl(220, 12%, 95%);
-      cursor: pointer;
-      ${IconWrapper} {
-        display: inline-flex;
-        background-color: hsl(220, 12%, 95%);
-      }
-    }
-  `}
 `;
 
 const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean}>`
@@ -102,7 +52,6 @@ const defaultSort = (sortingValues: ISortConfig[] ) : IEasySort => {
     if(active && (initialSortedCol === null)) { initialSortedCol = columnId }
     convertedSort[columnId] = { columnId, ascending, active } ;
   });
-  console.log(convertedSort,'sorting values');
   return convertedSort;
 }
 
@@ -148,6 +97,7 @@ const TypeTable : React.FC<IProps> = ({
   }, [rows]);
 
   /**
+   * toggleSort
    * Toggle the clicked header
    * Make clicked header active true and the rest false;
    */
@@ -176,22 +126,19 @@ const TypeTable : React.FC<IProps> = ({
           {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
           {columnConfig.map((column, key) => {
-            const {alignment, header, hasCopyButton, sortable, columnId } : ITableColumnConfig = column;
+            const {alignment, hasCopyButton, columnId } : ITableColumnConfig = column;
             return <HeaderItem
                       key={key}
                       alignment={alignment}
                       hasCopyButton={hasCopyButton}
                       >
-                        <HeaderTitle
-                          sortable={sortable}
+                        <TableHeaderTitle
+                          {...column}
                           isSortActive={sortSpec[columnId]?.active}
                           ascending={sortSpec[columnId]?.ascending}
-                          onClick= {() => {toggleSort(columnId)}}
-                          >
-                          {sortable && <Icon icon={'FilterSorting'} size={14} color='dimmed'/>}
-                          {header}
-                        </HeaderTitle>
-                      </HeaderItem>;
+                          toggleSort= {toggleSort}
+                          />
+                    </HeaderItem>;
           })}
         </HeaderRow>
 
