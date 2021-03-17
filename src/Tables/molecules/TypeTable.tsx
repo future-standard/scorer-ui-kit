@@ -79,21 +79,21 @@ const TypeTable : React.FC<IProps> = ({
    * Toggle the clicked header
    * Make clicked header active true and the rest false;
    */
-  const toggleSort = useCallback((columnKey : number) => {
-    if(sortSpec[columnKey] === undefined) { return;}
-    if(!sortSpec[columnKey].sortable) { return; }
+  const toggleSort = useCallback((indexKey : number) => {
+    if(sortSpec[indexKey] === undefined) { return;}
+    if(!sortSpec[indexKey].sortable) { return; }
 
     const updatedSort = [...sortSpec]
     updatedSort.forEach((col, key) => {
-      if(key === columnKey) {
+      if(key === indexKey) {
         col.sortActive = true;
       } else {
         col.sortActive = false;
       }
     });
-    const newAscending = undefined ? true: !sortSpec[columnKey].ascending;
-    updatedSort[columnKey].ascending = newAscending
-    const colId = (updatedSort[columnKey].columnId === undefined) ?  '' : updatedSort[columnKey].columnId;
+    const newAscending = undefined ? true: !sortSpec[indexKey].ascending;
+    updatedSort[indexKey].ascending = newAscending
+    const colId = (updatedSort[indexKey].columnId === undefined) ?  '' : updatedSort[indexKey].columnId;
     sortCallback(newAscending, colId);
     setSortSpec(updatedSort);
   },[sortSpec])
