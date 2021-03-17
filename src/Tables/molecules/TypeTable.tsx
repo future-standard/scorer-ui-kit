@@ -81,6 +81,8 @@ const TypeTable : React.FC<IProps> = ({
    */
   const toggleSort = useCallback((columnKey : number) => {
     if(sortSpec[columnKey] === undefined) { return;}
+    if(!sortSpec[columnKey].sortable) { return; }
+
     const updatedSort = [...sortSpec]
     updatedSort.forEach((col, key) => {
       if(key === columnKey) {
