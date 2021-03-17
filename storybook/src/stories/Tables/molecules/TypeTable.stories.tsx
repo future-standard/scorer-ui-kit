@@ -41,6 +41,8 @@ const columnConfigSample : ITableColumnConfig[] = [
     columnId: 'col-1',
     header: 'Device Name',
     sortable: true,
+    sortActive: true,
+    ascending: true,
     cellStyle: 'firstColumn',
   },
   {

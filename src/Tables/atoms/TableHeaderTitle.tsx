@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, {css}from 'styled-components';
-import { TypeCellAlignment, ITableColumnConfig } from '..';
+import { ITableColumnConfig } from '..';
 import Icon, {IconWrapper} from '../../Icons/Icon';
 
 const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, ascending?:boolean}>`
@@ -54,15 +54,16 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
 interface IHeaderProps extends ITableColumnConfig {
   isSortActive?: boolean
   ascending?: boolean
-  toggleSort: (columnId: string) => void
+  columnKey: number
+  toggleSort: (columnKey: number) => void
 }
 
 const TableHeaderTitle : React.FC<IHeaderProps> = ({
   header,
   sortable,
-  columnId,
   isSortActive,
   ascending,
+  columnKey,
   toggleSort
 }) => {
   return(
@@ -70,7 +71,7 @@ const TableHeaderTitle : React.FC<IHeaderProps> = ({
         sortable={sortable}
         isSortActive={isSortActive}
         ascending={ascending}
-        onClick= {() => {toggleSort(columnId)}}
+        onClick= {() => {toggleSort(columnKey)}}
         >
         {sortable && <Icon icon={'FilterSorting'} size={14} color='dimmed'/>}
         {header}

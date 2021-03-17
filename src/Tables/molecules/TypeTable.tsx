@@ -41,26 +41,6 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
   `}
 `;
 
-
-interface IEasySort {
-  [colId: string] : ISortConfig
-}
-const defaultSort = (sortingValues: ISortConfig[] ) : IEasySort => { 
-  let initialSortedCol : null | string = null;
-  const convertedSort : IEasySort = {};
-  sortingValues.forEach(({columnId, ascending, active}) => { 
-    if(active && (initialSortedCol === null)) { initialSortedCol = columnId }
-    convertedSort[columnId] = { columnId, ascending, active } ;
-  });
-  return convertedSort;
-}
-
-interface ISortConfig {
-  columnId: string
-  ascending?: boolean
-  active?: boolean
-}
-
 interface IProps {
   columnConfig: ITableColumnConfig[]
   rows: ITypeTableData
@@ -68,10 +48,10 @@ interface IProps {
   hasStatus?: boolean
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
-  sortConfig?: ISortConfig[]
+  initialSortColumnId?: boolean
   selectCallback? : (checked:boolean, id?: string | number)=>void
   toggleAllCallback? : (checked: boolean)=>void
-  sortCallback? : (columnId: string, ascending: boolean) => void
+  sortCallback? : (ascending: boolean, columnId?: string) => void
 }
 
 const TypeTable : React.FC<IProps> = ({
@@ -81,7 +61,6 @@ const TypeTable : React.FC<IProps> = ({
   hasStatus = false,
   hasThumbnail = false,
   hasTypeIcon = false,
-  sortConfig=[],
   selectCallback = ()=>{},
   toggleAllCallback = ()=>{},
   sortCallback = ()=>{},
@@ -90,7 +69,7 @@ const TypeTable : React.FC<IProps> = ({
   const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
     toggleAllCallback(checked);
   }, [toggleAllCallback]);
-  const [sortSpec, setSortSpec] = useState<IEasySort>(defaultSort(sortConfig));
+  const [sortSpec, setSortSpec] = useState(columnConfig);
 
   useEffect(() => {
     setAllChecked(rows.every(isChecked) && rows.length > 0);
@@ -101,19 +80,20 @@ const TypeTable : React.FC<IProps> = ({
    * Toggle the clicked header
    * Make clicked header active true and the rest false;
    */
-  const toggleSort = useCallback((columnId : string) => {
-    if(sortSpec[columnId] === undefined) { return;}
-    const updatedSort = {...sortSpec}
-    Object.keys(updatedSort).forEach((key) => {
-      if(key === columnId) {
-        updatedSort[key].active = true;
+  const toggleSort = useCallback((columnKey : number) => {
+    if(sortSpec[columnKey] === undefined) { return;}
+    const updatedSort = [...sortSpec]
+    updatedSort.forEach((col, key) => {
+      if(key === columnKey) {
+        col.sortActive = true;
       } else {
-        updatedSort[key].active = false;
+        col.sortActive = false;
       }
-    })
-    const newAscending = undefined ? true: !sortSpec[columnId].ascending;
-    updatedSort[columnId].ascending = newAscending
-    sortCallback(columnId, newAscending);
+    });
+    const newAscending = undefined ? true: !sortSpec[columnKey].ascending;
+    updatedSort[columnKey].ascending = newAscending
+    const colId = (updatedSort[columnKey].columnId === undefined) ?  '' : updatedSort[columnKey].columnId;
+    sortCallback(newAscending, colId);
     setSortSpec(updatedSort);
   },[sortSpec])
 
@@ -126,7 +106,7 @@ const TypeTable : React.FC<IProps> = ({
           {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
           {columnConfig.map((column, key) => {
-            const {alignment, hasCopyButton, columnId } : ITableColumnConfig = column;
+            const {alignment, hasCopyButton, sortActive, ascending } : ITableColumnConfig = column;
             return <HeaderItem
                       key={key}
                       alignment={alignment}
@@ -134,9 +114,10 @@ const TypeTable : React.FC<IProps> = ({
                       >
                         <TableHeaderTitle
                           {...column}
-                          isSortActive={sortSpec[columnId]?.active}
-                          ascending={sortSpec[columnId]?.ascending}
-                          toggleSort= {toggleSort}
+                          columnKey={key}
+                          isSortActive={sortActive}
+                          ascending={ascending}
+                          toggleSort={toggleSort}
                           />
                     </HeaderItem>;
           })}
@@ -148,7 +129,6 @@ const TypeTable : React.FC<IProps> = ({
         })}
 
       </TableContainer>
-
     </Container>
   );
 };
