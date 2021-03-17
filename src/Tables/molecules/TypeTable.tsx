@@ -48,7 +48,6 @@ interface IProps {
   hasStatus?: boolean
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
-  initialSortColumnId?: boolean
   selectCallback? : (checked:boolean, id?: string | number)=>void
   toggleAllCallback? : (checked: boolean)=>void
   sortCallback? : (ascending: boolean, columnId?: string) => void
