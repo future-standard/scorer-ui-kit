@@ -22,7 +22,9 @@ const StyledButton = styled.button<IStyledComponentProps>`
     // No transition at this time as we're using a gradient in the default view. Requires work to make smooth.
     // transition: background ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
 
-    &:hover {
+    transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
+
+    &:hover:enabled {
       background: ${theme.styles.form.button[design].hover.backgroundColor};
     }
 
@@ -31,6 +33,8 @@ const StyledButton = styled.button<IStyledComponentProps>`
     }
 
     &:disabled {
+      cursor: not-allowed;
+      opacity: 50%;
       background: ${theme.styles.form.button[design].disabled.backgroundColor};
     }
 
