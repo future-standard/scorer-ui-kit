@@ -21,7 +21,8 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
     padding: 3px 1px;
-    ${({ascending}) => !ascending && css`
+    
+    ${({ascending}) => ascending && css`
       transform: rotate(180deg);
       border-bottom-right-radius: 3px;
       border-top-right-radius: 3px;

@@ -1,5 +1,6 @@
 import TypeTable from './molecules/TypeTable';
 import TableRowThumbnail from './atoms/TableRowThumbnail';
+import TableHeaderTitle from './atoms/TableHeaderTitle';
 import { ReactElement } from 'react';
 
 export type TypeCellStyle = 'firstColumn' | 'lowImportance' | 'normalImportance' | 'highImportance' ;
@@ -58,5 +59,6 @@ export type ITypeTableData = IRowData[]
 
 export {
   TypeTable,
-  TableRowThumbnail
+  TableRowThumbnail,
+  TableHeaderTitle,
 };
