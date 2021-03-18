@@ -25,15 +25,21 @@ const Container = styled.div`
 
 const columnConfigSample : ITableColumnConfig[] = [
   {
+    header: 'Job Number',
+    sortable: false,
+    cellStyle: 'firstColumn',
+  },
+  {
     header: 'Camera Name',
     sortable: false,
     cellStyle: 'normalImportance',
+    alignment:'left',
   },
   {
     header: 'When',
     sortable: false,
     cellStyle: 'normalImportance',
-
+    alignment:'center',
   },
   {
     header: 'Status',
@@ -51,6 +57,7 @@ const columnConfigSample : ITableColumnConfig[] = [
 
 interface IExampleData {
   id: string,
+  jobName: string,
   cameraName: string,
   jobTime: string,
   status: IStatus,
@@ -60,6 +67,7 @@ interface IExampleData {
 const sampleData: IExampleData[] = [
   {
     id: 'device-1',
+    jobName: 'capture123',
     cameraName: 'Camera1',
     jobTime: 'Just Now',
     status: 'good',
@@ -68,15 +76,26 @@ const sampleData: IExampleData[] = [
   },
   {
     id: 'device-2',
+    jobName: 'capture234',
     cameraName: 'Camera2',
+    jobTime: 'Just Now',
+    status: 'good',
+    statusText: 'OK',
+    temperature: '38.2ºC',
+  },
+  {
+    id: 'device-3',
+    jobName: 'capture345',
+    cameraName: 'Camera3',
     jobTime: '3 mins ago',
     status: 'danger',
     statusText: 'Warning',
     temperature: '38.2ºC',
   },
   {
-    id: 'device-2',
-    cameraName: 'Camera2',
+    id: 'device-4',
+    jobName: 'capture456',
+    cameraName: 'Camera4',
     jobTime: '12 mins ago',
     status: 'danger',
     statusText:'Warning',
@@ -84,39 +103,34 @@ const sampleData: IExampleData[] = [
   }
 ];
 
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(() => {console.log('DataBaseUpdated')}  , ms));
-}
+const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay))
 
 export const _EditableTable = () => {
   const [data, setData] = useState<IExampleData[]>(sampleData);
   const [rows, setRows] = useState<ITypeTableData>([]);
-  const [loading, setLoading] = useState(false);
 
   const updateCameraName = useCallback(async (name: string, rowKey: string) => {
-    setLoading(true);
     const updatedData = [...data];
     const updatedRow = updatedData.find(({id}) =>  id === rowKey);
     if(updatedRow && name.length > 0) {
 
       updatedRow.cameraName = name;
       // Database wait example
-      await sleep(2000);
+      await sleep(3000);
       setData(updatedData);
     }
-    setLoading(false);
   },[data]);
 
   const buildDataRows = useCallback((data : IExampleData[]) : ITypeTableData =>  {
-    const newRows : ITypeTableData = data.map(({id, cameraName, jobTime, status, statusText, temperature}) => {
+    const newRows : ITypeTableData = data.map(({id, jobName, cameraName, jobTime, status, statusText, temperature}) => {
       const row : IRowData =  ({
         id,
         header: {
           image: photo,
         },
         columns:
-        [
-          {customComponent: <EditCell defaultValue={cameraName} rowKey={id} saveCallback={updateCameraName} loading={loading}/>},
+        [ {text: jobName },
+          {customComponent: <EditCell alignment={'left'} defaultValue={cameraName} rowKey={id} saveCallback={updateCameraName} />},
           { text: jobTime},
           { text: statusText, status },
           { text: temperature },
@@ -126,7 +140,7 @@ export const _EditableTable = () => {
     })
   
     return newRows;
-  },[updateCameraName, loading])
+  },[updateCameraName])
 
   /**
    * If data is updated the table will be rebuild
