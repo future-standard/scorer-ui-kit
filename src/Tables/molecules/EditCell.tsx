@@ -5,22 +5,27 @@ import Button from '../../Form/atoms/Button';
 import ButtonWithLoading from '../../Form/atoms/ButtonWithLoading';
 import {StyledLabel} from '../../Form/atoms/Label';
 import IconButton from '../../Form/atoms/IconButton';
+import { TypeCellAlignment } from '../';
 import { useClickOutside } from '../../hooks/useClickOutside';
 
 const Container = styled.div`
   position: relative;
 `;
-const StyledButton = styled(Button)``;
+const StyledButton = styled(Button)`
+  flex-shrink: 0;
+`;
 
-const StyledLoadingButton = styled(ButtonWithLoading)``;
+const StyledLoadingButton = styled(ButtonWithLoading)`
+  flex-shrink: 0;
+`;
 
 const EditContainer = styled.div`
-  min-width: 380px;
+  min-width: 320px;
   background-color: hsl(0, 0%, 100%);
   z-index: 99;
   position: absolute;
   bottom: -15px;
-  left:0;
+  left: -11px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,14 +45,25 @@ const EditContainer = styled.div`
 
 const StyledIconButton = styled(IconButton)``;
 
-const TextContainer = styled.div`
+const TextContainer = styled.div<{alignment:TypeCellAlignment}>`
   display: flex;
   justify-content: space-between;
-  margin-right: 16px;
   align-items: center;
+  padding-right: 18px;
+
+  ${({alignment}) => alignment === 'center' && css`
+    justify-content: center;
+  `}
+
+  ${({alignment}) => alignment === 'right' && css`
+    justify-content: flex-end;
+`}
 
   ${StyledIconButton} {
     opacity: 0;
+    position: absolute;
+    top: 7px;
+    right: 0;
   };
 
   &:hover {
@@ -61,6 +77,7 @@ export interface OwnProps {
   defaultValue: string
   rowKey: string
   loading?: boolean
+  alignment?: TypeCellAlignment
   saveCallback?: (inputValue: string, rowKey: string) => void
 }
 
@@ -71,27 +88,30 @@ const EditCell : React.FC<IEditableCell> = ({
   placeholder = '',
   defaultValue,
   rowKey,
-  loading = false,
+  alignment = 'left',
   saveCallback,
   ...props
 }) => {
   const [isEditMode, setIsEditMode] = useState(Boolean);
   const [updatedValue, setUpdatedValue] = useState(defaultValue);
+  const [loading, setLoading] = useState(false);
 
-  const handleSave = useCallback((value: string) => {
-    if(saveCallback) {
-      saveCallback(value, rowKey);
-    }
-    setIsEditMode(false);
+  const handleSave = useCallback(async (value: string) => {
+    setLoading(true);
+      if(saveCallback) {
+        await saveCallback(value, rowKey);
+      }
+      setIsEditMode(false);
+    setLoading(false);
   },[]);
 
-  const verifyKeyPress = useCallback( (eve: React.KeyboardEvent<HTMLInputElement>) => {
+  const verifyKeyPress = useCallback( async (eve: React.KeyboardEvent<HTMLInputElement>) => {
   
     // var code = parseInt(eve.key, 10);
     const code = eve.keyCode | eve.which | parseInt(eve.key, 10);
 
     if(code === 13 && handleSave) {
-      handleSave(updatedValue);
+      await handleSave(updatedValue);
       setIsEditMode(false);
     }
 
@@ -143,9 +163,9 @@ const EditCell : React.FC<IEditableCell> = ({
             size="small"
             >Cancel</StyledButton>}
         </EditContainer>
-      : <TextContainer>
+      : <TextContainer alignment={alignment}>
           {updatedValue}
-          <StyledIconButton icon='Edit' size={16} onClick={() => setIsEditMode(true)} />
+          <StyledIconButton icon='Edit' weight='light' size={16} onClick={() => setIsEditMode(true)} />
         </TextContainer>
       }
     </Container>
