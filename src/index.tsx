@@ -118,7 +118,7 @@ import {
   TabContent
 } from './Tabs';
 
-export {export default usePoll;
+export {
   // Theme
   darkTheme,
   lightTheme,
