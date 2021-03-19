@@ -1,21 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
-
+import Spinner from '../../Indicators/Spinner';
 import TypeTableRow from '../atoms/TypeTableRow';
 import Checkbox from '../../Form/atoms/Checkbox';
 import { TypeCellAlignment, ITableColumnConfig, ITypeTableData, IRowData } from '..';
 import TableHeaderTitle from '../atoms/TableHeaderTitle';
 
-const Container = styled.div``;
+
+const HEADER_HEIGHT = `50px`;
+const Container = styled.div`
+`;
 
 const TableContainer = styled.div`
   display: table;
   width: 100%;
+  position: relative;
 `;
 
 const HeaderRow = styled.div`
   display: table-row;
-  height: 50px;
+  height: ${HEADER_HEIGHT};
 `;
 
 const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean}>`
@@ -41,6 +45,47 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
   `}
 `;
 
+const LoadingText = styled.div`
+  color: hsla(195, 10%, 52%, 0.72);
+`;
+const LoadingBox = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background-color: ${({theme}) => theme.colors["pureBase"]};
+  opacity: 85%;
+  width: 100%;
+  min-height: 100px;
+  height: calc(100% - ${HEADER_HEIGHT});
+  margin-top: ${HEADER_HEIGHT};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  ${LoadingText} {
+    margin-top: 10px;
+  }
+`;
+
+const EmptyTableBox = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  margin-top: ${HEADER_HEIGHT};
+  width: 100%;
+  min-height: 100px;
+  text-align: center;
+  h3 {
+    font-weight: 500;
+    color: hsl(208, 8%, 38%);
+  }
+  color: hsl(207, 5%, 57%);
+`;
+
 interface IProps {
   columnConfig: ITableColumnConfig[]
   rows: ITypeTableData
@@ -48,6 +93,10 @@ interface IProps {
   hasStatus?: boolean
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
+  isLoading?: boolean
+  loadingText?: string
+  emptyTableTitle?: string
+  emptyTableText?: string
   selectCallback? : (checked:boolean, id?: string | number)=>void
   toggleAllCallback? : (checked: boolean)=>void
   sortCallback? : (ascending: boolean, columnId?: string) => void
@@ -60,6 +109,10 @@ const TypeTable : React.FC<IProps> = ({
   hasStatus = false,
   hasThumbnail = false,
   hasTypeIcon = false,
+  isLoading = false,
+  loadingText = 'Loading Data...',
+  emptyTableTitle = '',
+  emptyTableText = '',
   selectCallback = ()=>{},
   toggleAllCallback = ()=>{},
   sortCallback = ()=>{},
@@ -83,7 +136,7 @@ const TypeTable : React.FC<IProps> = ({
     if(sortSpec[indexKey] === undefined) { return;}
     if(!sortSpec[indexKey].sortable) { return; }
 
-    const updatedSort = [...sortSpec]
+    const updatedSort = [...sortSpec];
     updatedSort.forEach((col, key) => {
       if(key === indexKey) {
         col.sortActive = true;
@@ -92,11 +145,18 @@ const TypeTable : React.FC<IProps> = ({
       }
     });
     const newAscending = undefined ? true: !sortSpec[indexKey].ascending;
-    updatedSort[indexKey].ascending = newAscending
+    updatedSort[indexKey].ascending = newAscending;
     const colId = (updatedSort[indexKey].columnId === undefined) ?  '' : updatedSort[indexKey].columnId;
     sortCallback(newAscending, colId);
     setSortSpec(updatedSort);
-  },[sortSpec])
+  },[sortCallback, sortSpec]);
+  /* Currently IRowData Type enforces user to send columns
+   so rows length will always be at least 1
+   I wasn't sure if I should edit IRowData to have columns optional
+   If we allow columns to be optional, previous implementations
+   wont be able to have "No data" Message
+  */
+  const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
 
   return (
     <Container>
@@ -108,27 +168,52 @@ const TypeTable : React.FC<IProps> = ({
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
           {columnConfig.map((column, key) => {
             const {alignment, hasCopyButton, sortActive, ascending } : ITableColumnConfig = column;
-            return <HeaderItem
-                      key={key}
-                      alignment={alignment}
-                      hasCopyButton={hasCopyButton}
-                      >
-                        <TableHeaderTitle
-                          {...column}
-                          columnKey={key}
-                          isSortActive={sortActive}
-                          ascending={ascending}
-                          toggleSort={toggleSort}
-                          />
-                    </HeaderItem>;
+            return (
+              <HeaderItem
+                key={key}
+                alignment={alignment}
+                hasCopyButton={hasCopyButton}
+              >
+                <TableHeaderTitle
+                  {...column}
+                  columnKey={key}
+                  isSortActive={sortActive}
+                  ascending={ascending}
+                  toggleSort={toggleSort}
+                />
+              </HeaderItem>
+            );
           })}
         </HeaderRow>
-
+        {isLoading ? (
+          <LoadingBox>
+            <Spinner size='large' styling='primary' />
+            <LoadingText>{loadingText}</LoadingText>
+          </LoadingBox>
+          ) : null}
+        {isEmptyTable
+          ? (
+            <EmptyTableBox>
+              <h3>{emptyTableTitle}</h3>
+              <p>{emptyTableText}</p>
+            </EmptyTableBox>
+          )
+            : null}
         {rows.map((rowData, key) => {
-          const isLastRow = (rows.length - 1 === key) ? true : false;
-          return <TypeTableRow key={key} {...{rowData, isLastRow, selectable, selectCallback, columnConfig, hasStatus, hasThumbnail, hasTypeIcon}} />;
-        })}
-
+              const isLastRow = (rows.length - 1 === key) ? true : false;
+              return <TypeTableRow
+                key={key} {...{
+                rowData,
+                isLastRow,
+                selectable,
+                selectCallback,
+                columnConfig,
+                hasStatus,
+                hasThumbnail,
+                hasTypeIcon
+              }}
+                     />;
+            })}
       </TableContainer>
     </Container>
   );
