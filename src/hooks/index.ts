@@ -5,6 +5,7 @@ import {useCopyToClipboard} from './useCopyToClipboard';
 import {useModal, IModal} from './useModal';
 import {useNotification} from './useNotification';
 import {useClickOutside} from './useClickOutside';
+import {usePoll} from './usePoll';
 export {
   useInterval,
   useTo,
@@ -12,6 +13,7 @@ export {
   useCopyToClipboard,
   useModal,
   useNotification,
-  useClickOutside
+  useClickOutside,
+  usePoll
 };
 export type { IModal };

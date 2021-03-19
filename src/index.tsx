@@ -80,6 +80,7 @@ import {
   useNotification,
   useClickOutside,
   IModal,
+  usePoll,
 } from './hooks';
 
 import {
@@ -116,7 +117,7 @@ import {
   TabContent
 } from './Tabs';
 
-export {
+export {export default usePoll;
   // Theme
   darkTheme,
   lightTheme,
@@ -181,6 +182,7 @@ export {
   useTitle,
   useCopyToClipboard,
   useClickOutside,
+  usePoll,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
