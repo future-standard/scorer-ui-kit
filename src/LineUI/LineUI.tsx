@@ -110,8 +110,9 @@ const LineUI: React.FC<LineUIProps> = ({
     }
 
     const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
-    const h = (fixedImgDimensions && fixedImgDimensions.y) || naturalHeight;
-    const w = (fixedImgDimensions && fixedImgDimensions.x) || naturalWidth;
+
+    const h = fixedImgDimensions?.y || naturalHeight;
+    const w = fixedImgDimensions?.x || naturalWidth;
     if (h !== imgSize.h || w !== imgSize.w) {
       setImgSize({ h, w });
       onSizeChange({ h, w });

@@ -4,10 +4,9 @@ import styled, {css} from 'styled-components';
 import TypeTableRow from '../atoms/TypeTableRow';
 import Checkbox from '../../Form/atoms/Checkbox';
 import { TypeCellAlignment, ITableColumnConfig, ITypeTableData, IRowData } from '..';
+import TableHeaderTitle from '../atoms/TableHeaderTitle';
 
-const Container = styled.div`
-
-`;
+const Container = styled.div``;
 
 const TableContainer = styled.div`
   display: table;
@@ -18,12 +17,13 @@ const HeaderRow = styled.div`
   display: table-row;
   height: 50px;
 `;
-const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean }>`
+
+const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean}>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
   line-height: 20px;
-
+  position: relative;
   font-family: ${p => p.theme.fontFamily.ui };
 
   ${({hasCopyButton}) => hasCopyButton && css`
@@ -39,7 +39,6 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
   ${p => p.fixedWidth && css`
     width: ${p.fixedWidth}px;
   `}
-
 `;
 
 interface IProps {
@@ -51,26 +50,53 @@ interface IProps {
   hasTypeIcon?: boolean
   selectCallback? : (checked:boolean, id?: string | number)=>void
   toggleAllCallback? : (checked: boolean)=>void
+  sortCallback? : (ascending: boolean, columnId?: string) => void
 }
 
 const TypeTable : React.FC<IProps> = ({
   columnConfig,
   selectable,
-  selectCallback = ()=>{},
-  toggleAllCallback = ()=>{},
   rows = [],
   hasStatus = false,
   hasThumbnail = false,
-  hasTypeIcon = false
+  hasTypeIcon = false,
+  selectCallback = ()=>{},
+  toggleAllCallback = ()=>{},
+  sortCallback = ()=>{},
 }) => {
   const [allChecked, setAllChecked] = useState(false);
   const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
     toggleAllCallback(checked);
   }, [toggleAllCallback]);
+  const [sortSpec, setSortSpec] = useState(columnConfig);
 
   useEffect(() => {
     setAllChecked(rows.every(isChecked) && rows.length > 0);
   }, [rows]);
+
+  /**
+   * toggleSort
+   * Toggle the clicked header
+   * Make clicked header active true and the rest false;
+   */
+  const toggleSort = useCallback((indexKey : number) => {
+    if(sortSpec[indexKey] === undefined) { return;}
+    if(!sortSpec[indexKey].sortable) { return; }
+
+    const updatedSort = [...sortSpec]
+    updatedSort.forEach((col, key) => {
+      if(key === indexKey) {
+        col.sortActive = true;
+      } else {
+        col.sortActive = false;
+      }
+    });
+    const newAscending = undefined ? true: !sortSpec[indexKey].ascending;
+    updatedSort[indexKey].ascending = newAscending
+    const colId = (updatedSort[indexKey].columnId === undefined) ?  '' : updatedSort[indexKey].columnId;
+    sortCallback(newAscending, colId);
+    setSortSpec(updatedSort);
+  },[sortSpec])
 
   return (
     <Container>
@@ -80,10 +106,21 @@ const TypeTable : React.FC<IProps> = ({
           {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
           {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
-
           {columnConfig.map((column, key) => {
-            const {alignment, header, hasCopyButton} = column;
-            return <HeaderItem key={key} alignment={alignment} hasCopyButton={hasCopyButton}>{header}</HeaderItem>;
+            const {alignment, hasCopyButton, sortActive, ascending } : ITableColumnConfig = column;
+            return <HeaderItem
+                      key={key}
+                      alignment={alignment}
+                      hasCopyButton={hasCopyButton}
+                      >
+                        <TableHeaderTitle
+                          {...column}
+                          columnKey={key}
+                          isSortActive={sortActive}
+                          ascending={ascending}
+                          toggleSort={toggleSort}
+                          />
+                    </HeaderItem>;
           })}
         </HeaderRow>
 
@@ -93,7 +130,6 @@ const TypeTable : React.FC<IProps> = ({
         })}
 
       </TableContainer>
-
     </Container>
   );
 };
