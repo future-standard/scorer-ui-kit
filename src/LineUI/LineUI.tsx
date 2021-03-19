@@ -110,8 +110,8 @@ const LineUI: React.FC<LineUIProps> = ({
     }
 
     const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
-    const h = fixedImgDimensions?.y ?? naturalHeight;
-    const w = fixedImgDimensions?.x ?? naturalWidth;
+    const h = (fixedImgDimensions && fixedImgDimensions.y) || naturalHeight;
+    const w = (fixedImgDimensions && fixedImgDimensions.x) || naturalWidth;
     if (h !== imgSize.h || w !== imgSize.w) {
       setImgSize({ h, w });
       onSizeChange({ h, w });
@@ -122,7 +122,7 @@ const LineUI: React.FC<LineUIProps> = ({
       setUnit(h / clientHeight);
     }
     setLoaded(true);
-  }, [fixedImgDimensions?.x, fixedImgDimensions?.y, imgSize.h, imgSize.w, onSizeChange, unit]);
+  }, [fixedImgDimensions, imgSize.h, imgSize.w, onSizeChange, unit]);
 
   const calculateCTM = useCallback(() => {
     if (!frame.current) { return null; }

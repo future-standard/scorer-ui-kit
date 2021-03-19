@@ -78,6 +78,7 @@ import {
   useCopyToClipboard,
   useModal,
   useNotification,
+  useClickOutside,
   IModal,
 } from './hooks';
 
@@ -179,6 +180,7 @@ export {
   useTo,
   useTitle,
   useCopyToClipboard,
+  useClickOutside,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
