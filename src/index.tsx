@@ -61,6 +61,7 @@ import {
   TypeTable,
   TableRowThumbnail,
   TableHeaderTitle,
+  EditCell,
 } from './Tables';
 
 import {
@@ -176,6 +177,7 @@ export {
   TypeTable,
   TableRowThumbnail,
   TableHeaderTitle,
+  EditCell,
 
   // Common && hooks
   useInterval,
