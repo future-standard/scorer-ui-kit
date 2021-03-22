@@ -70,6 +70,11 @@ import {
   PTZContext
 } from './PTZControl';
 
+// Misc
+  import {
+    Tag
+  } from './Misc';
+
 // Other
 import {
   useInterval,
@@ -204,6 +209,9 @@ export {
   Tab,
   TabList,
   TabContent,
+
+  // Misc
+  Tag,
 
   //Context
   NotificationProvider,
