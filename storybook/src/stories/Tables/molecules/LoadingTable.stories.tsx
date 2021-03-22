@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import {boolean, text } from "@storybook/addon-knobs";
+import {boolean, text, object} from "@storybook/addon-knobs";
 
 import {TypeTable as LoadingTable } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
@@ -26,17 +26,20 @@ const columnConfigSample : ITableColumnConfig[] = [
     header: 'When',
     sortable: false,
     cellStyle: 'normalImportance',
+    minWidth: 200,
   },
   {
     header: 'Status',
     sortable: false,
     cellStyle: 'normalImportance',
     showStatus: true,
+    minWidth: 200,
   },
   {
     header: 'Temperature',
     sortable: false,
     cellStyle: 'normalImportance',
+    minWidth: 200,
   },
 ];
 
@@ -104,6 +107,7 @@ export const _LoadingTable = () => {
   const emptyTableTitle = text("emptyTableTitle","No Data Available"); 
   const emptyTableText = text("emptyTableText", 'There is currently no data');
   const loadingText = text("loadingText", 'Loading Data..')
+  const columnConfig = object("Column Configuration", columnConfigSample);
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
   const toggleAllCallback = useCallback((checked:boolean) => {
@@ -131,7 +135,7 @@ export const _LoadingTable = () => {
     <Container>
       <LoadingTable {
         ...{
-          columnConfig: columnConfigSample,
+          columnConfig,
           rows,
           toggleAllCallback,
           isLoading,

@@ -21,7 +21,7 @@ const HeaderRow = styled.div`
   height: ${HEADER_HEIGHT};
 `;
 
-const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean }>`
+const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, }>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
@@ -43,6 +43,9 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
     width: ${p.fixedWidth}px;
   `}
 
+  ${({minWidth}) => minWidth && css`
+    min-width:${minWidth}px; 
+  `}
 `;
 
 const LoadingText = styled.div`
@@ -142,8 +145,8 @@ const TypeTable : React.FC<IProps> = ({
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
 
           {columnConfig.map((column, key) => {
-            const {alignment, header, hasCopyButton} = column;
-            return <HeaderItem key={key} alignment={alignment} hasCopyButton={hasCopyButton}>{header}</HeaderItem>;
+            const {alignment, header, hasCopyButton, minWidth} = column;
+            return <HeaderItem key={key} alignment={alignment} hasCopyButton={hasCopyButton} minWidth={minWidth}>{header}</HeaderItem>;
           })}
         </HeaderRow>
         {isLoading ? (
