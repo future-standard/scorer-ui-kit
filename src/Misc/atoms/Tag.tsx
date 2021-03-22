@@ -2,9 +2,9 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import Icon, {IconProps, IconWrapper} from '../../Icons/Icon';
 
-const Container = styled.div<{hoverColor:ISvgIcons['color']; isClickable:boolean }>`
+const Container = styled.div<{hoverColor:ISvgIcons['color']; isClickable:boolean; size: number}>`
   font-family: ${({theme}) => theme.fontFamily.ui };
-  font-size: 14px;
+  font-size: ${({size}) => size}px;
   font-weight: 500;
   color: hsl(200, 3%, 39%);
   padding: 4px 10px;
@@ -50,7 +50,7 @@ const Tag : React.FC<ITag> = ({
   ...props 
 }) => {
   return(
-    <Container hoverColor={hoverColor} isClickable={isClickable}>
+    <Container hoverColor={hoverColor} isClickable={isClickable} size={size}>
       {icon && <Icon
         icon={icon}
         size={size}

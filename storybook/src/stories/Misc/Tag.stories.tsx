@@ -1,5 +1,5 @@
 import React from 'react';
-import {select, boolean, text} from "@storybook/addon-knobs";
+import {select, boolean, text, number} from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {Tag, IconSVGs} from 'scorer-ui-kit';
 
@@ -24,7 +24,8 @@ const Container = styled.div``;
 export const _Tag = () => {
   const iconList = generateIconList();
   const tagText = text("text", "Example")
-  const iconName = select("Name", iconList, 'MetaTags');
+  const iconName = select("icon", iconList, 'MetaTags');
+  const size = number('size',14);
   const isClickable = boolean('isClickable', false);
   return (
     <Container>
@@ -32,6 +33,7 @@ export const _Tag = () => {
         text={tagText}
         icon={iconName}
         isClickable={isClickable}
+        size={size}
       />
     </Container>
   )
