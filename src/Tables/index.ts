@@ -25,6 +25,7 @@ export interface ITableColumnConfig {
   showStatus?: boolean
   hasCopyButton?: boolean
   width?: number // TODO: This!
+  minWidth?: number
 }
 export interface ICellData {
   text?: string
