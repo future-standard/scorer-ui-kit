@@ -33,11 +33,13 @@ const Container = styled.div<{hoverColor:ISvgIcons['color']; isClickable:boolean
 
 `;
 
-interface ITag extends IconProps {
+interface OwnProps {
   text?: string
   hoverColor?: ISvgIcons['color']
   isClickable?: boolean 
 }
+
+export type ITag = OwnProps & IconProps;
 
 const Tag : React.FC<ITag> = ({
   icon = '',

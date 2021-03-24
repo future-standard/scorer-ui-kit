@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {Tag, IconSVGs} from 'scorer-ui-kit';
 
 export default {
-  title: 'Misc',
+  title: 'Misc/atoms',
   component: Tag,
   decorators: []
 };

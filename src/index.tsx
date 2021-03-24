@@ -72,7 +72,10 @@ import {
 
 // Misc
   import {
-    Tag
+    Tag,
+    TagList,
+    ITag,
+    ITagList,
   } from './Misc';
 
 // Other
@@ -212,6 +215,7 @@ export {
 
   // Misc
   Tag,
+  TagList,
 
   //Context
   NotificationProvider,
@@ -225,4 +229,6 @@ export type {
   IModal,
   INotificationProps,
   IconButtonData,
+  ITag,
+  ITagList,
 };
