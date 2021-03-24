@@ -8,7 +8,13 @@ export default {
   decorators: []
 };
 
-const Container = styled.div``;
+
+// overflow-x: scroll;
+const Container = styled.div`
+  width: 250px;
+  overflow: hidden;
+  box-shadow: -21px 2px 10px -22px rgba(0,0,0,0.11) inset;
+`;
 
 const defaultTags : ITag[] = [
   {
@@ -16,7 +22,12 @@ const defaultTags : ITag[] = [
     icon: 'MetaCategories',
   },
   {
-    text: 'Shop A',
+    text: 'Example',
+    icon: 'MetaTags',
+    isClickable: true,
+  },
+  {
+    text: 'Smart',
     icon: 'MetaTags',
   },
 

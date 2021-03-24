@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import Tag, {ITag} from '../atoms/Tag';
+import Tag, {ITag, TagWrapper} from '../atoms/Tag';
+
 
 const Container = styled.div`
   display: flex;
+  ${TagWrapper} {
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
 `;
-
-// Posible with links
-interface LinkTag extends ITag {
-}
 
 export interface ITagList {
   tagsConfig: ITag[]
