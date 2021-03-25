@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {TagList, ITag} from 'scorer-ui-kit';
+import {object} from "@storybook/addon-knobs";
+
 
 export default {
   title: 'Misc/Molecules',
@@ -11,32 +13,40 @@ export default {
 
 // overflow-x: scroll;
 const Container = styled.div`
-  width: 250px;
-  overflow: hidden;
-  box-shadow: -21px 2px 10px -22px rgba(0,0,0,0.11) inset;
+  font-family: ${p => p.theme.fontFamily.data};
+  margin: 100px;
+  display: table-cell;
+  height: 50px;
+  width: 300px;
+  vertical-align: middle;
+  position: relative;
+  line-height: 30px;
+  padding: 0 2px;
 `;
 
 const defaultTags : ITag[] = [
   {
-    text: 'Shop A',
+    label: 'Shop A',
     icon: 'MetaCategories',
   },
   {
-    text: 'Example',
+    label: 'Example',
     icon: 'MetaTags',
-    isClickable: true,
+    color: 'primary'
   },
   {
-    text: 'Smart',
+    label: 'Smart',
     icon: 'MetaTags',
   },
 
 ];
 
 export const _TagList = () => {
+
+  const someTags = object("tagsConfig", defaultTags)
   return(
     <Container>
-      <TagList tagsConfig={defaultTags}/>
+      <TagList tagsConfig={someTags}/>
     </Container>
   );
 };

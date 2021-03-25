@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import Tag, {ITag, TagWrapper} from '../atoms/Tag';
 
 
-const Container = styled.div`
+export const TagListWrapper = styled.div`
   display: flex;
   ${TagWrapper} {
     margin-right: 10px;
+    margin-bottom: 6px;
     flex-shrink: 0;
   }
+  flex-wrap: wrap;
 `;
 
 export interface ITagList {
@@ -17,13 +19,13 @@ export interface ITagList {
 
 const TagList : React.FC<ITagList> = ({tagsConfig}) => {
   return(
-    <Container>
+    <TagListWrapper>
       {tagsConfig.map((tagProps, index) => {
         return (
           <Tag key={`tag-${index}`} {...tagProps} />
         );
       })}
-    </Container>
+    </TagListWrapper>
   );
 };
 

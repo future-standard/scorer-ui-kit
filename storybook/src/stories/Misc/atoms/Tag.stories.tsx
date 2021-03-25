@@ -21,19 +21,28 @@ const generateIconList = () => {
 
 const Container = styled.div``;
 
+const colorOptions = { EmtpyValue: "", Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary", Danger : "danger" };
+
 export const _Tag = () => {
   const iconList = generateIconList();
-  const tagText = text("text", "Example")
-  const iconName = select("icon", iconList, 'MetaTags');
-  const size = number('size',14);
-  const isClickable = boolean('isClickable', false);
+  const tagText = text("Label", "Example")
+  const iconName = select("Icon", iconList, 'MetaTags');
+  const size = number('Size',14);
+  const tagWeight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy" }, "regular");
+  const color = select("Color",{...colorOptions}, "");
+  const hoverColor = select("Hover Color",{...colorOptions}, "mono");
+  const isHoverEnabled = boolean('enableHover', false);
+
   return (
     <Container>
       <Tag
-        text={tagText}
+        label={tagText}
         icon={iconName}
-        isClickable={isClickable}
+        enableHover={isHoverEnabled}
         size={size}
+        color={color}
+        hoverColor={hoverColor}
+        weight={tagWeight}
       />
     </Container>
   )

@@ -2,15 +2,22 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import Icon, {IconProps, IconWrapper} from '../../Icons/Icon';
 
-export const TagWrapper = styled.div<{hoverColor:ISvgIcons['color']; isClickable:boolean; size: number}>`
+const TextContainer = styled.div`
+  user-select: none;
+`;
+
+export const TagWrapper = styled.div<{color?:ISvgIcons['color']; hoverColor:ISvgIcons['color']; enableHover:boolean; size: number}>`
   font-family: ${({theme}) => theme.fontFamily.ui };
   font-size: ${({size}) => size}px;
   font-weight: 500;
-  color: hsl(200, 3%, 39%);
+  color: ${({theme, color}) => color ? theme.colors.icons[color] : `hsl(200, 3%, 39%)`};
   padding: 4px 10px;
-  border: solid 1px hsl(120, 1%, 85%);
+  border: solid 1px ${({theme, color}) => color ? theme.colors.icons[color] : `hsl(120, 1%, 85%)`};
   display: inline-flex;
+  align-items: center;
   border-radius: 3px;
+  height: 26px;
+
   ${IconWrapper} {
     margin-right: 8px;
     display: flex;
@@ -18,7 +25,7 @@ export const TagWrapper = styled.div<{hoverColor:ISvgIcons['color']; isClickable
     align-items: center;
   }
 
-  ${({theme, hoverColor, isClickable}) => isClickable && css`
+  ${({theme, hoverColor, enableHover}) => enableHover && css`
     &:hover {
       cursor: pointer;
       border-color: ${theme.colors.icons[hoverColor]};
@@ -30,13 +37,12 @@ export const TagWrapper = styled.div<{hoverColor:ISvgIcons['color']; isClickable
       }
     }
   `};
-
 `;
 
 interface OwnProps {
-  text?: string
+  label?: string
   hoverColor?: ISvgIcons['color']
-  isClickable?: boolean 
+  enableHover?: boolean 
 }
 
 export type ITag = OwnProps & IconProps;
@@ -45,22 +51,22 @@ const Tag : React.FC<ITag> = ({
   icon = '',
   size = 14,
   weight = 'regular',
-  color = 'dimmed',
+  color,
   hoverColor = 'mono',
-  text='',
-  isClickable=false,
+  label='',
+  enableHover=false,
   ...props 
 }) => {
   return(
-    <TagWrapper hoverColor={hoverColor} isClickable={isClickable} size={size}>
+    <TagWrapper color={color} hoverColor={hoverColor} enableHover={enableHover} size={size}>
       {icon && <Icon
         icon={icon}
         size={size}
-        color={color}
+        color={color ? color : 'dimmed' }
         weight={weight}
         {...props}
                />}
-      {text}
+      <TextContainer>{label}</TextContainer>
     </TagWrapper>
   );
 };
