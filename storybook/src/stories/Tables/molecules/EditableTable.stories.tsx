@@ -1,8 +1,11 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
+import { object } from "@storybook/addon-knobs";
+
 
 import {TypeTable as EditableTable,
   EditCell,
+  sleep,
 } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
 
@@ -103,11 +106,10 @@ const sampleData: IExampleData[] = [
   }
 ];
 
-const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay))
-
 export const _EditableTable = () => {
   const [data, setData] = useState<IExampleData[]>(sampleData);
   const [rows, setRows] = useState<ITypeTableData>([]);
+  const columnConfig = object('ColumConfig', columnConfigSample);
 
   const updateCameraName = useCallback(async (name: string, rowKey: string) => {
     const updatedData = [...data];
@@ -158,7 +160,7 @@ export const _EditableTable = () => {
     <Container>
       <EditableTable {
         ...{
-          columnConfig: columnConfigSample,
+          columnConfig: columnConfig,
           rows,
           hasThumbnail: true,
         }

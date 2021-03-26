@@ -88,6 +88,10 @@ import {
   ModalProvider,
 } from './context';
 
+import {
+  sleep
+} from './helpers';
+
 import  { resetButtonStyles } from './common';
 
 import Spinner from './Indicators/Spinner';
@@ -210,7 +214,10 @@ export {
   useNotification,
   ModalContext,
   ModalProvider,
-  useModal
+  useModal,
+
+  //helpers
+  sleep,
 };
 
 export type {
