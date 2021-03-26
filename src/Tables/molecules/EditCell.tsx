@@ -7,9 +7,13 @@ import {StyledLabel} from '../../Form/atoms/Label';
 import IconButton from '../../Form/atoms/IconButton';
 import { TypeCellAlignment } from '../';
 import { useClickOutside } from '../../hooks/useClickOutside';
+import {Link} from 'react-router-dom';
 
 const Container = styled.div`
   position: relative;
+  ${({theme}) => css`
+    font-family: ${theme.fontFamily.ui};
+  `}
 `;
 const StyledButton = styled(Button)`
   flex-shrink: 0;
@@ -17,6 +21,15 @@ const StyledButton = styled(Button)`
 
 const StyledLoadingButton = styled(ButtonWithLoading)`
   flex-shrink: 0;
+`;
+
+const StyledLink = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const EditContainer = styled.div`
@@ -76,8 +89,8 @@ const TextContainer = styled.div<{alignment:TypeCellAlignment}>`
 export interface OwnProps {
   defaultValue: string
   rowKey: string
-  loading?: boolean
   alignment?: TypeCellAlignment
+  toLink?: string
   saveCallback?: (inputValue: string, rowKey: string) => void
 }
 
@@ -89,6 +102,7 @@ const EditCell : React.FC<IEditableCell> = ({
   defaultValue,
   rowKey,
   alignment = 'left',
+  toLink= '',
   saveCallback,
   ...props
 }) => {
@@ -164,7 +178,7 @@ const EditCell : React.FC<IEditableCell> = ({
             >Cancel</StyledButton>}
         </EditContainer>
       : <TextContainer alignment={alignment}>
-          {updatedValue}
+          {toLink? <StyledLink to={toLink}>{updatedValue}</StyledLink>: updatedValue}
           <StyledIconButton icon='Edit' weight='light' size={16} onClick={() => setIsEditMode(true)} />
         </TextContainer>
       }
