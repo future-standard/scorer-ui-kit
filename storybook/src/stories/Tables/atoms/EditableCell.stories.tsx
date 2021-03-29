@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import { text, select } from "@storybook/addon-knobs";
-import {EditCell, sleep} from 'scorer-ui-kit';
+import {EditCell} from 'scorer-ui-kit';
+import {sleep} from '../../helpers';
 
 export default {
   title: 'Tables/atoms',
