@@ -12,6 +12,7 @@ import TextArea from './atoms/TextArea';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
+import SliderInput from  './molecules/SliderInput';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 
@@ -31,6 +32,7 @@ export {
     TextField,
     TextArea,
     TextAreaField,
+    SliderInput,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';

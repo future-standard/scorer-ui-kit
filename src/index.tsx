@@ -30,6 +30,7 @@ import {
   TextField,
   TextArea,
   TextAreaField,
+  SliderInput,
 } from './Form';
 
 // Components - Filter
@@ -149,6 +150,7 @@ export {
   TextField,
   TextArea,
   TextAreaField,
+  SliderInput,
 
   // Filters
   DatePicker,
