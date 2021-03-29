@@ -106,7 +106,7 @@ const EditCell : React.FC<IEditableCell> = ({
   saveCallback,
   ...props
 }) => {
-  const [isEditMode, setIsEditMode] = useState(Boolean);
+  const [isEditMode, setIsEditMode] = useState(false);
   const [updatedValue, setUpdatedValue] = useState(defaultValue);
   const [loading, setLoading] = useState(false);
 
@@ -152,6 +152,7 @@ const EditCell : React.FC<IEditableCell> = ({
           ref={editContainerRef}
         >
           <SmallInput
+            {...props}
             autoFocus
             label=''
             disabled={loading}
@@ -160,7 +161,6 @@ const EditCell : React.FC<IEditableCell> = ({
             defaultValue={defaultValue}
             onKeyUp={(eve: React.KeyboardEvent<HTMLInputElement>) => verifyKeyPress(eve)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setUpdatedValue(e.target.value);}} 
-            {...props}
           />
           <StyledLoadingButton
             onClick = {() => {
