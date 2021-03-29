@@ -29,13 +29,13 @@ export interface ITableColumnConfig {
   minWidth?: number
 }
 
-export type IStatus = 'caution' | 'danger' | 'folder' | 'good' | 'neutral';
+export type IDeviceStatus = 'caution' | 'danger' | 'folder' | 'good' | 'neutral';
 
 export interface ICellData {
   text?: string
   href?: string
   unit?: string
-  status?: IStatus;
+  status?: IDeviceStatus;
   customComponent?: ReactElement
 }
 export interface IRowHeader {

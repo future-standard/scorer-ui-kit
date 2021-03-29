@@ -4,14 +4,14 @@ import { object } from "@storybook/addon-knobs";
 
 
 import {TypeTable as EditableTable,
-  EditCell,
-  sleep,
+  EditCell
 } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
+import {sleep} from '../../helpers';
 
 import { 
   IRowData,
-  IStatus,
+  IDeviceStatus,
   ITableColumnConfig,
   ITypeTableData
 } from 'scorer-ui-kit/dist/Tables';
@@ -63,7 +63,7 @@ interface IExampleData {
   jobName: string,
   cameraName: string,
   jobTime: string,
-  status: IStatus,
+  status: IDeviceStatus,
   statusText: string,
   temperature: string,
 }
@@ -132,7 +132,7 @@ export const _EditableTable = () => {
         },
         columns:
         [ {text: jobName },
-          {customComponent: <EditCell alignment={'left'} defaultValue={cameraName} rowKey={id} saveCallback={updateCameraName} />},
+          {customComponent: <EditCell alignment={'left'} defaultValue={cameraName} rowKey={id} saveCallback={updateCameraName} toLink='/'/>},
           { text: jobTime},
           { text: statusText, status },
           { text: temperature },

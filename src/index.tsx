@@ -89,10 +89,6 @@ import {
   ModalProvider,
 } from './context';
 
-import {
-  sleep
-} from './helpers';
-
 import  { resetButtonStyles } from './common';
 
 import Spinner from './Indicators/Spinner';
@@ -218,8 +214,6 @@ export {
   ModalProvider,
   useModal,
 
-  //helpers
-  sleep,
 };
 
 export type {

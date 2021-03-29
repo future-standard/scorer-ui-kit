@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import {IStatus} from '..';
+import {IDeviceStatus} from '..';
 
-type TypeDeviceStatus = IStatus;
+type TypeDeviceStatus = IDeviceStatus;
 
 const Container = styled.div<{ status: TypeDeviceStatus }>`
   height: 42px;
