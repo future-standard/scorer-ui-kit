@@ -6,6 +6,18 @@ import Spinner from '../../Indicators/Spinner';
 import { TypeButtonDesigns, IButtonProps } from '..';
 
 
+const LoadingButton = styled(Button)<{ loading: boolean }>`
+  ${({loading, theme, design}) => loading && css`
+    cursor: wait;
+    background: ${ theme.styles.form.button['primary'].active };
+
+    &:disabled {
+      opacity: 1;
+    }
+  `};
+
+`
+
 const TextContainer = styled.div`
   height: inherit;
   flex: 1;
@@ -35,7 +47,6 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
       opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
 
     order: ${ position && position === 'left' ? 0 : 2 };
-    background: ${ theme.styles.form.button[design].actionArea };
   `}
 
   svg {
@@ -43,18 +54,21 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   }
 `;
 
-const InnerContainer = styled.div<{position?: string, loading: string}>`
+const InnerContainer = styled.div<{position?: string, loading: string, design: TypeButtonDesigns}>`
   display: flex;
   height: inherit;
 
 
   ${({ position, loading }) => position && position === 'left' ? css`
-  margin-right: ${ loading === 'true' ? '-20px' : '0' };
+    margin-right: ${ loading === 'true' ? '-20px' : '0' };
   ` : css`
-  margin-left: ${ loading === 'true' ? '-20px' : '0' };
+    margin-left: ${ loading === 'true' ? '-20px' : '0' };
   `}
 
-  ${({ loading, theme }) => loading === 'true' ? css`
+  ${({ loading, theme, design }) => loading === 'true' ? css`
+
+    // TODO: Fix transition animation so the below line doesn't look awful when transitioning - L
+    // ${ theme.styles.form.button[design].active };
 
     transition: margin ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
 
@@ -64,6 +78,7 @@ const InnerContainer = styled.div<{position?: string, loading: string}>`
     ${LoadingContainer}{
       opacity: 1;
       transition: flex ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut}, opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut} ${theme.animation.speed.slow};
+      ${ theme.styles.form.button[design].actionArea };
     }
   ` : css`
     ${LoadingContainer}{
@@ -79,14 +94,14 @@ interface IProps extends IButtonProps {
 
 const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', onClick, disabled, position, loading, children,...rest}) => {
   return (
-    <Button disabled={disabled || loading} {...{ design, size, onClick}} {...rest}>
-      <InnerContainer loading={loading.toString()}>
+    <LoadingButton disabled={disabled || loading} {...{ design, size, loading, onClick}} {...rest}>
+      <InnerContainer loading={loading.toString()} {...{ design}}>
         <TextContainer>{children}</TextContainer>
         <LoadingContainer {...{ design, position }}>
           <Spinner size='small' styling={design} />
         </LoadingContainer>
       </InnerContainer>
-    </Button>
+    </LoadingButton>
   );
 };
 

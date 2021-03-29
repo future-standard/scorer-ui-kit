@@ -57,6 +57,11 @@ export interface LineUIOptions {
   pointIndexOffset?: number;
 
   showPoint?: boolean;
+
+  fixedImgDimensions?: {
+    x: number;
+    y: number;
+  };
 }
 
 export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>

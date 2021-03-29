@@ -32,19 +32,26 @@ const Title = styled.h1`
   margin: 0 0 20px;
 `;
 
-const AreaTitle = styled(Link)`
+
+const AreaTitleCss = css`
   ${({theme}) => css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.pageHeader.areaTitle};
+  font-family: ${theme.fontFamily.ui};
+  ${theme.typography.pageHeader.areaTitle};
   `}
   margin: 0;
   position: absolute;
   top: -18px;
+`;
 
+const AreaTitle = styled.div`
+  ${AreaTitleCss}
+`;
+
+const AreaLinkTitle = styled(Link)`
+  ${AreaTitleCss}
   &:hover {
     text-decoration: underline;
   }
-
 `;
 
 interface IProps {
@@ -61,10 +68,12 @@ const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateD
     useTitle(title, areaTitle || "");
   }
 
+
   return <Container>
-    {areaTitle && areaHref ?
-      <AreaTitle to={areaHref}>{areaTitle}</AreaTitle>
-    : null}
+    {areaTitle && areaHref
+      ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
+      : areaTitle && <AreaTitle>{areaTitle}</AreaTitle> 
+    }
     <Title>{title}</Title>
     {icon ?
       <IconContainer><Icon size={24} color='dimmed' {...{icon}} /></IconContainer>

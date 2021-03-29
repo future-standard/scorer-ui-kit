@@ -26,6 +26,7 @@ export interface ITableColumnConfig {
   showStatus?: boolean
   hasCopyButton?: boolean
   width?: number // TODO: This!
+  minWidth?: number
 }
 
 export type IDeviceStatus = 'caution' | 'danger' | 'folder' | 'good' | 'neutral';

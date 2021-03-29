@@ -25,7 +25,11 @@ const Line: React.FC<{}> = () => {
     pointIndexOffset: 1,
     showPointLabel: true,
     setIndexOffset: 1,
-    showMoveHandle: false
+    showMoveHandle: false,
+    fixedImgDimensions: {
+      x: 2310,
+      y: 1535
+    }
   });
 
   const fetchLine = useCallback(async () => {
@@ -33,70 +37,16 @@ const Line: React.FC<{}> = () => {
       name: 'Line 1',
       points: [
           {
-            x: 1407,
-            y: 869
+            x: 100,
+            y: 100
           },
           {
-            x: 2293,
-            y: 531
+            x: 200,
+            y: 200
           }
         ],
         readOnly: false,
         styling: "primary"
-      },
-      {
-        name: "Line 2",
-        points: [
-          {
-            x: 1426,
-            y: 254
-          },
-          {
-            x: 2260,
-            y: 283
-          }
-        ],
-        "readOnly": false,
-        "styling": "secondary"
-      },
-      {
-        name: "Yikes!",
-        points: [
-          {
-            x: 500,
-            y: 500
-          },
-          {
-            x: 1000,
-            y: 1000
-          }
-        ],
-        readOnly: false,
-        styling: "danger"
-      },
-      {
-        name: "Get to the Point",
-        points: [
-          {
-            x: 2063,
-            y: 1175
-          },
-
-        ],
-        readOnly: false,
-        styling: "danger"
-      },
-      {
-        name: "Weird Point",
-        points: [
-          {
-            x: 900,
-            y: 1400
-          },
-
-        ],
-        readOnly: false,
-        styling: 'weird'
       }
     ];
 
