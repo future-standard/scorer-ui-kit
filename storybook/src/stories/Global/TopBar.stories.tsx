@@ -36,6 +36,7 @@ export const _TopBar = () => {
   ])
 
   const useSearch = boolean("Use Search", true);
+  const useLogout = boolean("Use Logout", true);
   const useNotifications = boolean("Use Notifications", true);
   const showLanguage = boolean("Show Language", true);
   const logoutLink = text("Logout Url", "#")
@@ -43,5 +44,5 @@ export const _TopBar = () => {
 
   // userDrawerBespoke: See examples for implementation of this prop.
 
-  return <Container><TopBar {...{loggedInUser, userSubmenu, useSearch, useNotifications, logoutLink, searchPlaceholder, showLanguage}}/></Container>;
+  return <Container><TopBar {...{loggedInUser, userSubmenu, useSearch, useLogout, useNotifications, logoutLink, searchPlaceholder, showLanguage}}/></Container>;
 };
