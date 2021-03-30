@@ -1,4 +1,4 @@
-import React, {DataHTMLAttributes, useState} from 'react';
+import React, { useState} from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, number, object } from "@storybook/addon-knobs";
 import styled from 'styled-components';
@@ -13,6 +13,7 @@ export default {
 
 const Container = styled.div`
     margin: 20px;
+    width: 500px;
 `;
 
 
@@ -43,7 +44,7 @@ export const _SliderInput = () => {
           disabled={disabled}
           step={step}
           list="exampleList"
-          onChange={handleUpdate}
+          inputCallback={handleUpdate}
         />
         <datalist id="exampleList" >
           <option>0</option>
