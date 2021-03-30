@@ -208,28 +208,30 @@ const LanguageMenu = styled.button`
 `;
 
 interface IProps {
-  useNotifications?: boolean;
+  hasNotifications?: boolean;
   userSubmenu?: any[];
-  logoutLink?: string;
   loggedInUser: string;
-  useSearch?: boolean;
+  hasLanguage?: boolean;
+  hasLogout?: boolean;
+  logoutLink?: string;
+  hasSearch?: boolean;
   searchPlaceholder?: string;
-  showLanguage?: boolean;
   userDrawerBespoke?: ReactElement;
   onLogout?: ()=>void;
   onLanguageToggle?: ()=>void;
 }
 
 const TopBar : React.FC<IProps> = ({
-  useNotifications = false,
+  hasNotifications = false,
+  hasLanguage = false,
+  hasLogout = true,
   logoutLink = '/logout',
-  useSearch = false,
+  hasSearch = false,
   searchPlaceholder = 'Search for devices, analysis tasks, etc.',
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
   onLogout = ()=>{},
-  showLanguage = false,
   onLanguageToggle = ()=>{}
 }) => {
 
@@ -244,7 +246,7 @@ const TopBar : React.FC<IProps> = ({
 
   return (
     <Container>
-      {useSearch ?
+      {hasSearch ?
         <SearchBar>
           <IconWrapper>
             <Icon icon='Search' size={18} color='dimmed' />
@@ -253,7 +255,7 @@ const TopBar : React.FC<IProps> = ({
         </SearchBar> : <div />}
 
       <ButtonArea>
-        {useNotifications ? <DrawerToggle isActive={isNotificationsOpen} onClick={() => { setNotificationsOpen(!isNotificationsOpen); setUserMenuOpen(false); }}><Icon icon='Notifications' size={18} color='dimmed' /></DrawerToggle> : null}
+        {hasNotifications ? <DrawerToggle isActive={isNotificationsOpen} onClick={() => { setNotificationsOpen(!isNotificationsOpen); setUserMenuOpen(false); }}><Icon icon='Notifications' size={18} color='dimmed' /></DrawerToggle> : null}
         <DrawerToggle isActive={isUserMenuOpen} onClick={() => { setUserMenuOpen(!isUserMenuOpen); setNotificationsOpen(false); }}><Icon icon='UserProfile' size={18} color='dimmed' /></DrawerToggle>
       </ButtonArea>
 
@@ -278,15 +280,17 @@ const TopBar : React.FC<IProps> = ({
 
           {userDrawerBespoke ? userDrawerBespoke : null}
 
-          <Logout>
-            <LinkMenu>
-              <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
-            </LinkMenu>
-          </Logout>
+          {hasLogout ?
+            <Logout>
+              <LinkMenu>
+                <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
+              </LinkMenu>
+            </Logout>
+          : null }
         </DrawerTop>
         <DrawerBottom>
           {
-            showLanguage &&
+            hasLanguage &&
               <LanguageMenu onClick={onLanguageToggle}>
                 <IconWrapper>
                   <Icon icon='Language' size={18} color='dimmed' />
@@ -299,7 +303,7 @@ const TopBar : React.FC<IProps> = ({
       </Drawer>
 
       {/* Notifications */}
-      {useNotifications ?
+      {hasNotifications ?
         <Drawer isOpen={isNotificationsOpen}>
           <CurrentUser>
             <em>Feature Pending Development.</em>

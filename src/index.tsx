@@ -61,6 +61,7 @@ import {
   TypeTable,
   TableRowThumbnail,
   TableHeaderTitle,
+  EditCell,
 } from './Tables';
 
 import {
@@ -81,6 +82,7 @@ import {
   useNotification,
   useClickOutside,
   IModal,
+  usePoll,
 } from './hooks';
 
 import {
@@ -176,6 +178,7 @@ export {
   TypeTable,
   TableRowThumbnail,
   TableHeaderTitle,
+  EditCell,
 
   // Common && hooks
   useInterval,
@@ -183,6 +186,7 @@ export {
   useTitle,
   useCopyToClipboard,
   useClickOutside,
+  usePoll,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
@@ -212,7 +216,8 @@ export {
   useNotification,
   ModalContext,
   ModalProvider,
-  useModal
+  useModal,
+
 };
 
 export type {
