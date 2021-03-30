@@ -36,6 +36,7 @@ interface IExampleData  {
   cost: number
 }
 
+
 /** Imagine this data comes from Server :) */
 const defaultData : IExampleData[] = [
   {
@@ -161,6 +162,26 @@ const defaultData : IExampleData[] = [
   },
 ]
 
+const sortDataBy = (unsortedData : IExampleData[] , columnId : keyof IExampleData, ascending: boolean) => {
+  return unsortedData.sort((itemA, itemB) => {
+
+    /** This is added because typescript complained about object keys */
+    const valueA  = itemA[columnId];
+    const valueB  = itemB[columnId];
+
+    if(!valueA) {return 0;}
+    if(!valueB) {return 0;}
+    /** ---- */
+
+    if(valueA > valueB) {
+      return ascending ? 1 : -1 ;
+    }
+    return ascending ? -1 : 1 ;
+  })
+}
+
+const sortedByDeviceData = sortDataBy(defaultData, 'deviceName', true);
+
 
 const rowMaker = (rowData: IExampleData[]) : ITypeTableData=> {
   const newRows : ITypeTableData = rowData.map( ({
@@ -202,7 +223,6 @@ const columnConfigSample : ITableColumnConfig[] = [
     header: 'Device Name',
     sortable: true,
     sortActive: true,
-    ascending: true,
     cellStyle: 'firstColumn',
   },
   {
@@ -240,8 +260,8 @@ const columnConfigSample : ITableColumnConfig[] = [
 
 export const _TypeTable = () => {
 
-  const [data, setData] = useState<IExampleData[]>(defaultData);
-  const [rows, setRows] = useState<ITypeTableData>(rowMaker(defaultData));
+  const [data, setData] = useState<IExampleData[]>(sortedByDeviceData);
+  const [rows, setRows] = useState<ITypeTableData>(rowMaker(sortedByDeviceData));
 
   // To implement...
   const hasStatus = boolean("Has Device Status", true);
@@ -272,27 +292,12 @@ export const _TypeTable = () => {
     setRows(newRows);
   }, [rows, setRows]);
 
-  const sortCallback = useCallback((ascending: boolean, columnId?: string) => {
-    // Since in this example we are working with column Id's I will not sort if I don't have the key
-    if(!columnId) { return;}
-    const updatedData : IExampleData[] = [...data];
-    
-    updatedData.sort((itemA, itemB) => {
+  const sortCallback = useCallback((ascending: boolean, columnId: string) => {
+    const unsortedData : IExampleData[] = [...data];
 
-      /** This is added because typescript complained about object keys */
-      const valueA  = itemA[columnId as keyof IExampleData];
-      const valueB  = itemB[columnId as keyof IExampleData];
-
-      if(!valueA) {return 0;}
-      if(!valueB) {return 0;}
-      /** ---- */
-
-      if(valueA > valueB) {
-        return ascending ? 1 : -1 ;
-      }
-      return ascending ? -1 : 1 ;
-    })
-    setData(updatedData);
+    const validKey = columnId as keyof IExampleData;
+    const sortedData = sortDataBy(unsortedData, validKey, ascending);
+    setData(sortedData);
 
   },[data]);
 
@@ -300,5 +305,5 @@ export const _TypeTable = () => {
     setRows(rowMaker(data));
   }, [data])
 
-  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon, sortCallback}} /></Container>;
+  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon, defaultAscending:true, sortCallback}} /></Container>;
 };

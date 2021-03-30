@@ -25,7 +25,6 @@ export interface ITableColumnConfig {
   columnId?: string
   header: string
   sortable?: boolean
-  ascending?: boolean
   sortActive?: boolean
   cellStyle: TypeCellStyle
   alignment?: TypeCellAlignment

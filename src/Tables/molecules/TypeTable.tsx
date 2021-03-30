@@ -48,9 +48,10 @@ interface IProps {
   hasStatus?: boolean
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
+  defaultAscending?: boolean
   selectCallback? : (checked:boolean, id?: string | number)=>void
   toggleAllCallback? : (checked: boolean)=>void
-  sortCallback? : (ascending: boolean, columnId?: string) => void
+  sortCallback? : (ascending: boolean, columnId: string) => void
 }
 
 const TypeTable : React.FC<IProps> = ({
@@ -60,6 +61,7 @@ const TypeTable : React.FC<IProps> = ({
   hasStatus = false,
   hasThumbnail = false,
   hasTypeIcon = false,
+  defaultAscending = false,
   selectCallback = ()=>{},
   toggleAllCallback = ()=>{},
   sortCallback = ()=>{},
@@ -68,34 +70,47 @@ const TypeTable : React.FC<IProps> = ({
   const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
     toggleAllCallback(checked);
   }, [toggleAllCallback]);
+
   const [sortSpec, setSortSpec] = useState(columnConfig);
+  const [ascendingState, setAscendingState] = useState(defaultAscending);
 
   useEffect(() => {
     setAllChecked(rows.every(isChecked) && rows.length > 0);
   }, [rows]);
 
-  /**
-   * toggleSort
-   * Toggle the clicked header
-   * Make clicked header active true and the rest false;
-   */
-  const toggleSort = useCallback((indexKey : number) => {
+
+  const toggleSort = useCallback((indexKey: number, columnId?: string) => {
+
     if(sortSpec[indexKey] === undefined) { return;}
     if(!sortSpec[indexKey].sortable) { return; }
 
     const updatedSort = [...sortSpec]
+    
+    let lastActiveKey : number | null = null; 
     updatedSort.forEach((col, key) => {
+      if(col.sortActive) {
+        lastActiveKey = key;
+      }
       if(key === indexKey) {
         col.sortActive = true;
       } else {
         col.sortActive = false;
       }
     });
-    const newAscending = undefined ? true: !sortSpec[indexKey].ascending;
-    updatedSort[indexKey].ascending = newAscending
-    const colId = (updatedSort[indexKey].columnId === undefined) ?  '' : updatedSort[indexKey].columnId;
+
+    /**
+     * Rules for toggling ascending value
+     * - Clicked column was active, toggle ascending.
+     * - No column was sorted before, keep the sorting ascending.
+     * - Clicked column was not active persist the last ascending option
+     */
+    
+
+    const newAscending : boolean = (lastActiveKey === indexKey) ? !ascendingState : ascendingState;
+    const colId : string = (columnId === undefined) ?  `column_${indexKey}` : columnId;
     sortCallback(newAscending, colId);
     setSortSpec(updatedSort);
+    setAscendingState(newAscending);
   },[sortSpec])
 
   return (
@@ -107,7 +122,7 @@ const TypeTable : React.FC<IProps> = ({
           {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
           {columnConfig.map((column, key) => {
-            const {alignment, hasCopyButton, sortActive, ascending } : ITableColumnConfig = column;
+            const {alignment, hasCopyButton, sortActive, columnId } : ITableColumnConfig = column;
             return <HeaderItem
                       key={key}
                       alignment={alignment}
@@ -115,9 +130,10 @@ const TypeTable : React.FC<IProps> = ({
                       >
                         <TableHeaderTitle
                           {...column}
-                          columnKey={key}
+                          indexKey={key}
+                          columnId={columnId}
                           isSortActive={sortActive}
-                          ascending={ascending}
+                          ascending={ascendingState}
                           toggleSort={toggleSort}
                           />
                     </HeaderItem>;

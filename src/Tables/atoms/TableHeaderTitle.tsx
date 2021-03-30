@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, {css}from 'styled-components';
-import { ITableColumnConfig } from '..';
 import Icon, {IconWrapper} from '../../Icons/Icon';
 
 const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, ascending?:boolean}>`
@@ -12,6 +11,7 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
   position: relative;
   padding: 0 2px;
   user-select: none;
+  z-index: 99;
 
   ${IconWrapper} {
     position: absolute;
@@ -52,11 +52,14 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
   `}
 `;
 
-interface IHeaderProps extends ITableColumnConfig {
+interface IHeaderProps {
   isSortActive?: boolean
+  header: string
+  sortable?: boolean
   ascending?: boolean
-  columnKey: number
-  toggleSort: (columnKey: number) => void
+  columnId?: string
+  indexKey: number
+  toggleSort: (dataKey: number, columnId?: string) => void
 }
 
 const TableHeaderTitle : React.FC<IHeaderProps> = ({
@@ -64,15 +67,21 @@ const TableHeaderTitle : React.FC<IHeaderProps> = ({
   sortable,
   isSortActive,
   ascending,
-  columnKey,
+  columnId,
+  indexKey,
   toggleSort
 }) => {
+
+  const handleClick = (key: number, colId?: string) => {
+      toggleSort(key, colId);
+  };
+
   return(
       <HeaderTitle
         sortable={sortable}
         isSortActive={isSortActive}
         ascending={ascending}
-        onClick= {() => {toggleSort(columnKey)}}
+        onClick= {() => {handleClick(indexKey, columnId)}}
         >
         {sortable && <Icon icon={'FilterSorting'} size={14} color='dimmed'/>}
         {header}
