@@ -82,7 +82,8 @@ const LineUI: React.FC<LineUIProps> = ({
     setIndexOffset = 0,
     pointIndexOffset = 0,
     showPoint = false,
-    fixedImgDimensions
+    fixedImgDimensions,
+    boundaryOffset = 0
   } = {}
 }) => {
 
@@ -149,12 +150,12 @@ const LineUI: React.FC<LineUIProps> = ({
     const { viewBox } = frame.current;
     const bounds = {
       x: {
-        min: viewBox.baseVal.x,
-        max: viewBox.baseVal.x + viewBox.baseVal.width
+        min: viewBox.baseVal.x + boundaryOffset,
+        max: viewBox.baseVal.x + viewBox.baseVal.width - boundaryOffset
       },
       y: {
-        min: viewBox.baseVal.y,
-        max: viewBox.baseVal.y + viewBox.baseVal.height
+        min: viewBox.baseVal.y + boundaryOffset,
+        max: viewBox.baseVal.y + viewBox.baseVal.height - boundaryOffset
       },
     };
     console.debug('setBoundaries', bounds);

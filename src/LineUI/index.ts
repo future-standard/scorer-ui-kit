@@ -62,6 +62,8 @@ export interface LineUIOptions {
     x: number;
     y: number;
   };
+
+  boundaryOffset? : number
 }
 
 export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>
