@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { action } from '@storybook/addon-actions';
+// import { action } from '@storybook/addon-actions';
 import { boolean, number, object } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {SliderInput} from 'scorer-ui-kit';
@@ -15,9 +15,6 @@ const Container = styled.div`
     margin: 20px;
     width: 500px;
 `;
-
-
-type IMylist = HTMLDataListElement;
   
 
 export const _SliderInput = () => {

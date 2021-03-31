@@ -13,6 +13,7 @@ const HiddenInput = styled.input`
   padding:0;
   opacity: .2;
   z-index: 99;
+  cursor: pointer;
 `;
 
 const Mark = styled.span`
@@ -50,7 +51,9 @@ const Thumb = styled.span<{leftValue: number}>`
   top: -7.5px;
   left: ${({leftValue}) => `${leftValue}%`};
 `;
-
+const thumbLeftPostion = (value: number, min: number, max: number ) => {
+  return valueToPercent(value, min, max);
+};
 
 const clamp = (value: number, min: number, max: number) =>{
   if (value == null) {
@@ -65,6 +68,10 @@ const clamp = (value: number, min: number, max: number) =>{
  * if Min is not available Max is negative min will be reduce by 1
  */
 const validMin = (max: number, min?: number) : number => {
+
+  if((!max) && (!min)) {
+    return 0;
+  }
   
   if(!min) {
     if(max > 0) {
@@ -73,9 +80,24 @@ const validMin = (max: number, min?: number) : number => {
       return max - 1 ;
     }
   }
-
   return min;
 }
+
+/**
+ * Storybook sends null because it cans o.O
+ * if Max is less value than min fix
+ */
+const validMax = (max: number, min?: number) : number => {
+  if((max === null) && (!min)) {
+    return 100;
+  }
+
+  if(min && (min > max) ) {
+     return min + 1;
+  }
+
+  return max;
+};
 
 function valueToPercent(value: number, min: number, max: number) {
   return Math.round(((value - min) * 100) / (max - min));
@@ -112,10 +134,13 @@ const SliderInput : React.FC<ISlider> = ({
   ...props
 }) => {
 
-
-  const [selectedValue, setSelectedValue] = useState(max);
-
+  const maxValid = validMax(max, min);
   const minValid = validMin(max, min);
+
+  const [selectedValue, setSelectedValue] = useState(maxValid);
+  const [thumbValue, setThumbValue] = useState(thumbLeftPostion(selectedValue, minValid, max));
+  console.log('max value',max);
+  console.log('max valid value',maxValid);
 
   const handleInputChange =  useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -125,11 +150,8 @@ const SliderInput : React.FC<ISlider> = ({
       inputCallback(e);
     }
     setSelectedValue(numericVal);
-  },[]);
-
-  const thumbLeftPostion = useCallback((value: number) => {
-      return valueToPercent(value, minValid, max);
-  },[]);
+    setThumbValue(thumbLeftPostion(numericVal, minValid, maxValid));
+  },[min, maxValid, minValid]);
 
   return(
     <SliderWrapper>
@@ -138,12 +160,15 @@ const SliderInput : React.FC<ISlider> = ({
       <ThumbWrapper>
         <Thumb
             data-value={selectedValue}
-            leftValue={thumbLeftPostion(selectedValue)}
-            data-percentage={thumbLeftPostion(selectedValue)}
+            leftValue={thumbValue}
+            data-percentage={thumbValue}
           />
       </ThumbWrapper>
       <HiddenInput
-        type="range" {...props}
+        type="range"
+        {...props}
+        min={minValid}
+        max={maxValid}
         value={selectedValue}
         onChange={(e : ChangeEvent<HTMLInputElement>) => handleInputChange(e)}
       />
