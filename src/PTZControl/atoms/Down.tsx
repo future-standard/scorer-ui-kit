@@ -45,7 +45,7 @@ const Down: React.FC<Props> = () => {
   },[]);
 
   return (
-    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} transform='translate(138.146447, 137.146447) rotate(45.000000)'>
+    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} onTouchStart={activeStart} onTouchEnd={activeEnd} transform='translate(138.146447, 137.146447) rotate(45.000000)'>
       <Hover hover={hover} transform='translate(-138.146447, -137.146447) translate(41.146447, 40.646447)' fill='url(#linearGradient-11)' fillOpacity='0.56'>
         <path d='M193.146668,96.3343288 L193.47713,96.6672527 L193.47713,192.833775 L97.3106078,192.833775 L96.9799206,192.503329 L96.9900583,191.237971 C97.8404498,138.7883 140.535707,96.5106982 193.146668,96.3343288 Z' id='PTZ-Hover-Down' transform='translate(145.228525, 144.584052) rotate(180.000000) translate(-145.228525, -144.584052) ' />
       </Hover>
