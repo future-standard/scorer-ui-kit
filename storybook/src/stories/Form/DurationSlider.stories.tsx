@@ -1,6 +1,6 @@
 import React from 'react';
 // import { action } from '@storybook/addon-actions';
-import { boolean, number, object } from "@storybook/addon-knobs";
+import { boolean, number, object, text, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import {DurationSlider, ISliderMark} from 'scorer-ui-kit';
@@ -52,16 +52,17 @@ const exampleMarks : ISliderMark[] = [
   },
 ];
   
-
-export const _SliderInput = () => {
+export const _DurationSlider = () => {
+  const title = text('Title', 'Duration');
+  const durationUnit= select("Time Unit", { Seconds: 'seconds', Minutes: 'minutes', Hours: 'hours' }, 'hours');
   const disabled = boolean('Disabled', false);
   const maxValue = number('Max', 8);
   const minValue = number('Min', 1);
   const defaultValue = number('Default value', 6)
+
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
   // const step = number('Step', 1); // still fixing step option
-
   const handleUpdate = (value: number) => {
     console.log('updated value', value);
     showValue(`Returned value: ${value}`, value)
@@ -77,6 +78,8 @@ export const _SliderInput = () => {
           inputCallback={handleUpdate}
           marks={marks}
           defaultValue={defaultValue}
+          title={title}
+          timeUnit={durationUnit}
         />
     </Container>
   )

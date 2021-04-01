@@ -218,6 +218,8 @@ export {
   useModal
 };
 
+export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
+
 export type {
   IModal,
   INotificationProps,

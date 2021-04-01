@@ -6,6 +6,7 @@ import React, {
   Fragment,
 } from 'react';
 import styled, {css} from 'styled-components';
+import {isInsideRange} from '../../helpers';
 
 /**
  * TODO to support all input range features
@@ -19,6 +20,8 @@ const ThumbDiameter = 16;
 const SliderWrapper = styled.div<{disabled: boolean}>`
   font-family: ${({ theme }) => theme.fontFamily.data};
   position: relative;
+  height: 30px;
+  margin-top: 20px;
   ${({disabled}) => disabled && css`
     opacity: .5;
   `};
@@ -64,9 +67,9 @@ const MarkLabel = styled.span<{leftValue: number, alignment?: IMartAlignment,}>`
   text-align: center;
   color: hsla(195, 10%, 52%, 0.72);
 
-  ${({alignment, leftValue}) => (alignment === 'center') && css`transform: translateX(-50%);;`}
-  ${({alignment, leftValue}) => (alignment === 'right') && css`transform: translateX(5%);`}
-  ${({alignment, leftValue}) => (alignment === 'left') && css`transform: translateX(-95%);`}
+  ${({alignment}) => (alignment === 'center') && css`transform: translateX(-50%);;`}
+  ${({alignment}) => (alignment === 'right') && css`transform: translateX(5%);`}
+  ${({alignment}) => (alignment === 'left') && css`transform: translateX(-95%);`}
 `;
 
 const ThumbWrapper = styled.div`
@@ -137,12 +140,6 @@ const getValidMax = (max: number, min?: number) : number => {
 
 const  valueToPercent = (value: number, min: number, max: number) : number => {
   return Math.round(((value - min) * 100) / (max - min));
-}
-
-const isInsideRange = (value: number, min: number, max: number) : boolean => {
-  if( value < min) {return false;}
-  if(value > max) { return false;}
-  return true;
 }
 
 const percentToValue = (percent: number, min: number, max: number) : number => {
