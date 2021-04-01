@@ -160,7 +160,7 @@ const LineUI: React.FC<LineUIProps> = ({
     };
     console.debug('setBoundaries', bounds);
     setBoundaries(bounds);
-  }, [imgSize]);
+  }, [imgSize, boundaryOffset]);
 
   useEffect(() => {
 
