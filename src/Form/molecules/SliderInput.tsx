@@ -1,5 +1,12 @@
-import React, {InputHTMLAttributes, useState, useCallback, ChangeEvent} from 'react';
+import React, {InputHTMLAttributes, useState, useCallback, ChangeEvent, Fragment} from 'react';
 import styled from 'styled-components';
+
+/**
+ * TODO to support all input range features
+ * Currently you can pass this values but to be visually correct the needs to work around the current implementation.
+ * Step
+ * Vertical usage
+ */
 
 const ThumbDiameter = 16;
 
@@ -16,37 +23,53 @@ const HiddenInput = styled.input`
   cursor: pointer;
 `;
 
-const Mark = styled.span`
-  width: 1px;
-  height: 9px;
-  opacity: 0.25;
-  background-color: hsl(205, 77%, 64%);
-`;
-
 const Rail = styled.div`
   position: absolute;
-  left: 0;
-  top: 12px;
-  width: 100%;
+  left: ${ThumbDiameter/2}px;
+  top: 10px;
+  width: calc(100% - ${ThumbDiameter}px);
   height: 2px;
   border-radius: 11px;
   background: red
 `;
 // background-image: linear-gradient(to bottom, hsl(210, 30%, 96%), hsl(203, 42%, 94%) 98%);
 
+const Mark = styled.span<{leftValue: number}>`
+  position: absolute;
+  top: -3px;
+  left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
+  width: 1px;
+  height: 30px;
+  opacity: 0.25;
+  background-color: blue;
+`;
+// background-color: hsl(205, 77%, 64%);
+
+const MarkLabel = styled.span<{leftValue: number}>`
+  position: absolute;
+  top: -20px;
+  left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
+  font-size: 10px;
+  font-style: italic;
+  line-height: normal;
+  text-align: center;
+  color: hsla(195, 10%, 52%, 0.72);
+  transform: translateX(-50%);
+`;
+
 const ThumbWrapper = styled.div`
   position: relative;
   margin-right: 16px;
   left: 0;
-  top: 12px;
+  top: 10px;
   width: calc(100% - ${ThumbDiameter}px);
   height: 2px;
 `;
-const Thumb = styled.span<{leftValue: number}>`
+const Thumb = styled.span<{leftValue: number, bgColor: IFeedbackColor }>`
   width: ${ThumbDiameter}px;
   height: ${ThumbDiameter}px;
   border-radius: 8px;
-  background-color: hsl(43, 100%, 50%);
+  background-color: ${({theme, bgColor}) => theme.colors.feedback[bgColor]};
   position: absolute;
   top: -7.5px;
   left: ${({leftValue}) => `${leftValue}%`};
@@ -55,19 +78,13 @@ const thumbLeftPostion = (value: number, min: number, max: number ) => {
   return valueToPercent(value, min, max);
 };
 
-const clamp = (value: number, min: number, max: number) =>{
-  if (value == null) {
-    return min;
-  }
-  return Math.min(Math.max(min, value), max);
-}
-
 /**
+ * Rules for a getValidMin
  * Max needs to be bigger than Min
  * if Min is not available and Max is positive default is 0
  * if Min is not available Max is negative min will be reduce by 1
  */
-const validMin = (max: number, min?: number) : number => {
+const getValidMin = (max: number, min?: number) : number => {
 
   if((!max) && (!min)) {
     return 0;
@@ -84,10 +101,11 @@ const validMin = (max: number, min?: number) : number => {
 }
 
 /**
- * Storybook sends null because it cans o.O
- * if Max is less value than min fix
+ * 
+ * Max is required but null because it cans o.O
+ * if Max is less value than min fix to one more than min
  */
-const validMax = (max: number, min?: number) : number => {
+const getValidMax = (max: number, min?: number) : number => {
   if((max === null) && (!min)) {
     return 100;
   }
@@ -99,29 +117,68 @@ const validMax = (max: number, min?: number) : number => {
   return max;
 };
 
-function valueToPercent(value: number, min: number, max: number) {
+const  valueToPercent = (value: number, min: number, max: number) : number => {
   return Math.round(((value - min) * 100) / (max - min));
 }
 
-const percentToValue = (percent: number, min: number, max: number) => {
+const isInsideRange = (value: number, min: number, max: number) : boolean => {
+  if( value < min) {return false;}
+  if(value > max) { return false;}
+  return true;
+}
+
+const percentToValue = (percent: number, min: number, max: number) : number => {
   return (max - min) * percent + min;
 }
 
+const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string) => {
+
+  const listOptions : JSX.Element[] = []; 
+  const marksElements = markList.map(({value, label}, index) => {
+    // * first and last should be 0% and 100%
+    const left = index === (markList.length - 1) ? 100 : valueToPercent(value, min, max);
+    listOptions.push(<option key={`option-${value}`}>{value}</option>);
+
+    return <Fragment key={`mark-${index}`}>
+            <Mark
+              data-leftvalue={`${left}%`}
+              leftValue={left}
+            />
+            <MarkLabel
+              leftValue={left}
+            >
+              {label}
+            </MarkLabel>
+          </Fragment>
+  })
+
+  return <Fragment>
+      {marksElements}
+        <datalist id={listTag}>
+          {listOptions}
+        </datalist>
+  </Fragment>
+
+};
+
+/**
+ * Values based on colors.feedback from theme
+ */
 export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
 
-interface IMark {
-  label?: string
+export interface ISliderMark {
   value: number
+  label?: string
 }
 
 interface OwnProps {
   min?: number
   max: number
   step?: number
-  marks?: boolean | IMark[]
+  marks?: ISliderMark[]
   defaultValue?: number
   value?: number
-  staticBallColor?: IFeedbackColor 
+  staticThumbColor?: IFeedbackColor 
   inputCallback?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -130,17 +187,19 @@ type ISlider = OwnProps & InputHTMLAttributes<HTMLInputElement>;
 const SliderInput : React.FC<ISlider> = ({
   min,
   max,
+  marks,
+  defaultValue,
+  staticThumbColor = 'info',
   inputCallback,
   ...props
 }) => {
 
-  const maxValid = validMax(max, min);
-  const minValid = validMin(max, min);
+  const maxValid = getValidMax(max, min);
+  const minValid = getValidMin(max, min);
+  const initValue = (defaultValue && isInsideRange(defaultValue, minValid, maxValid)) ? defaultValue : minValid;
 
-  const [selectedValue, setSelectedValue] = useState(maxValid);
+  const [selectedValue, setSelectedValue] = useState(initValue);
   const [thumbValue, setThumbValue] = useState(thumbLeftPostion(selectedValue, minValid, max));
-  console.log('max value',max);
-  console.log('max valid value',maxValid);
 
   const handleInputChange =  useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -162,11 +221,14 @@ const SliderInput : React.FC<ISlider> = ({
             data-value={selectedValue}
             leftValue={thumbValue}
             data-percentage={thumbValue}
+            bgColor={staticThumbColor}
           />
+          {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`)}
       </ThumbWrapper>
       <HiddenInput
         type="range"
         {...props}
+        list={`sliderList-${minValid}-${maxValid}`}
         min={minValid}
         max={maxValid}
         value={selectedValue}

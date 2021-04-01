@@ -31,6 +31,7 @@ import {
   TextArea,
   TextAreaField,
   SliderInput,
+  ISliderMark,
 } from './Form';
 
 // Components - Filter
@@ -219,4 +220,5 @@ export type {
   IModal,
   INotificationProps,
   IconButtonData,
+  ISliderMark,
 };

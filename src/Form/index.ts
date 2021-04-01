@@ -12,7 +12,7 @@ import TextArea from './atoms/TextArea';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
-import SliderInput from  './molecules/SliderInput';
+import SliderInput, {ISliderMark} from  './molecules/SliderInput';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 
@@ -46,4 +46,4 @@ interface ButtonProps {
 
 export type IButtonProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-export type { IconButtonData };
+export type { IconButtonData, ISliderMark };
