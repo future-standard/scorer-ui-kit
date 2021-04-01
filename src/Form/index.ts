@@ -11,6 +11,7 @@ import Checkbox from './atoms/Checkbox';
 import TextArea from './atoms/TextArea';
 import SliderInput, {ISliderMark} from  './atoms/SliderInput';
 import DurationSlider from './molecules/DurationSlider';
+import PercentageSlider from './molecules/PercentageSlider';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
@@ -35,6 +36,7 @@ export {
     TextAreaField,
     SliderInput,
     DurationSlider,
+    PercentageSlider,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';

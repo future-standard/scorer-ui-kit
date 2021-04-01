@@ -6,6 +6,7 @@ import React, {
   Fragment,
 } from 'react';
 import styled, {css} from 'styled-components';
+import {IFeedbackColor} from '../../index';
 import {isInsideRange} from '../../helpers';
 
 /**
@@ -190,10 +191,6 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
 
 };
 
-/**
- * Values based on colors.feedback from theme
- */
-export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
 export type IMartAlignment = 'left' | 'center' | 'right';
 
 export interface ISliderMark {
@@ -208,7 +205,7 @@ interface ISliderOwnProps {
   marks?: ISliderMark[]
   defaultValue?: number
   value?: number
-  staticThumbColor?: IFeedbackColor 
+  thumbColor?: IFeedbackColor 
   inputCallback?: (value: number) => void
 }
 
@@ -219,7 +216,7 @@ const SliderInput : React.FC<ISlider> = ({
   max,
   marks,
   defaultValue,
-  staticThumbColor = 'info',
+  thumbColor = 'info',
   disabled = false,
   inputCallback,
   ...props
@@ -253,19 +250,19 @@ const SliderInput : React.FC<ISlider> = ({
       <Rail>
       </Rail>
       <ThumbWrapper>
+        {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`)}
         <GhostTumb
             data-value={selectedValue}
             leftValue={ghostThumbValue}
             data-percentage={ghostThumbValue}
-            bgColor={staticThumbColor}
+            bgColor={thumbColor}
           />
         <Thumb
             data-value={selectedValue}
             leftValue={thumbValue}
             data-percentage={thumbValue}
-            bgColor={staticThumbColor}
+            bgColor={thumbColor}
         />
-          {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`)}
       </ThumbWrapper>
       <HiddenInput
         {...props}
