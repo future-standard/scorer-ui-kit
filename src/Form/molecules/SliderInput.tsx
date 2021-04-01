@@ -17,6 +17,7 @@ import styled, {css} from 'styled-components';
 const ThumbDiameter = 16;
 
 const SliderWrapper = styled.div<{disabled: boolean}>`
+  font-family: ${({ theme }) => theme.fontFamily.data};
   position: relative;
   ${({disabled}) => disabled && css`
     opacity: .5;
@@ -52,16 +53,20 @@ const Mark = styled.span<{leftValue: number}>`
   background-color: hsl(205, 77%, 64%);
 `;
 
-const MarkLabel = styled.span<{leftValue: number}>`
+const MarkLabel = styled.span<{leftValue: number, alignment?: IMartAlignment,}>`
   position: absolute;
-  top: -20px;
+  top: -24px;
   left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
+
   font-size: 10px;
   font-style: italic;
   line-height: normal;
   text-align: center;
   color: hsla(195, 10%, 52%, 0.72);
-  transform: translateX(-50%);
+
+  ${({alignment, leftValue}) => (alignment === 'center') && css`transform: translateX(-50%);;`}
+  ${({alignment, leftValue}) => (alignment === 'right') && css`transform: translateX(5%);`}
+  ${({alignment, leftValue}) => (alignment === 'left') && css`transform: translateX(-95%);`}
 `;
 
 const ThumbWrapper = styled.div`
@@ -144,6 +149,19 @@ const percentToValue = (percent: number, min: number, max: number) : number => {
   return (max - min) * percent + min;
 }
 
+
+const getMarkAlignment = (value: number, min: number, max: number) : IMartAlignment => {
+  if(value === min) {
+    return 'right';
+  }
+
+  if(value === max) {
+    return 'left';
+  }
+
+  return 'center';
+}
+
 const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string) => {
 
   const listOptions : JSX.Element[] = []; 
@@ -159,6 +177,7 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
             />
             <MarkLabel
               leftValue={left}
+              alignment={getMarkAlignment(value, min, max)}
             >
               {label}
             </MarkLabel>
@@ -178,6 +197,7 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
  * Values based on colors.feedback from theme
  */
 export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
+export type IMartAlignment = 'left' | 'center' | 'right';
 
 export interface ISliderMark {
   value: number

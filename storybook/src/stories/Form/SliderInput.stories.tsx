@@ -14,7 +14,7 @@ export default {
 
 const Container = styled.div`
     margin: 20px;
-    width: 234px;
+    width: 268px;
 `;
 
 const exampleMarks : ISliderMark[] = [
@@ -57,7 +57,7 @@ export const _SliderInput = () => {
   const disabled = boolean('Disabled', false);
   const maxValue = number('Max', 8);
   const minValue = number('Min', 1);
-  const defaultValue = number('Default value', 4)
+  const defaultValue = number('Default value', 6)
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
   // const step = number('Step', 1); // still fixing step option
