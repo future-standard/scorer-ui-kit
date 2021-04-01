@@ -85,7 +85,7 @@ const LineUI : React.FC<LineUIProps> = ({
     setIndexOffset = 0,
     pointIndexOffset = 0,
     showPoint = false,
-    boundaryOffset = 0,
+    boundaryOffset = 0
   }={}
 }) => {
 
