@@ -32,6 +32,7 @@ import {
   TextAreaField,
   SliderInput,
   ISliderMark,
+  DurationSlider,
 } from './Form';
 
 // Components - Filter
@@ -152,6 +153,7 @@ export {
   TextArea,
   TextAreaField,
   SliderInput,
+  DurationSlider,
 
   // Filters
   DatePicker,

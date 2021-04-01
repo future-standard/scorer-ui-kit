@@ -204,7 +204,7 @@ export interface ISliderMark {
   label?: string
 }
 
-interface OwnProps {
+interface ISliderOwnProps {
   min?: number
   max: number
   step?: number
@@ -215,7 +215,7 @@ interface OwnProps {
   inputCallback?: (value: number) => void
 }
 
-type ISlider = OwnProps & InputHTMLAttributes<HTMLInputElement>;
+export type ISlider = ISliderOwnProps & InputHTMLAttributes<HTMLInputElement>;
 
 const SliderInput : React.FC<ISlider> = ({
   min,

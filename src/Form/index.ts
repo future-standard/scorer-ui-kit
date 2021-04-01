@@ -9,10 +9,11 @@ import Label from './atoms/Label';
 import Switch from './atoms/Switch';
 import Checkbox from './atoms/Checkbox';
 import TextArea from './atoms/TextArea';
+import SliderInput, {ISliderMark} from  './atoms/SliderInput';
+import DurationSlider from './molecules/DurationSlider';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
-import SliderInput, {ISliderMark} from  './molecules/SliderInput';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 
@@ -33,6 +34,7 @@ export {
     TextArea,
     TextAreaField,
     SliderInput,
+    DurationSlider,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
