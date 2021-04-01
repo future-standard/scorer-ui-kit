@@ -1,5 +1,11 @@
-import React, {InputHTMLAttributes, useState, useCallback, ChangeEvent, Fragment} from 'react';
-import styled from 'styled-components';
+import React, {
+  InputHTMLAttributes,
+  useState,
+  useCallback,
+  ChangeEvent,
+  Fragment,
+} from 'react';
+import styled, {css} from 'styled-components';
 
 /**
  * TODO to support all input range features
@@ -10,17 +16,20 @@ import styled from 'styled-components';
 
 const ThumbDiameter = 16;
 
-const SliderWrapper = styled.div`
+const SliderWrapper = styled.div<{disabled: boolean}>`
   position: relative;
+  ${({disabled}) => disabled && css`
+    opacity: .5;
+  `};
 `;
 
-const HiddenInput = styled.input`
+const HiddenInput = styled.input<{disabled:boolean}>`
   width: 100%;
   margin: 0;
   padding:0;
-  opacity: .2;
+  opacity: .001;
   z-index: 99;
-  cursor: pointer;
+  cursor: ${({disabled}) => disabled ? `not-allowed` : `pointer`};
 `;
 
 const Rail = styled.div`
@@ -30,20 +39,18 @@ const Rail = styled.div`
   width: calc(100% - ${ThumbDiameter}px);
   height: 2px;
   border-radius: 11px;
-  background: red
+  background-image: linear-gradient(to bottom, hsl(210, 30%, 96%), hsl(203, 42%, 94%) 98%);
 `;
-// background-image: linear-gradient(to bottom, hsl(210, 30%, 96%), hsl(203, 42%, 94%) 98%);
 
 const Mark = styled.span<{leftValue: number}>`
   position: absolute;
   top: -3px;
   left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
   width: 1px;
-  height: 30px;
+  height: 9px;
   opacity: 0.25;
-  background-color: blue;
+  background-color: hsl(205, 77%, 64%);
 `;
-// background-color: hsl(205, 77%, 64%);
 
 const MarkLabel = styled.span<{leftValue: number}>`
   position: absolute;
@@ -65,6 +72,7 @@ const ThumbWrapper = styled.div`
   width: calc(100% - ${ThumbDiameter}px);
   height: 2px;
 `;
+
 const Thumb = styled.span<{leftValue: number, bgColor: IFeedbackColor }>`
   width: ${ThumbDiameter}px;
   height: ${ThumbDiameter}px;
@@ -74,6 +82,11 @@ const Thumb = styled.span<{leftValue: number, bgColor: IFeedbackColor }>`
   top: -7.5px;
   left: ${({leftValue}) => `${leftValue}%`};
 `;
+
+const GhostTumb = styled(Thumb)`
+  opacity: .5;
+`;
+
 const thumbLeftPostion = (value: number, min: number, max: number ) => {
   return valueToPercent(value, min, max);
 };
@@ -179,7 +192,7 @@ interface OwnProps {
   defaultValue?: number
   value?: number
   staticThumbColor?: IFeedbackColor 
-  inputCallback?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  inputCallback?: (value: number) => void
 }
 
 type ISlider = OwnProps & InputHTMLAttributes<HTMLInputElement>;
@@ -190,6 +203,7 @@ const SliderInput : React.FC<ISlider> = ({
   marks,
   defaultValue,
   staticThumbColor = 'info',
+  disabled = false,
   inputCallback,
   ...props
 }) => {
@@ -199,39 +213,52 @@ const SliderInput : React.FC<ISlider> = ({
   const initValue = (defaultValue && isInsideRange(defaultValue, minValid, maxValid)) ? defaultValue : minValid;
 
   const [selectedValue, setSelectedValue] = useState(initValue);
-  const [thumbValue, setThumbValue] = useState(thumbLeftPostion(selectedValue, minValid, max));
+  const [thumbValue, setThumbValue] = useState(thumbLeftPostion(selectedValue, minValid, maxValid));
+  const [ghostThumbValue, setGhostThumbValue] = useState(thumbLeftPostion(selectedValue, minValid, maxValid));
+
 
   const handleInputChange =  useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     const numericVal = parseInt(val,10);
-
-    if(inputCallback) {
-      inputCallback(e);
-    }
     setSelectedValue(numericVal);
-    setThumbValue(thumbLeftPostion(numericVal, minValid, maxValid));
+    setGhostThumbValue(thumbLeftPostion(numericVal, minValid, maxValid));
   },[min, maxValid, minValid]);
 
+  const handleMouseUp =  useCallback((e) => {
+    if(inputCallback) {
+      inputCallback(selectedValue);
+    }
+    setThumbValue(thumbLeftPostion(selectedValue, minValid, maxValid));
+  },[selectedValue]);
+
   return(
-    <SliderWrapper>
+    <SliderWrapper disabled={disabled}>
       <Rail>
       </Rail>
       <ThumbWrapper>
+        <GhostTumb
+            data-value={selectedValue}
+            leftValue={ghostThumbValue}
+            data-percentage={ghostThumbValue}
+            bgColor={staticThumbColor}
+          />
         <Thumb
             data-value={selectedValue}
             leftValue={thumbValue}
             data-percentage={thumbValue}
             bgColor={staticThumbColor}
-          />
+        />
           {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`)}
       </ThumbWrapper>
       <HiddenInput
-        type="range"
         {...props}
+        type="range"
+        disabled={disabled}
         list={`sliderList-${minValid}-${maxValid}`}
         min={minValid}
         max={maxValid}
         value={selectedValue}
+        onMouseUp = {(e) => {handleMouseUp(e)}}
         onChange={(e : ChangeEvent<HTMLInputElement>) => handleInputChange(e)}
       />
     </SliderWrapper>

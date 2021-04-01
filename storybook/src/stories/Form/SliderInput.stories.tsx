@@ -1,6 +1,7 @@
 import React from 'react';
 // import { action } from '@storybook/addon-actions';
 import { boolean, number, object } from "@storybook/addon-knobs";
+import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import {SliderInput, ISliderMark} from 'scorer-ui-kit';
 
@@ -13,7 +14,7 @@ export default {
 
 const Container = styled.div`
     margin: 20px;
-    width: 500px;
+    width: 234px;
 `;
 
 const exampleMarks : ISliderMark[] = [
@@ -56,14 +57,14 @@ export const _SliderInput = () => {
   const disabled = boolean('Disabled', false);
   const maxValue = number('Max', 8);
   const minValue = number('Min', 1);
-  const marks = object('Marks', exampleMarks);
   const defaultValue = number('Default value', 4)
+  const showValue = action('Input Callback');
+  const marks = object('Marks', exampleMarks);
   // const step = number('Step', 1); // still fixing step option
-  // const onChange = action('OnChange', value);
 
-  const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const val = event.target.value;
-    console.log('updated value', val);
+  const handleUpdate = (value: number) => {
+    console.log('updated value', value);
+    showValue(`Returned value: ${value}`, value)
   };
 
   return (
