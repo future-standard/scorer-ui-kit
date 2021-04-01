@@ -13,6 +13,7 @@ import {
   Button,
   TextField,
   Label,
+  Input
 } from 'scorer-ui-kit';
 import { LineUIOptions } from '../../../dist/LineUI';
 
@@ -29,7 +30,8 @@ const Line: React.FC<{}> = () => {
     fixedImgDimensions: {
       x: 2310,
       y: 1535
-    }
+    },
+    boundaryOffset: 0
   });
 
   const fetchLine = useCallback(async () => {
@@ -87,6 +89,10 @@ const Line: React.FC<{}> = () => {
     fetchLine();
   }, [fetchLine])
 
+  const updateBoudaryOffset =  useCallback( ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    setOptions({...options, boundaryOffset: parseInt(value) });
+  }, [options]);
+
   return (
     <Layout >
       <Sidebar>
@@ -109,6 +115,9 @@ const Line: React.FC<{}> = () => {
         </SidebarBox>
         <SidebarBox>
           <TextField label='Rename Line' fieldState='default' name='rename' value={state[0]?.name ||''} onChange={renameLine}/>
+          <Label labelText='Boundary Offset' htmlFor='boundaryOffset' >
+            <Input type='number' name='boundaryOffset' min={0} value={options.boundaryOffset} onChange={updateBoudaryOffset}/>
+          </Label>
         </SidebarBox>
         <SidebarBox>
           <Button design="secondary" onClick={toggleReadOnly()} >Toggle Read Only</Button>
