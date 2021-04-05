@@ -247,8 +247,7 @@ const SliderInput : React.FC<ISlider> = ({
 
   return(
     <SliderWrapper disabled={disabled}>
-      <Rail>
-      </Rail>
+      <Rail/>
       <ThumbWrapper>
         {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`)}
         <GhostTumb
