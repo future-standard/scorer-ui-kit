@@ -40,7 +40,7 @@ const Up: React.FC<Props> = () => {
     setHover(false);
   },[]);
   return (
-    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} transform='translate(10.000000, 10.625000)'>
+    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} onTouchStart={activeStart} onTouchEnd={activeEnd} transform='translate(10.000000, 10.625000)'>
       <Hover hover={hover} fillOpacity='0.56'>
         <path
           d='M97,0 L97,63.75 L32.1164062,63.75 C14.3790049,63.75 0,49.4790764 0,31.875 C0,14.2709236 14.3790049,0 32.1164062,0 L97,0 Z'

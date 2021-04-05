@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import Checkbox from '../../Form/atoms/Checkbox';
 import TableRowThumbnail from './TableRowThumbnail';
@@ -9,8 +9,11 @@ import Icon from '../../Icons/Icon';
 import { ITableColumnConfig, IRowData } from '..';
 
 
-const RowContainer = styled.div`
+const RowContainer = styled.div<{isEmpty: boolean}>`
   display: table-row;
+  ${({isEmpty}) =>  isEmpty && css`
+    visibility: hidden;
+  `};
 `;
 
 interface IProps {
@@ -30,8 +33,10 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, ha
     if(selectCallback){ selectCallback(checked, rowData.id); }
   }, [rowData.id, selectCallback]);
 
+  const isEmpty = rowData.columns.length === 0;
+
   return (
-    <RowContainer>
+    <RowContainer isEmpty={isEmpty}>
       {selectable ? <TypeTableCell hideDivider><Checkbox checked={rowData._checked} onChangeCallback={wrappedSelectCallback} /></TypeTableCell> : null}
       {hasStatus ?  <TypeTableCell hideDivider><TypeTableDeviceStatus status={rowData.header?.status} /></TypeTableCell> : null}
       {hasThumbnail ? <TypeTableCell hideDivider><TableRowThumbnail image={rowData.header?.image} /></TypeTableCell> : null}
