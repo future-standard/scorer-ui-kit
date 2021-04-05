@@ -16,7 +16,10 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background-color: hsl(0, 0%, 0%, 0.2);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   font-family: ${({ theme }) => theme.fontFamily.ui};
+
 `;
 
 const CloseIcon = styled(Icon)``;
