@@ -8,7 +8,6 @@ import darkTheme from './themes/dark';
 import {
   AlertBar,
   Notification,
-  ConfirmationModal,
   INotificationProps,
 }from './Alerts';
 
@@ -75,6 +74,10 @@ import {
   usePTZ,
   PTZContext
 } from './PTZControl';
+
+import {
+  ConfirmationModal,
+} from './Modals';
 
 // Other
 import {

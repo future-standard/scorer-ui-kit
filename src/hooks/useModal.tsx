@@ -1,6 +1,6 @@
 import { ReactElement, useCallback, useContext} from 'react';
 import { ModalContext } from '../context/ModalContext';
-import { IModalProps } from '../Alerts/atom/Modal';
+import { IModalProps } from '../Modals/Modal';
 
 /**
  * This type is a reduced version of the modalProps

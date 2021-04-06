@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Modal, { IModalProps } from '../Alerts/atom/Modal';
+import Modal, { IModalProps } from '../Modals/Modal';
 
 const defaultModalProps: IModalProps = {
   isOpen: false,

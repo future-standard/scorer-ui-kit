@@ -1,9 +1,9 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components';
-import { resetButtonStyles } from '../../common';
-import Icon, {IconWrapper} from '../../Icons/Icon';
-import { useClickOutside } from '../../hooks/useClickOutside';
+import { resetButtonStyles } from '../common';
+import Icon, {IconWrapper} from '../Icons/Icon';
+import { useClickOutside } from '../hooks/useClickOutside';
 
 
 const Container = styled.div`
