@@ -1,5 +1,5 @@
-import Modal from '../Modals/Modal';
-import ConfirmationModal from '../Modals/ConfirmationModal';
+import Modal from './Modal';
+import ConfirmationModal from './ConfirmationModal';
 
 export {
   Modal,

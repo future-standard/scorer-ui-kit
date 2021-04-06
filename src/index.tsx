@@ -79,6 +79,12 @@ import {
   ConfirmationModal,
 } from './Modals';
 
+// Misc
+import {
+  MediaBox,
+} from  './Misc';
+
+
 // Other
 import {
   useInterval,
@@ -134,7 +140,6 @@ export {
   // Alerts
   AlertBar,
   Notification,
-  ConfirmationModal,
 
   // LineUI
   LineUI,
@@ -162,6 +167,9 @@ export {
   SliderInput,
   DurationSlider,
   PercentageSlider,
+
+  // Modals
+  ConfirmationModal,
 
   // Filters
   DatePicker,
@@ -220,6 +228,9 @@ export {
   Tab,
   TabList,
   TabContent,
+
+  //Misc
+  MediaBox,
 
   //Context
   NotificationProvider,
