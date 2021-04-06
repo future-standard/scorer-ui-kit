@@ -30,7 +30,7 @@ export const _TableHeaderTitle = () => {
     setToggleSort(asc);
   }, [asc])
 
-  const sortHandler = useCallback((columnKey: number) => {
+  const sortHandler = useCallback((indexKey: number) => {
     console.log('arriving', toggleSort);
     setToggleSort((prev) => !prev)
   },[toggleSort])
@@ -40,9 +40,9 @@ export const _TableHeaderTitle = () => {
           sortable={sortable}
           isSortActive= {isSortActive}
           ascending={toggleSort}
-          columnKey={1}
+          columnId={'firstColumn'}
+          indexKey={1}
           header={header}
-          cellStyle={'firstColumn'}
           toggleSort={sortHandler}
         />
   </Container>

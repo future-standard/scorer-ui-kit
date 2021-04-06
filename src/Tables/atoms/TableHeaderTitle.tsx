@@ -21,7 +21,7 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
     padding: 3px 1px;
-    
+
     ${({ascending}) => ascending && css`
       transform: rotate(180deg);
       border-bottom-right-radius: 3px;
@@ -31,12 +31,12 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
       top: 0;
     `}
   }
-  
+
   ${({isSortActive}) => isSortActive && css`
     &:not(hover) {
       ${IconWrapper} {
         display: inline-flex;
-      }  
+      }
     }
   `}
 
@@ -77,16 +77,16 @@ const TableHeaderTitle : React.FC<IHeaderProps> = ({
   };
 
   return(
-      <HeaderTitle
-        sortable={sortable}
-        isSortActive={isSortActive}
-        ascending={ascending}
-        onClick= {() => {handleClick(indexKey, columnId)}}
-        >
-        {sortable && <Icon icon={'FilterSorting'} size={14} color='dimmed'/>}
-        {header}
-      </HeaderTitle>
+    <HeaderTitle
+      sortable={sortable}
+      isSortActive={isSortActive}
+      ascending={ascending}
+      onClick={() => {handleClick(indexKey, columnId);}}
+    >
+      {sortable && <Icon icon='FilterSorting' size={14} color='dimmed' />}
+      {header}
+    </HeaderTitle>
   );
-}
+};
 
 export default TableHeaderTitle;
