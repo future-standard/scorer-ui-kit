@@ -30,6 +30,10 @@ import {
   TextField,
   TextArea,
   TextAreaField,
+  SliderInput,
+  ISliderMark,
+  DurationSlider,
+  PercentageSlider,
 } from './Form';
 
 // Components - Filter
@@ -151,6 +155,9 @@ export {
   TextField,
   TextArea,
   TextAreaField,
+  SliderInput,
+  DurationSlider,
+  PercentageSlider,
 
   // Filters
   DatePicker,
@@ -218,8 +225,15 @@ export {
 
 };
 
+/**
+ * Values based on colors.feedback from theme
+ */
+export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
+export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
+
 export type {
   IModal,
   INotificationProps,
   IconButtonData,
+  ISliderMark,
 };
