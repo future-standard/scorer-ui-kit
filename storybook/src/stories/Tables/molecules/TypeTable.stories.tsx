@@ -5,8 +5,10 @@ import { object, boolean } from "@storybook/addon-knobs";
 import {TypeTable} from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
 import { 
+  IRowData,
   ITableColumnConfig,
-  ITypeTableData
+  ITypeTableData,
+
 } from 'scorer-ui-kit/dist/Tables';
 
 const Container = styled.div`
@@ -19,19 +21,219 @@ export default {
   decorators: []
 };
 
+// I will update this type to be availabe when all the table PR's are merged 
+type IStatus = "good" | "neutral" | "caution" | "danger" | "folder" | undefined;
+
+interface IExampleData  {
+  id: string
+  deviceName: string
+  deviceLink: string
+  status: IStatus
+  statusText: string
+  created: string
+  usage: number
+  usageUnit: string
+  cost: number
+}
+
+
+/** Imagine this data comes from Server :) */
+const defaultData : IExampleData[] = [
+  {
+    id: 'device-1',
+    deviceName: 'Device Name',
+    deviceLink: '#',
+    status: 'good',
+    statusText: 'OK',
+    created: 'Just Now',
+    usage: 242,
+    usageUnit: 'mb',
+    cost: 20000,
+  },
+  {
+    id: 'device-2',
+    deviceName: 'Another Device',
+    deviceLink: '',
+    status: 'danger',
+    statusText: 'Warning',
+    created: '1st October 2019',
+    usage: 2.1,
+    usageUnit: 'gb',
+    cost: 4000,
+  },
+  {
+    id: 'device-3',
+    deviceName: 'Old Device',
+    deviceLink: '#',
+    status: 'danger',
+    statusText: 'Warning',
+    created: '22nd March 2020',
+    usage: 2.1,
+    usageUnit: 'tb',
+    cost: 7000,
+  },
+  {
+    id: 'device-4',
+    deviceName: 'Magic Edge Cloud',
+    deviceLink: '#',
+    status: 'good',
+    statusText: 'OK',
+    created: '2nd April 2020',
+    usage:  153,
+    usageUnit: 'mb',
+    cost: 25000,
+  },
+  {
+    id: 'device-5',
+    deviceName: 'Magic Edge Cloud',
+    deviceLink: '#',
+    status: 'caution',
+    statusText: 'Caution',
+    created: '2nd April 2020',
+    usage:  153,
+    usageUnit: 'mb',
+    cost: 25000,
+  },
+  {
+    id: 'device-6',
+    deviceName: 'Magic Edge Cloud',
+    deviceLink: '#',
+    status: 'good',
+    statusText: 'OK',
+    created: '2nd April 2020',
+    usage:  153,
+    usageUnit: 'mb',
+    cost: 25000,
+  },
+  {
+    id: 'device-7',
+    deviceName: 'Magic Edge Cloud',
+    deviceLink: '#',
+    status: 'good',
+    statusText: 'OK',
+    created: '2nd April 2020',
+    usage:  153,
+    usageUnit: 'mb',
+    cost: 25000,
+  },
+  {
+    id: 'device-8',
+    deviceName: 'Magic Edge Cloud',
+    deviceLink: '#',
+    status: 'neutral',
+    statusText: 'Offline',
+    created: '2nd April 2020',
+    usage:  153,
+    usageUnit: 'mb',
+    cost: 25000,
+  },
+  {
+    id: 'device-9',
+    deviceName: 'Magic Edge Cloud',
+    deviceLink: '#',
+    status: 'good',
+    statusText: 'OK',
+    created: '2nd April 2020',
+    usage:  153,
+    usageUnit: 'mb',
+    cost: 25000,
+  },
+  {
+    id: 'device-10',
+    deviceName: 'Magic Edge Cloud',
+    deviceLink: '#',
+    status: 'good',
+    statusText: 'OK',
+    created: '2nd April 2020',
+    usage:  153,
+    usageUnit: 'mb',
+    cost: 25000,
+  },
+  {
+    id: 'device-11',
+    deviceName: 'Magic Edge Cloud',
+    deviceLink: '#',
+    status: 'good',
+    statusText: 'OK',
+    created: '2nd April 2020',
+    usage:  153,
+    usageUnit: 'mb',
+    cost: 25000,
+  },
+]
+
+const sortDataBy = (unsortedData : IExampleData[] , columnId : keyof IExampleData, ascending: boolean) => {
+  return unsortedData.sort((itemA, itemB) => {
+
+    /** This is added because typescript complained about object keys */
+    const valueA  = itemA[columnId];
+    const valueB  = itemB[columnId];
+
+    if(!valueA) {return 0;}
+    if(!valueB) {return 0;}
+    /** ---- */
+
+    if(valueA > valueB) {
+      return ascending ? 1 : -1 ;
+    }
+    return ascending ? -1 : 1 ;
+  })
+}
+
+const sortedByDeviceData = sortDataBy(defaultData, 'deviceName', true);
+
+
+const rowMaker = (rowData: IExampleData[]) : ITypeTableData=> {
+  const newRows : ITypeTableData = rowData.map( ({
+    id,
+    deviceName,
+    deviceLink,
+    status,
+    statusText,
+    created,
+    usage,
+    usageUnit,
+    cost
+  }) => {
+
+    const yenCost = `¥${cost}`
+    const row : IRowData =  ({
+      id,
+      header: {
+        image: photo,
+        icon: 'Location',
+        status,
+      },
+      columns: [
+        { text: deviceName, href: deviceLink },
+        { text: statusText, status},
+        { text: created },
+        { text: `${usage}`, unit: usageUnit },
+        { text: yenCost},
+      ]
+    })
+    return row;
+  })
+  return newRows;
+}
+
 const columnConfigSample : ITableColumnConfig[] = [
   {
+    columnId: 'deviceName',
     header: 'Device Name',
     sortable: true,
+    sortActive: true,
     cellStyle: 'firstColumn',
   },
   {
+    columnId: 'status',
     header: 'Status',
     sortable: true,
     showStatus: true,
     cellStyle: 'normalImportance',
   },
   {
+    columnId: 'created',
     header: 'Created',
     sortable: false,
     cellStyle: 'lowImportance',
@@ -39,6 +241,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     hasCopyButton: true
   },
   {
+    columnId: 'usage',
     header: 'Usage',
     sortable: false,
     cellStyle: 'normalImportance',
@@ -46,6 +249,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     showUnit: true
   },
   {
+    columnId: 'cost',
     header: 'Cost',
     sortable: true,
     cellStyle: 'highImportance',
@@ -54,188 +258,10 @@ const columnConfigSample : ITableColumnConfig[] = [
   }
 ];
 
-const initialRows : ITypeTableData = [
-  {
-    id: 'device-1',
-    header: {
-      image: photo,
-      icon: 'Zone',
-      status: 'neutral'
-    },
-    columns:
-    [
-      { text: 'Device Name', href: '#' },
-      { text: 'OK', status: 'good' },
-      { text: 'Just Now' },
-      { text: '242', unit: 'mb' },
-      { text: '¥20,000'}
-    ]
-  },
-  {
-    id: 'device-2',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'good'
-    },
-    columns:
-    [
-      { text: 'Another Device', href: '#' },
-      { text: 'Warning', status: 'danger' },
-      { text: '1st October 2019' },
-      { text: '2.1', unit: 'gb' },
-      { text: '¥4,000'},
-    ],
-  },
-  {
-    id: 'device-3',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'good'
-    },
-    columns:
-    [
-      { text: 'Old Device', href: '#' },
-      { text: 'Warning', status: 'danger' },
-      { text: '22nd March 2020' },
-      { text: '2.1', unit: 'tb' },
-      { text: '¥7,000'},
-    ],
-  },
-  {
-    id: 'device-4',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'danger'
-    },
-    columns:
-    [
-      { text: 'Magic Edge Cloud', href: '#' },
-      { text: 'OK', status: 'good' },
-      { text: '2nd April 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
-    ]
-  },
-  {
-    id: 'device-5',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'danger'
-    },
-    columns:
-    [
-      { text: 'Magic Edge Cloud', href: '#' },
-      { text: 'Caution', status: 'caution' },
-      { text: '2nd April 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' },
-    ]
-  },
-  {
-    id: 'device-6',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'danger'
-    },
-    columns:
-    [
-      { text: 'Magic Edge Cloud', href: '#' },
-      { text: 'OK', status: 'good' },
-      { text: '2nd April 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
-    ]
-  },
-  {
-    id: 'device-7',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'danger'
-    },
-    columns:
-    [
-      { text: 'Magic Edge Cloud', href: '#' },
-      { text: 'OK', status: 'good' },
-      { text: '2nd April 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' },
-    ]
-  },
-  {
-    id: 'device-8',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'danger'
-    },
-    columns:
-    [
-      { text: 'Magic Edge Cloud', href: '#' },
-      { text: 'Offline', status: 'neutral' },
-      { text: '2nd April 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
-    ]
-  },
-  {
-    id: 'device-9',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'danger'
-    },
-    columns:
-    [
-      { text: 'Magic Edge Cloud', href: '#' },
-      { text: 'OK', status: 'good' },
-      { text: '2nd April 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
-    ]
-  },
-  {
-    id: 'device-10',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'danger'
-    },
-    columns:
-    [
-      { text: 'Magic Edge Cloud', href: '#' },
-      { text: 'OK', status: 'good' },
-      { text: '2nd April 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
-    ]
-  },
-  {
-    id: 'device-4',
-    header: {
-      image: photo,
-      icon: 'Location',
-      status: 'danger'
-    },
-    columns:
-    [
-      { text: 'Magic Edge Cloud', href: '#' },
-      { text: 'OK', status: 'good' },
-      { text: '2nd April 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
-    ]
-  }
-];
-
 export const _TypeTable = () => {
 
-  const [rows, setRows] = useState<ITypeTableData>(initialRows)
+  const [data, setData] = useState<IExampleData[]>(sortedByDeviceData);
+  const [rows, setRows] = useState<ITypeTableData>(rowMaker(sortedByDeviceData));
 
   // To implement...
   const hasStatus = boolean("Has Device Status", true);
@@ -244,7 +270,6 @@ export const _TypeTable = () => {
 
   const selectable = boolean("Selectable Rows", true);
   const columnConfig = object("Column Configuration", columnConfigSample);
-  const customRowData = object("Row Data", rows);
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked:boolean, id?: string | number) => {
@@ -267,9 +292,18 @@ export const _TypeTable = () => {
     setRows(newRows);
   }, [rows, setRows]);
 
-  useEffect(() => {
-    setRows(customRowData);
-  }, [customRowData])
+  const sortCallback = useCallback((ascending: boolean, columnId: string) => {
+    const unsortedData : IExampleData[] = [...data];
 
-  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon}} /></Container>;
+    const validKey = columnId as keyof IExampleData;
+    const sortedData = sortDataBy(unsortedData, validKey, ascending);
+    setData(sortedData);
+
+  },[data]);
+
+  useEffect(() => {
+    setRows(rowMaker(data));
+  }, [data])
+
+  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon, defaultAscending:true, sortCallback}} /></Container>;
 };

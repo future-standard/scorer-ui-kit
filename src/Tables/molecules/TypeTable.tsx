@@ -4,6 +4,7 @@ import Spinner from '../../Indicators/Spinner';
 import TypeTableRow from '../atoms/TypeTableRow';
 import Checkbox from '../../Form/atoms/Checkbox';
 import { TypeCellAlignment, ITableColumnConfig, ITypeTableData, IRowData } from '..';
+import TableHeaderTitle from '../atoms/TableHeaderTitle';
 
 
 const HEADER_HEIGHT = `50px`;
@@ -21,12 +22,12 @@ const HeaderRow = styled.div`
   height: ${HEADER_HEIGHT};
 `;
 
-const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, }>`
+const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number}>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
   line-height: 20px;
-
+  position: relative;
   font-family: ${p => p.theme.fontFamily.ui };
 
   ${({hasCopyButton}) => hasCopyButton && css`
@@ -96,12 +97,14 @@ interface IProps {
   hasStatus?: boolean
   hasThumbnail?: boolean
   hasTypeIcon?: boolean
+  defaultAscending?: boolean
   isLoading?: boolean
   loadingText?: string
   emptyTableTitle?: string
   emptyTableText?: string
   selectCallback? : (checked:boolean, id?: string | number)=>void
   toggleAllCallback? : (checked: boolean)=>void
+  sortCallback? : (ascending: boolean, columnId: string) => void
 }
 
 const TypeTable : React.FC<IProps> = ({
@@ -111,10 +114,12 @@ const TypeTable : React.FC<IProps> = ({
   hasStatus = false,
   hasThumbnail = false,
   hasTypeIcon = false,
+  defaultAscending = false,
   isLoading = false,
   loadingText = 'Loading Data...',
   emptyTableTitle = '',
   emptyTableText = '',
+  sortCallback = ()=>{},
   selectCallback = ()=>{},
   toggleAllCallback = ()=>{},
 }) => {
@@ -123,9 +128,47 @@ const TypeTable : React.FC<IProps> = ({
     toggleAllCallback(checked);
   }, [toggleAllCallback]);
 
+  const [sortSpec, setSortSpec] = useState(columnConfig);
+  const [ascendingState, setAscendingState] = useState(defaultAscending);
+
   useEffect(() => {
     setAllChecked(rows.every(isChecked) && rows.length > 0);
   }, [rows]);
+
+
+  const toggleSort = useCallback((indexKey: number, columnId?: string) => {
+
+    if(sortSpec[indexKey] === undefined) { return;}
+    if(!sortSpec[indexKey].sortable) { return; }
+
+    const updatedSort = [...sortSpec]
+    
+    let lastActiveKey : number | null = null; 
+    updatedSort.forEach((col, key) => {
+      if(col.sortActive) {
+        lastActiveKey = key;
+      }
+      if(key === indexKey) {
+        col.sortActive = true;
+      } else {
+        col.sortActive = false;
+      }
+    });
+
+    /**
+     * Rules for toggling ascending value
+     * - Clicked column was active, toggle ascending.
+     * - No column was sorted before, keep the sorting ascending.
+     * - Clicked column was not active persist the last ascending option
+     */
+    
+
+    const newAscending : boolean = (lastActiveKey === indexKey) ? !ascendingState : ascendingState;
+    const colId : string = (columnId === undefined) ?  `column_${indexKey}` : columnId;
+    sortCallback(newAscending, colId);
+    setSortSpec(updatedSort);
+    setAscendingState(newAscending);
+  },[sortSpec])
 
   /* Currenlty IRowData Type enforces user to send columns
    so rows length will always be at least 1
@@ -143,10 +186,24 @@ const TypeTable : React.FC<IProps> = ({
           {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
           {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
-
           {columnConfig.map((column, key) => {
-            const {alignment, header, hasCopyButton, minWidth} = column;
-            return <HeaderItem key={key} alignment={alignment} hasCopyButton={hasCopyButton} minWidth={minWidth}>{header}</HeaderItem>;
+            const {header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth } : ITableColumnConfig = column;
+            return <HeaderItem
+                      key={key}
+                      alignment={alignment}
+                      hasCopyButton={hasCopyButton}
+                      minWidth={minWidth}
+                      >
+                        <TableHeaderTitle
+                          header={header}
+                          sortable={sortable}
+                          indexKey={key}
+                          columnId={columnId}
+                          isSortActive={sortActive}
+                          ascending={ascendingState}
+                          toggleSort={toggleSort}
+                          />
+                    </HeaderItem>;
           })}
         </HeaderRow>
         {isLoading ? (
