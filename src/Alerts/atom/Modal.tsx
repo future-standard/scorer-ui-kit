@@ -16,7 +16,10 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background-color: hsl(0, 0%, 0%, 0.2);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   font-family: ${({ theme }) => theme.fontFamily.ui};
+
 `;
 
 const CloseIcon = styled(Icon)``;
@@ -61,7 +64,6 @@ const CloseButton = styled.button<{ selected?: boolean }>`
 
 const LightBox = styled.div<{ padding?: boolean, width?: string}>`
   position: relative;
-  min-height: 300px;
   margin: 27px 0 0;
   box-shadow: 0 10px 15px 0 hsla(205, 42%, 60%, 0.15);
   background-color: hsl(0, 0%, 100%);
