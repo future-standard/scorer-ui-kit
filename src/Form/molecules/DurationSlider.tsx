@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import styled from 'styled-components';
 import {ITimeUnit} from '../../index';
 import SliderInput, {ISlider} from '../atoms/SliderInput';
@@ -51,12 +51,12 @@ const DurationSlider: React.FC<IDurationSlider> = (
 
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
-  const handleSelectedValue = (value: number) => {
+  const handleSelectedValue = useCallback((value: number) => {
     if(inputCallback) {
-      inputCallback(selectedValue);
+      inputCallback(value);
     }
     setSelectedValue(value);
-  };
+  },[inputCallback]);
 
   return(
     <Container>
