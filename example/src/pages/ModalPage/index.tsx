@@ -209,15 +209,22 @@ const ModalPage: React.FC = () => {
   /***
    * 
    */
-  const [videoOptions]= useState<VideoHTMLAttributes<HTMLVideoElement>>({
+  const [videoOptions] = useState<VideoHTMLAttributes<HTMLVideoElement>>({
     loop: true,
     autoPlay: true
   });
-  const exampleMediaModal = <MediaBox videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4'/>
+  const mediaVideo = <MediaBox mediaType='video' videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4'/>
 
   const openMediaModal = () => {
-    createModal({customComponent: exampleMediaModal, padding: false})
+    createModal({customComponent: mediaVideo, padding: false})
   };
+
+  const mediaImage : ReactElement = <MediaBox mediaType="img" alt="city" src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw"/>
+
+  
+  const openImageModal = () => {
+    createModal({customComponent:mediaImage, padding: false})
+  }
 
   return (
     <Container>
@@ -256,11 +263,17 @@ const ModalPage: React.FC = () => {
       >Form Modal
       </Button>
       <Button
-      design='secondary'
+        design='secondary'
         onClick={
           openMediaModal
         }
-      >Media Modal
+      >Video Modal
+      </Button>
+      <Button
+        design='secondary'
+        onClick={openImageModal}
+      >
+        Image Modal
       </Button>
     </Container>
   );
