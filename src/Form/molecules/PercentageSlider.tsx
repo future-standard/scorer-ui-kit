@@ -1,4 +1,4 @@
-import React, {InputHTMLAttributes, useState} from 'react';
+import React, {InputHTMLAttributes, useState, useCallback} from 'react';
 import styled from 'styled-components';
 import SliderInput, {ISliderMark} from '../atoms/SliderInput';
 import {IFeedbackColor} from '../../index';
@@ -69,12 +69,12 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
   ) => {
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
-  const handleSelectedValue = (value: number) => {
+  const handleSelectedValue = useCallback((value: number) => {
     if(inputCallback) {
-      inputCallback(selectedValue);
+      inputCallback(value);
     }
     setSelectedValue(value);
-  };
+  },[inputCallback]);
 
   return(
     <Container>
