@@ -21,9 +21,11 @@ const Headers = styled.div`
   margin-bottom: 30px;
   padding: 0 6px;
 `;
+
 const MainTitle = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
 `;
+
 const ValueTitle = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.data};
 `;
@@ -54,7 +56,7 @@ const DurationSlider: React.FC<IDurationSlider> = (
       inputCallback(selectedValue);
     }
     setSelectedValue(value);
-  } 
+  };
 
   return(
     <Container>
@@ -62,12 +64,13 @@ const DurationSlider: React.FC<IDurationSlider> = (
         <MainTitle>{title}</MainTitle>
         <ValueTitle>{getTextTimeUnit(selectedValue, timeUnit)}</ValueTitle>
       </Headers>
-      <SliderInput {
+      <SliderInput
+        {
           ...props}
-          max={max}
-          min={min}
-          defaultValue={defaultValue}
-          inputCallback={(value) => handleSelectedValue(value)}
+        max={max}
+        min={min}
+        defaultValue={defaultValue}
+        inputCallback={(value) => handleSelectedValue(value)}
       />
     </Container>
   );

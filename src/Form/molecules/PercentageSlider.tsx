@@ -30,7 +30,7 @@ const getThumbColor = (value: number) : IFeedbackColor =>  {
   }
 
   return 'success';
-}
+};
 
 const getTitleLevel = (value: number) : string => {
   if(value <= 10) {
@@ -42,7 +42,7 @@ const getTitleLevel = (value: number) : string => {
   }
 
   return 'Safe Level';
-}
+};
 
 
 interface IPercentageSliderProps {
@@ -60,7 +60,7 @@ type IPercentageSlider = IPercentageSliderProps & InputHTMLAttributes<HTMLInputE
 const PercentageSlider: React.FC<IPercentageSlider> = (
   {
     defaultValue=0,
-    title='',
+    // title='',
     inputCallback,
     updateThumbColor,
     updateTitle,
@@ -74,24 +74,27 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
       inputCallback(selectedValue);
     }
     setSelectedValue(value);
-  }
+  };
 
   return(
     <Container>
       <Headers>
-        <MainTitle>{
-          updateTitle
-          ? updateTitle(selectedValue)
-          : getTitleLevel(selectedValue)}</MainTitle>
+        <MainTitle>
+          {
+            updateTitle
+            ? updateTitle(selectedValue)
+            : getTitleLevel(selectedValue)
+          }
+        </MainTitle>
         <ValueTitle>{`${selectedValue}%`}</ValueTitle>
       </Headers>
       <SliderInput
-          {...props}
-          max={100}
-          min={0}
-          defaultValue={defaultValue}
-          inputCallback={(value) => handleSelectedValue(value)}
-          thumbColor={
+        {...props}
+        max={100}
+        min={0}
+        defaultValue={defaultValue}
+        inputCallback={(value) => handleSelectedValue(value)}
+        thumbColor={
             updateThumbColor
             ? updateThumbColor(selectedValue)
             : getThumbColor(selectedValue)
