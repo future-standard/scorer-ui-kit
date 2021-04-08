@@ -2,6 +2,7 @@ import React, {InputHTMLAttributes, useState, useCallback} from 'react';
 import styled from 'styled-components';
 import SliderInput, {ISliderMark} from '../atoms/SliderInput';
 import {IFeedbackColor} from '../../index';
+import Label from '../atoms/Label';
 
 
 const Container = styled.div``;
@@ -13,10 +14,8 @@ const Headers = styled.div`
   margin-bottom: 20px;
   padding: 0 6px;
 `;
-const MainTitle = styled.div`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
-`;
-const ValueTitle = styled.div`
+
+const ValueTitle = styled(Label)`
   font-family: ${({ theme }) => theme.fontFamily.data};
 `;
 
@@ -79,14 +78,10 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
   return(
     <Container>
       <Headers>
-        <MainTitle>
-          {
-            updateTitle
-            ? updateTitle(selectedValue)
-            : getTitleLevel(selectedValue)
-          }
-        </MainTitle>
-        <ValueTitle>{`${selectedValue}%`}</ValueTitle>
+        <Label
+          labelText={updateTitle ? updateTitle(selectedValue) : getTitleLevel(selectedValue)}
+        />
+        <ValueTitle labelText={`${selectedValue}%`} />
       </Headers>
       <SliderInput
         {...props}
