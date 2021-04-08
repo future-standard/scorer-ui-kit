@@ -8,7 +8,7 @@ import {
   IRowData,
   ITableColumnConfig,
   ITypeTableData,
-
+  IDeviceStatus,
 } from 'scorer-ui-kit/dist/Tables';
 
 const Container = styled.div`
@@ -21,14 +21,12 @@ export default {
   decorators: []
 };
 
-// I will update this type to be availabe when all the table PR's are merged 
-type IStatus = "good" | "neutral" | "caution" | "danger" | "folder" | undefined;
 
 interface IExampleData  {
   id: string
   deviceName: string
   deviceLink: string
-  status: IStatus
+  status: IDeviceStatus
   statusText: string
   created: string
   usage: number

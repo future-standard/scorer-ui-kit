@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import TypeTableRow from '../atoms/TypeTableRow';
 import Checkbox from '../../Form/atoms/Checkbox';
@@ -22,19 +22,19 @@ const HeaderRow = styled.div`
   height: ${HEADER_HEIGHT};
 `;
 
-const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number}>`
+const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number }>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
   line-height: 20px;
   position: relative;
-  font-family: ${p => p.theme.fontFamily.ui };
+  font-family: ${p => p.theme.fontFamily.ui};
 
-  ${({hasCopyButton}) => hasCopyButton && css`
+  ${({ hasCopyButton }) => hasCopyButton && css`
     padding-right: 20px;
   `};
 
-  ${({theme, alignment}) => alignment ? css`
+  ${({ theme, alignment }) => alignment ? css`
     ${theme.typography.table.header[alignment]};
   ` : css`
     ${theme.typography.table.header['left']};
@@ -44,7 +44,7 @@ const HeaderItem = styled.div<{fixedWidth?: number, alignment?: TypeCellAlignmen
     width: ${p.fixedWidth}px;
   `}
 
-  ${({minWidth}) => minWidth && css`
+  ${({ minWidth }) => minWidth && css`
     min-width:${minWidth}px; 
   `}
 `;
@@ -57,7 +57,7 @@ const LoadingBox = styled.div`
   top: 0;
   left: 0;
   z-index: 99;
-  background-color: ${({theme}) => theme.colors["pureBase"]};
+  background-color: ${({ theme }) => theme.colors["pureBase"]};
   opacity: 85%;
   width: 100%;
   min-height: 100px;
@@ -102,12 +102,12 @@ interface IProps {
   loadingText?: string
   emptyTableTitle?: string
   emptyTableText?: string
-  selectCallback? : (checked:boolean, id?: string | number)=>void
-  toggleAllCallback? : (checked: boolean)=>void
-  sortCallback? : (ascending: boolean, columnId: string) => void
+  selectCallback?: (checked: boolean, id?: string | number) => void
+  toggleAllCallback?: (checked: boolean) => void
+  sortCallback?: (ascending: boolean, columnId: string) => void
 }
 
-const TypeTable : React.FC<IProps> = ({
+const TypeTable: React.FC<IProps> = ({
   columnConfig,
   selectable,
   rows = [],
@@ -119,12 +119,12 @@ const TypeTable : React.FC<IProps> = ({
   loadingText = 'Loading Data...',
   emptyTableTitle = '',
   emptyTableText = '',
-  sortCallback = ()=>{},
-  selectCallback = ()=>{},
-  toggleAllCallback = ()=>{},
+  sortCallback = () => { },
+  selectCallback = () => { },
+  toggleAllCallback = () => { },
 }) => {
   const [allChecked, setAllChecked] = useState(false);
-  const toggleAllCallbackWrapper = useCallback((checked:boolean) => {
+  const toggleAllCallbackWrapper = useCallback((checked: boolean) => {
     toggleAllCallback(checked);
   }, [toggleAllCallback]);
 
@@ -138,17 +138,17 @@ const TypeTable : React.FC<IProps> = ({
 
   const toggleSort = useCallback((indexKey: number, columnId?: string) => {
 
-    if(sortSpec[indexKey] === undefined) { return;}
-    if(!sortSpec[indexKey].sortable) { return; }
+    if (sortSpec[indexKey] === undefined) { return; }
+    if (!sortSpec[indexKey].sortable) { return; }
 
-    const updatedSort = [...sortSpec]
-    
-    let lastActiveKey : number | null = null; 
+    const updatedSort = [...sortSpec];
+
+    let lastActiveKey: number | null = null;
     updatedSort.forEach((col, key) => {
-      if(col.sortActive) {
+      if (col.sortActive) {
         lastActiveKey = key;
       }
-      if(key === indexKey) {
+      if (key === indexKey) {
         col.sortActive = true;
       } else {
         col.sortActive = false;
@@ -161,20 +161,20 @@ const TypeTable : React.FC<IProps> = ({
      * - No column was sorted before, keep the sorting ascending.
      * - Clicked column was not active persist the last ascending option
      */
-    
 
-    const newAscending : boolean = (lastActiveKey === indexKey) ? !ascendingState : ascendingState;
-    const colId : string = (columnId === undefined) ?  `column_${indexKey}` : columnId;
+
+    const newAscending: boolean = (lastActiveKey === indexKey) ? !ascendingState : ascendingState;
+    const colId: string = (columnId === undefined) ? `column_${indexKey}` : columnId;
     sortCallback(newAscending, colId);
     setSortSpec(updatedSort);
     setAscendingState(newAscending);
-  },[sortSpec])
+  }, [ascendingState, sortCallback, sortSpec]);
 
   /* Currenlty IRowData Type enforces user to send columns
-   so rows length will always be at least 1
-   I wasn't sure if I should edit IRowData to have columns optional
-   If we allow columns to be optional, previous implementations
-   wont be able to have "No data" Message
+    so rows length will always be at least 1
+    I wasn't sure if I should edit IRowData to have columns optional
+    If we allow columns to be optional, previous implementations
+    wont be able to have "No data" Message
   */
   const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
 
@@ -187,52 +187,56 @@ const TypeTable : React.FC<IProps> = ({
           {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
           {columnConfig.map((column, key) => {
-            const {header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth } : ITableColumnConfig = column;
-            return <HeaderItem
-                      key={key}
-                      alignment={alignment}
-                      hasCopyButton={hasCopyButton}
-                      minWidth={minWidth}
-                      >
-                        <TableHeaderTitle
-                          header={header}
-                          sortable={sortable}
-                          indexKey={key}
-                          columnId={columnId}
-                          isSortActive={sortActive}
-                          ascending={ascendingState}
-                          toggleSort={toggleSort}
-                          />
-                    </HeaderItem>;
+            const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth }: ITableColumnConfig = column;
+            return (
+              <HeaderItem
+                key={key}
+                alignment={alignment}
+                hasCopyButton={hasCopyButton}
+                minWidth={minWidth}
+              >
+                <TableHeaderTitle
+                  header={header}
+                  sortable={sortable}
+                  indexKey={key}
+                  columnId={columnId}
+                  isSortActive={sortActive}
+                  ascending={ascendingState}
+                  toggleSort={toggleSort}
+                />
+              </HeaderItem>);
           })}
         </HeaderRow>
         {isLoading ? (
-            <LoadingBox>
-              <Spinner size='large' styling='primary'/>
-              <LoadingText>{loadingText}</LoadingText>
-            </LoadingBox>
-          ) : null}
+          <LoadingBox>
+            <Spinner size='large' styling='primary' />
+            <LoadingText>{loadingText}</LoadingText>
+          </LoadingBox>
+        ) : null}
         {isEmptyTable
-          ? <EmptyTableBox>
+          ? (
+            <EmptyTableBox>
               <h3>{emptyTableTitle}</h3>
               <p>{emptyTableText}</p>
             </EmptyTableBox>
-            : null
-          }
-          {rows.map((rowData, key) => {
-              const isLastRow = (rows.length - 1 === key) ? true : false;
-              return <TypeTableRow key={key} {...{
-                rowData,
-                isLastRow,
-                selectable,
-                selectCallback,
-                columnConfig,
-                hasStatus,
-                hasThumbnail,
-                hasTypeIcon
-              }} />;
-            })
-          }
+          )
+          : null}
+        {rows.map((rowData, key) => {
+          const isLastRow = (rows.length - 1 === key) ? true : false;
+          return (
+            <TypeTableRow
+              key={key} {...{
+              rowData,
+              isLastRow,
+              selectable,
+              selectCallback,
+              columnConfig,
+              hasStatus,
+              hasThumbnail,
+              hasTypeIcon}} 
+            />
+          );
+        })}
       </TableContainer>
     </Container>
   );
@@ -240,6 +244,6 @@ const TypeTable : React.FC<IProps> = ({
 
 export default TypeTable;
 
-function isChecked({_checked=false} : IRowData){
+function isChecked({ _checked = false }: IRowData) {
   return _checked === true;
 }

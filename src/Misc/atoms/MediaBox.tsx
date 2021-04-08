@@ -1,6 +1,7 @@
 import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
 import styled, {css} from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
+import {IMediaType} from '../../index';
 
 const Container = styled.div`
   position: relative;
@@ -46,8 +47,6 @@ const StyledImage = styled.img<{ isLoaded?: boolean }>`
 
 `;
 
-type IMediaType = 'img' | 'video'
-
 interface IMediaModal {
   src: string
   mediaType: IMediaType
@@ -64,7 +63,7 @@ const MediaBox: React.FC<IMediaModal> = ({
 
   const {
     loop = false,
-    autoPlay = false,
+    autoPlay = true,
     controls = false,
     muted = true,
     ...videoValues

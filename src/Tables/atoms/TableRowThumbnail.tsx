@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled, { css } from 'styled-components';
+import MediaBox  from '../../Misc/atoms/MediaBox';
+import  { useModal } from '../../hooks/useModal';
+import { IMediaType } from '../..';
 
 type VideoAspects = '4:3' | '16:9';
 
-const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects }>`
+const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string }>`
   position: relative;
   height: inherit;
   background: grey;
@@ -30,6 +33,10 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects }>`
   `}
 
   &:hover {
+    ${({mediaUrl}) => mediaUrl && css`
+      cursor: pointer;  
+    `};
+
     ${({theme, hoverZoom}) => theme && hoverZoom && css`
       transform: scale(1.5);
       opacity: 1;
@@ -55,14 +62,25 @@ interface IProps {
   image?: string
   hoverZoom?: boolean,
   aspect?: VideoAspects
+  mediaUrl?: string
+  mediaType?: IMediaType
 }
 
 // Image
 // No Image Placeholder
 
-const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image}) => {
+const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image, mediaUrl, mediaType }) => {
+
+  const {createModal} = useModal();
+
+  const handleModal = useCallback(() => {
+    if(mediaUrl && mediaType) {
+      createModal({padding:false ,customComponent: <MediaBox src={mediaUrl} mediaType={mediaType} />});
+    }
+  },[createModal, mediaType, mediaUrl]);
+
   return (
-    <Container {...{hoverZoom}} aspect='16:9'>
+    <Container {...{hoverZoom}} mediaUrl={mediaUrl} aspect='16:9' onClick={handleModal}>
       <Image {...{image}} />
     </Container>
   );
