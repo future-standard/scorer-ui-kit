@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {ITimeUnit} from '../../index';
 import SliderInput, {ISlider} from '../atoms/SliderInput';
 import {getTextTimeUnit} from '../../helpers';
+import Label from '../atoms/Label';
 
 
 /**
@@ -22,11 +23,7 @@ const Headers = styled.div`
   padding: 0 6px;
 `;
 
-const MainTitle = styled.div`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
-`;
-
-const ValueTitle = styled.div`
+const ValueTitle = styled(Label)`
   font-family: ${({ theme }) => theme.fontFamily.data};
 `;
 
@@ -61,8 +58,8 @@ const DurationSlider: React.FC<IDurationSlider> = (
   return(
     <Container>
       <Headers>
-        <MainTitle>{title}</MainTitle>
-        <ValueTitle>{getTextTimeUnit(selectedValue, timeUnit)}</ValueTitle>
+        <Label labelText={title} />
+        <ValueTitle labelText={getTextTimeUnit(selectedValue, timeUnit)} />
       </Headers>
       <SliderInput
         {
