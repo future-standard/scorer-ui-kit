@@ -216,14 +216,14 @@ const ModalPage: React.FC = () => {
   const mediaVideo = <MediaBox mediaType='video' videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4'/>
 
   const openMediaModal = () => {
-    createModal({customComponent: mediaVideo, padding: false, width: '1080px'})
+    createModal({customComponent: mediaVideo, padding: false, width: '60%'})
   };
 
   const mediaImage : ReactElement = <MediaBox mediaType="img" alt="city" src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw"/>
 
   
   const openImageModal = () => {
-    createModal({customComponent:mediaImage, padding: false, width: '1080px'})
+    createModal({customComponent:mediaImage, padding: false, width: '60%'})
   }
 
   return (

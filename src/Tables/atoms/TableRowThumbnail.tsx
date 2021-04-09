@@ -80,7 +80,7 @@ const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image, mediaUrl
     if(mediaUrl && mediaType) {
       createModal({
         padding:false,
-        width:'1080px',
+        width:'60%',
         customComponent: <MediaBox src={mediaUrl} mediaType={mediaType} videoOptions={videoDefaultOptions} />
       });
     }
