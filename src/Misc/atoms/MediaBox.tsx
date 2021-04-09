@@ -29,6 +29,7 @@ const LoadingOverlay = styled.div`
 
 const Video = styled.video<{ isLoaded?: boolean }>`
   ${mediaStyle};
+  outline: none;
 
   ${({theme, isLoaded}) => css`
     transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
@@ -86,6 +87,7 @@ const MediaBox: React.FC<IMediaModal> = ({
             {...videoValues}
             src={src}
             isLoaded={loaded}
+            preload='metadata'
             onCanPlay={handleLoad}
           />
         : <StyledImage

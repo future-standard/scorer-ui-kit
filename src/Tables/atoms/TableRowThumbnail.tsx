@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, VideoHTMLAttributes} from 'react';
 import styled, { css } from 'styled-components';
 import MediaBox  from '../../Misc/atoms/MediaBox';
 import  { useModal } from '../../hooks/useModal';
@@ -69,13 +69,20 @@ interface IProps {
 // Image
 // No Image Placeholder
 
+// default options for media box
+const videoDefaultOptions : VideoHTMLAttributes<HTMLVideoElement> = {controls: true};
+
 const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image, mediaUrl, mediaType }) => {
 
   const {createModal} = useModal();
 
   const handleModal = useCallback(() => {
     if(mediaUrl && mediaType) {
-      createModal({padding:false ,customComponent: <MediaBox src={mediaUrl} mediaType={mediaType} />});
+      createModal({
+        padding:false,
+        width:'1080px',
+        customComponent: <MediaBox src={mediaUrl} mediaType={mediaType} videoOptions={videoDefaultOptions} />
+      });
     }
   },[createModal, mediaType, mediaUrl]);
 
