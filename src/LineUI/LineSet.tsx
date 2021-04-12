@@ -222,7 +222,8 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
     });
 
     midpoint = { x: midpoint.x / pointsLength, y: midpoint.y / pointsLength };
-    return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'}  x={midpoint.x - (4 * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText >
+    const Textlen = lineSetData.areaName?.length || 1;
+    return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'}  x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText >
 };
 
   return (
