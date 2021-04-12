@@ -55,7 +55,7 @@ const Line: React.FC<{}> = () => {
       },
       {
         name: 'Shape 1',
-        areaName: 'Green Apple',
+        areaName: 'Traffic Area',
         points: [
           {
             x: 502,
