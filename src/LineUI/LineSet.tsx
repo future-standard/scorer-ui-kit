@@ -10,6 +10,14 @@ const Point = styled.circle<{styling: string}>`
   fill: ${({theme, styling}) => theme.custom.lines[styling].point.fill};
 `;
 
+const AreaLabelText = styled.text<{styling: string}>`
+  text-align: center;
+  fill: ${({theme, styling}) => theme.custom.lines[styling].label.fill};
+  font-weight: bold;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+`;
+
 interface ILineSetProps {
   lineSetId: number,
   boundaries: any,
@@ -203,12 +211,26 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
     />
   );});
 
+  const AreaLabel = () => {
+    const pointsLength = lineSetData.points.length;
+    if (pointsLength < 3) return null;
+    let midpoint = { x: 0, y: 0 };
+
+    lineSetData.points.map(({ x, y }) => {
+      midpoint.x += x;
+      midpoint.y += y;
+    });
+
+    midpoint = { x: midpoint.x / pointsLength, y: midpoint.y / pointsLength };
+    return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'}  x={midpoint.x - (4 * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText >
+};
+
   return (
     <g>
       {lines}
       {handles}
       {points}
-
+      <AreaLabel />
     </g>
   );
 };
