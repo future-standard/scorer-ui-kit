@@ -13,9 +13,18 @@ export const dimensions = {
   },
   form: {
     button: {
-      small: '30px',
-      normal: '40px',
-      large: '60px'
+      height: {
+        extraSmall: '20px',
+        small: '30px',
+        normal: '40px',
+        large: '60px'
+      },
+      padding: {
+        extraSmall: '3px 10px',
+        small: '0 20px',
+        normal: '0 20px',
+        large: '0 20px'        
+      }
     },
     input: {
       height: '40px'

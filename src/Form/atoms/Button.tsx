@@ -11,10 +11,11 @@ interface IStyledComponentProps {
 
 
 const StyledButton = styled.button<IStyledComponentProps>`
-  ${({theme, design, size}) => css`
+  ${({theme, design, size}) => css` 
 
     ${theme.styles.form.button[design].default};
-    height: ${theme.dimensions.form.button[ size ]};
+    height: ${theme.dimensions.form.button.height[ size ]};
+    padding: ${theme.dimensions.form.button.padding[ size ]};
 
     ${theme.typography.form.button[ design ][ size ]};
     font-family: ${theme.fontFamily.ui};
@@ -44,7 +45,6 @@ const StyledButton = styled.button<IStyledComponentProps>`
   border: none;
   cursor: pointer;
   border-radius: 3px;
-  padding: 0 20px;
   outline: none;
 
   button + button {
