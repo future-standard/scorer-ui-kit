@@ -42,11 +42,12 @@ const AreaLabel : React.FC<AreaLabelProps> = ( { lineSetData, unit } ) => {
   lineSetData.points.map(({ x, y }) => {
     midpoint.x += x;
     midpoint.y += y;
+    return null;
   });
 
   midpoint = { x: midpoint.x / pointsLength, y: midpoint.y / pointsLength };
   const Textlen = lineSetData.areaName?.length || 1;
-  return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'}  x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText >
+  return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'} x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText>;
 };
 
 const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options , onLineMoveEnd}) => {
