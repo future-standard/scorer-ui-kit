@@ -29,6 +29,26 @@ interface ILineSetProps {
   getCTM: () => DOMMatrix | null;
 }
 
+interface AreaLabelProps {
+  lineSetData: IPointSet,
+  unit: number
+}
+
+const AreaLabel : React.FC<AreaLabelProps> = ( { lineSetData, unit } ) => {
+  const pointsLength = lineSetData.points.length;
+  if (pointsLength < 3) return null;
+  let midpoint = { x: 0, y: 0 };
+
+  lineSetData.points.map(({ x, y }) => {
+    midpoint.x += x;
+    midpoint.y += y;
+  });
+
+  midpoint = { x: midpoint.x / pointsLength, y: midpoint.y / pointsLength };
+  const Textlen = lineSetData.areaName?.length || 1;
+  return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'}  x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText >
+};
+
 const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options , onLineMoveEnd}) => {
   // console.log("Unit " + lineSetId + ", reporting in...")
 
@@ -211,27 +231,12 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
     />
   );});
 
-  const AreaLabel = () => {
-    const pointsLength = lineSetData.points.length;
-    if (pointsLength < 3) return null;
-    let midpoint = { x: 0, y: 0 };
-
-    lineSetData.points.map(({ x, y }) => {
-      midpoint.x += x;
-      midpoint.y += y;
-    });
-
-    midpoint = { x: midpoint.x / pointsLength, y: midpoint.y / pointsLength };
-    const Textlen = lineSetData.areaName?.length || 1;
-    return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'}  x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText >
-};
-
   return (
     <g>
       {lines}
       {handles}
       {points}
-      <AreaLabel />
+      <AreaLabel lineSetData={lineSetData} unit={unit} />
     </g>
   );
 };
