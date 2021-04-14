@@ -18,6 +18,7 @@ export interface IPointSet {
   rotate?: number;
   showOrientation?: boolean;
   styling?: string;
+  areaName?: string;
 }
 
 export interface IMinMax {

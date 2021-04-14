@@ -10,6 +10,14 @@ const Point = styled.circle<{styling: string}>`
   fill: ${({theme, styling}) => theme.custom.lines[styling].point.fill};
 `;
 
+const AreaLabelText = styled.text<{styling: string}>`
+  text-align: center;
+  fill: ${({theme, styling}) => theme.custom.lines[styling].label.fill};
+  font-weight: bold;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+`;
+
 interface ILineSetProps {
   lineSetId: number,
   boundaries: any,
@@ -20,6 +28,27 @@ interface ILineSetProps {
   onLineMoveEnd: () => void;
   getCTM: () => DOMMatrix | null;
 }
+
+interface AreaLabelProps {
+  lineSetData: IPointSet,
+  unit: number
+}
+
+const AreaLabel : React.FC<AreaLabelProps> = ( { lineSetData, unit } ) => {
+  const pointsLength = lineSetData.points.length;
+  if (pointsLength < 3) return null;
+  let midpoint = { x: 0, y: 0 };
+
+  lineSetData.points.map(({ x, y }) => {
+    midpoint.x += x;
+    midpoint.y += y;
+    return null;
+  });
+
+  midpoint = { x: midpoint.x / pointsLength, y: midpoint.y / pointsLength };
+  const Textlen = lineSetData.areaName?.length || 1;
+  return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'} x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText>;
+};
 
 const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options , onLineMoveEnd}) => {
   // console.log("Unit " + lineSetId + ", reporting in...")
@@ -208,7 +237,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       {lines}
       {handles}
       {points}
-
+      <AreaLabel lineSetData={lineSetData} unit={unit} />
     </g>
   );
 };
