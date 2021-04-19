@@ -1,27 +1,31 @@
-import React, {useRef, useCallback} from 'react';
+import React, {useRef, useCallback, ChangeEvent, InputHTMLAttributes} from 'react';
 import styled from 'styled-components';
 import Button from './Button';
+import { TypeButtonSizes, TypeButtonDesigns } from '..';
 
 const Container = styled.div``;
 const HiddenInput = styled.input`
   display: none;
 `;
 
-interface IFileInput {
+interface OwnProps {
   text: string
-  callback: (newFile: File) => void 
+  buttonSize?: TypeButtonSizes
+  buttonDesign?: TypeButtonDesigns
+  callback: (newFiles: FileList) => void 
 }
 
-const InputFileButton : React.FC<IFileInput> = ({callback}) => {
+type IFileInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
+const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize, callback, ...props}) => {
 
   let fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFile = useCallback(async(e) => {
+  const handleFile = useCallback(async(e: ChangeEvent<HTMLInputElement>) => {
     if (!(e.target.files && e.target.files.length > 0)) { return;}
 
-    const newFile : File = e.target.files[0];
+    const newFiles : FileList = e.target.files;
       if(callback) {
-        callback(newFile);
+        callback(newFiles);
       }
   },[callback]);
 
@@ -37,12 +41,13 @@ const InputFileButton : React.FC<IFileInput> = ({callback}) => {
         ref={fileInputRef}
         type='file'
         onChange={handleFile}
-        multiple={false}
-        accept='image/*'
+        {...props}
       />
       <Button
         onClick={fowardClick}
-      >Select File
+        design={buttonDesign}
+        size={buttonSize}
+      >{text}
       </Button>
     </Container>
   );
