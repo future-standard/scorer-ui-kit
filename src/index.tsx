@@ -34,6 +34,7 @@ import {
   ISliderMark,
   DurationSlider,
   PercentageSlider,
+  InputFileButton,
 } from './Form';
 
 // Components - Filter
@@ -159,6 +160,7 @@ export {
   SliderInput,
   DurationSlider,
   PercentageSlider,
+  InputFileButton,
 
   // Filters
   DatePicker,
