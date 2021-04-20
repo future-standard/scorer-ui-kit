@@ -35,6 +35,8 @@ import {
   DurationSlider,
   PercentageSlider,
   InputFileButton,
+  DropArea,
+  AvatarUploader,
 } from './Form';
 
 // Components - Filter
@@ -161,6 +163,8 @@ export {
   DurationSlider,
   PercentageSlider,
   InputFileButton,
+  DropArea,
+  AvatarUploader,
 
   // Filters
   DatePicker,

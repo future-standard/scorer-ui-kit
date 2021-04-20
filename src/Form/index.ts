@@ -16,6 +16,8 @@ import PercentageSlider from './molecules/PercentageSlider';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
+import DropArea from './atoms/DropArea';
+import AvatarUploader from './molecules/AvatarUploader';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 
@@ -39,6 +41,8 @@ export {
     DurationSlider,
     PercentageSlider,
     InputFileButton,
+    AvatarUploader,
+    DropArea,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
