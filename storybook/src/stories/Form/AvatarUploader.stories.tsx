@@ -14,23 +14,14 @@ export default {
 
 export const _AvatarUploader = () => {
 
-  const multipleVal = boolean('Multiple', false);
-  const textVal = text('Text','Select a File');
-  const buttonDesign = select("Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
-  const buttonSize = select("Button Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
+  // const multipleVal = boolean('Multiple', false);
+  // const textVal = text('Text','Select a File');
+  // const buttonDesign = select("Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
+  // const buttonSize = select("Button Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
   
-  const showValue = action('Input Callback');
+  // const showValue = action('Input Callback');
   
 
-  const myCallback = (newFiles: FileList) => {
-    console.log('file', newFiles);
-    if(newFiles.length === 1) {
-      showValue(newFiles[0].name);
-    } else {
-      showValue(newFiles);
-    }
-    
-  };
 
   return(
     <Container>

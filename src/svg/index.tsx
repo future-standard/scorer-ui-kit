@@ -5,3 +5,4 @@ export { default as PasswordHide } from './PasswordHide';
 export { default as PasswordShow } from './PasswordShow';
 export { default as Required } from './Required';
 export { default as Success } from './Success';
+export { default as AvatarPlaceholder} from './AvatarPlaceholder';
