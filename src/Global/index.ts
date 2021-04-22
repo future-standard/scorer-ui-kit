@@ -42,4 +42,5 @@ export interface IMenuTop {
     logoMark?: string
     logoText?: string
     supportUrl?: string
+    defaultMenuOpen?: boolean
   }
