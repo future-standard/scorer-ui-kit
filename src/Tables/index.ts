@@ -3,6 +3,7 @@ import TableRowThumbnail from './atoms/TableRowThumbnail';
 import TableHeaderTitle from './atoms/TableHeaderTitle';
 import EditCell from './molecules/EditCell';
 import { ReactElement } from 'react';
+import { IMediaType } from '..';
 
 export type TypeCellStyle = 'firstColumn' | 'lowImportance' | 'normalImportance' | 'highImportance' ;
 export type TypeCellAlignment = 'left' | 'center' | 'right';
@@ -48,6 +49,8 @@ export interface ICellData {
 export interface IRowHeader {
   status?: any
   image?: string
+  mediaUrl?: string
+  mediaType?: IMediaType
   icon?: string
 }
 
