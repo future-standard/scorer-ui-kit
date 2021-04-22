@@ -33,7 +33,7 @@ const Video = styled.video<{ isLoaded?: boolean }>`
 
   ${({theme, isLoaded}) => css`
     transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
-    opacity: ${isLoaded ? `1` : `.001`};
+    opacity: ${isLoaded ? `1` : `0`};
   `};
 
 `;
@@ -43,7 +43,7 @@ const StyledImage = styled.img<{ isLoaded?: boolean }>`
 
   ${({theme, isLoaded}) => css`
     transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
-    opacity: ${isLoaded ? `1` : `.001`};
+    opacity: ${isLoaded ? `1` : `0`};
   `};
 
 `;
