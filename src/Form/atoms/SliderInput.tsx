@@ -92,11 +92,11 @@ const Thumb = styled.span<{leftValue: number, bgColor: IFeedbackColor }>`
   left: ${({leftValue}) => `${leftValue}%`};
 `;
 
-const GhostTumb = styled(Thumb)`
+const GhostThumb = styled(Thumb)`
   opacity: .5;
 `;
 
-const thumbLeftPostion = (value: number, min: number, max: number ) => {
+const thumbLeftPosition = (value: number, min: number, max: number ) => {
   return valueToPercent(value, min, max);
 };
 
@@ -111,7 +111,7 @@ const getValidMin = (max: number, min?: number) : number => {
   if((!max) && (!min)) {
     return 0;
   }
-  
+
   if(!min) {
     if(max > 0) {
       return 0;
@@ -120,10 +120,10 @@ const getValidMin = (max: number, min?: number) : number => {
     }
   }
   return min;
-}
+};
 
 /**
- * 
+ *
  * Max is required but null because it cans o.O
  * if Max is less value than min fix to one more than min
  */
@@ -141,11 +141,11 @@ const getValidMax = (max: number, min?: number) : number => {
 
 const  valueToPercent = (value: number, min: number, max: number) : number => {
   return Math.round(((value - min) * 100) / (max - min));
-}
+};
 
-const percentToValue = (percent: number, min: number, max: number) : number => {
-  return (max - min) * percent + min;
-}
+// const percentToValue = (percent: number, min: number, max: number) : number => {
+//   return (max - min) * percent + min;
+// };
 
 
 const getMarkAlignment = (value: number, min: number, max: number) : IMartAlignment => {
@@ -158,36 +158,40 @@ const getMarkAlignment = (value: number, min: number, max: number) : IMartAlignm
   }
 
   return 'center';
-}
+};
 
 const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string) => {
 
-  const listOptions : JSX.Element[] = []; 
+  const listOptions : JSX.Element[] = [];
   const marksElements = markList.map(({value, label}, index) => {
     // * first and last should be 0% and 100%
     const left = index === (markList.length - 1) ? 100 : valueToPercent(value, min, max);
     listOptions.push(<option key={`option-${value}`}>{value}</option>);
 
-    return <Fragment key={`mark-${index}`}>
-            <Mark
-              data-leftvalue={`${left}%`}
-              leftValue={left}
-            />
-            <MarkLabel
-              leftValue={left}
-              alignment={getMarkAlignment(value, min, max)}
-            >
-              {label}
-            </MarkLabel>
-          </Fragment>
-  })
+    return (
+      <Fragment key={`mark-${index}`}>
+        <Mark
+          data-leftvalue={`${left}%`}
+          leftValue={left}
+        />
+        <MarkLabel
+          leftValue={left}
+          alignment={getMarkAlignment(value, min, max)}
+        >
+          {label}
+        </MarkLabel>
+      </Fragment>
+    );
+  });
 
-  return <Fragment>
+  return (
+    <Fragment>
       {marksElements}
-        <datalist id={listTag}>
-          {listOptions}
-        </datalist>
-  </Fragment>
+      <datalist id={listTag}>
+        {listOptions}
+      </datalist>
+    </Fragment>
+  );
 
 };
 
@@ -205,7 +209,7 @@ interface ISliderOwnProps {
   marks?: ISliderMark[]
   defaultValue?: number
   value?: number
-  thumbColor?: IFeedbackColor 
+  thumbColor?: IFeedbackColor
   inputCallback?: (value: number) => void
 }
 
@@ -227,52 +231,52 @@ const SliderInput : React.FC<ISlider> = ({
   const initValue = (defaultValue && isInsideRange(defaultValue, minValid, maxValid)) ? defaultValue : minValid;
 
   const [selectedValue, setSelectedValue] = useState(initValue);
-  const [thumbValue, setThumbValue] = useState(thumbLeftPostion(selectedValue, minValid, maxValid));
-  const [ghostThumbValue, setGhostThumbValue] = useState(thumbLeftPostion(selectedValue, minValid, maxValid));
+  const [thumbValue, setThumbValue] = useState(thumbLeftPosition(selectedValue, minValid, maxValid));
+  const [ghostThumbValue, setGhostThumbValue] = useState(thumbLeftPosition(selectedValue, minValid, maxValid));
 
 
   const handleInputChange =  useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     const numericVal = parseInt(val,10);
     setSelectedValue(numericVal);
-    setGhostThumbValue(thumbLeftPostion(numericVal, minValid, maxValid));
-  },[min, maxValid, minValid]);
+    setGhostThumbValue(thumbLeftPosition(numericVal, minValid, maxValid));
+  },[maxValid, minValid]);
 
-  const handleMouseUp =  useCallback((e) => {
+  const handleMouseUp =  useCallback(() => {
     if(inputCallback) {
       inputCallback(selectedValue);
     }
-    setThumbValue(thumbLeftPostion(selectedValue, minValid, maxValid));
-  },[selectedValue]);
+    setThumbValue(thumbLeftPosition(selectedValue, minValid, maxValid));
+  },[inputCallback, maxValid, minValid, selectedValue]);
 
   return(
     <SliderWrapper disabled={disabled}>
-      <Rail/>
+      <Rail />
       <ThumbWrapper>
         {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`)}
-        <GhostTumb
-            data-value={selectedValue}
-            leftValue={ghostThumbValue}
-            data-percentage={ghostThumbValue}
-            bgColor={thumbColor}
-          />
+        <GhostThumb
+          data-value={selectedValue}
+          leftValue={ghostThumbValue}
+          data-percentage={ghostThumbValue}
+          bgColor={thumbColor}
+        />
         <Thumb
-            data-value={selectedValue}
-            leftValue={thumbValue}
-            data-percentage={thumbValue}
-            bgColor={thumbColor}
+          data-value={selectedValue}
+          leftValue={thumbValue}
+          data-percentage={thumbValue}
+          bgColor={thumbColor}
         />
       </ThumbWrapper>
       <HiddenInput
         {...props}
-        type="range"
+        type='range'
         disabled={disabled}
         list={`sliderList-${minValid}-${maxValid}`}
         min={minValid}
         max={maxValid}
         value={selectedValue}
-        onMouseUp = {(e) => {handleMouseUp(e)}}
-        onChange={(e : ChangeEvent<HTMLInputElement>) => handleInputChange(e)}
+        onMouseUp={handleMouseUp}
+        onChange={handleInputChange}
       />
     </SliderWrapper>
   );

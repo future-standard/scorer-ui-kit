@@ -1,4 +1,4 @@
-import React, {InputHTMLAttributes, useState} from 'react';
+import React, {InputHTMLAttributes, useState, useCallback} from 'react';
 import styled from 'styled-components';
 import SliderInput, {ISliderMark} from '../atoms/SliderInput';
 import {IFeedbackColor} from '../../index';
@@ -30,7 +30,7 @@ const getThumbColor = (value: number) : IFeedbackColor =>  {
   }
 
   return 'success';
-}
+};
 
 const getTitleLevel = (value: number) : string => {
   if(value <= 10) {
@@ -42,7 +42,7 @@ const getTitleLevel = (value: number) : string => {
   }
 
   return 'Safe Level';
-}
+};
 
 
 interface IPercentageSliderProps {
@@ -60,7 +60,7 @@ type IPercentageSlider = IPercentageSliderProps & InputHTMLAttributes<HTMLInputE
 const PercentageSlider: React.FC<IPercentageSlider> = (
   {
     defaultValue=0,
-    title='',
+    // title='',
     inputCallback,
     updateThumbColor,
     updateTitle,
@@ -69,29 +69,32 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
   ) => {
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
-  const handleSelectedValue = (value: number) => {
+  const handleSelectedValue = useCallback((value: number) => {
     if(inputCallback) {
-      inputCallback(selectedValue);
+      inputCallback(value);
     }
     setSelectedValue(value);
-  }
+  },[inputCallback]);
 
   return(
     <Container>
       <Headers>
-        <MainTitle>{
-          updateTitle
-          ? updateTitle(selectedValue)
-          : getTitleLevel(selectedValue)}</MainTitle>
+        <MainTitle>
+          {
+            updateTitle
+            ? updateTitle(selectedValue)
+            : getTitleLevel(selectedValue)
+          }
+        </MainTitle>
         <ValueTitle>{`${selectedValue}%`}</ValueTitle>
       </Headers>
       <SliderInput
-          {...props}
-          max={100}
-          min={0}
-          defaultValue={defaultValue}
-          inputCallback={(value) => handleSelectedValue(value)}
-          thumbColor={
+        {...props}
+        max={100}
+        min={0}
+        defaultValue={defaultValue}
+        inputCallback={(value) => handleSelectedValue(value)}
+        thumbColor={
             updateThumbColor
             ? updateThumbColor(selectedValue)
             : getThumbColor(selectedValue)

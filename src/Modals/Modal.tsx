@@ -15,7 +15,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: hsl(0, 0%, 0%, 0.2);
+  background-color: hsla(202, 33%, 95%, 0.51);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   font-family: ${({ theme }) => theme.fontFamily.ui};

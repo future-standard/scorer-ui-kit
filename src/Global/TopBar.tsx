@@ -215,6 +215,7 @@ interface IProps {
   hasLogout?: boolean;
   logoutLink?: string;
   hasSearch?: boolean;
+  hasCurrentUser?: boolean;
   searchPlaceholder?: string;
   userDrawerBespoke?: ReactElement;
   onLogout?: ()=>void;
@@ -227,6 +228,7 @@ const TopBar : React.FC<IProps> = ({
   hasLogout = true,
   logoutLink = '/logout',
   hasSearch = false,
+  hasCurrentUser = true,
   searchPlaceholder = 'Search for devices, analysis tasks, etc.',
   userSubmenu = [],
   userDrawerBespoke,
@@ -262,10 +264,12 @@ const TopBar : React.FC<IProps> = ({
       {/* User Menu */}
       <Drawer isOpen={isUserMenuOpen}>
         <DrawerTop>
-          <CurrentUser>
-            <DrawerHeader>Current User</DrawerHeader>
-            {loggedInUser}
-          </CurrentUser>
+          {hasCurrentUser ?
+            <CurrentUser>
+              <DrawerHeader>Current User</DrawerHeader>
+              {loggedInUser}
+            </CurrentUser>
+          : null}
 
           {userSubmenu.length > 0 ?
             <UserMenu>
@@ -286,7 +290,7 @@ const TopBar : React.FC<IProps> = ({
                 <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
               </LinkMenu>
             </Logout>
-          : null }
+          : null}
         </DrawerTop>
         <DrawerBottom>
           {
