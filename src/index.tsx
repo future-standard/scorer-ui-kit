@@ -76,8 +76,6 @@ import {
     TagList,
     ITag,
     ITagList,
-    TagLink,
-    ITagLink,
     TagListWrapper,
   } from './Misc';
 
@@ -219,7 +217,6 @@ export {
   // Misc
   Tag,
   TagList,
-  TagLink,
   TagListWrapper,
 
   //Context
@@ -236,5 +233,4 @@ export type {
   IconButtonData,
   ITag,
   ITagList,
-  ITagLink,
 };
