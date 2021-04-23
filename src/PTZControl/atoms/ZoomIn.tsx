@@ -40,7 +40,7 @@ const Up: React.FC<Props> = () => {
   },[]);
 
   return (
-    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} transform='translate(10.000000, 10.625000)'>
+    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} onTouchStart={activeStart} onTouchEnd={activeEnd} transform='translate(10.000000, 10.625000)'>
       <Hover hover={hover} fillOpacity='0.56'>
         <path
           d='M96,0 L96,63.75 L160.883594,63.75 C178.620995,63.75 193,49.4790764 193,31.875 C193,14.2709236 178.620995,0 160.883594,0 L96,0 Z'

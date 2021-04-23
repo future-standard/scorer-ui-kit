@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, VideoHTMLAttributes } from 'react';
 import styled from 'styled-components';
 import GhostLogo from '../../svg/ghost-logo.svg';
 import { LoginScreen } from '../../svg';
@@ -11,6 +11,7 @@ import {
   resetButtonStyles,
   useNotification,
   INotificationProps,
+  MediaBox,
 } from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -203,6 +204,28 @@ const ModalPage: React.FC = () => {
     createModal({ customComponent: FormModal });
   };
 
+
+  /// ------ Media Modal example ----//
+  /***
+   * 
+   */
+  const [videoOptions] = useState<VideoHTMLAttributes<HTMLVideoElement>>({
+    autoPlay: true,
+    controls: true
+  });
+  const mediaVideo = <MediaBox mediaType='video' videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4'/>
+
+  const openMediaModal = () => {
+    createModal({customComponent: mediaVideo, padding: false, width: '60%'})
+  };
+
+  const mediaImage : ReactElement = <MediaBox mediaType="img" alt="city" src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw"/>
+
+  
+  const openImageModal = () => {
+    createModal({customComponent:mediaImage, padding: false, width: '60%'})
+  }
+
   return (
     <Container>
       <Button
@@ -238,6 +261,19 @@ const ModalPage: React.FC = () => {
           openLoginModal
         }
       >Form Modal
+      </Button>
+      <Button
+        design='secondary'
+        onClick={
+          openMediaModal
+        }
+      >Video Modal
+      </Button>
+      <Button
+        design='secondary'
+        onClick={openImageModal}
+      >
+        Image Modal
       </Button>
     </Container>
   );

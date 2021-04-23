@@ -38,7 +38,7 @@ const Up: React.FC<Props> = () => {
     setHover(false);
   },[]);
   return (
-    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} transform='translate(138.146447, 137.146447) rotate(45.000000)'>
+    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} onTouchStart={activeStart} onTouchEnd={activeEnd} transform='translate(138.146447, 137.146447) rotate(45.000000)'>
       <Hover hover={hover} transform='translate(-138.146447, -137.146447) translate(41.146447, 40.646447)' fill='url(#linearGradient-11)' fillOpacity='0.56'>
         <path d='M97.1695375,0.000553838433 L97.5,0.333477759 L97.5,96.5 L1.33347776,96.5 L1.00279053,96.1695538 L1.01292824,94.904196 C1.86331972,42.4545249 44.5585771,0.176923219 97.1695375,0.000553838433 Z' id='PTZ-Hover-Up' />
       </Hover>

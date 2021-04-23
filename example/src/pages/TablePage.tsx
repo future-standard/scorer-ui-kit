@@ -48,6 +48,11 @@ const columnConfig : ITableColumnConfig[] = [
 const initialRows : ITypeTableData = [
   {
     id: 'device-id-1',
+    header: {
+      image: "https://i.picsum.photos/id/348/3872/2592.jpg?hmac=I51bqSjuTk6zKHgtJDpMLY3kSSfAXdB8AHGmWf-Eq1Q",
+      mediaUrl: "/scorer-ui-kit/traffic.mp4",
+      mediaType: 'video',
+    },
     columns:
     [
       { text: 'Device Name', href: '#' },
@@ -59,6 +64,11 @@ const initialRows : ITypeTableData = [
   {
     _checked: true,
     id: 'device-id-2',
+    header: {
+      image: "https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw",
+      mediaUrl: "https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw",
+      mediaType: 'img',
+    },
     columns:
     [
       { text: 'Another Device', href: '#' },
@@ -116,10 +126,11 @@ const TablePage : React.FC = () => {
     setRows(newRows);
   }, [rows, setRows]);
 
+
   return <Container>
     <Content>
       <PageHeader title="Table Example" areaTitle="Examples" areaHref={'/'} />
-      <TypeTable selectable={true} {...{columnConfig, rows, selectCallback, toggleAllCallback}} />
+      <TypeTable selectable={true} {...{columnConfig, rows, selectCallback, toggleAllCallback, hasThumbnail:true}} />
       <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
     </Content>
   </Container>

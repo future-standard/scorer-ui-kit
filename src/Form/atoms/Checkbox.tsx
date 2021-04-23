@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-
-import Icon from '../../Icons/Icon';
+import { CheckMark } from '../../svg';
+import { dimensions } from '../../themes/common';
 
 enum CheckboxState {
   Off = "off",
@@ -33,15 +33,21 @@ const CheckboxInner = styled.div<{}>`
   box-sizing: border-box;
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.div<{color: ISvgIcons['color']}>`
   position: absolute;
-  width: inherit;
-  height: inherit;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   svg {
     display: block;
+    [stroke]{
+      stroke: transparent;
+    }
+    [fill] {
+      fill: ${({theme, color}) => theme.colors.icons[color]};
+    }
   }
 `;
 
@@ -130,11 +136,13 @@ const Checkbox : React.FC<IProps> = ({ indeterminate = false, disabled, checked 
     setIsChecked(checked);
   }, [checked, setIsChecked]);
 
+  const iconWeight : number = dimensions.icons.weights['regular'];
+
   return (
     <Container onChange={customOnChange} {...{indeterminate, disabled, visualState}}>
       <CheckboxOuter>
         <CheckboxInner>
-          {visualState === CheckboxState.On ? <IconWrapper><Icon icon='CloseCompact' color='inverse' size={18} weight='regular' /></IconWrapper> : null}
+          {visualState === CheckboxState.On ? <IconWrapper color='inverse'><CheckMark color='inverse' stroke='inverse' size={12} weight={iconWeight} /></IconWrapper> : null}
         </CheckboxInner>
       </CheckboxOuter>
       <RealInput type='checkbox' checked={isChecked} readOnly {...{disabled}} /> {/* disabled={state !== 'default' && state !== 'failure'} */}

@@ -8,7 +8,6 @@ import darkTheme from './themes/dark';
 import {
   AlertBar,
   Notification,
-  ConfirmationModal,
   INotificationProps,
 }from './Alerts';
 
@@ -30,6 +29,10 @@ import {
   TextField,
   TextArea,
   TextAreaField,
+  SliderInput,
+  ISliderMark,
+  DurationSlider,
+  PercentageSlider,
 } from './Form';
 
 // Components - Filter
@@ -59,7 +62,9 @@ import {
 // Tables
 import {
   TypeTable,
-  TableRowThumbnail
+  TableRowThumbnail,
+  TableHeaderTitle,
+  EditCell,
 } from './Tables';
 
 import {
@@ -77,7 +82,12 @@ import {
     ITag,
     ITagList,
     TagListWrapper,
+    MediaBox,
   } from './Misc';
+
+import {
+  ConfirmationModal,
+} from './Modals';
 
 // Other
 import {
@@ -89,6 +99,7 @@ import {
   useNotification,
   useClickOutside,
   IModal,
+  usePoll,
 } from './hooks';
 
 import {
@@ -133,7 +144,6 @@ export {
   // Alerts
   AlertBar,
   Notification,
-  ConfirmationModal,
 
   // LineUI
   LineUI,
@@ -158,6 +168,12 @@ export {
   TextField,
   TextArea,
   TextAreaField,
+  SliderInput,
+  DurationSlider,
+  PercentageSlider,
+
+  // Modals
+  ConfirmationModal,
 
   // Filters
   DatePicker,
@@ -183,6 +199,8 @@ export {
   // Tables
   TypeTable,
   TableRowThumbnail,
+  TableHeaderTitle,
+  EditCell,
 
   // Common && hooks
   useInterval,
@@ -190,6 +208,7 @@ export {
   useTitle,
   useCopyToClipboard,
   useClickOutside,
+  usePoll,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
@@ -218,14 +237,23 @@ export {
   Tag,
   TagList,
   TagListWrapper,
+  MediaBox,
 
   //Context
   NotificationProvider,
   useNotification,
   ModalContext,
   ModalProvider,
-  useModal
+  useModal,
+
 };
+
+/**
+ * Values based on colors.feedback from theme
+ */
+export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
+export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
+export type IMediaType = 'img' | 'video'
 
 export type {
   IModal,
@@ -233,4 +261,5 @@ export type {
   IconButtonData,
   ITag,
   ITagList,
+  ISliderMark,
 };

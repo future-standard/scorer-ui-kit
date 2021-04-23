@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../../Form/atoms/Button';
-import { TypeButtonDesigns } from '../../Form';
-import { useModal } from '../../hooks';
+import Button from '../Form/atoms/Button';
+import { TypeButtonDesigns } from '../Form';
+import { useModal } from '../hooks';
 
 const Container = styled.div``;
 

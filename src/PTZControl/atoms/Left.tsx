@@ -41,7 +41,7 @@ const Left: React.FC<Props> = () => {
   },[]);
 
   return (
-    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} transform='translate(138.146447, 137.146447) rotate(45.000000)'>
+    <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} onTouchStart={activeStart} onTouchEnd={activeEnd} transform='translate(138.146447, 137.146447) rotate(45.000000)'>
       <Hover hover={hover} transform='translate(-138.146447, -137.146447) translate(41.146447, 40.646447)' fill='url(#linearGradient-11)' fillOpacity='0.56'>
         <path d='M96.9801453,96.3343288 L97.3106078,96.6672527 L97.3106078,192.833775 L1.14408557,192.833775 L0.813398341,192.503329 L0.823536055,191.237971 C1.67392753,138.7883 44.3691849,96.5106982 96.9801453,96.3343288 Z' id='PTZ-Hover-Left' transform='translate(49.062003, 144.584052) rotate(-90.000000) translate(-49.062003, -144.584052) ' />
       </Hover>
