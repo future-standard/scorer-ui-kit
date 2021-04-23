@@ -16,7 +16,7 @@ const LabelText = styled.span`
 `;
 
 interface OwnProps {
-  htmlFor?: string
+  htmlFor: string
   labelText: string
 }
 type Props = OwnProps & LabelHTMLAttributes<HTMLLabelElement>

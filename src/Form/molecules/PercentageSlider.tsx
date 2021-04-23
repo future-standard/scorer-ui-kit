@@ -79,12 +79,14 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
     <Container>
       <Headers>
         <Label
+          htmlFor='percentage-slider'
           labelText={updateTitle ? updateTitle(selectedValue) : getTitleLevel(selectedValue)}
         />
-        <ValueTitle labelText={`${selectedValue}%`} />
+        <ValueTitle htmlFor='percentage-slider' labelText={`${selectedValue}%`} />
       </Headers>
       <SliderInput
         {...props}
+        id='percentage-slider'
         max={100}
         min={0}
         defaultValue={defaultValue}
