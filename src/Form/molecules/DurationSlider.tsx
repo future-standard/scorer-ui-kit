@@ -58,12 +58,13 @@ const DurationSlider: React.FC<IDurationSlider> = (
   return(
     <Container>
       <Headers>
-        <Label labelText={title} />
-        <ValueTitle labelText={getTextTimeUnit(selectedValue, timeUnit)} />
+        <Label htmlFor='duration-slider' labelText={title} />
+        <ValueTitle htmlFor='duration-slider' labelText={getTextTimeUnit(selectedValue, timeUnit)} />
       </Headers>
       <SliderInput
         {
           ...props}
+        id='duration-slider'
         max={max}
         min={min}
         defaultValue={defaultValue}
