@@ -17,14 +17,20 @@ export const dimensions = {
         xSmall: '20px',
         small: '30px',
         normal: '40px',
-        large: '60px'
+        large: '60px',
       },
       padding: {
         xSmall: '0 10px',
         small: '0 20px',
         normal: '0 20px',
-        large: '0 20px'
+        large: '0 20px',
       },
+      iconSize: {
+        xSmall: 12,
+        small: 14,
+        normal: 16,
+        large: 20
+      }
     },
     input: {
       height: '40px'

@@ -1,12 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-
 import Button from './Button';
 import Icon from '../../Icons/Icon';
-import { IButtonProps } from '..';
+import { IButtonProps, TypeButtonSizes } from '..';
+import {dimensions} from '../../themes/common';
 
-
-const TextContainer = styled.div`
+const TextContainer = styled.div<{size: TypeButtonSizes, position?: string}>`
   height: inherit;
   flex: 1;
   order: 1;
@@ -14,16 +13,20 @@ const TextContainer = styled.div`
   justify-content: center;
   align-items: center;
   white-space: nowrap;
-  padding: 0 20px;
+
+  ${({ position, size }) => position && position === 'left' ? css`
+    padding-left: ${( size === 'xSmall' ) ? `10px` : `20px`};
+  ` : css`
+    padding-right: ${( size === 'xSmall' ) ? `10px` : `20px`};
+`}
+
   ${({theme}) => theme && css`
     transition: padding ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
   `}
-
 `;
 
 const IconContainer = styled.div<{ position?: string }>`
   height: inherit;
-  flex: 0 0 35px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,17 +41,9 @@ const IconContainer = styled.div<{ position?: string }>`
   }
 `;
 
-const InnerContainer = styled.div<{position?: string}>`
+const InnerContainer = styled.div`
   display: flex;
   height: inherit;
-
-
-  ${({ position }) => position && position === 'left' ? css`
-    margin-right: -20px;
-  ` : css`
-    margin-left: -20px;
-  `}
-
 `;
 
 interface IProps extends IButtonProps {
@@ -56,19 +51,20 @@ interface IProps extends IButtonProps {
   position?: 'left' | 'right'
 }
 
-const ButtonWithIcon : React.FC<IProps> = ({design, size, onClick, disabled, position, icon, children, ...props}) => {
+const ButtonWithIcon : React.FC<IProps> = ({design, size='normal', onClick, disabled, position, icon, children, ...props}) => {
 
-  const iconSize = size === 'large' ? 20 : 16;
+  const iconSize = dimensions.form.button.iconSize[size];
   const iconColor = design === 'secondary' ? 'dimmed' : 'inverse';
 
-  return <Button disabled={disabled} {...{ design, size, onClick, disabled }} {...props}>
-    <InnerContainer>
-      <TextContainer>{children}</TextContainer>
-      <IconContainer {...{ design, position }}>
-        <Icon icon={icon} size={iconSize} color={iconColor} weight={'heavy'} />
-      </IconContainer>
-    </InnerContainer>
-  </Button>;
-};
+  return (
+    <Button disabled={disabled} {...{ design, size, onClick, disabled }} {...props}>
+      <InnerContainer>
+        <TextContainer {...{size, position}}>{children}</TextContainer>
+        <IconContainer {...{ position }}>
+          <Icon icon={icon} size={iconSize} color={iconColor} weight='heavy' />
+        </IconContainer>
+      </InnerContainer>
+    </Button>
+  );};
 
 export default ButtonWithIcon;
