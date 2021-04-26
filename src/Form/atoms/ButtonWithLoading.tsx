@@ -3,20 +3,19 @@ import styled, { css } from 'styled-components';
 
 import Button from './Button';
 import Spinner from '../../Indicators/Spinner';
-import { TypeButtonDesigns, IButtonProps } from '..';
+import { TypeButtonDesigns, IButtonProps, TypeButtonSizes } from '..';
 
 
 const LoadingButton = styled(Button)<{ loading: boolean }>`
-  ${({loading, theme, design}) => loading && css`
+  ${({loading, theme}) => loading && css`
     cursor: wait;
     background: ${ theme.styles.form.button['primary'].active };
-
+    padding: 0 20px;
     &:disabled {
       opacity: 1;
     }
   `};
-
-`
+`;
 
 const TextContainer = styled.div`
   height: inherit;
@@ -41,7 +40,7 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   overflow: hidden;
   opacity: 0;
 
-  ${({ theme, position, design }) => css`
+  ${({ theme, position }) => css`
     transition:
       flex ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut} ${theme.animation.speed.slow},
       opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
@@ -54,7 +53,7 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   }
 `;
 
-const InnerContainer = styled.div<{position?: string, loading: string, design: TypeButtonDesigns}>`
+const InnerContainer = styled.div<{position?: string, loading: string, design: TypeButtonDesigns, size: TypeButtonSizes}>`
   display: flex;
   height: inherit;
 
@@ -65,7 +64,7 @@ const InnerContainer = styled.div<{position?: string, loading: string, design: T
     margin-left: ${ loading === 'true' ? '-20px' : '0' };
   `}
 
-  ${({ loading, theme, design }) => loading === 'true' ? css`
+  ${({ loading, theme, design, size }) => loading === 'true' ? css`
 
     // TODO: Fix transition animation so the below line doesn't look awful when transitioning - L
     // ${ theme.styles.form.button[design].active };
@@ -73,7 +72,7 @@ const InnerContainer = styled.div<{position?: string, loading: string, design: T
     transition: margin ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
 
     ${TextContainer}{
-      padding: 0 20px;
+      padding: ${theme.dimensions.form.button.padding[ size ]};
     }
     ${LoadingContainer}{
       opacity: 1;
@@ -95,10 +94,10 @@ interface IProps extends IButtonProps {
 const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', onClick, disabled, position, loading, children,...rest}) => {
   return (
     <LoadingButton disabled={disabled || loading} {...{ design, size, loading, onClick}} {...rest}>
-      <InnerContainer loading={loading.toString()} {...{ design}}>
+      <InnerContainer loading={loading.toString()} {...{ design, size}}>
         <TextContainer>{children}</TextContainer>
         <LoadingContainer {...{ design, position }}>
-          <Spinner size='small' styling={design} />
+          <Spinner size={size ==='xSmall' ? 'xSmall' : 'small'} styling={design} />
         </LoadingContainer>
       </InnerContainer>
     </LoadingButton>
