@@ -18,7 +18,7 @@ const TextContainer = styled.div<{size: TypeButtonSizes, position?: string}>`
     padding-left: ${( size === 'xSmall' ) ? `10px` : `20px`};
   ` : css`
     padding-right: ${( size === 'xSmall' ) ? `10px` : `20px`};
-`}
+  `}
 
   ${({theme}) => theme && css`
     transition: padding ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
