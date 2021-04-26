@@ -13,7 +13,7 @@ export default {
 export const StandardButton = () => {
   const buttonText = text("Button Text", "Example Title");
   const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
-  const buttonSize = select("Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
+  const buttonSize = select("Size", { xSmall: 'xSmall', Small: "small", Normal: "normal", Large: "large" }, "normal");
   const buttonDisabled = boolean("Disabled", false);
   const buttonOnClick = action('button-click');
 
