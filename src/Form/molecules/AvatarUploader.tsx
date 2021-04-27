@@ -5,10 +5,12 @@ import DropArea from '../atoms/DropArea';
 import { AvatarPlaceholder } from '../../svg';
 import Label from '../atoms/Label';
 
+const PHOTO_HEGHT = `150px`;
+const PHOTO_WIDTH = `142px`;
 
 const Container = styled.div`
   position: relative;
-  width: 110px;
+  width: ${PHOTO_WIDTH};
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
   `}
@@ -91,7 +93,7 @@ const AvatarUploader : React.FC = () => {
               <PlaceholderText>Drop Photo</PlaceholderText>
             </NoPhoto>
             )}
-        <DropArea height='150px' dropCallback={handleFileUpload} />
+        <DropArea height={PHOTO_HEGHT} dropCallback={handleFileUpload} />
       </PreviewImageGroup>
       <StyledInputFileButton
         id='avatar-upload'

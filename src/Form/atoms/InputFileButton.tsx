@@ -7,6 +7,10 @@ const Container = styled.div``;
 const HiddenInput = styled.input`
   display: none;
 `;
+const StyledButton = styled(Button)`
+  width: 100%;
+  text-align: center;
+`;
 
 interface OwnProps {
   text: string
@@ -43,12 +47,12 @@ const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize,
         onChange={handleFile}
         {...props}
       />
-      <Button
+      <StyledButton
         onClick={fowardClick}
         design={buttonDesign}
         size={buttonSize}
       >{text}
-      </Button>
+      </StyledButton>
     </Container>
   );
 };
