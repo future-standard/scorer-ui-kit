@@ -14,8 +14,8 @@ const StyledButton = styled.button<IStyledComponentProps>`
   ${({theme, design, size}) => css`
 
     ${theme.styles.form.button[design].default};
-    height: ${theme.dimensions.form.button.height[ size ]};
-    padding: ${theme.dimensions.form.button.padding[ size ]};
+    height: ${theme.dimensions.form.button[ size ].height};
+    padding: ${theme.dimensions.form.button[ size ].padding};
 
     ${theme.typography.form.button[ design ][ size ]};
     font-family: ${theme.fontFamily.ui};
