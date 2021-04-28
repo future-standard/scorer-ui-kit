@@ -17,6 +17,7 @@ import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
 import DropArea from './atoms/DropArea';
+import CropTool from './atoms/CropTool';
 import AvatarUploader from './molecules/AvatarUploader';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
@@ -43,6 +44,7 @@ export {
     InputFileButton,
     AvatarUploader,
     DropArea,
+    CropTool,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';

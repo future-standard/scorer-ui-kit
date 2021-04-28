@@ -36,6 +36,7 @@ import {
   PercentageSlider,
   InputFileButton,
   DropArea,
+  CropTool,
   AvatarUploader,
 } from './Form';
 
@@ -164,6 +165,7 @@ export {
   PercentageSlider,
   InputFileButton,
   DropArea,
+  CropTool,
   AvatarUploader,
 
   // Filters
