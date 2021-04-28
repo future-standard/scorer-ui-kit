@@ -185,7 +185,7 @@ export const typography = {
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 100%, 1.000)"
                 },
-                "xSmall": {
+                "xsmall": {
                   "textAlign": "center",
                   "fontSize": "12px",
                   "fontWeight": 500,
@@ -215,7 +215,7 @@ export const typography = {
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 55.3%, 1.000)"
                 },
-                "xSmall": {
+                "xsmall": {
                   "textAlign": "center",
                   "fontSize": "12px",
                   "fontWeight": 500,
@@ -245,7 +245,7 @@ export const typography = {
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 100%, 1.000)"
                 },
-                "xSmall": {
+                "xsmall": {
                   "textAlign": "center",
                   "fontSize": "12px",
                   "fontWeight": 500,

@@ -15,9 +15,9 @@ const TextContainer = styled.div<{size: TypeButtonSizes, position?: string}>`
   white-space: nowrap;
 
   ${({ position, size }) => position && position === 'left' ? css`
-    padding-left: ${( size === 'xSmall' ) ? `10px` : `20px`};
+    padding-left: ${( size === 'xsmall' ) ? `10px` : `20px`};
   ` : css`
-    padding-right: ${( size === 'xSmall' ) ? `10px` : `20px`};
+    padding-right: ${( size === 'xsmall' ) ? `10px` : `20px`};
   `}
 
   ${({theme}) => theme && css`
@@ -53,7 +53,7 @@ interface IProps extends IButtonProps {
 
 const ButtonWithIcon : React.FC<IProps> = ({design, size='normal', onClick, disabled, position, icon, children, ...props}) => {
 
-  const iconSize = dimensions.form.button.iconSize[size];
+  const iconSize = dimensions.form.button[size].iconSize;
   const iconColor = design === 'secondary' ? 'dimmed' : 'inverse';
 
   return (

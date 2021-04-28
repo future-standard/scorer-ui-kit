@@ -72,7 +72,7 @@ const InnerContainer = styled.div<{position?: string, loading: string, design: T
     transition: margin ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
 
     ${TextContainer}{
-      padding: ${theme.dimensions.form.button.padding[ size ]};
+      padding: ${theme.dimensions.form.button[ size ].padding};
     }
     ${LoadingContainer}{
       opacity: 1;
@@ -97,7 +97,7 @@ const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', 
       <InnerContainer loading={loading.toString()} {...{ design, size}}>
         <TextContainer>{children}</TextContainer>
         <LoadingContainer {...{ design, position }}>
-          <Spinner size={size ==='xSmall' ? 'xSmall' : 'small'} styling={design} />
+          <Spinner size={size ==='xsmall' ? 'xsmall' : 'small'} styling={design} />
         </LoadingContainer>
       </InnerContainer>
     </LoadingButton>

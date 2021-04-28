@@ -46,10 +46,10 @@ const RotatingCircle = styled.circle<{ r: number, styling: string }>`
   stroke-linecap: round;
 `;
 
-type SpinnerSize = 'xSmall' | 'small' | 'medium' | 'large' | 'xlarge';
+type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
 const sizeGuide = {
-  xSmall: 12,
+  xsmall: 12,
   small: 16,
   medium: 24,
   large: 36,

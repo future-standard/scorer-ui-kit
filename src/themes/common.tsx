@@ -13,24 +13,26 @@ export const dimensions = {
   },
   form: {
     button: {
-      height:  {
-        xSmall: '20px',
-        small: '30px',
-        normal: '40px',
-        large: '60px',
+      xsmall: {
+        height: '20px',
+        padding: '0 10px',
+        iconSize: 12,
       },
-      padding: {
-        xSmall: '0 10px',
-        small: '0 20px',
-        normal: '0 20px',
-        large: '0 20px',
+      small: {
+        height: '30px',
+        padding: '0 20px',
+        iconSize: 14,
       },
-      iconSize: {
-        xSmall: 12,
-        small: 14,
-        normal: 16,
-        large: 20
-      }
+      normal: {
+        height: '40px',
+        padding: '0 20px',
+        iconSize: 16,
+      },
+      large: {
+        height: '60px',
+        padding: '0 20px',
+        iconSize: 20,
+      },
     },
     input: {
       height: '40px'
