@@ -55,6 +55,10 @@ const NoPhoto = styled.div`
  * TODO Free memory for  URL.createObjectURL(); 
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
  * 
+ * validate image type and size
+ * validateImageMimeType
+ * https://product.voxmedia.com/2020/10/23/21520222/building-an-in-browser-image-editor-with-react
+ * 
 */
 
 const StyledInputFileButton = styled(InputFileButton)`
