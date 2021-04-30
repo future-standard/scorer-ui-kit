@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
 import styled, {css} from 'styled-components';
 import ReactDom from 'react-dom';
 import Icon, {IconWrapper} from '../../Icons/Icon';
@@ -160,30 +160,32 @@ interface IDrawArea {
 interface ICrop {
   title?: string
   cancelBtnTxt?: string
-  saveBtnTxt?: string
+  cropBtnTxt?: string
   scaleX?: number
   scaleY?: number
   enable?: number
   zoomTo?: number
   imgUrl: string
-  fixedCropSize?: boolean
+  isResizable?: boolean
   cropHeight?: number
   cropWidth?: number
   canvasHeight: number
   canvasWidth: number
   onCrop?: (newFileUrl: string) => void
+  onClose?: () => void
 }
 
 const CropTool : React.FC<ICrop> = ({
   title='Crop Image',
   cancelBtnTxt='Cancel',
-  saveBtnTxt='Crop & Save',
+  cropBtnTxt='Crop & Save',
   cropHeight = 100,
   cropWidth = 100,
   canvasHeight,
   canvasWidth,
   imgUrl,
   onCrop,
+  onClose = () => {},
 }) => {
 
   const [cropValues, setCropValues] = useState<IDrawArea>(initialCropValues(cropHeight, cropWidth, canvasHeight, canvasWidth));
@@ -236,6 +238,11 @@ const CropTool : React.FC<ICrop> = ({
     setIsLoading(false);
   },[onCrop]);
 
+  useEffect(() => {
+    setCropValues(initialCropValues(cropHeight, cropWidth, canvasHeight, canvasWidth));
+    handleOnLoad();
+  }, [canvasHeight, canvasWidth, cropHeight, cropWidth, handleOnLoad]);
+
   return(
     ReactDom.createPortal(
       <Container>
@@ -246,18 +253,24 @@ const CropTool : React.FC<ICrop> = ({
               {title}
             </TextGroup>
             <ButtonsGroup>
-              <Button design='secondary' size='small'>{cancelBtnTxt}</Button>
+              <Button
+                design='secondary'
+                size='small'
+                onClick={onClose}
+              >
+                {cancelBtnTxt}
+              </Button>
               <ButtonWithLoading
                 loading={isLoading}
                 size='small'
                 onClick={() => handleCrop(cropValues)}
-              > {saveBtnTxt}
+              > {cropBtnTxt}
               </ButtonWithLoading>
             </ButtonsGroup>
           </ToolHeader>
           <PreviewArea canvasHeight={canvasHeight} canvasWidth={canvasWidth}>
             <HiddenImage ref={imgRef} src={imgUrl} onLoad={handleOnLoad} />
-            <canvas ref={canvasRef} width={`${canvasWidth}px`} height={`${canvasHeight}`} />
+            <canvas ref={canvasRef} width={`${canvasWidth}px`} height={`${canvasHeight}px`} />
             <CropArea cropValues={cropValues} />
           </PreviewArea>
         </InnerContainer>

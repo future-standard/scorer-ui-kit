@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import { CropTool } from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
-import { text} from "@storybook/addon-knobs";
+import { text, boolean, number} from "@storybook/addon-knobs";
 import photo from '../../assets/placeholder.jpg';
 
 
 const Container = styled.div`
-  max-width: 500px;
+    margin: 20px;
 `;
 
 const CropResult = styled.img`
@@ -18,14 +18,21 @@ const NewImageArea = styled.div``;
 export default {
   title: 'Form/File Management',
   component: CropTool,
-  decorators:[]
+  decorators:[],
+  escapeHTML: false,
 };
 
 export const _CropTool = () => {
   const [cropImg, setCropImg] = useState('');
   const [isCroping, setIsCropping] = useState(true);
   const textVal = text('Title','Crop Image');
-  const heightVal = text('Height', '300px');
+  const cancelText = text('Cancel Button Text', 'Cancel');
+  const cropText = text('Crop Button Text', `Crop and Save`);
+  const resizableCropArea = boolean('Resizable', false);
+  const heightCanvasVal = number('Canvas Height', 450);
+  const widthCanvasVal = number('Canvas Width', 500);
+  const initalCropHeight = number('Crop Height', 150);
+  const initalCropWidth = number('Crop Width', 150);
   const showValue = action('Input Callback');
   
 
@@ -33,17 +40,27 @@ export const _CropTool = () => {
     console.log('Crop');
     setCropImg(newImgUrl);
     setIsCropping(false);
-    
   };
+
+  const handleClose = () => {
+    setIsCropping(false);
+  }
 
   return(
     <Container>
       {isCroping ? <CropTool
         title={textVal}
         onCrop={onCrop}
+        onClose={handleClose}
+        cancelBtnTxt={cancelText}
+        cropBtnTxt={cropText}
+        isResizable={resizableCropArea}
         imgUrl={photo}
-        canvasHeight={462}
-        canvasWidth={485}
+        canvasHeight={heightCanvasVal}
+        canvasWidth={widthCanvasVal}
+        cropHeight={initalCropHeight}
+        cropWidth={initalCropWidth}
+
       />
       : null}
       <NewImageArea>
