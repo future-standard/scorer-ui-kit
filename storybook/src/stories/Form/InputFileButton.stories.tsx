@@ -29,7 +29,6 @@ export const _InputFileButton = () => {
     } else {
       showValue(newFiles);
     }
-    
   };
 
   return(

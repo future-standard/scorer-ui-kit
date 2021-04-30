@@ -65,7 +65,19 @@ const StyledInputFileButton = styled(InputFileButton)`
   width: 100%;
 `;
 
-const AvatarUploader : React.FC = () => {
+interface IAvatar {
+  title?: string
+  innerText?: string
+  buttonText?: string
+  onAvatarReady?: (imgFile: File) => void
+}
+
+const AvatarUploader : React.FC<IAvatar> = ({
+  title = 'Photograph',
+  innerText = 'Drop Photo',
+  buttonText = 'Select File',
+  onAvatarReady,
+}) => {
   const [avatarImg, setAvatarImg] = useState('');
 
   // cosnt handleCrop = () => {
@@ -78,6 +90,9 @@ const AvatarUploader : React.FC = () => {
       const prevImg = URL.createObjectURL(newFiles[0]);
       console.log(prevImg);
       setAvatarImg(prevImg);
+      if(onAvatarReady) {
+        onAvatarReady(newFiles[0]);
+      }
     } else {
       console.log(newFiles);
       // We need some notice to let the user that can only drop one
@@ -87,21 +102,21 @@ const AvatarUploader : React.FC = () => {
 
   return(
     <Container>
-      <Label labelText='Photograph' htmlFor='avatar-upload' />
+      <Label labelText={title} htmlFor='avatar-upload' />
       <PreviewImageGroup>
         {avatarImg
           ? <PreviewImage src={avatarImg} alt='avatar image' />
           : (
             <NoPhoto>
               <AvatarPlaceholder />
-              <PlaceholderText>Drop Photo</PlaceholderText>
+              <PlaceholderText>{innerText}</PlaceholderText>
             </NoPhoto>
             )}
         <DropArea height={PHOTO_HEGHT} dropCallback={handleFileUpload} />
       </PreviewImageGroup>
       <StyledInputFileButton
         id='avatar-upload'
-        text='Select File'
+        text={buttonText}
         buttonSize='small'
         accept='image/*'
         callback={handleFileUpload}
