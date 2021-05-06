@@ -86,9 +86,9 @@ const ContainerInner = styled.div`
   height: 100%;
 `;
 
-const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, supportUrl }) => {
+const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, supportUrl, defaultMenuOpen=true }) => {
 
-  const [isMenuOpen, setMenuOpen] = useState<boolean>(true);
+  const [isMenuOpen, setMenuOpen] = useState<boolean>(defaultMenuOpen);
   const [isMenuPinned, setMenuPinned] = useState<boolean>(true);
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
