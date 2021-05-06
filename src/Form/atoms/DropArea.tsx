@@ -33,28 +33,27 @@ const DropArea : React.FC<IDropArea> = ({height, text, dropCallback}) => {
 const handleDragEnter = useCallback((e) => {
   e.preventDefault();
   e.stopPropagation();
-  console.log('entering..');
+
   setInDropZone(true);
 },[]);
 
 const handleDragLeave = useCallback((e) => {
   e.preventDefault();
   e.stopPropagation();
-  console.log('leaving..');
+
   setInDropZone(false);
 },[]);
 
 const handleDragOver = useCallback((e) => {
   e.preventDefault();
   e.stopPropagation();
-  console.log('DragOver');
+
 },[]);
 
 const handleDrop = useCallback((e ) => {
   e.preventDefault();
   e.stopPropagation();
   if(e.dataTransfer?.files && dropCallback) {
-    console.log('droping', e.dataTransfer.files);
     dropCallback(e.dataTransfer.files);
   }
   setInDropZone(false);

@@ -1,9 +1,11 @@
-import React, {useState, useRef, useCallback, useEffect} from 'react';
-import styled, {css} from 'styled-components';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import styled, { css } from 'styled-components';
 import ReactDom from 'react-dom';
-import Icon, {IconWrapper} from '../../Icons/Icon';
+import Icon, { IconWrapper } from '../../Icons/Icon';
 import Button from '../atoms/Button';
 import ButtonWithLoading from '../atoms/ButtonWithLoading';
+
+// TODO: Add debouncer //
 
 const Container = styled.div`
   position: fixed;
@@ -31,24 +33,25 @@ const HiddenImage = styled.img`
   display: none;
 `;
 
-/** https://projects.verou.me/css3patterns/# */
-const PreviewArea = styled.div<{canvasHeight?: number, canvasWidth?: number}>`
-  height: ${({canvasHeight}) => canvasHeight ? `${canvasHeight}px` : `462px`};
-  width: ${({canvasWidth}) => canvasWidth ? `${canvasWidth}px` : `485px`};
+/** background pattern https://projects.verou.me/css3patterns/# */
+const PreviewArea = styled.div<{ canvasHeight?: number, canvasWidth?: number}>`
+  height: ${({ canvasHeight }) => canvasHeight ? `${canvasHeight}px` : `462px`};
+  width: ${({ canvasWidth }) => canvasWidth ? `${canvasWidth}px` : `485px`};
   border-radius: 5px;
   background-color: hsla(202, 33%, 95%, 0.8);
   background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.8) 35px, rgba(255,255,255,.8) 70px);
 `;
 
-const CropArea = styled.div<{cropValues: IDrawArea}>`
+const CropArea = styled.div<{ cropValues: IDrawArea, cursorStyle: string  }>`
   position: absolute;
   border: dashed yellow 2px;
-  ${({cropValues}) => css`
+  ${({ cropValues }) => css`
     top: ${cropValues.top}px;
     left: ${cropValues.left}px;
     width: ${cropValues.width}px;
     height: ${cropValues.height}px;
   `};
+  cursor: ${({cursorStyle}) => cursorStyle};
 `;
 
 const ToolHeader = styled.div`
@@ -95,7 +98,7 @@ interface ICoordinates {
   inputDimensions: IDimensions
   outputDimensions: IDimensions
   focalPoint: IFocalPoint
-  zoom: number 
+  zoom: number
 }
 
 // const defaultDrawValues = {
@@ -115,8 +118,8 @@ function drawImgValues(img: HTMLImageElement, canvasHeight: number, canvasWidth:
 
   const width = Math.floor(img.naturalWidth * scale);
   const height = Math.floor(img.naturalHeight * scale);
-  const top = 0 + Math.floor((canvasHeight - height)/2);
-  const left = 0 + Math.floor((canvasWidth - width)/2);
+  const top = 0 + Math.floor((canvasHeight - height) / 2);
+  const left = 0 + Math.floor((canvasWidth - width) / 2);
 
   return {
     left,
@@ -128,10 +131,10 @@ function drawImgValues(img: HTMLImageElement, canvasHeight: number, canvasWidth:
 
 function initialCropValues(cropHeight: number, cropWidth: number, canvasHeight: number, canvasWidth: number) {
 
-  const width =  Math.min(cropWidth, canvasWidth);
+  const width = Math.min(cropWidth, canvasWidth);
   const height = Math.min(cropHeight, canvasHeight);
-  const top = 0 + Math.floor( (canvasHeight/2) - (height/2) );
-  const left = 0 + Math.floor( (canvasWidth/2) - (width/2) );
+  const top = 0 + Math.floor((canvasHeight / 2) - (height / 2));
+  const left = 0 + Math.floor((canvasWidth / 2) - (width / 2));
 
   return {
     left,
@@ -141,11 +144,51 @@ function initialCropValues(cropHeight: number, cropWidth: number, canvasHeight: 
   };
 
 }
+// https://developer.mozilla.org/en-US/docs/Web/CSS/cursor //
+function calcCursorStyle(left: number, top: number, width: number, height: number, clientX: number, clientY: number) {
+  let cursorStyle = 'default';
+
+  if (clientY - top < 5) {
+    if (width - (clientX - left) < 5) {
+      cursorStyle = 'ne-resize';
+    } else if (clientX - left < 5) {
+      cursorStyle = 'nw-resize';
+    } else {
+      cursorStyle = 'n-resize';
+    }
+  } else if (height - (clientY - top) < 5) {
+    if (width - (clientX - left) < 5) {
+      cursorStyle = 'se-resize';
+    } else if (clientX - left < 5) {
+      cursorStyle = 'sw-resize';
+    } else {
+      cursorStyle = 's-resize';
+    }
+  } else if (width - (clientX - left) < 5) {
+    cursorStyle = 'e-resize';
+  } else if (clientX - left < 5) {
+    cursorStyle = 'w-resize';
+  } else {
+    cursorStyle = 'move';
+  }
+
+  return cursorStyle;
+}
+
+// function calculateCropValues(left: number, top: number, diffy: number, diffX) {
+
+//   return {
+//     newLeft,
+//     newTop,
+//     newWidth,
+//     newHeight,
+//   }
+// }
 
 function getImageType(img: HTMLImageElement) {
-  var dataType = img.src.substr(0,20);
-  if (dataType.includes('data')){
-      return dataType.split('/')[1].split(';')[0];
+  var dataType = img.src.substr(0, 20);
+  if (dataType.includes('data')) {
+    return dataType.split('/')[1].split(';')[0];
   }
   return 'image/jpeg';
 }
@@ -155,6 +198,14 @@ interface IDrawArea {
   top: number
   width: number
   height: number
+}
+
+interface IMouseValues {
+  clientX: number
+  clientY: number
+  width: number,
+  height: number,
+  cursor: string,
 }
 
 interface ICrop {
@@ -175,75 +226,205 @@ interface ICrop {
   onClose?: () => void
 }
 
-const CropTool : React.FC<ICrop> = ({
-  title='Crop Image',
-  cancelBtnTxt='Cancel',
-  cropBtnTxt='Crop & Save',
+const CropTool: React.FC<ICrop> = ({
+  title = 'Crop Image',
+  cancelBtnTxt = 'Cancel',
+  cropBtnTxt = 'Crop & Save',
   cropHeight = 100,
   cropWidth = 100,
   canvasHeight,
   canvasWidth,
   imgUrl,
   onCrop,
-  onClose = () => {},
+  onClose = () => { },
 }) => {
 
   const [cropValues, setCropValues] = useState<IDrawArea>(initialCropValues(cropHeight, cropWidth, canvasHeight, canvasWidth));
   const [isLoading, setIsLoading] = useState(false);
+  const [cursorVal, setCursorVal] = useState('default');
+  const [mouseDownStart, setMouseDownStart] = useState<IMouseValues>({
+    clientX: 0,
+    clientY: 0,
+    width: cropWidth,
+    height: cropHeight,
+    cursor: cursorVal,
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const cropRef = useRef<HTMLDivElement>(null);
 
-  const handleOnLoad = useCallback(()=> {
-    if(!canvasRef || !imgRef) { return; }
+  const handleOnLoad = useCallback(() => {
+    if (!canvasRef || !imgRef) { return; }
     const newImage = imgRef.current;
-    if(!newImage) {return; }
+    if (!newImage) { return; }
 
     const { left, top, width, height } = drawImgValues(newImage, canvasHeight, canvasWidth);
     const canvas = canvasRef.current;
     console.log('getting values', left, top, width, height);
-    if(canvas) {
+    if (canvas) {
       const ctx = canvas.getContext("2d");
       // ctx.imageSmoothingEnabled = false; </// not sure if required
       ctx?.drawImage(newImage, left, top, width, height);
     }
-  },[canvasHeight, canvasWidth]);
+  }, [canvasHeight, canvasWidth]);
 
   const handleCrop = useCallback((cropArea: IDrawArea) => {
     setIsLoading(true);
 
-    if(!canvasRef || !canvasRef.current|| !imgRef) { return; }
+    if (!canvasRef || !canvasRef.current || !imgRef) { return; }
 
     const newImage = imgRef.current;
-    if(!newImage) {return; }
+    if (!newImage) { return; }
 
     const canvas = canvasRef.current;
-    if(!canvas) { return; }
+    if (!canvas) { return; }
 
     const ctx = canvas.getContext("2d");
     // ctx.imageSmoothingEnabled = false; </// not sure required
     const cropImageData = ctx?.getImageData(cropArea.left, cropArea.top, cropArea.width, cropArea.height);
-    if(!cropImageData) {return;}
+    if (!cropImageData) { return; }
 
     const canvasCropped = document.createElement('canvas');
     const cropContext = canvasCropped.getContext('2d');
     canvasCropped.width = cropArea.width;
     canvasCropped.height = cropArea.height;
 
-    cropContext?.putImageData(cropImageData,0,0);
+    cropContext?.putImageData(cropImageData, 0, 0);
     const newImgUrl = canvasCropped.toDataURL(getImageType(newImage));
-    if(onCrop) {
+    if (onCrop) {
       onCrop(newImgUrl);
     }
-    
+
     setIsLoading(false);
-  },[onCrop]);
+  }, [onCrop]);
 
   useEffect(() => {
     setCropValues(initialCropValues(cropHeight, cropWidth, canvasHeight, canvasWidth));
     handleOnLoad();
   }, [canvasHeight, canvasWidth, cropHeight, cropWidth, handleOnLoad]);
 
-  return(
+  // Selection handlers //
+
+  const handleMouseMove = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // console.log('Mouse Move',cropValues);
+    // console.log('e.clientY', e.clientY);
+    // console.log('e.clientX', e.clientX);
+    if (!cropRef) { return; }
+    const rect = e.target.getBoundingClientRect();
+    if(!rect) { return; }
+    setCursorVal(calcCursorStyle(rect.left, rect.top, rect.width, rect.height, e.clientX, e.clientY));
+
+  }, []);
+
+  const handleMouseDown = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!cropRef) { return; }
+    
+    let mouseButton;
+
+    if (typeof (e.buttons) !== undefined) {
+      mouseButton = e.buttons;
+    } else if (typeof (e.button) !== undefined) {
+      mouseButton = e.button;
+    } else {
+      mouseButton = e.which;
+    }
+
+    if(mouseButton !== 1) { return; }
+    console.log(mouseButton, 'mousebutton');
+    console.log('Mouse Down', cropValues);
+    console.log('e.clientX', e.clientX);
+    console.log('e.clientY', e.clientY);
+    console.log('e value', e);
+    const rect = e.target.getBoundingClientRect();
+    console.log('rec value', rect);
+    setMouseDownStart(
+      {
+        clientX : e.clientX,
+        clientY: e.clientY,
+        width: rect.width,
+        height: rect.height,
+        cursor: cursorVal
+      });
+
+  }, [cropValues, cursorVal]);
+
+  // end of selection handlerss //
+
+  const handleMouseUp = useCallback((e, cropArea: IDrawArea, mouseStart: IMouseValues) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Mouse Up');
+    const rect = e.target.getBoundingClientRect();
+    console.log('rec value', rect);
+    if (!cropRef) { return; }
+    
+    let [newLeft, newTop, newWidth, newHeight] = [cropArea.left, cropArea.top, cropArea.width, cropArea.height];
+
+    const diffY = e.clientY - mouseStart.clientY;
+    const diffX = e.clientX - mouseStart.clientX;
+    switch(mouseStart.cursor) {
+      case 'ne-resize':
+        newTop = cropArea.top + diffY;
+        newHeight = mouseStart.height - diffY;
+        newWidth = mouseStart.width + diffX;
+
+      break;
+
+      case 'nw-resize':
+        newTop = cropArea.top + diffY;
+        newLeft = cropArea.left + diffX;
+        newHeight = mouseStart.height - diffY;
+        newWidth = mouseStart.width - diffX;
+      break;
+
+      case 'n-resize':
+        newTop = cropArea.top + diffY;
+        newHeight = mouseStart.height - diffY;
+      break;
+
+      case 'se-resize':
+        newHeight = mouseStart.height + diffY;
+        newWidth = mouseStart.width + diffX;
+      break;
+
+      case 'sw-resize':
+        newLeft = cropArea.left + diffX;
+        newHeight = mouseStart.height + diffY;
+        newWidth = mouseStart.width - diffX;
+      break;
+
+      case 's-resize':
+        newHeight = mouseStart.height + diffY;
+      break;
+
+      case 'e-resize':
+        newWidth = mouseStart.width + diffX;
+      break;
+
+      case 'w-resize':
+        newLeft = cropArea.left + diffX;
+        newWidth = mouseStart.width - diffX;
+      break;
+
+      case 'move' :
+        newTop = cropArea.top + diffY;
+        newLeft = cropArea.left + diffX; 
+      break;
+
+      default: 
+      break;
+    }
+    
+    setCropValues({left: newLeft, top: newTop, width: newWidth, height: newHeight});
+  }, []);
+
+
+
+  return (
     ReactDom.createPortal(
       <Container>
         <InnerContainer>
@@ -268,10 +449,24 @@ const CropTool : React.FC<ICrop> = ({
               </ButtonWithLoading>
             </ButtonsGroup>
           </ToolHeader>
-          <PreviewArea canvasHeight={canvasHeight} canvasWidth={canvasWidth}>
+          <PreviewArea
+            canvasHeight={canvasHeight}
+            canvasWidth={canvasWidth}
+            onMouseDown={handleMouseDown}
+            onMouseUp={(e) => handleMouseUp(e, cropValues, mouseDownStart)}
+          >
             <HiddenImage ref={imgRef} src={imgUrl} onLoad={handleOnLoad} />
-            <canvas ref={canvasRef} width={`${canvasWidth}px`} height={`${canvasHeight}px`} />
-            <CropArea cropValues={cropValues} />
+            <canvas
+              ref={canvasRef}
+              width={`${canvasWidth}px`}
+              height={`${canvasHeight}px`}
+            />
+            <CropArea
+              ref={cropRef}
+              cropValues={cropValues}
+              onMouseMove={handleMouseMove}
+              cursorStyle={cursorVal}
+            />
           </PreviewArea>
         </InnerContainer>
       </Container>, document.body)
