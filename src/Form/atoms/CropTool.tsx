@@ -34,7 +34,8 @@ const HiddenImage = styled.img`
 `;
 
 /** background pattern https://projects.verou.me/css3patterns/# */
-const PreviewArea = styled.div<{ canvasHeight?: number, canvasWidth?: number}>`
+const PreviewArea = styled.div<{ canvasHeight?: number, canvasWidth?: number }>`
+  position: relative;
   height: ${({ canvasHeight }) => canvasHeight ? `${canvasHeight}px` : `462px`};
   width: ${({ canvasWidth }) => canvasWidth ? `${canvasWidth}px` : `485px`};
   border-radius: 5px;
@@ -42,7 +43,7 @@ const PreviewArea = styled.div<{ canvasHeight?: number, canvasWidth?: number}>`
   background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.8) 35px, rgba(255,255,255,.8) 70px);
 `;
 
-const CropArea = styled.div<{ cropValues: IDrawArea, cursorStyle: string  }>`
+const CropArea = styled.div<{ cropValues: IDrawArea, cursorStyle: string }>`
   position: absolute;
   border: dashed yellow 2px;
   ${({ cropValues }) => css`
@@ -51,7 +52,7 @@ const CropArea = styled.div<{ cropValues: IDrawArea, cursorStyle: string  }>`
     width: ${cropValues.width}px;
     height: ${cropValues.height}px;
   `};
-  cursor: ${({cursorStyle}) => cursorStyle};
+  cursor: ${({ cursorStyle }) => cursorStyle};
 `;
 
 const ToolHeader = styled.div`
@@ -80,9 +81,9 @@ const ButtonsGroup = styled.div`
   }
 `;
 
-// function clamp(value: number, minValue: number, maxValue: number) {
-//   return Math.min( Math.max(value, minValue), maxValue);
-// }
+function clamp(value: number, minValue: number, maxValue: number) {
+  return Math.min( Math.max(value, minValue), maxValue);
+}
 
 interface IDimensions {
   height: number
@@ -142,10 +143,9 @@ function initialCropValues(cropHeight: number, cropWidth: number, canvasHeight: 
     width,
     height,
   };
-
 }
 // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor //
-function calcCursorStyle(left: number, top: number, width: number, height: number, clientX: number, clientY: number) {
+function updateCursorStyle(left: number, top: number, width: number, height: number, clientX: number, clientY: number) {
   let cursorStyle = 'default';
 
   if (clientY - top < 5) {
@@ -175,15 +175,96 @@ function calcCursorStyle(left: number, top: number, width: number, height: numbe
   return cursorStyle;
 }
 
-// function calculateCropValues(left: number, top: number, diffy: number, diffX) {
+function updateCropValues(oldCropArea: IDrawArea, mouseStart: IMouseValues, diffY: number, diffX: number, canvasH: number, canvasW: number ) {
 
-//   return {
-//     newLeft,
-//     newTop,
-//     newWidth,
-//     newHeight,
-//   }
-// }
+  let [updatedLeft, updatedTop, updatedWidth, updatedHeight] = [oldCropArea.left, oldCropArea.top, oldCropArea.width, oldCropArea.height];
+
+  switch (mouseStart.cursor) {
+    case 'ne-resize':
+      updatedTop = oldCropArea.top + diffY;
+      updatedHeight = mouseStart.height - diffY;
+      updatedWidth = mouseStart.width + diffX;
+
+      break;
+
+    case 'nw-resize':
+      updatedTop = oldCropArea.top + diffY;
+      updatedLeft = oldCropArea.left + diffX;
+      updatedHeight = mouseStart.height - diffY;
+      updatedWidth = mouseStart.width - diffX;
+      break;
+
+    case 'n-resize':
+      updatedTop = oldCropArea.top + diffY;
+      updatedHeight = mouseStart.height - diffY;
+      break;
+
+    case 'se-resize':
+      updatedHeight = mouseStart.height + diffY;
+      updatedWidth = mouseStart.width + diffX;
+      break;
+
+    case 'sw-resize':
+      updatedLeft = oldCropArea.left + diffX;
+      updatedHeight = mouseStart.height + diffY;
+      updatedWidth = mouseStart.width - diffX;
+      break;
+
+    case 's-resize':
+      updatedHeight = mouseStart.height + diffY;
+      break;
+
+    case 'e-resize':
+      updatedWidth = mouseStart.width + diffX;
+      break;
+
+    case 'w-resize':
+      updatedLeft = oldCropArea.left + diffX;
+      updatedWidth = mouseStart.width - diffX;
+      break;
+
+    case 'move':
+      updatedTop = oldCropArea.top + diffY;
+      updatedLeft = oldCropArea.left + diffX;
+      break;
+
+    default:
+      break;
+  }
+  
+  const newLeft = clamp(updatedLeft, 0, (canvasW - mouseStart.width));
+  const newTop = clamp(updatedTop, 0, (canvasH - mouseStart.height));
+  const newWidth= clamp(updatedWidth, 0, canvasW);
+  const newHeight = clamp(updatedHeight, 0, canvasH);
+
+  return {
+    newLeft,
+    newTop,
+    newWidth,
+    newHeight,
+  };
+}
+
+function isLeftMouseButton(e: MouseEvent) {
+  console.log('e value', e);
+
+  let mouseButton;
+  if (typeof (e.buttons) !== undefined) {
+    mouseButton = e.buttons;
+  } else if (typeof (e.button) !== undefined) {
+    mouseButton = e.button;
+  } else {
+    mouseButton = e.which;
+  }
+
+  if (mouseButton === 1) {
+    console.log('is 1', mouseButton);
+    return true;
+  }
+
+  console.log('is other', mouseButton);
+  return false;
+}
 
 function getImageType(img: HTMLImageElement) {
   var dataType = img.src.substr(0, 20);
@@ -303,38 +384,23 @@ const CropTool: React.FC<ICrop> = ({
     handleOnLoad();
   }, [canvasHeight, canvasWidth, cropHeight, cropWidth, handleOnLoad]);
 
-  // Selection handlers //
+  // Mouse Crop selection handlers //
 
   const handleMouseMove = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
-    // console.log('Mouse Move',cropValues);
-    // console.log('e.clientY', e.clientY);
-    // console.log('e.clientX', e.clientX);
     if (!cropRef) { return; }
     const rect = e.target.getBoundingClientRect();
-    if(!rect) { return; }
-    setCursorVal(calcCursorStyle(rect.left, rect.top, rect.width, rect.height, e.clientX, e.clientY));
-
+    if (!rect) { return; }
+    setCursorVal(updateCursorStyle(rect.left, rect.top, rect.width, rect.height, e.clientX, e.clientY));
   }, []);
 
   const handleMouseDown = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!cropRef) { return; }
-    
-    let mouseButton;
+    if (!isLeftMouseButton(e)) { return; }
 
-    if (typeof (e.buttons) !== undefined) {
-      mouseButton = e.buttons;
-    } else if (typeof (e.button) !== undefined) {
-      mouseButton = e.button;
-    } else {
-      mouseButton = e.which;
-    }
-
-    if(mouseButton !== 1) { return; }
-    console.log(mouseButton, 'mousebutton');
     console.log('Mouse Down', cropValues);
     console.log('e.clientX', e.clientX);
     console.log('e.clientY', e.clientY);
@@ -343,7 +409,7 @@ const CropTool: React.FC<ICrop> = ({
     console.log('rec value', rect);
     setMouseDownStart(
       {
-        clientX : e.clientX,
+        clientX: e.clientX,
         clientY: e.clientY,
         width: rect.width,
         height: rect.height,
@@ -352,7 +418,6 @@ const CropTool: React.FC<ICrop> = ({
 
   }, [cropValues, cursorVal]);
 
-  // end of selection handlerss //
 
   const handleMouseUp = useCallback((e, cropArea: IDrawArea, mouseStart: IMouseValues) => {
     e.preventDefault();
@@ -361,68 +426,16 @@ const CropTool: React.FC<ICrop> = ({
     const rect = e.target.getBoundingClientRect();
     console.log('rec value', rect);
     if (!cropRef) { return; }
-    
-    let [newLeft, newTop, newWidth, newHeight] = [cropArea.left, cropArea.top, cropArea.width, cropArea.height];
 
     const diffY = e.clientY - mouseStart.clientY;
     const diffX = e.clientX - mouseStart.clientX;
-    switch(mouseStart.cursor) {
-      case 'ne-resize':
-        newTop = cropArea.top + diffY;
-        newHeight = mouseStart.height - diffY;
-        newWidth = mouseStart.width + diffX;
-
-      break;
-
-      case 'nw-resize':
-        newTop = cropArea.top + diffY;
-        newLeft = cropArea.left + diffX;
-        newHeight = mouseStart.height - diffY;
-        newWidth = mouseStart.width - diffX;
-      break;
-
-      case 'n-resize':
-        newTop = cropArea.top + diffY;
-        newHeight = mouseStart.height - diffY;
-      break;
-
-      case 'se-resize':
-        newHeight = mouseStart.height + diffY;
-        newWidth = mouseStart.width + diffX;
-      break;
-
-      case 'sw-resize':
-        newLeft = cropArea.left + diffX;
-        newHeight = mouseStart.height + diffY;
-        newWidth = mouseStart.width - diffX;
-      break;
-
-      case 's-resize':
-        newHeight = mouseStart.height + diffY;
-      break;
-
-      case 'e-resize':
-        newWidth = mouseStart.width + diffX;
-      break;
-
-      case 'w-resize':
-        newLeft = cropArea.left + diffX;
-        newWidth = mouseStart.width - diffX;
-      break;
-
-      case 'move' :
-        newTop = cropArea.top + diffY;
-        newLeft = cropArea.left + diffX; 
-      break;
-
-      default: 
-      break;
-    }
-    
-    setCropValues({left: newLeft, top: newTop, width: newWidth, height: newHeight});
-  }, []);
+    let {newLeft, newTop, newWidth, newHeight} = updateCropValues(cropArea, mouseDownStart, diffY, diffX, canvasHeight, canvasWidth);
 
 
+    setCropValues({ left: newLeft, top: newTop, width: newWidth, height: newHeight });
+  }, [canvasHeight, canvasWidth, mouseDownStart]);
+
+  // End of Mouse Crop selection handlerss //
 
   return (
     ReactDom.createPortal(
