@@ -5,7 +5,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 import Button from '../atoms/Button';
 import ButtonWithLoading from '../atoms/ButtonWithLoading';
 
-// TODO: Add debouncer //
+// TODO: Add debouncer, prevent black sections, restrict area//
 
 const Container = styled.div`
   position: fixed;
@@ -36,6 +36,7 @@ const HiddenImage = styled.img`
 /** background pattern https://projects.verou.me/css3patterns/# */
 const PreviewArea = styled.div<{ canvasHeight?: number, canvasWidth?: number }>`
   position: relative;
+  overflow: hidden;
   height: ${({ canvasHeight }) => canvasHeight ? `${canvasHeight}px` : `462px`};
   width: ${({ canvasWidth }) => canvasWidth ? `${canvasWidth}px` : `485px`};
   border-radius: 5px;
@@ -46,6 +47,7 @@ const PreviewArea = styled.div<{ canvasHeight?: number, canvasWidth?: number }>`
 const CropArea = styled.div<{ cropValues: IDrawArea, cursorStyle: string }>`
   position: absolute;
   border: dashed yellow 2px;
+  box-shadow: 0 0 0 9999em hsla(0, 0%, 32%, 0.75);
   ${({ cropValues }) => css`
     top: ${cropValues.top}px;
     left: ${cropValues.left}px;
@@ -349,7 +351,7 @@ const CropTool: React.FC<ICrop> = ({
     }
   }, [canvasHeight, canvasWidth]);
 
-  const handleCrop = useCallback((cropArea: IDrawArea) => {
+  const handleCrop = useCallback(async (cropArea: IDrawArea) => {
     setIsLoading(true);
 
     if (!canvasRef || !canvasRef.current || !imgRef) { return; }

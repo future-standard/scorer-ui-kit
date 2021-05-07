@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import styled, {css} from 'styled-components';
 import InputFileButton from '../atoms/InputFileButton';
 import DropArea from '../atoms/DropArea';
+import CropTool from '../atoms/CropTool';
 import { AvatarPlaceholder } from '../../svg';
 import Label from '../atoms/Label';
 
@@ -79,26 +80,35 @@ const AvatarUploader : React.FC<IAvatar> = ({
   onAvatarReady,
 }) => {
   const [avatarImg, setAvatarImg] = useState('');
+  const [isCropOpen, setIsCropOpen] = useState(false);
 
-  // cosnt handleCrop = () => {
-  // }
+  const handleCrop = useCallback(async (newFileUrl: string) => {
+    setAvatarImg(newFileUrl);
+    let newFile = await fetch(newFileUrl).then(r => r.blob()).then(blobFile => new File([blobFile], "newAvatar", { type: "image/png" }));
+    if(onAvatarReady) {
+      onAvatarReady(newFile);
+    }
+    setIsCropOpen(false);
+  },[onAvatarReady]);
 
-  const handleFileUpload  = (newFiles: FileList) => {
+  const handleCropClose = useCallback(() => {
+    setIsCropOpen(false);
+  },[]);
+
+  const handleFileUpload  = useCallback((newFiles: FileList) => {
     console.log('file', newFiles);
     if(newFiles.length === 1) {
       console.log(newFiles[0].name);
       const prevImg = URL.createObjectURL(newFiles[0]);
       console.log(prevImg);
       setAvatarImg(prevImg);
-      if(onAvatarReady) {
-        onAvatarReady(newFiles[0]);
-      }
+      setIsCropOpen(true);
     } else {
       console.log(newFiles);
       // We need some notice to let the user that can only drop one
       // Maybe after trying to 
     }
-  };
+  },[]);
 
   return(
     <Container>
@@ -121,6 +131,17 @@ const AvatarUploader : React.FC<IAvatar> = ({
         accept='image/*'
         callback={handleFileUpload}
       />
+      {isCropOpen
+        ? <CropTool
+            imgUrl={avatarImg}
+            onCrop={handleCrop}
+            onClose={handleCropClose}
+            canvasHeight={490}
+            canvasWidth={460}
+            cropHeight={360}
+            cropWidth={360}
+          />
+        : null}
     </Container>
   );
 };
