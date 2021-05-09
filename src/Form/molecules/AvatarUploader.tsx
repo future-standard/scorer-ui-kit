@@ -15,6 +15,9 @@ const Container = styled.div`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
   `}
+  button {
+    width: 100%;
+  }
 `;
 
 const PreviewImageGroup = styled.div`

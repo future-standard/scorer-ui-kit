@@ -46,7 +46,8 @@ const PreviewArea = styled.div<{ canvasHeight?: number, canvasWidth?: number }>`
 
 const CropArea = styled.div<{ cropValues: IDrawArea, cursorStyle: string }>`
   position: absolute;
-  border: dashed yellow 2px;
+  border: dashed 1px hsl(0, 0%, 24%);
+  margin: 5px;
   box-shadow: 0 0 0 9999em hsla(0, 0%, 32%, 0.75);
   ${({ cropValues }) => css`
     top: ${cropValues.top}px;
@@ -83,34 +84,58 @@ const ButtonsGroup = styled.div`
   }
 `;
 
+const resizeSquaresCss = css`
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: solid 1px hsl(0, 1%, 28%);
+  background-color: hsl(0, 0%, 100%);
+`;
+
+const PointNW = styled.div`
+  ${resizeSquaresCss};
+  top: -5px;
+  left: calc(50% - 5px);
+`;
+const PointN =  styled.div`
+  ${resizeSquaresCss};
+  top: -5px;
+  left: -5px;
+`;
+const PointNE =  styled.div`
+  ${resizeSquaresCss};
+  top: -5px;
+  left: calc(100% - 5px);
+`;
+const PointE =  styled.div`
+  ${resizeSquaresCss};
+  top: calc(50% - 5px);
+  left: calc(100% - 5px);
+`;
+const PointSE =  styled.div`
+  ${resizeSquaresCss};
+  top: calc(100% - 5px);
+  left: calc(100% - 5px);
+`;
+const PointS =  styled.div`
+  ${resizeSquaresCss};
+  top: calc(100% - 5px);
+  left: calc(50% - 5px);
+`;
+const PointSW =  styled.div`
+  ${resizeSquaresCss};
+  top: calc(100% - 5px);
+  left: -5px;
+`;
+const PointW =  styled.div`
+  ${resizeSquaresCss};
+  top: calc(50% - 5px);
+  left: -5px;
+`;
+
 function clamp(value: number, minValue: number, maxValue: number) {
   return Math.min( Math.max(value, minValue), maxValue);
 }
-
-interface IDimensions {
-  height: number
-  width: number
-}
-
-interface IFocalPoint {
-  x: number
-  y: number
-}
-
-interface ICoordinates {
-  inputDimensions: IDimensions
-  outputDimensions: IDimensions
-  focalPoint: IFocalPoint
-  zoom: number
-}
-
-// const defaultDrawValues = {
-//   x: 0,
-//   y: 0,
-//   width: 0,
-//   height: 0,
-//   unit: 'px',
-// };
 
 function drawImgValues(img: HTMLImageElement, canvasHeight: number, canvasWidth: number) {
 
@@ -184,45 +209,45 @@ function updateCropValues(oldCropArea: IDrawArea, mouseStart: IMouseValues, diff
   switch (mouseStart.cursor) {
     case 'ne-resize':
       updatedTop = oldCropArea.top + diffY;
-      updatedHeight = mouseStart.height - diffY;
-      updatedWidth = mouseStart.width + diffX;
+      updatedHeight = oldCropArea.height - diffY;
+      updatedWidth = oldCropArea.width + diffX;
 
       break;
 
     case 'nw-resize':
       updatedTop = oldCropArea.top + diffY;
       updatedLeft = oldCropArea.left + diffX;
-      updatedHeight = mouseStart.height - diffY;
-      updatedWidth = mouseStart.width - diffX;
+      updatedHeight = oldCropArea.height - diffY;
+      updatedWidth = oldCropArea.width - diffX;
       break;
 
     case 'n-resize':
       updatedTop = oldCropArea.top + diffY;
-      updatedHeight = mouseStart.height - diffY;
+      updatedHeight = oldCropArea.height - diffY;
       break;
 
     case 'se-resize':
-      updatedHeight = mouseStart.height + diffY;
-      updatedWidth = mouseStart.width + diffX;
+      updatedHeight = oldCropArea.height + diffY;
+      updatedWidth = oldCropArea.width + diffX;
       break;
 
     case 'sw-resize':
       updatedLeft = oldCropArea.left + diffX;
-      updatedHeight = mouseStart.height + diffY;
-      updatedWidth = mouseStart.width - diffX;
+      updatedHeight = oldCropArea.height + diffY;
+      updatedWidth = oldCropArea.width - diffX;
       break;
 
     case 's-resize':
-      updatedHeight = mouseStart.height + diffY;
+      updatedHeight = oldCropArea.height + diffY;
       break;
 
     case 'e-resize':
-      updatedWidth = mouseStart.width + diffX;
+      updatedWidth = oldCropArea.width + diffX;
       break;
 
     case 'w-resize':
       updatedLeft = oldCropArea.left + diffX;
-      updatedWidth = mouseStart.width - diffX;
+      updatedWidth = oldCropArea.width - diffX;
       break;
 
     case 'move':
@@ -289,6 +314,7 @@ interface IMouseValues {
   width: number,
   height: number,
   cursor: string,
+  isResizing: boolean,
 }
 
 interface ICrop {
@@ -325,16 +351,17 @@ const CropTool: React.FC<ICrop> = ({
   const [cropValues, setCropValues] = useState<IDrawArea>(initialCropValues(cropHeight, cropWidth, canvasHeight, canvasWidth));
   const [isLoading, setIsLoading] = useState(false);
   const [cursorVal, setCursorVal] = useState('default');
-  const [mouseDownStart, setMouseDownStart] = useState<IMouseValues>({
+  const [mouseResizing, setMouseResizing] = useState<IMouseValues>({
     clientX: 0,
     clientY: 0,
     width: cropWidth,
     height: cropHeight,
     cursor: cursorVal,
+    isResizing: false,
   });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
-  const cropRef = useRef<HTMLDivElement>(null);
+  const cropRef = useRef<HTMLDivElement | null>(null);
 
   const handleOnLoad = useCallback(() => {
     if (!canvasRef || !imgRef) { return; }
@@ -388,56 +415,91 @@ const CropTool: React.FC<ICrop> = ({
 
   // Mouse Crop selection handlers //
 
+  const handleOnMouseOver = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!cropRef) { return; }
+    const rect = cropRef.current?.getBoundingClientRect();
+    if (!rect) { return; }
+    // mouse will be statick if it's resizing
+    if(mouseResizing.isResizing) { return;}
+      const [clientX, clientY] = [e.clientX, e.clientY]; // Necesary to moved outside asynchronous context
+      setCursorVal(updateCursorStyle(rect.left, rect.top, rect.width, rect.height, clientX, clientY));
+    },
+    [mouseResizing.isResizing],
+  );
+
   const handleMouseMove = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!cropRef) { return; }
-    const rect = e.target.getBoundingClientRect();
-    if (!rect) { return; }
-    setCursorVal(updateCursorStyle(rect.left, rect.top, rect.width, rect.height, e.clientX, e.clientY));
-  }, []);
+    if(!mouseResizing.isResizing) { return;}
+    // console.log('Mouse Move');
+    // console.log(mouseResizing);
+    const [clientX, clientY] = [e.clientX, e.clientY]; // Necesary to moved outside asynchronous context
+    console.log('clientX', clientX);
+    console.log('clientY', clientY);
+    const diffY = clientY - mouseResizing.clientY;
+    const diffX = clientX - mouseResizing.clientX;
+    const oldCropValues = {...cropValues};
+    let {newLeft, newTop, newWidth, newHeight} = updateCropValues(oldCropValues, mouseResizing, diffY, diffX, canvasHeight, canvasWidth);
+    setCropValues({ left: newLeft, top: newTop, width: newWidth, height: newHeight });
+    setMouseResizing(
+      {
+        clientX: clientX,
+        clientY: clientY,
+        width: newWidth,
+        height: newHeight,
+        cursor: mouseResizing.cursor,
+        isResizing: true
+      });
+  }, [canvasHeight, canvasWidth, cropValues, mouseResizing]);
 
   const handleMouseDown = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!cropRef) { return; }
-    if (!isLeftMouseButton(e)) { return; }
 
-    console.log('Mouse Down', cropValues);
-    console.log('e.clientX', e.clientX);
-    console.log('e.clientY', e.clientY);
-    console.log('e value', e);
-    const rect = e.target.getBoundingClientRect();
-    console.log('rec value', rect);
-    setMouseDownStart(
+    if (!isLeftMouseButton(e)) { return; }
+    const [clientX, clientY] = [e.clientX, e.clientY];
+    console.log('Mouse Down');
+    console.log('clientX', clientX);
+    console.log('clientY', clientY);
+    const rect = cropRef.current?.getBoundingClientRect();
+    if (!rect) { return; }
+    const cursorStyle = updateCursorStyle(rect.left, rect.top, rect.width, rect.height, clientX, clientY);
+    setCursorVal(cursorStyle);
+    console.log('mouse is:', cursorStyle);
+    setMouseResizing(
       {
-        clientX: e.clientX,
-        clientY: e.clientY,
+        clientX: clientX,
+        clientY: clientY,
         width: rect.width,
         height: rect.height,
-        cursor: cursorVal
+        cursor: cursorStyle,
+        isResizing: true
       });
+  }, []);
 
-  }, [cropValues, cursorVal]);
 
-
-  const handleMouseUp = useCallback((e, cropArea: IDrawArea, mouseStart: IMouseValues) => {
+  const handleMouseUp = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     console.log('Mouse Up');
-    const rect = e.target.getBoundingClientRect();
-    console.log('rec value', rect);
+    const [clientX, clientY] = [e.clientX, e.clientY];
+    console.log('start clientX', mouseResizing.clientX);
+    console.log('start clientY', mouseResizing.clientY);
+    
+    console.log('end clientX', clientX);
+    console.log('end clientY', clientY);
     if (!cropRef) { return; }
+    const updateMouseStart = {...mouseResizing};
+    console.log("Stop resize");
+    updateMouseStart.isResizing = false;
+    setMouseResizing(updateMouseStart);
+  }, [mouseResizing]);
 
-    const diffY = e.clientY - mouseStart.clientY;
-    const diffX = e.clientX - mouseStart.clientX;
-    let {newLeft, newTop, newWidth, newHeight} = updateCropValues(cropArea, mouseDownStart, diffY, diffX, canvasHeight, canvasWidth);
-
-
-    setCropValues({ left: newLeft, top: newTop, width: newWidth, height: newHeight });
-  }, [canvasHeight, canvasWidth, mouseDownStart]);
-
-  // End of Mouse Crop selection handlerss //
+  // End of Mouse Crop selection handlers //
 
   return (
     ReactDom.createPortal(
@@ -467,21 +529,32 @@ const CropTool: React.FC<ICrop> = ({
           <PreviewArea
             canvasHeight={canvasHeight}
             canvasWidth={canvasWidth}
-            onMouseDown={handleMouseDown}
-            onMouseUp={(e) => handleMouseUp(e, cropValues, mouseDownStart)}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
           >
             <HiddenImage ref={imgRef} src={imgUrl} onLoad={handleOnLoad} />
             <canvas
               ref={canvasRef}
               width={`${canvasWidth}px`}
               height={`${canvasHeight}px`}
-            />
+            />  
             <CropArea
               ref={cropRef}
               cropValues={cropValues}
-              onMouseMove={handleMouseMove}
               cursorStyle={cursorVal}
-            />
+              onMouseOver={handleOnMouseOver}
+              //onMouseMove={handleMouseMoveCrop}
+              onMouseDown={handleMouseDown}
+            >
+              <PointNW />
+              <PointN />
+              <PointNE />
+              <PointE />
+              <PointSE />
+              <PointS />
+              <PointSW />
+              <PointW />
+            </CropArea>
           </PreviewArea>
         </InnerContainer>
       </Container>, document.body)

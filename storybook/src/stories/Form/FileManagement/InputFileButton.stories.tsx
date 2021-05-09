@@ -4,10 +4,12 @@ import {InputFileButton} from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
 import { boolean, select, text} from "@storybook/addon-knobs";
 
-const Container = styled.div``;
+const Container = styled.div`
+    margin: 20px;
+`;
 
 export default {
-  title: 'Form/Input',
+  title: 'Form/File Management',
   component: InputFileButton,
   decorators:[]
 };

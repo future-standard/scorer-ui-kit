@@ -9,7 +9,7 @@ const Container = styled.div`
 `;
 
 export default {
-  title: 'Form/Input',
+  title: 'Form/File Management',
   component: DropArea,
   decorators:[]
 };

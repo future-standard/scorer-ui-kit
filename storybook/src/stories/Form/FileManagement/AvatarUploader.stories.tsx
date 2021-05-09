@@ -7,7 +7,7 @@ import { boolean, select, text} from "@storybook/addon-knobs";
 const Container = styled.div``;
 
 export default {
-  title: 'Form/Input',
+  title: 'Form/File Management',
   component: AvatarUploader,
   decorators:[]
 };

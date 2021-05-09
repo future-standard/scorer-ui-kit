@@ -8,7 +8,6 @@ const HiddenInput = styled.input`
   display: none;
 `;
 const StyledButton = styled(Button)`
-  width: 100%;
   text-align: center;
 `;
 
@@ -42,10 +41,10 @@ const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize,
   return(
     <Container>
       <HiddenInput 
+        {...props}
         ref={fileInputRef}
         type='file'
         onChange={handleFile}
-        {...props}
       />
       <StyledButton
         onClick={fowardClick}
