@@ -5,7 +5,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 import Button from '../atoms/Button';
 import ButtonWithLoading from '../atoms/ButtonWithLoading';
 import { useCrop, ICursorStyles, IDrawArea, updateCursorStyle, isLeftMouseButton } from '../../hooks/useCrop';
-
+import { getImageType } from '../../helpers';
 // TODO: Add throttle //
 
 const Container = styled.div`
@@ -175,14 +175,6 @@ function initialCropValues(
     width,
     height,
   };
-}
-
-function getImageType(img: HTMLImageElement) {
-  var dataType = img.src.substr(0, 20);
-  if (dataType.includes('data')) {
-    return dataType.split('/')[1].split(';')[0];
-  }
-  return 'image/jpeg';
 }
 
 interface ICrop {

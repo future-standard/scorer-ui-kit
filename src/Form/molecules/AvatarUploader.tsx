@@ -5,6 +5,7 @@ import DropArea from '../atoms/DropArea';
 import CropTool from '../atoms/CropTool';
 import { AvatarPlaceholder } from '../../svg';
 import Label from '../atoms/Label';
+import { isValidImage } from '../../helpers';
 
 const PHOTO_HEGHT = `150px`;
 const PHOTO_WIDTH = `142px`;
@@ -56,12 +57,8 @@ const NoPhoto = styled.div`
 `;
 
 /**
- * TODO Free memory for  URL.createObjectURL(); 
+ * TODO: Free memory for  URL.createObjectURL(); 
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
- * 
- * validate image type and size
- * validateImageMimeType
- * https://product.voxmedia.com/2020/10/23/21520222/building-an-in-browser-image-editor-with-react
  * 
 */
 
@@ -74,6 +71,7 @@ interface IAvatar {
   innerText?: string
   buttonText?: string
   onAvatarReady?: (imgFile: File) => void
+  onError?: (msg: string) => void
 }
 
 const AvatarUploader : React.FC<IAvatar> = ({
@@ -81,13 +79,16 @@ const AvatarUploader : React.FC<IAvatar> = ({
   innerText = 'Drop Photo',
   buttonText = 'Select File',
   onAvatarReady,
+  onError = () => {},
 }) => {
   const [avatarImg, setAvatarImg] = useState('');
   const [isCropOpen, setIsCropOpen] = useState(false);
 
   const handleCrop = useCallback(async (newFileUrl: string) => {
     setAvatarImg(newFileUrl);
-    let newFile = await fetch(newFileUrl).then(r => r.blob()).then(blobFile => new File([blobFile], "newAvatar", { type: "image/png" }));
+    let newFile = await fetch(
+      newFileUrl).then(r => r.blob()).then(blobFile => new File([blobFile], "newAvatar", { type: "image/png" })
+      );
     if(onAvatarReady) {
       onAvatarReady(newFile);
     }
@@ -99,19 +100,20 @@ const AvatarUploader : React.FC<IAvatar> = ({
   },[]);
 
   const handleFileUpload  = useCallback((newFiles: FileList) => {
-    console.log('file', newFiles);
+
     if(newFiles.length === 1) {
-      console.log(newFiles[0].name);
+      if(!isValidImage(newFiles[0])){ 
+        onError('Please upload only jpeg and png file');
+        return;
+      }
       const prevImg = URL.createObjectURL(newFiles[0]);
-      console.log(prevImg);
+
       setAvatarImg(prevImg);
       setIsCropOpen(true);
     } else {
-      console.log(newFiles);
-      // We need some notice to let the user that can only drop one
-      // Maybe after trying to 
+      onError('Drop only one file');
     }
-  },[]);
+  },[onError]);
 
   return(
     <Container>

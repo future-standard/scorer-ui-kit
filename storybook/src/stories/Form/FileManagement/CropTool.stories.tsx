@@ -33,8 +33,7 @@ export const _CropTool = () => {
   const widthCanvasVal = number('Canvas Width', 500);
   const initalCropHeight = number('Crop Height', 150);
   const initalCropWidth = number('Crop Width', 150);
-  const showValue = action('Input Callback');
-  
+  const errorValue = action ('Error');
 
   const onCrop = (newImgUrl: string) => {
     console.log('Crop');
@@ -45,6 +44,10 @@ export const _CropTool = () => {
   const handleClose = () => {
     setIsCropping(false);
   }
+  const errorCallback = (msg: string) => {
+    console.log(msg);
+    errorValue(msg);
+  };
 
   return(
     <Container>
@@ -60,7 +63,7 @@ export const _CropTool = () => {
         canvasWidth={widthCanvasVal}
         cropHeight={initalCropHeight}
         cropWidth={initalCropWidth}
-
+        onError={errorCallback}
       />
       : null}
       <NewImageArea>

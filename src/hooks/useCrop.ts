@@ -1,8 +1,5 @@
 import { useReducer, useCallback } from 'react';
-
-function clamp(value: number, minValue: number, maxValue: number) {
-  return Math.min( Math.max(value, minValue), maxValue);
-}
+import { clamp } from '../helpers/index';
 
 // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor //
 export type ICursorStyles = (
@@ -278,7 +275,6 @@ function cropReducer(state: ICropState, action: ICropReducerActions){
 
     case START_RESIZE:
       {
-        console.log(`action data:`, action.data);
       return {...state, 
               cursorStyle: action.data.resizeCursor,
               resizeCursorStyle: action.data.resizeCursor,
@@ -344,7 +340,6 @@ export function useCrop(initialValues = defaultCropValues) {
   },[]);
 
   const startResize = useCallback((newCursorStyle: ICursorStyles, posX: number, posY: number, height: number, width: number) => {
-    console.log('values at startResize', newCursorStyle, posX, posY);
     dispatch({
           type: START_RESIZE,
           data: {
