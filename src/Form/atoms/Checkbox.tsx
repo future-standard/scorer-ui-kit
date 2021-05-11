@@ -60,9 +60,11 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
       ${styles.form.checkbox.unchecked.default};
     }
 
-    &:hover ${CheckboxOuter} {
-      ${styles.form.checkbox.unchecked.hover};
-    }
+    ${!disabled && css`
+      &:hover ${CheckboxOuter} {
+        ${styles.form.checkbox.unchecked.hover};
+      }`
+    };
 
     ${disabled && css`
       ${CheckboxOuter}{
@@ -76,11 +78,12 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
       ${styles.form.checkbox.checked.default};
       border: none;
     }
-
-    &:hover ${CheckboxOuter}{
-      ${styles.form.checkbox.checked.hover};
-      border: none;
-    }
+    ${!disabled && css`
+      &:hover ${CheckboxOuter}{
+        ${styles.form.checkbox.checked.hover};
+        border: none;
+      }`
+    };
 
     ${disabled && css`
       ${CheckboxOuter}{
@@ -89,16 +92,15 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
     `}
   `}
 
-  ${({visualState, theme: { styles }}) => visualState === CheckboxState.Indeterminate && css`
+  ${({visualState, disabled, theme: { styles }}) => visualState === CheckboxState.Indeterminate && css`
     ${CheckboxOuter}{
       ${styles.form.checkbox.indeterminate.default};
     }
-
-    &:hover ${CheckboxOuter}{
-      ${styles.form.checkbox.indeterminate.hover};
-    }
-
-
+    ${!disabled && css`
+      &:hover ${CheckboxOuter}{
+        ${styles.form.checkbox.indeterminate.hover};
+      }
+    `};
 
   `}
 
