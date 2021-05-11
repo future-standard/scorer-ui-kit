@@ -131,9 +131,15 @@ const TypeTable: React.FC<IProps> = ({
   const [sortSpec, setSortSpec] = useState(columnConfig);
   const [ascendingState, setAscendingState] = useState(defaultAscending);
 
+  const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
+
   useEffect(() => {
-    setAllChecked(rows.every(isChecked) && rows.length > 0);
-  }, [rows]);
+    let areAllChecked = false;
+    if(rows.every(isChecked) && (rows.length > 0) && !isEmptyTable) { 
+      areAllChecked = true;
+    }
+    setAllChecked(areAllChecked);
+  }, [isEmptyTable, rows]);
 
 
   const toggleSort = useCallback((indexKey: number, columnId?: string) => {
@@ -176,13 +182,12 @@ const TypeTable: React.FC<IProps> = ({
     If we allow columns to be optional, previous implementations
     wont be able to have "No data" Message
   */
-  const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
 
   return (
     <Container>
       <TableContainer>
         <HeaderRow>
-          {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={allChecked} onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
+          {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={allChecked} disabled={isEmptyTable || isLoading} onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
           {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
           {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
           {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}

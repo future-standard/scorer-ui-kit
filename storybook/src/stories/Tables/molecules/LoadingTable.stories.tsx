@@ -108,6 +108,8 @@ export const _LoadingTable = () => {
   const emptyTableText = text("emptyTableText", 'There is currently no data');
   const loadingText = text("loadingText", 'Loading Data..')
   const columnConfig = object("Column Configuration", columnConfigSample);
+  const selectable = boolean("Selectable Rows", true);
+  
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
   const toggleAllCallback = useCallback((checked:boolean) => {
@@ -115,10 +117,20 @@ export const _LoadingTable = () => {
 
     newRows.forEach((row) => {
       row._checked = checked;
-    });
+  });
 
     setRows(newRows);
   }, [rows, setRows]);
+
+    // Sent to checkbox in TableRow via Table component.
+    const selectCallback = useCallback((checked:boolean, id?: string | number) => {
+      const newRows = [...rows];
+      const targetRowIndex = newRows.findIndex(row => row.id === id)
+      newRows[targetRowIndex]._checked = checked;
+  
+      setRows(newRows);
+  
+    }, [rows, setRows]);
 
   useEffect(() => {
     if(emptyTable) {
@@ -138,6 +150,8 @@ export const _LoadingTable = () => {
           columnConfig,
           rows,
           toggleAllCallback,
+          selectable,
+          selectCallback,
           isLoading,
           loadingText,
           hasThumbnail: true,
