@@ -17,8 +17,8 @@ import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
 import DropArea from './atoms/DropArea';
-import CropTool from './atoms/CropTool';
-import AvatarUploader from './molecules/AvatarUploader';
+import CropTool from './molecules/CropTool';
+import AvatarUploader from './organisms/AvatarUploader';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 

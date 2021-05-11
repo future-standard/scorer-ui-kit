@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import styled, {css} from 'styled-components';
 import InputFileButton from '../atoms/InputFileButton';
 import DropArea from '../atoms/DropArea';
-import CropTool from '../atoms/CropTool';
+import CropTool from '../molecules/CropTool';
 import { AvatarPlaceholder } from '../../svg';
 import Label from '../atoms/Label';
 import { isValidImage } from '../../helpers';
