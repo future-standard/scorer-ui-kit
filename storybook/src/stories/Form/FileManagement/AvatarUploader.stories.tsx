@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {AvatarUploader} from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
-import { boolean, select, text} from "@storybook/addon-knobs";
+import { text} from "@storybook/addon-knobs";
 
 const Container = styled.div``;
 
@@ -14,13 +14,10 @@ export default {
 
 export const _AvatarUploader = () => {
 
-  // const multipleVal = boolean('Multiple', false);
-  // const textVal = text('Text','Select a File');
-  // const buttonDesign = select("Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
-  // const buttonSize = select("Button Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
   const titleText = text('Title','Photograph' );
   const photoText = text('InnerText', 'Drop Photo');
-  const buttonText = text('Button Text', 'Select File')
+  const buttonText = text('Button Text', 'Select File');
+  const buttonReplaceText = text('Button Replace Text', 'Replace Photo');
   const showValue = action('Input Callback');
   const errorValue = action ('Error');
   
@@ -41,6 +38,7 @@ export const _AvatarUploader = () => {
         title={titleText}
         innerText={photoText}
         buttonText={buttonText}
+        buttonTextReplace={buttonReplaceText}
         onAvatarReady={uploadReady}
         onError={errorCallback}
       />

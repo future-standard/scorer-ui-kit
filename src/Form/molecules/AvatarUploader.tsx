@@ -70,6 +70,7 @@ interface IAvatar {
   title?: string
   innerText?: string
   buttonText?: string
+  buttonTextReplace?: string
   onAvatarReady?: (imgFile: File) => void
   onError?: (msg: string) => void
 }
@@ -78,6 +79,7 @@ const AvatarUploader : React.FC<IAvatar> = ({
   title = 'Photograph',
   innerText = 'Drop Photo',
   buttonText = 'Select File',
+  buttonTextReplace = 'Replace Photo',
   onAvatarReady,
   onError = () => {},
 }) => {
@@ -131,7 +133,7 @@ const AvatarUploader : React.FC<IAvatar> = ({
       </PreviewImageGroup>
       <StyledInputFileButton
         id='avatar-upload'
-        text={buttonText}
+        text={avatarImg ? buttonTextReplace : buttonText}
         buttonSize='small'
         accept='image/*'
         callback={handleFileUpload}

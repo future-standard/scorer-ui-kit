@@ -196,6 +196,7 @@ const CropTool: React.FC<ICrop> = ({
   title = 'Crop Image',
   cancelBtnTxt = 'Cancel',
   cropBtnTxt = 'Crop & Save',
+  isResizable = true,
   cropHeight = 100,
   cropWidth = 100,
   canvasHeight,
@@ -281,6 +282,7 @@ const CropTool: React.FC<ICrop> = ({
   const handleOnMouseOver = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
+    if(!isResizable) { return;}
     if (!cropRef) { return; }
     const rect = cropRef.current?.getBoundingClientRect();
     if (!rect) { return; }
@@ -291,7 +293,7 @@ const CropTool: React.FC<ICrop> = ({
     const newCursorStyle = updateCursorStyle(left, top, width, height, clientX, clientY);
     updateCursor(newCursorStyle);
 
-  },[cropState.isResizing, updateCursor],);
+  },[cropState.isResizing, isResizable, updateCursor],);
 
   const handleMouseMove = useCallback((e) => {
     e.preventDefault();
@@ -316,9 +318,14 @@ const CropTool: React.FC<ICrop> = ({
     if (!rect) { return; }
     const {left, top, width, height} = rect;
     const [posX, posY] = [e.clientX, e.clientY];
-    const newCursorStyle = updateCursorStyle(left, top, width, height, posX, posY);
-    startResize(newCursorStyle, posX, posY, height, width);
-  }, [startResize]);
+    let newCursorStyle : ICursorStyles;
+    if(!isResizable) {
+      newCursorStyle = 'move';
+    }else {
+      newCursorStyle = updateCursorStyle(left, top, width, height, posX, posY);
+    }
+      startResize(newCursorStyle, posX, posY, height, width);
+  }, [isResizable, startResize]);
 
 
   const handleMouseUp = useCallback((e) => {
@@ -370,7 +377,7 @@ const CropTool: React.FC<ICrop> = ({
             <CropArea
               ref={cropRef}
               cropValues={cropState.cropDraw}
-              cursorStyle={cropState.cursorStyle}
+              cursorStyle={isResizable? cropState.cursorStyle : 'move'}
               onMouseOver={handleOnMouseOver}
               onMouseDown={handleMouseDown}
             >
