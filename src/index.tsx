@@ -238,7 +238,6 @@ export {
   ModalContext,
   ModalProvider,
   useModal,
-
 };
 
 /**

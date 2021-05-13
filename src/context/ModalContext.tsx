@@ -13,16 +13,14 @@ interface ModalContextType {
 
 const defaultContext: ModalContextType = {
   modalProps: defaultModalProps,
-  // disabling because this is just declaration
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setModalProps: (newProps: IModalProps) => null,
+  setModalProps: (newProps: IModalProps) => { console.log(newProps); },
 };
 
-const ModalContext = React.createContext<ModalContextType>(defaultContext);
+export const ModalContext = React.createContext<ModalContextType>(defaultContext);
 
 const ModalProvider: React.FC = ({ children }) => {
 
-  const [modalProps, setProps] = useState<IModalProps>(defaultModalProps);
+  const [modalProps, setProps] = useState<IModalProps>(defaultContext.modalProps);
 
   const setModalProps = (newProps: IModalProps) => {
     setProps(newProps);
@@ -36,4 +34,4 @@ const ModalProvider: React.FC = ({ children }) => {
   );
 };
 
-export { ModalContext, ModalProvider };
+export default ModalProvider;
