@@ -44,7 +44,7 @@ const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
   )
 }
 
-// Provider should be a App.tsx level, it's here just for the example
+  // Provider should be at main Index level, it's here just for the story example
 export const _Notification = () => {
 
   const isPin = boolean('Is Pinned', false);

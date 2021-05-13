@@ -64,7 +64,7 @@ const ModalExample: React.FC<IExampleModal> = ({
   )
 }
 
-export const _ConfirmationModal = () => {
+export const _ConfirmationTemplate = () => {
   const title = text("Title", 'Modal Title');
   const msg = text('Message', 'This is an example of some information provided to the customer to confirm an option');
   const leftBtnTxt = text('Left Button Text', 'Back');
@@ -75,7 +75,7 @@ export const _ConfirmationModal = () => {
   const rightBtnCallback = action('Accept button pressed');
 
 
-  // Provider should be a App.tsx level, it's here just for the example
+  // Provider should be at main Index level, it's here just for the story example
   return <Container>
     <ModalProvider>
       <ModalExample
