@@ -34,7 +34,8 @@
     "styled-components": "^5.1.0",
     "react-router-dom": "^5.2.0",
     "react-router": "^5.2.0",
-    "react-use-websocket": "2.1.1"
+    "react-use-websocket": "2.1.1",
+    "@future-standard/icons": "^1.0.0"
   },
   "devDependencies": {
     "@svgr/cli": "^5.4.0",

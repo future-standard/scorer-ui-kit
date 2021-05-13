@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 
 const NotificationPage : React.FC = () => {
-  
+
   const {sendNotification } = useNotification();
 
   const processAtClose = () => {
