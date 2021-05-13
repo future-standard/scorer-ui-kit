@@ -4,14 +4,14 @@ import { text, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import {
   ModalProvider,
-  useModal, ConfirmationModal,
+  useModal,
+  ConfirmationModal,
   Button,
 } from 'scorer-ui-kit';
-import { TypeButtonDesigns } from '../../../../dist/Form';
+import { TypeButtonDesigns } from '../../../../../dist/Form';
 
 const Container = styled.div``;
 
-console.log(ModalProvider);
 export default {
   title: 'Alerts/Modals',
   components: ConfirmationModal,
@@ -60,7 +60,7 @@ const ExampleModals: React.FC<IExampleModal> = ({
   />
 
   return (
-    <Button onClick={openConfirmationModal}>Open Modal</Button>
+    <Button design='secondary' onClick={openConfirmationModal}>Open Modal</Button>
   )
 }
 
@@ -86,7 +86,6 @@ export const _ConfirmationModal = () => {
         rightButtonText={RightBtnTxt}
         rightButtonDesign={buttonDesignRight}
         rightButtonCallback={rightBtnCallback}
-
       />
     </ModalProvider>
   </Container>
