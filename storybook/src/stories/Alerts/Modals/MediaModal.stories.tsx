@@ -35,7 +35,7 @@ const MediaImageModal = () => {
   )
 }
 
-  // Provider should be a App.tsx level, it's here just for the example
+  // Provider should be at main Index level, it's here just for the story example
 export const _MediaModal = () => {
   return (
     <Container>

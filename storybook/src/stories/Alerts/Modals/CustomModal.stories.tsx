@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { text, boolean } from "@storybook/addon-knobs";
-import { action } from '@storybook/addon-actions';
 import LoginModalExample from './LoginModalExample';
 
 import {
@@ -51,20 +49,12 @@ const LoginModal = (modal?: IModal) => {
 }
 
 export const _CustomExampleModals = () => {
-  const closeTxt = text('Close text', 'Close')
-  const isCloseEnable = boolean('Is Close Enabled', true);
-  const padding = boolean('Padding', true);
-  const dismissAction = action('Modal dismissed');
 
-  // Provider should be a App.tsx level, it's here just for the example
+  // Provider should be at main Index level, it's here just for the story example
   return (
     <Container>
       <ModalProvider>
         <LoginModal
-          closeText={closeTxt}
-          isCloseEnable={isCloseEnable}
-          padding={padding}
-          dismissCallback={dismissAction}
         />
       </ModalProvider>
     </Container>
