@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { 
+import { text, boolean, select } from "@storybook/addon-knobs";
+import { action } from '@storybook/addon-actions';
+
+import {
   useNotification,
   Button,
   INotificationProps,
+  NotificationProvider,
 } from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -19,90 +23,54 @@ export default {
   decorator: []
 }
 
+const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
+  const { sendNotification } = useNotification();
+
+  const [notificationSettings, setNotificationSettings] = useState(notiSettings);
+
+  useEffect(() => {
+    setNotificationSettings(notiSettings);
+  }, [notiSettings])
+
+  return (
+    <Button
+      design='secondary'
+      size='small'
+      onClick={() => {
+        sendNotification(notificationSettings)
+      }
+      }
+    >Send notification</Button>
+  )
+}
+
+// Provider should be a App.tsx level, it's here just for the example
 export const _Notification = () => {
 
-  const {sendNotification } = useNotification();
+  const isPin = boolean('Is Pinned', false);
+  const type = select("Type", { Error: 'error', Warning: 'warning', Info: 'info', Success: 'success', Neutral: 'neutral' }, 'info');
+  const msg = text('Message', 'This is a message example');
+  const actionText = text('Action Text Button', '');
+  const onTextBtnClick = action('Action was clicked');
+  const closeCall = action('The message was closed by the user');
 
-  const processAtClose = () => {
-    console.log('I have succesfully deliver the message mate');
+  const handleActionTextCall = () => {
+    const text = `User clicked on [${actionText}] button`;
+    onTextBtnClick(text);
   }
-  
-  const processAtClose2 = () => {
-    console.log('I have tell the user about that error');
-  }
-  
-  const openDocumentation = () => {
-    window.open('https://nihongoipsum.com/', '_blank');
-  }
-  
-  const notiInfoSettings : INotificationProps = {
-    type: 'info',
-    message: 'You have pending messages in your mailbox',
-    closeCallback: () => processAtClose(),
-  }
-  
-  const notiWarningSettings : INotificationProps  = {
-    type: 'warning',
-    message: 'Those settings might be very expensive. You can learn about different settings',
-    actionTextButton: 'SHOW DOCUMENTATION',
-    onTextButtonClick: () => openDocumentation(),
-  }
-  
-  const notiErrorSettings : INotificationProps  = {
-    type: 'error',
-    message: 'There was a problem starting that process consult support',
-    closeCallback: () => processAtClose2(),
-    isPinned: true,
-  }
-  
-  const notiSucessSettings : INotificationProps  = {
-    type: 'success',
-    message: 'You have sucessfully bought a new camera'
-  }
-  
-  const notiNeutralSettings : INotificationProps  = {
-    type: 'neutral',
-    message: 'Running job in the background'
-  }
-  
-  return(
+
+  return (
     <Container>
-      <Button
-      design = 'secondary'
-      size = 'small'
-        onClick = {() => {
-          sendNotification(notiInfoSettings)
-        }
-      }
-      >Send notification</Button>
-      <Button
-        design = 'secondary'
-        size = 'small'
-        onClick = {() => {
-          sendNotification(notiSucessSettings)
-          }}
-      >Send success</Button>
-      <Button
-        design = 'secondary'
-        size = 'small'
-        onClick = {() => {
-          sendNotification(notiWarningSettings)
-        }}
-      >Send warning</Button>
-      <Button
-        design = 'secondary'
-        size = 'small'
-        onClick = {() => {
-          sendNotification(notiNeutralSettings)
-        }}
-      >Send neutral message</Button>
-      <Button
-        design = 'secondary'
-        size = 'small'
-        onClick = {() => {
-          sendNotification(notiErrorSettings)
-        }}
-      >Send pinned Error</Button>
+      <NotificationProvider>
+        <NotificationExample
+          type={type}
+          message={msg}
+          closeCallback={closeCall}
+          actionTextButton={actionText}
+          onTextButtonClick={handleActionTextCall}
+          isPinned={isPin}
+        />
+      </NotificationProvider>
     </Container>
   );
 }

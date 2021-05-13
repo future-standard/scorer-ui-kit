@@ -29,7 +29,7 @@ interface IExampleModal {
   rightButtonCallback?: () => void,
 }
 
-const ExampleModals: React.FC<IExampleModal> = ({
+const ModalExample: React.FC<IExampleModal> = ({
   message = 'Hello',
   leftButtonDesign,
   rightButtonDesign,
@@ -75,9 +75,10 @@ export const _ConfirmationModal = () => {
   const rightBtnCallback = action('Accept button pressed');
 
 
+  // Provider should be a App.tsx level, it's here just for the example
   return <Container>
     <ModalProvider>
-      <ExampleModals
+      <ModalExample
         title={title}
         message={msg}
         leftButtonText={leftBtnTxt}

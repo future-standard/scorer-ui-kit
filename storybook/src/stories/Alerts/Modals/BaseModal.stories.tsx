@@ -42,6 +42,7 @@ export const _BaseModal = () => {
   const padding = boolean('Padding', true);
   const dismissAction = action('Modal dismissed');
 
+  // Provider should be a App.tsx level, it's here just for the example
   return (
     <Container>
       <ModalProvider>
