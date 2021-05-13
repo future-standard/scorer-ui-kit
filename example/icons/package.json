@@ -9,7 +9,7 @@
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "svgr": "npx @svgr/cli ./svg --svgo-config '{\"plugins\": [{\"removeViewBox\": false}]}' --out-dir ./src/components --template ./src/SVGRTemplate.js --typescript"
+    "svgr": "npx @svgr/cli ./src/svg --svgo-config '{\"plugins\": [{\"removeViewBox\": false}]}' --out-dir ./src/components --template ./src/SVGRTemplate.js --typescript"
   },
   "peerDependencies": {
     "react": "^16.13.1",

@@ -1,8 +1,14 @@
 import * as React from "react";
 
-function SvgAdd(props: ISvgIcons) {
+function SvgCustomAdd(props: ISvgIcons) {
   return (
-    <svg width={props.size} height={props.size} viewBox="0 0 24 24" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.size}
+      height={props.size}
+      viewBox="0 0 24 24"
+      {...props}
+    >
       <g
         stroke={props.color}
         strokeWidth={props.weight}
@@ -19,4 +25,4 @@ function SvgAdd(props: ISvgIcons) {
   );
 }
 
-export default SvgAdd;
+export default SvgCustomAdd;
