@@ -10,7 +10,9 @@ import {
   INotificationProps,
   useModal,
 } from 'scorer-ui-kit';
-
+// These is the code related to the logo background but this asses are in the Example pages folder.
+// I left the code here in case this needs to be moved back or into the UI Library folder to be put it back.
+// 
 // const LogoBackground = styled.img`
 //   position: absolute;
 //   top: -545px;
