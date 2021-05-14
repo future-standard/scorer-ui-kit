@@ -121,7 +121,8 @@ import {
   Logo,
   SidebarLinkHeading,
   BackLink,
-  Sidebar
+  Sidebar,
+  NavigationTemplate,
 } from './Global';
 
 // Tabs
@@ -222,6 +223,7 @@ export {
   SidebarLinkHeading,
   BackLink,
   Sidebar,
+  NavigationTemplate,
 
   // Tabs
   Tabs,

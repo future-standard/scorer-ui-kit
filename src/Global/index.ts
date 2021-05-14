@@ -1,6 +1,8 @@
 import {Content, Layout, MainContainer} from './atoms/Layout';
 import MainMenu from './MainMenu';
 import TopBar from './TopBar';
+import NavigationTemplate from './templates/NavigationTemplate';
+
 export {
   SidebarBox,
   SidebarLink,
@@ -16,7 +18,8 @@ export {
     Layout,
     MainMenu,
     TopBar,
-    MainContainer
+    MainContainer,
+    NavigationTemplate,
 };
 
 export interface IMenuTop {

@@ -207,7 +207,7 @@ const LanguageMenu = styled.button`
 
 `;
 
-interface IProps {
+export interface ITopBar {
   hasNotifications?: boolean;
   userSubmenu?: any[];
   loggedInUser: string;
@@ -222,7 +222,7 @@ interface IProps {
   onLanguageToggle?: ()=>void;
 }
 
-const TopBar : React.FC<IProps> = ({
+const TopBar : React.FC<ITopBar> = ({
   hasNotifications = false,
   hasLanguage = false,
   hasLogout = true,
