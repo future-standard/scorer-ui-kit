@@ -16,7 +16,6 @@ const LinksPage : React.FC = () => {
     <div><Link to={`/ptz`}>PTZ</Link></div>
     <div><Link to={`/login`}>Login</Link></div>
     <div><Link to={`/tabs`}>Tabs Example</Link></div>
-    <div><Link to={`/notification`}>Notification Example</Link></div>
     <div><a href='/scorer-ui-kit/storybook'>Storybook</a></div>
   </Container>
 };
