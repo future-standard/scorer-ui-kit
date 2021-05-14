@@ -17,8 +17,6 @@ export default {
 
 const Container = styled.div``;
 
-
-
 const LoginModal = (modal?: IModal) => {
   const { createModal } = useModal();
 
@@ -36,7 +34,6 @@ const LoginModal = (modal?: IModal) => {
     createModal({ customComponent: FormModal });
   };
 
-
   return (
     <Button
       design='secondary'
@@ -48,7 +45,7 @@ const LoginModal = (modal?: IModal) => {
   )
 }
 
-export const _CustomExampleModals = () => {
+export const _CustomExampleModal = () => {
 
   // Provider should be at main Index level, it's here just for the story example
   return (
