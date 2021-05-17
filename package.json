@@ -73,7 +73,7 @@
     "@types/react-dom": "^17.0.0",
     "date-fns": "^2.16.1",
     "immutability-helper": "^3.1.1",
-    "@future-standard/icons": "^1.0.2"
+    "@future-standard/icons": "^1.0.3"
   },
   "directories": {
     "example": "example"
