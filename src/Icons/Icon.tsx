@@ -1,18 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import * as IconSVGs from  './stroked';
+import * as IconSVGs from  '@future-standard/icons';
 
 import { dimensions } from '../themes/common';
-let CustomIcons: {[key: string]: any} = {};
-//@ts-ignore
-const p = import('@future-standard/icons').then((CustomIconsModule)=>{
-  for(const [name,icon] of Object.entries(CustomIconsModule)){
-    console.log(name);
-    CustomIcons[name] = icon;
-  }
-}).catch(()=>{
-  console.debug('No Custom Icons found');
-});
 
 
 const IconWrapper = styled.div<{color:string}>`
@@ -38,19 +28,8 @@ interface ISvgIcon extends React.SVGProps<SVGSVGElement> {
 const Icon : React.FC<IconProps> = ({icon, size = 24, weight = 'regular', color = 'mono'}) => {
 
   const iconWeight : number = dimensions.icons.weights[weight];
-  const [_loading, setLoading] = useState(true);
   //@ts-ignore
-  const IconSVG = IconSVGs[icon]||CustomIcons[icon];
-
-  useEffect(() => {
-    async function waitForLoad() {
-      await p;
-      setLoading(false);
-    }
-
-    waitForLoad();
-  }, [icon]);
-
+  const IconSVG = IconSVGs[icon];
 
   return (
     IconSVG != null ?
