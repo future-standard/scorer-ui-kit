@@ -2,7 +2,7 @@ import { useReducer, useCallback } from 'react';
 import { clamp } from '../helpers/index';
 
 // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor //
-export type ICursorStyles = (
+type ICursorStyles = (
   'ne-resize'
   | 'nw-resize'
   | 'n-resize'
@@ -15,14 +15,14 @@ export type ICursorStyles = (
   | 'default'
   );
 
-export function updateCursorStyle(
+const updateCursorStyle = (
   left: number,
   top: number,
   width: number,
   height: number,
   clientX: number,
   clientY: number
-  ) : ICursorStyles {
+  ) : ICursorStyles => {
   let cursorStyle : ICursorStyles= 'default';
 
   if (clientY - top < 5) {
@@ -50,9 +50,9 @@ export function updateCursorStyle(
   }
 
   return cursorStyle;
-}
+};
 
-export function isLeftMouseButton(e: MouseEvent) {
+const isLeftMouseButton = (e: MouseEvent) => {
 
   let mouseButton;
   if (typeof (e.buttons) !== undefined) {
@@ -68,15 +68,16 @@ export function isLeftMouseButton(e: MouseEvent) {
   }
 
   return false;
-}
-function updateCropValues(
+};
+
+const updateCropValues = (
   oldCropArea: IDrawArea,
   cursorStyle: ICursorStyles,
   lastPoint: ILastPoint,
   newX: number,
   newY: number,
   imgArea: IDrawArea
-) {
+) => {
 
   let [updatedLeft, updatedTop, updatedWidth, updatedHeight] = 
   [oldCropArea.left, oldCropArea.top, oldCropArea.width, oldCropArea.height];
@@ -148,9 +149,9 @@ function updateCropValues(
     width,
     height,
   };
-}
+};
 
-export interface IDrawArea {
+interface IDrawArea {
   left: number
   top: number
   width: number
@@ -164,7 +165,7 @@ interface ILastPoint {
   height: number
 }
 
-export type ICropState = {
+interface ICropState {
   cursorStyle : ICursorStyles,
   resizeCursorStyle: ICursorStyles,
   isResizing: boolean,
@@ -260,7 +261,7 @@ const defaultCropValues : ICropState = {
 };
 
 
-function cropReducer(state: ICropState, action: ICropReducerActions){
+const cropReducer = (state: ICropState, action: ICropReducerActions) => {
   switch(action.type) {
 
     case SET_DRAW_AREAS :
@@ -318,9 +319,9 @@ function cropReducer(state: ICropState, action: ICropReducerActions){
       console.error(`Action ${action['type']} not registered.`);
       return state;
   }
-}
+};
 
-export function useCrop(initialValues = defaultCropValues) {
+const useCrop = (initialValues = defaultCropValues) => {
 
   const [state, dispatch] = useReducer(cropReducer, initialValues);
 
@@ -374,4 +375,19 @@ export function useCrop(initialValues = defaultCropValues) {
     resizeCropArea,
     endResize,
   };
-}
+};
+
+export type {
+  ICursorStyles,
+  IDrawArea,
+  ICropState,
+};
+
+  export {
+    updateCursorStyle,
+    isLeftMouseButton,
+    updateCropValues,
+    cropReducer
+  };
+
+  export default useCrop;

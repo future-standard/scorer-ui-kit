@@ -68,7 +68,7 @@ const StyledInputFileButton = styled(InputFileButton)`
 
 interface IAvatar {
   title?: string
-  innerText?: string
+  photoText?: string
   buttonText?: string
   buttonTextReplace?: string
   onAvatarReady?: (imgFile: File) => void
@@ -77,7 +77,7 @@ interface IAvatar {
 
 const AvatarUploader : React.FC<IAvatar> = ({
   title = 'Photograph',
-  innerText = 'Drop Photo',
+  photoText = 'Drop Photo',
   buttonText = 'Select File',
   buttonTextReplace = 'Replace Photo',
   onAvatarReady,
@@ -126,7 +126,7 @@ const AvatarUploader : React.FC<IAvatar> = ({
           : (
             <NoPhoto>
               <AvatarPlaceholder />
-              <PlaceholderText>{innerText}</PlaceholderText>
+              <PlaceholderText>{photoText}</PlaceholderText>
             </NoPhoto>
             )}
         <DropArea height={PHOTO_HEIGHT} dropCallback={handleFileUpload} />
@@ -136,7 +136,7 @@ const AvatarUploader : React.FC<IAvatar> = ({
         text={avatarImg ? buttonTextReplace : buttonText}
         buttonSize='small'
         accept='image/*'
-        callback={handleFileUpload}
+        inputCallback={handleFileUpload}
       />
       {isCropOpen
         ? <CropTool

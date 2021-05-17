@@ -14,8 +14,8 @@ export default {
 
 export const _AvatarUploader = () => {
 
-  const titleText = text('Title','Photograph' );
-  const photoText = text('InnerText', 'Drop Photo');
+  const title = text('Title','Photograph' );
+  const photoText = text('Photo Text', 'Drop Photo');
   const buttonText = text('Button Text', 'Select File');
   const buttonReplaceText = text('Button Replace Text', 'Replace Photo');
   const showValue = action('Input Callback');
@@ -26,7 +26,7 @@ export const _AvatarUploader = () => {
       showValue(imgFile.name);
   };
 
-  const errorCallback = (msg: string) => {
+  const onError = (msg: string) => {
     console.log(msg);
     errorValue(msg);
   };
@@ -35,12 +35,14 @@ export const _AvatarUploader = () => {
   return(
     <Container>
       <AvatarUploader
-        title={titleText}
-        innerText={photoText}
-        buttonText={buttonText}
-        buttonTextReplace={buttonReplaceText}
         onAvatarReady={uploadReady}
-        onError={errorCallback}
+        {...{
+          title,
+          photoText,
+          buttonText,
+          buttonReplaceText,
+          onError
+        }}
       />
     </Container>
   )

@@ -19,13 +19,11 @@ const DragAndDrop = styled.div<{inDropZone: boolean}>`
   border: ${({inDropZone}) => inDropZone ? `dashed #afa9a9 2px` : null};
 `;
 
-interface OwnProps {
+interface IDropArea {
   height?: string
   text?: string
   dropCallback?: (newFiles: FileList) => void 
 }
-
-type IDropArea = OwnProps
 
 const DropArea : React.FC<IDropArea> = ({height, text, dropCallback}) => {
   const [inDropZone, setInDropZone] = useState(false);

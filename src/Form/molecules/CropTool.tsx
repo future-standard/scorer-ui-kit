@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Button from '../atoms/Button';
 import ButtonWithLoading from '../atoms/ButtonWithLoading';
-import { useCrop, ICursorStyles, IDrawArea, updateCursorStyle, isLeftMouseButton } from '../../hooks/useCrop';
+import useCrop, {ICursorStyles, IDrawArea, updateCursorStyle, isLeftMouseButton } from '../../hooks/useCrop';
 import { getImageType } from '../../helpers';
 // TODO: Add throttle //
 
@@ -133,7 +133,7 @@ const PointW = styled.div`
   left: -5px;
 `;
 
-function drawImgValues(img: HTMLImageElement, canvasHeight: number, canvasWidth: number) : IDrawArea {
+const drawImgValues = (img: HTMLImageElement, canvasHeight: number, canvasWidth: number) : IDrawArea  => {
 
   const scale = Math.min(
     canvasWidth / img.naturalWidth,
@@ -153,16 +153,16 @@ function drawImgValues(img: HTMLImageElement, canvasHeight: number, canvasWidth:
   };
 
   return imageDraw;
-}
+};
 
-function initialCropValues(
+const initialCropValues =(
   cropWidth: number,
   cropHeight: number,
   canvasWidth: number,
   canvasHeight: number,
   imgWidth: number,
   imgHeight: number,
-  ) {
+  ) => {
 
   const width = Math.min(cropWidth, canvasWidth, imgWidth);
   const height = Math.min(cropHeight, canvasHeight, imgHeight);
@@ -175,7 +175,7 @@ function initialCropValues(
     width,
     height,
   };
-}
+};
 
 interface ICrop {
   title?: string
@@ -286,9 +286,9 @@ const CropTool: React.FC<ICrop> = ({
     if (!cropRef) { return; }
     const rect = cropRef.current?.getBoundingClientRect();
     if (!rect) { return; }
-    // mouse will be statick if it's resizing
+    // mouse will be static if it's resizing
     if (cropState.isResizing) { return; }
-    const [clientX, clientY] = [e.clientX, e.clientY]; // Necesary to moved outside asynchronous context
+    const [clientX, clientY] = [e.clientX, e.clientY]; // Necessary to moved outside asynchronous context
     const {left, top, width, height} = rect;
     const newCursorStyle = updateCursorStyle(left, top, width, height, clientX, clientY);
     updateCursor(newCursorStyle);

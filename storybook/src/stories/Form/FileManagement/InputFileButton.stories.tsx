@@ -16,7 +16,7 @@ export default {
 
 export const _InputFileButton = () => {
 
-  const multipleVal = boolean('Multiple', false);
+  const multiple = boolean('Multiple', false);
   const textVal = text('Text','Select a File');
   const buttonDesign = select("Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
   const buttonSize = select("Button Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
@@ -24,7 +24,7 @@ export const _InputFileButton = () => {
   const showValue = action('Input Callback');
   
 
-  const myCallback = (newFiles: FileList) => {
+  const inputCallback = (newFiles: FileList) => {
     console.log('file', newFiles);
     if(newFiles.length === 1) {
       showValue(newFiles[0].name);
@@ -36,12 +36,8 @@ export const _InputFileButton = () => {
   return(
     <Container>
       <InputFileButton
-        callback={myCallback}
-        buttonDesign={buttonDesign}
-        buttonSize={buttonSize}
         text={textVal}
-        multiple={multipleVal}
-
+        {...{buttonDesign, buttonSize, multiple, inputCallback}}
 
         />
     </Container>

@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CropTool } from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
-import { text, boolean, number} from "@storybook/addon-knobs";
+import { text, boolean, number } from "@storybook/addon-knobs";
 import photo from '../../assets/placeholder.jpg';
-
 
 const Container = styled.div`
     margin: 20px;
@@ -18,22 +17,22 @@ const NewImageArea = styled.div``;
 export default {
   title: 'Form/File Management',
   component: CropTool,
-  decorators:[],
+  decorators: [],
   escapeHTML: false,
 };
 
 export const _CropTool = () => {
-  const resizableCropArea = boolean('Resizable', false);
+  const isResizable = boolean('Is Resizable', false);
   const [cropImg, setCropImg] = useState('');
   const [isCropping, setIsCropping] = useState(true);
-  const textVal = text('Title','Crop Image');
-  const cancelText = text('Cancel Button Text', 'Cancel');
-  const cropText = text('Crop Button Text', `Crop and Save`);
-  const heightCanvasVal = number('Canvas Height', 450);
-  const widthCanvasVal = number('Canvas Width', 500);
-  const initialCropHeight = number('Crop Height', 150);
-  const initialCropWidth = number('Crop Width', 150);
-  const errorValue = action ('Error');
+  const title = text('Title', 'Crop Image');
+  const cancelBtnTxt = text('Cancel Button Text', 'Cancel');
+  const cropBtnTxt = text('Crop Button Text', `Crop and Save`);
+  const canvasHeight = number('Canvas Height', 450);
+  const canvasWidth = number('Canvas Width', 500);
+  const cropHeight = number('Crop Height', 150);
+  const cropWidth = number('Crop Width', 150);
+  const errorValue = action('Error');
 
   const onCrop = (newImgUrl: string) => {
     console.log('Crop');
@@ -41,34 +40,36 @@ export const _CropTool = () => {
     setIsCropping(false);
   };
 
-  const handleClose = () => {
+  const onClose = () => {
     setIsCropping(false);
   }
-  const errorCallback = (msg: string) => {
+  const onError = (msg: string) => {
     console.log(msg);
     errorValue(msg);
   };
 
-  return(
+  return (
     <Container>
       {isCropping ? <CropTool
-        title={textVal}
-        onCrop={onCrop}
-        onClose={handleClose}
-        cancelBtnTxt={cancelText}
-        cropBtnTxt={cropText}
-        isResizable={resizableCropArea}
         imgUrl={photo}
-        canvasHeight={heightCanvasVal}
-        canvasWidth={widthCanvasVal}
-        cropHeight={initialCropHeight}
-        cropWidth={initialCropWidth}
-        onError={errorCallback}
+        {...{
+          title,
+          onCrop,
+          onClose,
+          cancelBtnTxt,
+          cropBtnTxt,
+          isResizable,
+          canvasHeight,
+          canvasWidth,
+          cropHeight,
+          cropWidth,
+          onError,
+        }}
       />
-      : null}
+        : null}
       <NewImageArea>
         <h3>Cropped Area</h3>
-        <CropResult src={cropImg}/>
+        <CropResult src={cropImg} />
       </NewImageArea>
     </Container>
   )
