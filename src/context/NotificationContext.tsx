@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Notification, { INotificationProps } from '../Alerts/atom/Notification';
 
-export type NotificationContextType = {
+type NotificationContextType = {
   sendNotification: (newNotification: INotificationProps) => void;
 };
 
@@ -9,7 +9,7 @@ const defaultContext: NotificationContextType = {
   sendNotification: () => console.log("This is the context initialization should not appear"),
 };
 
-export const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
+const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
 
 const notificationList: INotificationProps[] = [];
 
@@ -74,4 +74,6 @@ const NotificationProvider: React.FC = ({ children }) => {
   );
 };
 
+export { NotificationContext };
+export type  { NotificationContextType };
 export default NotificationProvider;

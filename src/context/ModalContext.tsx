@@ -16,7 +16,7 @@ const defaultContext: ModalContextType = {
   setModalProps: (newProps: IModalProps) => { console.log(newProps); },
 };
 
-export const ModalContext = React.createContext<ModalContextType>(defaultContext);
+const ModalContext = React.createContext<ModalContextType>(defaultContext);
 
 const ModalProvider: React.FC = ({ children }) => {
 
@@ -34,4 +34,5 @@ const ModalProvider: React.FC = ({ children }) => {
   );
 };
 
+export { ModalContext };
 export default ModalProvider;
