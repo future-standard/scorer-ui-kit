@@ -69,6 +69,7 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
     ${disabled && css`
       ${CheckboxOuter}{
         ${styles.form.checkbox.unchecked.disabled};
+        cursor: not-allowed;
       }
     `}
   `}
@@ -88,6 +89,7 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
     ${disabled && css`
       ${CheckboxOuter}{
         ${styles.form.checkbox.checked.disabled};
+        cursor: not-allowed;
       }
     `}
   `}
