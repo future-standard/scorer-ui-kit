@@ -7,7 +7,7 @@ import { AvatarPlaceholder } from '../../svg';
 import Label from '../atoms/Label';
 import { isValidImage } from '../../helpers';
 
-const PHOTO_HEGHT = `150px`;
+const PHOTO_HEIGHT = `150px`;
 const PHOTO_WIDTH = `142px`;
 
 const Container = styled.div`
@@ -129,7 +129,7 @@ const AvatarUploader : React.FC<IAvatar> = ({
               <PlaceholderText>{innerText}</PlaceholderText>
             </NoPhoto>
             )}
-        <DropArea height={PHOTO_HEGHT} dropCallback={handleFileUpload} />
+        <DropArea height={PHOTO_HEIGHT} dropCallback={handleFileUpload} />
       </PreviewImageGroup>
       <StyledInputFileButton
         id='avatar-upload'

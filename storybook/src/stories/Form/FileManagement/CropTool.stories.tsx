@@ -23,16 +23,16 @@ export default {
 };
 
 export const _CropTool = () => {
+  const resizableCropArea = boolean('Resizable', false);
   const [cropImg, setCropImg] = useState('');
-  const [isCroping, setIsCropping] = useState(true);
+  const [isCropping, setIsCropping] = useState(true);
   const textVal = text('Title','Crop Image');
   const cancelText = text('Cancel Button Text', 'Cancel');
   const cropText = text('Crop Button Text', `Crop and Save`);
-  const resizableCropArea = boolean('Resizable', false);
   const heightCanvasVal = number('Canvas Height', 450);
   const widthCanvasVal = number('Canvas Width', 500);
-  const initalCropHeight = number('Crop Height', 150);
-  const initalCropWidth = number('Crop Width', 150);
+  const initialCropHeight = number('Crop Height', 150);
+  const initialCropWidth = number('Crop Width', 150);
   const errorValue = action ('Error');
 
   const onCrop = (newImgUrl: string) => {
@@ -51,7 +51,7 @@ export const _CropTool = () => {
 
   return(
     <Container>
-      {isCroping ? <CropTool
+      {isCropping ? <CropTool
         title={textVal}
         onCrop={onCrop}
         onClose={handleClose}
@@ -61,8 +61,8 @@ export const _CropTool = () => {
         imgUrl={photo}
         canvasHeight={heightCanvasVal}
         canvasWidth={widthCanvasVal}
-        cropHeight={initalCropHeight}
-        cropWidth={initalCropWidth}
+        cropHeight={initialCropHeight}
+        cropWidth={initialCropWidth}
         onError={errorCallback}
       />
       : null}
@@ -70,7 +70,6 @@ export const _CropTool = () => {
         <h3>Cropped Area</h3>
         <CropResult src={cropImg}/>
       </NewImageArea>
-
     </Container>
   )
 };

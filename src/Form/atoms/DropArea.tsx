@@ -6,7 +6,7 @@ const Container = styled.div<{height?: string}>`
   position: relative;
 `;
 
-const DradAndDrop = styled.div<{inDropZone: boolean}>`
+const DragAndDrop = styled.div<{inDropZone: boolean}>`
   border-radius: 5px;
   position: absolute;
   top: 0;
@@ -61,7 +61,7 @@ const handleDrop = useCallback((e ) => {
 
   return(
     <Container height={height}>
-      <DradAndDrop
+      <DragAndDrop
         inDropZone={inDropZone}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
@@ -69,7 +69,7 @@ const handleDrop = useCallback((e ) => {
         onDrop={handleDrop}
       >
         {text}
-      </DradAndDrop>
+      </DragAndDrop>
     </Container>
   );
 };

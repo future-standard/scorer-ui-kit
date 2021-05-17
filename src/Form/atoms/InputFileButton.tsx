@@ -32,7 +32,7 @@ const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize,
       }
   },[callback]);
 
-  const fowardClick = useCallback(() => {
+  const forwardClick = useCallback(() => {
     if(fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -47,7 +47,7 @@ const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize,
         onChange={handleFile}
       />
       <StyledButton
-        onClick={fowardClick}
+        onClick={forwardClick}
         design={buttonDesign}
         size={buttonSize}
       >{text}
