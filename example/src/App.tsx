@@ -19,8 +19,6 @@ import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import TabsPage from './pages/TabsPage';
 import NotificationPage from './pages/NotificationPage';
 import ModalPage from './pages/ModalPage';
-import CustomIconPage from './pages/CustomIconPage';
-
 
 const App: React.FC<{}> = () => {
   return (
@@ -37,7 +35,6 @@ const App: React.FC<{}> = () => {
         <Route path={`/customdrawer`} exact={true} component={CustomUserDrawerPage} />
         <Route path={`/notification`} exact={true} component={NotificationPage} />
         <Route path={`/modal`} exact={true} component={ModalPage} />
-        <Route path={`/icon`} exact={true} component={CustomIconPage} />
         <Route path={`/ptz`} exact={true}>
           <PTZProvider socketUrl='ws://localhost/wsapp/' imageRefresh={2000}>
             <PTZPage />
