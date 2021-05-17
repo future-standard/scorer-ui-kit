@@ -257,7 +257,6 @@ export const styles = {
                 "disabled": {
                     "backgroundColor": "hsla(0, 0%, 98.8%, 1.000)",
                     "borderColor": "hsla(210, 20%, 90.2%, 1.000)",
-                    "cursor": "not-allowed",
                 },
                 "default": {
                     "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)"
@@ -270,7 +269,6 @@ export const styles = {
                 "disabled": {
                     "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
                     "backgroundColor": "hsla(210, 20%, 90.2%, 1.000)",
-                    "cursor": "not-allowed",
                 },
                 "default": {
                     "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
