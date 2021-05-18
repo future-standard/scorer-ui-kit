@@ -1,10 +1,10 @@
-import React, { useState, useRef, useCallback} from 'react';
+import React, { useState, useRef, useCallback, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import ReactDom from 'react-dom';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Button from '../atoms/Button';
 import ButtonWithLoading from '../atoms/ButtonWithLoading';
-import useCrop, {ICursorStyles, IDrawArea, updateCursorStyle, isLeftMouseButton } from '../../hooks/useCrop';
+import useCrop, { ICursorStyles, IDrawArea, updateCursorStyle, isLeftMouseButton } from '../../hooks/useCrop';
 import { getImageType } from '../../helpers';
 // TODO: Add throttle //
 
@@ -84,6 +84,47 @@ const ButtonsGroup = styled.div`
   }
 `;
 
+const CropLineStyle = css`
+position: absolute;
+display: block;
+opacity: 0.1;
+`;
+const TopLine = styled.div`
+  ${CropLineStyle};
+  cursor: n-resize;
+  width: 100%;
+  height: 5px;
+  left: 0;
+  top: -3px;
+`;
+
+const RightLine = styled.div`
+  ${CropLineStyle};
+  cursor: e-resize;
+  right: -3px;
+  top: 0;
+  width: 5px;
+  height: 100%;
+`;
+
+const BottomLine = styled.div`
+  ${CropLineStyle}
+  cursor: s-resize;
+  bottom: -3px;
+  height: 5px;
+  width: 100%;
+  left: 0;
+`;
+
+const LeftLine = styled.div`
+  ${CropLineStyle};
+  cursor: w-resize;
+  left: -3px;
+  top: 0;
+  width: 5px;
+  height: 100%;
+`;
+
 const resizeSquaresCss = css`
   position: absolute;
   width: 10px;
@@ -92,48 +133,77 @@ const resizeSquaresCss = css`
   background-color: hsl(0, 0%, 100%);
 `;
 
-const PointNW = styled.div`
+const PointN = styled.div<{ isResizable: boolean }>`
   ${resizeSquaresCss};
   top: -5px;
-  left: calc(50% - 5px);
+  margin-left: -5px;
+  left: 50%;
+  ${({ isResizable }) => isResizable && css`
+    cursor: n-resize;
+  `};
 `;
-const PointN = styled.div`
+const PointNW = styled.div<{ isResizable: boolean }>`
   ${resizeSquaresCss};
   top: -5px;
   left: -5px;
-`;
-const PointNE = styled.div`
-  ${resizeSquaresCss};
-  top: -5px;
-  left: calc(100% - 5px);
-`;
-const PointE = styled.div`
-  ${resizeSquaresCss};
-  top: calc(50% - 5px);
-  left: calc(100% - 5px);
-`;
-const PointSE = styled.div`
-  ${resizeSquaresCss};
-  top: calc(100% - 5px);
-  left: calc(100% - 5px);
-`;
-const PointS = styled.div`
-  ${resizeSquaresCss};
-  top: calc(100% - 5px);
-  left: calc(50% - 5px);
-`;
-const PointSW = styled.div`
-  ${resizeSquaresCss};
-  top: calc(100% - 5px);
-  left: -5px;
-`;
-const PointW = styled.div`
-  ${resizeSquaresCss};
-  top: calc(50% - 5px);
-  left: -5px;
+  ${({ isResizable }) => isResizable && css`
+    cursor: nw-resize;
+  `};
 `;
 
-const drawImgValues = (img: HTMLImageElement, canvasHeight: number, canvasWidth: number) : IDrawArea  => {
+const PointNE = styled.div<{ isResizable: boolean }>`
+  ${resizeSquaresCss};
+  top: -5px;
+  right: -5px;
+  ${({ isResizable }) => isResizable && css`
+    cursor: ne-resize;
+  `};
+`;
+const PointE = styled.div<{ isResizable: boolean }>`
+  ${resizeSquaresCss};
+    margin-top: -5px;
+    top: 50%;
+    left: -5px;
+  ${({ isResizable }) => isResizable && css`
+    cursor: e-resize;
+  `};
+`;
+const PointSE = styled.div<{ isResizable: boolean }>`
+  ${resizeSquaresCss};
+  bottom: -5px;
+  right: -5px;
+  ${({ isResizable }) => isResizable && css`
+    cursor: se-resize;
+  `};
+`;
+const PointS = styled.div<{ isResizable: boolean }>`
+  ${resizeSquaresCss};
+  bottom: -5px;
+  left: 50%;
+  margin-left: -5px;
+  ${({ isResizable }) => isResizable && css`
+    cursor: s-resize;
+  `};
+`;
+const PointSW = styled.div<{ isResizable: boolean }>`
+  ${resizeSquaresCss};
+  bottom: -5px;
+  left: -5px;
+  ${({ isResizable }) => isResizable && css`
+    cursor: sw-resize;
+  `};
+`;
+const PointW = styled.div<{ isResizable: boolean }>`
+  ${resizeSquaresCss};
+  margin-top: -5px;
+  top: 50% -5px;
+  left: -5px;
+  ${({ isResizable }) => isResizable && css`
+    cursor: w-resize;
+  `};
+`;
+
+const drawImgValues = (img: HTMLImageElement, canvasHeight: number, canvasWidth: number): IDrawArea => {
 
   const scale = Math.min(
     canvasWidth / img.naturalWidth,
@@ -145,7 +215,7 @@ const drawImgValues = (img: HTMLImageElement, canvasHeight: number, canvasWidth:
   const top = 0 + Math.floor((canvasHeight - height) / 2);
   const left = 0 + Math.floor((canvasWidth - width) / 2);
 
-  const imageDraw : IDrawArea = {
+  const imageDraw: IDrawArea = {
     left,
     top,
     width,
@@ -155,14 +225,14 @@ const drawImgValues = (img: HTMLImageElement, canvasHeight: number, canvasWidth:
   return imageDraw;
 };
 
-const initialCropValues =(
+const initialCropValues = (
   cropWidth: number,
   cropHeight: number,
   canvasWidth: number,
   canvasHeight: number,
   imgWidth: number,
   imgHeight: number,
-  ) => {
+) => {
 
   const width = Math.min(cropWidth, canvasWidth, imgWidth);
   const height = Math.min(cropHeight, canvasHeight, imgHeight);
@@ -203,15 +273,14 @@ const CropTool: React.FC<ICrop> = ({
   canvasWidth,
   imgUrl,
   onCrop,
-  onClose = () => {},
-  onError = () => {}
+  onClose = () => { },
+  onError = () => { }
 }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const {
     state: cropState,
     setDrawAreas,
-    updateCursor,
     startResize,
     resizeCropArea,
     endResize,
@@ -242,8 +311,8 @@ const CropTool: React.FC<ICrop> = ({
 
     const newImgDraw = drawImgValues(newImage, canvasHeight, canvasWidth);
     ctx?.drawImage(newImage, newImgDraw.left, newImgDraw.top, newImgDraw.width, newImgDraw.height);
-    const newCrop : IDrawArea = initialCropValues(cropWidth, cropHeight, canvasWidth, canvasHeight, newImgDraw.width, newImgDraw.height);
-    const newCanvas: IDrawArea = {left: 0, top: 0, width: canvas.width, height: canvas.height};
+    const newCrop: IDrawArea = initialCropValues(cropWidth, cropHeight, canvasWidth, canvasHeight, newImgDraw.width, newImgDraw.height);
+    const newCanvas: IDrawArea = { left: 0, top: 0, width: canvas.width, height: canvas.height };
     setDrawAreas(newCrop, newImgDraw, newCanvas);
   }, [canvasHeight, canvasWidth, cropHeight, cropWidth, onError, setDrawAreas]);
 
@@ -277,24 +346,6 @@ const CropTool: React.FC<ICrop> = ({
     setIsLoading(false);
   }, [onCrop]);
 
-  // Mouse Crop selection handlers //
-
-  const handleOnMouseOver = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if(!isResizable) { return;}
-    if (!cropRef) { return; }
-    const rect = cropRef.current?.getBoundingClientRect();
-    if (!rect) { return; }
-    // mouse will be static if it's resizing
-    if (cropState.isResizing) { return; }
-    const [clientX, clientY] = [e.clientX, e.clientY]; // Necessary to moved outside asynchronous context
-    const {left, top, width, height} = rect;
-    const newCursorStyle = updateCursorStyle(left, top, width, height, clientX, clientY);
-    updateCursor(newCursorStyle);
-
-  },[cropState.isResizing, isResizable, updateCursor],);
-
   const handleMouseMove = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -303,7 +354,7 @@ const CropTool: React.FC<ICrop> = ({
 
     const rect = cropRef.current?.getBoundingClientRect();
     if (!rect) { return; }
-    const {width, height} = rect;
+    const { width, height } = rect;
     const [posX, posY] = [e.clientX, e.clientY];
     resizeCropArea(posX, posY, height, width);
   }, [cropState.isResizing, resizeCropArea]);
@@ -316,15 +367,15 @@ const CropTool: React.FC<ICrop> = ({
 
     const rect = cropRef.current?.getBoundingClientRect();
     if (!rect) { return; }
-    const {left, top, width, height} = rect;
+    const { left, top, width, height } = rect;
     const [posX, posY] = [e.clientX, e.clientY];
-    let newCursorStyle : ICursorStyles;
-    if(!isResizable) {
+    let newCursorStyle: ICursorStyles;
+    if (!isResizable) {
       newCursorStyle = 'move';
-    }else {
+    } else {
       newCursorStyle = updateCursorStyle(left, top, width, height, posX, posY);
     }
-      startResize(newCursorStyle, posX, posY, height, width);
+    startResize(newCursorStyle, posX, posY, height, width);
   }, [isResizable, startResize]);
 
 
@@ -332,7 +383,6 @@ const CropTool: React.FC<ICrop> = ({
     e.preventDefault();
     e.stopPropagation();
     endResize();
-
   }, [endResize]);
 
   // End of Mouse Crop selection handlers //
@@ -377,18 +427,26 @@ const CropTool: React.FC<ICrop> = ({
             <CropArea
               ref={cropRef}
               cropValues={cropState.cropDraw}
-              cursorStyle={isResizable? cropState.cursorStyle : 'move'}
-              onMouseOver={handleOnMouseOver}
+              cursorStyle='move'
               onMouseDown={handleMouseDown}
             >
-              <PointNW />
-              <PointN />
-              <PointNE />
-              <PointE />
-              <PointSE />
-              <PointS />
-              <PointSW />
-              <PointW />
+              {isResizable ? (
+                <Fragment>
+                  {/* This lines are just for cursor css */}
+                  <TopLine />
+                  <RightLine />
+                  <BottomLine />
+                  <LeftLine />
+                </Fragment>)
+                : null}
+              <PointNW {...{ isResizable }} />
+              <PointN {...{ isResizable }} />
+              <PointNE {...{ isResizable }} />
+              <PointE {...{ isResizable }} />
+              <PointSE {...{ isResizable }} />
+              <PointS {...{ isResizable }} />
+              <PointSW {...{ isResizable }} />
+              <PointW {...{ isResizable }} />
             </CropArea>
           </PreviewArea>
         </InnerContainer>

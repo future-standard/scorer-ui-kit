@@ -336,10 +336,6 @@ const useCrop = (initialValues = defaultCropValues) => {
     });
   },[]);
 
-  const updateCursor = useCallback((newCursorStyle: ICursorStyles) => { 
-    dispatch({type: UPDATE_CURSOR, data:{cursorStyle: newCursorStyle}});
-  },[]);
-
   const startResize = useCallback((newCursorStyle: ICursorStyles, posX: number, posY: number, height: number, width: number) => {
     dispatch({
           type: START_RESIZE,
@@ -370,7 +366,6 @@ const useCrop = (initialValues = defaultCropValues) => {
   return {
     state,
     setDrawAreas,
-    updateCursor,
     startResize,
     resizeCropArea,
     endResize,
