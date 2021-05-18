@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, Fragment } from 'react';
 import styled, { css } from 'styled-components';
-import useCrop, { ICursorStyles, IDrawArea, updateCursorStyle, isLeftMouseButton } from '../../hooks/useCrop';
+import useCrop, { ICursorStyles, IDrawArea, updateCursorStyle, isLeftMouseButton, updateCropValues } from '../../hooks/useCrop';
 import { getImageType } from '../../helpers';
 
 const Container = styled.div<{ canvasHeight?: number, canvasWidth?: number }>`
@@ -142,8 +142,8 @@ const PointSW = styled.div<{ isResizable: boolean }>`
 const PointW = styled.div<{ isResizable: boolean }>`
   ${resizeSquaresCss};
   margin-top: -5px;
-  top: 50% -5px;
-  left: -5px;
+  top: 50%;
+  right: -5px;
   ${({ isResizable }) => isResizable && css`
     cursor: w-resize;
   `};
@@ -191,6 +191,23 @@ const initialCropValues = (
     width,
     height,
   };
+};
+
+const dimensions = {
+  cropLeft: 0,
+  cropTop: 0,
+  cropWidth: 100,
+  cropHeight: 100,
+  mouseStartWidth:100,
+  mouseStartHeight:100,
+  mouseStartX: 0,
+  mouseStartY: 0,
+  imgLeft: 0,
+  imgTop: 0,
+  imgWidth: 200,
+  imgHeight: 200,
+  cursorStart: 'default',
+  isResizing: false,
 };
 
 interface ICropArea {
@@ -279,6 +296,20 @@ const CropArea: React.FC<ICropArea> = ({
     const newCanvas: IDrawArea = { left: 0, top: 0, width: canvas.width, height: canvas.height };
     setDrawAreas(newCrop, newImgDraw, newCanvas);
     handleCropArea(cropState.cropDraw);
+
+      dimensions.cropLeft = newCrop.left;
+      dimensions.cropTop = newCrop.top;
+      dimensions.cropWidth = newCrop.width;
+      dimensions.cropHeight = newCrop.height;
+      dimensions.mouseStartWidth = newCrop.width;
+      dimensions.mouseStartHeight = newCrop.height;
+      dimensions.imgLeft = newImgDraw.left;
+      dimensions.imgTop = newImgDraw.top;
+      dimensions.imgWidth = newImgDraw.width;
+      dimensions.imgHeight = newImgDraw.height;
+      dimensions.cursorStart = 'default';
+      dimensions.isResizing= false;
+    
   }, [canvasHeight, canvasWidth, cropHeight, cropState.cropDraw, cropWidth, handleCropArea, onError, setDrawAreas]);
 
   const handleMouseDown = useCallback((e) => {
@@ -297,36 +328,83 @@ const CropArea: React.FC<ICropArea> = ({
     } else {
       newCursorStyle = updateCursorStyle(left, top, width, height, posX, posY);
     }
-    startResize(newCursorStyle, posX, posY, height, width);
+    // startResize(newCursorStyle, posX, posY, height, width);
+    dimensions.mouseStartX = posX;
+    dimensions.mouseStartY = posY;
+    dimensions.cursorStart = newCursorStyle;
+    dimensions.isResizing = true;
+    console.log("mouse down");
   }, [isResizable, startResize]);
 
   const handleMouseUp = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!cropState.isResizing) { return; }
-    endResize();
-    handleCropArea(cropState.cropDraw);
+    if (!dimensions.isResizing) { return; }
+    // endResize();
+    const newCropArea = {left: dimensions.cropLeft, top: dimensions.cropTop, width: dimensions.cropWidth, height: dimensions.cropHeight};
+    handleCropArea(newCropArea);
+    console.log("mouse up");
+    dimensions.isResizing = false;
   }, [cropState.cropDraw, cropState.isResizing, endResize, handleCropArea]);
 
   const handleMouseMove = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!cropRef) { return; }
-    if (!cropState.isResizing) { return; }
+    if (!dimensions.isResizing) { return; }
 
     const rect = cropRef.current?.getBoundingClientRect();
     if (!rect) { return; }
-    const { width, height } = rect;
+    //const { width, height } = rect;
     const [posX, posY] = [e.clientX, e.clientY];
-    resizeCropArea(posX, posY, height, width);
+    //resizeCropArea(posX, posY, height, width);
+    const oldCrop = {left: dimensions.cropLeft, top: dimensions.cropTop, width: dimensions.cropWidth, height: dimensions.cropHeight};
+    //const cursorStyle = dimensions.cursorStart;
+    const lastPoint = {
+      posX: dimensions.mouseStartX,
+      posY: dimensions.mouseStartY,
+      width: dimensions.mouseStartWidth,
+      height: dimensions.mouseStartHeight,
+    };
+    const drawArea = {
+      left: dimensions.imgLeft,
+      top: dimensions.imgTop,
+      width: dimensions.imgWidth,
+      height: dimensions.imgHeight,
+    };
+    
+    const newDimensions = updateCropValues(oldCrop, "move", lastPoint, posX, posY, drawArea);
+    dimensions.cropTop = newDimensions.top;
+    dimensions.cropLeft = newDimensions.left;
+    dimensions.cropWidth = newDimensions.width;
+    dimensions.cropHeight = newDimensions.height;
+    dimensions.mouseStartHeight = newDimensions.height;
+    dimensions.mouseStartWidth = newDimensions.width;
+    dimensions.mouseStartX = posX;
+    dimensions.mouseStartY = posY;
+
+    if (!cropRef.current) { return; }
+    cropRef.current.style.left = dimensions.cropLeft.toString() + "px";
+    cropRef.current.style.top = dimensions.cropTop.toString() + "px";
+
+    console.log("mouse move");
   }, [cropState.isResizing, resizeCropArea]);
 
+  const handleOnMouseLeave = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!dimensions.isResizing) { return; }
+      dimensions.isResizing = false;
+  },[]);
+
+  console.log(dimensions);
   return (
     <Container
       canvasHeight={canvasHeight}
       canvasWidth={canvasWidth}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
+      onMouseLeave={handleOnMouseLeave}
     >
       <HiddenImage ref={imgRef} src={imgUrl} onLoad={drawImgOnCanvas} />
       <canvas
@@ -336,7 +414,7 @@ const CropArea: React.FC<ICropArea> = ({
       />
       <SelectedArea
         ref={cropRef}
-        cropValues={cropState.cropDraw}
+        cropValues={{left: dimensions.cropLeft, top: dimensions.cropTop, width: dimensions.cropWidth, height: dimensions.cropHeight }}
         cursorStyle='move'
         onMouseDown={handleMouseDown}
       >
