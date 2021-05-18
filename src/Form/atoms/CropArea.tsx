@@ -321,8 +321,6 @@ const CropArea: React.FC<ICropArea> = ({
     resizeCropArea(posX, posY, height, width);
   }, [cropState.isResizing, resizeCropArea]);
 
-  // End of Mouse Crop selection handlers //
-
   return (
     <Container
       canvasHeight={canvasHeight}

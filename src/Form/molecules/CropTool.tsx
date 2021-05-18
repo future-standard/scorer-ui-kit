@@ -102,8 +102,6 @@ const CropTool: React.FC<ICrop> = ({
     setIsLoading(false);
   }, [cropFile, onCrop]);
 
-  // End of Mouse Crop selection handlers //
-
   return (
     ReactDom.createPortal(
       <Container>
