@@ -129,10 +129,10 @@ const CropArea: React.FC<ICropArea> = ({
   isResizable,
   hasAspectRatio
 }) => {
-  console.log(hasAspectRatio,'aspect radio');
+
   return (
     <Fragment>
-      {(isResizable && (!hasAspectRatio) ) ? (
+      {(isResizable && (!hasAspectRatio)) ? (
         <Fragment>
           {/* This lines are just for cursor css */}
           <TopLine />
@@ -140,15 +140,23 @@ const CropArea: React.FC<ICropArea> = ({
           <BottomLine />
           <LeftLine />
         </Fragment>)
-          : null}
+        : null}
+
+      {hasAspectRatio ? null
+        : (
+          <Fragment>
+            <PointN data-point='cursor-n' {...{ isResizable }} />
+            <PointE data-point='cursor-e' {...{ isResizable }} />
+            <PointS data-point='cursor-s' {...{ isResizable }} />
+            <PointW data-point='cursor-w' {...{ isResizable }} />
+          </Fragment>
+        )}
+
+
       <PointNW data-point='cursor-nw' {...{ isResizable }} />
-      <PointN data-point='cursor-n' {...{ isResizable }} />
       <PointNE data-point='cursor-ne' {...{ isResizable }} />
-      <PointE data-point='cursor-e' {...{ isResizable }} />
       <PointSE data-point='cursor-se' {...{ isResizable }} />
-      <PointS data-point='cursor-s' {...{ isResizable }} />
       <PointSW data-point='cursor-sw' {...{ isResizable }} />
-      <PointW data-point='cursor-w' {...{ isResizable }} />
     </Fragment>
   );
 };

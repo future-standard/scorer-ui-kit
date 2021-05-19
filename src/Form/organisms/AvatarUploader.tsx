@@ -7,8 +7,16 @@ import { AvatarPlaceholder } from '../../svg';
 import Label from '../atoms/Label';
 import { isValidImage } from '../../helpers';
 
-const PHOTO_HEIGHT = `150px`;
-const PHOTO_WIDTH = `142px`;
+/** TODO update to useReduce */
+
+const PREVIEW_HEIGHT_AREA = 150;
+const PREVIEW_WIDTH_AREA = 142;
+
+const ratio =  Math.round((PREVIEW_WIDTH_AREA / PREVIEW_HEIGHT_AREA) * 100) / 100;
+
+const PHOTO_HEIGHT = `${PREVIEW_HEIGHT_AREA}px`;
+const PHOTO_WIDTH = `${PREVIEW_WIDTH_AREA}px`;
+
 
 const Container = styled.div`
   position: relative;
@@ -56,12 +64,6 @@ const NoPhoto = styled.div`
   }
 `;
 
-/**
- * TODO: Free memory for  URL.createObjectURL(); 
- * https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
- * 
-*/
-
 const StyledInputFileButton = styled(InputFileButton)`
   width: 100%;
 `;
@@ -71,7 +73,7 @@ interface IAvatar {
   photoText?: string
   buttonText?: string
   buttonTextReplace?: string
-  onAvatarReady?: (imgFile: File) => void
+  onAvatarUpdate?: (imgFile: File) => void
   onError?: (msg: string) => void
 }
 
@@ -80,26 +82,28 @@ const AvatarUploader : React.FC<IAvatar> = ({
   photoText = 'Drop Photo',
   buttonText = 'Select File',
   buttonTextReplace = 'Replace Photo',
-  onAvatarReady,
+  onAvatarUpdate,
   onError = () => {},
 }) => {
   const [avatarImg, setAvatarImg] = useState('');
+  const [cropImg, setCropImg] = useState('');
   const [isCropOpen, setIsCropOpen] = useState(false);
 
-  const handleCrop = useCallback(async (newFileUrl: string) => {
+  const handleCrop = useCallback(async (newFileUrl: string, fileType: string) => {
     setAvatarImg(newFileUrl);
     let newFile = await fetch(
-      newFileUrl).then(r => r.blob()).then(blobFile => new File([blobFile], "newAvatar", { type: "image/png" })
+      newFileUrl).then(r => r.blob()).then(blobFile => new File([blobFile], "newAvatar", { type: fileType })
       );
-    if(onAvatarReady) {
-      onAvatarReady(newFile);
+    if(onAvatarUpdate) {
+      onAvatarUpdate(newFile);
     }
     setIsCropOpen(false);
-  },[onAvatarReady]);
+  },[onAvatarUpdate]);
 
   const handleCropClose = useCallback(() => {
     setIsCropOpen(false);
-  },[]);
+    URL.revokeObjectURL(cropImg);
+  },[cropImg]);
 
   const handleFileUpload  = useCallback((newFiles: FileList) => {
 
@@ -110,7 +114,7 @@ const AvatarUploader : React.FC<IAvatar> = ({
       }
       const prevImg = URL.createObjectURL(newFiles[0]);
 
-      setAvatarImg(prevImg);
+      setCropImg(prevImg);
       setIsCropOpen(true);
     } else {
       onError('Drop only one file');
@@ -140,14 +144,15 @@ const AvatarUploader : React.FC<IAvatar> = ({
       />
       {isCropOpen
         ? <CropTool
-            imgUrl={avatarImg}
+            imgUrl={cropImg}
             onCrop={handleCrop}
             onClose={handleCropClose}
+            onError={onError}
             canvasHeight={490}
             canvasWidth={460}
-            cropHeight={142}
-            cropWidth={150}
-            aspectRatio={142/150}
+            cropHeight={PREVIEW_WIDTH_AREA}
+            cropWidth={PREVIEW_HEIGHT_AREA}
+            aspectRatio={ratio}
             isResizable
           />
         : null}

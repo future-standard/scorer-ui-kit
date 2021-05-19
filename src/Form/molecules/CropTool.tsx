@@ -4,8 +4,10 @@ import ReactDom from 'react-dom';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Button from '../atoms/Button';
 import ButtonWithLoading from '../atoms/ButtonWithLoading';
-import { ICursorStyles,
+import {
+  ICursorStyles,
   IDrawArea,
+  ISelectedArea,
   updateCursorStyle,
   isLeftMouseButton,
   updateCropValues,
@@ -92,20 +94,6 @@ const SelectedArea = styled.div<{ cropLeft: number, cropTop: number, cropWidth: 
   cursor: move;
 `;
 
-interface ISelectedArea {
-  cropLeft: number
-  cropTop: number
-  cropWidth: number
-  cropHeight: number
-  mouseStartX: number
-  mouseStartY: number
-  imgLeft: number
-  imgTop: number
-  imgWidth: number
-  imgHeight: number
-  cursorStart: ICursorStyles
-  isResizing: boolean
-}
 const viewDimensions: ISelectedArea = {
   cropLeft: 0,
   cropTop: 0,
@@ -132,7 +120,7 @@ interface ICrop {
   canvasHeight: number
   canvasWidth: number
   aspectRatio?: number
-  onCrop?: (newFileUrl: string) => void
+  onCrop?: (newFileUrl: string, fileType: string) => void
   onClose?: () => void
   onError?: (msg: string) => void
 }
@@ -158,7 +146,6 @@ const CropTool: React.FC<ICrop> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const cropRef = useRef<HTMLDivElement | null>(null);
-
 
   const drawImgOnCanvas = useCallback(() => {
     if (!canvasRef || !imgRef) { return; }
@@ -240,9 +227,10 @@ const CropTool: React.FC<ICrop> = ({
     canvasCropped.height = cropArea.height;
 
     cropContext?.putImageData(cropImageData, 0, 0);
-    const newImgUrl = canvasCropped.toDataURL(getImageType(newImage));
+    const imgType = getImageType(newImage);
+    const newImgUrl = canvasCropped.toDataURL(imgType);
     if (onCrop) {
-      onCrop(newImgUrl);
+      onCrop(newImgUrl, imgType);
     }
   }, [onCrop]);
 
@@ -267,14 +255,12 @@ const CropTool: React.FC<ICrop> = ({
     viewDimensions.mouseStartY = posY;
     viewDimensions.cursorStart = newCursorStyle;
     viewDimensions.isResizing = true;
-    console.log("mouse down");
   }, [isResizable]);
 
   const handleMouseUp = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!viewDimensions.isResizing) { return; }
-    console.log("mouse up");
     viewDimensions.isResizing = false;
   }, []);
   
@@ -284,7 +270,7 @@ const CropTool: React.FC<ICrop> = ({
     cropRef.current.style.top = `${top}px`;
     cropRef.current.style.width = `${width}px`;
     cropRef.current.style.height = `${height}px`;
-    console.log("mouse move");
+
   },[]);
 
   const handleMouseMove = useCallback((e) => {
@@ -381,7 +367,7 @@ const CropTool: React.FC<ICrop> = ({
             >
               <CropArea
                 {...{ isResizable }}
-                hasAspectRatio={!!aspectRatio}
+                hasAspectRatio={aspectRatio ? true : false}
               />
             </SelectedArea>
           </PreviewArea>

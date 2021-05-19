@@ -35,7 +35,7 @@ export const _AvatarUploader = () => {
   return(
     <Container>
       <AvatarUploader
-        onAvatarReady={uploadReady}
+        onAvatarUpdate={uploadReady}
         {...{
           title,
           photoText,

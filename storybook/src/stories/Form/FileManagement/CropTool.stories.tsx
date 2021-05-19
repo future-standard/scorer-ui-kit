@@ -36,7 +36,6 @@ export const _CropTool = () => {
   const errorValue = action('Error');
 
   const onCrop = (newImgUrl: string) => {
-    console.log('Crop');
     setCropImg(newImgUrl);
     setIsCropping(false);
   };
