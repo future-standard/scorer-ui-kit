@@ -145,8 +145,10 @@ const AvatarUploader : React.FC<IAvatar> = ({
             onClose={handleCropClose}
             canvasHeight={490}
             canvasWidth={460}
-            cropHeight={360}
-            cropWidth={360}
+            cropHeight={142}
+            cropWidth={150}
+            aspectRatio={142/150}
+            isResizable
           />
         : null}
     </Container>

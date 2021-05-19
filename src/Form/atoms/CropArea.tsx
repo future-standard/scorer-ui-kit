@@ -1,34 +1,5 @@
-import React, { useRef, useCallback, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
-import useCrop, { ICursorStyles, IDrawArea, updateCursorStyle, isLeftMouseButton, updateCropValues } from '../../hooks/useCrop';
-import { getImageType } from '../../helpers';
-
-const Container = styled.div<{ canvasHeight?: number, canvasWidth?: number }>`
-  position: relative;
-  overflow: hidden;
-  height: ${({ canvasHeight }) => canvasHeight ? `${canvasHeight}px` : `462px`};
-  width: ${({ canvasWidth }) => canvasWidth ? `${canvasWidth}px` : `485px`};
-  border-radius: 5px;
-  background-color: hsla(202, 33%, 95%, 0.8);
-  background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.8) 35px, rgba(255,255,255,.8) 70px);
-`;
-
-const HiddenImage = styled.img`
-  display: none;
-`;
-
-const SelectedArea = styled.div<{ cropValues: IDrawArea, cursorStyle: ICursorStyles }>`
-  position: absolute;
-  border: dashed 1px hsl(0, 0%, 24%);
-  box-shadow: 0 0 0 9999em hsla(0, 0%, 32%, 0.75);
-  ${({ cropValues }) => css`
-    top: ${cropValues.top}px;
-    left: ${cropValues.left}px;
-    width: ${cropValues.width}px;
-    height: ${cropValues.height}px;
-  `};
-  cursor: ${({ cursorStyle }) => cursorStyle};
-`;
 
 const CropLineStyle = css`
   position: absolute;
@@ -109,7 +80,7 @@ const PointE = styled.div<{ isResizable: boolean }>`
   ${resizeSquaresCss};
     margin-top: -5px;
     top: 50%;
-    left: -5px;
+    right: -5px;
   ${({ isResizable }) => isResizable && css`
     cursor: e-resize;
   `};
@@ -143,300 +114,42 @@ const PointW = styled.div<{ isResizable: boolean }>`
   ${resizeSquaresCss};
   margin-top: -5px;
   top: 50%;
-  right: -5px;
+  left: -5px;
   ${({ isResizable }) => isResizable && css`
     cursor: w-resize;
   `};
 `;
 
-const drawImgValues = (img: HTMLImageElement, canvasHeight: number, canvasWidth: number): IDrawArea => {
-
-  const scale = Math.min(
-    canvasWidth / img.naturalWidth,
-    canvasHeight / img.naturalHeight
-  );
-
-  const width = Math.floor(img.naturalWidth * scale);
-  const height = Math.floor(img.naturalHeight * scale);
-  const top = 0 + Math.floor((canvasHeight - height) / 2);
-  const left = 0 + Math.floor((canvasWidth - width) / 2);
-
-  const imageDraw: IDrawArea = {
-    left,
-    top,
-    width,
-    height,
-  };
-
-  return imageDraw;
-};
-
-const initialCropValues = (
-  cropWidth: number,
-  cropHeight: number,
-  canvasWidth: number,
-  canvasHeight: number,
-  imgWidth: number,
-  imgHeight: number,
-) => {
-
-  const width = Math.min(cropWidth, canvasWidth, imgWidth);
-  const height = Math.min(cropHeight, canvasHeight, imgHeight);
-  const top = 0 + Math.floor((canvasHeight / 2) - (height / 2));
-  const left = 0 + Math.floor((canvasWidth / 2) - (width / 2));
-
-  return {
-    left,
-    top,
-    width,
-    height,
-  };
-};
-
-const dimensions = {
-  cropLeft: 0,
-  cropTop: 0,
-  cropWidth: 100,
-  cropHeight: 100,
-  mouseStartWidth:100,
-  mouseStartHeight:100,
-  mouseStartX: 0,
-  mouseStartY: 0,
-  imgLeft: 0,
-  imgTop: 0,
-  imgWidth: 200,
-  imgHeight: 200,
-  cursorStart: 'default',
-  isResizing: false,
-};
-
 interface ICropArea {
-  imgUrl: string
-  isResizable?: boolean
-  cropHeight?: number
-  cropWidth?: number
-  canvasHeight: number
-  canvasWidth: number
-  onNewArea?: (newFileUrl: string) => void
-  onError?: (msg: string) => void
+  isResizable: boolean
+  hasAspectRatio: boolean
 }
 
 const CropArea: React.FC<ICropArea> = ({
-  isResizable = true,
-  cropHeight = 100,
-  cropWidth = 100,
-  canvasHeight,
-  canvasWidth,
-  imgUrl,
-  onNewArea,
-  onError = () => { }
+  isResizable,
+  hasAspectRatio
 }) => {
-
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const cropRef = useRef<HTMLDivElement | null>(null);
-
-  const {
-    state: cropState,
-    setDrawAreas,
-    startResize,
-    resizeCropArea,
-    endResize,
-  } = useCrop();
-
-  const handleCropArea = useCallback(async (cropArea: IDrawArea) => {
-
-    if (!canvasRef || !canvasRef.current || !imgRef) { return; }
-
-    const newImage = imgRef.current;
-    if (!newImage) { return; }
-
-    const canvas = canvasRef.current;
-    if (!canvas) { return; }
-
-    const ctx = canvas.getContext("2d");
-    // ctx.imageSmoothingEnabled = false; </// not sure required
-    const cropImageData = ctx?.getImageData(cropArea.left, cropArea.top, cropArea.width, cropArea.height);
-    if (!cropImageData) { return; }
-
-    const canvasCropped = document.createElement('canvas');
-    const cropContext = canvasCropped.getContext('2d');
-    canvasCropped.width = cropArea.width;
-    canvasCropped.height = cropArea.height;
-
-    cropContext?.putImageData(cropImageData, 0, 0);
-    const newImgUrl = canvasCropped.toDataURL(getImageType(newImage));
-    if (onNewArea) {
-      onNewArea(newImgUrl);
-    }
-  }, [onNewArea]);
-
-  const drawImgOnCanvas = useCallback(() => {
-    if (!canvasRef || !imgRef) { return; }
-    const newImage = imgRef.current;
-    if (!newImage) {
-      onError('error loading image');
-      return;
-    }
-    const canvas = canvasRef.current;
-    if (!canvas) {
-      onError('error loading canvas');
-      return;
-    }
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      onError('error drawing image');
-      return;
-    }
-
-    const newImgDraw = drawImgValues(newImage, canvasHeight, canvasWidth);
-    ctx?.drawImage(newImage, newImgDraw.left, newImgDraw.top, newImgDraw.width, newImgDraw.height);
-    const newCrop: IDrawArea = initialCropValues(cropWidth, cropHeight, canvasWidth, canvasHeight, newImgDraw.width, newImgDraw.height);
-    const newCanvas: IDrawArea = { left: 0, top: 0, width: canvas.width, height: canvas.height };
-    setDrawAreas(newCrop, newImgDraw, newCanvas);
-    handleCropArea(cropState.cropDraw);
-
-      dimensions.cropLeft = newCrop.left;
-      dimensions.cropTop = newCrop.top;
-      dimensions.cropWidth = newCrop.width;
-      dimensions.cropHeight = newCrop.height;
-      dimensions.mouseStartWidth = newCrop.width;
-      dimensions.mouseStartHeight = newCrop.height;
-      dimensions.imgLeft = newImgDraw.left;
-      dimensions.imgTop = newImgDraw.top;
-      dimensions.imgWidth = newImgDraw.width;
-      dimensions.imgHeight = newImgDraw.height;
-      dimensions.cursorStart = 'default';
-      dimensions.isResizing= false;
-    
-  }, [canvasHeight, canvasWidth, cropHeight, cropState.cropDraw, cropWidth, handleCropArea, onError, setDrawAreas]);
-
-  const handleMouseDown = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!cropRef) { return; }
-    if (!isLeftMouseButton(e)) { return; }
-
-    const rect = cropRef.current?.getBoundingClientRect();
-    if (!rect) { return; }
-    const { left, top, width, height } = rect;
-    const [posX, posY] = [e.clientX, e.clientY];
-    let newCursorStyle: ICursorStyles;
-    if (!isResizable) {
-      newCursorStyle = 'move';
-    } else {
-      newCursorStyle = updateCursorStyle(left, top, width, height, posX, posY);
-    }
-    // startResize(newCursorStyle, posX, posY, height, width);
-    dimensions.mouseStartX = posX;
-    dimensions.mouseStartY = posY;
-    dimensions.cursorStart = newCursorStyle;
-    dimensions.isResizing = true;
-    console.log("mouse down");
-  }, [isResizable, startResize]);
-
-  const handleMouseUp = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!dimensions.isResizing) { return; }
-    // endResize();
-    const newCropArea = {left: dimensions.cropLeft, top: dimensions.cropTop, width: dimensions.cropWidth, height: dimensions.cropHeight};
-    handleCropArea(newCropArea);
-    console.log("mouse up");
-    dimensions.isResizing = false;
-  }, [cropState.cropDraw, cropState.isResizing, endResize, handleCropArea]);
-
-  const handleMouseMove = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!cropRef) { return; }
-    if (!dimensions.isResizing) { return; }
-
-    const rect = cropRef.current?.getBoundingClientRect();
-    if (!rect) { return; }
-    //const { width, height } = rect;
-    const [posX, posY] = [e.clientX, e.clientY];
-    //resizeCropArea(posX, posY, height, width);
-    const oldCrop = {left: dimensions.cropLeft, top: dimensions.cropTop, width: dimensions.cropWidth, height: dimensions.cropHeight};
-    //const cursorStyle = dimensions.cursorStart;
-    const lastPoint = {
-      posX: dimensions.mouseStartX,
-      posY: dimensions.mouseStartY,
-      width: dimensions.mouseStartWidth,
-      height: dimensions.mouseStartHeight,
-    };
-    const drawArea = {
-      left: dimensions.imgLeft,
-      top: dimensions.imgTop,
-      width: dimensions.imgWidth,
-      height: dimensions.imgHeight,
-    };
-    
-    const newDimensions = updateCropValues(oldCrop, "move", lastPoint, posX, posY, drawArea);
-    dimensions.cropTop = newDimensions.top;
-    dimensions.cropLeft = newDimensions.left;
-    dimensions.cropWidth = newDimensions.width;
-    dimensions.cropHeight = newDimensions.height;
-    dimensions.mouseStartHeight = newDimensions.height;
-    dimensions.mouseStartWidth = newDimensions.width;
-    dimensions.mouseStartX = posX;
-    dimensions.mouseStartY = posY;
-
-    if (!cropRef.current) { return; }
-    cropRef.current.style.left = dimensions.cropLeft.toString() + "px";
-    cropRef.current.style.top = dimensions.cropTop.toString() + "px";
-
-    console.log("mouse move");
-  }, [cropState.isResizing, resizeCropArea]);
-
-  const handleOnMouseLeave = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!dimensions.isResizing) { return; }
-      dimensions.isResizing = false;
-  },[]);
-
-  console.log(dimensions);
+  console.log(hasAspectRatio,'aspect radio');
   return (
-    <Container
-      canvasHeight={canvasHeight}
-      canvasWidth={canvasWidth}
-      onMouseUp={handleMouseUp}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleOnMouseLeave}
-    >
-      <HiddenImage ref={imgRef} src={imgUrl} onLoad={drawImgOnCanvas} />
-      <canvas
-        ref={canvasRef}
-        width={`${canvasWidth}px`}
-        height={`${canvasHeight}px`}
-      />
-      <SelectedArea
-        ref={cropRef}
-        cropValues={{left: dimensions.cropLeft, top: dimensions.cropTop, width: dimensions.cropWidth, height: dimensions.cropHeight }}
-        cursorStyle='move'
-        onMouseDown={handleMouseDown}
-      >
-        {isResizable ? (
-          <Fragment>
-            {/* This lines are just for cursor css */}
-            <TopLine />
-            <RightLine />
-            <BottomLine />
-            <LeftLine />
-          </Fragment>)
+    <Fragment>
+      {(isResizable && (!hasAspectRatio) ) ? (
+        <Fragment>
+          {/* This lines are just for cursor css */}
+          <TopLine />
+          <RightLine />
+          <BottomLine />
+          <LeftLine />
+        </Fragment>)
           : null}
-        <PointNW {...{ isResizable }} />
-        <PointN {...{ isResizable }} />
-        <PointNE {...{ isResizable }} />
-        <PointE {...{ isResizable }} />
-        <PointSE {...{ isResizable }} />
-        <PointS {...{ isResizable }} />
-        <PointSW {...{ isResizable }} />
-        <PointW {...{ isResizable }} />
-      </SelectedArea>
-    </Container>
+      <PointNW data-point='cursor-nw' {...{ isResizable }} />
+      <PointN data-point='cursor-n' {...{ isResizable }} />
+      <PointNE data-point='cursor-ne' {...{ isResizable }} />
+      <PointE data-point='cursor-e' {...{ isResizable }} />
+      <PointSE data-point='cursor-se' {...{ isResizable }} />
+      <PointS data-point='cursor-s' {...{ isResizable }} />
+      <PointSW data-point='cursor-sw' {...{ isResizable }} />
+      <PointW data-point='cursor-w' {...{ isResizable }} />
+    </Fragment>
   );
 };
 

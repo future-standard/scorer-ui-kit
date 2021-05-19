@@ -32,6 +32,7 @@ export const _CropTool = () => {
   const canvasWidth = number('Canvas Width', 500);
   const cropHeight = number('Crop Height', 150);
   const cropWidth = number('Crop Width', 150);
+  const aspectRatio = number('Aspect Ratio', 2);
   const errorValue = action('Error');
 
   const onCrop = (newImgUrl: string) => {
@@ -64,6 +65,7 @@ export const _CropTool = () => {
           cropHeight,
           cropWidth,
           onError,
+          aspectRatio,
         }}
       />
         : null}
