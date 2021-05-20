@@ -256,7 +256,7 @@ export const styles = {
             "unchecked": {
                 "disabled": {
                     "backgroundColor": "hsla(0, 0%, 98.8%, 1.000)",
-                    "borderColor": "hsla(210, 20%, 90.2%, 1.000)"
+                    "borderColor": "hsla(210, 20%, 90.2%, 1.000)",
                 },
                 "default": {
                     "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)"
@@ -268,7 +268,7 @@ export const styles = {
             "checked": {
                 "disabled": {
                     "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
-                    "backgroundColor": "hsla(210, 20%, 90.2%, 1.000)"
+                    "backgroundColor": "hsla(210, 20%, 90.2%, 1.000)",
                 },
                 "default": {
                     "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
@@ -388,4 +388,4 @@ export const styles = {
             "backgroundColor": "hsla(30, 91%, 61%, 1.000)"
         }
     }
-}
+};
