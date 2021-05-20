@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@future-standard/icons": "github:future-standard/icons#private",
+    "@future-standard/icons": "^1.0.5",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.36",
     "@types/react": "^16.9.34",

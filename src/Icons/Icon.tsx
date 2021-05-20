@@ -11,7 +11,7 @@ const IconWrapper = styled.div<{color:string}>`
 }
 `;
 
-export {IconWrapper};
+export {IconWrapper, IconSVGs};
 
 export interface IconProps {
   icon: string;
