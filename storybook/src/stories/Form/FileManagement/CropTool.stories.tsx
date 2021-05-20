@@ -28,8 +28,8 @@ export const _CropTool = () => {
   const title = text('Title', 'Crop Image');
   const cancelBtnTxt = text('Cancel Button Text', 'Cancel');
   const cropBtnTxt = text('Crop Button Text', `Crop and Save`);
-  const canvasHeight = number('Canvas Height', 450);
-  const canvasWidth = number('Canvas Width', 500);
+  const canvasHeight = number('Canvas Height', 400);
+  const canvasWidth = number('Canvas Width', 450);
   const cropHeight = number('Crop Height', 300);
   const cropWidth = number('Crop Width', 300);
   const aspectRatio = number('Aspect Ratio', 0);
@@ -50,7 +50,8 @@ export const _CropTool = () => {
 
   return (
     <Container>
-      {isCropping ? <CropTool
+      {isCropping ? <CropTool // this key is to force the re-render in storybook
+        key={`${isResizable} - ${canvasHeight} - ${canvasWidth} - ${cropHeight} - ${cropWidth} - ${aspectRatio}`}
         imgUrl={photo}
         {...{
           title,

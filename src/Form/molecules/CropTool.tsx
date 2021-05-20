@@ -36,8 +36,7 @@ const Container = styled.div`
 `;
 
 const InnerContainer = styled.div`
-  position: relative;
-  min-width: 460px; 
+    position: relative;
   z-index: 99;
 `;
 
@@ -97,14 +96,14 @@ const SelectedArea = styled.div<{ cropLeft: number, cropTop: number, cropWidth: 
 const viewDimensions: ISelectedArea = {
   cropLeft: 0,
   cropTop: 0,
-  cropWidth: 100,
-  cropHeight: 100,
+  cropWidth: 350,
+  cropHeight: 300,
   mouseStartX: 0,
   mouseStartY: 0,
   imgLeft: 0,
   imgTop: 0,
-  imgWidth: 200,
-  imgHeight: 200,
+  imgWidth: 400,
+  imgHeight: 400,
   cursorStart: 'default',
   isResizing: false,
 };
@@ -130,10 +129,10 @@ const CropTool: React.FC<ICrop> = ({
   cancelBtnTxt = 'Cancel',
   cropBtnTxt = 'Crop & Save',
   isResizable = true,
-  cropHeight = 100,
-  cropWidth = 100,
-  canvasHeight = 200,
-  canvasWidth = 200,
+  cropHeight = 300,
+  cropWidth = 350,
+  canvasHeight = 400,
+  canvasWidth = 450,
   aspectRatio,
   imgUrl,
   onCrop,
