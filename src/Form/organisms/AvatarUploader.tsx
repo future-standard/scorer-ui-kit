@@ -7,15 +7,17 @@ import { AvatarPlaceholder } from '../../svg';
 import Label from '../atoms/Label';
 import { isValidImage } from '../../helpers';
 
-/** TODO update to useReduce */
+/** TODO update to useReduce for better state  management*/
 
-const PREVIEW_HEIGHT_AREA = 150;
-const PREVIEW_WIDTH_AREA = 142;
+const CROP_HEIGHT_AREA = 500;
+const CROP_WIDTH_AREA = 423;
+const CANVAS_HEIGHT= 490;
+const CANVAS_WIDTH= 460;
 
-const ratio =  Math.round((PREVIEW_WIDTH_AREA / PREVIEW_HEIGHT_AREA) * 100) / 100;
+const ratio =  Math.round((CROP_WIDTH_AREA / CROP_HEIGHT_AREA) * 100) / 100;
 
-const PHOTO_HEIGHT = `${PREVIEW_HEIGHT_AREA}px`;
-const PHOTO_WIDTH = `${PREVIEW_WIDTH_AREA}px`;
+const PHOTO_HEIGHT = `150px`;
+const PHOTO_WIDTH = `142px`;
 
 
 const Container = styled.div`
@@ -148,10 +150,10 @@ const AvatarUploader : React.FC<IAvatar> = ({
             onCrop={handleCrop}
             onClose={handleCropClose}
             onError={onError}
-            canvasHeight={490}
-            canvasWidth={460}
-            cropHeight={PREVIEW_WIDTH_AREA}
-            cropWidth={PREVIEW_HEIGHT_AREA}
+            canvasHeight={CANVAS_HEIGHT}
+            canvasWidth={CANVAS_WIDTH}
+            cropHeight={CROP_WIDTH_AREA}
+            cropWidth={CROP_HEIGHT_AREA}
             aspectRatio={ratio}
             isResizable
           />

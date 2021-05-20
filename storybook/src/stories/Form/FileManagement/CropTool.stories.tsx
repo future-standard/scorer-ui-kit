@@ -22,7 +22,7 @@ export default {
 };
 
 export const _CropTool = () => {
-  const isResizable = boolean('Is Resizable', false);
+  const isResizable = boolean('Is Resizable', true);
   const [cropImg, setCropImg] = useState('');
   const [isCropping, setIsCropping] = useState(true);
   const title = text('Title', 'Crop Image');
@@ -30,9 +30,9 @@ export const _CropTool = () => {
   const cropBtnTxt = text('Crop Button Text', `Crop and Save`);
   const canvasHeight = number('Canvas Height', 450);
   const canvasWidth = number('Canvas Width', 500);
-  const cropHeight = number('Crop Height', 150);
-  const cropWidth = number('Crop Width', 150);
-  const aspectRatio = number('Aspect Ratio', 2);
+  const cropHeight = number('Crop Height', 300);
+  const cropWidth = number('Crop Width', 300);
+  const aspectRatio = number('Aspect Ratio', 0);
   const errorValue = action('Error');
 
   const onCrop = (newImgUrl: string) => {
