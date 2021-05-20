@@ -25,11 +25,11 @@ const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize,
 
   const handleFile = useCallback(async(e: ChangeEvent<HTMLInputElement>) => {
     if (!(e.target.files && e.target.files.length > 0)) { return;}
-
     const newFiles : FileList = e.target.files;
       if(inputCallback) {
         inputCallback(newFiles);
       }
+      e.target.value = '';
   },[inputCallback]);
 
   const forwardClick = useCallback(() => {

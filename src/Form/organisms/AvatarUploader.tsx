@@ -10,10 +10,11 @@ import { isValidImage } from '../../helpers';
 /** TODO update to useReduce for better state  management*/
 
 const CROP_HEIGHT_AREA = 500;
-const CROP_WIDTH_AREA = 423;
+const CROP_WIDTH_AREA = 475;
 const CANVAS_HEIGHT= 490;
 const CANVAS_WIDTH= 460;
 
+// 0.95
 const ratio =  Math.round((CROP_WIDTH_AREA / CROP_HEIGHT_AREA) * 100) / 100;
 
 const PHOTO_HEIGHT = `150px`;
@@ -104,11 +105,11 @@ const AvatarUploader : React.FC<IAvatar> = ({
 
   const handleCropClose = useCallback(() => {
     setIsCropOpen(false);
+    setCropImg('');
     URL.revokeObjectURL(cropImg);
   },[cropImg]);
 
   const handleFileUpload  = useCallback((newFiles: FileList) => {
-
     if(newFiles.length === 1) {
       if(!isValidImage(newFiles[0])){ 
         onError('Please upload only jpeg and png file');
