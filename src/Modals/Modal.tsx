@@ -1,9 +1,9 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components';
-import { resetButtonStyles } from '../../common';
-import Icon, {IconWrapper} from '../../Icons/Icon';
-import { useClickOutside } from '../../hooks/useClickOutside';
+import { resetButtonStyles } from '../common';
+import Icon, {IconWrapper} from '../Icons/Icon';
+import { useClickOutside } from '../hooks/useClickOutside';
 
 
 const Container = styled.div`
@@ -15,8 +15,11 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: hsl(0, 0%, 0%, 0.2);
+  background-color: hsla(202, 33%, 95%, 0.51);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   font-family: ${({ theme }) => theme.fontFamily.ui};
+  z-index: 999;
 `;
 
 const CloseIcon = styled(Icon)``;
@@ -61,11 +64,10 @@ const CloseButton = styled.button<{ selected?: boolean }>`
 
 const LightBox = styled.div<{ padding?: boolean, width?: string}>`
   position: relative;
-  min-height: 300px;
   margin: 27px 0 0;
   box-shadow: 0 10px 15px 0 hsla(205, 42%, 60%, 0.15);
   background-color: hsl(0, 0%, 100%);
-  z-index: 99;
+  z-index: 9999;
   width: ${({ width }) => width ? width : `580px`};
   padding: ${({ padding }) => padding ? `30px 40px` : `0`};
   border-radius: 5px;

@@ -22,10 +22,12 @@ interface OwnProps {
 type Props = OwnProps & LabelHTMLAttributes<HTMLLabelElement>
 
 const Label : React.FC<Props> = ({ htmlFor, labelText, children, ...props }) => {
-  return <StyledLabel htmlFor={htmlFor} {...props}>
-    <LabelText>{labelText}</LabelText>
-    {children}
-  </StyledLabel>;
+  return (
+    <StyledLabel htmlFor={htmlFor} {...props}>
+      <LabelText>{labelText}</LabelText>
+      {children}
+    </StyledLabel>
+  );
 };
 
 export default Label;

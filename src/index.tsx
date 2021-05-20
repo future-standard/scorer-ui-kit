@@ -8,7 +8,6 @@ import darkTheme from './themes/dark';
 import {
   AlertBar,
   Notification,
-  ConfirmationModal,
   INotificationProps,
 }from './Alerts';
 
@@ -80,6 +79,20 @@ import {
   PTZContext
 } from './PTZControl';
 
+// Misc
+  import {
+    Tag,
+    TagList,
+    ITag,
+    ITagList,
+    TagListWrapper,
+    MediaBox,
+  } from './Misc';
+
+import {
+  ConfirmationModal,
+} from './Modals';
+
 // Other
 import {
   useInterval,
@@ -135,7 +148,6 @@ export {
   // Alerts
   AlertBar,
   Notification,
-  ConfirmationModal,
 
   // LineUI
   LineUI,
@@ -167,6 +179,9 @@ export {
   DropArea,
   CropTool,
   AvatarUploader,
+
+  // Modals
+  ConfirmationModal,
 
   // Filters
   DatePicker,
@@ -226,13 +241,18 @@ export {
   TabList,
   TabContent,
 
+  // Misc
+  Tag,
+  TagList,
+  TagListWrapper,
+  MediaBox,
+
   //Context
   NotificationProvider,
   useNotification,
   ModalContext,
   ModalProvider,
   useModal,
-
 };
 
 /**
@@ -240,10 +260,13 @@ export {
  */
 export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
+export type IMediaType = 'img' | 'video'
 
 export type {
   IModal,
   INotificationProps,
   IconButtonData,
+  ITag,
+  ITagList,
   ISliderMark,
 };

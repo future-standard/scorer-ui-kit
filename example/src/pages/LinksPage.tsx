@@ -5,7 +5,6 @@ const Container = styled.div`
     margin: 100px 200px;
 `
 
-
 const LinksPage : React.FC = () => {
   return <Container>
     <div><Link to={`/line`}>Line</Link></div>
@@ -17,8 +16,6 @@ const LinksPage : React.FC = () => {
     <div><Link to={`/ptz`}>PTZ</Link></div>
     <div><Link to={`/login`}>Login</Link></div>
     <div><Link to={`/tabs`}>Tabs Example</Link></div>
-    <div><Link to={`/notification`}>Notification Example</Link></div>
-    <div><Link to={`/modal`}>Modal Example</Link></div>
     <div><a href='/scorer-ui-kit/storybook'>Storybook</a></div>
   </Container>
 };

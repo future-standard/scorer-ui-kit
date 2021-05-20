@@ -1,6 +1,6 @@
 export const fontFamily = {
-  ui: 'Monorale',
-  data: 'Lato'
+  ui: 'Monorale, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;',
+  data: 'Lato, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;'
 };
 
 export const dimensions = {
@@ -13,9 +13,26 @@ export const dimensions = {
   },
   form: {
     button: {
-      small: '30px',
-      normal: '40px',
-      large: '60px'
+      xsmall: {
+        height: '20px',
+        padding: '0 10px',
+        iconSize: 12,
+      },
+      small: {
+        height: '30px',
+        padding: '0 20px',
+        iconSize: 14,
+      },
+      normal: {
+        height: '40px',
+        padding: '0 20px',
+        iconSize: 16,
+      },
+      large: {
+        height: '60px',
+        padding: '0 20px',
+        iconSize: 20,
+      },
     },
     input: {
       height: '40px'

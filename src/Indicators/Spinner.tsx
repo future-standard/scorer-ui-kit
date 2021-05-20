@@ -46,9 +46,10 @@ const RotatingCircle = styled.circle<{ r: number, styling: string }>`
   stroke-linecap: round;
 `;
 
-type SpinnerSize = 'small' | 'medium' | 'large' | 'xlarge';
+type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
 const sizeGuide = {
+  xsmall: 12,
   small: 16,
   medium: 24,
   large: 36,
@@ -65,10 +66,12 @@ const Spinner : React.FC<IProps> = ({ size = 'medium', styling = 'primary' }) =>
   const strokeWidth = sizeVal / 5.333;
   const circleRadius = (sizeVal / 2) - (strokeWidth / 2);
 
-  return <svg viewBox={`-${sizeVal/2} -${sizeVal/2} ${sizeVal} ${sizeVal}`} width={sizeVal} height={sizeVal} xmlns='http://www.w3.org/2000/svg'>
-    <BaseCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={styling} />
-    <RotatingCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={styling} />
-  </svg>;
+  return (
+    <svg viewBox={`-${sizeVal/2} -${sizeVal/2} ${sizeVal} ${sizeVal}`} width={sizeVal} height={sizeVal} xmlns='http://www.w3.org/2000/svg'>
+      <BaseCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={styling} />
+      <RotatingCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={styling} />
+    </svg>
+  );
 
 };
 

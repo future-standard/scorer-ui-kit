@@ -20,6 +20,14 @@ export const _TopBar = () => {
 
 
   const loggedInUser = text("Logged In User", "full.name@example.com");
+
+  const hasSearch = boolean("Has Search", true);
+  const hasLogout = boolean("Has Logout", true);
+  const hasNotifications = boolean("Has Notifications", true);
+  const hasLanguage = boolean("Has Language", true);
+  const hasCurrentUser = boolean("Has Current User", true);
+  const logoutLink = text("Logout Url", "#")
+  const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
@@ -35,14 +43,7 @@ export const _TopBar = () => {
     }
   ])
 
-  const hasSearch = boolean("Has Search", true);
-  const hasLogout = boolean("Has Logout", true);
-  const hasNotifications = boolean("Has Notifications", true);
-  const hasLanguage = boolean("Has Language", true);
-  const logoutLink = text("Logout Url", "#")
-  const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
-
   // userDrawerBespoke: See examples for implementation of this prop.
 
-  return <Container><TopBar {...{loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage}}/></Container>;
+  return <Container><TopBar {...{loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser}}/></Container>;
 };

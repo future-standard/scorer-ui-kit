@@ -135,6 +135,13 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
   const [ activeTheming, setActiveTheming ] = useState<string>( leftTheme );
   const [ switchState, setSwitchState ] = useState<TypeSwitchState>('default');
 
+  useEffect(() => {
+    setPosition(checked ? SwitchPosition.On : SwitchPosition.Off);
+    if (inputRef.current) {
+      inputRef.current.checked = checked;
+    }
+  }, [checked]);
+
   const positionSwitch = useCallback(() => {
     if(inputRef.current?.checked){
      setPosition(SwitchPosition.On);

@@ -179,12 +179,19 @@ export const typography = {
                     "color": "hsla(0, 0%, 100%, 1.000)"
                 },
                 "small": {
-                    "textAlign": "left",
+                    "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 600,
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 100%, 1.000)"
-                }
+                },
+                "xsmall": {
+                  "textAlign": "center",
+                  "fontSize": "12px",
+                  "fontWeight": 500,
+                  "textDecoration": "none",
+                  "color": "hsla(0, 0%, 100%, 1.000)"
+              }
             },
             "secondary": {
                 "large": {
@@ -202,12 +209,19 @@ export const typography = {
                     "color": "hsla(0, 0%, 55.3%, 1.000)"
                 },
                 "small": {
-                    "textAlign": "left",
+                    "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 600,
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 55.3%, 1.000)"
-                }
+                },
+                "xsmall": {
+                  "textAlign": "center",
+                  "fontSize": "12px",
+                  "fontWeight": 500,
+                  "textDecoration": "none",
+                  "color": "hsla(0, 0%, 55.3%, 1.000)"
+              }
             },
             "danger": {
                 "large": {
@@ -225,12 +239,19 @@ export const typography = {
                     "color": "hsla(0, 0%, 100%, 1.000)"
                 },
                 "small": {
-                    "textAlign": "left",
+                    "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 600,
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 100%, 1.000)"
-                }
+                },
+                "xsmall": {
+                  "textAlign": "center",
+                  "fontSize": "12px",
+                  "fontWeight": 500,
+                  "textDecoration": "none",
+                  "color": "hsla(0, 0%, 100%, 1.000)"
+              }
             }
         }
     },
@@ -675,4 +696,4 @@ export const typography = {
             "color": "hsla(202, 6.2%, 74.5%, 1.000)"
         }
     }
-}
+};
