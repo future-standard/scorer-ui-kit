@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as IconSVGs from  '@future-standard/icons';
+import {IconSVGs} from  '@future-standard/icons';
 
 import { dimensions } from '../themes/common';
 
