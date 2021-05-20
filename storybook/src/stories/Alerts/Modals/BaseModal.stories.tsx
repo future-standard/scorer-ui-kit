@@ -1,6 +1,6 @@
 import React, {useState, useEffect, ReactElement} from 'react';
 import styled from 'styled-components';
-import { text, boolean, object } from "@storybook/addon-knobs";
+import { text, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -40,7 +40,7 @@ const EmptyModal = (modal?: IModal) => {
   )
 }
 
-const customComponentExample : ReactElement = <h1>Hello!</h1>; 
+const customComponentExample : ReactElement = <h1>Hello!</h1>;
 
 export const _BaseModal = () => {
   const closeTxt = text('Close text', 'Close')

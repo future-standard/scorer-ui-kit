@@ -11,7 +11,7 @@ const IconWrapper = styled.div<{color:string}>`
 }
 `;
 
-export {IconSVGs, IconWrapper};
+export {IconWrapper};
 
 export interface IconProps {
   icon: string;
@@ -30,6 +30,9 @@ const Icon : React.FC<IconProps> = ({icon, size = 24, weight = 'regular', color 
   const iconWeight : number = dimensions.icons.weights[weight];
   //@ts-ignore
   const IconSVG = IconSVGs[icon];
+
+  //@ts-ignore
+  console.debug(IconSVGs[icon], icon);
 
   return (
     IconSVG != null ?
