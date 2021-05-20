@@ -31,9 +31,6 @@ const Icon : React.FC<IconProps> = ({icon, size = 24, weight = 'regular', color 
   //@ts-ignore
   const IconSVG = IconSVGs[icon];
 
-  //@ts-ignore
-  console.debug(IconSVGs[icon], icon);
-
   return (
     IconSVG != null ?
       <IconWrapper color={color}>
