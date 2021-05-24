@@ -1,28 +1,43 @@
 import React from 'react';
-import styled from 'styled-components';
 import { IMenu } from '..';
-import { Layout } from '../atoms/Layout';
+import { Layout, MainContainer } from '../atoms/Layout';
 import MainMenu from '../MainMenu';
 import TopBar, { ITopBar } from '../TopBar';
-
-const Container = styled.div``;
 
 type INavigation = IMenu & ITopBar;
 
 const NavigationTemplate: React.FC<INavigation> = ({
-  content, onLogout, onLanguageToggle, loggedInUser
+  content,
+  home,
+  openWidth,
+  logoMark,
+  logoText,
+  supportUrl,
+  defaultMenuOpen,
+  children,
+  ...props
 }) => {
+
   return (
-    <Container>
-      <Layout>
-        <MainMenu content={content} />
+    <Layout>
+      <MainMenu {...{
+          content,
+          home,
+          openWidth,
+          logoMark,
+          logoText,
+          supportUrl,
+          defaultMenuOpen}
+        }
+      />
+      <MainContainer>
         <TopBar
-          onLogout={onLogout}
-          onLanguageToggle={onLanguageToggle}
-          loggedInUser={loggedInUser}
+          {...{...props}}
         />
-      </Layout>
-    </Container>
+        {children}
+      </MainContainer>
+
+    </Layout>
   );
 };
 

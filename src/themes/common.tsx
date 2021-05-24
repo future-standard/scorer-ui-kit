@@ -83,3 +83,22 @@ export const animation = {
     slowest: '2.8s'
   }
 };
+
+// export const deviceSize = {
+//   mobileS: `(max-width: 640px)`,
+//   mobileM: `(min-width: 321px) and (max-width: 767px)`,
+//   tabletP: `(min-width: 768px) and (max-width: 1023px)`,
+//   desktopS: `(min-width: 1024px) and (max-width: 1279px)`,
+//   desktop: `(min-width: 1280px) and (max-width: 1399px)`,
+//   desktopL: `(min-width: 1400px)`
+// };
+
+
+export const deviceSize = {
+  mobileS: `(max-width: 640px)`,
+  mobileM: `(min-width: 321px)`,
+  tabletP: `(min-width: 768px)`,
+  desktopS: `(min-width: 1024px)`,
+  desktop: `(min-width: 1280px)`,
+  desktopL: `(min-width: 1400px)`
+};

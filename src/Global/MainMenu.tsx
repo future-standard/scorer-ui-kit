@@ -1,13 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useLayoutEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 import NavigationItem from './atoms/NavigationItem';
 import ContextItem from './atoms/ContextItem';
+import useBreakpoints from '../hooks/useBreakpoints'; 
 
 import SvgLogoMark from '../svg/LogoMark';
 import SvgLogoText from '../svg/LogoText';
 import { IMenu } from '.';
 import { Link, useLocation } from 'react-router-dom';
+
 
 const Logo = styled(Link)`
   height: 50px;
@@ -88,13 +90,27 @@ const ContainerInner = styled.div`
 
 const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, supportUrl, defaultMenuOpen=true }) => {
 
+  const {isDesktop, isDesktopL} = useBreakpoints();
+
   const [isMenuOpen, setMenuOpen] = useState<boolean>(defaultMenuOpen);
   const [isMenuPinned, setMenuPinned] = useState<boolean>(true);
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const location = useLocation();
-
   let checkedInItems : number = 0;
+
+  const shouldBeOpen = defaultMenuOpen && isDesktop;
+  console.log(`isMenuOpen: ${isMenuOpen} + isDesktop: ${isDesktop} =  ${shouldBeOpen}`);
+
+  useLayoutEffect(() => {
+      if(defaultMenuOpen && isDesktop) {
+        setMenuOpen(true);
+        console.log('*** update to true open by isDesktop rule ****');
+      }else {
+        setMenuOpen(false);
+        console.log('*** update to false by isDesktop rule ***');
+      }
+  }, [defaultMenuOpen, isDesktop]);
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
@@ -104,18 +120,19 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, sup
 
   const autoMenuClose = useCallback(() => {
     // TODO: Move the focused back to the active view so it re-opens on current context.
-    if(!isMenuPinned){
+    if(!isMenuPinned || !isDesktop){
       setMenuOpen(false);
     }
-  }, [setMenuOpen, isMenuPinned]);
+  }, [isMenuPinned, isDesktop]);
 
   const toggleMenuPin = useCallback((e: any) => {
     if(e.pointerType === 'touch'){ return; }
     if(isMenuPinned){
-      setMenuOpen(!isMenuOpen);
+      setMenuOpen((prev) => !prev);
     }
-    setMenuPinned(!isMenuPinned);
-  }, [isMenuPinned, setMenuPinned, isMenuOpen, setMenuOpen]);
+    setMenuPinned((prev) => !prev);
+  
+  }, [isMenuPinned, setMenuPinned, setMenuOpen]);
 
 
   /** Manage which context is open. */
@@ -143,7 +160,8 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, sup
 
         <NavigationContainer>
           {content.items.map((item, key) => {
-            return <NavigationItem topLevelPath={ getTopLevelPath(location.pathname) } key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
+            return <NavigationItem
+              topLevelPath={getTopLevelPath(location.pathname)} key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
           })}
         </NavigationContainer>
 
@@ -154,9 +172,19 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, sup
           </FooterItemContainer>}
 
           <FooterItemContainer>
-            <ContextItem compact isActive={false} icon={isMenuOpen && isMenuPinned ? 'Left' : 'Menu'} title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'} onClickCallback={toggleMenuPin} menuOpen={isMenuOpen} />
+            {(isDesktop && !isDesktopL)
+            ? (
+              <ContextItem
+                compact
+                isActive={false}
+                icon={isMenuOpen && isMenuPinned ? 'Left' : 'Menu'}
+                title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'}
+                onClickCallback={toggleMenuPin}
+                menuOpen={isMenuOpen}
+              />
+              )
+            : null}
           </FooterItemContainer>
-
         </MenuFooter>
       </ContainerInner>
     </Container>
@@ -166,6 +194,6 @@ const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, sup
 const getTopLevelPath = (pathname : string) => {
   const parts = pathname.split('/').filter(String);
   return parts.length > 0 ? "/" + parts[0] : "/";
-}
+};
 
 export default MainMenu;
