@@ -1,15 +1,15 @@
-import React, { useState, useCallback, useLayoutEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 import NavigationItem from './atoms/NavigationItem';
 import ContextItem from './atoms/ContextItem';
-import useBreakpoints from '../hooks/useBreakpoints'; 
+import useMenu from '../hooks/useMenu';
+import { IBreakpoints } from '../hooks/useBreakpoints';
 
 import SvgLogoMark from '../svg/LogoMark';
 import SvgLogoText from '../svg/LogoText';
 import { IMenu } from '.';
 import { Link, useLocation } from 'react-router-dom';
-
 
 const Logo = styled(Link)`
   height: 50px;
@@ -46,7 +46,7 @@ const SVGObjectText = styled.object`
 const NavigationContainer = styled.div``;
 
 const MenuFooter = styled.div`
-  ${({theme}) => theme && css`
+  ${({ theme }) => theme && css`
     ${theme.styles.global.mainMenu.footerBackground}
   `};
   display: flex;
@@ -59,15 +59,25 @@ const FooterItemContainer = styled.div`
   min-height: 70px;
 `;
 
-const Container = styled.div<{ open : boolean }>`
+const PushContainer = styled.div<{ isPinned: boolean; }>`
+  position: relative;
+  ${({ theme, isPinned }) => theme && css`
+    width: ${isPinned ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed};
+  `};
+`;
 
-  ${({theme, open}) => theme && css`
+const Container = styled.div<{ open: boolean; desktopSize: IBreakpoints }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  ${({ theme, open, desktopSize }) => theme && css`
     ${theme.styles.global.mainMenu.background}
-
+    ${desktopSize === 'desktopL' ? `` : css`
+      transition: width ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut}
+      `
+    };
+    width: ${open ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed};
     border-right: 1px solid ${theme.styles.global.mainMenu.lines.backgroundColor};
-    transition: flex-basis ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
-    flex-basis: ${open ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed };
-    flex-shrink: 0;
 
     ${LogoType}{
       transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
@@ -82,116 +92,107 @@ const Container = styled.div<{ open : boolean }>`
 `;
 
 const ContainerInner = styled.div`
-  width: ${({theme}) => theme.dimensions.global.mainMenu.width.open };
+  width: ${({ theme }) => theme.dimensions.global.mainMenu.width.open};
   display: flex;
   flex-direction: column;
   height: 100%;
 `;
 
-const MainMenu : React.FC<IMenu> = ({ content, home="/", logoMark, logoText, supportUrl, defaultMenuOpen=true }) => {
 
-  const {isDesktop, isDesktopL} = useBreakpoints();
+const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, supportUrl, defaultMenuOpen = true }) => {
 
-  const [isMenuOpen, setMenuOpen] = useState<boolean>(defaultMenuOpen);
-  const [isMenuPinned, setMenuPinned] = useState<boolean>(true);
+  const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen);
+
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const location = useLocation();
-  let checkedInItems : number = 0;
-
-  const shouldBeOpen = defaultMenuOpen && isDesktop;
-  console.log(`isMenuOpen: ${isMenuOpen} + isDesktop: ${isDesktop} =  ${shouldBeOpen}`);
-
-  useLayoutEffect(() => {
-      if(defaultMenuOpen && isDesktop) {
-        setMenuOpen(true);
-        console.log('*** update to true open by isDesktop rule ****');
-      }else {
-        setMenuOpen(false);
-        console.log('*** update to false by isDesktop rule ***');
-      }
-  }, [defaultMenuOpen, isDesktop]);
+  let checkedInItems: number = 0;
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
-    if(e.pointerType === 'touch'){ return; }
-    setMenuOpen(true);
+    if (e.pointerType === 'touch') { return; }
+    setMenuOpen();
   }, [setMenuOpen]);
 
   const autoMenuClose = useCallback(() => {
     // TODO: Move the focused back to the active view so it re-opens on current context.
-    if(!isMenuPinned || !isDesktop){
-      setMenuOpen(false);
-    }
-  }, [isMenuPinned, isDesktop]);
+    setMenuClose();
+  }, [setMenuClose]);
 
   const toggleMenuPin = useCallback((e: any) => {
-    if(e.pointerType === 'touch'){ return; }
-    if(isMenuPinned){
-      setMenuOpen((prev) => !prev);
-    }
-    setMenuPinned((prev) => !prev);
-  
-  }, [isMenuPinned, setMenuPinned, setMenuOpen]);
-
+    if (e.pointerType === 'touch') { return; }
+    togglePinned();
+  }, [togglePinned]);
 
   /** Manage which context is open. */
   const setFocusedContextCb = useCallback(contextKey => {
     setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
   }, [setFocusedContext, focusedContext]);
 
-
   /** Manage the loading cycle. */
   const readyCallback = useCallback(() => {
     // Basic count of menu items (that need to measure height) that have checked in.
     checkedInItems++;
-    if(checkedInItems === content.items.length){
+    if (checkedInItems === content.items.length) {
       setLoading(false);
     }
   }, [checkedInItems, content]);
 
   return (
-    <Container open={isMenuOpen} onPointerEnter={autoMenuOpen} onTouchStart={() => console.log('touch')} onMouseLeave={autoMenuClose}>
-      <ContainerInner>
-        <Logo to={home}>
-          <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
-          <LogoType>{logoText ? <SVGObjectText type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
-        </Logo>
+    <PushContainer isPinned={menuState.isMenuPinned}>
+      <Container
+        open={menuState.isMenuOpen}
+        desktopSize={menuState.desktopSize}
+        onPointerEnter={autoMenuOpen}
+        onTouchStart={() => console.log('touch')}
+        onMouseLeave={autoMenuClose}
+      >
+        <ContainerInner>
+          <Logo to={home}>
+            <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
+            <LogoType>{logoText ? <SVGObjectText type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
+          </Logo>
 
-        <NavigationContainer>
-          {content.items.map((item, key) => {
-            return <NavigationItem
-              topLevelPath={getTopLevelPath(location.pathname)} key={key} contextKey={key} menuOpen={isMenuOpen} submenuOpen={key === focusedContext && isMenuOpen} onClickCallback={setFocusedContextCb} {...{item, loading, focusedContext, readyCallback}} />;
-          })}
-        </NavigationContainer>
+          <NavigationContainer>
+            {content.items.map((item, key) => {
+              return (
+                <NavigationItem
+                  topLevelPath={getTopLevelPath(location.pathname)} key={key} contextKey={key} menuOpen={menuState.isMenuOpen} submenuOpen={key === focusedContext && menuState.isMenuOpen} onClickCallback={setFocusedContextCb} {...{ item, loading, focusedContext, readyCallback }}
+                />
+              );
+            })}
+          </NavigationContainer>
 
-        <MenuFooter>
+          <MenuFooter>
 
-          {supportUrl && <FooterItemContainer>
-            <ContextItem compact isActive={false} icon='Question' title='Help &amp; Support' href={supportUrl} menuOpen={isMenuOpen} />
-          </FooterItemContainer>}
+            {supportUrl && (
+              <FooterItemContainer>
+                <ContextItem compact isActive={false} icon='Question' title='Help &amp; Support' href={supportUrl} menuOpen={menuState.isMenuOpen} />
+              </FooterItemContainer>
+            )}
 
-          <FooterItemContainer>
-            {(isDesktop && !isDesktopL)
-            ? (
-              <ContextItem
-                compact
-                isActive={false}
-                icon={isMenuOpen && isMenuPinned ? 'Left' : 'Menu'}
-                title={isMenuPinned ? 'Keep Open' : 'Auto-Hide'}
-                onClickCallback={toggleMenuPin}
-                menuOpen={isMenuOpen}
-              />
-              )
-            : null}
-          </FooterItemContainer>
-        </MenuFooter>
-      </ContainerInner>
-    </Container>
+            <FooterItemContainer>
+              {(menuState.canPin)
+                ? (
+                  <ContextItem
+                    compact
+                    isActive={false}
+                    icon={menuState.isMenuOpen && menuState.isMenuPinned ? 'Left' : 'Menu'}
+                    title={menuState.isMenuPinned ? 'Keep Open' : 'Auto-Hide'}
+                    onClickCallback={toggleMenuPin}
+                    menuOpen={menuState.isMenuOpen}
+                  />
+                )
+                : null}
+            </FooterItemContainer>
+          </MenuFooter>
+        </ContainerInner>
+      </Container>
+    </PushContainer>
   );
 };
 
-const getTopLevelPath = (pathname : string) => {
+const getTopLevelPath = (pathname: string) => {
   const parts = pathname.split('/').filter(String);
   return parts.length > 0 ? "/" + parts[0] : "/";
 };

@@ -13,8 +13,18 @@ export type IBreakpoints = 'mobileS'
 | 'desktop'
 | 'desktopL';
 
+interface OwnProps  {
+  isMobileS: boolean
+  isMobileM: boolean
+  isTabletP: boolean
+  isDesktopS: boolean
+  isDesktop: boolean
+  isDesktopL: boolean
+  activeScreen: IBreakpoints
+}
+
 export default function useBreakpoints() {
-  const breakpoints = {
+  const breakpoints : OwnProps= {
     isMobileS: useMediaQuery(deviceSize.mobileS),
     isMobileM: useMediaQuery(deviceSize.mobileM),
     isTabletP: useMediaQuery(deviceSize.tabletP),
