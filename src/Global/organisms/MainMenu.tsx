@@ -1,14 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
-import NavigationItem from './atoms/NavigationItem';
-import ContextItem from './atoms/ContextItem';
-import useMenu from '../hooks/useMenu';
-import { IBreakpoints } from '../hooks/useBreakpoints';
+import NavigationItem from '../atoms/NavigationItem';
+import ContextItem from '../atoms/ContextItem';
+import useMenu from '../../hooks/useMenu';
+import { IBreakpoints } from '../../hooks/useBreakpoints';
 
-import SvgLogoMark from '../svg/LogoMark';
-import SvgLogoText from '../svg/LogoText';
-import { IMenu } from '.';
+import SvgLogoMark from '../../svg/LogoMark';
+import SvgLogoText from '../../svg/LogoText';
+import { IMenu } from '..';
 import { Link, useLocation } from 'react-router-dom';
 
 const Logo = styled(Link)`

@@ -1,8 +1,8 @@
 import React from 'react';
 import { IMenu } from '..';
 import { Layout, MainContainer, Content2 } from '../atoms/Layout';
-import MainMenu from '../MainMenu';
-import TopBar, { ITopBar } from '../TopBar';
+import MainMenu from '../organisms/MainMenu';
+import TopBar, { ITopBar } from '../molecules/TopBar';
 
 type INavigation = IMenu & ITopBar;
 

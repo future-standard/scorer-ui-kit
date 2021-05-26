@@ -2,9 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-
-
-
 const Container = styled.div`
   width: 286px;
   border-right: 1px solid hsla(0, 0%, 84%, 50%);

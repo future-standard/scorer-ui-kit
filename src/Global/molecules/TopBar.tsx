@@ -1,8 +1,8 @@
 import React, { useState, useCallback, ReactElement } from 'react';
 import styled, { css } from 'styled-components';
-import { resetButtonStyles } from '../common';
+import { resetButtonStyles } from '../../common';
 
-import Icon from '../Icons/Icon';
+import Icon from '../../Icons/Icon';
 
 const Container = styled.div`
   height: 65px;

@@ -1,6 +1,6 @@
 import {Content, Layout, MainContainer} from './atoms/Layout';
-import MainMenu from './MainMenu';
-import TopBar from './TopBar';
+import MainMenu from './organisms/MainMenu';
+import TopBar from './molecules/TopBar';
 import NavigationTemplate from './templates/NavigationTemplate';
 
 export {
@@ -11,7 +11,7 @@ export {
   SidebarLinkHeading,
   BackLink,
   default as Sidebar
-} from './Sidebar';
+} from './molecules/Sidebar';
 
 export {
     Content,
