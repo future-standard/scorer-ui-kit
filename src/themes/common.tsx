@@ -85,8 +85,8 @@ export const animation = {
 };
 
 // export const deviceSize = {
-//   mobileS: `(max-width: 640px)`,
-//   mobileM: `(min-width: 321px) and (max-width: 767px)`,
+//   mobileS: `(max-width: 319px)`,
+//   mobileM: `(min-width: 320px) and (max-width: 767px)`,
 //   tabletP: `(min-width: 768px) and (max-width: 1023px)`,
 //   desktopS: `(min-width: 1024px) and (max-width: 1279px)`,
 //   desktop: `(min-width: 1280px) and (max-width: 1399px)`,
@@ -95,10 +95,10 @@ export const animation = {
 
 
 export const deviceSize = {
-  mobileS: `(max-width: 640px)`,
-  mobileM: `(min-width: 321px)`,
-  tabletP: `(min-width: 768px)`,
-  desktopS: `(min-width: 1024px)`,
-  desktop: `(min-width: 1280px)`,
-  desktopL: `(min-width: 1400px)`
+  mobileS: '(max-width: 319px)',
+  mobileM: '(min-width: 320px)',
+  tabletP: '(min-width: 768px)',
+  desktopS: '(min-width: 1024px)',
+  desktop: '(min-width: 1280px)',
+  desktopL: '(min-width: 1400px)'
 };
