@@ -28,3 +28,12 @@ export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const Content2 = styled.div`
+  flex: 1;
+  overflow: auto;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+`;
