@@ -1,7 +1,5 @@
 import React from 'react';
-import {NavigationTemplate} from 'scorer-ui-kit';
-// import {LoginScreen, LogoText} from '../svg';
-
+import {GlobalUI} from 'scorer-ui-kit';
 
 const userSubmenu = [
   {
@@ -82,13 +80,11 @@ const content = {
 
 const NavigationPage = () => {
   return(
-    <NavigationTemplate
+    <GlobalUI
       {...{
         homeLink: '#',
         content,
         userSubmenu,
-        // logoMark: LoginScreen,
-        // logoText: LogoText,
         supportUrl: '#',
         loggedInUser: 'isa@mail.com',
         hasSearch: true,
@@ -104,7 +100,7 @@ const NavigationPage = () => {
       <div style={{backgroundColor: 'slateblue'}}>
         <h1>Hello!</h1>
       </div>
-    </NavigationTemplate>
+    </GlobalUI>
   );
 };
 

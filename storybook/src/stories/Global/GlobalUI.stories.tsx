@@ -1,5 +1,6 @@
 import React from 'react';
-import { NavigationTemplate } from 'scorer-ui-kit';
+import { GlobalUI } from 'scorer-ui-kit';
+import styled from 'styled-components';
 
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
@@ -8,12 +9,19 @@ import { text, object, boolean } from '@storybook/addon-knobs';
 
 export default {
   title: 'Global',
-  component: NavigationTemplate,
+  component: GlobalUI,
   decorators: [
   ]
 };
 
-export const _NavigationTemplate = () => {
+const Container = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
+
+export const _GlobalUI = () => {
 
   const logoMark = text("Logo Mark SVG", logoMarkSvg);
   const logoText = text("Logo Text SVG", logoTextSvg);
@@ -108,11 +116,13 @@ export const _NavigationTemplate = () => {
   ])
 
   return (
-    <NavigationTemplate
-      content={menuConfig}
-      home={menuHomeLink}
-      {...{ logoMark, logoText, supportUrl }}
-      {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
-      />
+    <Container>
+      <GlobalUI
+        content={menuConfig}
+        home={menuHomeLink}
+        {...{ logoMark, logoText, supportUrl }}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
+        />
+    </Container>
   )
 }

@@ -1,45 +1,45 @@
 import useMediaQuery from "./useMediaQuery";
-import {deviceSize} from '../themes/common';
+import {deviceMediaQuery} from '../themes/common';
 
 /**
  * Get a set of boolean representing which breakpoint is activeScreen
  * and which breakpoints are inactiveScreen.
  */
 
-export type IBreakpoints = 'mobileS'
-| 'mobileM'
-| 'tabletP'
-| 'desktopS'
-| 'desktop'
-| 'desktopL';
+export type IBreakpoints = 'xsmall'
+| 'small'
+| 'medium'
+| 'large'
+| 'xlarge'
+| 'xxlarge';
 
 interface OwnProps  {
-  isMobileS: boolean
-  isMobileM: boolean
-  isTabletP: boolean
-  isDesktopS: boolean
-  isDesktop: boolean
-  isDesktopL: boolean
+  isXSmall: boolean
+  isSmall: boolean
+  isMedium: boolean
+  isLarge: boolean
+  isXLarge: boolean
+  isXXLarge: boolean
   activeScreen: IBreakpoints
 }
 
 export default function useBreakpoints() {
   const breakpoints : OwnProps= {
-    isMobileS: useMediaQuery(deviceSize.mobileS),
-    isMobileM: useMediaQuery(deviceSize.mobileM),
-    isTabletP: useMediaQuery(deviceSize.tabletP),
-    isDesktopS: useMediaQuery(deviceSize.desktopS),
-    isDesktop: useMediaQuery(deviceSize.desktop),
-    isDesktopL: useMediaQuery(deviceSize.desktopL),
-    activeScreen: "mobileS"
+    isXSmall: useMediaQuery(deviceMediaQuery.xsmall),
+    isSmall: useMediaQuery(deviceMediaQuery.small),
+    isMedium: useMediaQuery(deviceMediaQuery.medium),
+    isLarge: useMediaQuery(deviceMediaQuery.large),
+    isXLarge: useMediaQuery(deviceMediaQuery.xlarge),
+    isXXLarge: useMediaQuery(deviceMediaQuery.xxlarge),
+    activeScreen: "xsmall"
   };
 
-  if (breakpoints.isMobileS) breakpoints.activeScreen = 'mobileS';
-  if (breakpoints.isMobileM) breakpoints.activeScreen = 'mobileM';
-  if (breakpoints.isTabletP) breakpoints.activeScreen = 'tabletP';
-  if (breakpoints.isDesktopS) breakpoints.activeScreen = 'desktopS';
-  if (breakpoints.isDesktop) breakpoints.activeScreen = 'desktop';
-  if (breakpoints.isDesktopL) breakpoints.activeScreen = 'desktopL';
+  if (breakpoints.isXSmall) breakpoints.activeScreen = 'xsmall';
+  if (breakpoints.isSmall) breakpoints.activeScreen = 'small';
+  if (breakpoints.isMedium) breakpoints.activeScreen = 'medium';
+  if (breakpoints.isLarge) breakpoints.activeScreen = 'large';
+  if (breakpoints.isXLarge) breakpoints.activeScreen = 'xlarge';
+  if (breakpoints.isXXLarge) breakpoints.activeScreen = 'xxlarge';
 
   return breakpoints;
 }

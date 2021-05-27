@@ -29,11 +29,11 @@ export const MainContainer = styled.div`
   flex-direction: column;
 `;
 
-export const Content2 = styled.div`
+export const ContentArea = styled.div<{ maxWidth?: string}>`
   flex: 1;
   overflow: auto;
   width: 100%;
-  max-width: 1200px;
+  max-width: ${({maxWidth}) => maxWidth ? maxWidth : `1200px`};
   margin-left: auto;
   margin-right: auto;
 `;

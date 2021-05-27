@@ -1,12 +1,12 @@
 import React from 'react';
 import { IMenu } from '..';
-import { Layout, MainContainer, Content2 } from '../atoms/Layout';
+import { Layout, MainContainer, ContentArea } from '../atoms/Layout';
 import MainMenu from '../organisms/MainMenu';
 import TopBar, { ITopBar } from '../molecules/TopBar';
 
 type INavigation = IMenu & ITopBar;
 
-const NavigationTemplate: React.FC<INavigation> = ({
+const GlobalUI: React.FC<INavigation> = ({
   content,
   home,
   openWidth,
@@ -34,12 +34,12 @@ const NavigationTemplate: React.FC<INavigation> = ({
         <TopBar
           {...{...props}}
         />
-        <Content2>
+        <ContentArea>
           {children}
-        </Content2>
+        </ContentArea>
       </MainContainer>
     </Layout>
   );
 };
 
-export default NavigationTemplate;
+export default GlobalUI;

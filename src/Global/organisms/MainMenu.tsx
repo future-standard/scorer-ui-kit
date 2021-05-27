@@ -72,7 +72,7 @@ const Container = styled.div<{ open: boolean; desktopSize: IBreakpoints }>`
   left: 0;
   ${({ theme, open, desktopSize }) => theme && css`
     ${theme.styles.global.mainMenu.background}
-    ${desktopSize === 'desktopL' ? `` : css`
+    ${desktopSize === 'xxlarge' ? `` : css`
       transition: width ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut}
       `
     };
