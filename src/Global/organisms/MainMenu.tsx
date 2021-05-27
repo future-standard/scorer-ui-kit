@@ -4,6 +4,8 @@ import styled, { css } from 'styled-components';
 import NavigationItem from '../atoms/NavigationItem';
 import ContextItem from '../atoms/ContextItem';
 import useMenu from '../../hooks/useMenu';
+import ReactDom from 'react-dom';
+
 import { IBreakpoints } from '../../hooks/useBreakpoints';
 
 import SvgLogoMark from '../../svg/LogoMark';
@@ -61,6 +63,7 @@ const FooterItemContainer = styled.div`
 
 const PushContainer = styled.div<{ isPinned: boolean; }>`
   position: relative;
+  height: 100%;
   ${({ theme, isPinned }) => theme && css`
     width: ${isPinned ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed};
   `};
@@ -140,39 +143,40 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
 
   return (
     <PushContainer isPinned={menuState.isMenuPinned}>
-      <Container
-        open={menuState.isMenuOpen}
-        desktopSize={menuState.desktopSize}
-        onPointerEnter={autoMenuOpen}
-        onTouchStart={() => console.log('touch')}
-        onMouseLeave={autoMenuClose}
-      >
-        <ContainerInner>
-          <Logo to={home}>
-            <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
-            <LogoType>{logoText ? <SVGObjectText type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
-          </Logo>
+      {ReactDom.createPortal(
+        <Container
+          open={menuState.isMenuOpen}
+          desktopSize={menuState.desktopSize}
+          onPointerEnter={autoMenuOpen}
+          onTouchStart={() => console.log('touch')}
+          onMouseLeave={autoMenuClose}
+        >
+          <ContainerInner>
+            <Logo to={home}>
+              <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
+              <LogoType>{logoText ? <SVGObjectText type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
+            </Logo>
 
-          <NavigationContainer>
-            {content.items.map((item, key) => {
+            <NavigationContainer>
+              {content.items.map((item, key) => {
               return (
                 <NavigationItem
                   topLevelPath={getTopLevelPath(location.pathname)} key={key} contextKey={key} menuOpen={menuState.isMenuOpen} submenuOpen={key === focusedContext && menuState.isMenuOpen} onClickCallback={setFocusedContextCb} {...{ item, loading, focusedContext, readyCallback }}
                 />
               );
             })}
-          </NavigationContainer>
+            </NavigationContainer>
 
-          <MenuFooter>
+            <MenuFooter>
 
-            {supportUrl && (
-              <FooterItemContainer>
-                <ContextItem compact isActive={false} icon='Question' title='Help &amp; Support' href={supportUrl} menuOpen={menuState.isMenuOpen} />
-              </FooterItemContainer>
+              {supportUrl && (
+                <FooterItemContainer>
+                  <ContextItem compact isActive={false} icon='Question' title='Help &amp; Support' href={supportUrl} menuOpen={menuState.isMenuOpen} />
+                </FooterItemContainer>
             )}
 
-            <FooterItemContainer>
-              {(menuState.canPin)
+              <FooterItemContainer>
+                {(menuState.canPin)
                 ? (
                   <ContextItem
                     compact
@@ -184,10 +188,11 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
                   />
                 )
                 : null}
-            </FooterItemContainer>
-          </MenuFooter>
-        </ContainerInner>
-      </Container>
+              </FooterItemContainer>
+            </MenuFooter>
+          </ContainerInner>
+        </Container>,
+      document.body)}
     </PushContainer>
   );
 };
