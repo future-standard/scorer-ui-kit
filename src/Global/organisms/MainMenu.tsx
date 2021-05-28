@@ -7,6 +7,7 @@ import useMenu from '../../hooks/useMenu';
 import ReactDom from 'react-dom';
 
 import { IBreakpoints } from '../../hooks/useBreakpoints';
+import {useWhyDidYouUpdate } from '../../hooks/useWhyDidYouUpdate';
 
 import SvgLogoMark from '../../svg/LogoMark';
 import SvgLogoText from '../../svg/LogoText';
@@ -110,6 +111,8 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
   const [loading, setLoading] = useState<boolean>(true);
   const location = useLocation();
   let checkedInItems: number = 0;
+
+  useWhyDidYouUpdate('Main menu', menuState);
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
