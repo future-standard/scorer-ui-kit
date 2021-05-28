@@ -9,7 +9,7 @@ import Style from '../src/style';
 
 const RouterDecorator = story => (
   <Router 
-    initialEntries={["/one", "/two", { pathname: "/three" }]}
+    initialEntries={["/welcome"]}
     initialIndex={1}
   >
     {story()}

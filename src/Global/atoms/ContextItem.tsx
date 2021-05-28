@@ -1,23 +1,24 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 
-const ContextTitle = styled.div<{compact?: boolean}>`
+const ContextTitle = styled.div<{ compact?: boolean }>`
   opacity: 0;
 
-  ${({theme}) => css`
+  ${({ theme }) => css`
     transition: opacity ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
   `}
 
-  ${({compact}) => compact && css`
+  ${({ compact }) => compact && css`
     font-size:14px;
   `}
 `;
 
-const ContextIcon = styled.div<{compact?: boolean}>`
-  ${({theme}) => css`
+const ContextIcon = styled.div<{ compact?: boolean }>`
+  ${({ theme }) => css`
     ${theme.styles.global.mainMenu.iconBackground.default};
     transition: background ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
   `};
@@ -36,7 +37,7 @@ const ContextIcon = styled.div<{compact?: boolean}>`
     display: block;
   }
 
-  ${({compact}) => compact && css`
+  ${({ compact }) => compact && css`
     // width: 24px;
     // height: 24px;
     // flex: 0 0 24px;
@@ -60,7 +61,7 @@ const ContextIndicator = styled.div`
 
   opacity: 0;
 
-  ${({theme}) => css`
+  ${({ theme }) => css`
     transition: opacity 0 ${theme.animation.easing.primary.easeInOut};
   `}
 
@@ -79,14 +80,14 @@ const ContextActionBaseCSS = css`
   text-decoration: none;
 `;
 
-const ContextActionA = styled.a<{menuOpen?:boolean, isActive:boolean}>`
+const ContextActionA = styled(Link) <{ menuOpen?: boolean, isActive: boolean }>`
   ${ContextActionBaseCSS}
-  ${({theme}) => theme && css`
+  ${({ theme }) => theme && css`
     font-family: ${theme.fontFamily.ui};
     ${theme.typography.global.mainMenu.menuItem.default};
   `}
 
-  ${({menuOpen}) => menuOpen && css`
+  ${({ menuOpen }) => menuOpen && css`
     ${ContextTitle}{
       opacity: 1;
     }
@@ -94,30 +95,30 @@ const ContextActionA = styled.a<{menuOpen?:boolean, isActive:boolean}>`
 
   &:hover ${ContextIcon}{
     opacity: 1;
-    ${({theme}) => theme.styles.global.mainMenu.iconBackground.hover};
+    ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
     ${IconWrapper}{
       [stroke]{
-        stroke: ${({theme}) => theme.colors.icons['inverse']};
+        stroke: ${({ theme }) => theme.colors.icons['inverse']};
       }
     }
   }
 
-  ${({isActive}) => isActive && css`
+  ${({ isActive }) => isActive && css`
     ${ContextIcon},
     &:hover ${ContextIcon}{
-      ${({theme}) => theme.styles.global.mainMenu.iconBackground.active};
+      ${({ theme }) => theme.styles.global.mainMenu.iconBackground.active};
     }
   `}
 `;
-const ContextActionButton = styled.button<{menuOpen?:boolean, isActive:boolean}>`
+const ContextActionButton = styled.button<{ menuOpen?: boolean, isActive: boolean }>`
   ${ContextActionBaseCSS}
 
-  ${({theme}) => theme && css`
+  ${({ theme }) => theme && css`
     font-family: ${theme.fontFamily.ui};
     ${theme.typography.global.mainMenu.menuItem.default};
   `}
 
-  ${({menuOpen, theme}) => menuOpen && css`
+  ${({ menuOpen, theme }) => menuOpen && css`
     ${ContextTitle}{
       opacity: 1;
     }
@@ -130,18 +131,18 @@ const ContextActionButton = styled.button<{menuOpen?:boolean, isActive:boolean}>
 
   &:hover ${ContextIcon}{
     opacity: 1;
-    ${({theme}) => theme.styles.global.mainMenu.iconBackground.hover};
+    ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
     ${IconWrapper}{
       [stroke]{
-        stroke: ${({theme}) => theme.colors.icons['inverse']};
+        stroke: ${({ theme }) => theme.colors.icons['inverse']};
       }
     }
   }
 
-  ${({isActive}) => isActive && css`
+  ${({ isActive }) => isActive && css`
     ${ContextIcon},
     &:hover ${ContextIcon}{
-      ${({theme}) => theme.styles.global.mainMenu.iconBackground.active};
+      ${({ theme }) => theme.styles.global.mainMenu.iconBackground.active};
     }
   `}
 
@@ -160,24 +161,30 @@ interface IProps {
   onClickCallback?: (...args: any[]) => void
 }
 
-const ContextItem : React.FC<IProps> = ({ hasSubmenu = false, contextKey = -1, submenuOpen, menuOpen, onClickCallback, title, href, icon, compact, isActive }) => {
+const ContextItem: React.FC<IProps> = ({ hasSubmenu = false, contextKey = -1, submenuOpen, menuOpen, onClickCallback, title, href, icon, compact, isActive }) => {
 
   const internal = <React.Fragment>
-    <ContextIcon {...{compact}}>
+    <ContextIcon {...{ compact }}>
       <Icon icon={icon} color={isActive ? 'inverse' : 'dimmed'} size={20} />
     </ContextIcon>
-    <ContextTitle {...{compact}}>{title}</ContextTitle>
-    {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} color={'dimmed'} /></ContextIndicator> : null}
+    <ContextTitle {...{ compact }}>{title}</ContextTitle>
+    {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} color='dimmed' /></ContextIndicator> : null}
   </React.Fragment>;
 
-  if(hasSubmenu){
+  if (hasSubmenu) {
     return <ContextActionButton menuOpen={menuOpen} isActive={isActive} onClick={() => onClickCallback && onClickCallback(contextKey)}>
       {internal}
     </ContextActionButton>;
   } else {
-    return <ContextActionA menuOpen={menuOpen} href={href} isActive={isActive} onClick={() => onClickCallback && onClickCallback(contextKey)}>
-      {internal}
-    </ContextActionA>;
+    return (
+      <ContextActionA
+        menuOpen={menuOpen}
+        to={href ? href : '#'}
+        isActive={isActive}
+        onClick={() => onClickCallback && onClickCallback(contextKey)}
+      >
+        {internal}
+      </ContextActionA>);
   }
 
 };

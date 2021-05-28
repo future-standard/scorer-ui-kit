@@ -1,12 +1,7 @@
 import React from 'react';
-import { GlobalUI, PageHeader } from 'scorer-ui-kit';
+import { GlobalUI, PageHeader, TextAreaField } from 'scorer-ui-kit';
 import styled from 'styled-components';
-import {
-  Link,
-  Route,
-  Switch,
-  useLocation,
-} from 'react-router-dom';
+import { Route, Switch, Link, RouteComponentProps } from 'react-router-dom';
 
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
@@ -27,51 +22,95 @@ const Container = styled.div`
   right: 0;
 `;
 
-const getTopLevelPath = (pathname: string) => {
-  const parts = pathname.split('/').filter(String);
-  
-  const result = parts.length > 0 ? "/" + parts[0] : "/";
-  console.log(result, 'result');
-  return result;
-};
-
 const Welcome = () => (
-  <div>
-    <PageHeader 
+    <PageHeader
       title='Welcome'
-      introductionText= 'Thanks for using our UI library.'
+      introductionText='Thanks for using our UI library.'
     />
-    
-  </div>
 );
 
 const About = () => (
   <PageHeader 
-  title='About'
-  introductionText= 'We are a team dedicated to create components to make life easier to out engineering team.'
+    title='About'
+    introductionText= 'We are a team dedicated to create components to make building UI easier.'
+  />
+);
+
+const Team = () => (
+  <PageHeader 
+    title='Team'
+    introductionText= 'We are a team dedicated to create components to make building UI easier.'
+  />
+);
+
+
+const Contact = () => (
+  <div>
+    <PageHeader 
+      title='Contact'
+      introductionText= 'Please leave us a message'
+    />
+    <TextAreaField name='message' label='message' fieldState='default'/>
+  </div>
+);
+
+const Company = () => (
+  <PageHeader 
+    title='Company'
+    introductionText= 'We are a team dedicated to create components to make building UI easier.'
+  />
+);
+
+interface OwnProps {
+  match: {
+    params: {
+      name: string
+    }
+  }
+}
+
+type RouteProps = OwnProps & RouteComponentProps;
+
+const Service = (route : RouteProps) => (
+<PageHeader 
+  title={`Service ${route.match.params.name}`}
+  introductionText= 'Excelling at this service.'
 />
+)
+
+const Support = () => (
+  <PageHeader 
+    title={`Support`}
+    introductionText= 'Call 00000000'
+  />
+)
+
+const Services = () => (
+  <div>
+  <PageHeader 
+    title='Services'
+    introductionText= 'We have plenty of services'
+  />
+    <ul>
+      <li><Link to='/services/custom'>Custom</Link></li>
+      <li><Link to='/services/special'>Special</Link></li>
+      <li><Link to='/services/extra-special'>Extra Special</Link></li>
+    </ul>
+  </div>
+
 );
 
 const ComponentLinks = () => (
-  <div>
-    <ul>
-      <li>
-        <Link to="/#welcome">Welcome</Link>
-      </li>
-      <li>
-        <Link to="/about">About</Link>
-      </li>
-      <li>
-        <Link to="/articles/1">First Article</Link>
-      </li>
-    </ul>
-    <hr />
     <Switch>
-      <Route exact path="/#welcome" component={Welcome} />
-      <Route path="/about" component={About} />
+      <Route exact path="/welcome" component={Welcome} />
+      <Route exact path="/company" component={Company} />
+      <Route exact path="/company/about" component={About} />
+      <Route exact path="/company/team" component={Team} />
+      <Route exact path="/company/contact" component={Contact} />
+      <Route exact path="/support" component={Support} />
+      <Route exact path="/services" component={Services} />
+      <Route path="/services/:name" component={Service} />
     </Switch>
-
-  </div>
 );
 
 
@@ -80,65 +119,65 @@ export const _GlobalUI = () => {
   const logoMark = text("Logo Mark SVG", logoMarkSvg);
   const logoText = text("Logo Text SVG", logoTextSvg);
 
-  const supportUrl = text("Support Url", "#");
+  const supportUrl = text("Support Url", "/support");
 
   const menuHomeLink = text("Home Link", "#");
   const menuConfig = object("Menu Config", {
     items: [
       {
-        icon: 'Detection',
+        icon: 'Home',
         title: 'Welcome',
-        href: '/?path=/story/global--global-ui#welcome'
+        href: '/welcome'
       },
       {
-        icon: 'PasswordShow',
-        title: 'With Children',
-        href: '/?path=/story/global--global-ui#About',
+        icon: 'Detection',
+        title: 'Company',
+        href: '/company',
         submenu: [
           {
-            title: 'Child One',
-            href: '/'
+            title: 'About us',
+            href: '/company/about'
           },
           {
-            title: 'Child Two',
-            href: '#'
+            title: 'Team',
+            href: '/company/team'
           },
           {
-            title: 'Child Three',
-            href: '#'
+            title: 'Contact',
+            href: '/company/contact'
           }
         ]
       },
       {
-        icon: 'Success',
-        title: 'Grouped Children',
-        href: '#',
+        icon: 'Usage',
+        title: 'Services',
+        href: '/services',
         submenu: [
           {
-            title: 'Subheader'
+            title: 'Online Services'
           },
           {
-            title: 'Nested Child One',
-            href: '#'
+            title: 'Service custom',
+            href: '/services/custom'
           },
           {
-            title: 'Nested Child Two',
-            href: '#'
+            title: 'Service special',
+            href: '/services/special'
           },
           {
-            title: 'Nested Child Three',
-            href: '#'
+            title: 'Service extra special',
+            href: '/services/extra-special'
           },
           {
-            title: 'Subheader Two'
+            title: 'On site Services'
           },
           {
-            title: 'Nested Child Four',
-            href: '#'
+            title: 'Service special',
+            href: '/services/special'
           },
           {
-            title: 'Nested Child Five',
-            href: '#'
+            title: 'Service extra special',
+            href: '/services/extra-special'
           }
         ]
       }
@@ -169,14 +208,12 @@ export const _GlobalUI = () => {
     }
   ])
 
-  // const location = useLocation();
-  // console.log(location, 'location');
-
   return (
     <Container>
       <GlobalUI
         content={menuConfig}
         home={menuHomeLink}
+        defaultMenuOpen={true}
         {...{ logoMark, logoText, supportUrl }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
         >

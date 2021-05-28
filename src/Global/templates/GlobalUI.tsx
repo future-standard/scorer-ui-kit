@@ -4,7 +4,13 @@ import { Layout, MainContainer, ContentArea } from '../atoms/Layout';
 import MainMenu from '../organisms/MainMenu';
 import TopBar, { ITopBar } from '../molecules/TopBar';
 
-type INavigation = IMenu & ITopBar;
+
+interface OwnProps {
+  maxWidth?: string,
+  paddingOverride?: string,
+}
+
+type INavigation = OwnProps & IMenu & ITopBar;
 
 const GlobalUI: React.FC<INavigation> = ({
   content,
@@ -15,6 +21,8 @@ const GlobalUI: React.FC<INavigation> = ({
   supportUrl,
   defaultMenuOpen,
   children,
+  paddingOverride,
+  maxWidth,
   ...props
 }) => {
 
@@ -34,7 +42,7 @@ const GlobalUI: React.FC<INavigation> = ({
         <TopBar
           {...{...props}}
         />
-        <ContentArea>
+        <ContentArea {...{maxWidth, paddingOverride}}>
           {children}
         </ContentArea>
       </MainContainer>
