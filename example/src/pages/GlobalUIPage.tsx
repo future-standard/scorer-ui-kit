@@ -1,5 +1,9 @@
 import React from 'react';
 import {GlobalUI} from 'scorer-ui-kit';
+import {
+  Link,
+  Route
+} from 'react-router-dom';
 
 const userSubmenu = [
   {
@@ -78,6 +82,38 @@ const content = {
   ]
 };
 
+const Home = () => (
+  <div>
+    <h2>Home</h2>
+  </div>
+);
+
+const About = () => (
+  <div>
+    <h2>About</h2>
+  </div>
+);
+
+const ComponentLinks = () => (
+  <div>
+    <ul>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/about">About</Link>
+      </li>
+      <li>
+        <Link to="/articles/1">First Article</Link>
+      </li>
+    </ul>
+    <hr />
+    <Route exact path="/" component={Home} />
+    <Route path="/about" component={About} />
+  </div>
+);
+
+
 const NavigationPage = () => {
   return(
     <GlobalUI
@@ -100,6 +136,7 @@ const NavigationPage = () => {
       <div style={{backgroundColor: 'slateblue'}}>
         <h1>Hello!</h1>
       </div>
+      <ComponentLinks />
     </GlobalUI>
   );
 };

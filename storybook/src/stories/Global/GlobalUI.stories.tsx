@@ -1,6 +1,12 @@
 import React from 'react';
-import { GlobalUI } from 'scorer-ui-kit';
+import { GlobalUI, PageHeader } from 'scorer-ui-kit';
 import styled from 'styled-components';
+import {
+  Link,
+  Route,
+  Switch,
+  useLocation,
+} from 'react-router-dom';
 
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
@@ -21,6 +27,54 @@ const Container = styled.div`
   right: 0;
 `;
 
+const getTopLevelPath = (pathname: string) => {
+  const parts = pathname.split('/').filter(String);
+  
+  const result = parts.length > 0 ? "/" + parts[0] : "/";
+  console.log(result, 'result');
+  return result;
+};
+
+const Welcome = () => (
+  <div>
+    <PageHeader 
+      title='Welcome'
+      introductionText= 'Thanks for using our UI library.'
+    />
+    
+  </div>
+);
+
+const About = () => (
+  <PageHeader 
+  title='About'
+  introductionText= 'We are a team dedicated to create components to make life easier to out engineering team.'
+/>
+);
+
+const ComponentLinks = () => (
+  <div>
+    <ul>
+      <li>
+        <Link to="/#welcome">Welcome</Link>
+      </li>
+      <li>
+        <Link to="/about">About</Link>
+      </li>
+      <li>
+        <Link to="/articles/1">First Article</Link>
+      </li>
+    </ul>
+    <hr />
+    <Switch>
+      <Route exact path="/#welcome" component={Welcome} />
+      <Route path="/about" component={About} />
+    </Switch>
+
+  </div>
+);
+
+
 export const _GlobalUI = () => {
 
   const logoMark = text("Logo Mark SVG", logoMarkSvg);
@@ -32,14 +86,14 @@ export const _GlobalUI = () => {
   const menuConfig = object("Menu Config", {
     items: [
       {
-        icon: 'Invalid',
-        title: 'Basic Item',
-        href: '#'
+        icon: 'Detection',
+        title: 'Welcome',
+        href: '/?path=/story/global--global-ui#welcome'
       },
       {
         icon: 'PasswordShow',
         title: 'With Children',
-        href: '/',
+        href: '/?path=/story/global--global-ui#About',
         submenu: [
           {
             title: 'Child One',
@@ -115,6 +169,9 @@ export const _GlobalUI = () => {
     }
   ])
 
+  // const location = useLocation();
+  // console.log(location, 'location');
+
   return (
     <Container>
       <GlobalUI
@@ -122,7 +179,9 @@ export const _GlobalUI = () => {
         home={menuHomeLink}
         {...{ logoMark, logoText, supportUrl }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
-        />
+        >
+          <ComponentLinks />
+        </GlobalUI>
     </Container>
   )
 }

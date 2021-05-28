@@ -199,7 +199,10 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
 
 const getTopLevelPath = (pathname: string) => {
   const parts = pathname.split('/').filter(String);
-  return parts.length > 0 ? "/" + parts[0] : "/";
+  
+  const result = parts.length > 0 ? "/" + parts[0] : "/";
+  console.log(result, 'result');
+  return result;
 };
 
 export default MainMenu;
