@@ -56,7 +56,7 @@ const ComponentLinks = () => (
   <div>
     <ul>
       <li>
-        <Link to="/#welcome">Welcome</Link>
+        <Link to="/welcome">Welcome</Link>
       </li>
       <li>
         <Link to="/about">About</Link>
@@ -67,7 +67,7 @@ const ComponentLinks = () => (
     </ul>
     <hr />
     <Switch>
-      <Route exact path="/#welcome" component={Welcome} />
+      <Route exact path="/welcome" component={Welcome} />
       <Route path="/about" component={About} />
     </Switch>
 
@@ -93,11 +93,11 @@ export const _GlobalUI = () => {
       {
         icon: 'PasswordShow',
         title: 'With Children',
-        href: '/?path=/story/global--global-ui#About',
+        href: '/?path=/story/global--global-ui#about',
         submenu: [
           {
             title: 'Child One',
-            href: '/'
+            href: '/?path=/story/global--global-ui#about'
           },
           {
             title: 'Child Two',
@@ -171,6 +171,8 @@ export const _GlobalUI = () => {
 
   // const location = useLocation();
   // console.log(location, 'location');
+
+  console.log(`this is the href ${window.location.href}`);
 
   return (
     <Container>

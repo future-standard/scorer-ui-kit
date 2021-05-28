@@ -136,6 +136,7 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
   const { icon, title, href, submenu } = item;
   const isActive = topLevelPath === href;
 
+  console.log(`topLevelPath ${topLevelPath} - href ${href}`);
   const refSubmenu = useRef<any>(null);
   const [submenuHeight, setSubmenuHeight] = useState<number>(0);
 

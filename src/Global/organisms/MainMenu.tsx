@@ -204,7 +204,8 @@ const getTopLevelPath = (pathname: string) => {
   const parts = pathname.split('/').filter(String);
   
   const result = parts.length > 0 ? "/" + parts[0] : "/";
-  console.log(result, 'result');
+  // console.log(pathname, 'whole path');
+  // console.log(result, 'getTopLevelPath - result');
   return result;
 };
 
