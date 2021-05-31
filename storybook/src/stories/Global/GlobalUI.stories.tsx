@@ -116,11 +116,19 @@ const ComponentLinks = () => (
 
 export const _GlobalUI = () => {
 
+  const maxWidth = text("Max width", "1200px");
+  const paddingOverride = text("Padding Override","70px 90px");
+  const loggedInUser = text("Logged In User", "full.name@example.com");
+  const hasSearch = boolean("Has Search", true);
+  const hasLogout = boolean("Has Logout", true);
+  const hasNotifications = boolean("Has Notifications", true);
+  const hasLanguage = boolean("Has Language", true);
+  const hasCurrentUser = boolean("Has Current User", true);
+  const logoutLink = text("Logout Url", "#")
+  const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const logoMark = text("Logo Mark SVG", logoMarkSvg);
   const logoText = text("Logo Text SVG", logoTextSvg);
-
   const supportUrl = text("Support Url", "/support");
-
   const menuHomeLink = text("Home Link", "#");
   const menuConfig = object("Menu Config", {
     items: [
@@ -184,15 +192,7 @@ export const _GlobalUI = () => {
     ]
   });
 
-  const loggedInUser = text("Logged In User", "full.name@example.com");
 
-  const hasSearch = boolean("Has Search", true);
-  const hasLogout = boolean("Has Logout", true);
-  const hasNotifications = boolean("Has Notifications", true);
-  const hasLanguage = boolean("Has Language", true);
-  const hasCurrentUser = boolean("Has Current User", true);
-  const logoutLink = text("Logout Url", "#")
-  const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
@@ -214,7 +214,7 @@ export const _GlobalUI = () => {
         content={menuConfig}
         home={menuHomeLink}
         defaultMenuOpen={true}
-        {...{ logoMark, logoText, supportUrl }}
+        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
         >
           <ComponentLinks />

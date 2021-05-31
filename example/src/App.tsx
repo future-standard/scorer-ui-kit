@@ -19,7 +19,6 @@ import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import TabsPage from './pages/TabsPage';
 import NotificationPage from './pages/NotificationPage';
 import ModalPage from './pages/ModalPage';
-import GlobalUIPage from './pages/GlobalUIPage';
 
 
 const App: React.FC<{}> = () => {
@@ -37,7 +36,6 @@ const App: React.FC<{}> = () => {
         <Route path={`/customdrawer`} exact={true} component={CustomUserDrawerPage} />
         <Route path={`/notification`} exact={true} component={NotificationPage} />
         <Route path={`/modal`} exact={true} component={ModalPage} />
-        <Route path={`/globalui`} exact={true} component={GlobalUIPage} />
         <Route path={`/ptz`} exact={true}>
           <PTZProvider socketUrl='ws://localhost/wsapp/' imageRefresh={2000}>
             <PTZPage />
