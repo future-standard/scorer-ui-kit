@@ -80,14 +80,14 @@ const ContextActionBaseCSS = css`
   text-decoration: none;
 `;
 
-const ContextActionA = styled(Link) <{ menuOpen?: boolean, isActive: boolean }>`
+const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }>`
   ${ContextActionBaseCSS}
   ${({ theme }) => theme && css`
     font-family: ${theme.fontFamily.ui};
     ${theme.typography.global.mainMenu.menuItem.default};
   `}
 
-  ${({ menuOpen }) => menuOpen && css`
+  ${({ $menuOpen }) => $menuOpen && css`
     ${ContextTitle}{
       opacity: 1;
     }
@@ -103,7 +103,7 @@ const ContextActionA = styled(Link) <{ menuOpen?: boolean, isActive: boolean }>`
     }
   }
 
-  ${({ isActive }) => isActive && css`
+  ${({ $isActive }) => $isActive && css`
     ${ContextIcon},
     &:hover ${ContextIcon}{
       ${({ theme }) => theme.styles.global.mainMenu.iconBackground.active};
@@ -178,9 +178,9 @@ const ContextItem: React.FC<IProps> = ({ hasSubmenu = false, contextKey = -1, su
   } else {
     return (
       <ContextActionA
-        menuOpen={menuOpen}
+        $menuOpen={menuOpen}
         to={href ? href : '#'}
-        isActive={isActive}
+        $isActive={isActive}
         onClick={() => onClickCallback && onClickCallback(contextKey)}
       >
         {internal}
