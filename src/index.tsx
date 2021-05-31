@@ -122,7 +122,7 @@ import {
   SidebarLinkHeading,
   BackLink,
   Sidebar,
-  NavigationTemplate,
+  GlobalUI,
 } from './Global';
 
 // Tabs
@@ -223,7 +223,7 @@ export {
   SidebarLinkHeading,
   BackLink,
   Sidebar,
-  NavigationTemplate,
+  GlobalUI,
 
   // Tabs
   Tabs,

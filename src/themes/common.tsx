@@ -84,21 +84,21 @@ export const animation = {
   }
 };
 
-// export const deviceSize = {
-//   mobileS: `(max-width: 319px)`,
-//   mobileM: `(min-width: 320px) and (max-width: 767px)`,
-//   tabletP: `(min-width: 768px) and (max-width: 1023px)`,
-//   desktopS: `(min-width: 1024px) and (max-width: 1279px)`,
-//   desktop: `(min-width: 1280px) and (max-width: 1399px)`,
-//   desktopL: `(min-width: 1400px)`
-// };
-
-
 export const deviceSize = {
-  mobileS: '(max-width: 319px)',
-  mobileM: '(min-width: 320px)',
-  tabletP: '(min-width: 768px)',
-  desktopS: '(min-width: 1024px)',
-  desktop: '(min-width: 1280px)',
-  desktopL: '(min-width: 1400px)'
+  xsmall: 0,
+  small: 320,
+  medium: 768,
+  large: 1024,
+  xlarge: 1280,
+  xxlarge: 1400,
+};
+
+
+export const deviceMediaQuery = {
+  xsmall: `(min-width: ${deviceSize.xsmall}px)`,
+  small: `(min-width: ${deviceSize.small}px)`,
+  medium: `(min-width: ${deviceSize.medium}px)`,
+  large: `(min-width: ${deviceSize.large}px)`,
+  xlarge: `(min-width: ${deviceSize.xlarge}px)`,
+  xxlarge: `(min-width: ${deviceSize.xxlarge}px)`
 };

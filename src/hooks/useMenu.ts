@@ -42,11 +42,11 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
       let isMenuPinned = false;
       let canPin = false;
 
-      if (action.data.defaultMenuOpen && action.data.desktopSize === 'desktop') {
+      if (action.data.defaultMenuOpen && action.data.desktopSize === 'xlarge') {
         canPin = true;
       }
 
-      if (action.data.desktopSize === 'desktopL') {
+      if (action.data.desktopSize === 'xxlarge') {
         isMenuOpen = true;
         isMenuPinned = true;
       }
@@ -63,7 +63,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
     // handle autoOpen based on desktop
     case 'SET_OPEN': {
       if (state.isMenuOpen === true) { return state; }
-      if (state.desktopSize === 'desktopL') { return state; }
+      if (state.desktopSize === 'xxlarge') { return state; }
 
       return {
         ...state,
@@ -74,7 +74,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
     // handle auto close based on desktop
     case 'SET_CLOSE': {
       if (state.isMenuOpen === false) { return state; }
-      if (state.desktopSize === 'desktopL') { return state; }
+      if (state.desktopSize === 'xxlarge') { return state; }
       if (state.isMenuPinned === true) { return state; }
 
       return {
@@ -106,7 +106,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
 };
 
 const menuState: IMenuState = {
-  desktopSize: 'desktopS',
+  desktopSize: 'large',
   isMenuPinned: false,
   isMenuOpen: false,
   canPin: false

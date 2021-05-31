@@ -8,7 +8,10 @@ import Style from '../src/style';
 
 
 const RouterDecorator = story => (
-  <Router >
+  <Router 
+    initialEntries={["/welcome"]}
+    initialIndex={1}
+  >
     {story()}
   </Router>
 );

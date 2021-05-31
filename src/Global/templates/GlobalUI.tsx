@@ -1,14 +1,20 @@
 import React from 'react';
 import { IMenu } from '..';
-import { Layout, MainContainer, Content2, MobileLayout } from '../atoms/Layout';
+import { Layout, MainContainer, ContentArea, MobileLayout } from '../atoms/Layout';
 import MainMenu from '../organisms/MainMenu';
 import TopBar, { ITopBar } from '../molecules/TopBar';
 import MobileNavbar from '../molecules/MobileNavbar';
 import useBreakpoints from '../../hooks/useBreakpoints';
 
-type INavigation = IMenu & ITopBar;
 
-const NavigationTemplate: React.FC<INavigation> = ({
+interface OwnProps {
+  maxWidth?: string,
+  paddingOverride?: string,
+}
+
+type INavigation = OwnProps & IMenu & ITopBar;
+
+const GlobalUI: React.FC<INavigation> = ({
   content,
   home,
   openWidth,
@@ -17,13 +23,15 @@ const NavigationTemplate: React.FC<INavigation> = ({
   supportUrl,
   defaultMenuOpen,
   children,
+  paddingOverride,
+  maxWidth,
   ...props
 }) => {
 
-  const { isDesktopS } = useBreakpoints(); 
+  const { isLarge } = useBreakpoints();
 
   return (
-    isDesktopS 
+    isLarge
     ? (
       <Layout>
         <MainMenu {...{
@@ -40,9 +48,9 @@ const NavigationTemplate: React.FC<INavigation> = ({
           <TopBar
             {...{...props}}
           />
-          <Content2>
+          <ContentArea {...{maxWidth, paddingOverride}}>
             {children}
-          </Content2>
+          </ContentArea>
         </MainContainer>
       </Layout>
     )
@@ -65,4 +73,4 @@ const NavigationTemplate: React.FC<INavigation> = ({
   );
 };
 
-export default NavigationTemplate;
+export default GlobalUI;
