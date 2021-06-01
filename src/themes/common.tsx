@@ -85,8 +85,7 @@ export const animation = {
 };
 
 export const deviceSize = {
-  xsmall: 0,
-  small: 320,
+  small: 0,
   medium: 768,
   large: 1024,
   xlarge: 1280,
@@ -95,7 +94,6 @@ export const deviceSize = {
 
 
 export const deviceMediaQuery = {
-  xsmall: `(min-width: ${deviceSize.xsmall}px)`,
   small: `(min-width: ${deviceSize.small}px)`,
   medium: `(min-width: ${deviceSize.medium}px)`,
   large: `(min-width: ${deviceSize.large}px)`,

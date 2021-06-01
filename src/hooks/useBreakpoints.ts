@@ -6,15 +6,13 @@ import {deviceMediaQuery} from '../themes/common';
  * and which breakpoints are inactiveScreen.
  */
 
-export type IBreakpoints = 'xsmall'
-| 'small'
+export type IBreakpoints = 'small'
 | 'medium'
 | 'large'
 | 'xlarge'
 | 'xxlarge';
 
 interface OwnProps  {
-  isXSmall: boolean
   isSmall: boolean
   isMedium: boolean
   isLarge: boolean
@@ -25,16 +23,14 @@ interface OwnProps  {
 
 export default function useBreakpoints() {
   const breakpoints : OwnProps= {
-    isXSmall: useMediaQuery(deviceMediaQuery.xsmall),
     isSmall: useMediaQuery(deviceMediaQuery.small),
     isMedium: useMediaQuery(deviceMediaQuery.medium),
     isLarge: useMediaQuery(deviceMediaQuery.large),
     isXLarge: useMediaQuery(deviceMediaQuery.xlarge),
     isXXLarge: useMediaQuery(deviceMediaQuery.xxlarge),
-    activeScreen: "xsmall"
+    activeScreen: "small"
   };
 
-  if (breakpoints.isXSmall) breakpoints.activeScreen = 'xsmall';
   if (breakpoints.isSmall) breakpoints.activeScreen = 'small';
   if (breakpoints.isMedium) breakpoints.activeScreen = 'medium';
   if (breakpoints.isLarge) breakpoints.activeScreen = 'large';
