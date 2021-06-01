@@ -1,4 +1,5 @@
 import styled, {css} from 'styled-components';
+import {deviceMediaQuery} from '../../themes/common';
 
 export const Layout = styled.div`
   display: flex;
@@ -41,8 +42,16 @@ export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: str
   flex: 1;
   overflow: auto;
   width: 100%;
-  max-width: ${({maxWidth}) => maxWidth ? maxWidth : `1200px`};
-  padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '70px 90px'};
+  padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '40px 20px'};
   margin-left: auto;
   margin-right: auto;
+
+  @media ${deviceMediaQuery.medium} {
+    padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '40px'};
+  }
+
+  @media ${deviceMediaQuery.large} {
+    max-width: ${({maxWidth}) => maxWidth ? maxWidth : `1200px`};
+    padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '70px 90px'};
+  }
 `;

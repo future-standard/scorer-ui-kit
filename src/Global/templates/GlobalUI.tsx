@@ -67,7 +67,9 @@ const GlobalUI: React.FC<INavigation> = ({
             defaultMenuOpen}
           }
         />
-        {children}
+        <ContentArea>
+          {children}
+        </ContentArea>
       </MobileLayout>
     )
   );
