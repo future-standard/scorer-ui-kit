@@ -2,8 +2,10 @@ import React, { useContext, useCallback } from 'react';
 import styled, {css} from 'styled-components';
 import { TabContext, ContextProps } from './Tabs';
 import Icon, {IconWrapper} from '../Icons/Icon';
+import { resetButtonStyles } from '../common/index';
 
-const Container = styled.div`
+const Container = styled.button`
+  ${resetButtonStyles}
   flex-basis: auto;
   flex-grow: 1;
 `;

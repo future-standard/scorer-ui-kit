@@ -64,7 +64,9 @@ const GlobalUI: React.FC<INavigation> = ({
             logoMark,
             logoText,
             supportUrl,
-            defaultMenuOpen}
+            defaultMenuOpen,
+            ...props
+            }
           }
         />
         <ContentArea>
