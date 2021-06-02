@@ -1,26 +1,20 @@
 import React from 'react';
-// import ReactDom from 'react-dom';
-import styled, { css } from 'styled-components';
-import { IMenu } from '..';
-import SvgLogoMark from '../../svg/LogoMark';
+import styled  from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Tabs, TabContent, MobileTab } from '../../Tabs/index';
 import { TabListWrapper, TabList } from '../../Tabs/TabList';
+import { IMenu } from '..';
+import SvgLogoMark from '../../svg/LogoMark';
 import CloseButton from '../atoms/CloseButton';
 import MobileNavbarContainer from '../atoms/MobileNavbarContainer';
+import MobileMenu from './MobileMenu';
 
 const Container = styled.div``;
 
 const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
-  height: 53px;
-
-  ${({ theme }) => theme && css`
-    @media ${theme.deviceMediaQuery.medium} {
-      height:68px;
-    }
-  `};
+  height:68px;
 
   ${TabListWrapper} {
     flex-basis: 0;
@@ -52,11 +46,11 @@ interface OwnProps {
 type IMobileNavbar = OwnProps & IMenu;
 
 const MobileNavbar: React.FC<IMobileNavbar> = ({
-  //  content,
+  content,
   home = "/",
   logoMark,
-  //  supportUrl,
-  //  defaultMenuOpen = true 
+  supportUrl,
+  defaultMenuOpen = true,
   closeText,
 }) => {
   return (
@@ -80,7 +74,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
             <div>User context</div>
           </TabContent>
           <TabContent tabId='menu'>
-            <div>Menu context</div>
+            <MobileMenu {...{content, supportUrl, defaultMenuOpen}} closeId='closeMenu' />
           </TabContent>
           <CloseButton {...{ closeText }} closeId='closeMenu' />
         </MobileNavbarContainer>

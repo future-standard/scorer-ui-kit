@@ -22,7 +22,7 @@ const StyledButton = styled.button`
   bottom: 0;
   font-size: 14px;
   outline: none;
-  -webkit-tap-highlight-color: transparent;
+
   width: 100%;
   text-align: center;
   white-space: nowrap;

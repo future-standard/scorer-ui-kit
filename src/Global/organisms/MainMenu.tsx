@@ -1,17 +1,18 @@
 import React, { useState, useCallback } from 'react';
+import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components';
 
-import NavigationItem from '../atoms/NavigationItem';
+import { Link, useLocation } from 'react-router-dom';
 import ContextItem from '../atoms/ContextItem';
 import useMenu from '../../hooks/useMenu';
-import ReactDom from 'react-dom';
 
 import { IBreakpoints } from '../../hooks/useBreakpoints';
 
 import SvgLogoMark from '../../svg/LogoMark';
 import SvgLogoText from '../../svg/LogoText';
+import NavigationItem from '../atoms/NavigationItem';
 import { IMenu } from '..';
-import { Link, useLocation } from 'react-router-dom';
+import { getTopLevelPath } from '../../helpers/index';
 
 const Logo = styled(Link)`
   height: 50px;
@@ -128,7 +129,12 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
   }, [togglePinned]);
 
   /** Manage which context is open. */
+  /** Submenu sends -1 because context only is for the parent
+    * The -1 value is important in the mobile version of this menu 
+  */
   const setFocusedContextCb = useCallback(contextKey => {
+    if(contextKey === -1) { return; }
+
     setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
   }, [setFocusedContext, focusedContext]);
 
@@ -195,11 +201,6 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
       document.body)}
     </PushContainer>
   );
-};
-
-const getTopLevelPath = (pathname: string) => {
-  const parts = pathname.split('/').filter(String);
-  return  parts.length > 0 ? "/" + parts[0] : "/";
 };
 
 export default MainMenu;

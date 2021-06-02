@@ -67,6 +67,7 @@ const ContextIndicator = styled.div`
 
 `;
 const ContextActionBaseCSS = css`
+  -webkit-tap-highlight-color: transparent;
   border: none;
   background: none;
   display: flex;
@@ -78,6 +79,8 @@ const ContextActionBaseCSS = css`
   outline: none;
   padding: 0;
   text-decoration: none;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
 `;
 
 const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }>`

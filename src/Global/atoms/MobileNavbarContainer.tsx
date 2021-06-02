@@ -5,7 +5,6 @@ import { TabContext, ContextProps } from '../../Tabs/Tabs';
 const Container = styled.div`
   z-index: 3;
   position: relative;
-  background-color: hsla(120, 100%, 75%, 0.3);
   min-height: 100vh;
   width: 100%;
 `;

@@ -3,7 +3,7 @@ import { IMenu } from '..';
 import { Layout, MainContainer, ContentArea, MobileLayout } from '../atoms/Layout';
 import MainMenu from '../organisms/MainMenu';
 import TopBar, { ITopBar } from '../molecules/TopBar';
-import MobileNavbar from '../molecules/MobileNavbar';
+import MobileNavbar from '../organisms/MobileNavbar';
 import useBreakpoints from '../../hooks/useBreakpoints';
 
 
@@ -22,9 +22,9 @@ const GlobalUI: React.FC<INavigation> = ({
   logoText,
   supportUrl,
   defaultMenuOpen,
-  children,
   paddingOverride,
   maxWidth,
+  children,
   ...props
 }) => {
 
@@ -60,9 +60,7 @@ const GlobalUI: React.FC<INavigation> = ({
           {...{
             content,
             home,
-            openWidth,
             logoMark,
-            logoText,
             supportUrl,
             defaultMenuOpen,
             ...props

@@ -13,6 +13,7 @@ export const ColumnCss = css`
 `;
 
 export const resetButtonStyles = css`
+  -webkit-tap-highlight-color: transparent;
   background-color: transparent;
   background: transparent;
   border: none;

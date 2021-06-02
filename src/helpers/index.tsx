@@ -21,4 +21,10 @@ export const getTextTimeUnit = (value: number, unit : ITimeUnit) => {
       default:
         return value < 2 ? `${value} Hour` : `${value} Hours`;
     }
-}
+};
+
+
+export const getTopLevelPath = (pathname: string) => {
+  const parts = pathname.split('/').filter(String);
+  return  parts.length > 0 ? "/" + parts[0] : "/";
+};
