@@ -1,15 +1,16 @@
 import React from 'react';
-import styled  from 'styled-components';
+import styled from 'styled-components';
 import { Tabs, TabContent, MobileTab } from '../../Tabs/index';
 import { TabListWrapper, TabList } from '../../Tabs/TabList';
-import { IMenu } from '..';
+import { IMenu, ITopBar } from '..';
 
 import CloseButton from '../atoms/CloseButton';
 import MobileNavbarContainer from '../atoms/MobileNavbarContainer';
 import MobileMenu from './MobileMenu';
-import MobileLogoLink  from '../atoms/MobileLogoLink';
+import MobileLogoLink from '../atoms/MobileLogoLink';
+import MobileUserMenu from '../molecules/MobileUserMenu';
 
-const Container = styled.div``;
+const Container = styled.nav``;
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ interface OwnProps {
   closeText?: string
 }
 
-type IMobileNavbar = OwnProps & IMenu;
+type IMobileNavbar = OwnProps & IMenu & ITopBar;
 
 const MobileNavbar: React.FC<IMobileNavbar> = ({
   content,
@@ -35,13 +36,22 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   supportUrl,
   defaultMenuOpen = true,
   closeText,
+  hasLanguage,
+  hasLogout,
+  logoutLink,
+  hasCurrentUser,
+  userSubmenu,
+  userDrawerBespoke,
+  loggedInUser,
+  onLogout,
+  onLanguageToggle,
 }) => {
 
   return (
     <Container>
       <Tabs>
         <HeaderContainer>
-          <MobileLogoLink {...{home, logoMark}} closeId='closeMenu' />
+          <MobileLogoLink {...{ home, logoMark }} closeId='closeMenu' />
           <TabList defaultTabId='closeMenu'>
             <MobileTab tabFor='notifications' icon='Notifications' />
             <MobileTab tabFor='user' icon='UserProfile' />
@@ -53,10 +63,24 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
             <div>Notifications context</div>
           </TabContent>
           <TabContent tabId='user'>
-            <div>User context</div>
+            <MobileUserMenu
+              {...{
+              hasLanguage,
+              hasLogout,
+              logoutLink,
+              hasCurrentUser,
+              userSubmenu,
+              userDrawerBespoke,
+              loggedInUser,
+              onLogout,
+              onLanguageToggle
+            }}
+              closeId='closeMenu'
+            />
+
           </TabContent>
           <TabContent tabId='menu'>
-            <MobileMenu {...{content, supportUrl, defaultMenuOpen}} closeId='closeMenu' />
+            <MobileMenu {...{ content, supportUrl, defaultMenuOpen }} closeId='closeMenu' />
           </TabContent>
           <CloseButton {...{ closeText }} closeId='closeMenu' />
         </MobileNavbarContainer>

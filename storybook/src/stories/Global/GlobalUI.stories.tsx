@@ -1,7 +1,7 @@
 import React from 'react';
-import { GlobalUI, PageHeader, TextAreaField } from 'scorer-ui-kit';
+import { GlobalUI, PageHeader, TextAreaField} from 'scorer-ui-kit';
 import styled from 'styled-components';
-import { Route, Switch, Link, RouteComponentProps } from 'react-router-dom';
+import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
@@ -23,41 +23,62 @@ const Container = styled.div`
 `;
 
 const Welcome = () => (
-    <PageHeader
-      title='Welcome'
-      introductionText='Thanks for using our UI library.'
-    />
+  <PageHeader
+    title='Welcome'
+    introductionText='Thanks for using our UI library.'
+  />
 );
 
 const About = () => (
-  <PageHeader 
+  <PageHeader
     title='About'
-    introductionText= 'We are a team dedicated to create components to make building UI easier.'
+    introductionText='We are a team dedicated to create components to make building UI easier.'
   />
 );
 
 const Team = () => (
-  <PageHeader 
+  <PageHeader
     title='Team'
-    introductionText= 'We are a team dedicated to create components to make building UI easier.'
+    introductionText='We are a team dedicated to create components to make building UI easier.'
   />
 );
 
 
 const Contact = () => (
   <div>
-    <PageHeader 
+    <PageHeader
       title='Contact'
-      introductionText= 'Please leave us a message'
+      introductionText='Please leave us a message'
     />
-    <TextAreaField name='message' label='message' fieldState='default'/>
+    <TextAreaField name='message' label='message' fieldState='default' />
   </div>
 );
 
 const Company = () => (
-  <PageHeader 
+  <PageHeader
     title='Company'
-    introductionText= 'We are a team dedicated to create components to make building UI easier.'
+    introductionText='We are a team dedicated to create components to make building UI easier.'
+  />
+);
+
+const Accounts = () => (
+  <PageHeader
+    title='Accounts'
+    introductionText='Here is a list of accounts'
+  />
+);
+
+const Billing = () => (
+  <PageHeader
+    title='Billing'
+    introductionText='Information about your billing'
+  />
+);
+
+const Payments = () => (
+  <PageHeader
+    title='Payments'
+    introductionText='Information of Payments'
   />
 );
 
@@ -71,53 +92,40 @@ interface OwnProps {
 
 type RouteProps = OwnProps & RouteComponentProps;
 
-const Service = (route : RouteProps) => (
-<PageHeader 
-  title={`Service ${route.match.params.name}`}
-  introductionText= 'Excelling at this service.'
-/>
+const Service = (route: RouteProps) => (
+  <PageHeader
+    title={`Service ${route.match.params.name}`}
+    introductionText='Excelling at this service.'
+  />
 )
 
 const Support = () => (
-  <PageHeader 
+  <PageHeader
     title={`Support`}
-    introductionText= 'Call 00000000'
+    introductionText='Call 00000000'
   />
 )
 
-const Services = () => (
-  <div>
-  <PageHeader 
-    title='Services'
-    introductionText= 'We have plenty of services'
-  />
-    <ul>
-      <li><Link to='/services/custom'>Custom</Link></li>
-      <li><Link to='/services/special'>Special</Link></li>
-      <li><Link to='/services/extra-special'>Extra Special</Link></li>
-    </ul>
-  </div>
-
-);
-
 const ComponentLinks = () => (
-    <Switch>
-      <Route exact path="/welcome" component={Welcome} />
-      <Route exact path="/company" component={Company} />
-      <Route exact path="/company/about" component={About} />
-      <Route exact path="/company/team" component={Team} />
-      <Route exact path="/company/contact" component={Contact} />
-      <Route exact path="/support" component={Support} />
-      <Route exact path="/services" component={Services} />
-      <Route path="/services/:name" component={Service} />
-    </Switch>
+  <Switch>
+    <Route exact path="/welcome" component={Welcome} />
+    <Route exact path="/company" component={Company} />
+    <Route exact path="/company/about" component={About} />
+    <Route exact path="/company/team" component={Team} />
+    <Route exact path="/company/contact" component={Contact} />
+    <Route exact path="/support" component={Support} />
+    <Route exact path="/user/accounts" component={Accounts} />
+    <Route exact path="/user/billing" component={Billing} />
+    <Route exact path="/user/payments" component={Payments} />
+    <Route path="/services/:name" component={Service} />
+  </Switch>
 );
 
 
 export const _GlobalUI = () => {
 
   const maxWidth = text("Max width", "1200px");
-  const paddingOverride = text("Padding Override","70px 90px");
+  const paddingOverride = text("Padding Override", "70px 90px");
   const loggedInUser = text("Logged In User", "full.name@example.com");
   const hasSearch = boolean("Has Search", true);
   const hasLogout = boolean("Has Logout", true);
@@ -196,15 +204,15 @@ export const _GlobalUI = () => {
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
-      href: '#'
+      href: '/user/accounts'
     },
     {
       text: 'Billing',
-      href: '#'
+      href: '/user/billing'
     },
     {
       text: 'Payments',
-      href: '#'
+      href: '/user/payments'
     }
   ])
 
@@ -216,9 +224,9 @@ export const _GlobalUI = () => {
         defaultMenuOpen={true}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
-        >
-          <ComponentLinks />
-        </GlobalUI>
+      >
+        <ComponentLinks />
+      </GlobalUI>
     </Container>
   )
 }

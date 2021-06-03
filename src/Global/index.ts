@@ -1,3 +1,4 @@
+import {ReactElement} from 'react';
 import {Content, Layout, MainContainer} from './atoms/Layout';
 import MainMenu from './organisms/MainMenu';
 import TopBar from './molecules/TopBar';
@@ -46,4 +47,19 @@ export interface IMenuTop {
     logoText?: string
     supportUrl?: string
     defaultMenuOpen?: boolean
+  }
+
+  export interface ITopBar {
+    hasNotifications?: boolean;
+    userSubmenu?: any[];
+    loggedInUser: string;
+    hasLanguage?: boolean;
+    hasLogout?: boolean;
+    logoutLink?: string;
+    hasSearch?: boolean;
+    hasCurrentUser?: boolean;
+    searchPlaceholder?: string;
+    userDrawerBespoke?: ReactElement;
+    onLogout?: ()=>void;
+    onLanguageToggle?: ()=>void;
   }

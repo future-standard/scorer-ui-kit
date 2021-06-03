@@ -1,9 +1,9 @@
-import React, { useState, useCallback, ReactElement } from 'react';
+import React, { useState} from 'react';
 import styled, { css } from 'styled-components';
-import { resetButtonStyles } from '../../common';
-import {Link} from 'react-router-dom';
 
 import Icon from '../../Icons/Icon';
+import UserMenu from '../molecules/UserMenu';
+import { ITopBar } from '../index';
 
 const Container = styled.div`
   height: 65px;
@@ -11,11 +11,10 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
 
-  ${({theme: {colors}}) => colors && css`
+  ${({ theme: { colors } }) => colors && css`
     border-bottom: ${colors.divider} 1px solid;
     box-shadow: 5px 7px 10px 0 hsla(205, 16%, 77%, 0.1);
   `}
-
 `;
 
 const SearchBar = styled.div`
@@ -24,7 +23,6 @@ const SearchBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
 `;
 
 const IconWrapper = styled.div`
@@ -38,22 +36,21 @@ const IconWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
   }
-
 `;
 
 const SearchInput = styled.input`
-  font-family: ${({theme}) => theme.fontFamily.data};
+  font-family: ${({ theme }) => theme.fontFamily.data};
   flex: 1;
   height: 35px;
   line-height: 35px;
   border: none;
   outline: none;
 
-  ${ ({theme: {typography}}) => typography.global.topBar.search.value };
+  ${({ theme: { typography } }) => typography.global.topBar.search.value};
 
   &::placeholder {
     font-style: italic;
-    ${ ({theme: {typography}}) => typography.global.topBar.search.placeholder };
+    ${({ theme: { typography } }) => typography.global.topBar.search.placeholder};
   }
 `;
 
@@ -62,7 +59,7 @@ const ButtonArea = styled.div`
   padding-right: 10px;
 `;
 
-const DrawerToggle = styled.button.attrs({ type: 'button' })<{ isActive: boolean }>`
+const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolean }>`
   width: 60px;
   margin: 0 5px;
   height: inherit;
@@ -71,7 +68,7 @@ const DrawerToggle = styled.button.attrs({ type: 'button' })<{ isActive: boolean
   outline: none;
   cursor: pointer;
 
-  ${({theme}) => css`
+  ${({ theme }) => css`
     border-bottom: 5px solid ${theme.colors.menu.indicator};
 
     &:hover {
@@ -79,26 +76,24 @@ const DrawerToggle = styled.button.attrs({ type: 'button' })<{ isActive: boolean
     }
 
     transition: border ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
-
   `};
 
-  ${({isActive, theme}) => isActive && css`
+  ${({ isActive, theme }) => isActive && css`
     &, &:hover {
       border-bottom-color: ${theme.colors.menu.active};
     }
   `}
 `;
 
-const Drawer = styled.div<{ isOpen : boolean }>`
-
-  font-family: ${({theme}) => theme.fontFamily.ui};
+const Drawer = styled.div<{ isOpen: boolean }>`
+  font-family: ${({ theme }) => theme.fontFamily.ui};
 
   position: fixed;
   right: -10px;
   top: 65px;
   bottom: 0;
-  background: ${({theme}) => theme.styles.global.mainMenu.background};
-  border-left: ${({theme: {colors}}) => colors.divider} 1px solid;
+  background: ${({ theme }) => theme.styles.global.mainMenu.background};
+  border-left: ${({ theme: { colors } }) => colors.divider} 1px solid;
   width: 200px;
   opacity: 0;
   visibility: hidden;
@@ -107,123 +102,29 @@ const Drawer = styled.div<{ isOpen : boolean }>`
   flex-direction: column;
   justify-content: space-between;
 
-  ${({theme}) => css`
+  ${({ theme }) => css`
     transition:
       opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut},
       right ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
   `};
 
-
-  ${({isOpen}) => isOpen && css`
+  ${({ isOpen }) => isOpen && css`
     right: 0;
     opacity: 1;
     visibility: visible;
   `}
 `;
 
-const DrawerTop = styled.div`
-
-`;
-
-const DrawerBottom = styled.div`
-
-`;
-
-const DrawerHeader = styled.h2`
-  ${({theme}) => theme.typography.global.mainMenu.subheader};
-  padding: 0;
-  margin: 0 0 5px;
-`;
-
-const CurrentUser = styled.div`
+const Comment = styled.div`
   padding: 20px 20px 15px;
   word-break: no-wrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: ${({theme: {colors}}) => colors.divider} 1px solid;
-  ${({theme}) => theme.typography.global.mainMenu.identity};
+  border-bottom: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  ${({ theme }) => theme.typography.global.mainMenu.identity};
 `;
 
-const UserMenu = styled.div`
-  padding: 20px 20px 0;
-  border-bottom: ${({theme: {colors}}) => colors.divider} 1px solid;
-`;
-
-const Logout = styled.div`
-  padding: 0 20px;
-`;
-
-const LinkMenu = styled.ul`
-  padding: 0;
-  margin: 22px 0 0 0;
-  list-style: none;
-`;
-
-const LinkMenuItem = styled.li`
-  padding: 0;
-  margin: 0 0 21px;
-
-`;
-const LinkMenuItemA = styled(Link)<{isActive?:boolean}>`
-  ${({theme}) => css`
-    ${theme.typography.global.mainMenu.subItem.default};
-
-    &:hover {
-      ${theme.typography.global.mainMenu.subItem.hover};
-    }
-
-  `};
-
-  ${({theme, isActive}) => isActive && css`
-    &, &:hover {
-      ${theme.typography.global.mainMenu.subItem.active};
-    }
-  `};
-
-
-
-
-
-
-`;
-const LanguageMenu = styled.button`
-  ${resetButtonStyles};
-
-  font-family: ${({theme}) => theme.fontFamily.ui};
-  margin-top: auto;
-  display: flex;
-  flex-direction: row;
-
-  border-top: ${({theme: {colors}}) => colors.divider} 1px solid;
-  ${({theme}) => css`
-    ${theme.typography.global.mainMenu.subItem.default};
-    &:hover { ${theme.typography.global.mainMenu.subItem.hover}; }
-    &:active { ${theme.typography.global.mainMenu.subItem.active}; }
-  `};
-
-  padding: 20px 10px 15px;
-  align-items: center;
-  width: 100%;
-
-
-`;
-
-export interface ITopBar {
-  hasNotifications?: boolean;
-  userSubmenu?: any[];
-  loggedInUser: string;
-  hasLanguage?: boolean;
-  hasLogout?: boolean;
-  logoutLink?: string;
-  hasSearch?: boolean;
-  hasCurrentUser?: boolean;
-  searchPlaceholder?: string;
-  userDrawerBespoke?: ReactElement;
-  onLogout?: ()=>void;
-  onLanguageToggle?: ()=>void;
-}
-
-const TopBar : React.FC<ITopBar> = ({
+const TopBar: React.FC<ITopBar> = ({
   hasNotifications = false,
   hasLanguage = false,
   hasLogout = true,
@@ -234,18 +135,12 @@ const TopBar : React.FC<ITopBar> = ({
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
-  onLogout = ()=>{},
-  onLanguageToggle = ()=>{}
+  onLogout = () => { },
+  onLanguageToggle = () => { }
 }) => {
 
   const [isUserMenuOpen, setUserMenuOpen] = useState<boolean>(false);
   const [isNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);
-
-  const logoutHandler = useCallback(async(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>)=>{
-    e.preventDefault();
-    await onLogout();
-    window.location.assign(logoutLink);
-  },[logoutLink, onLogout]);
 
   return (
     <Container>
@@ -264,57 +159,27 @@ const TopBar : React.FC<ITopBar> = ({
 
       {/* User Menu */}
       <Drawer isOpen={isUserMenuOpen}>
-        <DrawerTop>
-          {hasCurrentUser ?
-            <CurrentUser>
-              <DrawerHeader>Current User</DrawerHeader>
-              {loggedInUser}
-            </CurrentUser>
-          : null}
-
-          {userSubmenu.length > 0 ?
-            <UserMenu>
-              <DrawerHeader>Account Options</DrawerHeader>
-              <LinkMenu>
-                {userSubmenu.map(({text, href}, index) => {
-                  return <LinkMenuItem key={index}><LinkMenuItemA to={href}>{text}</LinkMenuItemA></LinkMenuItem>;
-                })}
-              </LinkMenu>
-            </UserMenu>
-          : null}
-
-          {userDrawerBespoke ? userDrawerBespoke : null}
-
-          {hasLogout ?
-            <Logout>
-              <LinkMenu>
-                <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} to={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
-              </LinkMenu>
-            </Logout>
-          : null}
-        </DrawerTop>
-        <DrawerBottom>
-          {
-            hasLanguage &&
-              <LanguageMenu onClick={onLanguageToggle}>
-                <IconWrapper>
-                  <Icon icon='Language' size={18} color='dimmed' />
-                </IconWrapper>
-                Language / 言語
-              </LanguageMenu>
-          }
-        </DrawerBottom>
-
+        <UserMenu {...{
+          hasLanguage,
+          hasLogout,
+          logoutLink,
+          hasCurrentUser,
+          userSubmenu,
+          userDrawerBespoke,
+          loggedInUser,
+          onLogout,
+          onLanguageToggle
+        }}
+        />
       </Drawer>
 
       {/* Notifications */}
       {hasNotifications ?
         <Drawer isOpen={isNotificationsOpen}>
-          <CurrentUser>
+          <Comment>
             <em>Feature Pending Development.</em>
-          </CurrentUser>
+          </Comment>
         </Drawer> : null}
-
     </Container>
   );
 

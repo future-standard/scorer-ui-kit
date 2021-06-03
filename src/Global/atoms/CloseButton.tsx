@@ -12,9 +12,7 @@ const StyledButton = styled.button`
     ${theme.typography.global.mainMenu.menuItem.default};
     ${theme.styles.global.mainMenu.footerBackground};
     border-top: 1px solid ${theme.colors.divider};
-    @media ${theme.deviceMediaQuery.medium} {
-      height:68px;
-    }
+    height:68px;
   `};
   
   height: 50px;
