@@ -129,7 +129,7 @@ export const _GlobalUI = () => {
   const logoMark = text("Logo Mark SVG", logoMarkSvg);
   const logoText = text("Logo Text SVG", logoTextSvg);
   const supportUrl = text("Support Url", "/support");
-  const menuHomeLink = text("Home Link", "#");
+  const menuHomeLink = text("Home Link", "/welcome");
   const menuConfig = object("Menu Config", {
     items: [
       {

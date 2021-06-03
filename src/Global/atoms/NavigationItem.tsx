@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import {Link} from 'react-router-dom';
 import ContextItem from './ContextItem';
 import { IMenuItemTop, IMenuItemSubmenu } from '..';
+import {resetButtonStyles} from '../../common/index';
 
 const Submenu = styled.ul`
   display: block;
@@ -27,6 +28,7 @@ const SubmenuItemTitle = styled.span`
 `;
 
 const SubmenuItemLink = styled(Link)`
+  ${resetButtonStyles};
   display: block;
 
 `;

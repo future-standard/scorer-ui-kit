@@ -79,8 +79,6 @@ const ContextActionBaseCSS = css`
   outline: none;
   padding: 0;
   text-decoration: none;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
 `;
 
 const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }>`
