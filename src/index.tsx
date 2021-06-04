@@ -33,6 +33,10 @@ import {
   ISliderMark,
   DurationSlider,
   PercentageSlider,
+  InputFileButton,
+  DropArea,
+  CropTool,
+  AvatarUploader,
 } from './Form';
 
 // Components - Filter
@@ -171,6 +175,10 @@ export {
   SliderInput,
   DurationSlider,
   PercentageSlider,
+  InputFileButton,
+  DropArea,
+  CropTool,
+  AvatarUploader,
 
   // Modals
   ConfirmationModal,
