@@ -28,3 +28,13 @@ export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: string}>`
+  flex: 1;
+  overflow: auto;
+  width: 100%;
+  max-width: ${({maxWidth}) => maxWidth ? maxWidth : `1200px`};
+  padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '70px 90px'};
+  margin-left: auto;
+  margin-right: auto;
+`;

@@ -1,8 +1,9 @@
 import React, { useState, useCallback, ReactElement } from 'react';
 import styled, { css } from 'styled-components';
-import { resetButtonStyles } from '../common';
+import { resetButtonStyles } from '../../common';
+import {Link} from 'react-router-dom';
 
-import Icon from '../Icons/Icon';
+import Icon from '../../Icons/Icon';
 
 const Container = styled.div`
   height: 65px;
@@ -163,7 +164,7 @@ const LinkMenuItem = styled.li`
   margin: 0 0 21px;
 
 `;
-const LinkMenuItemA = styled.a<{isActive?:boolean}>`
+const LinkMenuItemA = styled(Link)<{isActive?:boolean}>`
   ${({theme}) => css`
     ${theme.typography.global.mainMenu.subItem.default};
 
@@ -207,7 +208,7 @@ const LanguageMenu = styled.button`
 
 `;
 
-interface IProps {
+export interface ITopBar {
   hasNotifications?: boolean;
   userSubmenu?: any[];
   loggedInUser: string;
@@ -222,7 +223,7 @@ interface IProps {
   onLanguageToggle?: ()=>void;
 }
 
-const TopBar : React.FC<IProps> = ({
+const TopBar : React.FC<ITopBar> = ({
   hasNotifications = false,
   hasLanguage = false,
   hasLogout = true,
@@ -276,7 +277,7 @@ const TopBar : React.FC<IProps> = ({
               <DrawerHeader>Account Options</DrawerHeader>
               <LinkMenu>
                 {userSubmenu.map(({text, href}, index) => {
-                  return <LinkMenuItem key={index}><LinkMenuItemA href={href}>{text}</LinkMenuItemA></LinkMenuItem>;
+                  return <LinkMenuItem key={index}><LinkMenuItemA to={href}>{text}</LinkMenuItemA></LinkMenuItem>;
                 })}
               </LinkMenu>
             </UserMenu>
@@ -287,7 +288,7 @@ const TopBar : React.FC<IProps> = ({
           {hasLogout ?
             <Logout>
               <LinkMenu>
-                <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} href={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
+                <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} to={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
               </LinkMenu>
             </Logout>
           : null}

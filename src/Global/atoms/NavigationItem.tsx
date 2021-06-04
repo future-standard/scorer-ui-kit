@@ -151,10 +151,12 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
 
   }, [refSubmenu, setSubmenuHeight, readyCallback, contextKey]);
 
-  return <ContextContainer open={submenuOpen} loading={loading ? 'true': 'false'} maxHeight={submenuHeight}>
-    <ContextItem {...{title, href, isActive, icon, hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey}} />
-    {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>{submenus}</SubmenuContainer> : null}
-  </ContextContainer>;
+  return (
+    <ContextContainer open={submenuOpen} loading={loading ? 'true': 'false'} maxHeight={submenuHeight}>
+      <ContextItem {...{title, href, isActive, icon, hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey}} />
+      {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>{submenus}</SubmenuContainer> : null}
+    </ContextContainer>
+  );
 
 };
 

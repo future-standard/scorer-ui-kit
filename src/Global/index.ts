@@ -1,6 +1,8 @@
 import {Content, Layout, MainContainer} from './atoms/Layout';
-import MainMenu from './MainMenu';
-import TopBar from './TopBar';
+import MainMenu from './organisms/MainMenu';
+import TopBar from './molecules/TopBar';
+import GlobalUI from './templates/GlobalUI';
+
 export {
   SidebarBox,
   SidebarLink,
@@ -9,14 +11,15 @@ export {
   SidebarLinkHeading,
   BackLink,
   default as Sidebar
-} from './Sidebar';
+} from './molecules/Sidebar';
 
 export {
     Content,
     Layout,
     MainMenu,
     TopBar,
-    MainContainer
+    MainContainer,
+    GlobalUI,
 };
 
 export interface IMenuTop {

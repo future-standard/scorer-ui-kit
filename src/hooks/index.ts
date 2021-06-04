@@ -6,6 +6,9 @@ import {useModal, IModal} from './useModal';
 import {useNotification} from './useNotification';
 import {useClickOutside} from './useClickOutside';
 import {usePoll} from './usePoll';
+import useBreakpoints from './useBreakpoints';
+import useMediaQuery from './useMediaQuery';
+
 export {
   useInterval,
   useTo,
@@ -14,6 +17,8 @@ export {
   useModal,
   useNotification,
   useClickOutside,
-  usePoll
+  usePoll,
+  useMediaQuery,
+  useBreakpoints,
 };
 export type { IModal };

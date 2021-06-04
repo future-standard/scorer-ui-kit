@@ -129,7 +129,8 @@ import {
   Logo,
   SidebarLinkHeading,
   BackLink,
-  Sidebar
+  Sidebar,
+  GlobalUI,
 } from './Global';
 
 // Tabs
@@ -234,6 +235,7 @@ export {
   SidebarLinkHeading,
   BackLink,
   Sidebar,
+  GlobalUI,
 
   // Tabs
   Tabs,

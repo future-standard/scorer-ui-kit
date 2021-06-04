@@ -83,3 +83,20 @@ export const animation = {
     slowest: '2.8s'
   }
 };
+
+export const deviceSize = {
+  small: 0,
+  medium: 768,
+  large: 1024,
+  xlarge: 1280,
+  xxlarge: 1400,
+};
+
+
+export const deviceMediaQuery = {
+  small: `(min-width: ${deviceSize.small}px)`,
+  medium: `(min-width: ${deviceSize.medium}px)`,
+  large: `(min-width: ${deviceSize.large}px)`,
+  xlarge: `(min-width: ${deviceSize.xlarge}px)`,
+  xxlarge: `(min-width: ${deviceSize.xxlarge}px)`
+};
