@@ -31,4 +31,4 @@ export const colors = {
         "good": "hsla(126, 48.1%, 68.2%, 1.000)",
         "neutral": "hsla(0, 0%, 91.8%, 1.000)"
     }
-}
+};

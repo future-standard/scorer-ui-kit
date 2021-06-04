@@ -2,7 +2,8 @@ import React from 'react';
 import {  select, boolean, number } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 
-import {Icon, IconSVGs} from 'scorer-ui-kit';
+import {Icon} from 'scorer-ui-kit';
+import {IconSVGs} from '@future-standard/icons';
 
 
 export default {

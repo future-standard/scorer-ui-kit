@@ -75,15 +75,19 @@ import {
   PTZContext
 } from './PTZControl';
 
+// Misc
+  import {
+    Tag,
+    TagList,
+    ITag,
+    ITagList,
+    TagListWrapper,
+    MediaBox,
+  } from './Misc';
+
 import {
   ConfirmationModal,
 } from './Modals';
-
-// Misc
-import {
-  MediaBox,
-} from  './Misc';
-
 
 // Other
 import {
@@ -229,7 +233,10 @@ export {
   TabList,
   TabContent,
 
-  //Misc
+  // Misc
+  Tag,
+  TagList,
+  TagListWrapper,
   MediaBox,
 
   //Context
@@ -238,7 +245,6 @@ export {
   ModalContext,
   ModalProvider,
   useModal,
-
 };
 
 /**
@@ -252,5 +258,7 @@ export type {
   IModal,
   INotificationProps,
   IconButtonData,
+  ITag,
+  ITagList,
   ISliderMark,
 };
