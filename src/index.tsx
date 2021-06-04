@@ -33,6 +33,10 @@ import {
   ISliderMark,
   DurationSlider,
   PercentageSlider,
+  InputFileButton,
+  DropArea,
+  CropTool,
+  AvatarUploader,
 } from './Form';
 
 // Components - Filter
@@ -75,15 +79,19 @@ import {
   PTZContext
 } from './PTZControl';
 
+// Misc
+  import {
+    Tag,
+    TagList,
+    ITag,
+    ITagList,
+    TagListWrapper,
+    MediaBox,
+  } from './Misc';
+
 import {
   ConfirmationModal,
 } from './Modals';
-
-// Misc
-import {
-  MediaBox,
-} from  './Misc';
-
 
 // Other
 import {
@@ -170,6 +178,10 @@ export {
   SliderInput,
   DurationSlider,
   PercentageSlider,
+  InputFileButton,
+  DropArea,
+  CropTool,
+  AvatarUploader,
 
   // Modals
   ConfirmationModal,
@@ -233,7 +245,10 @@ export {
   TabList,
   TabContent,
 
-  //Misc
+  // Misc
+  Tag,
+  TagList,
+  TagListWrapper,
   MediaBox,
 
   //Context
@@ -242,7 +257,6 @@ export {
   ModalContext,
   ModalProvider,
   useModal,
-
 };
 
 /**
@@ -256,6 +270,8 @@ export type {
   IModal,
   INotificationProps,
   IconButtonData,
+  ITag,
+  ITagList,
   ISliderMark,
   IAlertItem,
   IAlertsHistory,

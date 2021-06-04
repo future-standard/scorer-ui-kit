@@ -10,11 +10,15 @@ import Switch from './atoms/Switch';
 import Checkbox from './atoms/Checkbox';
 import TextArea from './atoms/TextArea';
 import SliderInput, {ISliderMark} from  './atoms/SliderInput';
+import InputFileButton from './atoms/InputFileButton';
 import DurationSlider from './molecules/DurationSlider';
 import PercentageSlider from './molecules/PercentageSlider';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
+import DropArea from './atoms/DropArea';
+import CropTool from './molecules/CropTool';
+import AvatarUploader from './organisms/AvatarUploader';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 
@@ -37,6 +41,10 @@ export {
     SliderInput,
     DurationSlider,
     PercentageSlider,
+    InputFileButton,
+    AvatarUploader,
+    DropArea,
+    CropTool,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';

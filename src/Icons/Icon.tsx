@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as IconSVGs from  './stroked';
+import {IconSVGs} from  '@future-standard/icons';
 
 import { dimensions } from '../themes/common';
 
@@ -11,7 +11,7 @@ const IconWrapper = styled.div<{color:string}>`
 }
 `;
 
-export {IconSVGs, IconWrapper};
+export {IconWrapper, IconSVGs};
 
 export interface IconProps {
   icon: string;
@@ -19,30 +19,26 @@ export interface IconProps {
   weight?: 'light' | 'regular' | 'heavy'
   color?: ISvgIcons['color']
 }
+interface ISvgIcon extends React.SVGProps<SVGSVGElement> {
+  size: number
+  color:string
+  weight: number
+}
 
 const Icon : React.FC<IconProps> = ({icon, size = 24, weight = 'regular', color = 'mono'}) => {
 
-  const getKeyValue = <U extends keyof T, T extends object>(key: U) => (obj: T) => obj[key];
-
   const iconWeight : number = dimensions.icons.weights[weight];
-  const IconSVG = getKeyValue<keyof any, any>(icon)(IconSVGs);
-  if(icon in IconSVGs && IconSVG){
+  //@ts-ignore
+  const IconSVG = IconSVGs[icon];
 
-    return <IconWrapper color={color}>
-      {IconSVG({ size: size, weight: iconWeight, color: '#666' })}
-    </IconWrapper>;
-
-  } else {
-
-    const capitalizedIconName = icon.charAt(0).toUpperCase() + icon.slice(1);
-    const tip = capitalizedIconName in IconSVGs
-      ? `Did you mean '${capitalizedIconName}'?`
-      : ``;
-
-    console.error(`Missing SVG: No SVG found for reference '${icon}'. ${tip}`);
-    return null;
-
-  }
+  return (
+    IconSVG != null ?
+      <IconWrapper color={color}>
+        {IconSVG({ size: size, weight: iconWeight, color: '#666' })}
+      </IconWrapper>
+      :
+      null
+  );
 
 };
 

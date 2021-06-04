@@ -112,7 +112,7 @@ const LanguageMenu = styled.button`
 `;
 
 interface IUserMenu extends ITopBar {
-  closeOnClick: () => void
+  closeOnClick?: () => void
 }
 
 const UserMenu: React.FC<IUserMenu> = ({

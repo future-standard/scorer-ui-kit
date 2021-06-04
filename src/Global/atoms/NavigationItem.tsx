@@ -200,7 +200,5 @@ const generateSubmenus = (
 
 };
 
-
-
 export default NavigationItem;
 
