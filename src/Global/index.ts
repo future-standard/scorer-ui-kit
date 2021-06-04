@@ -63,3 +63,15 @@ export interface IMenuTop {
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
   }
+
+  export interface IAlertItem {
+    imgUrl?: string
+    title: string
+    message: string
+    time: string
+  }
+
+  export interface IAlertsHistory {
+    read: IAlertItem[]
+    unread: IAlertItem[]
+  }

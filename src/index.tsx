@@ -123,6 +123,8 @@ import {
   BackLink,
   Sidebar,
   GlobalUI,
+  IAlertItem,
+  IAlertsHistory
 } from './Global';
 
 // Tabs
@@ -255,4 +257,6 @@ export type {
   INotificationProps,
   IconButtonData,
   ISliderMark,
+  IAlertItem,
+  IAlertsHistory,
 };

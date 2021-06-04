@@ -27,16 +27,14 @@ const DrawerHeader = styled.h2`
 `;
 const CurrentUser = styled.div`
   padding: 20px 20px 15px;
-  word-break: no-wrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   ${({ theme }) => css`
     border-bottom: ${theme.colors.divider} 1px solid;
+    border-top: ${theme.colors.divider} 1px solid;
     ${theme.typography.global.mainMenu.identity};
 
-    @media ${theme.deviceMediaQuery.medium} {
-      border-top: ${theme.colors.divider} 1px solid;
+    @media ${theme.deviceMediaQuery.large} {
+      border-top: none;
     }
   `};
 `;

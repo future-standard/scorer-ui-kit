@@ -1,5 +1,5 @@
 import React from 'react';
-import { GlobalUI, PageHeader, TextAreaField} from 'scorer-ui-kit';
+import { GlobalUI, PageHeader, TextAreaField, IAlertItem, IAlertsHistory} from 'scorer-ui-kit';
 import styled from 'styled-components';
 import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 
@@ -122,6 +122,53 @@ const ComponentLinks = () => (
 );
 
 
+const unreadAlerts : IAlertItem[]= [
+  {
+    imgUrl: '',
+    title: 'Event Type',
+    message: 'A short message limited to two lines. Extra text will just truncat...',
+    time: 'Just Now',
+  },
+  {
+    imgUrl: '',
+    title: 'Device is off',
+    message: 'The device has correctly turn off',
+    time: '1 min ago',
+  },
+  {
+    imgUrl: '',
+    title: 'Device is on',
+    message: 'The device has correctly turn on',
+    time: '6 mins ago',
+  },
+  {
+    imgUrl: '',
+    title: 'Connection was interrupted',
+    message: 'The connections is not working properly. Please verify your connection or contact your personal support.',
+    time: '1 hour ago',
+  },
+  {
+    imgUrl: '',
+    title: 'Device is off',
+    message: 'The device has correctly turn off',
+    time: '3 hour ago',
+  },
+]
+
+const readAlerts: IAlertItem[] = [
+  {
+    imgUrl: '',
+    title: 'Device is off',
+    message: 'The device has correctly turn on',
+    time: '3 days ago',
+  },
+];
+
+const allAlerts : IAlertsHistory = {
+  unread: unreadAlerts,
+  read: readAlerts
+}
+
 export const _GlobalUI = () => {
 
   const maxWidth = text("Max width", "1200px");
@@ -215,6 +262,7 @@ export const _GlobalUI = () => {
       href: '/user/payments'
     }
   ])
+  const alerts = object("Alerts", allAlerts);
 
   return (
     <Container>
@@ -222,7 +270,7 @@ export const _GlobalUI = () => {
         content={menuConfig}
         home={menuHomeLink}
         defaultMenuOpen={true}
-        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride }}
+        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, alerts }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
       >
         <ComponentLinks />

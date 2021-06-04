@@ -10,7 +10,7 @@ const StyledButton = styled.button`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
     ${theme.typography.global.mainMenu.menuItem.default};
-    ${theme.styles.global.mainMenu.footerBackground};
+    ${theme.styles.global.mainMenu.background};
     border-top: 1px solid ${theme.colors.divider};
     height:68px;
   `};

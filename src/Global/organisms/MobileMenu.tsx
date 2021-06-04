@@ -11,7 +11,7 @@ import { getTopLevelPath } from '../../helpers/index';
 const Container = styled.div``;
 
 const ItemWrapper = styled.div`
-  padding: 14px 0;
+  padding: 14px 0 50px 0;
   ${({ theme }) => css`
     border-top: 1px solid ${theme.colors.divider}
   `};

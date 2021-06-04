@@ -1,8 +1,8 @@
 import React from 'react';
-import { IMenu } from '..';
+import { IMenu, ITopBar, IAlertsHistory } from '..';
 import { Layout, MainContainer, ContentArea, MobileLayout } from '../atoms/Layout';
 import MainMenu from '../organisms/MainMenu';
-import TopBar, { ITopBar } from '../molecules/TopBar';
+import TopBar from '../molecules/TopBar';
 import MobileNavbar from '../organisms/MobileNavbar';
 import useBreakpoints from '../../hooks/useBreakpoints';
 
@@ -10,6 +10,7 @@ import useBreakpoints from '../../hooks/useBreakpoints';
 interface OwnProps {
   maxWidth?: string,
   paddingOverride?: string,
+  alerts?: IAlertsHistory
 }
 
 type INavigation = OwnProps & IMenu & ITopBar;
@@ -25,6 +26,7 @@ const GlobalUI: React.FC<INavigation> = ({
   paddingOverride,
   maxWidth,
   children,
+  alerts,
   ...props
 }) => {
 
@@ -63,6 +65,7 @@ const GlobalUI: React.FC<INavigation> = ({
             logoMark,
             supportUrl,
             defaultMenuOpen,
+            alerts,
             ...props
             }
           }
