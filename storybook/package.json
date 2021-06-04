@@ -24,13 +24,13 @@
     "typescript": "^4.0.2"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "6.1.21",
-    "@storybook/addon-knobs": "6.1.21",
-    "@storybook/addon-links": "6.1.21",
-    "@storybook/addons": "6.1.21",
+    "@storybook/addon-actions": "6.2.9",
+    "@storybook/addon-knobs": "6.2.9",
+    "@storybook/addon-links": "6.2.9",
+    "@storybook/addons": "6.2.9",
     "@storybook/preset-create-react-app": "3.1.7",
-    "@storybook/react": "6.1.21",
-    "storybook-dark-mode": "^1.0.3"
+    "@storybook/react": "6.2.9",
+    "storybook-dark-mode": "^1.0.8"
   },
   "scripts": {
     "start": "npm run storybook",
