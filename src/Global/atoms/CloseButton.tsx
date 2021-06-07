@@ -3,6 +3,7 @@ import { TabContext, ContextProps } from '../../Tabs/Tabs';
 import styled, {css} from 'styled-components';
 import { resetButtonStyles } from '../../common/index';
 import Icon from '../../Icons/Icon';
+import { MOBILE_CLOSE_HEIGHT } from './Layout';
 
 const StyledButton = styled.button`
   ${resetButtonStyles}
@@ -12,10 +13,9 @@ const StyledButton = styled.button`
     ${theme.typography.global.mainMenu.menuItem.default};
     ${theme.styles.global.mainMenu.background};
     border-top: 1px solid ${theme.colors.divider};
-    height:68px;
   `};
   
-  height: 50px;
+  height: ${MOBILE_CLOSE_HEIGHT}px;
   position: fixed;
   bottom: 0;
   font-size: 14px;

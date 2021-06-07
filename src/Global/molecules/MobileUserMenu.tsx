@@ -11,7 +11,6 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-
 interface IMobileUserMenu extends ITopBar {
   closeId: string
 }

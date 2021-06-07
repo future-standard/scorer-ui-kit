@@ -30,12 +30,7 @@ const CurrentUser = styled.div`
 
   ${({ theme }) => css`
     border-bottom: ${theme.colors.divider} 1px solid;
-    border-top: ${theme.colors.divider} 1px solid;
     ${theme.typography.global.mainMenu.identity};
-
-    @media ${theme.deviceMediaQuery.large} {
-      border-top: none;
-    }
   `};
 `;
 

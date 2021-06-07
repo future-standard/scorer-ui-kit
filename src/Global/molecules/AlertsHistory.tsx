@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { IAlertsHistory, IAlertItem } from '../index';
 import AlertItem from '../atoms/AlertItem';
 
@@ -8,24 +8,13 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const StatusContainer = styled.h2<{noBorderTop?: boolean}>`
+const StatusContainer = styled.h2`
     padding: 10px 0 10px 20px;
     font-size: 14px;
     font-weight: 500;
     color: hsl(0, 0%, 34%);
-
-  ${({ theme, noBorderTop }) => css`
-    ${noBorderTop ? `` : 
-      `border-top: ${theme.colors.divider} 1px solid`
-    };
-
-    border-bottom: ${theme.colors.divider} 1px solid;
+    border-bottom: ${({ theme}) =>theme.colors.divider} 1px solid;
     margin: 0;
-
-    @media ${theme.deviceMediaQuery.large} {
-      border-top: none;
-    }
-  `};
 `;
 
 const AlertWrapper = styled.div`
@@ -61,7 +50,7 @@ const AlertsHistory: React.FC<IAlertsHistory> = ({ read, unread }) => {
       )}
       {read && (
         <Fragment>
-          <StatusContainer noBorderTop={unread.length > 0}>READ</StatusContainer>
+          <StatusContainer>READ</StatusContainer>
           {renderAlerts(read, 'read')}
         </Fragment>
       )}

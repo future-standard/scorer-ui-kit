@@ -3,20 +3,27 @@ import styled from 'styled-components';
 import { Tabs, TabContent, MobileTab } from '../../Tabs/index';
 import { TabListWrapper, TabList } from '../../Tabs/TabList';
 import { IMenu, ITopBar, IAlertsHistory } from '..';
-
 import CloseButton from '../atoms/CloseButton';
-import MobileNavbarContainer from '../atoms/MobileNavbarContainer';
+import MobileNavbarContainer from '../atoms/MobileNavbarContent';
 import MobileMenu from './MobileMenu';
 import MobileLogoLink from '../atoms/MobileLogoLink';
 import MobileUserMenu from '../molecules/MobileUserMenu';
 import AlertsHistory from '../molecules/AlertsHistory';
+import { MOBILE_NAVBAR_HEIGHT } from '../atoms/Layout';
 
-const Container = styled.nav``;
+const Container = styled.nav`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+`;
 
 const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
-  height:68px;
+  height: ${MOBILE_NAVBAR_HEIGHT}px;
+  border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
 
   ${TabListWrapper} {
     flex-basis: 0;
