@@ -12,8 +12,8 @@ import AlertsHistory from '../molecules/AlertsHistory';
 import { MOBILE_NAVBAR_HEIGHT } from '../atoms/Layout';
 
 const Container = styled.nav`
-  ${({theme}) => theme.styles.global.mainMenu.background};
-  position: fixed;
+  background-color: ${({theme}) => theme.styles.global.mainMenu.background.backgroundColor};
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;

@@ -7,14 +7,19 @@ import { ITopBar } from '../index';
 import AlertsHistory from './AlertsHistory';
 
 const Container = styled.div`
+  z-index: 9; 
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
   height: 65px;
   width: 100%;
   display: flex;
   justify-content: space-between;
 
-  ${({ theme: { colors } }) => colors && css`
+  ${({ theme, theme: { colors } }) => colors && css`
     border-bottom: ${colors.divider} 1px solid;
     box-shadow: 5px 7px 10px 0 hsla(205, 16%, 77%, 0.1);
+    background-color:${theme.styles.global.mainMenu.background.backgroundColor};
   `}
 `;
 

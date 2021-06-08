@@ -39,13 +39,10 @@ export const MOBILE_NAVBAR_HEIGHT = 68;
 
 export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: string}>`
   flex: 1;
-  overflow: auto;
   width: 100%;
   padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '40px 20px'};
-  margin-top: ${MOBILE_NAVBAR_HEIGHT}px;
   margin-left: auto;
   margin-right: auto;
-  height: calc(100vh - ${MOBILE_NAVBAR_HEIGHT}px);
 
   @media ${deviceMediaQuery.medium} {
     padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '40px'};
@@ -54,6 +51,5 @@ export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: str
   @media ${deviceMediaQuery.large} {
     max-width: ${({maxWidth}) => maxWidth ? maxWidth : `1200px`};
     padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '70px 90px'};
-    margin-top: 0;
   }
 `;
