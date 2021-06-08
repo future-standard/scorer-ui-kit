@@ -49,7 +49,6 @@ export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: str
 
   @media ${deviceMediaQuery.medium} {
     padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '40px'};
-    margin-top: 0;
   }
 
   @media ${deviceMediaQuery.large} {

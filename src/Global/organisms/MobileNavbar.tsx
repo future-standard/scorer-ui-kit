@@ -12,6 +12,7 @@ import AlertsHistory from '../molecules/AlertsHistory';
 import { MOBILE_NAVBAR_HEIGHT } from '../atoms/Layout';
 
 const Container = styled.nav`
+  ${({theme}) => theme.styles.global.mainMenu.background};
   position: fixed;
   top: 0;
   left: 0;
@@ -49,6 +50,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   hasLogout,
   logoutLink,
   hasCurrentUser,
+  hasNotifications,
   userSubmenu,
   userDrawerBespoke,
   loggedInUser,
@@ -63,14 +65,14 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
         <HeaderContainer>
           <MobileLogoLink {...{ home, logoMark }} closeId='closeMenu' />
           <TabList defaultTabId='closeMenu'>
-            <MobileTab tabFor='notifications' icon='Notifications' />
+            {hasNotifications? <MobileTab tabFor='notifications' icon='Notifications' /> : null}
             <MobileTab tabFor='user' icon='UserProfile' />
             <MobileTab tabFor='menu' icon='Menu' />
           </TabList>
         </HeaderContainer>
         <MobileNavbarContainer closeId='closeMenu'>
           <TabContent tabId='notifications'>
-            {alerts ? <AlertsHistory read={alerts.read} unread={alerts.unread} /> : null}
+            {alerts && hasNotifications ? <AlertsHistory read={alerts.read} unread={alerts.unread} /> : null}
           </TabContent>
           <TabContent tabId='user'>
             <MobileUserMenu

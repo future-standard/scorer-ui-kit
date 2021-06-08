@@ -13,7 +13,6 @@ const Container = styled.div`
   min-height: calc(100vh - ${MOBILE_NAVBAR_HEIGHT + MOBILE_CLOSE_HEIGHT }px);
   width: 100%;
   overflow-y: scroll;
-  ${({theme}) => theme.styles.global.mainMenu.background};
 `;
 
 const ContentWrapper = styled.div`
