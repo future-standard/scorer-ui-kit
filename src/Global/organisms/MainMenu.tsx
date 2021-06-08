@@ -71,7 +71,7 @@ const PushContainer = styled.div<{ isPinned: boolean; }>`
 `;
 
 const Container = styled.div<{ open: boolean; desktopSize: IBreakpoints }>`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   ${({ theme, open, desktopSize }) => theme && css`

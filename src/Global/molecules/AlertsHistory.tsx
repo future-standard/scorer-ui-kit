@@ -13,7 +13,7 @@ const StatusContainer = styled.h2`
     font-size: 14px;
     font-weight: 500;
     color: hsl(0, 0%, 34%);
-    border-bottom: ${({ theme}) =>theme.colors.divider} 1px solid;
+    border-bottom: ${({ theme }) => theme.colors.divider} 1px solid;
     margin: 0;
 `;
 

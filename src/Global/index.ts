@@ -60,6 +60,7 @@ export interface IMenuTop {
     hasCurrentUser?: boolean;
     searchPlaceholder?: string;
     userDrawerBespoke?: ReactElement;
+    alerts? : IAlertsHistory;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
   }

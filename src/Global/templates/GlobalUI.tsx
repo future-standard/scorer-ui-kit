@@ -48,7 +48,7 @@ const GlobalUI: React.FC<INavigation> = ({
         />
         <MainContainer>
           <TopBar
-            {...{...props}}
+            {...{...props, alerts}}
           />
           <ContentArea {...{maxWidth, paddingOverride}}>
             {children}

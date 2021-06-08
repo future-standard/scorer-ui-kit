@@ -1,9 +1,10 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
 import UserMenu from '../molecules/UserMenu';
 import { ITopBar } from '../index';
+import AlertsHistory from './AlertsHistory';
 
 const Container = styled.div`
   height: 65px;
@@ -94,7 +95,7 @@ const Drawer = styled.div<{ isOpen: boolean }>`
   bottom: 0;
   background: ${({ theme }) => theme.styles.global.mainMenu.background};
   border-left: ${({ theme: { colors } }) => colors.divider} 1px solid;
-  width: 200px;
+  width: 250px;
   opacity: 0;
   visibility: hidden;
   z-index: 100;
@@ -115,13 +116,13 @@ const Drawer = styled.div<{ isOpen: boolean }>`
   `}
 `;
 
-const Comment = styled.div`
-  padding: 20px 20px 15px;
-  word-break: no-wrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-bottom: ${({ theme: { colors } }) => colors.divider} 1px solid;
-  ${({ theme }) => theme.typography.global.mainMenu.identity};
+/**
+ * Negative margin hides the scroll;
+ * Reviewed on Chrome an Firefox
+ */
+const AlertsContainer = styled.div`
+    overflow-y: scroll;
+    margin-right: -17px;
 `;
 
 const TopBar: React.FC<ITopBar> = ({
@@ -135,6 +136,7 @@ const TopBar: React.FC<ITopBar> = ({
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
+  alerts,
   onLogout = () => { },
   onLanguageToggle = () => { }
 }) => {
@@ -176,9 +178,9 @@ const TopBar: React.FC<ITopBar> = ({
       {/* Notifications */}
       {hasNotifications ?
         <Drawer isOpen={isNotificationsOpen}>
-          <Comment>
-            <em>Feature Pending Development.</em>
-          </Comment>
+          <AlertsContainer>
+            {alerts ? <AlertsHistory read={alerts.read} unread={alerts.unread} /> : null}
+          </AlertsContainer>
         </Drawer> : null}
     </Container>
   );
