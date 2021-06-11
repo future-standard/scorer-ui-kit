@@ -9,6 +9,7 @@ const Container = styled.div`
 `;
 
 const StatusContainer = styled.h2`
+    text-transform: uppercase;
     padding: 10px 0 10px 20px;
     font-size: 14px;
     font-weight: 500;
@@ -30,12 +31,19 @@ const renderNotifications = (items: INotificationItem[], type: string) => (
   })
 );
 
-const NotificationsHistory: React.FC<INotificationsHistory> = ({ read, unread }) => {
+const NotificationsHistory: React.FC<INotificationsHistory> = ({
+  read,
+  unread,
+  noNotificationsText = 'NO NEW NOTIFICATIONS',
+  readNotificationsText = 'NEW',
+  unreadNotificationsText = 'READ',
+
+}) => {
 
   if ((read.length === 0) && (unread.length === 0)) {
     return (
       <Container>
-        <StatusContainer>NO NEW NOTIFICATIONS</StatusContainer>
+        <StatusContainer>{noNotificationsText}</StatusContainer>
       </Container>
     );
   }
@@ -44,13 +52,13 @@ const NotificationsHistory: React.FC<INotificationsHistory> = ({ read, unread })
     <Container>
       {unread && (
         <Fragment>
-          <StatusContainer>NEW</StatusContainer>
+          <StatusContainer>{readNotificationsText}</StatusContainer>
           {renderNotifications(unread, 'unread')}
         </Fragment>
       )}
       {read && (
         <Fragment>
-          <StatusContainer>READ</StatusContainer>
+          <StatusContainer>{unreadNotificationsText}</StatusContainer>
           {renderNotifications(read, 'read')}
         </Fragment>
       )}

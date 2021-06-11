@@ -60,7 +60,7 @@ export interface IMenuTop {
     hasCurrentUser?: boolean;
     searchPlaceholder?: string;
     userDrawerBespoke?: ReactElement;
-    notificationLists? : INotificationsHistory;
+    notificationsHistory? : INotificationsHistory;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
   }
@@ -75,4 +75,7 @@ export interface IMenuTop {
   export interface INotificationsHistory {
     read: INotificationItem[]
     unread: INotificationItem[]
+    noNotificationsText?: string
+    readNotificationsText?: string
+    unreadNotificationsText?: string
   }

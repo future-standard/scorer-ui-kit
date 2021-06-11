@@ -44,6 +44,10 @@ const IconContainer = styled.div`
   }
 `;
 
+const TextWrapper = styled.div`
+  text-transform: uppercase;
+`;
+
 interface ICloseProps {
   closeId: string
   closeText?: string
@@ -51,7 +55,10 @@ interface ICloseProps {
 
 type IClose = ICloseProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-const CloseButton: React.FC<IClose> = ({ closeId, closeText, ...props }) => {
+const CloseButton: React.FC<IClose> = ({
+  closeId,
+  closeText = 'CLOSE MENU',
+  ...props }) => {
   const { setSelected }: ContextProps = useContext(TabContext);
 
   return (
@@ -62,7 +69,7 @@ const CloseButton: React.FC<IClose> = ({ closeId, closeText, ...props }) => {
       <IconContainer>
         <Icon icon='CloseCompact' color='dimmed' size={16} />
       </IconContainer>
-      <div>{closeText ? closeText : 'CLOSE MENU'}</div>
+      <TextWrapper>{closeText}</TextWrapper>
     </StyledButton>
   );
 };

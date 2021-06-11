@@ -1,6 +1,9 @@
 import styled, {css} from 'styled-components';
 import {deviceMediaQuery} from '../../themes/common';
 
+export const MOBILE_CLOSE_HEIGHT = 50;
+export const MOBILE_NAVBAR_HEIGHT = 68;
+
 export const Layout = styled.div`
   display: flex;
   flex-direction: row;
@@ -33,9 +36,6 @@ export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-export const MOBILE_CLOSE_HEIGHT = 50;
-export const MOBILE_NAVBAR_HEIGHT = 68;
 
 export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: string}>`
   flex: 1;

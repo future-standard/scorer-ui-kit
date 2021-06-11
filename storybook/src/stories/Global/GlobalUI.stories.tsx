@@ -240,9 +240,14 @@ const readNotifications: INotificationItem[] = [
   }
 ];
 
+
+// unread read can be empty array when there are no notifications
 const allNotifications: INotificationsHistory = {
   unread: unreadNotifications,
-  read: readNotifications
+  read: readNotifications,
+  noNotificationsText: 'NO NEW NOTIFICATIONS',
+  readNotificationsText: 'NEW',
+  unreadNotificationsText: 'READ',
 }
 
 export const _GlobalUI = () => {
@@ -338,7 +343,7 @@ export const _GlobalUI = () => {
       href: '/user/payments'
     }
   ])
-  const notificationLists = object("NotificationLists", allNotifications);
+  const notificationsHistory = object("Notifications History", allNotifications);
 
   return (
     <Container>
@@ -346,7 +351,7 @@ export const _GlobalUI = () => {
         content={menuConfig}
         home={menuHomeLink}
         defaultMenuOpen={true}
-        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationLists }}
+        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
       >
         <ComponentLinks />

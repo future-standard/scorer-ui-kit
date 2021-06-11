@@ -141,7 +141,7 @@ const TopBar: React.FC<ITopBar> = ({
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
-  notificationLists,
+  notificationsHistory,
   onLogout = () => { },
   onLanguageToggle = () => { }
 }) => {
@@ -184,7 +184,7 @@ const TopBar: React.FC<ITopBar> = ({
       {hasNotifications ?
         <Drawer isOpen={isNotificationsOpen} baseWidth='300px'>
           <NotificationsContainer>
-            {notificationLists ? <NotificationsHistory read={notificationLists.read} unread={notificationLists.unread} /> : null}
+            {notificationsHistory ? <NotificationsHistory {...notificationsHistory} /> : null}
           </NotificationsContainer>
         </Drawer> : null}
     </Container>

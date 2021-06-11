@@ -34,7 +34,7 @@ const HeaderContainer = styled.div`
 
 interface OwnProps {
   closeText?: string
-  notificationLists?: INotificationsHistory
+  notificationsHistory?: INotificationsHistory
 }
 
 type IMobileNavbar = OwnProps & IMenu & ITopBar;
@@ -54,7 +54,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   userSubmenu,
   userDrawerBespoke,
   loggedInUser,
-  notificationLists,
+  notificationsHistory,
   onLogout,
   onLanguageToggle,
 }) => {
@@ -72,7 +72,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
         </HeaderContainer>
         <MobileNavbarContainer closeId='closeMenu'>
           <TabContent tabId='notifications'>
-            {notificationLists && hasNotifications ? <NotificationsHistory read={notificationLists.read} unread={notificationLists.unread} /> : null}
+            {notificationsHistory && hasNotifications ? <NotificationsHistory {...notificationsHistory} /> : null}
           </TabContent>
           <TabContent tabId='user'>
             <MobileUserMenu
