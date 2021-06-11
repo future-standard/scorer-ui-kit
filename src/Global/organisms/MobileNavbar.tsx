@@ -65,9 +65,9 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
         <HeaderContainer>
           <MobileLogoLink {...{ home, logoMark }} closeId='closeMenu' />
           <TabList defaultTabId='closeMenu'>
-            {hasNotifications? <MobileTab tabFor='notifications' icon='Notifications' /> : null}
-            <MobileTab tabFor='user' icon='UserProfile' />
-            <MobileTab tabFor='menu' icon='Menu' />
+            {hasNotifications? <MobileTab tabFor='notifications' icon='Notifications' closeId='closeMenu' /> : null}
+            <MobileTab tabFor='user' icon='UserProfile' closeId='closeMenu' />
+            <MobileTab tabFor='menu' icon='Menu' closeId='closeMenu' />
           </TabList>
         </HeaderContainer>
         <MobileNavbarContainer closeId='closeMenu'>

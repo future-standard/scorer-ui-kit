@@ -91,7 +91,7 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
   `}
 `;
 
-const Drawer = styled.div<{ isOpen: boolean }>`
+const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
   font-family: ${({ theme }) => theme.fontFamily.ui};
 
   position: fixed;
@@ -100,7 +100,7 @@ const Drawer = styled.div<{ isOpen: boolean }>`
   bottom: 0;
   background: ${({ theme }) => theme.styles.global.mainMenu.background};
   border-left: ${({ theme: { colors } }) => colors.divider} 1px solid;
-  width: 250px;
+  width: ${({baseWidth}) => baseWidth ? baseWidth : `200px`};
   opacity: 0;
   visibility: hidden;
   z-index: 100;
@@ -182,7 +182,7 @@ const TopBar: React.FC<ITopBar> = ({
 
       {/* Notifications */}
       {hasNotifications ?
-        <Drawer isOpen={isNotificationsOpen}>
+        <Drawer isOpen={isNotificationsOpen} baseWidth='300px'>
           <NotificationsContainer>
             {notificationLists ? <NotificationsHistory read={notificationLists.read} unread={notificationLists.unread} /> : null}
           </NotificationsContainer>

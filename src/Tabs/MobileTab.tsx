@@ -1,7 +1,7 @@
 import React, { useContext, useCallback } from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import { TabContext, ContextProps } from './Tabs';
-import Icon, {IconWrapper} from '../Icons/Icon';
+import Icon, { IconWrapper } from '../Icons/Icon';
 import { resetButtonStyles } from '../common/index';
 
 const Container = styled.button`
@@ -10,13 +10,13 @@ const Container = styled.button`
   flex-grow: 1;
 `;
 
-const LinkTab = styled.div<{isActive: boolean}>`
+const LinkTab = styled.div<{ isActive: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
 
-  ${({theme}) => css`
+  ${({ theme }) => css`
     transition: border ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
     border-bottom: 5px solid ${theme.colors.menu.indicator};
 
@@ -36,7 +36,7 @@ const LinkTab = styled.div<{isActive: boolean}>`
     }
   `};
 
-  ${({isActive, theme}) => isActive && css`
+  ${({ isActive, theme }) => isActive && css`
     &, &:hover {
       border-bottom-color: ${theme.colors.menu.active};
       ${IconWrapper} {
@@ -51,22 +51,24 @@ const LinkTab = styled.div<{isActive: boolean}>`
 interface IMobileTab {
   tabFor: string
   icon: string
+  closeId: string
 }
 
-const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, ...props }) => {
+const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, closeId, ...props }) => {
   const { selected, setSelected }: ContextProps = useContext(TabContext);
 
   const onChangeTab = useCallback((tabId: string) => {
-    setSelected(tabId);
-  }, [setSelected]);
+    const newValue = (selected === tabId) ? closeId : tabId;
+    setSelected(newValue);
+  }, [closeId, selected, setSelected]);
 
-  return(
+  return (
     <Container {...props} onClick={() => onChangeTab(tabFor)}>
       <LinkTab isActive={selected === tabFor}>
-        <Icon {...{icon}} size={18} />
+        <Icon {...{ icon }} size={18} />
       </LinkTab>
     </Container>
   );
 };
 
-export {MobileTab};
+export { MobileTab };
