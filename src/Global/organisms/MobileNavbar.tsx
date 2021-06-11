@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Tabs, TabContent, MobileTab } from '../../Tabs/index';
 import { TabListWrapper, TabList } from '../../Tabs/TabList';
-import { IMenu, ITopBar, IAlertsHistory } from '..';
+import { IMenu, ITopBar, INotificationsHistory } from '..';
 import CloseButton from '../atoms/CloseButton';
 import MobileNavbarContainer from '../atoms/MobileNavbarContent';
 import MobileMenu from './MobileMenu';
 import MobileLogoLink from '../atoms/MobileLogoLink';
 import MobileUserMenu from '../molecules/MobileUserMenu';
-import AlertsHistory from '../molecules/AlertsHistory';
+import NotificationsHistory from '../molecules/NotificationsHistory';
 import { MOBILE_NAVBAR_HEIGHT } from '../atoms/Layout';
 
 const Container = styled.nav`
@@ -34,7 +34,7 @@ const HeaderContainer = styled.div`
 
 interface OwnProps {
   closeText?: string
-  alerts?: IAlertsHistory
+  notificationLists?: INotificationsHistory
 }
 
 type IMobileNavbar = OwnProps & IMenu & ITopBar;
@@ -54,11 +54,11 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   userSubmenu,
   userDrawerBespoke,
   loggedInUser,
-  alerts,
+  notificationLists,
   onLogout,
   onLanguageToggle,
 }) => {
-  console.log('alerts Mobile nav', alerts);
+
   return (
     <Container>
       <Tabs>
@@ -72,7 +72,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
         </HeaderContainer>
         <MobileNavbarContainer closeId='closeMenu'>
           <TabContent tabId='notifications'>
-            {alerts && hasNotifications ? <AlertsHistory read={alerts.read} unread={alerts.unread} /> : null}
+            {notificationLists && hasNotifications ? <NotificationsHistory read={notificationLists.read} unread={notificationLists.unread} /> : null}
           </TabContent>
           <TabContent tabId='user'>
             <MobileUserMenu

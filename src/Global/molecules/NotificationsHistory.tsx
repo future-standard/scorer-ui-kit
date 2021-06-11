@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { IAlertsHistory, IAlertItem } from '../index';
-import AlertItem from '../atoms/AlertItem';
+import { INotificationsHistory, INotificationItem } from '../index';
+import NotificationItem from '../atoms/NotificationItem';
 
 const Container = styled.div`
   display: flex;
@@ -17,20 +17,20 @@ const StatusContainer = styled.h2`
     margin: 0;
 `;
 
-const AlertWrapper = styled.div`
+const NotificationWrapper = styled.div`
   border-bottom: ${({ theme: { colors } }) => colors.divider} 1px solid;
 `;
 
-const renderAlerts = (items: IAlertItem[], type: string) => (
+const renderNotifications = (items: INotificationItem[], type: string) => (
   items.map((item, index) => {
     return (
-      <AlertWrapper key={`alert-${type}-${index}`}>
-        <AlertItem {...item} />
-      </AlertWrapper>);
+      <NotificationWrapper key={`alert-${type}-${index}`}>
+        <NotificationItem {...item} />
+      </NotificationWrapper>);
   })
 );
 
-const AlertsHistory: React.FC<IAlertsHistory> = ({ read, unread }) => {
+const NotificationsHistory: React.FC<INotificationsHistory> = ({ read, unread }) => {
 
   if ((read.length === 0) && (unread.length === 0)) {
     return (
@@ -45,17 +45,17 @@ const AlertsHistory: React.FC<IAlertsHistory> = ({ read, unread }) => {
       {unread && (
         <Fragment>
           <StatusContainer>NEW</StatusContainer>
-          {renderAlerts(unread, 'unread')}
+          {renderNotifications(unread, 'unread')}
         </Fragment>
       )}
       {read && (
         <Fragment>
           <StatusContainer>READ</StatusContainer>
-          {renderAlerts(read, 'read')}
+          {renderNotifications(read, 'read')}
         </Fragment>
       )}
     </Container>
   );
 };
 
-export default AlertsHistory;
+export default NotificationsHistory;

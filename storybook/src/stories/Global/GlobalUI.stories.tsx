@@ -1,5 +1,5 @@
 import React from 'react';
-import { GlobalUI, PageHeader, TextAreaField, IAlertItem, IAlertsHistory } from 'scorer-ui-kit';
+import { GlobalUI, PageHeader, TextAreaField, INotificationItem, INotificationsHistory } from 'scorer-ui-kit';
 import styled from 'styled-components';
 import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ const Container = styled.div`
 `;
 
 const Welcome = () => (
-  <div>
+  <>
     <PageHeader
       title='Welcome'
       introductionText='Thanks for using our UI library.'
@@ -90,7 +90,7 @@ const Welcome = () => (
         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       `}
     />
-  </div>
+  </>
 );
 
 const About = () => (
@@ -186,7 +186,7 @@ const ComponentLinks = () => (
 );
 
 
-const unreadAlerts: IAlertItem[] = [
+const unreadNotifications: INotificationItem[] = [
   {
     imgUrl: '',
     title: 'Event Type',
@@ -219,7 +219,7 @@ const unreadAlerts: IAlertItem[] = [
   },
 ]
 
-const readAlerts: IAlertItem[] = [
+const readNotifications: INotificationItem[] = [
   {
     imgUrl: '',
     title: 'Device is off',
@@ -240,9 +240,9 @@ const readAlerts: IAlertItem[] = [
   }
 ];
 
-const allAlerts: IAlertsHistory = {
-  unread: unreadAlerts,
-  read: readAlerts
+const allNotifications: INotificationsHistory = {
+  unread: unreadNotifications,
+  read: readNotifications
 }
 
 export const _GlobalUI = () => {
@@ -338,7 +338,7 @@ export const _GlobalUI = () => {
       href: '/user/payments'
     }
   ])
-  const alerts = object("Alerts", allAlerts);
+  const notificationLists = object("NotificationLists", allNotifications);
 
   return (
     <Container>
@@ -346,7 +346,7 @@ export const _GlobalUI = () => {
         content={menuConfig}
         home={menuHomeLink}
         defaultMenuOpen={true}
-        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, alerts }}
+        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationLists }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
       >
         <ComponentLinks />

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IAlertItem } from '../index';
+import { INotificationItem } from '../index';
 
 const Container = styled.div`
   display: flex;
@@ -68,7 +68,7 @@ const TimeMsg = styled.div`
 `;
 
 
-const AlertItem: React.FC<IAlertItem> = ({ imgUrl, title, message, time }) => {
+const NotificationItem: React.FC<INotificationItem> = ({ imgUrl, title, message, time }) => {
   return (
     <Container>
       <ImgWrapper>
@@ -85,4 +85,4 @@ const AlertItem: React.FC<IAlertItem> = ({ imgUrl, title, message, time }) => {
   );
 };
 
-export default AlertItem;
+export default NotificationItem;

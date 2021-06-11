@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import UserMenu from '../molecules/UserMenu';
 import { ITopBar } from '../index';
-import AlertsHistory from './AlertsHistory';
+import NotificationsHistory from './NotificationsHistory';
 
 const Container = styled.div`
   z-index: 9; 
@@ -125,7 +125,7 @@ const Drawer = styled.div<{ isOpen: boolean }>`
  * Negative margin hides the scroll;
  * Reviewed on Chrome an Firefox
  */
-const AlertsContainer = styled.div`
+const NotificationsContainer = styled.div`
     overflow-y: scroll;
     margin-right: -17px;
 `;
@@ -141,7 +141,7 @@ const TopBar: React.FC<ITopBar> = ({
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
-  alerts,
+  notificationLists,
   onLogout = () => { },
   onLanguageToggle = () => { }
 }) => {
@@ -183,9 +183,9 @@ const TopBar: React.FC<ITopBar> = ({
       {/* Notifications */}
       {hasNotifications ?
         <Drawer isOpen={isNotificationsOpen}>
-          <AlertsContainer>
-            {alerts ? <AlertsHistory read={alerts.read} unread={alerts.unread} /> : null}
-          </AlertsContainer>
+          <NotificationsContainer>
+            {notificationLists ? <NotificationsHistory read={notificationLists.read} unread={notificationLists.unread} /> : null}
+          </NotificationsContainer>
         </Drawer> : null}
     </Container>
   );

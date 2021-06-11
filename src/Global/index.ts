@@ -60,19 +60,19 @@ export interface IMenuTop {
     hasCurrentUser?: boolean;
     searchPlaceholder?: string;
     userDrawerBespoke?: ReactElement;
-    alerts? : IAlertsHistory;
+    notificationLists? : INotificationsHistory;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
   }
 
-  export interface IAlertItem {
+  export interface INotificationItem {
     imgUrl?: string
     title: string
     message: string
     time: string
   }
 
-  export interface IAlertsHistory {
-    read: IAlertItem[]
-    unread: IAlertItem[]
+  export interface INotificationsHistory {
+    read: INotificationItem[]
+    unread: INotificationItem[]
   }
