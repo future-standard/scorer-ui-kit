@@ -25,48 +25,33 @@ const Box = styled.div<{ margin?: string; flex?: string;}>`
   `}
 `;
 
-// const LoginForm = styled(Form)`
-//   /* width:342px; */
-//   /* height: 100%; */
-//   display: flex;
-//   flex-direction: column;
-//   padding: 70px 60px;
-//   flex: 1;
-//   @keyframes fadeIn{
-//     0% {
-//       opacity:0;
-//     }
-//     100% {
-//       opacity:1;
-//     }
-//   }
-//   animation: fadeIn ease-in 0.5s;
-
-// `;
-
 const LoginForm = styled(Form)`
     max-width: 320px;
     margin: auto;
     padding: 44px 0;
     min-height: calc(100vh - 126px);
+    @keyframes fadeIn{
+      0% {
+        opacity:0;
+      }
+      100% {
+        opacity:1;
+      }
+    }
+    animation: fadeIn ease-in 0.5s;
 
   ${({theme}) => css`
+
+    @media ${theme.deviceMediaQuery.medium} {
+      min-height: auto;
+    }
+
     @media ${theme.deviceMediaQuery.large} {
       max-width: none;
-      min-height: auto;
       display: flex;
       flex-direction: column;
       padding: 70px 60px;
       flex: 1;
-      @keyframes fadeIn{
-        0% {
-          opacity:0;
-        }
-        100% {
-          opacity:1;
-        }
-      }
-      animation: fadeIn ease-in 0.5s;
     }
   `};
 `;
@@ -90,24 +75,6 @@ const CopyRight = styled.div`
   margin-top:49px;
 `;
 
-// const Container = styled.div`
-//   transform: translate(-50%,-50%);
-//   left: 50%;
-//   position: absolute;
-//   top: 50%;
-//   @media screen  and (max-width: 900px) {
-//     /* overflow: auto; */
-//     height: 100%;
-//     ${CopyRight}{
-//       display:none;
-//     }
-//     transform: translateX(-50%);
-//     left: 50%;
-//     top: 0;
-//   }
-// `;
-
-
 const Container = styled.div`
   ${CopyRight}{
     display:none;
@@ -115,7 +82,7 @@ const Container = styled.div`
 
   ${({theme}) => css`
 
-    @media ${theme.deviceMediaQuery.large} {
+    @media ${theme.deviceMediaQuery.medium} {
       position: absolute;
       transform: translate(-50%,-50%);
       left: 50%;
@@ -154,16 +121,6 @@ const LogoBackground = styled.img`
   `};
 `;
 
-
-// export const LogoContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   flex: 1;
-//   align-items: center;
-//   position: relative;
-//   justify-content: center;
-// `;
-
 export const LogoContainer = styled.div`
   height: 126px;
   display: flex;
@@ -177,24 +134,10 @@ export const LogoContainer = styled.div`
   ${({theme}) => css`
     @media ${theme.deviceMediaQuery.large} {
       height: auto;
-      overflow: auto;
+      overflow: initial;
     }
   `};
 `;
-
-// const LoginBox = styled.div`
-//   ${RowCss}
-//   overflow: hidden;
-//   position:relative;
-//   min-width: ${widthDesk * 2}px;
-//   height: 560px;
-//   border-radius: 5px;
-//   box-shadow: 0 20px 30px 0 hsla(205, 24%, 26%, 0.15);
-//   border: solid 1px hsl(0, 0%, 91%);
-//   input{
-//     min-width: 296px;
-//   }
-// `;
 
 const LoginBox = styled.div`
   border: solid 1px hsl(0, 0%, 91%);
@@ -203,15 +146,19 @@ const LoginBox = styled.div`
   height: 100%;
 
   ${({theme}) => css`
+
+    @media ${theme.deviceMediaQuery.medium} {
+      box-shadow: 0 20px 30px 0 hsla(205, 24%, 26%, 0.15);
+      border-radius: 5px;
+    }
+
     @media ${theme.deviceMediaQuery.large} {
       ${RowCss}
       overflow: hidden;
       position:relative;
-      max-width: auto;
+      max-width: none;
       min-width: ${widthDesk * 2}px;
-      height: 560px;
-      border-radius: 5px;
-      box-shadow: 0 20px 30px 0 hsla(205, 24%, 26%, 0.15);
+      min-height: 560px;
 
       input{
         min-width: 296px;
@@ -227,7 +174,6 @@ interface AuthProps {
 
 interface Props {
   onLogin: (params: {username: string; password: string}) => void;
-  title?: string
 }
 type OwnProps = AuthProps & Props;
 
@@ -236,10 +182,7 @@ interface Alert {
   message: string;
 }
 
-const Login: React.FC<OwnProps> = ({
-  onLogin,
-  title = 'Sign In To Your Account'
-}) => {
+const Login: React.FC<OwnProps> = ({ onLogin }) => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<Alert|null>(null);
   const [form, setForm] = useState({username:'', password:''});
@@ -273,7 +216,7 @@ const Login: React.FC<OwnProps> = ({
           <LogoBackground src={GhostLogo} />
         </LogoContainer>
         <LoginForm onSubmit={onSubmit}>
-          <Title>{title}</Title>
+          <Title>Sign In To Your Account</Title>
 
           <TextField
             fieldState='default'
@@ -293,10 +236,7 @@ const Login: React.FC<OwnProps> = ({
             name='password'
           />
 
-
-
           {alert &&<AlertBar type={alert.type} message={alert.message} />}
-
 
           <Box flex='1'>
             <ButtonWithLoading loading={loading} type='submit' onClick={onSubmit}>Login</ButtonWithLoading>

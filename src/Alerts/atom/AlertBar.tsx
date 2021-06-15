@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
-import { AlertType } from '..'
+import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
 
 const IconButton = styled.button<{selected?: boolean}>`
@@ -25,7 +25,7 @@ const IconButton = styled.button<{selected?: boolean}>`
 `;
 
 const Container = styled.div<{type: AlertType}>`
-  height: 50px;
+  min-height: 50px;
   border-radius: 3px;
   display: flex;
   flex-direction: row;
@@ -46,10 +46,10 @@ const IconNames = {
   success: 'Success',
   info: 'Information',
   neutral: 'Information'
-}
+};
 
 const MessageBox = styled.div`
-  margin-left: 15px;
+  margin: 5px 0px 5px 15px;
   flex: 1;
 `;
 export interface IAlert {
