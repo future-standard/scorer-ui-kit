@@ -11,8 +11,6 @@ const RowCss = css`
   flex-direction: row;
 `;
 
-
-
 const Box = styled.div<{ margin?: string; flex?: string;}>`
   margin-top:30px;
   button{
@@ -47,16 +45,15 @@ const Box = styled.div<{ margin?: string; flex?: string;}>`
 // `;
 
 const LoginForm = styled(Form)`
-
-    width: 320px;
+    max-width: 320px;
     margin: auto;
     padding: 44px 0;
+    min-height: calc(100vh - 126px);
 
   ${({theme}) => css`
     @media ${theme.deviceMediaQuery.large} {
-      /* width:342px; */
-      /* height: 100%; */
-      width: auto;
+      max-width: none;
+      min-height: auto;
       display: flex;
       flex-direction: column;
       padding: 70px 60px;
@@ -112,7 +109,6 @@ const CopyRight = styled.div`
 
 
 const Container = styled.div`
-
   ${CopyRight}{
     display:none;
   }
@@ -176,7 +172,7 @@ export const LogoContainer = styled.div`
   align-items: center;
   position: relative;
   justify-content: center;
-  overflow-y: hidden;
+  overflow: hidden;
   
   ${({theme}) => css`
     @media ${theme.deviceMediaQuery.large} {
@@ -185,8 +181,6 @@ export const LogoContainer = styled.div`
     }
   `};
 `;
-
-
 
 // const LoginBox = styled.div`
 //   ${RowCss}
@@ -203,20 +197,22 @@ export const LogoContainer = styled.div`
 // `;
 
 const LoginBox = styled.div`
-  width: ${widthDesk}px;
+  border: solid 1px hsl(0, 0%, 91%);
+  max-width: ${widthDesk}px;
   margin: auto;
+  height: 100%;
 
   ${({theme}) => css`
     @media ${theme.deviceMediaQuery.large} {
       ${RowCss}
       overflow: hidden;
       position:relative;
-      width: auto;
+      max-width: auto;
       min-width: ${widthDesk * 2}px;
       height: 560px;
       border-radius: 5px;
       box-shadow: 0 20px 30px 0 hsla(205, 24%, 26%, 0.15);
-      border: solid 1px hsl(0, 0%, 91%);
+
       input{
         min-width: 296px;
       }
