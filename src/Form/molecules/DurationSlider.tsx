@@ -78,7 +78,7 @@ const DurationSlider: React.FC<IDurationSlider> = (
       <Headers>
         <Label htmlFor='duration-slider' labelText={title} />
         <ValueTitle>
-          <ValueLabel htmlFor='duration-slider' labelText={`${labelValue}  `} />
+          <ValueLabel htmlFor='duration-slider' labelText={`${labelValue}`} />
           <Unit>{unit}</Unit>
         </ValueTitle>
       </Headers>
@@ -89,7 +89,7 @@ const DurationSlider: React.FC<IDurationSlider> = (
         max={max}
         min={min}
         defaultValue={defaultValue}
-        inputCallback={(value) => handleSelectedValue(value)}
+        onChangeCallback={handleSelectedValue}
       />
     </Container>
   );

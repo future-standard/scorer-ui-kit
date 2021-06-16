@@ -7,7 +7,10 @@ import React, {
 } from 'react';
 import styled, {css} from 'styled-components';
 import {IFeedbackColor} from '../../index';
-import {isInsideRange} from '../../helpers';
+import {
+  isInsideRange,
+  // throttle
+} from '../../helpers';
 
 /**
  * TODO to support all input range features
@@ -211,6 +214,7 @@ interface ISliderOwnProps {
   value?: number
   thumbColor?: IFeedbackColor
   inputCallback?: (value: number) => void
+  onChangeCallback?: (value: number) => void
 }
 
 export type ISlider = ISliderOwnProps & InputHTMLAttributes<HTMLInputElement>;
@@ -223,6 +227,7 @@ const SliderInput : React.FC<ISlider> = ({
   thumbColor = 'info',
   disabled = false,
   inputCallback,
+  onChangeCallback,
   ...props
 }) => {
 
@@ -240,7 +245,10 @@ const SliderInput : React.FC<ISlider> = ({
     const numericVal = parseInt(val,10);
     setSelectedValue(numericVal);
     setGhostThumbValue(thumbLeftPosition(numericVal, minValid, maxValid));
-  },[maxValid, minValid]);
+    if(onChangeCallback) {
+      onChangeCallback(numericVal);
+    }
+  },[maxValid, minValid, onChangeCallback]);
 
   const handleMouseUp =  useCallback(() => {
     if(inputCallback) {
@@ -248,6 +256,8 @@ const SliderInput : React.FC<ISlider> = ({
     }
     setThumbValue(thumbLeftPosition(selectedValue, minValid, maxValid));
   },[inputCallback, maxValid, minValid, selectedValue]);
+
+  // const throttledChange = throttle(handleInputChange, 500);
 
   return(
     <SliderWrapper disabled={disabled}>
