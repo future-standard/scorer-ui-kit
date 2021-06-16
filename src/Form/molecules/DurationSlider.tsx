@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import styled from 'styled-components';
 import {ITimeUnit} from '../../index';
 import SliderInput, {ISlider} from '../atoms/SliderInput';
-import {getTextTimeUnit} from '../../helpers';
+import {getShortTextTimeUnit, isTimeUnit} from '../../helpers';
 import Label from '../atoms/Label';
 
 
@@ -23,13 +23,26 @@ const Headers = styled.div`
   padding: 0 6px;
 `;
 
-const ValueTitle = styled(Label)`
+const ValueLabel = styled(Label)`
+  font-family: ${({ theme }) => theme.fontFamily.ui};
+  margin-bottom: 0;
+`;
+
+const Unit = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.data};
+  color: hsla(195, 10%, 52%, 0.72);
+  font-style: italic;
+  font-size: 12px;
+  line-height: 1.5;
+`;
+
+const ValueTitle = styled.div`
+  display: flex;
 `;
 
 interface IDurationSliderProps {
   title: string
-  timeUnit: ITimeUnit
+  timeUnit: ITimeUnit | string
   controlledValue?: number
 }
 
@@ -58,12 +71,16 @@ const DurationSlider: React.FC<IDurationSlider> = (
   },[inputCallback]);
 
   const labelValue = controlledValue ? controlledValue : selectedValue;
+  const unit = isTimeUnit(timeUnit) ? getShortTextTimeUnit(labelValue, timeUnit) : timeUnit;
 
   return(
     <Container>
       <Headers>
         <Label htmlFor='duration-slider' labelText={title} />
-        <ValueTitle htmlFor='duration-slider' labelText={getTextTimeUnit(labelValue, timeUnit)} />
+        <ValueTitle>
+          <ValueLabel htmlFor='duration-slider' labelText={`${labelValue}  `} />
+          <Unit>{unit}</Unit>
+        </ValueTitle>
       </Headers>
       <SliderInput
         {

@@ -262,6 +262,7 @@ export {
  */
 export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
+
 export type IMediaType = 'img' | 'video'
 
 export type {
