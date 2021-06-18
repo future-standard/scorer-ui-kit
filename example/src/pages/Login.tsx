@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import React, { useState, useCallback, ChangeEvent } from 'react';
 import { ButtonWithLoading, TextField, PasswordField, Form, AlertBar } from 'scorer-ui-kit';
 import GhostLogo from '../svg/ghost-logo.svg';
@@ -9,6 +9,15 @@ const widthDesk = 480;
 const RowCss = css`
   display: flex;
   flex-direction: row;
+`;
+
+const fadeInAnimation = keyframes`
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
 `;
 
 const Box = styled.div<{ margin?: string; flex?: string;}>`
@@ -30,17 +39,9 @@ const LoginForm = styled(Form)`
     margin: auto;
     padding: 44px 0;
     min-height: calc(100vh - 126px);
-    @keyframes fadeIn{
-      0% {
-        opacity:0;
-      }
-      100% {
-        opacity:1;
-      }
-    }
-    animation: fadeIn ease-in 0.5s;
 
   ${({theme}) => css`
+    animation: ${fadeInAnimation} ${theme.animation.speed.normal} ${theme.animation.easing.primary.in};
 
     @media ${theme.deviceMediaQuery.medium} {
       min-height: auto;
