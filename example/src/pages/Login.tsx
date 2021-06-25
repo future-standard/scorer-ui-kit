@@ -148,7 +148,8 @@ const Container = styled.div`
 `;
 
 const Logo = styled(LoginScreen)`
-
+    height: 54px;
+    width: auto;
 `;
 
 const LogoBackground = styled.img`
@@ -156,7 +157,7 @@ const LogoBackground = styled.img`
   background-image: ${bgGradient1};
   position: absolute;
   bottom: -360px;
-  left: -600px;
+  left: -630px;
   min-width: ${widthDesk}px;
   object-fit: contain;
   mix-blend-mode: overlay;
@@ -269,7 +270,7 @@ const Login: React.FC<OwnProps> = ({ onLogin }) => {
           <Logo />
           <LogoBackground src={GhostLogo} />
         </LogoContainer>
-        <LoginForm onSubmit={onSubmit} spacing='24px'>
+        <LoginForm onSubmit={onSubmit} spacing='25px'>
           <Title>Sign In To Your Account</Title>
           <SubTitle>This service requires an account to login. If you do not have one, please make one first.</SubTitle>
           <TextField
