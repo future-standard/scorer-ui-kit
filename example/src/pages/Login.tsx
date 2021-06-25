@@ -6,8 +6,11 @@ import {LoginScreen} from '../svg';
 import {Link} from 'react-router-dom';
 
 const widthDesk = 480;
-const bgGradient1 = `linear-gradient(-45deg, #5CA0D1, #7DB8DB)`;
-const bgGradient2 = `linear-gradient(139deg, hsl(250, 60%, 62%), hsl(0, 46%, 54%))`;
+
+const gradients = {
+  "primary" : `linear-gradient(-45deg, #5CA0D1, #7DB8DB)`,
+  "secondary" : `linear-gradient(139deg, hsl(250, 60%, 62%), hsl(0, 46%, 54%))`,
+}
 
 const RowCss = css`
   display: flex;
@@ -152,12 +155,12 @@ const Logo = styled(LoginScreen)`
     width: auto;
 `;
 
-const LogoBackground = styled.img`
+const LogoBackground = styled.img<{design: gradientDesign}>`
   height: 1080px;
-  background-image: ${bgGradient1};
+  background-image: ${({design}) => gradients[design]};
   position: absolute;
   bottom: -360px;
-  left: -630px;
+  left: -600px;
   min-width: ${widthDesk}px;
   object-fit: contain;
   mix-blend-mode: overlay;
@@ -229,6 +232,7 @@ interface AuthProps {
 
 interface Props {
   onLogin: (params: {username: string; password: string}) => void;
+  design?: gradientDesign
 }
 type OwnProps = AuthProps & Props;
 
@@ -237,7 +241,12 @@ interface Alert {
   message: string;
 }
 
-const Login: React.FC<OwnProps> = ({ onLogin }) => {
+type gradientDesign = 'primary' | 'secondary';
+
+const Login: React.FC<OwnProps> = ({
+  onLogin,
+  design='primary',
+}) => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<Alert|null>(null);
   const [form, setForm] = useState({username:'', password:''});
@@ -268,7 +277,7 @@ const Login: React.FC<OwnProps> = ({ onLogin }) => {
       <LoginBox>
         <LogoContainer>
           <Logo />
-          <LogoBackground src={GhostLogo} />
+          <LogoBackground src={GhostLogo} {...{design}} />
         </LogoContainer>
         <LoginForm onSubmit={onSubmit} spacing='25px'>
           <Title>Sign In To Your Account</Title>
