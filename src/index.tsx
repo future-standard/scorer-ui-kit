@@ -9,6 +9,7 @@ import {
   AlertBar,
   Notification,
   INotificationProps,
+  AlertWrapper,
 }from './Alerts';
 
 // Components - Form
@@ -149,6 +150,7 @@ export {
   // Alerts
   AlertBar,
   Notification,
+  AlertWrapper,
 
   // LineUI
   LineUI,

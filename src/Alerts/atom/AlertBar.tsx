@@ -24,7 +24,7 @@ const IconButton = styled.button<{selected?: boolean}>`
   }
 `;
 
-const Container = styled.div<{type: AlertType}>`
+export const AlertWrapper = styled.div<{type: AlertType}>`
   min-height: 50px;
   border-radius: 3px;
   display: flex;
@@ -70,12 +70,12 @@ const AlertBar: React.FC<Props> = ({type='info', message}) => {
 
 
   return ( (message && !dismiss)?
-    <Container type={type}>
+    <AlertWrapper type={type}>
       <Icon icon={IconNames[type]} color='inverse' />
       <MessageBox>{message}</MessageBox>
 
       <IconButton onClick={() => setDismiss(true)}><Icon icon='CloseCompact' color='inverse' /></IconButton>
-    </Container>
+    </AlertWrapper>
     :
     null
   );
