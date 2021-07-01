@@ -24,7 +24,9 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "svgr": "svgr --typescript -d src/svg/ src/svg",
-    "deploy": "gh-pages -d test"
+    "predeploy": "cd example && npm install && npm run build && cd ../storybook && npm install && npm run build-storybook",
+    "deploy": "gh-pages -d example/build",
+    "actions-deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
     "react": "^16.13.1",
