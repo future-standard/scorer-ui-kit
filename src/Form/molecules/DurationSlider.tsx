@@ -30,6 +30,7 @@ const ValueTitle = styled(Label)`
 interface IDurationSliderProps {
   title: string
   timeUnit: ITimeUnit
+  controlledValue?: number
 }
 
 type IDurationSlider = IDurationSliderProps & ISlider;
@@ -41,6 +42,7 @@ const DurationSlider: React.FC<IDurationSlider> = (
     defaultValue=0,
     title='',
     timeUnit,
+    controlledValue,
     inputCallback,
     ...props
   }
@@ -55,11 +57,13 @@ const DurationSlider: React.FC<IDurationSlider> = (
     setSelectedValue(value);
   },[inputCallback]);
 
+  const labelValue = controlledValue ? controlledValue : selectedValue;
+
   return(
     <Container>
       <Headers>
         <Label htmlFor='duration-slider' labelText={title} />
-        <ValueTitle htmlFor='duration-slider' labelText={getTextTimeUnit(selectedValue, timeUnit)} />
+        <ValueTitle htmlFor='duration-slider' labelText={getTextTimeUnit(labelValue, timeUnit)} />
       </Headers>
       <SliderInput
         {
