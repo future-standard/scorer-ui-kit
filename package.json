@@ -26,7 +26,8 @@
     "svgr": "svgr --typescript -d src/svg/ src/svg",
     "predeploy": "cd example && npm install && npm run build && cd ../storybook && npm install && npm run build-storybook",
     "deploy": "gh-pages -d example/build",
-    "actions-deploy": "gh-pages -d example/build"
+    "actions-deploy": "gh-pages -d example/build",
+    "link": "npm link && npm link react && npm link react-dom && npm link react-router-dom && npm link styled-components"
   },
   "peerDependencies": {
     "react": "^16.13.1",

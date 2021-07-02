@@ -2,7 +2,7 @@ name: Deploy gh-pages
 
 on:
   push:
-    branches: [ 'feature/automatic-deploy' ]
+    branches: [ 'main', 'demo']
 
 jobs:
   deploy:
