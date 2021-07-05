@@ -118,7 +118,7 @@ const nearMark = (value: number, marks: ISliderMark[]) : number => {
  * if Min is not available and Max is positive default is 0
  * if Min is not available Max is negative min will be reduce by 1
  */
-const getValidMin = (max: number, min?: number) : number => { 
+const getValidMin = (max: number, min?: number) : number => {
 
   if((!max) && (!min)) {
     return 0;
@@ -281,7 +281,7 @@ const SliderInput : React.FC<ISlider> = ({
       if(numericVal === prev) { return prev; }
       return numericVal;
     });
-  
+
   },[marks, maxValid, minValid, onChangeCallback, onlyMarkSelect]);
 
 
