@@ -22,3 +22,5 @@ yarn-debug.log*
 yarn-error.log*
 
 storybook-static/
+example/public/storybook/
+storybook/build/

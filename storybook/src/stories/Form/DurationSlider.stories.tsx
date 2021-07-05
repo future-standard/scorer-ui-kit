@@ -155,17 +155,16 @@ export const _DurationSlider = () => {
   const maxValue2 = number('Max 2', 3600);
   const minValue2 = number('Min 2', 3);
   const defaultValue2 = number('Default value 2', defaultMixValue)
+  const onlyMarkSelect = boolean('Only Mark Select', true);
 
   const showValue2 = action('Input Callback');
   const marks2 = object('Marks 2', exampleMarks2);
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate2 = (value: number) => {
-    console.log('updated value', value);
-    showValue2(`Returned value: ${value}`, value)
+    console.log('updated value2', value);
+    showValue2(`Returned value2: ${value}`, value)
     const newValue = secToMinAndHours(value)
-    console.log('new time converted');
     setValue2(newValue);
-    
   };
 
   return (
@@ -203,6 +202,7 @@ export const _DurationSlider = () => {
           controlledValue={value2.time}
           title={title2}
           timeUnit={value2.unit}
+          onlyMarkSelect={onlyMarkSelect}
         />
       </Wrapper>
     </Container>

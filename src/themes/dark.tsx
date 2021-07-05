@@ -1,4 +1,4 @@
-import { fontFamily, dimensions } from './common';
+import { fontFamily, dimensions, animation, deviceSize, deviceMediaQuery } from './common';
 
 const colors = {
 
@@ -64,5 +64,8 @@ export default {
   fontFamily,
   dimensions,
   colors,
-  tmp
+  tmp,
+  animation,
+  deviceSize,
+  deviceMediaQuery,
 };

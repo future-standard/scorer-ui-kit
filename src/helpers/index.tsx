@@ -18,14 +18,47 @@ const clamp = (value: number, minValue: number, maxValue: number) => {
 const getTextTimeUnit = (value: number, unit : ITimeUnit) => {
     switch (unit) {
       case 'seconds':
-        return value < 2 ? `${value} Second` : `${value} Seconds`;
+        return value < 2 ? `Second` : `Seconds`;
 
       case 'minutes':
-        return value < 2 ? `${value} Minute` : `${value} Minutes`;
-    
+        return value < 2 ? `Minute` : `Minutes`;
+
       default:
-        return value < 2 ? `${value} Hour` : `${value} Hours`;
+        return value < 2 ? `Hour` : `Hours`;
     }
+};
+
+/**
+ * Helper for adding appropriate text to a time number
+ * Default is hours
+ */
+const getShortTextTimeUnit = (value: number, unit : string) => {
+  switch (unit) {
+    case 'seconds':
+      return value < 2 ? `sec` : `secs`;
+
+    case 'minutes':
+      return value < 2 ? `min` : `mins`;
+
+    default:
+      return value < 2 ? `hr` : `hrs`;
+  }
+};
+
+export const isTimeUnit = (value: any) => {
+  switch(value) {
+    case 'seconds':
+    case 'minutes':
+    case 'hours':
+      return true;
+    default:
+      return false;
+  }
+};
+
+const getTopLevelPath = (pathname: string) => {
+  const parts = pathname.split('/').filter(String);
+  return  parts.length > 0 ? "/" + parts[0] : "/";
 };
 
 const getImageType = (img: HTMLImageElement) => {
@@ -48,4 +81,6 @@ export {
   getImageType,
   getTextTimeUnit,
   isInsideRange,
+  getShortTextTimeUnit,
+  getTopLevelPath,
 };

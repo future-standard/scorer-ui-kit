@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import {Link} from 'react-router-dom';
 import ContextItem from './ContextItem';
 import { IMenuItemTop, IMenuItemSubmenu } from '..';
+import {resetButtonStyles} from '../../common/index';
 
 const Submenu = styled.ul`
   display: block;
@@ -27,6 +28,7 @@ const SubmenuItemTitle = styled.span`
 `;
 
 const SubmenuItemLink = styled(Link)`
+  ${resetButtonStyles};
   display: block;
 
 `;
@@ -94,8 +96,8 @@ const SubmenuContainer = styled.div`
 
 `;
 
-const ContextContainer = styled.div<{ open: boolean, maxHeight: number, loading: 'true'|'false' }>`
-  min-height: 70px;
+const ContextContainer = styled.div<{ open: boolean, maxHeight: number, minHeight?: number, loading: 'true'|'false' }>`
+  min-height: ${({minHeight}) => minHeight ? `${minHeight}px` : `70px`};
   width: inherit;
 
   ${SubmenuContainer}{
@@ -128,18 +130,19 @@ interface IProps {
   loading: boolean
   menuOpen?: boolean
   topLevelPath: string
+  minHeight?: number
   onClickCallback?: (...args: any[]) => void
   readyCallback?: (...args: any[]) => void
 }
 
-const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, loading, topLevelPath, onClickCallback, readyCallback}) => {
+const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, loading, topLevelPath, minHeight, onClickCallback, readyCallback}) => {
   const { icon, title, href, submenu } = item;
   const isActive = topLevelPath === href;
 
   const refSubmenu = useRef<any>(null);
   const [submenuHeight, setSubmenuHeight] = useState<number>(0);
 
-  const submenus : any[] = generateSubmenus(submenu) || [];
+  const submenus : any[] = generateSubmenus(submenu, onClickCallback ) || [];
   const hasSubmenu : boolean = submenus.length > 0;
 
   useEffect(() => {
@@ -152,7 +155,7 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
   }, [refSubmenu, setSubmenuHeight, readyCallback, contextKey]);
 
   return (
-    <ContextContainer open={submenuOpen} loading={loading ? 'true': 'false'} maxHeight={submenuHeight}>
+    <ContextContainer open={submenuOpen} loading={loading ? 'true': 'false'} maxHeight={submenuHeight} minHeight={minHeight}>
       <ContextItem {...{title, href, isActive, icon, hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey}} />
       {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>{submenus}</SubmenuContainer> : null}
     </ContextContainer>
@@ -164,7 +167,10 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
  * Generate the submenu component structure.
  * @param submenu JSON Object with the menu structure
  */
-const generateSubmenus = (submenu? : IMenuItemSubmenu[]) => {
+const generateSubmenus = (
+  submenu? : IMenuItemSubmenu[],
+  onClickCallback?: (...args: any[]) => void,
+  ) => {
 
   if(!submenu){ return; }
 
@@ -178,7 +184,7 @@ const generateSubmenus = (submenu? : IMenuItemSubmenu[]) => {
     const {title, href} = item;
     if(href){
       // Treat as menu item/
-      grouping[grouping.length - 1].push(<SubmenuItem key={key} isActive={false}><SubmenuItemLink to={href}>{title}</SubmenuItemLink></SubmenuItem>);
+      grouping[grouping.length - 1].push(<SubmenuItem key={key} isActive={false}><SubmenuItemLink to={href} onClick={() => onClickCallback && onClickCallback(-1)}>{title}</SubmenuItemLink></SubmenuItem>);
     } else {
       // Assume this is a grouping header.
       if(grouping[grouping.length - 1].length > 1){ grouping.push([]); }
@@ -193,8 +199,6 @@ const generateSubmenus = (submenu? : IMenuItemSubmenu[]) => {
   return output;
 
 };
-
-
 
 export default NavigationItem;
 

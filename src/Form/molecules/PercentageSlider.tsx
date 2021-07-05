@@ -90,7 +90,7 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
         max={100}
         min={0}
         defaultValue={defaultValue}
-        inputCallback={(value) => handleSelectedValue(value)}
+        onChangeCallback={handleSelectedValue}
         thumbColor={
             updateThumbColor
             ? updateThumbColor(selectedValue)
