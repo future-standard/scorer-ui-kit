@@ -32,14 +32,14 @@ const getTextTimeUnit = (value: number, unit : ITimeUnit) => {
  * Helper for adding appropriate text to a time number
  * Default is hours
  */
- const getShortTextTimeUnit = (value: number, unit : string) => {
+const getShortTextTimeUnit = (value: number, unit : string) => {
   switch (unit) {
     case 'seconds':
       return value < 2 ? `sec` : `secs`;
 
     case 'minutes':
       return value < 2 ? `min` : `mins`;
-  
+
     default:
       return value < 2 ? `hr` : `hrs`;
   }
@@ -54,6 +54,11 @@ export const isTimeUnit = (value: any) => {
     default:
       return false;
   }
+};
+
+const getTopLevelPath = (pathname: string) => {
+  const parts = pathname.split('/').filter(String);
+  return  parts.length > 0 ? "/" + parts[0] : "/";
 };
 
 const getImageType = (img: HTMLImageElement) => {
@@ -77,4 +82,5 @@ export {
   getTextTimeUnit,
   isInsideRange,
   getShortTextTimeUnit,
+  getTopLevelPath,
 };

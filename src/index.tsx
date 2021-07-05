@@ -9,6 +9,7 @@ import {
   AlertBar,
   Notification,
   INotificationProps,
+  AlertWrapper,
 }from './Alerts';
 
 // Components - Form
@@ -131,6 +132,8 @@ import {
   BackLink,
   Sidebar,
   GlobalUI,
+  INotificationItem,
+  INotificationsHistory
 } from './Global';
 
 // Tabs
@@ -149,6 +152,7 @@ export {
   // Alerts
   AlertBar,
   Notification,
+  AlertWrapper,
 
   // LineUI
   LineUI,
@@ -272,4 +276,6 @@ export type {
   ITag,
   ITagList,
   ISliderMark,
+  INotificationItem,
+  INotificationsHistory,
 };

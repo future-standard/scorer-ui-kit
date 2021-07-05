@@ -1,20 +1,32 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import React, { useState, useCallback, ChangeEvent } from 'react';
-import { ButtonWithLoading, TextField, PasswordField, Form, AlertBar } from 'scorer-ui-kit';
+import { ButtonWithLoading, TextField, PasswordField, Form, AlertBar, AlertWrapper } from 'scorer-ui-kit';
 import GhostLogo from '../svg/ghost-logo.svg';
 import {LoginScreen} from '../svg';
+import {Link} from 'react-router-dom';
 
 const widthDesk = 480;
+
+const gradients = {
+  "primary" : 'linear-gradient(-45deg, hsl(205,56%,59%), hsl(202,57%,67%))',
+  "secondary" : 'linear-gradient(139deg, hsl(250, 60%, 62%), hsl(0, 46%, 54%))',
+}
 
 const RowCss = css`
   display: flex;
   flex-direction: row;
 `;
 
-
+const fadeInAnimation = keyframes`
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+`;
 
 const Box = styled.div<{ margin?: string; flex?: string;}>`
-  margin-top:30px;
   button{
     width: 100%;
   }
@@ -28,22 +40,28 @@ const Box = styled.div<{ margin?: string; flex?: string;}>`
 `;
 
 const LoginForm = styled(Form)`
-  /* width:342px; */
-  /* height: 100%; */
-  display: flex;
-  flex-direction: column;
-  padding: 70px 60px;
-  flex: 1;
-  @keyframes fadeIn{
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  animation: fadeIn ease-in 0.5s;
+    max-width: 320px;
+    margin: auto;
+    padding: 44px 0;
+    min-height: calc(100vh - 126px);
 
+  ${({theme}) => css`
+    animation: ${fadeInAnimation} ${theme.animation.speed.normal} ${theme.animation.easing.primary.in};
+
+    ${AlertWrapper} {
+      margin-bottom: 20px;
+    }
+
+    @media ${theme.deviceMediaQuery.medium} {
+      min-height: auto;
+    }
+
+    @media ${theme.deviceMediaQuery.large} {
+      max-width: ${widthDesk}px;
+      padding: 70px;
+      margin: initial;
+    }
+  `};
 `;
 
 const Title = styled.div`
@@ -52,10 +70,30 @@ const Title = styled.div`
   text-align: center;
   color: hsl(208, 8%, 38%);
   position:relative;
-  margin-bottom: 45px;
 `;
 
-const CopyRight = styled.div`
+const SubTitle = styled.div`
+  ${({theme}) => theme && css`
+    ${theme.typography.content.actionParagraph};
+  `};
+  margin: 23px 0 40px 0;
+`;
+
+const ForgotLink = styled(Link)`
+  ${({theme}) => theme && css`
+    ${theme.typography.content.hyperlink.base};
+    &:hover {
+      ${theme.typography.content.hyperlink.hover};
+    }
+  `};
+`;
+
+const ForgotLinkWrapper = styled.div`
+    text-align: center;
+    margin: 10px auto; 
+`;
+
+const CopyRightStyle = css`
   opacity: 0.65;
   font-size: 14px;
   font-style: italic;
@@ -65,61 +103,126 @@ const CopyRight = styled.div`
   margin-top:49px;
 `;
 
-const Container = styled.div`
-  transform: translate(-50%,-50%);
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  @media screen  and (max-width: 900px) {
-    /* overflow: auto; */
-    height: 100%;
-    ${CopyRight}{
-      display:none;
-    }
-    transform: translateX(-50%);
-    left: 50%;
-    top: 0;
+
+const CopyRight = styled.div`
+  ${CopyRightStyle};
+  margin-right: 17px;
+`;
+
+const CopyRightLink = styled(Link)`
+  ${CopyRightStyle};
+  margin: 49px 4px 0 4px;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
-const Logo = styled(LoginScreen)`
-
+const CopyRightDot = styled.div`
+  ${CopyRightStyle};
+  font-weight: 700;
 `;
 
-const LogoBackground = styled.img`
+const CopyRightGroup = styled.div`
+    ${RowCss}
+    justify-content: center;
+`;
+
+const Container = styled.div`
+  ${CopyRightGroup}{
+    display:none;
+  }
+
+  ${({theme}) => css`
+
+    @media ${theme.deviceMediaQuery.medium} {
+      position: absolute;
+      transform: translate(-50%,-50%);
+      left: 50%;
+      top: 50%;
+      height: auto;
+
+      ${CopyRightGroup}{
+        display: flex;
+      }
+    }
+  `};
+`;
+
+const Logo = styled(LoginScreen)`
+    height: 54px;
+    width: auto;
+`;
+
+const LogoBackground = styled.img<{design: gradientDesign}>`
+  height: 1080px;
+  background-image: ${({design}) => gradients[design]};
   position: absolute;
-  top: -120px;
-  width: 100%;
-  height: 890px;
+  bottom: -360px;
+  left: -600px;
   min-width: ${widthDesk}px;
-  background: linear-gradient(-45deg, #5CA0D1, #7DB8DB);
   object-fit: contain;
   mix-blend-mode: overlay;
   opacity:0.87;
+  svg {
+    width: 100%;
+  }
+
+  ${({theme}) => css`
+    @media ${theme.deviceMediaQuery.large} {
+      height: 1080px;
+      width: auto;
+      bottom: 0;
+      left: -300px;
+    }
+  `};
 `;
 
-
 export const LogoContainer = styled.div`
+  height: 126px;
   display: flex;
   flex-direction: column;
   flex: 1;
   align-items: center;
   position: relative;
   justify-content: center;
+  overflow: hidden;
+  
+  ${({theme}) => css`
+    @media ${theme.deviceMediaQuery.large} {
+      height: auto;
+      max-width: ${widthDesk}px;
+    }
+  `};
 `;
 
 const LoginBox = styled.div`
-  ${RowCss}
-  overflow: hidden;
-  position:relative;
-  min-width: ${widthDesk * 2}px;
-  height: 560px;
-  border-radius: 5px;
-  box-shadow: 0 20px 30px 0 hsla(205, 24%, 26%, 0.15);
   border: solid 1px hsl(0, 0%, 91%);
-  input{
-    min-width: 296px;
-  }
+  max-width: ${widthDesk}px;
+  margin: auto;
+  height: 100%;
+
+  ${({theme}) => css`
+
+    @media ${theme.deviceMediaQuery.medium} {
+      box-shadow: 0 20px 30px 0 hsla(205, 24%, 26%, 0.15);
+      border-radius: 5px;
+    }
+
+    @media ${theme.deviceMediaQuery.large} {
+      ${RowCss}
+      overflow: hidden;
+      position:relative;
+      max-width: none;
+      min-width: ${widthDesk * 2}px;
+      min-height: 560px;
+
+      input{
+        min-width: 296px;
+      }
+    }
+  `};
 `;
 
 interface AuthProps {
@@ -129,6 +232,7 @@ interface AuthProps {
 
 interface Props {
   onLogin: (params: {username: string; password: string}) => void;
+  design?: gradientDesign
 }
 type OwnProps = AuthProps & Props;
 
@@ -137,7 +241,12 @@ interface Alert {
   message: string;
 }
 
-const Login: React.FC<OwnProps> = ({onLogin}) => {
+type gradientDesign = 'primary' | 'secondary';
+
+const Login: React.FC<OwnProps> = ({
+  onLogin,
+  design='primary',
+}) => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<Alert|null>(null);
   const [form, setForm] = useState({username:'', password:''});
@@ -168,11 +277,11 @@ const Login: React.FC<OwnProps> = ({onLogin}) => {
       <LoginBox>
         <LogoContainer>
           <Logo />
-          <LogoBackground src={GhostLogo} />
+          <LogoBackground src={GhostLogo} {...{design}} />
         </LogoContainer>
-        <LoginForm onSubmit={onSubmit}>
+        <LoginForm onSubmit={onSubmit} spacing='25px'>
           <Title>Sign In To Your Account</Title>
-
+          <SubTitle>This service requires an account to login. If you do not have one, please make one first.</SubTitle>
           <TextField
             fieldState='default'
             required
@@ -190,18 +299,25 @@ const Login: React.FC<OwnProps> = ({onLogin}) => {
             value={form.password}
             name='password'
           />
-
-
-
-          {alert &&<AlertBar type={alert.type} message={alert.message} />}
-
+          {alert && <AlertBar type={alert.type} message={alert.message} />}
 
           <Box flex='1'>
             <ButtonWithLoading loading={loading} type='submit' onClick={onSubmit}>Login</ButtonWithLoading>
           </Box>
+          <ForgotLinkWrapper>
+            <ForgotLink to='#'>Forgotten Password</ForgotLink>
+          </ForgotLinkWrapper>
+
         </LoginForm>
       </LoginBox>
-      <CopyRight>Copyright {new Date().getFullYear()} - Future Standard Co. Ltd. All Rights Reserved.</CopyRight>
+      <CopyRightGroup>
+        <CopyRight>Copyright {new Date().getFullYear()} - Future Standard Co. Ltd. All Rights Reserved. </CopyRight>
+        <CopyRightLink to='#'>Terms</CopyRightLink>
+        <CopyRightDot>&middot;</CopyRightDot>
+        <CopyRightLink to='#'>Privacy</CopyRightLink>
+      </CopyRightGroup>
+
+
     </Container>
   );
 };

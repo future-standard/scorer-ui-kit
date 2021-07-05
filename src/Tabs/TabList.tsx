@@ -2,7 +2,7 @@ import React, { useContext, useEffect, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import { TabContext, ContextProps } from './Tabs';
 
-const TabListComponent = styled.div`
+export const TabListWrapper = styled.div`
   display: flex;
   flex-direction: row;
 `;
@@ -21,9 +21,9 @@ const TabList: React.FC<Props> = ({ children, defaultTabId}) => {
   }, [defaultTabId, setSelected]);
 
   return (
-    <TabListComponent>
+    <TabListWrapper>
       {children}
-    </TabListComponent>
+    </TabListWrapper>
   );
 };
 

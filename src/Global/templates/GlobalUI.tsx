@@ -1,13 +1,16 @@
 import React from 'react';
-import { IMenu } from '..';
-import { Layout, MainContainer, ContentArea } from '../atoms/Layout';
+import { IMenu, ITopBar, INotificationsHistory } from '..';
+import { Layout, MainContainer, ContentArea, MobileLayout } from '../atoms/Layout';
 import MainMenu from '../organisms/MainMenu';
-import TopBar, { ITopBar } from '../molecules/TopBar';
+import TopBar from '../molecules/TopBar';
+import MobileNavbar from '../organisms/MobileNavbar';
+import useBreakpoints from '../../hooks/useBreakpoints';
 
 
 interface OwnProps {
   maxWidth?: string,
   paddingOverride?: string,
+  notificationsHistory?: INotificationsHistory
 }
 
 type INavigation = OwnProps & IMenu & ITopBar;
@@ -20,33 +23,58 @@ const GlobalUI: React.FC<INavigation> = ({
   logoText,
   supportUrl,
   defaultMenuOpen,
-  children,
   paddingOverride,
   maxWidth,
+  children,
+  notificationsHistory,
   ...props
 }) => {
 
+  const { isLarge } = useBreakpoints();
+
   return (
-    <Layout>
-      <MainMenu {...{
-          content,
-          home,
-          openWidth,
-          logoMark,
-          logoText,
-          supportUrl,
-          defaultMenuOpen}
-        }
-      />
-      <MainContainer>
-        <TopBar
-          {...{...props}}
+    isLarge
+    ? (
+      <Layout>
+        <MainMenu {...{
+            content,
+            home,
+            openWidth,
+            logoMark,
+            logoText,
+            supportUrl,
+            defaultMenuOpen}
+          }
         />
-        <ContentArea {...{maxWidth, paddingOverride}}>
+        <MainContainer>
+          <TopBar
+            {...{...props, notificationsHistory}}
+          />
+          <ContentArea {...{maxWidth, paddingOverride}}>
+            {children}
+          </ContentArea>
+        </MainContainer>
+      </Layout>
+    )
+    : (
+      <MobileLayout>
+        <MobileNavbar
+          {...{
+            content,
+            home,
+            logoMark,
+            supportUrl,
+            defaultMenuOpen,
+            notificationsHistory,
+            ...props
+            }
+          }
+        />
+        <ContentArea>
           {children}
         </ContentArea>
-      </MainContainer>
-    </Layout>
+      </MobileLayout>
+    )
   );
 };
 

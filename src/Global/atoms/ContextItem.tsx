@@ -67,6 +67,7 @@ const ContextIndicator = styled.div`
 
 `;
 const ContextActionBaseCSS = css`
+  -webkit-tap-highlight-color: transparent;
   border: none;
   background: none;
   display: flex;
