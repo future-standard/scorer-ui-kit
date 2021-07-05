@@ -36,7 +36,9 @@
   "scripts": {
     "start": "npm run storybook",
     "storybook": "start-storybook -p 9009",
-    "build-storybook": "build-storybook --output-dir ../example/build/storybook"
+    "build-storybook": "build-storybook --output-dir ../example/build/storybook",
+    "build-storybook-dev": "build-storybook --output-dir ./build",
+    "serve": "npx serve build"
   },
   "eslintConfig": {
     "extends": "react-app"

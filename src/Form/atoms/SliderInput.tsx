@@ -4,10 +4,13 @@ import React, {
   useCallback,
   ChangeEvent,
   Fragment,
+  useRef,
 } from 'react';
 import styled, {css} from 'styled-components';
 import {IFeedbackColor} from '../../index';
-import {isInsideRange} from '../../helpers';
+import {
+  isInsideRange,
+} from '../../helpers';
 
 /**
  * TODO to support all input range features
@@ -98,6 +101,15 @@ const GhostThumb = styled(Thumb)`
 
 const thumbLeftPosition = (value: number, min: number, max: number ) => {
   return valueToPercent(value, min, max);
+};
+
+const nearMark = (value: number, marks: ISliderMark[]) : number => {
+
+  let closest = marks.reduce((prev, curr) => {
+    return (Math.abs(curr.value - value) < Math.abs(prev.value - value) ? curr : prev);
+  });
+
+  return closest.value;
 };
 
 /**
@@ -210,10 +222,14 @@ interface ISliderOwnProps {
   defaultValue?: number
   value?: number
   thumbColor?: IFeedbackColor
+  onlyMarkSelect?: boolean
   inputCallback?: (value: number) => void
+  onChangeCallback?: (value: number) => void
 }
 
 export type ISlider = ISliderOwnProps & InputHTMLAttributes<HTMLInputElement>;
+
+let ghostThumbValue = 0;
 
 const SliderInput : React.FC<ISlider> = ({
   min,
@@ -222,7 +238,9 @@ const SliderInput : React.FC<ISlider> = ({
   defaultValue,
   thumbColor = 'info',
   disabled = false,
-  inputCallback,
+  onlyMarkSelect = false,
+  inputCallback = () => {},
+  onChangeCallback = () => {},
   ...props
 }) => {
 
@@ -231,39 +249,79 @@ const SliderInput : React.FC<ISlider> = ({
   const initValue = (defaultValue && isInsideRange(defaultValue, minValid, maxValid)) ? defaultValue : minValid;
 
   const [selectedValue, setSelectedValue] = useState(initValue);
-  const [thumbValue, setThumbValue] = useState(thumbLeftPosition(selectedValue, minValid, maxValid));
-  const [ghostThumbValue, setGhostThumbValue] = useState(thumbLeftPosition(selectedValue, minValid, maxValid));
+  const [isGhostActive, setIsGhostActive ] = useState(false);
+
+  const thumbValueRef = useRef(thumbLeftPosition(selectedValue, minValid, maxValid));
+
+  if(marks && onlyMarkSelect) {
+    const mark = nearMark(selectedValue, marks);
+    const ghostVal = thumbLeftPosition(mark, minValid, maxValid);
+    ghostThumbValue = ghostVal;
+  }
 
 
-  const handleInputChange =  useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange =  useCallback((e: ChangeEvent<HTMLInputElement>, lastValue: number) => {
     const val = e.target.value;
+    if(val === null) { return; }
     const numericVal = parseInt(val,10);
-    setSelectedValue(numericVal);
-    setGhostThumbValue(thumbLeftPosition(numericVal, minValid, maxValid));
-  },[maxValid, minValid]);
 
-  const handleMouseUp =  useCallback(() => {
-    if(inputCallback) {
-      inputCallback(selectedValue);
+    thumbValueRef.current = thumbLeftPosition(numericVal, minValid, maxValid);
+    const mark = marks ? nearMark(numericVal, marks) : numericVal;
+    const prevMark  = marks ? nearMark(lastValue, marks) : numericVal;
+
+    if(onlyMarkSelect && (prevMark !== mark)) {
+      onChangeCallback(mark);
     }
-    setThumbValue(thumbLeftPosition(selectedValue, minValid, maxValid));
-  },[inputCallback, maxValid, minValid, selectedValue]);
+
+    if(!onlyMarkSelect) {
+      onChangeCallback(numericVal);
+    }
+
+    setSelectedValue(prev => {
+      if(numericVal === prev) { return prev; }
+      return numericVal;
+    });
+
+  },[marks, maxValid, minValid, onChangeCallback, onlyMarkSelect]);
+
+
+  const handleSelectStart = useCallback(() => {
+    setIsGhostActive(true);
+  }, []);
+
+  const handleSelectEnd =  useCallback((currentValue: number) => {
+    if(onlyMarkSelect) {
+      inputCallback(ghostThumbValue);
+    } else {
+      inputCallback(currentValue);
+    }
+
+    if(onlyMarkSelect) {
+      thumbValueRef.current = ghostThumbValue;
+    }
+
+    setIsGhostActive(false);
+  },[inputCallback, onlyMarkSelect]);
 
   return(
     <SliderWrapper disabled={disabled}>
       <Rail />
       <ThumbWrapper>
         {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`)}
-        <GhostThumb
-          data-value={selectedValue}
-          leftValue={ghostThumbValue}
-          data-percentage={ghostThumbValue}
-          bgColor={thumbColor}
-        />
+        {isGhostActive && onlyMarkSelect
+          ? (
+            <GhostThumb
+              data-value={selectedValue}
+              leftValue={ghostThumbValue}
+              data-percentage={ghostThumbValue}
+              bgColor={thumbColor}
+            />
+          )
+          : null}
         <Thumb
           data-value={selectedValue}
-          leftValue={thumbValue}
-          data-percentage={thumbValue}
+          leftValue={thumbValueRef.current}
+          data-percentage={thumbValueRef.current}
           bgColor={thumbColor}
         />
       </ThumbWrapper>
@@ -275,8 +333,11 @@ const SliderInput : React.FC<ISlider> = ({
         min={minValid}
         max={maxValid}
         value={selectedValue}
-        onMouseUp={handleMouseUp}
-        onChange={handleInputChange}
+        onMouseUp={() => handleSelectEnd(selectedValue)}
+        onMouseDown={handleSelectStart}
+        onTouchStart={() => handleSelectEnd(selectedValue)}
+        onTouchEnd={handleSelectStart}
+        onChange={(e) => handleInputChange(e, selectedValue)}
       />
     </SliderWrapper>
   );
