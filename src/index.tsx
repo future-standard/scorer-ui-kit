@@ -132,6 +132,8 @@ import {
   BackLink,
   Sidebar,
   GlobalUI,
+  INotificationItem,
+  INotificationsHistory
 } from './Global';
 
 // Tabs
@@ -273,4 +275,6 @@ export type {
   ITag,
   ITagList,
   ISliderMark,
+  INotificationItem,
+  INotificationsHistory,
 };

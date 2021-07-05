@@ -28,6 +28,12 @@ const getTextTimeUnit = (value: number, unit : ITimeUnit) => {
     }
 };
 
+
+const getTopLevelPath = (pathname: string) => {
+  const parts = pathname.split('/').filter(String);
+  return  parts.length > 0 ? "/" + parts[0] : "/";
+};
+
 const getImageType = (img: HTMLImageElement) => {
   const dataType = img.src.substr(0, 20);
   if (dataType.includes('data')) {
@@ -48,4 +54,5 @@ export {
   getImageType,
   getTextTimeUnit,
   isInsideRange,
+  getTopLevelPath,
 };
