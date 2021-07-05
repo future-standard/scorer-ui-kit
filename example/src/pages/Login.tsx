@@ -8,8 +8,8 @@ import {Link} from 'react-router-dom';
 const widthDesk = 480;
 
 const gradients = {
-  "primary" : `linear-gradient(-45deg, #5CA0D1, #7DB8DB)`,
-  "secondary" : `linear-gradient(139deg, hsl(250, 60%, 62%), hsl(0, 46%, 54%))`,
+  "primary" : 'linear-gradient(-45deg, hsl(205,56%,59%), hsl(202,57%,67%))',
+  "secondary" : 'linear-gradient(139deg, hsl(250, 60%, 62%), hsl(0, 46%, 54%))',
 }
 
 const RowCss = css`
