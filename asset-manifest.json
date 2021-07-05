@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "/scorer-ui-kit/static/js/main.e474385f.chunk.js",
-    "main.js.map": "/scorer-ui-kit/static/js/main.e474385f.chunk.js.map",
+    "main.js": "/scorer-ui-kit/static/js/main.819ccc85.chunk.js",
+    "main.js.map": "/scorer-ui-kit/static/js/main.819ccc85.chunk.js.map",
     "runtime-main.js": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js",
     "runtime-main.js.map": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js.map",
-    "static/js/2.dd2f1354.chunk.js": "/scorer-ui-kit/static/js/2.dd2f1354.chunk.js",
-    "static/js/2.dd2f1354.chunk.js.map": "/scorer-ui-kit/static/js/2.dd2f1354.chunk.js.map",
+    "static/js/2.5006ee9e.chunk.js": "/scorer-ui-kit/static/js/2.5006ee9e.chunk.js",
+    "static/js/2.5006ee9e.chunk.js.map": "/scorer-ui-kit/static/js/2.5006ee9e.chunk.js.map",
     "index.html": "/scorer-ui-kit/index.html",
-    "precache-manifest.f5e4cef18169543eb1371fd5976a6486.js": "/scorer-ui-kit/precache-manifest.f5e4cef18169543eb1371fd5976a6486.js",
+    "precache-manifest.e19558e4aa24038df85e2255a344fe8a.js": "/scorer-ui-kit/precache-manifest.e19558e4aa24038df85e2255a344fe8a.js",
     "service-worker.js": "/scorer-ui-kit/service-worker.js",
-    "static/js/2.dd2f1354.chunk.js.LICENSE.txt": "/scorer-ui-kit/static/js/2.dd2f1354.chunk.js.LICENSE.txt",
+    "static/js/2.5006ee9e.chunk.js.LICENSE.txt": "/scorer-ui-kit/static/js/2.5006ee9e.chunk.js.LICENSE.txt",
     "static/media/Lato-Bold.ttf": "/scorer-ui-kit/static/media/Lato-Bold.2d15decc.ttf",
     "static/media/Lato-Light.ttf": "/scorer-ui-kit/static/media/Lato-Light.0f73589a.ttf",
     "static/media/Lato-Regular.ttf": "/scorer-ui-kit/static/media/Lato-Regular.c5eb5440.ttf",
@@ -33,13 +33,13 @@
     "static/media/Monorale-Thin.woff": "/scorer-ui-kit/static/media/Monorale-Thin.ad1820a1.woff",
     "static/media/Monorale-ThinItalic.woff": "/scorer-ui-kit/static/media/Monorale-ThinItalic.70996eb1.woff",
     "static/media/ghost-logo.svg": "/scorer-ui-kit/static/media/ghost-logo.b349b992.svg",
-    "static/media/login-screen.219b21cc.svg": "/scorer-ui-kit/static/media/login-screen.219b21cc.svg",
+    "static/media/login-screen.9c61d69f.svg": "/scorer-ui-kit/static/media/login-screen.9c61d69f.svg",
     "static/media/logo-mark.f6d05a3c.svg": "/scorer-ui-kit/static/media/logo-mark.f6d05a3c.svg",
     "static/media/logo-text.02fd7cf3.svg": "/scorer-ui-kit/static/media/logo-text.02fd7cf3.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.1ec9fcf8.js",
-    "static/js/2.dd2f1354.chunk.js",
-    "static/js/main.e474385f.chunk.js"
+    "static/js/2.5006ee9e.chunk.js",
+    "static/js/main.819ccc85.chunk.js"
   ]
 }

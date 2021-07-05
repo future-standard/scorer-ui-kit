@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b22fc90d67f2f39eda1a077dcd599370",
+    "revision": "f53f15914e1c0512a099b18574c0dab7",
     "url": "/scorer-ui-kit/index.html"
   },
   {
-    "revision": "1e49da90692ba504c9a4",
-    "url": "/scorer-ui-kit/static/js/2.dd2f1354.chunk.js"
+    "revision": "0d1207d24bbe3bbbbe4f",
+    "url": "/scorer-ui-kit/static/js/2.5006ee9e.chunk.js"
   },
   {
     "revision": "9b318b6fb13190fe82c0677e9264b3c7",
-    "url": "/scorer-ui-kit/static/js/2.dd2f1354.chunk.js.LICENSE.txt"
+    "url": "/scorer-ui-kit/static/js/2.5006ee9e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "64f66ccb60be5ef8231b",
-    "url": "/scorer-ui-kit/static/js/main.e474385f.chunk.js"
+    "revision": "b636d86b26424f8dc93b",
+    "url": "/scorer-ui-kit/static/js/main.819ccc85.chunk.js"
   },
   {
     "revision": "283cd069f47daaf60567",
@@ -112,8 +112,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/scorer-ui-kit/static/media/ghost-logo.b349b992.svg"
   },
   {
-    "revision": "219b21cca8373bd1d22fe20e39f0b691",
-    "url": "/scorer-ui-kit/static/media/login-screen.219b21cc.svg"
+    "revision": "9c61d69ffde46e8d78dadff760d8d1eb",
+    "url": "/scorer-ui-kit/static/media/login-screen.9c61d69f.svg"
   },
   {
     "revision": "f6d05a3cdbec8ba528917fb4509cb823",
