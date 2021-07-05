@@ -64,7 +64,7 @@ const PlayableDrop = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: hsla(0, 0%, 25%, .5);
+  background-color: hsla(0, 0%, 0%, .5);
   height: 24px;
   width: 24px;
   border-radius: 50%;
@@ -73,6 +73,9 @@ const PlayableDrop = styled.div`
   justify-content: center;
   ${IconWrapper} {
     display: flex;
+    svg {
+      padding-left: 2px;
+    }
   };
 `;
 
@@ -111,7 +114,7 @@ const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image, mediaUrl
       <Image {...{image}} />
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
-          <Icon size={12} icon='Add' color='inverse' />
+          <Icon size={12} icon='Play' color='inverse' />
         </PlayableDrop>}
     </Container>
   );
