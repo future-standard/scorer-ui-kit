@@ -13,5 +13,6 @@ export default {
   animation,
   custom,
   deviceSize,
-  deviceMediaQuery,
+  deviceMediaQuery
 };
+
