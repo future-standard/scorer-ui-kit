@@ -49,14 +49,14 @@ export const _Icons = () => {
 
   const showAll = boolean("Show All", false);
   const iconName = select("Name", iconList, Object.keys(iconList)[0]);
-  const iconColor = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary" }, "mono");
+  const iconColor = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary" , Danger: "danger"}, "mono");
   const iconWeight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy" }, "regular");
   const iconSize = number("Size", 24);
 
   /**
    * Generate a grid of all the icons for easy browsing and hovering to find names.
    */
-  const generateIconGrid = (props: { color: "mono" | "dimmed" | "subtle" | "inverse" | "primary"; weight: "regular" | "light" | "heavy"; size: number; }) => {
+  const generateIconGrid = (props: { color: "mono" | "dimmed" | "subtle" | "inverse" | "primary" | "danger" ; weight: "regular" | "light" | "heavy"; size: number; }) => {
     return Object.keys(IconSVGs).map((iconName) => (
       <div title={iconName} key={iconName}>
         <Icon icon={iconName} {...props} ></Icon>
