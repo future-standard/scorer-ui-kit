@@ -1,9 +1,8 @@
-name: NPM Publish
+name: NPM Publish (Beta)
 on:
   create:
     tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
-
+      - '[0-9]+.[0-9]+.[0-9]+.beta.[0-9]+'
 
 jobs:
   publish:
@@ -18,4 +17,5 @@ jobs:
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
+          tag: beta
           dry-run: true
