@@ -1,6 +1,8 @@
 name: NPM Publish
 on:
-  tag
+  create:
+    tags:
+      - *
 
 
 jobs:
