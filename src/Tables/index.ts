@@ -25,6 +25,7 @@ export interface TableHeaderItem {
 
 export interface ITableColumnConfig {
   columnId?: string
+  groupTitle?: string
   header: string
   sortable?: boolean
   sortActive?: boolean

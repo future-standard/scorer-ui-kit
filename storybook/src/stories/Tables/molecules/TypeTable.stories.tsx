@@ -4,7 +4,7 @@ import { object, boolean } from "@storybook/addon-knobs";
 
 import {TypeTable} from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
-import { 
+import {
   IRowData,
   ITableColumnConfig,
   ITypeTableData,
@@ -218,6 +218,7 @@ const rowMaker = (rowData: IExampleData[]) : ITypeTableData=> {
 const columnConfigSample : ITableColumnConfig[] = [
   {
     columnId: 'deviceName',
+    groupTitle: 'Device',
     header: 'Device Name',
     sortable: true,
     sortActive: true,
@@ -225,6 +226,7 @@ const columnConfigSample : ITableColumnConfig[] = [
   },
   {
     columnId: 'status',
+    groupTitle: 'Device',
     header: 'Status',
     sortable: true,
     showStatus: true,
@@ -232,6 +234,7 @@ const columnConfigSample : ITableColumnConfig[] = [
   },
   {
     columnId: 'created',
+    groupTitle: 'Meta',
     header: 'Created',
     sortable: false,
     cellStyle: 'lowImportance',
@@ -265,9 +268,10 @@ export const _TypeTable = () => {
   const hasStatus = boolean("Has Device Status", true);
   const hasThumbnail = boolean("Has Thumbnail", true);
   const hasTypeIcon = boolean("Has Device Type Icon", true);
-
+  const hasHeaderGroups = boolean("Has Header Groups", true);
   const selectable = boolean("Selectable Rows", true);
   const columnConfig = object("Column Configuration", columnConfigSample);
+
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked:boolean, id?: string | number) => {
@@ -303,5 +307,5 @@ export const _TypeTable = () => {
     setRows(rowMaker(data));
   }, [data])
 
-  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon, defaultAscending:true, sortCallback}} /></Container>;
+  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon, defaultAscending:true, sortCallback, hasHeaderGroups}} /></Container>;
 };

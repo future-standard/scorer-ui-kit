@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import TypeTableRow from '../atoms/TypeTableRow';
@@ -8,6 +8,7 @@ import TableHeaderTitle from '../atoms/TableHeaderTitle';
 
 
 const HEADER_HEIGHT = `50px`;
+const SUB_HEADER_HEIGHT = `30px`;
 const Container = styled.div`
 `;
 
@@ -17,12 +18,12 @@ const TableContainer = styled.div`
   position: relative;
 `;
 
-const HeaderRow = styled.div`
+const HeaderRow = styled.div<{headerStyle: string}>`
   display: table-row;
-  height: ${HEADER_HEIGHT};
+  height: ${({headerStyle}) => (headerStyle === 'subHeader') ? SUB_HEADER_HEIGHT : HEADER_HEIGHT };
 `;
 
-const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number }>`
+const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, headerStyle: string, isSortActive?: boolean }>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
@@ -34,19 +35,34 @@ const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignme
     padding-right: 20px;
   `};
 
-  ${({ theme, alignment }) => alignment ? css`
-    ${theme.typography.table.header[alignment]};
+  ${({ theme, alignment, headerStyle }) => alignment ? css`
+    ${theme.typography.table[headerStyle][alignment]};
   ` : css`
-    ${theme.typography.table.header['left']};
-  `}
+    ${theme.typography.table[headerStyle]['left']};
+  `};
 
   ${p => p.fixedWidth && css`
     width: ${p.fixedWidth}px;
-  `}
+  `};
 
   ${({ minWidth }) => minWidth && css`
-    min-width:${minWidth}px; 
-  `}
+    min-width:${minWidth}px;
+  `};
+
+  ${({headerStyle, isSortActive}) => headerStyle === 'subHeader' && css`
+  &::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background-color: hsl(0, 0%, 89%);
+    left: ${isSortActive ? '-15px' : '0'};
+    right: 0;
+    width: ${isSortActive ? 'calc(100% + 15px)' : '100%'};
+    bottom: 0px;
+    position: absolute;
+  }
+`};
+
 `;
 
 const LoadingText = styled.div`
@@ -90,6 +106,31 @@ const EmptyTableBox = styled.div`
   color: hsl(207, 5%, 57%);
 `;
 
+interface IOptionalHeaders {
+  selectable?: boolean
+  hasStatus: boolean
+  hasThumbnail: boolean
+  hasTypeIcon: boolean
+}
+
+const OptionalHeaders : React.FC<IOptionalHeaders> = ({
+    hasStatus,
+    hasThumbnail,
+    hasTypeIcon,
+    selectable,
+    children
+}) => {
+
+  return (
+    <Fragment>
+      {selectable ? <HeaderItem headerStyle='header' fixedWidth={30}>{children}</HeaderItem> : null}
+      {hasStatus ? <HeaderItem headerStyle='header' fixedWidth={10} /> : null}
+      {hasThumbnail ? <HeaderItem headerStyle='header' fixedWidth={70} /> : null}
+      {hasTypeIcon ? <HeaderItem headerStyle='header' fixedWidth={35} /> : null}
+    </Fragment>
+  );
+}
+
 interface IProps {
   columnConfig: ITableColumnConfig[]
   rows: ITypeTableData
@@ -102,6 +143,7 @@ interface IProps {
   loadingText?: string
   emptyTableTitle?: string
   emptyTableText?: string
+  hasHeaderGroups?: boolean
   selectCallback?: (checked: boolean, id?: string | number) => void
   toggleAllCallback?: (checked: boolean) => void
   sortCallback?: (ascending: boolean, columnId: string) => void
@@ -119,6 +161,7 @@ const TypeTable: React.FC<IProps> = ({
   loadingText = 'Loading Data...',
   emptyTableTitle = '',
   emptyTableText = '',
+  hasHeaderGroups = false,
   sortCallback = () => { },
   selectCallback = () => { },
   toggleAllCallback = () => { },
@@ -135,7 +178,7 @@ const TypeTable: React.FC<IProps> = ({
 
   useEffect(() => {
     let areAllChecked = false;
-    if(rows.every(isChecked) && (rows.length > 0) && !isEmptyTable) { 
+    if(rows.every(isChecked) && (rows.length > 0) && !isEmptyTable) {
       areAllChecked = true;
     }
     setAllChecked(areAllChecked);
@@ -176,7 +219,7 @@ const TypeTable: React.FC<IProps> = ({
     setAscendingState(newAscending);
   }, [ascendingState, sortCallback, sortSpec]);
 
-  /* Currenlty IRowData Type enforces user to send columns
+  /* Currently IRowData Type enforces user to send columns
     so rows length will always be at least 1
     I wasn't sure if I should edit IRowData to have columns optional
     If we allow columns to be optional, previous implementations
@@ -186,29 +229,37 @@ const TypeTable: React.FC<IProps> = ({
   return (
     <Container>
       <TableContainer>
-        <HeaderRow>
-          {selectable ? <HeaderItem fixedWidth={30}><Checkbox checked={allChecked} disabled={isEmptyTable || isLoading} onChangeCallback={toggleAllCallbackWrapper} /></HeaderItem> : null}
-          {hasStatus ? <HeaderItem fixedWidth={10} /> : null}
-          {hasThumbnail ? <HeaderItem fixedWidth={70} /> : null}
-          {hasTypeIcon ? <HeaderItem fixedWidth={35} /> : null}
+        <HeaderRow headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}>
+          <OptionalHeaders {...{selectable, hasStatus, hasThumbnail, hasTypeIcon}}>
+            <Checkbox checked={allChecked} disabled={isEmptyTable || isLoading} onChangeCallback={toggleAllCallbackWrapper} />
+          </OptionalHeaders>
           {columnConfig.map((column, key) => {
-            const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth }: ITableColumnConfig = column;
+            const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth, groupTitle }: ITableColumnConfig = column;
             return (
               <HeaderItem
                 key={key}
                 alignment={alignment}
                 hasCopyButton={hasCopyButton}
                 minWidth={minWidth}
+                headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
+                isSortActive={sortActive}
               >
-                <TableHeaderTitle
-                  header={header}
-                  sortable={sortable}
-                  indexKey={key}
-                  columnId={columnId}
-                  isSortActive={sortActive}
-                  ascending={ascendingState}
-                  toggleSort={toggleSort}
-                />
+                <div style={{display:'flex', flexDirection:'column'}}>
+                  <div style={{display: 'flex', flexDirection: 'row', alignItems:'center'}} >
+                      <div>Example</div>
+                      <div style={{background:'#4d4d4d', height: '1px', flex: 1}}>
+                    </div>
+                  </div>
+                  <TableHeaderTitle
+                    header={header}
+                    sortable={sortable}
+                    indexKey={key}
+                    columnId={columnId}
+                    isSortActive={sortActive}
+                    ascending={ascendingState}
+                    toggleSort={toggleSort}
+                  />
+                </div>
               </HeaderItem>);
           })}
         </HeaderRow>
@@ -238,7 +289,7 @@ const TypeTable: React.FC<IProps> = ({
               columnConfig,
               hasStatus,
               hasThumbnail,
-              hasTypeIcon}} 
+              hasTypeIcon}}
             />
           );
         })}
