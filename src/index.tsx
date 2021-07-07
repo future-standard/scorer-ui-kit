@@ -2,6 +2,7 @@
 // import lightTheme from './themes/light';
 import lightTheme from './themes/light/light';
 import darkTheme from './themes/dark';
+import themeFallbackHelper from './themes/themeFallbackHelper';
 
 
 //Components Alerts
@@ -148,6 +149,7 @@ export {
   // Theme
   darkTheme,
   lightTheme,
+  themeFallbackHelper,
 
   // Alerts
   AlertBar,

@@ -1,14 +1,14 @@
 import React from 'react';
-// import { useDarkMode } from 'storybook-dark-mode';
+import { useDarkMode } from 'storybook-dark-mode';
 import { ThemeProvider } from 'styled-components';
-import {lightTheme, darkTheme } from 'scorer-ui-kit';
+import {lightTheme, darkTheme, themeFallbackHelper } from 'scorer-ui-kit';
 import Fonts from '../src/fonts';
 import { MemoryRouter as Router } from 'react-router-dom'
 import Style from '../src/style';
 
 
 const RouterDecorator = story => (
-  <Router 
+  <Router
     initialEntries={["/welcome"]}
     initialIndex={1}
   >
@@ -17,7 +17,7 @@ const RouterDecorator = story => (
 );
 
 const ThemeDecorator = story => (
-  <ThemeProvider theme={ lightTheme}>
+  <ThemeProvider theme={ useDarkMode() ? themeFallbackHelper(darkTheme, lightTheme): lightTheme}>
     <Fonts />
     <Style/>
     {story()}
