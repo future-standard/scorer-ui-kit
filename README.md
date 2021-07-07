@@ -50,3 +50,15 @@ Photo by [Van Thanh](https://unsplash.com/@vanthanh2608?utm_source=unsplash&amp;
 The Scorer UI Kit is released under the MIT license.
 
 Please note however that the icon set included in this software is included under license and remains property of Webalys LLC. These icons can be used only in the context of this open source project. For more information regarding this license, see [Streamline Icons Premium License](https://help.streamlineicons.com/license-premium).
+
+## Release
+1. Update the version in package.json and commit it. (this can done on a branch and then merged)
+2. Add a release tag with the following format: vXX.XX.XX or vXX.XX.XX-beta.x(for beta) - this should match the package.json version
+3. Push the tag to Github (this should cause the release)
+
+```
+grep version package.json
+#  "version": "1.5.2",
+git tag v1.0.0
+git push origin v1.0.0
+```
