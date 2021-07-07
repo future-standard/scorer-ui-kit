@@ -1,4 +1,4 @@
-import TypeTable from './molecules/TypeTable';
+import TypeTable from './organisms/TypeTable';
 import TableRowThumbnail from './atoms/TableRowThumbnail';
 import TableHeaderTitle from './atoms/TableHeaderTitle';
 import EditCell from './molecules/EditCell';
