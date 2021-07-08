@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import MediaBox  from '../../Misc/atoms/MediaBox';
 import  { useModal } from '../../hooks/useModal';
 import { IMediaType } from '../..';
+import Icon, {IconWrapper} from '../../Icons/Icon';
 
 type VideoAspects = '4:3' | '16:9';
 
@@ -34,7 +35,7 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
 
   &:hover {
     ${({mediaUrl}) => mediaUrl && css`
-      cursor: pointer;  
+      cursor: pointer;
     `};
 
     ${({theme, hoverZoom}) => theme && hoverZoom && css`
@@ -56,6 +57,26 @@ const Image = styled.div<{ image?: string }>`
   background-size: cover;
   background-repeat: no-repeat;
   display: ${p => p.image ? 'block' : 'none'};
+`;
+
+const PlayableDrop = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: hsla(0, 0%, 0%, .5);
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${IconWrapper} {
+    display: flex;
+    svg {
+      padding-left: 2px;
+    }
+  };
 `;
 
 interface IProps {
@@ -89,6 +110,10 @@ const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image, mediaUrl
   return (
     <Container {...{hoverZoom}} mediaUrl={mediaUrl} aspect='16:9' onClick={handleModal}>
       <Image {...{image}} />
+      {mediaUrl && (mediaType === 'video') &&
+        <PlayableDrop>
+          <Icon size={12} icon='Play' color='inverse' />
+        </PlayableDrop>}
     </Container>
   );
 };
