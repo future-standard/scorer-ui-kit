@@ -35,7 +35,7 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
 
   &:hover {
     ${({mediaUrl}) => mediaUrl && css`
-      cursor: pointer;  
+      cursor: pointer;
     `};
 
     ${({theme, hoverZoom}) => theme && hoverZoom && css`
@@ -106,8 +106,6 @@ const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image, mediaUrl
       });
     }
   },[createModal, mediaType, mediaUrl]);
-
-  console.log('mediaType', mediaType);
 
   return (
     <Container {...{hoverZoom}} mediaUrl={mediaUrl} aspect='16:9' onClick={handleModal}>
