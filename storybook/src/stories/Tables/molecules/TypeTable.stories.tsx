@@ -234,7 +234,7 @@ const columnConfigSample : ITableColumnConfig[] = [
   },
   {
     columnId: 'created',
-    groupTitle: 'Meta',
+    groupTitle: 'Device',
     header: 'Created',
     sortable: false,
     cellStyle: 'lowImportance',

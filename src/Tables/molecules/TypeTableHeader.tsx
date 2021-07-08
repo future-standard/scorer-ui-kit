@@ -71,7 +71,10 @@ const GroupTitle = styled.div`
 `;
 
 const Title = styled.div`
+  padding-left: 2px;
   padding-right: 8px;
+  color: hsla(210, 2%, 51%, 0.65);
+  font-weight: 500;
 `;
 
 // Keeps the height consistent with other rows
