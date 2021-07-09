@@ -4,12 +4,12 @@
     "main.js.map": "/scorer-ui-kit/static/js/main.f2010d80.chunk.js.map",
     "runtime-main.js": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js",
     "runtime-main.js.map": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js.map",
-    "static/js/2.35d64cfa.chunk.js": "/scorer-ui-kit/static/js/2.35d64cfa.chunk.js",
-    "static/js/2.35d64cfa.chunk.js.map": "/scorer-ui-kit/static/js/2.35d64cfa.chunk.js.map",
+    "static/js/2.59e3b64e.chunk.js": "/scorer-ui-kit/static/js/2.59e3b64e.chunk.js",
+    "static/js/2.59e3b64e.chunk.js.map": "/scorer-ui-kit/static/js/2.59e3b64e.chunk.js.map",
     "index.html": "/scorer-ui-kit/index.html",
-    "precache-manifest.bafe8ea62a334d836109336b7eea74de.js": "/scorer-ui-kit/precache-manifest.bafe8ea62a334d836109336b7eea74de.js",
+    "precache-manifest.116f6fdf4beb31bd5646c54fbdc91474.js": "/scorer-ui-kit/precache-manifest.116f6fdf4beb31bd5646c54fbdc91474.js",
     "service-worker.js": "/scorer-ui-kit/service-worker.js",
-    "static/js/2.35d64cfa.chunk.js.LICENSE.txt": "/scorer-ui-kit/static/js/2.35d64cfa.chunk.js.LICENSE.txt",
+    "static/js/2.59e3b64e.chunk.js.LICENSE.txt": "/scorer-ui-kit/static/js/2.59e3b64e.chunk.js.LICENSE.txt",
     "static/media/Lato-Bold.ttf": "/scorer-ui-kit/static/media/Lato-Bold.2d15decc.ttf",
     "static/media/Lato-Light.ttf": "/scorer-ui-kit/static/media/Lato-Light.0f73589a.ttf",
     "static/media/Lato-Regular.ttf": "/scorer-ui-kit/static/media/Lato-Regular.c5eb5440.ttf",
@@ -39,7 +39,7 @@
   },
   "entrypoints": [
     "static/js/runtime-main.1ec9fcf8.js",
-    "static/js/2.35d64cfa.chunk.js",
+    "static/js/2.59e3b64e.chunk.js",
     "static/js/main.f2010d80.chunk.js"
   ]
 }
