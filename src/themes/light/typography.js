@@ -479,6 +479,32 @@ export const typography = {
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
                 "color": "hsla(204, 2.4%, 59%, 1.000)"
+            },
+          },
+        "subHeader": {
+            "center": {
+                "textAlign": "center",
+                "fontSize": "14px",
+                "fontWeight": 700,
+                "letterSpacing": "0.4px",
+                "textDecoration": "none",
+                "color": "hsla(204, 2%, 59%, 1.000)"
+            },
+            "left": {
+                "textAlign": "left",
+                "fontSize": "14px",
+                "fontWeight": 700,
+                "letterSpacing": "0.4px",
+                "textDecoration": "none",
+                "color": "hsla(204, 2%, 59%, 1.000)"
+            },
+            "right": {
+                "textAlign": "right",
+                "fontSize": "14px",
+                "fontWeight": 700,
+                "letterSpacing": "0.4px",
+                "textDecoration": "none",
+                "color": "hsla(204, 2%, 59%, 1.000)"
             }
         }
     },
