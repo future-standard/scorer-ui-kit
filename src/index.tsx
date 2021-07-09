@@ -134,7 +134,8 @@ import {
   Sidebar,
   GlobalUI,
   INotificationItem,
-  INotificationsHistory
+  INotificationsHistory,
+  ICustomDrawer,
 } from './Global';
 
 // Tabs
@@ -280,4 +281,5 @@ export type {
   ISliderMark,
   INotificationItem,
   INotificationsHistory,
+  ICustomDrawer,
 };

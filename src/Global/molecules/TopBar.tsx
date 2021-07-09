@@ -7,7 +7,7 @@ import { ITopBar } from '../index';
 import NotificationsHistory from './NotificationsHistory';
 
 const Container = styled.div`
-  z-index: 9; 
+  z-index: 9;
   position: sticky;
   top: 0;
   align-self: flex-start;
@@ -100,7 +100,7 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
   bottom: 0;
   background: ${({ theme }) => theme.styles.global.mainMenu.background};
   border-left: ${({ theme: { colors } }) => colors.divider} 1px solid;
-  width: ${({baseWidth}) => baseWidth ? baseWidth : `200px`};
+  width: ${({ baseWidth }) => baseWidth ? baseWidth : `200px`};
   opacity: 0;
   visibility: hidden;
   z-index: 100;
@@ -130,6 +130,8 @@ const NotificationsContainer = styled.div`
     margin-right: -17px;
 `;
 
+type IDrawerKeys = 'user' | 'notifications' | 'custom' | '';
+
 const TopBar: React.FC<ITopBar> = ({
   hasNotifications = false,
   hasLanguage = false,
@@ -142,12 +144,25 @@ const TopBar: React.FC<ITopBar> = ({
   userDrawerBespoke,
   loggedInUser,
   notificationsHistory,
+  customDrawer,
   onLogout = () => { },
   onLanguageToggle = () => { }
 }) => {
 
-  const [isUserMenuOpen, setUserMenuOpen] = useState<boolean>(false);
-  const [isNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);
+  const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>('');
+
+  const toggleDrawers = (drawerKey: IDrawerKeys) => {
+    setOpenDrawer(
+      prevDrawer => {
+        // if prevDrawer is open, just close
+        if (prevDrawer === drawerKey) {
+          return '';
+        }
+
+        return drawerKey;
+      }
+    );
+  };
 
   return (
     <Container>
@@ -160,12 +175,13 @@ const TopBar: React.FC<ITopBar> = ({
         </SearchBar> : <div />}
 
       <ButtonArea>
-        {hasNotifications ? <DrawerToggle isActive={isNotificationsOpen} onClick={() => { setNotificationsOpen(!isNotificationsOpen); setUserMenuOpen(false); }}><Icon icon='Notifications' size={18} color='dimmed' /></DrawerToggle> : null}
-        <DrawerToggle isActive={isUserMenuOpen} onClick={() => { setUserMenuOpen(!isUserMenuOpen); setNotificationsOpen(false); }}><Icon icon='UserProfile' size={18} color='dimmed' /></DrawerToggle>
+        {customDrawer ? <DrawerToggle isActive={openDrawer==='custom'} onClick={() => toggleDrawers('custom')}><Icon icon={customDrawer.icon} size={18} color='dimmed' /></DrawerToggle> : null}
+        {hasNotifications ? <DrawerToggle isActive={openDrawer==='notifications'} onClick={() => toggleDrawers('notifications')}><Icon icon='Notifications' size={18} color='dimmed' /></DrawerToggle> : null}
+        <DrawerToggle isActive={openDrawer==='user'} onClick={() => toggleDrawers('user')}><Icon icon='UserProfile' size={18} color='dimmed' /></DrawerToggle>
       </ButtonArea>
 
       {/* User Menu */}
-      <Drawer isOpen={isUserMenuOpen}>
+      <Drawer isOpen={openDrawer==='user'}>
         <UserMenu {...{
           hasLanguage,
           hasLogout,
@@ -182,11 +198,17 @@ const TopBar: React.FC<ITopBar> = ({
 
       {/* Notifications */}
       {hasNotifications ?
-        <Drawer isOpen={isNotificationsOpen} baseWidth='300px'>
+        <Drawer isOpen={openDrawer==='notifications'} baseWidth='300px'>
           <NotificationsContainer>
             {notificationsHistory ? <NotificationsHistory {...notificationsHistory} /> : null}
           </NotificationsContainer>
         </Drawer> : null}
+
+      {customDrawer && (
+        <Drawer isOpen={openDrawer==='custom'} baseWidth={customDrawer.width ? customDrawer.width : "200px"}>
+          {customDrawer.customComponent}
+        </Drawer>
+      )}
     </Container>
   );
 
