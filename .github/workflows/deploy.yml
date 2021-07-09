@@ -36,17 +36,11 @@ jobs:
     - name: Build library
       run: npm run build
 
-    - name: remove node modules
-      run: rm -rf node_modules
-
     - name: Build example
       run: |
         cd example
         npm install
         npm run build
-
-    - name: remove node modules
-      run: rm -rf node_modules
 
     - name: Build storybook
       run: |
