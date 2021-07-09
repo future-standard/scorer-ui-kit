@@ -36,7 +36,7 @@ const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignme
   `};
 
   ${({ headerStyle, isSortActive }) => headerStyle === 'subHeader' && css`
-  padding-bottom: 20px;
+  padding-bottom: 15px;
 
   &::after {
     content: '';
@@ -68,6 +68,7 @@ const GroupTitle = styled.div`
   flex-direction: row;
   align-items: center;
   align-self: stretch;
+  margin-bottom: 4px;
 `;
 
 const Title = styled.div`
@@ -75,6 +76,9 @@ const Title = styled.div`
   padding-right: 8px;
   color: hsla(210, 2%, 51%, 0.65);
   font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
 `;
 
 // Keeps the height consistent with other rows
@@ -92,7 +96,7 @@ const MiddleLine = styled.div<{ isLastOfGroup?: boolean }>`
 `;
 
 const renderGroupHeader = (columnConfig: ITableColumnConfig[], index: number) => {
-  if (index < 0) { return null };
+  if (index < 0) { return null; }
 
   let isLastOfGroup: boolean = true;
 
@@ -124,7 +128,7 @@ const renderGroupHeader = (columnConfig: ITableColumnConfig[], index: number) =>
       <Title>{columnConfig[index].groupTitle}</Title>
       <MiddleLine {...{ isLastOfGroup }} />
     </Fragment>
-  )
+  );
 };
 
 interface ITableHeader {
@@ -214,7 +218,8 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
         const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth }: ITableColumnConfig = column;
         return (
           <HeaderItem
-            {...{ key, alignment, hasCopyButton, minWidth }}
+            key={key}
+            {...{ alignment, hasCopyButton, minWidth }}
             headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
             isSortActive={sortActive}
           >
@@ -222,8 +227,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
               {hasHeaderGroups &&
                 <GroupTitle>
                   {hasHeaderGroups && renderGroupHeader(allColls, key)}
-                </GroupTitle>
-              }
+                </GroupTitle>}
               <TableHeaderTitle
                 header={header}
                 sortable={sortable}

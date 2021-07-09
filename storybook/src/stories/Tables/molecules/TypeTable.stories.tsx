@@ -29,6 +29,7 @@ interface IExampleData  {
   status: IDeviceStatus
   statusText: string
   created: string
+  totalTime: string
   usage: number
   usageUnit: string
   cost: number
@@ -44,6 +45,7 @@ const defaultData : IExampleData[] = [
     status: 'good',
     statusText: 'OK',
     created: 'Just Now',
+    totalTime: '00:10:10',
     usage: 242,
     usageUnit: 'mb',
     cost: 20000,
@@ -55,6 +57,7 @@ const defaultData : IExampleData[] = [
     status: 'danger',
     statusText: 'Warning',
     created: '1st October 2019',
+    totalTime: '00:40:12',
     usage: 2.1,
     usageUnit: 'gb',
     cost: 4000,
@@ -66,6 +69,7 @@ const defaultData : IExampleData[] = [
     status: 'danger',
     statusText: 'Warning',
     created: '22nd March 2020',
+    totalTime: '00:70:00',
     usage: 2.1,
     usageUnit: 'tb',
     cost: 7000,
@@ -77,6 +81,7 @@ const defaultData : IExampleData[] = [
     status: 'good',
     statusText: 'OK',
     created: '2nd April 2020',
+    totalTime: '00:30:00',
     usage:  153,
     usageUnit: 'mb',
     cost: 25000,
@@ -88,6 +93,7 @@ const defaultData : IExampleData[] = [
     status: 'caution',
     statusText: 'Caution',
     created: '2nd April 2020',
+    totalTime: '01:30:00',
     usage:  153,
     usageUnit: 'mb',
     cost: 25000,
@@ -99,6 +105,7 @@ const defaultData : IExampleData[] = [
     status: 'good',
     statusText: 'OK',
     created: '2nd April 2020',
+    totalTime: '01:30:00',
     usage:  153,
     usageUnit: 'mb',
     cost: 25000,
@@ -110,6 +117,7 @@ const defaultData : IExampleData[] = [
     status: 'good',
     statusText: 'OK',
     created: '2nd April 2020',
+    totalTime: '01:30:00',
     usage:  153,
     usageUnit: 'mb',
     cost: 25000,
@@ -121,6 +129,7 @@ const defaultData : IExampleData[] = [
     status: 'neutral',
     statusText: 'Offline',
     created: '2nd April 2020',
+    totalTime: '01:30:00',
     usage:  153,
     usageUnit: 'mb',
     cost: 25000,
@@ -132,6 +141,7 @@ const defaultData : IExampleData[] = [
     status: 'good',
     statusText: 'OK',
     created: '2nd April 2020',
+    totalTime: '01:30:00',
     usage:  153,
     usageUnit: 'mb',
     cost: 25000,
@@ -142,6 +152,7 @@ const defaultData : IExampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OK',
+    totalTime: '01:30:00',
     created: '2nd April 2020',
     usage:  153,
     usageUnit: 'mb',
@@ -154,6 +165,7 @@ const defaultData : IExampleData[] = [
     status: 'good',
     statusText: 'OK',
     created: '2nd April 2020',
+    totalTime: '01:30:00',
     usage:  153,
     usageUnit: 'mb',
     cost: 25000,
@@ -189,6 +201,7 @@ const rowMaker = (rowData: IExampleData[]) : ITypeTableData=> {
     status,
     statusText,
     created,
+    totalTime,
     usage,
     usageUnit,
     cost
@@ -206,6 +219,7 @@ const rowMaker = (rowData: IExampleData[]) : ITypeTableData=> {
         { text: deviceName, href: deviceLink },
         { text: statusText, status},
         { text: created },
+        { text: totalTime},
         { text: `${usage}`, unit: usageUnit },
         { text: yenCost},
       ]
@@ -239,6 +253,15 @@ const columnConfigSample : ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'lowImportance',
     alignment: 'center',
+    hasCopyButton: true
+  },
+  {
+    columnId: 'run',
+    groupTitle: 'Time',
+    header: 'Total Run Time',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'left',
     hasCopyButton: true
   },
   {
