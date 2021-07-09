@@ -49,6 +49,14 @@ export interface IMenuTop {
     defaultMenuOpen?: boolean
   }
 
+  export interface ICustomDrawer {
+    customComponent: ReactElement
+    icon: string
+    status?: string
+    counter?: number
+    width?: string
+  }
+
   export interface ITopBar {
     hasNotifications?: boolean;
     userSubmenu?: any[];
@@ -61,6 +69,7 @@ export interface IMenuTop {
     searchPlaceholder?: string;
     userDrawerBespoke?: ReactElement;
     notificationsHistory? : INotificationsHistory;
+    customDrawer?: ICustomDrawer;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
   }

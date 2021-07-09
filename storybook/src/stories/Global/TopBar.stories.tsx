@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import {  object, text, boolean } from "@storybook/addon-knobs";
-import {TopBar} from 'scorer-ui-kit';
+import { object, text, boolean } from "@storybook/addon-knobs";
+import { TopBar, ICustomDrawer } from 'scorer-ui-kit';
 
 const Container = styled.div`
   position: fixed;
@@ -16,8 +16,17 @@ export default {
   decorators: []
 };
 
-export const _TopBar = () => {
+const MyCustomDrawer: ReactElement = <h1>Hello Drawer</h1>;
 
+const drawerProps : ICustomDrawer = {
+  customComponent: MyCustomDrawer,
+  icon: 'Add',
+  status: 'danger',
+  counter: 5,
+  width: '300px;'
+}
+
+export const _TopBar = () => {
 
   const loggedInUser = text("Logged In User", "full.name@example.com");
 
@@ -45,5 +54,22 @@ export const _TopBar = () => {
 
   // userDrawerBespoke: See examples for implementation of this prop.
 
-  return <Container><TopBar {...{loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser}}/></Container>;
+  return (
+    <Container>
+      <TopBar {...{
+        loggedInUser,
+        userSubmenu,
+        hasSearch,
+        hasLogout,
+        hasNotifications,
+        logoutLink,
+        searchPlaceholder,
+        hasLanguage,
+        hasCurrentUser
+        }
+        }
+        customDrawer={drawerProps}
+        />
+    </Container>
+  );
 };
