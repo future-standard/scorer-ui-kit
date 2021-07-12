@@ -135,7 +135,7 @@ import {
   GlobalUI,
   INotificationItem,
   INotificationsHistory,
-  ICustomDrawer,
+  ICustomDrawer
 } from './Global';
 
 // Tabs
@@ -272,6 +272,8 @@ export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
 
 export type IMediaType = 'img' | 'video'
 
+export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral';
+
 export type {
   IModal,
   INotificationProps,
@@ -281,5 +283,5 @@ export type {
   ISliderMark,
   INotificationItem,
   INotificationsHistory,
-  ICustomDrawer,
+  ICustomDrawer
 };

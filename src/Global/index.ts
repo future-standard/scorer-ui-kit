@@ -3,6 +3,7 @@ import {Content, Layout, MainContainer} from './atoms/Layout';
 import MainMenu from './organisms/MainMenu';
 import TopBar from './molecules/TopBar';
 import GlobalUI from './templates/GlobalUI';
+import { IStatusDot } from '..';
 
 export {
   SidebarBox,
@@ -15,12 +16,12 @@ export {
 } from './molecules/Sidebar';
 
 export {
-    Content,
-    Layout,
-    MainMenu,
-    TopBar,
-    MainContainer,
-    GlobalUI,
+  Content,
+  Layout,
+  MainMenu,
+  TopBar,
+  MainContainer,
+  GlobalUI
 };
 
 export interface IMenuTop {
@@ -52,7 +53,7 @@ export interface IMenuTop {
   export interface ICustomDrawer {
     customComponent: ReactElement
     icon: string
-    status?: string
+    status?: IStatusDot
     counter?: number
     width?: string
   }

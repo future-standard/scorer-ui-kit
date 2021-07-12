@@ -5,6 +5,7 @@ import Icon from '../../Icons/Icon';
 import UserMenu from '../molecules/UserMenu';
 import { ITopBar } from '../index';
 import NotificationsHistory from './NotificationsHistory';
+import { IStatusDot } from '../..';
 
 const Container = styled.div`
   z-index: 9;
@@ -63,6 +64,7 @@ const SearchInput = styled.input`
 const ButtonArea = styled.div`
   height: inherit;
   padding-right: 10px;
+  display: flex;
 `;
 
 const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolean }>`
@@ -130,7 +132,39 @@ const NotificationsContainer = styled.div`
     margin-right: -17px;
 `;
 
+const IconStatusWrapper = styled.div`
+  position: relative;
+`;
+
+const StatusCounter = styled.div<{color?: IStatusDot}>`
+  background-color: ${({theme, color}) => color ? theme.colors.status[color] : 'hsla(0, 0%, 91.8%, 1.000)'};
+  position: absolute;
+  right: 7px;
+  top: -12px;
+  border-radius: 50%;
+  height: 14px;
+  width: 14px;
+  font-size: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StatusDot = styled.div<{color?: IStatusDot}>`
+  background-color: ${({theme, color}) => color ? theme.colors.status[color] : 'hsla(0, 0%, 91.8%, 1.000)'};
+  width: 10px;
+  height: 10px;
+  border: solid 2px hsl(0, 0%, 100%);
+  border-radius: 50%;
+  position: absolute;
+  top: -6px;
+  right: 7px;
+`;
+
+
 type IDrawerKeys = 'user' | 'notifications' | 'custom' | '';
+
 
 const TopBar: React.FC<ITopBar> = ({
   hasNotifications = false,
@@ -175,13 +209,27 @@ const TopBar: React.FC<ITopBar> = ({
         </SearchBar> : <div />}
 
       <ButtonArea>
-        {customDrawer ? <DrawerToggle isActive={openDrawer==='custom'} onClick={() => toggleDrawers('custom')}><Icon icon={customDrawer.icon} size={18} color='dimmed' /></DrawerToggle> : null}
-        {hasNotifications ? <DrawerToggle isActive={openDrawer==='notifications'} onClick={() => toggleDrawers('notifications')}><Icon icon='Notifications' size={18} color='dimmed' /></DrawerToggle> : null}
-        <DrawerToggle isActive={openDrawer==='user'} onClick={() => toggleDrawers('user')}><Icon icon='UserProfile' size={18} color='dimmed' /></DrawerToggle>
+        {customDrawer && (
+          <DrawerToggle isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
+            <IconStatusWrapper>
+              {customDrawer.status && (customDrawer.counter === undefined)  && <StatusDot color={customDrawer.status} />}
+              {(customDrawer.counter !== undefined) && <StatusCounter color={customDrawer.status}>{customDrawer.counter}</StatusCounter>}
+              <Icon icon={customDrawer.icon} size={customDrawer.status && (customDrawer.counter === undefined) ? 14 : 18} color='dimmed' />
+            </IconStatusWrapper>
+          </DrawerToggle>
+        )}
+        {hasNotifications && (
+          <DrawerToggle isActive={openDrawer === 'notifications'} onClick={() => toggleDrawers('notifications')}>
+            <Icon icon='Notifications' size={18} color='dimmed' />
+          </DrawerToggle>
+        )}
+        <DrawerToggle isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
+          <Icon icon='UserProfile' size={18} color='dimmed' />
+        </DrawerToggle>
       </ButtonArea>
 
       {/* User Menu */}
-      <Drawer isOpen={openDrawer==='user'}>
+      <Drawer isOpen={openDrawer === 'user'}>
         <UserMenu {...{
           hasLanguage,
           hasLogout,
@@ -198,14 +246,14 @@ const TopBar: React.FC<ITopBar> = ({
 
       {/* Notifications */}
       {hasNotifications ?
-        <Drawer isOpen={openDrawer==='notifications'} baseWidth='300px'>
+        <Drawer isOpen={openDrawer === 'notifications'} baseWidth='300px'>
           <NotificationsContainer>
             {notificationsHistory ? <NotificationsHistory {...notificationsHistory} /> : null}
           </NotificationsContainer>
         </Drawer> : null}
 
       {customDrawer && (
-        <Drawer isOpen={openDrawer==='custom'} baseWidth={customDrawer.width ? customDrawer.width : "200px"}>
+        <Drawer isOpen={openDrawer === 'custom'} baseWidth={customDrawer.width ? customDrawer.width : "200px"}>
           {customDrawer.customComponent}
         </Drawer>
       )}
