@@ -11,6 +11,12 @@ import MobileUserMenu from '../molecules/MobileUserMenu';
 import NotificationsHistory from '../molecules/NotificationsHistory';
 import { MOBILE_NAVBAR_HEIGHT } from '../atoms/Layout';
 
+const CLOSE_ID = 'closeMenu';
+const NOTI_TAB = 'notifications';
+const USER_TAB= 'user';
+const MENU_TAB = 'menu';
+const CUSTOM_TAB = 'custom';
+
 const Container = styled.nav`
   background-color: ${({theme}) => theme.styles.global.mainMenu.background.backgroundColor};
   position: sticky;
@@ -55,6 +61,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   userDrawerBespoke,
   loggedInUser,
   notificationsHistory,
+  customDrawer,
   onLogout,
   onLanguageToggle,
 }) => {
@@ -63,18 +70,22 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
     <Container>
       <Tabs>
         <HeaderContainer>
-          <MobileLogoLink {...{ home, logoMark }} closeId='closeMenu' />
-          <TabList defaultTabId='closeMenu'>
-            {hasNotifications? <MobileTab tabFor='notifications' icon='Notifications' closeId='closeMenu' /> : null}
-            <MobileTab tabFor='user' icon='UserProfile' closeId='closeMenu' />
-            <MobileTab tabFor='menu' icon='Menu' closeId='closeMenu' />
+          <MobileLogoLink {...{ home, logoMark }} closeId={CLOSE_ID} />
+          <TabList defaultTabId={CLOSE_ID}>
+            {customDrawer && <MobileTab {...customDrawer} tabFor={CUSTOM_TAB} closeId={CLOSE_ID} />}
+            {hasNotifications? <MobileTab tabFor={NOTI_TAB} icon='Notifications' closeId={CLOSE_ID} /> : null}
+            <MobileTab tabFor={USER_TAB} icon='UserProfile' closeId={CLOSE_ID} />
+            <MobileTab tabFor={MENU_TAB} icon='Menu' closeId={CLOSE_ID} />
           </TabList>
         </HeaderContainer>
-        <MobileNavbarContainer closeId='closeMenu'>
-          <TabContent tabId='notifications'>
+        <MobileNavbarContainer closeId={CLOSE_ID}>
+          <TabContent tabId={CUSTOM_TAB}>
+            {customDrawer && customDrawer.customComponent}
+          </TabContent>
+          <TabContent tabId={NOTI_TAB}>
             {notificationsHistory && hasNotifications ? <NotificationsHistory {...notificationsHistory} /> : null}
           </TabContent>
-          <TabContent tabId='user'>
+          <TabContent tabId={USER_TAB}>
             <MobileUserMenu
               {...{
               hasLanguage,
@@ -87,14 +98,14 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
               onLogout,
               onLanguageToggle
             }}
-              closeId='closeMenu'
+              closeId={CLOSE_ID}
             />
 
           </TabContent>
-          <TabContent tabId='menu'>
-            <MobileMenu {...{ content, supportUrl, defaultMenuOpen }} closeId='closeMenu' />
+          <TabContent tabId={MENU_TAB}>
+            <MobileMenu {...{ content, supportUrl, defaultMenuOpen }} closeId={CLOSE_ID} />
           </TabContent>
-          <CloseButton {...{ closeText }} closeId='closeMenu' />
+          <CloseButton {...{ closeText }} closeId={CLOSE_ID} />
         </MobileNavbarContainer>
       </Tabs>
     </Container>

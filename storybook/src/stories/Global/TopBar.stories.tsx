@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { object, text, boolean } from "@storybook/addon-knobs";
-import { TopBar, ICustomDrawer } from 'scorer-ui-kit';
+import { TopBar, ICustomDrawer, INotificationItem, INotificationsHistory } from 'scorer-ui-kit';
 
 const Container = styled.div`
   position: fixed;
