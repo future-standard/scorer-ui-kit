@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
+import StatusIcon from '../../Icons/StatusIcon';
 import UserMenu from '../molecules/UserMenu';
 import { ITopBar } from '../index';
 import NotificationsHistory from './NotificationsHistory';
-import { IStatusDot } from '../..';
 
 const Container = styled.div`
   z-index: 9;
@@ -132,37 +132,6 @@ const NotificationsContainer = styled.div`
     margin-right: -17px;
 `;
 
-const IconStatusWrapper = styled.div`
-  position: relative;
-`;
-
-const StatusCounter = styled.div<{color?: IStatusDot}>`
-  background-color: ${({theme, color}) => color ? theme.colors.status[color] : 'hsla(0, 0%, 91.8%, 1.000)'};
-  position: absolute;
-  right: 7px;
-  top: -12px;
-  border-radius: 50%;
-  height: 14px;
-  width: 14px;
-  font-size: 10px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StatusDot = styled.div<{color?: IStatusDot}>`
-  background-color: ${({theme, color}) => color ? theme.colors.status[color] : 'hsla(0, 0%, 91.8%, 1.000)'};
-  width: 10px;
-  height: 10px;
-  border: solid 2px hsl(0, 0%, 100%);
-  border-radius: 50%;
-  position: absolute;
-  top: -6px;
-  right: 7px;
-`;
-
-
 type IDrawerKeys = 'user' | 'notifications' | 'custom' | '';
 
 
@@ -211,11 +180,7 @@ const TopBar: React.FC<ITopBar> = ({
       <ButtonArea>
         {customDrawer && (
           <DrawerToggle isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
-            <IconStatusWrapper>
-              {customDrawer.status && (customDrawer.counter === undefined)  && <StatusDot color={customDrawer.status} />}
-              {(customDrawer.counter !== undefined) && <StatusCounter color={customDrawer.status}>{customDrawer.counter}</StatusCounter>}
-              <Icon icon={customDrawer.icon} size={customDrawer.status && (customDrawer.counter === undefined) ? 14 : 18} color='dimmed' />
-            </IconStatusWrapper>
+            <StatusIcon {...customDrawer} />
           </DrawerToggle>
         )}
         {hasNotifications && (

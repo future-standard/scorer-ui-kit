@@ -1,8 +1,10 @@
 import React, { useContext, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { TabContext, ContextProps } from './Tabs';
-import Icon, { IconWrapper } from '../Icons/Icon';
+import { IconWrapper } from '../Icons/Icon';
+import StatusIcon from '../Icons/StatusIcon';
 import { resetButtonStyles } from '../common/index';
+import { IStatusDot } from '..';
 
 const Container = styled.button`
   ${resetButtonStyles}
@@ -52,9 +54,11 @@ interface IMobileTab {
   tabFor: string
   icon: string
   closeId: string
+  counter?: number
+  status?: IStatusDot
 }
 
-const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, closeId, ...props }) => {
+const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, closeId, counter, status, ...props }) => {
   const { selected, setSelected }: ContextProps = useContext(TabContext);
 
   const onChangeTab = useCallback((tabId: string) => {
@@ -65,7 +69,7 @@ const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, closeId, ...props }) =>
   return (
     <Container {...props} onClick={() => onChangeTab(tabFor)}>
       <LinkTab isActive={selected === tabFor}>
-        <Icon {...{ icon }} size={18} />
+        <StatusIcon {...{icon, status, counter}} />
       </LinkTab>
     </Container>
   );

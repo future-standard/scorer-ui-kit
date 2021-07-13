@@ -48,6 +48,8 @@ import {
 } from './Filters';
 
 import Icon, {IconSVGs} from  './Icons/Icon';
+import StatusIcon from './Icons/StatusIcon';
+
 // Components - Line UI
 import {
   LineUI,
@@ -198,6 +200,7 @@ export {
   //Icon
   Icon,
   IconSVGs,
+  StatusIcon,
 
   //Pages
   IntroductionText,
