@@ -52,6 +52,7 @@ export {
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
 export type TypeButtonDesigns = 'primary' | 'secondary' | 'danger';
 export type TypeButtonSizes = 'xsmall' | 'small' | 'normal' | 'large';
+export type ISelectSizes = 'small' | 'normal';
 
 interface ButtonProps {
   size?: TypeButtonSizes
