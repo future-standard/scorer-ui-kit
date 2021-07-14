@@ -5,15 +5,15 @@ import { ISelectSizes } from '../index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 
-const Container = styled.div<{styleSize?: ISelectSizes,}>`
+const Container = styled.div<{ styleSize?: ISelectSizes, }>`
 
-${({styleSize}) => (styleSize === 'small') && css`
+${({ styleSize }) => (styleSize === 'small') && css`
   ${StyledLabel} {
-    span {
-      margin-bottom: 6px;
+      span {
+        margin-bottom: 6px;
+      }
     }
-  }
-`}
+  `}
 `;
 
 const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder: boolean, selectWidth?: string }>`
@@ -23,7 +23,7 @@ const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder
   height: 40px;
   padding: 0 25px 0 12px;
   appearance: none;
-  width: ${({selectWidth}) => selectWidth ? selectWidth : '220px'};
+  width: ${({ selectWidth }) => selectWidth ? selectWidth : '220px'};
 
   &::-ms-expand {
     display: none;
@@ -41,7 +41,7 @@ const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder
     ${typography.form.input.value.compact};
   `};
 
-  ${({ theme, activePlaceholder }) =>  activePlaceholder && css`
+  ${({ theme, activePlaceholder }) => activePlaceholder && css`
     ${theme.typography.form.input.placeholder.normal};
   `};
 
@@ -91,7 +91,7 @@ const SelectField: React.FC<ISelect> = ({
   labelProps,
   styleSize,
   selectWidth,
-  onChange = () => {},
+  onChange = () => { },
   children,
   ...props
 }) => {
@@ -99,14 +99,14 @@ const SelectField: React.FC<ISelect> = ({
   const [activePlaceholder, setPlaceholderInactive] = useState<boolean>(true);
 
   const handleOnChange = useCallback((e) => {
-    setPlaceholderInactive( prev => {
-      if(prev){ return false; }
+    setPlaceholderInactive(prev => {
+      if (prev) { return false; }
       return prev;
     });
 
-    const {value} = e.target;
+    const { value } = e.target;
     onChange(value);
-  },[onChange]);
+  }, [onChange]);
 
   const renderSelect = (htmlFor?: string) => (
     <SelectWrapper>
@@ -125,7 +125,7 @@ const SelectField: React.FC<ISelect> = ({
   );
 
   return (
-    <Container {...{styleSize}}>
+    <Container {...{ styleSize }}>
       {labelProps
         ? (
           <Label {...labelProps}>

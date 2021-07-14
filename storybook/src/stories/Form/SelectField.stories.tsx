@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { text, select, object} from "@storybook/addon-knobs";
+import { text, select, object } from "@storybook/addon-knobs";
 import { SelectField } from 'scorer-ui-kit';
 
 export default {
@@ -9,17 +9,14 @@ export default {
   decorators: []
 };
 
-
 const Container = styled.div`
   margin: 20px;
 `;
 
-
-
 export const _SelectField = () => {
 
   const styleSize = select('Size', { Small: 'small', Normal: 'normal' }, 'normal');
-  const placeholder = text('Placeholder','Choose an option...');
+  const placeholder = text('Placeholder', 'Choose an option...');
 
   const selectWidth = text('Select Width', '');
   const labelProps = object('Label Props', {
