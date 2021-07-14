@@ -32,7 +32,7 @@ export const _Status_Icon = () => {
 
   const icon = select("Name", iconList, Object.keys(iconList)[0]);
   const counter = number('Counter', 5);
-  const status = select("Status", { Caution: 'caution', Danger: 'danger', Good: 'good', Neutral:'neutral'}, 'danger');
+  const status = select("Status", { Caution: 'caution', Danger: 'danger', Good: 'good', Neutral:'neutral', Highlight:'highlight'}, 'danger');
   const undefineCounter = boolean('Show empty counter', false);
 
   return (
