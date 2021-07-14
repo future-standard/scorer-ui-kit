@@ -18,7 +18,7 @@ export default {
 
 const MyCustomDrawer: ReactElement = <h1>Hello Drawer</h1>;
 
-const drawerProps : ICustomDrawer = {
+const drawerProps: ICustomDrawer = {
   customComponent: MyCustomDrawer,
   icon: 'Add',
   status: 'danger',
@@ -131,11 +131,9 @@ export const _TopBar = () => {
         searchPlaceholder,
         hasLanguage,
         hasCurrentUser,
-        notificationsHistory
-        }
-        }
+        notificationsHistory}}
         customDrawer={drawerProps}
-        />
+      />
     </Container>
   );
 };
