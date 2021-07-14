@@ -34,9 +34,9 @@ const renderNotifications = (items: INotificationItem[], type: string) => (
 const NotificationsHistory: React.FC<INotificationsHistory> = ({
   read,
   unread,
-  noNotificationsText = 'NO NEW NOTIFICATIONS',
-  readNotificationsText = 'NEW',
-  unreadNotificationsText = 'READ',
+  noNotificationsText = 'No new notifications',
+  readNotificationsText = 'New',
+  unreadNotificationsText = 'Read',
 
 }) => {
 

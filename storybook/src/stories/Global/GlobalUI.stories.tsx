@@ -253,9 +253,9 @@ const readNotifications: INotificationItem[] = [
 const allNotifications: INotificationsHistory = {
   unread: unreadNotifications,
   read: readNotifications,
-  noNotificationsText: 'NO NEW NOTIFICATIONS',
-  readNotificationsText: 'NEW',
-  unreadNotificationsText: 'READ',
+  noNotificationsText: 'No new notifications',
+  readNotificationsText: 'New',
+  unreadNotificationsText: 'Read',
 }
 
 const MyCustomDrawer: ReactElement = <h1>Hello Drawer</h1>;
