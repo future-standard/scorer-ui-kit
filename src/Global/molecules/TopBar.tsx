@@ -132,7 +132,7 @@ const NotificationsContainer = styled.div`
     margin-right: -17px;
 `;
 
-type IDrawerKeys = 'user' | 'notifications' | 'custom' | undefined;
+type IDrawerKeys = 'user' | 'notifications' | 'custom' | null;
 
 
 const TopBar: React.FC<ITopBar> = ({
@@ -152,14 +152,14 @@ const TopBar: React.FC<ITopBar> = ({
   onLanguageToggle = () => { }
 }) => {
 
-  const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(undefined);
+  const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
 
   const toggleDrawers = (drawerKey: IDrawerKeys) => {
     setOpenDrawer(
       prevDrawer => {
-        // if prevDrawer is open, just update to undefined to close
+        // if prevDrawer is open, just update to null to close
         if (prevDrawer === drawerKey) {
-          return undefined;
+          return null;
         }
 
         return drawerKey;
