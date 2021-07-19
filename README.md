@@ -57,8 +57,9 @@ Please note however that the icon set included in this software is included unde
 3. Push the tag to Github (this should cause the release)
 
 ```
+git commit -m "Bump 1.5.2"
 grep version package.json
 #  "version": "1.5.2",
-git tag v1.0.0
-git push origin v1.0.0
+git tag v1.5.2
+git push origin v1.5.2
 ```
