@@ -39,6 +39,8 @@ import {
   DropArea,
   CropTool,
   AvatarUploader,
+  SelectField,
+  ISelectSizes,
 } from './Form';
 
 // Components - Filter
@@ -189,6 +191,7 @@ export {
   DropArea,
   CropTool,
   AvatarUploader,
+  SelectField,
 
   // Modals
   ConfirmationModal,
@@ -288,5 +291,6 @@ export type {
   ISliderMark,
   INotificationItem,
   INotificationsHistory,
+  ISelectSizes,
   ICustomDrawer
 };
