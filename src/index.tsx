@@ -50,6 +50,8 @@ import {
 } from './Filters';
 
 import Icon, {IconSVGs} from  './Icons/Icon';
+import StatusIcon from './Icons/StatusIcon';
+
 // Components - Line UI
 import {
   LineUI,
@@ -136,7 +138,8 @@ import {
   Sidebar,
   GlobalUI,
   INotificationItem,
-  INotificationsHistory
+  INotificationsHistory,
+  ICustomDrawer
 } from './Global';
 
 // Tabs
@@ -200,6 +203,7 @@ export {
   //Icon
   Icon,
   IconSVGs,
+  StatusIcon,
 
   //Pages
   IntroductionText,
@@ -274,6 +278,10 @@ export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
 
 export type IMediaType = 'img' | 'video'
 
+export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
+
+
+
 export type {
   IModal,
   INotificationProps,
@@ -284,4 +292,5 @@ export type {
   INotificationItem,
   INotificationsHistory,
   ISelectSizes,
+  ICustomDrawer
 };
