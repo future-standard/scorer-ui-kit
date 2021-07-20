@@ -21,7 +21,7 @@ const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder
   outline: none;
   border-radius: 3px;
   height: 40px;
-  padding: 0 25px 0 12px;
+  padding: 0 25px 0 15px;
   appearance: none;
   width: ${({ selectWidth }) => selectWidth ? selectWidth : '220px'};
 
@@ -37,7 +37,7 @@ const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder
 
   ${({ theme: { typography }, styleSize }) => (styleSize === 'small') && css`
     height: 30px;
-    padding: 0 25px 0 5px;
+    padding: 0 25px 0 10px;
     ${typography.form.input.value.compact};
   `};
 
