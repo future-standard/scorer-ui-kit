@@ -23,6 +23,7 @@ const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder
   height: 40px;
   padding: 0 25px 0 15px;
   appearance: none;
+  line-height: 1.56;
   width: ${({ selectWidth }) => selectWidth ? selectWidth : '220px'};
 
   &::-ms-expand {
@@ -59,6 +60,7 @@ const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder
       ${typography.form.input.value.compact};
     `};
   }
+  font-weight: 400;
 `;
 
 const SelectWrapper = styled.div`

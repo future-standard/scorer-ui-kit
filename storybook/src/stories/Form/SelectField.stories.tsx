@@ -27,12 +27,10 @@ export const _SelectField = () => {
   return (
     <Container>
       <SelectField {...{ styleSize, placeholder, labelProps, selectWidth }}>
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-        <option value="hamster">Hamster</option>
-        <option value="parrot">Parrot</option>
-        <option value="spider">Spider</option>
-        <option value="goldfish">Goldfish</option>
+        <option value="option1">Example Option 1</option>
+        <option value="option2">Example Option 2</option>
+        <option value="option3">Example Option 3</option>
+        <option value="option4">Example Option 4</option>
       </SelectField>
     </Container>
   );
