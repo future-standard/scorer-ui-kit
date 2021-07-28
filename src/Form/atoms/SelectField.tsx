@@ -5,18 +5,7 @@ import { ISelectSizes } from '../index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 
-const Container = styled.div<{ styleSize?: ISelectSizes, }>`
-
-${({ styleSize }) => (styleSize === 'small') && css`
-  ${StyledLabel} {
-      span {
-        margin-bottom: 6px;
-      }
-    }
-  `}
-`;
-
-const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder: boolean, selectWidth?: string }>`
+const StyledSelect = styled.select`
   box-sizing: border-box;
   outline: none;
   border-radius: 3px;
@@ -24,49 +13,66 @@ const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder
   padding: 0 25px 0 15px;
   appearance: none;
   line-height: 1.56;
-  width: ${({ selectWidth }) => selectWidth ? selectWidth : '220px'};
+  width: 100%;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 
   &::-ms-expand {
     display: none;
   }
+`;
 
-  ${({ theme }) => css`
-    border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
-    font-family: ${theme.fontFamily.data};
-    ${theme.typography.form.input.value.normal};
-  `};
+const Container = styled.div<{ styleSize?: ISelectSizes, activePlaceholder: boolean }>`
+${({ styleSize }) => (styleSize === 'small') && css`
+  ${StyledLabel} {
+      span {
+        margin-bottom: 6px;
+      }
+    }
+  `}
 
-  ${({ theme: { typography }, styleSize }) => (styleSize === 'small') && css`
-    height: 30px;
-    padding: 0 25px 0 10px;
-    ${typography.form.input.value.compact};
-  `};
-
-  ${({ theme, activePlaceholder }) => activePlaceholder && css`
-    ${theme.typography.form.input.placeholder.normal};
-  `};
-
-  ${({ theme, styleSize, activePlaceholder }) => (styleSize === 'small') && activePlaceholder && css`
-    ${theme.typography.form.input.placeholder.compact};
-  `};
-
-  option {
-    font-style: normal;
+  ${StyledSelect} {
     ${({ theme }) => css`
+      border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
+      font-family: ${theme.fontFamily.data};
       ${theme.typography.form.input.value.normal};
     `};
 
     ${({ theme: { typography }, styleSize }) => (styleSize === 'small') && css`
+      height: 30px;
+      padding: 0 25px 0 10px;
       ${typography.form.input.value.compact};
     `};
+
+    ${({ theme, activePlaceholder }) => activePlaceholder && css`
+      ${theme.typography.form.input.placeholder.normal};
+    `};
+
+    ${({ theme, styleSize, activePlaceholder }) => (styleSize === 'small') && activePlaceholder && css`
+      ${theme.typography.form.input.placeholder.compact};
+    `};
+
+    option {
+      font-style: normal;
+      ${({ theme }) => css`
+        ${theme.typography.form.input.value.normal};
+      `};
+
+      ${({ theme: { typography }, styleSize }) => (styleSize === 'small') && css`
+        ${typography.form.input.value.compact};
+      `};
+    }
+    font-weight: 400;
   }
-  font-weight: 400;
 `;
 
 const SelectWrapper = styled.div`
   position: relative;
   display: inline-block;
-  cursor: pointer;
+  width: 100%;
 
   ${IconWrapper} {
     position: absolute;
@@ -85,7 +91,6 @@ interface OwnProps {
   labelProps?: ILabel
   styleSize?: ISelectSizes
   placeholder?: string
-  selectWidth?: string
 }
 
 type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>
@@ -94,7 +99,6 @@ const SelectField: React.FC<ISelect> = ({
   placeholder,
   labelProps,
   styleSize,
-  selectWidth,
   onChange = () => { },
   children,
   ...props
@@ -116,7 +120,6 @@ const SelectField: React.FC<ISelect> = ({
     <SelectWrapper>
       <StyledSelect
         id={htmlFor}
-        {...{ styleSize, activePlaceholder, selectWidth }}
         {...props}
         defaultValue=''
         onChange={handleOnChange}
@@ -129,7 +132,7 @@ const SelectField: React.FC<ISelect> = ({
   );
 
   return (
-    <Container {...{ styleSize }}>
+    <Container {...{ styleSize, activePlaceholder }}>
       {labelProps
         ? (
           <Label {...labelProps}>
