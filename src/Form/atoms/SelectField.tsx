@@ -64,11 +64,13 @@ const StyledSelect = styled.select<{ styleSize?: ISelectSizes, activePlaceholder
 const SelectWrapper = styled.div`
   position: relative;
   display: inline-block;
+  cursor: pointer;
 
   ${IconWrapper} {
     position: absolute;
     top: calc(50% - 7px);
     right: 10px;
+    pointer-events: none;
   }
 `;
 
