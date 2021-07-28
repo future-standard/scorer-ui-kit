@@ -107,12 +107,14 @@ const SelectField: React.FC<ISelect> = ({
   const [activePlaceholder, setPlaceholderInactive] = useState<boolean>(true);
 
   const handleOnChange = useCallback((e) => {
+
+    const { value } = e.target;
+
     setPlaceholderInactive(prev => {
       if (prev) { return false; }
       return prev;
     });
 
-    const { value } = e.target;
     onChange(value);
   }, [onChange]);
 
