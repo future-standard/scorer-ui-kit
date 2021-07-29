@@ -5,8 +5,16 @@ import {
   TextAreaField,
   INotificationItem,
   INotificationsHistory,
-  ICustomDrawer
+  ICustomDrawer,
+  TypeTable,
 } from 'scorer-ui-kit';
+import photo from '../assets/placeholder.jpg';
+
+import {
+  ITableColumnConfig,
+  ITypeTableData
+} from 'scorer-ui-kit/dist/Tables';
+
 
 import styled from 'styled-components';
 import { Route, Switch, RouteComponentProps } from 'react-router-dom';
@@ -178,6 +186,100 @@ const Support = () => (
   />
 )
 
+const columnConfig : ITableColumnConfig[] = [
+  {
+    header: 'Start time',
+    groupTitle: 'Time',
+    sortable: false,
+    cellStyle: 'normalImportance',
+  },
+  {
+    header: 'Job Created At',
+    groupTitle: 'Time',
+    sortable: false,
+    cellStyle: 'normalImportance',
+  },
+  {
+    header: 'Run Time',
+    groupTitle: 'Time',
+    sortable: false,
+    cellStyle: 'normalImportance',
+  },
+  {
+    header: 'Status',
+    groupTitle: 'Meta',
+    sortable: false,
+    cellStyle: 'normalImportance',
+  },
+  {
+    header: 'Details',
+    groupTitle: 'Meta',
+    sortable: false,
+    cellStyle: 'normalImportance',
+  },
+];
+
+const rows : ITypeTableData = [
+  {
+    id: 'row1',
+    header: {
+      image: photo,
+    },
+    columns: [
+      {text: `2020/06/11 - 16:00`},
+      {customComponent: <div style={{fontStyle:'italic'}}>Just Now</div>},
+      {text: `00:00:12`},
+      {text: `Complete`},
+      {text: `Green`},
+    ]
+  },
+  {
+    id: 'row2',
+    header: {
+      image: photo,
+    },
+    columns: [
+      {text: '2020/06/11 - 13:00'},
+      {text: `2020/06/11 - 17:30`},
+      {text: `00:00:12`},
+      {text: `Complete`},
+      {text: `Black`},
+    ]
+  },
+  {
+    id: 'row3',
+    header: {
+      image: photo,
+    },
+    columns: [
+      {text: `2020/05/10 - 05:30`},
+      {text: `2020/05/10 - 12:30`},
+      {text: `00:00:12`},
+      {text: `Complete`},
+      {text: `Pink`},
+    ]
+  }
+];
+
+const TablePage = () => (
+  <>
+    <PageHeader
+      title='Table Example'
+      introductionText='This is an example to verify that the sidebar with table'
+    />
+        <TypeTable
+          {...{
+              columnConfig,
+              rows,
+              selectable: true,
+              hasThumbnail: true,
+              hasHeaderGroups: true,
+            }
+          }
+        />
+  </>
+)
+
 const ComponentLinks = () => (
   <Switch>
     <Route exact path="/welcome" component={Welcome} />
@@ -185,6 +287,7 @@ const ComponentLinks = () => (
     <Route exact path="/company/about" component={About} />
     <Route exact path="/company/team" component={Team} />
     <Route exact path="/company/contact" component={Contact} />
+    <Route exact path="/company/table-example" component={TablePage}/>
     <Route exact path="/support" component={Support} />
     <Route exact path="/user/accounts" component={Accounts} />
     <Route exact path="/user/billing" component={Billing} />
@@ -307,6 +410,10 @@ export const _GlobalUI = () => {
           {
             title: 'Contact',
             href: '/company/contact'
+          },
+          {
+            title: 'Table Example',
+            href: '/company/table-example'
           }
         ]
       },
