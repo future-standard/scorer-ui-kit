@@ -20,9 +20,9 @@ export const _InputFileButton = () => {
   const textVal = text('Text','Select a File');
   const buttonDesign = select("Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
   const buttonSize = select("Button Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
-  
+
   const showValue = action('Input Callback');
-  
+
 
   const inputCallback = (newFiles: FileList) => {
     console.log('file', newFiles);

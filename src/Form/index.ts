@@ -9,7 +9,7 @@ import Label from './atoms/Label';
 import Switch from './atoms/Switch';
 import Checkbox from './atoms/Checkbox';
 import TextArea from './atoms/TextArea';
-import SelectField from './atoms/SelectField';
+import SelectField, {SelectWrapper} from './atoms/SelectField';
 import SliderInput, {ISliderMark} from  './atoms/SliderInput';
 import InputFileButton from './atoms/InputFileButton';
 import DurationSlider from './molecules/DurationSlider';
@@ -47,6 +47,7 @@ export {
     DropArea,
     CropTool,
     SelectField,
+    SelectWrapper,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';

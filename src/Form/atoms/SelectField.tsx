@@ -5,6 +5,19 @@ import { ISelectSizes } from '../index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 
+export const SelectWrapper = styled.div`
+  position: relative;
+  display: flex;
+  width: 100%;
+
+  ${IconWrapper} {
+    position: absolute;
+    top: calc(50% - 7px);
+    right: 10px;
+    pointer-events: none;
+  }
+`;
+
 const StyledSelect = styled.select`
   box-sizing: border-box;
   outline: none;
@@ -69,19 +82,6 @@ ${({ styleSize }) => (styleSize === 'small') && css`
   }
 `;
 
-const SelectWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-  width: 100%;
-
-  ${IconWrapper} {
-    position: absolute;
-    top: calc(50% - 7px);
-    right: 10px;
-    pointer-events: none;
-  }
-`;
-
 interface ILabel {
   htmlFor: string
   labelText: string
@@ -91,6 +91,7 @@ interface OwnProps {
   labelProps?: ILabel
   styleSize?: ISelectSizes
   placeholder?: string
+  changeCallback?: (value: string) => void
 }
 
 type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>
@@ -99,7 +100,8 @@ const SelectField: React.FC<ISelect> = ({
   placeholder,
   labelProps,
   styleSize,
-  onChange = () => { },
+  defaultValue,
+  changeCallback = () => { },
   children,
   ...props
 }) => {
@@ -114,19 +116,19 @@ const SelectField: React.FC<ISelect> = ({
       if (prev) { return false; }
       return prev;
     });
-
-    onChange(value);
-  }, [onChange]);
+    console.log(value);
+    changeCallback(value);
+  }, [changeCallback]);
 
   const renderSelect = (htmlFor?: string) => (
     <SelectWrapper>
       <StyledSelect
         id={htmlFor}
         {...props}
-        defaultValue=''
+        defaultValue={defaultValue ? defaultValue : ''}
         onChange={handleOnChange}
       >
-        <option value='' disabled selected hidden>{placeholder}</option>
+        {!defaultValue && <option value='' disabled hidden>{placeholder}</option>}
         {children}
       </StyledSelect>
       <Icon icon='Down' color='dimmed' size={11} />
