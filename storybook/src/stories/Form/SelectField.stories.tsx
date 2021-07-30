@@ -14,21 +14,21 @@ const Container = styled.div`
   margin: 20px;
 `;
 
-const FixedSelect = styled.div`
+const FixedSelect = styled.div<{width?: string}>`
   ${SelectWrapper} {
-    width: 60px;
+    width: ${({width}) => width ? width : `60px` };
   }
 `;
 
 export const _SelectField = () => {
 
   const styleSize = select('Size', { Small: 'small', Normal: 'normal' }, 'normal');
-  const placeholder = text('Placeholder', 'Choose an option...');
+  const placeholder = text('Placeholder free width', 'Choose an option...');
   const disabled = boolean('Disabled', false);
   const freeSelectValue = action('Free select value');
   const fixedSelectValue = action('Free select value');
 
-  const selectWidth = text('Select Width', '');
+  const selectWidth = text('Fix width', '60px');
   const labelProps = object('Label Props', {
     htmlFor: 'animal_select',
     labelText: 'Field Label'
@@ -64,9 +64,9 @@ export const _SelectField = () => {
       <PageHeader
         title='Select fixed width'
       />
-      <FixedSelect>
+      <FixedSelect width={selectWidth}>
         <SelectField
-          {...{ styleSize }}
+          {...{ styleSize, disabled }}
           defaultValue={1}
           changeCallback={fixSelectOnChange}
           >
