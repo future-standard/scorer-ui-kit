@@ -37,7 +37,8 @@ const StyledSelect = styled.select`
   }
 `;
 
-const Container = styled.div<{ isCompact?: boolean, activePlaceholder: boolean }>`
+const Container = styled.div<{ isCompact?: boolean, activePlaceholder: boolean, isLabelSameRow?: boolean }>`
+
 ${({ isCompact }) => isCompact && css`
   ${StyledLabel} {
       span {
@@ -45,6 +46,16 @@ ${({ isCompact }) => isCompact && css`
       }
     }
   `}
+
+${({isLabelSameRow}) => isLabelSameRow && css`
+  ${StyledLabel} {
+    display: flex;
+    align-items: center;
+    span {
+      margin: 0 10px 0 0;
+    }
+  }
+`};
 
   ${StyledSelect} {
     ${({ theme }) => css`
@@ -83,11 +94,12 @@ ${({ isCompact }) => isCompact && css`
 
 interface ILabel {
   htmlFor: string
-  labelText: string
+  text: string
+  isSameRow? : boolean
 }
 
 interface OwnProps {
-  labelProps?: ILabel
+  label?: ILabel
   isCompact?: boolean
   placeholder?: string
   changeCallback?: (value: string) => void
@@ -97,7 +109,7 @@ type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>
 
 const SelectField: React.FC<ISelect> = ({
   placeholder,
-  labelProps,
+  label,
   isCompact,
   defaultValue,
   changeCallback = () => { },
@@ -135,11 +147,11 @@ const SelectField: React.FC<ISelect> = ({
   );
 
   return (
-    <Container {...{ isCompact, activePlaceholder }}>
-      {labelProps
+    <Container {...{ isCompact, activePlaceholder}} isLabelSameRow={label?.isSameRow}>
+      {label
         ? (
-          <Label {...labelProps}>
-            {renderSelect(labelProps.htmlFor)}
+          <Label htmlFor={label.htmlFor} labelText={label.text}>
+            {renderSelect(label.htmlFor)}
           </Label>
         )
         : renderSelect()}

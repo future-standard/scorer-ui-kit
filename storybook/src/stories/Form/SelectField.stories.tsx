@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { text, object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
-import { SelectField, PageHeader, SelectWrapper } from 'scorer-ui-kit';
+import { SelectField, PageHeader, SelectWrapper} from 'scorer-ui-kit';
 
 export default {
   title: 'Form/atoms',
@@ -29,9 +29,14 @@ export const _SelectField = () => {
   const fixedSelectValue = action('Free select value');
 
   const selectWidth = text('Fix width', '60px');
-  const labelProps = object('Label Props', {
-    htmlFor: 'animal_select',
-    labelText: 'Field Label'
+  const label = object('Free Select Label', {
+    htmlFor: 'free_select',
+    text: 'Field Label'
+  })
+  const fixLabel = object('Fix Select Label', {
+    htmlFor: 'fix_select',
+    text: 'Page',
+    isSameRow: true
   })
 
   const freeOnChange = (value: string) => {
@@ -50,7 +55,7 @@ export const _SelectField = () => {
         {...{
           isCompact,
           placeholder,
-          labelProps,
+          label,
           selectWidth,
           disabled
         }}
@@ -67,6 +72,7 @@ export const _SelectField = () => {
       <FixedSelect width={selectWidth}>
         <SelectField
           {...{ isCompact, disabled }}
+          label={fixLabel}
           defaultValue={1}
           changeCallback={fixSelectOnChange}
         >
