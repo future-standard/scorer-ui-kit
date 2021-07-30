@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { text, select, object, boolean} from "@storybook/addon-knobs";
+import { text, object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import { SelectField, PageHeader, SelectWrapper } from 'scorer-ui-kit';
 
@@ -14,15 +14,15 @@ const Container = styled.div`
   margin: 20px;
 `;
 
-const FixedSelect = styled.div<{width?: string}>`
+const FixedSelect = styled.div<{ width?: string }>`
   ${SelectWrapper} {
-    width: ${({width}) => width ? width : `60px` };
+    width: ${({ width }) => width ? width : `60px`};
   }
 `;
 
 export const _SelectField = () => {
 
-  const styleSize = select('Size', { Small: 'small', Normal: 'normal' }, 'normal');
+  const isCompact = boolean('isCompact', false);
   const placeholder = text('Placeholder free width', 'Choose an option...');
   const disabled = boolean('Disabled', false);
   const freeSelectValue = action('Free select value');
@@ -48,7 +48,7 @@ export const _SelectField = () => {
       />
       <SelectField
         {...{
-          styleSize,
+          isCompact,
           placeholder,
           labelProps,
           selectWidth,
@@ -66,10 +66,10 @@ export const _SelectField = () => {
       />
       <FixedSelect width={selectWidth}>
         <SelectField
-          {...{ styleSize, disabled }}
+          {...{ isCompact, disabled }}
           defaultValue={1}
           changeCallback={fixSelectOnChange}
-          >
+        >
           <option value={1}>1</option>
           <option value={5}>5</option>
           <option value={10}>10</option>

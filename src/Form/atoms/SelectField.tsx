@@ -1,7 +1,6 @@
 import React, { useCallback, useState, SelectHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Label, { StyledLabel } from './Label';
-import { ISelectSizes } from '../index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 
@@ -38,8 +37,8 @@ const StyledSelect = styled.select`
   }
 `;
 
-const Container = styled.div<{ styleSize?: ISelectSizes, activePlaceholder: boolean }>`
-${({ styleSize }) => (styleSize === 'small') && css`
+const Container = styled.div<{ isCompact?: boolean, activePlaceholder: boolean }>`
+${({ isCompact }) => isCompact && css`
   ${StyledLabel} {
       span {
         margin-bottom: 6px;
@@ -54,7 +53,7 @@ ${({ styleSize }) => (styleSize === 'small') && css`
       ${theme.typography.form.input.value.normal};
     `};
 
-    ${({ theme: { typography }, styleSize }) => (styleSize === 'small') && css`
+    ${({ theme: { typography }, isCompact }) => isCompact && css`
       height: 30px;
       padding: 0 25px 0 10px;
       ${typography.form.input.value.compact};
@@ -64,7 +63,7 @@ ${({ styleSize }) => (styleSize === 'small') && css`
       ${theme.typography.form.input.placeholder.normal};
     `};
 
-    ${({ theme, styleSize, activePlaceholder }) => (styleSize === 'small') && activePlaceholder && css`
+    ${({ theme, isCompact, activePlaceholder }) => isCompact && activePlaceholder && css`
       ${theme.typography.form.input.placeholder.compact};
     `};
 
@@ -74,7 +73,7 @@ ${({ styleSize }) => (styleSize === 'small') && css`
         ${theme.typography.form.input.value.normal};
       `};
 
-      ${({ theme: { typography }, styleSize }) => (styleSize === 'small') && css`
+      ${({ theme: { typography }, isCompact }) => isCompact && css`
         ${typography.form.input.value.compact};
       `};
     }
@@ -89,7 +88,7 @@ interface ILabel {
 
 interface OwnProps {
   labelProps?: ILabel
-  styleSize?: ISelectSizes
+  isCompact?: boolean
   placeholder?: string
   changeCallback?: (value: string) => void
 }
@@ -99,7 +98,7 @@ type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>
 const SelectField: React.FC<ISelect> = ({
   placeholder,
   labelProps,
-  styleSize,
+  isCompact,
   defaultValue,
   changeCallback = () => { },
   children,
@@ -136,7 +135,7 @@ const SelectField: React.FC<ISelect> = ({
   );
 
   return (
-    <Container {...{ styleSize, activePlaceholder }}>
+    <Container {...{ isCompact, activePlaceholder }}>
       {labelProps
         ? (
           <Label {...labelProps}>

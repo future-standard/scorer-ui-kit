@@ -40,7 +40,6 @@ import {
   CropTool,
   AvatarUploader,
   SelectField,
-  ISelectSizes,
   SelectWrapper,
 } from './Form';
 
@@ -293,6 +292,5 @@ export type {
   ISliderMark,
   INotificationItem,
   INotificationsHistory,
-  ISelectSizes,
   ICustomDrawer
 };
