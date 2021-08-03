@@ -127,7 +127,6 @@ const SelectField: React.FC<ISelect> = ({
       if (prev) { return false; }
       return prev;
     });
-    console.log(value);
     changeCallback(value);
   }, [changeCallback]);
 
