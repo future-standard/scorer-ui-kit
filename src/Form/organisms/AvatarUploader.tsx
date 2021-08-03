@@ -1,6 +1,7 @@
-import React, {useState, useCallback} from 'react';
-import styled, {css} from 'styled-components';
+import React, { useState, useCallback, useEffect } from 'react';
+import styled, { css } from 'styled-components';
 import InputFileButton from '../atoms/InputFileButton';
+import Button from '../atoms/Button';
 import DropArea from '../atoms/DropArea';
 import CropTool from '../molecules/CropTool';
 import { AvatarPlaceholder } from '../../svg';
@@ -11,11 +12,11 @@ import { isValidImage } from '../../helpers';
 
 const CROP_HEIGHT_AREA = 500;
 const CROP_WIDTH_AREA = 475;
-const CANVAS_HEIGHT= 490;
-const CANVAS_WIDTH= 460;
+const CANVAS_HEIGHT = 490;
+const CANVAS_WIDTH = 460;
 
 // 0.95
-const ratio =  Math.round((CROP_WIDTH_AREA / CROP_HEIGHT_AREA) * 100) / 100;
+const ratio = Math.round((CROP_WIDTH_AREA / CROP_HEIGHT_AREA) * 100) / 100;
 
 const PHOTO_HEIGHT = `150px`;
 const PHOTO_WIDTH = `142px`;
@@ -24,7 +25,7 @@ const PHOTO_WIDTH = `142px`;
 const Container = styled.div`
   position: relative;
   width: ${PHOTO_WIDTH};
-  ${({theme}) => css`
+  ${({ theme }) => css`
     font-family: ${theme.fontFamily.ui};
   `}
   button {
@@ -35,6 +36,8 @@ const Container = styled.div`
 const PreviewImageGroup = styled.div`
   position: relative;
   margin-bottom: 17px;
+  height: ${PHOTO_HEIGHT};
+  width: ${PHOTO_WIDTH};
 `;
 
 const PhotoContainerStyle = css`
@@ -49,7 +52,7 @@ const PhotoContainerStyle = css`
   justify-content: center;
   border-radius: 5px;
   background-color: hsl(0, 0%, 90%);
-`; 
+`;
 const PreviewImage = styled.img`
   ${PhotoContainerStyle}
 `;
@@ -76,19 +79,26 @@ interface IAvatar {
   photoText?: string
   buttonText?: string
   buttonTextReplace?: string
+  cropText?: string
+  defaultImg?: string
+  hasCrop?: boolean
   onAvatarUpdate?: (imgFile: File) => void
   onError?: (msg: string) => void
 }
 
-const AvatarUploader : React.FC<IAvatar> = ({
+const AvatarUploader: React.FC<IAvatar> = ({
   title = 'Photograph',
   photoText = 'Drop Photo',
   buttonText = 'Select File',
   buttonTextReplace = 'Replace Photo',
-  onAvatarUpdate,
-  onError = () => {},
+  cropText = 'Crop Image',
+  defaultImg,
+  hasCrop = true,
+  onAvatarUpdate = () => { },
+  onError = () => { },
 }) => {
-  const [avatarImg, setAvatarImg] = useState('');
+
+  const [avatarImg, setAvatarImg] = useState(defaultImg);
   const [cropImg, setCropImg] = useState('');
   const [isCropOpen, setIsCropOpen] = useState(false);
 
@@ -97,34 +107,68 @@ const AvatarUploader : React.FC<IAvatar> = ({
     let newFile = await fetch(
       newFileUrl).then(r => r.blob()).then(blobFile => new File([blobFile], "newAvatar", { type: fileType })
       );
-    if(onAvatarUpdate) {
-      onAvatarUpdate(newFile);
-    }
+
+    onAvatarUpdate(newFile);
+
     setIsCropOpen(false);
-  },[onAvatarUpdate]);
+  }, [onAvatarUpdate]);
 
   const handleCropClose = useCallback(() => {
     setIsCropOpen(false);
     setCropImg('');
     URL.revokeObjectURL(cropImg);
-  },[cropImg]);
+  }, [cropImg]);
 
-  const handleFileUpload  = useCallback((newFiles: FileList) => {
-    if(newFiles.length === 1) {
-      if(!isValidImage(newFiles[0])){ 
+  const handleFileUpload = useCallback((newFiles: FileList) => {
+    if (newFiles.length === 1) {
+      if (!isValidImage(newFiles[0])) {
         onError('Please upload only jpeg and png file');
         return;
       }
       const prevImg = URL.createObjectURL(newFiles[0]);
 
-      setCropImg(prevImg);
-      setIsCropOpen(true);
+      if (hasCrop) {
+        setCropImg(prevImg);
+        setIsCropOpen(true);
+      } else {
+        onAvatarUpdate(newFiles[0]);
+        setAvatarImg(prevImg);
+      }
+
     } else {
       onError('Drop only one file');
     }
-  },[onError]);
+  }, [onError, hasCrop]);
 
-  return(
+  const handleEdit = useCallback((fileUrl: string) => {
+    setCropImg(fileUrl);
+    setIsCropOpen(true);
+  }, []);
+
+  useEffect(() => {
+    setAvatarImg(defaultImg);
+    return () => {
+      setAvatarImg('');
+    }
+  }, [defaultImg])
+
+  const renderButton = useCallback(() => {
+    if ((defaultImg && (!hasCrop)) || !defaultImg) {
+      return (
+        <StyledInputFileButton
+          id='avatar-upload'
+          text={avatarImg ? buttonTextReplace : buttonText}
+          buttonSize='small'
+          accept='image/*'
+          inputCallback={handleFileUpload}
+        />
+      )
+    }
+    return <Button size='small' onClick={() => handleEdit(defaultImg)}>{cropText}</Button>
+
+  }, [defaultImg, avatarImg, hasCrop]);
+
+  return (
     <Container>
       <Label labelText={title} htmlFor='avatar-upload' />
       <PreviewImageGroup>
@@ -135,29 +179,23 @@ const AvatarUploader : React.FC<IAvatar> = ({
               <AvatarPlaceholder />
               <PlaceholderText>{photoText}</PlaceholderText>
             </NoPhoto>
-            )}
-        <DropArea height={PHOTO_HEIGHT} dropCallback={handleFileUpload} />
+          )}
+        {((defaultImg && (!hasCrop)) || !defaultImg) && <DropArea height={PHOTO_HEIGHT} dropCallback={handleFileUpload} />}
       </PreviewImageGroup>
-      <StyledInputFileButton
-        id='avatar-upload'
-        text={avatarImg ? buttonTextReplace : buttonText}
-        buttonSize='small'
-        accept='image/*'
-        inputCallback={handleFileUpload}
-      />
-      {isCropOpen
+      {renderButton()}
+      {isCropOpen && hasCrop
         ? <CropTool
-            imgUrl={cropImg}
-            onCrop={handleCrop}
-            onClose={handleCropClose}
-            onError={onError}
-            canvasHeight={CANVAS_HEIGHT}
-            canvasWidth={CANVAS_WIDTH}
-            cropHeight={CROP_WIDTH_AREA}
-            cropWidth={CROP_HEIGHT_AREA}
-            aspectRatio={ratio}
-            isResizable
-          />
+          imgUrl={cropImg}
+          onCrop={handleCrop}
+          onClose={handleCropClose}
+          onError={onError}
+          canvasHeight={CANVAS_HEIGHT}
+          canvasWidth={CANVAS_WIDTH}
+          cropHeight={CROP_WIDTH_AREA}
+          cropWidth={CROP_HEIGHT_AREA}
+          aspectRatio={ratio}
+          isResizable
+        />
         : null}
     </Container>
   );
