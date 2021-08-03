@@ -39,6 +39,8 @@ import {
   DropArea,
   CropTool,
   AvatarUploader,
+  SelectField,
+  SelectWrapper,
 } from './Form';
 
 // Components - Filter
@@ -189,6 +191,8 @@ export {
   DropArea,
   CropTool,
   AvatarUploader,
+  SelectField,
+  SelectWrapper,
 
   // Modals
   ConfirmationModal,

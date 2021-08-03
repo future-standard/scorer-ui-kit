@@ -9,6 +9,7 @@ import Label from './atoms/Label';
 import Switch from './atoms/Switch';
 import Checkbox from './atoms/Checkbox';
 import TextArea from './atoms/TextArea';
+import SelectField, {SelectWrapper} from './atoms/SelectField';
 import SliderInput, {ISliderMark} from  './atoms/SliderInput';
 import InputFileButton from './atoms/InputFileButton';
 import DurationSlider from './molecules/DurationSlider';
@@ -45,11 +46,14 @@ export {
     AvatarUploader,
     DropArea,
     CropTool,
+    SelectField,
+    SelectWrapper,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
 export type TypeButtonDesigns = 'primary' | 'secondary' | 'danger';
 export type TypeButtonSizes = 'xsmall' | 'small' | 'normal' | 'large';
+export type ISelectSizes = 'small' | 'normal';
 
 interface ButtonProps {
   size?: TypeButtonSizes
