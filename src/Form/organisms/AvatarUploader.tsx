@@ -75,7 +75,7 @@ const StyledInputFileButton = styled(InputFileButton)`
 `;
 
 interface IAvatar {
-  uploaderTitle?: string
+  title?: string
   photoText?: string
   buttonText?: string
   buttonTextReplace?: string
@@ -90,7 +90,7 @@ interface IAvatar {
 }
 
 const AvatarUploader: React.FC<IAvatar> = ({
-  uploaderTitle = 'Photograph',
+  title = 'Photograph',
   photoText = 'Drop Photo',
   buttonText = 'Select File',
   buttonTextReplace = 'Replace Photo',
@@ -176,7 +176,7 @@ const AvatarUploader: React.FC<IAvatar> = ({
 
   return (
     <Container>
-      <Label labelText={uploaderTitle} htmlFor='avatar-upload' />
+      <Label labelText={title} htmlFor='avatar-upload' />
       <PreviewImageGroup>
         {avatarImg
           ? <PreviewImage src={avatarImg} alt='avatar image' />

@@ -15,7 +15,7 @@ export default {
 
 export const _AvatarUploader = () => {
 
-  const uploaderTitle = text('Uploader Title', 'Photograph');
+  const title = text('Uploader Title', 'Photograph');
   const photoText = text('Photo Text', 'Drop Photo');
   const buttonText = text('Button Text', 'Select File');
   const buttonReplaceText = text('Button Replace Text', 'Replace Photo');
@@ -44,7 +44,7 @@ export const _AvatarUploader = () => {
         onAvatarUpdate={uploadReady}
         defaultImg={baseImg ? photo : ''}
         {...{
-          uploaderTitle,
+          title,
           photoText,
           buttonText,
           buttonReplaceText,
