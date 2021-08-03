@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
@@ -92,6 +93,8 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
     }
   `}
 `;
+
+const DrawerPortalWrapper = styled.div``;
 
 const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -193,35 +196,38 @@ const TopBar: React.FC<ITopBar> = ({
         </DrawerToggle>
       </ButtonArea>
 
-      {/* User Menu */}
-      <Drawer isOpen={openDrawer === 'user'}>
-        <UserMenu {...{
-          hasLanguage,
-          hasLogout,
-          logoutLink,
-          hasCurrentUser,
-          userSubmenu,
-          userDrawerBespoke,
-          loggedInUser,
-          onLogout,
-          onLanguageToggle
-        }}
-        />
-      </Drawer>
+      {ReactDom.createPortal(
+        <DrawerPortalWrapper>
+          {/* User Menu */}
+          <Drawer isOpen={openDrawer === 'user'}>
+            <UserMenu {...{
+              hasLanguage,
+              hasLogout,
+              logoutLink,
+              hasCurrentUser,
+              userSubmenu,
+              userDrawerBespoke,
+              loggedInUser,
+              onLogout,
+              onLanguageToggle
+            }}
+            />
+          </Drawer>
 
-      {/* Notifications */}
-      {hasNotifications ?
-        <Drawer isOpen={openDrawer === 'notifications'} baseWidth='300px'>
-          <NotificationsContainer>
-            {notificationsHistory ? <NotificationsHistory {...notificationsHistory} /> : null}
-          </NotificationsContainer>
-        </Drawer> : null}
+          {/* Notifications */}
+          {hasNotifications ?
+            <Drawer isOpen={openDrawer === 'notifications'} baseWidth='300px'>
+              <NotificationsContainer>
+                {notificationsHistory ? <NotificationsHistory {...notificationsHistory} /> : null}
+              </NotificationsContainer>
+            </Drawer> : null}
 
-      {customDrawer && (
-        <Drawer isOpen={openDrawer === 'custom'} baseWidth={customDrawer.width ? customDrawer.width : "200px"}>
-          {customDrawer.customComponent}
-        </Drawer>
-      )}
+          {customDrawer && (
+            <Drawer isOpen={openDrawer === 'custom'} baseWidth={customDrawer.width ? customDrawer.width : "200px"}>
+              {customDrawer.customComponent}
+            </Drawer>
+          )}
+        </DrawerPortalWrapper>, document.body)}
     </Container>
   );
 
