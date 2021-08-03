@@ -15,11 +15,14 @@ export default {
 
 export const _AvatarUploader = () => {
 
-  const title = text('Title', 'Photograph');
+  const uploaderTitle = text('Uploader Title', 'Photograph');
   const photoText = text('Photo Text', 'Drop Photo');
   const buttonText = text('Button Text', 'Select File');
   const buttonReplaceText = text('Button Replace Text', 'Replace Photo');
-  const cropText = text('Crop Text','Crop Image');
+  const uploaderCropText = text('Uploader Crop Text','Crop Image');
+  const cropToolTitle = text('CropTool Title', 'Crop utility');
+  const cropToolCancelTxt = text('CropTool Cancel Text', 'Cancel');
+  const cropToolConfirmTxt = text('CropTool Confirm Text', 'Crop and Save');
   const baseImg = boolean('Default Photo', false);
   const hasCrop = boolean('Has Crop', true);
   const showValue = action('Input Callback');
@@ -41,13 +44,16 @@ export const _AvatarUploader = () => {
         onAvatarUpdate={uploadReady}
         defaultImg={baseImg ? photo : ''}
         {...{
-          title,
+          uploaderTitle,
           photoText,
           buttonText,
           buttonReplaceText,
           onError,
-          cropText,
-          hasCrop
+          uploaderCropText,
+          hasCrop,
+          cropToolTitle,
+          cropToolCancelTxt,
+          cropToolConfirmTxt
         }}
       />
     </Container>

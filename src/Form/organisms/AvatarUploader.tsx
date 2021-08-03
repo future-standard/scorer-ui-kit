@@ -75,11 +75,14 @@ const StyledInputFileButton = styled(InputFileButton)`
 `;
 
 interface IAvatar {
-  title?: string
+  uploaderTitle?: string
   photoText?: string
   buttonText?: string
   buttonTextReplace?: string
-  cropText?: string
+  cropToolTitle?: string
+  cropToolCancelTxt?: string
+  cropToolConfirmTxt?: string
+  uploaderCropText?: string
   defaultImg?: string
   hasCrop?: boolean
   onAvatarUpdate?: (imgFile: File) => void
@@ -87,11 +90,14 @@ interface IAvatar {
 }
 
 const AvatarUploader: React.FC<IAvatar> = ({
-  title = 'Photograph',
+  uploaderTitle = 'Photograph',
   photoText = 'Drop Photo',
   buttonText = 'Select File',
   buttonTextReplace = 'Replace Photo',
-  cropText = 'Crop Image',
+  uploaderCropText = 'Crop Image',
+  cropToolTitle,
+  cropToolCancelTxt,
+  cropToolConfirmTxt,
   defaultImg,
   hasCrop = true,
   onAvatarUpdate = () => { },
@@ -164,13 +170,13 @@ const AvatarUploader: React.FC<IAvatar> = ({
         />
       )
     }
-    return <Button size='small' onClick={() => handleEdit(defaultImg)}>{cropText}</Button>
+    return <Button size='small' onClick={() => handleEdit(defaultImg)}>{uploaderCropText}</Button>
 
   }, [defaultImg, avatarImg, hasCrop]);
 
   return (
     <Container>
-      <Label labelText={title} htmlFor='avatar-upload' />
+      <Label labelText={uploaderTitle} htmlFor='avatar-upload' />
       <PreviewImageGroup>
         {avatarImg
           ? <PreviewImage src={avatarImg} alt='avatar image' />
@@ -194,6 +200,9 @@ const AvatarUploader: React.FC<IAvatar> = ({
           cropHeight={CROP_WIDTH_AREA}
           cropWidth={CROP_HEIGHT_AREA}
           aspectRatio={ratio}
+          title={cropToolTitle}
+          cancelBtnTxt={cropToolCancelTxt}
+          cropBtnTxt ={cropToolConfirmTxt}
           isResizable
         />
         : null}
