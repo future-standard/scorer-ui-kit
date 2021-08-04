@@ -55,6 +55,7 @@ const PhotoContainerStyle = css`
 `;
 const PreviewImage = styled.img`
   ${PhotoContainerStyle}
+  object-fit: cover;
 `;
 
 const PlaceholderText = styled.div`
