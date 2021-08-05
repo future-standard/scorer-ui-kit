@@ -80,8 +80,8 @@ const initialRows : ITypeTableData = [
   {
     id: 'device-id-3',
     header: {
-      image: "http://placekitten.com/1300/1300",
-      mediaUrl:"http://placekitten.com/1300/1300",
+      image: "http://placekitten.com/1934/3102",
+      mediaUrl:"http://placekitten.com/1934/3102",
       mediaType: 'img'
     },
     columns:

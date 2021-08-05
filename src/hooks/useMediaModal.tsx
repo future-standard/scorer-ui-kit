@@ -21,7 +21,7 @@ export const useMediaModal = () => {
     createModal({
       padding: false,
       width: 'auto',
-      customComponent: <MediaBox {...{ src, mediaType, alt }} videoOptions={videoOptions || videoDefaultOptions} />
+      customComponent: <MediaBox {...{ src, mediaType, alt }} videoOptions={videoOptions || videoDefaultOptions} hasModalLimits/>
     });
 
   }, [createModal]);

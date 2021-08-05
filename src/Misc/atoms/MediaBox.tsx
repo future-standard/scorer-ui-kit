@@ -1,4 +1,4 @@
-import React, { useState, useCallback, VideoHTMLAttributes, useRef } from 'react';
+import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
 import styled, {css} from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import {IMediaType} from '../../index';
@@ -27,64 +27,43 @@ const LoadingOverlay = styled.div`
   justify-content: center;
 `;
 
-const Video = styled.video<{ isLoaded?: boolean, maxDimensions: IImageDimensions | null }>`
+const Video = styled.video<{ isLoaded?: boolean, hasModalLimits?: boolean }>`
   ${mediaStyle};
   outline: none;
 
-  ${({theme, isLoaded}) => css`
+  ${({theme, isLoaded, hasModalLimits}) => css`
     transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
     opacity: ${isLoaded ? `1` : `0`};
+
+    ${hasModalLimits && css`
+      max-height: calc(100vh - 100px);
+      max-width: calc(100vw - 100px);
+    `};
   `};
-  ${({maxDimensions}) => (maxDimensions !== null) &&`
-    max-width: ${maxDimensions.width};
-    max-height: ${maxDimensions.height};
-  `}
+
 `;
 
-const StyledImage = styled.img<{ isLoaded?: boolean, maxDimensions: IImageDimensions | null}>`
+const StyledImage = styled.img<{ isLoaded?: boolean, hasModalLimits?: boolean }>`
   ${mediaStyle};
 
-  ${({theme, isLoaded}) => css`
+  ${({theme, isLoaded, hasModalLimits}) => css`
     transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
     opacity: ${isLoaded ? `1` : `0`};
+
+    ${hasModalLimits && css`
+    max-height: calc(100vh - 100px);
+    max-width: calc(100vw - 100px);
+  `};
   `};
 
-  ${({maxDimensions}) => (maxDimensions !== null) &&`
-      max-width: ${maxDimensions.width};
-      max-height: ${maxDimensions.height};
-  `}
 `;
-
-
 
 export interface IMediaModal {
   src: string
   mediaType: IMediaType
   alt?: string
   videoOptions?: VideoHTMLAttributes<HTMLVideoElement>
-}
-
-interface IImageDimensions {
-  width: string
-  height: string
-};
-
-const getMaxDimensions = (width: number, height: number): IImageDimensions => {
-
-    // 100 will be reduce to prevent the close button to be overloaded
-    const maxHeight = window.innerHeight - 100;
-    const maxWidth = window.innerWidth - 100;
-
-  // prevent 0 division
-  if(width === 0) { return {width: `${maxWidth}px`, height: `${maxHeight}`}}
-
-  const aspectRatio = height / width;
-
-  const modalMaxHeightPx : number = maxWidth * aspectRatio;
-  const modalMaxWidthPx : number = maxHeight / aspectRatio;
-  const dimensions : IImageDimensions = {width: `${modalMaxWidthPx}px`, height:`${modalMaxHeightPx}px` }
-
-  return dimensions;
+  hasModalLimits?: boolean
 }
 
 const MediaBox: React.FC<IMediaModal> = ({
@@ -103,39 +82,19 @@ const MediaBox: React.FC<IMediaModal> = ({
   } = videoOptions;
 
   const [loaded, setLoaded] = useState(false);
-  const [maxDimensions, setMaxDimensions] = useState<IImageDimensions | null>(null);
-
-  const imgRef = useRef<HTMLImageElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleLoad = useCallback(() => {
-
-      if(mediaType === 'img' && imgRef.current && imgRef.current.width && imgRef.current.width) {
-        const dimensions = getMaxDimensions(imgRef.current.width, imgRef.current.height);
-
-        if(dimensions) {
-          setMaxDimensions(dimensions);
-        }
-      }
-
-      if(mediaType === 'video' && videoRef.current) {
-        const dimensions = getMaxDimensions(videoRef.current.videoWidth, videoRef.current.videoHeight);
-
-        if(dimensions) {
-          setMaxDimensions(dimensions);
-        }
-      }
-
       setLoaded(true);
-
-  },[mediaType]);
+  },[]);
 
   return (
     <Container>
       {mediaType === 'video'
         ? <Video
-            ref={videoRef}
-            {...{loop, autoPlay, controls, muted, maxDimensions}}
+            loop={loop}
+            autoPlay={autoPlay}
+            controls={controls}
+            muted={muted}
             {...videoValues}
             src={src}
             isLoaded={loaded}
@@ -143,8 +102,8 @@ const MediaBox: React.FC<IMediaModal> = ({
             onCanPlay={handleLoad}
           />
         : <StyledImage
-            ref={imgRef}
-            {...{src, alt, maxDimensions}}
+            src={src}
+            alt={alt}
             onLoad={handleLoad}
             isLoaded={loaded}
           />}
