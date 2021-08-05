@@ -2,6 +2,7 @@ import React, {useCallback, VideoHTMLAttributes} from 'react';
 import styled, { css } from 'styled-components';
 import MediaBox  from '../../Misc/atoms/MediaBox';
 import  { useModal } from '../../hooks/useModal';
+import { useMediaModal } from '../../hooks/useMediaModal';
 import { IMediaType } from '../..';
 import Icon, {IconWrapper} from '../../Icons/Icon';
 
@@ -90,22 +91,16 @@ interface IProps {
 // Image
 // No Image Placeholder
 
-// default options for media box
-const videoDefaultOptions : VideoHTMLAttributes<HTMLVideoElement> = {controls: true};
-
 const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image, mediaUrl, mediaType }) => {
 
-  const {createModal} = useModal();
+  const { createMediaModal } = useMediaModal();
 
   const handleModal = useCallback(() => {
-    if(mediaUrl && mediaType) {
-      createModal({
-        padding:false,
-        width:'60%',
-        customComponent: <MediaBox src={mediaUrl} mediaType={mediaType} videoOptions={videoDefaultOptions} />
-      });
+    if (mediaUrl && mediaType) {
+
+      createMediaModal({src: mediaUrl, mediaType});
     }
-  },[createModal, mediaType, mediaUrl]);
+  }, [createMediaModal, mediaType, mediaUrl]);
 
   return (
     <Container {...{hoverZoom}} mediaUrl={mediaUrl} aspect='16:9' onClick={handleModal}>

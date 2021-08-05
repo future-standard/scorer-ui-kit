@@ -79,6 +79,11 @@ const initialRows : ITypeTableData = [
   },
   {
     id: 'device-id-3',
+    header: {
+      image: "http://placekitten.com/1300/1300",
+      mediaUrl:"http://placekitten.com/1300/1300",
+      mediaType: 'img'
+    },
     columns:
     [
       { text: 'Old Device', href: '#' },
