@@ -1,14 +1,12 @@
-import React, {useCallback, VideoHTMLAttributes} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import MediaBox  from '../../Misc/atoms/MediaBox';
-import  { useModal } from '../../hooks/useModal';
 import { useMediaModal } from '../../hooks/useMediaModal';
 import { IMediaType } from '../..';
-import Icon, {IconWrapper} from '../../Icons/Icon';
+import Icon, { IconWrapper } from '../../Icons/Icon';
 
 type VideoAspects = '4:3' | '16:9';
 
-const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string }>`
+const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string, hasPreview: boolean }>`
   position: relative;
   height: inherit;
   background: grey;
@@ -23,23 +21,23 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
     content: '';
     display: block;
     padding-bottom: 75%;
-    ${({aspect}) => aspect === '16:9' && css`
+    ${({ aspect }) => aspect === '16:9' && css`
       padding-left: 56.25%;
     `}
   }
 
-  ${({theme}) => theme && css`
+  ${({ theme }) => theme && css`
     transition:
       opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut},
       transform ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeOut};
   `}
 
   &:hover {
-    ${({mediaUrl}) => mediaUrl && css`
+    ${({ mediaUrl, hasPreview }) => mediaUrl && hasPreview && css`
       cursor: pointer;
     `};
 
-    ${({theme, hoverZoom}) => theme && hoverZoom && css`
+    ${({ theme, hoverZoom, mediaUrl, hasPreview }) => theme && hoverZoom && mediaUrl && hasPreview && css`
       transform: scale(1.5);
       opacity: 1;
       transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
@@ -91,20 +89,47 @@ interface IProps {
 // Image
 // No Image Placeholder
 
-const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image, mediaUrl, mediaType }) => {
+const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl, mediaType }) => {
 
-  const { createMediaModal } = useMediaModal();
+  const [hasPreview, setHasPreview] = useState(false);
+  const { createMediaModal, isMediaUrlValid } = useMediaModal();
 
-  const handleModal = useCallback(() => {
-    if (mediaUrl && mediaType) {
+  const handleModal = useCallback(async () => {
 
-      createMediaModal({src: mediaUrl, mediaType});
+    if (mediaUrl && mediaType && hasPreview) {
+      createMediaModal({ src: mediaUrl, mediaType });
     }
-  }, [createMediaModal, mediaType, mediaUrl]);
+
+  }, [createMediaModal, mediaType, mediaUrl, hasPreview]);
+
+  const verifyPreview = useCallback(async (currentMediaUrl: string, currentMediaType: IMediaType) => {
+    const isValidUrl : boolean = await isMediaUrlValid(currentMediaUrl, currentMediaType);
+
+    setHasPreview((prev) => {
+
+      if(prev === isValidUrl) {
+        return prev;
+      }
+
+      return isValidUrl;
+    });
+
+  }, []);
+
+  useEffect(() => {
+    let loading = true;
+    if (mediaUrl && mediaType) {
+      verifyPreview(mediaUrl, mediaType);
+    }
+
+    return () => {
+      loading = false;
+    }
+  }, [mediaUrl, mediaType])
 
   return (
-    <Container {...{hoverZoom}} mediaUrl={mediaUrl} aspect='16:9' onClick={handleModal}>
-      <Image {...{image}} />
+    <Container {...{ hoverZoom, mediaUrl, hasPreview }} aspect='16:9' onClick={handleModal}>
+      <Image {...{ image }} />
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
           <Icon size={12} icon='Play' color='inverse' />

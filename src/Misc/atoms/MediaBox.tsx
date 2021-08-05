@@ -1,7 +1,7 @@
 import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
-import {IMediaType} from '../../index';
+import { IMediaType } from '../../index';
 
 const Container = styled.div`
   position: relative;
@@ -31,7 +31,7 @@ const Video = styled.video<{ isLoaded?: boolean, hasModalLimits?: boolean }>`
   ${mediaStyle};
   outline: none;
 
-  ${({theme, isLoaded, hasModalLimits}) => css`
+  ${({ theme, isLoaded, hasModalLimits }) => css`
     transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
     opacity: ${isLoaded ? `1` : `0`};
 
@@ -40,22 +40,20 @@ const Video = styled.video<{ isLoaded?: boolean, hasModalLimits?: boolean }>`
       max-width: calc(100vw - 100px);
     `};
   `};
-
 `;
 
 const StyledImage = styled.img<{ isLoaded?: boolean, hasModalLimits?: boolean }>`
   ${mediaStyle};
 
-  ${({theme, isLoaded, hasModalLimits}) => css`
+  ${({ theme, isLoaded, hasModalLimits }) => css`
     transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
     opacity: ${isLoaded ? `1` : `0`};
 
     ${hasModalLimits && css`
-    max-height: calc(100vh - 100px);
-    max-width: calc(100vw - 100px);
+      max-height: calc(100vh - 100px);
+      max-width: calc(100vw - 100px);
+    `};
   `};
-  `};
-
 `;
 
 export interface IMediaModal {
@@ -64,13 +62,18 @@ export interface IMediaModal {
   alt?: string
   videoOptions?: VideoHTMLAttributes<HTMLVideoElement>
   hasModalLimits?: boolean
+  onError?: () => void
+  onMediaLoad?: () => void
 }
 
 const MediaBox: React.FC<IMediaModal> = ({
   src,
   alt,
   videoOptions = {},
-  mediaType
+  mediaType,
+  hasModalLimits,
+  onError = () => { },
+  onMediaLoad = () => { },
 }) => {
 
   const {
@@ -84,29 +87,25 @@ const MediaBox: React.FC<IMediaModal> = ({
   const [loaded, setLoaded] = useState(false);
 
   const handleLoad = useCallback(() => {
-      setLoaded(true);
-  },[]);
+    onMediaLoad();
+    setLoaded(true);
+  }, [onMediaLoad, setLoaded]);
 
   return (
     <Container>
       {mediaType === 'video'
         ? <Video
-            loop={loop}
-            autoPlay={autoPlay}
-            controls={controls}
-            muted={muted}
-            {...videoValues}
-            src={src}
-            isLoaded={loaded}
-            preload='metadata'
-            onCanPlay={handleLoad}
-          />
+          {...{ src, loop, autoPlay, controls, muted, onError, hasModalLimits }}
+          {...videoValues}
+          isLoaded={loaded}
+          preload='metadata'
+          onCanPlayThrough={handleLoad}
+        />
         : <StyledImage
-            src={src}
-            alt={alt}
-            onLoad={handleLoad}
-            isLoaded={loaded}
-          />}
+          {...{ src, alt, onError, hasModalLimits }}
+          onLoad={handleLoad}
+          isLoaded={loaded}
+        />}
       {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
     </Container>
   );
