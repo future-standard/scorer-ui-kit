@@ -1,16 +1,16 @@
-import React, { ReactElement, useCallback, VideoHTMLAttributes } from 'react';
+import React, {useCallback, VideoHTMLAttributes } from 'react';
 import { IMediaType } from '..';
 import MediaBox, { IMediaModal } from "../Misc/atoms/MediaBox";
-import { useModal } from "./useModal";
+import { useModal, IModal } from "./useModal";
 
 
-let hasMediaError = false
+export type ICreateMediaModal = IMediaModal & IModal;
 
 export const useMediaModal = () => {
 
   // default options for media box
   const videoDefaultOptions: VideoHTMLAttributes<HTMLVideoElement> = { controls: true };
-  const { createModal } = useModal();
+  const { createModal, isModalOpen, setModalOpen } = useModal();
 
 
   async function isMediaUrlValid(src: string, mediaType: IMediaType): Promise<boolean> {
@@ -50,25 +50,44 @@ export const useMediaModal = () => {
   }
 
 
-  const createMediaModal = useCallback(async (media: IMediaModal) => {
-    const { videoOptions } = media;
+  const createMediaModal = useCallback(async (mediaModal: ICreateMediaModal) => {
+    const {
+      src,
+      mediaType,
+      alt,
+      videoOptions = videoDefaultOptions,
+      onError,
+      onMediaLoad,
+      closeText,
+      dismissCallback,
+    } = mediaModal;
 
     createModal({
       padding: false,
       width: 'auto',
+      closeText,
+      dismissCallback,
       customComponent: (
         <MediaBox
-          {...media}
-          videoOptions={videoOptions || videoDefaultOptions}
+          {...{
+            src,
+            mediaType,
+            alt,
+            videoOptions,
+            onError,
+            onMediaLoad
+          }}
           hasModalLimits
         />
       )
     });
 
-  }, [createModal, hasMediaError]);
+  }, [createModal]);
 
   return {
     createMediaModal,
     isMediaUrlValid,
+    isMediaModalOpen: isModalOpen,
+    setMediaModalOpen: setModalOpen,
   }
 };
