@@ -108,6 +108,7 @@ import {
   useModal,
   useNotification,
   useClickOutside,
+  useMediaModal,
   IModal,
   usePoll,
 } from './hooks';
@@ -232,6 +233,7 @@ export {
   useCopyToClipboard,
   useClickOutside,
   usePoll,
+  useMediaModal,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
