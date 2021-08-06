@@ -26,7 +26,7 @@ export const useMediaModal = () => {
         })
       } catch (error) {
         isValid = false;
-        console.log(`[useMediaModal Hook] ${src} load image failed`, error);
+        console.log(`[useMediaModal - isMediaUrlValid] Invalid preview url ${src} - image load failed, modal will not be open`, error);
       }
     }
 
@@ -42,7 +42,7 @@ export const useMediaModal = () => {
 
       } catch (error) {
         isValid = false;
-        console.log(`[useMediaModal Hook] ${src} load image failed`, error);
+        console.log(`[useMediaModal - isMediaUrlValid] Invalid preview url ${src} - video load failed, modal will not be open`, error);
       }
     }
 

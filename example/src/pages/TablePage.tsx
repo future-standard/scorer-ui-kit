@@ -96,7 +96,7 @@ const initialRows : ITypeTableData = [
     id: 'device-id-4',
     header: {
       image: "http://placekitten.com/2934/3102",
-      mediaUrl:"http://placekiten.com/2934/3102",
+      mediaUrl:"http://wrong-url-placekitten.com/2934/3102",
       mediaType: 'img'
     },
     columns:
