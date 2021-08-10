@@ -11,6 +11,7 @@ import Checkbox from './atoms/Checkbox';
 import TextArea from './atoms/TextArea';
 import SelectField, {SelectWrapper} from './atoms/SelectField';
 import SliderInput, {ISliderMark} from  './atoms/SliderInput';
+import SearchInput from './atoms/SearchInput';
 import InputFileButton from './atoms/InputFileButton';
 import DurationSlider from './molecules/DurationSlider';
 import PercentageSlider from './molecules/PercentageSlider';
@@ -48,6 +49,7 @@ export {
     CropTool,
     SelectField,
     SelectWrapper,
+    SearchInput,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';

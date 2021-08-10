@@ -32,6 +32,7 @@ import {
   TextArea,
   TextAreaField,
   SliderInput,
+  SearchInput,
   ISliderMark,
   DurationSlider,
   PercentageSlider,
@@ -193,6 +194,7 @@ export {
   AvatarUploader,
   SelectField,
   SelectWrapper,
+  SearchInput,
 
   // Modals
   ConfirmationModal,
