@@ -1,22 +1,37 @@
 import React, { InputHTMLAttributes } from 'react';
-import styled, {css} from 'styled-components';
-import Icon, {IconWrapper} from '../../Icons/Icon';
+import styled, { css } from 'styled-components';
+import Icon, { IconWrapper } from '../../Icons/Icon';
 
-const Container = styled.div`
-  ${({theme}) => css`
-    border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
-    height: 30px;
-    padding: 2px 2px 2px 10px;
-    align-items: center;
+const Container = styled.div<{ hasBorder: boolean }>`
+  ${({ theme, hasBorder }) => css`
+    ${hasBorder && css
+      `border: 1px solid ${theme.styles.form.input.default.normal.borderColor}`
+    };
   `};
-  display: flex;
-  border-radius: 3px;
+
   ${IconWrapper} {
     flex-shrink: 0;
+    display: flex;
   }
+
+  height: 30px;
+  padding: 0 0 0 8px;
+  align-items: center;
+  display: flex;
+  border-radius: 3px;
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<{color: string}>`
+  ${({ theme, color }) => css`
+    ${theme.typography.form.input.value.compact};
+    &::placeholder {
+      ${theme.typography.form.input.placeholder.compact};
+      color: ${theme.colors.icons[color]};
+      font-size: 12px;
+    }
+  `};
+
+  font-size: 12px;
   border: none;
   height: 100%;
   width: 100%;
@@ -29,25 +44,27 @@ const StyledInput = styled.input`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  ${({theme: {typography}}) => css`
-    ${typography.form.input.value.compact};
-    &::placeholder {
-      ${typography.form.input.placeholder.compact};
-    }
-  `};
 `;
 
 interface OwnProps {
-
+  color?: 'mono' | 'dimmed' | 'subtle';
+  hasBorder?: boolean
+  iconSize?: number
 }
 
 type ISearchInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
 
-const SearchInput : React.FC<ISearchInput> = ({...props}) => {
-  return(
-    <Container>
-      <Icon icon='Search' color='dimmed' size={12}/>
+const SearchInput: React.FC<ISearchInput> = ({
+  color = 'subtle',
+  hasBorder = true,
+  iconSize = 11,
+  ...props
+}) => {
+  return (
+    <Container {...{ hasBorder }} >
+      <Icon {...{color}} icon='Search' weight='strong' size={iconSize} />
       <StyledInput
+        {...{color}}
         {...props}
       />
     </Container>
