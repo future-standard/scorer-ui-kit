@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import InputFileButton from '../atoms/InputFileButton';
 import Button from '../atoms/Button';
+import ButtonWithIcon from '../atoms/ButtonWithIcon';
 import DropArea from '../atoms/DropArea';
 import CropTool from '../molecules/CropTool';
 import { AvatarPlaceholder } from '../../svg';
@@ -84,7 +85,7 @@ interface IAvatar {
   cropToolCancelTxt?: string
   cropToolConfirmTxt?: string
   uploaderCropText?: string
-  defaultImg?: string
+  currentImg?: string
   hasCrop?: boolean
   onAvatarUpdate?: (imgFile: File) => void
   onError?: (msg: string) => void
@@ -99,13 +100,13 @@ const AvatarUploader: React.FC<IAvatar> = ({
   cropToolTitle,
   cropToolCancelTxt,
   cropToolConfirmTxt,
-  defaultImg,
+  currentImg,
   hasCrop = true,
   onAvatarUpdate = () => { },
   onError = () => { },
 }) => {
 
-  const [avatarImg, setAvatarImg] = useState(defaultImg);
+  const [avatarImg, setAvatarImg] = useState(currentImg);
   const [cropImg, setCropImg] = useState('');
   const [isCropOpen, setIsCropOpen] = useState(false);
 
@@ -153,14 +154,14 @@ const AvatarUploader: React.FC<IAvatar> = ({
   }, []);
 
   useEffect(() => {
-    setAvatarImg(defaultImg);
+    setAvatarImg(currentImg);
     return () => {
       setAvatarImg('');
     }
-  }, [defaultImg])
+  }, [currentImg])
 
   const renderButton = useCallback(() => {
-    if ((defaultImg && (!hasCrop)) || !defaultImg) {
+    if ((currentImg && (!hasCrop)) || !currentImg) {
       return (
         <StyledInputFileButton
           id='avatar-upload'
@@ -171,9 +172,9 @@ const AvatarUploader: React.FC<IAvatar> = ({
         />
       )
     }
-    return <Button size='small' onClick={() => handleEdit(defaultImg)}>{uploaderCropText}</Button>
+    return <Button size='small' onClick={() => handleEdit(currentImg)}>{uploaderCropText}</Button>
 
-  }, [defaultImg, avatarImg, hasCrop]);
+  }, [currentImg, avatarImg, hasCrop]);
 
   return (
     <Container>
@@ -187,7 +188,7 @@ const AvatarUploader: React.FC<IAvatar> = ({
               <PlaceholderText>{photoText}</PlaceholderText>
             </NoPhoto>
           )}
-        {((defaultImg && (!hasCrop)) || !defaultImg) && <DropArea height={PHOTO_HEIGHT} dropCallback={handleFileUpload} />}
+        {((currentImg && (!hasCrop)) || !currentImg) && <DropArea height={PHOTO_HEIGHT} dropCallback={handleFileUpload} />}
       </PreviewImageGroup>
       {renderButton()}
       {isCropOpen && hasCrop

@@ -23,7 +23,7 @@ export const _AvatarUploader = () => {
   const cropToolTitle = text('CropTool Title', 'Crop utility');
   const cropToolCancelTxt = text('CropTool Cancel Text', 'Cancel');
   const cropToolConfirmTxt = text('CropTool Confirm Text', 'Crop and Save');
-  const baseImg = boolean('Default Photo', false);
+  const baseImg = boolean('Current Image', false);
   const hasCrop = boolean('Has Crop', true);
   const showValue = action('Input Callback');
   const errorValue = action('Error');
@@ -42,7 +42,7 @@ export const _AvatarUploader = () => {
     <Container>
       <AvatarUploader
         onAvatarUpdate={uploadReady}
-        defaultImg={baseImg ? photo : ''}
+        currentImg={baseImg ? photo : ''}
         {...{
           title,
           photoText,
