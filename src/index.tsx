@@ -41,6 +41,7 @@ import {
   AvatarUploader,
   SelectField,
   SelectWrapper,
+  FilterButton,
 } from './Form';
 
 // Components - Filter
@@ -193,6 +194,7 @@ export {
   AvatarUploader,
   SelectField,
   SelectWrapper,
+  FilterButton,
 
   // Modals
   ConfirmationModal,

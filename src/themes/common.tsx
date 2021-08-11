@@ -57,6 +57,42 @@ export const dimensions = {
       }
     }
   },
+  filterBar: {
+    button: {
+      xsmall: {
+        height: '0 20px',
+        iconPadding: '0 9px',
+        textPaddingNoArrow: '20px',
+        textPaddingWithArrow: '3px',
+        iconSize: 10,
+        arrowSize: 8,
+      },
+      small: {
+        height: '30px',
+        iconPadding: '0 9px',
+        textPaddingNoArrow: '20px',
+        textPaddingWithArrow: '3px',
+        iconSize: 12,
+        arrowSize: 8,
+      },
+      normal: {
+        height: '40px',
+        iconPadding: '0 20px',
+        textPaddingNoArrow: '40px',
+        textPaddingWithArrow: '4px',
+        iconSize: 14,
+        arrowSize: 10,
+      },
+      large: {
+        height: '60px',
+        iconPadding: '0 20px',
+        textPaddingNoArrow: '40px',
+        textPaddingWithArrow: '4px',
+        iconSize: 20,
+        arrowSize: 12,
+      },
+    },
+  },
   global: {
     mainMenu: {
       width: {

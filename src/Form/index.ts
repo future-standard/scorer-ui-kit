@@ -3,6 +3,7 @@ import ButtonWithIcon from './atoms/ButtonWithIcon';
 import ButtonWithLoading from './atoms/ButtonWithLoading';
 import IconButton, {IconButtonData} from './atoms/IconButton';
 import ActionButtons from './molecules/ActionButtons';
+import FilterButton from './atoms/FilterButton';
 import Input from './atoms/Input';
 import SmallInput from './atoms/SmallInput';
 import Label from './atoms/Label';
@@ -48,6 +49,7 @@ export {
     CropTool,
     SelectField,
     SelectWrapper,
+    FilterButton,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
