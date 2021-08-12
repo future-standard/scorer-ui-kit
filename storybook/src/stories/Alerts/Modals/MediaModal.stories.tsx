@@ -6,6 +6,7 @@ import {
   MediaBox,
   Button
 } from 'scorer-ui-kit';
+import { boolean } from '@storybook/addon-knobs';
 
 export default {
   title: 'Alerts/Modals',
@@ -15,14 +16,19 @@ export default {
 
 const Container = styled.div``;
 
+interface IExampleModal {
+  hasModalLimitsValue: boolean
+}
 
-const MediaImageModal = () => {
+const MediaImageModal : React.FC<IExampleModal> = ({hasModalLimitsValue}) => {
   const { createModal } = useModal();
 
-  const mediaImage: ReactElement = <MediaBox mediaType="img" alt="city" src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
+  const mediaImage: ReactElement = <MediaBox hasModalLimits={hasModalLimitsValue} mediaType="img" alt="city" src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
+
+  const modalWidth = hasModalLimitsValue ? 'auto' : '60%';
 
   const openImageModal = () => {
-    createModal({ customComponent: mediaImage, padding: false, width: '60%' })
+    createModal({ customComponent: mediaImage, padding: false, width: modalWidth  })
   }
 
   return (
@@ -37,10 +43,12 @@ const MediaImageModal = () => {
 
   // Provider should be at main Index level, it's here just for the story example
 export const _MediaModal = () => {
+
+  const hasModalLimits = boolean('Has Modal Limits', true);
   return (
     <Container>
       <ModalProvider>
-        <MediaImageModal />
+        <MediaImageModal hasModalLimitsValue={hasModalLimits} />
       </ModalProvider>
     </Container>
   )

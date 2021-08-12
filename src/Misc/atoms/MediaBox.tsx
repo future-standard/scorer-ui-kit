@@ -9,8 +9,8 @@ const Container = styled.div`
 `;
 
 const mediaStyle = `
-  width:  100%;
-  height: 100%;
+  max-width:  100%;
+  max-height: 100%;
   border-radius: 3px;
   background-color: hsla(0deg, 0%, 0%, 35%);
 `;

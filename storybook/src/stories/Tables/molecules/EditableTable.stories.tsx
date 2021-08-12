@@ -4,12 +4,13 @@ import { object } from "@storybook/addon-knobs";
 
 
 import {TypeTable as EditableTable,
-  EditCell
+  EditCell,
+  ModalProvider,
 } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
 import {sleep} from '../../helpers';
 
-import { 
+import {
   IRowData,
   IDeviceStatus,
   ITableColumnConfig,
@@ -129,6 +130,8 @@ export const _EditableTable = () => {
         id,
         header: {
           image: photo,
+          mediaUrl: photo,
+          mediaType: 'img',
         },
         columns:
         [ {text: jobName },
@@ -140,7 +143,7 @@ export const _EditableTable = () => {
       })
       return row;
     })
-  
+
     return newRows;
   },[updateCameraName])
 
@@ -156,15 +159,18 @@ export const _EditableTable = () => {
     }
   }, [data, buildDataRows]);
 
-  return(
+  // Provider should be at main Index level, it's here just for the example
+  return (
     <Container>
-      <EditableTable {
-        ...{
-          columnConfig: columnConfig,
-          rows,
-          hasThumbnail: true,
-        }
-      }/>
+      <ModalProvider>
+        <EditableTable {
+          ...{
+            columnConfig: columnConfig,
+            rows,
+            hasThumbnail: true,
+          }
+        } />
+      </ModalProvider>
     </Container>
   )
 };
