@@ -25,8 +25,9 @@ export const _AvatarUploader = () => {
   const cropToolConfirmTxt = text('CropTool Confirm Text', 'Crop and Save');
   const baseImg = boolean('Current Image', false);
   const hasCrop = boolean('Has Crop', true);
-  const showValue = action('Input Callback');
-  const errorValue = action('Error');
+  const showValue = action('Update Callback');
+  const errorValue = action('On Error');
+  const onRemoveValue = action('On Remove');
 
   const uploadReady = (imgFile: File) => {
     console.log('file', imgFile);
@@ -37,6 +38,10 @@ export const _AvatarUploader = () => {
     console.log(msg);
     errorValue(msg);
   };
+
+  const onRemove = () => {
+    onRemoveValue('The user has deleted Avatar image');
+  }
 
   return (
     <Container>
@@ -49,6 +54,7 @@ export const _AvatarUploader = () => {
           buttonText,
           buttonReplaceText,
           onError,
+          onRemove,
           uploaderCropText,
           hasCrop,
           cropToolTitle,
