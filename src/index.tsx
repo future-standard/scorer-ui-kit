@@ -42,6 +42,7 @@ import {
   SelectField,
   SelectWrapper,
   FilterButton,
+  FilterDropdown
 } from './Form';
 
 // Components - Filter
@@ -195,6 +196,7 @@ export {
   SelectField,
   SelectWrapper,
   FilterButton,
+  FilterDropdown,
 
   // Modals
   ConfirmationModal,
