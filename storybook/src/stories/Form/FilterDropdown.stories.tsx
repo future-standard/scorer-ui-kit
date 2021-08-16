@@ -36,6 +36,7 @@ export const _FilterDropdown = () => {
   const isLoading = boolean('Is Loading', false);
   const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "small");
   const optionType = select("Option Type", {text: "text", checkbox: "checkbox", radio: "radio", icon: "icon"},"text")
+  const loadingText = text('Loading Text', 'Loading Tags...');
 
   return <Content>
 
@@ -45,6 +46,7 @@ export const _FilterDropdown = () => {
         buttonSize,
         disabled,
         isLoading,
+        loadingText,
       }}
         optionType={optionType}
       />

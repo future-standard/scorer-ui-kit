@@ -1,8 +1,10 @@
 import React, { useRef, useState, useCallback } from 'react';
+import { useClickOutside } from '../../hooks/useClickOutside';
 import styled, { css } from 'styled-components';
 import { TypeButtonSizes } from '..';
 import FilterButton from '../atoms/FilterButton';
-import { useClickOutside } from '../../hooks/useClickOutside';
+import Spinner from '../../Indicators/Spinner';
+
 
 const MIN_WIDTH = 270;
 const MIN_HEIGHT = 190;
@@ -20,6 +22,7 @@ const ContentBox = styled.div<{ contentState: IDropOpen }>`
   z-index: 100;
   min-width: ${MIN_WIDTH}px;
   position: absolute;
+  background-color: ${({ theme }) => theme.colors["pureBase"]};
 
   ${({ contentState }) => contentState && css`
     display: ${contentState.isOpen ? 'inline-block' : 'none'};
@@ -67,6 +70,24 @@ border-bottom-right-radius: 3px;
   border-bottom: solid 1px hsl(207, 16%, 86%);
   border-left: solid 1px hsl(207, 16%, 86%);
   background-color: hsl(200, 23%, 97%);
+`;
+
+const LoadingBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 146px;
+`;
+
+const LoadingText = styled.div`
+  ${({theme}) => css`
+    font-family: ${theme.fontFamily.data};
+  `}
+  color: hsl(0, 0%, 55%);
+  font-size: 12px;
+  font-style: italic;
+  padding: 15px 0;
 `;
 
 const getDropPosition = (buttonRect: DOMRect): IOpenPos => {
@@ -164,7 +185,11 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
         <InnerBox>
           <div className="SearchField">Filter Tags</div>
           {isLoading
-            ? <div className='LoadingBox'></div>
+            ? (
+              <LoadingBox>
+                <Spinner size='large' styling='primary' />
+                <LoadingText>{loadingText}</LoadingText>
+              </LoadingBox>)
             : (
               <div className='Results Container'>
                 <div className="ResultCounter">Showing 6 of 6</div>
