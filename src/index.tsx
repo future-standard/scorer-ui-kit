@@ -42,7 +42,8 @@ import {
   SelectField,
   SelectWrapper,
   FilterButton,
-  FilterDropdown
+  FilterDropdown,
+  IFilterDropdownValue,
 } from './Form';
 
 // Components - Filter
@@ -285,8 +286,6 @@ export type IMediaType = 'img' | 'video'
 
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
 
-
-
 export type {
   IModal,
   INotificationProps,
@@ -296,5 +295,6 @@ export type {
   ISliderMark,
   INotificationItem,
   INotificationsHistory,
-  ICustomDrawer
+  ICustomDrawer,
+  IFilterDropdownValue
 };
