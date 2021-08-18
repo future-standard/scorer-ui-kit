@@ -9,6 +9,7 @@ import SmallInput from './atoms/SmallInput';
 import Label from './atoms/Label';
 import Switch from './atoms/Switch';
 import Checkbox from './atoms/Checkbox';
+import RadioButton from './atoms/RadioButton';
 import TextArea from './atoms/TextArea';
 import SelectField, {SelectWrapper} from './atoms/SelectField';
 import SliderInput, {ISliderMark} from  './atoms/SliderInput';
@@ -52,6 +53,7 @@ export {
     SelectWrapper,
     FilterButton,
     FilterDropdown,
+    RadioButton,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';

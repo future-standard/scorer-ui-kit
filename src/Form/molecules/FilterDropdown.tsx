@@ -311,7 +311,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                         label={text.toString()}
                         onClick={() => handleSelection(item)}
                         selected={isValueSelected(item, selected)}
-                        {...{ optionType, }}
+                        {...{ optionType, value}}
                       />
                     )
                   })

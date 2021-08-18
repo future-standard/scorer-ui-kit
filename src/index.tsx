@@ -44,6 +44,7 @@ import {
   FilterButton,
   FilterDropdown,
   IFilterDropdownValue,
+  RadioButton,
 } from './Form';
 
 // Components - Filter
@@ -198,6 +199,7 @@ export {
   SelectWrapper,
   FilterButton,
   FilterDropdown,
+  RadioButton,
 
   // Modals
   ConfirmationModal,

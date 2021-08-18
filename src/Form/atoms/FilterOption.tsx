@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import Checkbox from './Checkbox';
+import RadioButton from './RadioButton';
 import { IInputOptionsType, TypeButtonSizes } from '..';
 
 const StyledCheckbox = styled(Checkbox)``;
@@ -62,11 +63,12 @@ const renderOption = (
   optionType: IInputOptionsType,
   selected: boolean,
   disabled: boolean,
+  value: string | number,
   parentHover: boolean
 ) => {
   switch (optionType) {
     case 'radio':
-      return <input type='radio' {...{ id, disabled }} checked={selected} />
+      return <RadioButton {...{ id, disabled, value, parentHover }} currentChecked={selected ? value : undefined} />
 
     default:
       return <StyledCheckbox {...{ id, disabled, parentHover }} checked={selected} />
@@ -77,6 +79,7 @@ const renderOption = (
 interface IFilterOption {
   id: string
   label: string
+  value: string |number
   optionType?: IInputOptionsType
   buttonSize?: TypeButtonSizes
   selected?: boolean
@@ -87,6 +90,7 @@ interface IFilterOption {
 const FilterOption: React.FC<IFilterOption> = ({
   id,
   label,
+  value,
   optionType = "text",
   selected = false,
   disabled = false,
@@ -113,7 +117,7 @@ const FilterOption: React.FC<IFilterOption> = ({
       onMouseLeave={handleMouseLeave}
       {...props}
     >
-      {(optionType !== 'text') && renderOption(id, optionType, selected, disabled, parentHover)}
+      {(optionType !== 'text') && renderOption(id, optionType, selected, disabled, value, parentHover)}
       <StyledLabel htmlFor={id} {...{ buttonSize }}>{label}</StyledLabel>
     </Container>
   );
