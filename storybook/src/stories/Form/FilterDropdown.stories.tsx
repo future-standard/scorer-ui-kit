@@ -14,7 +14,8 @@ export default {
 const Content = styled.div``;
 
 const Wrapper = styled.div`
-  margin: 100px 20px;
+  margin: 50px;
+  display: inline-block;
 `;
 
 const generateIconList = () => {
@@ -50,16 +51,14 @@ const yearList = [1900, 1910, 1920, 1930, 1950, 1960, 1970, 1980, 1990, 2000, 20
 const englishPayList = ['Card', 'Cash', 'IC Card'];
 const japanesePayList = ['カード','現金','IC カード']
 
-export const _FilterDropdown = () => {
 
-  const [selectedObj, setSelectedObj] = useState<IFilterDropdownValue>(null); // this could also start with values [{ text: 'Super Spicy', value: 0 }]
-  const [textArraySelected, setTextArraySelected] = useState<IFilterDropdownValue>(null); // this could also start with values ['Ramen', 'Takoyaki']
-  const [wordSelected, setWordSelected] = useState<IFilterDropdownValue>('Card'); // this could also start with value 'Card' or null
-  const [numberSelected, setNumberSelected] = useState<IFilterDropdownValue>(1990); // this could also start with value 1990 or null
+const baseExample = ['Adipiscing', 'Amet', 'Consectetur', 'Dolor sit', 'Lorem ipsum', 'Vestibulum'];
+
+export const _FilterDropdown = () => {
   const iconList = generateIconList();
 
   // const indeterminate = boolean("Indeterminate", false);
-  const buttonText = text('Text', 'Flavors');
+  const buttonText = text('Text', 'Department');
   const buttonIcon = select("Button Icon", iconList, Object.keys(iconList)[0]);
   const disabled = boolean('disable', false);
   const isLoading = boolean('Is Loading', false);
@@ -69,46 +68,69 @@ export const _FilterDropdown = () => {
   const language = select("Lenguage", { English: 'english', Japanese: "japanese" }, "japanese");
   const selectedItems = action('Currently Selected');
 
+  const [selectedObj, setSelectedObj] = useState<IFilterDropdownValue>(null); // this could also start with values [{ text: 'Super Spicy', value: 0 }]
+  const [textArraySelected, setTextArraySelected] = useState<IFilterDropdownValue>(null); // this could also start with values ['Ramen', 'Takoyaki']
+  const [wordSelected, setWordSelected] = useState<IFilterDropdownValue>(language === 'english' ? 'Card' : 'カード'); // this could also start with value 'Card' or null
+  const [numberSelected, setNumberSelected] = useState<IFilterDropdownValue>(1990); // this could also start with value 1990 or null
+  const [baseSelected, setBaseSelected]= useState<IFilterDropdownValue>(null);
 
   const handleListItemSelect = useCallback((newSelection: IFilterDropdownValue) => {
     console.log('newSelection in storybook', newSelection);
     selectedItems(newSelection);
     setSelectedObj(newSelection);
-    console.log(newSelection);
   }, [selectedItems]);
 
   const handleTextListSelect = useCallback((newSelection: IFilterDropdownValue) => {
     console.log('newSelection in storybook', newSelection);
     selectedItems(newSelection);
     setTextArraySelected(newSelection);
-    console.log(newSelection);
   }, [selectedItems]);
 
   const handleNumberListSelect = useCallback((newSelection: IFilterDropdownValue) => {
     console.log('newSelection in storybook', newSelection);
     selectedItems(newSelection);
     setNumberSelected(newSelection);
-    console.log(newSelection);
   }, [selectedItems]);
 
   const handleWordSelect = useCallback((newSelection: IFilterDropdownValue) => {
     console.log('newSelection in storybook', newSelection);
     selectedItems(newSelection);
     setWordSelected(newSelection);
-    console.log(newSelection);
+  }, [selectedItems]);
+
+  const handleBaseExample = useCallback((newSelection: IFilterDropdownValue) => {
+    console.log('newSelection in storybook', newSelection);
+    selectedItems(newSelection);
+    setBaseSelected(newSelection);
   }, [selectedItems]);
 
 
   return <Content>
+    <Wrapper key='eje-0'>
+      <FilterDropdown
+        {...{
+          buttonSize,
+          disabled,
+          isLoading,
+          loadingText,
+          buttonText
+        }}
+        buttonIcon = 'MetaCategories'
+        list={baseExample}
+        onSelect={handleBaseExample}
+        optionType='checkbox'
+        selected={baseSelected}
+      />
+    </Wrapper>
     <Wrapper key='eje-1'>
       <FilterDropdown {...{
-        buttonText,
         buttonIcon,
         buttonSize,
         disabled,
         isLoading,
         loadingText,
       }}
+      buttonText={language === 'english' ? 'Spice level' : 'ピリ辛'}
         selected={selectedObj}
         optionType={optionType}
         list={language === 'english' ? englishDataList : japaneseDataList}
@@ -124,7 +146,7 @@ export const _FilterDropdown = () => {
           isLoading,
           loadingText,
         }}
-        buttonText='Menu'
+        buttonText={language === 'english' ? 'Menu' : 'メニュー'}
         selected={textArraySelected}
         list={language === 'english' ? englishTextList : japaneseTextList}
         onSelect={handleTextListSelect}
@@ -140,11 +162,11 @@ export const _FilterDropdown = () => {
           isLoading,
           loadingText,
         }}
-        buttonText='Pay Method'
+        buttonText={language === 'english' ? 'Pay Method' : '支払方法'}
         selected={wordSelected}
         list={language === 'english' ? englishPayList : japanesePayList}
         onSelect={handleWordSelect}
-        optionType={optionType}
+        optionType='radio'
       />
     </Wrapper>
     <Wrapper key='eje-4'>
@@ -156,7 +178,7 @@ export const _FilterDropdown = () => {
           isLoading,
           loadingText,
         }}
-        buttonText='Year'
+        buttonText={language === 'english' ? 'Year' : '年'}
         selected={numberSelected}
         list={yearList}
         onSelect={handleNumberListSelect}

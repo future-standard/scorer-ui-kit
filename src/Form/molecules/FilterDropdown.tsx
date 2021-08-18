@@ -6,7 +6,6 @@ import FilterButton from '../atoms/FilterButton';
 import FilterOption from '../atoms/FilterOption'
 import Spinner from '../../Indicators/Spinner';
 
-
 const MIN_WIDTH = 270;
 const MIN_HEIGHT = 190;
 
@@ -88,6 +87,15 @@ const LoadingText = styled.div`
   font-size: 12px;
   font-style: italic;
   padding: 15px 0;
+`;
+
+const StyledFilterOption = styled(FilterOption)``;
+
+const OptionList = styled.div`
+  ${StyledFilterOption} {
+    height: 35px;
+    padding-left: 10px;
+  }
 `;
 
 const getDropPosition = (buttonRect: DOMRect): IOpenPos => {
@@ -292,23 +300,23 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
             : (
               <div className='Results Container'>
                 <div className="ResultCounter">Showing 6 of 6</div>
-                <div className="OptionList">
+                <OptionList>
                   {(list.length > 0) && list.map((item: IFilterItem) => {
                     const value = ((typeof item === 'string') || (typeof item === 'number')) ? item : item.value;
                     const text = ((typeof item === 'string') || (typeof item === 'number')) ? item : item.text;
                     return (
-                      <FilterOption
+                      <StyledFilterOption
                         key={`select-${text}`}
                         id={`select-${text}`}
                         label={text.toString()}
                         onClick={() => handleSelection(item)}
                         selected={isValueSelected(item, selected)}
-                        {...{ optionType }}
+                        {...{ optionType, }}
                       />
                     )
                   })
                   }
-                </div>
+                </OptionList>
               </div>)
           }
         </InnerBox>
