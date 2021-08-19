@@ -66,6 +66,7 @@ export const _FilterDropdown = () => {
   const optionType = select("Option Type", { text: "text", checkbox: "checkbox", radio: "radio" }, "checkbox")
   const loadingText = text('Loading Text', 'Loading Tags...');
   const language = select("Lenguage", { English: 'english', Japanese: "japanese" }, "japanese");
+  const searchPlaceholder = text('Search Placeholder', 'Filter Tags...');
   const selectedItems = action('Currently Selected');
 
   const [selectedObj, setSelectedObj] = useState<IFilterDropdownValue>(null); // this could also start with values [{ text: 'Super Spicy', value: 0 }]
@@ -113,7 +114,8 @@ export const _FilterDropdown = () => {
           disabled,
           isLoading,
           loadingText,
-          buttonText
+          buttonText,
+          searchPlaceholder
         }}
         buttonIcon = 'MetaCategories'
         list={baseExample}
@@ -129,6 +131,7 @@ export const _FilterDropdown = () => {
         disabled,
         isLoading,
         loadingText,
+        searchPlaceholder,
       }}
       buttonText={language === 'english' ? 'Spice level' : 'ピリ辛'}
         selected={selectedObj}
@@ -145,6 +148,7 @@ export const _FilterDropdown = () => {
           disabled,
           isLoading,
           loadingText,
+          searchPlaceholder,
         }}
         buttonText={language === 'english' ? 'Menu' : 'メニュー'}
         selected={textArraySelected}
@@ -161,6 +165,7 @@ export const _FilterDropdown = () => {
           disabled,
           isLoading,
           loadingText,
+          searchPlaceholder,
         }}
         buttonText={language === 'english' ? 'Pay Method' : '支払方法'}
         selected={wordSelected}
@@ -177,6 +182,7 @@ export const _FilterDropdown = () => {
           disabled,
           isLoading,
           loadingText,
+          searchPlaceholder,
         }}
         buttonText={language === 'english' ? 'Year' : '年'}
         selected={numberSelected}

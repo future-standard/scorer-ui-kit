@@ -8,6 +8,8 @@ import Spinner from '../../Indicators/Spinner';
 
 const MIN_WIDTH = 270;
 const MIN_HEIGHT = 190;
+const MAX_ITEMS = 6;
+const BASE_PADDING_LEFT = '10px;'
 
 const Container = styled.div`
   display: inline-block;
@@ -77,6 +79,7 @@ const LoadingBox = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 146px;
+  border-top: 1px solid hsl(0, 0%, 91%);
 `;
 
 const LoadingText = styled.div`
@@ -94,8 +97,28 @@ const StyledFilterOption = styled(FilterOption)``;
 const OptionList = styled.div`
   ${StyledFilterOption} {
     height: 35px;
-    padding-left: 10px;
+    padding-left: ${BASE_PADDING_LEFT};
   }
+`;
+
+const ResultsContainer = styled.div`
+  border-top: 1px solid hsl(0, 0%, 91%);
+`;
+
+const ResultCounter = styled.div`
+  opacity: 0.75;
+  font-family: ${({theme}) => theme.fontFamily.data};
+  color: hsl(0, 0%, 55%);
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-left: ${BASE_PADDING_LEFT};
+  height: 30px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid hsl(0, 0%, 91%);
 `;
 
 const getDropPosition = (buttonRect: DOMRect): IOpenPos => {
@@ -222,6 +245,7 @@ interface IFilterDropdown {
   optionType?: IInputOptionsType
   isLoading?: boolean
   loadingText?: string
+  searchPlaceholder?: string
   onSelect: (newSelection: IFilterDropdownValue) => void;
 }
 
@@ -235,6 +259,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   isLoading = false,
   loadingText,
   optionType = 'text',
+  searchPlaceholder,
   onSelect = () => { },
 }) => {
 
@@ -290,7 +315,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
       <ContentBox {...{ contentState }}>
         <TopLine />
         <InnerBox>
-          <div className="SearchField">Filter Tags</div>
+          <div className="SearchField">{searchPlaceholder}</div>
           {isLoading || !list
             ? (
               <LoadingBox>
@@ -298,8 +323,8 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                 <LoadingText>{loadingText}</LoadingText>
               </LoadingBox>)
             : (
-              <div className='Results Container'>
-                <div className="ResultCounter">Showing 6 of 6</div>
+              <ResultsContainer>
+                <ResultCounter>Showing 6 of 6</ResultCounter>
                 <OptionList>
                   {(list.length > 0) && list.map((item: IFilterItem) => {
                     const value = ((typeof item === 'string') || (typeof item === 'number')) ? item : item.value;
@@ -317,7 +342,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                   })
                   }
                 </OptionList>
-              </div>)
+              </ResultsContainer>)
           }
         </InnerBox>
       </ContentBox>
