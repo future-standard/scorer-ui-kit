@@ -11,7 +11,7 @@ IconButtonData,
 MultilineContent,
 } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
-import {
+import { 
   ITableColumnConfig,
   ITypeTableData
 } from 'scorer-ui-kit/dist/Tables';
@@ -123,7 +123,7 @@ const generateConfigButtons  = (rowId: string) : IconButtonData[] => {
 
 const generateTimeRows = (initTime: string, endTime: string) : ReactElement[] =>  {
   return (
-    [
+    [ 
       <TimeText>{`${initTime} ${String.fromCharCode(160)} →`}</TimeText>,
       <TimeText>{endTime}<span>{` JST`}</span></TimeText>
     ]
@@ -195,7 +195,7 @@ export const ActionsTable = () => {
     setRows(newRows);
 
   }, [rows, setRows]);
-
+  
 
   return (
       <Container>
@@ -208,7 +208,7 @@ export const ActionsTable = () => {
               toggleAllCallback,
               hasThumbnail,
             }
-          }
+          } 
         />
       </Container>
       )
