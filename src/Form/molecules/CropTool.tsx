@@ -178,7 +178,7 @@ const CropTool: React.FC<ICrop> = ({
       );
     // triggers a render to repaint canvas
     setLoadDimensions((prevState) =>
-      ({ 
+      ({
         ...prevState,
         cropLeft: newCrop.left,
         cropTop: newCrop.top,
@@ -262,7 +262,7 @@ const CropTool: React.FC<ICrop> = ({
     if (!viewDimensions.isResizing) { return; }
     viewDimensions.isResizing = false;
   }, []);
-  
+
   const updateSelect = useCallback((left, top, width, height) =>{
     if (!cropRef.current) { return; }
     cropRef.current.style.left = `${left}px`;
