@@ -32,7 +32,6 @@ import {
   TextArea,
   TextAreaField,
   SliderInput,
-  SearchInput,
   ISliderMark,
   DurationSlider,
   PercentageSlider,
@@ -94,6 +93,7 @@ import {
     ITagList,
     TagListWrapper,
     MediaBox,
+    BasicSearchInput,
   } from './Misc';
 
 import {
@@ -194,7 +194,6 @@ export {
   AvatarUploader,
   SelectField,
   SelectWrapper,
-  SearchInput,
 
   // Modals
   ConfirmationModal,
@@ -264,6 +263,7 @@ export {
   TagList,
   TagListWrapper,
   MediaBox,
+  BasicSearchInput,
 
   //Context
   NotificationProvider,

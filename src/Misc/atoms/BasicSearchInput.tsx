@@ -52,9 +52,9 @@ interface OwnProps {
   iconSize?: number
 }
 
-type ISearchInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
+type IBasicSearchInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
 
-const SearchInput: React.FC<ISearchInput> = ({
+const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   color = 'subtle',
   hasBorder = true,
   iconSize = 11,
@@ -71,4 +71,4 @@ const SearchInput: React.FC<ISearchInput> = ({
   );
 };
 
-export default SearchInput;
+export default BasicSearchInput;

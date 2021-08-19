@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { SearchInput } from 'scorer-ui-kit';
+import { BasicSearchInput } from 'scorer-ui-kit';
 import { text, boolean, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Form/Input',
-  component: SearchInput,
+  title: 'Misc/atoms',
+  component: BasicSearchInput,
   decorators: []
 };
 
@@ -14,7 +14,7 @@ const Container = styled.div`
   margin: 20px;
 `;
 
-export const _SearchInput = () => {
+export const _BasicSearchInput = () => {
 
   const inputPlaceholder = text("Placeholder", "Search by name...");
   const textValue = action('Search value');
@@ -30,7 +30,7 @@ export const _SearchInput = () => {
 
   return (
     <Container>
-      <SearchInput
+      <BasicSearchInput
         placeholder={inputPlaceholder}
         onChange={handleChange}
         {...{hasBorder, color, iconSize}}
