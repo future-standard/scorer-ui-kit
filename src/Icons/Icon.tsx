@@ -16,7 +16,7 @@ export {IconWrapper, IconSVGs};
 export interface IconProps {
   icon: string;
   size?: number;
-  weight?: 'light' | 'regular' | 'heavy'
+  weight?: 'light' | 'regular' | 'heavy' | 'strong'
   color?: ISvgIcons['color']
 }
 interface ISvgIcon extends React.SVGProps<SVGSVGElement> {
