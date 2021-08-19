@@ -1,15 +1,14 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import styled, { css } from 'styled-components';
 import { IInputOptionsType, TypeButtonSizes } from '..';
 import FilterButton from '../atoms/FilterButton';
-import FilterOption from '../atoms/FilterOption'
+import FilterOption from '../atoms/FilterOption';
+import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import Spinner from '../../Indicators/Spinner';
 
 const MIN_WIDTH = 270;
 const MIN_HEIGHT = 190;
-const MAX_ITEMS = 6;
-const BASE_PADDING_LEFT = '10px;'
 
 const Container = styled.div`
   display: inline-block;
@@ -92,22 +91,25 @@ const LoadingText = styled.div`
   padding: 15px 0;
 `;
 
-const StyledFilterOption = styled(FilterOption)``;
+const StyledFilterOption = styled(FilterOption)`
+  letter-spacing: 0.2px;
+`;
 
 const OptionList = styled.div`
   ${StyledFilterOption} {
     height: 35px;
-    padding-left: ${BASE_PADDING_LEFT};
+    padding-left: 10px;
   }
 `;
 
 const ResultsContainer = styled.div`
   border-top: 1px solid hsl(0, 0%, 91%);
+  padding-bottom: 8px;
 `;
 
 const ResultCounter = styled.div`
   opacity: 0.75;
-  font-family: ${({theme}) => theme.fontFamily.data};
+  font-family: ${({ theme }) => theme.fontFamily.data};
   color: hsl(0, 0%, 55%);
   font-size: 12px;
   font-style: italic;
@@ -115,23 +117,29 @@ const ResultCounter = styled.div`
   display: flex;
   align-items: center;
   justify-content: left;
-  padding-left: ${BASE_PADDING_LEFT};
+  padding-left: 9px;
   height: 30px;
   margin-bottom: 6px;
   border-bottom: 1px solid hsl(0, 0%, 91%);
 `;
 
-const getDropPosition = (buttonRect: DOMRect): IOpenPos => {
+const SearchWrapper = styled.div`
+  height: 41px;
+  display: flex;
+  align-items: center;
+`;
 
+const getDropPosition = (buttonRect: DOMRect): IOpenPos => {
   let position: IOpenPos = 'bottom-right';
   const openLeft = (buttonRect.left + MIN_WIDTH) > window.innerWidth;
   const openTop = (buttonRect.bottom + MIN_HEIGHT) > window.innerHeight;
+  const spaceTop = buttonRect.bottom > MIN_HEIGHT;
 
-  if (openLeft && openTop) {
+  if (openLeft && openTop && spaceTop) {
     position = 'top-left';
   }
 
-  if (openTop && !openLeft) {
+  if (openTop && !openLeft && spaceTop) {
     position = 'top-right';
   }
 
@@ -148,12 +156,22 @@ const isValueSelected = (item: IFilterItem, selected: IFilterDropdownValue) => {
 
   if (Array.isArray(selected)) {
     selected.forEach((element: IFilterItem) => {
-      if (element === item) {
+
+      if (isListItem(element) && isListItem(item) && element.value === item.value) {
+        isItemSelected = true;
+      } else if (element === item) {
         isItemSelected = true;
       }
     })
+
   } else {
-    isItemSelected = item === selected;
+
+    if (isListItem(selected) && isListItem(item)) {
+      isItemSelected = item.value === selected.value
+    } else {
+      isItemSelected = item === selected;
+    }
+
   }
 
   return isItemSelected;
@@ -163,6 +181,8 @@ const isValueSelected = (item: IFilterItem, selected: IFilterDropdownValue) => {
 // https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
 
 const isListItem = (item: any): item is ListItem => {
+  if (item === null) { return false };
+
   return (item.value !== undefined) && (item.text !== undefined);
 }
 
@@ -220,6 +240,121 @@ const getNewSelected = (item: IFilterItem, selected: IFilterDropdownValue, optio
   return item;
 }
 
+const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilterDropdownValue): IFilterItem[] => {
+
+  if (list.length <= maxItems) {
+    return list;
+  }
+
+  if (selected === null) {
+    return list.slice(0, maxItems - 1);
+  }
+
+  if (typeof selected === 'number' || typeof selected === 'string' || isListItem(selected)) {
+    const index = list.findIndex(item => {
+      if (isListItem(item) && isListItem(selected)) {
+        item.value === selected.value;
+      } else {
+        return item === selected;
+      }
+    })
+
+    if ((index !== -1) && (index < maxItems)) {
+      return list.slice(0, maxItems - 1);
+    }
+
+    const newList = list.slice(0, maxItems - 2);
+    newList.push(selected);
+    return newList;
+  }
+
+
+  if (Array.isArray(selected)) {
+
+    if (selected.length > maxItems) {
+      return selected.slice(0, maxItems - 1);
+    }
+
+    if (selected.length === maxItems) {
+      return selected;
+    }
+    const selectedIndexList: number[] = [];
+
+    selected.forEach((element: IFilterItem) => {
+      const index = list.findIndex(item => {
+        if (isListItem(item) && isListItem(element)) {
+          item.value === element.value;
+        } else {
+          return item === element;
+        }
+      })
+
+      if (index !== -1) {
+        selectedIndexList.push(index);
+      }
+    })
+    selectedIndexList.sort(function (a, b) {
+      return a - b;
+    });
+
+    let selectedIndex = 0;
+    let visibleListAvailability = maxItems - selected.length;
+    const newList: IFilterItem[] = [];
+
+    for (let listIndex = 0; listIndex < list.length; listIndex++) {
+      if ((selectedIndex < selectedIndexList.length) && (listIndex === selectedIndexList[selectedIndex])) {
+        selectedIndex++;
+      } else {
+        visibleListAvailability--;
+      }
+      newList.push(list[listIndex]);
+
+      if (visibleListAvailability === 0) {
+        break;
+      }
+    }
+
+    if ((newList.length < maxItems) && (selectedIndex < selectedIndexList.length)) {
+      for (; selectedIndex < selectedIndexList.length; selectedIndex++) {
+        newList.push(list[selectedIndexList[selectedIndex]]);
+      }
+    }
+
+    return newList;
+  }
+
+  return list.slice(0, maxItems - 1);
+}
+
+const getFilteredList = (list: IFilterItem[], newValue: string): IFilterItem[] => {
+  return list.filter(element => {
+
+    if (isListItem(element) && typeof element.value === 'number') {
+      const valueString = (element.value).toString(10);
+      return valueString.includes(newValue);
+    }
+
+    if (isListItem(element) && typeof element.value === 'string') {
+      return element.value.includes(newValue);
+    }
+
+    if (typeof element === 'number') {
+      const valueString = element.toString(10);
+      return valueString.includes(newValue);
+    }
+
+    if (typeof element === 'string') {
+      return element.includes(newValue);
+    }
+
+  });
+}
+
+const getResultText = (template: string, visible: number, total: number) => {
+  const newMessage = template.replace('[TOTAL]', `${total}`);
+  return newMessage.replace('[VISIBLE]', `${visible}`);
+}
+
 type IFilterItem = string | ListItem | number;
 
 export type IFilterDropdownValue = string | string[] | number | number[] | ListItem | ListItem[] | null;
@@ -246,6 +381,8 @@ interface IFilterDropdown {
   isLoading?: boolean
   loadingText?: string
   searchPlaceholder?: string
+  maxDisplayedItems?: number
+  searchResultText?: string
   onSelect: (newSelection: IFilterDropdownValue) => void;
 }
 
@@ -260,17 +397,21 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   loadingText,
   optionType = 'text',
   searchPlaceholder,
+  maxDisplayedItems = 5,
+  searchResultText = 'Showing [VISIBLE] of [TOTAL]',
   onSelect = () => { },
 }) => {
 
-  const buttonWrapperRef = useRef<HTMLDivElement>(null);
-  const mainRef = useRef<HTMLDivElement>(null);
+  const [visibleList, setVisibleList] = useState(getVisibleList(list, maxDisplayedItems, selected));
+  const [searchText, setSearchText] = useState<string>('');
   const [contentState, setContentState] = useState<IDropOpen>({
     isOpen: false,
     position: 'bottom-right',
   });
+  const buttonWrapperRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
-  const handleToggleOpen = () => {
+  const handleToggleOpen = useCallback(() => {
     if (!buttonWrapperRef.current) { return; }
 
     const buttonRect = buttonWrapperRef.current?.getBoundingClientRect();
@@ -282,22 +423,55 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
       const isOpen = !prev.isOpen;
       return { ...prev, isOpen, position }
     });
-  }
+  }, [buttonWrapperRef]);
 
   const handleClose = useCallback(() => {
     setContentState((prev) => {
       const isOpen = false;
       return { ...prev, isOpen };
     })
-  }, []);
+
+    setSearchText('');
+    setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
+  }, [list, maxDisplayedItems, selected]);
 
   useClickOutside(mainRef, handleClose);
 
   const handleSelection = useCallback((item: IFilterItem) => {
+
     const newSelected = getNewSelected(item, selected, optionType);
-    onSelect(newSelected);
     handleClose();
-  }, [selected]);
+    onSelect(newSelected);
+
+  }, [selected, optionType]);
+
+  const handleInputFilter = useCallback((e) => {
+    const { value } = e.target;
+    setSearchText(value);
+
+    if (value === '') {
+      setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
+      return;
+    }
+
+    const newValue = typeof value === 'number' ? value.toString(10) : value;
+    const newList = getFilteredList(list, newValue);
+
+    // sending null so the filtered list doesn't force the selected values to appear.
+    setVisibleList(getVisibleList(newList, maxDisplayedItems, null));
+  }, [list, maxDisplayedItems, selected]);
+
+  useEffect(() => {
+    let isActive = true;
+    if (isActive) {
+      setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
+    }
+
+    return () => {
+      isActive = false;
+    }
+  }, [list, maxDisplayedItems, selected])
+
 
   return (
     <Container ref={mainRef}>
@@ -315,7 +489,17 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
       <ContentBox {...{ contentState }}>
         <TopLine />
         <InnerBox>
-          <div className="SearchField">{searchPlaceholder}</div>
+          <SearchWrapper>
+            <BasicSearchInput
+              type='text'
+              hasBorder={false}
+              placeholder={searchPlaceholder}
+              color='dimmed'
+              iconSize={12}
+              value={searchText}
+              onChange={handleInputFilter}
+            />
+          </SearchWrapper>
           {isLoading || !list
             ? (
               <LoadingBox>
@@ -324,9 +508,9 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
               </LoadingBox>)
             : (
               <ResultsContainer>
-                <ResultCounter>Showing 6 of 6</ResultCounter>
+                <ResultCounter>{ getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>
                 <OptionList>
-                  {(list.length > 0) && list.map((item: IFilterItem) => {
+                  {(visibleList.length > 0) && visibleList.map((item: IFilterItem) => {
                     const value = ((typeof item === 'string') || (typeof item === 'number')) ? item : item.value;
                     const text = ((typeof item === 'string') || (typeof item === 'number')) ? item : item.text;
                     return (
@@ -336,7 +520,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                         label={text.toString()}
                         onClick={() => handleSelection(item)}
                         selected={isValueSelected(item, selected)}
-                        {...{ optionType, value}}
+                        {...{ optionType, value }}
                       />
                     )
                   })

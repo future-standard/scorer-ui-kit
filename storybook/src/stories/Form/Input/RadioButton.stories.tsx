@@ -5,7 +5,7 @@ import { boolean, text } from "@storybook/addon-knobs";
 import { RadioButton, Label } from 'scorer-ui-kit';
 
 export default {
-  title: 'Form/atoms',
+  title: 'Form/Input',
   component: RadioButton,
   decorators: []
 };
@@ -13,7 +13,6 @@ export default {
 const Container = styled.div``;
 
 export const _RadioButton = () => {
-
 
   const disabled = boolean("Disabled", false);
   const selection = action('value-changed');
@@ -25,7 +24,6 @@ export const _RadioButton = () => {
     selection(value)
     setCurrentCheck(value);
   }
-
 
   return (
     <Container>

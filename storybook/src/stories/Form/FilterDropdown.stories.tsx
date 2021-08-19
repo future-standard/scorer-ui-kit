@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { IconSVGs } from '@future-standard/icons';
 import styled from 'styled-components';
-import { boolean, text, select } from "@storybook/addon-knobs";
+import { boolean, text, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import { FilterDropdown, IFilterDropdownValue } from 'scorer-ui-kit';
 
@@ -14,7 +14,7 @@ export default {
 const Content = styled.div``;
 
 const Wrapper = styled.div`
-  margin: 50px;
+  margin: 100px;
   display: inline-block;
 `;
 
@@ -30,29 +30,40 @@ const generateIconList = () => {
 };
 
 const englishDataList = [
-  { text: 'Super Spicy', value: 0 },
-  { text: 'Spicy', value: 1 },
-  { text: 'Mild', value: 2 },
-  { text: 'Sweet', value: 3 },
+  { text: 'Ramen', value: 0 },
+  { text: 'Takoyaki', value: 1 },
+  { text: 'Gyoza', value: 2 },
+  { text: 'Tempura', value: 3 },
+  { text: 'Sushi', value: 4 },
 ];
 
 const japaneseDataList = [
-  { text: '超辛い', value: 0 },
-  { text: '辛い', value: 1 },
-  { text: '中華い', value: 2 },
-  { text: '甘口', value: 3 },
+  { text: 'ラーメン', value: 0 },
+  { text: '蛸焼き', value: 1 },
+  { text: '餃子', value: 2 },
+  { text: '天婦羅', value: 3 },
+  { text: 'すし', value: 4 },
 ];
 
-const englishTextList = ['Ramen', 'Takoyaki', 'Gyoza', 'Tempura', 'Sushi'];
-const japaneseTextList = ['ラーメン', '蛸焼き', '餃子', '天婦羅', 'すし'];
+const englishTextList = ['Super Spicy', 'Spicy', 'Mild', 'Sweet'];
+const japaneseTextList = ['超辛い', '辛い', '中華い', '甘口'];
 
 const yearList = [1900, 1910, 1920, 1930, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020];
 
 const englishPayList = ['Card', 'Cash', 'IC Card'];
-const japanesePayList = ['カード','現金','IC カード']
+const japanesePayList = ['カード', '現金', 'IC カード']
 
 
-const baseExample = ['Adipiscing', 'Amet', 'Consectetur', 'Dolor sit', 'Lorem ipsum', 'Vestibulum'];
+const baseExample = ["Adipiscing", "Amet", "Consectetur", "Dolor sit", "Lorem ipsum", "Vestibulum"];
+
+const searchTemplateResultEnglish = 'Showing [VISIBLE] of [TOTAL]';
+const searchTemplateResultJapanese = '[VISIBLE] 〜 [TOTAL]件';
+
+const searchPlaceholderJapanese = 'フィルタータグ...';
+const searchPlaceholderEnglish = 'Filter tags...';
+
+const loadingTagsEnglish = 'Loading Tags...';
+const loadingTagsJapanese = 'ローディング...';
 
 export const _FilterDropdown = () => {
   const iconList = generateIconList();
@@ -65,42 +76,41 @@ export const _FilterDropdown = () => {
   const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "small");
   const optionType = select("Option Type", { text: "text", checkbox: "checkbox", radio: "radio" }, "checkbox")
   const loadingText = text('Loading Text', 'Loading Tags...');
-  const language = select("Lenguage", { English: 'english', Japanese: "japanese" }, "japanese");
-  const searchPlaceholder = text('Search Placeholder', 'Filter Tags...');
+  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
+  const maxDisplayedItems = number('Max Displayed Items', 6);
   const selectedItems = action('Currently Selected');
+  const foodSelection = action('Food selected');
+  const spiceAction = action('Spicy level');
+  const paymentAction = action ('Payment type');
+  const yearAction = action('Years');
 
-  const [selectedObj, setSelectedObj] = useState<IFilterDropdownValue>(null); // this could also start with values [{ text: 'Super Spicy', value: 0 }]
-  const [textArraySelected, setTextArraySelected] = useState<IFilterDropdownValue>(null); // this could also start with values ['Ramen', 'Takoyaki']
+  const [selectedObj, setSelectedObj] = useState<IFilterDropdownValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
+  const [textArraySelected, setTextArraySelected] = useState<IFilterDropdownValue>(null); // this could also start with values ['Spicy','Sweet']
   const [wordSelected, setWordSelected] = useState<IFilterDropdownValue>(language === 'english' ? 'Card' : 'カード'); // this could also start with value 'Card' or null
-  const [numberSelected, setNumberSelected] = useState<IFilterDropdownValue>(1990); // this could also start with value 1990 or null
-  const [baseSelected, setBaseSelected]= useState<IFilterDropdownValue>(null);
+  const [numberSelected, setNumberSelected] = useState<IFilterDropdownValue>([1990]); // this could also start with value 1990 or null
+  const [baseSelected, setBaseSelected] = useState<IFilterDropdownValue>(null);
 
   const handleListItemSelect = useCallback((newSelection: IFilterDropdownValue) => {
-    console.log('newSelection in storybook', newSelection);
-    selectedItems(newSelection);
+    foodSelection(newSelection);
     setSelectedObj(newSelection);
-  }, [selectedItems]);
+  }, [foodSelection]);
 
   const handleTextListSelect = useCallback((newSelection: IFilterDropdownValue) => {
-    console.log('newSelection in storybook', newSelection);
-    selectedItems(newSelection);
+    spiceAction(newSelection);
     setTextArraySelected(newSelection);
-  }, [selectedItems]);
+  }, [spiceAction]);
 
   const handleNumberListSelect = useCallback((newSelection: IFilterDropdownValue) => {
-    console.log('newSelection in storybook', newSelection);
-    selectedItems(newSelection);
+    yearAction(newSelection);
     setNumberSelected(newSelection);
-  }, [selectedItems]);
+  }, [yearAction]);
 
   const handleWordSelect = useCallback((newSelection: IFilterDropdownValue) => {
-    console.log('newSelection in storybook', newSelection);
-    selectedItems(newSelection);
+    paymentAction(newSelection);
     setWordSelected(newSelection);
-  }, [selectedItems]);
+  }, [paymentAction]);
 
   const handleBaseExample = useCallback((newSelection: IFilterDropdownValue) => {
-    console.log('newSelection in storybook', newSelection);
     selectedItems(newSelection);
     setBaseSelected(newSelection);
   }, [selectedItems]);
@@ -113,16 +123,18 @@ export const _FilterDropdown = () => {
           buttonSize,
           disabled,
           isLoading,
-          loadingText,
           buttonText,
-          searchPlaceholder
+          maxDisplayedItems
         }}
-        buttonIcon = 'MetaCategories'
+        buttonIcon='MetaCategories'
         list={baseExample}
         onSelect={handleBaseExample}
         optionType='checkbox'
         selected={baseSelected}
-      />
+        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
+        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
+    />
     </Wrapper>
     <Wrapper key='eje-1'>
       <FilterDropdown {...{
@@ -131,14 +143,17 @@ export const _FilterDropdown = () => {
         disabled,
         isLoading,
         loadingText,
-        searchPlaceholder,
+        maxDisplayedItems
       }}
-      buttonText={language === 'english' ? 'Spice level' : 'ピリ辛'}
+        list={language === 'english' ? englishDataList : japaneseDataList}
+        buttonText={language === 'english' ? 'Menu' : 'メニュー'}
         selected={selectedObj}
         optionType={optionType}
-        list={language === 'english' ? englishDataList : japaneseDataList}
         onSelect={handleListItemSelect}
-      />
+        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
+        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
+    />
     </Wrapper>
     <Wrapper key='eje-2'>
       <FilterDropdown
@@ -148,14 +163,17 @@ export const _FilterDropdown = () => {
           disabled,
           isLoading,
           loadingText,
-          searchPlaceholder,
+          maxDisplayedItems
         }}
-        buttonText={language === 'english' ? 'Menu' : 'メニュー'}
-        selected={textArraySelected}
         list={language === 'english' ? englishTextList : japaneseTextList}
+        buttonText={language === 'english' ? 'Spice level' : 'ピリ辛'}
+        selected={textArraySelected}
         onSelect={handleTextListSelect}
-        optionType={optionType}
-      />
+        optionType='text'
+        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
+        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
+        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
+    />
     </Wrapper>
     <Wrapper key='eje-3'>
       <FilterDropdown
@@ -165,13 +183,16 @@ export const _FilterDropdown = () => {
           disabled,
           isLoading,
           loadingText,
-          searchPlaceholder,
+          maxDisplayedItems
         }}
+        list={language === 'english' ? englishPayList : japanesePayList}
         buttonText={language === 'english' ? 'Pay Method' : '支払方法'}
         selected={wordSelected}
-        list={language === 'english' ? englishPayList : japanesePayList}
         onSelect={handleWordSelect}
         optionType='radio'
+        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
+        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
+        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
       />
     </Wrapper>
     <Wrapper key='eje-4'>
@@ -182,13 +203,16 @@ export const _FilterDropdown = () => {
           disabled,
           isLoading,
           loadingText,
-          searchPlaceholder,
+          maxDisplayedItems
         }}
         buttonText={language === 'english' ? 'Year' : '年'}
         selected={numberSelected}
         list={yearList}
         onSelect={handleNumberListSelect}
-        optionType={optionType}
+        optionType='checkbox'
+        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
+        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
       />
     </Wrapper>
   </Content>

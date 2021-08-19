@@ -23,6 +23,7 @@ const Container = styled.div<{ hasBorder: boolean }>`
 
 const StyledInput = styled.input<{color: string}>`
   ${({ theme, color }) => css`
+    font-family: ${theme.fontFamily.ui};
     ${theme.typography.form.input.value.compact};
     &::placeholder {
       ${theme.typography.form.input.placeholder.compact};
