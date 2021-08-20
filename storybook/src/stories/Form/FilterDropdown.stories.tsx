@@ -75,7 +75,7 @@ export const _FilterDropdown = () => {
   // const indeterminate = boolean("Indeterminate", false);
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const buttonText = text('Text', 'Department');
-  const buttonIcon = select("Button Icon", iconList, Object.keys(iconList)[0]);
+  const buttonIcon = select("Button Icon", iconList, iconList['MetaCategories']);
   const disabled = boolean('disable', false);
   const isLoading = boolean('Is Loading', false);
   const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "small");
