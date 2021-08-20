@@ -3,7 +3,11 @@ import { IconSVGs } from '@future-standard/icons';
 import styled from 'styled-components';
 import { boolean, text, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
-import { FilterDropdown, IFilterDropdownValue } from 'scorer-ui-kit';
+import {
+  FilterDropdown,
+  IFilterDropdownValue,
+  PageHeader,
+} from 'scorer-ui-kit';
 
 export default {
   title: 'Form/atoms',
@@ -69,6 +73,7 @@ export const _FilterDropdown = () => {
   const iconList = generateIconList();
 
   // const indeterminate = boolean("Indeterminate", false);
+  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const buttonText = text('Text', 'Department');
   const buttonIcon = select("Button Icon", iconList, Object.keys(iconList)[0]);
   const disabled = boolean('disable', false);
@@ -76,12 +81,11 @@ export const _FilterDropdown = () => {
   const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "small");
   const optionType = select("Option Type", { text: "text", checkbox: "checkbox", radio: "radio" }, "checkbox")
   const loadingText = text('Loading Text', 'Loading Tags...');
-  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const maxDisplayedItems = number('Max Displayed Items', 6);
   const selectedItems = action('Currently Selected');
   const foodSelection = action('Food selected');
   const spiceAction = action('Spicy level');
-  const paymentAction = action ('Payment type');
+  const paymentAction = action('Payment type');
   const yearAction = action('Years');
 
   const [selectedObj, setSelectedObj] = useState<IFilterDropdownValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
@@ -118,6 +122,9 @@ export const _FilterDropdown = () => {
 
   return <Content>
     <Wrapper key='eje-0'>
+      <PageHeader title='Base Example'
+        introductionText="Array of strings ['Adipiscing, Amet']"
+      />
       <FilterDropdown
         {...{
           buttonSize,
@@ -131,12 +138,16 @@ export const _FilterDropdown = () => {
         onSelect={handleBaseExample}
         optionType='checkbox'
         selected={baseSelected}
-        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
-        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
-        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
-    />
+        searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
+      />
     </Wrapper>
     <Wrapper key='eje-1'>
+      <PageHeader title='Data Object'
+        introductionText="Array of IItemList [{text: 'Option1', value: 1 }, {text: 'Option2', value: 2 }]"
+        areaTitle='Recommended method'
+      />
       <FilterDropdown {...{
         buttonIcon,
         buttonSize,
@@ -150,12 +161,15 @@ export const _FilterDropdown = () => {
         selected={selectedObj}
         optionType={optionType}
         onSelect={handleListItemSelect}
-        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
-        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
-        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
-    />
+        searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
+      />
     </Wrapper>
     <Wrapper key='eje-2'>
+      <PageHeader title='Text type'
+        introductionText="Array of strings ['Mild, Sweet']"
+      />
       <FilterDropdown
         {...{
           buttonIcon,
@@ -170,12 +184,15 @@ export const _FilterDropdown = () => {
         selected={textArraySelected}
         onSelect={handleTextListSelect}
         optionType='text'
-        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
-        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
-        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
-    />
+        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
+        searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
+      />
     </Wrapper>
     <Wrapper key='eje-3'>
+      <PageHeader title='Radio type'
+        introductionText="Array of strings ['Card', 'Cash']"
+      />
       <FilterDropdown
         {...{
           buttonIcon,
@@ -190,12 +207,15 @@ export const _FilterDropdown = () => {
         selected={wordSelected}
         onSelect={handleWordSelect}
         optionType='radio'
-        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
-        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
-        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
+        searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
       />
     </Wrapper>
     <Wrapper key='eje-4'>
+      <PageHeader title='Checkbox type'
+        introductionText="Array of numbers [1900, 1910]"
+      />
       <FilterDropdown
         {...{
           buttonIcon,
@@ -210,9 +230,9 @@ export const _FilterDropdown = () => {
         list={yearList}
         onSelect={handleNumberListSelect}
         optionType='checkbox'
-        loadingText={language === 'english'? loadingTagsEnglish : loadingTagsJapanese}
-        searchPlaceholder={language === 'english'? searchPlaceholderEnglish : searchPlaceholderJapanese}
-        searchResultText={language === 'english'? searchTemplateResultEnglish : searchTemplateResultJapanese }
+        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
+        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
       />
     </Wrapper>
   </Content>
