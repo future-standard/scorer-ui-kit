@@ -110,8 +110,10 @@ export const _LoadingTable = () => {
   const emptyTableTitle = text("emptyTableTitle","No Data Available");
   const emptyTableText = text("emptyTableText", 'There is currently no data');
   const loadingText = text("loadingText", 'Loading Data..')
-  const columnConfig = object("Column Configuration", columnConfigSample);
   const selectable = boolean("Selectable Rows", true);
+  const hasGroups = boolean('Has Header Groups', true);
+  const columnConfig = object("Column Configuration", columnConfigSample);
+
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
@@ -149,7 +151,7 @@ export const _LoadingTable = () => {
   return (
     <Container>
       <LoadingTable
-        hasHeaderGroups
+        hasHeaderGroups={hasGroups}
         {...{
           columnConfig,
           rows,
