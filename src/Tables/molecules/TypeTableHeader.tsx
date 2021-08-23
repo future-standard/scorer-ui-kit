@@ -1,12 +1,13 @@
-import React, { useState, useCallback, Fragment } from 'react';
+import React, { useState, useCallback, Fragment, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { TypeCellAlignment, ITableColumnConfig } from '..';
 import Checkbox from '../../Form/atoms/Checkbox';
 import TableHeaderTitle from '../atoms/TableHeaderTitle';
+import useBreakpoints from '../../hooks/useBreakpoints';
 
-const HeaderRow = styled.div<{ HEADER_HEIGHT: string }>`
+const HeaderRow = styled.div`
   display: table-row;
-  height: ${({ HEADER_HEIGHT }) => HEADER_HEIGHT};
+  height: 50px;
 `;
 
 const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, headerStyle: string, isSortActive?: boolean }>`
@@ -142,9 +143,9 @@ interface ITableHeader {
   hasHeaderGroups: boolean
   columnConfig: ITableColumnConfig[]
   defaultAscending: boolean
-  HEADER_HEIGHT: string
   toggleAllCallback?: (checked: boolean) => void
   sortCallback?: (ascending: boolean, columnId: string) => void
+  handleHeightCallback?: (newHeight: number) => void
 }
 
 const TypeTableHeader: React.FC<ITableHeader> = ({
@@ -158,9 +159,9 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
   hasHeaderGroups,
   columnConfig,
   defaultAscending,
-  HEADER_HEIGHT,
   toggleAllCallback = () => { },
   sortCallback = () => { },
+  handleHeightCallback = () => { },
 }) => {
 
   const [sortSpec, setSortSpec] = useState(columnConfig);
@@ -203,8 +204,20 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
     setAscendingState(newAscending);
   }, [ascendingState, sortCallback, sortSpec]);
 
+  const headerRef = useRef<HTMLDivElement>(null);
+  const { activeScreen } = useBreakpoints();
+
+  useEffect(() => {
+    if (headerRef !== null && headerRef.current) {
+      const newHeight = headerRef.current.getBoundingClientRect().height;
+      if (newHeight) {
+        handleHeightCallback(newHeight);
+      }
+    }
+  }, [headerRef, activeScreen]);
+
   return (
-    <HeaderRow {...{ HEADER_HEIGHT }}>
+    <HeaderRow ref={headerRef}>
       {selectable ? (
         <HeaderItem headerStyle='header' fixedWidth={30}>
           <Checkbox checked={allChecked} disabled={isEmptyTable || isLoading} onChangeCallback={toggleAllCallbackWrapper} />

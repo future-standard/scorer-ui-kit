@@ -1,11 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import styled from 'styled-components';
+import React, {useCallback, useEffect, useState} from 'react';
+import styled, {css} from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import TypeTableRow from '../atoms/TypeTableRow';
 import {ITableColumnConfig, ITypeTableData, IRowData} from '..';
 import TypeTableHeader from '../molecules/TypeTableHeader';
-
-const HEADER_HEIGHT = `50px`;
 
 const Container = styled.div``;
 
@@ -19,17 +17,20 @@ const LoadingText = styled.div`
   color: hsla(195, 10%, 52%, 0.72);
 `;
 
-const LoadingBox = styled.div`
+const LoadingBox = styled.div<{headerHeight: number}>`
   position: absolute;
   top: 0;
   left: 0;
   z-index: 99;
   background-color: ${({ theme }) => theme.colors["pureBase"]};
+  ${({headerHeight}) => headerHeight && css`
+    height: calc(100% - ${headerHeight}px);
+    margin-top: ${headerHeight}px;
+  `}
+
   opacity: 85%;
   width: 100%;
   min-height: 100px;
-  height: calc(100% - ${HEADER_HEIGHT});
-  margin-top: ${HEADER_HEIGHT};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,12 +42,13 @@ const LoadingBox = styled.div`
   }
 `;
 
-const EmptyTableBox = styled.div`
+const EmptyTableBox = styled.div<{headerHeight: number}>`
   position: absolute;
   top: 0;
   left: 0;
   z-index: 99;
-  margin-top: ${HEADER_HEIGHT};
+  margin-top: ${({headerHeight}) => headerHeight}px;
+  padding: 20px;
   width: 100%;
   min-height: 100px;
   text-align: center;
@@ -106,6 +108,7 @@ const TypeTable: React.FC<IProps> = ({
   */
 
   const [allChecked, setAllChecked] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState<number>(50);
   const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
 
   useEffect(() => {
@@ -115,6 +118,10 @@ const TypeTable: React.FC<IProps> = ({
     }
     setAllChecked(areAllChecked);
   }, [isEmptyTable, rows]);
+
+  const handleHeightCallback = useCallback((newValue: number) => {
+    setHeaderHeight(newValue);
+  },[]);
 
   return (
     <Container>
@@ -133,18 +140,18 @@ const TypeTable: React.FC<IProps> = ({
             columnConfig,
             toggleAllCallback,
             sortCallback,
-            HEADER_HEIGHT,
+            handleHeightCallback,
             }}
         />
         {isLoading ? (
-          <LoadingBox>
+          <LoadingBox {...{headerHeight}}>
             <Spinner size='large' styling='primary' />
             <LoadingText>{loadingText}</LoadingText>
           </LoadingBox>
         ) : null}
         {isEmptyTable
           ? (
-            <EmptyTableBox>
+            <EmptyTableBox {...{headerHeight}}>
               <h3>{emptyTableTitle}</h3>
               <p>{emptyTableText}</p>
             </EmptyTableBox>
