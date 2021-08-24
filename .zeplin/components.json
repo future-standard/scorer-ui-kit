@@ -1,0 +1,63 @@
+{
+    "plugins": [
+        {
+            "name": "@zeplin/cli-connect-react-plugin",
+            "config": {
+                "tsDocgen": "react-docgen-typescript"
+            }
+        }
+    ],
+    "projects": [
+        "5ee9f5a23a30524bf9e5b2a9"
+    ],
+    "styleguides": [],
+    "components": [
+        {
+            "path": "src/Form/atoms/Button.tsx",
+            "zeplinIds": [
+                "5ef455d2a8c04082b9bf50ad",
+                "5ef455d24284e77feca01583",
+                "5ef455d342a70e7f8ee713a8"
+            ]
+        },
+        {
+            "path": "src/Form/atoms/ButtonWithLoading.tsx",
+            "zeplinIds": [
+                "5ef455d5a8c04082b9bf50ec",
+                "5ef455d5cf4c2081d9113c63",
+                "5ef45af0d38b4182ae21d211",
+                "5ef45aee591e65a0f2736f28",
+                "5ef455d5b4332ba0ce2d13ed",
+                "5ef455d55a2d629d8824d76f",
+                "5ef455d5cf4c2081d9113c70",
+                "5ef455d55b8a0da114cbb1c0",
+                "5ef45af0ea21aaa00cee3223",
+                "5ef45aeeb4fd369ce8d0af00",
+                "5ef455d5005864a25541b1c2",
+                "5ef455d518d4a09ce20c5322",
+                "5ef455d550b217a4a98bf2fb",
+                "5ef455d5a8c04082b9bf50d2",
+                "5ef45aefea21aaa00cee3216",
+                "5ef45aee10918d9d2286cdfc",
+                "5ef455d518d4a09ce20c532f",
+                "5ef455d5a8c04082b9bf50df"
+            ]
+        },
+        {
+            "path": "src/Global/organisms/MainMenu.tsx",
+            "zeplinIds": [
+                "5ee9f62e1054124654cc44cc"
+            ]
+        },
+        {
+            "path": "src/Form/atoms/SelectField.tsx",
+            "zeplinIds": [
+                "60e7ec0a7cd667114f54962f",
+                "60e7ec0ae67d537ebe6dd641",
+                "60e7ec0b6ac3337d5ab640ac",
+                "60e7ec0b046abc7824a8eafe",
+                "60e7ec0c5ef13e7e1f1572cb"
+            ]
+        }
+    ]
+}
