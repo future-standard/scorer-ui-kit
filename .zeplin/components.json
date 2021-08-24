@@ -15,6 +15,10 @@
       }
     }
   ],
+  "github": {
+    "repository": "future-standard/scorer-ui-kit",
+    "branch": "main"
+  },
   "projects": [
     "5ee9f5a23a30524bf9e5b2a9"
   ],
@@ -25,7 +29,40 @@
       "zeplinIds": [
         "5ef455d2a8c04082b9bf50ad",
         "5ef455d24284e77feca01583",
-        "5ef455d342a70e7f8ee713a8"
+        "5ef455d342a70e7f8ee713a8",
+        "5ef455d1b4332ba0ce2d13c7",
+        "5ef455d318d4a09ce20c531a",
+        "5ef455d4005864a25541b1ba",
+        "5ef455d32a4a71617f1315e0",
+        "5ef455d1a8c04082b9bf50a5",
+        "5ef455d30a80609d3e9cb02f",
+        "5ef455d4346efd8296028942",
+        "5ef455d3346efd829602893a",
+        "5ef455d150b217a4a98bf2f0",
+        "5ef455d32a4a71617f1315e8",
+        "5ef455d42a4a71617f1315f0",
+        "5ef455d35a2d629d8824d752",
+        "5ef455d4005864a25541b1aa",
+        "5ef455d4b4332ba0ce2d13e5",
+        "5ef455d3868e9ea4f9902bdc",
+        "5ef455d4b4332ba0ce2d13dd",
+        "5ef455d41c00c280a9d14e3b",
+        "5ef455d392b22aa0b511996d",
+        "5ef455d4f47783a0be5e48f2",
+        "5ef455d3a8c04082b9bf50b5",
+        "5ef455d442a70e7f8ee713b0",
+        "5ef455d318d4a09ce20c5312",
+        "5ef455d4ef873380675d8c5b",
+        "5ef455d40a80609d3e9cb03f",
+        "5ef455d35a2d629d8824d75a",
+        "5ef455d32a4a71617f1315d8",
+        "5ef455d4005864a25541b1b2",
+        "5ef455d49a646f82e067ed11",
+        "5ef455d3f47783a0be5e48ea",
+        "5ef455d2cf4c2081d9113c5b",
+        "5ef455d40a80609d3e9cb037",
+        "5ef455d4a8c04082b9bf50bd",
+        "5ef455d3005864a25541b1a2"
       ],
       "storybook": {
         "kind": "Form/Buttons",
