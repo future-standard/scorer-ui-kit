@@ -50,6 +50,7 @@
     "@typescript-eslint/parser": "^2.26.0",
     "@zeplin/cli": "^1.1.12",
     "@zeplin/cli-connect-react-plugin": "^1.1.1",
+    "@zeplin/cli-connect-storybook-plugin": "^0.5.4",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
