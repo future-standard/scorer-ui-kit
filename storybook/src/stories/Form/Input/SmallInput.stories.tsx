@@ -22,6 +22,16 @@ export const _SmallInput = () => {
   const inputPlaceholder = text("Placeholder", "Placeholder...");
   const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
 
-  return <Container><SmallInput type={inputType} unit={inputUnit} name={inputName} label={inputLabel} placeholder={inputPlaceholder} fieldState={inputState} /></Container>;
+  return <Container>
+    <SmallInput
+      type={inputType}
+      unit={inputUnit}
+      name={inputName}
+      label={inputLabel}
+      placeholder={inputPlaceholder}
+      fieldState={inputState}
+      disabled={inputState === 'disabled'}
+    />
+  </Container>;
 
 };
