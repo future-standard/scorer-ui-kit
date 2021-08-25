@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import {TabWithIcon} from 'scorer-ui-kit';
-import {text} from "@storybook/addon-knobs";
+import { Tabs, TabList, TabWithIcon } from 'scorer-ui-kit';
+import { text, boolean } from "@storybook/addon-knobs";
 
 export default {
   title: 'Misc/atoms',
@@ -13,10 +13,20 @@ const Container = styled.div``;
 
 export const _TabWithIcon = () => {
 
-  const icon = text('Icon', 'MetaCategories');
-  return(
+  const icon = text('Icon', 'Success');
+  const title = text('Title', 'New Items');
+  const subtitle = text('Subtitle', 'Selected 120 of 120');
+  const selected = boolean('Show selected', false);
+  return (
     <Container>
-      <TabWithIcon {...{icon}}/>
+      <Tabs>
+        <TabList defaultTabId={selected ? 'exampleTab' : 'none'}>
+          <TabWithIcon
+            {...{ icon, title, subtitle }}
+            tabFor='exampleTab'
+          />
+        </TabList>
+      </Tabs>
     </Container>
   )
 
