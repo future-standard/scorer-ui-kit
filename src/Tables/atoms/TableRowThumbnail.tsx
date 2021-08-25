@@ -1,13 +1,12 @@
-import React, {useCallback, VideoHTMLAttributes} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import MediaBox  from '../../Misc/atoms/MediaBox';
-import  { useModal } from '../../hooks/useModal';
+import { useMediaModal } from '../../hooks/useMediaModal';
 import { IMediaType } from '../..';
-import Icon, {IconWrapper} from '../../Icons/Icon';
+import Icon, { IconWrapper } from '../../Icons/Icon';
 
 type VideoAspects = '4:3' | '16:9';
 
-const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string }>`
+const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string, isImageValid: boolean, hasPreview: boolean }>`
   position: relative;
   height: inherit;
   background: grey;
@@ -22,23 +21,23 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
     content: '';
     display: block;
     padding-bottom: 75%;
-    ${({aspect}) => aspect === '16:9' && css`
+    ${({ aspect }) => aspect === '16:9' && css`
       padding-left: 56.25%;
     `}
   }
 
-  ${({theme}) => theme && css`
+  ${({ theme }) => theme && css`
     transition:
       opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut},
       transform ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeOut};
   `}
 
   &:hover {
-    ${({mediaUrl}) => mediaUrl && css`
+    ${({ mediaUrl, hasPreview }) => mediaUrl && hasPreview && css`
       cursor: pointer;
     `};
 
-    ${({theme, hoverZoom}) => theme && hoverZoom && css`
+    ${({ theme, hoverZoom, isImageValid }) => theme && hoverZoom && isImageValid && css`
       transform: scale(1.5);
       opacity: 1;
       transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
@@ -90,26 +89,68 @@ interface IProps {
 // Image
 // No Image Placeholder
 
-// default options for media box
-const videoDefaultOptions : VideoHTMLAttributes<HTMLVideoElement> = {controls: true};
+const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl, mediaType }) => {
 
-const TableRowThumbnail : React.FC<IProps> = ({hoverZoom = true, image, mediaUrl, mediaType }) => {
+  const [hasPreview, setHasPreview] = useState(false);
+  const [isImageValid, setIsImageValid] = useState(false);
+  const { createMediaModal, isMediaUrlValid } = useMediaModal();
 
-  const {createModal} = useModal();
+  const handleModal = useCallback(async () => {
 
-  const handleModal = useCallback(() => {
-    if(mediaUrl && mediaType) {
-      createModal({
-        padding:false,
-        width:'60%',
-        customComponent: <MediaBox src={mediaUrl} mediaType={mediaType} videoOptions={videoDefaultOptions} />
-      });
+    if (mediaUrl && mediaType && hasPreview) {
+      createMediaModal({ src: mediaUrl, mediaType });
     }
-  },[createModal, mediaType, mediaUrl]);
+
+  }, [createMediaModal, mediaType, mediaUrl, hasPreview]);
+
+  const verifyPreview = useCallback(async (currentMediaUrl: string, currentMediaType: IMediaType) => {
+    const isValidUrl: boolean = await isMediaUrlValid(currentMediaUrl, currentMediaType);
+
+    setHasPreview((prev) => {
+
+      if (prev === isValidUrl) {
+        return prev;
+      }
+      return isValidUrl;
+    });
+
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    if (active && mediaUrl && mediaType) {
+      verifyPreview(mediaUrl, mediaType);
+    }
+
+    return () => {
+      active = false;
+    }
+  }, [mediaUrl, mediaType])
+
+  const validateImage = useCallback(async (currentImg: string) => {
+
+    const isValidUrl: boolean = await isMediaUrlValid(currentImg, 'img');
+    setIsImageValid((prev) => {
+      if (prev === isValidUrl) {
+        return prev;
+      }
+      return isValidUrl;
+    })
+
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    if (active && image) {
+      validateImage(image);
+    }
+
+  }, [image]);
 
   return (
-    <Container {...{hoverZoom}} mediaUrl={mediaUrl} aspect='16:9' onClick={handleModal}>
-      <Image {...{image}} />
+    <Container {...{ hoverZoom, mediaUrl, isImageValid, hasPreview }} aspect='16:9' onClick={handleModal}>
+      <Image {...{ image }} />
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
           <Icon size={12} icon='Play' color='inverse' />
