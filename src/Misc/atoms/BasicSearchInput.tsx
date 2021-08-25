@@ -4,9 +4,9 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 
 const Container = styled.div<{ hasBorder: boolean }>`
   ${({ theme, hasBorder }) => css`
-    ${hasBorder && css
-      `border: 1px solid ${theme.styles.form.input.default.normal.borderColor}`
-    };
+    ${hasBorder && css`
+      border: 1px solid ${theme.styles.form.input.default.normal.borderColor}
+    `};
   `};
 
   ${IconWrapper} {
@@ -61,8 +61,8 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   ...props
 }) => {
   return (
-    <Container {...{ hasBorder }} >
-      <Icon {...{color}} icon='Search' weight='strong' size={iconSize} />
+    <Container {...{ hasBorder }}>
+      <Icon {...{color}} icon='Search' weight='heavy' size={iconSize} />
       <StyledInput
         {...{color}}
         {...props}
