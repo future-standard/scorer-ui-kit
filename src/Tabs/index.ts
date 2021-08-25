@@ -1,6 +1,6 @@
 export { Tabs } from './Tabs';
 export { TabList } from './TabList';
-export { Tab } from './Tab';
+export { Tab } from './atoms/Tab';
 export { TabContent } from './TabContent';
-export { MobileTab } from './MobileTab';
-export { TabWithIcon } from './TabWithIcon';
+export { MobileTab } from './atoms/MobileTab';
+export { TabWithIcon } from './atoms/TabWithIcon';

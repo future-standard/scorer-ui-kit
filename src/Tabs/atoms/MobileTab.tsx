@@ -1,10 +1,10 @@
 import React, { useContext, useCallback } from 'react';
 import styled, { css } from 'styled-components';
-import { TabContext, ContextProps } from './Tabs';
-import { IconWrapper } from '../Icons/Icon';
-import StatusIcon from '../Icons/StatusIcon';
-import { resetButtonStyles } from '../common/index';
-import { IStatusDot } from '..';
+import { TabContext, ContextProps } from '../Tabs';
+import { IconWrapper } from '../../Icons/Icon';
+import StatusIcon from '../../Icons/StatusIcon';
+import { resetButtonStyles } from '../../common/index';
+import { IStatusDot } from '../..';
 
 const Container = styled.button`
   ${resetButtonStyles}

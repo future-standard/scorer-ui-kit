@@ -1,7 +1,7 @@
 import React, { useContext, useCallback } from 'react';
-import { TabContext, ContextProps } from './Tabs';
+import { TabContext, ContextProps } from '../Tabs';
 import styled, {css} from 'styled-components';
-import Icon, {IconWrapper} from '../Icons/Icon';
+import Icon, {IconWrapper} from '../../Icons/Icon';
 
 const Container = styled.div<{active: boolean}>`
   display: flex;

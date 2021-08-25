@@ -1,6 +1,6 @@
 import React, { useContext, HTMLAttributes, useCallback } from 'react';
 import styled, { css } from 'styled-components';
-import { TabContext, ContextProps } from './Tabs';
+import { TabContext, ContextProps } from '../Tabs';
 
 const TabComponent = styled.div`
   margin-right: 39px;
