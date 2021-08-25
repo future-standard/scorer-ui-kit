@@ -147,7 +147,8 @@ import {
   Tabs,
   Tab,
   TabList,
-  TabContent
+  TabContent,
+  TabWithIcon,
 } from './Tabs';
 
 export {
@@ -256,6 +257,7 @@ export {
   Tab,
   TabList,
   TabContent,
+  TabWithIcon,
 
   // Misc
   Tag,
