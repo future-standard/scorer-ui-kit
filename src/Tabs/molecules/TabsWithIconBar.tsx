@@ -5,8 +5,9 @@ import { TabWithIcon, ITabWithIcon } from '../atoms/TabWithIcon';
 
 const Container = styled.div``;
 
-const TabListWrapper = styled.div<{ paddingOverride?: string }>`
-  padding: ${({ paddingOverride }) => paddingOverride ? paddingOverride : '10px 0 0 87px'};
+const TabListWrapper = styled.div<{ paddingLeft?: string }>`
+  padding-top: 10px;
+  padding-left: ${({ paddingLeft }) => paddingLeft ? paddingLeft : '87px'};
   box-shadow: 0 -5px 5px 0 hsla(0, 0%, 0%, 0.01);
   border-bottom: 1px solid hsl(0, 0%, 89%);
   overflow-y: auto;
@@ -25,15 +26,15 @@ export interface ITabIcon extends ITabWithIcon {
 export interface ITabsWithIconBar {
   defaultTabId: string
   tabList: ITabIcon[]
-  paddingOverride?: string
+  paddingLeft?: string
 }
 
-const TabsWithIconBar: React.FC<ITabsWithIconBar> = ({ defaultTabId, tabList, paddingOverride }) => {
+const TabsWithIconBar: React.FC<ITabsWithIconBar> = ({ defaultTabId, tabList, paddingLeft }) => {
 
   return (
     <Container>
       <Tabs>
-        <TabListWrapper {...{ paddingOverride }}>
+        <TabListWrapper {...{ paddingLeft }}>
           <TabList {...{ defaultTabId }}>
             {tabList.map(({ icon, title, subtitle, tabFor }) => {
               return (

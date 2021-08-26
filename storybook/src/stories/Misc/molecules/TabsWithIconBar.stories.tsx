@@ -9,7 +9,7 @@ export default {
   decorators: []
 };
 
-const LEFT_PADDING = '87px';
+const PADDING_LEFT = '87px';
 
 const Container = styled.div`
   position: absolute;
@@ -20,9 +20,8 @@ const Container = styled.div`
 `;
 
 const LayoutWrapper = styled.div`
-  padding: ${`30px 30px 30px ${LEFT_PADDING}`} ;
+  padding: ${`30px 30px 30px ${PADDING_LEFT}`} ;
 `;
-
 
 const list: ITabIcon[] = [
   {
@@ -52,7 +51,6 @@ const list: ITabIcon[] = [
     subtitle: '6 entries with errors',
     tabFor: 'example4',
     customComponent: <LayoutWrapper><PageHeader title='Errors' introductionText='This is an example of a page shown by a selected tab' /></LayoutWrapper>
-
   }
 ]
 
@@ -60,12 +58,11 @@ export const _TabWithIconBar = () => {
 
   const defaultTabId = text('Default Tab Id', 'example1');
   const tabList = object('TabList', list);
-  const paddingOverride = text('Padding Override', `10px 0 0 ${LEFT_PADDING}`);
+  const paddingLeft = text('Padding Override', PADDING_LEFT);
 
   return (
     <Container>
-      <TabsWithIconBar {...{ defaultTabId, tabList, paddingOverride }} />
+      <TabsWithIconBar {...{ defaultTabId, tabList, paddingLeft }} />
     </Container>
   )
-
 }

@@ -33,7 +33,6 @@ const Title = styled.div<{ active: boolean }>`
   flex-shrink: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
-
 `;
 
 
@@ -45,13 +44,11 @@ const SubTitle = styled.div`
   flex-shrink: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
-
 `;
 
 const TextGroup = styled.div`
   margin-left: 12px;
   margin-right: 20px;
-
 `;
 
 export interface ITabWithIcon {
