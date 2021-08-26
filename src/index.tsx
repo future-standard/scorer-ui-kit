@@ -11,7 +11,7 @@ import {
   Notification,
   INotificationProps,
   AlertWrapper,
-}from './Alerts';
+} from './Alerts';
 
 // Components - Form
 import {
@@ -49,7 +49,7 @@ import {
   FilterDropdownContainer
 } from './Filters';
 
-import Icon, {IconSVGs} from  './Icons/Icon';
+import Icon, { IconSVGs } from './Icons/Icon';
 import StatusIcon from './Icons/StatusIcon';
 
 // Components - Line UI
@@ -86,14 +86,14 @@ import {
 } from './PTZControl';
 
 // Misc
-  import {
-    Tag,
-    TagList,
-    ITag,
-    ITagList,
-    TagListWrapper,
-    MediaBox,
-  } from './Misc';
+import {
+  Tag,
+  TagList,
+  ITag,
+  ITagList,
+  TagListWrapper,
+  MediaBox,
+} from './Misc';
 
 import {
   ConfirmationModal,
@@ -118,7 +118,7 @@ import {
   ModalProvider,
 } from './context';
 
-import  { resetButtonStyles } from './common';
+import { resetButtonStyles } from './common';
 
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
@@ -149,6 +149,8 @@ import {
   TabList,
   TabContent,
   TabWithIcon,
+  TabsWithIconBar,
+  ITabIcon,
 } from './Tabs';
 
 export {
@@ -258,6 +260,7 @@ export {
   TabList,
   TabContent,
   TabWithIcon,
+  TabsWithIconBar,
 
   // Misc
   Tag,
@@ -276,7 +279,7 @@ export {
 /**
  * Values based on colors.feedback from theme
  */
-export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
+export type IFeedbackColor = 'error' | 'warning' | 'info' | 'success' | 'neutral';
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
 
 export type IMediaType = 'img' | 'video'
@@ -294,5 +297,6 @@ export type {
   ISliderMark,
   INotificationItem,
   INotificationsHistory,
-  ICustomDrawer
+  ICustomDrawer,
+  ITabIcon,
 };
