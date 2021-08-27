@@ -79,6 +79,11 @@ const initialRows : ITypeTableData = [
   },
   {
     id: 'device-id-3',
+    header: {
+      image: "http://placekitten.com/1934/3102",
+      mediaUrl:"http://placekitten.com/1934/3102",
+      mediaType: 'img'
+    },
     columns:
     [
       { text: 'Old Device', href: '#' },
@@ -89,10 +94,25 @@ const initialRows : ITypeTableData = [
   },
   {
     id: 'device-id-4',
+    header: {
+      image: "http://placekitten.com/2934/3102",
+      mediaUrl:"http://wrong-url-placekitten.com/2934/3102",
+      mediaType: 'img'
+    },
     columns:
     [
       { text: 'Magic Edge Cloud', href: '#' },
       { text: '2nd April 2020' },
+      { text: '153', unit: 'mb' },
+      { text: '¥25,000' }
+    ]
+  },
+  {
+    id: 'device-id-5',
+    columns:
+    [
+      { text: 'Special Camera', href: '#' },
+      { text: '16th June 2020' },
       { text: '153', unit: 'mb' },
       { text: '¥25,000' }
     ]

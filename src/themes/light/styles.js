@@ -24,7 +24,13 @@ export const styles = {
                 "normal": {
                     "backgroundColor": "hsla(206, 36.8%, 96.3%, 1.000)",
                     "borderColor": "hsla(120, 1.3%, 85.3%, 1.000)"
-                }
+                },
+                "focused": {
+                  "boxShadow": "0px 3px 7px 0px hsla(207, 65.8%, 31%, 0.078)",
+                  "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
+                  "borderColor": "hsla(205, 58.9%, 71.4%, 1.000)"
+                },
+
             },
             "subdivision": {
                 "backgroundColor": "hsla(120, 1.3%, 85.3%, 1.000)"
