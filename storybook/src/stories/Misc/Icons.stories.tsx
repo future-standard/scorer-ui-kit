@@ -50,7 +50,7 @@ export const _Icons = () => {
   const showAll = boolean("Show All", false);
   const iconName = select("Name", iconList, Object.keys(iconList)[0]);
   const iconColor = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary" , Danger: "danger"}, "mono");
-  const iconWeight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy", Strong: 'strong' }, "regular");
+  const iconWeight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy" }, "regular");
   const iconSize = number("Size", 24);
 
   /**
