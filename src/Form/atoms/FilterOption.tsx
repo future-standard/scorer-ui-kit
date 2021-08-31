@@ -68,10 +68,10 @@ const renderOption = (
 ) => {
   switch (optionType) {
     case 'radio':
-      return <RadioButton {...{ id, disabled, value, parentHover }} currentChecked={selected ? value : undefined} />
+      return <RadioButton {...{ id, disabled, value, parentHover }} currentChecked={selected ? value : undefined} />;
 
     default:
-      return <StyledCheckbox {...{ id, disabled, parentHover }} checked={selected} />
+      return <StyledCheckbox {...{ id, disabled, parentHover }} checked={selected} />;
   }
 
 };

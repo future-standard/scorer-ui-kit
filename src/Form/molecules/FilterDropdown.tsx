@@ -362,7 +362,7 @@ interface IDropOpen {
   isOpen: boolean,
   position: IOpenPos,
 }
-interface IFilterDropdown {
+export interface IFilterDropdown {
   buttonIcon: string
   buttonText: string
   list: IFilterItem[];
@@ -392,6 +392,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   maxDisplayedItems = 5,
   searchResultText = 'Showing [VISIBLE] of [TOTAL]',
   onSelect = () => { },
+  ...props
 }) => {
 
   const [visibleList, setVisibleList] = useState(getVisibleList(list, maxDisplayedItems, selected));
@@ -466,7 +467,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   }, [list, maxDisplayedItems, selected]);
 
   return (
-    <Container ref={mainRef}>
+    <Container ref={mainRef} {...props}>
       <ButtonWrapper ref={buttonWrapperRef}>
         <FilterButton
           icon={buttonIcon}

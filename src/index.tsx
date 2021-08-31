@@ -98,6 +98,9 @@ import {
     TagListWrapper,
     MediaBox,
     BasicSearchInput,
+    FilterInputs,
+    ISearchFilter,
+    IFilterDropdownExt,
   } from './Misc';
 
 import {
@@ -271,6 +274,7 @@ export {
   TagListWrapper,
   MediaBox,
   BasicSearchInput,
+  FilterInputs,
 
   //Context
   NotificationProvider,
@@ -300,5 +304,7 @@ export type {
   INotificationItem,
   INotificationsHistory,
   ICustomDrawer,
-  IFilterDropdownValue
+  IFilterDropdownValue,
+  ISearchFilter,
+  IFilterDropdownExt
 };
