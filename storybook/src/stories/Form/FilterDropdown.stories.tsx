@@ -94,7 +94,7 @@ export const _FilterDropdown = () => {
   const [numberSelected, setNumberSelected] = useState<IFilterDropdownValue>([1990]); // this could also start with value 1990 or null
   const [baseSelected, setBaseSelected] = useState<IFilterDropdownValue>(null);
 
-  const handleListItemSelect = useCallback((newSelection: IFilterDropdownValue) => {
+  const handleSelectItemType = useCallback((newSelection: IFilterDropdownValue) => {
     foodSelection(newSelection);
     setSelectedObj(newSelection);
   }, [foodSelection]);
@@ -160,7 +160,7 @@ export const _FilterDropdown = () => {
         buttonText={language === 'english' ? 'Menu' : 'メニュー'}
         selected={selectedObj}
         optionType={optionType}
-        onSelect={handleListItemSelect}
+        onSelect={handleSelectItemType}
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
         searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
         loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}

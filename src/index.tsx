@@ -101,6 +101,7 @@ import {
     FilterInputs,
     ISearchFilter,
     IFilterDropdownExt,
+    FiltersResults,
   } from './Misc';
 
 import {
@@ -275,6 +276,7 @@ export {
   MediaBox,
   BasicSearchInput,
   FilterInputs,
+  FiltersResults,
 
   //Context
   NotificationProvider,
@@ -289,10 +291,13 @@ export {
  */
 export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
-
 export type IMediaType = 'img' | 'video'
-
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
+export type IFilterItem = string | ISelectItem | number;
+export interface ISelectItem {
+  text: string;
+  value: string | number;
+}
 
 export type {
   IModal,

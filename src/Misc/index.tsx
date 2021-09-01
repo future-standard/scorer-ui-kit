@@ -2,6 +2,7 @@ import Tag, { ITag } from './atoms/Tag';
 import TagList, { ITagList, TagListWrapper } from './molecules/TagList';
 import BasicSearchInput from './atoms/BasicSearchInput';
 import FilterInputs, { ISearchFilter, IFilterDropdownExt } from './molecules/FilterInputs';
+import FiltersResults from './molecules/FiltersResults';
 import MediaBox from './atoms/MediaBox';
 
 export {
@@ -11,6 +12,7 @@ export {
   MediaBox,
   BasicSearchInput,
   FilterInputs,
+  FiltersResults,
 };
 
 export type { ITagList, ITag, ISearchFilter, IFilterDropdownExt };

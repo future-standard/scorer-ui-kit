@@ -6,6 +6,7 @@ import FilterButton from '../atoms/FilterButton';
 import FilterOption from '../atoms/FilterOption';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import Spinner from '../../Indicators/Spinner';
+import { IFilterItem, ISelectItem } from '../..';
 
 const MIN_WIDTH = 270;
 const MIN_HEIGHT = 190;
@@ -157,7 +158,7 @@ const isValueSelected = (item: IFilterItem, selected: IFilterDropdownValue) => {
   if (Array.isArray(selected)) {
     selected.forEach((element: IFilterItem) => {
 
-      if (isListItem(element) && isListItem(item) && element.value === item.value) {
+      if (isSelectTypeItem(element) && isSelectTypeItem(item) && element.value === item.value) {
         isItemSelected = true;
       } else if (element === item) {
         isItemSelected = true;
@@ -166,7 +167,7 @@ const isValueSelected = (item: IFilterItem, selected: IFilterDropdownValue) => {
 
   } else {
 
-    if (isListItem(selected) && isListItem(item)) {
+    if (isSelectTypeItem(selected) && isSelectTypeItem(item)) {
       isItemSelected = item.value === selected.value;
     } else {
       isItemSelected = item === selected;
@@ -180,7 +181,7 @@ const isValueSelected = (item: IFilterItem, selected: IFilterDropdownValue) => {
 // type checking
 // https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
 
-const isListItem = (item: any): item is ListItem => {
+const isSelectTypeItem = (item: any): item is ISelectItem => {
   if (item === null) { return false; }
 
   return (item.value !== undefined) && (item.text !== undefined);
@@ -221,9 +222,9 @@ const getNewSelected = (item: IFilterItem, selected: IFilterDropdownValue, optio
       return newSelected;
     }
 
-    const newSelected: ListItem[] = [];
+    const newSelected: ISelectItem[] = [];
     validSelected.forEach((element: IFilterItem) => {
-      if (isListItem(element)) {
+      if (isSelectTypeItem(element)) {
         if (item.value === element.value) {
           isItemSelected = true;
         } else {
@@ -250,9 +251,9 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
     return list.slice(0, maxItems - 1);
   }
 
-  if (typeof selected === 'number' || typeof selected === 'string' || isListItem(selected)) {
+  if (typeof selected === 'number' || typeof selected === 'string' || isSelectTypeItem(selected)) {
     const index = list.findIndex(item => {
-      if (isListItem(item) && isListItem(selected)) {
+      if (isSelectTypeItem(item) && isSelectTypeItem(selected)) {
         return item.value === selected.value;
       } else {
         return item === selected;
@@ -282,7 +283,7 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
 
     selected.forEach((element: IFilterItem) => {
       const index = list.findIndex(item => {
-        if (isListItem(item) && isListItem(element)) {
+        if (isSelectTypeItem(item) && isSelectTypeItem(element)) {
           return item.value === element.value;
         } else {
           return item === element;
@@ -330,7 +331,7 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
 const getFilteredList = (list: IFilterItem[], newValue: string): IFilterItem[] => {
   return list.filter(element => {
 
-    if (isListItem(element)) {
+    if (isSelectTypeItem(element)) {
       const valueString = element.text.toLowerCase();
       return valueString.includes(newValue.toLowerCase());
     }else if (typeof element === 'number') {
@@ -347,14 +348,7 @@ const getResultText = (template: string, visible: number, total: number) => {
   return newMessage.replace('[VISIBLE]', `${visible}`);
 };
 
-type IFilterItem = string | ListItem | number;
-
-export type IFilterDropdownValue = string | string[] | number | number[] | ListItem | ListItem[] | null;
-
-interface ListItem {
-  text: string;
-  value: string | number;
-}
+export type IFilterDropdownValue = string | string[] | number | number[] | ISelectItem | ISelectItem[] | null;
 
 type IOpenPos = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 
