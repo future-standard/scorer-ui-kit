@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { ISelectItem, resetButtonStyles } from '../..';
+import { IFilterItem, IFilterType, resetButtonStyles } from '../..';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 const Container = styled.div`
@@ -16,10 +16,11 @@ const ResultsTextWrapper = styled.div`
 
 const FilterLabel = styled.div`
   height: 18px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   padding: 0 11px 0 8px;
-  margin-left: 3px;
+  margin: 0 0 3px 3px;
   color: hsl(207, 5%, 57%);
 
   ${({ theme }) => theme && css`
@@ -32,9 +33,8 @@ const FilterLabel = styled.div`
   }
   border-right: 1px solid hsla(0, 0%, 13%, 0.16);
 `;
-const FilterLabelText = styled.div`
-  padding: 0 15px 0 9px;
-
+const FilterLabelText = styled.div<{hasIcon?: boolean}>`
+  padding: ${({hasIcon}) => hasIcon ? '0 15px 0 9px' :'0 15px 0 0' };
 `;
 
 const ClearTextButton = styled.button`
@@ -51,6 +51,7 @@ const RemoveButton = styled.button`
 
 const FilterLabelsGroup = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-left: 10px;
 `;
@@ -59,18 +60,20 @@ const renderResults = (template: string, total: number) => {
   return template.replace('[TOTAL_RESULTS]', `${total}`);
 };
 
-interface IFilterLabel {
+export interface IFilterLabel {
   filterId: string
-  item: ISelectItem,
-  icon?: string,
+  item: IFilterItem
+  type: IFilterType
+  icon?: string
   filterName?: string
 }
+
 interface IFilterResults {
   labelLists: IFilterLabel[]
   totalResults: number
   resultTextTemplate?: string
   clearText?: string
-  onRemoveFilter: (filterId: string, item: ISelectItem) => void
+  onRemoveFilter? : (filterId: string, type: IFilterType, item: IFilterItem) => void
   onClearAll?: () => void
 }
 
@@ -79,20 +82,20 @@ const FiltersResults: React.FC<IFilterResults> = ({
   totalResults,
   resultTextTemplate = 'Showing Results ([TOTAL_RESULTS]):',
   clearText = 'CLEAR ALL',
-  onRemoveFilter,
+  onRemoveFilter = () => { },
   onClearAll = () => { },
 }) => {
   return (
     <Container>
       <ResultsTextWrapper>{renderResults(resultTextTemplate, totalResults)}</ResultsTextWrapper>
       <FilterLabelsGroup>
-        {labelLists.map(({ icon, item, filterName, filterId }, index) => {
+        {labelLists.map(({ icon, item, filterName, filterId, type }, index) => {
           return (
             <FilterLabel key={`Filter-Label-id-${index}`}>
               {icon && <Icon icon={icon} color='dimmed' size={10} weight='heavy' />}
-              <FilterLabelText>{filterName ? `${filterName}: ${item.text}` : item.text}</FilterLabelText>
+              <FilterLabelText hasIcon={!!icon}>{filterName ? `${filterName}: ${item.text}` : item.text}</FilterLabelText>
               <RemoveButton
-                onClick={() => onRemoveFilter(filterId, item)}
+                onClick={() => onRemoveFilter(filterId, type, item)}
               >
                 <Icon icon='CloseCompact' color='dimmed' size={10} weight='heavy' />
               </RemoveButton>

@@ -102,6 +102,7 @@ import {
     ISearchFilter,
     IFilterDropdownExt,
     FiltersResults,
+    IFilterLabel,
   } from './Misc';
 
 import {
@@ -228,8 +229,9 @@ export {
   Controls,
   PTZProvider,
   PTZContext,
-  PTZReducer, //shouldn't be needed usually; use provider instead
-  usePTZ, //shouldn't be needed usually; use provider instead
+  PTZReducer,
+  usePTZ,
+
 
   // Tables
   TypeTable,
@@ -283,7 +285,7 @@ export {
   useNotification,
   ModalContext,
   ModalProvider,
-  useModal,
+  useModal
 };
 
 /**
@@ -293,11 +295,20 @@ export type IFeedbackColor = 'error'|'warning'|'info'|'success'|'neutral';
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
 export type IMediaType = 'img' | 'video'
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
-export type IFilterItem = string | ISelectItem | number;
-export interface ISelectItem {
+export type IFilterType = 'search' | 'dropdown';
+
+// type checking
+// https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
+export type IFilterItem = {
   text: string;
   value: string | number;
 }
+
+export const isFilterItem = (item: any): item is IFilterItem => {
+  if (item === null) { return false; }
+
+  return (item.value !== undefined) && (item.text !== undefined);
+};
 
 export type {
   IModal,
@@ -311,5 +322,6 @@ export type {
   ICustomDrawer,
   IFilterDropdownValue,
   ISearchFilter,
-  IFilterDropdownExt
+  IFilterDropdownExt,
+  IFilterLabel,
 };

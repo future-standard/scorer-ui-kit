@@ -6,7 +6,7 @@ import FilterButton from '../atoms/FilterButton';
 import FilterOption from '../atoms/FilterOption';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import Spinner from '../../Indicators/Spinner';
-import { IFilterItem, ISelectItem } from '../..';
+import { IFilterItem, isFilterItem } from '../..';
 
 const MIN_WIDTH = 270;
 const MIN_HEIGHT = 190;
@@ -20,33 +20,33 @@ const ButtonWrapper = styled.div`
   display: inline-block;
 `;
 
-const ContentBox = styled.div<{ contentState: IDropOpen }>`
+const ContentBox = styled.div<{ openState: IDropOpen }>`
   z-index: 100;
   min-width: ${MIN_WIDTH}px;
   position: absolute;
 
-  ${({ contentState }) => contentState && css`
-    display: ${contentState.isOpen ? 'inline-block' : 'none'};
+  ${({ openState }) => openState && css`
+    display: ${openState.isOpen ? 'inline-block' : 'none'};
 
-    ${contentState.position === 'bottom-right' && `
+    ${openState.position === 'bottom-right' && `
       bottom: 0;
       left: 0;
       transform: translateY(calc(100% + 5px ));
     `};
 
-    ${contentState.position === 'bottom-left' && `
+    ${openState.position === 'bottom-left' && `
       bottom: 0;
       right: 0;
       transform: translateY(calc(100% + 5px ));
     `};
 
-    ${contentState.position === 'top-left' && `
+    ${openState.position === 'top-left' && `
       top: 0;
       right: 0;
       transform: translateY(calc( -100% - 5px ));
     `};
 
-    ${contentState.position === 'top-right' && `
+    ${openState.position === 'top-right' && `
       top: 0;
       left: 0;
       transform: translateY(calc( -100% - 5px ));
@@ -157,79 +157,34 @@ const isValueSelected = (item: IFilterItem, selected: IFilterDropdownValue) => {
 
   if (Array.isArray(selected)) {
     selected.forEach((element: IFilterItem) => {
-
-      if (isSelectTypeItem(element) && isSelectTypeItem(item) && element.value === item.value) {
-        isItemSelected = true;
-      } else if (element === item) {
+      if (element.value === item.value) {
         isItemSelected = true;
       }
     });
 
   } else {
-
-    if (isSelectTypeItem(selected) && isSelectTypeItem(item)) {
+    if (isFilterItem(selected)) {
       isItemSelected = item.value === selected.value;
-    } else {
-      isItemSelected = item === selected;
     }
-
   }
 
   return isItemSelected;
-};
-
-// type checking
-// https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
-
-const isSelectTypeItem = (item: any): item is ISelectItem => {
-  if (item === null) { return false; }
-
-  return (item.value !== undefined) && (item.text !== undefined);
 };
 
 const getNewSelected = (item: IFilterItem, selected: IFilterDropdownValue, optionType: IInputOptionsType): IFilterDropdownValue => {
   let isItemSelected = false;
 
   if (optionType === 'checkbox') {
-    const validSelected = Array.isArray(selected) ? selected : [];
-    if (typeof item === 'number') {
-      const newSelected: number[] = [];
-      validSelected.forEach((element: IFilterItem) => {
-        if (element === item) {
-          isItemSelected = true;
-        } else if (typeof element === 'number') {
-          newSelected.push(element);
-        }
-      });
-      if (!isItemSelected) {
-        newSelected.push(item);
-      }
-      return newSelected;
-    }
+    const validSelected = Array.isArray(selected)
+      ? selected
+      : isFilterItem(selected) ? [selected] : [];
 
-    if (typeof item === 'string') {
-      const newSelected: string[] = [];
-      validSelected.forEach((element: IFilterItem) => {
-        if (element === item) {
-          isItemSelected = true;
-        } else if (typeof element === 'string') {
-          newSelected.push(element);
-        }
-      });
-      if (!isItemSelected) {
-        newSelected.push(item);
-      }
-      return newSelected;
-    }
-
-    const newSelected: ISelectItem[] = [];
+    const newSelected: IFilterItem[] = [];
     validSelected.forEach((element: IFilterItem) => {
-      if (isSelectTypeItem(element)) {
-        if (item.value === element.value) {
-          isItemSelected = true;
-        } else {
-          newSelected.push(element);
-        }
+      if (item.value === element.value) {
+        isItemSelected = true;
+      } else {
+        newSelected.push(element);
       }
     });
     if (!isItemSelected) {
@@ -251,19 +206,20 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
     return list.slice(0, maxItems - 1);
   }
 
-  if (typeof selected === 'number' || typeof selected === 'string' || isSelectTypeItem(selected)) {
-    const index = list.findIndex(item => {
-      if (isSelectTypeItem(item) && isSelectTypeItem(selected)) {
-        return item.value === selected.value;
-      } else {
-        return item === selected;
-      }
-    });
+  if (isFilterItem(selected)) {
+    const index = list.findIndex(item => item.value === selected.value);
 
+    // if it doesn't exists return the list based in maxItems
+    if ((index !== -1)) {
+      return list.slice(0, maxItems - 1);
+    }
+
+    // if exists and is inside the visibleRange just return slice
     if ((index !== -1) && (index < maxItems)) {
       return list.slice(0, maxItems - 1);
     }
 
+    //If not is somewhere after the maxItems remove last item and add it to the end.
     const newList = list.slice(0, maxItems - 2);
     newList.push(selected);
     return newList;
@@ -279,16 +235,11 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
     if (selected.length === maxItems) {
       return selected;
     }
+
     const selectedIndexList: number[] = [];
 
     selected.forEach((element: IFilterItem) => {
-      const index = list.findIndex(item => {
-        if (isSelectTypeItem(item) && isSelectTypeItem(element)) {
-          return item.value === element.value;
-        } else {
-          return item === element;
-        }
-      });
+      const index = list.findIndex(item => item.value === element.value);
 
       if (index !== -1) {
         selectedIndexList.push(index);
@@ -330,16 +281,8 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
 
 const getFilteredList = (list: IFilterItem[], newValue: string): IFilterItem[] => {
   return list.filter(element => {
-
-    if (isSelectTypeItem(element)) {
-      const valueString = element.text.toLowerCase();
-      return valueString.includes(newValue.toLowerCase());
-    }else if (typeof element === 'number') {
-      const valueString = element.toString(10).toLowerCase();
-      return valueString.includes(newValue.toLowerCase());
-    }else {
-      return element.toLowerCase().includes(newValue.toLowerCase());
-    }
+    const valueString = element.text.toLowerCase();
+    return valueString.includes(newValue.toLowerCase());
   });
 };
 
@@ -348,7 +291,7 @@ const getResultText = (template: string, visible: number, total: number) => {
   return newMessage.replace('[VISIBLE]', `${visible}`);
 };
 
-export type IFilterDropdownValue = string | string[] | number | number[] | ISelectItem | ISelectItem[] | null;
+export type IFilterDropdownValue = IFilterItem | IFilterItem[] | null;
 
 type IOpenPos = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 
@@ -391,7 +334,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
   const [visibleList, setVisibleList] = useState(getVisibleList(list, maxDisplayedItems, selected));
   const [searchText, setSearchText] = useState<string>('');
-  const [contentState, setContentState] = useState<IDropOpen>({
+  const [openState, setOpenState] = useState<IDropOpen>({
     isOpen: false,
     position: 'bottom-right',
   });
@@ -406,14 +349,14 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
     const position: IOpenPos = getDropPosition(buttonRect);
 
-    setContentState((prev) => {
+    setOpenState((prev) => {
       const isOpen = !prev.isOpen;
       return { ...prev, isOpen, position };
     });
   }, [buttonWrapperRef]);
 
   const handleClose = useCallback(() => {
-    setContentState((prev) => {
+    setOpenState((prev) => {
       const isOpen = false;
       return { ...prev, isOpen };
     });
@@ -466,14 +409,14 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
         <FilterButton
           icon={buttonIcon}
           size={buttonSize}
-          isOpen={contentState.isOpen}
+          isOpen={openState.isOpen}
           hasFlipArrow
           onClick={handleToggleOpen}
           {...{ disabled }}
         >{buttonText}
         </FilterButton>
       </ButtonWrapper>
-      <ContentBox {...{ contentState }}>
+      <ContentBox {...{ openState }}>
         <TopLine />
         <InnerBox>
           <SearchWrapper>
@@ -498,8 +441,8 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                 <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>
                 <OptionList>
                   {(visibleList.length > 0) && visibleList.map((item: IFilterItem) => {
-                    const value = ((typeof item === 'string') || (typeof item === 'number')) ? item : item.value;
-                    const text = ((typeof item === 'string') || (typeof item === 'number')) ? item : item.text;
+                    const value = item.value;
+                    const text = item.text;
                     return (
                       <StyledFilterOption
                         key={`select-${text}`}

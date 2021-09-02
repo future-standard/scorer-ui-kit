@@ -16,6 +16,7 @@ export default {
 };
 
 const Content = styled.div``;
+const Divider = styled.div``;
 
 const Wrapper = styled.div`
   margin: 100px;
@@ -49,16 +50,38 @@ const japaneseDataList = [
   { text: 'すし', value: 4 },
 ];
 
-const englishTextList = ['Super Spicy', 'Spicy', 'Mild', 'Sweet'];
-const japaneseTextList = ['超辛い', '辛い', '中華い', '甘口'];
+const englishTextList = [
+  { text: 'Super Spicy', value: 0 },
+  { text: 'Spicy', value: 1 },
+  { text: 'Mild', value: 2 },
+  { text: 'Sweet', value: 3 }
+];
+const japaneseTextList = [{ text: '超辛い', value: 0 }, { text: '辛い', value: 1 }, { text: '中華い', value: 2 }, { text: '甘口', value: 3 }];
 
-const yearList = [1900, 1910, 1920, 1930, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020];
+const yearList = [
+  { text: '1900', value: 1900 },
+  { text: '1910', value: 1920 },
+  { text: '1930', value: 1930 },
+  { text: '1950', value: 1950 },
+  { text: '1960', value: 1960 },
+  { text: '1970', value: 1970 },
+  { text: '1980', value: 1990 },
+  { text: '2010', value: 2010 },
+  { text: '2020', value: 2020 }
+];
 
-const englishPayList = ['Card', 'Cash', 'IC Card'];
-const japanesePayList = ['カード', '現金', 'IC カード']
+const englishPayList = [{ text: 'Card', value: 0 }, { text: 'Cash', value: 1 }, { text: 'IC Card', value: 2 }];
+const japanesePayList = [{ text: 'カード', value: 0 }, { text: '現金', value: 1 }, { text: 'IC カード', value: 2 }]
 
 
-const baseExample = ["Adipiscing", "Amet", "Consectetur", "Dolor sit", "Lorem ipsum", "Vestibulum"];
+const baseExample = [
+  { text: "Adipiscing", value: 0 },
+  { text: "Amet", value: 0 },
+  { text: "Consectetur", value: 0 },
+  { text: "Dolor sit", value: 0 },
+  { text: "Lorem ipsum", value: 0 },
+  { text: "Vestibulum", value: 0 }
+];
 
 const searchTemplateResultEnglish = 'Showing [VISIBLE] of [TOTAL]';
 const searchTemplateResultJapanese = '[VISIBLE] 〜 [TOTAL]件';
@@ -90,8 +113,8 @@ export const _FilterDropdown = () => {
 
   const [selectedObj, setSelectedObj] = useState<IFilterDropdownValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
   const [textArraySelected, setTextArraySelected] = useState<IFilterDropdownValue>(null); // this could also start with values ['Spicy','Sweet']
-  const [wordSelected, setWordSelected] = useState<IFilterDropdownValue>(language === 'english' ? 'Card' : 'カード'); // this could also start with value 'Card' or null
-  const [numberSelected, setNumberSelected] = useState<IFilterDropdownValue>([1990]); // this could also start with value 1990 or null
+  const [wordSelected, setWordSelected] = useState<IFilterDropdownValue>(language === 'english' ? { text: 'Card', value: 0 } : { text: 'カード', value: 0 }); // this could also start with value 'Card' or null
+  const [numberSelected, setNumberSelected] = useState<IFilterDropdownValue>([{ text: '1990', value: 1990 }]); // this could also start with value 1990 or null
   const [baseSelected, setBaseSelected] = useState<IFilterDropdownValue>(null);
 
   const handleSelectItemType = useCallback((newSelection: IFilterDropdownValue) => {
@@ -123,7 +146,7 @@ export const _FilterDropdown = () => {
   return <Content>
     <Wrapper key='eje-0'>
       <PageHeader title='Base Example'
-        introductionText="Array of strings ['Adipiscing, Amet']"
+        introductionText="."
       />
       <FilterDropdown
         {...{
@@ -145,8 +168,7 @@ export const _FilterDropdown = () => {
     </Wrapper>
     <Wrapper key='eje-1'>
       <PageHeader title='Data Object'
-        introductionText="Array of IItemList [{text: 'Option1', value: 1 }, {text: 'Option2', value: 2 }]"
-        areaTitle='Recommended method'
+        introductionText="Array of IFilterList [{text: 'Option1', value: 1 }, {text: 'Option2', value: 2 }]"
       />
       <FilterDropdown {...{
         buttonIcon,
@@ -166,9 +188,10 @@ export const _FilterDropdown = () => {
         loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
       />
     </Wrapper>
+    <Divider />
     <Wrapper key='eje-2'>
       <PageHeader title='Text type'
-        introductionText="Array of strings ['Mild, Sweet']"
+        introductionText="."
       />
       <FilterDropdown
         {...{
@@ -191,7 +214,7 @@ export const _FilterDropdown = () => {
     </Wrapper>
     <Wrapper key='eje-3'>
       <PageHeader title='Radio type'
-        introductionText="Array of strings ['Card', 'Cash']"
+        introductionText="."
       />
       <FilterDropdown
         {...{
@@ -214,7 +237,7 @@ export const _FilterDropdown = () => {
     </Wrapper>
     <Wrapper key='eje-4'>
       <PageHeader title='Checkbox type'
-        introductionText="Array of numbers [1900, 1910]"
+        introductionText="Array of IFilterList with numbers [{text: '1900', value:1910}, {text:'1910', value: 1910}]"
       />
       <FilterDropdown
         {...{
