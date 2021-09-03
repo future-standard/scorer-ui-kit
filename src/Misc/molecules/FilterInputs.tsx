@@ -89,7 +89,7 @@ export interface IFilterDropdownExt extends IFilterDropdown {
   canHide?: boolean
 }
 
-interface IFilterInputs {
+export interface IFilterInputs {
   searchFilters: ISearchFilter[]
   dropdownFilters: IFilterDropdownExt[]
   hasShowMore?: boolean

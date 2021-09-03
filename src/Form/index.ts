@@ -19,7 +19,7 @@ import PercentageSlider from './molecules/PercentageSlider';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
-import FilterDropdown, {IFilterDropdownValue} from './molecules/FilterDropdown';
+import FilterDropdown from './molecules/FilterDropdown';
 import DropArea from './atoms/DropArea';
 import CropTool from './molecules/CropTool';
 import AvatarUploader from './organisms/AvatarUploader';
@@ -69,4 +69,4 @@ interface ButtonProps {
 
 export type IButtonProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-export type { IconButtonData, ISliderMark, IFilterDropdownValue };
+export type { IconButtonData, ISliderMark};

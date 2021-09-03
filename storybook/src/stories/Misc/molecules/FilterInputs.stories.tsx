@@ -4,7 +4,7 @@ import { select, boolean, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import {
   FilterInputs,
-  IFilterDropdownValue,
+  IFilterValue,
   ISearchFilter,
   IFilterDropdownExt,
   FiltersResults,
@@ -13,16 +13,17 @@ import {
   IFilterItem,
   IFilterType,
 } from 'scorer-ui-kit';
+import { loadingTagsEnglish, loadingTagsJapanese, searchPlaceholderEnglish, searchPlaceholderJapanese, searchTemplateResultEnglish, searchTemplateResultJapanese } from '../../data_samples';
 
 export default {
-  title: 'Misc/Organism',
+  title: 'Misc/Molecules',
   component: 'FilterInputs',
   decorators: []
 };
 
 const Container = styled.div``;
 
-const depList: IFilterDropdownValue = [
+const depList: IFilterValue = [
   {
     text: "Adipiscing",
     value: "Adipiscing",
@@ -49,7 +50,7 @@ const depList: IFilterDropdownValue = [
   }
 ];
 
-const englishDataList: IFilterDropdownValue = [
+const englishDataList: IFilterValue = [
   { text: 'Ramen', value: 0 },
   { text: 'Takoyaki', value: 1 },
   { text: 'Gyoza', value: 2 },
@@ -57,7 +58,7 @@ const englishDataList: IFilterDropdownValue = [
   { text: 'Sushi', value: 4 },
 ];
 
-const japaneseDataList: IFilterDropdownValue = [
+const japaneseDataList: IFilterValue = [
   { text: 'ラーメン', value: 0 },
   { text: '蛸焼き', value: 1 },
   { text: '餃子', value: 2 },
@@ -65,19 +66,9 @@ const japaneseDataList: IFilterDropdownValue = [
   { text: 'すし', value: 4 },
 ];
 
-const searchTemplateResultEnglish = 'Showing [VISIBLE] of [TOTAL]';
-const searchTemplateResultJapanese = '[VISIBLE] 〜 [TOTAL]件';
-
-const searchPlaceholderJapanese = 'フィルタータグ...';
-const searchPlaceholderEnglish = 'Filter tags...';
-
-const loadingTagsEnglish = 'Loading Tags...';
-const loadingTagsJapanese = 'ローディング...';
-
-
 // interface IFiltersSelected {
 //   id: string
-//   selected: IFilterDropdownValue
+//   selected: IFilterValue
 //   filterName?: string
 //   icon?: string
 // }
@@ -113,7 +104,7 @@ const loadingTagsJapanese = 'ローディング...';
 
 interface IDropdownsSelected {
   id: string
-  selected: IFilterDropdownValue
+  selected: IFilterValue
   icon?: string
 }
 
@@ -216,15 +207,15 @@ const generateResultsLabelData = (dropdownFilters: IFilterDropdownExt[], searchF
 }
 
 
-export const _FilterBar = () => {
+export const _FilterInputs = () => {
 
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const hasShowMore = boolean('Has ShowMore', true);
   const totalResults = number('Total Results', 6);
   const foodValue = action('food selection');
 
-  const [selectedObj, setSelectedObj] = useState<IFilterDropdownValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
-  const [categorySelected, setCategorySelected] = useState<IFilterDropdownValue>(null);
+  const [selectedObj, setSelectedObj] = useState<IFilterValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
+  const [categorySelected, setCategorySelected] = useState<IFilterValue>(null);
   const [nameVal, setNameVal] = useState('');
   const [foodSelected, setFoodSelected] = useState('');
   const [exampleSearch, setExampleSearch] = useState('');
@@ -232,12 +223,12 @@ export const _FilterBar = () => {
   // const [dropdownSelected, setDropdownSelected] = useState<IDropdownsSelected[]>(dropdownSelectedInitial);
   // const [searchSelected] = useState<ISearchSelected[]>(searchSelectedInitial)
 
-  const handleSelectItemType = useCallback((newSelection: IFilterDropdownValue) => {
+  const handleSelectItemType = useCallback((newSelection: IFilterValue) => {
     foodValue(newSelection);
     setSelectedObj(newSelection);
   }, [foodValue]);
 
-  const handleCategorySelected = useCallback((newSelection: IFilterDropdownValue) => {
+  const handleCategorySelected = useCallback((newSelection: IFilterValue) => {
     setCategorySelected(newSelection);
   }, []);
 
@@ -323,8 +314,8 @@ export const _FilterBar = () => {
   const onRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem) => {
     if (type === 'dropdown') {
       const foundFilter = dropdownFilters.find((dropdown) => dropdown.id === filterId);
-      if (foundFilter) {
-        const newSelected: IFilterDropdownValue = Array.isArray(foundFilter.selected)
+      if (foundFilter && foundFilter.onSelect) {
+        const newSelected: IFilterValue = Array.isArray(foundFilter.selected)
           ? foundFilter.selected.filter((currentItem) => currentItem.value !== item.value)
           : null
         foundFilter.onSelect(newSelected);
@@ -339,7 +330,6 @@ export const _FilterBar = () => {
     }
 
   }, [dropdownFilters, searchFilters]);
-
 
   return (
     <Container>

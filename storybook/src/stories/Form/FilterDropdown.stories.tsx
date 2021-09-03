@@ -5,7 +5,7 @@ import { boolean, text, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import {
   FilterDropdown,
-  IFilterDropdownValue,
+  IFilterValue,
   PageHeader,
 } from 'scorer-ui-kit';
 
@@ -111,33 +111,33 @@ export const _FilterDropdown = () => {
   const paymentAction = action('Payment type');
   const yearAction = action('Years');
 
-  const [selectedObj, setSelectedObj] = useState<IFilterDropdownValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
-  const [textArraySelected, setTextArraySelected] = useState<IFilterDropdownValue>(null); // this could also start with values ['Spicy','Sweet']
-  const [wordSelected, setWordSelected] = useState<IFilterDropdownValue>(language === 'english' ? { text: 'Card', value: 0 } : { text: 'カード', value: 0 }); // this could also start with value 'Card' or null
-  const [numberSelected, setNumberSelected] = useState<IFilterDropdownValue>([{ text: '1990', value: 1990 }]); // this could also start with value 1990 or null
-  const [baseSelected, setBaseSelected] = useState<IFilterDropdownValue>(null);
+  const [selectedObj, setSelectedObj] = useState<IFilterValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
+  const [textArraySelected, setTextArraySelected] = useState<IFilterValue>(null); // this could also start with values ['Spicy','Sweet']
+  const [wordSelected, setWordSelected] = useState<IFilterValue>(language === 'english' ? { text: 'Card', value: 0 } : { text: 'カード', value: 0 }); // this could also start with value 'Card' or null
+  const [numberSelected, setNumberSelected] = useState<IFilterValue>([{ text: '1990', value: 1990 }]); // this could also start with value 1990 or null
+  const [baseSelected, setBaseSelected] = useState<IFilterValue>(null);
 
-  const handleSelectItemType = useCallback((newSelection: IFilterDropdownValue) => {
+  const handleSelectItemType = useCallback((newSelection: IFilterValue) => {
     foodSelection(newSelection);
     setSelectedObj(newSelection);
   }, [foodSelection]);
 
-  const handleTextListSelect = useCallback((newSelection: IFilterDropdownValue) => {
+  const handleTextListSelect = useCallback((newSelection: IFilterValue) => {
     spiceAction(newSelection);
     setTextArraySelected(newSelection);
   }, [spiceAction]);
 
-  const handleNumberListSelect = useCallback((newSelection: IFilterDropdownValue) => {
+  const handleNumberListSelect = useCallback((newSelection: IFilterValue) => {
     yearAction(newSelection);
     setNumberSelected(newSelection);
   }, [yearAction]);
 
-  const handleWordSelect = useCallback((newSelection: IFilterDropdownValue) => {
+  const handleWordSelect = useCallback((newSelection: IFilterValue) => {
     paymentAction(newSelection);
     setWordSelected(newSelection);
   }, [paymentAction]);
 
-  const handleBaseExample = useCallback((newSelection: IFilterDropdownValue) => {
+  const handleBaseExample = useCallback((newSelection: IFilterValue) => {
     selectedItems(newSelection);
     setBaseSelected(newSelection);
   }, [selectedItems]);

@@ -3,6 +3,7 @@ import TagList, { ITagList, TagListWrapper } from './molecules/TagList';
 import BasicSearchInput from './atoms/BasicSearchInput';
 import FilterInputs, { ISearchFilter, IFilterDropdownExt } from './molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from './molecules/FiltersResults';
+import FilterBar, { IFilterDropdownConfig } from './organisms/FilterBar';
 import MediaBox from './atoms/MediaBox';
 
 export {
@@ -13,6 +14,7 @@ export {
   BasicSearchInput,
   FilterInputs,
   FiltersResults,
+  FilterBar
 };
 
-export type { ITagList, ITag, ISearchFilter, IFilterDropdownExt, IFilterLabel };
+export type { ITagList, ITag, ISearchFilter, IFilterDropdownExt, IFilterLabel, IFilterDropdownConfig };

@@ -43,7 +43,6 @@ import {
   SelectWrapper,
   FilterButton,
   FilterDropdown,
-  IFilterDropdownValue,
   RadioButton,
 } from './Form';
 
@@ -103,6 +102,8 @@ import {
     IFilterDropdownExt,
     FiltersResults,
     IFilterLabel,
+    FilterBar,
+    IFilterDropdownConfig,
   } from './Misc';
 
 import {
@@ -279,6 +280,7 @@ export {
   BasicSearchInput,
   FilterInputs,
   FiltersResults,
+  FilterBar,
 
   //Context
   NotificationProvider,
@@ -297,16 +299,18 @@ export type IMediaType = 'img' | 'video'
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
 export type IFilterType = 'search' | 'dropdown';
 
-// type checking
-// https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
-export type IFilterItem = {
-  text: string;
-  value: string | number;
+export type IFilterItem = { text: string; value: string | number;}
+export type IFilterValue = IFilterItem | IFilterItem[] | null;
+
+export interface IFilterResult {
+  id: string
+  selected: IFilterValue
 }
 
+// type checking
+// https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
 export const isFilterItem = (item: any): item is IFilterItem => {
   if (item === null) { return false; }
-
   return (item.value !== undefined) && (item.text !== undefined);
 };
 
@@ -320,8 +324,8 @@ export type {
   INotificationItem,
   INotificationsHistory,
   ICustomDrawer,
-  IFilterDropdownValue,
   ISearchFilter,
   IFilterDropdownExt,
   IFilterLabel,
+  IFilterDropdownConfig,
 };

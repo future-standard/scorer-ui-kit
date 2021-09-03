@@ -6,7 +6,7 @@ import FilterButton from '../atoms/FilterButton';
 import FilterOption from '../atoms/FilterOption';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import Spinner from '../../Indicators/Spinner';
-import { IFilterItem, isFilterItem } from '../..';
+import { IFilterItem, IFilterValue, isFilterItem } from '../..';
 
 const MIN_WIDTH = 270;
 const MIN_HEIGHT = 190;
@@ -152,7 +152,7 @@ const getDropPosition = (buttonRect: DOMRect): IOpenPos => {
 };
 
 
-const isValueSelected = (item: IFilterItem, selected: IFilterDropdownValue) => {
+const isValueSelected = (item: IFilterItem, selected: IFilterValue) => {
   let isItemSelected = false;
 
   if (Array.isArray(selected)) {
@@ -171,7 +171,7 @@ const isValueSelected = (item: IFilterItem, selected: IFilterDropdownValue) => {
   return isItemSelected;
 };
 
-const getNewSelected = (item: IFilterItem, selected: IFilterDropdownValue, optionType: IInputOptionsType): IFilterDropdownValue => {
+const getNewSelected = (item: IFilterItem, selected: IFilterValue, optionType: IInputOptionsType): IFilterValue => {
   let isItemSelected = false;
 
   if (optionType === 'checkbox') {
@@ -190,13 +190,18 @@ const getNewSelected = (item: IFilterItem, selected: IFilterDropdownValue, optio
     if (!isItemSelected) {
       newSelected.push(item);
     }
+
+    if(newSelected.length === 0) {
+      return null;
+    }
+
     return newSelected;
   }
 
   return item;
 };
 
-const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilterDropdownValue): IFilterItem[] => {
+const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilterValue): IFilterItem[] => {
 
   if (list.length <= maxItems) {
     return list;
@@ -291,8 +296,6 @@ const getResultText = (template: string, visible: number, total: number) => {
   return newMessage.replace('[VISIBLE]', `${visible}`);
 };
 
-export type IFilterDropdownValue = IFilterItem | IFilterItem[] | null;
-
 type IOpenPos = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 
 interface IDropOpen {
@@ -303,7 +306,7 @@ export interface IFilterDropdown {
   buttonIcon: string
   buttonText: string
   list: IFilterItem[];
-  selected: IFilterDropdownValue;
+  selected: IFilterValue;
   buttonSize?: TypeButtonSizes
   disabled?: boolean
   optionType?: IInputOptionsType
@@ -312,7 +315,7 @@ export interface IFilterDropdown {
   searchPlaceholder?: string
   maxDisplayedItems?: number
   searchResultText?: string
-  onSelect: (newSelection: IFilterDropdownValue) => void;
+  onSelect: (newSelection: IFilterValue) => void;
 }
 
 const FilterDropdown: React.FC<IFilterDropdown> = ({
