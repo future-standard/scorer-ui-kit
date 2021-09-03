@@ -45,7 +45,7 @@ const renderSearchInputs = (searchFilters: ISearchFilter[], visibleSearchInputs:
 const renderAddSearchButtons = (
   searchFilters: ISearchFilter[],
   visibleSearchInputs: String[],
-  handleVisbleSearch: (searchId: string) => void
+  handleVisibleSearch: (searchId: string) => void
 ) => {
   return searchFilters.map((element) => {
     if (element.canHide && !visibleSearchInputs.includes(element.id)) {
@@ -54,7 +54,7 @@ const renderAddSearchButtons = (
         <StyledFilterButton
           key={`search-button-id-${element.id}`}
           icon='Add'
-          onClick={() => handleVisbleSearch(searchId)}
+          onClick={() => handleVisibleSearch(searchId)}
         >
           {element.showFieldText}
         </StyledFilterButton>

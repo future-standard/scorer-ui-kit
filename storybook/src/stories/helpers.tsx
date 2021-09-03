@@ -63,8 +63,6 @@ const filterByStatus = (data: ITableSampleData[], filterVal: IFilterValue): ITab
   if (Array.isArray(filterVal)) {
     filterVal.forEach(({ value }) => {
       data.forEach((sample) => {
-        console.log('added data', sample);
-        console.log('filterValue', value);
         if (sample.status === value) {
           newData.push(sample);
         }

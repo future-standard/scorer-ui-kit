@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { IFilterItem, IFilterResult, IFilterValue } from '../../';
+import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem } from '../../';
 import { IInputOptionsType } from '../../Form';
 import FilterInputs, { IFilterDropdownExt, ISearchFilter } from '../molecules/FilterInputs';
+import FiltersResults, { IFilterLabel } from '../molecules/FiltersResults';
 
 const Container = styled.div``;
 
@@ -52,6 +53,60 @@ const createSearchers = (
   return searchersFilters;
 };
 
+const createLabelResults = (
+  searchersConfig: ISearchFilter[],
+  dropdownsConfig: IFilterDropdownConfig[],
+  filtersValues: IFilterResult[]): IFilterLabel[] => {
+
+  const labelLists: IFilterLabel[] = [];
+
+  searchersConfig.forEach((searcher) => {
+    const foundSearcher = filtersValues.find(element => element.id === searcher.id);
+    if (!foundSearcher) {
+      return;
+
+      // searchers are never arrays but Typescript requires this review
+    } else if (isFilterItem(foundSearcher.selected)) {
+      const newLabel: IFilterLabel = {
+        filterId: foundSearcher.id,
+        item: foundSearcher.selected,
+        filterName: searcher.name,
+        type: 'search',
+      };
+      labelLists.push(newLabel);
+    }
+  });
+
+  dropdownsConfig.forEach((dropdown) => {
+
+    const foundDropdown = filtersValues.find(element => element.id === dropdown.id);
+    if (!foundDropdown || foundDropdown.selected === null) {
+      return;
+    } else if (Array.isArray(foundDropdown.selected)) {
+      foundDropdown.selected.forEach((dropdownLabelVal) => {
+        const newLabel: IFilterLabel = {
+          filterId: foundDropdown.id,
+          item: dropdownLabelVal,
+          icon: dropdown.buttonIcon,
+          type: 'dropdown'
+        };
+        labelLists.push(newLabel);
+      });
+    } else if (isFilterItem(foundDropdown.selected)) {
+      const newLabel: IFilterLabel = {
+        filterId: foundDropdown.id,
+        item: foundDropdown.selected,
+        icon: dropdown.buttonIcon,
+        type: 'dropdown'
+      };
+
+      labelLists.push(newLabel);
+    }
+  });
+
+  return labelLists;
+};
+
 
 const initFilters = (
   searchersConfig: ISearchFilter[],
@@ -77,7 +132,6 @@ export interface IFilterDropdownConfig {
   list: IFilterItem[];
   disabled?: boolean
   optionType?: IInputOptionsType
-  isLoading?: boolean
   loadingText?: string
   searchPlaceholder?: string
   maxDisplayedItems?: number
@@ -90,6 +144,10 @@ interface IFilterBar {
   hasShowMore?: boolean
   showMoreText?: string
   showLessText?: string
+  resultTextTemplate?: string
+  totalResults: number
+  clearText?: string
+  isLoading?: boolean
   onChangeCallback?: (currentSelected: IFilterResult[]) => void
 }
 
@@ -99,13 +157,16 @@ const FilterBar: React.FC<IFilterBar> = ({
   dropdownsConfig,
   showMoreText,
   showLessText,
+  resultTextTemplate,
+  clearText,
+  totalResults,
   onChangeCallback = () => { }
 }) => {
 
   const [filtersValues, setFilterValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig));
 
-  const handleChange = useCallback((filtersValues: IFilterResult[]) => {
-    const notNullValues = filtersValues.filter((filter) => filter.selected !== null);
+  const handleChange = useCallback((newValues: IFilterResult[]) => {
+    const notNullValues = newValues.filter((filter) => filter.selected !== null);
     onChangeCallback(notNullValues);
   }, [onChangeCallback]);
 
@@ -136,6 +197,42 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   }, [handleChange]);
 
+  const handleOnClear = useCallback(() => {
+    setFilterValues((prev) => {
+      const updatedFilters = [...prev];
+      updatedFilters.forEach((filterElement) => {
+        if (filterElement.selected === null) {
+          return;
+        }
+        filterElement.selected = null;
+      });
+      handleChange(updatedFilters);
+      return updatedFilters;
+    });
+  }, [handleChange]);
+
+  const handleOnRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem) => {
+
+    setFilterValues((prev) => {
+      const updatedFilters = [...prev];
+
+      const foundFilter = updatedFilters.find((filterElement) => filterElement.id === filterId);
+
+      if (!foundFilter) {
+        return prev;
+      } else if (Array.isArray(foundFilter.selected)) {
+        const selectedFiltered = foundFilter.selected.filter((oldItem) => oldItem.value !== item.value);
+        foundFilter.selected = selectedFiltered.length === 0 ? null : selectedFiltered;
+      } else if (isFilterItem(foundFilter.selected)) {
+        foundFilter.selected = null;
+      }
+      handleChange(updatedFilters);
+      return updatedFilters;
+    });
+
+  }, [handleChange]);
+
+
   return (
     <Container>
       <FilterInputs
@@ -146,6 +243,12 @@ const FilterBar: React.FC<IFilterBar> = ({
         }}
         searchFilters={createSearchers(searchersConfig, filtersValues, handleSearchers)}
         dropdownFilters={createDropdownFilters(dropdownsConfig, filtersValues, handleSelected)}
+      />
+      <FiltersResults
+        {...{ resultTextTemplate, clearText, totalResults }}
+        labelLists={createLabelResults(searchersConfig, dropdownsConfig, filtersValues)}
+        onClearAll={handleOnClear}
+        onRemoveFilter={handleOnRemoveFilter}
       />
     </Container>
   );

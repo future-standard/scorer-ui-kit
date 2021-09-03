@@ -143,6 +143,7 @@ export const _FilterBar = () => {
       <FilterBar
         {...{ searchersConfig, dropdownsConfig }}
         onChangeCallback={handleFilters}
+        totalResults={rows.length}
       />
       <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}
         columnConfig={language === 'english' ? columnConfigSample : columnConfigSampleJp}
