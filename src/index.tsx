@@ -86,14 +86,15 @@ import {
 } from './PTZControl';
 
 // Misc
-import {
-  Tag,
-  TagList,
-  ITag,
-  ITagList,
-  TagListWrapper,
-  MediaBox,
-} from './Misc';
+  import {
+    Tag,
+    TagList,
+    ITag,
+    ITagList,
+    TagListWrapper,
+    MediaBox,
+    BasicSearchInput,
+  } from './Misc';
 
 import {
   ConfirmationModal,
@@ -108,6 +109,7 @@ import {
   useModal,
   useNotification,
   useClickOutside,
+  useMediaModal,
   IModal,
   usePoll,
 } from './hooks';
@@ -235,6 +237,7 @@ export {
   useCopyToClipboard,
   useClickOutside,
   usePoll,
+  useMediaModal,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
@@ -267,6 +270,7 @@ export {
   TagList,
   TagListWrapper,
   MediaBox,
+  BasicSearchInput,
 
   //Context
   NotificationProvider,

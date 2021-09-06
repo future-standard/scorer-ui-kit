@@ -4,7 +4,7 @@ import { IModalProps } from '../Modals/Modal';
 
 /**
  * This type is a reduced version of the modalProps
- * but with the posibilities to grow beyond the basic modal
+ * but with the possibilities to grow beyond the basic modal
  * features
  */
 export type IModal = {
@@ -54,6 +54,7 @@ export const useModal = () => {
 
   return {
     createModal,
+    isModalOpen: modalProps.isOpen,
     setModalOpen,
   };
 };

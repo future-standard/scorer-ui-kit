@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 import { object, boolean } from "@storybook/addon-knobs";
 
-import {TypeTable} from 'scorer-ui-kit';
+import {TypeTable, ModalProvider} from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
 import {
   IRowData,
@@ -212,6 +212,8 @@ const rowMaker = (rowData: IExampleData[]) : ITypeTableData=> {
       id,
       header: {
         image: photo,
+        mediaUrl: photo,
+        mediaType: 'img',
         icon: 'Location',
         status,
       },
@@ -330,5 +332,12 @@ export const _TypeTable = () => {
     setRows(rowMaker(data));
   }, [data])
 
-  return <Container><TypeTable {...{columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon, defaultAscending:true, sortCallback, hasHeaderGroups}} /></Container>;
+  // Provider should be at main Index level, it's here just for the example
+  return (
+    <Container>
+      <ModalProvider>
+        <TypeTable {...{ columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon, defaultAscending: true, sortCallback, hasHeaderGroups }} />
+      </ModalProvider>
+    </Container>
+  );
 };

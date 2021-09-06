@@ -57,8 +57,8 @@ const list: ITabIcon[] = [
 export const _TabWithIconBar = () => {
 
   const defaultTabId = text('Default Tab Id', 'example1');
+  const paddingLeft = text('Padding Left Override', PADDING_LEFT);
   const tabList = object('TabList', list);
-  const paddingLeft = text('Padding Override', PADDING_LEFT);
 
   return (
     <Container>

@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { Tabs, TabList, TabContent } from '..';
+import { Tabs } from '../Tabs';
+import { TabList } from '../TabList';
+import { TabContent } from '../TabContent';
 import { TabWithIcon, ITabWithIcon } from '../atoms/TabWithIcon';
 
 const Container = styled.div``;

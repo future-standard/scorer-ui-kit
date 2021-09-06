@@ -1,6 +1,6 @@
 {
   "name": "scorer-ui-kit",
-  "version": "1.5.5",
+  "version": "1.6.0",
   "description": "SCORER UI Components",
   "author": "Josh Lipps",
   "license": "MIT",
@@ -27,26 +27,30 @@
     "predeploy": "cd example && npm install && npm run build && cd ../storybook && npm install && npm run build-storybook",
     "deploy": "gh-pages -d example/build",
     "actions-deploy": "gh-pages -d example/build",
-    "link": "npm link && npm link react && npm link react-dom && npm link react-router-dom && npm link styled-components"
+    "link": "npm link && npm link react && npm link react-dom && npm link react-router-dom && npm link styled-components",
+    "zeplin-connect": "zeplin connect"
   },
   "peerDependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "styled-components": "^5.1.0",
-    "react-router-dom": "^5.2.0",
     "react-router": "^5.2.0",
-    "react-use-websocket": "2.1.1"
+    "react-router-dom": "^5.2.0",
+    "react-use-websocket": "2.1.1",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@svgr/cli": "^5.4.0",
     "@types/jest": "^25.1.4",
+    "@types/lodash.defaultsdeep": "^4.6.6",
     "@types/node": "^13.13.4",
     "@types/react": "^16.9.34",
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
-    "@types/lodash.defaultsdeep": "^4.6.6",
+    "@zeplin/cli": "^1.1.12",
+    "@zeplin/cli-connect-react-plugin": "^1.1.1",
+    "@zeplin/cli-connect-storybook-plugin": "^0.5.4",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",

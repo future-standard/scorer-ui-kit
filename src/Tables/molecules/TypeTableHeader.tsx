@@ -4,9 +4,9 @@ import { TypeCellAlignment, ITableColumnConfig } from '..';
 import Checkbox from '../../Form/atoms/Checkbox';
 import TableHeaderTitle from '../atoms/TableHeaderTitle';
 
-const HeaderRow = styled.div<{ HEADER_HEIGHT: string }>`
+const HeaderRow = styled.div`
   display: table-row;
-  height: ${({ HEADER_HEIGHT }) => HEADER_HEIGHT};
+  height: 50px;
 `;
 
 const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, headerStyle: string, isSortActive?: boolean }>`
@@ -142,7 +142,6 @@ interface ITableHeader {
   hasHeaderGroups: boolean
   columnConfig: ITableColumnConfig[]
   defaultAscending: boolean
-  HEADER_HEIGHT: string
   toggleAllCallback?: (checked: boolean) => void
   sortCallback?: (ascending: boolean, columnId: string) => void
 }
@@ -158,7 +157,6 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
   hasHeaderGroups,
   columnConfig,
   defaultAscending,
-  HEADER_HEIGHT,
   toggleAllCallback = () => { },
   sortCallback = () => { },
 }) => {
@@ -204,7 +202,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
   }, [ascendingState, sortCallback, sortSpec]);
 
   return (
-    <HeaderRow {...{ HEADER_HEIGHT }}>
+    <HeaderRow>
       {selectable ? (
         <HeaderItem headerStyle='header' fixedWidth={30}>
           <Checkbox checked={allChecked} disabled={isEmptyTable || isLoading} onChangeCallback={toggleAllCallbackWrapper} />

@@ -32,6 +32,9 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState, padRight?: numbe
     padding-right: ${p.padRight + 17}px;
   `}
 
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const InputContainer = styled.div<{hasAction?: boolean}>`
