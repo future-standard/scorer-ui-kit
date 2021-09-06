@@ -102,7 +102,8 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   searchFilters,
   dropdownFilters,
   showMoreText = 'Show More',
-  showLessText = 'Show Less'
+  showLessText = 'Show Less',
+  ...props
 }) => {
 
   const [visibleSearchInputs, setVisibleSearchInputs] = useState<String[]>(initialSearchFilters(searchFilters));
@@ -118,9 +119,11 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   }, [visibleSearchInputs]);
 
   return (
-    <Container>
+    <Container {...{props}}>
       {renderSearchInputs(searchFilters, visibleSearchInputs)}
       {renderDropdowns(dropdownFilters, showMoreDropdowns)}
+
+      {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
       {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
       {hasShowMore && (
         <FilterButton

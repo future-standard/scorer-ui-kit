@@ -84,9 +84,10 @@ const FiltersResults: React.FC<IFilterResults> = ({
   clearText = 'CLEAR ALL',
   onRemoveFilter = () => { },
   onClearAll = () => { },
+  ...props
 }) => {
   return (
-    <Container>
+    <Container {...props}>
       <ResultsTextWrapper>{renderResults(resultTextTemplate, totalResults)}</ResultsTextWrapper>
       <FilterLabelsGroup>
         {labelLists.map(({ icon, item, filterName, filterId, type }, index) => {

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { select, object } from "@storybook/addon-knobs";
+import { select, object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -8,7 +8,7 @@ import {
   ISearchFilter,
   TypeTable,
   IFilterDropdownConfig,
-  IFilterResult
+  IFilterResult,
 } from 'scorer-ui-kit';
 
 import {
@@ -25,9 +25,11 @@ import {
   searchPlaceholderJapanese,
   searchTemplateResultEnglish,
   searchTemplateResultJapanese,
+  costRangeEng,
+  costRangeJap,
 } from '../../data_samples';
 
-import { sortDataBy, rowMaker, filterByStatus } from '../../helpers';
+import { sortDataBy, rowMaker, filterByStatus, filterByPrice } from '../../helpers';
 import { ITypeTableData } from '../../../../../dist/Tables';
 
 export default {
@@ -36,7 +38,9 @@ export default {
   decorators: []
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin: 20px 0;
+`;
 
 const dataInitialState = sortDataBy(tableData, 'deviceName', true);
 
@@ -109,9 +113,21 @@ export const _FilterBar = () => {
       loadingText: language === 'english' ? loadingTagsEnglish : loadingTagsJapanese,
       searchPlaceholder: language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
       searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+    },
+    {
+      id: 'priceFilter',
+      canHide: true,
+      buttonText: language === 'english' ? 'Cost' : '価格',
+      list: language === 'english' ? costRangeEng : costRangeJap,
+      buttonIcon: 'Usage',
+      optionType: 'radio',
+      loadingText: language === 'english' ? loadingTagsEnglish : loadingTagsJapanese,
+      searchPlaceholder: language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
+      searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
     }
   ]
 
+  const hasShowMore = boolean('Has Show More', true);
   const searchersConfig = object('Search Filters', searchers);
   const dropdownsConfig = object('DropdownFilters', dropdowns);
   const filtersValues = action('onChangeCallback');
@@ -120,20 +136,27 @@ export const _FilterBar = () => {
     filtersValues(currentSelected);
     console.log(currentSelected, '[FilterBar] current selected');
 
-    const localData = language === 'english'? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true) ;
+    const localData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
     const tempData: ITableSampleData[] = [...localData];
+
+    if (currentSelected.length === 0) {
+      setData(localData);
+    }
+
     if (Array.isArray(currentSelected) && (currentSelected.length > 0)) {
       const filteredData: ITableSampleData[] = currentSelected.reduce((accumulator, currentFilter) => {
         if (currentFilter.id === 'dropdownForStatus') {
           return filterByStatus(accumulator, currentFilter.selected);
         }
+
+        if(currentFilter.id === 'priceFilter') {
+          return filterByPrice(accumulator, currentFilter.selected);
+        }
+
         return accumulator;
       }, tempData);
-      setData(filteredData);
-    }
 
-    if(currentSelected.length === 0) {
-      setData(localData);
+      setData(filteredData);
     }
 
   }, [filtersValues, language])
@@ -144,6 +167,9 @@ export const _FilterBar = () => {
         {...{ searchersConfig, dropdownsConfig }}
         onChangeCallback={handleFilters}
         totalResults={rows.length}
+        hasShowMore={hasShowMore}
+        showMoreText={language === 'english' ? 'Show More' : 'もっと見る'}
+        showLessText={language === 'english' ? 'Show less' : 'Show less'}
       />
       <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}
         columnConfig={language === 'english' ? columnConfigSample : columnConfigSampleJp}

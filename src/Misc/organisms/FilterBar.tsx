@@ -5,8 +5,14 @@ import { IInputOptionsType } from '../../Form';
 import FilterInputs, { IFilterDropdownExt, ISearchFilter } from '../molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from '../molecules/FiltersResults';
 
-const Container = styled.div``;
 
+const StyledFilterResults = styled(FiltersResults)``;
+
+const Container = styled.div`
+  ${StyledFilterResults} {
+    margin-top: 30px;
+  }
+`;
 
 const createDropdownFilters = (
   dropdownsConfig: IFilterDropdownConfig[],
@@ -244,7 +250,7 @@ const FilterBar: React.FC<IFilterBar> = ({
         searchFilters={createSearchers(searchersConfig, filtersValues, handleSearchers)}
         dropdownFilters={createDropdownFilters(dropdownsConfig, filtersValues, handleSelected)}
       />
-      <FiltersResults
+      <StyledFilterResults
         {...{ resultTextTemplate, clearText, totalResults }}
         labelLists={createLabelResults(searchersConfig, dropdownsConfig, filtersValues)}
         onClearAll={handleOnClear}

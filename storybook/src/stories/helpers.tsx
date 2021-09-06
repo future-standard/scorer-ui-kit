@@ -80,8 +80,18 @@ const filterByStatus = (data: ITableSampleData[], filterVal: IFilterValue): ITab
   return newData;
 }
 
+const filterByPrice = (data: ITableSampleData[], filterVal: IFilterValue): ITableSampleData[] => {
+
+  if(isFilterItem(filterVal)) {
+    return data.filter(sample => sample.cost <= filterVal.value );
+  }
+  return data;
+
+};
+
 export {
   sortDataBy,
   rowMaker,
-  filterByStatus
+  filterByStatus,
+  filterByPrice
 }

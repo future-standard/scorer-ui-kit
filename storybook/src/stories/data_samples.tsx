@@ -33,15 +33,15 @@ const statusValuesJp: IFilterItem[] = [
 ]
 
 const costRangeEng: IFilterItem[] = [
-  {text: 'Less than 1000', value: 1000},
-  {text: 'Less than 1500', value: 1500},
+  {text: 'Less than 5000', value: 5000},
+  {text: 'Less than 10000', value: 10000},
   {text: 'Less than 20000', value: 20000}
 ]
 
 const costRangeJap: IFilterItem[] = [
-  {text: 'Less than 1000', value: 1000},
-  {text: 'Less than 1500', value: 1500},
-  {text: 'Less than 20000', value: 20000}
+  {text: '以下 5000', value: 5000},
+  {text: '以下 10000', value: 10000},
+  {text: '以下 20000', value: 20000}
 ]
 
 /** Imagine this data comes from Server :) */
