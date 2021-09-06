@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment} from 'react';
+import React, { useState, useCallback, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { TypeCellAlignment, ITableColumnConfig } from '..';
 import Checkbox from '../../Form/atoms/Checkbox';
