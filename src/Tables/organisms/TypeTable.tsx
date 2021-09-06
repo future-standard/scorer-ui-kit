@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import styled, {css} from 'styled-components';
+import React, {useEffect, useState} from 'react';
+import styled from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import TypeTableRow from '../atoms/TypeTableRow';
 import {ITableColumnConfig, ITypeTableData, IRowData} from '..';
@@ -17,17 +17,12 @@ const LoadingText = styled.div`
   color: hsla(195, 10%, 52%, 0.72);
 `;
 
-const LoadingBox = styled.div<{headerHeight: number}>`
+const LoadingBox = styled.div`
   position: absolute;
-  top: 0;
   left: 0;
   z-index: 99;
   background-color: ${({ theme }) => theme.colors["pureBase"]};
-  ${({headerHeight}) => headerHeight && css`
-    height: calc(100% - ${headerHeight}px);
-    margin-top: ${headerHeight}px;
-  `}
-
+  height: calc(100% - 50px);
   opacity: 85%;
   width: 100%;
   min-height: 100px;
@@ -42,12 +37,10 @@ const LoadingBox = styled.div<{headerHeight: number}>`
   }
 `;
 
-const EmptyTableBox = styled.div<{headerHeight: number}>`
+const EmptyTableBox = styled.div`
   position: absolute;
-  top: 0;
   left: 0;
   z-index: 99;
-  margin-top: ${({headerHeight}) => headerHeight}px;
   padding: 20px;
   width: 100%;
   min-height: 100px;
@@ -61,7 +54,7 @@ const EmptyTableBox = styled.div<{headerHeight: number}>`
 
 const isChecked = ({ _checked = false }: IRowData) => {
   return _checked === true;
-}
+};
 
 interface IProps {
   columnConfig: ITableColumnConfig[]
@@ -108,7 +101,6 @@ const TypeTable: React.FC<IProps> = ({
   */
 
   const [allChecked, setAllChecked] = useState(false);
-  const [headerHeight, setHeaderHeight] = useState<number>(50);
   const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
 
   useEffect(() => {
@@ -119,15 +111,11 @@ const TypeTable: React.FC<IProps> = ({
     setAllChecked(areAllChecked);
   }, [isEmptyTable, rows]);
 
-  const handleHeightCallback = useCallback((newValue: number) => {
-    setHeaderHeight(newValue);
-  },[]);
-
   return (
     <Container>
       <TableContainer>
         <TypeTableHeader
-            {...{
+          {...{
             selectable,
             hasStatus,
             hasThumbnail,
@@ -140,18 +128,17 @@ const TypeTable: React.FC<IProps> = ({
             columnConfig,
             toggleAllCallback,
             sortCallback,
-            handleHeightCallback,
-            }}
+          }}
         />
         {isLoading ? (
-          <LoadingBox {...{headerHeight}}>
+          <LoadingBox>
             <Spinner size='large' styling='primary' />
             <LoadingText>{loadingText}</LoadingText>
           </LoadingBox>
         ) : null}
         {isEmptyTable
           ? (
-            <EmptyTableBox {...{headerHeight}}>
+            <EmptyTableBox>
               <h3>{emptyTableTitle}</h3>
               <p>{emptyTableText}</p>
             </EmptyTableBox>
