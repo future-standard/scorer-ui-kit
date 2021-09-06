@@ -93,6 +93,7 @@ import {
     ITagList,
     TagListWrapper,
     MediaBox,
+    BasicSearchInput,
   } from './Misc';
 
 import {
@@ -264,6 +265,7 @@ export {
   TagList,
   TagListWrapper,
   MediaBox,
+  BasicSearchInput,
 
   //Context
   NotificationProvider,
