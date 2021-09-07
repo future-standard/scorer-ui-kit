@@ -27,6 +27,8 @@ import {
   searchTemplateResultJapanese,
   costRangeEng,
   costRangeJap,
+  clearEng,
+  clearJp
 } from '../../helpers/data_samples';
 
 import {
@@ -190,6 +192,7 @@ export const _FilterBar = () => {
         showLessText={language === 'english' ? 'Show less' : 'Show less'}
         filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}
         resultTextTemplate = {language === 'english' ? 'Showing Results ([TOTAL_RESULTS]):' : '表示結果 ([TOTAL_RESULTS]):'}
+        clearText = {language === 'english' ? clearEng : clearJp}
       />
       <TypeTableWrapper>
         <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}

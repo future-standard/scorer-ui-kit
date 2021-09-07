@@ -7,7 +7,7 @@ import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersRes
 
 
 const Title = styled.div`
-  font-family: ${({theme}) => theme.fontFamily.ui};
+  font-family: ${({ theme }) => theme.fontFamily.ui};
   color: hsl(207, 5%, 57%);
   font-size: 12px;
   font-weight: 700;
@@ -17,7 +17,7 @@ const StyledFilterResults = styled(FiltersResults)``;
 
 const Container = styled.div`
   ${StyledFilterResults} {
-    margin-top: 30px;
+    margin-top: 29px;
   }
 `;
 
@@ -166,7 +166,7 @@ interface IFilterBar {
 }
 
 const FilterBar: React.FC<IFilterBar> = ({
-  filtersTitle ='Filters:',
+  filtersTitle = 'Filters:',
   hasShowMore,
   searchersConfig,
   dropdownsConfig,

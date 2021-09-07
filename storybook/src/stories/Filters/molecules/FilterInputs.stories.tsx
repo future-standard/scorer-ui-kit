@@ -20,11 +20,19 @@ import {
   searchPlaceholderEnglish,
   searchPlaceholderJapanese,
   searchTemplateResultEnglish,
-  searchTemplateResultJapanese
+  searchTemplateResultJapanese,
+  showMoreEng,
+  showMoreJp,
+  showLessEng,
+  ShowLessJp,
+  resultTextTemplateEng,
+  resultTextTemplateJp,
+  clearEng,
+  clearJp,
 } from '../../helpers/data_samples';
 
 export default {
-  title: 'Filters/Molecules',
+  title: 'Filters/molecules',
   component: 'FilterInputs',
   decorators: []
 };
@@ -245,11 +253,13 @@ export const _FilterInputs = () => {
     <Container>
       <FilterInputs
         {...{ searchFilters, dropdownFilters, hasShowMore }}
-        showMoreText={language === 'english' ? 'Show More' : 'もっと見る'}
-        showLessText={language === 'english' ? 'Show less' : 'Show less'}
+        showMoreText={language === 'english' ? showMoreEng : showMoreJp}
+        showLessText={language === 'english' ? showLessEng : ShowLessJp}
       />
       <FiltersResults
         {...{ labelLists, totalResults, onClearAll, onRemoveFilter }}
+        resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
+        clearText = {language === 'english' ? clearEng : clearJp}
       />
     </Container>)
 }

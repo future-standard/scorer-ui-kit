@@ -431,6 +431,16 @@ const searchPlaceholderEnglish = 'Filter tags...';
 const loadingTagsEnglish = 'Loading Tags...';
 const loadingTagsJapanese = 'ローディング...';
 
+const showMoreEng = 'Show More';
+const showMoreJp = 'もっと見る';
+const showLessEng = 'Show less';
+const ShowLessJp = 'Show less';
+const resultTextTemplateEng = 'Showing Results ([TOTAL_RESULTS]):';
+const resultTextTemplateJp = '表示結果 ([TOTAL_RESULTS]):';
+
+const clearEng = 'CLEAR ALL';
+const clearJp = 'すべてクリア';
+
 export {
   tableData,
   tableDataJp,
@@ -446,6 +456,14 @@ export {
   searchPlaceholderEnglish,
   loadingTagsEnglish,
   loadingTagsJapanese,
+  showMoreEng,
+  showMoreJp,
+  showLessEng,
+  ShowLessJp,
+  resultTextTemplateEng,
+  resultTextTemplateJp,
+  clearEng,
+  clearJp,
 };
 
 export type { ITableSampleData };
