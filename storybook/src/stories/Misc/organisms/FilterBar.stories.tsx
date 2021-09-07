@@ -29,7 +29,14 @@ import {
   costRangeJap,
 } from '../../data_samples';
 
-import { sortDataBy, rowMaker, filterByStatus, filterByPrice } from '../../helpers';
+import {
+  sortDataBy,
+  rowMaker,
+  filterByStatus,
+  filterByPrice,
+  filterByName,
+  filterByCreationDate
+} from '../../helpers';
 import { ITypeTableData } from '../../../../../dist/Tables';
 
 export default {
@@ -134,7 +141,6 @@ export const _FilterBar = () => {
 
   const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
     filtersValues(currentSelected);
-    console.log(currentSelected, '[FilterBar] current selected');
 
     const localData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
     const tempData: ITableSampleData[] = [...localData];
@@ -149,8 +155,16 @@ export const _FilterBar = () => {
           return filterByStatus(accumulator, currentFilter.selected);
         }
 
-        if(currentFilter.id === 'priceFilter') {
+        if (currentFilter.id === 'priceFilter') {
           return filterByPrice(accumulator, currentFilter.selected);
+        }
+
+        if (currentFilter.id === 'inputForDeviceName') {
+          return filterByName(accumulator, currentFilter.selected);
+        }
+
+        if(currentFilter.id === 'inputForDate') {
+          return filterByCreationDate(accumulator, currentFilter.selected);
         }
 
         return accumulator;

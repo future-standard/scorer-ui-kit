@@ -82,16 +82,48 @@ const filterByStatus = (data: ITableSampleData[], filterVal: IFilterValue): ITab
 
 const filterByPrice = (data: ITableSampleData[], filterVal: IFilterValue): ITableSampleData[] => {
 
-  if(isFilterItem(filterVal)) {
-    return data.filter(sample => sample.cost <= filterVal.value );
+  if (isFilterItem(filterVal)) {
+    return data.filter(sample => sample.cost <= filterVal.value);
   }
   return data;
 
 };
 
+const filterByName = (data: ITableSampleData[], filterVal: IFilterValue): ITableSampleData[] => {
+
+  if (isFilterItem(filterVal)) {
+    const newData = data.filter((sample) => {
+      const lowerValue = sample.deviceName.toLowerCase()
+      console.log('Filter by name [filterName]', lowerValue);
+      return lowerValue.includes(filterVal.text.toLocaleLowerCase());
+    })
+
+    return newData;
+  }
+
+  return data;
+}
+
+const filterByCreationDate = (data: ITableSampleData[], filterVal: IFilterValue): ITableSampleData[] => {
+
+  if (isFilterItem(filterVal)) {
+    const newData = data.filter((sample) => {
+      const lowerValue = sample.created.toLowerCase()
+      console.log('Filter by name [filterName]', lowerValue);
+      return lowerValue.includes(filterVal.text.toLocaleLowerCase());
+    })
+
+    return newData;
+  }
+
+  return data;
+}
+
 export {
   sortDataBy,
   rowMaker,
   filterByStatus,
-  filterByPrice
+  filterByPrice,
+  filterByName,
+  filterByCreationDate
 }
