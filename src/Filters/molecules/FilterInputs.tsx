@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import BasicSearchInput, { IBasicSearchInput } from '../atoms/BasicSearchInput';
-import FilterDropdown, { IFilterDropdown } from '../../Form/molecules/FilterDropdown';
-import FilterButton from '../../Form/atoms/FilterButton';
+import BasicSearchInput, { IBasicSearchInput } from '../../Misc/atoms/BasicSearchInput';
+import FilterDropdown, { IFilterDropdown } from '../../Filters/molecules/FilterDropdown';
+import FilterButton from '../../Filters/atoms/FilterButton';
 
 const SearchInputWrapper = styled.div`
   width: 214px;

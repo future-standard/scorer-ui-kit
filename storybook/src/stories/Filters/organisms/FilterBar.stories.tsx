@@ -40,7 +40,7 @@ import {
 import { ITypeTableData } from '../../../../../dist/Tables';
 
 export default {
-  title: 'Misc/Organism',
+  title: 'Filters/Organism',
   component: 'FilterBar',
   decorators: []
 };

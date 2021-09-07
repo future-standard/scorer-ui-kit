@@ -3,7 +3,6 @@ import ButtonWithIcon from './atoms/ButtonWithIcon';
 import ButtonWithLoading from './atoms/ButtonWithLoading';
 import IconButton, {IconButtonData} from './atoms/IconButton';
 import ActionButtons from './molecules/ActionButtons';
-import FilterButton from './atoms/FilterButton';
 import Input from './atoms/Input';
 import SmallInput from './atoms/SmallInput';
 import Label from './atoms/Label';
@@ -19,7 +18,6 @@ import PercentageSlider from './molecules/PercentageSlider';
 import PasswordField from './molecules/PasswordField';
 import TextField from './molecules/TextField';
 import TextAreaField from './molecules/TextAreaField';
-import FilterDropdown from './molecules/FilterDropdown';
 import DropArea from './atoms/DropArea';
 import CropTool from './molecules/CropTool';
 import AvatarUploader from './organisms/AvatarUploader';
@@ -51,8 +49,6 @@ export {
     CropTool,
     SelectField,
     SelectWrapper,
-    FilterButton,
-    FilterDropdown,
     RadioButton,
 };
 

@@ -41,15 +41,22 @@ import {
   AvatarUploader,
   SelectField,
   SelectWrapper,
-  FilterButton,
-  FilterDropdown,
   RadioButton,
 } from './Form';
 
 // Components - Filter
 import {
   DatePicker,
-  FilterDropdownContainer
+  FilterDropdownContainer,
+  FilterButton,
+  FilterDropdown,
+  FilterInputs,
+  ISearchFilter,
+  IFilterDropdownExt,
+  FiltersResults,
+  IFilterLabel,
+  FilterBar,
+  IFilterDropdownConfig,
 } from './Filters';
 
 import Icon, { IconSVGs } from './Icons/Icon';
@@ -97,13 +104,6 @@ import {
     TagListWrapper,
     MediaBox,
     BasicSearchInput,
-    FilterInputs,
-    ISearchFilter,
-    IFilterDropdownExt,
-    FiltersResults,
-    IFilterLabel,
-    FilterBar,
-    IFilterDropdownConfig,
   } from './Misc';
 
 import {
@@ -208,8 +208,6 @@ export {
   AvatarUploader,
   SelectField,
   SelectWrapper,
-  FilterButton,
-  FilterDropdown,
   RadioButton,
 
   // Modals
@@ -218,6 +216,11 @@ export {
   // Filters
   DatePicker,
   FilterDropdownContainer,
+  FilterButton,
+  FilterDropdown,
+  FilterInputs,
+  FiltersResults,
+  FilterBar,
 
   //Icon
   Icon,
@@ -285,9 +288,6 @@ export {
   TagListWrapper,
   MediaBox,
   BasicSearchInput,
-  FilterInputs,
-  FiltersResults,
-  FilterBar,
 
   //Context
   NotificationProvider,

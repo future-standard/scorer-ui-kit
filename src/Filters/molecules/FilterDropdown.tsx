@@ -1,9 +1,9 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import styled, { css } from 'styled-components';
-import { IInputOptionsType, TypeButtonSizes } from '..';
+import { IInputOptionsType, TypeButtonSizes } from '../../Form';
 import FilterButton from '../atoms/FilterButton';
-import FilterOption from '../atoms/FilterOption';
+import FilterOption from '../../Form/atoms/FilterOption';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import Spinner from '../../Indicators/Spinner';
 import { IFilterItem, IFilterValue, isFilterItem } from '../..';

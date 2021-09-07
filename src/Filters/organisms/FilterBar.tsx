@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem } from '../../';
+import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem } from '../..';
 import { IInputOptionsType } from '../../Form';
 import FilterInputs, { IFilterDropdownExt, ISearchFilter } from '../molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from '../molecules/FiltersResults';

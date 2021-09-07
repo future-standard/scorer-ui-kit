@@ -10,7 +10,7 @@ import {
 } from 'scorer-ui-kit';
 
 export default {
-  title: 'Form/atoms',
+  title: 'Filters/molecules',
   component: FilterDropdown,
   decorators: []
 };

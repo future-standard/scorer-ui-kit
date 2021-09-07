@@ -16,7 +16,7 @@ import {
 import { loadingTagsEnglish, loadingTagsJapanese, searchPlaceholderEnglish, searchPlaceholderJapanese, searchTemplateResultEnglish, searchTemplateResultJapanese } from '../../data_samples';
 
 export default {
-  title: 'Misc/Molecules',
+  title: 'Filters/Molecules',
   component: 'FilterInputs',
   decorators: []
 };

@@ -5,7 +5,7 @@ import { FilterButton } from 'scorer-ui-kit';
 import styled from 'styled-components';
 
 export default {
-  title: 'Form/Buttons',
+  title: 'Filters/atoms',
   component: FilterButton,
   decorators: []
 };
