@@ -15,7 +15,6 @@ const Content = styled.div``;
 const generateIconList = () => {
   let iconList : {[key: string]: string}= {};
 
-
   for(const key in IconSVGs){
     iconList[key] = key;
   }

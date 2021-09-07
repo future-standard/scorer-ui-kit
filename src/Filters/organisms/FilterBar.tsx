@@ -5,7 +5,6 @@ import { IInputOptionsType } from '../../Form';
 import FilterInputs, { IFilterDropdownExt, ISearchFilter } from '../molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
 
-
 const Title = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
   color: hsl(207, 5%, 57%);
@@ -13,6 +12,7 @@ const Title = styled.div`
   font-weight: 700;
   margin-bottom: 17px;
 `;
+
 const StyledFilterResults = styled(FiltersResults)``;
 
 const Container = styled.div`
@@ -28,7 +28,6 @@ const createDropdownFilters = (
 ): IFilterDropdownExt[] => {
 
   const dropdownFilters: IFilterDropdownExt[] = [];
-
   dropdownsConfig.forEach(dropdown => {
     const filter = filtersValues.find(filter => filter.id === dropdown.id);
     if (filter) {
@@ -119,7 +118,6 @@ const createLabelResults = (
 
   return labelLists;
 };
-
 
 const initFilters = (
   searchersConfig: ISearchFilter[],

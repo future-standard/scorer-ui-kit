@@ -19,7 +19,7 @@ const sortDataBy = (unsortedData: ITableSampleData[], columnId: keyof ITableSamp
     }
     return ascending ? -1 : 1;
   })
-}
+};
 
 const rowMaker = (rowData: ITableSampleData[]): ITypeTableData => {
   const newRows: ITypeTableData = rowData.map(({
@@ -54,8 +54,9 @@ const rowMaker = (rowData: ITableSampleData[]): ITypeTableData => {
     })
     return row;
   })
+
   return newRows;
-}
+};
 
 const filterByStatus = (data: ITableSampleData[], filterVal: IFilterValue): ITableSampleData[] => {
   const newData: ITableSampleData[] = [];
@@ -78,15 +79,15 @@ const filterByStatus = (data: ITableSampleData[], filterVal: IFilterValue): ITab
   }
 
   return newData;
-}
+};
 
 const filterByPrice = (data: ITableSampleData[], filterVal: IFilterValue): ITableSampleData[] => {
 
   if (isFilterItem(filterVal)) {
     return data.filter(sample => sample.cost <= filterVal.value);
   }
-  return data;
 
+  return data;
 };
 
 const filterByName = (data: ITableSampleData[], filterVal: IFilterValue): ITableSampleData[] => {
@@ -101,7 +102,7 @@ const filterByName = (data: ITableSampleData[], filterVal: IFilterValue): ITable
   }
 
   return data;
-}
+};
 
 const filterByCreationDate = (data: ITableSampleData[], filterVal: IFilterValue): ITableSampleData[] => {
 
@@ -115,7 +116,7 @@ const filterByCreationDate = (data: ITableSampleData[], filterVal: IFilterValue)
   }
 
   return data;
-}
+};
 
 export {
   sortDataBy,
@@ -124,4 +125,4 @@ export {
   filterByPrice,
   filterByName,
   filterByCreationDate
-}
+};

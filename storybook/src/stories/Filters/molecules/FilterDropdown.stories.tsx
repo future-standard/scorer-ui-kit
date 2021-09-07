@@ -8,6 +8,14 @@ import {
   IFilterValue,
   PageHeader,
 } from 'scorer-ui-kit';
+import {
+  searchTemplateResultEnglish,
+  searchTemplateResultJapanese,
+  searchPlaceholderJapanese,
+  searchPlaceholderEnglish,
+  loadingTagsEnglish,
+  loadingTagsJapanese,
+} from '../../helpers/data_samples';
 
 export default {
   title: 'Filters/molecules',
@@ -25,7 +33,6 @@ const Wrapper = styled.div`
 
 const generateIconList = () => {
   let iconList: { [key: string]: string } = {};
-
 
   for (const key in IconSVGs) {
     iconList[key] = key;
@@ -76,26 +83,16 @@ const japanesePayList = [{ text: 'カード', value: 0 }, { text: '現金', valu
 
 const baseExample = [
   { text: "Adipiscing", value: 0 },
-  { text: "Amet", value: 0 },
-  { text: "Consectetur", value: 0 },
-  { text: "Dolor sit", value: 0 },
-  { text: "Lorem ipsum", value: 0 },
-  { text: "Vestibulum", value: 0 }
+  { text: "Amet", value: 1 },
+  { text: "Consectetur", value: 2 },
+  { text: "Dolor sit", value: 3 },
+  { text: "Lorem ipsum", value: 4 },
+  { text: "Vestibulum", value: 5 }
 ];
-
-const searchTemplateResultEnglish = 'Showing [VISIBLE] of [TOTAL]';
-const searchTemplateResultJapanese = '[VISIBLE] 〜 [TOTAL]件';
-
-const searchPlaceholderJapanese = 'フィルタータグ...';
-const searchPlaceholderEnglish = 'Filter tags...';
-
-const loadingTagsEnglish = 'Loading Tags...';
-const loadingTagsJapanese = 'ローディング...';
 
 export const _FilterDropdown = () => {
   const iconList = generateIconList();
 
-  // const indeterminate = boolean("Indeterminate", false);
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const buttonText = text('Text', 'Department');
   const buttonIcon = select("Button Icon", iconList, iconList['MetaCategories']);

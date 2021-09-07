@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
-
 const StyledButton = styled.button<{isOpen?: boolean, hasFlipArrow?: boolean }>`
   ${resetButtonStyles};
   background-color: hsl(200, 23%, 97%);

@@ -20,13 +20,14 @@ const ButtonWrapper = styled.div`
   display: inline-block;
 `;
 
-const ContentBox = styled.div<{ openState: IDropOpen }>`
+const ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean }>`
   z-index: 100;
   min-width: ${MIN_WIDTH}px;
   position: absolute;
 
-  ${({ openState }) => openState && css`
+  ${({ openState, disabled }) => openState && css`
     display: ${openState.isOpen ? 'inline-block' : 'none'};
+    display: ${disabled && 'none'};
 
     ${openState.position === 'bottom-right' && `
       bottom: 0;
@@ -206,7 +207,7 @@ const getNewSelected = (item: IFilterItem, selected: IFilterValue, optionType: I
  * @param list is all the items that can be in the dropdown
  * @param maxItems will define in case the dropdown has 300 options to only show until maxItems (4 or 6)
  * @param selected is a list of the values that are selected and that should be visible
- *                 although are not at the beginning of the list
+ * although are not at the beginning of the list
  * @returns a FilterItem list to update the content of the dropdown
  */
 
@@ -238,7 +239,6 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
     newList.push(selected);
     return newList;
   }
-
 
   if (Array.isArray(selected)) {
 
@@ -331,7 +331,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   buttonText,
   list,
   selected = null,
-  disabled,
+  disabled = false,
   isLoading = false,
   loadingText,
   optionType = 'text',
@@ -425,7 +425,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
         >{buttonText}
         </FilterButton>
       </ButtonWrapper>
-      <ContentBox {...{ openState }}>
+      <ContentBox {...{ openState, disabled }}>
         <TopLine />
         <InnerBox>
           <SearchWrapper>
