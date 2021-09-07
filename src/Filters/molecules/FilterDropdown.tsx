@@ -63,9 +63,8 @@ const TopLine = styled.div`
 `;
 
 const InnerBox = styled.div`
-border-bottom-left-radius: 3px;
-border-bottom-right-radius: 3px;
-
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
   box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
   border-right: solid 1px hsl(207, 16%, 86%);
   border-bottom: solid 1px hsl(207, 16%, 86%);
@@ -200,6 +199,16 @@ const getNewSelected = (item: IFilterItem, selected: IFilterValue, optionType: I
 
   return item;
 };
+
+/**
+ * This is the list of values that will show in the dropdown
+ *
+ * @param list is all the items that can be in the dropdown
+ * @param maxItems will define in case the dropdown has 300 options to only show until maxItems (4 or 6)
+ * @param selected is a list of the values that are selected and that should be visible
+ *                 although are not at the beginning of the list
+ * @returns a FilterItem list to update the content of the dropdown
+ */
 
 const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilterValue): IFilterItem[] => {
 
@@ -344,6 +353,18 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
 
+  const handleClose = useCallback(() => {
+    setOpenState((prev) => {
+      const isOpen = false;
+      return { ...prev, isOpen };
+    });
+
+    setSearchText('');
+    setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
+  }, [list, maxDisplayedItems, selected]);
+
+  useClickOutside(mainRef, handleClose);
+
   const handleToggleOpen = useCallback(() => {
     if (!buttonWrapperRef.current) { return; }
 
@@ -357,18 +378,6 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
       return { ...prev, isOpen, position };
     });
   }, [buttonWrapperRef]);
-
-  const handleClose = useCallback(() => {
-    setOpenState((prev) => {
-      const isOpen = false;
-      return { ...prev, isOpen };
-    });
-
-    setSearchText('');
-    setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
-  }, [list, maxDisplayedItems, selected]);
-
-  useClickOutside(mainRef, handleClose);
 
   const handleSelection = useCallback((item: IFilterItem) => {
 

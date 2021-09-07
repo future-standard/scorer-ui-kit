@@ -1,8 +1,8 @@
-// type checking
+// function to do type checking for IFilterItem
 // https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
 export const isFilterItem = (item: any): item is IFilterItem => {
   if (item === null) { return false; }
-  return (item.value !== undefined) && (item.text !== undefined);
+  return ((typeof item.value === 'number') || (typeof item.value === 'string')) && (typeof item.text === 'string');
 };
 
 type IFilterItem = { text: string; value: string | number; }

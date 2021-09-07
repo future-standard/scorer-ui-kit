@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { select, boolean, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
@@ -113,7 +113,7 @@ const generateResultsLabelData = (dropdownFilters: IFilterDropdownExt[], searchF
     }
 
     if (Array.isArray(dropdown.selected)) {
-      dropdown.selected.forEach(item => {
+      dropdown.selected.forEach((item: IFilterItem) => {
         labelLists.push({
           filterId: dropdown.id,
           item: item,
@@ -150,19 +150,22 @@ export const _FilterInputs = () => {
     setCategorySelected(newSelection);
   }, []);
 
-  const handleSearcher = (newValue: string, id: string) => {
+  const handleSearcher = useCallback((newValue: string | null, id: string) => {
+    const validValue = newValue === null ? '' : newValue
+
     if ('search1' === id) {
-      setNameVal(newValue);
+      setNameVal(validValue);
     }
 
     if ('search2' === id) {
-      setFoodSelected(newValue);
+      setFoodSelected(validValue);
     }
 
     if ('search3' === id) {
-      setExampleSearch(newValue);
+      setExampleSearch(validValue);
     }
-  }
+
+  },[]);
 
   const dropdownFilters: IFilterDropdownExt[] = useMemo(() => [
     {
@@ -197,7 +200,7 @@ export const _FilterInputs = () => {
       placeholder: language === 'english' ? 'Filter by name...' : '名前 フィルター',
       value: nameVal,
       name: language === 'english' ? 'Name filter' : '名前 フィルター',
-      onChange: (e) => handleSearcher(e.target.value, 'search1')
+      onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search1')}
     },
     {
       id: 'search2',
@@ -206,7 +209,7 @@ export const _FilterInputs = () => {
       showFieldText: 'Search by food',
       value: foodSelected,
       name: language === 'english' ? 'Menu filter' : 'メニュー  フィルター',
-      onChange: (e) => handleSearcher(e.target.value, 'search2')
+      onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search2')}
     },
     {
       id: 'search3',
@@ -215,9 +218,9 @@ export const _FilterInputs = () => {
       canHide: true,
       value: exampleSearch,
       name: 'Example',
-      onChange: (e) => handleSearcher(e.target.value, 'search3')
+      onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search3')}
     }
-  ], [exampleSearch, foodSelected, language, nameVal]);
+  ], [exampleSearch, foodSelected, handleSearcher, language, nameVal]);
 
   const labelLists = generateResultsLabelData(dropdownFilters, searchFilters);
 
@@ -234,7 +237,7 @@ export const _FilterInputs = () => {
       const foundFilter = dropdownFilters.find((dropdown) => dropdown.id === filterId);
       if (foundFilter && foundFilter.onSelect) {
         const newSelected: IFilterValue = Array.isArray(foundFilter.selected)
-          ? foundFilter.selected.filter((currentItem) => currentItem.value !== item.value)
+          ? foundFilter.selected.filter((currentItem : IFilterItem) => currentItem.value !== item.value)
           : null
         foundFilter.onSelect(newSelected);
       }
@@ -247,7 +250,7 @@ export const _FilterInputs = () => {
       }
     }
 
-  }, [dropdownFilters, searchFilters]);
+  }, [dropdownFilters, handleSearcher, searchFilters]);
 
   return (
     <Container>

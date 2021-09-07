@@ -94,7 +94,6 @@ const filterByName = (data: ITableSampleData[], filterVal: IFilterValue): ITable
   if (isFilterItem(filterVal)) {
     const newData = data.filter((sample) => {
       const lowerValue = sample.deviceName.toLowerCase()
-      console.log('Filter by name [filterName]', lowerValue);
       return lowerValue.includes(filterVal.text.toLocaleLowerCase());
     })
 
@@ -109,7 +108,6 @@ const filterByCreationDate = (data: ITableSampleData[], filterVal: IFilterValue)
   if (isFilterItem(filterVal)) {
     const newData = data.filter((sample) => {
       const lowerValue = sample.created.toLowerCase()
-      console.log('Filter by name [filterName]', lowerValue);
       return lowerValue.includes(filterVal.text.toLocaleLowerCase());
     })
 
