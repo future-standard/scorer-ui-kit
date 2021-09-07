@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import styled, { css } from 'styled-components';
-import { IInputOptionsType, TypeButtonSizes } from '../../Form';
+import { IInputOptionsType } from '../../Form';
 import FilterButton from '../atoms/FilterButton';
 import FilterOption from '../../Form/atoms/FilterOption';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
@@ -316,7 +316,6 @@ export interface IFilterDropdown {
   buttonText: string
   list: IFilterItem[];
   selected: IFilterValue;
-  buttonSize?: TypeButtonSizes
   disabled?: boolean
   optionType?: IInputOptionsType
   isLoading?: boolean
@@ -332,7 +331,6 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   buttonText,
   list,
   selected = null,
-  buttonSize,
   disabled,
   isLoading = false,
   loadingText,
@@ -420,7 +418,6 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
       <ButtonWrapper ref={buttonWrapperRef}>
         <FilterButton
           icon={buttonIcon}
-          size={buttonSize}
           isOpen={openState.isOpen}
           hasFlipArrow
           onClick={handleToggleOpen}

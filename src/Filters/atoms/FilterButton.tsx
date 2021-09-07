@@ -1,30 +1,27 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
-import { TypeButtonSizes } from '../../Form';
 import { resetButtonStyles } from '../../common';
-import { dimensions } from '../../themes/common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 
-const StyledButton = styled.button<{ size: TypeButtonSizes, fontSize: string, isOpen?: boolean, hasFlipArrow?: boolean }>`
+const StyledButton = styled.button<{isOpen?: boolean, hasFlipArrow?: boolean }>`
   ${resetButtonStyles};
   background-color: hsl(200, 23%, 97%);
   border-radius: 3px;
   border: solid 1px hsl(207, 16%, 86%);
   box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
   color: hsl(0, 0%, 50%);
+  height: 30px;
+  font-size: 12px;
 
-  ${({ theme, size, fontSize }) => theme && css`
+  ${({ theme }) => theme && css`
     font-family: ${theme.fontFamily.ui};
-    font-size: ${fontSize};
-    height: ${theme.dimensions.filterBar.button[size].height};
     transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
 
     ${IconWrapper} {
-      padding: ${theme.dimensions.filterBar.button[size].iconPadding};
+      padding: 0 9px;
       display: flex;
       align-items: center;
-
       [stroke]{
         stroke: ${theme.colors.icons.dimmed};
       }
@@ -66,68 +63,37 @@ const InnerContainer = styled.div`
     align-items: center;
 `;
 
-/**
- * value of that might be replaced latter with a theme update.
- */
-const getFontSize = (size: TypeButtonSizes): string => {
-  switch (size) {
-    case 'xsmall':
-      return '12px';
-
-    case 'small':
-      return '12px';
-
-    case 'normal':
-      return '14px';
-
-    case 'large':
-      return '16px';
-
-    default:
-      return '12px';
-  }
-};
-
 const ArrowIcon = styled(Icon)``;
 
-const ButtonText = styled.div<{ size: TypeButtonSizes, hasFlipArrow: boolean }>`
-  ${({ theme, hasFlipArrow, size }) => hasFlipArrow
-    ? `padding-right: ${theme.dimensions.filterBar.button[size].textPaddingWithArrow};`
-    : `padding-right: ${theme.dimensions.filterBar.button[size].textPaddingNoArrow};`
-  };
+const ButtonText = styled.div<{hasFlipArrow: boolean }>`
+  padding-right: ${({hasFlipArrow}) => hasFlipArrow ? '3px' : '20px'};
 `;
 
 interface OwnProps {
   icon: string
   hasFlipArrow?: boolean
   isOpen?: boolean
-  size?: TypeButtonSizes
 }
 
 type IFilterButton = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const FilterButton: React.FC<IFilterButton> = ({
   icon,
-  size = 'small',
   hasFlipArrow = false,
   isOpen,
   children,
   ...props
 }) => {
 
-  const iconSize = dimensions.filterBar.button[size].iconSize;
-  const arrowSize = dimensions.filterBar.button[size].arrowSize;
-  const fontSize = getFontSize(size);
-
   return (
-    <StyledButton type='button' {...props} {...{ size, fontSize, isOpen, hasFlipArrow }}>
+    <StyledButton type='button' {...props} {...{isOpen, hasFlipArrow }}>
       <InnerContainer>
         <Icon
           icon={icon}
-          size={iconSize}
+          size={12}
         />
-        <ButtonText {...{ size, hasFlipArrow }}>{children}</ButtonText>
-        {hasFlipArrow && <ArrowIcon icon={isOpen ? 'Up' : 'Down'} size={arrowSize} />}
+        <ButtonText {...{hasFlipArrow }}>{children}</ButtonText>
+        {hasFlipArrow && <ArrowIcon icon={isOpen ? 'Up' : 'Down'} size={8} />}
       </InnerContainer>
     </StyledButton>
   );

@@ -31,13 +31,10 @@ export const _FilterButton = () => {
   const hasFlipArrow = boolean('Has Flip Arrow', false);
   const isOpen = boolean('is Open', false);
   const disabled = boolean('disable', false);
-  const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "small");
-
 
   return <Content>
     <FilterButton
       icon = {iconName}
-      size={buttonSize}
       {...{hasFlipArrow, isOpen, disabled}}
     >
       {buttonText}

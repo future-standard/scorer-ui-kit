@@ -101,7 +101,6 @@ export const _FilterDropdown = () => {
   const buttonIcon = select("Button Icon", iconList, iconList['MetaCategories']);
   const disabled = boolean('disable', false);
   const isLoading = boolean('Is Loading', false);
-  const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "small");
   const optionType = select("Option Type", { text: "text", checkbox: "checkbox", radio: "radio" }, "checkbox")
   const loadingText = text('Loading Text', 'Loading Tags...');
   const maxDisplayedItems = number('Max Displayed Items', 6);
@@ -150,7 +149,6 @@ export const _FilterDropdown = () => {
       />
       <FilterDropdown
         {...{
-          buttonSize,
           disabled,
           isLoading,
           buttonText,
@@ -172,7 +170,6 @@ export const _FilterDropdown = () => {
       />
       <FilterDropdown {...{
         buttonIcon,
-        buttonSize,
         disabled,
         isLoading,
         loadingText,
@@ -196,7 +193,6 @@ export const _FilterDropdown = () => {
       <FilterDropdown
         {...{
           buttonIcon,
-          buttonSize,
           disabled,
           isLoading,
           loadingText,
@@ -219,7 +215,6 @@ export const _FilterDropdown = () => {
       <FilterDropdown
         {...{
           buttonIcon,
-          buttonSize,
           disabled,
           isLoading,
           loadingText,
@@ -242,7 +237,6 @@ export const _FilterDropdown = () => {
       <FilterDropdown
         {...{
           buttonIcon,
-          buttonSize,
           disabled,
           isLoading,
           loadingText,
