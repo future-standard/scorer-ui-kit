@@ -6,6 +6,8 @@ import FilterButton from '../../Form/atoms/FilterButton';
 
 const SearchInputWrapper = styled.div`
   width: 214px;
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 3px;
 `;
 
 const StyledFilterButton = styled(FilterButton)``;
