@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { select, object, boolean, text } from "@storybook/addon-knobs";
+import { select, object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -27,7 +27,7 @@ import {
   searchTemplateResultJapanese,
   costRangeEng,
   costRangeJap,
-} from '../../data_samples';
+} from '../../helpers/data_samples';
 
 import {
   sortDataBy,
@@ -36,7 +36,7 @@ import {
   filterByPrice,
   filterByName,
   filterByCreationDate
-} from '../../helpers';
+} from '../../helpers/sample_table_helpers';
 import { ITypeTableData } from '../../../../../dist/Tables';
 
 export default {
@@ -138,7 +138,6 @@ export const _FilterBar = () => {
     }
   ]
 
-  const filtersTitle = text('Filters title', 'Filters:')
   const hasShowMore = boolean('Has Show More', true);
   const searchersConfig = object('Search Filters', searchers);
   const dropdownsConfig = object('DropdownFilters', dropdowns);
@@ -183,12 +182,14 @@ export const _FilterBar = () => {
   return (
     <Container>
       <FilterBar
-        {...{ filtersTitle, searchersConfig, dropdownsConfig }}
+        {...{ searchersConfig, dropdownsConfig }}
         onChangeCallback={handleFilters}
         totalResults={rows.length}
         hasShowMore={hasShowMore}
         showMoreText={language === 'english' ? 'Show More' : 'もっと見る'}
         showLessText={language === 'english' ? 'Show less' : 'Show less'}
+        filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}
+        resultTextTemplate = {language === 'english' ? 'Showing Results ([TOTAL_RESULTS]):' : '表示結果 ([TOTAL_RESULTS]):'}
       />
       <TypeTableWrapper>
         <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}

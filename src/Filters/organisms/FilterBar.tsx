@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem } from '../..';
+import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem } from '../FilterTypes';
 import { IInputOptionsType } from '../../Form';
 import FilterInputs, { IFilterDropdownExt, ISearchFilter } from '../molecules/FilterInputs';
-import FiltersResults, { IFilterLabel } from '../molecules/FiltersResults';
+import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
 
 
 const Title = styled.div`

@@ -1,13 +1,13 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { object, boolean } from "@storybook/addon-knobs";
-import {TypeTable, ModalProvider} from 'scorer-ui-kit';
+import { TypeTable, ModalProvider } from 'scorer-ui-kit';
 
 import {
   ITypeTableData,
 } from 'scorer-ui-kit/dist/Tables';
-import { tableData, columnConfigSample ,ITableSampleData } from '../../data_samples';
-import {sortDataBy, rowMaker} from '../../helpers';
+import { tableData, columnConfigSample, ITableSampleData } from '../../helpers/data_samples';
+import { sortDataBy, rowMaker } from '../../helpers/sample_table_helpers';
 
 const Container = styled.div`
   padding: 100px;
@@ -20,7 +20,7 @@ export default {
 };
 
 /** Imagine this data comes from Server :) */
-const defaultData : ITableSampleData[] = tableData;
+const defaultData: ITableSampleData[] = tableData;
 
 const sortedByDeviceData = sortDataBy(defaultData, 'deviceName', true);
 
@@ -39,7 +39,7 @@ export const _TypeTable = () => {
 
 
   // Sent to checkbox in TableRow via Table component.
-  const selectCallback = useCallback((checked:boolean, id?: string | number) => {
+  const selectCallback = useCallback((checked: boolean, id?: string | number) => {
     const newRows = [...rows];
     const targetRowIndex = newRows.findIndex(row => row.id === id)
     newRows[targetRowIndex]._checked = checked;
@@ -49,7 +49,7 @@ export const _TypeTable = () => {
   }, [rows, setRows]);
 
 
-  const toggleAllCallback = useCallback((checked:boolean) => {
+  const toggleAllCallback = useCallback((checked: boolean) => {
     const newRows = [...rows];
 
     newRows.forEach((row) => {
@@ -60,13 +60,13 @@ export const _TypeTable = () => {
   }, [rows, setRows]);
 
   const sortCallback = useCallback((ascending: boolean, columnId: string) => {
-    const unsortedData : ITableSampleData[] = [...data];
+    const unsortedData: ITableSampleData[] = [...data];
 
     const validKey = columnId as keyof ITableSampleData;
     const sortedData = sortDataBy(unsortedData, validKey, ascending);
     setData(sortedData);
 
-  },[data]);
+  }, [data]);
 
   useEffect(() => {
     setRows(rowMaker(data));

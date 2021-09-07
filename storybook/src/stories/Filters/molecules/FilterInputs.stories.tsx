@@ -13,7 +13,15 @@ import {
   IFilterItem,
   IFilterType,
 } from 'scorer-ui-kit';
-import { loadingTagsEnglish, loadingTagsJapanese, searchPlaceholderEnglish, searchPlaceholderJapanese, searchTemplateResultEnglish, searchTemplateResultJapanese } from '../../data_samples';
+
+import {
+  loadingTagsEnglish,
+  loadingTagsJapanese,
+  searchPlaceholderEnglish,
+  searchPlaceholderJapanese,
+  searchTemplateResultEnglish,
+  searchTemplateResultJapanese
+} from '../../helpers/data_samples';
 
 export default {
   title: 'Filters/Molecules',
@@ -65,101 +73,6 @@ const japaneseDataList: IFilterValue = [
   { text: '天婦羅', value: 3 },
   { text: 'すし', value: 4 },
 ];
-
-// interface IFiltersSelected {
-//   id: string
-//   selected: IFilterValue
-//   filterName?: string
-//   icon?: string
-// }
-
-// const filters : IFiltersSelected[] = [
-//     {
-//       id: 'search1',
-//       selected: null,
-//       filterName: 'Name'
-//     },
-//     {
-//       id: 'search2',
-//       selected: null,
-//       filterName: 'Food'
-//     },
-//     {
-//       id: 'search2',
-//       selected: null,
-//       filterName: 'Example'
-//     },
-//     {
-//       id: 'category1',
-//       selected: null,
-//       icon: 'MetaCategories',
-//     },
-//     {
-//       id: 'food',
-//       selected: null,
-//       icon: 'Zone'
-//     }
-// ]
-
-
-interface IDropdownsSelected {
-  id: string
-  selected: IFilterValue
-  icon?: string
-}
-
-interface ISearchSelected {
-  id: string
-  selected: ''
-  filterName?: string
-}
-
-// const dropdownSelectedInitial: IDropdownsSelected[] = [
-//   {
-//     id: 'category1',
-//     selected: null,
-//     icon: 'MetaCategories',
-//   },
-//   {
-//     id: 'food',
-//     selected: null,
-//     icon: 'Zone'
-//   }
-// ]
-
-// const searchSelectedInitial = {
-//   'search1': {
-//     id: 'search1',
-//     selected: '',
-//     filterName: 'Name'
-//   },
-//   'search2': {
-//     id: 'search2',
-//     selected: '',
-//     filterName: 'Food'
-//   },
-//   'search3': {
-//     id: 'search3',
-//     selected: '',
-//     filterName: 'Example'
-//   }
-// }
-
-// const searchSelectedInitial = [
-//   {
-//     id: 'search1',
-//     selected: '',
-//     filterName: 'Name',
-//   }, {
-//     id: 'search2',
-//     selected: '',
-//     filterName: 'Food'
-//   }, {
-//     id: 'search3',
-//     selected: '',
-//     filterName: 'Example'
-//   }
-// ];
 
 const generateResultsLabelData = (dropdownFilters: IFilterDropdownExt[], searchFilters: ISearchFilter[]): IFilterLabel[] => {
   const labelLists: IFilterLabel[] = [];
@@ -219,9 +132,6 @@ export const _FilterInputs = () => {
   const [nameVal, setNameVal] = useState('');
   const [foodSelected, setFoodSelected] = useState('');
   const [exampleSearch, setExampleSearch] = useState('');
-
-  // const [dropdownSelected, setDropdownSelected] = useState<IDropdownsSelected[]>(dropdownSelectedInitial);
-  // const [searchSelected] = useState<ISearchSelected[]>(searchSelectedInitial)
 
   const handleSelectItemType = useCallback((newSelection: IFilterValue) => {
     foodValue(newSelection);

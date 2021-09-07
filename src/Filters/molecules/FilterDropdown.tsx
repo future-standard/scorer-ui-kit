@@ -6,7 +6,7 @@ import FilterButton from '../atoms/FilterButton';
 import FilterOption from '../../Form/atoms/FilterOption';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import Spinner from '../../Indicators/Spinner';
-import { IFilterItem, IFilterValue, isFilterItem } from '../..';
+import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
 
 const MIN_WIDTH = 270;
 const MIN_HEIGHT = 190;
@@ -191,7 +191,7 @@ const getNewSelected = (item: IFilterItem, selected: IFilterValue, optionType: I
       newSelected.push(item);
     }
 
-    if(newSelected.length === 0) {
+    if (newSelected.length === 0) {
       return null;
     }
 

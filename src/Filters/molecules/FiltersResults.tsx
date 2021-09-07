@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { IFilterItem, IFilterType, resetButtonStyles } from '../..';
+import { IFilterItem, IFilterType } from '../index';
+import {resetButtonStyles} from '../../common/index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 const Container = styled.div`

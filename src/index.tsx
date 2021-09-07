@@ -57,6 +57,11 @@ import {
   IFilterLabel,
   FilterBar,
   IFilterDropdownConfig,
+  IFilterType,
+  IFilterItem,
+  IFilterValue,
+  IFilterResult,
+  isFilterItem,
 } from './Filters';
 
 import Icon, { IconSVGs } from './Icons/Icon';
@@ -96,15 +101,15 @@ import {
 } from './PTZControl';
 
 // Misc
-  import {
-    Tag,
-    TagList,
-    ITag,
-    ITagList,
-    TagListWrapper,
-    MediaBox,
-    BasicSearchInput,
-  } from './Misc';
+import {
+  Tag,
+  TagList,
+  ITag,
+  ITagList,
+  TagListWrapper,
+  MediaBox,
+  BasicSearchInput,
+} from './Misc';
 
 import {
   ConfirmationModal,
@@ -221,6 +226,7 @@ export {
   FilterInputs,
   FiltersResults,
   FilterBar,
+  isFilterItem,
 
   //Icon
   Icon,
@@ -304,22 +310,6 @@ export type IFeedbackColor = 'error' | 'warning' | 'info' | 'success' | 'neutral
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
 export type IMediaType = 'img' | 'video'
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
-export type IFilterType = 'search' | 'dropdown';
-
-export type IFilterItem = { text: string; value: string | number;}
-export type IFilterValue = IFilterItem | IFilterItem[] | null;
-
-export interface IFilterResult {
-  id: string
-  selected: IFilterValue
-}
-
-// type checking
-// https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
-export const isFilterItem = (item: any): item is IFilterItem => {
-  if (item === null) { return false; }
-  return (item.value !== undefined) && (item.text !== undefined);
-};
 
 export type {
   IModal,
@@ -336,4 +326,8 @@ export type {
   IFilterLabel,
   IFilterDropdownConfig,
   ITabIcon,
+  IFilterType,
+  IFilterItem,
+  IFilterValue,
+  IFilterResult,
 };
