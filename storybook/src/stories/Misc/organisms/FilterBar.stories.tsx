@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { select, object, boolean } from "@storybook/addon-knobs";
+import { select, object, boolean, text } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -46,7 +46,11 @@ export default {
 };
 
 const Container = styled.div`
-  margin: 20px 0;
+  margin: 20px;
+`;
+
+const TypeTableWrapper = styled.div`
+margin: 60px 0 20px 0
 `;
 
 const dataInitialState = sortDataBy(tableData, 'deviceName', true);
@@ -134,6 +138,7 @@ export const _FilterBar = () => {
     }
   ]
 
+  const filtersTitle = text('Filters title', 'Filters:')
   const hasShowMore = boolean('Has Show More', true);
   const searchersConfig = object('Search Filters', searchers);
   const dropdownsConfig = object('DropdownFilters', dropdowns);
@@ -163,7 +168,7 @@ export const _FilterBar = () => {
           return filterByName(accumulator, currentFilter.selected);
         }
 
-        if(currentFilter.id === 'inputForDate') {
+        if (currentFilter.id === 'inputForDate') {
           return filterByCreationDate(accumulator, currentFilter.selected);
         }
 
@@ -178,21 +183,23 @@ export const _FilterBar = () => {
   return (
     <Container>
       <FilterBar
-        {...{ searchersConfig, dropdownsConfig }}
+        {...{ filtersTitle, searchersConfig, dropdownsConfig }}
         onChangeCallback={handleFilters}
         totalResults={rows.length}
         hasShowMore={hasShowMore}
         showMoreText={language === 'english' ? 'Show More' : 'もっと見る'}
         showLessText={language === 'english' ? 'Show less' : 'Show less'}
       />
-      <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}
-        columnConfig={language === 'english' ? columnConfigSample : columnConfigSampleJp}
-        hasStatus
-        selectable
-        hasThumbnail
-        hasTypeIcon
-        defaultAscending
-        hasHeaderGroups
-      />
+      <TypeTableWrapper>
+        <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}
+          columnConfig={language === 'english' ? columnConfigSample : columnConfigSampleJp}
+          hasStatus
+          selectable
+          hasThumbnail
+          hasTypeIcon
+          defaultAscending
+          hasHeaderGroups
+        />
+      </TypeTableWrapper>
     </Container>)
 }

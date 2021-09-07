@@ -6,6 +6,13 @@ import FilterInputs, { IFilterDropdownExt, ISearchFilter } from '../molecules/Fi
 import FiltersResults, { IFilterLabel } from '../molecules/FiltersResults';
 
 
+const Title = styled.div`
+  font-family: ${({theme}) => theme.fontFamily.ui};
+  color: hsl(207, 5%, 57%);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 17px;
+`;
 const StyledFilterResults = styled(FiltersResults)``;
 
 const Container = styled.div`
@@ -145,6 +152,7 @@ export interface IFilterDropdownConfig {
 }
 
 interface IFilterBar {
+  filtersTitle?: string
   searchersConfig: ISearchFilter[]
   dropdownsConfig: IFilterDropdownConfig[]
   hasShowMore?: boolean
@@ -158,6 +166,7 @@ interface IFilterBar {
 }
 
 const FilterBar: React.FC<IFilterBar> = ({
+  filtersTitle ='Filters:',
   hasShowMore,
   searchersConfig,
   dropdownsConfig,
@@ -166,7 +175,8 @@ const FilterBar: React.FC<IFilterBar> = ({
   resultTextTemplate,
   clearText,
   totalResults,
-  onChangeCallback = () => { }
+  onChangeCallback = () => { },
+  ...props
 }) => {
 
   const [filtersValues, setFilterValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig));
@@ -240,7 +250,8 @@ const FilterBar: React.FC<IFilterBar> = ({
 
 
   return (
-    <Container>
+    <Container {...props}>
+      <Title>{filtersTitle}</Title>
       <FilterInputs
         {...{
           hasShowMore,
