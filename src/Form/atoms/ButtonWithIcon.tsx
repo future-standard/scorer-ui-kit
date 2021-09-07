@@ -31,6 +31,7 @@ const IconContainer = styled.div<{ position?: string }>`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  flex-shrink: 0;
 
   ${({ position }) => css`
     order: ${ position && position === 'left' ? 0 : 2 };

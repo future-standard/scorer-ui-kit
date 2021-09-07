@@ -8,6 +8,7 @@ import {useClickOutside} from './useClickOutside';
 import {usePoll} from './usePoll';
 import useBreakpoints from './useBreakpoints';
 import useMediaQuery from './useMediaQuery';
+import { useMediaModal } from './useMediaModal';
 
 export {
   useInterval,
@@ -20,5 +21,6 @@ export {
   usePoll,
   useMediaQuery,
   useBreakpoints,
+  useMediaModal
 };
 export type { IModal };

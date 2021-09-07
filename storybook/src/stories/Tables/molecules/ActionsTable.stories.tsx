@@ -5,13 +5,14 @@ import { action } from '@storybook/addon-actions';
 
 
 import {
-TypeTable as TypeTableCustom,
-ActionButtons,
-IconButtonData,
-MultilineContent,
+  TypeTable as TypeTableCustom,
+  ActionButtons,
+  IconButtonData,
+  MultilineContent,
+  ModalProvider,
 } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
-import { 
+import {
   ITableColumnConfig,
   ITypeTableData
 } from 'scorer-ui-kit/dist/Tables';
@@ -123,7 +124,7 @@ const generateConfigButtons  = (rowId: string) : IconButtonData[] => {
 
 const generateTimeRows = (initTime: string, endTime: string) : ReactElement[] =>  {
   return (
-    [ 
+    [
       <TimeText>{`${initTime} ${String.fromCharCode(160)} →`}</TimeText>,
       <TimeText>{endTime}<span>{` JST`}</span></TimeText>
     ]
@@ -135,6 +136,8 @@ const initialRows : ITypeTableData = [
     id: 'row1',
     header: {
       image: photo,
+      mediaUrl: photo,
+      mediaType: 'img',
     },
     columns: [
       {customComponent: <MultilineContent contentArray={generateTimeRows('2020/06/11 - 16:00','2020/06/11 - 21:30')}/>},
@@ -148,6 +151,8 @@ const initialRows : ITypeTableData = [
     id: 'row2',
     header: {
       image: photo,
+      mediaUrl: photo,
+      mediaType: 'img',
     },
     columns: [
       {customComponent: <MultilineContent contentArray={generateTimeRows('2020/06/11 - 13:00','2020/06/11 - 17:30')}/>},
@@ -161,6 +166,8 @@ const initialRows : ITypeTableData = [
     id: 'row3',
     header: {
       image: photo,
+      mediaUrl: photo,
+      mediaType: 'img',
     },
     columns: [
       {customComponent: <MultilineContent contentArray={generateTimeRows('2020/05/10 - 10:00','2020/05/10 - 12:30')}/>},
@@ -195,21 +202,23 @@ export const ActionsTable = () => {
     setRows(newRows);
 
   }, [rows, setRows]);
-  
 
+  // Provider should be at main Index level, it's here just for the example
   return (
-      <Container>
+    <Container>
+      <ModalProvider>
         <TypeTableCustom
           {...{
-              columnConfig,
-              rows,
-              selectable,
-              selectCallback,
-              toggleAllCallback,
-              hasThumbnail,
-            }
-          } 
+            columnConfig,
+            rows,
+            selectable,
+            selectCallback,
+            toggleAllCallback,
+            hasThumbnail,
+          }
+          }
         />
-      </Container>
-      )
+      </ModalProvider>
+    </Container>
+  )
 };

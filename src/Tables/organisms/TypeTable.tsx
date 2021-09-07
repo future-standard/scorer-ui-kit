@@ -1,11 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import TypeTableRow from '../atoms/TypeTableRow';
-import {ITableColumnConfig, ITypeTableData, IRowData} from '..';
+import { ITableColumnConfig, ITypeTableData, IRowData } from '..';
 import TypeTableHeader from '../molecules/TypeTableHeader';
-
-const HEADER_HEIGHT = `50px`;
 
 const Container = styled.div``;
 
@@ -21,15 +19,13 @@ const LoadingText = styled.div`
 
 const LoadingBox = styled.div`
   position: absolute;
-  top: 0;
   left: 0;
   z-index: 99;
   background-color: ${({ theme }) => theme.colors["pureBase"]};
+  height: calc(100% - 50px);
   opacity: 85%;
   width: 100%;
   min-height: 100px;
-  height: calc(100% - ${HEADER_HEIGHT});
-  margin-top: ${HEADER_HEIGHT};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,10 +39,9 @@ const LoadingBox = styled.div`
 
 const EmptyTableBox = styled.div`
   position: absolute;
-  top: 0;
   left: 0;
   z-index: 99;
-  margin-top: ${HEADER_HEIGHT};
+  padding: 20px;
   width: 100%;
   min-height: 100px;
   text-align: center;
@@ -59,7 +54,7 @@ const EmptyTableBox = styled.div`
 
 const isChecked = ({ _checked = false }: IRowData) => {
   return _checked === true;
-}
+};
 
 interface IProps {
   columnConfig: ITableColumnConfig[]
@@ -97,20 +92,20 @@ const TypeTable: React.FC<IProps> = ({
   toggleAllCallback = () => { },
 }) => {
 
-    /* Note about Empty table
-    Currently IRowData Type enforces user to send columns
-    so rows length will always be at least 1
-    I wasn't sure if I should edit IRowData to have columns optional
-    If we allow columns to be optional, previous implementations
-    wont be able to have "No data" Message
-  */
+  /* Note about Empty table
+  Currently IRowData Type enforces user to send columns
+  so rows length will always be at least 1
+  I wasn't sure if I should edit IRowData to have columns optional
+  If we allow columns to be optional, previous implementations
+  wont be able to have "No data" Message
+*/
 
   const [allChecked, setAllChecked] = useState(false);
   const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
 
   useEffect(() => {
     let areAllChecked = false;
-    if(rows.every(isChecked) && (rows.length > 0) && !isEmptyTable) {
+    if (rows.every(isChecked) && (rows.length > 0) && !isEmptyTable) {
       areAllChecked = true;
     }
     setAllChecked(areAllChecked);
@@ -120,7 +115,7 @@ const TypeTable: React.FC<IProps> = ({
     <Container>
       <TableContainer>
         <TypeTableHeader
-            {...{
+          {...{
             selectable,
             hasStatus,
             hasThumbnail,
@@ -133,8 +128,7 @@ const TypeTable: React.FC<IProps> = ({
             columnConfig,
             toggleAllCallback,
             sortCallback,
-            HEADER_HEIGHT,
-            }}
+          }}
         />
         {isLoading ? (
           <LoadingBox>
@@ -155,14 +149,15 @@ const TypeTable: React.FC<IProps> = ({
           return (
             <TypeTableRow
               key={key} {...{
-              rowData,
-              isLastRow,
-              selectable,
-              selectCallback,
-              columnConfig,
-              hasStatus,
-              hasThumbnail,
-              hasTypeIcon}}
+                rowData,
+                isLastRow,
+                selectable,
+                selectCallback,
+                columnConfig,
+                hasStatus,
+                hasThumbnail,
+                hasTypeIcon
+              }}
             />
           );
         })}

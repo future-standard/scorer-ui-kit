@@ -14,7 +14,7 @@ export {
   BasicSearchInput,
   FilterInputs,
   FiltersResults,
-  FilterBar
+  FilterBar,
 };
 
 export type { ITagList, ITag, ISearchFilter, IFilterDropdownExt, IFilterLabel, IFilterDropdownConfig };

@@ -5,7 +5,7 @@ import {boolean, text, object} from "@storybook/addon-knobs";
 import {TypeTable as LoadingTable } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
 
-import { 
+import {
   ITableColumnConfig,
   ITypeTableData
 } from 'scorer-ui-kit/dist/Tables';
@@ -24,19 +24,22 @@ const Container = styled.div`
 const columnConfigSample : ITableColumnConfig[] = [
   {
     header: 'When',
+    groupTitle: 'Time',
     sortable: false,
     cellStyle: 'normalImportance',
     minWidth: 200,
   },
   {
     header: 'Status',
+    groupTitle: 'Metadata',
     sortable: false,
     cellStyle: 'normalImportance',
     showStatus: true,
     minWidth: 200,
   },
   {
-    header: 'Temperature',
+    header: 'The Highest Temperature Recorded',
+    groupTitle: 'Metadata',
     sortable: false,
     cellStyle: 'normalImportance',
     minWidth: 200,
@@ -104,12 +107,14 @@ const dataRows : ITypeTableData = [
 export const _LoadingTable = () => {
   const isLoading = boolean("IsLoading", true);
   const emptyTable = boolean("Show Empty Table", true);
-  const emptyTableTitle = text("emptyTableTitle","No Data Available"); 
+  const emptyTableTitle = text("emptyTableTitle","No Data Available");
   const emptyTableText = text("emptyTableText", 'There is currently no data');
   const loadingText = text("loadingText", 'Loading Data..')
-  const columnConfig = object("Column Configuration", columnConfigSample);
   const selectable = boolean("Selectable Rows", true);
-  
+  const hasGroups = boolean('Has Header Groups', true);
+  const columnConfig = object("Column Configuration", columnConfigSample);
+
+
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
   const toggleAllCallback = useCallback((checked:boolean) => {
@@ -127,9 +132,9 @@ export const _LoadingTable = () => {
       const newRows = [...rows];
       const targetRowIndex = newRows.findIndex(row => row.id === id)
       newRows[targetRowIndex]._checked = checked;
-  
+
       setRows(newRows);
-  
+
     }, [rows, setRows]);
 
   useEffect(() => {
@@ -143,10 +148,11 @@ export const _LoadingTable = () => {
     }
   }, [emptyTable])
 
-  return(
+  return (
     <Container>
-      <LoadingTable {
-        ...{
+      <LoadingTable
+        hasHeaderGroups={hasGroups}
+        {...{
           columnConfig,
           rows,
           toggleAllCallback,
@@ -156,9 +162,9 @@ export const _LoadingTable = () => {
           loadingText,
           hasThumbnail: true,
           emptyTableTitle,
-          emptyTableText
-        }
-      }/>
+          emptyTableText,
+        }}
+      />
     </Container>
   )
 
