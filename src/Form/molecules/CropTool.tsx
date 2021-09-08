@@ -175,20 +175,20 @@ const CropTool: React.FC<ICrop> = ({
       newImgDraw.width,
       newImgDraw.height,
       aspectRatio
-      );
+    );
     // triggers a render to repaint canvas
     setLoadDimensions((prevState) =>
-      ({
-        ...prevState,
-        cropLeft: newCrop.left,
-        cropTop: newCrop.top,
-        cropWidth: newCrop.width,
-        cropHeight: newCrop.height,
-        imgLeft: newImgDraw.left,
-        imgTop: newImgDraw.top,
-        imgWidth: newImgDraw.width,
-        imgHeight: newImgDraw.height,
-      })
+    ({
+      ...prevState,
+      cropLeft: newCrop.left,
+      cropTop: newCrop.top,
+      cropWidth: newCrop.width,
+      cropHeight: newCrop.height,
+      imgLeft: newImgDraw.left,
+      imgTop: newImgDraw.top,
+      imgWidth: newImgDraw.width,
+      imgHeight: newImgDraw.height,
+    })
     );
 
     viewDimensions.cropLeft = newCrop.left;
@@ -263,14 +263,14 @@ const CropTool: React.FC<ICrop> = ({
     viewDimensions.isResizing = false;
   }, []);
 
-  const updateSelect = useCallback((left, top, width, height) =>{
+  const updateSelect = useCallback((left, top, width, height) => {
     if (!cropRef.current) { return; }
     cropRef.current.style.left = `${left}px`;
     cropRef.current.style.top = `${top}px`;
     cropRef.current.style.width = `${width}px`;
     cropRef.current.style.height = `${height}px`;
 
-  },[]);
+  }, []);
 
   const handleMouseMove = useCallback((e) => {
     e.preventDefault();
@@ -283,10 +283,10 @@ const CropTool: React.FC<ICrop> = ({
 
     const [posX, posY] = [e.clientX, e.clientY];
     const newDimensions = aspectRatio
-    ? updateCropWithAspect(viewDimensions, posX, posY, aspectRatio)
-    : updateCropValues(viewDimensions, posX, posY);
+      ? updateCropWithAspect(viewDimensions, posX, posY, aspectRatio)
+      : updateCropValues(viewDimensions, posX, posY);
 
-    if(!newDimensions.isUpdateRequired) { return; }
+    if (!newDimensions.isUpdateRequired) { return; }
 
     viewDimensions.cropTop = newDimensions.top;
     viewDimensions.cropLeft = newDimensions.left;
@@ -347,7 +347,7 @@ const CropTool: React.FC<ICrop> = ({
             onMouseMove={handleMouseMove}
             onMouseLeave={handleOnMouseLeave}
           >
-            <HiddenImage ref={imgRef} src={imgUrl} onLoad={drawImgOnCanvas} />
+            <HiddenImage ref={imgRef} src={imgUrl} onLoad={drawImgOnCanvas} crossOrigin='anonymous' />
             <canvas
               ref={canvasRef}
               width={`${canvasWidth}px`}
