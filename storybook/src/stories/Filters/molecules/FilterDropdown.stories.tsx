@@ -72,7 +72,9 @@ const yearList = [
   { text: '1950', value: 1950 },
   { text: '1960', value: 1960 },
   { text: '1970', value: 1970 },
-  { text: '1980', value: 1990 },
+  { text: '1980', value: 1980 },
+  { text: '1990', value: 1990 },
+  { text: '2000', value: 2000 },
   { text: '2010', value: 2010 },
   { text: '2020', value: 2020 }
 ];

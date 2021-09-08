@@ -205,7 +205,7 @@ const getNewSelected = (item: IFilterItem, selected: IFilterValue, optionType: I
  * This is the list of values that will show in the dropdown
  *
  * @param list is all the items that can be in the dropdown
- * @param maxItems will define in case the dropdown has 300 options to only show until maxItems (4 or 6)
+ * @param maxItems will define in case the dropdown has 300 options to only show until maxItems ( usually 4 or 6)
  * @param selected is a list of the values that are selected and that should be visible
  * although are not at the beginning of the list
  * @returns a FilterItem list to update the content of the dropdown
@@ -218,7 +218,7 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
   }
 
   if (selected === null) {
-    return list.slice(0, maxItems - 1);
+    return list.slice(0, maxItems);
   }
 
   if (isFilterItem(selected)) {
@@ -226,16 +226,16 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
 
     // if it doesn't exists return the list based in maxItems
     if ((index !== -1)) {
-      return list.slice(0, maxItems - 1);
+      return list.slice(0, maxItems);
     }
 
     // if exists and is inside the visibleRange just return slice
     if ((index !== -1) && (index < maxItems)) {
-      return list.slice(0, maxItems - 1);
+      return list.slice(0, maxItems);
     }
 
     //If not is somewhere after the maxItems remove last item and add it to the end.
-    const newList = list.slice(0, maxItems - 2);
+    const newList = list.slice(0, maxItems - 1);
     newList.push(selected);
     return newList;
   }
@@ -243,7 +243,7 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
   if (Array.isArray(selected)) {
 
     if (selected.length > maxItems) {
-      return selected.slice(0, maxItems - 1);
+      return selected.slice(0, maxItems);
     }
 
     if (selected.length === maxItems) {
@@ -371,19 +371,18 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
     const position: IOpenPos = getDropPosition(buttonRect);
 
+    setSearchText('');
+    setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
     setOpenState((prev) => {
       const isOpen = !prev.isOpen;
       return { ...prev, isOpen, position };
     });
-  }, [buttonWrapperRef]);
+  }, [list, maxDisplayedItems, selected]);
 
   const handleSelection = useCallback((item: IFilterItem) => {
-
     const newSelected = getNewSelected(item, selected, optionType);
-    handleClose();
     onSelect(newSelected);
-
-  }, [selected, optionType, handleClose, onSelect]);
+  }, [selected, optionType, onSelect]);
 
   const handleInputFilter = useCallback((e) => {
     const { value } = e.target;
@@ -404,6 +403,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   useEffect(() => {
     let isActive = true;
     if (isActive) {
+      setSearchText(''); // clears searchText if something was selected and the dropdown is still open
       setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
     }
 
