@@ -21,7 +21,6 @@ const ratio = Math.round((CROP_WIDTH_AREA / CROP_HEIGHT_AREA) * 100) / 100;
 const PHOTO_HEIGHT = `150px`;
 const PHOTO_WIDTH = `142px`;
 
-
 const Container = styled.div`
   position: relative;
   width: ${PHOTO_WIDTH};
@@ -94,6 +93,7 @@ interface IAvatar {
   cropToolCancelTxt?: string
   cropToolConfirmTxt?: string
   uploaderCropText?: string
+  deletePhotoText?: string
   currentImg?: string
   hasCrop?: boolean
   onAvatarUpdate?: (imgFile: File) => void
@@ -107,6 +107,7 @@ const AvatarUploader: React.FC<IAvatar> = ({
   buttonText = 'Select File',
   buttonTextReplace = 'Replace Photo',
   uploaderCropText = 'Crop Image',
+  deletePhotoText = 'Remove',
   cropToolTitle,
   cropToolCancelTxt,
   cropToolConfirmTxt,
@@ -174,35 +175,7 @@ const AvatarUploader: React.FC<IAvatar> = ({
   const handleRemove = useCallback(() => {
     setAvatarImg('');
     onRemove();
-  },[onRemove]);
-
-  const renderButtons = useCallback(() => {
-    return (
-      avatarImg
-        ? (
-          <ButtonsWrapper>
-            {hasCrop
-              ? <ButtonWithIcon icon='Crop' design='secondary' position='left' size='small' onClick={() => handleEdit(avatarImg)}>{uploaderCropText}</ButtonWithIcon>
-              : <StyledInputFileButton
-                  id='avatar-upload'
-                  text={buttonTextReplace}
-                  buttonSize='small'
-                  buttonDesign='secondary'
-                  accept='image/*'
-                  inputCallback={handleFileUpload}
-                />}
-            <ButtonWithIcon icon='Delete' design='secondary' position='left' size='small' onClick={handleRemove}>Remove</ButtonWithIcon>
-          </ButtonsWrapper>
-        )
-        : <StyledInputFileButton
-            id='avatar-upload'
-            text={buttonText}
-            buttonSize='small'
-            accept='image/*'
-            inputCallback={handleFileUpload}
-          />
-    );
-  }, [avatarImg, hasCrop, uploaderCropText, buttonTextReplace, handleFileUpload, handleRemove, buttonText, handleEdit]);
+  }, [onRemove]);
 
   return (
     <Container>
@@ -218,7 +191,29 @@ const AvatarUploader: React.FC<IAvatar> = ({
           )}
         {((currentImg && (!hasCrop)) || !currentImg) && <DropArea height={PHOTO_HEIGHT} dropCallback={handleFileUpload} />}
       </PreviewImageGroup>
-      {renderButtons()}
+      {avatarImg
+        ? (
+          <ButtonsWrapper>
+            {hasCrop
+              ? <ButtonWithIcon icon='Crop' design='secondary' position='left' size='small' onClick={() => handleEdit(avatarImg)}>{uploaderCropText}</ButtonWithIcon>
+              : <StyledInputFileButton
+                  id='avatar-upload'
+                  text={buttonTextReplace}
+                  buttonSize='small'
+                  buttonDesign='secondary'
+                  accept='image/*'
+                  inputCallback={handleFileUpload}
+                />}
+            <ButtonWithIcon icon='Delete' design='secondary' position='left' size='small' onClick={handleRemove}>{deletePhotoText}</ButtonWithIcon>
+          </ButtonsWrapper>
+        )
+        : <StyledInputFileButton
+            id='avatar-upload'
+            text={buttonText}
+            buttonSize='small'
+            accept='image/*'
+            inputCallback={handleFileUpload}
+          />}
       {isCropOpen && hasCrop
         ? <CropTool
             imgUrl={cropImg}
