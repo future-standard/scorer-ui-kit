@@ -27,7 +27,7 @@ const statusValuesEng: IFilterItem[] = [
 
 const statusValuesJp: IFilterItem[] = [
   {text: 'OKです。', value: 'good'},
-  {text: '注意事項', value: 'caution'},
+  {text: '注意', value: 'caution'},
   {text: '警告', value: 'danger'},
   {text: 'オフライン', value: 'neutral'}
 ]
@@ -381,7 +381,7 @@ const columnConfigSampleJp : ITableColumnConfig[] = [
   {
     columnId: 'status',
     groupTitle: 'デバイス',
-    header: 'Status',
+    header: 'ステータス',
     sortable: true,
     showStatus: true,
     cellStyle: 'normalImportance',
@@ -434,7 +434,7 @@ const loadingTagsJapanese = 'ローディング...';
 const showMoreEng = 'Show More';
 const showMoreJp = 'もっと見る';
 const showLessEng = 'Show less';
-const ShowLessJp = 'Show less';
+const showLessJp = '折りたたむ';
 const resultTextTemplateEng = 'Showing Results ([TOTAL_RESULTS]):';
 const resultTextTemplateJp = '表示結果 ([TOTAL_RESULTS]):';
 
@@ -459,7 +459,7 @@ export {
   showMoreEng,
   showMoreJp,
   showLessEng,
-  ShowLessJp,
+  showLessJp,
   resultTextTemplateEng,
   resultTextTemplateJp,
   clearEng,

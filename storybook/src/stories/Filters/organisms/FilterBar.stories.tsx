@@ -28,7 +28,13 @@ import {
   costRangeEng,
   costRangeJap,
   clearEng,
-  clearJp
+  clearJp,
+  showLessEng,
+  showLessJp,
+  showMoreEng,
+  showMoreJp,
+  resultTextTemplateEng,
+  resultTextTemplateJp,
 } from '../../helpers/data_samples';
 
 import {
@@ -188,10 +194,10 @@ export const _FilterBar = () => {
         onChangeCallback={handleFilters}
         totalResults={rows.length}
         hasShowMore={hasShowMore}
-        showMoreText={language === 'english' ? 'Show More' : 'もっと見る'}
-        showLessText={language === 'english' ? 'Show less' : 'Show less'}
+        showMoreText={language === 'english' ? showMoreEng : showMoreJp}
+        showLessText={language === 'english' ? showLessEng : showLessJp}
         filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}
-        resultTextTemplate = {language === 'english' ? 'Showing Results ([TOTAL_RESULTS]):' : '表示結果 ([TOTAL_RESULTS]):'}
+        resultTextTemplate = {language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
         clearText = {language === 'english' ? clearEng : clearJp}
       />
       <TypeTableWrapper>

@@ -24,7 +24,7 @@ import {
   showMoreEng,
   showMoreJp,
   showLessEng,
-  ShowLessJp,
+  showLessJp,
   resultTextTemplateEng,
   resultTextTemplateJp,
   clearEng,
@@ -257,7 +257,7 @@ export const _FilterInputs = () => {
       <FilterInputs
         {...{ searchFilters, dropdownFilters, hasShowMore }}
         showMoreText={language === 'english' ? showMoreEng : showMoreJp}
-        showLessText={language === 'english' ? showLessEng : ShowLessJp}
+        showLessText={language === 'english' ? showLessEng : showLessJp}
       />
       <FiltersResults
         {...{ labelLists, totalResults, onClearAll, onRemoveFilter }}
