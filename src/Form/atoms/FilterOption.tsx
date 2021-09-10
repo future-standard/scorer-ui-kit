@@ -1,12 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
-import Checkbox from './Checkbox';
-import RadioButton from './RadioButton';
-import { IInputOptionsType, TypeButtonSizes } from '..';
+import { CheckMark } from '../../svg';
+import { IInputOptionsType } from '..';
+import { dimensions } from '../../themes/common';
 
-const StyledCheckbox = styled(Checkbox)``;
-
-const StyledLabel = styled.label<{ buttonSize: TypeButtonSizes }>`
+const Title = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.data};
   display: block;
   color: hsl(0, 0%, 56%);
@@ -15,23 +13,64 @@ const StyledLabel = styled.label<{ buttonSize: TypeButtonSizes }>`
   margin-left: 12px;
   user-select: none;
   pointer-events: none;
+`;
 
-  ${({ buttonSize }) => buttonSize && css`
-    ${buttonSize === 'xsmall' && css`
-      font-size: 12px;
-      margin-left: 10px;
-    `};
+const FakeCheckbox = styled.div`
+  box-sizing: border-box;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+`;
 
-    ${buttonSize === 'normal' && css`
-      font-size: 16px;
-      margin-left: 17px;
-    `};
+const FakeCheckboxInner = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+`;
 
-    ${buttonSize === 'large' && css`
-      font-size: 18px;
-      margin-left: 20px;
-    `};
-  `};
+const CheckMarkWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    display: block;
+    [stroke]{
+      stroke: transparent;
+    }
+    [fill] {
+      fill: ${({ theme }) => theme.colors.icons.inverse};
+    }
+  }
+`;
+
+const FakeRadioButton = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  user-select: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  border-style: solid;
+`;
+
+const FakeInnerRadio = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  user-select: none;
 `;
 
 const Container = styled.div<{ disabled: boolean, selected: boolean }>`
@@ -39,86 +78,99 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
   align-items: center;
   height: 100%;
   width: 100%;
-  ${({ theme, selected }) => theme && css`
+
+  ${({ theme: { styles }, selected, disabled }) => styles && css`
+    ${FakeCheckbox}, ${FakeRadioButton} {
+      ${styles.form.checkbox.unchecked.default};
+    }
 
     &:hover {
       cursor: pointer;
-      color: pink;
-      ${StyledLabel} {
-        color: ${theme.styles.form.checkbox.checked.hover.backgroundColor};
+      ${Title} {
+        color: ${styles.form.checkbox.checked.hover.backgroundColor};
+      }
+
+      ${FakeCheckbox} {
+        ${styles.form.checkbox.unchecked.hover};
+      }
+
+      ${FakeRadioButton} {
+        border-color: ${styles.form.checkbox.unchecked.hover.borderColor};
       }
     }
 
     ${selected && css`
-      ${StyledLabel} {
-        color: ${theme.styles.form.checkbox.checked.default.backgroundColor};
+      ${Title} {
+        color: ${styles.form.checkbox.checked.default.backgroundColor};
+      }
+      ${FakeCheckbox} {
+        ${styles.form.checkbox.checked.default};
+        border: none;
+      }
+
+      ${FakeRadioButton} {
+        border-color: ${styles.form.checkbox.checked.default.backgroundColor};
+        ${FakeInnerRadio} {
+          background-color: ${styles.form.checkbox.checked.default.backgroundColor};
+        }
+      }
+
+      &:hover {
+        ${FakeCheckbox}{
+          ${styles.form.checkbox.checked.hover};
+        }
+
+        ${FakeRadioButton} {
+          border-color: ${styles.form.checkbox.checked.hover.backgroundColor};
+          ${FakeInnerRadio} {
+            background-color: ${styles.form.checkbox.checked.hover.backgroundColor};
+          }
+        }
       }
     `};
 
+    ${disabled && css`
+      cursor: not-allowed;
+    `};
   `};
 `;
 
-const renderOption = (
-  id: string,
-  optionType: IInputOptionsType,
-  selected: boolean,
-  disabled: boolean,
-  value: string | number,
-  parentHover: boolean
-) => {
-  switch (optionType) {
-    case 'radio':
-      return <RadioButton {...{ id, disabled, value, parentHover }} currentChecked={selected ? value : undefined} />;
-
-    default:
-      return <StyledCheckbox {...{ id, disabled, parentHover }} checked={selected} />;
-  }
-
-};
-
 interface IFilterOption {
-  id: string
-  label: string
-  value: string |number
+  title: string
+  value: string | number
   optionType?: IInputOptionsType
-  buttonSize?: TypeButtonSizes
   selected?: boolean
   disabled?: boolean
   onClick?: () => void
 }
 
 const FilterOption: React.FC<IFilterOption> = ({
-  id,
-  label,
+  title,
   value,
   optionType = "text",
   selected = false,
   disabled = false,
-  buttonSize = 'small',
   onClick = () => { },
   ...props
 }) => {
 
-  const [parentHover, setParentHover] = useState<boolean>(false);
-
-  const handleMouseEnter = useCallback(() => {
-    setParentHover(true);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setParentHover(false);
-  }, []);
+  const iconWeight: number = dimensions.icons.weights['regular'];
 
   return (
 
     <Container
-      {...{ onClick, disabled, selected, id }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      {...{ onClick, disabled, selected}}
       {...props}
     >
-      {(optionType !== 'text') && renderOption(id, optionType, selected, disabled, value, parentHover)}
-      <StyledLabel htmlFor={id} {...{ buttonSize }}>{label}</StyledLabel>
+      {(optionType === 'checkbox') && (
+        <FakeCheckbox>
+          <FakeCheckboxInner>
+            {selected && <CheckMarkWrapper><CheckMark color='inverse' stroke='inverse' size={12} weight={iconWeight} /></CheckMarkWrapper>}
+          </FakeCheckboxInner>
+        </FakeCheckbox>
+      )}
+      {(optionType === 'radio') && <FakeRadioButton><FakeInnerRadio /></FakeRadioButton>}
+      <Title>{title}</Title>
     </Container>
   );
 };

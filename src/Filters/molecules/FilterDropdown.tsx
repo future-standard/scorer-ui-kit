@@ -455,8 +455,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                     return (
                       <StyledFilterOption
                         key={`select-${text}`}
-                        id={`select-${text}`}
-                        label={text.toString()}
+                        title={text}
                         onClick={() => handleSelection(item)}
                         selected={isValueSelected(item, selected)}
                         {...{ optionType, value }}
