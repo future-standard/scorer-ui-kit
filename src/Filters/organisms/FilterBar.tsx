@@ -5,6 +5,7 @@ import { IInputOptionsType } from '../../Form';
 import FilterInputs, { IFilterDropdownExt, ISearchFilter } from '../molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
 import isequal from 'lodash.isequal';
+import debounce from 'lodash.debounce';
 
 const Title = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -187,6 +188,9 @@ const FilterBar: React.FC<IFilterBar> = ({
     dropdownsConfigRef.current = dropdownsConfig;
   }
 
+  // saves a reference of the debounce Change
+  const debounceSearcher = useRef(debounce(updatedFilters => handleChange(updatedFilters), 600)).current;
+
   const handleChange = useCallback((newValues: IFilterResult[]) => {
     const notNullValues = newValues.filter((filter) => filter.selected !== null);
     onChangeCallback(notNullValues);
@@ -206,18 +210,17 @@ const FilterBar: React.FC<IFilterBar> = ({
   }, [handleChange]);
 
   const handleSearchers = useCallback((newValue: string, filterId: string) => {
-    setFiltersValues((prev) => {
-      const updatedFilters = [...prev];
-      const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
-      if (foundFilter) {
-        foundFilter.selected = newValue === '' ? null : { text: newValue, value: newValue };
-        handleChange(updatedFilters);
-        return updatedFilters;
-      }
-      return prev;
-    });
 
-  }, [handleChange]);
+    const updatedFilters = [...filtersValues];
+    const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
+    if (foundFilter) {
+      foundFilter.selected = newValue === '' ? null : { text: newValue, value: newValue };
+    }
+
+    debounceSearcher(updatedFilters);
+    setFiltersValues(updatedFilters);
+
+  }, [debounceSearcher, filtersValues]);
 
   const handleOnClear = useCallback(() => {
     setFiltersValues((prev) => {
