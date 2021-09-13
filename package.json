@@ -42,6 +42,7 @@
     "@svgr/cli": "^5.4.0",
     "@types/jest": "^25.1.4",
     "@types/lodash.defaultsdeep": "^4.6.6",
+    "@types/lodash.isequal": "^4.5.0",
     "@types/node": "^13.13.4",
     "@types/react": "^16.9.34",
     "@types/react-router-dom": "^5.1.5",
@@ -80,7 +81,8 @@
     "@types/react-dom": "^17.0.0",
     "date-fns": "^2.16.1",
     "immutability-helper": "^3.1.1",
-    "lodash.defaultsdeep": "^4.6.1"
+    "lodash.defaultsdeep": "^4.6.1",
+    "lodash.isequal": "^4.5.0"
   },
   "directories": {
     "example": "example"

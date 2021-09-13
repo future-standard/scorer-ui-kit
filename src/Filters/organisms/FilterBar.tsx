@@ -1,9 +1,10 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem } from '../FilterTypes';
 import { IInputOptionsType } from '../../Form';
 import FilterInputs, { IFilterDropdownExt, ISearchFilter } from '../molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
+import isequal from 'lodash.isequal';
 
 const Title = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -179,6 +180,13 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   const [filtersValues, setFiltersValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig));
 
+  const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
+
+  // Prevents renders
+  if (dropdownsConfigRef.current && !isequal(dropdownsConfigRef.current, dropdownsConfig)) {
+    dropdownsConfigRef.current = dropdownsConfig;
+  }
+
   const handleChange = useCallback((newValues: IFilterResult[]) => {
     const notNullValues = newValues.filter((filter) => filter.selected !== null);
     onChangeCallback(notNullValues);
@@ -248,19 +256,17 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   /**
    * This use Effect will update filters text selections in case the language is changed.
-   * this solution could be improved to reduce re-renders.
-   * Dropdowns are the only ones that required this because Inputs text are the user typing
-   *
+   * Dropdowns are the only ones that required this because Inputs text are the user type data.
    */
   useEffect(() => {
     let mountConfig = true;
 
-    if (mountConfig) {
+    if (mountConfig && dropdownsConfigRef.current) {
       setFiltersValues((prev) => {
         const updatedFilters = [...prev];
         updatedFilters.forEach((filter: IFilterResult) => {
 
-          const foundDropdown = dropdownsConfig.find((dropdown) => dropdown.id === filter.id);
+          const foundDropdown = dropdownsConfigRef.current.find((dropdown) => dropdown.id === filter.id);
 
           if (foundDropdown) {
 
@@ -293,7 +299,8 @@ const FilterBar: React.FC<IFilterBar> = ({
     return () => {
       mountConfig = false;
     };
-  }, [dropdownsConfig]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dropdownsConfigRef.current]);
 
   return (
     <Container {...props}>
@@ -305,11 +312,11 @@ const FilterBar: React.FC<IFilterBar> = ({
           showLessText,
         }}
         searchFilters={createSearchers(searchersConfig, filtersValues, handleSearchers)}
-        dropdownFilters={createDropdownFilters(dropdownsConfig, filtersValues, handleSelected)}
+        dropdownFilters={createDropdownFilters(dropdownsConfigRef.current, filtersValues, handleSelected)}
       />
       <StyledFilterResults
         {...{ resultTextTemplate, clearText, totalResults }}
-        labelLists={createLabelResults(searchersConfig, dropdownsConfig, filtersValues)}
+        labelLists={createLabelResults(searchersConfig, dropdownsConfigRef.current, filtersValues)}
         onClearAll={handleOnClear}
         onRemoveFilter={handleOnRemoveFilter}
       />

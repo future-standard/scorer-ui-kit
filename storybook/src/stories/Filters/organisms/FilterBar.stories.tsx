@@ -63,10 +63,45 @@ margin: 60px 0 20px 0
 
 const dataInitialState = sortDataBy(tableData, 'deviceName', true);
 
+
+const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleData[]): ITableSampleData[] => {
+
+  if (Array.isArray(currentSelected) && (currentSelected.length > 0)) {
+    const filteredData: ITableSampleData[] = currentSelected.reduce((accumulator, currentFilter) => {
+      if (currentFilter.id === 'dropdownForStatus') {
+        return filterByStatus(accumulator, currentFilter.selected);
+      }
+
+      if (currentFilter.id === 'priceFilter') {
+        return filterByPrice(accumulator, currentFilter.selected);
+      }
+
+      if (currentFilter.id === 'inputForDeviceName') {
+        return filterByName(accumulator, currentFilter.selected);
+      }
+
+      if (currentFilter.id === 'inputForDate') {
+        return filterByCreationDate(accumulator, currentFilter.selected);
+      }
+
+      return accumulator;
+    }, data);
+
+    return filteredData;
+  }
+
+  return data;
+}
+
+/**
+ * Filter Bar Story Starts
+ */
+
 export const _FilterBar = () => {
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
   const [rows, setRows] = useState<ITypeTableData>(rowMaker(dataInitialState));
+  const [filters, setFilters] = useState<IFilterResult[]>([]);
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked: boolean, id?: string | number) => {
@@ -97,15 +132,6 @@ export const _FilterBar = () => {
     setData(sortedData);
 
   }, [data]);
-
-  useEffect(() => {
-    const newData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
-    setData(newData);
-  }, [language])
-
-  useEffect(() => {
-    setRows(rowMaker(data));
-  }, [data])
 
   const searchers: ISearchFilter[] = [
     {
@@ -159,33 +185,25 @@ export const _FilterBar = () => {
 
     if (currentSelected.length === 0) {
       setData(localData);
-    }
-
-    if (Array.isArray(currentSelected) && (currentSelected.length > 0)) {
-      const filteredData: ITableSampleData[] = currentSelected.reduce((accumulator, currentFilter) => {
-        if (currentFilter.id === 'dropdownForStatus') {
-          return filterByStatus(accumulator, currentFilter.selected);
-        }
-
-        if (currentFilter.id === 'priceFilter') {
-          return filterByPrice(accumulator, currentFilter.selected);
-        }
-
-        if (currentFilter.id === 'inputForDeviceName') {
-          return filterByName(accumulator, currentFilter.selected);
-        }
-
-        if (currentFilter.id === 'inputForDate') {
-          return filterByCreationDate(accumulator, currentFilter.selected);
-        }
-
-        return accumulator;
-      }, tempData);
-
+      setFilters([])
+    }else {
+      const filteredData = getFilteredData(currentSelected, tempData);
       setData(filteredData);
+      setFilters(currentSelected);
     }
 
   }, [filtersValues, language])
+
+
+  useEffect(() => {
+    const localizeData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
+    const newData = getFilteredData(filters, localizeData);
+    setData(newData);
+  }, [filters, language])
+
+  useEffect(() => {
+    setRows(rowMaker(data));
+  }, [data])
 
   return (
     <Container>
@@ -198,8 +216,8 @@ export const _FilterBar = () => {
         showMoreText={language === 'english' ? showMoreEng : showMoreJp}
         showLessText={language === 'english' ? showLessEng : showLessJp}
         filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}
-        resultTextTemplate = {language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
-        clearText = {language === 'english' ? clearEng : clearJp}
+        resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
+        clearText={language === 'english' ? clearEng : clearJp}
       />
       <TypeTableWrapper>
         <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}
