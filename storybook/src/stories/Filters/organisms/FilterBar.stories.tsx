@@ -190,7 +190,8 @@ export const _FilterBar = () => {
   return (
     <Container>
       <FilterBar
-        {...{ searchersConfig, dropdownsConfig }}
+        searchersConfig={searchers}
+        dropdownsConfig={dropdowns}
         onChangeCallback={handleFilters}
         totalResults={rows.length}
         hasShowMore={hasShowMore}

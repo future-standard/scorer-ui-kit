@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem } from '../FilterTypes';
 import { IInputOptionsType } from '../../Form';
@@ -177,7 +177,7 @@ const FilterBar: React.FC<IFilterBar> = ({
   ...props
 }) => {
 
-  const [filtersValues, setFilterValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig));
+  const [filtersValues, setFiltersValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig));
 
   const handleChange = useCallback((newValues: IFilterResult[]) => {
     const notNullValues = newValues.filter((filter) => filter.selected !== null);
@@ -185,7 +185,7 @@ const FilterBar: React.FC<IFilterBar> = ({
   }, [onChangeCallback]);
 
   const handleSelected = useCallback((newValue: IFilterValue, filterId: string) => {
-    setFilterValues((prev) => {
+    setFiltersValues((prev) => {
       const updatedFilters = [...prev];
       const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
       if (foundFilter) {
@@ -198,7 +198,7 @@ const FilterBar: React.FC<IFilterBar> = ({
   }, [handleChange]);
 
   const handleSearchers = useCallback((newValue: string, filterId: string) => {
-    setFilterValues((prev) => {
+    setFiltersValues((prev) => {
       const updatedFilters = [...prev];
       const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
       if (foundFilter) {
@@ -212,7 +212,7 @@ const FilterBar: React.FC<IFilterBar> = ({
   }, [handleChange]);
 
   const handleOnClear = useCallback(() => {
-    setFilterValues((prev) => {
+    setFiltersValues((prev) => {
       const updatedFilters = [...prev];
       updatedFilters.forEach((filterElement) => {
         if (filterElement.selected === null) {
@@ -227,7 +227,7 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   const handleOnRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem) => {
 
-    setFilterValues((prev) => {
+    setFiltersValues((prev) => {
       const updatedFilters = [...prev];
 
       const foundFilter = updatedFilters.find((filterElement) => filterElement.id === filterId);
@@ -246,6 +246,54 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   }, [handleChange]);
 
+  /**
+   * This use Effect will update filters text selections in case the language is changed.
+   * this solution could be improved to reduce re-renders.
+   * Dropdowns are the only ones that required this because Inputs text are the user typing
+   *
+   */
+  useEffect(() => {
+    let mountConfig = true;
+
+    if (mountConfig) {
+      setFiltersValues((prev) => {
+        const updatedFilters = [...prev];
+        updatedFilters.forEach((filter: IFilterResult) => {
+
+          const foundDropdown = dropdownsConfig.find((dropdown) => dropdown.id === filter.id);
+
+          if (foundDropdown) {
+
+            if (Array.isArray(filter.selected)) {
+              filter.selected.forEach(item => {
+                const foundItem = foundDropdown.list.find((dropdownItem) => dropdownItem.value === item.value);
+
+                if (foundItem) {
+                  item.text = foundItem.text;
+                }
+              });
+            } else if (isFilterItem(filter.selected)) {
+              const foundItem = foundDropdown.list.find((item: IFilterItem) => {
+                return filter.selected === null
+                  ? false
+                  : isFilterItem(filter.selected) ? item.value === filter.selected.value : false;
+              });
+
+              if (foundItem) {
+                filter.selected.text = foundItem.text;
+              }
+            }
+          }
+        });
+
+        return updatedFilters;
+      });
+    }
+
+    return () => {
+      mountConfig = false;
+    };
+  }, [dropdownsConfig]);
 
   return (
     <Container {...props}>

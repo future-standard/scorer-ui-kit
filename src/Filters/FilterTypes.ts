@@ -2,6 +2,15 @@
 // https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
 export const isFilterItem = (item: any): item is IFilterItem => {
   if (item === null) { return false; }
+
+  if (item.value === null) {
+    return false;
+  }
+
+  if (item.text === null) {
+    return false;
+  }
+
   return ((typeof item.value === 'number') || (typeof item.value === 'string')) && (typeof item.text === 'string');
 };
 
