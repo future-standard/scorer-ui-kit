@@ -183,12 +183,12 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
 
-  // Prevents renders
+  // Prevents extra-renders only updating if the dropdowns config actually changed
   if (dropdownsConfigRef.current && !isequal(dropdownsConfigRef.current, dropdownsConfig)) {
     dropdownsConfigRef.current = dropdownsConfig;
   }
 
-  // saves a reference of the debounce Change
+  // saves a reference of the debounce for searchers
   const debounceSearcher = useRef(debounce(updatedFilters => handleChange(updatedFilters), 600)).current;
 
   const handleChange = useCallback((newValues: IFilterResult[]) => {
