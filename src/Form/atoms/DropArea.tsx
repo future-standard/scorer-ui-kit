@@ -22,10 +22,10 @@ const DragAndDrop = styled.div<{inDropZone: boolean}>`
 interface IDropArea {
   height?: string
   text?: string
-  dropCallback?: (newFiles: FileList) => void 
+  dropCallback?: (newFiles: FileList) => void
 }
 
-const DropArea : React.FC<IDropArea> = ({height, text, dropCallback}) => {
+const DropArea : React.FC<IDropArea> = ({height, text, dropCallback, ...props}) => {
   const [inDropZone, setInDropZone] = useState(false);
 
 const onDragEnter = useCallback((e) => {
@@ -58,7 +58,7 @@ const onDrop = useCallback((e ) => {
 },[dropCallback]);
 
   return(
-    <Container height={height}>
+    <Container height={height} {...props}>
       <DragAndDrop
         {...{
           inDropZone,
