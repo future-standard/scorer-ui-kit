@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "/scorer-ui-kit/static/js/main.c70f6976.chunk.js",
-    "main.js.map": "/scorer-ui-kit/static/js/main.c70f6976.chunk.js.map",
+    "main.js": "/scorer-ui-kit/static/js/main.2dc4219e.chunk.js",
+    "main.js.map": "/scorer-ui-kit/static/js/main.2dc4219e.chunk.js.map",
     "runtime-main.js": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js",
     "runtime-main.js.map": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js.map",
-    "static/js/2.07b09e6f.chunk.js": "/scorer-ui-kit/static/js/2.07b09e6f.chunk.js",
-    "static/js/2.07b09e6f.chunk.js.map": "/scorer-ui-kit/static/js/2.07b09e6f.chunk.js.map",
+    "static/js/2.b13be410.chunk.js": "/scorer-ui-kit/static/js/2.b13be410.chunk.js",
+    "static/js/2.b13be410.chunk.js.map": "/scorer-ui-kit/static/js/2.b13be410.chunk.js.map",
     "index.html": "/scorer-ui-kit/index.html",
-    "precache-manifest.949fd17a0cec8bd27acec7e20c3f9b06.js": "/scorer-ui-kit/precache-manifest.949fd17a0cec8bd27acec7e20c3f9b06.js",
+    "precache-manifest.2d7076683c185bdc34cd94215707058b.js": "/scorer-ui-kit/precache-manifest.2d7076683c185bdc34cd94215707058b.js",
     "service-worker.js": "/scorer-ui-kit/service-worker.js",
-    "static/js/2.07b09e6f.chunk.js.LICENSE.txt": "/scorer-ui-kit/static/js/2.07b09e6f.chunk.js.LICENSE.txt",
+    "static/js/2.b13be410.chunk.js.LICENSE.txt": "/scorer-ui-kit/static/js/2.b13be410.chunk.js.LICENSE.txt",
     "static/media/Lato-Bold.ttf": "/scorer-ui-kit/static/media/Lato-Bold.2d15decc.ttf",
     "static/media/Lato-Light.ttf": "/scorer-ui-kit/static/media/Lato-Light.0f73589a.ttf",
     "static/media/Lato-Regular.ttf": "/scorer-ui-kit/static/media/Lato-Regular.c5eb5440.ttf",
@@ -39,7 +39,7 @@
   },
   "entrypoints": [
     "static/js/runtime-main.1ec9fcf8.js",
-    "static/js/2.07b09e6f.chunk.js",
-    "static/js/main.c70f6976.chunk.js"
+    "static/js/2.b13be410.chunk.js",
+    "static/js/main.2dc4219e.chunk.js"
   ]
 }
