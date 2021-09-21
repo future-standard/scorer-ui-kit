@@ -5,9 +5,9 @@ import FilterDropdown, { IFilterDropdown } from '../../Filters/molecules/FilterD
 import FilterButton from '../../Filters/atoms/FilterButton';
 
 const SearchInputWrapper = styled.div`
-  width: 214px;
   background-color: hsl(0, 0%, 100%);
   border-radius: 3px;
+  flex: 1 1 200px;
 `;
 
 const StyledFilterButton = styled(FilterButton)``;
