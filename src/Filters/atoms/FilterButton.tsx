@@ -62,8 +62,6 @@ const InnerContainer = styled.div`
     align-items: center;
 `;
 
-const ArrowIcon = styled(Icon)``;
-
 const ButtonText = styled.div<{hasFlipArrow: boolean }>`
   padding-right: ${({hasFlipArrow}) => hasFlipArrow ? '3px' : '20px'};
 `;
@@ -92,7 +90,7 @@ const FilterButton: React.FC<IFilterButton> = ({
           size={12}
         />
         <ButtonText {...{hasFlipArrow }}>{children}</ButtonText>
-        {hasFlipArrow && <ArrowIcon icon={isOpen ? 'Up' : 'Down'} size={8} />}
+        {hasFlipArrow && <Icon icon={isOpen ? 'Up' : 'Down'} size={8} />}
       </InnerContainer>
     </StyledButton>
   );
