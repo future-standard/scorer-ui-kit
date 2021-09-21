@@ -1,4 +1,4 @@
-import React, {useCallback, InputHTMLAttributes } from 'react';
+import React, { useCallback, InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 
 const InnerRadio = styled.div`
@@ -8,7 +8,7 @@ const InnerRadio = styled.div`
   user-select: none;
 `;
 
-const OuterRadio = styled.label<{ isChecked: boolean, disabled: boolean}>`
+const OuterRadio = styled.div<{ isChecked: boolean, disabled: boolean }>`
   position: absolute;
   display: flex;
   align-items: center;
@@ -20,7 +20,7 @@ const OuterRadio = styled.label<{ isChecked: boolean, disabled: boolean}>`
   border-style: solid;
   user-select: none;
 
-  ${({ theme: { styles }, isChecked, disabled}) => styles && css`
+  ${({ theme: { styles }, isChecked, disabled }) => styles && css`
     border-color: ${styles.form.checkbox.unchecked.default.borderColor};
 
     ${!disabled && css`
@@ -114,7 +114,7 @@ const RadioButton: React.FC<IRadioButton> = ({
         checked={isChecked}
         onChange={handleChange}
       />
-      <OuterRadio {...{ isChecked, disabled}} htmlFor={id}>
+      <OuterRadio {...{ isChecked, disabled }}>
         <InnerRadio />
       </OuterRadio>
     </Container>
