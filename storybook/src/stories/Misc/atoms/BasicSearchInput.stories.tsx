@@ -21,6 +21,7 @@ export const _BasicSearchInput = () => {
   const hasBorder = boolean('Has border', true);
   const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle"}, "subtle");
   const iconSize = number('Icon size', 11);
+  const disabled = boolean('Disabled', false)
 
   const handleChange = useCallback((e) => {
     const { value } = e.target;
@@ -33,7 +34,7 @@ export const _BasicSearchInput = () => {
       <BasicSearchInput
         placeholder={inputPlaceholder}
         onChange={handleChange}
-        {...{hasBorder, color, iconSize}}
+        {...{hasBorder, color, iconSize, disabled}}
       />
     </Container>
   )
