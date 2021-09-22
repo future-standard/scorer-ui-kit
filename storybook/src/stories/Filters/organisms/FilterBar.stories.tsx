@@ -172,6 +172,7 @@ export const _FilterBar = () => {
     }
   ]
 
+  const allowMultiFilter = boolean('Allow Multi Filter', false);
   const hasShowMore = boolean('Has Show More', true);
   const searchersConfig = object('Search Filters', searchers);
   const dropdownsConfig = object('DropdownFilters', dropdowns);
@@ -208,11 +209,11 @@ export const _FilterBar = () => {
   return (
     <Container>
       <FilterBar
+        {...{allowMultiFilter, hasShowMore }}
         searchersConfig={searchers}
         dropdownsConfig={dropdowns}
         onChangeCallback={handleFilters}
         totalResults={rows.length}
-        hasShowMore={hasShowMore}
         showMoreText={language === 'english' ? showMoreEng : showMoreJp}
         showLessText={language === 'english' ? showLessEng : showLessJp}
         filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}

@@ -23,9 +23,28 @@ const Container = styled.div`
   }
 `;
 
+const getDisableValue = (
+  filtersValues: IFilterResult[],
+  allowMultiFilter: boolean,
+  filter: ISearchFilter | IFilterDropdownConfig,
+) => {
+  let disabled = false;
+
+  if (filter.disabled) {
+    disabled = filter.disabled;
+  } else if (!allowMultiFilter) {
+    const notNullValues = filtersValues.filter((filter) => filter.selected !== null);
+    if (notNullValues) {
+      disabled = (notNullValues.length > 1 || (notNullValues[0] && notNullValues[0].id !== filter.id));
+    }
+  }
+  return disabled;
+};
+
 const createDropdownFilters = (
   dropdownsConfig: IFilterDropdownConfig[],
   filtersValues: IFilterResult[],
+  allowMultiFilter: boolean,
   handleSelected: (newValue: IFilterValue, filterId: string) => void
 ): IFilterDropdownExt[] => {
 
@@ -35,7 +54,8 @@ const createDropdownFilters = (
     if (filter) {
       const selected = filter.selected;
       const onSelect = (newSelection: IFilterValue) => { handleSelected(newSelection, filter.id); };
-      const newDropdown: IFilterDropdownExt = { ...dropdown, selected, onSelect };
+      let disabled = getDisableValue(filtersValues, allowMultiFilter, filter);
+      const newDropdown: IFilterDropdownExt = { ...dropdown, selected, disabled, onSelect };
       dropdownFilters.push(newDropdown);
     }
   });
@@ -45,7 +65,8 @@ const createDropdownFilters = (
 const createSearchers = (
   searchersConfig: ISearchFilter[],
   filtersValues: IFilterResult[],
-  handleSearchers: (newValue: string, filterId: string) => void
+  allowMultiFilter: boolean,
+  handleSearchers: (newValue: string, filterId: string) => void,
 ): ISearchFilter[] => {
   const searchersFilters: ISearchFilter[] = [];
 
@@ -59,7 +80,9 @@ const createSearchers = (
         handleSearchers(newValue, filter.id);
       };
 
-      const newSearcher: ISearchFilter = { ...searcher, value, onChange };
+      let disabled = getDisableValue(filtersValues, allowMultiFilter, filter);
+
+      const newSearcher: ISearchFilter = { ...searcher, value, disabled, onChange };
       searchersFilters.push(newSearcher);
     }
   });
@@ -162,6 +185,7 @@ interface IFilterBar {
   totalResults: number
   clearText?: string
   isLoading?: boolean
+  allowMultiFilter?: boolean
   onChangeCallback?: (currentSelected: IFilterResult[]) => void
 }
 
@@ -175,12 +199,12 @@ const FilterBar: React.FC<IFilterBar> = ({
   resultTextTemplate,
   clearText,
   totalResults,
+  allowMultiFilter = false,
   onChangeCallback = () => { },
   ...props
 }) => {
 
   const [filtersValues, setFiltersValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig));
-
   const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
 
   // Prevents extra-renders only updating if the dropdowns config actually changed
@@ -314,8 +338,8 @@ const FilterBar: React.FC<IFilterBar> = ({
           showMoreText,
           showLessText,
         }}
-        searchFilters={createSearchers(searchersConfig, filtersValues, handleSearchers)}
-        dropdownFilters={createDropdownFilters(dropdownsConfigRef.current, filtersValues, handleSelected)}
+        searchFilters={createSearchers(searchersConfig, filtersValues, allowMultiFilter, handleSearchers)}
+        dropdownFilters={createDropdownFilters(dropdownsConfigRef.current, filtersValues, allowMultiFilter, handleSelected)}
       />
       <StyledFilterResults
         {...{ resultTextTemplate, clearText, totalResults }}
