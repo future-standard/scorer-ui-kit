@@ -21,9 +21,9 @@ const Container = styled.div`
   }
 `;
 
-const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdowns: boolean) => {
+const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdowns: boolean, hasShowMore: boolean) => {
   return dropdownFilters.map((dropdown: IFilterDropdownExt) => {
-    if (!dropdown.canHide || !showMoreDropdowns) {
+    if (!dropdown.canHide || !showMoreDropdowns || (dropdown.canHide && !hasShowMore)) {
       return <StyledDropdown key={`dropdownFilter-id-${dropdown.id}`} {...dropdown} />;
     }
     return null;
@@ -123,7 +123,7 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   return (
     <Container {...{props}}>
       {renderSearchInputs(searchFilters, visibleSearchInputs)}
-      {renderDropdowns(dropdownFilters, showMoreDropdowns)}
+      {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
       {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
