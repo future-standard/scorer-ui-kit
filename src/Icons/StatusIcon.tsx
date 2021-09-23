@@ -53,7 +53,7 @@ const StatusIcon: React.FC<IStatusIcon> = ({icon, status, counter}) => {
       {status && (counter === undefined)
         ? <StatusDot color={status} />
         :  (counter === undefined) ? null : <StatusCounter color={status}>{counter}</StatusCounter>}
-      <Icon icon={icon} size={status && (counter === undefined) ? 14 : 18} color='dimmed' />
+      <Icon icon={icon} size={18} color='dimmed' />
     </Container>
   );
 };
