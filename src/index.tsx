@@ -41,12 +41,27 @@ import {
   AvatarUploader,
   SelectField,
   SelectWrapper,
+  RadioButton,
 } from './Form';
 
 // Components - Filter
 import {
   DatePicker,
-  FilterDropdownContainer
+  FilterDropdownContainer,
+  FilterButton,
+  FilterDropdown,
+  FilterInputs,
+  ISearchFilter,
+  IFilterDropdownExt,
+  FiltersResults,
+  IFilterLabel,
+  FilterBar,
+  IFilterDropdownConfig,
+  IFilterType,
+  IFilterItem,
+  IFilterValue,
+  IFilterResult,
+  isFilterItem,
 } from './Filters';
 
 import Icon, { IconSVGs } from './Icons/Icon';
@@ -86,15 +101,15 @@ import {
 } from './PTZControl';
 
 // Misc
-  import {
-    Tag,
-    TagList,
-    ITag,
-    ITagList,
-    TagListWrapper,
-    MediaBox,
-    BasicSearchInput,
-  } from './Misc';
+import {
+  Tag,
+  TagList,
+  ITag,
+  ITagList,
+  TagListWrapper,
+  MediaBox,
+  BasicSearchInput,
+} from './Misc';
 
 import {
   ConfirmationModal,
@@ -198,6 +213,7 @@ export {
   AvatarUploader,
   SelectField,
   SelectWrapper,
+  RadioButton,
 
   // Modals
   ConfirmationModal,
@@ -205,6 +221,12 @@ export {
   // Filters
   DatePicker,
   FilterDropdownContainer,
+  FilterButton,
+  FilterDropdown,
+  FilterInputs,
+  FiltersResults,
+  FilterBar,
+  isFilterItem,
 
   //Icon
   Icon,
@@ -221,8 +243,9 @@ export {
   Controls,
   PTZProvider,
   PTZContext,
-  PTZReducer, //shouldn't be needed usually; use provider instead
-  usePTZ, //shouldn't be needed usually; use provider instead
+  PTZReducer,
+  usePTZ,
+
 
   // Tables
   TypeTable,
@@ -277,7 +300,7 @@ export {
   useNotification,
   ModalContext,
   ModalProvider,
-  useModal,
+  useModal
 };
 
 /**
@@ -285,12 +308,8 @@ export {
  */
 export type IFeedbackColor = 'error' | 'warning' | 'info' | 'success' | 'neutral';
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
-
 export type IMediaType = 'img' | 'video'
-
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
-
-
 
 export type {
   IModal,
@@ -302,5 +321,13 @@ export type {
   INotificationItem,
   INotificationsHistory,
   ICustomDrawer,
+  ISearchFilter,
+  IFilterDropdownExt,
+  IFilterLabel,
+  IFilterDropdownConfig,
   ITabIcon,
+  IFilterType,
+  IFilterItem,
+  IFilterValue,
+  IFilterResult,
 };
