@@ -19,10 +19,7 @@ import {
   columnConfigSampleJp,
   statusValuesEng,
   statusValuesJp,
-  loadingTagsEnglish,
-  loadingTagsJapanese,
-  searchPlaceholderEnglish,
-  searchPlaceholderJapanese,
+  genericLoadingJp,
   searchTemplateResultEnglish,
   searchTemplateResultJapanese,
   costRangeEng,
@@ -155,8 +152,8 @@ export const _FilterBar = () => {
       list: language === 'english' ? statusValuesEng : statusValuesJp,
       buttonIcon: 'Camera',
       optionType: 'checkbox',
-      loadingText: language === 'english' ? loadingTagsEnglish : loadingTagsJapanese,
-      searchPlaceholder: language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
+      loadingText: language === 'english' ? 'Loading Status ...' : genericLoadingJp,
+      searchPlaceholder: language === 'english' ? 'Status...' : 'ステータス...',
       searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
     },
     {
@@ -166,15 +163,17 @@ export const _FilterBar = () => {
       list: language === 'english' ? costRangeEng : costRangeJap,
       buttonIcon: 'Usage',
       optionType: 'radio',
-      loadingText: language === 'english' ? loadingTagsEnglish : loadingTagsJapanese,
-      searchPlaceholder: language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
+      loadingText: language === 'english' ? 'Loading Cost...' : genericLoadingJp,
+      searchPlaceholder: language === 'english' ? 'Cost...' : '価格...',
       searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
     }
   ]
 
   const allowMultiFilter = boolean('Allow Multi Filter', false);
   const hasShowMore = boolean('Has Show More', true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const searchersConfig = object('Search Filters', searchers);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dropdownsConfig = object('DropdownFilters', dropdowns);
   const filtersValues = action('onChangeCallback');
 

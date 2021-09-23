@@ -16,7 +16,7 @@ import {
 
 import {
   loadingTagsEnglish,
-  loadingTagsJapanese,
+  genericLoadingJp,
   searchPlaceholderEnglish,
   searchPlaceholderJapanese,
   searchTemplateResultEnglish,
@@ -173,7 +173,7 @@ export const _FilterInputs = () => {
       buttonText: 'Department',
       buttonIcon: 'MetaCategories',
       list: depList,
-      loadingText: language === 'english' ? loadingTagsEnglish : loadingTagsJapanese,
+      loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
       searchPlaceholder: language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
       searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
       onSelect: handleCategorySelected,
@@ -185,8 +185,8 @@ export const _FilterInputs = () => {
       buttonText: language === 'english' ? 'Menu' : 'メニュー',
       buttonIcon: 'Zone',
       list: language === 'english' ? englishDataList : japaneseDataList,
-      loadingText: language === 'english' ? loadingTagsEnglish : loadingTagsJapanese,
-      searchPlaceholder: language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
+      loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
+      searchPlaceholder: language === 'english' ? 'Menu options...' : 'メニュー...',
       searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
       optionType: 'checkbox',
       onSelect: handleSelectItemType,
@@ -215,7 +215,6 @@ export const _FilterInputs = () => {
       id: 'search3',
       placeholder: 'Search by Item Id',
       showFieldText: 'Search Example String Field',
-      canHide: true,
       value: exampleSearch,
       name: 'Example',
       onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search3')}

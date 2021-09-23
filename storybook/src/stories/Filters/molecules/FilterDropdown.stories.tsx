@@ -14,7 +14,7 @@ import {
   searchPlaceholderJapanese,
   searchPlaceholderEnglish,
   loadingTagsEnglish,
-  loadingTagsJapanese,
+  genericLoadingJp,
 } from '../../helpers/data_samples';
 
 export default {
@@ -160,7 +160,7 @@ export const _FilterDropdown = () => {
         selected={baseSelected}
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
         searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
-        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
+        loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
       />
     </Wrapper>
     <Wrapper key='eje-1'>
@@ -180,8 +180,8 @@ export const _FilterDropdown = () => {
         optionType={optionType}
         onSelect={handleSelectItemType}
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
-        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
-        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
+        searchPlaceholder={language === 'english' ? 'Menu options...' : 'メニュー...'}
+        loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
       />
     </Wrapper>
     <Divider />
@@ -202,9 +202,9 @@ export const _FilterDropdown = () => {
         selected={textArraySelected}
         onSelect={handleTextListSelect}
         optionType='text'
-        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
+        loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
-        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        searchPlaceholder={language === 'english' ? 'Spice options...' : 'ピリ辛...'}
       />
     </Wrapper>
     <Wrapper key='eje-3'>
@@ -224,9 +224,9 @@ export const _FilterDropdown = () => {
         selected={wordSelected}
         onSelect={handleWordSelect}
         optionType='radio'
-        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
+        loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp }
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
-        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        searchPlaceholder={language === 'english' ? 'Pay Methods...' : '支払方法...'}
       />
     </Wrapper>
     <Wrapper key='eje-4'>
@@ -246,8 +246,8 @@ export const _FilterDropdown = () => {
         list={yearList}
         onSelect={handleNumberListSelect}
         optionType='checkbox'
-        loadingText={language === 'english' ? loadingTagsEnglish : loadingTagsJapanese}
-        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
+        loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
+        searchPlaceholder={language === 'english' ? 'Years...' : '2020...'}
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
       />
     </Wrapper>

@@ -429,7 +429,7 @@ const searchPlaceholderJapanese = 'フィルタータグ...';
 const searchPlaceholderEnglish = 'Filter tags...';
 
 const loadingTagsEnglish = 'Loading Tags...';
-const loadingTagsJapanese = 'ローディング...';
+const genericLoadingJp = 'ローディング...';
 
 const showMoreEng = 'Show More';
 const showMoreJp = 'もっと見る';
@@ -455,7 +455,7 @@ export {
   searchPlaceholderJapanese,
   searchPlaceholderEnglish,
   loadingTagsEnglish,
-  loadingTagsJapanese,
+  genericLoadingJp,
   showMoreEng,
   showMoreJp,
   showLessEng,
