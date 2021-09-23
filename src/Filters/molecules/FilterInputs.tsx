@@ -129,7 +129,7 @@ const FilterInputs: React.FC<IFilterInputs> = ({
       {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
       {hasShowMore && (
         <FilterButton
-          icon='SwitchAccount'
+          icon='FilterEllipsis'
           onClick={toggleShowMore}
         >
           {showMoreDropdowns ? showMoreText : showLessText}
