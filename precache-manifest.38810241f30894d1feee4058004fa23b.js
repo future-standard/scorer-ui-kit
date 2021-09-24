@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8d091ad0ab8f281686e25d4bc31d154a",
+    "revision": "0373002b2f758bc4b3ae599806d042bb",
     "url": "/scorer-ui-kit/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/scorer-ui-kit/static/js/2.8520b104.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "c26265db65a832a64c41",
-    "url": "/scorer-ui-kit/static/js/main.c14f2133.chunk.js"
+    "revision": "0706adc6bcf36eb862d4",
+    "url": "/scorer-ui-kit/static/js/main.40e01eba.chunk.js"
   },
   {
     "revision": "283cd069f47daaf60567",
