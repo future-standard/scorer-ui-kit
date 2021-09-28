@@ -2,7 +2,7 @@ name: Deploy gh-pages
 
 on:
   push:
-    branches: [ 'main', 'demo']
+    branches: [ 'main', 'demo', 'deploy-test']
 
 jobs:
   deploy:
@@ -41,6 +41,7 @@ jobs:
         cd example
         npm install
         npm run build
+        date >> build/deployed.html
 
     - name: Build storybook
       run: |
