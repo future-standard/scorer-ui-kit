@@ -75,7 +75,7 @@ const getUpdateFiles = (newFiles: FileList, files: FileList | null, allowedFileT
 
   for (let index = 0; index < newFiles.length; index++) {
 
-    const isCorrectType = allowedFileTypes ? allowedFileTypes.includes(newFiles[index].type) : true;
+    const isCorrectType = (allowedFileTypes === undefined) || (allowedFileTypes.length === 0) ?  true : allowedFileTypes.includes(newFiles[index].type);
     if (isCorrectType) {
       newFilesTransfer.items.add(newFiles[index]);
     } else {
@@ -100,7 +100,7 @@ const getUpdateFiles = (newFiles: FileList, files: FileList | null, allowedFileT
   for (let index = 0; index < newFilesTransfer.files.length; index++) {
 
     const isAlready = fileNamesSet.has(newFilesTransfer.files[index].name);
-    const isCorrectType = allowedFileTypes ? allowedFileTypes.includes(newFiles[index].type) : true;
+    const isCorrectType = (allowedFileTypes === undefined) || (allowedFileTypes.length === 0) ?  true : allowedFileTypes.includes(newFiles[index].type);
 
     if (isAlready || !isCorrectType) {
       rejectedFilesTransfer.items.add(newFiles[index]);
