@@ -67,13 +67,65 @@ const FileIcons = styled.div`
   }
 `;
 
+const getUpdateFiles = (newFiles: FileList, files: FileList | null, allowedFileTypes?: string[]): IUploadedFiles  => {
+
+  // creates a newFiles variable to prevent errors with input
+  const newFilesTransfer = new DataTransfer();
+  const rejectedFilesTransfer = new DataTransfer();
+
+  for (let index = 0; index < newFiles.length; index++) {
+
+    const isCorrectType = allowedFileTypes ? allowedFileTypes.includes(newFiles[index].type) : true;
+    if (isCorrectType) {
+      newFilesTransfer.items.add(newFiles[index]);
+    } else {
+      rejectedFilesTransfer.items.add(newFiles[index]);
+    }
+  }
+
+  if (files === null) {
+    const result : IUploadedFiles = {goodFiles :newFilesTransfer.files, rejectedFiles: rejectedFilesTransfer.files };
+    return result;
+  }
+
+  const updatedFilesTransfer = new DataTransfer();
+  const fileNamesSet = new Set();
+
+  for (let index = 0; index < files.length; index++) {
+    updatedFilesTransfer.items.add(files[index]);
+    const name = files[index].name;
+    fileNamesSet.add(name);
+  }
+
+  for (let index = 0; index < newFilesTransfer.files.length; index++) {
+
+    const isAlready = fileNamesSet.has(newFilesTransfer.files[index].name);
+    const isCorrectType = allowedFileTypes ? allowedFileTypes.includes(newFiles[index].type) : true;
+
+    if (isAlready || !isCorrectType) {
+      rejectedFilesTransfer.items.add(newFiles[index]);
+    }else {
+      updatedFilesTransfer.items.add(newFilesTransfer.files[index]);
+    }
+  }
+  const result : IUploadedFiles = {goodFiles :updatedFilesTransfer.files, rejectedFiles: rejectedFilesTransfer.files };
+
+  return result;
+};
+
+interface IUploadedFiles  {
+  goodFiles: FileList
+  rejectedFiles: FileList
+}
+
 interface IAreaUploaderManager {
   title?: string
   description?: string
   fileIcons?: string[]
   selectFilesText?: string
   addMoreFilesText?: string
-  onChangeCallback?: (newFiles: FileList) => void
+  allowedFileTypes?: string[]
+  onChangeCallback?: (goodFiles: FileList, rejectedFiles: FileList) => void
 }
 
 const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
@@ -82,6 +134,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   fileIcons,
   selectFilesText = 'Select Files',
   addMoreFilesText = 'Add More Files',
+  allowedFileTypes,
   onChangeCallback = () => { },
 }) => {
 
@@ -90,29 +143,14 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   const handleFiles = useCallback((newFiles: FileList) => {
     console.log('files received', newFiles);
 
-    if ((newFiles !== null)) {
-      setFiles((prev) => {
-        if (prev === null) {
-          onChangeCallback(newFiles);
-          return newFiles;
-        }
-        const dataTransfer = new DataTransfer();
-
-        for (let index = 0; index < prev.length; index++) {
-          dataTransfer.items.add(prev[index]);
-        }
-
-        for (let index = 0; index < newFiles.length; index++) {
-          dataTransfer.items.add(newFiles[index]);
-        }
-
-        onChangeCallback(dataTransfer.files);
-        return dataTransfer.files;
-
-      });
+    if (newFiles === null) {
+      return;
     }
+    const {goodFiles, rejectedFiles} = getUpdateFiles(newFiles, files, allowedFileTypes);
+    setFiles(goodFiles);
+    onChangeCallback(goodFiles, rejectedFiles);
 
-  }, [onChangeCallback]);
+  }, [files, allowedFileTypes, onChangeCallback]);
 
   return (
     <Container>
