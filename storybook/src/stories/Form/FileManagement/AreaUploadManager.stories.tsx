@@ -22,6 +22,7 @@ export const _AreaUploadManager = () => {
   const title = text('Title', 'Select Files')
   const selectFilesText = text('Select Files Text', 'Select Files');
   const description = text('Description', 'To begin, drop your CSV and Images files here to continue or click Select Files below.');
+  const addMoreFilesText = text('Add More Files Text', 'Add More files')
   const fileIcons = object('File Icons', defaultIcons)
   const showValue = action('Input Callback');
   const allowedFileTypes = object('allowedFileTypes', fileTypes);
@@ -35,7 +36,7 @@ export const _AreaUploadManager = () => {
   return (
     <Container>
       <AreaUploadManager
-        {...{ selectFilesText, title, fileIcons, description, allowedFileTypes }}
+        {...{ selectFilesText, title, fileIcons, description, allowedFileTypes, addMoreFilesText }}
         onChangeCallback={inputCallback}
       />
     </Container>
