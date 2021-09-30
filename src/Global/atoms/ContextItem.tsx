@@ -36,14 +36,8 @@ const ContextIcon = styled.div<{ compact?: boolean }>`
   svg {
     display: block;
   }
-
-  ${({ compact }) => compact && css`
-    // width: 24px;
-    // height: 24px;
-    // flex: 0 0 24px;
-    // margin: 0 28px 0 28px;
-  `}
 `;
+
 const ContextIndicator = styled.div`
   width: 12px;
   height: 12px;
@@ -79,6 +73,39 @@ const ContextActionBaseCSS = css`
   outline: none;
   padding: 0;
   text-decoration: none;
+`;
+
+const StyledAnchor = styled.a`
+  display: flex;
+  text-decoration: none;
+`;
+
+const ExternalIconWrapper = styled.div`
+  margin-left: 15px;
+`;
+
+const ContextWrapper = styled.div<{$menuOpen?: boolean}>`
+  ${ContextActionBaseCSS}
+  ${({ theme }) => theme && css`
+    font-family: ${theme.fontFamily.ui};
+    ${theme.typography.global.mainMenu.menuItem.default};
+  `}
+
+  ${({ $menuOpen }) => $menuOpen && css`
+  ${ContextTitle}{
+    opacity: 1;
+  }
+`}
+
+  &:hover ${ContextIcon}{
+    opacity: 1;
+    ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
+    ${IconWrapper}{
+      [stroke]{
+        stroke: ${({ theme }) => theme.colors.icons['inverse']};
+      }
+    }
+  }
 `;
 
 const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }>`
@@ -146,7 +173,6 @@ const ContextActionButton = styled.button<{ menuOpen?: boolean, isActive: boolea
       ${({ theme }) => theme.styles.global.mainMenu.iconBackground.active};
     }
   `}
-
 `;
 
 interface IProps {
@@ -159,33 +185,61 @@ interface IProps {
   contextKey?: number
   href?: string
   compact?: boolean
+  isExternalLink?: boolean
   onClickCallback?: (...args: any[]) => void
 }
 
-const ContextItem: React.FC<IProps> = ({ hasSubmenu = false, contextKey = -1, submenuOpen, menuOpen, onClickCallback, title, href, icon, compact, isActive }) => {
+const ContextItem: React.FC<IProps> = ({
+  hasSubmenu = false,
+  contextKey = -1,
+  submenuOpen,
+  menuOpen,
+  title,
+  href,
+  icon,
+  compact,
+  isActive,
+  isExternalLink,
+  onClickCallback }) => {
 
-  const internal = <React.Fragment>
-    <ContextIcon {...{ compact }}>
-      <Icon icon={icon} color={isActive ? 'inverse' : 'dimmed'} size={20} />
-    </ContextIcon>
-    <ContextTitle {...{ compact }}>{title}</ContextTitle>
-    {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} color='dimmed' /></ContextIndicator> : null}
-  </React.Fragment>;
+  const internal = (
+    <React.Fragment>
+      <ContextIcon {...{ compact }}>
+        <Icon icon={icon} color={isActive ? 'inverse' : 'dimmed'} size={20} />
+      </ContextIcon>
+      <ContextTitle {...{ compact }}>{title}</ContextTitle>
+      {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} color='dimmed' /></ContextIndicator> : null}
+    </React.Fragment>);
 
   if (hasSubmenu) {
-    return <ContextActionButton menuOpen={menuOpen} isActive={isActive} onClick={() => onClickCallback && onClickCallback(contextKey)}>
-      {internal}
-    </ContextActionButton>;
+    return (
+      <ContextActionButton menuOpen={menuOpen} isActive={isActive} onClick={() => onClickCallback && onClickCallback(contextKey)}>
+        {internal}
+      </ContextActionButton>
+    );
   } else {
     return (
-      <ContextActionA
-        $menuOpen={menuOpen}
-        to={href ? href : '#'}
-        $isActive={isActive}
-        onClick={() => onClickCallback && onClickCallback(contextKey)}
-      >
-        {internal}
-      </ContextActionA>);
+      isExternalLink
+        ? (
+          <StyledAnchor href={href} target='_blank'>
+            <ContextWrapper $menuOpen={menuOpen}>
+              {internal}
+              <ExternalIconWrapper>
+                <Icon icon='ExternalLink' color='dimmed' size={12} />
+              </ExternalIconWrapper>
+            </ContextWrapper>
+          </StyledAnchor>
+        )
+        : (
+          <ContextActionA
+            $menuOpen={menuOpen}
+            to={href ? href : '#'}
+            $isActive={isActive}
+            onClick={() => onClickCallback && onClickCallback(contextKey)}
+          >
+            {internal}
+          </ContextActionA>)
+    );
   }
 
 };

@@ -1,23 +1,14 @@
 import React from 'react';
 // import { MemoryRouter as Router } from 'react-router-dom'
-import {MainMenu, Layout} from 'scorer-ui-kit';
-
+import { MainMenu, Layout } from 'scorer-ui-kit';
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
-
 import { text, object } from '@storybook/addon-knobs';
-
-// const RouterDecorator = (story: () => React.ReactNode) => (
-//   <Router >
-//     {story()}
-//   </Router>
-// );
-
 
 export default {
   title: 'Global',
   component: MainMenu,
-  decorators:[
+  decorators: [
     // RouterDecorator
   ]
 };
@@ -38,6 +29,12 @@ export const _MainMenu = () => {
         href: '#'
       },
       {
+        icon: 'Detection',
+        title: 'External Link',
+        href: 'https://futurestandard.co.jp/',
+        isExternalLink: true,
+      },
+      {
         icon: 'PasswordShow',
         title: 'With Children',
         href: '/',
@@ -53,6 +50,11 @@ export const _MainMenu = () => {
           {
             title: 'Child Three',
             href: '#'
+          },
+          {
+            title: 'Child with external link',
+            href: 'https://www.google.com/',
+            isExternalLink: true
           }
         ]
       },
@@ -94,7 +96,7 @@ export const _MainMenu = () => {
 
   return (
     <Layout>
-      <MainMenu content={menuConfig} home={menuHomeLink} {...{logoMark, logoText, supportUrl}} />
+      <MainMenu content={menuConfig} home={menuHomeLink} {...{ logoMark, logoText, supportUrl }} />
     </Layout>
   );
 };

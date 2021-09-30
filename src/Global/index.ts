@@ -32,12 +32,14 @@ export interface IMenuTop {
     title: string
     icon?: any,
     href?: string
+    isExternalLink?: boolean
     submenu?: IMenuItemSubmenu[]
   }
 
   export interface IMenuItemSubmenu {
     title: string
     href?: string
+    isExternalLink?: boolean
   }
 
   export interface IMenu {

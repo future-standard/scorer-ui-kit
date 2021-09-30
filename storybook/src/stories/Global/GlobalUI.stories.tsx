@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from 'react';
 import {
   GlobalUI,
   PageHeader,
@@ -186,7 +186,7 @@ const Support = () => (
   />
 )
 
-const columnConfig : ITableColumnConfig[] = [
+const columnConfig: ITableColumnConfig[] = [
   {
     header: 'Start time',
     groupTitle: 'Time',
@@ -219,18 +219,18 @@ const columnConfig : ITableColumnConfig[] = [
   },
 ];
 
-const rows : ITypeTableData = [
+const rows: ITypeTableData = [
   {
     id: 'row1',
     header: {
       image: photo,
     },
     columns: [
-      {text: `2020/06/11 - 16:00`},
-      {customComponent: <div style={{fontStyle:'italic'}}>Just Now</div>},
-      {text: `00:00:12`},
-      {text: `Complete`},
-      {text: `Green`},
+      { text: `2020/06/11 - 16:00` },
+      { customComponent: <div style={{ fontStyle: 'italic' }}>Just Now</div> },
+      { text: `00:00:12` },
+      { text: `Complete` },
+      { text: `Green` },
     ]
   },
   {
@@ -239,11 +239,11 @@ const rows : ITypeTableData = [
       image: photo,
     },
     columns: [
-      {text: '2020/06/11 - 13:00'},
-      {text: `2020/06/11 - 17:30`},
-      {text: `00:00:12`},
-      {text: `Complete`},
-      {text: `Black`},
+      { text: '2020/06/11 - 13:00' },
+      { text: `2020/06/11 - 17:30` },
+      { text: `00:00:12` },
+      { text: `Complete` },
+      { text: `Black` },
     ]
   },
   {
@@ -252,11 +252,11 @@ const rows : ITypeTableData = [
       image: photo,
     },
     columns: [
-      {text: `2020/05/10 - 05:30`},
-      {text: `2020/05/10 - 12:30`},
-      {text: `00:00:12`},
-      {text: `Complete`},
-      {text: `Pink`},
+      { text: `2020/05/10 - 05:30` },
+      { text: `2020/05/10 - 12:30` },
+      { text: `00:00:12` },
+      { text: `Complete` },
+      { text: `Pink` },
     ]
   }
 ];
@@ -267,16 +267,16 @@ const TablePage = () => (
       title='Table Example'
       introductionText='This is an example to verify that the sidebar with table'
     />
-        <TypeTable
-          {...{
-              columnConfig,
-              rows,
-              selectable: true,
-              hasThumbnail: true,
-              hasHeaderGroups: true,
-            }
-          }
-        />
+    <TypeTable
+      {...{
+        columnConfig,
+        rows,
+        selectable: true,
+        hasThumbnail: true,
+        hasHeaderGroups: true,
+      }
+      }
+    />
   </>
 )
 
@@ -287,7 +287,7 @@ const ComponentLinks = () => (
     <Route exact path="/company/about" component={About} />
     <Route exact path="/company/team" component={Team} />
     <Route exact path="/company/contact" component={Contact} />
-    <Route exact path="/company/table-example" component={TablePage}/>
+    <Route exact path="/company/table-example" component={TablePage} />
     <Route exact path="/support" component={Support} />
     <Route exact path="/user/accounts" component={Accounts} />
     <Route exact path="/user/billing" component={Billing} />
@@ -363,7 +363,7 @@ const allNotifications: INotificationsHistory = {
 
 const MyCustomDrawer: ReactElement = <h1>Hello Drawer</h1>;
 
-const customDrawer : ICustomDrawer = {
+const customDrawer: ICustomDrawer = {
   customComponent: MyCustomDrawer,
   icon: 'Add',
   status: 'danger',
@@ -414,6 +414,12 @@ export const _GlobalUI = () => {
           {
             title: 'Table Example',
             href: '/company/table-example'
+          },
+          {
+            icon: 'Language',
+            title: 'External link',
+            href: 'https://www.google.com/',
+            isExternalLink: true
           }
         ]
       },
@@ -449,6 +455,12 @@ export const _GlobalUI = () => {
             href: '/services/extra-special'
           }
         ]
+      },
+      {
+        icon: 'Zone',
+        title: 'External link',
+        href: 'https://www.google.com/maps',
+        isExternalLink: true
       }
     ]
   });
