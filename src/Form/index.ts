@@ -8,6 +8,7 @@ import SmallInput from './atoms/SmallInput';
 import Label from './atoms/Label';
 import Switch from './atoms/Switch';
 import Checkbox from './atoms/Checkbox';
+import RadioButton from './atoms/RadioButton';
 import TextArea from './atoms/TextArea';
 import SelectField, {SelectWrapper} from './atoms/SelectField';
 import SliderInput, {ISliderMark} from  './atoms/SliderInput';
@@ -49,13 +50,15 @@ export {
     CropTool,
     SelectField,
     SelectWrapper,
-    AreaUploadManager
+    AreaUploadManager,
+    RadioButton,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
 export type TypeButtonDesigns = 'primary' | 'secondary' | 'danger';
 export type TypeButtonSizes = 'xsmall' | 'small' | 'normal' | 'large';
 export type ISelectSizes = 'small' | 'normal';
+export type IInputOptionsType = "text" | "checkbox" | "radio";
 
 interface ButtonProps {
   size?: TypeButtonSizes
@@ -64,4 +67,4 @@ interface ButtonProps {
 
 export type IButtonProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-export type { IconButtonData, ISliderMark };
+export type { IconButtonData, ISliderMark};
