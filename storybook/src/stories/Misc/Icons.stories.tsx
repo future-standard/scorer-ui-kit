@@ -66,7 +66,7 @@ export const _Icons = () => {
 
   return <Container>
     {showAll ? <>
-      <Grid>{generateIconGrid({ color: iconColor, weight: 'regular', size: 24  })}</Grid>
+      <Grid>{generateIconGrid({ color: iconColor, weight:iconWeight, size: iconSize })}</Grid>
     </> : <Icon icon={iconName} weight={iconWeight} color={iconColor} size={iconSize} />}
 
   </Container>;
