@@ -131,7 +131,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
 
   /** Manage which context is open. */
   /** Submenu sends -1 because context only is for the parent
-    * The -1 value is important in the mobile version of this menu 
+    * The -1 value is important in the mobile version of this menu
   */
   const setFocusedContextCb = useCallback(contextKey => {
     if(contextKey === -1) { return; }
@@ -168,7 +168,13 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
               {content.items.map((item, key) => {
               return (
                 <NavigationItem
-                  topLevelPath={getTopLevelPath(location.pathname)} key={key} contextKey={key} menuOpen={menuState.isMenuOpen} submenuOpen={key === focusedContext && menuState.isMenuOpen} onClickCallback={setFocusedContextCb} {...{ item, loading, focusedContext, readyCallback }}
+                  topLevelPath={getTopLevelPath(location.pathname)}
+                  key={key}
+                  contextKey={key}
+                  menuOpen={menuState.isMenuOpen}
+                  submenuOpen={key === focusedContext && menuState.isMenuOpen}
+                  onClickCallback={setFocusedContextCb}
+                  {...{ item, loading, focusedContext, readyCallback }}
                 />
               );
             })}
