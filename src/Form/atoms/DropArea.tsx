@@ -58,7 +58,7 @@ const onDrop = useCallback((e ) => {
 },[dropCallback]);
 
   return(
-    <Container height={height} {...props}>
+    <Container {...{height}} {...props}>
       <DragAndDrop
         {...{
           inDropZone,
