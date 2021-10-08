@@ -26,16 +26,25 @@ const PlusIconWrapper = styled.div`
 
 interface IBigIconsSummary {
   icons: string[]
+  color?: ISvgIcons['color']
+  size?: number,
+  weight?: 'light' | 'regular' | 'heavy'
 }
 
-const BigIconsSummary: React.FC<IBigIconsSummary> = ({icons, ...props}) => {
+const BigIconsSummary: React.FC<IBigIconsSummary> = ({
+  icons,
+  color = 'dimmed',
+  size = 72,
+  weight='light',
+  ...props
+}) => {
   return (
     <Container {...props}>
       {icons.map((icon, index) => {
         return (
           <Fragment key={`type-upload-${icon}}`}>
             {(index !== 0) && <PlusIconWrapper><PlusIcon icon='CloseCompact' size={22} /></PlusIconWrapper>}
-            <Icon icon={icon} size={72} color='dimmed' weight='light' />
+            <Icon icon={icon} {...{color, size, weight}} />
           </Fragment>
         );
       })}
