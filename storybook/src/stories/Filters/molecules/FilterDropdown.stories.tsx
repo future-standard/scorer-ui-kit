@@ -158,8 +158,6 @@ export const _FilterDropdown = () => {
         onSelect={handleBaseExample}
         optionType='checkbox'
         selected={baseSelected}
-        searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
-        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
         loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
       />
     </Wrapper>
