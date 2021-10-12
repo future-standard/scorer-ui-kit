@@ -2,8 +2,8 @@ import React, { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
-const Container = styled.div<{ hasBorder: boolean, disabled: boolean }>`
-  ${({ theme, hasBorder, disabled }) => css`
+const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
+  ${({ theme, hasBorder, disabled, noBackground, width }) => css`
     ${hasBorder && css`
       border: 1px solid ${theme.styles.form.input.default.normal.borderColor}
     `};
@@ -13,6 +13,12 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean }>`
       cursor: not-allowed;
       `
     };
+
+    ${width && css`
+      width: ${width};
+    `};
+
+    background-color: ${noBackground ? 'transparent' : 'hsla(0, 0%, 100%, 1.000)'};
   `};
 
   ${IconWrapper} {
@@ -61,6 +67,8 @@ interface OwnProps {
   color?: 'mono' | 'dimmed' | 'subtle';
   hasBorder?: boolean
   iconSize?: number
+  noBackground?: boolean
+  width?: string
 }
 
 export type IBasicSearchInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
@@ -70,11 +78,13 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   hasBorder = true,
   iconSize = 11,
   disabled = false,
+  noBackground = false,
+  width,
   ...props
 }) => {
   return (
-    <Container {...{ hasBorder, disabled }}>
-      <Icon {...{ color }} icon='Search' weight='heavy' size={iconSize} />
+    <Container {...{ hasBorder, disabled, noBackground, width }}>
+      <Icon {...{ color }} icon='Search' weight='regular' size={iconSize} />
       <StyledInput
         {...{ color, disabled }}
         {...props}
