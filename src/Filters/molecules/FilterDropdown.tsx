@@ -437,6 +437,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
               iconSize={12}
               value={searchText}
               onChange={handleInputFilter}
+              noBackground
             />
           </SearchWrapper>
           {isLoading || !list

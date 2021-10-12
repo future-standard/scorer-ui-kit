@@ -4,7 +4,7 @@ import BasicSearchInput, { IBasicSearchInput } from '../../Misc/atoms/BasicSearc
 import FilterDropdown, { IFilterDropdown } from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
 import Icon, { IconWrapper } from '../../Icons/Icon';
-import { resetButtonStyles } from '../..';
+import { resetButtonStyles } from '../../common/index';
 
 const SearchInputWrapper = styled.div`
   background-color: hsl(0, 0%, 100%);
