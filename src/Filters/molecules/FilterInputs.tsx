@@ -1,10 +1,19 @@
 import React, { useState, useCallback } from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import BasicSearchInput, { IBasicSearchInput } from '../../Misc/atoms/BasicSearchInput';
 import FilterDropdown, { IFilterDropdown } from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { resetButtonStyles } from '../../common/index';
+
+const fadeInAnimation = keyframes`
+  0% {
+    width: 50%;
+  }
+  100% {
+    width: 100%;
+  }
+`;
 
 const SearchInputWrapper = styled.div`
   background-color: hsl(0, 0%, 100%);
@@ -29,7 +38,8 @@ const CloseSearchButton = styled.button`
 
 const CloseSearchInputWrapper = styled.div`
   ${({ theme }) => theme && css`
-    border: 1px solid ${theme.styles.form.input.default.normal.borderColor}
+    border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
+    animation: ${fadeInAnimation} ${theme.animation.speed.slow} ${theme.animation.easing.primary.inOut};
   `};
   border-radius: 3px;
   display: flex;
