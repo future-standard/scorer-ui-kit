@@ -211,18 +211,18 @@ const DayGuide: string[] = [
   "S", "M", "T", "W", "T", "F", "S"
 ];
 
-interface DateInterval {
+export interface DateInterval {
   start: Date;
   end: Date;
 }
-interface IProps {
+export interface IDatePicker {
   initialValue?: Date | DateInterval
   dateMode?: DateMode
   timeMode?: TimeMode
   updateCallback?: (data: DateInterval | Date) => void
 }
 
-const DatePicker: React.FC<IProps> = ({
+const DatePicker: React.FC<IDatePicker> = ({
   dateMode = 'interval',
   timeMode = 'interval',
   updateCallback = () => { },

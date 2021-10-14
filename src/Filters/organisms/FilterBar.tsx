@@ -1,9 +1,10 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem } from '../FilterTypes';
+import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem, IDatePickerResult } from '../FilterTypes';
 import { IInputOptionsType } from '../../Form';
-import FilterInputs, { IFilterDropdownExt, ISearchFilter } from '../molecules/FilterInputs';
+import FilterInputs, { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
+import { DateInterval } from '../molecules/DatePicker';
 import isequal from 'lodash.isequal';
 import debounce from 'lodash.debounce';
 
@@ -45,7 +46,7 @@ const createDropdownFilters = (
   dropdownsConfig: IFilterDropdownConfig[],
   filtersValues: IFilterResult[],
   allowMultiFilter: boolean,
-  handleSelected: (newValue: IFilterValue, filterId: string) => void
+  handleDropdownsSelected: (newValue: IFilterValue, filterId: string) => void
 ): IFilterDropdownExt[] => {
 
   const dropdownFilters: IFilterDropdownExt[] = [];
@@ -53,7 +54,7 @@ const createDropdownFilters = (
     const filter = filtersValues.find(filter => filter.id === dropdown.id);
     if (filter) {
       const selected = filter.selected;
-      const onSelect = (newSelection: IFilterValue) => { handleSelected(newSelection, filter.id); };
+      const onSelect = (newSelection: IFilterValue) => { handleDropdownsSelected(newSelection, filter.id); };
       let disabled = getDisableValue(filtersValues, allowMultiFilter, filter);
       const newDropdown: IFilterDropdownExt = { ...dropdown, selected, disabled, onSelect };
       dropdownFilters.push(newDropdown);
@@ -144,6 +145,28 @@ const createLabelResults = (
   return labelLists;
 };
 
+/**
+ * TODO: fix getDisable for datePicker
+ */
+const createDatePickers = (
+  datePickersConfig: IFilterDatePicker[],
+  filtersValues: IFilterResult[],
+  allowMultiFilter: boolean,
+  handleDatePickers: (selection: DateInterval | Date, filterId: string) => void,
+): IFilterDatePicker[] => {
+  const datePickersFilters: IFilterDatePicker[] = [];
+
+  datePickersConfig.forEach((datePicker) => {
+    const updateCallback = (data: DateInterval | Date) => {
+      handleDatePickers(data, datePicker.id);
+    };
+    const newPicker: IFilterDatePicker = { ...datePicker, updateCallback };
+    datePickersFilters.push(newPicker);
+  });
+
+  return datePickersFilters;
+};
+
 const initFilters = (
   searchersConfig: ISearchFilter[],
   dropdownsConfig: IFilterDropdownConfig[]): IFilterResult[] => {
@@ -178,6 +201,7 @@ interface IFilterBar {
   filtersTitle?: string
   searchersConfig: ISearchFilter[]
   dropdownsConfig: IFilterDropdownConfig[]
+  datePickersConfig?: IFilterDatePicker[]
   hasShowMore?: boolean
   showMoreText?: string
   showLessText?: string
@@ -186,7 +210,7 @@ interface IFilterBar {
   clearText?: string
   isLoading?: boolean
   allowMultiFilter?: boolean
-  onChangeCallback?: (currentSelected: IFilterResult[]) => void
+  onChangeCallback?: (currentSelected: IFilterResult[], datePickersSelected?: IDatePickerResult[]) => void
 }
 
 const FilterBar: React.FC<IFilterBar> = ({
@@ -194,6 +218,7 @@ const FilterBar: React.FC<IFilterBar> = ({
   hasShowMore,
   searchersConfig,
   dropdownsConfig,
+  datePickersConfig,
   showMoreText,
   showLessText,
   resultTextTemplate,
@@ -206,6 +231,7 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   const [filtersValues, setFiltersValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig));
   const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
+  const [datePickersValues, setDatePickersValues] = useState<IDatePickerResult[]>([]);
 
   // Prevents extra-renders only updating if the dropdowns config actually changed
   if (dropdownsConfigRef.current && !isequal(dropdownsConfigRef.current, dropdownsConfig)) {
@@ -215,12 +241,16 @@ const FilterBar: React.FC<IFilterBar> = ({
   // saves a reference of the debounce for searchers
   const debounceSearcher = useRef(debounce(updatedFilters => handleChange(updatedFilters), 600)).current;
 
-  const handleChange = useCallback((newValues: IFilterResult[]) => {
+  const handleChange = useCallback((newValues: IFilterResult[], newDatePicker?: IDatePickerResult[]) => {
     const notNullValues = newValues.filter((filter) => filter.selected !== null);
-    onChangeCallback(notNullValues);
+    if (newDatePicker) {
+      onChangeCallback(notNullValues, newDatePicker);
+    } else {
+      onChangeCallback(notNullValues);
+    }
   }, [onChangeCallback]);
 
-  const handleSelected = useCallback((newValue: IFilterValue, filterId: string) => {
+  const handleDropdownsSelected = useCallback((newValue: IFilterValue, filterId: string) => {
     setFiltersValues((prev) => {
       const updatedFilters = [...prev];
       const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
@@ -281,6 +311,18 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   }, [handleChange]);
 
+  const handleDatePickers = useCallback((selection: DateInterval | Date, filterId: string) => {
+    const updatedDatePickers = [...datePickersValues];
+
+    const foundFilter = updatedDatePickers.find((datePicker) => datePicker.id === filterId);
+    if (foundFilter) {
+      foundFilter.selected = selection;
+      handleChange(filtersValues, updatedDatePickers);
+      setDatePickersValues(updatedDatePickers);
+    }
+
+  }, [datePickersValues, filtersValues, handleChange]);
+
   /**
    * This use Effect will update filters text selections in case the language is changed.
    * Dropdowns are the only ones that required this because Inputs text are the user type data.
@@ -339,7 +381,8 @@ const FilterBar: React.FC<IFilterBar> = ({
           showLessText,
         }}
         searchFilters={createSearchers(searchersConfig, filtersValues, allowMultiFilter, handleSearchers)}
-        dropdownFilters={createDropdownFilters(dropdownsConfigRef.current, filtersValues, allowMultiFilter, handleSelected)}
+        dropdownFilters={createDropdownFilters(dropdownsConfigRef.current, filtersValues, allowMultiFilter, handleDropdownsSelected)}
+        datePickFilters={datePickersConfig ? createDatePickers(datePickersConfig, filtersValues, allowMultiFilter, handleDatePickers) : undefined}
       />
       <StyledFilterResults
         {...{ resultTextTemplate, clearText, totalResults }}

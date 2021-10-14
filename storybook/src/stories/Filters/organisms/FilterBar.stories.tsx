@@ -9,6 +9,7 @@ import {
   TypeTable,
   IFilterDropdownConfig,
   IFilterResult,
+  IFilterDatePicker,
 } from 'scorer-ui-kit';
 
 import {
@@ -169,6 +170,16 @@ export const _FilterBar = () => {
     }
   ]
 
+  const datePickers: IFilterDatePicker[] = [
+    {
+      id: 'datePickerForRuntime',
+      dateMode: 'interval',
+      timeMode: 'off',
+      buttonText: 'Date Range',
+      buttonIcon: 'DateTime'
+    }
+  ]
+
   const allowMultiFilter = boolean('Allow Multi Filter', false);
   const hasShowMore = boolean('Has Show More', true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -186,7 +197,7 @@ export const _FilterBar = () => {
     if (currentSelected.length === 0) {
       setData(localData);
       setFilters([])
-    }else {
+    } else {
       const filteredData = getFilteredData(currentSelected, tempData);
       setData(filteredData);
       setFilters(currentSelected);
@@ -208,9 +219,10 @@ export const _FilterBar = () => {
   return (
     <Container>
       <FilterBar
-        {...{allowMultiFilter, hasShowMore }}
+        {...{ allowMultiFilter, hasShowMore }}
         searchersConfig={searchers}
         dropdownsConfig={dropdowns}
+        datePickersConfig={datePickers}
         onChangeCallback={handleFilters}
         totalResults={rows.length}
         showMoreText={language === 'english' ? showMoreEng : showMoreJp}

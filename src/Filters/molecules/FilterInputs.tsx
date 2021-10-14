@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import BasicSearchInput, { IBasicSearchInput } from '../../Misc/atoms/BasicSearchInput';
 import FilterDropdown, { IFilterDropdown } from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
+import DropdownDatePicker, { IDropdownDatePicker } from './DropdownDatePicker';
 
 const SearchInputWrapper = styled.div`
   background-color: hsl(0, 0%, 100%);
@@ -41,6 +42,18 @@ const renderSearchInputs = (searchFilters: ISearchFilter[], visibleSearchInputs:
       );
     }
     return null;
+  });
+};
+
+const renderDatePickers = (datePickFilters: IFilterDatePicker[]) => {
+  console.log('datePickers rendering', datePickFilters);
+  return datePickFilters.map((datePicker: IFilterDatePicker) => {
+    return (
+      <DropdownDatePicker
+        key={`datePicker-filter-${datePicker.id}`}
+        {...{ ...datePicker }}
+      />
+    );
   });
 };
 
@@ -91,9 +104,15 @@ export interface IFilterDropdownExt extends IFilterDropdown {
   canHide?: boolean
 }
 
+export interface IFilterDatePicker extends IDropdownDatePicker {
+  id: string
+  canHide?: boolean
+}
+
 export interface IFilterInputs {
   searchFilters: ISearchFilter[]
   dropdownFilters: IFilterDropdownExt[]
+  datePickFilters?: IFilterDatePicker[]
   hasShowMore?: boolean
   showMoreText?: string
   showLessText?: string
@@ -102,6 +121,7 @@ export interface IFilterInputs {
 const FilterInputs: React.FC<IFilterInputs> = ({
   hasShowMore = false,
   searchFilters,
+  datePickFilters,
   dropdownFilters,
   showMoreText = 'Show More',
   showLessText = 'Show Less',
@@ -121,8 +141,9 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   }, [visibleSearchInputs]);
 
   return (
-    <Container {...{props}}>
+    <Container {...{ props }}>
       {renderSearchInputs(searchFilters, visibleSearchInputs)}
+      {datePickFilters ? renderDatePickers(datePickFilters) : null}
       {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}

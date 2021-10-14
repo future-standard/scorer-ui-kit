@@ -1,63 +1,19 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
-import { useClickOutside } from '../../hooks/useClickOutside';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { IInputOptionsType } from '../../Form';
-import FilterButton from '../atoms/FilterButton';
 import FilterOption from '../../Form/atoms/FilterOption';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import Spinner from '../../Indicators/Spinner';
 import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
-
-const MIN_WIDTH = 270;
-const MIN_HEIGHT = 190;
+import FilterDropHandler from '../atoms/FilterDropHandler';
 
 const Container = styled.div`
   display: inline-block;
   position: relative;
 `;
 
-const ButtonWrapper = styled.div`
-  display: inline-block;
-`;
-
-const ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean }>`
-  z-index: 100;
-  min-width: ${MIN_WIDTH}px;
-  position: absolute;
-
-  ${({ openState, disabled }) => openState && css`
-    display: ${openState.isOpen ? 'inline-block' : 'none'};
-    display: ${disabled && 'none'};
-
-    ${openState.position === 'bottom-right' && `
-      bottom: 0;
-      left: 0;
-      transform: translateY(calc(100% + 5px ));
-    `};
-
-    ${openState.position === 'bottom-left' && `
-      bottom: 0;
-      right: 0;
-      transform: translateY(calc(100% + 5px ));
-    `};
-
-    ${openState.position === 'top-left' && `
-      top: 0;
-      right: 0;
-      transform: translateY(calc( -100% - 5px ));
-    `};
-
-    ${openState.position === 'top-right' && `
-      top: 0;
-      left: 0;
-      transform: translateY(calc( -100% - 5px ));
-    `};
-
-  `};
-`;
-
 const TopLine = styled.div`
-  background-color: hsl(205, 100%, 72%);
+  ${({ theme }) => theme.styles.filters.dropdownContainer.topBorder};
   height: 3px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -129,28 +85,6 @@ const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
-
-const getDropPosition = (buttonRect: DOMRect): IOpenPos => {
-  let position: IOpenPos = 'bottom-right';
-  const openLeft = (buttonRect.left + MIN_WIDTH) > window.innerWidth;
-  const openTop = (buttonRect.bottom + MIN_HEIGHT) > window.innerHeight;
-  const spaceTop = buttonRect.bottom > MIN_HEIGHT;
-
-  if (openLeft && openTop && spaceTop) {
-    position = 'top-left';
-  }
-
-  if (openTop && !openLeft && spaceTop) {
-    position = 'top-right';
-  }
-
-  if (!openTop && openLeft) {
-    position = 'bottom-left';
-  }
-
-  return position;
-};
-
 
 const isValueSelected = (item: IFilterItem, selected: IFilterValue) => {
   let isItemSelected = false;
@@ -305,12 +239,6 @@ const getResultText = (template: string, visible: number, total: number) => {
   return newMessage.replace('[VISIBLE]', `${visible}`);
 };
 
-type IOpenPos = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-
-interface IDropOpen {
-  isOpen: boolean,
-  position: IOpenPos,
-}
 export interface IFilterDropdown {
   buttonIcon: string
   buttonText: string
@@ -344,39 +272,15 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
   const [visibleList, setVisibleList] = useState(getVisibleList(list, maxDisplayedItems, selected));
   const [searchText, setSearchText] = useState<string>('');
-  const [openState, setOpenState] = useState<IDropOpen>({
-    isOpen: false,
-    position: 'bottom-right',
-  });
-  const buttonWrapperRef = useRef<HTMLDivElement>(null);
-  const mainRef = useRef<HTMLDivElement>(null);
 
   const handleClose = useCallback(() => {
-    setOpenState((prev) => {
-      const isOpen = false;
-      return { ...prev, isOpen };
-    });
-
     setSearchText('');
     setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
   }, [list, maxDisplayedItems, selected]);
 
-  useClickOutside(mainRef, handleClose);
-
   const handleToggleOpen = useCallback(() => {
-    if (!buttonWrapperRef.current) { return; }
-
-    const buttonRect = buttonWrapperRef.current?.getBoundingClientRect();
-    if (!buttonRect) { return; }
-
-    const position: IOpenPos = getDropPosition(buttonRect);
-
     setSearchText('');
     setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
-    setOpenState((prev) => {
-      const isOpen = !prev.isOpen;
-      return { ...prev, isOpen, position };
-    });
   }, [list, maxDisplayedItems, selected]);
 
   const handleSelection = useCallback((item: IFilterItem) => {
@@ -414,18 +318,12 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   }, [list, maxDisplayedItems, selected]);
 
   return (
-    <Container ref={mainRef} {...props}>
-      <ButtonWrapper ref={buttonWrapperRef}>
-        <FilterButton
-          icon={buttonIcon}
-          isOpen={openState.isOpen}
-          hasFlipArrow
-          onClick={handleToggleOpen}
-          {...{ disabled }}
-        >{buttonText}
-        </FilterButton>
-      </ButtonWrapper>
-      <ContentBox {...{ openState, disabled }}>
+    <Container {...props}>
+      <FilterDropHandler
+        {...{ buttonIcon, buttonText, disabled }}
+        onCloseCallback={handleClose}
+        onToggleOpenCallback={handleToggleOpen}
+      >
         <TopLine />
         <InnerBox>
           <SearchWrapper>
@@ -465,7 +363,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                 </OptionList>
               </ResultsContainer>)}
         </InnerBox>
-      </ContentBox>
+      </FilterDropHandler>
     </Container>
   );
 };

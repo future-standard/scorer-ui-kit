@@ -1,3 +1,5 @@
+import { DateInterval } from './molecules/DatePicker';
+
 // function to do type checking for IFilterItem
 // https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
 export const isFilterItem = (item: any): item is IFilterItem => {
@@ -21,11 +23,18 @@ interface IFilterResult {
   id: string
   selected: IFilterValue
 }
+
 type IFilterType = 'search' | 'dropdown';
+
+interface IDatePickerResult {
+  id: string
+  selected: DateInterval | Date;
+}
 
 export type {
   IFilterType,
   IFilterItem,
   IFilterResult,
   IFilterValue,
+  IDatePickerResult,
 };
