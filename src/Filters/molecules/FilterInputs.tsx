@@ -24,9 +24,8 @@ const SearchInputWrapper = styled.div`
 const CloseSearchButton = styled.button`
   ${resetButtonStyles};
   flex-shrink: 0;
-  flex-grow: 0
+  flex-grow: 0;
   flex-basis: auto;
-  border-left: solid 1px hsl(207,16%,86%);
   width: 26px;
 
   ${IconWrapper} {

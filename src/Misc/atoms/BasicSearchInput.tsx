@@ -5,7 +5,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
   ${({ theme, hasBorder, disabled, noBackground, width }) => css`
     ${hasBorder && css`
-      border: 1px solid ${theme.styles.form.input.default.normal.borderColor}
+      border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
     `};
 
     ${disabled && css`
