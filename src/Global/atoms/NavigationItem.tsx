@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import ContextItem from './ContextItem';
 import { IMenuItemTop, IMenuItemSubmenu } from '..';
 import {resetButtonStyles} from '../../common/index';
+import Icon from '../../Icons/Icon';
 
 const Submenu = styled.ul`
   display: block;
@@ -30,7 +31,16 @@ const SubmenuItemTitle = styled.span`
 const SubmenuItemLink = styled(Link)`
   ${resetButtonStyles};
   display: block;
+`;
 
+const ExternalIconWrapper = styled.div`
+  margin-left: 15px;
+`;
+
+const SubmenuItemAnchor = styled.a`
+  ${resetButtonStyles};
+  display: flex;
+  align-items: center;
 `;
 
 const SubmenuItem = styled.li<{isActive?: boolean}>`
@@ -50,7 +60,7 @@ const SubmenuItem = styled.li<{isActive?: boolean}>`
     background: ${({theme: {colors}}) => colors.divider};
   }
 
-  ${SubmenuItemLink}{
+  ${SubmenuItemLink}, ${SubmenuItemAnchor}{
 
     ${({theme, isActive}) => theme && css`
       font-family: ${theme.fontFamily.ui};
@@ -136,7 +146,7 @@ interface IProps {
 }
 
 const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, loading, topLevelPath, minHeight, onClickCallback, readyCallback}) => {
-  const { icon, title, href, submenu } = item;
+  const { icon, title, href, submenu, isExternalLink } = item;
   const isActive = topLevelPath === href;
 
   const refSubmenu = useRef<any>(null);
@@ -156,7 +166,7 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
 
   return (
     <ContextContainer open={submenuOpen} loading={loading ? 'true': 'false'} maxHeight={submenuHeight} minHeight={minHeight}>
-      <ContextItem {...{title, href, isActive, icon, hasSubmenu, submenuOpen, menuOpen, onClickCallback, contextKey}} />
+      <ContextItem {...{title, href, isActive, icon, hasSubmenu, isExternalLink, submenuOpen, menuOpen, onClickCallback, contextKey}} />
       {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>{submenus}</SubmenuContainer> : null}
     </ContextContainer>
   );
@@ -181,10 +191,22 @@ const generateSubmenus = (
   grouping.push([]);
 
   submenu.forEach((item, key) => {
-    const {title, href} = item;
+    const {title, href, isExternalLink} = item;
     if(href){
       // Treat as menu item/
-      grouping[grouping.length - 1].push(<SubmenuItem key={key} isActive={false}><SubmenuItemLink to={href} onClick={() => onClickCallback && onClickCallback(-1)}>{title}</SubmenuItemLink></SubmenuItem>);
+      if(isExternalLink) {
+        grouping[grouping.length - 1].push(
+          <SubmenuItem key={key} isActive={false}>
+            <SubmenuItemAnchor href={href} target='_blank'>
+              {title}
+              <ExternalIconWrapper>
+                <Icon icon='ExternalLink' color='dimmed' size={10} />
+              </ExternalIconWrapper>
+            </SubmenuItemAnchor>
+          </SubmenuItem>);
+      }else {
+        grouping[grouping.length - 1].push(<SubmenuItem key={key} isActive={false}><SubmenuItemLink to={href} onClick={() => onClickCallback && onClickCallback(-1)}>{title}</SubmenuItemLink></SubmenuItem>);
+      }
     } else {
       // Assume this is a grouping header.
       if(grouping[grouping.length - 1].length > 1){ grouping.push([]); }

@@ -144,22 +144,20 @@ export const _FilterDropdown = () => {
   return <Content>
     <Wrapper key='eje-0'>
       <PageHeader title='Base Example'
-        introductionText="."
+        introductionText="This example doesn't have filter for options."
       />
       <FilterDropdown
         {...{
           disabled,
           isLoading,
           buttonText,
-          maxDisplayedItems
+          maxDisplayedItems,
+          buttonIcon,
         }}
-        buttonIcon='MetaCategories'
         list={baseExample}
         onSelect={handleBaseExample}
         optionType='checkbox'
         selected={baseSelected}
-        searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
-        searchPlaceholder={language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese}
         loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
       />
     </Wrapper>
@@ -172,7 +170,7 @@ export const _FilterDropdown = () => {
         disabled,
         isLoading,
         loadingText,
-        maxDisplayedItems
+        maxDisplayedItems,
       }}
         list={language === 'english' ? englishDataList : japaneseDataList}
         buttonText={language === 'english' ? 'Menu' : 'メニュー'}
@@ -182,6 +180,7 @@ export const _FilterDropdown = () => {
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
         searchPlaceholder={language === 'english' ? 'Menu options...' : 'メニュー...'}
         loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
+        hasOptionsFilter
       />
     </Wrapper>
     <Divider />
@@ -205,6 +204,7 @@ export const _FilterDropdown = () => {
         loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
         searchPlaceholder={language === 'english' ? 'Spice options...' : 'ピリ辛...'}
+        hasOptionsFilter
       />
     </Wrapper>
     <Wrapper key='eje-3'>
@@ -227,6 +227,7 @@ export const _FilterDropdown = () => {
         loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp }
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
         searchPlaceholder={language === 'english' ? 'Pay Methods...' : '支払方法...'}
+        hasOptionsFilter
       />
     </Wrapper>
     <Wrapper key='eje-4'>
@@ -239,7 +240,7 @@ export const _FilterDropdown = () => {
           disabled,
           isLoading,
           loadingText,
-          maxDisplayedItems
+          maxDisplayedItems,
         }}
         buttonText={language === 'english' ? 'Year' : '年'}
         selected={numberSelected}
@@ -249,6 +250,7 @@ export const _FilterDropdown = () => {
         loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
         searchPlaceholder={language === 'english' ? 'Years...' : '2020...'}
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+        hasOptionsFilter
       />
     </Wrapper>
   </Content>
