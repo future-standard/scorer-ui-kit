@@ -40,7 +40,7 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, ha
       {selectable ? <TypeTableCell hideDivider><Checkbox checked={rowData._checked} onChangeCallback={wrappedSelectCallback} /></TypeTableCell> : null}
       {hasStatus ?  <TypeTableCell hideDivider><TypeTableDeviceStatus status={rowData.header?.status} /></TypeTableCell> : null}
       {hasThumbnail ? <TypeTableCell hideDivider><TableRowThumbnail image={rowData.header?.image} mediaUrl={rowData.header?.mediaUrl} mediaType={rowData.header?.mediaType} /></TypeTableCell> : null}
-      {hasTypeIcon ? <TypeTableCell hideDivider><Icon icon={rowData.header?.icon || ''} color='dimmed' weight='heavy' size={16} /></TypeTableCell> : null}
+      {hasTypeIcon ? <TypeTableCell hideDivider><Icon icon={rowData.header?.icon || ''} color='dimmed' weight='regular' size={16} /></TypeTableCell> : null}
 
       {rowData.columns.map((cell, key) => {
         const {cellStyle, alignment, showUnit, showStatus, hasCopyButton} = columnConfig[key];

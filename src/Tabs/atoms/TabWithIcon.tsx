@@ -70,7 +70,7 @@ const TabWithIcon: React.FC<ITabWithIcon> = ({ icon, title, subtitle, tabFor, ..
 
   return (
     <Container {...{ active }} {...props} onClick={() => onChangeTab(tabFor)}>
-      <Icon {...{ icon }} weight='heavy' size={15} color={active ? 'primary' : 'dimmed'} />
+      <Icon {...{ icon }} weight='regular' size={15} color={active ? 'primary' : 'dimmed'} />
       <TextGroup>
         <Title {...{ active }}>{title}</Title>
         {subtitle && <SubTitle>{subtitle}</SubTitle>}

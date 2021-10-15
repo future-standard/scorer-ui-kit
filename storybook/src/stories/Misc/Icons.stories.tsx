@@ -56,7 +56,7 @@ export const _Icons = () => {
   /**
    * Generate a grid of all the icons for easy browsing and hovering to find names.
    */
-  const generateIconGrid = (props: { color: "mono" | "dimmed" | "subtle" | "inverse" | "primary" | "danger" ; weight: "regular" | "light" | "heavy"; size: number; }) => {
+  const generateIconGrid = (props: { color: "mono" | "dimmed" | "subtle" | "inverse" | "primary" | "danger" ; weight: "regular" | "light" | "heavy" | "strong"; size: number; }) => {
     return Object.keys(IconSVGs).map((iconName) => (
       <div title={iconName} key={iconName}>
         <Icon icon={iconName} {...props} ></Icon>
