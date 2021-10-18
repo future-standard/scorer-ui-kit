@@ -21,6 +21,7 @@ import TextAreaField from './molecules/TextAreaField';
 import DropArea from './atoms/DropArea';
 import CropTool from './molecules/CropTool';
 import AvatarUploader from './organisms/AvatarUploader';
+import AreaUploadManager from './organisms/AreaUploadManager';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 
@@ -49,6 +50,7 @@ export {
     CropTool,
     SelectField,
     SelectWrapper,
+    AreaUploadManager,
     RadioButton,
 };
 

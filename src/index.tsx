@@ -41,6 +41,7 @@ import {
   AvatarUploader,
   SelectField,
   SelectWrapper,
+  AreaUploadManager,
   RadioButton,
 } from './Form';
 
@@ -108,7 +109,7 @@ import {
   ITagList,
   TagListWrapper,
   MediaBox,
-  BasicSearchInput,
+  BasicSearchInput
 } from './Misc';
 
 import {
@@ -213,6 +214,7 @@ export {
   AvatarUploader,
   SelectField,
   SelectWrapper,
+  AreaUploadManager,
   RadioButton,
 
   // Modals
