@@ -44,6 +44,7 @@ import {
   filterByCreationDate
 } from '../../helpers/sample_table_helpers';
 import { ITypeTableData } from '../../../../../dist/Tables';
+import { IDatePickerResult } from '../../../../../dist/Filters/FilterTypes';
 
 export default {
   title: 'Filters/Organism',
@@ -188,13 +189,14 @@ export const _FilterBar = () => {
   const dropdownsConfig = object('DropdownFilters', dropdowns);
   const filtersValues = action('onChangeCallback');
 
-  const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
+  const handleFilters = useCallback((currentSelected: IFilterResult[], datePickersSelected?: IDatePickerResult[]) => {
     filtersValues(currentSelected);
 
     const localData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
     const tempData: ITableSampleData[] = [...localData];
 
-    if (currentSelected.length === 0) {
+    console.log('datePickers', datePickersSelected);
+    if ((currentSelected.length === 0)) {
       setData(localData);
       setFilters([])
     } else {

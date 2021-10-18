@@ -13,11 +13,12 @@ const SearchInputWrapper = styled.div`
 
 const StyledFilterButton = styled(FilterButton)``;
 const StyledDropdown = styled(FilterDropdown)``;
+const StyledDropdownDatePicker = styled(DropdownDatePicker)``;
 
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  ${SearchInputWrapper}, ${StyledDropdown}, ${StyledFilterButton} {
+  ${SearchInputWrapper}, ${StyledDropdown}, ${StyledFilterButton}, ${StyledDropdownDatePicker} {
     margin: 0 5px 10px 0;
   }
 `;
@@ -46,10 +47,9 @@ const renderSearchInputs = (searchFilters: ISearchFilter[], visibleSearchInputs:
 };
 
 const renderDatePickers = (datePickFilters: IFilterDatePicker[]) => {
-  console.log('datePickers rendering', datePickFilters);
   return datePickFilters.map((datePicker: IFilterDatePicker) => {
     return (
-      <DropdownDatePicker
+      <StyledDropdownDatePicker
         key={`datePicker-filter-${datePicker.id}`}
         {...{ ...datePicker }}
       />

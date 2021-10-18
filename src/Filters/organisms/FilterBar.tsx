@@ -183,6 +183,22 @@ const initFilters = (
   return newFilters;
 };
 
+const initPickers = (
+  datePickersConfig?: IFilterDatePicker[]) : IDatePickerResult[] => {
+
+    if(!datePickersConfig) {
+      return [];
+    }
+
+    const newPickersResults : IDatePickerResult [] = [];
+    datePickersConfig.forEach(({id, initialValue}) => {
+      const selected = initialValue?  initialValue : null;
+      newPickersResults.push({id, selected });
+    });
+
+    return newPickersResults;
+};
+
 export interface IFilterDropdownConfig {
   id: string
   canHide?: boolean
@@ -231,7 +247,7 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   const [filtersValues, setFiltersValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig));
   const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
-  const [datePickersValues, setDatePickersValues] = useState<IDatePickerResult[]>([]);
+  const [datePickersValues, setDatePickersValues] = useState<IDatePickerResult[]>(initPickers(datePickersConfig));
 
   // Prevents extra-renders only updating if the dropdowns config actually changed
   if (dropdownsConfigRef.current && !isequal(dropdownsConfigRef.current, dropdownsConfig)) {
@@ -312,16 +328,17 @@ const FilterBar: React.FC<IFilterBar> = ({
   }, [handleChange]);
 
   const handleDatePickers = useCallback((selection: DateInterval | Date, filterId: string) => {
-    const updatedDatePickers = [...datePickersValues];
+    // const updatedDatePickers = [...datePickersValues];
+    console.log('getting value of picker', selection);
 
-    const foundFilter = updatedDatePickers.find((datePicker) => datePicker.id === filterId);
-    if (foundFilter) {
-      foundFilter.selected = selection;
-      handleChange(filtersValues, updatedDatePickers);
-      setDatePickersValues(updatedDatePickers);
-    }
+    // const foundFilter = updatedDatePickers.find((datePicker) => datePicker.id === filterId);
+    // if (foundFilter) {
+    //   foundFilter.selected = selection;
+    //   handleChange(filtersValues, updatedDatePickers);
+    //   setDatePickersValues(updatedDatePickers);
+    // }
 
-  }, [datePickersValues, filtersValues, handleChange]);
+  }, []);
 
   /**
    * This use Effect will update filters text selections in case the language is changed.

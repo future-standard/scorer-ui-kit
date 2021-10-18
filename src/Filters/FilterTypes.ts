@@ -28,7 +28,7 @@ type IFilterType = 'search' | 'dropdown';
 
 interface IDatePickerResult {
   id: string
-  selected: DateInterval | Date;
+  selected: DateInterval | Date | null;
 }
 
 export type {
