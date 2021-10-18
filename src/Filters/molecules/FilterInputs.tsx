@@ -7,9 +7,11 @@ import FilterButton from '../../Filters/atoms/FilterButton';
 const fadeInAnimation = keyframes`
   0% {
     width: 50%;
+    opacity: .5;
   }
   100% {
     width: 100%;
+    opacity: 1;
   }
 `;
 
