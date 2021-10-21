@@ -105,12 +105,16 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
   const mainRef = useRef<HTMLDivElement>(null);
 
   const handleClose = useCallback(() => {
-    onCloseCallback();
+    if (openState.isOpen) {
+      onCloseCallback();
+    }
+
     setOpenState((prev) => {
       const isOpen = false;
       return { ...prev, isOpen };
     });
-  }, [onCloseCallback]);
+
+  }, [onCloseCallback, openState.isOpen]);
 
   useClickOutside(mainRef, handleClose);
 

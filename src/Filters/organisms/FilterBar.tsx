@@ -152,15 +152,15 @@ const createDatePickers = (
   datePickersConfig: IFilterDatePicker[],
   filtersValues: IFilterResult[],
   allowMultiFilter: boolean,
-  handleDatePickers: (selection: DateInterval | Date, filterId: string) => void,
+  handleDatePickers: (selection: DateInterval | Date | null, filterId: string) => void,
 ): IFilterDatePicker[] => {
   const datePickersFilters: IFilterDatePicker[] = [];
 
   datePickersConfig.forEach((datePicker) => {
-    const updateCallback = (data: DateInterval | Date) => {
-      handleDatePickers(data, datePicker.id);
+    const onCloseCallback = (value: DateInterval | Date | null) => {
+      handleDatePickers(value, datePicker.id);
     };
-    const newPicker: IFilterDatePicker = { ...datePicker, updateCallback };
+    const newPicker: IFilterDatePicker = { ...datePicker, onCloseCallback };
     datePickersFilters.push(newPicker);
   });
 
@@ -184,19 +184,19 @@ const initFilters = (
 };
 
 const initPickers = (
-  datePickersConfig?: IFilterDatePicker[]) : IDatePickerResult[] => {
+  datePickersConfig?: IFilterDatePicker[]): IDatePickerResult[] => {
 
-    if(!datePickersConfig) {
-      return [];
-    }
+  if (!datePickersConfig) {
+    return [];
+  }
 
-    const newPickersResults : IDatePickerResult [] = [];
-    datePickersConfig.forEach(({id, initialValue}) => {
-      const selected = initialValue?  initialValue : null;
-      newPickersResults.push({id, selected });
-    });
+  const newPickersResults: IDatePickerResult[] = [];
+  datePickersConfig.forEach(({ id, initialValue }) => {
+    const selected = initialValue ? initialValue : null;
+    newPickersResults.push({ id, selected });
+  });
 
-    return newPickersResults;
+  return newPickersResults;
 };
 
 export interface IFilterDropdownConfig {
@@ -229,6 +229,7 @@ interface IFilterBar {
   onChangeCallback?: (currentSelected: IFilterResult[], datePickersSelected?: IDatePickerResult[]) => void
 }
 
+//** TODO: make multi filter default */
 const FilterBar: React.FC<IFilterBar> = ({
   filtersTitle = 'Filters:',
   hasShowMore,
@@ -270,7 +271,8 @@ const FilterBar: React.FC<IFilterBar> = ({
     setFiltersValues((prev) => {
       const updatedFilters = [...prev];
       const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
-      if (foundFilter) {
+      if (foundFilter && foundFilter.selected !== newValue) {
+        console.log('[FilterBar] its, different so update');
         foundFilter.selected = newValue;
         handleChange(updatedFilters);
         return updatedFilters;
@@ -327,18 +329,18 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   }, [handleChange]);
 
-  const handleDatePickers = useCallback((selection: DateInterval | Date, filterId: string) => {
-    // const updatedDatePickers = [...datePickersValues];
+  const handleDatePickers = useCallback((selection: DateInterval | Date | null, filterId: string) => {
+    const updatedDatePickers = [...datePickersValues];
     console.log('getting value of picker', selection);
 
-    // const foundFilter = updatedDatePickers.find((datePicker) => datePicker.id === filterId);
-    // if (foundFilter) {
-    //   foundFilter.selected = selection;
-    //   handleChange(filtersValues, updatedDatePickers);
-    //   setDatePickersValues(updatedDatePickers);
-    // }
+    const foundFilter = updatedDatePickers.find((datePicker) => datePicker.id === filterId);
+    if (foundFilter) {
+      foundFilter.selected = selection;
+      handleChange(filtersValues, updatedDatePickers);
+      setDatePickersValues(updatedDatePickers);
+    }
 
-  }, []);
+  }, [datePickersValues, filtersValues, handleChange]);
 
   /**
    * This use Effect will update filters text selections in case the language is changed.
