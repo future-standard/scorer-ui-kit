@@ -96,6 +96,8 @@ const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleDat
  * Filter Bar Story Starts
  */
 
+
+
 export const _FilterBar = () => {
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
@@ -196,7 +198,7 @@ export const _FilterBar = () => {
     const tempData: ITableSampleData[] = [...localData];
 
     console.log('datePickers', datePickersSelected);
-    if ((currentSelected.length === 0)) {
+    if ((currentSelected.length === 0) && datePickersSelected === undefined) {
       setData(localData);
       setFilters([])
     } else {

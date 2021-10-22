@@ -46,7 +46,7 @@ const rowMaker = (rowData: ITableSampleData[]): ITypeTableData => {
       columns: [
         { text: deviceName, href: deviceLink },
         { text: statusText, status },
-        { text: created },
+        { text: created.toDateString() },
         { text: totalTime },
         { text: `${usage}`, unit: usageUnit },
         { text: yenCost },
@@ -108,7 +108,7 @@ const filterByCreationDate = (data: ITableSampleData[], filterVal: IFilterValue)
 
   if (isFilterItem(filterVal)) {
     const newData = data.filter((sample) => {
-      const lowerValue = sample.created.toLowerCase()
+      const lowerValue = sample.created.toDateString().toLowerCase()
       return lowerValue.includes(filterVal.text.toLocaleLowerCase());
     })
 
@@ -117,6 +117,8 @@ const filterByCreationDate = (data: ITableSampleData[], filterVal: IFilterValue)
 
   return data;
 };
+
+
 
 export {
   sortDataBy,
