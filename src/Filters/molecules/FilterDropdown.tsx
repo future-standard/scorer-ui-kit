@@ -248,6 +248,7 @@ export interface IFilterDropdown {
   optionType?: IInputOptionsType
   isLoading?: boolean
   loadingText?: string
+  hasOptionsFilter?: boolean
   searchPlaceholder?: string
   maxDisplayedItems?: number
   searchResultText?: string
@@ -263,6 +264,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   isLoading = false,
   loadingText,
   optionType = 'text',
+  hasOptionsFilter,
   searchPlaceholder,
   maxDisplayedItems = 5,
   searchResultText = 'Showing [VISIBLE] of [TOTAL]',
@@ -326,17 +328,19 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
       >
         <TopLine />
         <InnerBox>
-          <SearchWrapper>
-            <BasicSearchInput
-              type='text'
-              hasBorder={false}
-              placeholder={searchPlaceholder}
-              color='dimmed'
-              iconSize={12}
-              value={searchText}
-              onChange={handleInputFilter}
-            />
-          </SearchWrapper>
+          {hasOptionsFilter && (
+            <SearchWrapper>
+              <BasicSearchInput
+                type='text'
+                hasBorder={false}
+                placeholder={searchPlaceholder}
+                color='dimmed'
+                iconSize={12}
+                value={searchText}
+                onChange={handleInputFilter}
+              />
+            </SearchWrapper>
+          )}
           {isLoading || !list
             ? (
               <LoadingBox>
@@ -345,7 +349,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
               </LoadingBox>)
             : (
               <ResultsContainer>
-                <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>
+                {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
                 <OptionList>
                   {(visibleList.length > 0) && visibleList.map((item: IFilterItem) => {
                     const value = item.value;
