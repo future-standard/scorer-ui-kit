@@ -15,6 +15,7 @@ export interface IDropdownDatePicker extends IDatePicker {
   disabled?: boolean
   onCloseCallback?: (value: DateInterval | Date | null) => void
   onUpdateCallback?: (value: DateInterval | Date | null) => void
+  onToggleCallback?: (value: DateInterval | Date | null, isOpen: boolean) => void
 }
 
 const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
@@ -26,6 +27,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
   timeMode,
   onCloseCallback = () => { },
   onUpdateCallback = () => { },
+  onToggleCallback = () => { },
   ...props }) => {
 
   const pickerValue = useRef<DateInterval | Date | null>(null);
@@ -41,6 +43,12 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
     }
   }, [onCloseCallback]);
 
+  const handleOnToggle = useCallback((isOpen: boolean) => {
+    if (pickerValue.current) {
+      onToggleCallback(pickerValue.current, isOpen);
+    }
+  }, [onToggleCallback]);
+
   return (
     <Container {...props}>
       <FilterDropHandler
@@ -48,6 +56,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
         min_width={MIN_WIDTH}
         min_height={MIN_HEIGHT}
         onCloseCallback={handleOnClose}
+        onToggleOpenCallback={handleOnToggle}
       >
         <FilterDropdownContainer>
           <DatePicker

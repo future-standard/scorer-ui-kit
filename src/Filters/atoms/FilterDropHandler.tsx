@@ -81,7 +81,7 @@ interface IFilterDropHandler {
   disabled?: boolean
   min_width?: number
   min_height?: number
-  onToggleOpenCallback?: () => void
+  onToggleOpenCallback?: (isOpen: boolean) => void
   onCloseCallback?: () => void
 }
 
@@ -125,12 +125,12 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
     if (!buttonRect) { return; }
     const position: IOpenPos = getDropPosition(buttonRect, min_width, min_height);
 
-    onToggleOpenCallback();
+    onToggleOpenCallback(openState.isOpen);
     setOpenState((prev) => {
       const isOpen = !prev.isOpen;
       return { ...prev, isOpen, position };
     });
-  }, [onToggleOpenCallback]);
+  }, [onToggleOpenCallback, openState.isOpen]);
 
   return (
     <Container ref={mainRef} {...props}>

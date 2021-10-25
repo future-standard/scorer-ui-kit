@@ -234,12 +234,12 @@ export const _FilterBar = () => {
       setDateFilters([])
     } else {
       const filteredData = datePickersSelected
-        ? getFilteredData(currentSelected, tempData, datePickersSelected )
-        : getFilteredData(currentSelected, tempData, []) ;
+        ? getFilteredData(currentSelected, tempData, datePickersSelected)
+        : getFilteredData(currentSelected, tempData, []);
 
       setData(filteredData);
       setFilters(currentSelected);
-      if(datePickersSelected) {
+      if (datePickersSelected) {
         setDateFilters(datePickersSelected);
       }
     }

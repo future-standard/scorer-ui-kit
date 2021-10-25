@@ -160,7 +160,15 @@ const createDatePickers = (
     const onCloseCallback = (value: DateInterval | Date | null) => {
       handleDatePickers(value, datePicker.id);
     };
-    const newPicker: IFilterDatePicker = { ...datePicker, onCloseCallback };
+
+    const onToggleCallback = (value: DateInterval | Date | null, isOpen: boolean) => {
+      // if it was open before toggle meains it will be closed, and value should be updated
+      if(isOpen) {
+        handleDatePickers(value, datePicker.id);
+      }
+    };
+
+    const newPicker: IFilterDatePicker = { ...datePicker, onCloseCallback, onToggleCallback };
     datePickersFilters.push(newPicker);
   });
 
