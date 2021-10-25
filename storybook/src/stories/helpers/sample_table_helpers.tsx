@@ -1,5 +1,5 @@
 import { ITableSampleData } from "./data_samples";
-import { IFilterValue, isFilterItem } from 'scorer-ui-kit';
+import { DateInterval, IFilterValue, isFilterItem } from 'scorer-ui-kit';
 import photo from '../assets/placeholder.jpg';
 import { IRowData, ITypeTableData } from "../../../../dist/Tables";
 
@@ -118,7 +118,20 @@ const filterByCreationDate = (data: ITableSampleData[], filterVal: IFilterValue)
   return data;
 };
 
+const filterByCreationDatePicker = (data: ITableSampleData[], filterVal: Date | DateInterval): ITableSampleData[] => {
 
+  if (filterVal instanceof Date) {
+    const newData: ITableSampleData[] = data.filter((sample) => {
+      return sample.created < filterVal;
+    });
+    return newData;
+  } else {
+    const newData: ITableSampleData[] = data.filter((sample) => {
+      return (sample.created > filterVal.start) && (sample.created < filterVal.end)
+    });
+    return newData;
+  }
+};
 
 export {
   sortDataBy,
@@ -126,5 +139,6 @@ export {
   filterByStatus,
   filterByPrice,
   filterByName,
-  filterByCreationDate
+  filterByCreationDate,
+  filterByCreationDatePicker
 };

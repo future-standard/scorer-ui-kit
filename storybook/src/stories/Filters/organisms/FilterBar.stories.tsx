@@ -41,7 +41,8 @@ import {
   filterByStatus,
   filterByPrice,
   filterByName,
-  filterByCreationDate
+  filterByCreationDate,
+  filterByCreationDatePicker
 } from '../../helpers/sample_table_helpers';
 import { ITypeTableData } from '../../../../../dist/Tables';
 import { IDatePickerResult } from '../../../../../dist/Filters/FilterTypes';
@@ -63,7 +64,8 @@ margin: 60px 0 20px 0
 const dataInitialState = sortDataBy(tableData, 'deviceName', true);
 
 
-const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleData[]): ITableSampleData[] => {
+const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleData[], datePickersSelected: IDatePickerResult[]): ITableSampleData[] => {
+
 
   if (Array.isArray(currentSelected) && (currentSelected.length > 0)) {
     const filteredData: ITableSampleData[] = currentSelected.reduce((accumulator, currentFilter) => {
@@ -86,8 +88,33 @@ const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleDat
       return accumulator;
     }, data);
 
+    console.log('Picker value', (datePickersSelected !== undefined) && (datePickersSelected.length > 0));
+
+    if ((datePickersSelected !== undefined) && (datePickersSelected.length > 0)) {
+
+      const filteredByPickers: ITableSampleData[] = datePickersSelected.reduce((accumulator, currentPicker) => {
+        if (currentPicker.id === 'datePickerForRuntime' && (currentPicker.selected !== null)) {
+          return filterByCreationDatePicker(accumulator, currentPicker.selected);
+        }
+        return accumulator;
+      }, filteredData);
+
+      // finish the function with pickers filter
+      return filteredByPickers;
+    }
+
     return filteredData;
+  } else if ((datePickersSelected !== undefined) && (datePickersSelected.length > 0)) {
+    const filteredByPickers: ITableSampleData[] = datePickersSelected.reduce((accumulator, currentPicker) => {
+      if (currentPicker.id === 'datePickerForRuntime' && (currentPicker.selected !== null)) {
+        return filterByCreationDatePicker(accumulator, currentPicker.selected);
+      }
+      return accumulator;
+    }, data);
+
+    return filteredByPickers;
   }
+
 
   return data;
 }
@@ -103,6 +130,7 @@ export const _FilterBar = () => {
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
   const [rows, setRows] = useState<ITypeTableData>(rowMaker(dataInitialState));
   const [filters, setFilters] = useState<IFilterResult[]>([]);
+  const [dateFilters, setDateFilters] = useState<IDatePickerResult[]>([]);
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked: boolean, id?: string | number) => {
@@ -192,7 +220,9 @@ export const _FilterBar = () => {
   const filtersValues = action('onChangeCallback');
 
   const handleFilters = useCallback((currentSelected: IFilterResult[], datePickersSelected?: IDatePickerResult[]) => {
-    filtersValues(currentSelected);
+    const change = datePickersSelected ? [...currentSelected, ...datePickersSelected] : currentSelected;
+    filtersValues(change);
+
 
     const localData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
     const tempData: ITableSampleData[] = [...localData];
@@ -201,10 +231,17 @@ export const _FilterBar = () => {
     if ((currentSelected.length === 0) && datePickersSelected === undefined) {
       setData(localData);
       setFilters([])
+      setDateFilters([])
     } else {
-      const filteredData = getFilteredData(currentSelected, tempData);
+      const filteredData = datePickersSelected
+        ? getFilteredData(currentSelected, tempData, datePickersSelected )
+        : getFilteredData(currentSelected, tempData, []) ;
+
       setData(filteredData);
       setFilters(currentSelected);
+      if(datePickersSelected) {
+        setDateFilters(datePickersSelected);
+      }
     }
 
   }, [filtersValues, language])
@@ -212,9 +249,9 @@ export const _FilterBar = () => {
 
   useEffect(() => {
     const localizeData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
-    const newData = getFilteredData(filters, localizeData);
+    const newData = getFilteredData(filters, localizeData, dateFilters);
     setData(newData);
-  }, [filters, language])
+  }, [dateFilters, filters, language])
 
   useEffect(() => {
     setRows(rowMaker(data));
