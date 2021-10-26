@@ -1,8 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { IFilterItem, IFilterType } from '../index';
-import {resetButtonStyles} from '../../common/index';
+import { IFilterItem, IFilterType, IFilterDateItem } from '../FilterTypes';
+import { resetButtonStyles } from '../../common/index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
+import { isFilterItem } from '..';
+import { isDateInterval } from './DatePicker';
 
 const Container = styled.div`
   display: flex;
@@ -34,8 +36,8 @@ const FilterLabel = styled.div`
   }
   border-right: 1px solid hsla(0, 0%, 13%, 0.16);
 `;
-const FilterLabelText = styled.div<{hasIcon?: boolean}>`
-  padding: ${({hasIcon}) => hasIcon ? '0 15px 0 9px' :'0 15px 0 0' };
+const FilterLabelText = styled.div<{ hasIcon?: boolean }>`
+  padding: ${({ hasIcon }) => hasIcon ? '0 15px 0 9px' : '0 15px 0 0'};
 `;
 
 const ClearTextButton = styled.button`
@@ -61,9 +63,32 @@ const renderResults = (template: string, total: number) => {
   return template.replace('[TOTAL_RESULTS]', `${total}`);
 };
 
+const renderLabel = (item: IFilterItem | IFilterDateItem, icon?: string, filterName?: string) => {
+
+  let textLabel: string = "";
+  console.log(item, 'datepicker');
+  console.log((!filterName && item instanceof Date),'date value');
+
+  if (filterName && isFilterItem(item)) {
+    textLabel = `${filterName}: ${item.text}`;
+  } else if (filterName && item instanceof Date) {
+    textLabel = `${filterName}: ${item.toDateString()}`;
+  } else if (filterName && isDateInterval(item)) {
+    textLabel = `${filterName}: ${item.start.toDateString()} - ${item.end.toDateString()}`;
+  } else if (!filterName && isFilterItem(item)) {
+    textLabel = item.text;
+  } else if (!filterName && item instanceof Date) {
+    textLabel = item.toDateString();
+  } else if (!filterName && isDateInterval(item)) {
+    textLabel = `${item.start.toDateString()} - ${item.end.toDateString()}`;
+  }
+
+  return <FilterLabelText hasIcon={!!icon}>{textLabel}</FilterLabelText>;
+};
+
 export interface IFilterLabel {
   filterId: string
-  item: IFilterItem
+  item: IFilterItem | IFilterDateItem
   type: IFilterType
   icon?: string
   filterName?: string
@@ -74,7 +99,7 @@ interface IFilterResults {
   totalResults: number
   resultTextTemplate?: string
   clearText?: string
-  onRemoveFilter? : (filterId: string, type: IFilterType, item: IFilterItem) => void
+  onRemoveFilter?: (filterId: string, type: IFilterType, item: IFilterItem | IFilterDateItem) => void
   onClearAll?: () => void
 }
 
@@ -95,7 +120,7 @@ const FiltersResults: React.FC<IFilterResults> = ({
           return (
             <FilterLabel key={`Filter-Label-id-${index}`}>
               {icon && <Icon icon={icon} color='dimmed' size={10} weight='heavy' />}
-              <FilterLabelText hasIcon={!!icon}>{filterName ? `${filterName}: ${item.text}` : item.text}</FilterLabelText>
+              {renderLabel(item, icon, filterName)}
               <RemoveButton
                 onClick={() => onRemoveFilter(filterId, type, item)}
               >

@@ -16,6 +16,7 @@ export const isFilterItem = (item: any): item is IFilterItem => {
   return ((typeof item.value === 'number') || (typeof item.value === 'string')) && (typeof item.text === 'string');
 };
 
+
 type IFilterItem = { text: string; value: string | number; }
 type IFilterValue = IFilterItem | IFilterItem[] | null;
 
@@ -24,12 +25,14 @@ interface IFilterResult {
   selected: IFilterValue
 }
 
-type IFilterType = 'search' | 'dropdown';
+type IFilterType = 'search' | 'dropdown' | 'datepicker';
 
 interface IDatePickerResult {
   id: string
   selected: DateInterval | Date | null;
 }
+
+type IFilterDateItem = DateInterval | Date;
 
 export type {
   IFilterType,
@@ -37,4 +40,5 @@ export type {
   IFilterResult,
   IFilterValue,
   IDatePickerResult,
+  IFilterDateItem,
 };
