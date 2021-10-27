@@ -1,10 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { IFilterItem, IFilterType, IFilterDateItem } from '../FilterTypes';
+import { IFilterItem, IFilterType } from '../FilterTypes';
 import { resetButtonStyles } from '../../common/index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
-import { isFilterItem } from '..';
-import { isDateInterval } from './DatePicker';
+import { isFilterItem } from '../FilterTypes';
+import { DateInterval, isDateInterval } from './DatePicker';
 
 const Container = styled.div`
   display: flex;
@@ -63,11 +63,11 @@ const renderResults = (template: string, total: number) => {
   return template.replace('[TOTAL_RESULTS]', `${total}`);
 };
 
-const renderLabel = (item: IFilterItem | IFilterDateItem, icon?: string, filterName?: string) => {
+const renderLabel = (item: IFilterItem | DateInterval | Date, icon?: string, filterName?: string) => {
 
   let textLabel: string = "";
   console.log(item, 'datepicker');
-  console.log((!filterName && item instanceof Date),'date value');
+  console.log((!filterName && item instanceof Date), 'date value');
 
   if (filterName && isFilterItem(item)) {
     textLabel = `${filterName}: ${item.text}`;
@@ -88,7 +88,7 @@ const renderLabel = (item: IFilterItem | IFilterDateItem, icon?: string, filterN
 
 export interface IFilterLabel {
   filterId: string
-  item: IFilterItem | IFilterDateItem
+  item: IFilterItem | Date | DateInterval
   type: IFilterType
   icon?: string
   filterName?: string
@@ -99,7 +99,7 @@ interface IFilterResults {
   totalResults: number
   resultTextTemplate?: string
   clearText?: string
-  onRemoveFilter?: (filterId: string, type: IFilterType, item: IFilterItem | IFilterDateItem) => void
+  onRemoveFilter?: (filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => void
   onClearAll?: () => void
 }
 

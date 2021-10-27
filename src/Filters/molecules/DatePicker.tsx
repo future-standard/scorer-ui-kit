@@ -30,7 +30,6 @@ const DateTimeArea = styled.div`
   width: 170px;
   display: flex;
   flex-direction: column;
-
 `;
 
 const TimeZoneOption = styled.div`
@@ -42,6 +41,7 @@ const TimeZoneOption = styled.div`
   padding: 10px;
   box-sizing: border-box;
 `;
+
 const TimeZoneLabel = styled.div`
   ${({ theme }) => css`
     font-family: ${theme.fontFamily.ui};
@@ -66,6 +66,7 @@ const CalendarHeader = styled.div`
   border-bottom: ${({ theme }) => theme.colors.divider} 1px solid;
   text-align: center;
 `;
+
 const CurrentMonth = styled.div`
   flex: 1;
   flex-direction: column;
@@ -212,7 +213,7 @@ const DayGuide: string[] = [
 ];
 
 export const isDateInterval = (value: any): value is DateInterval => {
-  if (value === null) {
+  if (value === null || value === undefined) {
     return false;
   }
 

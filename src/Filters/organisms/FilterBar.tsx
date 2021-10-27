@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem, IDatePickerResult, IFilterDateItem } from '../FilterTypes';
-import { IInputOptionsType } from '../../Form';
-import FilterInputs, { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../molecules/FilterInputs';
+import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem, IDatePickerResult, IFilterDropdownConfig } from '../FilterTypes';
+import FilterInputs from '../molecules/FilterInputs';
+import { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../FilterTypes';
 import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
 import { DateInterval } from '../molecules/DatePicker';
 import isequal from 'lodash.isequal';
@@ -27,7 +27,7 @@ const Container = styled.div`
 const getDisableValue = (
   filtersValues: IFilterResult[],
   allowMultiFilter: boolean,
-  filter: ISearchFilter | IFilterDropdownConfig,
+  filter: ISearchFilter | IFilterDropdownConfig | IFilterDatePicker,
 ) => {
   let disabled = false;
 
@@ -53,9 +53,9 @@ const createDropdownFilters = (
   dropdownsConfig.forEach(dropdown => {
     const filter = filtersValues.find(filter => filter.id === dropdown.id);
     if (filter) {
-      const selected = filter.selected;
+      const selected = Array.isArray(filter.selected) || isFilterItem(filter.selected) ? filter.selected : null;
       const onSelect = (newSelection: IFilterValue) => { handleDropdownsSelected(newSelection, filter.id); };
-      let disabled = getDisableValue(filtersValues, allowMultiFilter, filter);
+      let disabled = getDisableValue(filtersValues, allowMultiFilter, dropdown);
       const newDropdown: IFilterDropdownExt = { ...dropdown, selected, disabled, onSelect };
       dropdownFilters.push(newDropdown);
     }
@@ -74,14 +74,14 @@ const createSearchers = (
   searchersConfig.forEach(searcher => {
     const filter = filtersValues.find(filter => filter.id === searcher.id);
     if (filter && !Array.isArray(filter.selected)) {
-      const value: string = filter.selected === null ? '' : filter.selected.text;
+      const value: string = (filter.selected === null) || (!isFilterItem(filter.selected)) ? '' : filter.selected.text;
 
       const onChange = (e: React.FormEvent<HTMLInputElement>) => {
         const newValue = e.currentTarget.value;
         handleSearchers(newValue, filter.id);
       };
 
-      let disabled = getDisableValue(filtersValues, allowMultiFilter, filter);
+      let disabled = getDisableValue(filtersValues, allowMultiFilter, searcher);
 
       const newSearcher: ISearchFilter = { ...searcher, value, disabled, onChange };
       searchersFilters.push(newSearcher);
@@ -94,9 +94,8 @@ const createSearchers = (
 const createLabelResults = (
   searchersConfig: ISearchFilter[],
   dropdownsConfig: IFilterDropdownConfig[],
-  filtersValues: IFilterResult[],
   datePickersConfig: IFilterDatePicker[],
-  datePickersValues: IDatePickerResult[]
+  filtersValues: IFilterResult[],
 ): IFilterLabel[] => {
 
   const labelLists: IFilterLabel[] = [];
@@ -106,13 +105,13 @@ const createLabelResults = (
     if (!foundSearcher) {
       return;
 
-      // searchers are never arrays but Typescript requires this review
+      // searchers are never arrays or date but Typescript requires this type check
     } else if (isFilterItem(foundSearcher.selected)) {
       const newLabel: IFilterLabel = {
         filterId: foundSearcher.id,
         item: foundSearcher.selected,
         filterName: searcher.name,
-        type: 'search',
+        type: foundSearcher.type,
       };
       labelLists.push(newLabel);
     }
@@ -129,7 +128,8 @@ const createLabelResults = (
           filterId: foundDropdown.id,
           item: dropdownLabelVal,
           icon: dropdown.buttonIcon,
-          type: 'dropdown'
+          filterName: dropdown.name,
+          type: foundDropdown.type
         };
         labelLists.push(newLabel);
       });
@@ -138,7 +138,8 @@ const createLabelResults = (
         filterId: foundDropdown.id,
         item: foundDropdown.selected,
         icon: dropdown.buttonIcon,
-        type: 'dropdown'
+        filterName: dropdown.name,
+        type: foundDropdown.type
       };
 
       labelLists.push(newLabel);
@@ -146,15 +147,16 @@ const createLabelResults = (
   });
 
   datePickersConfig.forEach((datePicker) => {
-    const foundPicker = datePickersValues.find(element => element.id === datePicker.id);
-    if (!foundPicker || foundPicker.selected === null) {
+    const foundPicker = filtersValues.find(element => element.id === datePicker.id);
+    if (!foundPicker || foundPicker.selected === null || Array.isArray(foundPicker.selected) || isFilterItem(foundPicker.selected)) {
       return;
     } else {
       const newLabel: IFilterLabel = {
         filterId: foundPicker.id,
         item: foundPicker.selected,
         icon: 'Date',
-        type: 'datepicker'
+        filterName: datePicker.name,
+        type: foundPicker.type
       };
       labelLists.push(newLabel);
     }
@@ -163,9 +165,6 @@ const createLabelResults = (
   return labelLists;
 };
 
-/**
- * TODO: fix getDisable for datePicker
- */
 const createDatePickers = (
   datePickersConfig: IFilterDatePicker[],
   filtersValues: IFilterResult[],
@@ -180,13 +179,27 @@ const createDatePickers = (
     };
 
     const onToggleCallback = (value: DateInterval | Date | null, isOpen: boolean) => {
-      // if it was open before toggle means it will be closed, and value should be updated
+      // if it was open before toggle means the user closed it and value should be updated.
       if (isOpen) {
         handleDatePickers(value, datePicker.id);
       }
     };
+    const disabled = getDisableValue(filtersValues, allowMultiFilter, datePicker);
+    let validInitialValue: Date | DateInterval | undefined = undefined;
 
-    const newPicker: IFilterDatePicker = { ...datePicker, onCloseCallback, onToggleCallback };
+    if (datePicker.selected) {
+      validInitialValue = datePicker.selected;
+    } else if (datePicker.initialValue) {
+      validInitialValue = datePicker.initialValue;
+    }
+
+    const newPicker: IFilterDatePicker = {
+      ...datePicker,
+      onCloseCallback,
+      onToggleCallback,
+      disabled,
+      initialValue: validInitialValue,
+    };
     datePickersFilters.push(newPicker);
   });
 
@@ -195,54 +208,59 @@ const createDatePickers = (
 
 const initFilters = (
   searchersConfig: ISearchFilter[],
-  dropdownsConfig: IFilterDropdownConfig[]): IFilterResult[] => {
+  dropdownsConfig: IFilterDropdownConfig[],
+  datePickersConfig: IFilterDatePicker[],
+): IFilterResult[] => {
 
   const newFilters: IFilterResult[] = [];
 
-  searchersConfig.forEach(({ id }) => {
-    newFilters.push({ id, selected: null });
+  searchersConfig.forEach(({ id, value, selected }) => {
+
+    let validatedSelected: IFilterItem | null = null;
+    if (typeof value === 'number') {
+      validatedSelected = { text: value.toString(), value: value };
+    } else if (value === 'string') {
+      validatedSelected = { text: value, value: value };
+    } else if (isFilterItem(selected)) {
+      validatedSelected = selected;
+    }
+
+    const initialSearch: IFilterResult = { id, type: 'search', selected: validatedSelected };
+
+    newFilters.push(initialSearch);
   });
 
-  dropdownsConfig.forEach(({ id }) => {
-    newFilters.push({ id, selected: null });
+  dropdownsConfig.forEach(({ id, selected }) => {
+
+    const initialDropdown: IFilterResult = {
+      id,
+      type: 'dropdown',
+      selected: (isFilterItem(selected) || Array.isArray(selected)) ? selected : null,
+    };
+
+    newFilters.push(initialDropdown);
   });
+
+  datePickersConfig.forEach(({ id, initialValue, selected }) => {
+
+    let validSelected: Date | DateInterval | null = null;
+
+    if (initialValue) {
+      validSelected = initialValue;
+    } else if (selected) {
+      validSelected = selected;
+    }
+
+    newFilters.push({ id, type: 'datepicker', selected: validSelected });
+  });
+
   return newFilters;
 };
 
-const initPickers = (
-  datePickersConfig?: IFilterDatePicker[]): IDatePickerResult[] => {
-
-  if (!datePickersConfig) {
-    return [];
-  }
-
-  const newPickersResults: IDatePickerResult[] = [];
-  datePickersConfig.forEach(({ id, initialValue }) => {
-    const selected = initialValue ? initialValue : null;
-    newPickersResults.push({ id, selected });
-  });
-
-  return newPickersResults;
-};
-
-export interface IFilterDropdownConfig {
-  id: string
-  canHide?: boolean
-  buttonIcon: string
-  buttonText: string
-  list: IFilterItem[];
-  disabled?: boolean
-  optionType?: IInputOptionsType
-  loadingText?: string
-  searchPlaceholder?: string
-  maxDisplayedItems?: number
-  searchResultText?: string
-}
-
 interface IFilterBar {
   filtersTitle?: string
-  searchersConfig: ISearchFilter[]
-  dropdownsConfig: IFilterDropdownConfig[]
+  searchersConfig?: ISearchFilter[]
+  dropdownsConfig?: IFilterDropdownConfig[]
   datePickersConfig?: IFilterDatePicker[]
   hasShowMore?: boolean
   showMoreText?: string
@@ -255,26 +273,29 @@ interface IFilterBar {
   onChangeCallback?: (currentSelected: IFilterResult[], datePickersSelected?: IDatePickerResult[]) => void
 }
 
-//** TODO: make multi filter default */
+/**  TODO:
+ * - get filterResults date string format
+ * - initial empty date
+*/
+
 const FilterBar: React.FC<IFilterBar> = ({
   filtersTitle = 'Filters:',
   hasShowMore,
-  searchersConfig,
-  dropdownsConfig,
+  searchersConfig = [],
+  dropdownsConfig = [],
   datePickersConfig = [],
   showMoreText,
   showLessText,
   resultTextTemplate,
   clearText,
   totalResults,
-  allowMultiFilter = false,
+  allowMultiFilter = true,
   onChangeCallback = () => { },
   ...props
 }) => {
 
-  const [filtersValues, setFiltersValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig));
+  const [filtersValues, setFiltersValues] = useState<IFilterResult[]>(initFilters(searchersConfig, dropdownsConfig, datePickersConfig));
   const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
-  const [datePickersValues, setDatePickersValues] = useState<IDatePickerResult[]>(initPickers(datePickersConfig));
 
   // Prevents extra-renders only updating if the dropdowns config actually changed
   if (dropdownsConfigRef.current && !isequal(dropdownsConfigRef.current, dropdownsConfig)) {
@@ -282,13 +303,12 @@ const FilterBar: React.FC<IFilterBar> = ({
   }
 
   // saves a reference of the debounce for searchers
-  const debounceSearcher = useRef(debounce(updatedFilters => handleChange(updatedFilters, datePickersValues), 600)).current;
+  const debounceSearcher = useRef(debounce(updatedFilters => handleChange(updatedFilters), 600)).current;
 
-  const handleChange = useCallback((newValues: IFilterResult[], newDatePicker?: IDatePickerResult[]) => {
+  const handleChange = useCallback((newValues: IFilterResult[]) => {
     const notNullValues = newValues.filter((filter) => filter.selected !== null);
-    const notNullValuesPicker = newDatePicker ? newDatePicker.filter((filter) => filter.selected !== null) : [];
 
-    onChangeCallback(notNullValues, notNullValuesPicker);
+    onChangeCallback(notNullValues);
 
   }, [onChangeCallback]);
 
@@ -297,14 +317,13 @@ const FilterBar: React.FC<IFilterBar> = ({
       const updatedFilters = [...prev];
       const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
       if (foundFilter && foundFilter.selected !== newValue) {
-        console.log('[FilterBar] its, different so update');
         foundFilter.selected = newValue;
-        handleChange(updatedFilters, datePickersValues);
+        handleChange(updatedFilters);
         return updatedFilters;
       }
       return prev;
     });
-  }, [handleChange, datePickersValues]);
+  }, [handleChange]);
 
   const handleSearchers = useCallback((newValue: string, filterId: string) => {
 
@@ -329,80 +348,55 @@ const FilterBar: React.FC<IFilterBar> = ({
       filterElement.selected = null;
     });
 
-    const updatedPickers = [...datePickersValues];
+    handleChange(updatedFilters);
+    setFiltersValues(updatedFilters);
+  }, [filtersValues, handleChange]);
 
-    updatedPickers.forEach(datePicker => {
-      datePicker.selected = null;
+  const handleOnRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => {
+
+    setFiltersValues((prev) => {
+      const updatedFilters = [...prev];
+
+      const foundFilter = updatedFilters.find((filterElement) => filterElement.id === filterId);
+
+      if (!foundFilter) {
+        return prev;
+      } else if (Array.isArray(foundFilter.selected) && type === 'dropdown') {
+        const selectedFiltered = foundFilter.selected.filter((oldItem) => {
+          if (isFilterItem(oldItem) && isFilterItem(item)) {
+            return oldItem.value !== item.value;
+          }
+          // it's required to have return a value usually will always receive filterItems and all will enter the if
+          // but just in case if it's not a Filter item it will filter the value.
+          return true;
+        });
+        foundFilter.selected = selectedFiltered.length === 0 ? null : selectedFiltered;
+      } else {
+        foundFilter.selected = null;
+      }
+
+      handleChange(updatedFilters);
+      return updatedFilters;
     });
 
-    handleChange(updatedFilters, updatedPickers);
-    setFiltersValues(updatedFilters);
-    setDatePickersValues(updatedPickers);
-  }, [datePickersValues, filtersValues, handleChange]);
-
-  const handleOnRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | IFilterDateItem) => {
-
-    if (type === 'datepicker') {
-      setDatePickersValues((prev) => {
-
-        const updatedPickersValue = [...prev];
-        const foundPicker = updatedPickersValue.find((datePicker) => filterId === datePicker.id);
-
-        if (!foundPicker) {
-          return prev;
-        } else {
-          foundPicker.selected = null;
-        }
-        handleChange(filtersValues, updatedPickersValue);
-        return updatedPickersValue;
-      });
-    } else {
-
-      setFiltersValues((prev) => {
-        const updatedFilters = [...prev];
-
-        const foundFilter = updatedFilters.find((filterElement) => filterElement.id === filterId);
-
-        if (!foundFilter) {
-          return prev;
-        } else if (Array.isArray(foundFilter.selected) && type === 'dropdown') {
-          const selectedFiltered = foundFilter.selected.filter((oldItem) => {
-            if (isFilterItem(oldItem) && isFilterItem(item)) {
-              return oldItem.value !== item.value;
-            }
-            // it's required to have return a value usually will always receive filterItems and all will enter the if
-            // but just in case if it's not a Filter item it will filter the value.
-            return true;
-          });
-          foundFilter.selected = selectedFiltered.length === 0 ? null : selectedFiltered;
-        } else {
-          foundFilter.selected = null;
-        }
-
-        handleChange(updatedFilters, datePickersValues);
-        return updatedFilters;
-      });
-
-    }
-
-  }, [handleChange, filtersValues, datePickersValues]);
+  }, [handleChange]);
 
   const handleDatePickers = useCallback((selection: DateInterval | Date | null, filterId: string) => {
-    const updatedDatePickers = [...datePickersValues];
-    console.log('getting value of picker', selection);
+    const updatedDatePickers = [...filtersValues];
 
     const foundFilter = updatedDatePickers.find((datePicker) => datePicker.id === filterId);
     if (foundFilter) {
       foundFilter.selected = selection;
-      handleChange(filtersValues, updatedDatePickers);
-      setDatePickersValues(updatedDatePickers);
+      handleChange(filtersValues);
+      setFiltersValues(updatedDatePickers);
     }
 
-  }, [datePickersValues, filtersValues, handleChange]);
+  }, [filtersValues, handleChange]);
 
   /**
    * This use Effect will update filters text selections in case the language is changed.
    * Dropdowns are the only ones that required this because Inputs text are the user type data.
+   * DatePickers do not change text for now
    */
   useEffect(() => {
     let mountConfig = true;
@@ -463,7 +457,7 @@ const FilterBar: React.FC<IFilterBar> = ({
       />
       <StyledFilterResults
         {...{ resultTextTemplate, clearText, totalResults }}
-        labelLists={createLabelResults(searchersConfig, dropdownsConfigRef.current, filtersValues, datePickersConfig, datePickersValues)}
+        labelLists={createLabelResults(searchersConfig, dropdownsConfigRef.current, datePickersConfig, filtersValues)}
         onClearAll={handleOnClear}
         onRemoveFilter={handleOnRemoveFilter}
       />

@@ -49,6 +49,7 @@ import {
 import {
   DatePicker,
   DateInterval,
+  isDateInterval,
   IFilterDatePicker,
   FilterDropdownContainer,
   FilterButton,
@@ -231,6 +232,7 @@ export {
   FiltersResults,
   FilterBar,
   isFilterItem,
+  isDateInterval,
 
   //Icon
   Icon,

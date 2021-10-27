@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, ChangeEvent } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { select, boolean, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
@@ -12,6 +12,7 @@ import {
   IFilterLabel,
   IFilterItem,
   IFilterType,
+  DateInterval,
 } from 'scorer-ui-kit';
 
 import {
@@ -127,6 +128,13 @@ const generateResultsLabelData = (dropdownFilters: IFilterDropdownExt[], searchF
   return labelLists;
 }
 
+const isDifferentValue = (item: IFilterItem | Date | DateInterval, compareItem: IFilterItem | Date | DateInterval) : boolean => {
+  if(isFilterItem(item) && isFilterItem(compareItem)) {
+    return compareItem.value !== item.value;
+  }
+
+  return true;
+}
 
 export const _FilterInputs = () => {
 
@@ -231,12 +239,13 @@ export const _FilterInputs = () => {
     setExampleSearch('');
   }, []);
 
-  const onRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem) => {
-    if (type === 'dropdown') {
+
+  const onRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => {
+    if (type === 'dropdown' ) {
       const foundFilter = dropdownFilters.find((dropdown) => dropdown.id === filterId);
       if (foundFilter && foundFilter.onSelect) {
         const newSelected: IFilterValue = Array.isArray(foundFilter.selected)
-          ? foundFilter.selected.filter((currentItem : IFilterItem) => currentItem.value !== item.value)
+          ? foundFilter.selected.filter((currentItem : IFilterItem) => isDifferentValue(currentItem, item))
           : null
         foundFilter.onSelect(newSelected);
       }

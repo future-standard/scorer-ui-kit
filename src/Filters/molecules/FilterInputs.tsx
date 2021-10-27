@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import BasicSearchInput, { IBasicSearchInput } from '../../Misc/atoms/BasicSearchInput';
-import FilterDropdown, { IFilterDropdown } from '../../Filters/molecules/FilterDropdown';
+import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
+import FilterDropdown from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
-import DropdownDatePicker, { IDropdownDatePicker } from './DropdownDatePicker';
+import DropdownDatePicker from './DropdownDatePicker';
+import { IFilterDatePicker, IFilterDropdownExt, ISearchFilter } from '../FilterTypes';
 
 const SearchInputWrapper = styled.div`
   background-color: hsl(0, 0%, 100%);
@@ -92,22 +93,6 @@ const initialSearchFilters = (searchFilters: ISearchFilter[]): String[] => {
 
   return currentVisible;
 };
-
-export interface ISearchFilter extends IBasicSearchInput {
-  id: string
-  canHide?: boolean
-  showFieldText?: string
-}
-
-export interface IFilterDropdownExt extends IFilterDropdown {
-  id: string
-  canHide?: boolean
-}
-
-export interface IFilterDatePicker extends IDropdownDatePicker {
-  id: string
-  canHide?: boolean
-}
 
 export interface IFilterInputs {
   searchFilters: ISearchFilter[]

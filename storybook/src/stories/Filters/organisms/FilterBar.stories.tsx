@@ -10,6 +10,8 @@ import {
   IFilterDropdownConfig,
   IFilterResult,
   IFilterDatePicker,
+  isFilterItem,
+  DateInterval,
 } from 'scorer-ui-kit';
 
 import {
@@ -45,7 +47,6 @@ import {
   filterByCreationDatePicker
 } from '../../helpers/sample_table_helpers';
 import { ITypeTableData } from '../../../../../dist/Tables';
-import { IDatePickerResult } from '../../../../../dist/Filters/FilterTypes';
 
 export default {
   title: 'Filters/Organism',
@@ -64,57 +65,40 @@ margin: 60px 0 20px 0
 const dataInitialState = sortDataBy(tableData, 'deviceName', true);
 
 
-const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleData[], datePickersSelected: IDatePickerResult[]): ITableSampleData[] => {
+const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleData[]): ITableSampleData[] => {
 
 
   if (Array.isArray(currentSelected) && (currentSelected.length > 0)) {
     const filteredData: ITableSampleData[] = currentSelected.reduce((accumulator, currentFilter) => {
-      if (currentFilter.id === 'dropdownForStatus') {
+      if(currentFilter.selected === null) {
+        return accumulator;
+      };
+
+      if (currentFilter.id === 'dropdownForStatus' && (isFilterItem(currentFilter.selected) || (Array.isArray(currentFilter.selected))) ) {
         return filterByStatus(accumulator, currentFilter.selected);
       }
 
-      if (currentFilter.id === 'priceFilter') {
+      if ((currentFilter.id === 'priceFilter') && isFilterItem(currentFilter.selected)) {
         return filterByPrice(accumulator, currentFilter.selected);
       }
 
-      if (currentFilter.id === 'inputForDeviceName') {
+      if (currentFilter.id === 'inputForDeviceName' && isFilterItem(currentFilter.selected)) {
         return filterByName(accumulator, currentFilter.selected);
       }
 
-      if (currentFilter.id === 'inputForDate') {
+      if (currentFilter.id === 'inputForDate' && isFilterItem(currentFilter.selected)) {
         return filterByCreationDate(accumulator, currentFilter.selected);
       }
 
+      if(currentFilter.id === 'datePickerForRuntime' && !isFilterItem(currentFilter.selected) && !Array.isArray(currentFilter.selected) ){
+        return filterByCreationDatePicker(accumulator, currentFilter.selected);
+      }
+
       return accumulator;
     }, data);
-
-    console.log('Picker value', (datePickersSelected !== undefined) && (datePickersSelected.length > 0));
-
-    if ((datePickersSelected !== undefined) && (datePickersSelected.length > 0)) {
-
-      const filteredByPickers: ITableSampleData[] = datePickersSelected.reduce((accumulator, currentPicker) => {
-        if (currentPicker.id === 'datePickerForRuntime' && (currentPicker.selected !== null)) {
-          return filterByCreationDatePicker(accumulator, currentPicker.selected);
-        }
-        return accumulator;
-      }, filteredData);
-
-      // finish the function with pickers filter
-      return filteredByPickers;
-    }
 
     return filteredData;
-  } else if ((datePickersSelected !== undefined) && (datePickersSelected.length > 0)) {
-    const filteredByPickers: ITableSampleData[] = datePickersSelected.reduce((accumulator, currentPicker) => {
-      if (currentPicker.id === 'datePickerForRuntime' && (currentPicker.selected !== null)) {
-        return filterByCreationDatePicker(accumulator, currentPicker.selected);
-      }
-      return accumulator;
-    }, data);
-
-    return filteredByPickers;
   }
-
 
   return data;
 }
@@ -124,13 +108,15 @@ const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleDat
  */
 
 
+const today: Date = new Date();
+const before : Date = new Date();
+before.setDate(before.getDate() - 5);
 
 export const _FilterBar = () => {
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
   const [rows, setRows] = useState<ITypeTableData>(rowMaker(dataInitialState));
   const [filters, setFilters] = useState<IFilterResult[]>([]);
-  const [dateFilters, setDateFilters] = useState<IDatePickerResult[]>([]);
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked: boolean, id?: string | number) => {
@@ -166,7 +152,7 @@ export const _FilterBar = () => {
     {
       id: 'inputForDeviceName',
       placeholder: language === 'english' ? 'Filter by Device Name...' : 'デバイス名前 フィルター',
-      name: language === 'english' ? 'Device Name' : 'デバイス名前'
+      name: language === 'english' ? 'Device Name' : 'デバイス名前',
     },
     {
       id: 'inputForDate',
@@ -201,47 +187,47 @@ export const _FilterBar = () => {
     }
   ]
 
+  const myDate: DateInterval = {
+    start: before,
+    end: today,
+  }
+
   const datePickers: IFilterDatePicker[] = [
     {
       id: 'datePickerForRuntime',
       dateMode: 'interval',
       timeMode: 'off',
       buttonText: 'Date Range',
-      buttonIcon: 'DateTime'
+      buttonIcon: 'DateTime',
+      selected: myDate
     }
   ]
 
-  const allowMultiFilter = boolean('Allow Multi Filter', false);
+  const allowMultiFilter = boolean('Allow Multi Filter', true);
   const hasShowMore = boolean('Has Show More', true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const searchersConfig = object('Search Filters', searchers);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dropdownsConfig = object('DropdownFilters', dropdowns);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const datePickersConfig = object('DatePickers', datePickers);
   const filtersValues = action('onChangeCallback');
 
-  const handleFilters = useCallback((currentSelected: IFilterResult[], datePickersSelected?: IDatePickerResult[]) => {
-    const change = datePickersSelected ? [...currentSelected, ...datePickersSelected] : currentSelected;
-    filtersValues(change);
+  const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
+    filtersValues(currentSelected);
 
 
     const localData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
     const tempData: ITableSampleData[] = [...localData];
 
-    console.log('datePickers', datePickersSelected);
-    if ((currentSelected.length === 0) && datePickersSelected === undefined) {
+    if ((currentSelected.length === 0)) {
       setData(localData);
       setFilters([])
-      setDateFilters([])
     } else {
-      const filteredData = datePickersSelected
-        ? getFilteredData(currentSelected, tempData, datePickersSelected)
-        : getFilteredData(currentSelected, tempData, []);
+      const filteredData = getFilteredData(currentSelected, tempData);
 
       setData(filteredData);
       setFilters(currentSelected);
-      if (datePickersSelected) {
-        setDateFilters(datePickersSelected);
-      }
     }
 
   }, [filtersValues, language])
@@ -249,9 +235,9 @@ export const _FilterBar = () => {
 
   useEffect(() => {
     const localizeData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
-    const newData = getFilteredData(filters, localizeData, dateFilters);
+    const newData = getFilteredData(filters, localizeData);
     setData(newData);
-  }, [dateFilters, filters, language])
+  }, [filters, language])
 
   useEffect(() => {
     setRows(rowMaker(data));

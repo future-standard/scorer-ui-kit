@@ -11,8 +11,6 @@ import {
 import {
   searchTemplateResultEnglish,
   searchTemplateResultJapanese,
-  searchPlaceholderJapanese,
-  searchPlaceholderEnglish,
   loadingTagsEnglish,
   genericLoadingJp,
 } from '../../helpers/data_samples';
