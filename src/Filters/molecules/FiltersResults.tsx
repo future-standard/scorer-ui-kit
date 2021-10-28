@@ -60,6 +60,21 @@ const FilterLabelsGroup = styled.div`
   margin-left: 10px;
 `;
 
+const validateDateFormat = (resultsDateFormat: string): boolean => {
+  let isFormatValid = true;
+
+  if (resultsDateFormat) {
+    try {
+      const tryDate = new Date();
+      format(tryDate, resultsDateFormat);
+    } catch (error) {
+      isFormatValid = false;
+    }
+  }
+
+  return isFormatValid;
+};
+
 const renderResults = (template: string, total: number) => {
   return template.replace('[TOTAL_RESULTS]', `${total}`);
 };
@@ -67,19 +82,20 @@ const renderResults = (template: string, total: number) => {
 const renderLabel = (item: IFilterItem | DateInterval | Date, icon?: string, filterName?: string, resultsDateFormat?: string) => {
 
   let textLabel: string = "";
+  const isDateFormatValid = resultsDateFormat ? validateDateFormat(resultsDateFormat) : false;
 
   if (filterName && isFilterItem(item)) {
     textLabel = `${filterName}: ${item.text}`;
   } else if (filterName && item instanceof Date) {
-    textLabel = resultsDateFormat ?  `${filterName}: ${format(item,resultsDateFormat)}` : `${filterName}: ${item.toDateString()}`;
+    textLabel = isDateFormatValid && resultsDateFormat ? `${filterName}: ${format(item, resultsDateFormat)}` : `${filterName}: ${item.toDateString()}`;
   } else if (filterName && isDateInterval(item)) {
-    textLabel = resultsDateFormat ? `${filterName}: ${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}` : `${filterName}: ${item.start.toDateString()} - ${item.end.toDateString()}`;
+    textLabel = isDateFormatValid && resultsDateFormat ? `${filterName}: ${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}` : `${filterName}: ${item.start.toDateString()} - ${item.end.toDateString()}`;
   } else if (!filterName && isFilterItem(item)) {
     textLabel = item.text;
   } else if (!filterName && item instanceof Date) {
-    textLabel = resultsDateFormat ? format(item, resultsDateFormat) : item.toDateString();
+    textLabel = isDateFormatValid && resultsDateFormat ? format(item, resultsDateFormat) : item.toDateString();
   } else if (!filterName && isDateInterval(item)) {
-    textLabel = resultsDateFormat ? `${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}` : `${item.start.toDateString()} - ${item.end.toDateString()}`;
+    textLabel = isDateFormatValid && resultsDateFormat ? `${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}` : `${item.start.toDateString()} - ${item.end.toDateString()}`;
   }
 
   return <FilterLabelText hasIcon={!!icon}>{textLabel}</FilterLabelText>;

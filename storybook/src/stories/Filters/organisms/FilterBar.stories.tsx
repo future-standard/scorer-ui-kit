@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { select, object, boolean } from "@storybook/addon-knobs";
+import { select, object, boolean, text } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -62,19 +62,22 @@ const TypeTableWrapper = styled.div`
 margin: 60px 0 20px 0
 `;
 
-const dataInitialState = sortDataBy(tableData, 'deviceName', true);
+const today: Date = new Date();
+const before: Date = new Date();
+before.setDate(before.getDate() - 5);
 
+const dataInitialState = sortDataBy(tableData, 'deviceName', true);
 
 const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleData[]): ITableSampleData[] => {
 
 
   if (Array.isArray(currentSelected) && (currentSelected.length > 0)) {
     const filteredData: ITableSampleData[] = currentSelected.reduce((accumulator, currentFilter) => {
-      if(currentFilter.selected === null) {
+      if (currentFilter.selected === null) {
         return accumulator;
       };
 
-      if (currentFilter.id === 'dropdownForStatus' && (isFilterItem(currentFilter.selected) || (Array.isArray(currentFilter.selected))) ) {
+      if (currentFilter.id === 'dropdownForStatus' && (isFilterItem(currentFilter.selected) || (Array.isArray(currentFilter.selected)))) {
         return filterByStatus(accumulator, currentFilter.selected);
       }
 
@@ -90,7 +93,7 @@ const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleDat
         return filterByCreationDate(accumulator, currentFilter.selected);
       }
 
-      if(currentFilter.id === 'datePickerForRuntime' && !isFilterItem(currentFilter.selected) && !Array.isArray(currentFilter.selected) ){
+      if (currentFilter.id === 'datePickerForRuntime' && !isFilterItem(currentFilter.selected) && !Array.isArray(currentFilter.selected)) {
         return filterByCreationDatePicker(accumulator, currentFilter.selected);
       }
 
@@ -107,16 +110,19 @@ const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleDat
  * Filter Bar Story Starts
  */
 
-
-const today: Date = new Date();
-const before : Date = new Date();
-before.setDate(before.getDate() - 5);
-
 export const _FilterBar = () => {
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
   const [rows, setRows] = useState<ITypeTableData>(rowMaker(dataInitialState));
   const [filters, setFilters] = useState<IFilterResult[]>([]);
+
+  /**
+ * Story interaction section
+ */
+  const allowMultiFilter = boolean('Allow Multi Filter', true);
+  const hasShowMore = boolean('Has Show More', true);
+  // valid formats - https://date-fns.org/v2.25.0/docs/format
+  const resultsDateFormat = text('Results date format', 'yyyy-MM-dd');
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked: boolean, id?: string | number) => {
@@ -153,6 +159,7 @@ export const _FilterBar = () => {
       id: 'inputForDeviceName',
       placeholder: language === 'english' ? 'Filter by Device Name...' : 'デバイス名前 フィルター',
       name: language === 'english' ? 'Device Name' : 'デバイス名前',
+      // selected: {text:'OK', value: 'OK'}
     },
     {
       id: 'inputForDate',
@@ -173,6 +180,7 @@ export const _FilterBar = () => {
       loadingText: language === 'english' ? 'Loading Status ...' : genericLoadingJp,
       searchPlaceholder: language === 'english' ? 'Status...' : 'ステータス...',
       searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+      // selected: {text: language === 'english'? 'OK' : 'OKです。', value: 'ok' }
     },
     {
       id: 'priceFilter',
@@ -187,6 +195,7 @@ export const _FilterBar = () => {
     }
   ]
 
+  // Selected example
   // const myDate: DateInterval = {
   //   start: before,
   //   end: today,
@@ -197,19 +206,22 @@ export const _FilterBar = () => {
       id: 'datePickerForRuntime',
       dateMode: 'interval',
       timeMode: 'off',
-      buttonText: 'Date Range',
+      buttonText: language === 'english' ? 'Date Range' : '日付範囲',
       buttonIcon: 'DateTime',
+      // selected: myDate,
     }
   ]
 
-  const allowMultiFilter = boolean('Allow Multi Filter', true);
-  const hasShowMore = boolean('Has Show More', true);
+  /**
+   * objects only for display
+   */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const searchersConfig = object('Search Filters', searchers);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dropdownsConfig = object('DropdownFilters', dropdowns);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const datePickersConfig = object('DatePickers', datePickers);
+
   const filtersValues = action('onChangeCallback');
 
   const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
@@ -256,7 +268,7 @@ export const _FilterBar = () => {
         filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}
         resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
         clearText={language === 'english' ? clearEng : clearJp}
-        resultsDateFormat={'yyyy-MM-dd'}
+        resultsDateFormat={resultsDateFormat}
       />
       <TypeTableWrapper>
         <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}
