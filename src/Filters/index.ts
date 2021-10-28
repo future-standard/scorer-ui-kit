@@ -10,11 +10,11 @@ import {
   IFilterItem,
   IFilterResult,
   IFilterValue,
-  isFilterItem,
   ISearchFilter,
   IFilterDropdownExt,
   IFilterDropdownConfig,
-  IFilterDatePicker
+  IFilterDatePicker,
+  isFilterItem,
 } from './FilterTypes';
 
 export {

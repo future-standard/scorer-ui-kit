@@ -1,6 +1,13 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem, IDatePickerResult, IFilterDropdownConfig } from '../FilterTypes';
+import {
+  IFilterItem,
+  IFilterResult,
+  IFilterType,
+  IFilterValue,
+  isFilterItem,
+  IFilterDropdownConfig
+} from '../FilterTypes';
 import FilterInputs from '../molecules/FilterInputs';
 import { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../FilterTypes';
 import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
@@ -111,7 +118,7 @@ const createDatePickers = (
       }
     };
     const disabled = getDisableValue(filtersValues, allowMultiFilter, datePicker);
-    const foundPicker = filtersValues.find( filter => filter.id === datePicker.id);
+    const foundPicker = filtersValues.find(filter => filter.id === datePicker.id);
     let validInitialValue: Date | DateInterval | undefined = undefined;
 
     if (datePicker.selected) {
@@ -125,7 +132,7 @@ const createDatePickers = (
       onCloseCallback,
       onToggleCallback,
       disabled,
-      selected: foundPicker && (foundPicker.selected instanceof Date || isDateInterval(foundPicker.selected))  ? foundPicker.selected : null,
+      selected: foundPicker && (foundPicker.selected instanceof Date || isDateInterval(foundPicker.selected)) ? foundPicker.selected : null,
       initialValue: validInitialValue,
     };
     datePickersFilters.push(newPicker);
@@ -273,7 +280,7 @@ interface IFilterBar {
   isLoading?: boolean
   allowMultiFilter?: boolean
   resultsDateFormat?: string
-  onChangeCallback?: (currentSelected: IFilterResult[], datePickersSelected?: IDatePickerResult[]) => void
+  onChangeCallback?: (currentSelected: IFilterResult[]) => void
 }
 
 const FilterBar: React.FC<IFilterBar> = ({
@@ -381,9 +388,10 @@ const FilterBar: React.FC<IFilterBar> = ({
   }, [handleChange]);
 
   const handleDatePickers = useCallback((selection: DateInterval | Date | null, filterId: string) => {
-    const updatedDatePickers = [...filtersValues];
 
+    const updatedDatePickers = [...filtersValues];
     const foundFilter = updatedDatePickers.find((datePicker) => datePicker.id === filterId);
+
     if (foundFilter) {
       foundFilter.selected = selection;
       handleChange(filtersValues);

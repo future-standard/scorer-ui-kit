@@ -4,9 +4,13 @@ import { DateInterval } from './molecules/DatePicker';
 import { IDropdownDatePicker } from './molecules/DropdownDatePicker';
 import { IFilterDropdown } from './molecules/FilterDropdown';
 
-// function to do type checking for IFilterItem
+type IFilterItem = { text: string; value: string | number; }
+type IFilterValue = IFilterItem | IFilterItem[] | null;
+type IFilterType = 'search' | 'dropdown' | 'datepicker';
+
+// Type checking for IFilterItem
 // https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
-export const isFilterItem = (item: any): item is IFilterItem => {
+const isFilterItem = (item: any): item is IFilterItem => {
   if (item === null || item === undefined) { return false; }
 
   if (item.value === undefined || item.value === null) {
@@ -20,43 +24,31 @@ export const isFilterItem = (item: any): item is IFilterItem => {
   return ((typeof item.value === 'number') || (typeof item.value === 'string')) && (typeof item.text === 'string');
 };
 
-
-type IFilterItem = { text: string; value: string | number; }
-type IFilterValue = IFilterItem | IFilterItem[] | null;
-
 interface IFilterResult {
   id: string
   type: IFilterType
   selected: IFilterItem | IFilterItem[] | DateInterval | Date | null;
 }
 
-type IFilterType = 'search' | 'dropdown' | 'datepicker';
-
-interface IDatePickerResult {
-  id: string
-  type: IFilterType
-  selected: DateInterval | Date | null;
-}
-
-export interface ISearchFilter extends IBasicSearchInput {
+interface ISearchFilter extends IBasicSearchInput {
   id: string
   canHide?: boolean
   showFieldText?: string
   selected?: IFilterItem
 }
 
-export interface IFilterDropdownExt extends IFilterDropdown {
+interface IFilterDropdownExt extends IFilterDropdown {
   id: string
   canHide?: boolean
 }
 
-export interface IFilterDatePicker extends IDropdownDatePicker {
+interface IFilterDatePicker extends IDropdownDatePicker {
   id: string
   canHide?: boolean
   name?: string
 }
 
-export interface IFilterDropdownConfig {
+interface IFilterDropdownConfig {
   id: string
   canHide?: boolean
   buttonIcon: string
@@ -74,10 +66,17 @@ export interface IFilterDropdownConfig {
   name?: string
 }
 
+export {
+  isFilterItem
+};
+
 export type {
   IFilterType,
   IFilterItem,
   IFilterResult,
   IFilterValue,
-  IDatePickerResult,
+  ISearchFilter,
+  IFilterDropdownExt,
+  IFilterDatePicker,
+  IFilterDropdownConfig
 };

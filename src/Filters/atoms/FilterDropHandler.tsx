@@ -101,6 +101,7 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
     isOpen: false,
     position: 'bottom-right',
   });
+
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
 

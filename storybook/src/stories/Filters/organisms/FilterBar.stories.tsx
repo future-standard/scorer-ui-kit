@@ -109,7 +109,6 @@ const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleDat
 /**
  * Filter Bar Story Starts
  */
-
 export const _FilterBar = () => {
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
@@ -200,7 +199,6 @@ export const _FilterBar = () => {
   //   start: before,
   //   end: today,
   // }
-
   const datePickers: IFilterDatePicker[] = [
     {
       id: 'datePickerForRuntime',
@@ -221,13 +219,10 @@ export const _FilterBar = () => {
   const dropdownsConfig = object('DropdownFilters', dropdowns);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const datePickersConfig = object('DatePickers', datePickers);
-
   const filtersValues = action('onChangeCallback');
 
   const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
     filtersValues(currentSelected);
-
-
     const localData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
     const tempData: ITableSampleData[] = [...localData];
 
@@ -236,7 +231,6 @@ export const _FilterBar = () => {
       setFilters([])
     } else {
       const filteredData = getFilteredData(currentSelected, tempData);
-
       setData(filteredData);
       setFilters(currentSelected);
     }
