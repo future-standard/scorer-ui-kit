@@ -3,11 +3,17 @@ import styled from 'styled-components';
 import BasicSearchInput, { IBasicSearchInput } from '../../Misc/atoms/BasicSearchInput';
 import FilterDropdown, { IFilterDropdown } from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
+import Icon from '../../Icons/Icon';
+import { resetButtonStyles } from '../..';
 
 const SearchInputWrapper = styled.div`
   background-color: hsl(0, 0%, 100%);
   border-radius: 3px;
   flex: 1 1 200px;
+`;
+
+const CloseSearchButton = styled.button`
+  ${resetButtonStyles};
 `;
 
 const StyledFilterButton = styled(FilterButton)``;
@@ -37,6 +43,7 @@ const renderSearchInputs = (searchFilters: ISearchFilter[], visibleSearchInputs:
       return (
         <SearchInputWrapper key={`searchFilter-id-${searchInput.id}`}>
           <BasicSearchInput {...searchInput} />
+          {searchInput.canHide && <CloseSearchButton><Icon icon='CloseCompact' color='dimmed' /></CloseSearchButton>}
         </SearchInputWrapper>
       );
     }

@@ -68,13 +68,13 @@ export type IBasicSearchInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
 const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   color = 'subtle',
   hasBorder = true,
-  iconSize = 11,
+  iconSize = 12,
   disabled = false,
   ...props
 }) => {
   return (
     <Container {...{ hasBorder, disabled }}>
-      <Icon {...{ color }} icon='Search' weight='heavy' size={iconSize} />
+      <Icon {...{ color }} icon='Search' weight='regular' size={iconSize} />
       <StyledInput
         {...{ color, disabled }}
         {...props}

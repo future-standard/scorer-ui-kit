@@ -192,17 +192,19 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
     }
   }, [state, setPosition, positionSwitch]);
 
-  return <Container onChange={customOnChange} activeTheming={activeTheming} loading={state === 'loading'} useIntent={state === 'default' || state === 'failure'} themeState={switchState} position={position} checked={inputRef.current?.checked}>
-    <SwitchOuter>
-      <SwitchInner>
-        {state === 'failure' ? <IconWrapper><Icon icon='Exclamation' color='danger' size={18} weight='regular' /></IconWrapper> : null}
-        {state === 'locked' ? <IconWrapper><Icon icon='Locked' color='dimmed' size={10} weight='heavy' /></IconWrapper> : null}
-        {state === 'loading' ? <SpinnerWrapper><Spinner size='small' styling='simple' /></SpinnerWrapper> : null}
-      </SwitchInner>
-    </SwitchOuter>
-    {labelText ? <LabelText>{labelText}</LabelText> : null}
-    <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} defaultChecked={ checked } />
-  </Container>;
+  return (
+    <Container onChange={customOnChange} activeTheming={activeTheming} loading={state === 'loading'} useIntent={state === 'default' || state === 'failure'} themeState={switchState} position={position} checked={inputRef.current?.checked}>
+      <SwitchOuter>
+        <SwitchInner>
+          {state === 'failure' ? <IconWrapper><Icon icon='Exclamation' color='danger' size={18} weight='regular' /></IconWrapper> : null}
+          {state === 'locked' ? <IconWrapper><Icon icon='Locked' color='dimmed' size={10} weight='light' /></IconWrapper> : null}
+          {state === 'loading' ? <SpinnerWrapper><Spinner size='small' styling='simple' /></SpinnerWrapper> : null}
+        </SwitchInner>
+      </SwitchOuter>
+      {labelText ? <LabelText>{labelText}</LabelText> : null}
+      <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} defaultChecked={checked} />
+    </Container>
+    );
 
 };
 
