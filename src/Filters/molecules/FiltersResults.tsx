@@ -36,6 +36,10 @@ const FilterLabel = styled.div`
 `;
 const FilterLabelText = styled.div<{hasIcon?: boolean}>`
   padding: ${({hasIcon}) => hasIcon ? '0 15px 0 9px' :'0 15px 0 0' };
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 300px;
 `;
 
 const ClearTextButton = styled.button`
