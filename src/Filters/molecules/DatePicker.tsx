@@ -5,6 +5,21 @@ import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, setDayOfYear, getDayOfYear, add, set } from 'date-fns';
 
+
+/**
+ * Convert a single days duration to an interval.
+ * @param day The day to convert to an interval
+ */
+const initializeInterval = (day: Date): DateInterval => {
+  return {
+    start: set(day, { seconds: 0, milliseconds: 0 }),
+    end: endOfDay(day)
+  };
+};
+
+const TODAY = new Date();
+const TODAY_INTERVAL: DateInterval = initializeInterval(startOfDay(new Date()));
+
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover";
 type DateMode = "single" | "interval";
 type TimeMode = "off" | "single" | "interval";
@@ -236,21 +251,22 @@ export interface IDatePicker {
   initialValue?: Date | DateInterval
   dateMode?: DateMode
   timeMode?: TimeMode
+  hasEmptyValue?: boolean
   updateCallback?: (data: DateInterval | Date) => void
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
   dateMode = 'interval',
   timeMode = 'interval',
+  hasEmptyValue = false,
   updateCallback = () => { },
-  initialValue = initializeInterval(startOfDay(new Date()))
+  initialValue,
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
 
-  const [_hoverDay, setHoverDay] = useState<Date | null>(null);
-  const [selectedRange, setSelectedRange] = useState<DateInterval>(() => initialValue instanceof Date ? initializeInterval(initialValue) : initialValue);
-  const [focusedMonth, setFocusedMonth] = useState(selectedRange.start);
+  const [selectedRange, setSelectedRange] = useState<DateInterval | null>(getInitialValue(hasEmptyValue, initialValue));
+  const [focusedMonth, setFocusedMonth] = useState(selectedRange === null ? TODAY : selectedRange.start);
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
@@ -274,7 +290,9 @@ const DatePicker: React.FC<IDatePicker> = ({
   }, [focusedMonth]);
 
   useEffect(() => {
-    updateCallback((dateMode === 'interval' || timeMode === 'interval') ? selectedRange : selectedRange.start);
+    if (selectedRange !== null) {
+      updateCallback((dateMode === 'interval' || timeMode === 'interval') ? selectedRange : selectedRange.start);
+    }
   }, [dateMode, selectedRange, timeMode, updateCallback]);
 
   /**
@@ -283,11 +301,14 @@ const DatePicker: React.FC<IDatePicker> = ({
    */
   const onCellClick = useCallback((day: Date) => {
 
+    // The first click will initialize the range when empty is valid
+    const validRange = selectedRange ? selectedRange : TODAY_INTERVAL;
+
     if (dateMode === 'single') {
 
       // === Single Mode ===
-      const start = setDay(selectedRange.start, day);
-      const end = setDay(selectedRange.end, day);
+      const start = updateDay(validRange.start, day);
+      const end = updateDay(validRange.end, day);
       setSelectedRange({
         start,
         end
@@ -296,10 +317,10 @@ const DatePicker: React.FC<IDatePicker> = ({
 
       // === Interval Mode ===
       // Setting the interval end (assuming it's later than the start).
-      if (targetedDate === 'end' && isAfter(day, selectedRange.start)) {
-        const end = setDay(selectedRange.end, day);
+      if (targetedDate === 'end' && isAfter(day, validRange.start)) {
+        const end = updateDay(validRange.end, day);
         setSelectedRange({
-          ...selectedRange,
+          ...validRange,
           end
         });
 
@@ -308,8 +329,8 @@ const DatePicker: React.FC<IDatePicker> = ({
         // For first interaction || setting the end date correctly || if completed and restarting.
       } else if (targetedDate === 'start' || targetedDate === 'end' || targetedDate === 'done') {
 
-        const start = setDay(selectedRange.start, day);
-        const end = setDay(selectedRange.end, day);
+        const start = updateDay(validRange.start, day);
+        const end = updateDay(validRange.end, day);
         setSelectedRange({
           start,
           end
@@ -322,13 +343,13 @@ const DatePicker: React.FC<IDatePicker> = ({
 
 
   const updateStartDate = useCallback((start: Date) => {
-    const { end } = selectedRange;
+    const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
     if (isAfter(add(start, { minutes: 1 }), end)) return;
     setSelectedRange({ start, end });
   }, [selectedRange]);
 
   const updateEndDate = useCallback((end: Date) => {
-    const { start } = selectedRange;
+    const { start } = selectedRange ? selectedRange : TODAY_INTERVAL;
     if (isAfter(add(start, { minutes: 1 }), end)) return;
     setSelectedRange({ start, end });
   }, [selectedRange]);
@@ -338,8 +359,8 @@ const DatePicker: React.FC<IDatePicker> = ({
     <Container>
 
       <DateTimeArea>
-        <DateTimeBlock title='From' hasDate hasTime={timeMode !== 'off'} date={selectedRange.start} setDateCallback={updateStartDate} />
-        <DateTimeBlock title='To' hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange.end} allowAfterMidnight setDateCallback={updateEndDate} />
+        <DateTimeBlock title='From' hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
+        <DateTimeBlock title='To' hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>
           <TimeZoneLabel>Timezone</TimeZoneLabel>
@@ -384,7 +405,7 @@ const DatePicker: React.FC<IDatePicker> = ({
             return (
               <CalRow key={index}>
                 {days.map((day, index) => {
-                  return <CalCellB key={index} onClick={() => onCellClick(day)} onMouseEnter={() => setHoverDay(day)} onMouseLeave={() => setHoverDay(null)} state={cellState(day, selectedRange)} thisMonth={isSameMonth(day, focusedMonth)} isToday={isToday(day)}>{format(day, "d")}</CalCellB>;
+                  return <CalCellB key={index} onClick={() => onCellClick(day)} state={cellState(day, selectedRange)} thisMonth={isSameMonth(day, focusedMonth)} isToday={isToday(day)}>{format(day, "d")}</CalCellB>;
                 })}
               </CalRow>
             );
@@ -407,9 +428,13 @@ export default DatePicker;
  * @param day Date - The date of the cell in the calendar.
  * @param interval Interval - The date range that is active in the calendar.
  */
-const cellState = (day: Date, interval: Interval, _hoverDate?: Date): CellStates => {
+const cellState = (day: Date, interval: Interval | null, _hoverDate?: Date): CellStates => {
 
   let state: CellStates = "off";
+
+  if (interval === null) {
+    return state;
+  }
 
   const singleDayRange: boolean = intervalToDuration(interval).days === 0;
 
@@ -430,15 +455,14 @@ const cellState = (day: Date, interval: Interval, _hoverDate?: Date): CellStates
   return state;
 };
 
-/**
- * Convert a single days duration to an interval.
- * @param day The day to convert to an interval
- */
-const initializeInterval = (day: Date): DateInterval => {
-  return {
-    start: set(day, { seconds: 0, milliseconds: 0 }),
-    end: endOfDay(day)
-  };
-};
+const updateDay = (date: Date, target: Date) => setDayOfYear(date, getDayOfYear(target));
 
-const setDay = (date: Date, target: Date) => setDayOfYear(date, getDayOfYear(target));
+const getInitialValue = (hasEmptyValue: boolean, initialValue?: Date | DateInterval): DateInterval | null => {
+  if (hasEmptyValue && initialValue === undefined) {
+    return null;
+  }
+
+  const validInitial = initialValue ? initialValue : initializeInterval(startOfDay(new Date()));
+
+  return (validInitial instanceof Date) ? initializeInterval(validInitial) : validInitial;
+};

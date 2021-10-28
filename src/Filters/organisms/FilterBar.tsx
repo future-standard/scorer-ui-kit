@@ -4,7 +4,7 @@ import { IFilterItem, IFilterResult, IFilterType, IFilterValue, isFilterItem, ID
 import FilterInputs from '../molecules/FilterInputs';
 import { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../FilterTypes';
 import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
-import { DateInterval } from '../molecules/DatePicker';
+import { DateInterval, isDateInterval } from '../molecules/DatePicker';
 import isequal from 'lodash.isequal';
 import debounce from 'lodash.debounce';
 
@@ -91,6 +91,49 @@ const createSearchers = (
   return searchersFilters;
 };
 
+const createDatePickers = (
+  datePickersConfig: IFilterDatePicker[],
+  filtersValues: IFilterResult[],
+  allowMultiFilter: boolean,
+  handleDatePickers: (selection: DateInterval | Date | null, filterId: string) => void,
+): IFilterDatePicker[] => {
+  const datePickersFilters: IFilterDatePicker[] = [];
+
+  datePickersConfig.forEach((datePicker) => {
+    const onCloseCallback = (value: DateInterval | Date | null) => {
+      handleDatePickers(value, datePicker.id);
+    };
+
+    const onToggleCallback = (value: DateInterval | Date | null, isOpen: boolean) => {
+      // if it was open before toggle means the user closed it and value should be updated.
+      if (isOpen) {
+        handleDatePickers(value, datePicker.id);
+      }
+    };
+    const disabled = getDisableValue(filtersValues, allowMultiFilter, datePicker);
+    const foundPicker = filtersValues.find( filter => filter.id === datePicker.id);
+    let validInitialValue: Date | DateInterval | undefined = undefined;
+
+    if (datePicker.selected) {
+      validInitialValue = datePicker.selected;
+    } else if (datePicker.initialValue) {
+      validInitialValue = datePicker.initialValue;
+    }
+
+    const newPicker: IFilterDatePicker = {
+      ...datePicker,
+      onCloseCallback,
+      onToggleCallback,
+      disabled,
+      selected: foundPicker && (foundPicker.selected instanceof Date || isDateInterval(foundPicker.selected))  ? foundPicker.selected : null,
+      initialValue: validInitialValue,
+    };
+    datePickersFilters.push(newPicker);
+  });
+
+  return datePickersFilters;
+};
+
 const createLabelResults = (
   searchersConfig: ISearchFilter[],
   dropdownsConfig: IFilterDropdownConfig[],
@@ -163,47 +206,6 @@ const createLabelResults = (
   });
 
   return labelLists;
-};
-
-const createDatePickers = (
-  datePickersConfig: IFilterDatePicker[],
-  filtersValues: IFilterResult[],
-  allowMultiFilter: boolean,
-  handleDatePickers: (selection: DateInterval | Date | null, filterId: string) => void,
-): IFilterDatePicker[] => {
-  const datePickersFilters: IFilterDatePicker[] = [];
-
-  datePickersConfig.forEach((datePicker) => {
-    const onCloseCallback = (value: DateInterval | Date | null) => {
-      handleDatePickers(value, datePicker.id);
-    };
-
-    const onToggleCallback = (value: DateInterval | Date | null, isOpen: boolean) => {
-      // if it was open before toggle means the user closed it and value should be updated.
-      if (isOpen) {
-        handleDatePickers(value, datePicker.id);
-      }
-    };
-    const disabled = getDisableValue(filtersValues, allowMultiFilter, datePicker);
-    let validInitialValue: Date | DateInterval | undefined = undefined;
-
-    if (datePicker.selected) {
-      validInitialValue = datePicker.selected;
-    } else if (datePicker.initialValue) {
-      validInitialValue = datePicker.initialValue;
-    }
-
-    const newPicker: IFilterDatePicker = {
-      ...datePicker,
-      onCloseCallback,
-      onToggleCallback,
-      disabled,
-      initialValue: validInitialValue,
-    };
-    datePickersFilters.push(newPicker);
-  });
-
-  return datePickersFilters;
 };
 
 const initFilters = (

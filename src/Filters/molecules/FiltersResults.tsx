@@ -66,8 +66,6 @@ const renderResults = (template: string, total: number) => {
 const renderLabel = (item: IFilterItem | DateInterval | Date, icon?: string, filterName?: string) => {
 
   let textLabel: string = "";
-  console.log(item, 'datepicker');
-  console.log((!filterName && item instanceof Date), 'date value');
 
   if (filterName && isFilterItem(item)) {
     textLabel = `${filterName}: ${item.text}`;

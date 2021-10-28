@@ -54,7 +54,6 @@ export interface IFilterDatePicker extends IDropdownDatePicker {
   id: string
   canHide?: boolean
   name?: string
-  selected?: DateInterval | Date;
 }
 
 export interface IFilterDropdownConfig {

@@ -187,10 +187,10 @@ export const _FilterBar = () => {
     }
   ]
 
-  const myDate: DateInterval = {
-    start: before,
-    end: today,
-  }
+  // const myDate: DateInterval = {
+  //   start: before,
+  //   end: today,
+  // }
 
   const datePickers: IFilterDatePicker[] = [
     {
@@ -199,7 +199,6 @@ export const _FilterBar = () => {
       timeMode: 'off',
       buttonText: 'Date Range',
       buttonIcon: 'DateTime',
-      selected: myDate
     }
   ]
 
