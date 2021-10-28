@@ -256,6 +256,7 @@ export const _FilterBar = () => {
         filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}
         resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
         clearText={language === 'english' ? clearEng : clearJp}
+        resultsDateFormat={'yyyy-MM-dd'}
       />
       <TypeTableWrapper>
         <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}

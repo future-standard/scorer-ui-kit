@@ -5,6 +5,7 @@ import { resetButtonStyles } from '../../common/index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { isFilterItem } from '../FilterTypes';
 import { DateInterval, isDateInterval } from './DatePicker';
+import { format } from 'date-fns';
 
 const Container = styled.div`
   display: flex;
@@ -63,22 +64,22 @@ const renderResults = (template: string, total: number) => {
   return template.replace('[TOTAL_RESULTS]', `${total}`);
 };
 
-const renderLabel = (item: IFilterItem | DateInterval | Date, icon?: string, filterName?: string) => {
+const renderLabel = (item: IFilterItem | DateInterval | Date, icon?: string, filterName?: string, resultsDateFormat?: string) => {
 
   let textLabel: string = "";
 
   if (filterName && isFilterItem(item)) {
     textLabel = `${filterName}: ${item.text}`;
   } else if (filterName && item instanceof Date) {
-    textLabel = `${filterName}: ${item.toDateString()}`;
+    textLabel = resultsDateFormat ?  `${filterName}: ${format(item,resultsDateFormat)}` : `${filterName}: ${item.toDateString()}`;
   } else if (filterName && isDateInterval(item)) {
-    textLabel = `${filterName}: ${item.start.toDateString()} - ${item.end.toDateString()}`;
+    textLabel = resultsDateFormat ? `${filterName}: ${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}` : `${filterName}: ${item.start.toDateString()} - ${item.end.toDateString()}`;
   } else if (!filterName && isFilterItem(item)) {
     textLabel = item.text;
   } else if (!filterName && item instanceof Date) {
-    textLabel = item.toDateString();
+    textLabel = resultsDateFormat ? format(item, resultsDateFormat) : item.toDateString();
   } else if (!filterName && isDateInterval(item)) {
-    textLabel = `${item.start.toDateString()} - ${item.end.toDateString()}`;
+    textLabel = resultsDateFormat ? `${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}` : `${item.start.toDateString()} - ${item.end.toDateString()}`;
   }
 
   return <FilterLabelText hasIcon={!!icon}>{textLabel}</FilterLabelText>;
@@ -97,6 +98,7 @@ interface IFilterResults {
   totalResults: number
   resultTextTemplate?: string
   clearText?: string
+  resultsDateFormat?: string
   onRemoveFilter?: (filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => void
   onClearAll?: () => void
 }
@@ -106,6 +108,7 @@ const FiltersResults: React.FC<IFilterResults> = ({
   totalResults,
   resultTextTemplate = 'Showing Results ([TOTAL_RESULTS]):',
   clearText = 'CLEAR ALL',
+  resultsDateFormat,
   onRemoveFilter = () => { },
   onClearAll = () => { },
   ...props
@@ -118,7 +121,7 @@ const FiltersResults: React.FC<IFilterResults> = ({
           return (
             <FilterLabel key={`Filter-Label-id-${index}`}>
               {icon && <Icon icon={icon} color='dimmed' size={10} weight='heavy' />}
-              {renderLabel(item, icon, filterName)}
+              {renderLabel(item, icon, filterName, resultsDateFormat)}
               <RemoveButton
                 onClick={() => onRemoveFilter(filterId, type, item)}
               >

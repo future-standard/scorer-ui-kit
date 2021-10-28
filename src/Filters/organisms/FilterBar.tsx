@@ -272,13 +272,9 @@ interface IFilterBar {
   clearText?: string
   isLoading?: boolean
   allowMultiFilter?: boolean
+  resultsDateFormat?: string
   onChangeCallback?: (currentSelected: IFilterResult[], datePickersSelected?: IDatePickerResult[]) => void
 }
-
-/**  TODO:
- * - get filterResults date string format
- * - initial empty date
-*/
 
 const FilterBar: React.FC<IFilterBar> = ({
   filtersTitle = 'Filters:',
@@ -292,6 +288,7 @@ const FilterBar: React.FC<IFilterBar> = ({
   clearText,
   totalResults,
   allowMultiFilter = true,
+  resultsDateFormat,
   onChangeCallback = () => { },
   ...props
 }) => {
@@ -458,7 +455,7 @@ const FilterBar: React.FC<IFilterBar> = ({
         datePickFilters={datePickersConfig ? createDatePickers(datePickersConfig, filtersValues, allowMultiFilter, handleDatePickers) : undefined}
       />
       <StyledFilterResults
-        {...{ resultTextTemplate, clearText, totalResults }}
+        {...{ resultTextTemplate, clearText, totalResults, resultsDateFormat }}
         labelLists={createLabelResults(searchersConfig, dropdownsConfigRef.current, datePickersConfig, filtersValues)}
         onClearAll={handleOnClear}
         onRemoveFilter={handleOnRemoveFilter}
