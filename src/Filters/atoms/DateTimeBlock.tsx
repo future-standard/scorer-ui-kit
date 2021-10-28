@@ -156,7 +156,7 @@ const DateTimeBlock : React.FC<IProps> = ({
       {hasDate && (
         <Item>
           <IconWrap>
-            <Icon icon='Date' color='dimmed' size={14} weight='regular' />
+            <Icon icon='Date' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
             <Input type='text' readOnly value={format(date, "yyyy/MM/dd")} />
@@ -167,7 +167,7 @@ const DateTimeBlock : React.FC<IProps> = ({
       {hasTime && (
         <Item>
           <IconWrap>
-            <Icon icon='Time' color='dimmed' size={14} weight='regular' />
+            <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
             <Input name='hours' type='number' min='0' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} />

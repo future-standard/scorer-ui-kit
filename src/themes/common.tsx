@@ -8,7 +8,8 @@ export const dimensions = {
     weights: {
       light: 1,
       regular: 1.5,
-      heavy: 2
+      heavy: 3,
+      strong: 5
     }
   },
   form: {

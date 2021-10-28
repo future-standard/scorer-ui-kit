@@ -28,7 +28,7 @@ interface IBigIconsSummary {
   icons: string[]
   color?: ISvgIcons['color']
   size?: number,
-  weight?: 'light' | 'regular' | 'heavy'
+  weight?: 'light' | 'regular' | 'heavy' | 'strong'
 }
 
 const BigIconsSummary: React.FC<IBigIconsSummary> = ({

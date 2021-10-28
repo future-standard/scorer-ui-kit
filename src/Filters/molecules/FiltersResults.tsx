@@ -94,12 +94,12 @@ const FiltersResults: React.FC<IFilterResults> = ({
         {labelLists.map(({ icon, item, filterName, filterId, type }, index) => {
           return (
             <FilterLabel key={`Filter-Label-id-${index}`}>
-              {icon && <Icon icon={icon} color='dimmed' size={10} weight='heavy' />}
+              {icon && <Icon icon={icon} color='dimmed' size={10} weight='light' />}
               <FilterLabelText hasIcon={!!icon}>{filterName ? `${filterName}: ${item.text}` : item.text}</FilterLabelText>
               <RemoveButton
                 onClick={() => onRemoveFilter(filterId, type, item)}
               >
-                <Icon icon='CloseCompact' color='dimmed' size={10} weight='heavy' />
+                <Icon icon='CloseCompact' color='dimmed' size={10} weight='light' />
               </RemoveButton>
             </FilterLabel>
           );

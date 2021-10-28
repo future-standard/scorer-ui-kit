@@ -1,17 +1,17 @@
 import React, { InputHTMLAttributes, useState, useCallback, useRef } from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import SmallInput from '../../Form/atoms/SmallInput';
 import Button from '../../Form/atoms/Button';
 import ButtonWithLoading from '../../Form/atoms/ButtonWithLoading';
-import {StyledLabel} from '../../Form/atoms/Label';
+import { StyledLabel } from '../../Form/atoms/Label';
 import IconButton from '../../Form/atoms/IconButton';
 import { TypeCellAlignment } from '../';
 import { useClickOutside } from '../../hooks/useClickOutside';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   position: relative;
-  ${({theme}) => css`
+  ${({ theme }) => css`
     font-family: ${theme.fontFamily.ui};
   `}
 `;
@@ -26,7 +26,7 @@ const StyledLoadingButton = styled(ButtonWithLoading)`
 const StyledLink = styled(Link)`
   color: inherit;
   text-decoration: none;
-  
+
   &:hover {
     text-decoration: underline;
   }
@@ -58,17 +58,17 @@ const EditContainer = styled.div`
 
 const StyledIconButton = styled(IconButton)``;
 
-const TextContainer = styled.div<{alignment:TypeCellAlignment}>`
+const TextContainer = styled.div<{ alignment: TypeCellAlignment }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-right: 18px;
 
-  ${({alignment}) => alignment === 'center' && css`
+  ${({ alignment }) => alignment === 'center' && css`
     justify-content: center;
   `}
 
-  ${({alignment}) => alignment === 'right' && css`
+  ${({ alignment }) => alignment === 'right' && css`
     justify-content: flex-end;
 `}
 
@@ -96,13 +96,13 @@ export interface OwnProps {
 
 type IEditableCell = OwnProps & InputHTMLAttributes<HTMLInputElement>
 
-const EditCell : React.FC<IEditableCell> = ({
+const EditCell: React.FC<IEditableCell> = ({
   type = 'text',
   placeholder = '',
   defaultValue,
   rowKey,
   alignment = 'left',
-  toLink= '',
+  toLink = '',
   saveCallback,
   ...props
 }) => {
@@ -112,29 +112,29 @@ const EditCell : React.FC<IEditableCell> = ({
 
   const handleSave = useCallback(async (value: string) => {
     setLoading(true);
-      if(saveCallback) {
-        await saveCallback(value, rowKey);
-      }
-      setIsEditMode(false);
+    if (saveCallback) {
+      await saveCallback(value, rowKey);
+    }
+    setIsEditMode(false);
     setLoading(false);
-  },[]);
+  }, [rowKey, saveCallback]);
 
-  const verifyKeyPress = useCallback( async (eve: React.KeyboardEvent<HTMLInputElement>) => {
-  
+  const verifyKeyPress = useCallback(async (eve: React.KeyboardEvent<HTMLInputElement>) => {
+
     // var code = parseInt(eve.key, 10);
     const code = eve.keyCode | eve.which | parseInt(eve.key, 10);
 
-    if(code === 13 && handleSave) {
+    if (code === 13 && handleSave) {
       await handleSave(updatedValue);
       setIsEditMode(false);
     }
 
-    if(code === 27) {
+    if (code === 27) {
       setUpdatedValue(defaultValue);
       setIsEditMode(false);
     }
 
-  },[updatedValue, handleSave, isEditMode]);
+  }, [handleSave, updatedValue, defaultValue]);
 
   const editContainerRef = useRef<HTMLDivElement>(null);
 
@@ -144,46 +144,47 @@ const EditCell : React.FC<IEditableCell> = ({
   };
 
   useClickOutside(editContainerRef, onClickOutsideEdit);
-  
-  return(
-    <Container> 
+
+  return (
+    <Container>
       {isEditMode
-      ? <EditContainer
-          ref={editContainerRef}
-        >
-          <SmallInput
-            {...props}
-            autoFocus
-            label=''
-            disabled={loading}
-            type={type}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            onKeyUp={(eve: React.KeyboardEvent<HTMLInputElement>) => verifyKeyPress(eve)}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setUpdatedValue(e.target.value);}} 
-          />
-          <StyledLoadingButton
-            onClick = {() => {
+        ? (
+          <EditContainer ref={editContainerRef}>
+            <SmallInput
+              {...props}
+              autoFocus
+              label=''
+              disabled={loading}
+              type={type}
+              placeholder={placeholder}
+              defaultValue={defaultValue}
+              onKeyUp={(eve: React.KeyboardEvent<HTMLInputElement>) => verifyKeyPress(eve)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setUpdatedValue(e.target.value); }}
+            />
+            <StyledLoadingButton
+              onClick={() => {
               handleSave(updatedValue);
-            }}
-            size="small"
-            loading={loading}
-          >
-            {loading ? 'Saving' : 'Save'}
-          </StyledLoadingButton>
-          {!loading && <StyledButton 
-            onClick={() => setIsEditMode(false)}
-            design='secondary'
-            size="small"
-            >Cancel</StyledButton>}
-        </EditContainer>
-      : <TextContainer alignment={alignment}>
-          {toLink? <StyledLink to={toLink}>{updatedValue}</StyledLink>: updatedValue}
-          <StyledIconButton icon='Edit' weight='light' size={16} onClick={() => setIsEditMode(true)} />
-        </TextContainer>
-      }
+              }}
+              size='small'
+              loading={loading}
+            >
+              {loading ? 'Saving' : 'Save'}
+            </StyledLoadingButton>
+            {!loading && (
+              <StyledButton
+                onClick={() => setIsEditMode(false)}
+                design='secondary'
+                size='small'
+              >Cancel
+              </StyledButton>)}
+          </EditContainer>)
+        : (
+          <TextContainer alignment={alignment}>
+            {toLink ? <StyledLink to={toLink}>{updatedValue}</StyledLink> : updatedValue}
+            <StyledIconButton icon='Edit' weight='light' size={16} onClick={() => setIsEditMode(true)} />
+          </TextContainer>)}
     </Container>
   );
-}
+};
 
 export default EditCell;

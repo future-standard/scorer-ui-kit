@@ -58,11 +58,11 @@ const ButtonWithIcon : React.FC<IProps> = ({design, size='normal', onClick, disa
   const iconColor = design === 'secondary' ? 'dimmed' : 'inverse';
 
   return (
-    <Button disabled={disabled} {...{ design, size, onClick, disabled }} {...props}>
+    <Button {...{ design, size, onClick, disabled }} {...props}>
       <InnerContainer>
         <TextContainer {...{size, position}}>{children}</TextContainer>
         <IconContainer {...{ position }}>
-          <Icon icon={icon} size={iconSize} color={iconColor} weight='heavy' />
+          <Icon icon={icon} size={iconSize} color={iconColor} weight='regular' />
         </IconContainer>
       </InnerContainer>
     </Button>

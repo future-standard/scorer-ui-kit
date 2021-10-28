@@ -20,7 +20,7 @@ export const _BasicSearchInput = () => {
   const textValue = action('Search value');
   const hasBorder = boolean('Has border', true);
   const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle"}, "subtle");
-  const iconSize = number('Icon size', 11);
+  const iconSize = number('Icon size', 12);
   const disabled = boolean('Disabled', false)
 
   const handleChange = useCallback((e) => {
