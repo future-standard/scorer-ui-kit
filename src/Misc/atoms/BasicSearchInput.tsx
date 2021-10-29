@@ -1,11 +1,13 @@
 import React, { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
+import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
-const Container = styled.div<{ hasBorder: boolean, disabled: boolean }>`
-  ${({ theme, hasBorder, disabled }) => css`
+const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
+  ${({ theme, hasBorder, disabled, noBackground, width }) => css`
     ${hasBorder && css`
-      border: 1px solid ${theme.styles.form.input.default.normal.borderColor}
+      border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
+      box-shadow: 0 4px 9px 0 hsla(205, 35%, 68%, 0.07);
     `};
 
     ${disabled && css`
@@ -13,6 +15,12 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean }>`
       cursor: not-allowed;
       `
     };
+
+    ${width && css`
+      width: ${width};
+    `};
+
+    background-color: ${noBackground ? 'transparent' : 'hsla(0, 0%, 100%, 1.000)'};
   `};
 
   ${IconWrapper} {
@@ -25,6 +33,20 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean }>`
   align-items: center;
   display: flex;
   border-radius: 3px;
+`;
+
+const CrossButton = styled.button`
+  ${resetButtonStyles};
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  width: 26px;
+
+  ${IconWrapper} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const StyledInput = styled.input<{ color: string }>`
@@ -61,6 +83,10 @@ interface OwnProps {
   color?: 'mono' | 'dimmed' | 'subtle';
   hasBorder?: boolean
   iconSize?: number
+  noBackground?: boolean
+  width?: string
+  hasCrossButton?: boolean
+  onCrossClick?: () => void
 }
 
 export type IBasicSearchInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
@@ -70,15 +96,20 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   hasBorder = true,
   iconSize = 12,
   disabled = false,
+  noBackground = false,
+  hasCrossButton = false,
+  onCrossClick = () => {},
+  width,
   ...props
 }) => {
   return (
-    <Container {...{ hasBorder, disabled }}>
+    <Container {...{ hasBorder, disabled, noBackground, width }}>
       <Icon {...{ color }} icon='Search' weight='regular' size={iconSize} />
       <StyledInput
         {...{ color, disabled }}
         {...props}
       />
+      {hasCrossButton && <CrossButton onClick={onCrossClick}> <Icon icon='CloseCompact' color='dimmed' size={12} /></CrossButton>}
     </Container>
   );
 };

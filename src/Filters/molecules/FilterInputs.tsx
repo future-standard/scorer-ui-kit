@@ -1,19 +1,33 @@
 import React, { useState, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import BasicSearchInput, { IBasicSearchInput } from '../../Misc/atoms/BasicSearchInput';
 import FilterDropdown, { IFilterDropdown } from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
-import Icon from '../../Icons/Icon';
-import { resetButtonStyles } from '../..';
+
+const fadeInAnimation = keyframes`
+  0% {
+    width: 50%;
+    opacity: .5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+  }
+`;
 
 const SearchInputWrapper = styled.div`
   background-color: hsl(0, 0%, 100%);
   border-radius: 3px;
   flex: 1 1 200px;
+  max-width: 320px;
 `;
 
-const CloseSearchButton = styled.button`
-  ${resetButtonStyles};
+const CloseSearchInputWrapper = styled.div`
+  ${({ theme }) => theme && css`
+    animation: ${fadeInAnimation} ${theme.animation.speed.slow} ${theme.animation.easing.primary.inOut};
+  `};
 `;
 
 const StyledFilterButton = styled(FilterButton)``;
@@ -36,14 +50,23 @@ const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdown
   });
 };
 
-const renderSearchInputs = (searchFilters: ISearchFilter[], visibleSearchInputs: String[]) => {
+const renderSearchInputs = (
+  searchFilters: ISearchFilter[],
+  visibleSearchInputs: String[],
+  handleVisibleSearch: (searchId: string) => void
+) => {
   return searchFilters.map((searchInput: ISearchFilter) => {
 
     if (visibleSearchInputs.includes(searchInput.id)) {
       return (
         <SearchInputWrapper key={`searchFilter-id-${searchInput.id}`}>
-          <BasicSearchInput {...searchInput} />
-          {searchInput.canHide && <CloseSearchButton><Icon icon='CloseCompact' color='dimmed' /></CloseSearchButton>}
+          {searchInput.canHide
+            ? (
+              <CloseSearchInputWrapper>
+                <BasicSearchInput {...searchInput} hasCrossButton onCrossClick={() => handleVisibleSearch(searchInput.id)} />
+              </CloseSearchInputWrapper>
+            )
+            : <BasicSearchInput {...searchInput} />}
         </SearchInputWrapper>
       );
     }
@@ -72,7 +95,6 @@ const renderAddSearchButtons = (
     return null;
   });
 };
-
 
 // initially visible are only the ones that can't hide
 const initialSearchFilters = (searchFilters: ISearchFilter[]): String[] => {
@@ -123,13 +145,20 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   }, []);
 
   const handleVisibleSearch = useCallback((searchId: string) => {
-    const newVisible = [...visibleSearchInputs, searchId];
-    setVisibleSearchInputs(newVisible);
+
+    if (visibleSearchInputs.includes(searchId)) {
+      const newVisible = visibleSearchInputs.filter((id) => searchId !== id);
+      setVisibleSearchInputs(newVisible);
+    } else {
+      const newVisible = [...visibleSearchInputs, searchId];
+      setVisibleSearchInputs(newVisible);
+    }
+
   }, [visibleSearchInputs]);
 
   return (
-    <Container {...{props}}>
-      {renderSearchInputs(searchFilters, visibleSearchInputs)}
+    <Container {...{ props }}>
+      {renderSearchInputs(searchFilters, visibleSearchInputs, handleVisibleSearch)}
       {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
