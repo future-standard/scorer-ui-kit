@@ -46,7 +46,7 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   &:focus {
     outline: none;
   }
- 
+
   &:hover:enabled {
     ${({ theme }) => theme && css`
       opacity: .8;
@@ -119,10 +119,10 @@ const Modal: React.FC<IModalProps> = ({
       <Container>
         <LightBox ref={lightBoxRef} width={width} padding={padding}>
           {isCloseEnable
-            ? 
+            ?
               <CloseButton onClick={() => dismiss()}>
                 {closeText ? closeText : 'CLOSE'}
-                <CloseIcon icon='CloseCompact' size={15} color='dimmed' weight='heavy' />
+                <CloseIcon icon='CloseCompact' size={15} color='dimmed' weight='regular' />
               </CloseButton>
             : null}
           {customComponent}

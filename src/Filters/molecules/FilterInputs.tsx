@@ -1,15 +1,35 @@
 import React, { useState, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import FilterDropdown from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
 import DropdownDatePicker from './DropdownDatePicker';
 import { IFilterDatePicker, IFilterDropdownExt, ISearchFilter } from '../FilterTypes';
 
+const fadeInAnimation = keyframes`
+  0% {
+    width: 50%;
+    opacity: .5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+  }
+`;
+
 const SearchInputWrapper = styled.div`
   background-color: hsl(0, 0%, 100%);
   border-radius: 3px;
   flex: 1 1 200px;
+  max-width: 320px;
+`;
+
+const CloseSearchInputWrapper = styled.div`
+  ${({ theme }) => theme && css`
+    animation: ${fadeInAnimation} ${theme.animation.speed.slow} ${theme.animation.easing.primary.inOut};
+  `};
 `;
 
 const StyledFilterButton = styled(FilterButton)``;
@@ -33,13 +53,23 @@ const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdown
   });
 };
 
-const renderSearchInputs = (searchFilters: ISearchFilter[], visibleSearchInputs: String[]) => {
+const renderSearchInputs = (
+  searchFilters: ISearchFilter[],
+  visibleSearchInputs: String[],
+  handleVisibleSearch: (searchId: string) => void
+) => {
   return searchFilters.map((searchInput: ISearchFilter) => {
 
     if (visibleSearchInputs.includes(searchInput.id)) {
       return (
         <SearchInputWrapper key={`searchFilter-id-${searchInput.id}`}>
-          <BasicSearchInput {...searchInput} />
+          {searchInput.canHide
+            ? (
+              <CloseSearchInputWrapper>
+                <BasicSearchInput {...searchInput} hasCrossButton onCrossClick={() => handleVisibleSearch(searchInput.id)} />
+              </CloseSearchInputWrapper>
+            )
+            : <BasicSearchInput {...searchInput} />}
         </SearchInputWrapper>
       );
     }
@@ -80,7 +110,6 @@ const renderAddSearchButtons = (
   });
 };
 
-
 // initially visible are only the ones that can't hide
 const initialSearchFilters = (searchFilters: ISearchFilter[]): String[] => {
   const currentVisible: String[] = [];
@@ -95,8 +124,8 @@ const initialSearchFilters = (searchFilters: ISearchFilter[]): String[] => {
 };
 
 export interface IFilterInputs {
-  searchFilters: ISearchFilter[]
-  dropdownFilters: IFilterDropdownExt[]
+  searchFilters?: ISearchFilter[]
+  dropdownFilters?: IFilterDropdownExt[]
   datePickFilters?: IFilterDatePicker[]
   hasShowMore?: boolean
   showMoreText?: string
@@ -105,9 +134,9 @@ export interface IFilterInputs {
 
 const FilterInputs: React.FC<IFilterInputs> = ({
   hasShowMore = false,
-  searchFilters,
-  datePickFilters,
-  dropdownFilters,
+  searchFilters = [],
+  datePickFilters = [],
+  dropdownFilters = [],
   showMoreText = 'Show More',
   showLessText = 'Show Less',
   ...props
@@ -121,14 +150,21 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   }, []);
 
   const handleVisibleSearch = useCallback((searchId: string) => {
-    const newVisible = [...visibleSearchInputs, searchId];
-    setVisibleSearchInputs(newVisible);
+
+    if (visibleSearchInputs.includes(searchId)) {
+      const newVisible = visibleSearchInputs.filter((id) => searchId !== id);
+      setVisibleSearchInputs(newVisible);
+    } else {
+      const newVisible = [...visibleSearchInputs, searchId];
+      setVisibleSearchInputs(newVisible);
+    }
+
   }, [visibleSearchInputs]);
 
   return (
     <Container {...{ props }}>
-      {renderSearchInputs(searchFilters, visibleSearchInputs)}
-      {datePickFilters ? renderDatePickers(datePickFilters) : null}
+      {renderSearchInputs(searchFilters, visibleSearchInputs, handleVisibleSearch)}
+      {renderDatePickers(datePickFilters)}
       {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}

@@ -37,8 +37,12 @@ const FilterLabel = styled.div`
   }
   border-right: 1px solid hsla(0, 0%, 13%, 0.16);
 `;
-const FilterLabelText = styled.div<{ hasIcon?: boolean }>`
-  padding: ${({ hasIcon }) => hasIcon ? '0 15px 0 9px' : '0 15px 0 0'};
+const FilterLabelText = styled.div<{hasIcon?: boolean}>`
+  padding: ${({hasIcon}) => hasIcon ? '0 15px 0 9px' :'0 15px 0 0' };
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 300px;
 `;
 
 const ClearTextButton = styled.button`
@@ -136,12 +140,12 @@ const FiltersResults: React.FC<IFilterResults> = ({
         {labelLists.map(({ icon, item, filterName, filterId, type }, index) => {
           return (
             <FilterLabel key={`Filter-Label-id-${index}`}>
-              {icon && <Icon icon={icon} color='dimmed' size={10} weight='heavy' />}
+              {icon && <Icon icon={icon} color='dimmed' size={10} weight='light' />}
               {renderLabel(item, icon, filterName, resultsDateFormat)}
               <RemoveButton
                 onClick={() => onRemoveFilter(filterId, type, item)}
               >
-                <Icon icon='CloseCompact' color='dimmed' size={10} weight='heavy' />
+                <Icon icon='CloseCompact' color='dimmed' size={10} weight='light' />
               </RemoveButton>
             </FilterLabel>
           );
