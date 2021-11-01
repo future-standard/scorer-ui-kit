@@ -1,6 +1,4 @@
-## PR Template
-
- ### Description
+### Description
 
  Please provide the context of this PR.
  Here are some questions to help you write this information.
