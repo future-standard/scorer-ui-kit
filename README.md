@@ -1,6 +1,6 @@
 # scorer-ui-kit
 
-This project is prefered to be run using npm 6, usually you can find it in [node version 12](https://github.com/nodejs/node/discussions/37689).
+This project is prefered to be run using npm 6, usually you can find it in node version 12 [(Why?)](https://github.com/nodejs/node/discussions/37689) [(How to downgrade?)](https://www.geeksforgeeks.org/how-to-install-the-previous-version-of-node-js-and-npm/).
 
 ```bash
 npm --version # verify your npm version
