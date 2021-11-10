@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6cfd4d9e5f9fe6dd44d108f17914fb0b",
+    "revision": "458c3cc7393b7198c2d848c8988d4e82",
     "url": "/scorer-ui-kit/index.html"
   },
   {
-    "revision": "5b32dfd856141cc49946",
-    "url": "/scorer-ui-kit/static/js/2.1e00cf20.chunk.js"
+    "revision": "4cf5f04573128c4f927a",
+    "url": "/scorer-ui-kit/static/js/2.03783536.chunk.js"
   },
   {
     "revision": "9b318b6fb13190fe82c0677e9264b3c7",
-    "url": "/scorer-ui-kit/static/js/2.1e00cf20.chunk.js.LICENSE.txt"
+    "url": "/scorer-ui-kit/static/js/2.03783536.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "865ff68a571cc943f4e4",
-    "url": "/scorer-ui-kit/static/js/main.f5f65339.chunk.js"
+    "revision": "d291ad7c135d72683f1e",
+    "url": "/scorer-ui-kit/static/js/main.ff1c01fd.chunk.js"
   },
   {
     "revision": "283cd069f47daaf60567",
