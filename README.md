@@ -1,5 +1,12 @@
 # scorer-ui-kit
 
+This project is prefered to be run using npm 6, usually you can find it in [node version 12](https://github.com/nodejs/node/discussions/37689).
+
+```bash
+npm --version # verify your npm version
+```
+
+
 ## Development
 
 Local development is broken into two parts (ideally using two tabs).
