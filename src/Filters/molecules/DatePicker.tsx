@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, setDayOfYear, getDayOfYear, add, set } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, add, set } from 'date-fns';
 
 /**
  * Convert a single days duration to an interval.
@@ -430,6 +430,7 @@ export default DatePicker;
 const cellState = (day: Date, interval: Interval | null, _hoverDate?: Date): CellStates => {
 
   let state: CellStates = "off";
+  let isInsideInterval = false;
 
   if (interval === null) {
     return state;
@@ -437,7 +438,14 @@ const cellState = (day: Date, interval: Interval | null, _hoverDate?: Date): Cel
 
   const singleDayRange: boolean = intervalToDuration(interval).days === 0;
 
-  if (isWithinInterval(day, interval) || isSameDay(interval.start, day)) {
+  try {
+    isInsideInterval = isWithinInterval(day, interval);
+    } catch (error) {
+      isInsideInterval = false;
+      console.log('wrong interval in datepicker', error);
+  }
+
+  if ( isInsideInterval || isSameDay(interval.start, day)) {
 
     if (singleDayRange) {
       state = "single";
@@ -448,13 +456,22 @@ const cellState = (day: Date, interval: Interval | null, _hoverDate?: Date): Cel
     } else {
       state = "inside";
     }
-
   }
 
   return state;
 };
 
-const updateDay = (date: Date, target: Date) => setDayOfYear(date, getDayOfYear(target));
+const updateDay = (date: Date, target: Date) => {
+
+  const newDate = set(target, {
+    hours: date.getHours(),
+    minutes: date.getMinutes(),
+    seconds: date.getSeconds(),
+    milliseconds: date.getMilliseconds(),
+  });
+
+  return newDate;
+};
 
 const getInitialValue = (hasEmptyValue: boolean, initialValue?: Date | DateInterval): DateInterval | null => {
   if (hasEmptyValue && initialValue === undefined) {
