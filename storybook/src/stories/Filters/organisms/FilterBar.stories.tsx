@@ -11,6 +11,7 @@ import {
   IFilterResult,
   IFilterDatePicker,
   isFilterItem,
+  DateInterval,
 } from 'scorer-ui-kit';
 
 import {
