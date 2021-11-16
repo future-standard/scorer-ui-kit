@@ -11,7 +11,6 @@ import {
   IFilterResult,
   IFilterDatePicker,
   isFilterItem,
-  DateInterval,
 } from 'scorer-ui-kit';
 
 import {
@@ -118,7 +117,7 @@ export const _FilterBar = () => {
   /**
  * Story interaction section
  */
-  const allowMultiFilter = boolean('Allow Multi Filter', true);
+  const singleFilter = boolean('Single Filter', false);
   const hasShowMore = boolean('Has Show More', true);
   // valid formats - https://date-fns.org/v2.25.0/docs/format
   const resultsDateFormat = text('Results date format', 'yyyy-MM-dd');
@@ -251,7 +250,7 @@ export const _FilterBar = () => {
   return (
     <Container>
       <FilterBar
-        {...{ allowMultiFilter, hasShowMore }}
+        {...{ singleFilter, hasShowMore }}
         searchersConfig={searchers}
         dropdownsConfig={dropdowns}
         datePickersConfig={datePickers}
