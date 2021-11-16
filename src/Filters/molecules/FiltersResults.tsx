@@ -37,8 +37,8 @@ const FilterLabel = styled.div`
   }
   border-right: 1px solid hsla(0, 0%, 13%, 0.16);
 `;
-const FilterLabelText = styled.div<{hasIcon?: boolean}>`
-  padding: ${({hasIcon}) => hasIcon ? '0 15px 0 9px' :'0 15px 0 0' };
+const FilterLabelText = styled.div<{ hasIcon?: boolean }>`
+  padding: ${({ hasIcon }) => hasIcon ? '0 15px 0 9px' : '0 15px 0 0'};
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -65,12 +65,13 @@ const FilterLabelsGroup = styled.div`
 `;
 
 const validateDateFormat = (resultsDateFormat: string): boolean => {
-  let isFormatValid = true;
+  let isFormatValid = false;
 
-  if (resultsDateFormat) {
+  if (resultsDateFormat !== '') {
     try {
       const tryDate = new Date();
       format(tryDate, resultsDateFormat);
+      isFormatValid = true;
     } catch (error) {
       isFormatValid = false;
     }
@@ -83,23 +84,32 @@ const renderResults = (template: string, total: number) => {
   return template.replace('[TOTAL_RESULTS]', `${total}`);
 };
 
-const renderLabel = (item: IFilterItem | DateInterval | Date, icon?: string, filterName?: string, resultsDateFormat?: string) => {
+
+const renderLabel = (item: IFilterItem | DateInterval | Date, resultsDateFormat: string, icon?: string, filterName?: string) => {
 
   let textLabel: string = "";
-  const isDateFormatValid = resultsDateFormat ? validateDateFormat(resultsDateFormat) : false;
+  const isDateFormatValid = validateDateFormat(resultsDateFormat);
 
   if (filterName && isFilterItem(item)) {
     textLabel = `${filterName}: ${item.text}`;
   } else if (filterName && item instanceof Date) {
-    textLabel = isDateFormatValid && resultsDateFormat ? `${filterName}: ${format(item, resultsDateFormat)}` : `${filterName}: ${item.toDateString()}`;
+    textLabel = isDateFormatValid
+      ? `${filterName}: ${format(item, resultsDateFormat)}`
+      : `${filterName}: ${item.toDateString()}`;
   } else if (filterName && isDateInterval(item)) {
-    textLabel = isDateFormatValid && resultsDateFormat ? `${filterName}: ${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}` : `${filterName}: ${item.start.toDateString()} - ${item.end.toDateString()}`;
+    textLabel = isDateFormatValid
+      ? `${filterName}: ${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}`
+      : `${filterName}: ${item.start.toDateString()} - ${item.end.toDateString()}`;
   } else if (!filterName && isFilterItem(item)) {
     textLabel = item.text;
   } else if (!filterName && item instanceof Date) {
-    textLabel = isDateFormatValid && resultsDateFormat ? format(item, resultsDateFormat) : item.toDateString();
+    textLabel = isDateFormatValid
+      ? format(item, resultsDateFormat)
+      : item.toDateString();
   } else if (!filterName && isDateInterval(item)) {
-    textLabel = isDateFormatValid && resultsDateFormat ? `${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}` : `${item.start.toDateString()} - ${item.end.toDateString()}`;
+    textLabel = isDateFormatValid
+      ? `${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}`
+      : `${item.start.toDateString()} - ${item.end.toDateString()}`;
   }
 
   return <FilterLabelText hasIcon={!!icon}>{textLabel}</FilterLabelText>;
@@ -128,7 +138,7 @@ const FiltersResults: React.FC<IFilterResults> = ({
   totalResults,
   resultTextTemplate = 'Showing Results ([TOTAL_RESULTS]):',
   clearText = 'CLEAR ALL',
-  resultsDateFormat,
+  resultsDateFormat = '',
   onRemoveFilter = () => { },
   onClearAll = () => { },
   ...props
@@ -141,7 +151,7 @@ const FiltersResults: React.FC<IFilterResults> = ({
           return (
             <FilterLabel key={`Filter-Label-id-${index}`}>
               {icon && <Icon icon={icon} color='dimmed' size={10} weight='light' />}
-              {renderLabel(item, icon, filterName, resultsDateFormat)}
+              {renderLabel(item, resultsDateFormat, icon, filterName)}
               <RemoveButton
                 onClick={() => onRemoveFilter(filterId, type, item)}
               >

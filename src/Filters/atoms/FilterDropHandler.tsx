@@ -122,7 +122,7 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
   const handleToggleOpen = useCallback((min_width: number, min_height: number) => {
     if (!buttonWrapperRef.current) { return; }
 
-    const buttonRect = buttonWrapperRef.current?.getBoundingClientRect();
+    const buttonRect = buttonWrapperRef.current.getBoundingClientRect();
     if (!buttonRect) { return; }
     const position: IOpenPos = getDropPosition(buttonRect, min_width, min_height);
 

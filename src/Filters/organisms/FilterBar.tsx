@@ -60,7 +60,9 @@ const createDropdownFilters = (
   dropdownsConfig.forEach(dropdown => {
     const filter = filtersValues.find(filter => filter.id === dropdown.id);
     if (filter) {
-      const selected = Array.isArray(filter.selected) || isFilterItem(filter.selected) ? filter.selected : null;
+      const selected = (Array.isArray(filter.selected) || isFilterItem(filter.selected))
+        ? filter.selected
+        : null;
       const onSelect = (newSelection: IFilterValue) => { handleDropdownsSelected(newSelection, filter.id); };
       let disabled = getDisableValue(filtersValues, allowMultiFilter, dropdown);
       const newDropdown: IFilterDropdownExt = { ...dropdown, selected, disabled, onSelect };
@@ -460,7 +462,7 @@ const FilterBar: React.FC<IFilterBar> = ({
         }}
         searchFilters={createSearchers(searchersConfig, filtersValues, allowMultiFilter, handleSearchers)}
         dropdownFilters={createDropdownFilters(dropdownsConfigRef.current, filtersValues, allowMultiFilter, handleDropdownsSelected)}
-        datePickFilters={datePickersConfig ? createDatePickers(datePickersConfig, filtersValues, allowMultiFilter, handleDatePickers) : undefined}
+        datePickerFilters={datePickersConfig ? createDatePickers(datePickersConfig, filtersValues, allowMultiFilter, handleDatePickers) : undefined}
       />
       <StyledFilterResults
         {...{ resultTextTemplate, clearText, totalResults, resultsDateFormat }}
