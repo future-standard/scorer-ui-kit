@@ -22,8 +22,15 @@ export const StyledLabel = styled.label<{ rightAlign: boolean }>`
 `;
 
 const LabelText = styled.span<{ rightAlign: boolean }>`
-  margin-bottom: ${({ rightAlign }) => rightAlign ? '0px' : '10px'};
-  margin-left:  ${({ rightAlign }) => rightAlign ? '12px' : '0px'};
+  display: block;
+  ${({ rightAlign }) => rightAlign
+      ? `
+        margin-left: 12px;
+        `
+      : `
+        margin-bottom: 10px;
+      `
+  }
 `;
 
 interface OwnProps {
