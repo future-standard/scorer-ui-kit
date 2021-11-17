@@ -48,6 +48,9 @@ import {
 // Components - Filter
 import {
   DatePicker,
+  DateInterval,
+  isDateInterval,
+  IFilterDatePicker,
   FilterDropdownContainer,
   FilterButton,
   FilterDropdown,
@@ -229,6 +232,7 @@ export {
   FiltersResults,
   FilterBar,
   isFilterItem,
+  isDateInterval,
 
   //Icon
   Icon,
@@ -332,4 +336,6 @@ export type {
   IFilterItem,
   IFilterValue,
   IFilterResult,
+  DateInterval,
+  IFilterDatePicker,
 };

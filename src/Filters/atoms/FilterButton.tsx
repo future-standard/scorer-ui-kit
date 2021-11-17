@@ -88,6 +88,7 @@ const FilterButton: React.FC<IFilterButton> = ({
         <Icon
           icon={icon}
           size={12}
+          weight='light'
         />
         <ButtonText {...{hasFlipArrow }}>{children}</ButtonText>
         {hasFlipArrow && <Icon icon={isOpen ? 'Up' : 'Down'} size={8} />}
