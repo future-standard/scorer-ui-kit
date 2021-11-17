@@ -22,13 +22,13 @@ export const StyledLabel = styled.label<{ rightAlign: boolean }>`
 `;
 
 const LabelText = styled.span<{ rightAlign: boolean }>`
-${({ rightAlign }) => rightAlign
-    ? `
-      margin-left: 12px;
-      `
-    : `
-      display: block;
-      margin-bottom: 10px;
+  display: block;
+  ${({ rightAlign }) => rightAlign
+      ? `
+        margin-left: 12px;
+        `
+      : `
+        margin-bottom: 10px;
       `
   }
 `;
