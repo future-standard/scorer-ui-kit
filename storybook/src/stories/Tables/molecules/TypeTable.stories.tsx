@@ -8,6 +8,7 @@ import {
 } from 'scorer-ui-kit/dist/Tables';
 import { tableData, columnConfigSample, ITableSampleData } from '../../helpers/data_samples';
 import { sortDataBy, rowMaker } from '../../helpers/sample_table_helpers';
+import { emptyCallbackForStory } from '../../helpers';
 
 const Container = styled.div`
   padding: 100px;
@@ -16,7 +17,10 @@ const Container = styled.div`
 export default {
   title: 'Tables/molecules',
   component: TypeTable,
-  decorators: []
+  decorators: [],
+  parameters: {
+    jsx: { skip: 2 }
+  }
 };
 
 /** Imagine this data comes from Server :) */
@@ -76,7 +80,21 @@ export const _TypeTable = () => {
   return (
     <Container>
       <ModalProvider>
-        <TypeTable {...{ columnConfig, selectable, selectCallback, toggleAllCallback, rows, hasStatus, hasThumbnail, hasTypeIcon, defaultAscending: true, sortCallback, hasHeaderGroups }} />
+        <TypeTable {...{
+          columnConfig,
+          selectable,
+          rows,
+          hasStatus,
+          hasThumbnail,
+          hasTypeIcon,
+          defaultAscending: true,
+          hasHeaderGroups
+          }}
+
+          selectCallback={emptyCallbackForStory(selectCallback)}
+          toggleAllCallback={emptyCallbackForStory(toggleAllCallback)}
+          sortCallback={emptyCallbackForStory(sortCallback)}
+          />
       </ModalProvider>
     </Container>
   );
