@@ -1,16 +1,20 @@
-import DatePicker from './molecules/DatePicker';
+import DatePicker, { DateInterval, isDateInterval } from './molecules/DatePicker';
 import FilterDropdownContainer from './atoms/FilterDropdownContainer';
 import FilterButton from './atoms/FilterButton';
 import FilterDropdown from './molecules/FilterDropdown';
-import FilterInputs, { ISearchFilter, IFilterInputs, IFilterDropdownExt } from './molecules/FilterInputs';
+import FilterInputs, { IFilterInputs } from './molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from './molecules/FiltersResults';
-import FilterBar, { IFilterDropdownConfig } from './organisms/FilterBar';
+import FilterBar from './organisms/FilterBar';
 import {
   IFilterType,
   IFilterItem,
   IFilterResult,
   IFilterValue,
-  isFilterItem
+  ISearchFilter,
+  IFilterDropdownExt,
+  IFilterDropdownConfig,
+  IFilterDatePicker,
+  isFilterItem,
 } from './FilterTypes';
 
 export {
@@ -22,6 +26,7 @@ export {
   FiltersResults,
   FilterBar,
   isFilterItem,
+  isDateInterval,
 };
 
 export type {
@@ -34,4 +39,6 @@ export type {
   IFilterItem,
   IFilterResult,
   IFilterValue,
+  DateInterval,
+  IFilterDatePicker
 };

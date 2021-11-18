@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import BasicSearchInput, { IBasicSearchInput } from '../../Misc/atoms/BasicSearchInput';
-import FilterDropdown, { IFilterDropdown } from '../../Filters/molecules/FilterDropdown';
+import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
+import FilterDropdown from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
+import DropdownDatePicker from './DropdownDatePicker';
+import { IFilterDatePicker, IFilterDropdownExt, ISearchFilter } from '../FilterTypes';
 
 const fadeInAnimation = keyframes`
   0% {
@@ -32,11 +34,12 @@ const CloseSearchInputWrapper = styled.div`
 
 const StyledFilterButton = styled(FilterButton)``;
 const StyledDropdown = styled(FilterDropdown)``;
+const StyledDropdownDatePicker = styled(DropdownDatePicker)``;
 
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  ${SearchInputWrapper}, ${StyledDropdown}, ${StyledFilterButton} {
+  ${SearchInputWrapper}, ${StyledDropdown}, ${StyledFilterButton}, ${StyledDropdownDatePicker} {
     margin: 0 5px 10px 0;
   }
 `;
@@ -71,6 +74,17 @@ const renderSearchInputs = (
       );
     }
     return null;
+  });
+};
+
+const renderDatePickers = (datePickerFilters: IFilterDatePicker[]) => {
+  return datePickerFilters.map((datePicker: IFilterDatePicker) => {
+    return (
+      <StyledDropdownDatePicker
+        key={`datePicker-filter-${datePicker.id}`}
+        {...{ ...datePicker }}
+      />
+    );
   });
 };
 
@@ -109,20 +123,10 @@ const initialSearchFilters = (searchFilters: ISearchFilter[]): String[] => {
   return currentVisible;
 };
 
-export interface ISearchFilter extends IBasicSearchInput {
-  id: string
-  canHide?: boolean
-  showFieldText?: string
-}
-
-export interface IFilterDropdownExt extends IFilterDropdown {
-  id: string
-  canHide?: boolean
-}
-
 export interface IFilterInputs {
-  searchFilters: ISearchFilter[]
-  dropdownFilters: IFilterDropdownExt[]
+  searchFilters?: ISearchFilter[]
+  dropdownFilters?: IFilterDropdownExt[]
+  datePickerFilters?: IFilterDatePicker[]
   hasShowMore?: boolean
   showMoreText?: string
   showLessText?: string
@@ -130,8 +134,9 @@ export interface IFilterInputs {
 
 const FilterInputs: React.FC<IFilterInputs> = ({
   hasShowMore = false,
-  searchFilters,
-  dropdownFilters,
+  searchFilters = [],
+  datePickerFilters = [],
+  dropdownFilters = [],
   showMoreText = 'Show More',
   showLessText = 'Show Less',
   ...props
@@ -159,6 +164,7 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   return (
     <Container {...{ props }}>
       {renderSearchInputs(searchFilters, visibleSearchInputs, handleVisibleSearch)}
+      {renderDatePickers(datePickerFilters)}
       {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
