@@ -3,11 +3,15 @@ import styled from 'styled-components';
 import { BasicSearchInput } from 'scorer-ui-kit';
 import { text, boolean, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
+import { emptyCallbackForStory } from '../../helpers';
 
 export default {
   title: 'Misc/atoms',
   component: BasicSearchInput,
-  decorators: []
+  decorators: [],
+  parameters: {
+    jsx: { skip: 1 }
+  }
 };
 
 const Container = styled.div`
@@ -33,7 +37,7 @@ export const _BasicSearchInput = () => {
     <Container>
       <BasicSearchInput
         placeholder={inputPlaceholder}
-        onChange={handleChange}
+        onChange={emptyCallbackForStory(handleChange)}
         {...{hasBorder, color, iconSize, disabled}}
       />
     </Container>
