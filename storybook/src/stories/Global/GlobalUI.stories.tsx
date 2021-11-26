@@ -36,6 +36,8 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
+  ${({theme}) => theme.styles.global.background};
+
 `;
 
 const Welcome = () => (

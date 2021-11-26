@@ -19,8 +19,8 @@ const Container = styled.div`
   justify-content: space-between;
 
   ${({ theme, theme: { colors } }) => colors && css`
-    border-bottom: ${colors.divider} 1px solid;
-    box-shadow: 5px 7px 10px 0 hsla(205, 16%, 77%, 0.1);
+    border-bottom: ${theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
+    // box-shadow: 5px 7px 10px 0 hsla(205, 16%, 77%, 0.1);
     background-color:${theme.styles.global.mainMenu.background.backgroundColor};
   `}
 `;
@@ -53,6 +53,7 @@ const SearchInput = styled.input`
   line-height: 35px;
   border: none;
   outline: none;
+  background: transparent;
 
   ${({ theme: { typography } }) => typography.global.topBar.search.value};
 
@@ -78,7 +79,8 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
   cursor: pointer;
 
   ${({ theme }) => css`
-    border-bottom: 5px solid ${theme.colors.menu.indicator};
+    border-bottom: 5px solid transparent;
+    /*${theme.colors.menu.indicator};*/
 
     &:hover {
       border-bottom-color: ${theme.colors.menu.hover};
@@ -104,7 +106,7 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
   top: 65px;
   bottom: 0;
   background: ${({ theme }) => theme.styles.global.mainMenu.background};
-  border-left: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  border-left: ${({ theme }) => theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
   width: ${({ baseWidth }) => baseWidth ? baseWidth : `200px`};
   opacity: 0;
   visibility: hidden;

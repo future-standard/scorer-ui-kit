@@ -29,14 +29,17 @@ const CurrentUser = styled.div`
   padding: 20px 20px 15px;
 
   ${({ theme }) => css`
-    border-bottom: ${theme.colors.divider} 1px solid;
+    border-bottom: ${theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
     ${theme.typography.global.mainMenu.identity};
   `};
 `;
 
 const UserOptions = styled.div`
   padding: 20px 20px 10px 20px;
-  border-bottom: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  ${({ theme }) => css`
+    border-bottom: ${theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
+  `};
+
 `;
 
 const Logout = styled.div`
