@@ -156,7 +156,7 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
   const hasSubmenu : boolean = submenus.length > 0;
 
   useEffect(() => {
-    if(refSubmenu && refSubmenu.current){
+    if(refSubmenu && refSubmenu.current && refSubmenu.current.clientHeight !== 0){
       setSubmenuHeight(refSubmenu.current.clientHeight);
     }
 
