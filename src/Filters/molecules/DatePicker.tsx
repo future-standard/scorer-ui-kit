@@ -251,16 +251,16 @@ export interface IDatePicker {
   dateMode?: DateMode
   timeMode?: TimeMode
   hasEmptyValue?: boolean
-  dateTimeTextUpside?: string
-  dateTimeTextDownside?: string
+  dateTimeTextUpper?: string
+  dateTimeTextLower?: string
   updateCallback?: (data: DateInterval | Date) => void
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
   dateMode = 'interval',
   timeMode = 'interval',
-  dateTimeTextUpside = 'From',
-  dateTimeTextDownside = 'To',
+  dateTimeTextUpper = 'From',
+  dateTimeTextLower = 'To',
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
@@ -362,8 +362,8 @@ const DatePicker: React.FC<IDatePicker> = ({
     <Container>
 
       <DateTimeArea>
-        <DateTimeBlock title={dateTimeTextUpside} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
-        <DateTimeBlock title={dateTimeTextDownside} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
+        <DateTimeBlock title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
+        <DateTimeBlock title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>
           <TimeZoneLabel>Timezone</TimeZoneLabel>

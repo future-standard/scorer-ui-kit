@@ -28,8 +28,8 @@ export const _DatePicker = () => {
 
   const dateMode = select("Date Mode", { single: "single", interval: "interval" }, "interval");
   const timeMode = select("Time Mode", { off: "off", single: "single", interval: "interval" }, "interval");
-  const dateTimeTextUpside = text('Date Time Text Upside', 'From');
-  const dateTimeTextDownside = text('Date Time Text Downside', 'To');
+  const dateTimeTextUpper = text('Date Time Text Upside', 'From');
+  const dateTimeTextLower = text('Date Time Text Downside', 'To');
   const updateCallback = action('Date / Time Updated')
 
   return <Container>
@@ -38,8 +38,8 @@ export const _DatePicker = () => {
         timeMode,
         dateMode,
         updateCallback: exampleCallback(updateCallback),
-        dateTimeTextUpside,
-        dateTimeTextDownside
+        dateTimeTextUpper,
+        dateTimeTextLower
         }} />
     </FilterDropdownContainer>
   </Container>;
