@@ -1,7 +1,7 @@
 // Themes
 // import lightTheme from './themes/light';
 import lightTheme from './themes/light/light';
-import darkTheme from './themes/dark';
+import darkTheme from './themes/dark/dark';
 import themeFallbackHelper from './themes/themeFallbackHelper';
 
 
