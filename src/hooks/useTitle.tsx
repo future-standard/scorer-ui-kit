@@ -10,7 +10,7 @@ export const useTitle = (title : string, area? : string, delimiter?: string) => 
       ...(area ? [area] : []),
       baseTitle
     ], delimiter);
-  },[title, area]);
+  },[title, area, baseTitle, delimiter]);
 };
 
 /**
