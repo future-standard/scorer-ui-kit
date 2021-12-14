@@ -64,20 +64,21 @@ interface IProps {
 
 const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true}) => {
   // Set <title> attribute automagically.
-  if(updateDocTitle){
-    useTitle(title, areaTitle || "");
-  }
+
+  useTitle(title, areaTitle || '', undefined, updateDocTitle);
 
 
-  return <Container>
-    {areaTitle && areaHref
-      ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
-      : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
-    <Title>{title}</Title>
-    {icon ?
-      <IconContainer><Icon size={24} color='dimmed' {...{icon}} /></IconContainer>
-    : null}
-  </Container>;
+  return (
+    <Container>
+      {areaTitle && areaHref
+        ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
+        : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
+      <Title>{title}</Title>
+      {icon ?
+        <IconContainer><Icon size={24} color='dimmed' {...{icon}} /></IconContainer>
+      : null}
+    </Container>
+  );
 };
 
 export default PageTitle;
