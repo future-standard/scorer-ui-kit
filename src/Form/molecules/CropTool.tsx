@@ -141,7 +141,7 @@ const CropTool: React.FC<ICrop> = ({
 }) => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const [loadDimensions, setLoadDimensions] = useState(viewDimensions);
+  const [_loadDimensions, setLoadDimensions] = useState(viewDimensions);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const cropRef = useRef<HTMLDivElement | null>(null);

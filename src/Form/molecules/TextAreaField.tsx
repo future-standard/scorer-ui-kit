@@ -1,5 +1,4 @@
 import React, { TextareaHTMLAttributes } from 'react';
-import styled from 'styled-components';
 import { TypeFieldState } from '..';
 import Label from '../atoms/Label';
 import TextArea from '../atoms/TextArea';

@@ -114,18 +114,13 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl
       return isValidUrl;
     });
 
-  }, []);
+  }, [isMediaUrlValid]);
 
   useEffect(() => {
-    let active = true;
-    if (active && mediaUrl && mediaType) {
+    if ( mediaUrl && mediaType) {
       verifyPreview(mediaUrl, mediaType);
     }
-
-    return () => {
-      active = false;
-    };
-  }, [mediaUrl, mediaType]);
+  }, [mediaUrl, mediaType, verifyPreview]);
 
   const validateImage = useCallback(async (currentImg: string) => {
 
@@ -137,16 +132,13 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl
       return isValidUrl;
     });
 
-  }, []);
+  }, [isMediaUrlValid]);
 
   useEffect(() => {
-    let active = true;
-
-    if (active && image) {
+    if (image) {
       validateImage(image);
     }
-
-  }, [image]);
+  }, [image, validateImage]);
 
   return (
     <Container {...{ hoverZoom, mediaUrl, isImageValid, hasPreview }} aspect='16:9' onClick={handleModal}>

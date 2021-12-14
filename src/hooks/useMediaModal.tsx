@@ -6,12 +6,12 @@ import { useModal, IModal } from "./useModal";
 
 export type ICreateMediaModal = IMediaModal & IModal;
 
+const videoDefaultOptions: VideoHTMLAttributes<HTMLVideoElement> = { controls: true };
+
 export const useMediaModal = () => {
 
   // default options for media box
-  const videoDefaultOptions: VideoHTMLAttributes<HTMLVideoElement> = { controls: true };
   const { createModal, isModalOpen, setModalOpen } = useModal();
-
 
   async function isMediaUrlValid(src: string, mediaType: IMediaType): Promise<boolean> {
     let isValid = false;

@@ -6,7 +6,7 @@ import { dimensions } from '../themes/common';
 
 const IconWrapper = styled.div<{ color: string }>`
   [stroke]{
-    content: ${({ theme, color }) => color};
+    content: ${({ color }) => color};
     stroke: ${({ theme, color }) => theme.colors.icons[color]};
   }
   svg {
