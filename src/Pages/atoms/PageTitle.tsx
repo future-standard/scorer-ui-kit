@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
 import { Link } from 'react-router-dom';
-import { useTitle } from '../../hooks/useTitle'
+import { useTitle } from '../../hooks/useTitle';
 
 
 const Container = styled.div`
@@ -72,8 +72,7 @@ const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateD
   return <Container>
     {areaTitle && areaHref
       ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
-      : areaTitle && <AreaTitle>{areaTitle}</AreaTitle> 
-    }
+      : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
     <Title>{title}</Title>
     {icon ?
       <IconContainer><Icon size={24} color='dimmed' {...{icon}} /></IconContainer>
