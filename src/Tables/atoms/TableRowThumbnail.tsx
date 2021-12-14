@@ -124,8 +124,8 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl
 
     return () => {
       active = false;
-    }
-  }, [mediaUrl, mediaType])
+    };
+  }, [mediaUrl, mediaType]);
 
   const validateImage = useCallback(async (currentImg: string) => {
 
@@ -135,7 +135,7 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl
         return prev;
       }
       return isValidUrl;
-    })
+    });
 
   }, []);
 

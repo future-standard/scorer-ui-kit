@@ -32,4 +32,4 @@ const makeTitle = (parts: string[], delimiter : string = '|') : string => {
 
   return title;
 
-}
+};
