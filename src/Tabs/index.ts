@@ -1,4 +1,4 @@
-export { Tabs } from './Tabs';
+export { Tabs, TabContext } from './Tabs';
 export { TabList } from './TabList';
 export { Tab } from './atoms/Tab';
 export { TabContent } from './TabContent';

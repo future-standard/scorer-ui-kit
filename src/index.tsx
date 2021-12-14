@@ -166,6 +166,7 @@ import {
 // Tabs
 import {
   Tabs,
+  TabContext,
   Tab,
   TabList,
   TabContent,
@@ -288,6 +289,7 @@ export {
 
   // Tabs
   Tabs,
+  TabContext,
   Tab,
   TabList,
   TabContent,
