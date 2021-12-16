@@ -4,7 +4,7 @@ import LatoThin from './Lato-Thin.ttf';
 import LatoLight from './Lato-Light.ttf';
 import LatoRegular from './Lato-Regular.ttf';
 import LatoBold from './Lato-Bold.ttf';
-import MonoraleThin from './Monorale-Thin.woff'
+import MonoraleThin from './Monorale-Thin.woff';
 import MonoraleThinItalic from './Monorale-ThinItalic.woff';
 import MonoraleExtraLight from './Monorale-ExtraLight.woff';
 import MonoraleExtraLightItalic from './Monorale-ExtraLightItalic.woff';
@@ -200,5 +200,5 @@ const GlobalStyle = createGlobalStyle`
     src: url(${MonoraleBlackItalic}) format('woff');
     font-display: fallback;
   }
-`
+`;
 export default GlobalStyle;

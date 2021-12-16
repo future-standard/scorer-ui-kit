@@ -83,8 +83,10 @@ const WebRTCPlayer: React.FC<Props> = ({
       console.debug('Got local description: ' + JSON.stringify(answer));
       await peerConnection.current.setLocalDescription(answer);
     } catch (error){
-      console.error('Error:', error.message);
-      setError('Error Creating Answer');
+      console.error(error);
+      if(error instanceof Error){
+        setError(error.message);
+      }
       return;
     }
 
@@ -99,8 +101,10 @@ const WebRTCPlayer: React.FC<Props> = ({
       await webSocket.current.send(JSON.stringify(message));
       setStatus('Connected');
     } catch (error) {
-      console.error(error.name + ': ' + error.message);
-      setError(error.message);
+      console.error(error);
+      if(error instanceof Error){
+        setError(error.message);
+      }
     }
   };
 
@@ -269,7 +273,7 @@ const WebRTCPlayer: React.FC<Props> = ({
       console.debug('cleanup');
       closeWebSocket();
     };
-  }, [enabled]);
+  }, [enabled]);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Video {...props} autoPlay={autoPlay} muted={muted} ref={videoRef} />
