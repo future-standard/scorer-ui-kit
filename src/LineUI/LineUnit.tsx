@@ -88,7 +88,7 @@ interface ILineUnitProps {
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
-  CenterIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  CenterIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | undefined;
   centerIconPosition?: string;
 }
 

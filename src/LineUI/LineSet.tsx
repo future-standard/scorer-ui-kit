@@ -214,28 +214,6 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
     }
     const {x:x2,y:y2} = points[nextIndex];
    
-    if (points.length < 3){
-      return (
-        <LineUnit
-          key={index}
-          moveEndCB={onLineMoveEnd}
-          lineSetId={lineSetId}
-          options={options}
-          x1={x1}
-          y1={y1}
-          x2={x2}
-          y2={y2}
-          unit={unit}
-          label={name}
-          styling={styling}
-          lineMoveCallback={lineDragUpdate}
-          lineMoveStartCallback={lineDragStart}
-          CenterIcon={centerIcon}
-          centerIconPosition={centerIconPosition}
-        />
-      );
-    }
-
   return (
     <LineUnit
       key={index}
@@ -251,6 +229,8 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       styling={styling}
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
+      CenterIcon={points.length === 2 ? centerIcon : undefined}
+      centerIconPosition={points.length === 2 ? centerIconPosition : ''}
     />
   );});
 
