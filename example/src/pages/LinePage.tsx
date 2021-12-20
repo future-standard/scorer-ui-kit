@@ -1,6 +1,6 @@
 import React, { useReducer, useCallback, useEffect, useState } from 'react';
 // import styled from 'styled-components';
-
+import {ArrowIcon} from '../svg';
 import {
   LineReducer,
   LineSetContext,
@@ -36,7 +36,7 @@ const Line: React.FC<{}> = () => {
 
   const fetchLine = useCallback(async () => {
     const state = [{
-      name: 'Line 1',
+      name: 'UP',
       points: [
           {
             x: 100,
@@ -48,8 +48,27 @@ const Line: React.FC<{}> = () => {
           }
         ],
         readOnly: false,
-        styling: "primary"
-      }
+        styling: 'primary',
+        centerIcon: ArrowIcon,
+        centerIconPosition: 'UP'
+      },
+      {
+        name: 'DOWN',
+        points: [
+            {
+              x: 200,
+              y: 200
+            },
+            {
+              x: 300,
+              y: 300
+            }
+          ],
+          readOnly: false,
+          styling: 'primary',
+          centerIcon: ArrowIcon,
+          centerIconPosition: 'DOWN'
+        }
     ];
 
     dispatch({

@@ -19,6 +19,8 @@ export interface IPointSet {
   showOrientation?: boolean;
   styling?: string;
   areaName?: string;
+  centerIcon?: React.FunctionComponent;
+  centerIconPosition?: string;
 }
 
 export interface IMinMax {

@@ -88,12 +88,14 @@ interface ILineUnitProps {
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
+  CenterIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  centerIconPosition?: string;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}} = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, CenterIcon, centerIconPosition} = props;
   const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset } = options;
 
   const a = x1 - x2;
@@ -146,6 +148,15 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     x: (x2 + x1) / 2,
     y: (y2 + y1) / 2
   };
+
+  const ArrowCordinates = () => {
+    const angle = Math.atan2((y2 - y1), (x2 - x1));
+    const angleMode = (Math.PI / 2) - angle;
+    const x = midpoint.x + Math.sin(angleMode) * (-50);
+    const y = midpoint.y + Math.cos(angleMode) * (-50);
+    return {x, y};
+  };
+
   return (
     <g>
       <ContrastLine styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
@@ -165,11 +176,18 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
       {/* <circle r={1* unit} cx={x1} cy={y1} fill='white' /> */}
       {/* <circle r={1* unit} cx={x2} cy={y2} fill='white' /> */}
 
-      {
-        label &&
-          <LabelText styling={styling} fontSize={`${unit * 14}px`} x={midpoint.x - (16 * unit)} y={midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive}>
+      {label &&
+          <LabelText styling={styling} fontSize={`${unit * 14}px`} x={centerIconPosition === 'UP' ? midpoint.x - (10 * unit) : midpoint.x - (20 * unit)} y={centerIconPosition === 'UP' ? midpoint.y + (30 * unit) : midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive}>
             {label}
           </LabelText>
+      }
+      
+      {centerIconPosition && CenterIcon &&
+        <g transform={`translate(${ArrowCordinates().x},${ArrowCordinates().y}) rotate(${(180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1) + (centerIconPosition === 'UP' ? 0 : 180)}) scale(${unit * 1.5})`} >
+          <g transform={centerIconPosition === 'UP' ? `translate(${Math.ceil(4-unit) > 2 ? 10 : 5 - unit}, -35)` : `translate(${(-25 + 1.5 * unit) < -21 ? -28 : -25 + 1.5 * unit}, -35)`}>
+            <CenterIcon height='20' width='20' />
+          </g>
+        </g>
       }
     </g>
   );
