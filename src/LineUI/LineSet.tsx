@@ -230,7 +230,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
       CenterIcon={points.length === 2 ? centerIcon : undefined}
-      centerIconPosition={points.length === 2 ? centerIconPosition : ''}
+      centerIconPosition={points.length === 2 ? centerIconPosition : undefined}
     />
   );});
 

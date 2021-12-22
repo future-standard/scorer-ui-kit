@@ -50,7 +50,7 @@ const Line: React.FC<{}> = () => {
         readOnly: false,
         styling: 'primary',
         centerIcon: ArrowIcon,
-        centerIconPosition: 'UP'
+        centerIconPosition: 'up'
       },
       {
         name: 'DOWN',
@@ -67,7 +67,7 @@ const Line: React.FC<{}> = () => {
           readOnly: false,
           styling: 'primary',
           centerIcon: ArrowIcon,
-          centerIconPosition: 'DOWN'
+          centerIconPosition: 'down'
         }
     ];
 

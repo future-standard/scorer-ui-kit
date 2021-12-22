@@ -89,7 +89,7 @@ interface ILineUnitProps {
   label?: string;
   styling?: string;
   CenterIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | undefined;
-  centerIconPosition?: string;
+  centerIconPosition?: string | undefined;
 }
 
 
@@ -149,7 +149,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     y: (y2 + y1) / 2
   };
 
-  const ArrowCordinates = () => {
+  const centerIconCordinates = () => {
     const angle = Math.atan2((y2 - y1), (x2 - x1));
     const angleMode = (Math.PI / 2) - angle;
     const x = midpoint.x + Math.sin(angleMode) * (-50);
@@ -177,14 +177,19 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
       {/* <circle r={1* unit} cx={x2} cy={y2} fill='white' /> */}
 
       {label &&
-          <LabelText styling={styling} fontSize={`${unit * 14}px`} x={centerIconPosition === 'UP' ? midpoint.x - (10 * unit) : midpoint.x - (20 * unit)} y={centerIconPosition === 'UP' ? midpoint.y + (30 * unit) : midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive}>
-            {label}
-          </LabelText>
-      }
+        <LabelText
+          styling={styling}
+          fontSize={`${unit * 14}px`}
+          x={midpoint.x - ((centerIconPosition === 'up' ? 10 : 20) * unit) }
+          y={midpoint.y  + (centerIconPosition === 'up' ? (30 * unit) : -(15 * unit))}
+          showIndex={revealSetIndex || handleFinderActive}
+        >
+          {label}
+        </LabelText>}
       
       {centerIconPosition && CenterIcon &&
-        <g transform={`translate(${ArrowCordinates().x},${ArrowCordinates().y}) rotate(${(180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1) + (centerIconPosition === 'UP' ? 0 : 180)}) scale(${unit * 1.5})`} >
-          <g transform={centerIconPosition === 'UP' ? `translate(${Math.ceil(4-unit) > 2 ? 10 : 5 - unit}, -35)` : `translate(${(-25 + 1.5 * unit) < -21 ? -28 : -25 + 1.5 * unit}, -35)`}>
+        <g transform={`translate(${centerIconCordinates().x},${centerIconCordinates().y}) rotate(${(180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1) + (centerIconPosition === 'up' ? 0 : 180)}) scale(${unit * 1.5})`} >
+          <g transform={centerIconPosition === 'up' ? `translate(${Math.ceil(4-unit) > 2 ? 10 : 5 - unit}, -30)` : `translate(${(-25 + 1.5 * unit) < -21 ? -28 : -25 + 1.5 * unit}, -30)`}>
             <CenterIcon height='20' width='20' />
           </g>
         </g>
