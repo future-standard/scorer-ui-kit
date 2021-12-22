@@ -89,7 +89,7 @@ interface ILineUnitProps {
   label?: string;
   styling?: string;
   CenterIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | undefined;
-  centerIconPosition?: string | undefined;
+  centerIconPosition?: 'up' | 'down' | undefined;
 }
 
 

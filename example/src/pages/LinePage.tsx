@@ -15,7 +15,7 @@ import {
   Label,
   Input
 } from 'scorer-ui-kit';
-import { LineUIOptions } from '../../../dist/LineUI';
+import { IPointSet, LineUIOptions } from '../../../dist/LineUI';
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
@@ -35,7 +35,7 @@ const Line: React.FC<{}> = () => {
   });
 
   const fetchLine = useCallback(async () => {
-    const state = [{
+    const state: IPointSet[] = [{
       name: 'UP',
       points: [
           {
