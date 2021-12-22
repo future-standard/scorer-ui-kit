@@ -40,10 +40,10 @@ const Line: React.FC<{}> = () => {
       points: [
           {
             x: 100,
-            y: 100
+            y: 200
           },
           {
-            x: 200,
+            x: 300,
             y: 200
           }
         ],
@@ -57,11 +57,11 @@ const Line: React.FC<{}> = () => {
         points: [
             {
               x: 200,
-              y: 200
+              y: 400
             },
             {
-              x: 300,
-              y: 300
+              x: 400,
+              y: 400
             }
           ],
           readOnly: false,
