@@ -30,7 +30,8 @@ const Line: React.FC<{}> = () => {
       x: 2310,
       y: 1535
     },
-    boundaryOffset: 0
+    boundaryOffset: 0,
+    showDirectionMark: false
   });
 
   const fetchLine = useCallback(async () => {
@@ -47,24 +48,22 @@ const Line: React.FC<{}> = () => {
           }
         ],
         readOnly: false,
-        styling: 'primary',
-        showDirectionMark: true
+        styling: 'primary'
       },
       {
         name: 'DOWN',
         points: [
             {
-              x: 200,
+              x: 400,
               y: 400
             },
             {
-              x: 400,
+              x: 200,
               y: 400
             }
           ],
           readOnly: false,
-          styling: 'primary',
-          showDirectionMark: true
+          styling: 'primary'
         }
     ];
 
@@ -127,6 +126,9 @@ const Line: React.FC<{}> = () => {
           </Label>
           <Label labelText='Show Point' htmlFor='showPoint' >
             <input type='checkbox' name='showPoint' checked={options.showPoint} onChange={toggleOptions('showPoint')}/>
+          </Label>
+          <Label labelText='Show Direction Mark' htmlFor='showDirectionMark' >
+            <input type='checkbox' name='showDirectionMark' checked={options.showDirectionMark} onChange={toggleOptions('showDirectionMark')}/>
           </Label>
         </SidebarBox>
         <SidebarBox>

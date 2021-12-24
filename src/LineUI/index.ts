@@ -19,7 +19,6 @@ export interface IPointSet {
   showOrientation?: boolean;
   styling?: string;
   areaName?: string;
-  showDirectionMark?: boolean;
 }
 
 export interface IMinMax {
@@ -41,6 +40,7 @@ export interface IDragLineUISharedOptions {
   setIndexOffset: number;
   pointIndexOffset: number;
   showPoint: boolean;
+  showDirectionMark: boolean;
 }
 
 export interface LineUIOptions {
@@ -65,7 +65,8 @@ export interface LineUIOptions {
     y: number;
   };
 
-  boundaryOffset? : number
+  boundaryOffset? : number,
+  showDirectionMark? : boolean
 }
 
 export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>

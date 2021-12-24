@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { IDragLineUISharedOptions } from '.';
+import Icon from '../Icons/Icon';
 
 
 const ContrastLine = styled.line<{styling: string}>`
@@ -88,18 +89,18 @@ interface ILineUnitProps {
   y2: number,
   unit: number,
   lineMoveCallback: any,
-  lineMoveStartCallback: any
+  lineMoveStartCallback: any,
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
-  showDirectionMark? : boolean;
+  showDirection?: boolean
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, showDirectionMark} = props;
-  const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset } = options;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, showDirection=false} = props;
+  const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
 
   const a = x1 - x2;
   const b = y1 - y2;
@@ -160,7 +161,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     const rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
     return {x, y, rotate};
   };
-
+  
   return (
     <g>
       <ContrastLine styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
@@ -185,17 +186,18 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           styling={styling}
           fontSize={`${unit * 14}px`}
           text-anchor='center'
-          x={showDirectionMark ? (50 - unit) < 46 ? centerIconCordinates().x - (100 - unit) : centerIconCordinates().x - (50 - unit) : midpoint.x - (16 * unit)}
-          y={showDirectionMark ? centerIconCordinates().y + 10 + ((centerIconCordinates().rotate < -90 && centerIconCordinates().rotate < 90) ? - (30 * unit) : centerIconCordinates().rotate > 90 && centerIconCordinates().rotate < 180 ? - (30 * unit) : (30 * unit)) : midpoint.y - (15 * unit)}
+          x={(showDirectionMark && showDirection) ? (10 - unit) < 6 ? centerIconCordinates().x - (100 - unit) : centerIconCordinates().x - (50 - unit) : midpoint.x - (16 * unit)}
+          y={(showDirectionMark && showDirection) ? centerIconCordinates().y + 10 + ((centerIconCordinates().rotate < -90 && centerIconCordinates().rotate < 90) ? - (30 * unit) : centerIconCordinates().rotate > 90 && centerIconCordinates().rotate < 180 ? - (30 * unit) : (30 * unit)) : midpoint.y - (15 * unit)}
           showIndex={revealSetIndex || handleFinderActive}
         >
           {label}
         </LabelText>}
       
-      {showDirectionMark &&
+      {showDirectionMark && showDirection &&
         <g transform={`translate(${centerIconCordinates(-30).x},${centerIconCordinates(-30).y}) rotate(${centerIconCordinates(-30).rotate}) scale(${unit * 1.5})`}>
-          <g>
-            <Circle r={unit * 2 < 10 ? 12 - unit : 6} cx={10 - unit} cy={-20} />
+          <g transform={`translate(${unit > 5 ? -1 : 1.5},${unit > 3 ? -25 : -30}) scale(${unit > 3 ? 0.6 : 0.8})`}>
+            <Circle r={14} cx={7} cy={8} />
+            <Icon color='inverse' icon='Up' size={14} weight='heavy' forSvgUsage />
           </g>
         </g>}
     </g>
