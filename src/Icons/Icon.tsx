@@ -13,7 +13,7 @@ const wrapperCss = css`
       vector-effect: non-scaling-stroke;
     }
   }
-`
+`;
 const IconWrapper = styled.div`
   ${wrapperCss};
 `;
