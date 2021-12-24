@@ -1,4 +1,4 @@
-import React, { TextareaHTMLAttributes } from 'react'
+import React, { TextareaHTMLAttributes } from 'react';
 import styled, { css } from  'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import Icon from '../../Icons/Icon';
@@ -141,16 +141,16 @@ const TextArea : React.FC<Props> = ({
         placeholder={placeholder}
         disabled={fieldState === 'disabled' || fieldState === 'processing'}
         {...props}
-      >{children}</StyledTextArea>
-      { fieldState && (
+      >{children}
+      </StyledTextArea>
+      {fieldState && (
         <FeedbackContainer>
           <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
           <FeedbackMessage>{feedbackMessage}</FeedbackMessage>
         </FeedbackContainer>
-      )
-      }
+      )}
     </Container>
   );
-}
+};
 
 export default TextArea;

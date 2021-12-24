@@ -95,17 +95,17 @@ const MediaBox: React.FC<IMediaModal> = ({
     <Container>
       {mediaType === 'video'
         ? <Video
-          {...{ src, loop, autoPlay, controls, muted, onError, hasModalLimits }}
-          {...videoValues}
-          isLoaded={loaded}
-          preload='metadata'
-          onCanPlayThrough={handleLoad}
-        />
+            {...{ src, loop, autoPlay, controls, muted, onError, hasModalLimits }}
+            {...videoValues}
+            isLoaded={loaded}
+            preload='metadata'
+            onCanPlayThrough={handleLoad}
+          />
         : <StyledImage
-          {...{ src, alt, onError, hasModalLimits }}
-          onLoad={handleLoad}
-          isLoaded={loaded}
-        />}
+            {...{ src, alt, onError, hasModalLimits }}
+            onLoad={handleLoad}
+            isLoaded={loaded}
+          />}
       {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
     </Container>
   );
