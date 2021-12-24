@@ -25,11 +25,6 @@ export interface IconProps {
   weight?: 'light' | 'regular' | 'heavy' | 'strong'
   color?: ISvgIcons['color']
 }
-interface ISvgIcon extends React.SVGProps<SVGSVGElement> {
-  size: number
-  color: string
-  weight: number
-}
 
 const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color = 'mono' }) => {
 
