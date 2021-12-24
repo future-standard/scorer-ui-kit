@@ -40,7 +40,7 @@ export interface IDragLineUISharedOptions {
   setIndexOffset: number;
   pointIndexOffset: number;
   showPoint: boolean;
-  showDirectionMark: boolean;
+  showDirectionMark?: boolean;
 }
 
 export interface LineUIOptions {
@@ -65,8 +65,8 @@ export interface LineUIOptions {
     y: number;
   };
 
-  boundaryOffset? : number,
-  showDirectionMark? : boolean
+  boundaryOffset?: number,
+  showDirectionMark?: boolean
 }
 
 export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>

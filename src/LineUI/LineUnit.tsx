@@ -154,11 +154,11 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     y: (y2 + y1) / 2
   };
 
-  const centerIconCordinates = (space:number = 1) => {
+  const detectionMarkCoordinat = (space:number = 1) => {
     const angle = Math.atan2((y2 - y1), (x2 - x1));
     const angleMode = (Math.PI / 2) - angle;
-    const x = midpoint.x + Math.sin(angleMode)*(space);
-    const y = midpoint.y + Math.cos(angleMode)*(space);
+    const x = midpoint.x + Math.sin(angleMode) * (space);
+    const y = midpoint.y + Math.cos(angleMode) * (space);
     const rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
     return {x, y, rotate};
   };
@@ -187,18 +187,18 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           styling={styling}
           fontSize={`${unit * 14}px`}
           text-anchor='center'
-          x={(showDirectionMark) ? (10 - unit) < 5 ? centerIconCordinates().x - (label?.length * 30) : centerIconCordinates().x -(label?.length * 15) : midpoint.x - (16 * unit)}
-          y={(showDirectionMark) ? centerIconCordinates().y + 10 + ((centerIconCordinates().rotate < -90 && centerIconCordinates().rotate < 90) ? - (30 * unit) : centerIconCordinates().rotate > 90 && centerIconCordinates().rotate < 180 ? - (30 * unit) : (30 * unit)) : midpoint.y - (15 * unit)}
+          x={showDirectionMark ? (10 - unit) < 5 ? detectionMarkCoordinat().x - (label?.length * 30) : detectionMarkCoordinat().x -(label?.length * 15) : midpoint.x - (16 * unit)}
+          y={showDirectionMark ? detectionMarkCoordinat().y + 10 + ((detectionMarkCoordinat().rotate < -90 && detectionMarkCoordinat().rotate < 90) ? - (30 * unit) : detectionMarkCoordinat().rotate > 90 && detectionMarkCoordinat().rotate < 180 ? - (30 * unit) : (30 * unit)) : midpoint.y - (15 * unit)}
           showIndex={revealSetIndex || handleFinderActive}
         >
           {label}
         </LabelText>}
       
       {showDirectionMark &&
-        <g transform={`translate(${centerIconCordinates(-30).x},${centerIconCordinates(-30).y}) rotate(${centerIconCordinates(-30).rotate}) scale(${unit * 1.5})`}>
+        <g transform={`translate(${detectionMarkCoordinat(-30).x},${detectionMarkCoordinat(-30).y}) rotate(${detectionMarkCoordinat(-30).rotate}) scale(${unit * 1.5})`}>
           <g transform={`translate(${unit > 5 ? -1 : 1.5},${unit > 3 ? -25 : -30}) scale(${unit > 3 ? 0.6 : 0.8})`}>
-            <Circle r={14} cx={7} cy={8} />
-            <Icon color='inverse' icon='Up' size={14} weight='heavy' forSvgUsage />
+            <Circle r={12} cx={6} cy={7} />
+            <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
           </g>
         </g>}
     </g>
