@@ -93,14 +93,15 @@ interface ILineUnitProps {
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
-  showDirection?: boolean
+  hasTwoPonts?: boolean
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, showDirection=false} = props;
-  const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, hasTwoPonts=false} = props;
+  let { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
+  showDirectionMark= showDirectionMark && hasTwoPonts;
 
   const a = x1 - x2;
   const b = y1 - y2;
@@ -186,14 +187,14 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           styling={styling}
           fontSize={`${unit * 14}px`}
           text-anchor='center'
-          x={(showDirectionMark && showDirection) ? (10 - unit) < 5 ? centerIconCordinates().x - (label?.length * 30) : centerIconCordinates().x -(label?.length * 15) : midpoint.x - (16 * unit)}
-          y={(showDirectionMark && showDirection) ? centerIconCordinates().y + 10 + ((centerIconCordinates().rotate < -90 && centerIconCordinates().rotate < 90) ? - (30 * unit) : centerIconCordinates().rotate > 90 && centerIconCordinates().rotate < 180 ? - (30 * unit) : (30 * unit)) : midpoint.y - (15 * unit)}
+          x={(showDirectionMark) ? (10 - unit) < 5 ? centerIconCordinates().x - (label?.length * 30) : centerIconCordinates().x -(label?.length * 15) : midpoint.x - (16 * unit)}
+          y={(showDirectionMark) ? centerIconCordinates().y + 10 + ((centerIconCordinates().rotate < -90 && centerIconCordinates().rotate < 90) ? - (30 * unit) : centerIconCordinates().rotate > 90 && centerIconCordinates().rotate < 180 ? - (30 * unit) : (30 * unit)) : midpoint.y - (15 * unit)}
           showIndex={revealSetIndex || handleFinderActive}
         >
           {label}
         </LabelText>}
       
-      {showDirectionMark && showDirection &&
+      {showDirectionMark &&
         <g transform={`translate(${centerIconCordinates(-30).x},${centerIconCordinates(-30).y}) rotate(${centerIconCordinates(-30).rotate}) scale(${unit * 1.5})`}>
           <g transform={`translate(${unit > 5 ? -1 : 1.5},${unit > 3 ? -25 : -30}) scale(${unit > 3 ? 0.6 : 0.8})`}>
             <Circle r={14} cx={7} cy={8} />
