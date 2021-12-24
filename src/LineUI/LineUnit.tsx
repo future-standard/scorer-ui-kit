@@ -162,7 +162,10 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     const rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
     return {x, y, rotate};
   };
- 
+
+  const labelX = label && ((10 - unit) < 5 ? detectionMarkCoordinat().x - (label?.length * 30) : detectionMarkCoordinat().x -(label?.length * 15))
+  const labelY = detectionMarkCoordinat().y + 10 + ((detectionMarkCoordinat().rotate < -90 && detectionMarkCoordinat().rotate < 90) ? - (30 * unit) : detectionMarkCoordinat().rotate > 90 && detectionMarkCoordinat().rotate < 180 ? - (30 * unit) : (30 * unit)); 
+  
   return (
     <g>
       <ContrastLine styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
@@ -187,8 +190,8 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           styling={styling}
           fontSize={`${unit * 14}px`}
           text-anchor='center'
-          x={showDirectionMark ? (10 - unit) < 5 ? detectionMarkCoordinat().x - (label?.length * 30) : detectionMarkCoordinat().x -(label?.length * 15) : midpoint.x - (16 * unit)}
-          y={showDirectionMark ? detectionMarkCoordinat().y + 10 + ((detectionMarkCoordinat().rotate < -90 && detectionMarkCoordinat().rotate < 90) ? - (30 * unit) : detectionMarkCoordinat().rotate > 90 && detectionMarkCoordinat().rotate < 180 ? - (30 * unit) : (30 * unit)) : midpoint.y - (15 * unit)}
+          x={showDirectionMark ? labelX : midpoint.x - (16 * unit)}
+          y={showDirectionMark ? labelY : midpoint.y - (15 * unit)}
           showIndex={revealSetIndex || handleFinderActive}
         >
           {label}
