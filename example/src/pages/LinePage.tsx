@@ -1,6 +1,5 @@
 import React, { useReducer, useCallback, useEffect, useState } from 'react';
 // import styled from 'styled-components';
-import {ArrowIcon} from '../svg';
 import {
   LineReducer,
   LineSetContext,
@@ -49,8 +48,7 @@ const Line: React.FC<{}> = () => {
         ],
         readOnly: false,
         styling: 'primary',
-        centerIcon: ArrowIcon,
-        centerIconPosition: 'up'
+        showDirectionMark: true
       },
       {
         name: 'DOWN',
@@ -66,8 +64,7 @@ const Line: React.FC<{}> = () => {
           ],
           readOnly: false,
           styling: 'primary',
-          centerIcon: ArrowIcon,
-          centerIconPosition: 'down'
+          showDirectionMark: true
         }
     ];
 

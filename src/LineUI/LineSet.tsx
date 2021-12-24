@@ -205,7 +205,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
   const points = options.showPoint && (lineSetData.points.map(({x,y}, index) => <Point styling={lineSetData.styling||'primary'} key={index} r={unit} cx={x} cy={y} />));
 
   const lines = lineSetData.points.map(({x:x1,y:y1}, index) => {
-    const {points, name, styling = 'primary', centerIcon , centerIconPosition} = lineSetData;
+    const {points, name, styling = 'primary', showDirectionMark} = lineSetData;
     //nextIndex  index is next Point's index
     const nextIndex = ( index + 1 >= points.length ) ? 0 : index + 1 ;
     //in the case of a line don't draw line back from second point
@@ -229,8 +229,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       styling={styling}
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
-      CenterIcon={points.length === 2 ? centerIcon : undefined}
-      centerIconPosition={points.length === 2 ? centerIconPosition : undefined}
+      showDirectionMark={points.length === 2 && showDirectionMark}
     />
   );});
 

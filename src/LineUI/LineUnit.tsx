@@ -75,6 +75,10 @@ const GrabHandleGroup = styled.g<{ showIndex: boolean, originalRadius: number, s
   `};
 `;
 
+const Circle = styled.circle`
+  fill: hsla(203, 100%, 35%, 0.49);
+`;
+
 interface ILineUnitProps {
   lineSetId: number,
   options: IDragLineUISharedOptions,
@@ -88,14 +92,13 @@ interface ILineUnitProps {
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
-  CenterIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | undefined;
-  centerIconPosition?: 'up' | 'down' | undefined;
+  showDirectionMark? : boolean;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, CenterIcon, centerIconPosition} = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, showDirectionMark} = props;
   const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset } = options;
 
   const a = x1 - x2;
@@ -149,12 +152,13 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     y: (y2 + y1) / 2
   };
 
-  const centerIconCordinates = () => {
+  const centerIconCordinates = (space:number = 1) => {
     const angle = Math.atan2((y2 - y1), (x2 - x1));
     const angleMode = (Math.PI / 2) - angle;
-    const x = midpoint.x + Math.sin(angleMode) * (-50);
-    const y = midpoint.y + Math.cos(angleMode) * (-50);
-    return {x, y};
+    const x = midpoint.x + Math.sin(angleMode)*(space);
+    const y = midpoint.y + Math.cos(angleMode)*(space);
+    const rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
+    return {x, y, rotate};
   };
 
   return (
@@ -180,20 +184,20 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
         <LabelText
           styling={styling}
           fontSize={`${unit * 14}px`}
-          x={midpoint.x - ((centerIconPosition === 'up' ? 10 : 20) * unit) }
-          y={midpoint.y  + (centerIconPosition === 'up' ? (30 * unit) : -(15 * unit))}
+          text-anchor='center'
+          x={showDirectionMark ? (50 - unit) < 46 ? centerIconCordinates().x - (100 - unit) : centerIconCordinates().x - (50 - unit) : midpoint.x - (16 * unit)}
+          y={showDirectionMark ? centerIconCordinates().y + 10 + ((centerIconCordinates().rotate < -90 && centerIconCordinates().rotate < 90) ? - (30 * unit) : centerIconCordinates().rotate > 90 && centerIconCordinates().rotate < 180 ? - (30 * unit) : (30 * unit)) : midpoint.y - (15 * unit)}
           showIndex={revealSetIndex || handleFinderActive}
         >
           {label}
         </LabelText>}
       
-      {centerIconPosition && CenterIcon &&
-        <g transform={`translate(${centerIconCordinates().x},${centerIconCordinates().y}) rotate(${(180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1) + (centerIconPosition === 'up' ? 0 : 180)}) scale(${unit * 1.5})`} >
-          <g transform={centerIconPosition === 'up' ? `translate(${Math.ceil(4-unit) > 2 ? 10 : 5 - unit}, -30)` : `translate(${(-25 + 1.5 * unit) < -21 ? -28 : -25 + 1.5 * unit}, -30)`}>
-            <CenterIcon height='20' width='20' />
+      {showDirectionMark &&
+        <g transform={`translate(${centerIconCordinates(-30).x},${centerIconCordinates(-30).y}) rotate(${centerIconCordinates(-30).rotate}) scale(${unit * 1.5})`}>
+          <g>
+            <Circle r={unit * 2 < 10 ? 12 - unit : 6} cx={10 - unit} cy={-20} />
           </g>
-        </g>
-      }
+        </g>}
     </g>
   );
 
