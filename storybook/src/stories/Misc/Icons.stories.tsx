@@ -48,10 +48,11 @@ export const _Icons = () => {
   const iconList = generateIconList();
 
   const showAll = boolean("Show All", false);
-  const iconName = select("Name", iconList, Object.keys(iconList)[0]);
-  const iconColor = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary" , Danger: "danger"}, "mono");
-  const iconWeight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy", Strong: 'strong' }, "regular");
-  const iconSize = number("Size", 24);
+  const forSvgUsage = boolean("For SVG Usage", false);
+  const icon = select("Name", iconList, Object.keys(iconList)[0]);
+  const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary" , Danger: "danger"}, "mono");
+  const weight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy", Strong: 'strong' }, "regular");
+  const size = number("Size", 24);
 
   /**
    * Generate a grid of all the icons for easy browsing and hovering to find names.
@@ -66,8 +67,8 @@ export const _Icons = () => {
 
   return <Container>
     {showAll ? <>
-      <Grid>{generateIconGrid({ color: iconColor, weight:iconWeight, size: iconSize })}</Grid>
-    </> : <Icon icon={iconName} weight={iconWeight} color={iconColor} size={iconSize} />}
+      <Grid>{generateIconGrid({...{color, weight, size, forSvgUsage}})}</Grid>
+    </> : <Icon {...{icon, weight, color, size, forSvgUsage}} />}
 
   </Container>;
 };
