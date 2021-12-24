@@ -161,7 +161,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     const rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
     return {x, y, rotate};
   };
-  
+ 
   return (
     <g>
       <ContrastLine styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
@@ -186,7 +186,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           styling={styling}
           fontSize={`${unit * 14}px`}
           text-anchor='center'
-          x={(showDirectionMark && showDirection) ? (10 - unit) < 6 ? centerIconCordinates().x - (100 - unit) : centerIconCordinates().x - (50 - unit) : midpoint.x - (16 * unit)}
+          x={(showDirectionMark && showDirection) ? (10 - unit) < 5 ? centerIconCordinates().x - (label?.length * 30) : centerIconCordinates().x -(label?.length * 15) : midpoint.x - (16 * unit)}
           y={(showDirectionMark && showDirection) ? centerIconCordinates().y + 10 + ((centerIconCordinates().rotate < -90 && centerIconCordinates().rotate < 90) ? - (30 * unit) : centerIconCordinates().rotate > 90 && centerIconCordinates().rotate < 180 ? - (30 * unit) : (30 * unit)) : midpoint.y - (15 * unit)}
           showIndex={revealSetIndex || handleFinderActive}
         >
