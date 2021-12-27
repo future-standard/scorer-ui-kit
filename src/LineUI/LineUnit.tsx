@@ -80,6 +80,8 @@ const Circle = styled.circle`
   fill: hsla(203, 100%, 35%, 0.49);
 `;
 
+const GTag = styled.g``;
+
 interface ILineUnitProps {
   lineSetId: number,
   options: IDragLineUISharedOptions,
@@ -163,11 +165,11 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     return {x, y, rotate};
   };
 
-  const labelX = label && ((10 - unit) < 5 ? detectionMarkCoordinat().x - (label?.length * 30) : detectionMarkCoordinat().x -(label?.length * 15))
-  const labelY = detectionMarkCoordinat().y + 10 + ((detectionMarkCoordinat().rotate < -90 && detectionMarkCoordinat().rotate < 90) ? - (30 * unit) : detectionMarkCoordinat().rotate > 90 && detectionMarkCoordinat().rotate < 180 ? - (30 * unit) : (30 * unit)); 
+  const labelX = label && ((10 - unit) < 5 ? detectionMarkCoordinat().x - (label?.length * 30) : detectionMarkCoordinat().x -(label?.length * 15));
+  const labelY = detectionMarkCoordinat().y  + ((detectionMarkCoordinat().rotate < -90 && detectionMarkCoordinat().rotate < 90) ? - (25 * unit) : detectionMarkCoordinat().rotate > 90 && detectionMarkCoordinat().rotate < 180 ? - (25 * unit) : (35 * unit)); 
   
   return (
-    <g>
+    <GTag>
       <ContrastLine styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
       <HighlightLine styling={styling} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
@@ -198,13 +200,13 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
         </LabelText>}
       
       {showDirectionMark &&
-        <g transform={`translate(${detectionMarkCoordinat(-30).x},${detectionMarkCoordinat(-30).y}) rotate(${detectionMarkCoordinat(-30).rotate}) scale(${unit * 1.5})`}>
-          <g transform={`translate(${unit > 5 ? -1 : 1.5},${unit > 3 ? -25 : -30}) scale(${unit > 3 ? 0.6 : 0.8})`}>
+        <GTag transform={`translate(${detectionMarkCoordinat(-30).x},${detectionMarkCoordinat(-30).y}) rotate(${detectionMarkCoordinat(-30).rotate}) scale(${unit * 1.5})`}>
+          <GTag transform={`translate(${unit > 5 ? -1 : 1.5},${unit > 3 ? -25 : -30}) scale(${unit > 3 ? 0.6 : 0.8})`}>
             <Circle r={12} cx={6} cy={7} />
             <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
-          </g>
-        </g>}
-    </g>
+          </GTag>
+        </GTag>}
+    </GTag>
   );
 
 };
