@@ -39,12 +39,12 @@ const Line: React.FC<{}> = () => {
       name: 'UP',
       points: [
           {
-            x: 100,
+            x: 600,
             y: 200
           },
           {
-            x: 300,
-            y: 200
+            x: 1100,
+            y: 450
           }
         ],
         readOnly: false,
@@ -54,12 +54,12 @@ const Line: React.FC<{}> = () => {
         name: 'DOWN',
         points: [
             {
-              x: 400,
-              y: 400
+              x: 1200,
+              y: 750
             },
             {
-              x: 200,
-              y: 400
+              x: 700,
+              y: 500
             }
           ],
           readOnly: false,

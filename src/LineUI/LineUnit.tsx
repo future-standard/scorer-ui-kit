@@ -166,7 +166,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   };
 
   const labelX = label && ((10 - unit) < 5 ? detectionMarkCoordinat().x - (label?.length * 30) : detectionMarkCoordinat().x -(label?.length * 15));
-  const labelY = detectionMarkCoordinat().y  + ((detectionMarkCoordinat().rotate < -90 && detectionMarkCoordinat().rotate < 90) ? - (25 * unit) : detectionMarkCoordinat().rotate > 90 && detectionMarkCoordinat().rotate < 180 ? - (25 * unit) : (35 * unit)); 
+  const labelY = detectionMarkCoordinat().y + ((detectionMarkCoordinat().rotate < -90 && detectionMarkCoordinat().rotate < 90) ? - (25 * unit) : detectionMarkCoordinat().rotate > 90 && detectionMarkCoordinat().rotate < 180 ? - (25 * unit) : (35 * unit)); 
   
   return (
     <GTag>
