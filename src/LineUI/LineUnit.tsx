@@ -80,8 +80,6 @@ const Circle = styled.circle`
   fill: hsla(203, 100%, 35%, 0.49);
 `;
 
-const GTag = styled.g``;
-
 interface ILineUnitProps {
   lineSetId: number,
   options: IDragLineUISharedOptions,
@@ -103,13 +101,13 @@ interface ILineUnitProps {
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
   const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, hasTwoPonts=false} = props;
   let { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
-  showDirectionMark= showDirectionMark && hasTwoPonts;
+  showDirectionMark = showDirectionMark && hasTwoPonts;
 
   const a = x1 - x2;
   const b = y1 - y2;
   const distance = Math.sqrt( a*a + b*b );
   //this distance 60 doesn't work now...
-  const hideGrabHandle = showMoveHandle === false ||  (showMoveHandle !== true  && distance < 60);
+  const hideGrabHandle = showMoveHandle === false || (showMoveHandle !== true && distance < 60);
 
 
   /** --- Toucher Events Section --- */
@@ -133,7 +131,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
 
   /** --- Mouse Events Section --- */
   const handleMouseDown = (e: any) => {
-    lineMoveStartCallback({ x: e.pageX, y: e.pageY});
+    lineMoveStartCallback({ x: e.pageX, y: e.pageY });
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
     e.preventDefault();
@@ -156,20 +154,98 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     y: (y2 + y1) / 2
   };
 
-  const detectionMarkCoordinat = (space:number = 1) => {
+  const detectionMarkCoordinate = () => {
     const angle = Math.atan2((y2 - y1), (x2 - x1));
     const angleMode = (Math.PI / 2) - angle;
-    const x = midpoint.x + Math.sin(angleMode) * (space);
-    const y = midpoint.y + Math.cos(angleMode) * (space);
+    const x = midpoint.x + Math.sin(angleMode) * (-30);
+    const y = midpoint.y + Math.cos(angleMode) * (-30);
     const rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
     return {x, y, rotate};
   };
 
-  const labelX = label && ((10 - unit) < 5 ? detectionMarkCoordinat().x - (label?.length * 30) : detectionMarkCoordinat().x -(label?.length * 15));
-  const labelY = detectionMarkCoordinat().y + ((detectionMarkCoordinat().rotate < -90 && detectionMarkCoordinat().rotate < 90) ? - (25 * unit) : detectionMarkCoordinat().rotate > 90 && detectionMarkCoordinat().rotate < 180 ? - (25 * unit) : (35 * unit)); 
-  
+  const detectionLabelCoordinate = (labelLength:number) => {
+    let rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
+    let x = midpoint.x - rotate - (unit*10) - (labelLength * 10);
+    let y = midpoint.y - rotate;
+    
+    if (rotate >= 0 && rotate <= 20) {
+      x= x + 20;
+      y = y + 120;
+    }
+    else if (rotate >= 20 && rotate <= 40) {
+      y = y + 130;
+    }
+    else if (rotate >= 40 && rotate <= 60) {
+      x = x - 50;
+      y = y + 140;
+    }
+    else if (rotate >= 60 && rotate <= 90) {
+      x = x - 80;
+      y = y + 110;
+    }
+    else if (rotate >= 90 && rotate <= 110) {
+      x = x - 80;
+      y = y + 50;
+    }
+    else if (rotate >= 110 && rotate <= 120) {
+      x = x - 80;
+      y = y + 100;
+    }
+    else if (rotate >= 120 && rotate <= 140) {
+      x = x + 55;
+      y = y + 60;
+    }
+    else if (rotate >= 140 && rotate <= 160) {
+      x = x + 110;
+      y = y + 60;
+    }
+    else if (rotate >= 160 && rotate <= 180) {
+      x = x + 180;
+      y = y + 100;
+    }
+    else if (rotate <= 0 && rotate >= -20) {
+      y = y + 120;
+    }
+    else if (rotate <= -20 && rotate >= -40) {
+      x = x + 50;
+      y = y + 80;
+    }
+    else if (rotate <= -40 && rotate >= -60) {
+      x = x + 80;
+      y = y + 50;
+    }
+    else if (rotate <= -60 && rotate >= -80) {
+      x = x + 80;
+    }
+    else if (rotate <= -80 && rotate >= -90) {
+      x = x + 80;
+      y = y - 65;
+    }
+    else if (rotate <= -90 && rotate >= -110) {
+      x = x + 80;
+      y = y - 120;
+    }
+    else if (rotate <= -110 && rotate >= -130) {
+      x = x + 20;
+      y = y - 180;
+    }
+    else if (rotate <= -130 && rotate >= -150) {
+      x = x - 50;
+      y = y - 220;
+    }
+    else if (rotate <= -150 && rotate >= -170) {
+      x = x - 150;
+      y = y - 250;
+    }
+    else if (rotate <= -170 && rotate >= -180) {
+      x = x - 180;
+      y = y - 250;
+    }
+    return {x, y, rotate};
+  };
+
   return (
-    <GTag>
+    <g>
       <ContrastLine styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
       <HighlightLine styling={styling} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
@@ -191,22 +267,22 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
         <LabelText
           styling={styling}
           fontSize={`${unit * 14}px`}
-          text-anchor='center'
-          x={showDirectionMark ? labelX : midpoint.x - (16 * unit)}
-          y={showDirectionMark ? labelY : midpoint.y - (15 * unit)}
-          showIndex={revealSetIndex || handleFinderActive}
+          text-anchor='middel'
+          x={showDirectionMark ? detectionLabelCoordinate(label.length).x : midpoint.x - (16 * unit)}
+          y={showDirectionMark ? detectionLabelCoordinate(label.length).y : midpoint.y - (15 * unit)}
+          showIndex={revealSetIndex || handleFinderActive} 
         >
           {label}
         </LabelText>}
-      
+
       {showDirectionMark &&
-        <GTag transform={`translate(${detectionMarkCoordinat(-30).x},${detectionMarkCoordinat(-30).y}) rotate(${detectionMarkCoordinat(-30).rotate}) scale(${unit * 1.5})`}>
-          <GTag transform={`translate(${unit > 5 ? -1 : 1.5},${unit > 3 ? -25 : -30}) scale(${unit > 3 ? 0.6 : 0.8})`}>
+        <g transform={`translate(${detectionMarkCoordinate().x},${detectionMarkCoordinate().y}) rotate(${detectionMarkCoordinate().rotate}) scale(${unit * 1.5})`}>
+          <g transform={`translate(${unit > 5 ? -1 : 1.5},${unit > 3 ? -25 : -30}) scale(${unit > 3 ? 0.6 : 0.8})`}>
             <Circle r={12} cx={6} cy={7} />
             <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
-          </GTag>
-        </GTag>}
-    </GTag>
+          </g>
+        </g>}
+    </g>
   );
 
 };

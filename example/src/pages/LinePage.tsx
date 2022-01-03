@@ -36,7 +36,7 @@ const Line: React.FC<{}> = () => {
 
   const fetchLine = useCallback(async () => {
     const state: IPointSet[] = [{
-      name: 'UP',
+      name: 'DOWN',
       points: [
           {
             x: 600,
@@ -49,22 +49,7 @@ const Line: React.FC<{}> = () => {
         ],
         readOnly: false,
         styling: 'primary'
-      },
-      {
-        name: 'DOWN',
-        points: [
-            {
-              x: 1200,
-              y: 750
-            },
-            {
-              x: 700,
-              y: 500
-            }
-          ],
-          readOnly: false,
-          styling: 'primary'
-        }
+      }
     ];
 
     dispatch({
