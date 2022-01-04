@@ -277,7 +277,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
 
       {showDirectionMark &&
         <g transform={`translate(${detectionMarkCoordinate().x},${detectionMarkCoordinate().y}) rotate(${detectionMarkCoordinate().rotate}) scale(${unit * 1.5})`}>
-          <g transform={`translate(${unit > 5 ? -1 : 1.5},${unit > 3 ? -25 : -30}) scale(${unit > 3 ? 0.6 : 0.8})`}>
+          <g transform={`translate(${unit >= 4 ? 1 : 10 - unit * 2},${unit > 3 ? -25 : -30}) scale(${unit > 3 ? 0.6 : 0.8})`}>
             <Circle r={12} cx={6} cy={7} />
             <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
           </g>
