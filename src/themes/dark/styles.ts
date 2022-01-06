@@ -13,13 +13,13 @@ import { colors } from './colors';export const styles = {
             },
             "iconBackground": {
                 "default": {
-                    "backgroundColor": "hsla(215, 19.1%, 36.9%, 0.000)"
+                    "backgroundColor": colors.menu.default
                 },
                 "hover": {
-                    "backgroundColor": "hsla(215, 19.1%, 36.9%, 1.000)"
+                    "backgroundColor": colors.menu.hover
                 },
                 "active": {
-                    "backgroundColor": "hsla(215, 66.3%, 59.2%, 1.000)"
+                    "backgroundColor": colors.menu.active
                 }
             },
             "desktop": {
