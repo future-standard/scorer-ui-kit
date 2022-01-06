@@ -1,4 +1,4 @@
-export const styles = {
+import { colors } from './colors';export const styles = {
     "global": {
         "mainMenu": {
             "background": {
