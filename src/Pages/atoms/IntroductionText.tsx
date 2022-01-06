@@ -11,9 +11,11 @@ const Container = styled.p`
 interface IProps {}
 
 const IntroductionText : React.FC<IProps> = ({children}) => {
-  return <Container>
-    {children}
-  </Container>;
+  return (
+    <Container>
+      {children}
+    </Container>
+  );
 };
 
 export default IntroductionText;

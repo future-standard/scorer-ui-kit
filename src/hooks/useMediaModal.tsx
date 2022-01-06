@@ -6,12 +6,12 @@ import { useModal, IModal } from "./useModal";
 
 export type ICreateMediaModal = IMediaModal & IModal;
 
+const videoDefaultOptions: VideoHTMLAttributes<HTMLVideoElement> = { controls: true };
+
 export const useMediaModal = () => {
 
   // default options for media box
-  const videoDefaultOptions: VideoHTMLAttributes<HTMLVideoElement> = { controls: true };
   const { createModal, isModalOpen, setModalOpen } = useModal();
-
 
   async function isMediaUrlValid(src: string, mediaType: IMediaType): Promise<boolean> {
     let isValid = false;
@@ -23,7 +23,7 @@ export const useMediaModal = () => {
         await new Promise((resolve, reject) => {
           img.onload = () => resolve(isValid = true);
           img.onerror = reject;
-        })
+        });
       } catch (error) {
         isValid = false;
         console.log(`[useMediaModal - isMediaUrlValid] Invalid preview url ${src} - image load failed, modal will not be open`, error);
@@ -38,7 +38,7 @@ export const useMediaModal = () => {
         await new Promise((resolve, reject) => {
           videoElement.oncanplaythrough = () => resolve(isValid = true);
           videoElement.onerror = reject;
-        })
+        });
 
       } catch (error) {
         isValid = false;
@@ -89,5 +89,5 @@ export const useMediaModal = () => {
     isMediaUrlValid,
     isMediaModalOpen: isModalOpen,
     setMediaModalOpen: setModalOpen,
-  }
+  };
 };

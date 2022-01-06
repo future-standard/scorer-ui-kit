@@ -1,48 +1,55 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css, useTheme } from 'styled-components';
 import { IconSVGs } from '@future-standard/icons';
 
 import { dimensions } from '../themes/common';
 
-const IconWrapper = styled.div<{ color: string }>`
-  [stroke]{
-    content: ${({ theme, color }) => color};
-    stroke: ${({ theme, color }) => theme.colors.icons[color]};
-  }
+
+const wrapperCss = css`
   svg {
     overflow: visible;
     vector-effect: non-scaling-stroke;
+
     line, path, circle, ellipse, foreignObject, polygon, polyline, rect, text, textPath, tspan {
-    vector-effect: non-scaling-stroke;
-  }
+      vector-effect: non-scaling-stroke;
+    }
   }
 `;
+const IconWrapper = styled.div`
+  ${wrapperCss};
+`;
 
-export { IconWrapper, IconSVGs };
+const IconWrapperForSVG = styled.g`
+  ${wrapperCss};
+`;
+
+export { IconWrapper, IconWrapperForSVG, IconSVGs };
 
 export interface IconProps {
   icon: string;
   size?: number;
   weight?: 'light' | 'regular' | 'heavy' | 'strong'
   color?: ISvgIcons['color']
-}
-interface ISvgIcon extends React.SVGProps<SVGSVGElement> {
-  size: number
-  color: string
-  weight: number
+  forSvgUsage?: boolean
 }
 
-const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color = 'mono' }) => {
+const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color = 'mono', forSvgUsage = false }) => {
 
+  const theme : any = useTheme();
   const iconWeight: number = dimensions.icons.weights[weight];
   //@ts-ignore
   const IconSVG = IconSVGs[icon];
 
   return (
     IconSVG != null ?
-      <IconWrapper color={color}>
-        {IconSVG({ size: size, weight: iconWeight, color: '#666' })}
-      </IconWrapper>
+      forSvgUsage ?
+        <IconWrapperForSVG>
+          {IconSVG({ size: size, weight: iconWeight, color: theme.colors.icons[color] })}
+        </IconWrapperForSVG>
+        :
+        <IconWrapper>
+          {IconSVG({ size: size, weight: iconWeight, color: theme.colors.icons[color] })}
+        </IconWrapper>
       :
       null
   );

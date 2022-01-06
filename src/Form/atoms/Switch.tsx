@@ -152,7 +152,7 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
    }
   }, [setPosition, setActiveTheming, leftTheme, rightTheme, inputRef]);
 
-  const customOnChange = (e: any) => {
+  const customOnChange = () => {
     positionSwitch();
     if(onChangeCallback){ onChangeCallback(inputRef.current?.checked || false); }
   };
