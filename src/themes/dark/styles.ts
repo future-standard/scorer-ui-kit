@@ -46,4 +46,4 @@ export const styles = {
             "backgroundColor": "hsla(213, 11.6%, 18.6%, 1.000)"
         }
     }
-}
+};

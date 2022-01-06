@@ -172,4 +172,4 @@ export const typography = {
         "textDecoration": "none",
         "color": "hsla(0, 0%, 100%, 0.800)"
     }
-}
+};

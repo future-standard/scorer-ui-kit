@@ -13,4 +13,4 @@ export const colors = {
         "danger": "hsla(0, 100%, 70%, 1.000)",
         "primary": "hsla(205, 100%, 65.1%, 1.000)"
     }
-}
+};
