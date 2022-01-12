@@ -49,6 +49,8 @@ export interface IMenuTop {
     logoMark?: string
     logoText?: string
     supportUrl?: string
+    keepOpenText?: string
+    autoHideText? :string
     defaultMenuOpen?: boolean
   }
 
@@ -66,9 +68,12 @@ export interface IMenuTop {
     loggedInUser: string;
     hasLanguage?: boolean;
     hasLogout?: boolean;
+    logoutText?: string;
     logoutLink?: string;
     hasSearch?: boolean;
     hasCurrentUser?: boolean;
+    currentUserText?: string;
+    accountOptionText? : string;
     searchPlaceholder?: string;
     userDrawerBespoke?: ReactElement;
     notificationsHistory? : INotificationsHistory;

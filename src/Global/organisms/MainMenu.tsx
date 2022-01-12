@@ -104,7 +104,7 @@ const ContainerInner = styled.div`
 `;
 
 
-const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, supportUrl, defaultMenuOpen = true }) => {
+const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, defaultMenuOpen = true }) => {
 
   const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen);
 
@@ -195,7 +195,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
                     compact
                     isActive={false}
                     icon={menuState.isMenuOpen && menuState.isMenuPinned ? 'Left' : 'Menu'}
-                    title={menuState.isMenuPinned ? 'Keep Open' : 'Auto-Hide'}
+                    title={menuState.isMenuPinned ? keepOpenText : autoHideText}
                     onClickCallback={toggleMenuPin}
                     menuOpen={menuState.isMenuOpen}
                   />

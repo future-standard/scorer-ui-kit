@@ -114,7 +114,10 @@ const UserMenu: React.FC<IUserMenu> = ({
   hasLanguage = false,
   hasLogout = true,
   logoutLink = '/logout',
+  logoutText = 'Logout',
   hasCurrentUser = true,
+  currentUserText = 'Current User',
+  accountOptionText = "Account Options",
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
@@ -143,14 +146,14 @@ const UserMenu: React.FC<IUserMenu> = ({
       <DrawerTop>
         {hasCurrentUser ?
           <CurrentUser>
-            <DrawerHeader>Current User</DrawerHeader>
+            <DrawerHeader>{currentUserText}</DrawerHeader>
             {loggedInUser}
           </CurrentUser>
           : null}
 
         {userSubmenu.length > 0 ?
           <UserOptions>
-            <DrawerHeader>Account Options</DrawerHeader>
+            <DrawerHeader>{accountOptionText}</DrawerHeader>
             <LinkMenu>
               {userSubmenu.map(({ text, href }, index) => {
                 return (
@@ -168,7 +171,7 @@ const UserMenu: React.FC<IUserMenu> = ({
         {hasLogout ?
           <Logout>
             <LinkMenu>
-              <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} to={logoutLink}>Logout</LinkMenuItemA></LinkMenuItem>
+              <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} to={logoutLink}>{logoutText}</LinkMenuItemA></LinkMenuItem>
             </LinkMenu>
           </Logout>
           : null}
