@@ -15,9 +15,11 @@ import {
   Input
 } from 'scorer-ui-kit';
 import { IPointSet, LineUIOptions } from '../../../dist/LineUI';
+
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
+
   const [options, setOptions] = useState<LineUIOptions>({
     showSetIndex: true,
     pointIndexOffset: 1,
@@ -31,7 +33,9 @@ const Line: React.FC<{}> = () => {
     boundaryOffset: 0,
     showDirectionMark: false
   });
+
   const fetchLine = useCallback(async () => {
+
     const state: IPointSet[] = [{
       name: 'Line 1',
       points: [
@@ -48,12 +52,15 @@ const Line: React.FC<{}> = () => {
         styling: 'primary'
       }
     ];
+
     dispatch({
       type: 'LOAD',
       state
     });
   }, []);
+
   const fetchDirectionLine = useCallback(async () => {
+
     const state: IPointSet[] = [{
       name: 'UP',
       isUpDirection: true,
@@ -88,11 +95,13 @@ const Line: React.FC<{}> = () => {
           styling: 'primary'
         }
     ];
+
     dispatch({
       type: 'LOAD',
       state
     });
   }, []);
+
   const renameLine = useCallback( ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'RENAME_SET',
@@ -102,6 +111,7 @@ const Line: React.FC<{}> = () => {
       }
     });
   }, []);
+
   const renamePointLine = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'RENAME_SET',
@@ -111,6 +121,7 @@ const Line: React.FC<{}> = () => {
       }
     });
   }, []);
+
   const toggleReadOnly = useCallback((index=0) => () => {
     dispatch({
       type: 'UPDATE_SET_OPTIONS',
@@ -120,17 +131,22 @@ const Line: React.FC<{}> = () => {
       }
     });
   }, [state]);
+
   const toggleOptions = useCallback((option: keyof LineUIOptions) => () => {
     setOptions({...options, [option]: !options[option]});
   }, [options]);
+
   // const saveLine = useCallback(async () => {
   // }, []);
+
   useEffect(() => {
     options.showDirectionMark ? fetchDirectionLine() : fetchLine();
   }, [fetchLine, fetchDirectionLine, options])
+
   const updateBoudaryOffset =  useCallback( ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
     setOptions({...options, boundaryOffset: parseInt(value) });
   }, [options]);
+
   return (
     <Layout >
       <Sidebar>
@@ -181,4 +197,5 @@ const Line: React.FC<{}> = () => {
     </Layout>
   );
 }
+
 export default Line;
