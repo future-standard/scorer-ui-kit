@@ -4,12 +4,10 @@ import LineUIRTC from './LineUIRTC';
 import LineReducer from './LineReducer';
 import { LineSetContext } from './Contexts';
 import { VideoHTMLAttributes } from 'react';
-
 export interface IVector2 {
   x: number,
   y: number
 }
-
 export interface IPointSet {
   name?: string;
   points: IVector2[];
@@ -19,18 +17,16 @@ export interface IPointSet {
   showOrientation?: boolean;
   styling?: string;
   areaName?: string;
+  isUpDirection?: boolean;
 }
-
 export interface IMinMax {
   min: number,
   max: number
 }
-
 export interface IBoundary {
   x: IMinMax,
   y: IMinMax,
 }
-
 export interface IDragLineUISharedOptions {
   revealSetIndex: boolean;
   handleFinderActive: boolean;
@@ -42,7 +38,6 @@ export interface IDragLineUISharedOptions {
   showPoint: boolean;
   showDirectionMark?: boolean;
 }
-
 export interface LineUIOptions {
   showHandleFinder?: boolean;
   showSetIndex?: boolean;
@@ -57,20 +52,16 @@ export interface LineUIOptions {
   setIndexOffset?: number;
   // Note this is display only (does not apply to state indices)
   pointIndexOffset?: number;
-
   showPoint?: boolean;
-
   fixedImgDimensions?: {
     x: number;
     y: number;
   };
-
   boundaryOffset?: number,
-  showDirectionMark?: boolean
+  showDirectionMark?: boolean,
+  isUpDirection?: boolean
 }
-
 export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>
-
 export {
   LineUI,
   LineUIVideo,

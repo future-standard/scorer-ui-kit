@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
-
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 import { LineUIOptions, IBoundary } from '.';
 import Spinner from '../Indicators/Spinner';
-
-
 const Container = styled.div`
   position: relative;
   line-height: 0;
@@ -15,12 +12,9 @@ const Container = styled.div`
   /* box-shadow: 0 10px 20px hsla(195deg, 65%, 5%, 35%); */
   /* border: 10px solid hsla(195deg, 45%, 35%, 45%); */
   /* border-radius:3px; */
-
   width: auto;
   /* transform: translateY(-70%); */
-
 `;
-
 const LoadingOverlay =styled.div`
   position: absolute;
   top:0;
@@ -32,14 +26,11 @@ const LoadingOverlay =styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const Frame = styled.svg<{ transculent?: boolean }>`
   touch-action: none;
   user-select: none;
   margin: 0;
-
   overflow: visible;
-
   position: absolute;
   top: 0;
   right: 0;
@@ -49,25 +40,22 @@ const Frame = styled.svg<{ transculent?: boolean }>`
   width: 100%;
   transition: background 250ms ease;
   background: hsla(0deg, 0%, 0%, 0%);
-
   ${props => props.transculent && css`
     background: hsla(0deg, 0%, 0%, 35%);
   `}
-
 `;
 const Image = styled.img`
   object-fit: contain;
   width:  100%;
   height: 100%;
 `;
-
-
 interface LineUIProps {
   src: string;
   onSizeChange?: (size: { h: number; w: number }) => void;
   onLineMoveEnd?: () => void;
   options?: LineUIOptions;
   showDirectionMark?: boolean;
+  isUpDirection?: boolean;
 }
 const LineUI: React.FC<LineUIProps> = ({
   src,
@@ -85,33 +73,24 @@ const LineUI: React.FC<LineUIProps> = ({
     showPoint = false,
     fixedImgDimensions,
     boundaryOffset = 0,
-    showDirectionMark = false
+    showDirectionMark = false,
+    isUpDirection = false
   } = {}
 }) => {
-
-
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
   const { state } = useContext(LineSetContext);
-
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
-
   const [loaded, setLoaded] = useState(false);
-
-
   // Scale Code
   const [imgSize, setImgSize] = useState({ h: 1, w: 1 });
   const [unit, setUnit] = useState(1);
   const imgRef = useRef<HTMLImageElement>(null);
   const frame = useRef<SVGSVGElement>(null);
-
-
-
   // Initialization functions.
   const initScaleAndBounds = useCallback(() => {
     if (!imgRef.current) {
       return;
     }
-
     const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
     const h = (fixedImgDimensions && fixedImgDimensions.y) || naturalHeight;
     const w = (fixedImgDimensions && fixedImgDimensions.x) || naturalWidth;
@@ -120,13 +99,11 @@ const LineUI: React.FC<LineUIProps> = ({
       onSizeChange({ h, w });
       console.debug('image size:', { naturalHeight, naturalWidth, clientHeight, unit: naturalHeight / clientHeight });
     }
-
     if (h / clientHeight !== unit) {
       setUnit(h / clientHeight);
     }
     setLoaded(true);
   }, [fixedImgDimensions, imgSize.h, imgSize.w, onSizeChange, unit]);
-
   const calculateCTM = useCallback(() => {
     if (!frame.current) { return null; }
     //On size change make sure to refresh CTM
@@ -134,20 +111,16 @@ const LineUI: React.FC<LineUIProps> = ({
     console.debug('calculateCTM', ctm);
     return ctm;
   }, []);
-
   const handlePositionTipShow = (e: any) => {
     if (e.target === frame.current) {
       setHandleFinder((!handleFinder === false) && true);
     }
   };
-
   const handlePositionTipHide = () => {
     setHandleFinder(showHandleFinder || false);
   };
-
   useEffect(() => {
     if (!frame.current) { return; }
-
     // Redefine boundaries loaded image changes our svg viewbox.
     const { viewBox } = frame.current;
     const bounds = {
@@ -163,17 +136,13 @@ const LineUI: React.FC<LineUIProps> = ({
     console.debug('setBoundaries', bounds);
     setBoundaries(bounds);
   }, [imgSize, boundaryOffset]);
-
   useEffect(() => {
-
     // Make sure we always keep scale up to date on resize.
     window.addEventListener('resize', initScaleAndBounds);
     return () => {
       window.removeEventListener('resize', initScaleAndBounds);
     };
   }, [initScaleAndBounds]);
-
-
   const options = {
     handleFinderActive: handleFinder,
     revealSetIndex: showSetIndex !== false && (showSetIndex || state.length > 1),
@@ -183,9 +152,9 @@ const LineUI: React.FC<LineUIProps> = ({
     setIndexOffset,
     pointIndexOffset,
     showPoint,
-    showDirectionMark
+    showDirectionMark,
+    isUpDirection
   };
-
   return (
     <Container>
       <Image ref={imgRef} onLoad={initScaleAndBounds} src={src} alt='' />
@@ -201,7 +170,5 @@ const LineUI: React.FC<LineUIProps> = ({
       }
     </Container>
   );
-
 };
-
 export default LineUI;
