@@ -168,40 +168,18 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     const lblMargin = label ? (label.length * 16)/2 : 0;
     isUpDirection ? labelX = -(lblMargin/2) : labelX = (lblMargin/2);
     if(rotate >=0){
-      if(rotate >30 && rotate <45){
+      if(rotate >30 && rotate <90){
         if(isUpDirection){
           labelY += 10;
         }
-        labelRotate = -20;
-      } else if(rotate >=45 && rotate <60){
-        if(isUpDirection){
-          labelY += 10;
-        }
-        labelRotate = -20;
-      } else if(rotate >=60 && rotate <90){
-        if(isUpDirection){
-          labelY += 10;
-        }
-        labelRotate = -30;
+        labelRotate = -(rotate/3);
       } else if(rotate >=90 && rotate <120){
         if(isUpDirection){
           labelY += 20;
         }
         labelX = 0;
         labelRotate = -70;
-      } else if(rotate >=120 && rotate <150){
-        if(isUpDirection){
-          labelX = (lblMargin/2);
-          labelY = 20;
-          rotatefactor = -8;
-        } else {
-          labelX = -(lblMargin/2);
-          labelY = 30;
-          rotatefactor = -3;
-        }
-        labelRotate = 180;
-        
-      } else if(rotate >=150 && rotate <=180){
+      } else if(rotate >=120 && rotate <=180){
         if(isUpDirection){
           labelX = (lblMargin/2);
           labelY = 20;
