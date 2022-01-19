@@ -93,13 +93,12 @@ interface ILineUnitProps {
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
-  isUpDirection?: boolean;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, isUpDirection=false} = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}} = props;
   const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
 
   const a = x1 - x2;
@@ -159,98 +158,19 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     const x = midpoint.x + Math.sin(angleMode) -5;
     const y = midpoint.y + Math.cos(angleMode);
     let rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
-
-    let labelX = 0;
-    let labelY = isUpDirection ? 30 : 20;
-    let labelRotate = 0;
-    let rotatefactor = isUpDirection ? -3 : -8;
-    
-    const lblMargin = label ? (label.length * 16)/2 : 0;
-    isUpDirection ? labelX = -(lblMargin/2) : labelX = (lblMargin/2);
-    if(rotate >=0){
-      if(rotate >30 && rotate <90){
-        if(isUpDirection){
-          labelY += 10;
-        }
-        labelRotate = -(rotate/3);
-      } else if(rotate >=90 && rotate <120){
-        if(isUpDirection){
-          labelY += 20;
-        }
-        labelX = 0;
-        labelRotate = -70;
-      } else if(rotate >=120 && rotate <=180){
-        if(isUpDirection){
-          labelX = (lblMargin/2);
-          labelY = 20;
-          rotatefactor = -8;
-        } else {
-          labelX = -(lblMargin/2);
-          labelY = 30;
-          rotatefactor = -3;
-        }
-        labelRotate = 180;
-      }
-    } else {
-      if(isUpDirection){
-        labelX = (lblMargin/2);
-        labelY = 20;
-        rotatefactor = -8;
-      } else {
-        labelX = -(lblMargin/2);
-        labelY = 30;
-        rotatefactor = -3;
-      }
-      labelRotate = 180;
-      
-      if(rotate < -90 && rotate >= -150){
-        labelRotate = 150;
-        if(isUpDirection){
-          labelX = (lblMargin/2);
-          labelY = 20;
-        } else {
-          labelX = -(lblMargin/2);
-          labelY = 35;
-        }
-      } else if(rotate < -45 && rotate >= -90){
-        labelRotate = 45;
-        if(isUpDirection){
-          labelX = -(lblMargin/2);
-          labelY = 25;
-          rotatefactor = -8;
-        } else {
-          labelX = (lblMargin/2);
-          labelY = 35;
-          rotatefactor = -8;
-        }
-      } else if(rotate < 0 && rotate >= -45){
-        labelRotate = 0;
-        
-        if(isUpDirection){
-          labelX = -(lblMargin/2);
-          labelY = 30;
-          rotatefactor = -3;
-        } else {
-          labelX = (lblMargin/2);
-          labelY = 20;
-          rotatefactor = -8;
-        }
-      }
-    }
-    rotate = isUpDirection ? rotate : rotate + 180;
-    labelRotate = isUpDirection ? labelRotate : labelRotate + 180;
-    return {x, y, rotate, labelX, labelY, labelRotate, rotatefactor};
+    let labelRotate = -rotate;
+    return {x, y, rotate, labelRotate};
   };
 
   const getDirectionMarkLine = () => {
-    const dmCordinate = directionMarkCoordinate();
+    const dmCoordinate = directionMarkCoordinate();
     return (
-      <g transform={`translate(${dmCordinate.x},${dmCordinate.y}) rotate(${dmCordinate.rotate}) scale(${unit * 1})`}>
-        <g transform={`translate(${dmCordinate.rotatefactor},-30) scale(0.8)`}>
+      <g transform={`translate(${dmCoordinate.x},${dmCoordinate.y}) rotate(${dmCoordinate.rotate}) scale(${unit * 1})`}>
+        <g transform={`translate(-3,-30) scale(0.8)`}>
           <Circle r={12} cx={6} cy={7} />
           <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
         </g>
-        <g transform={`translate(${dmCordinate.labelX},${dmCordinate.labelY}) rotate(${dmCordinate.labelRotate})`}>
+        <g transform={`translate(0,30) rotate(${dmCoordinate.labelRotate})`}>
           <LabelText styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
             {label}
           </LabelText>
