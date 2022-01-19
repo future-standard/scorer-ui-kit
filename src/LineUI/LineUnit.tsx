@@ -76,7 +76,7 @@ const GrabHandleGroup = styled.g<{ showIndex: boolean, originalRadius: number, s
   `};
 `;
 
-const Circle = styled.circle`
+const DMCircle = styled.circle`
   fill: hsla(203, 100%, 35%, 0.49);
 `;
 
@@ -166,8 +166,8 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     const dmCoordinate = directionMarkCoordinate();
     return (
       <g transform={`translate(${dmCoordinate.x},${dmCoordinate.y}) rotate(${dmCoordinate.rotate}) scale(${unit * 1})`}>
-        <g transform={`translate(-3,-30) scale(0.8)`}>
-          <Circle r={12} cx={6} cy={7} />
+        <g transform='translate(-3,-30) scale(0.8)'>
+          <DMCircle r={12} cx={6} cy={7} />
           <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
         </g>
         <g transform={`translate(0,30) rotate(${dmCoordinate.labelRotate})`}>
