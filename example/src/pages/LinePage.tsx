@@ -25,13 +25,13 @@ const Line: React.FC<{}> = () => {
     pointIndexOffset: 1,
     showPointLabel: true,
     setIndexOffset: 1,
-    showMoveHandle: false,
+    showMoveHandle: true,
     fixedImgDimensions: {
       x: 2310,
       y: 1535
     },
     boundaryOffset: 0,
-    showDirectionMark: false
+    showDirectionMark: true
   });
 
   const fetchLine = useCallback(async () => {
@@ -63,7 +63,6 @@ const Line: React.FC<{}> = () => {
 
     const state: IPointSet[] = [{
       name: 'UP',
-      isUpDirection: true,
       points: [
           {
             x: 343,
@@ -79,16 +78,14 @@ const Line: React.FC<{}> = () => {
       },
       {
         name: 'DOWN',
-        isUpDirection: false,
         points: [
-          
-          {
-            x: 256,
-            y: 576
-          },
           {
             x: 841,
             y: 700
+          },
+          {
+            x: 256,
+            y: 576
           }
           ],
           readOnly: false,

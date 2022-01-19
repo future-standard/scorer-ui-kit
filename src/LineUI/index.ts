@@ -19,7 +19,6 @@ export interface IPointSet {
   showOrientation?: boolean;
   styling?: string;
   areaName?: string;
-  isUpDirection?: boolean;
 }
 
 export interface IMinMax {
@@ -67,8 +66,7 @@ export interface LineUIOptions {
   };
 
   boundaryOffset?: number,
-  showDirectionMark?: boolean,
-  isUpDirection?: boolean
+  showDirectionMark?: boolean
 }
 
 export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>

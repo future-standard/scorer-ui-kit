@@ -68,7 +68,6 @@ interface LineUIProps {
   onLineMoveEnd?: () => void;
   options?: LineUIOptions;
   showDirectionMark?: boolean;
-  isUpDirection?: boolean;
 }
 const LineUI: React.FC<LineUIProps> = ({
   src,
@@ -86,8 +85,7 @@ const LineUI: React.FC<LineUIProps> = ({
     showPoint = false,
     fixedImgDimensions,
     boundaryOffset = 0,
-    showDirectionMark = false,
-    isUpDirection = false
+    showDirectionMark = false
   } = {}
 }) => {
 
@@ -185,8 +183,7 @@ const LineUI: React.FC<LineUIProps> = ({
     setIndexOffset,
     pointIndexOffset,
     showPoint,
-    showDirectionMark,
-    isUpDirection
+    showDirectionMark
   };
 
   return (
