@@ -40,6 +40,7 @@ export const styles = {
             }
         },
         "background": {
+            "backgroundColor": "hsla(220, 4.9%, 12%, 1.000)",
             "backgroundImage": "linear-gradient(180.00deg, hsla(220, 4.9%, 12%, 1.000) 0%, hsla(220, 6.1%, 9.6%, 1.000) 100%)"
         }
     },
