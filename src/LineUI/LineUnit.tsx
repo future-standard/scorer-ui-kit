@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { IDragLineUISharedOptions } from '.';
+import Icon from '../Icons/Icon';
 
 
 const ContrastLine = styled.line<{styling: string}>`
@@ -75,6 +76,10 @@ const GrabHandleGroup = styled.g<{ showIndex: boolean, originalRadius: number, s
   `};
 `;
 
+const DMCircle = styled.circle`
+  fill: hsla(203, 100%, 35%, 0.49);
+`;
+
 interface ILineUnitProps {
   lineSetId: number,
   options: IDragLineUISharedOptions,
@@ -84,7 +89,7 @@ interface ILineUnitProps {
   y2: number,
   unit: number,
   lineMoveCallback: any,
-  lineMoveStartCallback: any
+  lineMoveStartCallback: any,
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
@@ -94,13 +99,13 @@ interface ILineUnitProps {
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
   const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}} = props;
-  const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset } = options;
+  const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
 
   const a = x1 - x2;
   const b = y1 - y2;
   const distance = Math.sqrt( a*a + b*b );
   //this distance 60 doesn't work now...
-  const hideGrabHandle = showMoveHandle === false ||  (showMoveHandle !== true  && distance < 60);
+  const hideGrabHandle = showMoveHandle === false || (showMoveHandle !== true && distance < 60);
 
 
   /** --- Toucher Events Section --- */
@@ -124,7 +129,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
 
   /** --- Mouse Events Section --- */
   const handleMouseDown = (e: any) => {
-    lineMoveStartCallback({ x: e.pageX, y: e.pageY});
+    lineMoveStartCallback({ x: e.pageX, y: e.pageY });
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
     e.preventDefault();
@@ -146,6 +151,34 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     x: (x2 + x1) / 2,
     y: (y2 + y1) / 2
   };
+
+  const directionMarkCoordinate = () => {
+    const angle = Math.atan2((y2 - y1), (x2 - x1));
+    const angleMode = (Math.PI / 2) - angle;
+    const x = midpoint.x + Math.sin(angleMode) -5;
+    const y = midpoint.y + Math.cos(angleMode);
+    let rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
+    let labelRotate = -rotate;
+    return {x, y, rotate, labelRotate};
+  };
+
+  const getDirectionMarkLine = () => {
+    const dmCoordinate = directionMarkCoordinate();
+    return (
+      <g transform={`translate(${dmCoordinate.x},${dmCoordinate.y}) rotate(${dmCoordinate.rotate}) scale(${unit * 1})`}>
+        <g transform='translate(-3,-30) scale(0.8)'>
+          <DMCircle r={12} cx={6} cy={7} />
+          <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
+        </g>
+        <g transform={`translate(0,30) rotate(${dmCoordinate.labelRotate})`}>
+          <LabelText styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
+            {label}
+          </LabelText>
+        </g>
+      </g>
+    );
+  };
+
   return (
     <g>
       <ContrastLine styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
@@ -165,12 +198,13 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
       {/* <circle r={1* unit} cx={x1} cy={y1} fill='white' /> */}
       {/* <circle r={1* unit} cx={x2} cy={y2} fill='white' /> */}
 
-      {
+      {showDirectionMark ?
+        getDirectionMarkLine()
+        :
         label &&
           <LabelText styling={styling} fontSize={`${unit * 14}px`} x={midpoint.x - (16 * unit)} y={midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive}>
             {label}
-          </LabelText>
-      }
+          </LabelText>}
     </g>
   );
 

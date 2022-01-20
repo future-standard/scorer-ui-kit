@@ -213,7 +213,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       return null;
     }
     const {x:x2,y:y2} = points[nextIndex];
-
+   
   return (
     <LineUnit
       key={index}
