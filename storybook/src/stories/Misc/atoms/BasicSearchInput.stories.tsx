@@ -23,6 +23,7 @@ export const _BasicSearchInput = () => {
   const inputPlaceholder = text("Placeholder", "Search by name...");
   const textValue = action('Search value');
   const hasBorder = boolean('Has border', true);
+  const noBackground = boolean('No Background', true);
   const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle"}, "subtle");
   const iconSize = number('Icon size', 12);
   const disabled = boolean('Disabled', false)
@@ -38,7 +39,7 @@ export const _BasicSearchInput = () => {
       <BasicSearchInput
         placeholder={inputPlaceholder}
         onChange={emptyCallbackForStory(handleChange)}
-        {...{hasBorder, color, iconSize, disabled}}
+        {...{hasBorder, noBackground, color, iconSize, disabled}}
       />
     </Container>
   )
