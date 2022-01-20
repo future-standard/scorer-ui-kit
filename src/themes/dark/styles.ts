@@ -71,6 +71,20 @@ export const styles = {
                 "border": "hsla(205, 100%, 72%, 1.000) 1px solid",
                 "textColor": "hsla(0, 0%, 100%, 1.000)"
             }
+        },
+        "searchInput": {
+            "default": {
+                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
+                "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
+                "borderColor": "hsla(210, 3.5%, 22.4%, 1.000)",
+                "border": "hsla(210, 3.5%, 22.4%, 1.000) 1px solid"
+            },
+            "focused": {
+                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
+                "backgroundColor": "hsla(210, 14.3%, 19.2%, 1.000)",
+                "borderColor": "hsla(207, 19.8%, 34.7%, 1.000)",
+                "border": "hsla(207, 19.8%, 34.7%, 1.000) 1px solid"
+            }
         }
     }
 };

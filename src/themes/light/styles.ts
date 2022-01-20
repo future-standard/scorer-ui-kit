@@ -436,6 +436,12 @@ export const styles = {
                 "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
                 "borderColor": "hsla(207, 15.9%, 86.5%, 1.000)",
                 "border": "hsla(207, 15.9%, 86.5%, 1.000) 1px solid"
+            },
+            "focused": {
+                "boxShadow": "0px 4px 9px 0px hsla(205, 34.6%, 68.2%, 0.071)",
+                "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
+                "borderColor": "hsla(208, 50%, 81.2%, 1.000)",
+                "border": "hsla(208, 50%, 81.2%, 1.000) 1px solid"
             }
         }
     },

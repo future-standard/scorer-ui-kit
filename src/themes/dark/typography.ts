@@ -195,6 +195,16 @@ export const typography = {
                 "textDecoration": "none",
                 "color": "hsla(0, 0%, 100%, 1.000)"
             }
+        },
+        "searchInput": {
+            "placeholder": {
+                "textAlign": "left",
+                "fontStyle": "italic",
+                "fontSize": "12px",
+                "fontWeight": 500,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 46.3%, 0.647)"
+            }
         }
     }
 };

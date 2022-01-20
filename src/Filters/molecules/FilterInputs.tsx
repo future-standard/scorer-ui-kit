@@ -20,8 +20,6 @@ const fadeInAnimation = keyframes`
 `;
 
 const SearchInputWrapper = styled.div`
-  background-color: hsl(0, 0%, 100%);
-  border-radius: 3px;
   flex: 1 1 200px;
   max-width: 320px;
 `;
