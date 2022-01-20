@@ -118,7 +118,7 @@ const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean) => {
   const {activeScreen} = useBreakpoints();
   const [state, dispatch] = useReducer(menuReducer, menuState);
 
-  const setMenu = useCallback((defaultMenuOpen: boolean, desktopSize: IBreakpoints)=>{
+  const setMenu = useCallback((defaultMenuOpen: boolean, canAlwaysPin: boolean, desktopSize: IBreakpoints,)=>{
       dispatch({type: 'SET_MENU', data: {defaultMenuOpen, desktopSize, canAlwaysPin}});
   },[]);
 
@@ -135,8 +135,8 @@ const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean) => {
   },[]);
 
   useLayoutEffect(() => {
-    setMenu(defaultMenuOpen, activeScreen);
-  }, [activeScreen, defaultMenuOpen, setMenu]);
+    setMenu(defaultMenuOpen, canAlwaysPin, activeScreen);
+  }, [activeScreen, defaultMenuOpen, canAlwaysPin, setMenu]);
 
   return {
     menuState: state,
