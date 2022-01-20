@@ -118,6 +118,15 @@ export const styles = {
                     "backgroundColor": "hsla(205, 56.9%, 28.2%, 1.000)"
                 }
             }
+        },
+        "input": {
+            "default": {
+                "normal": {
+                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
+                    "borderColor": "hsla(216, 3.4%, 28.8%, 1.000)",
+                    "border": "hsla(216, 3.4%, 28.8%, 1.000) 1px solid"
+                }
+            }
         }
     },
     "tables": {

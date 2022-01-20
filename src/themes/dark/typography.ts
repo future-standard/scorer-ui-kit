@@ -9,6 +9,35 @@ export const typography = {
                 "color": "hsla(207, 5%, 56.7%, 1.000)"
             }
         },
+        "input": {
+            "label": {
+                "textAlign": "left",
+                "fontSize": "14px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(207, 5%, 56.7%, 1.000)"
+            },
+            "placeholder": {
+                "normal": {
+                    "textAlign": "left",
+                    "fontStyle": "italic",
+                    "fontSize": "16px",
+                    "fontWeight": 500,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 46.3%, 1.000)"
+                }
+            },
+            "value": {
+                "normal": {
+                    "textAlign": "left",
+                    "fontSize": "16px",
+                    "fontWeight": 500,
+                    "lineHeight": "25px",
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 96.9%, 1.000)"
+                }
+            }
+        },
         "button": {
             "secondary": {
                 "normal": {
