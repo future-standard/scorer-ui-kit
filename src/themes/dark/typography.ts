@@ -8,6 +8,38 @@ export const typography = {
                 "textDecoration": "none",
                 "color": "hsla(207, 5%, 56.7%, 1.000)"
             }
+        },
+        "button": {
+            "secondary": {
+                "normal": {
+                    "textAlign": "center",
+                    "fontSize": "16px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 91.4%, 1.000)"
+                },
+                "large": {
+                    "textAlign": "center",
+                    "fontSize": "20px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 91.4%, 1.000)"
+                },
+                "small": {
+                    "textAlign": "center",
+                    "fontSize": "14px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 91.4%, 1.000)"
+                },
+                "xsmall": {
+                    "textAlign": "center",
+                    "fontSize": "12px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 91.4%, 1.000)"
+                }
+            }
         }
     },
     "global": {
@@ -113,12 +145,25 @@ export const typography = {
     "pageHeader": {
         "introduction": {
             "textAlign": "left",
-            "fontStyle": "italic",
             "fontSize": "14px",
             "fontWeight": 300,
-            "lineHeight": "25px",
+            "lineHeight": "20px",
             "textDecoration": "none",
-            "color": "hsla(207, 5%, 56.7%, 1.000)"
+            "color": "hsla(0, 0%, 85.9%, 1.000)"
+        },
+        "mainTitle": {
+            "textAlign": "left",
+            "fontSize": "26px",
+            "fontWeight": 600,
+            "textDecoration": "none",
+            "color": "hsla(208, 17.8%, 85.7%, 1.000)"
+        },
+        "areaTitle": {
+            "textAlign": "left",
+            "fontSize": "12px",
+            "fontWeight": 400,
+            "textDecoration": "none",
+            "color": "hsla(205, 7.6%, 69%, 1.000)"
         }
     },
     "styleGuide": {

@@ -7,7 +7,7 @@ export const colors = {
     },
     "icons": {
         "subtle": "hsla(207, 4.8%, 37.1%, 1.000)",
-        "dimmed": "hsla(205, 11.7%, 63.1%, 1.000)",
+        "dimmed": "hsla(0, 0%, 65.1%, 1.000)",
         "inverse": "hsla(0, 0%, 25.1%, 1.000)",
         "mono": "hsla(0, 0%, 100%, 1.000)",
         "danger": "hsla(0, 100%, 70%, 1.000)",
