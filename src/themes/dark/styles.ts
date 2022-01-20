@@ -47,5 +47,30 @@ export const styles = {
         "divider": {
             "backgroundColor": "hsla(213, 11.6%, 18.6%, 1.000)"
         }
+    },
+    "filters": {
+        "filterButton": {
+            "hover": {
+                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
+                "backgroundColor": "hsla(205, 86.8%, 70.4%, 1.000)",
+                "borderColor": "hsla(205, 100%, 72%, 1.000)",
+                "border": "hsla(205, 100%, 72%, 1.000) 1px solid",
+                "textColor": "hsla(0, 0%, 100%, 1.000)"
+            },
+            "default": {
+                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
+                "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
+                "borderColor": "hsla(210, 3.5%, 22.4%, 1.000)",
+                "border": "hsla(210, 3.5%, 22.4%, 1.000) 1px solid",
+                "textColor": "hsla(0, 0%, 89.8%, 1.000)"
+            },
+            "active": {
+                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
+                "backgroundColor": "hsla(205, 81.2%, 64.5%, 1.000)",
+                "borderColor": "hsla(205, 100%, 72%, 1.000)",
+                "border": "hsla(205, 100%, 72%, 1.000) 1px solid",
+                "textColor": "hsla(0, 0%, 100%, 1.000)"
+            }
+        }
     }
 };

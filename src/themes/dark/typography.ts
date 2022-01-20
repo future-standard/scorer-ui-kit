@@ -171,5 +171,30 @@ export const typography = {
         "fontWeight": 600,
         "textDecoration": "none",
         "color": "hsla(0, 0%, 100%, 0.800)"
+    },
+    "filters": {
+        "filterButton": {
+            "default": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 89.8%, 1.000)"
+            },
+            "active": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 100%, 1.000)"
+            },
+            "hover": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 100%, 1.000)"
+            }
+        }
     }
 };
