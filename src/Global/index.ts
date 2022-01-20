@@ -52,6 +52,7 @@ export interface IMenuTop {
     keepOpenText?: string
     autoHideText? :string
     defaultMenuOpen?: boolean
+    canAlwaysPin?: boolean
   }
 
   export interface ICustomDrawer {

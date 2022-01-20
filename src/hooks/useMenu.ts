@@ -14,6 +14,7 @@ interface SET_MENU {
   data: {
     desktopSize: IBreakpoints
     defaultMenuOpen: boolean
+    canAlwaysPin?: boolean
   }
 }
 
@@ -42,7 +43,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
       let isMenuPinned = false;
       let canPin = false;
 
-      if (action.data.defaultMenuOpen && action.data.desktopSize === 'xlarge') {
+      if (action.data.canAlwaysPin || (action.data.defaultMenuOpen && action.data.desktopSize === 'xlarge')) {
         canPin = true;
       }
 
@@ -112,20 +113,20 @@ const menuState: IMenuState = {
   canPin: false
 };
 
-const useMenu = (defaultMenuOpen: boolean) => {
+const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean) => {
 
   const {activeScreen} = useBreakpoints();
   const [state, dispatch] = useReducer(menuReducer, menuState);
 
   const setMenu = useCallback((defaultMenuOpen: boolean, desktopSize: IBreakpoints)=>{
-      dispatch({type: 'SET_MENU', data: {defaultMenuOpen, desktopSize}});
+      dispatch({type: 'SET_MENU', data: {defaultMenuOpen, desktopSize, canAlwaysPin}});
   },[]);
 
   const setMenuOpen = useCallback(() => {
     dispatch({type: 'SET_OPEN'});
-  },[]); 
+  },[]);
 
-  const setMenuClose = useCallback(()=> { 
+  const setMenuClose = useCallback(()=> {
     dispatch({type: 'SET_CLOSE'});
   },[]);
 
