@@ -474,5 +474,28 @@ export const styles = {
             "borderColor": "hsla(205, 100%, 72%, 1.000)",
             "border": "hsla(205, 100%, 72%, 1.000) 1px solid"
         }
+    },
+    "tables": {
+        "rows": {
+            "divider": {
+                "backgroundColor": colors.divider
+            }
+        },
+        "header": {
+            "groupLine": {
+                "backgroundColor": colors.divider
+            },
+            "divider": {
+                "backgroundColor": colors.divider
+            },
+            "sortable": {
+                "hover": {
+                    "backgroundColor": "hsla(220, 33.3%, 94.7%, 1.000)"
+                },
+                "default": {
+                    "backgroundColor": "hsla(220, 33.3%, 94.7%, 0.000)"
+                }
+            }
+        }
     }
 };

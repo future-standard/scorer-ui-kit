@@ -748,5 +748,15 @@ export const typography = {
                 "color": "hsla(0, 0%, 50.2%, 1.000)"
             }
         }
+    },
+    "tables": {
+        "groupName": {
+            "textAlign": "left",
+            "fontSize": "12px",
+            "fontWeight": 400,
+            "letterSpacing": "0.3px",
+            "textDecoration": "none",
+            "color": "hsla(210, 2.4%, 51%, 0.651)"
+        }
     }
 };

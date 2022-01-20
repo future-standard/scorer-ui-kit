@@ -40,13 +40,17 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
     }
   `}
 
-  ${({sortable}) => sortable && css`
+  ${({theme: { styles }, sortable}) => sortable && css`
+
+    ${styles.tables.header.sortable.default};
+
     &:hover {
-      background-color: hsl(220, 12%, 95%);
       cursor: pointer;
+      ${styles.tables.header.sortable.hover};
+
       ${IconWrapper} {
+        ${styles.tables.header.sortable.hover};
         display: inline-flex;
-        background-color: hsl(220, 12%, 95%);
       }
     }
   `}

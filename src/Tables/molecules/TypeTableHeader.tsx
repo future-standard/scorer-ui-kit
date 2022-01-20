@@ -35,14 +35,14 @@ const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignme
     min-width:${minWidth}px;
   `};
 
-  ${({ headerStyle, isSortActive }) => headerStyle === 'subHeader' && css`
+  ${({ theme: {styles}, headerStyle, isSortActive }) => headerStyle === 'subHeader' && css`
   padding-bottom: 15px;
 
   &::after {
+    ${styles.tables.header.divider};
     content: '';
     display: block;
     height: 1px;
-    background-color: hsl(0, 0%, 89%);
     left: ${isSortActive ? '-15px' : '0'};
     right: 0;
     width: ${isSortActive ? 'calc(100% + 15px)' : '100%'};
@@ -72,12 +72,11 @@ const GroupTitle = styled.div`
 `;
 
 const Title = styled.div`
+  ${({ theme: {typography} }) => css`
+    ${typography.tables.groupName};
+  `};
   padding-left: 2px;
   padding-right: 8px;
-  color: hsla(210, 2%, 51%, 0.65);
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.3px;
   white-space: nowrap;
 `;
 
@@ -87,8 +86,11 @@ const EmptyTitle = styled.div`
 `;
 
 const MiddleLine = styled.div<{ isLastOfGroup?: boolean }>`
+  ${({ theme: {styles} }) => css`
+    ${styles.tables.header.groupLine};
+  `};
+
   height: 1px;
-  background: hsl(0, 0%, 93%);
   flex: 1;
   ${({ isLastOfGroup }) => isLastOfGroup && css`
     margin-right: 15px;

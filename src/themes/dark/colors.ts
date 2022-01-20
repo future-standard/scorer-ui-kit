@@ -1,5 +1,5 @@
 export const colors = {
-    "divider": "hsla(240, 6.3%, 15.5%, 1.000)",
+    "divider": "hsla(240, 4.7%, 25.1%, 1.000)",
     "menu": {
         "active": "hsla(215, 66.3%, 59.2%, 1.000)",
         "hover": "hsla(215, 19.1%, 36.9%, 1.000)",
@@ -12,5 +12,8 @@ export const colors = {
         "mono": "hsla(0, 0%, 100%, 1.000)",
         "danger": "hsla(0, 100%, 70%, 1.000)",
         "primary": "hsla(205, 100%, 65.1%, 1.000)"
+    },
+    "status": {
+        "good": "hsla(126, 48.1%, 68.2%, 1.000)"
     }
 };

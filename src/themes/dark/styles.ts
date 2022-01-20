@@ -86,5 +86,38 @@ export const styles = {
                 "border": "hsla(207, 19.8%, 34.7%, 1.000) 1px solid"
             }
         }
+    },
+    "form": {
+        "checkbox": {
+            "unchecked": {
+                "default": {
+                    "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)",
+                    "border": "hsla(208, 24.6%, 77.6%, 1.000) 2px solid"
+                }
+            }
+        }
+    },
+    "tables": {
+        "rows": {
+            "divider": {
+                "backgroundColor": colors.divider
+            }
+        },
+        "header": {
+            "groupLine": {
+                "backgroundColor": "hsla(240, 4.7%, 25.1%, 1.000)"
+            },
+            "divider": {
+                "backgroundColor": colors.divider
+            },
+            "sortable": {
+                "default": {
+                    "backgroundColor": "hsla(221, 15.9%, 38.2%, 0.000)"
+                },
+                "hover": {
+                    "backgroundColor": "hsla(221, 15.9%, 38.2%, 1.000)"
+                }
+            }
+        }
     }
 };
