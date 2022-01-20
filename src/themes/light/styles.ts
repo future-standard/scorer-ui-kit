@@ -80,6 +80,7 @@ export const styles = {
             },
             "seperatedValues": {
                 "background": {
+                    "backgroundColor": "hsla(205, 82.4%, 64.3%, 1.000)",
                     "backgroundImage": "linear-gradient(315.00deg, hsla(205, 82.4%, 64.3%, 1.000) 0%, hsla(195, 83.5%, 54.7%, 1.000) 100%)"
                 },
                 "hoverHighlight": {
@@ -90,6 +91,7 @@ export const styles = {
         "button": {
             "primary": {
                 "default": {
+                    "backgroundColor": "hsla(200, 77.5%, 68.6%, 1.000)",
                     "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)"
                 },
                 "hover": {
@@ -102,9 +104,11 @@ export const styles = {
                     "backgroundColor": "hsla(202, 70.4%, 62.9%, 1.000)"
                 },
                 "disabled": {
+                    "backgroundColor": "hsla(200, 77.5%, 68.6%, 1.000)",
                     "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)"
                 },
                 "actionArea": {
+                    "backgroundColor": "hsla(200, 77.5%, 68.6%, 1.000)",
                     "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)"
                 }
             },
@@ -130,6 +134,7 @@ export const styles = {
             },
             "danger": {
                 "default": {
+                    "backgroundColor": "hsla(0, 54%, 60.8%, 1.000)",
                     "backgroundImage": "linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)"
                 },
                 "hover": {
@@ -145,6 +150,7 @@ export const styles = {
                     "backgroundColor": "hsla(0, 62.1%, 61.8%, 1.000)"
                 },
                 "actionArea": {
+                    "backgroundColor": "hsla(0, 54%, 60.8%, 1.000)",
                     "backgroundImage": "linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)"
                 }
             }
@@ -153,16 +159,19 @@ export const styles = {
             "off": {
                 "default": {
                     "outer": {
+                        "backgroundColor": "hsla(210, 30%, 96.1%, 1.000)",
                         "backgroundImage": "linear-gradient(180.00deg, hsla(210, 30%, 96.1%, 1.000) 0%, hsla(203, 41.9%, 93.9%, 1.000) 100%)",
                         "borderColor": "hsla(208, 24.6%, 77.6%, 0.651)",
                         "border": "hsla(208, 24.6%, 77.6%, 0.651) 1px solid"
                     },
                     "inner": {
+                        "backgroundColor": "hsla(205, 82.4%, 64.3%, 1.000)",
                         "backgroundImage": "linear-gradient(315.00deg, hsla(205, 82.4%, 64.3%, 1.000) 0%, hsla(195, 83.5%, 54.7%, 1.000) 100%)"
                     }
                 },
                 "disabled": {
                     "outer": {
+                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
                         "backgroundImage": "linear-gradient(180.00deg, hsla(0, 0%, 100%, 1.000) 0%, hsla(0, 0%, 98.8%, 1.000) 100%)",
                         "borderColor": "hsla(208, 22.7%, 85.3%, 0.651)",
                         "border": "hsla(208, 22.7%, 85.3%, 0.651) 1px solid"
@@ -173,6 +182,7 @@ export const styles = {
                 },
                 "loading": {
                     "outer": {
+                        "backgroundColor": "hsla(210, 30%, 96.1%, 1.000)",
                         "backgroundImage": "linear-gradient(180.00deg, hsla(210, 30%, 96.1%, 1.000) 0%, hsla(203, 41.9%, 93.9%, 1.000) 100%)",
                         "borderColor": "hsla(208, 24.6%, 77.6%, 0.651)",
                         "border": "hsla(208, 24.6%, 77.6%, 0.651) 1px solid"
@@ -182,6 +192,7 @@ export const styles = {
             "on": {
                 "default": {
                     "outer": {
+                        "backgroundColor": "hsla(204, 78.4%, 72.7%, 1.000)",
                         "backgroundImage": "linear-gradient(317.51deg, hsla(204, 78.4%, 72.7%, 1.000) 0%, hsla(195, 83.2%, 67.3%, 1.000) 100%)",
                         "borderColor": "hsla(205, 66.5%, 61.4%, 1.000)",
                         "border": "hsla(205, 66.5%, 61.4%, 1.000) 1px solid"
@@ -192,6 +203,7 @@ export const styles = {
                 },
                 "disabled": {
                     "outer": {
+                        "backgroundColor": "hsla(205, 61.9%, 87.6%, 1.000)",
                         "backgroundImage": "linear-gradient(180.00deg, hsla(205, 61.9%, 87.6%, 1.000) 0%, hsla(204, 45.5%, 84.9%, 1.000) 100%)",
                         "borderColor": "hsla(205, 89.5%, 85.1%, 1.000)",
                         "border": "hsla(205, 89.5%, 85.1%, 1.000) 1px solid"
@@ -202,6 +214,7 @@ export const styles = {
                 },
                 "loading": {
                     "outer": {
+                        "backgroundColor": "hsla(204, 68.3%, 72.7%, 0.647)",
                         "backgroundImage": "linear-gradient(315.00deg, hsla(204, 68.3%, 72.7%, 0.647) 0%, hsla(195, 83.2%, 67.3%, 0.655) 100%)",
                         "borderColor": "hsla(205, 66.5%, 61.4%, 0.651)",
                         "border": "hsla(205, 66.5%, 61.4%, 0.651) 1px solid"
@@ -211,6 +224,7 @@ export const styles = {
             "failure": {
                 "default": {
                     "outer": {
+                        "backgroundColor": "hsla(0, 68.5%, 67.6%, 1.000)",
                         "backgroundImage": "linear-gradient(317.51deg, hsla(0, 68.5%, 67.6%, 1.000) 0%, hsla(0, 69.1%, 65.7%, 1.000) 100%)",
                         "borderColor": "hsla(0, 66.5%, 61.4%, 1.000)",
                         "border": "hsla(0, 66.5%, 61.4%, 1.000) 1px solid"
@@ -221,6 +235,7 @@ export const styles = {
                 },
                 "loading": {
                     "outer": {
+                        "backgroundColor": "hsla(0, 60.6%, 73.1%, 1.000)",
                         "backgroundImage": "linear-gradient(317.51deg, hsla(0, 60.6%, 73.1%, 1.000) 0.4%, hsla(0, 57.9%, 73.9%, 1.000) 100%)",
                         "borderColor": "hsla(0, 54.2%, 67.5%, 1.000)",
                         "border": "hsla(0, 54.2%, 67.5%, 1.000) 1px solid"
@@ -233,6 +248,7 @@ export const styles = {
             "danger": {
                 "default": {
                     "outer": {
+                        "backgroundColor": "hsla(0, 68%, 66.9%, 1.000)",
                         "backgroundImage": "linear-gradient(317.51deg, hsla(0, 68%, 66.9%, 1.000) 0%, hsla(20, 81.2%, 64.5%, 1.000) 100%)",
                         "borderColor": "hsla(0, 51.2%, 60.6%, 1.000)",
                         "border": "hsla(0, 51.2%, 60.6%, 1.000) 1px solid"
@@ -243,6 +259,7 @@ export const styles = {
                 },
                 "loading": {
                     "outer": {
+                        "backgroundColor": "hsla(0, 79.5%, 77.1%, 1.000)",
                         "backgroundImage": "linear-gradient(317.51deg, hsla(0, 79.5%, 77.1%, 1.000) 0%, hsla(20, 96%, 80.4%, 1.000) 100%)",
                         "borderColor": "hsla(0, 62%, 73.1%, 1.000)",
                         "border": "hsla(0, 62%, 73.1%, 1.000) 1px solid"
@@ -250,6 +267,7 @@ export const styles = {
                 },
                 "disabled": {
                     "outer": {
+                        "backgroundColor": "hsla(0, 57%, 81.8%, 1.000)",
                         "backgroundImage": "linear-gradient(317.51deg, hsla(0, 57%, 81.8%, 1.000) 0%, hsla(19, 100%, 84.9%, 1.000) 100%)",
                         "borderColor": "hsla(0, 78.7%, 85.3%, 1.000)",
                         "border": "hsla(0, 78.7%, 85.3%, 1.000) 1px solid"
@@ -262,6 +280,7 @@ export const styles = {
             "locked": {
                 "default": {
                     "outer": {
+                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
                         "backgroundImage": "linear-gradient(180.00deg, hsla(0, 0%, 100%, 1.000) 0%, hsla(0, 0%, 98.8%, 1.000) 100%)",
                         "borderColor": "hsla(208, 22.7%, 85.3%, 0.651)",
                         "border": "hsla(208, 22.7%, 85.3%, 0.651) 1px solid"
@@ -339,6 +358,7 @@ export const styles = {
             }
         },
         "background": {
+            "backgroundColor": "hsla(210, 20%, 98%, 1.000)",
             "backgroundImage": "linear-gradient(180.00deg, hsla(210, 20%, 98%, 1.000) 0%, hsla(210, 20%, 96.1%, 1.000) 100%)"
         },
         "drawer": {
