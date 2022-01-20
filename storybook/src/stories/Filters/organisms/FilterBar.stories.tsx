@@ -11,8 +11,8 @@ import {
   IFilterResult,
   IFilterDatePicker,
   isFilterItem,
-  DateInterval,
-} from 'scorer-ui-kit';
+  // DateInterval,
+} from 'scorer-ui-kit'
 
 import {
   tableData,
@@ -62,7 +62,7 @@ const TypeTableWrapper = styled.div`
 margin: 60px 0 20px 0
 `;
 
-const today: Date = new Date();
+// const today: Date = new Date();
 const before: Date = new Date();
 before.setDate(before.getDate() - 5);
 
