@@ -62,7 +62,7 @@ export const styles = {
                 "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
                 "borderColor": "hsla(210, 3.5%, 22.4%, 1.000)",
                 "border": "hsla(210, 3.5%, 22.4%, 1.000) 1px solid",
-                "textColor": "hsla(0, 0%, 89.8%, 1.000)"
+                "textColor": "hsla(0, 0%, 86.3%, 1.000)"
             },
             "active": {
                 "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",

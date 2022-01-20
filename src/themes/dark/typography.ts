@@ -121,6 +121,48 @@ export const typography = {
             "color": "hsla(207, 5%, 56.7%, 1.000)"
         }
     },
+    "filters": {
+        "searchInput": {
+            "value": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 96.9%, 1.000)"
+            },
+            "placeholder": {
+                "textAlign": "left",
+                "fontStyle": "italic",
+                "fontSize": "12px",
+                "fontWeight": 500,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 46.3%, 1.000)"
+            }
+        },
+        "filterButton": {
+            "default": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 86.3%, 1.000)"
+            },
+            "active": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 100%, 1.000)"
+            },
+            "hover": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 100%, 1.000)"
+            }
+        }
+    },
     "styleGuide": {
         "guideTitle": {
             "textAlign": "left",
@@ -171,40 +213,5 @@ export const typography = {
         "fontWeight": 600,
         "textDecoration": "none",
         "color": "hsla(0, 0%, 100%, 0.800)"
-    },
-    "filters": {
-        "filterButton": {
-            "default": {
-                "textAlign": "left",
-                "fontSize": "12px",
-                "fontWeight": 400,
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 89.8%, 1.000)"
-            },
-            "active": {
-                "textAlign": "left",
-                "fontSize": "12px",
-                "fontWeight": 400,
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 100%, 1.000)"
-            },
-            "hover": {
-                "textAlign": "left",
-                "fontSize": "12px",
-                "fontWeight": 400,
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 100%, 1.000)"
-            }
-        },
-        "searchInput": {
-            "placeholder": {
-                "textAlign": "left",
-                "fontStyle": "italic",
-                "fontSize": "12px",
-                "fontWeight": 500,
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 46.3%, 0.647)"
-            }
-        }
     }
 };
