@@ -77,6 +77,7 @@ export const animation = {
     }
   },
   speed: {
+    faster: '0.085s',
     fast: '0.175s',
     normal: '0.35s',
     slow: '0.7s',
