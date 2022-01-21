@@ -453,5 +453,15 @@ export const typography = {
                 }
             }
         }
+    },
+    "searchBar": {
+        "placeholder": {
+            "textAlign": "left",
+            "fontStyle": "italic",
+            "fontSize": "14px",
+            "fontWeight": 700,
+            "textDecoration": "none",
+            "color": "hsla(0, 0%, 46.3%, 0.647)"
+        }
     }
 };

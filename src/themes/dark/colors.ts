@@ -15,5 +15,10 @@ export const colors = {
     },
     "status": {
         "good": "hsla(126, 48.1%, 68.2%, 1.000)"
+    },
+    "input": {
+        "border": {
+            "default": "hsla(120, 1.3%, 85.3%, 1.000)"
+        }
     }
 };

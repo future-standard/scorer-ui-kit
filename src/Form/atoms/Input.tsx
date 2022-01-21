@@ -115,7 +115,7 @@ const Container = styled.div<{ fieldState: string }>`
     `}
   }
 
-  &:focus-within ${InputContainer} {
+  &:focus-within ${StyledInput} {
     ${({theme, fieldState}) => theme.styles.form.input[fieldState].focused};
   }
 
