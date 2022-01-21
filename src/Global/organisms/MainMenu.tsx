@@ -104,9 +104,9 @@ const ContainerInner = styled.div`
 `;
 
 
-const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, supportUrl, defaultMenuOpen = true }) => {
+const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, defaultMenuOpen = true, canAlwaysPin = false }) => {
 
-  const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen);
+  const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen, canAlwaysPin);
 
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
@@ -186,22 +186,22 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, su
                 <FooterItemContainer>
                   <ContextItem compact isActive={false} icon='Question' title='Help &amp; Support' href={supportUrl} menuOpen={menuState.isMenuOpen} />
                 </FooterItemContainer>
-            )}
+              )}
 
-              <FooterItemContainer>
-                {(menuState.canPin)
-                ? (
+              {(menuState.canPin)
+              ? (
+                <FooterItemContainer>
                   <ContextItem
                     compact
                     isActive={false}
                     icon={menuState.isMenuOpen && menuState.isMenuPinned ? 'Left' : 'Menu'}
-                    title={menuState.isMenuPinned ? 'Keep Open' : 'Auto-Hide'}
+                    title={menuState.isMenuPinned ? keepOpenText : autoHideText}
                     onClickCallback={toggleMenuPin}
                     menuOpen={menuState.isMenuOpen}
                   />
-                )
-                : null}
-              </FooterItemContainer>
+                </FooterItemContainer>
+              )
+              : null}
             </MenuFooter>
           </ContainerInner>
         </Container>,

@@ -383,12 +383,16 @@ export const _GlobalUI = () => {
   const hasNotifications = boolean("Has Notifications", true);
   const hasLanguage = boolean("Has Language", true);
   const hasCurrentUser = boolean("Has Current User", true);
+  const currentUserText = text("Current User Text", "Current User");
   const logoutLink = text("Logout Url", "#")
+  const logoutText = text("Logout Text", "Logout");
+  const accountOptionText = text("Account Options Text", "Account Options")
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const logoMark = text("Logo Mark SVG", logoMarkSvg);
   const logoText = text("Logo Text SVG", logoTextSvg);
   const supportUrl = text("Support Url", "/support");
   const menuHomeLink = text("Home Link", "/welcome");
+  const canAlwaysPin = boolean("Can Always Pin", true);
   const menuConfig = object("Menu Config", {
     items: [
       {
@@ -490,8 +494,9 @@ export const _GlobalUI = () => {
         content={menuConfig}
         home={menuHomeLink}
         defaultMenuOpen={true}
+        canAlwaysPin={canAlwaysPin}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
-        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText }}
       >
         <ComponentLinks />
       </GlobalUI>
