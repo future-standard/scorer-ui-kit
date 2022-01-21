@@ -17,6 +17,7 @@ export const _MainMenu = () => {
 
   const logoMark = text("Logo Mark SVG", logoMarkSvg);
   const logoText = text("Logo Text SVG", logoTextSvg);
+  const canAlwaysPin = false;
 
   const supportUrl = text("Support Url", "#");
 
@@ -96,7 +97,7 @@ export const _MainMenu = () => {
 
   return (
     <Layout>
-      <MainMenu content={menuConfig} home={menuHomeLink} {...{ logoMark, logoText, supportUrl }} />
+      <MainMenu content={menuConfig} home={menuHomeLink} {...{ logoMark, logoText, supportUrl, canAlwaysPin }} />
     </Layout>
   );
 };
