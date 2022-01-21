@@ -67,7 +67,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
     // handle autoOpen based on desktop
     case 'SET_OPEN': {
       if (state.isMenuOpen === true) { return state; }
-      if (state.desktopSize === 'xxlarge') { return state; }
+      if (state.desktopSize === 'xxlarge' && !state.canPin) { return state; }
 
       return {
         ...state,
@@ -78,7 +78,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
     // handle auto close based on desktop
     case 'SET_CLOSE': {
       if (state.isMenuOpen === false) { return state; }
-      if (state.desktopSize === 'xxlarge') { return state; }
+      if (state.desktopSize === 'xxlarge' && !state.canPin) { return state; }
       if (state.isMenuPinned === true) { return state; }
 
       return {
