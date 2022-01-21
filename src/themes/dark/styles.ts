@@ -86,6 +86,17 @@ export const styles = {
                 "borderColor": "hsla(207, 19.8%, 34.7%, 1.000)",
                 "border": "hsla(207, 19.8%, 34.7%, 1.000) 1px solid"
             }
+        },
+        "dropdownContainer": {
+            "topBorder": {
+                "backgroundColor": "hsla(205, 100%, 72%, 1.000)"
+            },
+            "background": {
+                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
+                "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
+                "borderColor": colors.divider,
+                "border": colors.divider + " 1px solid"
+            }
         }
     },
     "form": {
