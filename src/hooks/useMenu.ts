@@ -47,9 +47,12 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
         canPin = true;
       }
 
-      if (action.data.desktopSize === 'xxlarge') {
+      if (action.data.desktopSize === 'xxlarge' && action.data.canAlwaysPin === false) {
         isMenuOpen = true;
         isMenuPinned = true;
+      } else if(action.data.desktopSize === 'xxlarge'){
+        isMenuOpen = action.data.defaultMenuOpen;
+        isMenuPinned = false;
       }
 
       return {
