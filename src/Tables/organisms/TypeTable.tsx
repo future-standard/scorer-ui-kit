@@ -21,9 +21,8 @@ const LoadingBox = styled.div`
   position: absolute;
   left: 0;
   z-index: 99;
-  background-color: ${({ theme }) => theme.styles.global.background.backgroundColor};
+  background-color: ${({ theme }) => theme.styles.tables.loadingOverlay};
   height: calc(100% - 50px);
-  opacity: 85%;
   width: 100%;
   min-height: 100px;
   display: flex;

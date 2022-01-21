@@ -40,13 +40,40 @@ export const styles = {
             }
         },
         "background": {
-            "backgroundColor": "hsla(220, 4.9%, 12%, 1.000)",
-            "backgroundImage": "linear-gradient(180.00deg, hsla(220, 4.9%, 12%, 1.000) 0%, hsla(220, 6.1%, 9.6%, 1.000) 100%)"
+            "backgroundColor": "hsla(220, 4.2%, 13.9%, 1.000)",
+            "backgroundImage": "linear-gradient(180.00deg, hsla(220, 4.2%, 13.9%, 1.000) 0%, hsla(220, 4.9%, 12%, 1.000) 100%)"
         }
     },
     "general": {
         "divider": {
             "backgroundColor": "hsla(213, 11.6%, 18.6%, 1.000)"
+        }
+    },
+    "tables": {
+        "loadingOverlay": {
+            "backgroundColor": "hsla(220, 4.2%, 13.9%, 0.851)",
+            "backgroundImage": "linear-gradient(180.00deg, hsla(220, 4.2%, 13.9%, 0.851) 0%, hsla(220, 4.2%, 13.9%, 1.000) 100%)"
+        },
+        "rows": {
+            "divider": {
+                "backgroundColor": colors.divider
+            }
+        },
+        "header": {
+            "groupLine": {
+                "backgroundColor": "hsla(240, 4.7%, 25.1%, 1.000)"
+            },
+            "divider": {
+                "backgroundColor": colors.divider
+            },
+            "sortable": {
+                "default": {
+                    "backgroundColor": "hsla(221, 15.9%, 38.2%, 0.000)"
+                },
+                "hover": {
+                    "backgroundColor": "hsla(221, 15.9%, 38.2%, 1.000)"
+                }
+            }
         }
     },
     "filters": {
@@ -211,39 +238,46 @@ export const styles = {
             }
         }
     },
-    "tables": {
-        "rows": {
-            "divider": {
-                "backgroundColor": colors.divider
-            }
-        },
-        "header": {
-            "groupLine": {
-                "backgroundColor": "hsla(240, 4.7%, 25.1%, 1.000)"
-            },
-            "divider": {
-                "backgroundColor": colors.divider
-            },
-            "sortable": {
-                "default": {
-                    "backgroundColor": "hsla(221, 15.9%, 38.2%, 0.000)"
-                },
-                "hover": {
-                    "backgroundColor": "hsla(221, 15.9%, 38.2%, 1.000)"
-                }
-            }
-        }
-    },
     "indicators": {
         "spinner": {
             "secondary": {
                 "top": {
-                    "borderColor": "hsla(0, 0%, 100%, 1.000)",
-                    "border": "hsla(0, 0%, 100%, 1.000) 3px solid"
+                    "borderColor": "hsla(195, 59.4%, 72%, 1.000)",
+                    "border": "hsla(195, 59.4%, 72%, 1.000) 3px solid"
                 },
                 "base": {
-                    "borderColor": "hsla(0, 0%, 75.7%, 1.000)",
-                    "border": "hsla(0, 0%, 75.7%, 1.000) 3px solid"
+                    "borderColor": "hsla(0, 2%, 29.6%, 1.000)",
+                    "border": "hsla(0, 2%, 29.6%, 1.000) 3px solid"
+                }
+            },
+            "danger": {
+                "base": {
+                    "borderColor": "hsla(0, 78.8%, 70.4%, 1.000)",
+                    "border": "hsla(0, 78.8%, 70.4%, 1.000) 3px solid"
+                },
+                "top": {
+                    "borderColor": "hsla(0, 91.5%, 72.2%, 1.000)",
+                    "border": "hsla(0, 91.5%, 72.2%, 1.000) 3px solid"
+                }
+            },
+            "simple": {
+                "base": {
+                    "borderColor": "hsla(0, 0%, 76.9%, 0.329)",
+                    "border": "hsla(0, 0%, 76.9%, 0.329) 3px solid"
+                },
+                "top": {
+                    "borderColor": "hsla(0, 0%, 100%, 1.000)",
+                    "border": "hsla(0, 0%, 100%, 1.000) 3px solid"
+                }
+            },
+            "primary": {
+                "base": {
+                    "borderColor": "hsla(195, 54.1%, 30.8%, 1.000)",
+                    "border": "hsla(195, 54.1%, 30.8%, 1.000) 3px solid"
+                },
+                "top": {
+                    "borderColor": "hsla(210, 100%, 65.9%, 1.000)",
+                    "border": "hsla(210, 100%, 65.9%, 1.000) 3px solid"
                 }
             }
         }

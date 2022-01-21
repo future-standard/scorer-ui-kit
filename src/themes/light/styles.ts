@@ -421,7 +421,9 @@ export const styles = {
         "dropdownContainer": {
             "background": {
                 "boxShadow": "0px 5px 25px 0px hsla(210, 66.9%, 46.3%, 0.122)",
-                "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
+                "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
+                "borderColor": "hsla(0, 0%, 90.6%, 1.000)",
+                "border": "hsla(0, 0%, 90.6%, 1.000) 1px solid"
             },
             "topBorder": {
                 "backgroundColor": "hsla(205, 100%, 72%, 1.000)"
@@ -465,6 +467,33 @@ export const styles = {
             }
         }
     },
+    "tables": {
+        "loadingOverlay": {
+            "backgroundColor": "hsla(210, 20%, 98%, 0.851)",
+            "backgroundImage": "linear-gradient(180.00deg, hsla(210, 20%, 98%, 0.851) 0%, hsla(210, 20%, 96.1%, 1.000) 100%)"
+        },
+        "rows": {
+            "divider": {
+                "backgroundColor": colors.divider
+            }
+        },
+        "header": {
+            "groupLine": {
+                "backgroundColor": colors.divider
+            },
+            "divider": {
+                "backgroundColor": colors.divider
+            },
+            "sortable": {
+                "hover": {
+                    "backgroundColor": "hsla(220, 33.3%, 94.7%, 1.000)"
+                },
+                "default": {
+                    "backgroundColor": "hsla(220, 33.3%, 94.7%, 0.000)"
+                }
+            }
+        }
+    },
     "general": {
         "divider": {
             "backgroundColor": colors.divider
@@ -493,29 +522,6 @@ export const styles = {
             "backgroundColor": "hsla(200, 23.1%, 97.5%, 1.000)",
             "borderColor": "hsla(205, 100%, 72%, 1.000)",
             "border": "hsla(205, 100%, 72%, 1.000) 1px solid"
-        }
-    },
-    "tables": {
-        "rows": {
-            "divider": {
-                "backgroundColor": colors.divider
-            }
-        },
-        "header": {
-            "groupLine": {
-                "backgroundColor": colors.divider
-            },
-            "divider": {
-                "backgroundColor": colors.divider
-            },
-            "sortable": {
-                "hover": {
-                    "backgroundColor": "hsla(220, 33.3%, 94.7%, 1.000)"
-                },
-                "default": {
-                    "backgroundColor": "hsla(220, 33.3%, 94.7%, 0.000)"
-                }
-            }
         }
     }
 };
