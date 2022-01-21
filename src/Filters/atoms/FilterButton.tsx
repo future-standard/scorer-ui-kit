@@ -5,17 +5,16 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 
 const StyledButton = styled.button<{isOpen?: boolean, hasFlipArrow?: boolean }>`
   ${resetButtonStyles};
-  background-color: hsl(200, 23%, 97%);
   border-radius: 3px;
-  border: solid 1px hsl(207, 16%, 86%);
-  box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
-  color: hsl(0, 0%, 50%);
   height: 30px;
-  font-size: 12px;
 
-  ${({ theme }) => theme && css`
+  ${({ theme: {styles, typography, animation}, theme }) => theme && css`
+
+    ${styles.filters.filterButton.default};
+    ${typography.filters.filterButton.default};
+
     font-family: ${theme.fontFamily.ui};
-    transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
+    transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.inOut};
 
     ${IconWrapper} {
       padding: 0 9px;
@@ -26,13 +25,23 @@ const StyledButton = styled.button<{isOpen?: boolean, hasFlipArrow?: boolean }>`
       }
     }
 
-    &:hover:enabled, &:active:enabled {
-      background-color: hsl(205, 100%, 72%);
-      border: solid 1px hsl(205, 100%, 72%);
-      color: ${theme.colors.icons.inverse};
+    &:hover:enabled {
+      ${styles.filters.filterButton.hover};
+      ${typography.filters.filterButton.hover};
+      transition:
+        background ${animation.speed.fast} ${animation.easing.primary.inOut},
+        border ${animation.speed.fast} ${animation.easing.primary.inOut};
+    }
 
+    &:active:enabled {
+      ${styles.filters.filterButton.active};
+      ${typography.filters.filterButton.active};
+    }
+
+    &:hover:enabled, &:active:enabled {
       ${IconWrapper} {
         [stroke]{
+          transition: stroke ${animation.speed.faster} ${animation.easing.primary.inOut};
           stroke: ${theme.colors.icons.inverse};
         }
       }

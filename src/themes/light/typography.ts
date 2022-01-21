@@ -1,12 +1,5 @@
 export const typography = {
     "pageHeader": {
-        "mainTitle": {
-            "textAlign": "left",
-            "fontSize": "26px",
-            "fontWeight": 600,
-            "textDecoration": "none",
-            "color": "hsla(208, 7.7%, 38.2%, 1.000)"
-        },
         "introduction": {
             "textAlign": "left",
             "fontStyle": "italic",
@@ -22,10 +15,162 @@ export const typography = {
             "fontWeight": 400,
             "textDecoration": "none",
             "color": "hsla(0, 0%, 46.3%, 1.000)"
+        },
+        "mainTitle": {
+            "textAlign": "left",
+            "fontSize": "26px",
+            "fontWeight": 600,
+            "textDecoration": "none",
+            "color": "hsla(208, 7.7%, 38.2%, 1.000)"
         }
     },
     "form": {
+        "label": {
+            "meta": {
+                "textAlign": "left",
+                "fontSize": "14px",
+                "fontWeight": 300,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 56.1%, 1.000)"
+            },
+            "default": {
+                "textAlign": "left",
+                "fontSize": "14px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(207, 5%, 56.7%, 1.000)"
+            },
+            "disabled": {
+                "textAlign": "left",
+                "fontSize": "16px",
+                "fontWeight": 300,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 46.3%, 0.651)"
+            },
+            "failure": {
+                "textAlign": "left",
+                "fontSize": "16px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 67.9%, 67.1%, 1.000)"
+            },
+            "meta(Selected)": {
+                "textAlign": "left",
+                "fontSize": "14px",
+                "fontWeight": 600,
+                "textDecoration": "none",
+                "color": "hsla(207, 94.2%, 66.1%, 1.000)"
+            }
+        },
+        "tip": {
+            "textAlign": "left",
+            "fontStyle": "italic",
+            "fontSize": "14px",
+            "fontWeight": 500,
+            "lineHeight": "25px",
+            "textDecoration": "none",
+            "color": "hsla(205, 59.7%, 71.8%, 1.000)"
+        },
+        "button": {
+            "secondary": {
+                "normal": {
+                    "textAlign": "center",
+                    "fontSize": "16px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 55.3%, 1.000)"
+                },
+                "large": {
+                    "textAlign": "center",
+                    "fontSize": "20px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 55.3%, 1.000)"
+                },
+                "small": {
+                    "textAlign": "center",
+                    "fontSize": "14px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 55.3%, 1.000)"
+                },
+                "xsmall": {
+                    "textAlign": "center",
+                    "fontSize": "12px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 55.3%, 1.000)"
+                }
+            },
+            "primary": {
+                "large": {
+                    "textAlign": "center",
+                    "fontSize": "20px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                },
+                "normal": {
+                    "textAlign": "center",
+                    "fontSize": "16px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                },
+                "small": {
+                    "textAlign": "center",
+                    "fontSize": "14px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                },
+                "xsmall": {
+                    "textAlign": "center",
+                    "fontSize": "12px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                }
+            },
+            "danger": {
+                "large": {
+                    "textAlign": "center",
+                    "fontSize": "20px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                },
+                "normal": {
+                    "textAlign": "center",
+                    "fontSize": "16px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                },
+                "small": {
+                    "textAlign": "center",
+                    "fontSize": "14px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                },
+                "xsmall": {
+                    "textAlign": "center",
+                    "fontSize": "12px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 100%, 1.000)"
+                }
+            }
+        },
         "input": {
+            "label": {
+                "textAlign": "left",
+                "fontSize": "14px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(207, 5%, 56.7%, 1.000)"
+            },
             "placeholder": {
                 "normal": {
                     "textAlign": "left",
@@ -40,6 +185,7 @@ export const typography = {
                     "fontStyle": "italic",
                     "fontSize": "14px",
                     "fontWeight": 500,
+                    "lineHeight": "15px",
                     "textDecoration": "none",
                     "color": "hsla(0, 0%, 46.3%, 0.502)"
                 }
@@ -61,50 +207,6 @@ export const typography = {
                     "textDecoration": "none",
                     "color": "hsla(207, 5%, 56.7%, 1.000)"
                 }
-            },
-            "label": {
-                "textAlign": "left",
-                "fontSize": "14px",
-                "fontWeight": 400,
-                "textDecoration": "none",
-                "color": "hsla(207, 5%, 56.7%, 1.000)"
-            }
-        },
-        "label": {
-            "default": {
-                "textAlign": "left",
-                "fontSize": "16px",
-                "fontWeight": 300,
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 46.3%, 1.000)"
-            },
-            "disabled": {
-                "textAlign": "left",
-                "fontSize": "16px",
-                "fontWeight": 300,
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 46.3%, 0.651)"
-            },
-            "failure": {
-                "textAlign": "left",
-                "fontSize": "16px",
-                "fontWeight": 400,
-                "textDecoration": "none",
-                "color": "hsla(0, 67.9%, 67.1%, 1.000)"
-            },
-            "meta": {
-                "textAlign": "left",
-                "fontSize": "14px",
-                "fontWeight": 300,
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 56.1%, 1.000)"
-            },
-            "meta(Selected)": {
-                "textAlign": "left",
-                "fontSize": "14px",
-                "fontWeight": 600,
-                "textDecoration": "none",
-                "color": "hsla(207, 94.2%, 66.1%, 1.000)"
             }
         },
         "labelInformation": {
@@ -115,15 +217,6 @@ export const typography = {
             "lineHeight": "25px",
             "textDecoration": "none",
             "color": "hsla(207, 5%, 56.7%, 1.000)"
-        },
-        "tip": {
-            "textAlign": "left",
-            "fontStyle": "italic",
-            "fontSize": "14px",
-            "fontWeight": 500,
-            "lineHeight": "25px",
-            "textDecoration": "none",
-            "color": "hsla(205, 59.7%, 71.8%, 1.000)"
         },
         "select": {
             "option": {
@@ -161,97 +254,97 @@ export const typography = {
                 "textDecoration": "none",
                 "color": "hsla(0, 0%, 100%, 1.000)"
             }
+        }
+    },
+    "global": {
+        "mainMenu": {
+            "menuItem": {
+                "default": {
+                    "textAlign": "left",
+                    "fontSize": "16px",
+                    "fontWeight": 300,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 34.5%, 0.847)"
+                },
+                "active": {
+                    "textAlign": "left",
+                    "fontSize": "16px",
+                    "fontWeight": 300,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 34.5%, 0.851)"
+                },
+                "hover": {
+                    "textAlign": "left",
+                    "fontSize": "16px",
+                    "fontWeight": 300,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 34.5%, 0.851)"
+                }
+            },
+            "subheader": {
+                "textAlign": "left",
+                "fontSize": "14px",
+                "fontWeight": 600,
+                "textTransform": "uppercase",
+                "letterSpacing": "0.35px",
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 34.5%, 0.902)"
+            },
+            "hidePrompt": {
+                "textAlign": "left",
+                "fontSize": "14px",
+                "fontWeight": 300,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 34.5%, 1.000)"
+            },
+            "subItem": {
+                "default": {
+                    "textAlign": "left",
+                    "fontSize": "14px",
+                    "fontWeight": 300,
+                    "textDecoration": "none",
+                    "color": "hsla(0, 0%, 34.5%, 0.647)"
+                },
+                "active": {
+                    "textAlign": "left",
+                    "fontSize": "14px",
+                    "fontWeight": 600,
+                    "textDecoration": "none",
+                    "color": "hsla(214, 14.4%, 46.3%, 1.000)"
+                },
+                "hover": {
+                    "textAlign": "left",
+                    "fontSize": "14px",
+                    "fontWeight": 300,
+                    "textDecoration": "none",
+                    "color": "hsla(214, 14.4%, 46.3%, 1.000)"
+                }
+            },
+            "identity": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 34.1%, 0.749)"
+            }
         },
-        "button": {
-            "primary": {
-                "large": {
-                    "textAlign": "center",
-                    "fontSize": "20px",
-                    "fontWeight": 600,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
-                },
-                "normal": {
-                    "textAlign": "center",
-                    "fontSize": "16px",
-                    "fontWeight": 600,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
-                },
-                "small": {
-                    "textAlign": "center",
+        "topBar": {
+            "search": {
+                "value": {
+                    "textAlign": "left",
                     "fontSize": "14px",
-                    "fontWeight": 600,
+                    "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "hsla(0, 0%, 34.9%, 1.000)"
                 },
-                "xsmall": {
-                  "textAlign": "center",
-                  "fontSize": "12px",
-                  "fontWeight": 500,
-                  "textDecoration": "none",
-                  "color": "hsla(0, 0%, 100%, 1.000)"
-              }
-            },
-            "secondary": {
-                "large": {
-                    "textAlign": "center",
-                    "fontSize": "20px",
-                    "fontWeight": 600,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 55.3%, 1.000)"
-                },
-                "normal": {
-                    "textAlign": "center",
-                    "fontSize": "16px",
-                    "fontWeight": 600,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 55.3%, 1.000)"
-                },
-                "small": {
-                    "textAlign": "center",
+                "placeholder": {
+                    "textAlign": "left",
+                    "fontStyle": "italic",
                     "fontSize": "14px",
-                    "fontWeight": 600,
+                    "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 55.3%, 1.000)"
-                },
-                "xsmall": {
-                  "textAlign": "center",
-                  "fontSize": "12px",
-                  "fontWeight": 500,
-                  "textDecoration": "none",
-                  "color": "hsla(0, 0%, 55.3%, 1.000)"
-              }
-            },
-            "danger": {
-                "large": {
-                    "textAlign": "center",
-                    "fontSize": "20px",
-                    "fontWeight": 600,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
-                },
-                "normal": {
-                    "textAlign": "center",
-                    "fontSize": "16px",
-                    "fontWeight": 600,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
-                },
-                "small": {
-                    "textAlign": "center",
-                    "fontSize": "14px",
-                    "fontWeight": 600,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
-                },
-                "xsmall": {
-                  "textAlign": "center",
-                  "fontSize": "12px",
-                  "fontWeight": 500,
-                  "textDecoration": "none",
-                  "color": "hsla(0, 0%, 100%, 1.000)"
-              }
+                    "color": "hsla(0, 0%, 65.5%, 1.000)"
+                }
             }
         }
     },
@@ -479,8 +572,8 @@ export const typography = {
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
                 "color": "hsla(204, 2.4%, 59%, 1.000)"
-            },
-          },
+            }
+        },
         "subHeader": {
             "center": {
                 "textAlign": "center",
@@ -488,7 +581,7 @@ export const typography = {
                 "fontWeight": 700,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
-                "color": "hsla(204, 2%, 59%, 1.000)"
+                "color": "hsla(204, 2.4%, 59%, 1.000)"
             },
             "left": {
                 "textAlign": "left",
@@ -496,7 +589,7 @@ export const typography = {
                 "fontWeight": 700,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
-                "color": "hsla(204, 2%, 59%, 1.000)"
+                "color": "hsla(204, 2.4%, 59%, 1.000)"
             },
             "right": {
                 "textAlign": "right",
@@ -504,99 +597,7 @@ export const typography = {
                 "fontWeight": 700,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
-                "color": "hsla(204, 2%, 59%, 1.000)"
-            }
-        }
-    },
-    "global": {
-        "mainMenu": {
-            "menuItem": {
-                "default": {
-                    "textAlign": "left",
-                    "fontSize": "16px",
-                    "fontWeight": 300,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.5%, 0.847)"
-                },
-                "active": {
-                    "textAlign": "left",
-                    "fontSize": "16px",
-                    "fontWeight": 300,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.5%, 0.851)"
-                },
-                "hover": {
-                    "textAlign": "left",
-                    "fontSize": "16px",
-                    "fontWeight": 300,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.5%, 0.851)"
-                }
-            },
-            "subheader": {
-                "textAlign": "left",
-                "fontSize": "14px",
-                "fontWeight": 600,
-                "textTransform": "uppercase",
-                "letterSpacing": "0.35px",
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 34.5%, 0.902)"
-            },
-            "hidePrompt": {
-                "textAlign": "left",
-                "fontSize": "14px",
-                "fontWeight": 300,
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 34.5%, 1.000)"
-            },
-            "subItem": {
-                "default": {
-                    "textAlign": "left",
-                    "fontSize": "14px",
-                    "fontWeight": 300,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.5%, 0.647)"
-                },
-                "active": {
-                    "textAlign": "left",
-                    "fontSize": "14px",
-                    "fontWeight": 600,
-                    "textDecoration": "none",
-                    "color": "hsla(214, 14.4%, 46.3%, 1.000)"
-                },
-                "hover": {
-                    "textAlign": "left",
-                    "fontSize": "14px",
-                    "fontWeight": 300,
-                    "textDecoration": "none",
-                    "color": "hsla(214, 14.4%, 46.3%, 1.000)"
-                }
-            },
-            "identity": {
-                "textAlign": "left",
-                "fontSize": "12px",
-                "fontWeight": 400,
-                "textDecoration": "none",
-                "color": "hsla(0, 0%, 34.1%, 0.749)"
-            }
-        },
-        "topBar": {
-            "search": {
-                "placeholder": {
-                    "textAlign": "left",
-                    "fontStyle": "italic",
-                    "fontSize": "14px",
-                    "fontWeight": 300,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 65.5%, 1.000)"
-                },
-                "value": {
-                    "textAlign": "left",
-                    "fontSize": "14px",
-                    "fontWeight": 300,
-                    "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.9%, 1.000)"
-                }
+                "color": "hsla(204, 2.4%, 59%, 1.000)"
             }
         }
     },
@@ -720,6 +721,56 @@ export const typography = {
             "fontWeight": 500,
             "textDecoration": "none",
             "color": "hsla(202, 6.2%, 74.5%, 1.000)"
+        },
+        "filterButton": {
+            "default": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 50.2%, 1.000)"
+            },
+            "active": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 100%, 1.000)"
+            },
+            "hover": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 100%, 1.000)"
+            }
+        },
+        "searchInput": {
+            "placeholder": {
+                "textAlign": "left",
+                "fontStyle": "italic",
+                "fontSize": "12px",
+                "fontWeight": 500,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 46.3%, 0.647)"
+            },
+            "value": {
+                "textAlign": "left",
+                "fontSize": "12px",
+                "fontWeight": 400,
+                "textDecoration": "none",
+                "color": "hsla(0, 0%, 50.2%, 1.000)"
+            }
+        }
+    },
+    "tables": {
+        "groupName": {
+            "textAlign": "left",
+            "fontSize": "12px",
+            "fontWeight": 400,
+            "letterSpacing": "0.3px",
+            "textDecoration": "none",
+            "color": "hsla(210, 2.4%, 51%, 0.651)"
         }
     }
 };

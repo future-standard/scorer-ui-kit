@@ -20,10 +20,9 @@ const StyledButton = styled.button<IStyledComponentProps>`
     ${theme.typography.form.button[ design ][ size ]};
     font-family: ${theme.fontFamily.ui};
 
-    // No transition at this time as we're using a gradient in the default view. Requires work to make smooth.
-    // transition: background ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
-
-    transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
+    transition:
+      background ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeOut},
+      opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
 
     &:hover:enabled {
       background: ${theme.styles.form.button[design].hover.backgroundColor};
