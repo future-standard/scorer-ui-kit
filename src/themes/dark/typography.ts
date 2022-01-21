@@ -45,7 +45,7 @@ export const typography = {
                     "fontSize": "16px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 91.4%, 1.000)"
+                    "color": "hsla(0, 0%, 55.3%, 1.000)"
                 },
                 "large": {
                     "textAlign": "center",

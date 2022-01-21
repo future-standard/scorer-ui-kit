@@ -14,19 +14,19 @@ const Container = styled.div`
 
 const TopLine = styled.div`
   ${({ theme }) => theme.styles.filters.dropdownContainer.topBorder};
-  height: 3px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  height: 4px;
+  border-radius: 3px 3px 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 `;
 
 const InnerBox = styled.div`
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-  box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
-  border-right: solid 1px hsl(207, 16%, 86%);
-  border-bottom: solid 1px hsl(207, 16%, 86%);
-  border-left: solid 1px hsl(207, 16%, 86%);
-  background-color: hsl(200, 23%, 97%);
+  padding-top: 5px;
+  ${({theme}) => theme.styles.filters.dropdownContainer.background};
 `;
 
 const LoadingBox = styled.div`
@@ -35,7 +35,7 @@ const LoadingBox = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 146px;
-  border-top: 1px solid hsl(0, 0%, 91%);
+  border-top: ${({theme}) => theme.colors.divider} 1px solid;
 `;
 
 const LoadingText = styled.div`
@@ -60,7 +60,7 @@ const OptionList = styled.div`
 `;
 
 const ResultsContainer = styled.div`
-  border-top: 1px solid hsl(0, 0%, 91%);
+  border-top: ${({theme}) => theme.colors.divider} 1px solid;
   padding-bottom: 8px;
 `;
 
@@ -77,7 +77,7 @@ const ResultCounter = styled.div`
   padding-left: 9px;
   height: 30px;
   margin-bottom: 6px;
-  border-bottom: 1px solid hsl(0, 0%, 91%);
+  border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
 `;
 
 const SearchWrapper = styled.div`
