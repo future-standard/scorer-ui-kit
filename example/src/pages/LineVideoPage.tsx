@@ -30,6 +30,7 @@ const Line: React.FC<{}> = () => {
     pointIndexOffset: 1,
     showPointLabel: true,
     setIndexOffset: 1,
+    showDirectionMark: true
   });
 
   const [videoOptions]= useState<LineUIVideoOptions>({

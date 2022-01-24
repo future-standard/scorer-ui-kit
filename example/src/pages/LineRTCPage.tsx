@@ -24,7 +24,8 @@ const Line: React.FC<{}> = () => {
 
   const options : LineUIOptions = {
     showSetIndex: true,
-    setIndexOffset: 1
+    setIndexOffset: 1,
+    showDirectionMark: true
   }
 
   const fetchLine = useCallback(async () => {

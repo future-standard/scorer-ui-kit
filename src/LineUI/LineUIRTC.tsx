@@ -85,7 +85,8 @@ const LineUI : React.FC<LineUIProps> = ({
     setIndexOffset = 0,
     pointIndexOffset = 0,
     showPoint = false,
-    boundaryOffset = 0
+    boundaryOffset = 0,
+    showDirectionMark = false
   }={}
 }) => {
 
@@ -177,7 +178,8 @@ const LineUI : React.FC<LineUIProps> = ({
     showMoveHandle:  showMoveHandle || (showMoveHandle !== false && showGrabHandle !== false),
     setIndexOffset,
     pointIndexOffset,
-    showPoint
+    showPoint,
+    showDirectionMark
   };
 
   return (
