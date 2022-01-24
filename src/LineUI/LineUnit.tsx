@@ -171,7 +171,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
         </g>
         <g transform={`translate(0,30) rotate(${dmCoordinate.labelRotate})`}>
-          <LabelText styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
+          <LabelText styling={styling} fontSize={`${14}px`} x={-10} y={0} showIndex={revealSetIndex || handleFinderActive}>
             {label}
           </LabelText>
         </g>
