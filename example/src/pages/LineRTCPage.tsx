@@ -12,7 +12,8 @@ import {
   LineUIRTC,
   Logo,
   Button,
-  AlertBar
+  AlertBar,
+  Switch
 } from 'scorer-ui-kit';
 import { LineUIOptions } from '../../../dist/LineUI';
 
@@ -21,11 +22,12 @@ const Line: React.FC<{}> = () => {
   const [error] = useState<string | null>('');
   const [ws, setWS] = useState('localhost/wsapp');
   const [wsURL, setWsURL] = useState('');
+  const [isShowDirection, setShowDirection] = useState<boolean>(false);
 
   const options : LineUIOptions = {
     showSetIndex: true,
     setIndexOffset: 1,
-    showDirectionMark: true
+    showDirectionMark: isShowDirection
   }
 
   const fetchLine = useCallback(async () => {
@@ -94,6 +96,10 @@ const Line: React.FC<{}> = () => {
     setWsURL(ws);
   },[ws]);
 
+  const showDirection = useCallback((event) => {
+    setShowDirection(event);
+  }, []);
+
   return (
     <Layout >
       <Sidebar>
@@ -104,6 +110,8 @@ const Line: React.FC<{}> = () => {
           </pre>
         </SidebarBox>
         <SidebarBox>
+          <Switch checked={isShowDirection} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
+          <br />
           <Button design="secondary" onClick={fetchLine} >Cancel</Button>
           <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button>
         </SidebarBox>
