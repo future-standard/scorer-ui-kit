@@ -391,6 +391,7 @@ export const _GlobalUI = () => {
   const supportUrl = text("Support Url", "/support");
   const menuHomeLink = text("Home Link", "/welcome");
   const canAlwaysPin = boolean("Can Always Pin", true);
+  const defaultMenuOpen = boolean("Default menu open", false);
   const menuConfig = object("Menu Config", {
     items: [
       {
@@ -491,7 +492,7 @@ export const _GlobalUI = () => {
       <GlobalUI
         content={menuConfig}
         home={menuHomeLink}
-        defaultMenuOpen={true}
+        defaultMenuOpen={defaultMenuOpen}
         canAlwaysPin={canAlwaysPin}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText }}
