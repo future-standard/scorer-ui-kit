@@ -11,6 +11,7 @@ import {
   Content,
   Logo,
   ButtonWithIcon,
+  Switch,
 } from 'scorer-ui-kit';
 import styled from 'styled-components';
 import {LineUIOptions} from '../../../dist/LineUI';
@@ -25,11 +26,12 @@ const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
 
-  const [options] = useState<LineUIOptions>({
+  const [options, setOptions] = useState<LineUIOptions>({
     showSetIndex: true,
     pointIndexOffset: 1,
     showPointLabel: true,
     setIndexOffset: 1,
+    showDirectionMark: false
   });
 
   const [videoOptions]= useState<LineUIVideoOptions>({
@@ -136,6 +138,10 @@ const Line: React.FC<{}> = () => {
     fetchLine();
   }, [fetchLine])
 
+  const showDirection = useCallback((isChecked: boolean) => {
+    setOptions(previous => ({...previous, showDirectionMark: isChecked}));
+  }, []);
+
   return (
     <Layout >
       <Sidebar>
@@ -149,6 +155,8 @@ const Line: React.FC<{}> = () => {
           <StyledButton icon={'Delete'} design='danger' onClick={()=>removePoint(state.length-1)} >Remove Point</StyledButton>
 
           <StyledButton  icon={'Delete'}  design='danger' onClick={()=>removeSet(state.length-1)} >Remove Shape</StyledButton>
+
+          <Switch checked={options.showDirectionMark} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
 
         </SidebarBox>
         <SidebarBox style={{ flex: '1' }} >
