@@ -138,8 +138,8 @@ const Line: React.FC<{}> = () => {
     fetchLine();
   }, [fetchLine])
 
-  const showDirection = useCallback((event) => {
-    setOptions(previous => ({...previous, showDirectionMark: event}));
+  const showDirection = useCallback((isChecked: boolean) => {
+    setOptions(previous => ({...previous, showDirectionMark: isChecked}));
   }, []);
 
   return (

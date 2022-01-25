@@ -1,5 +1,5 @@
 import React, { useReducer, useCallback, useEffect, useState } from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 import {
   LineReducer,
@@ -16,6 +16,10 @@ import {
   Switch
 } from 'scorer-ui-kit';
 import { LineUIOptions } from '../../../dist/LineUI';
+
+const SwitchBox = styled.div`
+  margin-bottom: 15px;
+`;
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
@@ -96,8 +100,8 @@ const Line: React.FC<{}> = () => {
     setWsURL(ws);
   },[ws]);
 
-  const showDirection = useCallback((event) => {
-    setShowDirection(event);
+  const showDirection = useCallback((isChecked: boolean) => {
+    setShowDirection(isChecked);
   }, []);
 
   return (
@@ -110,8 +114,9 @@ const Line: React.FC<{}> = () => {
           </pre>
         </SidebarBox>
         <SidebarBox>
-          <Switch checked={isShowDirection} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
-          <br />
+          <SwitchBox>
+            <Switch checked={isShowDirection} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
+          </SwitchBox>
           <Button design="secondary" onClick={fetchLine} >Cancel</Button>
           <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button>
         </SidebarBox>
