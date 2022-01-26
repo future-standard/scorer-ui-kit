@@ -45,7 +45,7 @@ export const typography = {
                     "fontSize": "16px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 55.3%, 1.000)"
+                    "color": "hsla(0, 0%, 91.4%, 1.000)"
                 },
                 "large": {
                     "textAlign": "center",
@@ -462,6 +462,24 @@ export const typography = {
             "fontWeight": 700,
             "textDecoration": "none",
             "color": "hsla(0, 0%, 46.3%, 0.647)"
+        }
+    },
+    "modal": {
+        "basicContent": {
+            "textAlign": "left",
+            "fontSize": "14px",
+            "fontWeight": 400,
+            "lineHeight": "25px",
+            "textDecoration": "none",
+            "color": "hsla(0, 0%, 86.3%, 1.000)"
+        },
+        "title": {
+            "textAlign": "left",
+            "fontSize": "20px",
+            "fontWeight": 400,
+            "textShadow": "0px 0px 10px #1a97e959",
+            "textDecoration": "none",
+            "color": "hsla(0, 0%, 86.3%, 1.000)"
         }
     }
 };

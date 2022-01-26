@@ -772,5 +772,23 @@ export const typography = {
             "textDecoration": "none",
             "color": "hsla(210, 2.4%, 51%, 0.651)"
         }
+    },
+    "modal": {
+        "title": {
+            "textAlign": "left",
+            "fontSize": "20px",
+            "fontWeight": 400,
+            "textShadow": "0px 0px 10px #ffffffcc",
+            "textDecoration": "none",
+            "color": "hsla(210, 5.8%, 47.5%, 1.000)"
+        },
+        "basicContent": {
+            "textAlign": "left",
+            "fontSize": "14px",
+            "fontWeight": 400,
+            "lineHeight": "25px",
+            "textDecoration": "none",
+            "color": "hsla(200, 1.2%, 49.2%, 1.000)"
+        }
     }
 };

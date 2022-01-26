@@ -523,5 +523,16 @@ export const styles = {
             "borderColor": "hsla(205, 100%, 72%, 1.000)",
             "border": "hsla(205, 100%, 72%, 1.000) 1px solid"
         }
+    },
+    "modal": {
+        "overlay": {
+            "backgroundColor": "hsla(202, 33.3%, 95.3%, 0.510)"
+        },
+        "container": {
+            "boxShadow": "0px 10px 15px 0px hsla(205, 42.2%, 60%, 0.149)",
+            "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
+            "borderColor": "hsla(0, 14.3%, 90.4%, 1.000)",
+            "border": "hsla(0, 14.3%, 90.4%, 1.000) 1px solid"
+        }
     }
 };
