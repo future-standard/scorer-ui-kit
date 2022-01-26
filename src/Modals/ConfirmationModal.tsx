@@ -7,7 +7,6 @@ import { useModal } from '../hooks';
 const Container = styled.div``;
 
 const Title = styled.div`
-  // text-shadow: 0 0 10px hsla(0, 0%, 100%, 0.8);
   ${({theme: { typography }}) => typography.modal.title};
 `;
 
