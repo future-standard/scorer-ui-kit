@@ -778,6 +778,7 @@ export const typography = {
             "textAlign": "left",
             "fontSize": "20px",
             "fontWeight": 400,
+            "textShadow": "0px 0px 10px #ffffffcc",
             "textDecoration": "none",
             "color": "hsla(210, 5.8%, 47.5%, 1.000)"
         },
