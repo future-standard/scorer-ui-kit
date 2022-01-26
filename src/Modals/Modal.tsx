@@ -18,8 +18,11 @@ const Container = styled.div`
   background-color: hsla(202, 33%, 95%, 0.51);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-  font-family: ${({ theme }) => theme.fontFamily.ui};
   z-index: 999;
+  ${({theme}) => theme && css``}
+
+  font-family: ${({ theme }) => theme.fontFamily.ui};
+  ${({ theme }) => theme.styles.modal.overlay};
 `;
 
 const CloseIcon = styled(Icon)``;
@@ -65,12 +68,11 @@ const CloseButton = styled.button<{ selected?: boolean }>`
 const LightBox = styled.div<{ padding?: boolean, width?: string}>`
   position: relative;
   margin: 27px 0 0;
-  box-shadow: 0 10px 15px 0 hsla(205, 42%, 60%, 0.15);
-  background-color: hsl(0, 0%, 100%);
   z-index: 9999;
   width: ${({ width }) => width ? width : `580px`};
   padding: ${({ padding }) => padding ? `30px 40px` : `0`};
   border-radius: 5px;
+  ${({ theme }) => theme.styles.modal.container};
 `;
 
 export interface IModalProps {

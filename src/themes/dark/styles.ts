@@ -281,5 +281,16 @@ export const styles = {
                 }
             }
         }
+    },
+    "modal": {
+        "container": {
+            "boxShadow": "0px 10px 15px 0px hsla(205, 38.7%, 12.2%, 0.149)",
+            "backgroundColor": "hsla(210, 17.1%, 13.7%, 1.000)",
+            "borderColor": "hsla(206, 7.1%, 19.4%, 1.000)",
+            "border": "hsla(206, 7.1%, 19.4%, 1.000) 1px solid"
+        },
+        "overlay": {
+            "backgroundColor": "hsla(203, 100%, 4.7%, 0.647)"
+        }
     }
 };
