@@ -21,6 +21,14 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
     `};
 
     background-color: ${noBackground ? 'transparent' : 'hsla(0, 0%, 100%, 1.000)'};
+
+    /* https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px ${noBackground ? 'transparent' : 'hsla(0, 0%, 100%, 1.000)'} inset !important;
+    }
   `};
 
   ${IconWrapper} {
@@ -98,7 +106,7 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   disabled = false,
   noBackground = false,
   hasCrossButton = false,
-  onCrossClick = () => {},
+  onCrossClick = () => { },
   width,
   ...props
 }) => {
