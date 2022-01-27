@@ -24,10 +24,21 @@ const isFilterItem = (item: any): item is IFilterItem => {
   return ((typeof item.value === 'number') || (typeof item.value === 'string')) && (typeof item.text === 'string');
 };
 
+interface IFiltersSelections {
+  [id: string] : {
+    id: string
+    type: IFilterType
+    order: number
+    selected: IFilterItem | IFilterItem[] | DateInterval | Date | null;
+  }
+}
+
+
 interface IFilterResult {
   id: string
   type: IFilterType
-  selected: IFilterItem | IFilterItem[] | DateInterval | Date | null;
+  order: number
+  selected: IFilterItem | IFilterItem[] | DateInterval | Date | null ;
 }
 
 interface ISearchFilter extends IBasicSearchInput {
@@ -35,17 +46,20 @@ interface ISearchFilter extends IBasicSearchInput {
   canHide?: boolean
   showFieldText?: string
   selected?: IFilterItem
+  order?: number
 }
 
 interface IFilterDropdownExt extends IFilterDropdown {
   id: string
   canHide?: boolean
+  order?: number
 }
 
 interface IFilterDatePicker extends IDropdownDatePicker {
   id: string
   canHide?: boolean
   name?: string
+  order?: number
 }
 
 interface IFilterDropdownConfig {
@@ -64,6 +78,7 @@ interface IFilterDropdownConfig {
   maxDisplayedItems?: number
   searchResultText?: string
   name?: string
+  order?: number
 }
 
 export {
@@ -78,5 +93,6 @@ export type {
   ISearchFilter,
   IFilterDropdownExt,
   IFilterDatePicker,
-  IFilterDropdownConfig
+  IFilterDropdownConfig,
+  IFiltersSelections
 };
