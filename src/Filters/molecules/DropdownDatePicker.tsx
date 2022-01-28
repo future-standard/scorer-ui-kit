@@ -34,6 +34,8 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
   selected,
   dateTimeTextUpper,
   dateTimeTextLower,
+  timeZoneTitle,
+  timeZoneValueTitle,
   onCloseCallback = () => { },
   onUpdateCallback = () => { },
   onToggleCallback = () => { },
@@ -96,7 +98,14 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
         <FilterDropdownContainer>
           {mountedPicker.isMount && (
             <DatePicker
-              {...{ dateMode, timeMode, dateTimeTextUpper, dateTimeTextLower }}
+              {...{
+                dateMode,
+                timeMode,
+                dateTimeTextUpper,
+                dateTimeTextLower,
+                timeZoneTitle,
+                timeZoneValueTitle,
+              }}
               updateCallback={handleUpdateCallback}
               hasEmptyValue
               initialValue={mountedPicker.initialValue}
