@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import {
   IFilterItem,
@@ -12,7 +12,7 @@ import FilterInputs from '../molecules/FilterInputs';
 import { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../FilterTypes';
 import FiltersResults, { IFilterLabel } from '../molecules/FiltersResults';
 import { DateInterval, isDateInterval } from '../molecules/DatePicker';
-// import isequal from 'lodash.isequal';
+import isequal from 'lodash.isequal';
 import useWhyDidYouUpdate from '../../hooks/whyDidYouRender';
 
 const Title = styled.div`
@@ -230,7 +230,8 @@ export interface IFilterBarContainer {
   isLoading?: boolean
   singleFilter?: boolean
   resultsDateFormat?: string
-  filtersValues: IFilterResult[]
+  filtersValues: IFilterResult[],
+  isControlledValue: boolean
   onChangeCallback: (currentSelected: IFilterResult[]) => void
 }
 
@@ -248,17 +249,14 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
   singleFilter = false,
   resultsDateFormat,
   filtersValues,
+  isControlledValue,
   onChangeCallback,
   ...props
 }) => {
 
-  // const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
+  const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
+  console.log(dropdownsConfigRef.current, 'dropdownsConfigRef');
   useWhyDidYouUpdate('filterValues at Container', filtersValues);
-
-  // // Prevents extra-renders only updating if the dropdowns config actually changed
-  // if (dropdownsConfigRef.current && !isequal(dropdownsConfigRef.current, dropdownsConfig)) {
-  //   dropdownsConfigRef.current = dropdownsConfig;
-  // }
 
   const handleChange = useCallback((newValues: IFilterResult[]) => {
     onChangeCallback(newValues);
@@ -300,74 +298,98 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
   }, [filtersValues, handleChange]);
 
   const handleOnRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => {
-    const updatedFilters = [...filtersValues];
 
-    const foundFilter = updatedFilters.find((filterElement) => filterElement.id === filterId);
-    if (!foundFilter) {
-      return;
-    } else if (Array.isArray(foundFilter.selected) && type === 'dropdown') {
-      const selectedFiltered = foundFilter.selected.filter((oldItem) => {
-        if (isFilterItem(oldItem) && isFilterItem(item)) {
-          return oldItem.value !== item.value;
-        }
-        // it's required to have return a value usually will always receive filterItems and all will enter the if
-        // but just in case if it's not a Filter item it will filter the value.
-        return true;
-      });
-      foundFilter.selected = selectedFiltered.length === 0 ? null : selectedFiltered;
-    } else {
-      foundFilter.selected = null;
-    }
+    const updatedFilters = filtersValues.map((filter) => {
+      if(filter.id !== filterId) {
+        return filter;
+      }
+
+      if (Array.isArray(filter.selected) && type === 'dropdown' && isFilterItem(item)) {
+          const newSelected = filter.selected.filter((filter : IFilterItem) => filter.value !== item.value );
+          const validSelected = newSelected.length === 0 ? null : newSelected;
+          return {...filter, selected: validSelected };
+      }
+
+      return {...filter, selected: null};
+    });
 
     handleChange(updatedFilters);
 
   }, [filtersValues, handleChange]);
 
   const handleDatePickers = useCallback((selection: DateInterval | Date | null, filterId: string) => {
+    const updatedFilters = filtersValues.map((filter) => {
+      if (filter.id !== filterId) {
+        return filter;
+      }
+      return { ...filter, selection };
+    });
 
-    const updatedDatePickers = [...filtersValues];
-    const foundFilter = updatedDatePickers.find((datePicker) => datePicker.id === filterId);
-
-    if (foundFilter) {
-      foundFilter.selected = selection;
-      handleChange(filtersValues);
-    }
+    handleChange(updatedFilters);
 
   }, [filtersValues, handleChange]);
 
-  // const updateDropdownsSelectedText = useCallback((dropdownsConfig: IFilterDropdownConfig[]): IFilterResult[] => {
+  const reviewDropdownsSelectedText = useCallback(() => {
+    if (isControlledValue) {
+      // console.log('it controlled from outside');
+      return;
+    }
 
-  //   const updatedFilters = [...filtersValues];
-  //   updatedFilters.forEach((filter: IFilterResult) => {
+    // console.log('its not controlled from outside');
 
-  //     const foundDropdown = dropdownsConfig.find((dropdown) => dropdown.id === filter.id);
+    if (!dropdownsConfigRef.current) {
+      // console.log('no dropdowns ref exist');
+      return;
+    }
 
-  //     if (foundDropdown) {
+    if (isequal(dropdownsConfigRef.current, dropdownsConfig)) {
+      // console.log('nothing really changed in dropdowns');
+      return;
+    }
 
-  //       if (Array.isArray(filter.selected)) {
-  //         filter.selected.forEach(item => {
-  //           const foundItem = foundDropdown.list.find((dropdownItem) => dropdownItem.value === item.value);
+    if (dropdownsConfigRef.current[0].buttonText === dropdownsConfig[0].buttonText) {
+      // console.log('NO TEXT changed in dropdowns, but something changed so lets update Ref and leave');
+      return;
+    }
 
-  //           if (foundItem) {
-  //             item.text = foundItem.text;
-  //           }
-  //         });
-  //       } else if (isFilterItem(filter.selected)) {
-  //         const foundItem = foundDropdown.list.find((item: IFilterItem) => {
-  //           return filter.selected === null
-  //             ? false
-  //             : isFilterItem(filter.selected) ? item.value === filter.selected.value : false;
-  //         });
+    const updatedFilters = filtersValues.map((filter) => {
 
-  //         if (foundItem) {
-  //           filter.selected.text = foundItem.text;
-  //         }
-  //       }
-  //     }
-  //   });
+      if (filter.type !== 'dropdown' || filter.selected === null) {
+        return filter;
+      }
 
-  //   return updatedFilters;
-  // }, [filtersValues]);
+      const foundDropdown = dropdownsConfig.find((dropdown) => dropdown.id === filter.id);
+
+      if (Array.isArray(filter.selected) && foundDropdown) {
+        const newSelected = filter.selected.map((selected) => {
+
+          const foundItem = foundDropdown.list.find((item) => item.value === selected.value);
+          if (foundItem) {
+            return { text: foundItem.text, value: selected.value };
+          }
+          return selected;
+        });
+        return { ...filter, selected: newSelected };
+      }
+
+      if (isFilterItem(filter.selected) && foundDropdown) {
+        const { value } = filter.selected;
+        const foundItem = foundDropdown.list.find((item) => item.value === value);
+        if (foundItem) {
+          const newSelected = { text: foundItem.text, value };
+          return { ...filter, selected: newSelected };
+        }
+      }
+
+      return filter;
+    });
+
+
+
+    dropdownsConfigRef.current = dropdownsConfig;
+    console.log('updated', updatedFilters);
+    handleChange(updatedFilters);
+  }, [dropdownsConfig, filtersValues, handleChange, isControlledValue]);
 
 
   /**
@@ -376,19 +398,11 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
    * DatePickers do not change text for now
    */
 
-  // useEffect(() => {
-  //   let mountConfig = true;
-  //   if (mountConfig && dropdownsConfig) {
-  //     handleChange(updateDropdownsSelectedText(dropdownsConfig));
-  //   }
-
-  //   return () => {
-  //     mountConfig = false;
-  //   };
-
-  //   //  maybe if the list change for the first will change for all
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [handleChange, updateDropdownsSelectedText, dropdownsConfig[0].list]);
+  useEffect(() => {
+    reviewDropdownsSelectedText();
+    //  maybe if the list change for the first will change for all
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reviewDropdownsSelectedText, dropdownsConfig[0].buttonText]);
 
   return (
     <Container {...props}>

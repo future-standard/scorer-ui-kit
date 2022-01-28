@@ -137,9 +137,9 @@ const FilterBar: React.FC<IFilterBar> = ({
       {...props}
       {...{ searchersConfig, dropdownsConfig, datePickersConfig }}
       filtersValues={controlledValue ? filtersValuesObjToArr(controlledValue) : filtersValues}
+      isControlledValue={!!controlledValue}
       onChangeCallback={handleChangeCallback}
     />
-
   );
 };
 

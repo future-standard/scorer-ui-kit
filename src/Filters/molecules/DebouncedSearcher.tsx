@@ -1,11 +1,12 @@
 import debounce from 'lodash.debounce';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ISearchFilter } from '..';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 
 
 const DebounceSearcher: React.FC<ISearchFilter> = ({
   onDebouncedChange = () => { },
+  value,
   ...props
 }) => {
   const [typedValue, setTypedValue] = useState('');
@@ -22,6 +23,12 @@ const DebounceSearcher: React.FC<ISearchFilter> = ({
     setTypedValue(newValue);
     debounceChange(newValue);
   }, [debounceChange]);
+
+  useEffect(() =>{
+    if(value === '') {
+      setTypedValue('');
+    }
+  },[value]);
 
   return (
     <BasicSearchInput {...props} onChange={updateTyped} value={typedValue} />
