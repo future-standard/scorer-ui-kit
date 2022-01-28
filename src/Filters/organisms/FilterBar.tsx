@@ -133,21 +133,13 @@ const FilterBar: React.FC<IFilterBar> = ({
   }, [controlledValue, onChangeCallback, onChangeObjCallback]);
 
   return (
-    controlledValue
-      ? (
-        <FilterBarContainer
-          {...props}
-          {...{ searchersConfig, dropdownsConfig, datePickersConfig }}
-          filtersValues={filtersValuesObjToArr(controlledValue)}
-          onChangeCallback={handleChangeCallback}
-        />
-      )
-      : (
-        <FilterBarContainer
-          {...{ filtersValues, searchersConfig, dropdownsConfig, datePickersConfig }}
-          {...props}
-          onChangeCallback={handleChangeCallback}
-        />)
+    <FilterBarContainer
+      {...props}
+      {...{ searchersConfig, dropdownsConfig, datePickersConfig }}
+      filtersValues={controlledValue ? filtersValuesObjToArr(controlledValue) : filtersValues}
+      onChangeCallback={handleChangeCallback}
+    />
+
   );
 };
 
