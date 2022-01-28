@@ -18,6 +18,7 @@ const initFilters = (
   dropdownsConfig: IFilterDropdownConfig[],
   datePickersConfig: IFilterDatePicker[],
 ): IFilterResult[] => {
+  console.info('*** Initializing filters *** ');
 
   const newFilters: IFilterResult[] = [];
 

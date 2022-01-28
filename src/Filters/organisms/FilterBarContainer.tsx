@@ -255,7 +255,7 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
 }) => {
 
   const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
-  console.log(dropdownsConfigRef.current, 'dropdownsConfigRef');
+
   useWhyDidYouUpdate('filterValues at Container', filtersValues);
 
   const handleChange = useCallback((newValues: IFilterResult[]) => {
@@ -264,34 +264,37 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
 
   const handleDropdownsSelected = useCallback((newValue: IFilterValue, filterId: string) => {
 
-    const updatedFilters = [...filtersValues];
-    const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
-    if (foundFilter && foundFilter.selected !== newValue) {
-      foundFilter.selected = newValue;
-      handleChange(updatedFilters);
-    }
+    const updatedFilters = filtersValues.map((filter) => {
+      if (filterId === filter.id) {
+        return { ...filter, selected: newValue };
+      }
+      return filter;
+    });
+
+    handleChange(updatedFilters);
 
   }, [filtersValues, handleChange]);
 
   const handleSearchers = useCallback((newValue: string, filterId: string) => {
 
-    const updatedFilters = [...filtersValues];
-    const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
-    if (foundFilter) {
-      foundFilter.selected = newValue === '' ? null : { text: newValue, value: newValue };
-      handleChange(updatedFilters);
-    }
+    console.log(filtersValues, 'before update');
+    const updatedFilters = filtersValues.map((filter) => {
+      if (filter.id === filterId) {
+        const updatedSelect = newValue === '' ? null : { text: newValue, value: newValue };
+        return { ...filter, selected: updatedSelect };
+      }
+
+      return filter;
+    });
+    console.log(updatedFilters, 'value of the searchers');
+    handleChange(updatedFilters);
 
   }, [filtersValues, handleChange]);
 
   const handleOnClear = useCallback(() => {
 
-    const updatedFilters = [...filtersValues];
-    updatedFilters.forEach((filterElement) => {
-      if (filterElement.selected === null) {
-        return;
-      }
-      filterElement.selected = null;
+    const updatedFilters = filtersValues.map((filter) => {
+      return { ...filter, selected: null };
     });
 
     handleChange(updatedFilters);
@@ -300,17 +303,17 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
   const handleOnRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => {
 
     const updatedFilters = filtersValues.map((filter) => {
-      if(filter.id !== filterId) {
+      if (filter.id !== filterId) {
         return filter;
       }
 
       if (Array.isArray(filter.selected) && type === 'dropdown' && isFilterItem(item)) {
-          const newSelected = filter.selected.filter((filter : IFilterItem) => filter.value !== item.value );
-          const validSelected = newSelected.length === 0 ? null : newSelected;
-          return {...filter, selected: validSelected };
+        const newSelected = filter.selected.filter((filter: IFilterItem) => filter.value !== item.value);
+        const validSelected = newSelected.length === 0 ? null : newSelected;
+        return { ...filter, selected: validSelected };
       }
 
-      return {...filter, selected: null};
+      return { ...filter, selected: null };
     });
 
     handleChange(updatedFilters);
@@ -335,7 +338,7 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
       return;
     }
 
-    // console.log('its not controlled from outside');
+    // console.log('its self controlled');
 
     if (!dropdownsConfigRef.current) {
       // console.log('no dropdowns ref exist');
@@ -348,7 +351,7 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
     }
 
     if (dropdownsConfigRef.current[0].buttonText === dropdownsConfig[0].buttonText) {
-      // console.log('NO TEXT changed in dropdowns, but something changed so lets update Ref and leave');
+      console.log('NO TEXT changed in dropdowns, but something changed so lets update Ref and leave');
       return;
     }
 
@@ -384,11 +387,11 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
       return filter;
     });
 
-
+    console.log('TEXT WAS UPDATED', updatedFilters);
 
     dropdownsConfigRef.current = dropdownsConfig;
-    console.log('updated', updatedFilters);
     handleChange(updatedFilters);
+
   }, [dropdownsConfig, filtersValues, handleChange, isControlledValue]);
 
 
