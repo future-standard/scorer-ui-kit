@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import FilterDropdown from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
 import DropdownDatePicker from './DropdownDatePicker';
 import { IFilterDatePicker, IFilterDropdownExt, ISearchFilter } from '../FilterTypes';
+import DebounceSearcher from './DebouncedSearcher';
 
 const fadeInAnimation = keyframes`
   0% {
@@ -66,10 +66,10 @@ const renderSearchInputs = (
           {searchInput.canHide
             ? (
               <CloseSearchInputWrapper>
-                <BasicSearchInput {...searchInput} hasCrossButton onCrossClick={() => handleVisibleSearch(searchInput.id)} />
+                <DebounceSearcher {...searchInput} hasCrossButton onCrossClick={() => handleVisibleSearch(searchInput.id)} />
               </CloseSearchInputWrapper>
             )
-            : <BasicSearchInput {...searchInput} />}
+            : <DebounceSearcher {...searchInput} />}
         </SearchInputWrapper>
       );
     }

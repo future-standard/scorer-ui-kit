@@ -47,6 +47,7 @@ interface ISearchFilter extends IBasicSearchInput {
   showFieldText?: string
   selected?: IFilterItem
   order?: number
+  onDebouncedChange?: (newValue: string) => void
 }
 
 interface IFilterDropdownExt extends IFilterDropdown {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import {
   IFilterItem,
@@ -12,8 +12,7 @@ import FilterInputs from '../molecules/FilterInputs';
 import { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../FilterTypes';
 import FiltersResults, { IFilterLabel } from '../molecules/FiltersResults';
 import { DateInterval, isDateInterval } from '../molecules/DatePicker';
-import isequal from 'lodash.isequal';
-import debounce from 'lodash.debounce';
+// import isequal from 'lodash.isequal';
 import useWhyDidYouUpdate from '../../hooks/whyDidYouRender';
 
 const Title = styled.div`
@@ -86,14 +85,13 @@ const createSearchers = (
     if (filter && !Array.isArray(filter.selected)) {
       const value: string = (filter.selected === null) || (!isFilterItem(filter.selected)) ? '' : filter.selected.text;
 
-      const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-        const newValue = e.currentTarget.value;
+      const onDebouncedChange = (newValue: string) => {
         handleSearchers(newValue, filter.id);
       };
 
       let disabled = getDisableValue(filtersValues, singleFilter, searcher);
 
-      const newSearcher: ISearchFilter = { ...searcher, value, disabled, onChange };
+      const newSearcher: ISearchFilter = { ...searcher, value, disabled, onDebouncedChange };
       searchersFilters.push(newSearcher);
     }
   });
@@ -218,43 +216,6 @@ const createLabelResults = (
   return labelLists;
 };
 
-// const updateDropdownsSelectedText = (dropdownsConfig: IFilterDropdownConfig[], filtersValues: IFilterResult[]): IFilterResult[] => {
-//   const updatedFilters = [...filtersValues];
-//   updatedFilters.forEach((filter: IFilterResult) => {
-
-//     const foundDropdown = dropdownsConfig.find((dropdown) => dropdown.id === filter.id);
-
-//     if (foundDropdown) {
-
-//       if (Array.isArray(filter.selected)) {
-//         filter.selected.forEach(item => {
-//           const foundItem = foundDropdown.list.find((dropdownItem) => dropdownItem.value === item.value);
-
-//           if (foundItem) {
-//             item.text = foundItem.text;
-//           }
-//         });
-//       } else if (isFilterItem(filter.selected)) {
-//         const foundItem = foundDropdown.list.find((item: IFilterItem) => {
-//           return filter.selected === null
-//             ? false
-//             : isFilterItem(filter.selected) ? item.value === filter.selected.value : false;
-//         });
-
-//         if (foundItem) {
-//           filter.selected.text = foundItem.text;
-//         }
-//       }
-//     }
-//   });
-
-//   return updatedFilters;
-// };
-
-const initSearchers = (filtersValues: IFilterResult[]): IFilterResult[] => {
-  return filtersValues.filter(({ type }) => type === 'search');
-};
-
 export interface IFilterBarContainer {
   filtersTitle?: string
   searchersConfig: ISearchFilter[]
@@ -291,18 +252,13 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
   ...props
 }) => {
 
-  const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
-  const [searchersValues, setSearchersValues] = useState<IFilterResult[]>(initSearchers(filtersValues));
-
+  // const dropdownsConfigRef = useRef<IFilterDropdownConfig[]>(dropdownsConfig);
   useWhyDidYouUpdate('filterValues at Container', filtersValues);
 
-  // Prevents extra-renders only updating if the dropdowns config actually changed
-  if (dropdownsConfigRef.current && !isequal(dropdownsConfigRef.current, dropdownsConfig)) {
-    dropdownsConfigRef.current = dropdownsConfig;
-  }
-
-  // saves a reference of the debounce for searchers
-  const debounceSearcher = useRef(debounce(updatedFilters => handleChange(updatedFilters), 600)).current;
+  // // Prevents extra-renders only updating if the dropdowns config actually changed
+  // if (dropdownsConfigRef.current && !isequal(dropdownsConfigRef.current, dropdownsConfig)) {
+  //   dropdownsConfigRef.current = dropdownsConfig;
+  // }
 
   const handleChange = useCallback((newValues: IFilterResult[]) => {
     onChangeCallback(newValues);
@@ -321,18 +277,14 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
 
   const handleSearchers = useCallback((newValue: string, filterId: string) => {
 
-    const updatedSearchers = [...searchersValues];
     const updatedFilters = [...filtersValues];
-    const foundSearcher = updatedSearchers.find((filter) => filter.id === filterId);
     const foundFilter = updatedFilters.find((filter) => filter.id === filterId);
-    if (foundSearcher && foundFilter) {
-      foundSearcher.selected = newValue === '' ? null : { text: newValue, value: newValue };
+    if (foundFilter) {
       foundFilter.selected = newValue === '' ? null : { text: newValue, value: newValue };
-      debounceSearcher(updatedFilters);
-      setSearchersValues(updatedSearchers);
+      handleChange(updatedFilters);
     }
 
-  }, [debounceSearcher, filtersValues, searchersValues]);
+  }, [filtersValues, handleChange]);
 
   const handleOnClear = useCallback(() => {
 
@@ -383,6 +335,41 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
 
   }, [filtersValues, handleChange]);
 
+  // const updateDropdownsSelectedText = useCallback((dropdownsConfig: IFilterDropdownConfig[]): IFilterResult[] => {
+
+  //   const updatedFilters = [...filtersValues];
+  //   updatedFilters.forEach((filter: IFilterResult) => {
+
+  //     const foundDropdown = dropdownsConfig.find((dropdown) => dropdown.id === filter.id);
+
+  //     if (foundDropdown) {
+
+  //       if (Array.isArray(filter.selected)) {
+  //         filter.selected.forEach(item => {
+  //           const foundItem = foundDropdown.list.find((dropdownItem) => dropdownItem.value === item.value);
+
+  //           if (foundItem) {
+  //             item.text = foundItem.text;
+  //           }
+  //         });
+  //       } else if (isFilterItem(filter.selected)) {
+  //         const foundItem = foundDropdown.list.find((item: IFilterItem) => {
+  //           return filter.selected === null
+  //             ? false
+  //             : isFilterItem(filter.selected) ? item.value === filter.selected.value : false;
+  //         });
+
+  //         if (foundItem) {
+  //           filter.selected.text = foundItem.text;
+  //         }
+  //       }
+  //     }
+  //   });
+
+  //   return updatedFilters;
+  // }, [filtersValues]);
+
+
   /**
    * This use Effect will update filters text selections in case the language is changed.
    * Dropdowns are the only ones that required this because Inputs text are the user type data.
@@ -391,16 +378,17 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
 
   // useEffect(() => {
   //   let mountConfig = true;
-
-  //   if (mountConfig && dropdownsConfigRef.current) {
-  //     handleChange(updateDropdownsSelectedText(dropdownsConfigRef.current, filtersValues));
+  //   if (mountConfig && dropdownsConfig) {
+  //     handleChange(updateDropdownsSelectedText(dropdownsConfig));
   //   }
 
   //   return () => {
   //     mountConfig = false;
   //   };
 
-  // }, [filtersValues, handleChange]);
+  //   //  maybe if the list change for the first will change for all
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [handleChange, updateDropdownsSelectedText, dropdownsConfig[0].list]);
 
   return (
     <Container {...props}>
@@ -412,12 +400,12 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
           showLessText,
         }}
         searchFilters={createSearchers(searchersConfig, filtersValues, singleFilter, handleSearchers)}
-        dropdownFilters={createDropdownFilters(dropdownsConfigRef.current, filtersValues, singleFilter, handleDropdownsSelected)}
+        dropdownFilters={createDropdownFilters(dropdownsConfig, filtersValues, singleFilter, handleDropdownsSelected)}
         datePickerFilters={datePickersConfig ? createDatePickers(datePickersConfig, filtersValues, singleFilter, handleDatePickers) : undefined}
       />
       <StyledFilterResults
         {...{ resultTextTemplate, clearText, totalResults, resultsDateFormat }}
-        labelLists={createLabelResults(searchersConfig, dropdownsConfigRef.current, datePickersConfig, filtersValues)}
+        labelLists={createLabelResults(searchersConfig, dropdownsConfig, datePickersConfig, filtersValues)}
         onClearAll={handleOnClear}
         onRemoveFilter={handleOnRemoveFilter}
       />
