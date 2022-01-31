@@ -7,7 +7,10 @@
   "created": "作成時期",
   "usage": "使用",
   "cost": "価格",
+  "filterByName": "デバイス名前 フィルター",
+  "filterByDate": "年月日 フィルター",
   "searchPlaceholder": "[VISIBLE] 〜 [TOTAL]件",
+  "clearText": "すべてクリア",
   "statusTypes": {
     "ok": "OKです",
     "caution": "注意",
