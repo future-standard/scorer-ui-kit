@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   HashRouter as Router,
   Switch,
@@ -19,6 +18,7 @@ import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import TabsPage from './pages/TabsPage';
 
 const App: React.FC<{}> = () => {
+
   return (
 
     <Router>

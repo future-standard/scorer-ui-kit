@@ -1,3 +1,17 @@
 {
-  "madeby": "Powered By:"
+  "madeby": "Powered By:",
+  "tableExample": "Table example",
+  "upExample": "Up Title Example",
+  "deviceName": "Device name",
+  "status": "Status",
+  "created": "Created",
+  "usage": "Usage",
+  "cost": "Cost",
+  "searchPlaceholder": "Showing [VISIBLE] of [TOTAL]",
+  "statusTypes": {
+    "ok": "OK",
+    "caution": "Caution",
+    "warning": "Warning",
+    "offline": "Offline"
+  }
 }

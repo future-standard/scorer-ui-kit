@@ -402,10 +402,12 @@ const FilterBar: React.FC<IFilterBarContainer> = ({
    */
 
   useEffect(() => {
-    reviewDropdownsSelectedText();
+    if(dropdownsConfig.length > 0) {
+      reviewDropdownsSelectedText();
+    }
     //  maybe if the list change for the first will change for all
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reviewDropdownsSelectedText, dropdownsConfig[0].buttonText]);
+  }, [reviewDropdownsSelectedText, dropdownsConfig]);
 
   return (
     <Container {...props}>
