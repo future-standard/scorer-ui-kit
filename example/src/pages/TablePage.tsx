@@ -1,10 +1,27 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { TypeTable, PageHeader, Content, Label, RadioButton, IFilterItem, IMediaType, FilterBar, IFilterDropdownConfig, isFilterItem } from 'scorer-ui-kit';
-import { IRowData, ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
+import {
+  TypeTable,
+  PageHeader,
+  Content,
+  Label,
+  RadioButton,
+  IFilterItem,
+  IMediaType,
+  FilterBar,
+  IFilterDropdownConfig,
+  isFilterItem,
+  IFiltersSelections,
+  ISearchFilter
+} from 'scorer-ui-kit';
+
+import {
+  IRowData,
+  ITableColumnConfig,
+  ITypeTableData
+} from 'scorer-ui-kit/dist/Tables';
 import i18n from '../locales/setup';
 import { getTimeSince } from '../utils';
-import { IFiltersSelections, ISearchFilter } from '../../../dist/Filters/FilterTypes';
 import { useTranslation } from 'react-i18next';
 import { useQueryParams } from '../hooks/useQueryParams';
 
@@ -64,8 +81,6 @@ export const filterByStatus = (data: ITableData[], selected: IFilterItem[]): ITa
 
   return updatedData;
 }
-
-
 
 export const filterByDeviceName = (data: ITableData[], selected: IFilterItem): ITableData[] => {
   return data.filter((item) => {
@@ -341,85 +356,85 @@ const TablePage: React.FC = () => {
 
 
   // Query params update is not working correctly, it overwrites the callbacks :(
-  const reviewParamsChange = useCallback(() => {
+  // const reviewParamsChange = useCallback(() => {
 
-    let hasStatusUpdated = false;
-    let hasNameParaUpdated = false;
-    const results: IFilterItem[] = [];
+  //   let hasStatusUpdated = false;
+  //   let hasNameParaUpdated = false;
+  //   const results: IFilterItem[] = [];
 
-    const statusArray = statusParam.split('%2C+');
+  //   const statusArray = statusParam.split('%2C+');
 
-    const newStatusSelected = statusArray.reduce((result, statusVal) => {
-      const foundItem = statusValues.find(({ value }) => statusVal === value);
-      if (foundItem) {
-        const newFilterItem: IFilterItem = { text: foundItem.text, value: foundItem.value }
-        result.push(newFilterItem);
-      }
+  //   const newStatusSelected = statusArray.reduce((result, statusVal) => {
+  //     const foundItem = statusValues.find(({ value }) => statusVal === value);
+  //     if (foundItem) {
+  //       const newFilterItem: IFilterItem = { text: foundItem.text, value: foundItem.value }
+  //       result.push(newFilterItem);
+  //     }
 
-      return result;
+  //     return result;
 
-    }, results);
+  //   }, results);
 
-    if (filterValues['status'].selected === null && newStatusSelected.length > 0) {
-      hasStatusUpdated = true;
-    }
+  //   if (filterValues['status'].selected === null && newStatusSelected.length > 0) {
+  //     hasStatusUpdated = true;
+  //   }
 
-    if (Array.isArray(filterValues['status'].selected) && filterValues['status'].selected.length !== newStatusSelected.length) {
-      hasStatusUpdated = true;
-    }
+  //   if (Array.isArray(filterValues['status'].selected) && filterValues['status'].selected.length !== newStatusSelected.length) {
+  //     hasStatusUpdated = true;
+  //   }
 
-    if (Array.isArray(filterValues['status'].selected)) {
-      let equalLength = 0
-      filterValues['status'].selected.forEach(({ value }) => {
-        newStatusSelected.forEach((newItem) => {
-          if (value === newItem.value) {
-            equalLength++;
-          }
-        })
-      })
-      if (equalLength !== filterValues['status'].selected.length) {
-        hasStatusUpdated = true;
-      }
-    }
+  //   if (Array.isArray(filterValues['status'].selected)) {
+  //     let equalLength = 0
+  //     filterValues['status'].selected.forEach(({ value }) => {
+  //       newStatusSelected.forEach((newItem) => {
+  //         if (value === newItem.value) {
+  //           equalLength++;
+  //         }
+  //       })
+  //     })
+  //     if (equalLength !== filterValues['status'].selected.length) {
+  //       hasStatusUpdated = true;
+  //     }
+  //   }
 
-    if (filterValues['name'].selected === null && nameParam.length > 0) {
-      hasNameParaUpdated = true;
-    }
+  //   if (filterValues['name'].selected === null && nameParam.length > 0) {
+  //     hasNameParaUpdated = true;
+  //   }
 
-    if (isFilterItem(filterValues['name'].selected) && (filterValues['name'].selected.text !== nameParam)) {
-      hasNameParaUpdated = true;
-    }
+  //   if (isFilterItem(filterValues['name'].selected) && (filterValues['name'].selected.text !== nameParam)) {
+  //     hasNameParaUpdated = true;
+  //   }
 
-    if (!hasNameParaUpdated && !hasStatusUpdated) {
-      console.log('*** nothing has updated ***')
-      return;
-    }
+  //   if (!hasNameParaUpdated && !hasStatusUpdated) {
+  //     console.log('*** nothing has updated ***')
+  //     return;
+  //   }
 
-    const newFilterValues: IFiltersSelections = {};
+  //   const newFilterValues: IFiltersSelections = {};
 
-    console.log('!!!! updating query params!!!!');
-    if (hasNameParaUpdated) {
-      const selected: IFilterItem | null = nameParam === '' ? null : { text: nameParam, value: nameParam };
-      newFilterValues['name'] = { ...filterValues['name'], selected };
-    } else {
-      newFilterValues['name'] = { ...filterValues['name'] }
-    }
+  //   console.log('!!!! updating query params!!!!');
+  //   if (hasNameParaUpdated) {
+  //     const selected: IFilterItem | null = nameParam === '' ? null : { text: nameParam, value: nameParam };
+  //     newFilterValues['name'] = { ...filterValues['name'], selected };
+  //   } else {
+  //     newFilterValues['name'] = { ...filterValues['name'] }
+  //   }
 
-    if (hasStatusUpdated) {
-      const selected = newStatusSelected.length === 0 ? null : newStatusSelected;
-      newFilterValues['status'] = { ...filterValues['status'], selected }
-    } else {
-      newFilterValues['status'] = { ...filterValues['status'] }
-    }
+  //   if (hasStatusUpdated) {
+  //     const selected = newStatusSelected.length === 0 ? null : newStatusSelected;
+  //     newFilterValues['status'] = { ...filterValues['status'], selected }
+  //   } else {
+  //     newFilterValues['status'] = { ...filterValues['status'] }
+  //   }
 
-    setFilerValues(newFilterValues);
+  //   setFilerValues(newFilterValues);
 
-  }, [filterValues, nameParam, statusParam, statusValues])
+  // }, [filterValues, nameParam, statusParam, statusValues])
 
 
-  useEffect(() => {
-    reviewParamsChange();
-  }, [nameParam, reviewParamsChange, statusParam]);
+  // useEffect(() => {
+  //   reviewParamsChange();
+  // }, [nameParam, reviewParamsChange, statusParam]);
 
   return <Container>
     <Content>

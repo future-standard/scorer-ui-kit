@@ -15,6 +15,7 @@ import {
   IFilterDropdownConfig,
   IFilterDatePicker,
   isFilterItem,
+  IFiltersSelections,
 } from './FilterTypes';
 
 export {
@@ -40,5 +41,6 @@ export type {
   IFilterResult,
   IFilterValue,
   DateInterval,
-  IFilterDatePicker
+  IFilterDatePicker,
+  IFiltersSelections,
 };

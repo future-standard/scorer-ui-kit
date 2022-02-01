@@ -32,6 +32,6 @@ export const useQueryParams = () => {
   return {
     updateParam,
     getParam,
-    search,
+    queryParams,
   };
 };

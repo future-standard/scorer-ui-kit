@@ -66,6 +66,7 @@ import {
   IFilterValue,
   IFilterResult,
   isFilterItem,
+  IFiltersSelections,
 } from './Filters';
 
 import Icon, { IconSVGs } from './Icons/Icon';
@@ -340,4 +341,5 @@ export type {
   IFilterResult,
   DateInterval,
   IFilterDatePicker,
+  IFiltersSelections,
 };
