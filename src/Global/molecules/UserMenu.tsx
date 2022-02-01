@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import Icon from '../../Icons/Icon';
 import { ITopBar } from '../index';
 import { resetButtonStyles } from '../../common/index';
-import DrawerBottomMenu from '../atoms/DrawerBottomMenu';
 
 const DrawerTop = styled.div``;
 const DrawerBottom = styled.div`
@@ -116,7 +115,6 @@ interface IUserMenu extends ITopBar {
 
 const UserMenu: React.FC<IUserMenu> = ({
   hasLanguage = false,
-  selectedLanguageText = '',
   hasLogout = true,
   logoutLink = '/logout',
   logoutText = 'Logout',
@@ -126,29 +124,25 @@ const UserMenu: React.FC<IUserMenu> = ({
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
-  hasSwitchTheme = true,
-  switchThemeText = 'SWITCH THEME',
-  selectedThemeText = '',
   onLogout = () => { },
   onLanguageToggle = () => { },
   closeOnClick,
-  onThemeToggle = () => { }
 }) => {
 
   const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     await onLogout();
     window.location.assign(logoutLink);
-    if (closeOnClick) {
+    if(closeOnClick) {
       closeOnClick();
     }
   }, [closeOnClick, logoutLink, onLogout]);
 
   const handleCloseWhenClick = useCallback(() => {
-    if (closeOnClick) {
+    if(closeOnClick) {
       closeOnClick();
     }
-  }, [closeOnClick]);
+  },[closeOnClick]);
 
   return (
     <Fragment>
@@ -186,9 +180,15 @@ const UserMenu: React.FC<IUserMenu> = ({
           : null}
       </DrawerTop>
       <DrawerBottom>
-        {hasSwitchTheme && <DrawerBottomMenu icon='ViewSettings' title={switchThemeText} selectedValue={selectedThemeText} onClickCallback={onThemeToggle} />}
-        {hasLanguage && <DrawerBottomMenu icon='Language' title='LANGUAGE / 言語' selectedValue={selectedLanguageText} onClickCallback={onLanguageToggle} />}
-
+        {
+          hasLanguage &&
+            <LanguageMenu onClick={onLanguageToggle}>
+              <IconWrapper>
+                <Icon icon='Language' size={18} color='dimmed' />
+              </IconWrapper>
+              Language / 言語
+            </LanguageMenu>
+        }
       </DrawerBottom>
     </Fragment>
   );

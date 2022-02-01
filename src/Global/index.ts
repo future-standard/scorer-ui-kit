@@ -68,7 +68,6 @@ export interface IMenuTop {
     userSubmenu?: any[];
     loggedInUser: string;
     hasLanguage?: boolean;
-    selectedLanguageText?: string;
     hasLogout?: boolean;
     logoutText?: string;
     logoutLink?: string;
@@ -80,12 +79,8 @@ export interface IMenuTop {
     userDrawerBespoke?: ReactElement;
     notificationsHistory? : INotificationsHistory;
     customDrawer?: ICustomDrawer;
-    hasSwitchTheme?: boolean;
-    switchThemeText?: string;
-    selectedThemeText?: string;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
-    onThemeToggle?: () => void;
   }
 
   export interface INotificationItem {
