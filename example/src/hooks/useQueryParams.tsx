@@ -1,37 +1,51 @@
 import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 
-export const useQueryParams = () => {
-  const [queryParams, setQueryParams] = useState<URLSearchParams>(new URLSearchParams());
+export interface ISearchParams {
+  [key: string]: string[]
 
-  const { push } = useHistory();
+}
+export const useQueryParams = () => {
+  const [queryParams, setQueryParams] = useState<ISearchParams>({});
+
+  const { replace } = useHistory();
   const { search } = useLocation();
 
   useEffect(() => {
     const params = new URLSearchParams(search);
-    setQueryParams(params);
+    const newSearch: ISearchParams = {};
+
+    params.forEach((value, key) => {
+      if (newSearch[key]) {
+        const isAlready = newSearch[key].some(item => item === value);
+        if (!isAlready) {
+          newSearch[key] = [...newSearch[key], value];
+        }
+      } else {
+        newSearch[key] = [value];
+      }
+    });
+
+    setQueryParams(newSearch);
   }, [search]);
 
-  const updateParam = useCallback((key, value) => {
-    const strValue = value.toString();
-    if (queryParams.get(key) === strValue) return;
-
-    if (strValue === '') {
-      queryParams.delete(key);
-    } else {
-      queryParams.set(key, value);
+  const updateParams = useCallback((newParams: ISearchParams) => {
+    const params = new URLSearchParams(search);
+    for (const [key, arrValues] of Object.entries(newParams)) {
+      params.delete(key);
+      arrValues.forEach((value) => {
+        params.append(key, value);
+      })
     }
+    replace({ search: params.toString() })
+  }, [replace, search])
 
-    push({ search: queryParams.toString() });
-  }, [push, queryParams]);
-
-  const getParam = useCallback((key: string): string => {
-    return queryParams.get(key) || '';
+  const getParam = useCallback((key: string): string[] => {
+    return queryParams[key] || [];
   }, [queryParams]);
 
   return {
-    updateParam,
     getParam,
-    queryParams,
+    updateParams,
   };
 };

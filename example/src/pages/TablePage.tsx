@@ -23,7 +23,7 @@ import {
 import i18n from '../locales/setup';
 import { getTimeSince } from '../utils';
 import { useTranslation } from 'react-i18next';
-import { useQueryParams } from '../hooks/useQueryParams';
+import { ISearchParams, useQueryParams } from '../hooks/useQueryParams';
 
 const Container = styled.div`
   margin: 100px 200px;
@@ -58,14 +58,12 @@ const StyledFilterBar = styled(FilterBar)`
   margin: 40px 0;
 `;
 
-export const getStatusParams = (selected: IFilterItem[]): string => {
-  return selected.reduce((result, filterItem, index) => {
-    if (index === 0) {
-      return `${filterItem.value}`;
-    }
+export const getStatusParams = (selected: IFilterItem[]): string[] => {
+  const params: string[] = [];
 
-    return `${result}, ${filterItem.value}`;
-  }, '')
+  return selected.reduce((result, filterItem) => {
+    return [...result, `${filterItem.value}`]
+  }, params)
 }
 
 export const filterByStatus = (data: ITableData[], selected: IFilterItem[]): ITableData[] => {
@@ -188,9 +186,11 @@ const TablePage: React.FC = () => {
   const [langSelect, setLangSelect] = useState('ja');
   const [filterValues, setFilerValues] = useState<IFiltersSelections>(initSelections);
   const { t } = useTranslation();
-  const { getParam, updateParam } = useQueryParams();
-  const statusParam = getParam('status');
-  const nameParam = getParam('name');
+  const { queryParams, updateParams } = useQueryParams();
+  // const statusParam = getParam('status');
+  // const nameParam = getParam('name');
+
+  console.log('[Table page] params', queryParams);
 
   const generateRows = useCallback((data: ITableData[]): ITypeTableData => {
 
@@ -317,42 +317,47 @@ const TablePage: React.FC = () => {
 
   const onChangeObjCallback = useCallback((currentSelected: IFiltersSelections) => {
 
-    if (Object.keys(currentSelected).length > 0) {
-
-      const updatedData: ITableData[] = Object.entries(currentSelected).map(([key, value]) => value).reduce((result, filterObj) => {
-        const { id, selected } = filterObj;
-
-        if (selected === null) {
-          if (id in FILTER_PARAMS) {
-            updateParam(id, '');
-          }
-
-          return result;
-        };
-
-        if (id === 'status' && Array.isArray(selected)) {
-          if (id in FILTER_PARAMS) {
-            updateParam(id, getStatusParams(selected));
-          }
-          return filterByStatus(result, selected)
-        }
-
-        if (id === 'name' && isFilterItem(selected)) {
-          if (id in FILTER_PARAMS) {
-            updateParam(id, selected.text);
-          }
-
-          return filterByDeviceName(result, selected);
-        }
-
-        return rawData;
-      }, rawData);
-
-
-      setRows(generateRows(updatedData));
+    // IFiltersSelections not initialized correctly
+    if (Object.entries(currentSelected).length <= 0) {
+      return;
     }
+
+    const newQueryParams: ISearchParams = {};
+
+    const updatedData: ITableData[] = Object.entries(currentSelected).map(([key, value]) => value).reduce((result, filterObj) => {
+      const { id, selected } = filterObj;
+
+      if (selected === null) {
+        if (id in FILTER_PARAMS) {
+          newQueryParams[id] = [];
+        }
+
+        return result;
+      };
+
+      if (id === 'status' && Array.isArray(selected)) {
+        if (id in FILTER_PARAMS) {
+          newQueryParams[id] = getStatusParams(selected);
+        }
+        return filterByStatus(result, selected)
+      }
+
+      if (id === 'name' && isFilterItem(selected)) {
+        if (id in FILTER_PARAMS) {
+          // updateParam(id, selected.text);
+          newQueryParams[id] = [selected.text];
+        }
+
+        return filterByDeviceName(result, selected);
+      }
+
+      return rawData;
+    }, rawData);
+
+    setRows(generateRows(updatedData));
     setFilerValues(currentSelected);
-  }, [generateRows, updateParam]);
+    updateParams(newQueryParams);
+  }, [generateRows, updateParams]);
 
 
   // Query params update is not working correctly, it overwrites the callbacks :(
