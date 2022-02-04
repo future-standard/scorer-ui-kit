@@ -2,6 +2,7 @@ import DatePicker, { DateInterval, isDateInterval } from './molecules/DatePicker
 import FilterDropdownContainer from './atoms/FilterDropdownContainer';
 import FilterButton from './atoms/FilterButton';
 import FilterDropdown from './molecules/FilterDropdown';
+import SortDropdown from './molecules/SortDropdown';
 import FilterInputs, { IFilterInputs } from './molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from './molecules/FiltersResults';
 import FilterBar from './organisms/FilterBar';
@@ -22,6 +23,7 @@ export {
   FilterDropdownContainer,
   FilterButton,
   FilterDropdown,
+  SortDropdown,
   FilterInputs,
   FiltersResults,
   FilterBar,

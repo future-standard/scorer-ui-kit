@@ -90,8 +90,8 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
     <Container {...props}>
       <FilterDropHandler
         {...{ buttonIcon, buttonText, disabled }}
-        min_width={MIN_WIDTH}
-        min_height={MIN_HEIGHT}
+        minWidth={MIN_WIDTH}
+        minHeight={MIN_HEIGHT}
         onCloseCallback={handleOnClose}
         onToggleOpenCallback={handleOnToggle}
       >

@@ -3,7 +3,13 @@ import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
-const StyledButton = styled.button<{isOpen?: boolean, hasFlipArrow?: boolean }>`
+const FlipWrapper = styled.div<{ isSortAscending: boolean }>`
+  ${({ isSortAscending }) => isSortAscending && css`
+      transform: scaleY(-1);
+  `};
+`;
+
+const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>`
   ${resetButtonStyles};
   background-color: hsl(200, 23%, 97%);
   border-radius: 3px;
@@ -62,13 +68,14 @@ const InnerContainer = styled.div`
     align-items: center;
 `;
 
-const ButtonText = styled.div<{hasFlipArrow: boolean }>`
-  padding-right: ${({hasFlipArrow}) => hasFlipArrow ? '3px' : '20px'};
+const ButtonText = styled.div<{ hasFlipArrow: boolean }>`
+  padding-right: ${({ hasFlipArrow }) => hasFlipArrow ? '3px' : '20px'};
 `;
 
 interface OwnProps {
   icon: string
   hasFlipArrow?: boolean
+  isSortAscending?: boolean
   isOpen?: boolean
 }
 
@@ -77,20 +84,23 @@ type IFilterButton = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>;
 const FilterButton: React.FC<IFilterButton> = ({
   icon,
   hasFlipArrow = false,
+  isSortAscending = false,
   isOpen,
   children,
   ...props
 }) => {
 
   return (
-    <StyledButton type='button' {...props} {...{isOpen, hasFlipArrow }}>
+    <StyledButton type='button' {...props} {...{ isOpen, hasFlipArrow }}>
       <InnerContainer>
-        <Icon
-          icon={icon}
-          size={12}
-          weight='light'
-        />
-        <ButtonText {...{hasFlipArrow }}>{children}</ButtonText>
+        <FlipWrapper {...{ isSortAscending }}>
+          <Icon
+            icon={icon}
+            size={12}
+            weight='light'
+          />
+        </FlipWrapper>
+        <ButtonText {...{ hasFlipArrow }}>{children}</ButtonText>
         {hasFlipArrow && <Icon icon={isOpen ? 'Up' : 'Down'} size={8} />}
       </InnerContainer>
     </StyledButton>
