@@ -186,11 +186,9 @@ const TablePage: React.FC = () => {
   const [langSelect, setLangSelect] = useState('ja');
   const [filterValues, setFilerValues] = useState<IFiltersSelections>(initSelections);
   const { t } = useTranslation();
-  const { queryParams, updateParams } = useQueryParams();
+  const { updateParams } = useQueryParams();
   // const statusParam = getParam('status');
   // const nameParam = getParam('name');
-
-  console.log('[Table page] params', queryParams);
 
   const generateRows = useCallback((data: ITableData[]): ITypeTableData => {
 
