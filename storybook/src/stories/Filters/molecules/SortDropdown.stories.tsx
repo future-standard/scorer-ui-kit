@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { IFilterItem, SortDropdown } from 'scorer-ui-kit';
-import { boolean, object, select, text } from '@storybook/addon-knobs';
+import { boolean, object, select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 export default {
@@ -13,9 +13,7 @@ export default {
   }
 };
 
-
 const Container = styled.div``;
-
 
 export const _SortDropdown = () => {
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
@@ -27,16 +25,18 @@ export const _SortDropdown = () => {
   ], [language])
 
   const [sortSelected, setSortSelected] = useState<IFilterItem>({ text: dropdownList[1].text, value: dropdownList[0].value });
-  const isSortAscending = boolean('Is ascending', false);
+  const [isAscending, setIsAScending] = useState<boolean>(true);
+  const isLoading = boolean('Is Loading', false);
+
   // const buttonText = text('Button Text', `Sorted by ${dropdownList[0].text}`);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const list = object('Dropdown list', dropdownList)
-  const isLoading = boolean('Is loading', false);
   const lastSelection = action('new sort');
 
-  const handleSelections = useCallback((newSort: IFilterItem) => {
+  const handleSelections = useCallback((newSort: IFilterItem, isSortAscending: boolean) => {
     setSortSelected(newSort);
-    lastSelection(newSort);
+    setIsAScending(isSortAscending);
+    lastSelection({ newSort, isSortAscending });
   }, [lastSelection])
 
   const getSortedTranslation = useCallback(() => {
@@ -53,12 +53,14 @@ export const _SortDropdown = () => {
     <Container>
       <SortDropdown
         {...{
-          isSortAscending,
+          isSortAscending: isAscending,
           buttonText: getSortedTranslation(),
           isLoading,
           list: dropdownList,
           selected: sortSelected,
-          onSelect: handleSelections
+          onSelect: handleSelections,
+          ascendingText: language === 'english' ? 'Ascending' : '昇順',
+          descendingText: language === 'english' ? 'Descending' : '降順'
         }}
 
       />

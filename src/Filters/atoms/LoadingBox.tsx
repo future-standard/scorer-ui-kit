@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Spinner } from '../..';
+import Spinner from '../../Indicators/Spinner';
 
 const Container = styled.div`
   display: flex;

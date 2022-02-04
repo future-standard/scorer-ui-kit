@@ -1,9 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useCallback } from 'react';
+import styled, { css } from 'styled-components';
+import Icon, { IconWrapper } from '../../Icons/Icon';
 import FilterOption from '../../Form/atoms/FilterOption';
 import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
 import { IFilterItem } from '../FilterTypes';
+import { resetButtonStyles } from '../../common';
 
 const Container = styled.div`
   display: inline-block;
@@ -38,16 +40,59 @@ const OptionList = styled.div`
   }
 `;
 
+const OrderGroup = styled.div`
+  display: flex;
+`;
+
+const OrderButton = styled.button<{ isSelected: boolean }>`
+  ${resetButtonStyles};
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-family: ${({ theme }) => theme.fontFamily.data};
+  color: hsl(0, 0%, 56%);
+  font-size: 14px;
+  height: 30px;
+  ${({ theme, isSelected }) => theme && css`
+
+  ${IconWrapper} {
+    padding: 0 9px;
+    display: flex;
+    align-items: center;
+    [stroke]{
+        stroke: ${theme.colors.icons.dimmed};
+      }
+    }
+
+  &:hover {
+    ${IconWrapper} {
+      [stroke]{
+        stroke: ${theme.styles.form.checkbox.checked.hover.backgroundColor};
+        }
+      }
+    }
+
+  ${isSelected && css`
+    ${IconWrapper} {
+      [stroke]{
+        stroke: ${theme.styles.form.checkbox.checked.default.backgroundColor};
+        }
+      }
+    `}
+  `}
+`;
+
 export interface ISortDropdown {
   buttonText: string
   list: IFilterItem[]
   disabled?: boolean
   isLoading?: boolean
   loadingText?: string
+  ascendingText?: string
+  descendingText?: string
   isSortAscending?: boolean
-  minWidthBtn?: number
   selected: IFilterItem
-  onSelect: (newSelection: IFilterItem) => void
+  onSelect: (newSort: IFilterItem, isSortAscending: boolean) => void
 }
 
 const SortDropdown: React.FC<ISortDropdown> = ({
@@ -58,14 +103,34 @@ const SortDropdown: React.FC<ISortDropdown> = ({
   loadingText,
   isSortAscending = true,
   selected,
-  minWidthBtn,
+  descendingText = 'Descending',
+  ascendingText = 'Ascending',
   onSelect,
   ...props }) => {
+
+
+  const handleSortSelect = useCallback((newValue: IFilterItem) => {
+    if (newValue.value === selected.value) {
+      return;
+    }
+
+    onSelect(newValue, isSortAscending);
+
+  }, [isSortAscending, onSelect, selected.value]);
+
+  const handleOrderSelect = useCallback((isAscending: boolean) => {
+    if (isSortAscending === isAscending) {
+      return;
+    }
+
+    onSelect(selected, isAscending);
+
+  }, [isSortAscending, onSelect, selected]);
+
   return (
     <Container {...props}>
       <FilterDropHandler
         {...{ buttonText, disabled, isSortAscending }}
-        minWidth={minWidthBtn}
         buttonIcon='FilterSorting'
       >
         <TopLine />
@@ -83,13 +148,30 @@ const SortDropdown: React.FC<ISortDropdown> = ({
                       title={item.text}
                       optionType='radio'
                       selected={selected.value === item.value}
-                      onClick={() => onSelect(item)}
-                      value={item.value}
+                      onClick={() => handleSortSelect(item)}
                     />
                   );
                 })}
               </OptionList>
             )}
+          <OrderGroup>
+            <OrderButton isSelected={isSortAscending} onClick={() => handleOrderSelect(true)}>
+              <Icon
+                icon='FilterAscending'
+                size={12}
+                weight='light'
+              />
+              <FilterOption selected={isSortAscending} title={ascendingText} />
+            </OrderButton>
+            <OrderButton isSelected={!isSortAscending} onClick={() => handleOrderSelect(false)}>
+              <Icon
+                icon='FilterDescending'
+                size={12}
+                weight='light'
+              />
+              <FilterOption selected={!isSortAscending} title={descendingText} />
+            </OrderButton>
+          </OrderGroup>
         </InnerBox>
       </FilterDropHandler>
 
