@@ -185,10 +185,10 @@ const UserMenu: React.FC<IUserMenu> = ({
           </Logout>
           : null}
       </DrawerTop>
+
       <DrawerBottom>
         {hasSwitchTheme && <DrawerBottomMenu icon='ViewSettings' title={switchThemeText} selectedValue={selectedThemeText} onClickCallback={onThemeToggle} />}
         {hasLanguage && <DrawerBottomMenu icon='Language' title='LANGUAGE / 言語' selectedValue={selectedLanguageText} onClickCallback={onLanguageToggle} />}
-
       </DrawerBottom>
     </Fragment>
   );
