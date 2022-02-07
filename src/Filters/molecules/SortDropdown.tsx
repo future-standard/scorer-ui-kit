@@ -42,6 +42,11 @@ const OptionList = styled.div`
 
 const OrderGroup = styled.div`
   display: flex;
+  border-top: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  margin-top: 5px;
+  button:first-child {
+    border-right: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  }
 `;
 
 const OrderButton = styled.button<{ isSelected: boolean }>`
@@ -52,11 +57,11 @@ const OrderButton = styled.button<{ isSelected: boolean }>`
   font-family: ${({ theme }) => theme.fontFamily.data};
   color: hsl(0, 0%, 56%);
   font-size: 14px;
-  height: 30px;
+  height: 35px;
   ${({ theme, isSelected }) => theme && css`
 
   ${IconWrapper} {
-    padding: 0 9px;
+    margin-left: 10px;
     display: flex;
     align-items: center;
     [stroke]{
@@ -158,7 +163,7 @@ const SortDropdown: React.FC<ISortDropdown> = ({
             <OrderButton isSelected={isSortAscending} onClick={() => handleOrderSelect(true)}>
               <Icon
                 icon='FilterAscending'
-                size={12}
+                size={16}
                 weight='light'
               />
               <FilterOption selected={isSortAscending} title={ascendingText} />
@@ -166,7 +171,7 @@ const SortDropdown: React.FC<ISortDropdown> = ({
             <OrderButton isSelected={!isSortAscending} onClick={() => handleOrderSelect(false)}>
               <Icon
                 icon='FilterDescending'
-                size={12}
+                size={16}
                 weight='light'
               />
               <FilterOption selected={!isSortAscending} title={descendingText} />
