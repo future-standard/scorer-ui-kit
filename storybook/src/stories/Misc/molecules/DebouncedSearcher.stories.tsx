@@ -18,7 +18,7 @@ const Container = styled.div`
   margin: 20px;
 `;
 
-export const _DebounceSearcher = () => {
+export const _DebouncedSearcher = () => {
 
   const inputPlaceholder = text("Placeholder", "Search by name...");
   const textValue = action('Search value');
