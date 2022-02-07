@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { object, text, boolean } from "@storybook/addon-knobs";
 import { TopBar, ICustomDrawer, INotificationItem, INotificationsHistory } from 'scorer-ui-kit';
+import { action } from '@storybook/addon-actions';
 
 const Container = styled.div`
   position: fixed;
@@ -105,6 +106,9 @@ export const _TopBar = () => {
   const selectedLanguageText = text("Selected Language Text", "English");
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
   const selectedThemeText = text("Selected Theme Text", "Light Theme");
+  const themeToggle = action('onThemeToggle');
+  const languageToggle = action('onLanguageToggle');
+
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
@@ -123,6 +127,14 @@ export const _TopBar = () => {
 
   // userDrawerBespoke: See examples for implementation of this prop.
 
+  const onThemeToggle = () => {
+    themeToggle();
+  }
+
+  const onLanguageToggle = () => {
+    languageToggle();
+  }
+
   return (
     <Container>
       <TopBar {...{
@@ -139,7 +151,9 @@ export const _TopBar = () => {
         hasSwitchTheme,
         selectedLanguageText,
         switchThemeText,
-        selectedThemeText
+        selectedThemeText,
+        onThemeToggle,
+        onLanguageToggle
       }}
         customDrawer={drawerProps}
       />
