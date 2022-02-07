@@ -58,7 +58,7 @@ const DrawerBottomMenu: FC<IDrawerBottomMenu> = ({ icon = 'Settings', title, sel
       </ColumnContainer>
 
     </Container>
-  )
+  );
 };
 
 export default DrawerBottomMenu;

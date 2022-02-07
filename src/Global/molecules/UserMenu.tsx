@@ -2,7 +2,6 @@ import React, { useCallback, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import Icon from '../../Icons/Icon';
 import { ITopBar } from '../index';
 import { resetButtonStyles } from '../../common/index';
 import DrawerBottomMenu from '../atoms/DrawerBottomMenu';
@@ -57,19 +56,6 @@ const LinkMenuItem = styled.li`
   padding: 10px 0;
 `;
 
-const IconWrapper = styled.div`
-  flex: 0 40px;
-  width: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-`;
-
 const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
   ${resetButtonStyles};
   display: block;
@@ -88,26 +74,6 @@ const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
       ${theme.typography.global.mainMenu.subItem.active};
     }
   `};
-`;
-
-const LanguageMenu = styled.button`
-  ${resetButtonStyles};
-
-  font-family: ${({ theme }) => theme.fontFamily.ui};
-  margin-top: auto;
-  display: flex;
-  flex-direction: row;
-
-  border-top: ${({ theme: { colors } }) => colors.divider} 1px solid;
-  ${({ theme }) => css`
-    ${theme.typography.global.mainMenu.subItem.default};
-    &:hover { ${theme.typography.global.mainMenu.subItem.hover}; }
-    &:active { ${theme.typography.global.mainMenu.subItem.active}; }
-  `};
-
-  padding: 20px 10px 15px;
-  align-items: center;
-  width: 100%;
 `;
 
 interface IUserMenu extends ITopBar {
