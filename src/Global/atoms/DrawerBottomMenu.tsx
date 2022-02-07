@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Icon } from '../..';
 
 const Container = styled.div`
-  padding: 18px 10px 14px 23px;
+  padding: 16px 10px 14px 23px;
   display: flex;
   flex-direction: row;
   border-top: 1px solid ${({ theme }) => theme.colors.divider};
@@ -17,7 +17,7 @@ const Container = styled.div`
 const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 11px;
+  padding-left: 14px;
   align-items: flex-start;
 `;
 
@@ -36,7 +36,7 @@ const SelectedValue = styled.div`
   font-weight: 500;
   letter-spacing: 0.29px;
   color: rgba(87, 87, 87, 0.5);
-  padding-top: 4px;
+  padding-top: 2px;
 `;
 
 interface IDrawerBottomMenu {

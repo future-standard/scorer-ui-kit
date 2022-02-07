@@ -105,7 +105,7 @@ export const _TopBar = () => {
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const selectedLanguageText = text("Selected Language Text", "English");
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
-  const selectedThemeText = text("Selected Theme Text", "Light Theme");
+  const selectedThemeText = text("Selected Theme Text", "Light Mode");
   const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
 

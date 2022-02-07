@@ -12,7 +12,7 @@ const DrawerBottom = styled.div`
   ${({ theme }) => css`
     width: 100%;
     position: fixed;
-    bottom: 50px;
+    bottom: 0;
 
     @media ${theme.deviceMediaQuery.large} {
       position: static;
