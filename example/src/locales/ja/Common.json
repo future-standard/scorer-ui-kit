@@ -1,3 +1,23 @@
 {
-  "madeby": "Powered By:"
+  "madeby": "作成時期 By:",
+  "tableExample": "タブルエクサンプル",
+  "upExample": "上 タブルエクサンプル",
+  "deviceName": "デバイス名",
+  "status": "デバイス名",
+  "created": "作成時期",
+  "usage": "使用",
+  "cost": "価格",
+  "filterByName": "デバイス名前 フィルター",
+  "filterByDate": "年月日 フィルター",
+  "searchPlaceholder": "[VISIBLE] 〜 [TOTAL]件",
+  "clearText": "すべてクリア",
+  "dateRange": "日付範囲",
+  "from": "から",
+  "To": "から",
+  "statusTypes": {
+    "ok": "OKです",
+    "caution": "注意",
+    "warning": "警告",
+    "offline": "オフライン"
+  }
 }

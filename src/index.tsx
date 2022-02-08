@@ -131,6 +131,8 @@ import {
   useMediaModal,
   IModal,
   usePoll,
+  useQueryParams,
+  ISearchParams,
 } from './hooks';
 
 import {
@@ -268,6 +270,7 @@ export {
   useClickOutside,
   usePoll,
   useMediaModal,
+  useQueryParams,
   resetButtonStyles,
   Spinner,
   WebRTCClient,
@@ -340,4 +343,5 @@ export type {
   IFilterResult,
   DateInterval,
   IFilterDatePicker,
+  ISearchParams,
 };

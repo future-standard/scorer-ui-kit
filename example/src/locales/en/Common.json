@@ -1,3 +1,23 @@
 {
-  "madeby": "Powered By:"
+  "madeby": "Powered By:",
+  "tableExample": "Table example",
+  "upExample": "Up Title Example",
+  "deviceName": "Device name",
+  "status": "Status",
+  "created": "Created",
+  "usage": "Usage",
+  "cost": "Cost",
+  "filterByName": "'Filter by Device Name...'",
+  "filterByDate": "Filter by Date",
+  "searchPlaceholder": "Showing [VISIBLE] of [TOTAL]",
+  "clearText": "CLEAR ALL",
+  "dateRange" : "Date Range",
+  "from": "From",
+  "To" : "To",
+  "statusTypes": {
+    "ok": "OK",
+    "caution": "Caution",
+    "warning": "Warning",
+    "offline": "Offline"
+  }
 }

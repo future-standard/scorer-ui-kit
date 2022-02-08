@@ -17,6 +17,7 @@ import LoginPage from './pages/Login';
 import TablePage from './pages/TablePage';
 import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import TabsPage from './pages/TabsPage';
+import FilterTablePage from './pages/FilterTablePage';
 
 const App: React.FC<{}> = () => {
   return (
@@ -30,6 +31,7 @@ const App: React.FC<{}> = () => {
         <Route path={`/login`} exact={true} component={LoginPage} />
         <Route path={`/forms`} exact={true} component={FormPage} />
         <Route path={`/table`} exact={true} component={TablePage} />
+        <Route path={`/filtertable`} exact={true} component={FilterTablePage} />
         <Route path={`/customdrawer`} exact={true} component={CustomUserDrawerPage} />
         <Route path={`/ptz`} exact={true}>
           <PTZProvider socketUrl='ws://localhost/wsapp/' imageRefresh={2000}>
