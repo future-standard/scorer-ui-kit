@@ -369,7 +369,6 @@ const TablePage: React.FC = () => {
 
   const onChangeCallback = useCallback((currentSelected: IFilterResult[]) => {
 
-
     const updatedData: ITableData[] = currentSelected.reduce((result, filterObj) => {
       const { id, selected } = filterObj;
 

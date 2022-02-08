@@ -47,5 +47,6 @@ export const useQueryParams = () => {
   return {
     getParam,
     updateParams,
+    queryParams,
   };
 };
