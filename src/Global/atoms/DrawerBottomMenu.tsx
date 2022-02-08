@@ -27,7 +27,7 @@ const Title = styled.div`
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.34px;
-  color: #575757;
+  color: ${({ theme }) => theme.typography.global.mainMenu.subheader.color};
 `;
 
 const SelectedValue = styled.div`
@@ -35,8 +35,9 @@ const SelectedValue = styled.div`
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.29px;
-  color: rgba(87, 87, 87, 0.5);
+  color: ${({ theme }) => theme.typography.global.mainMenu.subheader.color};
   padding-top: 2px;
+  opacity: 0.5;
 `;
 
 interface IDrawerBottomMenu {
