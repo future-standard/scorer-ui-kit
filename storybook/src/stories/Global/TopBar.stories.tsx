@@ -98,12 +98,12 @@ export const _TopBar = () => {
   const hasSearch = boolean("Has Search", true);
   const hasLogout = boolean("Has Logout", true);
   const hasNotifications = boolean("Has Notifications", true);
-  const hasSwitchTheme = boolean("Has Switch Theme", true);
-  const hasLanguage = boolean("Has Language", true);
   const hasCurrentUser = boolean("Has Current User", true);
   const logoutLink = text("Logout Url", "#")
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
+  const hasLanguage = boolean("Has Language", true);
   const selectedLanguageText = text("Selected Language Text", "English");
+  const hasSwitchTheme = boolean("Has Switch Theme", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
   const selectedThemeText = text("Selected Theme Text", "Light Mode");
   const themeToggle = action('onThemeToggle');
