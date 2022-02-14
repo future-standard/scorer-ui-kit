@@ -94,7 +94,7 @@ const allNotifications: INotificationsHistory = {
 }
 
 export const _TopBar = () => {
-  const [isLightMode, setIsLightMode] = useState(useDarkMode());
+  const [isLightMode, setIsLightMode] = useState(!useDarkMode());
 
   const loggedInUser = text("Logged In User", "full.name@example.com");
 
@@ -108,7 +108,7 @@ export const _TopBar = () => {
   const selectedLanguageText = text("Selected Language Text", "English");
   const hasSwitchTheme = boolean("Has Switch Theme", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
-  const selectedThemeText = text("Selected Theme Text", isLightMode ? "Dark Mode" : "Light Mode");
+  const selectedThemeText = text("Selected Theme Text", isLightMode ? "Light Mode" : "Dark Mode");
   const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
 
