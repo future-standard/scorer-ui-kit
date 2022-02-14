@@ -158,6 +158,7 @@ const TopBar: React.FC<ITopBar> = ({
   notificationsHistory,
   customDrawer,
   hasSwitchTheme = true,
+  isLightMode = true,
   switchThemeText = 'SWITCH THEME',
   selectedThemeText = '',
   onLogout = () => { },
@@ -225,6 +226,7 @@ const TopBar: React.FC<ITopBar> = ({
               onLanguageToggle,
               selectedLanguageText,
               hasSwitchTheme,
+              isLightMode,
               switchThemeText,
               selectedThemeText,
               onThemeToggle

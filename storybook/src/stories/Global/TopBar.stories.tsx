@@ -104,6 +104,7 @@ export const _TopBar = () => {
   const hasLanguage = boolean("Has Language", true);
   const selectedLanguageText = text("Selected Language Text", "English");
   const hasSwitchTheme = boolean("Has Switch Theme", true);
+  const isLightMode = boolean("Is Light Mode", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
   const selectedThemeText = text("Selected Theme Text", "Light Mode");
   const themeToggle = action('onThemeToggle');
@@ -149,6 +150,7 @@ export const _TopBar = () => {
         hasCurrentUser,
         notificationsHistory,
         hasSwitchTheme,
+        isLightMode,
         selectedLanguageText,
         switchThemeText,
         selectedThemeText,

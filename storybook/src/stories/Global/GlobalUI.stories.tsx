@@ -397,8 +397,9 @@ export const _GlobalUI = () => {
   const hasLanguage = boolean("Has Language", true);
   const selectedLanguageText = text("Selected Language Text", "English");
   const hasSwitchTheme = boolean("Has Switch Theme", true);
+  const isLightMode = boolean("Is light mode", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
-  const selectedThemeText = text("Selected Theme Text", "Light Mode");
+  const selectedThemeText = text("Selected Theme Text", isLightMode ? "Light Mode" : "Dark Mode");
   const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
 
@@ -515,7 +516,7 @@ export const _GlobalUI = () => {
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
         {...{
           loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasCurrentUser, currentUserText, accountOptionText,
-          hasLanguage, selectedLanguageText, hasSwitchTheme, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle,
+          hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle,
         }}
       >
         <ComponentLinks />

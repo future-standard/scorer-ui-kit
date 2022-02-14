@@ -93,6 +93,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   userDrawerBespoke,
   loggedInUser,
   hasSwitchTheme = true,
+  isLightMode = true,
   switchThemeText = 'SWITCH THEME',
   selectedThemeText = '',
   onLogout = () => { },
@@ -153,7 +154,7 @@ const UserMenu: React.FC<IUserMenu> = ({
       </DrawerTop>
 
       <DrawerBottom>
-        {hasSwitchTheme && <DrawerBottomMenu icon='LightMode' title={switchThemeText} selectedValue={selectedThemeText} onClickCallback={onThemeToggle} />}
+        {hasSwitchTheme && <DrawerBottomMenu icon={isLightMode ? 'LightMode' : 'DarkMode'} title={switchThemeText} selectedValue={selectedThemeText} onClickCallback={onThemeToggle} />}
         {hasLanguage && <DrawerBottomMenu icon='Language' title='LANGUAGE / 言語' selectedValue={selectedLanguageText} onClickCallback={onLanguageToggle} />}
       </DrawerBottom>
     </Fragment>

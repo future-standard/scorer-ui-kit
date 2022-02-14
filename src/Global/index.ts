@@ -81,6 +81,7 @@ export interface IMenuTop {
     notificationsHistory? : INotificationsHistory;
     customDrawer?: ICustomDrawer;
     hasSwitchTheme?: boolean;
+    isLightMode?: boolean;
     switchThemeText?: string;
     selectedThemeText?: string;
     onLogout?: ()=>void;
