@@ -30,7 +30,7 @@ const Title = styled.div`
   color: ${({ theme }) => theme.typography.global.mainMenu.subheader.color};
 `;
 
-const SelectedValue = styled.div`
+const SubTitle = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
   font-size: 10px;
   font-weight: 500;
@@ -43,11 +43,11 @@ const SelectedValue = styled.div`
 interface IDrawerBottomMenu {
   icon: string,
   title: string,
-  selectedValue: string,
+  subTitle: string,
   onClickCallback?: () => void 
 }
 
-const DrawerBottomMenu: FC<IDrawerBottomMenu> = ({ icon = 'Settings', title, selectedValue, onClickCallback = () => {} }) => {
+const DrawerBottomMenu: FC<IDrawerBottomMenu> = ({ icon = 'Settings', title, subTitle, onClickCallback = () => {} }) => {
 
   return (
     <Container onClick={onClickCallback}>
@@ -55,7 +55,7 @@ const DrawerBottomMenu: FC<IDrawerBottomMenu> = ({ icon = 'Settings', title, sel
 
       <ColumnContainer>
         <Title>{title}</Title>
-        <SelectedValue>{selectedValue}</SelectedValue>
+        <SubTitle>{subTitle}</SubTitle>
       </ColumnContainer>
 
     </Container>
