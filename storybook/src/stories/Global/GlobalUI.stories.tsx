@@ -24,6 +24,7 @@ import logoTextSvg from '../assets/logo-text.svg';
 
 import { text, object, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+import { useState } from 'react';
 
 export default {
   title: 'Global',
@@ -376,6 +377,8 @@ const customDrawer: ICustomDrawer = {
 
 export const _GlobalUI = () => {
 
+  const [isLightMode, setIsLightMode] = useState(true);
+
   const maxWidth = text("Max width", "1200px");
   const paddingOverride = text("Padding Override", "70px 90px");
   const loggedInUser = text("Logged In User", "full.name@example.com");
@@ -397,9 +400,8 @@ export const _GlobalUI = () => {
   const hasLanguage = boolean("Has Language", true);
   const selectedLanguageText = text("Selected Language Text", "English");
   const hasSwitchTheme = boolean("Has Switch Theme", true);
-  const isLightMode = boolean("Is light mode", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
-  const selectedThemeText = text("Selected Theme Text", isLightMode ? "Light Mode" : "Dark Mode");
+  const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
   const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
 
@@ -500,6 +502,7 @@ export const _GlobalUI = () => {
 
   const onThemeToggle = () => {
     themeToggle();
+    setIsLightMode((prev) => !prev);
   }
 
   const onLanguageToggle = () => {
