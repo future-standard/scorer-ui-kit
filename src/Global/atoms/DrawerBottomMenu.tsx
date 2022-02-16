@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Icon } from '../..';
+import Icon from '../../Icons/Icon';
 
 const Container = styled.div`
   padding: 16px 10px 14px 23px;
@@ -44,7 +44,7 @@ interface IDrawerBottomMenu {
   icon: string,
   title: string,
   subTitle: string,
-  onClickCallback?: () => void 
+  onClickCallback?: () => void
 }
 
 const DrawerBottomMenu: FC<IDrawerBottomMenu> = ({ icon = 'Settings', title, subTitle, onClickCallback = () => {} }) => {

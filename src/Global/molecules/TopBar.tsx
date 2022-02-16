@@ -157,7 +157,7 @@ const TopBar: React.FC<ITopBar> = ({
   loggedInUser,
   notificationsHistory,
   customDrawer,
-  hasSwitchTheme = true,
+  hasSwitchTheme = false,
   isLightMode = true,
   switchThemeText = 'SWITCH THEME',
   selectedThemeText = '',

@@ -92,7 +92,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
-  hasSwitchTheme = true,
+  hasSwitchTheme = false,
   isLightMode = true,
   switchThemeText = 'SWITCH THEME',
   selectedThemeText = '',
