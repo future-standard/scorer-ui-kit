@@ -27,8 +27,14 @@ const StyledSelect = styled.select`
   line-height: 1.56;
   width: 100%;
   cursor: pointer;
+  ${({theme: {styles}}) => css`
+    ${styles.form.input.default.normal};
+  `}
 
   &:disabled {
+    ${({theme: {styles}}) => css`
+      ${styles.form.input.disabled.normal};
+    `}
     cursor: not-allowed;
   }
 
