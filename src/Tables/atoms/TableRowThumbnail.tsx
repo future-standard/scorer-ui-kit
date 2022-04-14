@@ -6,7 +6,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 
 type VideoAspects = '4:3' | '16:9';
 
-const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string, isImageValid: boolean, hasPreview: boolean }>`
+const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string, isImageValid: boolean }>`
   position: relative;
   height: inherit;
   background: grey;
@@ -33,7 +33,7 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
   `}
 
   &:hover {
-    ${({ mediaUrl, hasPreview }) => mediaUrl && hasPreview && css`
+    ${({ mediaUrl }) => mediaUrl && css`
       cursor: pointer;
     `};
 
@@ -74,6 +74,9 @@ const PlayableDrop = styled.div`
     display: flex;
     svg {
       padding-left: 2px;
+      path {
+        stroke: hsla(0, 0%, 100%, 1.000);
+      }
     }
   };
 `;
@@ -91,36 +94,17 @@ interface IProps {
 
 const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl, mediaType }) => {
 
-  const [hasPreview, setHasPreview] = useState(false);
   const [isImageValid, setIsImageValid] = useState(false);
   const { createMediaModal, isMediaUrlValid } = useMediaModal();
 
   const handleModal = useCallback(async () => {
 
-    if (mediaUrl && mediaType && hasPreview) {
+    if (mediaUrl && mediaType ) {
       createMediaModal({ src: mediaUrl, mediaType });
     }
 
-  }, [createMediaModal, mediaType, mediaUrl, hasPreview]);
+  }, [createMediaModal, mediaType, mediaUrl]);
 
-  const verifyPreview = useCallback(async (currentMediaUrl: string, currentMediaType: IMediaType) => {
-    const isValidUrl: boolean = await isMediaUrlValid(currentMediaUrl, currentMediaType);
-
-    setHasPreview((prev) => {
-
-      if (prev === isValidUrl) {
-        return prev;
-      }
-      return isValidUrl;
-    });
-
-  }, [isMediaUrlValid]);
-
-  useEffect(() => {
-    if ( mediaUrl && mediaType) {
-      verifyPreview(mediaUrl, mediaType);
-    }
-  }, [mediaUrl, mediaType, verifyPreview]);
 
   const validateImage = useCallback(async (currentImg: string) => {
 
@@ -141,7 +125,7 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl
   }, [image, validateImage]);
 
   return (
-    <Container {...{ hoverZoom, mediaUrl, isImageValid, hasPreview }} aspect='16:9' onClick={handleModal}>
+    <Container {...{ hoverZoom, mediaUrl, isImageValid }} aspect='16:9' onClick={handleModal}>
       <Image {...{ image }} />
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
