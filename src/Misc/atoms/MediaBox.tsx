@@ -6,6 +6,8 @@ import { IMediaType } from '../../index';
 const Container = styled.div`
   position: relative;
   line-height: 0;
+  min-height: 300px;
+  min-width: 300px;
 `;
 
 const mediaStyle = `
