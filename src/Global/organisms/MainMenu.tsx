@@ -106,17 +106,17 @@ const ContainerInner = styled.div`
 
 const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, defaultMenuOpen = true, canAlwaysPin = false }) => {
 
-  const { menuState, setMenuOpen, setMenuClose, togglePinned, pinnedMenu } = useMenu(defaultMenuOpen, canAlwaysPin);
+  const [showMenuOpen, setShowMenuOpen] = useState<boolean>(false);
+  const { menuState, setMenuOpen, setMenuClose, togglePinned, pinnedMenu } = useMenu(defaultMenuOpen, canAlwaysPin, showMenuOpen);
 
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showMenuOpen, setShowMenuOpen] = useState<boolean>(false);
   const location = useLocation();
   let checkedInItems: number = 0;
 
   useLayoutEffect(() => {
     const isMenuOpen = localStorage.getItem('isMenuOpen');
-    if (isMenuOpen == 'true') {
+    if (isMenuOpen === 'true') {
       pinnedMenu();
       setShowMenuOpen(true);
     } else {

@@ -129,14 +129,15 @@ const menuState: IMenuState = {
   canPin: false
 };
 
-const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean) => {
+const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean, showMenuOpen: boolean) => {
 
   const {activeScreen} = useBreakpoints();
   const [state, dispatch] = useReducer(menuReducer, menuState);
 
-  const setMenu = useCallback((defaultMenuOpen: boolean, canAlwaysPin: boolean, desktopSize: IBreakpoints,)=>{
+  const setMenu = useCallback((defaultMenuOpen: boolean, canAlwaysPin: boolean, desktopSize: IBreakpoints,) => {
+    if(showMenuOpen) { return; }
     dispatch({type: 'SET_MENU', data: {defaultMenuOpen, desktopSize, canAlwaysPin}});
-  },[]);
+  },[showMenuOpen]);
 
   const setMenuOpen = useCallback(() => {
     dispatch({type: 'SET_OPEN'});
@@ -152,7 +153,7 @@ const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean) => {
 
   useLayoutEffect(() => {
     setMenu(defaultMenuOpen, canAlwaysPin, activeScreen);
-  }, []);
+  }, [defaultMenuOpen, canAlwaysPin, activeScreen, setMenu]);
 
   const pinnedMenu = useCallback(() => {
     dispatch({type: 'PIN_MENU'});
