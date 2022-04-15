@@ -152,7 +152,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
     * The -1 value is important in the mobile version of this menu
   */
   const setFocusedContextCb = useCallback(contextKey => {
-    if (contextKey === -1) { return; }
+    if(contextKey === -1) { return; }
 
     setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
   }, [setFocusedContext, focusedContext]);
@@ -184,17 +184,17 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
 
             <NavigationContainer>
               {content.items.map((item, key) => {
-                return (
-                  <NavigationItem
-                    topLevelPath={getTopLevelPath(location.pathname)}
-                    key={key}
-                    contextKey={key}
-                    menuOpen={menuState.isMenuOpen}
-                    submenuOpen={key === focusedContext && menuState.isMenuOpen}
-                    onClickCallback={setFocusedContextCb}
-                    {...{ item, loading, focusedContext, readyCallback }}
-                  />
-                );
+              return (
+                <NavigationItem
+                  topLevelPath={getTopLevelPath(location.pathname)}
+                  key={key}
+                  contextKey={key}
+                  menuOpen={menuState.isMenuOpen}
+                  submenuOpen={key === focusedContext && menuState.isMenuOpen}
+                  onClickCallback={setFocusedContextCb}
+                  {...{ item, loading, focusedContext, readyCallback }}
+                />
+              );
               })}
             </NavigationContainer>
 
@@ -207,23 +207,23 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
               )}
 
               {(menuState.canPin)
-                ? (
-                  <FooterItemContainer>
-                    <ContextItem
-                      compact
-                      isActive={false}
-                      icon={menuState.isMenuOpen && menuState.isMenuPinned ? 'Left' : 'Menu'}
-                      title={menuState.isMenuPinned ? keepOpenText : autoHideText}
-                      onClickCallback={toggleMenuPin}
-                      menuOpen={menuState.isMenuOpen}
-                    />
-                  </FooterItemContainer>
-                )
-                : null}
+              ? (
+                <FooterItemContainer>
+                  <ContextItem
+                    compact
+                    isActive={false}
+                    icon={menuState.isMenuOpen && menuState.isMenuPinned ? 'Left' : 'Menu'}
+                    title={menuState.isMenuPinned ? keepOpenText : autoHideText}
+                    onClickCallback={toggleMenuPin}
+                    menuOpen={menuState.isMenuOpen}
+                  />
+                </FooterItemContainer>
+              )
+              : null}
             </MenuFooter>
           </ContainerInner>
         </Container>,
-        document.body)}
+      document.body)}
     </PushContainer>
   );
 };
