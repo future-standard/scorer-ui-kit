@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useLayoutEffect } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components';
 
@@ -106,12 +106,23 @@ const ContainerInner = styled.div`
 
 const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, defaultMenuOpen = true, canAlwaysPin = false }) => {
 
-  const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen, canAlwaysPin);
+  const { menuState, setMenuOpen, setMenuClose, togglePinned, pinnedMenu } = useMenu(defaultMenuOpen, canAlwaysPin);
 
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  const [showMenuOpen, setShowMenuOpen] = useState<boolean>(false);
   const location = useLocation();
   let checkedInItems: number = 0;
+
+  useLayoutEffect(() => {
+    const isMenuOpen = localStorage.getItem('isMenuOpen');
+    if (isMenuOpen == 'true') {
+      pinnedMenu();
+      setShowMenuOpen(true);
+    } else {
+      setShowMenuOpen(false);
+    }
+  }, [pinnedMenu]);
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
@@ -127,14 +138,21 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
   const toggleMenuPin = useCallback((e: any) => {
     if (e.pointerType === 'touch') { return; }
     togglePinned();
-  }, [togglePinned]);
+    if (showMenuOpen) {
+      setShowMenuOpen(false);
+      localStorage.setItem('isMenuOpen', 'false');
+    } else {
+      setShowMenuOpen(true);
+      localStorage.setItem('isMenuOpen', 'true');
+    }
+  }, [togglePinned, showMenuOpen]);
 
   /** Manage which context is open. */
   /** Submenu sends -1 because context only is for the parent
     * The -1 value is important in the mobile version of this menu
   */
   const setFocusedContextCb = useCallback(contextKey => {
-    if(contextKey === -1) { return; }
+    if (contextKey === -1) { return; }
 
     setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
   }, [setFocusedContext, focusedContext]);
@@ -154,9 +172,9 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
         <Container
           open={menuState.isMenuOpen}
           desktopSize={menuState.desktopSize}
-          onPointerEnter={autoMenuOpen}
+          onPointerEnter={showMenuOpen ? undefined : autoMenuOpen}
           onTouchStart={() => console.log('touch')}
-          onMouseLeave={autoMenuClose}
+          onMouseLeave={showMenuOpen ? undefined : autoMenuClose}
         >
           <ContainerInner>
             <Logo to={home}>
@@ -166,18 +184,18 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
 
             <NavigationContainer>
               {content.items.map((item, key) => {
-              return (
-                <NavigationItem
-                  topLevelPath={getTopLevelPath(location.pathname)}
-                  key={key}
-                  contextKey={key}
-                  menuOpen={menuState.isMenuOpen}
-                  submenuOpen={key === focusedContext && menuState.isMenuOpen}
-                  onClickCallback={setFocusedContextCb}
-                  {...{ item, loading, focusedContext, readyCallback }}
-                />
-              );
-            })}
+                return (
+                  <NavigationItem
+                    topLevelPath={getTopLevelPath(location.pathname)}
+                    key={key}
+                    contextKey={key}
+                    menuOpen={menuState.isMenuOpen}
+                    submenuOpen={key === focusedContext && menuState.isMenuOpen}
+                    onClickCallback={setFocusedContextCb}
+                    {...{ item, loading, focusedContext, readyCallback }}
+                  />
+                );
+              })}
             </NavigationContainer>
 
             <MenuFooter>
@@ -189,23 +207,23 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
               )}
 
               {(menuState.canPin)
-              ? (
-                <FooterItemContainer>
-                  <ContextItem
-                    compact
-                    isActive={false}
-                    icon={menuState.isMenuOpen && menuState.isMenuPinned ? 'Left' : 'Menu'}
-                    title={menuState.isMenuPinned ? keepOpenText : autoHideText}
-                    onClickCallback={toggleMenuPin}
-                    menuOpen={menuState.isMenuOpen}
-                  />
-                </FooterItemContainer>
-              )
-              : null}
+                ? (
+                  <FooterItemContainer>
+                    <ContextItem
+                      compact
+                      isActive={false}
+                      icon={menuState.isMenuOpen && menuState.isMenuPinned ? 'Left' : 'Menu'}
+                      title={menuState.isMenuPinned ? keepOpenText : autoHideText}
+                      onClickCallback={toggleMenuPin}
+                      menuOpen={menuState.isMenuOpen}
+                    />
+                  </FooterItemContainer>
+                )
+                : null}
             </MenuFooter>
           </ContainerInner>
         </Container>,
-      document.body)}
+        document.body)}
     </PushContainer>
   );
 };

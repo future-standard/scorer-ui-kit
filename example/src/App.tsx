@@ -17,6 +17,7 @@ import LoginPage from './pages/Login';
 import TablePage from './pages/TablePage';
 import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import TabsPage from './pages/TabsPage';
+import GlobalUIComp from './pages/GlobalUIComp';
 
 const App: React.FC<{}> = () => {
   return (
@@ -37,6 +38,7 @@ const App: React.FC<{}> = () => {
           </PTZProvider>
         </Route>
         <Route path={`/tabs`} exact={true} component={TabsPage} />
+        <Route path={`/globalUI`} exact={true} component={GlobalUIComp} />
       </Switch>
     </Router>
   )
