@@ -40,8 +40,12 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   ${SearchInputWrapper}, ${StyledDropdown}, ${StyledFilterButton}, ${StyledDropdownDatePicker} {
-    margin: 0 5px 10px 0;
+    margin: 0 3px 10px 3px;
   }
+`;
+
+const FilterButtonBox = styled.div`
+  margin: 0 3px 0 3px;
 `;
 
 const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdowns: boolean, hasShowMore: boolean) => {
@@ -164,18 +168,21 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   return (
     <Container {...{ props }}>
       {renderSearchInputs(searchFilters, visibleSearchInputs, handleVisibleSearch)}
-      {renderDatePickers(datePickerFilters)}
+      {(datePickerFilters[0].positionStart === undefined || datePickerFilters[0].positionStart) && renderDatePickers(datePickerFilters)}
       {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
       {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
       {hasShowMore && (
-        <FilterButton
-          icon='FilterEllipsis'
-          onClick={toggleShowMore}
-        >
-          {showMoreDropdowns ? showMoreText : showLessText}
-        </FilterButton>)}
+        <FilterButtonBox>
+          <FilterButton
+            icon='FilterEllipsis'
+            onClick={toggleShowMore}
+          >
+            {showMoreDropdowns ? showMoreText : showLessText}
+          </FilterButton>
+        </FilterButtonBox>)}
+      {datePickerFilters[0].positionStart === false && renderDatePickers(datePickerFilters)}
     </Container>
   );
 };

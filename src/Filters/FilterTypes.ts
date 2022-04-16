@@ -43,6 +43,7 @@ interface IFilterDropdownExt extends IFilterDropdown {
 }
 
 interface IFilterDatePicker extends IDropdownDatePicker {
+  positionStart?: boolean
   id: string
   canHide?: boolean
   name?: string
