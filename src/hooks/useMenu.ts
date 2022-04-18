@@ -43,8 +43,9 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
 
     // initial State based in props and desktop size
     case 'SET_MENU': {
-      let isMenuOpen = false;
-      let isMenuPinned = false;
+      const openMenu = localStorage.getItem('isMenuOpen');
+      let isMenuOpen = openMenu === 'true';
+      let isMenuPinned = openMenu === 'true';
       let canPin = false;
 
       if (action.data.canAlwaysPin || (action.data.defaultMenuOpen && action.data.desktopSize === 'xlarge')) {
@@ -97,7 +98,10 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
       let isMenuOpen = true;
 
       if(state.isMenuPinned) {
+        localStorage.setItem('isMenuOpen', 'false');
         isMenuOpen = false;
+      } else {
+        localStorage.setItem('isMenuOpen', 'true');
       }
 
       return {
@@ -129,15 +133,14 @@ const menuState: IMenuState = {
   canPin: false
 };
 
-const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean, showMenuOpen: boolean) => {
+const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean) => {
 
   const {activeScreen} = useBreakpoints();
   const [state, dispatch] = useReducer(menuReducer, menuState);
 
   const setMenu = useCallback((defaultMenuOpen: boolean, canAlwaysPin: boolean, desktopSize: IBreakpoints,) => {
-    if(showMenuOpen) { return; }
     dispatch({type: 'SET_MENU', data: {defaultMenuOpen, desktopSize, canAlwaysPin}});
-  },[showMenuOpen]);
+  },[]);
 
   const setMenuOpen = useCallback(() => {
     dispatch({type: 'SET_OPEN'});
@@ -155,16 +158,11 @@ const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean, showMenuOpen: 
     setMenu(defaultMenuOpen, canAlwaysPin, activeScreen);
   }, [defaultMenuOpen, canAlwaysPin, activeScreen, setMenu]);
 
-  const pinnedMenu = useCallback(() => {
-    dispatch({type: 'PIN_MENU'});
-  },[]);
-
   return {
     menuState: state,
     setMenuOpen,
     setMenuClose,
-    togglePinned,
-    pinnedMenu
+    togglePinned
   };
 };
 

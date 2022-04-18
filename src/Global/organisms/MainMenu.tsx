@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useLayoutEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components';
 
@@ -106,23 +106,12 @@ const ContainerInner = styled.div`
 
 const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, defaultMenuOpen = true, canAlwaysPin = false }) => {
 
-  const [showMenuOpen, setShowMenuOpen] = useState<boolean>(false);
-  const { menuState, setMenuOpen, setMenuClose, togglePinned, pinnedMenu } = useMenu(defaultMenuOpen, canAlwaysPin, showMenuOpen);
+  const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen, canAlwaysPin);
 
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const location = useLocation();
   let checkedInItems: number = 0;
-
-  useLayoutEffect(() => {
-    const isMenuOpen = localStorage.getItem('isMenuOpen');
-    if (isMenuOpen === 'true') {
-      pinnedMenu();
-      setShowMenuOpen(true);
-    } else {
-      setShowMenuOpen(false);
-    }
-  }, [pinnedMenu]);
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
@@ -138,14 +127,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
   const toggleMenuPin = useCallback((e: any) => {
     if (e.pointerType === 'touch') { return; }
     togglePinned();
-    if (showMenuOpen) {
-      setShowMenuOpen(false);
-      localStorage.setItem('isMenuOpen', 'false');
-    } else {
-      setShowMenuOpen(true);
-      localStorage.setItem('isMenuOpen', 'true');
-    }
-  }, [togglePinned, showMenuOpen]);
+  }, [togglePinned]);
 
   /** Manage which context is open. */
   /** Submenu sends -1 because context only is for the parent
@@ -172,9 +154,9 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
         <Container
           open={menuState.isMenuOpen}
           desktopSize={menuState.desktopSize}
-          onPointerEnter={showMenuOpen ? undefined : autoMenuOpen}
+          onPointerEnter={menuState.isMenuPinned ? undefined : autoMenuOpen}
           onTouchStart={() => console.log('touch')}
-          onMouseLeave={showMenuOpen ? undefined : autoMenuClose}
+          onMouseLeave={menuState.isMenuPinned ? undefined : autoMenuClose}
         >
           <ContainerInner>
             <Logo to={home}>

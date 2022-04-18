@@ -38,7 +38,7 @@ const App: React.FC<{}> = () => {
           </PTZProvider>
         </Route>
         <Route path={`/tabs`} exact={true} component={TabsPage} />
-        <Route path={`/globalUI`} exact={true} component={GlobalUIComp} />
+        <Route path='/globalUI' exact component={GlobalUIComp} />
       </Switch>
     </Router>
   )
