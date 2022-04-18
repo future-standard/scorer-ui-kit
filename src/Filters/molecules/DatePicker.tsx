@@ -246,6 +246,12 @@ export interface DateInterval {
   start: Date;
   end: Date;
 }
+
+type Months = "January" | "February" | "March" | "April" | "May" | "June" | "July" | "August" | "September" | "October" | "November" | "December";
+export type IMonthsList = {
+  [key in Months]: string;
+};
+
 export interface IDatePicker {
   initialValue?: Date | DateInterval
   dateMode?: DateMode
@@ -256,6 +262,8 @@ export interface IDatePicker {
   timeZoneTitle?: string
   timeZoneValueTitle?: string
   updateCallback?: (data: DateInterval | Date) => void
+  translateOn?: boolean
+  monthsList?: IMonthsList
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
@@ -268,6 +276,8 @@ const DatePicker: React.FC<IDatePicker> = ({
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
+  translateOn = true,
+  monthsList
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -361,6 +371,51 @@ const DatePicker: React.FC<IDatePicker> = ({
     setSelectedRange({ start, end });
   }, [selectedRange]);
 
+  const translateMonths = useCallback((month: string) => {
+    if (translateOn && monthsList) {
+      switch (month) {
+        case 'January':
+        case 'Jan':
+          return monthsList.January;
+        case 'February':
+        case 'Feb':
+          return monthsList.February;
+        case 'March':
+        case 'Mar':
+          return monthsList.March;
+        case 'April':
+        case 'Apr':
+          return monthsList.April;
+        case 'May':
+          return monthsList.May;
+        case 'June':
+        case 'Jun':
+          return monthsList.June;
+        case 'July':
+        case 'Jul':
+          return monthsList.July;
+        case 'August':
+        case 'Aug':
+          return monthsList.August;
+        case 'September':
+        case 'Sep':
+          return monthsList.September;
+        case 'October':
+        case 'Oct':
+          return monthsList.October;
+        case 'November':
+        case 'Nov':
+          return monthsList.November;
+        case 'December':
+        case 'Dec':
+          return monthsList.December;
+        default:
+          return month;
+      }
+    } else {
+      return month;
+    }
+  }, [translateOn, monthsList]);
 
   return (
     <Container>
@@ -381,16 +436,16 @@ const DatePicker: React.FC<IDatePicker> = ({
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
-            {format(addMonths(focusedMonth, -1), "MMM")}
+            {translateMonths(format(addMonths(focusedMonth, -1), "MMM"))}
           </PaginateMonth>
 
           <CurrentMonth>
             <span>{format(focusedMonth, "yyyy")}</span>
-            {format(focusedMonth, "MMMM")}
+            {translateMonths(format(focusedMonth, "MMMM"))}
           </CurrentMonth>
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
-            {format(addMonths(focusedMonth, 1), "MMM")}
+            {translateMonths(format(addMonths(focusedMonth, 1), "MMM"))}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
 
