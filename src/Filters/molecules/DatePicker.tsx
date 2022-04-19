@@ -262,7 +262,6 @@ export interface IDatePicker {
   timeZoneTitle?: string
   timeZoneValueTitle?: string
   updateCallback?: (data: DateInterval | Date) => void
-  translateOn?: boolean
   monthsList?: IMonthsList
 }
 
@@ -276,7 +275,6 @@ const DatePicker: React.FC<IDatePicker> = ({
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
-  translateOn = true,
   monthsList
 }) => {
 
@@ -372,7 +370,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   }, [selectedRange]);
 
   const translateMonths = useCallback((month: string) => {
-    if (translateOn && monthsList) {
+    if (monthsList) {
       switch (month) {
         case 'January':
         case 'Jan':
@@ -415,7 +413,7 @@ const DatePicker: React.FC<IDatePicker> = ({
     } else {
       return month;
     }
-  }, [translateOn, monthsList]);
+  }, [monthsList]);
 
   return (
     <Container>

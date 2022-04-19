@@ -53,8 +53,7 @@ const DatePickerComp = () => {
           timeZoneTitle="Timezone"
           timeZoneValueTitle="JST"
           updateCallback={() => {}}
-          monthsList={monthsList}
-          translateOn={translate}
+          monthsList={translate ? monthsList : undefined}
         />
       </FilterDropdownContainer>
     </Content>
