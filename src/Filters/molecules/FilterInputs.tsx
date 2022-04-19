@@ -4,7 +4,7 @@ import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import FilterDropdown from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
 import DropdownDatePicker from './DropdownDatePicker';
-import { IFilterDatePicker, IFilterDropdownExt, ISearchFilter } from '../FilterTypes';
+import { IDisplayOrder, IFilterDatePicker, IFilterDropdownExt, ISearchFilter } from '../FilterTypes';
 
 const fadeInAnimation = keyframes`
   0% {
@@ -134,6 +134,7 @@ export interface IFilterInputs {
   hasShowMore?: boolean
   showMoreText?: string
   showLessText?: string
+  displayOrder?: IDisplayOrder[]
 }
 
 const FilterInputs: React.FC<IFilterInputs> = ({
@@ -143,6 +144,7 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   dropdownFilters = [],
   showMoreText = 'Show More',
   showLessText = 'Show Less',
+  displayOrder,
   ...props
 }) => {
 
@@ -165,11 +167,16 @@ const FilterInputs: React.FC<IFilterInputs> = ({
 
   }, [visibleSearchInputs]);
 
+  const searchInputsElement = renderSearchInputs(searchFilters, visibleSearchInputs, handleVisibleSearch);
+  const datePickersElement = renderDatePickers(datePickerFilters);
+  const dropDownsElement = renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore);
+  
+  const positionIndex: { [index: string]: (JSX.Element | null)[] } = { Searchers: searchInputsElement, DatePickers: datePickersElement, Dropdowns: dropDownsElement };
+
   return (
     <Container {...{ props }}>
-      {renderSearchInputs(searchFilters, visibleSearchInputs, handleVisibleSearch)}
-      {(datePickerFilters[0].positionStart === undefined || datePickerFilters[0].positionStart) && renderDatePickers(datePickerFilters)}
-      {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}
+    
+      {displayOrder ? displayOrder.map(element => positionIndex[element]) : [searchInputsElement, datePickersElement, dropDownsElement]}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
       {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
@@ -182,7 +189,6 @@ const FilterInputs: React.FC<IFilterInputs> = ({
             {showMoreDropdowns ? showMoreText : showLessText}
           </FilterButton>
         </FilterButtonBox>)}
-      {datePickerFilters[0].positionStart === false && renderDatePickers(datePickerFilters)}
     </Container>
   );
 };

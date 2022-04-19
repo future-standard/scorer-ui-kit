@@ -38,7 +38,7 @@ const FilterLabel = styled.div`
   border-right: 1px solid hsla(0, 0%, 13%, 0.16);
 `;
 const FilterLabelText = styled.div<{ hasIcon?: boolean }>`
-  padding: ${({ hasIcon }) => hasIcon ? '0 15px 2px 9px' : '0 15px 2px 0'};
+  padding: ${({ hasIcon }) => hasIcon ? '0 15px 0 9px' : '0 15px 0 0'};
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

@@ -10,10 +10,10 @@ const FilterBarComp = () => {
     return (
       <Container>
         <FilterBar
+          displayOrder={['Dropdowns','Searchers', 'DatePickers']}
           clearText="CLEAR ALL"
           datePickersConfig={[
             {
-              positionStart: false,
               buttonIcon: "DateTime",
               buttonText: "Date Range",
               dateMode: "interval",

@@ -6,7 +6,8 @@ import {
   IFilterType,
   IFilterValue,
   isFilterItem,
-  IFilterDropdownConfig
+  IFilterDropdownConfig,
+  IDisplayOrder
 } from '../FilterTypes';
 import FilterInputs from '../molecules/FilterInputs';
 import { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../FilterTypes';
@@ -28,6 +29,7 @@ const StyledFilterResults = styled(FiltersResults)``;
 const Container = styled.div`
   ${StyledFilterResults} {
     margin-top: 29px;
+    min-height: 19px;
   }
 `;
 
@@ -283,6 +285,7 @@ interface IFilterBar {
   singleFilter?: boolean
   resultsDateFormat?: string
   onChangeCallback?: (currentSelected: IFilterResult[]) => void
+  displayOrder?: IDisplayOrder[]
 }
 
 const FilterBar: React.FC<IFilterBar> = ({
@@ -299,6 +302,7 @@ const FilterBar: React.FC<IFilterBar> = ({
   singleFilter = false,
   resultsDateFormat,
   onChangeCallback = () => { },
+  displayOrder,
   ...props
 }) => {
 
@@ -459,6 +463,7 @@ const FilterBar: React.FC<IFilterBar> = ({
           hasShowMore,
           showMoreText,
           showLessText,
+          displayOrder
         }}
         searchFilters={createSearchers(searchersConfig, filtersValues, singleFilter, handleSearchers)}
         dropdownFilters={createDropdownFilters(dropdownsConfigRef.current, filtersValues, singleFilter, handleDropdownsSelected)}
