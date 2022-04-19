@@ -30,11 +30,7 @@ interface TOGGLE_PIN {
   type: 'TOGGLE_PIN'
 }
 
-interface PIN_MENU {
-  type: 'PIN_MENU'
-}
-
-type IMenuActions = SET_MENU | SET_OPEN | SET_CLOSE | TOGGLE_PIN | PIN_MENU
+type IMenuActions = SET_MENU | SET_OPEN | SET_CLOSE | TOGGLE_PIN
 
 
 const menuReducer = (state: IMenuState, action: IMenuActions) => {
@@ -111,15 +107,6 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
       };
     }
 
-    case 'PIN_MENU': {
-      return {
-        ...state,
-        isMenuPinned: true,
-        isMenuOpen: true,
-        canPin: true,
-      };
-    }
-
     default:
       console.error(`Action ${action['type']} not registered.`);
       return state;
@@ -156,7 +143,7 @@ const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean) => {
 
   useLayoutEffect(() => {
     setMenu(defaultMenuOpen, canAlwaysPin, activeScreen);
-  }, [defaultMenuOpen, canAlwaysPin, activeScreen, setMenu]);
+  }, [activeScreen, defaultMenuOpen, canAlwaysPin, setMenu]);
 
   return {
     menuState: state,
