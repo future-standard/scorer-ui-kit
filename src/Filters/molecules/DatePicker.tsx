@@ -247,8 +247,6 @@ export interface DateInterval {
   end: Date;
 }
 
-type Months = "January" | "February" | "March" | "April" | "May" | "June" | "July" | "August" | "September" | "October" | "November" | "December";
-
 export interface IDatePicker {
   initialValue?: Date | DateInterval
   dateMode?: DateMode
@@ -260,6 +258,7 @@ export interface IDatePicker {
   timeZoneValueTitle?: string
   updateCallback?: (data: DateInterval | Date) => void
   monthsList?: string[]
+  daysList?: string[]
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
@@ -272,7 +271,8 @@ const DatePicker: React.FC<IDatePicker> = ({
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
-  monthsList = []
+  monthsList = [],
+  daysList = DayGuide
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -407,7 +407,7 @@ const DatePicker: React.FC<IDatePicker> = ({
         </CalendarHeader>
 
         <CalHRow>
-          {DayGuide.map((day, index) => {
+          {daysList.map((day, index) => {
             return <CalHCell key={index}>{day}</CalHCell>;
           })}
         </CalHRow>

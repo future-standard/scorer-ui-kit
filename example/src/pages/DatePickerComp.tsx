@@ -29,6 +29,8 @@ const DatePickerComp = () => {
     "12月",
   ];
 
+  const japDays: string[] = ['日', '月', '火', '水', '木', '金', '土'];
+
   return (
     <Content>
       <TranslateBox>
@@ -53,6 +55,7 @@ const DatePickerComp = () => {
           timeZoneValueTitle="JST"
           updateCallback={() => { }}
           monthsList={translate ? japMonths : []}
+          daysList={translate ? japDays : undefined}
         />
       </FilterDropdownContainer>
     </Content>
