@@ -6,7 +6,6 @@ import {
   Switch,
 } from "scorer-ui-kit";
 import styled from "styled-components";
-import { IMonthsList } from "../../../dist/Filters/molecules/DatePicker";
 
 const TranslateBox = styled.div`
   margin: 20px 0;
@@ -15,20 +14,20 @@ const TranslateBox = styled.div`
 const DatePickerComp = () => {
   const [translate, setTranslate] = useState(false);
 
-  const monthsList: IMonthsList = {
-    January: "1月",
-    February: "2月",
-    March: "3月",
-    April: "4月",
-    May: "5月",
-    June: "6月",
-    July: "7月",
-    August: "8月",
-    September: "9月",
-    October: "10月",
-    November: "11月",
-    December: "12月",
-  };
+  const japMonths: string[] = [
+    "1月",
+    "2月",
+    "3月",
+    "4月",
+    "5月",
+    "6月",
+    "7月",
+    "8月",
+    "9月",
+    "10月",
+    "11月",
+    "12月",
+  ];
 
   return (
     <Content>
@@ -52,8 +51,8 @@ const DatePickerComp = () => {
           timeMode="interval"
           timeZoneTitle="Timezone"
           timeZoneValueTitle="JST"
-          updateCallback={() => {}}
-          monthsList={translate ? monthsList : undefined}
+          updateCallback={() => { }}
+          monthsList={translate ? japMonths : []}
         />
       </FilterDropdownContainer>
     </Content>
