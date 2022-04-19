@@ -48,10 +48,10 @@ const DatePickerComp = () => {
       <FilterDropdownContainer>
         <DatePicker
           dateMode="interval"
-          dateTimeTextLower="To"
-          dateTimeTextUpper="From"
+          dateTimeTextLower={translate ? "まで": "To"}
+          dateTimeTextUpper={translate ? "から" : "From"}
           timeMode="interval"
-          timeZoneTitle="Timezone"
+          timeZoneTitle={translate ? "時間帯" : "Timezone"}
           timeZoneValueTitle="JST"
           updateCallback={() => { }}
           monthsList={translate ? japMonths : []}
