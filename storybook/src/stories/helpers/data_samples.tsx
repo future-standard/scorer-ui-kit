@@ -443,6 +443,8 @@ const resultTextTemplateJp = '表示結果 ([TOTAL_RESULTS]):';
 const clearEng = 'CLEAR ALL';
 const clearJp = 'すべてクリア';
 
+const filterDisplayOrder = ['Searchers', 'DatePickers', 'Dropdowns'];
+
 export {
   tableData,
   tableDataJp,
@@ -466,6 +468,7 @@ export {
   resultTextTemplateJp,
   clearEng,
   clearJp,
+  filterDisplayOrder
 };
 
 export type { ITableSampleData };

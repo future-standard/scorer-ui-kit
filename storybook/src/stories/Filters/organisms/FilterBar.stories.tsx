@@ -11,7 +11,6 @@ import {
   IFilterResult,
   IFilterDatePicker,
   isFilterItem,
-  DateInterval,
 } from 'scorer-ui-kit';
 
 import {
@@ -35,6 +34,7 @@ import {
   showMoreJp,
   resultTextTemplateEng,
   resultTextTemplateJp,
+  filterDisplayOrder,
 } from '../../helpers/data_samples';
 
 import {
@@ -250,10 +250,14 @@ export const _FilterBar = () => {
     setRows(rowMaker(data));
   }, [data])
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const dispalyOrder = object('Display Order', filterDisplayOrder);
+
   return (
     <Container>
       <FilterBar
         {...{ singleFilter, hasShowMore }}
+        displayOrder={filterDisplayOrder}
         searchersConfig={searchers}
         dropdownsConfig={dropdowns}
         datePickersConfig={datePickers}
