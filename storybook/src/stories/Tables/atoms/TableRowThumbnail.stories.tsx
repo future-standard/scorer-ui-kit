@@ -32,10 +32,11 @@ export const _RowThumbnail = () => {
   const image = text("Image Src", photo);
   const mediaUrl = text("Video Src", video);
   const mediaType = select("Media Type", ['img','video'], 'video');
+  const retryImageLoad = boolean("Retry Image",false)
 
   return <Container>
     <ContainerInner>
-      <TableRowThumbnail {...{hoverZoom, image, mediaUrl, mediaType}} />
+      <TableRowThumbnail {...{hoverZoom, image, mediaUrl, mediaType, retryImageLoad}} />
     </ContainerInner>
   </Container>;
 };

@@ -6,7 +6,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 
 type VideoAspects = '4:3' | '16:9';
 
-const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string, isImageValid: boolean }>`
+const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string}>`
   position: relative;
   height: inherit;
   background: grey;
@@ -37,7 +37,7 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
       cursor: pointer;
     `};
 
-    ${({ theme, hoverZoom, isImageValid }) => theme && hoverZoom && isImageValid && css`
+    ${({ theme, hoverZoom }) => theme && hoverZoom && css`
       transform: scale(1.5);
       opacity: 1;
       transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
@@ -45,17 +45,14 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
   }
 
 `;
-const Image = styled.div<{ image?: string }>`
+const Image = styled.img<{ showImage: boolean }>`
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
-  background-image: url(${p => p.image});
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: ${p => p.image ? 'block' : 'none'};
+  object-fit: cover;
+  display: ${({showImage})=>showImage===true ? 'block': 'none'};
 `;
 
 const PlayableDrop = styled.div`
@@ -87,46 +84,44 @@ interface IProps {
   aspect?: VideoAspects
   mediaUrl?: string
   mediaType?: IMediaType
+  retryImageLoad?: boolean
+  retryLimit?: number;
 }
 
 // Image
 // No Image Placeholder
 
-const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl, mediaType }) => {
-
-  const [isImageValid, setIsImageValid] = useState(false);
-  const { createMediaModal, isMediaUrlValid } = useMediaModal();
+const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', mediaUrl, mediaType, retryImageLoad= false, retryLimit=5}) => {
+  const [showImage, setShowImage] = useState(true);
+  const [imgSrc, setImgSrc] = useState(image);
+  const { createMediaModal } = useMediaModal();
+  const [retryCount, setRetryCount] = useState(0);
 
   const handleModal = useCallback(async () => {
-
     if (mediaUrl && mediaType ) {
       createMediaModal({ src: mediaUrl, mediaType });
     }
-
   }, [createMediaModal, mediaType, mediaUrl]);
 
+  useEffect(()=>{
+    setShowImage(false);
+    setRetryCount(0);
+    setImgSrc(image);
+  },[image]);
 
-  const validateImage = useCallback(async (currentImg: string) => {
+  const retryImage = useCallback(()=>{
+    if(!retryImageLoad || retryCount >= retryLimit) return;
+    const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
+    setRetryCount(count => count+1);
+    setTimeout(()=>{
+      setImgSrc(`${image}?v=${Date.now()}`);
+    }, randomDelay);
 
-    const isValidUrl: boolean = await isMediaUrlValid(currentImg, 'img');
-    setIsImageValid((prev) => {
-      if (prev === isValidUrl) {
-        return prev;
-      }
-      return isValidUrl;
-    });
-
-  }, [isMediaUrlValid]);
-
-  useEffect(() => {
-    if (image) {
-      validateImage(image);
-    }
-  }, [image, validateImage]);
+  },[image, retryCount, retryImageLoad, retryLimit]);
 
   return (
-    <Container {...{ hoverZoom, mediaUrl, isImageValid }} aspect='16:9' onClick={handleModal}>
-      <Image {...{ image }} />
+    <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={handleModal}>
+      <Image src={imgSrc} onError={retryImage} onLoad={()=>setShowImage(true)} showImage={showImage} />
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
           <Icon size={12} icon='Play' color='inverse' />
