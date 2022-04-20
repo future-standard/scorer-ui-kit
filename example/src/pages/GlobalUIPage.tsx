@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import { GlobalUI } from "scorer-ui-kit";
 
-const GlobalUIPage = () => {
+const GlobalUIPage: FC = () => {
   return (
     <GlobalUI
       accountOptionText="Account Options"
