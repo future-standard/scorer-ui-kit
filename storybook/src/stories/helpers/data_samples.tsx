@@ -443,6 +443,9 @@ const resultTextTemplateJp = '表示結果 ([TOTAL_RESULTS]):';
 const clearEng = 'CLEAR ALL';
 const clearJp = 'すべてクリア';
 
+const jpMonths: string[] = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+const jpDays: string[] = ['日', '月', '火', '水', '木', '金', '土'];
+
 export {
   tableData,
   tableDataJp,
@@ -466,6 +469,8 @@ export {
   resultTextTemplateJp,
   clearEng,
   clearJp,
+  jpMonths,
+  jpDays
 };
 
 export type { ITableSampleData };

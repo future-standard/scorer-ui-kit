@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { select, text } from "@storybook/addon-knobs";
+import { object, select, text } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
+import { jpDays, jpMonths } from '../../helpers/data_samples';
 
 const Container = styled.div`
     margin: 20px;
@@ -25,14 +26,19 @@ const exampleCallback =  <T extends Function>(fn: T): T => {
 };
 
 export const _DatePicker = () => {
-
+  const language = select("Language", { English: 'english', Japanese: 'japanese' }, "japanese");
   const dateMode = select("Date Mode", { single: "single", interval: "interval" }, "interval");
   const timeMode = select("Time Mode", { off: "off", single: "single", interval: "interval" }, "interval");
   const dateTimeTextUpper = text('Date Time Text Upper', 'From');
   const dateTimeTextLower = text('Date Time Text Lower', 'To');
   const timeZoneTitle = text('Time Zone Title', 'Timezone');
   const timeZoneValueTitle = text('Time Zone Value','JST');
-  const updateCallback = action('Date / Time Updated')
+  const updateCallback = action('Date / Time Updated');
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const monthsList = object('Translate Months', jpMonths);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const daysList = object('Translate Days', jpDays);
 
   return <Container>
     <FilterDropdownContainer>
@@ -40,10 +46,12 @@ export const _DatePicker = () => {
         timeMode,
         dateMode,
         updateCallback: exampleCallback(updateCallback),
-        dateTimeTextUpper,
-        dateTimeTextLower,
-        timeZoneTitle,
+        dateTimeTextUpper: language === 'english' ? dateTimeTextUpper : 'から',
+        dateTimeTextLower: language === 'english' ? dateTimeTextLower : 'まで',
+        timeZoneTitle: language === 'english' ? timeZoneTitle : '時間帯',
         timeZoneValueTitle,
+        monthsList: language === 'english' ? [] : jpMonths ,
+        daysList: language === 'english' ? undefined : jpDays
         }} />
     </FilterDropdownContainer>
   </Container>;
