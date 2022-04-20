@@ -1,14 +1,26 @@
 import React, { useState } from "react";
 import {
-  Button,
+  ButtonWithIcon,
   Content,
   DatePicker,
-  FilterDropdownContainer
+  FilterDropdownContainer,
+  Label
 } from "scorer-ui-kit";
 import styled from "styled-components";
 
 const TranslateBox = styled.div`
+  display: flex;
   margin: 20px 0;
+  align-items: center;
+`;
+
+const TextLabel = styled(Label)`
+  margin-bottom: 0;
+  margin-left: 20px;
+  font-size: 20px;
+  span{
+    margin-bottom: 0;
+  }
 `;
 
 const DatePickerPage = () => {
@@ -21,7 +33,10 @@ const DatePickerPage = () => {
   return (
     <Content>
       <TranslateBox>
-        <Button onClick={() => setTranslate(!translate)}>{translate ? '言語を変更する' : 'Change Language'}</Button>
+        <ButtonWithIcon icon="Language" position="left" onClick={() => setTranslate(!translate)}>
+          Change Language
+        </ButtonWithIcon>
+        {translate ? <TextLabel htmlFor='' labelText='やまと' /> : <TextLabel htmlFor='' labelText='English' />}
       </TranslateBox>
       <FilterDropdownContainer>
         <DatePicker
