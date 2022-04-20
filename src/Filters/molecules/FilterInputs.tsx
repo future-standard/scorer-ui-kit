@@ -144,12 +144,13 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   dropdownFilters = [],
   showMoreText = 'Show More',
   showLessText = 'Show Less',
-  displayOrder,
+  displayOrder = [],
   ...props
 }) => {
 
   const [visibleSearchInputs, setVisibleSearchInputs] = useState<String[]>(initialSearchFilters(searchFilters));
   const [showMoreDropdowns, setShowMoreDropdowns] = useState(hasShowMore ? true : false);
+  const order = new Set([...displayOrder, 'Searchers', 'DatePickers', 'Dropdowns']);
 
   const toggleShowMore = useCallback(() => {
     setShowMoreDropdowns((prev) => !prev);
@@ -170,13 +171,13 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   const searchInputsElement = renderSearchInputs(searchFilters, visibleSearchInputs, handleVisibleSearch);
   const datePickersElement = renderDatePickers(datePickerFilters);
   const dropDownsElement = renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore);
-  
+
   const positionIndex: { [index: string]: (JSX.Element | null)[] } = { Searchers: searchInputsElement, DatePickers: datePickersElement, Dropdowns: dropDownsElement };
 
   return (
     <Container {...{ props }}>
-    
-      {displayOrder ? displayOrder.map(element => positionIndex[element]) : [searchInputsElement, datePickersElement, dropDownsElement]}
+
+      {Array.from(order)?.map(element => positionIndex[element])}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
       {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}

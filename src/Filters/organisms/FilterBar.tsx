@@ -302,7 +302,7 @@ const FilterBar: React.FC<IFilterBar> = ({
   singleFilter = false,
   resultsDateFormat,
   onChangeCallback = () => { },
-  displayOrder,
+  displayOrder = [],
   ...props
 }) => {
 

@@ -10,7 +10,7 @@ const FilterBarPage: FC = () => {
     return (
       <Container>
         <FilterBar
-          displayOrder={['Dropdowns','Searchers', 'DatePickers']}
+          displayOrder={['Dropdowns', 'Searchers', 'DatePickers']}
           clearText="CLEAR ALL"
           datePickersConfig={[
             {
