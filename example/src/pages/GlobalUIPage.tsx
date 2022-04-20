@@ -1,7 +1,7 @@
 import React from "react";
 import { GlobalUI } from "scorer-ui-kit";
 
-const GlobalUIComp = () => {
+const GlobalUIPage = () => {
   return (
     <GlobalUI
       accountOptionText="Account Options"
@@ -180,4 +180,4 @@ const GlobalUIComp = () => {
   );
 };
 
-export default GlobalUIComp;
+export default GlobalUIPage;
