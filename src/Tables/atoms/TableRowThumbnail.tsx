@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useMediaModal } from '../../hooks/useMediaModal';
 import { IMediaType } from '../..';
@@ -96,6 +96,7 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   const [imgSrc, setImgSrc] = useState(image);
   const { createMediaModal } = useMediaModal();
   const [retryCount, setRetryCount] = useState(0);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const handleModal = useCallback(async () => {
     if (mediaUrl && mediaType ) {
@@ -109,6 +110,12 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
     setImgSrc(image);
   },[image]);
 
+  useEffect(()=>{
+    if(imgRef.current && imgRef.current.complete){
+      setShowImage(true);
+    }
+  },[]);
+
   const retryImage = useCallback(()=>{
     if(!retryImageLoad || retryCount >= retryLimit) return;
     const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
@@ -121,7 +128,7 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
 
   return (
     <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={handleModal}>
-      <Image src={imgSrc} onError={retryImage} onLoad={()=>setShowImage(true)} showImage={showImage} />
+      <Image ref={imgRef} src={imgSrc} onError={retryImage} onLoad={()=>setShowImage(true)} showImage={showImage} />
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
           <Icon size={12} icon='Play' color='inverse' />
