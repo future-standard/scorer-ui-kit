@@ -18,7 +18,7 @@ export default {
   }
 };
 
-const exampleCallback =  <T extends Function>(fn: T): T => {
+const exampleCallback = <T extends Function>(fn: T): T => {
   /** A toString to render the function in storybook */
   // eslint-disable-next-line no-param-reassign
   fn.toString = () => '   updateCallback: (data: DateInterval | Date) => {}';
@@ -32,9 +32,9 @@ export const _DatePicker = () => {
   const dateTimeTextUpper = text('Date Time Text Upper', 'From');
   const dateTimeTextLower = text('Date Time Text Lower', 'To');
   const timeZoneTitle = text('Time Zone Title', 'Timezone');
-  const timeZoneValueTitle = text('Time Zone Value','JST');
+  const timeZoneValueTitle = text('Time Zone Value', 'JST');
   const updateCallback = action('Date / Time Updated');
-  
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const monthsList = object('Translate Months', jpMonths);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -45,14 +45,15 @@ export const _DatePicker = () => {
       <DatePicker {...{
         timeMode,
         dateMode,
-        updateCallback: exampleCallback(updateCallback),
-        dateTimeTextUpper: language === 'english' ? dateTimeTextUpper : 'から',
-        dateTimeTextLower: language === 'english' ? dateTimeTextLower : 'まで',
-        timeZoneTitle: language === 'english' ? timeZoneTitle : '時間帯',
-        timeZoneValueTitle,
-        monthsList: language === 'english' ? [] : jpMonths ,
-        daysList: language === 'english' ? undefined : jpDays
-        }} />
+        timeZoneValueTitle
+      }}
+        updateCallback={exampleCallback(updateCallback)}
+        dateTimeTextUpper={language === 'english' ? dateTimeTextUpper : 'から'}
+        dateTimeTextLower={language === 'english' ? dateTimeTextLower : 'まで'}
+        timeZoneTitle={language === 'english' ? timeZoneTitle : '時間帯'}
+        monthsList={language === 'english' ? [] : jpMonths}
+        daysList={language === 'english' ? undefined : jpDays}
+      />
     </FilterDropdownContainer>
   </Container>;
 
