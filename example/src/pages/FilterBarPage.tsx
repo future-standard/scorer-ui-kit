@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ FC } from "react";
 import { FilterBar } from "scorer-ui-kit";
 import styled from 'styled-components';
 
@@ -6,7 +6,7 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-const FilterBarComp = () => {
+const FilterBarPage: FC = () => {
     return (
       <Container>
         <FilterBar
@@ -103,4 +103,4 @@ const FilterBarComp = () => {
     );
 };
 
-export default FilterBarComp;
+export default FilterBarPage;
