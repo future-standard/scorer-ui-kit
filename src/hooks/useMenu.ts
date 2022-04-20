@@ -1,4 +1,4 @@
-import {useReducer, useCallback, useLayoutEffect} from 'react';
+import { useReducer, useCallback, useLayoutEffect } from 'react';
 
 import useBreakpoints, { IBreakpoints } from './useBreakpoints';
 
@@ -39,7 +39,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
 
     // initial State based in props and desktop size
     case 'SET_MENU': {
-      const openMenu = localStorage.getItem('isMenuOpen');
+      const openMenu = localStorage.getItem(window.location.hostname + '_isMenuOpen');
       let isMenuOpen = openMenu === 'true';
       let isMenuPinned = openMenu === 'true';
       let canPin = false;
@@ -51,7 +51,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
       if (action.data.desktopSize === 'xxlarge' && action.data.canAlwaysPin === false) {
         isMenuOpen = true;
         isMenuPinned = true;
-      } else if(action.data.desktopSize === 'xxlarge'){
+      } else if (action.data.desktopSize === 'xxlarge') {
         isMenuOpen = action.data.defaultMenuOpen;
         isMenuPinned = false;
       }
@@ -89,15 +89,15 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
     }
 
     case 'TOGGLE_PIN': {
-      if(!state.canPin) { return state; }
+      if (!state.canPin) { return state; }
 
       let isMenuOpen = true;
 
-      if(state.isMenuPinned) {
-        localStorage.setItem('isMenuOpen', 'false');
+      if (state.isMenuPinned) {
+        localStorage.removeItem(window.location.hostname + '_isMenuOpen');
         isMenuOpen = false;
       } else {
-        localStorage.setItem('isMenuOpen', 'true');
+        localStorage.setItem(window.location.hostname + '_isMenuOpen', 'true');
       }
 
       return {
@@ -122,24 +122,24 @@ const menuState: IMenuState = {
 
 const useMenu = (defaultMenuOpen: boolean, canAlwaysPin: boolean) => {
 
-  const {activeScreen} = useBreakpoints();
+  const { activeScreen } = useBreakpoints();
   const [state, dispatch] = useReducer(menuReducer, menuState);
 
   const setMenu = useCallback((defaultMenuOpen: boolean, canAlwaysPin: boolean, desktopSize: IBreakpoints,) => {
-    dispatch({type: 'SET_MENU', data: {defaultMenuOpen, desktopSize, canAlwaysPin}});
-  },[]);
+    dispatch({ type: 'SET_MENU', data: { defaultMenuOpen, desktopSize, canAlwaysPin } });
+  }, []);
 
   const setMenuOpen = useCallback(() => {
-    dispatch({type: 'SET_OPEN'});
-  },[]);
+    dispatch({ type: 'SET_OPEN' });
+  }, []);
 
   const setMenuClose = useCallback(() => {
-    dispatch({type: 'SET_CLOSE'});
-  },[]);
+    dispatch({ type: 'SET_CLOSE' });
+  }, []);
 
   const togglePinned = useCallback(() => {
-    dispatch({type: 'TOGGLE_PIN'});
-  },[]);
+    dispatch({ type: 'TOGGLE_PIN' });
+  }, []);
 
   useLayoutEffect(() => {
     setMenu(defaultMenuOpen, canAlwaysPin, activeScreen);
