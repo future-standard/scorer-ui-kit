@@ -127,6 +127,10 @@ const initialSearchFilters = (searchFilters: ISearchFilter[]): String[] => {
   return currentVisible;
 };
 
+interface IFilterPosition {
+  [index: string]: (JSX.Element | null)[]
+}
+
 export interface IFilterInputs {
   searchFilters?: ISearchFilter[]
   dropdownFilters?: IFilterDropdownExt[]
@@ -172,12 +176,12 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   const datePickersElement = renderDatePickers(datePickerFilters);
   const dropDownsElement = renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore);
 
-  const positionIndex: { [index: string]: (JSX.Element | null)[] } = { Searchers: searchInputsElement, DatePickers: datePickersElement, Dropdowns: dropDownsElement };
+  const filterPosition: IFilterPosition = { Searchers: searchInputsElement, DatePickers: datePickersElement, Dropdowns: dropDownsElement };
 
   return (
     <Container {...{ props }}>
 
-      {Array.from(order)?.map(element => positionIndex[element])}
+      {Array.from(order)?.map(element => filterPosition[element])}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
       {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
