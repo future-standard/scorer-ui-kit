@@ -3,24 +3,12 @@ import {
   ButtonWithIcon,
   Content,
   DatePicker,
-  FilterDropdownContainer,
-  Label
+  FilterDropdownContainer
 } from "scorer-ui-kit";
 import styled from "styled-components";
 
 const TranslateBox = styled.div`
-  display: flex;
   margin: 20px 0;
-  align-items: center;
-`;
-
-const TextLabel = styled(Label)`
-  margin-bottom: 0;
-  margin-left: 20px;
-  font-size: 20px;
-  span{
-    margin-bottom: 0;
-  }
 `;
 
 const DatePickerPage = () => {
@@ -34,9 +22,8 @@ const DatePickerPage = () => {
     <Content>
       <TranslateBox>
         <ButtonWithIcon icon="Language" position="left" onClick={() => setTranslate(!translate)}>
-          Change Language
+          {translate ? 'Japanese' : 'English'}
         </ButtonWithIcon>
-        {translate ? <TextLabel htmlFor='' labelText='やまと' /> : <TextLabel htmlFor='' labelText='English' />}
       </TranslateBox>
       <FilterDropdownContainer>
         <DatePicker
