@@ -20,20 +20,16 @@ const Tab1Container = styled.div`
 const Tab2Container = styled.div`
   margin-top: 20px;
 `
-const LanguageButton = styled(Button)`
-  margin-top: 20px;
-`;
 
 const TabsPage: React.FC = () => {
-  const [language, setLanguage] = React.useState(false);
 
   return <Container>
     <Content>
       <PageHeader title="Tabs Example" areaTitle="Examples" areaHref={'/'} />
       <Tabs>
         <TabList defaultTabId='tab1'>
-          <Tab tabFor='tab1'>{language ? 'タブ 1' : 'Tab 1'}</Tab>
-          <Tab tabFor='tab2'>{language ? 'タブ 2' : 'Tab 2'}</Tab>
+          <Tab tabFor='tab1'>Tab 1</Tab>
+          <Tab tabFor='tab2'>Tab 2</Tab>
         </TabList>
         <Divider />
         <TabContent tabId='tab1'>
@@ -47,12 +43,11 @@ const TabsPage: React.FC = () => {
         <TabContent tabId='tab2'>
           <Tab2Container>
             <Label htmlFor='' labelText='Content of tab 2' />
-            <Label htmlFor='' labelText='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet erat et sapien pulvinar efficitur. Quisque tristique massa at auctor rhoncus. Ut venenatis sem id gravida volutpat. Phasellus faucibus accumsan sapien, id pellentesque dolor consectetur quis. Duis non rhoncus nunc. Suspendisse et rhoncus tortor.' /> 
+            <Label htmlFor='' labelText='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet erat et sapien pulvinar efficitur. Quisque tristique massa at auctor rhoncus. Ut venenatis sem id gravida volutpat. Phasellus faucibus accumsan sapien, id pellentesque dolor consectetur quis. Duis non rhoncus nunc. Suspendisse et rhoncus tortor.' />
             <Button design='primary' size='small'> OK </Button>
           </Tab2Container>
         </TabContent>
       </Tabs>
-      <LanguageButton design='secondary' size='small' onClick={() => { setLanguage(!language) }}>Change Language</LanguageButton>
     </Content>
   </Container>
 };
