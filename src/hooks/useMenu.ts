@@ -94,7 +94,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
       let isMenuOpen = true;
 
       if (state.isMenuPinned) {
-        localStorage.removeItem(window.location.hostname + '_isMenuOpen');
+        localStorage.setItem(window.location.hostname + '_isMenuOpen', 'false');
         isMenuOpen = false;
       } else {
         localStorage.setItem(window.location.hostname + '_isMenuOpen', 'true');
