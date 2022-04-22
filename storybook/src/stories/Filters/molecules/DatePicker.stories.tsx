@@ -26,7 +26,7 @@ const exampleCallback = <T extends Function>(fn: T): T => {
 };
 
 export const _DatePicker = () => {
-  const language = select("Language", { English: 'english', Japanese: 'japanese' }, "japanese");
+  const language = select("Language", { English: 'en', Japanese: 'ja' }, "ja");
   const dateMode = select("Date Mode", { single: "single", interval: "interval" }, "interval");
   const timeMode = select("Time Mode", { off: "off", single: "single", interval: "interval" }, "interval");
   const dateTimeTextUpper = text('Date Time Text Upper', 'From');
@@ -35,10 +35,8 @@ export const _DatePicker = () => {
   const timeZoneValueTitle = text('Time Zone Value', 'JST');
   const updateCallback = action('Date / Time Updated');
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const monthsList = object('Translate Months', jpMonths);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const daysList = object('Translate Days', jpDays);
+  object('Translate Months', jpMonths);
+  object('Translate Days', jpDays);
 
   return <Container>
     <FilterDropdownContainer>
@@ -48,11 +46,11 @@ export const _DatePicker = () => {
         timeZoneValueTitle
       }}
         updateCallback={exampleCallback(updateCallback)}
-        dateTimeTextUpper={language === 'english' ? dateTimeTextUpper : 'から'}
-        dateTimeTextLower={language === 'english' ? dateTimeTextLower : 'まで'}
-        timeZoneTitle={language === 'english' ? timeZoneTitle : '時間帯'}
-        monthsList={language === 'english' ? [] : jpMonths}
-        daysList={language === 'english' ? undefined : jpDays}
+        dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}
+        dateTimeTextLower={language === 'ja' ? 'まで' : dateTimeTextLower}
+        timeZoneTitle={language === 'ja' ? '時間帯' : timeZoneTitle}
+        monthsList={language === 'ja' ? jpMonths : []}
+        daysList={language === 'ja' ? jpDays : undefined}
       />
     </FilterDropdownContainer>
   </Container>;
