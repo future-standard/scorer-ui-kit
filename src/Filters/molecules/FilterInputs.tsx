@@ -44,10 +44,6 @@ const Container = styled.div`
   }
 `;
 
-const FilterButtonBox = styled.div`
-  margin: 0 3px 0 3px;
-`;
-
 const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdowns: boolean, hasShowMore: boolean) => {
   return dropdownFilters.map((dropdown: IFilterDropdownExt) => {
     if (!dropdown.canHide || !showMoreDropdowns || (dropdown.canHide && !hasShowMore)) {
@@ -186,14 +182,12 @@ const FilterInputs: React.FC<IFilterInputs> = ({
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
       {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
       {hasShowMore && (
-        <FilterButtonBox>
-          <FilterButton
-            icon='FilterEllipsis'
-            onClick={toggleShowMore}
-          >
-            {showMoreDropdowns ? showMoreText : showLessText}
-          </FilterButton>
-        </FilterButtonBox>)}
+        <FilterButton
+          icon='FilterEllipsis'
+          onClick={toggleShowMore}
+        >
+          {showMoreDropdowns ? showMoreText : showLessText}
+        </FilterButton>)}
     </Container>
   );
 };

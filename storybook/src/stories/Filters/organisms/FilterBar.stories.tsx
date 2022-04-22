@@ -47,6 +47,7 @@ import {
   filterByCreationDatePicker
 } from '../../helpers/sample_table_helpers';
 import { ITypeTableData } from '../../../../../dist/Tables';
+import { IDisplayOrder } from '../../../../../dist/Filters/FilterTypes';
 
 export default {
   title: 'Filters/Organism',
@@ -250,14 +251,13 @@ export const _FilterBar = () => {
     setRows(rowMaker(data));
   }, [data])
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dispalyOrder = object('Display Order', filterDisplayOrder);
+  object('Display Order', filterDisplayOrder);
 
   return (
     <Container>
       <FilterBar
         {...{ singleFilter, hasShowMore }}
-        displayOrder={filterDisplayOrder}
+        displayOrder={filterDisplayOrder as IDisplayOrder[]}
         searchersConfig={searchers}
         dropdownsConfig={dropdowns}
         datePickersConfig={datePickers}
