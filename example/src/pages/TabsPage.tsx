@@ -21,7 +21,7 @@ const Tab2Container = styled.div`
   margin-top: 20px;
 `
 
-const TabsPage : React.FC = () => {
+const TabsPage: React.FC = () => {
 
   return <Container>
     <Content>

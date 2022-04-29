@@ -1,5 +1,5 @@
 import React, { useReducer, useCallback, useEffect, useState } from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 import {
   LineReducer,
@@ -12,19 +12,26 @@ import {
   LineUIRTC,
   Logo,
   Button,
-  AlertBar
+  AlertBar,
+  Switch
 } from 'scorer-ui-kit';
 import { LineUIOptions } from '../../../dist/LineUI';
+
+const SwitchBox = styled.div`
+  margin-bottom: 15px;
+`;
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
   const [ws, setWS] = useState('localhost/wsapp');
   const [wsURL, setWsURL] = useState('');
+  const [isShowDirection, setShowDirection] = useState<boolean>(false);
 
   const options : LineUIOptions = {
     showSetIndex: true,
-    setIndexOffset: 1
+    setIndexOffset: 1,
+    showDirectionMark: isShowDirection
   }
 
   const fetchLine = useCallback(async () => {
@@ -93,6 +100,10 @@ const Line: React.FC<{}> = () => {
     setWsURL(ws);
   },[ws]);
 
+  const showDirection = useCallback((isChecked: boolean) => {
+    setShowDirection(isChecked);
+  }, []);
+
   return (
     <Layout >
       <Sidebar>
@@ -103,6 +114,9 @@ const Line: React.FC<{}> = () => {
           </pre>
         </SidebarBox>
         <SidebarBox>
+          <SwitchBox>
+            <Switch checked={isShowDirection} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
+          </SwitchBox>
           <Button design="secondary" onClick={fetchLine} >Cancel</Button>
           <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button>
         </SidebarBox>

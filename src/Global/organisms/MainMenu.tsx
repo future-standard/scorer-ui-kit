@@ -154,9 +154,9 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
         <Container
           open={menuState.isMenuOpen}
           desktopSize={menuState.desktopSize}
-          onPointerEnter={autoMenuOpen}
+          onPointerEnter={menuState.isMenuPinned ? () => {} : autoMenuOpen}
           onTouchStart={() => console.log('touch')}
-          onMouseLeave={autoMenuClose}
+          onMouseLeave={menuState.isMenuPinned ? () => {} : autoMenuClose}
         >
           <ContainerInner>
             <Logo to={home}>
@@ -177,7 +177,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
                   {...{ item, loading, focusedContext, readyCallback }}
                 />
               );
-            })}
+              })}
             </NavigationContainer>
 
             <MenuFooter>

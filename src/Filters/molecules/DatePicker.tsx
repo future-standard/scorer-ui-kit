@@ -253,6 +253,8 @@ export interface IDatePicker {
   hasEmptyValue?: boolean
   dateTimeTextUpper?: string
   dateTimeTextLower?: string
+  timeZoneTitle?: string
+  timeZoneValueTitle?: string
   updateCallback?: (data: DateInterval | Date) => void
 }
 
@@ -261,6 +263,8 @@ const DatePicker: React.FC<IDatePicker> = ({
   timeMode = 'interval',
   dateTimeTextUpper = 'From',
   dateTimeTextLower = 'To',
+  timeZoneTitle = 'Timezone',
+  timeZoneValueTitle = 'JST',
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
@@ -366,8 +370,8 @@ const DatePicker: React.FC<IDatePicker> = ({
         <DateTimeBlock title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>
-          <TimeZoneLabel>Timezone</TimeZoneLabel>
-          <TimeZoneValue>JST</TimeZoneValue>
+          <TimeZoneLabel>{timeZoneTitle}</TimeZoneLabel>
+          <TimeZoneValue>{timeZoneValueTitle}</TimeZoneValue>
         </TimeZoneOption>
 
       </DateTimeArea>
@@ -444,12 +448,12 @@ const cellState = (day: Date, interval: Interval | null, _hoverDate?: Date): Cel
 
   try {
     isInsideInterval = isWithinInterval(day, interval);
-    } catch (error) {
-      isInsideInterval = false;
-      console.log('wrong interval in datepicker', error);
+  } catch (error) {
+    isInsideInterval = false;
+    console.log('wrong interval in datepicker', error);
   }
 
-  if ( isInsideInterval || isSameDay(interval.start, day)) {
+  if (isInsideInterval || isSameDay(interval.start, day)) {
 
     if (singleDayRange) {
       state = "single";

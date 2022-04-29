@@ -352,12 +352,12 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
               <ResultsContainer>
                 {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
                 <OptionList>
-                  {(visibleList.length > 0) && visibleList.map((item: IFilterItem) => {
+                  {(visibleList.length > 0) && visibleList.map((item: IFilterItem, index) => {
                     const value = item.value;
                     const text = item.text;
                     return (
                       <StyledFilterOption
-                        key={`select-${text}`}
+                        key={index}
                         title={text}
                         onClick={() => handleSelection(item)}
                         selected={isValueSelected(item, selected)}

@@ -515,8 +515,7 @@ export const _GlobalUI = () => {
         content={menuConfig}
         home={menuHomeLink}
         defaultMenuOpen={defaultMenuOpen}
-        canAlwaysPin={canAlwaysPin}
-        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
+        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer, canAlwaysPin }}
         {...{
           loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasCurrentUser, currentUserText, accountOptionText,
           hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle,
