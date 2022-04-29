@@ -17,7 +17,6 @@ import LoginPage from './pages/Login';
 import TablePage from './pages/TablePage';
 import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import TabsPage from './pages/TabsPage';
-import DatePickerPage from './pages/DatePickerPage';
 
 const App: React.FC<{}> = () => {
   return (
@@ -38,7 +37,6 @@ const App: React.FC<{}> = () => {
           </PTZProvider>
         </Route>
         <Route path={`/tabs`} exact={true} component={TabsPage} />
-        <Route path='/datepicker' exact component={DatePickerPage} />
       </Switch>
     </Router>
   )
