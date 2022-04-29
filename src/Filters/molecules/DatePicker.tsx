@@ -4,6 +4,7 @@ import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, add, set } from 'date-fns';
+import { ja } from 'date-fns/locale';
 
 /**
  * Convert a single days duration to an interval.
@@ -222,9 +223,11 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
 
 `;
 
-const DayGuide: string[] = [
+const enDayGuide: string[] = [
   "S", "M", "T", "W", "T", "F", "S"
 ];
+
+const jpDayGuide: string[] = ['日', '月', '火', '水', '木', '金', '土'];
 
 export const isDateInterval = (value: any): value is DateInterval => {
   if (value === null || value === undefined) {
@@ -246,7 +249,6 @@ export interface DateInterval {
   start: Date;
   end: Date;
 }
-
 export interface IDatePicker {
   initialValue?: Date | DateInterval
   dateMode?: DateMode
@@ -257,8 +259,7 @@ export interface IDatePicker {
   timeZoneTitle?: string
   timeZoneValueTitle?: string
   updateCallback?: (data: DateInterval | Date) => void
-  monthsList?: string[]
-  daysList?: string[]
+  translateOn?: boolean
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
@@ -271,8 +272,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
-  monthsList = [],
-  daysList = DayGuide
+  translateOn = false
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -282,6 +282,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
+  const dayGuide = translateOn ? jpDayGuide : enDayGuide;
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -385,29 +386,23 @@ const DatePicker: React.FC<IDatePicker> = ({
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
-            {monthsList?.length > 0 ?
-              monthsList[focusedMonth.getMonth() === 0 ? 11 : (focusedMonth.getMonth() - 1)] :
-              format(addMonths(focusedMonth, -1), "MMM")}
+            {format(addMonths(focusedMonth, -1), "MMM", { locale: translateOn ? ja : undefined})}
           </PaginateMonth>
 
           <CurrentMonth>
             <span>{format(focusedMonth, "yyyy")}</span>
-            {monthsList?.length > 0 ?
-              monthsList[focusedMonth.getMonth()] :
-              format(focusedMonth, "MMMM")}
+            {format(focusedMonth, "MMMM", { locale: translateOn ? ja : undefined})}
           </CurrentMonth>
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
-            {monthsList?.length > 0 ?
-              monthsList[focusedMonth.getMonth() === 11 ? 0 : (focusedMonth.getMonth() + 1)] :
-              format(addMonths(focusedMonth, 1), "MMM")}
+            {format(addMonths(focusedMonth, 1), "MMM", { locale: translateOn ? ja : undefined})}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
 
         </CalendarHeader>
 
         <CalHRow>
-          {daysList.map((day, index) => {
+          {dayGuide.map((day, index) => {
             return <CalHCell key={index}>{day}</CalHCell>;
           })}
         </CalHRow>

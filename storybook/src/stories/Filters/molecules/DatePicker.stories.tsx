@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object, select, text } from "@storybook/addon-knobs";
+import { select, text } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
-import { jpDays, jpMonths } from '../../helpers/data_samples';
 
 const Container = styled.div`
     margin: 20px;
@@ -35,9 +34,6 @@ export const _DatePicker = () => {
   const timeZoneValueTitle = text('Time Zone Value', 'JST');
   const updateCallback = action('Date / Time Updated');
 
-  object('Translate Months', jpMonths);
-  object('Translate Days', jpDays);
-
   return <Container>
     <FilterDropdownContainer>
       <DatePicker {...{
@@ -49,8 +45,7 @@ export const _DatePicker = () => {
         dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}
         dateTimeTextLower={language === 'ja' ? 'まで' : dateTimeTextLower}
         timeZoneTitle={language === 'ja' ? '時間帯' : timeZoneTitle}
-        monthsList={language === 'ja' ? jpMonths : []}
-        daysList={language === 'ja' ? jpDays : undefined}
+        translateOn={language === 'ja'}
       />
     </FilterDropdownContainer>
   </Container>;
