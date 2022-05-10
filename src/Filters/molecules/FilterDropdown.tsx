@@ -53,6 +53,8 @@ const StyledFilterOption = styled(FilterOption)`
 `;
 
 const OptionList = styled.div`
+  height: 180px;
+  overflow-y: scroll;
   ${StyledFilterOption} {
     height: 35px;
     padding-left: 10px;
@@ -135,63 +137,52 @@ const getNewSelected = (item: IFilterItem, selected: IFilterValue, optionType: I
   return item;
 };
 
-/**
- * This is the list of values that will show in the dropdown
- *
- * @param list is all the items that can be in the dropdown
- * @param maxItems will define in case the dropdown has 300 options to only show until maxItems ( usually 4 or 6)
- * @param selected is a list of the values that are selected and that should be visible
- * although are not at the beginning of the list
- * @returns a FilterItem list to update the content of the dropdown
- */
-
-const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilterValue): IFilterItem[] => {
+const selectedOrderList = (list: IFilterItem[], maxItems: number, selected: IFilterValue): IFilterItem[] => {
 
   if (list.length <= maxItems) {
     return list;
   }
 
-  if (selected === null) {
-    return list.slice(0, maxItems);
+  if(selected === null) {
+    return list;
   }
 
   if (isFilterItem(selected)) {
     const index = list.findIndex(item => item.value === selected.value);
 
     // if it doesn't exists return the list based in maxItems
-    if ((index !== -1)) {
-      return list.slice(0, maxItems);
+    if ((index === -1)) {
+      return list;
     }
 
     // if exists and is inside the visibleRange just return slice
     if ((index !== -1) && (index < maxItems)) {
-      return list.slice(0, maxItems);
+      return list;
     }
 
-    //If not is somewhere after the maxItems remove last item and add it to the end.
-    const newList = list.slice(0, maxItems - 1);
-    newList.push(selected);
+    const newList = list.filter(item => item.value !== selected.value);
+    newList.unshift(list[index]);
+
     return newList;
+
   }
 
   if (Array.isArray(selected)) {
-
-    if (selected.length > maxItems) {
-      return selected.slice(0, maxItems);
-    }
-
-    if (selected.length === maxItems) {
-      return selected;
-    }
-
     const selectedIndexList: number[] = [];
+    const newList: IFilterItem[] = [];
 
     selected.forEach((element: IFilterItem) => {
       const index = list.findIndex(item => item.value === element.value);
+      const foundItem = list.find(item => item.value === element.value);
+
 
       if (index !== -1) {
         selectedIndexList.push(index);
       }
+      if(foundItem) {
+        newList.push(foundItem);
+      }
+
     });
 
     selectedIndexList.sort(function (a, b) {
@@ -199,32 +190,19 @@ const getVisibleList = (list: IFilterItem[], maxItems: number, selected: IFilter
     });
 
     let selectedIndex = 0;
-    let visibleListAvailability = maxItems - selected.length;
-    const newList: IFilterItem[] = [];
 
-    for (let listIndex = 0; listIndex < list.length; listIndex++) {
-      if ((selectedIndex < selectedIndexList.length) && (listIndex === selectedIndexList[selectedIndex])) {
+    list.forEach((item, index) => {
+      if(index === selectedIndexList[selectedIndex]){
         selectedIndex++;
-      } else {
-        visibleListAvailability--;
+        return;
       }
-      newList.push(list[listIndex]);
-
-      if (visibleListAvailability === 0) {
-        break;
-      }
-    }
-
-    if ((newList.length < maxItems) && (selectedIndex < selectedIndexList.length)) {
-      for (; selectedIndex < selectedIndexList.length; selectedIndex++) {
-        newList.push(list[selectedIndexList[selectedIndex]]);
-      }
-    }
+      newList.push(item);
+    });
 
     return newList;
   }
 
-  return list.slice(0, maxItems - 1);
+  return list;
 };
 
 const getFilteredList = (list: IFilterItem[], newValue: string): IFilterItem[] => {
@@ -272,17 +250,17 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   ...props
 }) => {
 
-  const [visibleList, setVisibleList] = useState(getVisibleList(list, maxDisplayedItems, selected));
+  const [visibleList, setVisibleList] = useState(selectedOrderList(list, maxDisplayedItems, selected));
   const [searchText, setSearchText] = useState<string>('');
 
   const handleClose = useCallback(() => {
     setSearchText('');
-    setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
+    setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
   }, [list, maxDisplayedItems, selected]);
 
   const handleToggleOpen = useCallback(() => {
     setSearchText('');
-    setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
+    setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
   }, [list, maxDisplayedItems, selected]);
 
   const handleSelection = useCallback((item: IFilterItem) => {
@@ -295,7 +273,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
     setSearchText(value);
 
     if (value === '') {
-      setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
+      setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
       return;
     }
 
@@ -303,14 +281,14 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
     const newList = getFilteredList(list, newValue);
 
     // sending null so the filtered list doesn't force the selected values to appear.
-    setVisibleList(getVisibleList(newList, maxDisplayedItems, null));
+    setVisibleList(selectedOrderList(newList, maxDisplayedItems, null));
   }, [list, maxDisplayedItems, selected]);
 
   useEffect(() => {
     let isActive = true;
     if (isActive) {
       setSearchText(''); // clears searchText if something was selected and the dropdown is still open
-      setVisibleList(getVisibleList(list, maxDisplayedItems, selected));
+      setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
     }
 
     return () => {
