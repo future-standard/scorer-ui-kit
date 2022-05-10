@@ -55,6 +55,12 @@ const StyledFilterOption = styled(FilterOption)`
 const OptionList = styled.div`
   height: 180px;
   overflow-y: scroll;
+  ::-webkit-scrollbar {  /* Hide scrollbar for Chrome, Safari and Opera */
+    display: none;
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
   ${StyledFilterOption} {
     height: 35px;
     padding-left: 10px;
