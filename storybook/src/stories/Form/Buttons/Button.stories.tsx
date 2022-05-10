@@ -7,7 +7,10 @@ import {Button} from 'scorer-ui-kit';
 export default {
   title: 'Form/Buttons',
   component: Button,
-  decorators: []
+  decorators: [],
+  parameters: {
+    zeplinLink: "https://future-standard.github.io/scorer-ui-kit/storybook/?path=/story/form-buttons--standard-button"
+  }
 };
 
 export const StandardButton = () => {
