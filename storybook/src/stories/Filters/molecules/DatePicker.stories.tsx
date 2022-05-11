@@ -45,7 +45,7 @@ export const _DatePicker = () => {
         dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}
         dateTimeTextLower={language === 'ja' ? 'まで' : dateTimeTextLower}
         timeZoneTitle={language === 'ja' ? '時間帯' : timeZoneTitle}
-        translateOn={language === 'ja'}
+        lang={language}
       />
     </FilterDropdownContainer>
   </Container>;

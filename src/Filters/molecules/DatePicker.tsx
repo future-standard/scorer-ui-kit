@@ -259,7 +259,7 @@ export interface IDatePicker {
   timeZoneTitle?: string
   timeZoneValueTitle?: string
   updateCallback?: (data: DateInterval | Date) => void
-  translateOn?: boolean
+  lang?: 'en' | 'ja'
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
@@ -272,7 +272,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
-  translateOn = false
+  lang = 'en'
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -282,7 +282,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
-  const dayGuide = translateOn ? jpDayGuide : enDayGuide;
+  const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -386,16 +386,16 @@ const DatePicker: React.FC<IDatePicker> = ({
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
-            {format(addMonths(focusedMonth, -1), "MMM", { locale: translateOn ? ja : undefined})}
+            {lang === 'ja' ? format(addMonths(focusedMonth, -1), "MMM", { locale: ja }) : format(addMonths(focusedMonth, -1), "MMM")}
           </PaginateMonth>
 
           <CurrentMonth>
             <span>{format(focusedMonth, "yyyy")}</span>
-            {format(focusedMonth, "MMMM", { locale: translateOn ? ja : undefined})}
+            {lang === 'ja' ? format(focusedMonth, "MMMM", { locale: ja }) : format(focusedMonth, "MMMM")}
           </CurrentMonth>
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
-            {format(addMonths(focusedMonth, 1), "MMM", { locale: translateOn ? ja : undefined})}
+            {lang === 'ja' ? format(addMonths(focusedMonth, 1), "MMM", { locale: ja }) : format(addMonths(focusedMonth, 1), "MMM")}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
 
