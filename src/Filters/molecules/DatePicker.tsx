@@ -4,7 +4,7 @@ import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, add, set } from 'date-fns';
-import { ja } from 'date-fns/locale';
+import { ja, enUS } from 'date-fns/locale';
 
 /**
  * Convert a single days duration to an interval.
@@ -386,16 +386,16 @@ const DatePicker: React.FC<IDatePicker> = ({
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
-            {lang === 'ja' ? format(addMonths(focusedMonth, -1), "MMM", { locale: ja }) : format(addMonths(focusedMonth, -1), "MMM")}
+            {format(addMonths(focusedMonth, -1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
           </PaginateMonth>
 
           <CurrentMonth>
             <span>{format(focusedMonth, "yyyy")}</span>
-            {lang === 'ja' ? format(focusedMonth, "MMMM", { locale: ja }) : format(focusedMonth, "MMMM")}
+            {format(focusedMonth, "MMMM", { locale: lang === 'ja' ? ja : enUS })}
           </CurrentMonth>
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
-            {lang === 'ja' ? format(addMonths(focusedMonth, 1), "MMM", { locale: ja }) : format(addMonths(focusedMonth, 1), "MMM")}
+            {format(addMonths(focusedMonth, 1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
 
