@@ -4,12 +4,14 @@ import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, add, set } from 'date-fns';
+import i18n from 'i18next';
 import { ja, enUS } from 'date-fns/locale';
 
 /**
  * Convert a single days duration to an interval.
  * @param day The day to convert to an interval
  */
+
 const initializeInterval = (day: Date): DateInterval => {
   return {
     start: set(day, { seconds: 0, milliseconds: 0 }),
@@ -259,7 +261,6 @@ export interface IDatePicker {
   timeZoneTitle?: string
   timeZoneValueTitle?: string
   updateCallback?: (data: DateInterval | Date) => void
-  lang?: 'en' | 'ja'
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
@@ -271,8 +272,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   timeZoneValueTitle = 'JST',
   hasEmptyValue = false,
   updateCallback = () => { },
-  initialValue,
-  lang = 'en'
+  initialValue
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -282,7 +282,10 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
-  const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
+
+  const lang = i18n.language === 'ja' ? ja : enUS;
+
+  const dayGuide = lang === ja ? jpDayGuide : enDayGuide;
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -386,16 +389,16 @@ const DatePicker: React.FC<IDatePicker> = ({
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
-            {format(addMonths(focusedMonth, -1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
+            {format(addMonths(focusedMonth, -1), "MMM", { locale: lang })}
           </PaginateMonth>
 
           <CurrentMonth>
             <span>{format(focusedMonth, "yyyy")}</span>
-            {format(focusedMonth, "MMMM", { locale: lang === 'ja' ? ja : enUS })}
+            {format(focusedMonth, "MMMM", { locale: lang })}
           </CurrentMonth>
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
-            {format(addMonths(focusedMonth, 1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
+            {format(addMonths(focusedMonth, 1), "MMM", { locale: lang })}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
 
