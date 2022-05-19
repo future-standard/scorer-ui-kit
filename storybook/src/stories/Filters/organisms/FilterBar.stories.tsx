@@ -208,6 +208,7 @@ export const _FilterBar = () => {
       buttonIcon: 'DateTime',
       dateTimeTextUpper: language === 'english' ? 'From' : 'から',
       dateTimeTextLower: language === 'english' ? 'To' : 'まで',
+      lang: language === 'japanese' ? 'ja' : 'en'
       // selected: myDate,
     }
   ]
