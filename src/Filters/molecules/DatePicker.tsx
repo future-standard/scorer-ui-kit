@@ -4,11 +4,13 @@ import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, add, set } from 'date-fns';
+import { ja, enUS } from 'date-fns/locale';
 
 /**
  * Convert a single days duration to an interval.
  * @param day The day to convert to an interval
  */
+
 const initializeInterval = (day: Date): DateInterval => {
   return {
     start: set(day, { seconds: 0, milliseconds: 0 }),
@@ -222,9 +224,11 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
 
 `;
 
-const DayGuide: string[] = [
+const enDayGuide: string[] = [
   "S", "M", "T", "W", "T", "F", "S"
 ];
+
+const jpDayGuide: string[] = ['日', '月', '火', '水', '木', '金', '土'];
 
 export const isDateInterval = (value: any): value is DateInterval => {
   if (value === null || value === undefined) {
@@ -256,6 +260,7 @@ export interface IDatePicker {
   timeZoneTitle?: string
   timeZoneValueTitle?: string
   updateCallback?: (data: DateInterval | Date) => void
+  lang?: 'en' | 'ja'
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
@@ -268,6 +273,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
+  lang = 'en'
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -277,6 +283,8 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
+  
+  const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -361,7 +369,6 @@ const DatePicker: React.FC<IDatePicker> = ({
     setSelectedRange({ start, end });
   }, [selectedRange]);
 
-
   return (
     <Container>
 
@@ -381,23 +388,23 @@ const DatePicker: React.FC<IDatePicker> = ({
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
-            {format(addMonths(focusedMonth, -1), "MMM")}
+            {format(addMonths(focusedMonth, -1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
           </PaginateMonth>
 
           <CurrentMonth>
             <span>{format(focusedMonth, "yyyy")}</span>
-            {format(focusedMonth, "MMMM")}
+            {format(focusedMonth, "MMMM", { locale: lang === 'ja' ? ja : enUS })}
           </CurrentMonth>
 
           <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
-            {format(addMonths(focusedMonth, 1), "MMM")}
+            {format(addMonths(focusedMonth, 1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
 
         </CalendarHeader>
 
         <CalHRow>
-          {DayGuide.map((day, index) => {
+          {dayGuide.map((day, index) => {
             return <CalHCell key={index}>{day}</CalHCell>;
           })}
         </CalHRow>
