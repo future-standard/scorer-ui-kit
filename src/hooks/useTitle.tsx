@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const useTitle = (title : string, area? : string, delimiter?: string, update= true) => {
 
-  const [baseTitle] = useState<string>(document.title);
 
   useEffect(() => {
     if(!update) return;
     document.title = makeTitle([
       ...(title ? [title] : []),
-      ...(area ? [area] : []),
-      baseTitle
+      ...(area ? [area] : [])
     ], delimiter);
-  },[title, area, baseTitle, delimiter, update]);
+  },[title, area, delimiter, update]);
 };
 
 /**
