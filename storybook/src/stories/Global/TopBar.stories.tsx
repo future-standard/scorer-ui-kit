@@ -101,6 +101,8 @@ export const _TopBar = () => {
   const hasCurrentUser = boolean("Has Current User", true);
   const logoutLink = text("Logout Url", "#")
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
+  const currentUserText = text("Current User Text", "Current User");
+  const logoutText = text("Logout Text", "Logout");
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
@@ -131,7 +133,10 @@ export const _TopBar = () => {
         searchPlaceholder,
         hasLanguage,
         hasCurrentUser,
-        notificationsHistory}}
+        notificationsHistory,
+        currentUserText,
+        logoutText
+      }}
         customDrawer={drawerProps}
       />
     </Container>
