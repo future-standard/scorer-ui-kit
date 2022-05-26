@@ -11,9 +11,9 @@ const ButtonWrapper = styled.div`
   display: inline-block;
 `;
 
-const ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean, min_width: number }>`
+const ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean, minWidth: number }>`
   z-index: 100;
-  min-width: ${({ min_width }) => min_width}px;
+  min-width: ${({ minWidth }) => minWidth}px;
   position: absolute;
 
   ${({ openState, disabled }) => openState && css`
@@ -47,11 +47,11 @@ const ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean, min_wid
   `};
 `;
 
-const getDropPosition = (buttonRect: DOMRect, min_width: number, min_height: number): IOpenPos => {
+const getDropPosition = (buttonRect: DOMRect, minWidth: number, minHeight: number): IOpenPos => {
   let position: IOpenPos = 'bottom-right';
-  const openLeft = (buttonRect.left + min_width) > window.innerWidth;
-  const openTop = (buttonRect.bottom + min_height) > window.innerHeight;
-  const spaceTop = buttonRect.bottom > min_height;
+  const openLeft = (buttonRect.left + minWidth) > window.innerWidth;
+  const openTop = (buttonRect.bottom + minHeight) > window.innerHeight;
+  const spaceTop = buttonRect.bottom > minHeight;
 
   if (openLeft && openTop && spaceTop) {
     position = 'top-left';
@@ -79,8 +79,9 @@ interface IFilterDropHandler {
   buttonIcon: string
   buttonText: string
   disabled?: boolean
-  min_width?: number
-  min_height?: number
+  minWidth?: number
+  minHeight?: number
+  isSortAscending?: boolean
   onToggleOpenCallback?: (isOpen: boolean) => void
   onCloseCallback?: () => void
 }
@@ -89,8 +90,9 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
   buttonIcon,
   buttonText,
   disabled = false,
-  min_width = 270,
-  min_height = 190,
+  minWidth = 270,
+  minHeight = 190,
+  isSortAscending,
   children,
   onToggleOpenCallback = () => { },
   onCloseCallback = () => { },
@@ -119,12 +121,12 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
 
   useClickOutside(mainRef, handleClose);
 
-  const handleToggleOpen = useCallback((min_width: number, min_height: number) => {
+  const handleToggleOpen = useCallback((minWidth: number, minHeight: number) => {
     if (!buttonWrapperRef.current) { return; }
 
     const buttonRect = buttonWrapperRef.current.getBoundingClientRect();
     if (!buttonRect) { return; }
-    const position: IOpenPos = getDropPosition(buttonRect, min_width, min_height);
+    const position: IOpenPos = getDropPosition(buttonRect, minWidth, minHeight);
 
     onToggleOpenCallback(openState.isOpen);
     setOpenState((prev) => {
@@ -139,13 +141,13 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
         <FilterButton
           icon={buttonIcon}
           isOpen={openState.isOpen}
+          onClick={() => handleToggleOpen(minWidth, minHeight)}
+          {...{ disabled, isSortAscending }}
           hasFlipArrow
-          onClick={() => handleToggleOpen(min_width, min_height)}
-          {...{ disabled }}
         >{buttonText}
         </FilterButton>
       </ButtonWrapper>
-      <ContentBox {...{ openState, disabled, min_width }}>
+      <ContentBox {...{ openState, disabled, minWidth }}>
         {children}
       </ContentBox>
     </Container>

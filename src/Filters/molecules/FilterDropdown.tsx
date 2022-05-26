@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { IInputOptionsType } from '../../Form';
 import FilterOption from '../../Form/atoms/FilterOption';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
-import Spinner from '../../Indicators/Spinner';
+
 import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
 import FilterDropHandler from '../atoms/FilterDropHandler';
+import LoadingBox from '../atoms/LoadingBox';
 
 const Container = styled.div`
   display: inline-block;
@@ -27,25 +28,6 @@ const InnerBox = styled.div`
   border-bottom: solid 1px hsl(207, 16%, 86%);
   border-left: solid 1px hsl(207, 16%, 86%);
   background-color: hsl(200, 23%, 97%);
-`;
-
-const LoadingBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 146px;
-  border-top: 1px solid hsl(0, 0%, 91%);
-`;
-
-const LoadingText = styled.div`
-  ${({ theme }) => theme && css`
-    font-family: ${theme.fontFamily.data};
-  `}
-  color: hsl(0, 0%, 55%);
-  font-size: 12px;
-  font-style: italic;
-  padding: 15px 0;
 `;
 
 const StyledFilterOption = styled(FilterOption)`
@@ -344,10 +326,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
           )}
           {isLoading || !list
             ? (
-              <LoadingBox>
-                <Spinner size='large' styling='primary' />
-                <LoadingText>{loadingText}</LoadingText>
-              </LoadingBox>)
+              <LoadingBox {...{ loadingText }} />)
             : (
               <ResultsContainer>
                 {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
