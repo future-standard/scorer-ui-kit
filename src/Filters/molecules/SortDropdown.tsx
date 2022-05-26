@@ -23,9 +23,8 @@ const InnerBox = styled.div`
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
-  border-right: solid 1px hsl(207, 16%, 86%);
-  border-bottom: solid 1px hsl(207, 16%, 86%);
-  border-left: solid 1px hsl(207, 16%, 86%);
+  border: solid 1px hsl(207, 16%, 86%);
+  border-top: unset;
   background-color: hsl(200, 23%, 97%);
 `;
 
