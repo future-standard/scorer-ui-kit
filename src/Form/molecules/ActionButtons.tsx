@@ -33,7 +33,7 @@ type IGroupButtonsData = {
   alignment?: IAlignmentOptions
 }
 
-const ActionButtons : React.FC<IGroupButtonsData> = ({buttonsConfig, alignment}) => {
+const ActionButtons : React.FC<IGroupButtonsData> = ({buttonsConfig, alignment = 'right' }) => {
 
   return(
     <Container {...{alignment}}>

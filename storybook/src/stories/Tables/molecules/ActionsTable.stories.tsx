@@ -145,7 +145,7 @@ const initialRows : ITypeTableData = [
       {customComponent: <div style={{fontStyle:'italic'}}>Just Now</div>},
       {text: `00:00:12`},
       {text: `Complete`},
-      { customComponent: <ActionButtons alignment='right' buttonsConfig = {generateConfigButtons('device1')}/>},
+      { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device1')}/>},
     ]
   },
   {
@@ -160,7 +160,7 @@ const initialRows : ITypeTableData = [
       {text: `2020/06/11 - 17:30`},
       {text: `00:00:12`},
       {text: `Complete`},
-      { customComponent: <ActionButtons alignment='right' buttonsConfig = {generateConfigButtons('device2')}/>},
+      { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device2')}/>},
     ]
   },
   {
@@ -175,7 +175,7 @@ const initialRows : ITypeTableData = [
       {text: `2020/05/10 - 12:30`},
       {text: `00:00:12`},
       {text: `Complete`},
-      { customComponent: <ActionButtons alignment='right' buttonsConfig = {generateConfigButtons('device2')}/>},
+      { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device2')}/>},
     ]
   }
 ];
