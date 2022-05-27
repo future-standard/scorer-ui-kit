@@ -132,7 +132,7 @@ const Line: React.FC<{}> = () => {
     })
 
     createMediaModal({ mediaType: 'video', src: `ws://${wsURL}/`, dismissCallback: handleModalClose })
-  }, [createMediaModal, handleModalClose])
+  }, [createMediaModal, handleModalClose, wsURL])
 
   return (
     <Layout >
