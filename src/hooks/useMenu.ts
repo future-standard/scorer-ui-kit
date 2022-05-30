@@ -43,7 +43,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
 
       let isMenuOpen = (openValueStorage === 'true') || (openValueStorage === null && (!!action.data.defaultMenuOpen));
       let isMenuPinned = (openValueStorage === 'true') && !!action.data.canAlwaysPin;
-      let canPin = (action.data.desktopSize === 'xlarge') || !!action.data.canAlwaysPin;
+      const canPin = (action.data.desktopSize === 'xlarge') || !!action.data.canAlwaysPin;
 
       if (action.data.desktopSize === 'xxlarge' && action.data.canAlwaysPin === false) {
         isMenuOpen = true;
