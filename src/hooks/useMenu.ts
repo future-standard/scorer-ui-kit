@@ -37,23 +37,17 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
 
   switch (action.type) {
 
-    // initial State based in props and desktop size
+    // initial State based in props and desktop size and local storage
     case 'SET_MENU': {
-      const openMenu = localStorage.getItem(window.location.hostname + '_isMenuOpen');
-      let isMenuOpen = openMenu === 'true';
-      let isMenuPinned = openMenu === 'true';
-      let canPin = false;
+      const openValueStorage = localStorage.getItem(window.location.hostname + '_isMenuOpen');
 
-      if (action.data.canAlwaysPin || (action.data.defaultMenuOpen && action.data.desktopSize === 'xlarge')) {
-        canPin = true;
-      }
+      let isMenuOpen = (openValueStorage === 'true') || (openValueStorage === null && (!!action.data.defaultMenuOpen));
+      let isMenuPinned = (openValueStorage === 'true') && !!action.data.canAlwaysPin;
+      const canPin = (action.data.desktopSize === 'xlarge') || !!action.data.canAlwaysPin;
 
       if (action.data.desktopSize === 'xxlarge' && action.data.canAlwaysPin === false) {
         isMenuOpen = true;
         isMenuPinned = true;
-      } else if (action.data.desktopSize === 'xxlarge') {
-        isMenuOpen = action.data.defaultMenuOpen;
-        isMenuPinned = false;
       }
 
       return {
