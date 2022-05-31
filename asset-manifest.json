@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/scorer-ui-kit/static/js/main.bc106826.chunk.js",
-    "main.js.map": "/scorer-ui-kit/static/js/main.bc106826.chunk.js.map",
+    "main.js": "/scorer-ui-kit/static/js/main.1b566092.chunk.js",
+    "main.js.map": "/scorer-ui-kit/static/js/main.1b566092.chunk.js.map",
     "runtime-main.js": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js",
     "runtime-main.js.map": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js.map",
     "static/js/2.f8e5e9f6.chunk.js": "/scorer-ui-kit/static/js/2.f8e5e9f6.chunk.js",
     "static/js/2.f8e5e9f6.chunk.js.map": "/scorer-ui-kit/static/js/2.f8e5e9f6.chunk.js.map",
     "index.html": "/scorer-ui-kit/index.html",
-    "precache-manifest.b3fcd9fb4df8559ab40e752c15f991eb.js": "/scorer-ui-kit/precache-manifest.b3fcd9fb4df8559ab40e752c15f991eb.js",
+    "precache-manifest.9735f579b0f5702ee3bb3f481a81c922.js": "/scorer-ui-kit/precache-manifest.9735f579b0f5702ee3bb3f481a81c922.js",
     "service-worker.js": "/scorer-ui-kit/service-worker.js",
     "static/js/2.f8e5e9f6.chunk.js.LICENSE.txt": "/scorer-ui-kit/static/js/2.f8e5e9f6.chunk.js.LICENSE.txt",
     "static/media/Lato-Bold.ttf": "/scorer-ui-kit/static/media/Lato-Bold.2d15decc.ttf",
@@ -40,6 +40,6 @@
   "entrypoints": [
     "static/js/runtime-main.1ec9fcf8.js",
     "static/js/2.f8e5e9f6.chunk.js",
-    "static/js/main.bc106826.chunk.js"
+    "static/js/main.1b566092.chunk.js"
   ]
 }
