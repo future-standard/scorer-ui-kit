@@ -25,7 +25,7 @@ useEffect(() => {
   },[title, area, delimiter, update, baseTitle]);
 };
 
-/**useT
+/**
  * Put the parts together for title use.
  * @param parts Each part to make up the title.
  * @param delimiter Character used for delimiting
