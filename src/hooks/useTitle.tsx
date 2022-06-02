@@ -1,18 +1,16 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 
 export const useTitle = (title : string, area? : string, delimiter?: string, update= true) => {
 
 // Index Title
 const baseTitle = document.title.split('|').slice(-1)[0].trim();
-const location = useLocation();
 
 // on unmount will return the baseTitle to Index Title for pages not using this hook.
 useEffect(() => {
   return () => {
     document.title = baseTitle;
   };
-}, [baseTitle, location.pathname]);
+}, [baseTitle]);
 
   useEffect(() => {
     if(!update) return;
