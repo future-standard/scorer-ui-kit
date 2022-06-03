@@ -1,17 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const useTitle = (title : string, area? : string, delimiter?: string, update= true) => {
 
-  const [baseTitle] = useState<string>(document.title);
+// Index Title
+const baseTitle = document.title.split('|').slice(-1)[0].trim();
+
+// on unmount will return the baseTitle to Index Title for pages not using this hook.
+useEffect(() => {
+  return () => {
+    document.title = baseTitle;
+  };
+}, [baseTitle]);
 
   useEffect(() => {
     if(!update) return;
     document.title = makeTitle([
       ...(title ? [title] : []),
       ...(area ? [area] : []),
-      baseTitle
+      ...(baseTitle? [baseTitle] : [])
     ], delimiter);
-  },[title, area, baseTitle, delimiter, update]);
+
+  },[title, area, delimiter, update, baseTitle]);
 };
 
 /**
