@@ -11,6 +11,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   font-size: 12px;
+  min-height: 22px;
 `;
 
 const ResultsTextWrapper = styled.div`

@@ -13,12 +13,19 @@ import {
   Logo,
   Button,
   AlertBar,
-  Switch
+  Switch,
+  useMediaModal
 } from 'scorer-ui-kit';
-import { LineUIOptions } from '../../../dist/LineUI';
+import { LineUIOptions, LineUIVideoOptions } from '../../../dist/LineUI';
 
 const SwitchBox = styled.div`
   margin-bottom: 15px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  margin: 20px 0;
+  justify-content: flex-end;
 `;
 
 const Line: React.FC<{}> = () => {
@@ -27,6 +34,12 @@ const Line: React.FC<{}> = () => {
   const [ws, setWS] = useState('localhost/wsapp');
   const [wsURL, setWsURL] = useState('');
   const [isShowDirection, setShowDirection] = useState<boolean>(false);
+  const {createMediaModal} = useMediaModal();
+
+  const [videoOptions, setVideoOptions]= useState<LineUIVideoOptions>({
+    loop: true,
+    autoPlay: true
+  });
 
   const options : LineUIOptions = {
     showSetIndex: true,
@@ -104,6 +117,23 @@ const Line: React.FC<{}> = () => {
     setShowDirection(isChecked);
   }, []);
 
+  const handleModalClose = useCallback(() => {
+    setVideoOptions({
+      loop: true,
+      autoPlay: true
+    })
+  }, []);
+
+  const handleMediaModal = useCallback(() => {
+    setVideoOptions({
+      loop: false,
+      autoPlay: false,
+      muted: true,
+    })
+
+    createMediaModal({ mediaType: 'video', src: `ws://${wsURL}/`, dismissCallback: handleModalClose })
+  }, [createMediaModal, handleModalClose, wsURL])
+
   return (
     <Layout >
       <Sidebar>
@@ -126,10 +156,15 @@ const Line: React.FC<{}> = () => {
         <TextField label='Host' name='host' fieldState='default' value={ws} onChange={({target:{value}})=> setWS(value)} ></TextField>
         <Button onClick={connect}>Connect</Button>
         {
-          wsURL &&
+          wsURL && <>
             <LineSetContext.Provider value={{ state, dispatch }}>
-              <LineUIRTC options={options} ws={`ws://${wsURL}/`} />
+              <LineUIRTC ws={`ws://${wsURL}/`} {...{videoOptions, options}}/>
             </LineSetContext.Provider>
+            <ButtonWrapper>
+              <Button onClick={handleMediaModal}>Open Video Modal</Button>
+            </ButtonWrapper>
+          </>
+
         }
       </Content>
     </Layout>

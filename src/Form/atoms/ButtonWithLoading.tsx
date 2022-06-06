@@ -6,8 +6,8 @@ import Spinner from '../../Indicators/Spinner';
 import { TypeButtonDesigns, IButtonProps, TypeButtonSizes } from '..';
 
 
-const LoadingButton = styled(Button)<{ loading: boolean }>`
-  ${({loading, theme}) => loading && css`
+const LoadingButton = styled(Button)<{ $loading: boolean }>`
+  ${({$loading, theme}) => $loading && css`
     cursor: wait;
     background: ${ theme.styles.form.button['primary'].active };
     padding: 0 20px;
@@ -53,18 +53,18 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   }
 `;
 
-const InnerContainer = styled.div<{position?: string, loading: string, design: TypeButtonDesigns, size: TypeButtonSizes}>`
+const InnerContainer = styled.div<{position?: string, $loading: boolean, design: TypeButtonDesigns, size: TypeButtonSizes}>`
   display: flex;
   height: inherit;
 
 
-  ${({ position, loading }) => position && position === 'left' ? css`
-    margin-right: ${ loading === 'true' ? '-20px' : '0' };
+  ${({ position, $loading }) => position && position === 'left' ? css`
+    margin-right: ${ $loading ? '-20px' : '0' };
   ` : css`
-    margin-left: ${ loading === 'true' ? '-20px' : '0' };
+    margin-left: ${ $loading ? '-20px' : '0' };
   `}
 
-  ${({ loading, theme, design, size }) => loading === 'true' ? css`
+  ${({ $loading, theme, design, size }) => $loading ? css`
 
     // TODO: Fix transition animation so the below line doesn't look awful when transitioning - L
     // ${ theme.styles.form.button[design].active };
@@ -93,8 +93,8 @@ interface IProps extends IButtonProps {
 
 const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', onClick, disabled, position, loading, children,...rest}) => {
   return (
-    <LoadingButton disabled={disabled || loading} {...{ design, size, loading, onClick}} {...rest}>
-      <InnerContainer loading={loading.toString()} {...{ design, size}}>
+    <LoadingButton disabled={disabled || loading} $loading={loading} {...{ design, size, onClick}} {...rest}>
+      <InnerContainer $loading={loading} {...{ design, size}}>
         <TextContainer>{children}</TextContainer>
         <LoadingContainer {...{ design, position }}>
           <Spinner size={size ==='xsmall' ? 'xsmall' : 'small'} styling={design} />

@@ -75,7 +75,7 @@ const SpinnerWrapper = styled.div`
   margin-top: 1px;
 `;
 
-const Container = styled.label<{activeTheming: string, loading: boolean, useIntent: boolean, themeState: string, position: SwitchPosition, checked?: boolean}>`
+const Container = styled.label<{activeTheming: string, $loading: boolean, useIntent: boolean, themeState: string, position: SwitchPosition, checked?: boolean}>`
   user-select: none;
   display: flex;
 
@@ -96,7 +96,7 @@ const Container = styled.label<{activeTheming: string, loading: boolean, useInte
       width: calc(100% - ${parseInt(p.theme.dimensions.form.switch.positions.locked) * 2}px);
     `}
 
-    ${p => p.loading && css`
+    ${p => p.$loading && css`
       background: transparent;
       top: 1px;
     `}
@@ -193,7 +193,7 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
   }, [state, setPosition, positionSwitch]);
 
   return (
-    <Container onChange={customOnChange} activeTheming={activeTheming} loading={state === 'loading'} useIntent={state === 'default' || state === 'failure'} themeState={switchState} position={position} checked={inputRef.current?.checked}>
+    <Container onChange={customOnChange} activeTheming={activeTheming} $loading={state === 'loading'} useIntent={state === 'default' || state === 'failure'} themeState={switchState} position={position} checked={inputRef.current?.checked}>
       <SwitchOuter>
         <SwitchInner>
           {state === 'failure' ? <IconWrapper><Icon icon='Exclamation' color='danger' size={18} weight='regular' /></IconWrapper> : null}

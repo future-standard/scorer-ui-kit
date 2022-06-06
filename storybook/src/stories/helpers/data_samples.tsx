@@ -465,7 +465,7 @@ export {
   resultTextTemplateEng,
   resultTextTemplateJp,
   clearEng,
-  clearJp,
+  clearJp
 };
 
 export type { ITableSampleData };

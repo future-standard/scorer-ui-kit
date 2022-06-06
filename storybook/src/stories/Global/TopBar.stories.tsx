@@ -111,6 +111,8 @@ export const _TopBar = () => {
   const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
 
+  const currentUserText = text("Current User Text", "Current User");
+  const logoutText = text("Logout Text", "Logout");
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
@@ -157,7 +159,9 @@ export const _TopBar = () => {
         switchThemeText,
         selectedThemeText,
         onThemeToggle,
-        onLanguageToggle
+        onLanguageToggle,
+        currentUserText,
+        logoutText
       }}
         customDrawer={drawerProps}
       />
