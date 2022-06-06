@@ -28,6 +28,7 @@ const StyledFilterResults = styled(FiltersResults)``;
 const Container = styled.div`
   ${StyledFilterResults} {
     margin-top: 29px;
+    min-height: 19px;
   }
 `;
 
