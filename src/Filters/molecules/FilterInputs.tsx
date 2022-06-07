@@ -40,7 +40,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   ${SearchInputWrapper}, ${StyledDropdown}, ${StyledFilterButton}, ${StyledDropdownDatePicker} {
-    margin: 0 5px 10px 0;
+    margin: 0 3px 10px 3px;
   }
 `;
 
