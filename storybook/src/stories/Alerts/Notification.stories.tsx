@@ -24,7 +24,7 @@ export default {
 }
 
 const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
-  const { sendNotification } = useNotification();
+  const { sendNotification, clearNotifications } = useNotification();
 
   const [notificationSettings, setNotificationSettings] = useState(notiSettings);
 
@@ -33,14 +33,19 @@ const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
   }, [notiSettings])
 
   return (
-    <Button
-      design='secondary'
-      size='small'
-      onClick={() => {
-        sendNotification(notificationSettings)
-      }
-      }
-    >Send notification</Button>
+    <>
+      <Button
+        design='secondary'
+        size='small'
+        onClick={() => {
+          sendNotification(notificationSettings)
+        }
+        }
+      >Send notification</Button>
+      <Button onClick={() => clearNotifications()}>
+        Clear Notifications
+      </Button>
+    </>
   )
 }
 

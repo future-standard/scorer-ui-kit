@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Notification, { INotificationProps } from '../Alerts/atom/Notification';
 
 
@@ -7,11 +7,13 @@ const uniqueID = (): string => {
 };
 
 type NotificationContextType = {
-  sendNotification: (newNotification: INotificationProps) => void;
+  sendNotification: (newNotification: INotificationProps) => void
+  clearNotifications: () => void
 };
 
 const defaultContext: NotificationContextType = {
   sendNotification: () => console.log("This is the context initialization should not appear"),
+  clearNotifications: () => console.log("This is the context initialization should not appear"),
 };
 
 const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
@@ -70,8 +72,22 @@ const NotificationProvider: React.FC = ({ children }) => {
     }
   },[activeNotification, showNotification]);
 
+  const clearNotifications = useCallback(() => {
+    notificationList.length = 0;
+    setActiveNotification((prev) => {
+
+      if(prev !== null) {
+        return {...prev, closeNow: true};
+      }
+
+    return prev;
+    });
+  },[]);
+
+  const contextValue = useMemo(() => ({sendNotification, clearNotifications}),[clearNotifications, sendNotification]);
+
   return (
-    <NotificationContext.Provider value={{ sendNotification }}>
+    <NotificationContext.Provider value={contextValue}>
       {activeNotification
         ? <Notification {...activeNotification} />
         : null}

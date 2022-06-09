@@ -115,15 +115,16 @@ const MainMessage = styled.div`
 
 export type INotificationProps = {
   id?: string
-  type: AlertType;
-  message: string;
-  actionTextButton?: string;
-  onTextButtonClick?: () => void;
-  closeCallback?: () => void;
-  isPinned?: boolean;
+  type: AlertType
+  message: string
+  actionTextButton?: string
+  isPinned?: boolean
+  closeNow?: boolean
+  onTextButtonClick?: () => void
+  closeCallback?: () => void
 }
 
-const Notification : React.FC<INotificationProps> = ({id, type ='info', message, isPinned = false, actionTextButton, closeCallback, onTextButtonClick}) => {
+const Notification : React.FC<INotificationProps> = ({id, type ='info', message, isPinned = false, actionTextButton, closeNow = false, closeCallback, onTextButtonClick}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
   const [textClicked, setTextClicked] = useState(false);
@@ -144,7 +145,7 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
   },[handleDismiss]);
 
   const animationEnded = useCallback(() => {
-    // Will only trigger if the animation triggered was clossing one
+    // Will only trigger if the animation triggered was closing one
     if(slideUp){
       setDismiss(true);
 
@@ -172,6 +173,12 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
       mounted = false;
     };
   },[isPinned, handleDismiss, id]);
+
+  useEffect(() => {
+    if(closeNow) {
+      handleDismiss();
+    }
+  },[closeNow, handleDismiss]);
 
   return( (message && !dismiss)
   ? ReactDom.createPortal(
