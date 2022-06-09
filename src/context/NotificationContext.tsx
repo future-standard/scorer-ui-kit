@@ -34,7 +34,7 @@ const NotificationProvider: React.FC = ({ children }) => {
     setActiveNotification(displayedNotification);
   }, []);
 
-  const sendNotification = async (newNotification: INotificationProps) => {
+  const sendNotification = useCallback(async (newNotification: INotificationProps) => {
 
     const validNotification: INotificationProps = {
       message: newNotification.message,
@@ -62,7 +62,7 @@ const NotificationProvider: React.FC = ({ children }) => {
     if (notificationList.length === 1 && activeNotification === null) {
       showNotification();
     }
-  };
+  },[activeNotification, showNotification]);
 
   return (
     <NotificationContext.Provider value={{ sendNotification }}>
