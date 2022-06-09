@@ -1,6 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import Notification, { INotificationProps } from '../Alerts/atom/Notification';
 
+
+const uniqueID = (): string => {
+  return `${Date.now()}`;
+};
+
 type NotificationContextType = {
   sendNotification: (newNotification: INotificationProps) => void;
 };
@@ -39,6 +44,7 @@ const NotificationProvider: React.FC = ({ children }) => {
     const validNotification: INotificationProps = {
       message: newNotification.message,
       type: newNotification.type,
+      id: uniqueID()
     };
 
     if (newNotification.actionTextButton) {
