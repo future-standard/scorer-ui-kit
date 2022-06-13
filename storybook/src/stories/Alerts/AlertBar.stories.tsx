@@ -17,8 +17,8 @@ export default {
 export const _AlertBar = () => {
   const message = text("Message", 'Look Out!');
   const type = select("Type", { Error: 'error', Warning: 'warning', Info: 'info', Success:'success', Neutral:'neutral'}, 'error');
-  const hideCloseIcon = boolean('Hide close icon', false);
+  const hideCloseButton = boolean('Hide close icon', false);
 
-  return <Container><AlertBar {...{message, type, hideCloseIcon}} ></AlertBar></Container>;
+  return <Container><AlertBar {...{message, type, hideCloseButton}} ></AlertBar></Container>;
 
 };
