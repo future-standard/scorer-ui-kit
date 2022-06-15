@@ -49,6 +49,7 @@ const Line: React.FC<{}> = () => {
           }
         ],
         readOnly: false,
+        hidePointHandle: true,
         styling: 'primary'
       }
     ];
@@ -87,10 +88,11 @@ const Line: React.FC<{}> = () => {
             x: 256,
             y: 576
           }
-          ],
-          readOnly: false,
-          styling: 'primary'
-        }
+        ],
+        hidePointHandle: true,
+        readOnly: false,
+        styling: 'primary'
+      }
     ];
 
     dispatch({

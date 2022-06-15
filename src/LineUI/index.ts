@@ -19,6 +19,7 @@ export interface IPointSet {
   showOrientation?: boolean;
   styling?: string;
   areaName?: string;
+  hidePointHandle?: boolean;
 }
 
 export interface IMinMax {

@@ -235,7 +235,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
   return (
     <g>
       {lines}
-      {handles}
+      {!lineSetData.hidePointHandle && handles}
       {points}
       <AreaLabel lineSetData={lineSetData} unit={unit} />
     </g>
