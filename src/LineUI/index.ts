@@ -19,8 +19,8 @@ export interface IPointSet {
   showOrientation?: boolean;
   styling?: string;
   areaName?: string;
-  hidePointHandle?: boolean;
-  showDoubleDirectionMark?: boolean;
+  showPointHandle?: boolean;
+  showBothDirectionMark?: boolean;
 }
 
 export interface IMinMax {

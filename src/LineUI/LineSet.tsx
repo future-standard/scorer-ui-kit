@@ -229,14 +229,14 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       styling={styling}
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
-      doubleDirectionMark={!!lineSetData.showDoubleDirectionMark}
+      bothDirectionMark={!!lineSetData.showBothDirectionMark}
     />
   );});
 
   return (
     <g>
       {lines}
-      {!lineSetData.hidePointHandle && handles}
+      {(lineSetData.showPointHandle ?? true) && handles}
       {points}
       <AreaLabel lineSetData={lineSetData} unit={unit} />
     </g>

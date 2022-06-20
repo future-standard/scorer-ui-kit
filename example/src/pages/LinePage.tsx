@@ -73,7 +73,7 @@ const Line: React.FC<{}> = () => {
               y: 389
             }
         ],
-        showDoubleDirectionMark: true,
+        showBothDirectionMark: true,
         readOnly: false,
         styling: 'primary'
       },
@@ -89,7 +89,7 @@ const Line: React.FC<{}> = () => {
             y: 576
           }
         ],
-        hidePointHandle: true,
+        showPointHandle: false,
         readOnly: false,
         styling: 'primary'
       }
