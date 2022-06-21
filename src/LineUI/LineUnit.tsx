@@ -94,19 +94,20 @@ interface ILineUnitProps {
   label?: string;
   styling?: string;
   bothDirectionMark: boolean;
+  hideMoveHandle?: boolean;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}, bothDirectionMark } = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling = 'primary', moveEndCB = () => { }, bothDirectionMark, hideMoveHandle = true } = props;
   const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
 
   const a = x1 - x2;
   const b = y1 - y2;
   const distance = Math.sqrt( a*a + b*b );
   //this distance 60 doesn't work now...
-  const hideGrabHandle = showMoveHandle === false || (showMoveHandle !== true && distance < 60);
+  const hideGrabHandle = hideMoveHandle ? (showMoveHandle === false || (showMoveHandle !== true && distance < 60)) : !hideMoveHandle;
 
 
   /** --- Toucher Events Section --- */

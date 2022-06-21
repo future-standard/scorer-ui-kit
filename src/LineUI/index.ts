@@ -20,7 +20,8 @@ export interface IPointSet {
   styling?: string;
   areaName?: string;
   showPointHandle?: boolean;
-  showBothDirectionMark?: boolean;
+  showSmallDirectionMark?: boolean;
+  showMoveHandle?: boolean;
 }
 
 export interface IMinMax {
