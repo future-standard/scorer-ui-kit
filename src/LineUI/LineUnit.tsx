@@ -93,14 +93,14 @@ interface ILineUnitProps {
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
-  bothDirectionMark: boolean;
+  showSmallDirectionMark?: boolean;
   hideMoveHandle?: boolean;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling = 'primary', moveEndCB = () => { }, bothDirectionMark, hideMoveHandle = true } = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling = 'primary', moveEndCB = () => { }, showSmallDirectionMark = false, hideMoveHandle = true } = props;
   const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
 
   const a = x1 - x2;
@@ -172,13 +172,13 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           <DMCircle r={12} cx={6} cy={7} />
           <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
         </g>
-        {bothDirectionMark &&
+        {showSmallDirectionMark &&
           <g transform='translate(5,25) rotate(-180) scale(0.8)'>
             <DMCircle r={8} cx={3.5} cy={4.5} />
             <Icon color='inverse' icon='Up' size={7} weight='heavy' forSvgUsage />
           </g>}
         {label &&
-          <g transform={`translate(0,${bothDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
+          <g transform={`translate(0,${showSmallDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
             <LabelText textAnchor='middle' dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
               {label}
             </LabelText>
