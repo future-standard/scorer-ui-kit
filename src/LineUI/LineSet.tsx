@@ -230,7 +230,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
       showSmallDirectionMark={lineSetData.showSmallDirectionMark}
-      hideMoveHandle={lineSetData.showMoveHandle}
+      overrideShowMoveHandle={lineSetData.showMoveHandle}
     />
   );});
 
