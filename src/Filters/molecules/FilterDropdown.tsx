@@ -77,6 +77,18 @@ const SearchWrapper = styled.div`
   align-items: center;
 `;
 
+const EmptyResultText = styled.div`
+  display: block;
+  color: hsl(0, 0%, 56%);
+  margin-left: 12px;
+  user-select: none;
+  pointer-events: none;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+`;
+
 const isValueSelected = (item: IFilterItem, selected: IFilterValue) => {
   let isItemSelected = false;
 
@@ -219,6 +231,7 @@ export interface IFilterDropdown {
   searchPlaceholder?: string
   maxDisplayedItems?: number
   searchResultText?: string
+  emptyResultText?: string
   onSelect: (newSelection: IFilterValue) => void;
 }
 
@@ -235,6 +248,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   searchPlaceholder,
   maxDisplayedItems = 5,
   searchResultText = 'Showing [VISIBLE] of [TOTAL]',
+  emptyResultText,
   onSelect = () => { },
   ...props
 }) => {
@@ -316,19 +330,23 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
               <ResultsContainer>
                 {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
                 <OptionList>
-                  {(visibleList.length > 0) && visibleList.map((item: IFilterItem, index) => {
-                    const value = item.value;
-                    const text = item.text;
-                    return (
-                      <StyledFilterOption
-                        key={index}
-                        title={text}
-                        onClick={() => handleSelection(item)}
-                        selected={isValueSelected(item, selected)}
-                        {...{ optionType, value }}
-                      />
-                    );
-                  })}
+                  {(visibleList.length > 0)
+
+                    ? visibleList.map((item: IFilterItem, index) => {
+                      const value = item.value;
+                      const text = item.text;
+                      return (
+                        <StyledFilterOption
+                          key={index}
+                          title={text}
+                          onClick={() => handleSelection(item)}
+                          selected={isValueSelected(item, selected)}
+                          {...{ optionType, value }}
+                        />
+                      );
+                    })
+
+                    : <EmptyResultText>{emptyResultText}</EmptyResultText>}
                 </OptionList>
               </ResultsContainer>)}
         </InnerBox>
