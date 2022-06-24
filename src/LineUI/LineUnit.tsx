@@ -107,6 +107,8 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   // const b = y1 - y2;
   // const distance = Math.sqrt( a*a + b*b );
   //this distance 60 doesn't work now...
+  // const hideGrabHandle = showMoveHandle === false || (showMoveHandle !== true && distance < 60);
+  
   const hideGrabHandle = !showMoveHandle || !overrideShowMoveHandle;
 
 
