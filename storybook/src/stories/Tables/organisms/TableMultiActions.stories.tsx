@@ -47,10 +47,6 @@ export default {
   }
 };
 
-/** Imagine this data comes from Server :) */
-const defaultData: ITableSampleData[] = tableData;
-
-const sortedByDeviceData = sortDataBy(defaultData, 'deviceName', true);
 
 const handleDelete = (deviceId: string) => {
   console.log(`Running deleting job log for device:  ${deviceId}`);
@@ -142,8 +138,8 @@ const checkedRowIDs = (rows: ITypeTableData) => {
 
 export const _TableMultiActions = () => {
 
-  const [data, setData] = useState<ITableSampleData[]>(sortedByDeviceData);
-  const [rows, setRows] = useState<ITypeTableData>(rowMaker(sortedByDeviceData));
+  const [data, setData] = useState<ITableSampleData[]>(tableData);
+  const [rows, setRows] = useState<ITypeTableData>(rowMaker(tableData));
   const [_filters, setFilters] = useState<IFilterResult[]>([]);
   const [visibleBar, setVisibleBar] = useState('filterBar');
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
@@ -263,6 +259,8 @@ export const _TableMultiActions = () => {
               finishTextButton={ language === 'english' ? 'Finish' : '為しおわる'}
               finishCallback={handleActionsFinish}
               selectedTemplate={ language === 'english' ? 'Finish' : '[SELECTED] 〜 [TOTAL]件'}
+              totalAvailable={rows.length}
+              totalSelected= {checkedRowIDs(rows).length}
               actionButtons ={[
                 {
                   icon:'Delete',
