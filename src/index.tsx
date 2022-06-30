@@ -114,7 +114,9 @@ import {
   TagListWrapper,
   MediaBox,
   BasicSearchInput,
-  DebouncedSearcher
+  DebouncedSearcher,
+  ActionsBar,
+  IActionsButton,
 } from './Misc';
 
 import {
@@ -306,6 +308,7 @@ export {
   MediaBox,
   BasicSearchInput,
   DebouncedSearcher,
+  ActionsBar,
 
   //Context
   NotificationProvider,
@@ -344,4 +347,5 @@ export type {
   IFilterResult,
   DateInterval,
   IFilterDatePicker,
+  IActionsButton
 };

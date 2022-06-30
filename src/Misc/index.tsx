@@ -4,6 +4,7 @@ import BasicSearchInput from './atoms/BasicSearchInput';
 import BigIconsSummary from './atoms/BigIconsSummary';
 import MediaBox from './atoms/MediaBox';
 import DebouncedSearcher from './molecules/DebouncedSearcher';
+import ActionsBar, {IActionsBar, IActionsButton} from './atoms/ActionsBar';
 
 export {
   Tag,
@@ -13,6 +14,7 @@ export {
   BasicSearchInput,
   BigIconsSummary,
   DebouncedSearcher,
+  ActionsBar
 };
 
-export type { ITagList, ITag };
+export type { ITagList, ITag, IActionsBar, IActionsButton};

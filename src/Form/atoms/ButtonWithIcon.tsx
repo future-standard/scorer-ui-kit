@@ -47,12 +47,12 @@ const InnerContainer = styled.div`
   height: inherit;
 `;
 
-interface IProps extends IButtonProps {
+export interface IButtonWithIcon extends IButtonProps {
   icon: string
   position?: 'left' | 'right'
 }
 
-const ButtonWithIcon : React.FC<IProps> = ({design, size='normal', onClick, disabled, position, icon, children, ...props}) => {
+const ButtonWithIcon : React.FC<IButtonWithIcon> = ({design, size='normal', onClick, disabled, position, icon, children, ...props}) => {
 
   const iconSize = dimensions.form.button[size].iconSize;
   const iconColor = design === 'secondary' ? 'dimmed' : 'inverse';

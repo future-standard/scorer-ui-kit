@@ -424,6 +424,77 @@ const columnConfigSampleJp : ITableColumnConfig[] = [
   }
 ];
 
+
+const columnActionsSample : ITableColumnConfig[] = [
+  {
+    columnId: 'created',
+    groupTitle: 'Device',
+    header: 'Created',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'left',
+  },
+  {
+    columnId: 'run',
+    groupTitle: 'Time',
+    header: 'Total Run Time',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'left',
+  },
+  {
+    columnId: 'usage',
+    header: 'Usage',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'right',
+    showUnit: true
+  },
+  {
+    columnId: 'actions',
+    header: 'Actions',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'right'
+  },
+];
+
+
+
+const columnActionsSampleJp : ITableColumnConfig[] = [
+  {
+    columnId: 'created',
+    groupTitle: 'デバイス',
+    header: '作成時期',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'left',
+  },
+  {
+    columnId: 'run',
+    groupTitle: '時間',
+    header: 'ランタイム',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'left',
+  },
+  {
+    columnId: 'usage',
+    header: '使用',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'right',
+    showUnit: true
+  },
+  {
+    columnId: 'アクション',
+    header: 'Actions',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'right'
+  },
+];
+
 const searchTemplateResultEnglish = 'Showing [VISIBLE] of [TOTAL]';
 const searchTemplateResultJapanese = '[VISIBLE] 〜 [TOTAL]件';
 
@@ -448,6 +519,8 @@ export {
   tableDataJp,
   columnConfigSample,
   columnConfigSampleJp,
+  columnActionsSample,
+  columnActionsSampleJp,
   statusValuesEng,
   statusValuesJp,
   costRangeEng,
