@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { boolean, select, text } from "@storybook/addon-knobs";
+import { select } from "@storybook/addon-knobs";
 import {
   TypeTable,
   ModalProvider,
@@ -48,32 +48,7 @@ export default {
   }
 };
 
-
-const handleDelete = (deviceId: string) => {
-  console.log(`Running deleting job log for device:  ${deviceId}`);
-};
-
-const handleDownloadLogs = (deviceId: string) => {
-  console.log(`Download job log for device:  ${deviceId}`);
-};
-
-const generateConfigButtons = (rowId: string): IconButtonData[] => {
-  return (
-    [
-      {
-        icon: 'Delete',
-        onClick: () => { handleDelete(rowId) },
-      },
-      {
-        icon: 'Download',
-        onClick: () => { handleDownloadLogs(rowId) },
-      }
-    ]
-  )
-}
-
-
-const rowMaker = (rowData: ITableSampleData[]): ITypeTableData => {
+const rowMaker = (rowData: ITableSampleData[], generateConfigButtons: Function): ITypeTableData => {
   const newRows: ITypeTableData = rowData.map(({
     id,
     created,
@@ -139,12 +114,39 @@ const checkedRowIDs = (rows: ITypeTableData) => {
 export const _TableMultiActions = () => {
 
   const [data, setData] = useState<ITableSampleData[]>(tableDataJp);
-  const [rows, setRows] = useState<ITypeTableData>(rowMaker(tableDataJp));
+
+  const handleDelete = useCallback((deviceId: string) => {
+    const notDeletedData: ITableSampleData[] = data.filter(({id}) => id !== deviceId);
+    setData(notDeletedData);
+  },[data]);
+
+  const handleDownloadLogs = useCallback((deviceId: string) => {
+    console.log(`Download job log for device:  ${deviceId}`);
+  },[]);
+
+  const generateConfigButtons = useCallback((rowId: string): IconButtonData[] => {
+    return (
+      [
+        {
+          icon: 'Delete',
+          onClick: () => { handleDelete(rowId) },
+        },
+        {
+          icon: 'Download',
+          onClick: () => { handleDownloadLogs(rowId) },
+        }
+      ]
+    )
+  },[handleDelete, handleDownloadLogs])
+
+
+  const [rows, setRows] = useState<ITypeTableData>(rowMaker(tableDataJp, generateConfigButtons));
   const [_filters, setFilters] = useState<IFilterResult[]>([]);
   const [visibleBar, setVisibleBar] = useState('filterBar');
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const downloadAction = action('Downloading...');
-  const deleteAction = action ('Deleting...')
+  const deleteAction = action ('Deleting...');
+
   const datePickers: IFilterDatePicker[] = [
     {
       id: 'datePickerForRuntime',
@@ -158,6 +160,7 @@ export const _TableMultiActions = () => {
       lang: language === 'english' ? 'en' : 'ja'
     }
   ]
+
 
 
   const updateVisibleBar = useCallback((newRows: ITypeTableData) => {
@@ -239,9 +242,11 @@ export const _TableMultiActions = () => {
     downloadAction(`Downloading: ${checkedRowIDs(rows).toString()}`)
   },[downloadAction, rows])
 
+
+
   useEffect(() => {
-    setRows(rowMaker(data));
-  }, [data])
+    setRows(rowMaker(data, generateConfigButtons));
+  }, [data, generateConfigButtons])
 
   // Provider should be at main Index level, it's here just for the example
   return (
