@@ -21,6 +21,7 @@ import {
 import { tableData, ITableSampleData, columnActionsSample, resultTextTemplateEng, resultTextTemplateJp, clearEng, clearJp, tableDataJp } from '../../helpers/data_samples';
 import { filterByCreationDatePicker, sortDataBy } from '../../helpers/sample_table_helpers';
 import { emptyCallbackForStory } from '../../helpers';
+import { action } from '@storybook/addon-actions';
 
 const Container = styled.div`
   padding: 100px;
@@ -101,8 +102,6 @@ const rowMaker = (rowData: ITableSampleData[]): ITypeTableData => {
 };
 
 const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleData[]): ITableSampleData[] => {
-
-
   if (Array.isArray(currentSelected) && (currentSelected.length > 0)) {
     const filteredData: ITableSampleData[] = currentSelected.reduce((accumulator, currentFilter) => {
       if (currentFilter.selected === null) {
@@ -139,13 +138,13 @@ const checkedRowIDs = (rows: ITypeTableData) => {
 // Story starts here o.o
 export const _TableMultiActions = () => {
 
-  const [data, setData] = useState<ITableSampleData[]>(tableData);
-  const [rows, setRows] = useState<ITypeTableData>(rowMaker(tableData));
+  const [data, setData] = useState<ITableSampleData[]>(tableDataJp);
+  const [rows, setRows] = useState<ITypeTableData>(rowMaker(tableDataJp));
   const [_filters, setFilters] = useState<IFilterResult[]>([]);
   const [visibleBar, setVisibleBar] = useState('filterBar');
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
-  const resultsDateFormat = text('Results date format', 'yyyy-MM-dd');
-
+  const downloadAction = action('Downloading...');
+  const deleteAction = action ('Deleting...')
   const datePickers: IFilterDatePicker[] = [
     {
       id: 'datePickerForRuntime',
@@ -159,11 +158,6 @@ export const _TableMultiActions = () => {
       lang: language === 'english' ? 'en' : 'ja'
     }
   ]
-
-  // To implement...
-  const hasThumbnail = boolean("Has Thumbnail", true);
-  const hasHeaderGroups = boolean("Has Header Groups", true);
-  const selectable = boolean("Selectable Rows", true);
 
 
   const updateVisibleBar = useCallback((newRows: ITypeTableData) => {
@@ -218,7 +212,7 @@ export const _TableMultiActions = () => {
   }, [data]);
 
   const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
-    const localData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
+    const localData = language === 'english' ? tableData : tableDataJp
     const tempData: ITableSampleData[] = [...localData];
 
     if ((currentSelected.length === 0)) {
@@ -231,6 +225,19 @@ export const _TableMultiActions = () => {
     }
 
   }, [language])
+
+  const handleDeleteSelected = useCallback(() => {
+    const rowsSelected = checkedRowIDs(rows);
+    deleteAction(`Deleting ${rowsSelected}`);
+    const notDeletedData: ITableSampleData[] = data.filter(({id}) => !rowsSelected.includes(id))
+    setData(notDeletedData);
+
+  },[data, deleteAction, rows]);
+
+
+  const handleDownloadSelected = useCallback(() => {
+    downloadAction(`Downloading: ${checkedRowIDs(rows).toString()}`)
+  },[downloadAction, rows])
 
   useEffect(() => {
     setRows(rowMaker(data));
@@ -252,7 +259,7 @@ export const _TableMultiActions = () => {
                 filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}
                 resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
                 clearText={language === 'english' ? clearEng : clearJp}
-                resultsDateFormat={resultsDateFormat}
+                resultsDateFormat='yyyy-MM-dd'
               />)}
           {visibleBar === 'actionsBar' && (
             <ActionsBar
@@ -264,12 +271,14 @@ export const _TableMultiActions = () => {
               totalSelected= {checkedRowIDs(rows).length}
               actionButtons ={[
                 {
-                  icon:'Delete',
+                  icon: 'Delete',
                   text: language === 'english' ? 'Delete' : '消す',
+                  onClick: () => { handleDeleteSelected() }
                 },
                 {
                   icon: 'Download',
-                  text: language === 'english' ? 'Download': 'ダウンロード'
+                  text: language === 'english' ? 'Download': 'ダウンロード',
+                  onClick: () => {handleDownloadSelected()}
                 }
                 ]}
               />
@@ -277,11 +286,11 @@ export const _TableMultiActions = () => {
         </TableBarWrapper>
         <TypeTable {...{
           columnConfig: columnActionsSample,
-          selectable,
+          selectable: true,
           rows,
-          hasThumbnail,
+          hasThumbnail: true,
           defaultAscending: true,
-          hasHeaderGroups
+          hasHeaderGroups: true
         }}
 
           selectCallback={emptyCallbackForStory(selectCallback)}
