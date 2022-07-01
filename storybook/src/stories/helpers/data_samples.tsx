@@ -514,6 +514,11 @@ const resultTextTemplateJp = '表示結果 ([TOTAL_RESULTS]):';
 const clearEng = 'CLEAR ALL';
 const clearJp = 'すべてクリア';
 
+const deleteFilesTitleEn = 'Delete selected files';
+const deleteFilesTitleJP = '選択したファイルを削除しますか？';
+const deleteMessageEn = 'Are you sure you wish to delete these files? Once deleted they cannot be recovered.';
+const deleteMessageJp = 'これらのファイルを本当に削除してよいですか？一度削除すると元に戻せません';
+
 export {
   tableData,
   tableDataJp,
@@ -537,6 +542,10 @@ export {
   showLessJp,
   resultTextTemplateEng,
   resultTextTemplateJp,
+  deleteFilesTitleEn,
+  deleteFilesTitleJP,
+  deleteMessageEn,
+  deleteMessageJp,
   clearEng,
   clearJp
 };
