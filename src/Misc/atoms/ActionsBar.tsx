@@ -67,14 +67,14 @@ const ActionsBar: React.FC<IActionsBar> = ({
       <Title>{title}</Title>
       <ButtonsWrapper>
         <LeftButtons>
-          {actionButtons.map(({ design, size, icon, position, text }, index) => {
+          {actionButtons.map(({ design, size, position, text, ...props }, index) => {
             return (
               <ButtonWithIcon
                 key={index}
                 design={design || 'secondary'}
                 size={size || 'small'}
                 position={position || 'left'}
-                {...{ icon }}
+                {...props}
               >
                 {text}
               </ButtonWithIcon>

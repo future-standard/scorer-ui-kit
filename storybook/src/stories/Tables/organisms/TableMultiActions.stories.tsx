@@ -136,6 +136,7 @@ const checkedRowIDs = (rows: ITypeTableData) => {
 
 }
 
+// Story starts here o.o
 export const _TableMultiActions = () => {
 
   const [data, setData] = useState<ITableSampleData[]>(tableData);
@@ -264,7 +265,7 @@ export const _TableMultiActions = () => {
               actionButtons ={[
                 {
                   icon:'Delete',
-                  text: language === 'english' ? 'Delete' : '消す'
+                  text: language === 'english' ? 'Delete' : '消す',
                 },
                 {
                   icon: 'Download',
