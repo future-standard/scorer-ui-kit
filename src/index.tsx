@@ -105,6 +105,12 @@ import {
   PTZContext
 } from './PTZControl';
 
+// Camera Panels
+import {
+  CameraPanels
+} from './CameraPanels';
+
+
 // Misc
 import {
   Tag,
@@ -299,6 +305,9 @@ export {
   TabWithIcon,
   TabsWithIconBar,
 
+  // CameraPanels
+  CameraPanels,
+
   // Misc
   Tag,
   TagList,
@@ -322,6 +331,7 @@ export type IFeedbackColor = 'error' | 'warning' | 'info' | 'success' | 'neutral
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
 export type IMediaType = 'img' | 'video'
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
+export type IStatusLine = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
 
 export type {
   IModal,
