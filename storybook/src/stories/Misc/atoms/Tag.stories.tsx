@@ -1,7 +1,8 @@
 import React from 'react';
 import {select, text, number} from "@storybook/addon-knobs";
 import styled from 'styled-components';
-import {Tag, IconSVGs} from 'scorer-ui-kit';
+import {Tag} from 'scorer-ui-kit';
+import { generateIconList } from '../../helpers';
 
 export default {
   title: 'Misc/atoms',
@@ -9,15 +10,6 @@ export default {
   decorators: []
 };
 
-const generateIconList = () => {
-  let iconList : {[key: string]: string}= {};
-
-  for(const key in IconSVGs){
-    iconList[key] = key;
-  }
-
-  return iconList;
-};
 
 const Container = styled.div``;
 

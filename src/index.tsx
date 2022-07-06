@@ -107,7 +107,8 @@ import {
 
 // Camera Panels
 import {
-  CameraPanels
+  CameraPanels,
+  ICameraPanel
 } from './CameraPanels';
 
 
@@ -331,7 +332,6 @@ export type IFeedbackColor = 'error' | 'warning' | 'info' | 'success' | 'neutral
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
 export type IMediaType = 'img' | 'video'
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
-export type IStatusLine = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
 
 export type {
   IModal,
@@ -354,4 +354,5 @@ export type {
   IFilterResult,
   DateInterval,
   IFilterDatePicker,
+  ICameraPanel
 };

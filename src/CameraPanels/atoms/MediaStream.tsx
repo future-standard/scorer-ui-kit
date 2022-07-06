@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
-import { IStatusLine } from '../..';
-import Icon, {IconWrapper} from '../../Icons/Icon';
+import styled, { css } from 'styled-components';
+import { IFeedbackColor } from '../..';
+import Icon, { IconWrapper } from '../../Icons/Icon';
 import MediaBox, { IMediaModal } from '../../Misc/atoms/MediaBox';
 
 const Container = styled.div`
@@ -10,6 +10,7 @@ const Container = styled.div`
   border-radius: 3px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  position: relative;
 `;
 
 const EmptyWithIcon = styled.div`
@@ -25,22 +26,70 @@ const EmptyWithIcon = styled.div`
     justify-content: center;
   }
 `;
-const Notice = styled.div``;
+const Notice = styled.div`
+  ${({ theme, color }) => color && css`
+    background-color: ${theme.colors.feedback[color]};
+    color: ${theme.colors.icons.inverse};
+  `};
+  opacity: 0.85;
+  height: 46px;
+  width: 300px;
+  position: absolute;
+  bottom: -3px;
+  left: 0px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+`;
 
-const StatusLine = styled.div<{color: IStatusLine}>`
-  background-color: ${({ theme, color }) => color && theme.colors.status[color] };
+const NoticeMessage = styled.div`
+  font-size: 10px;
+`;
+
+const NoticeTitle = styled.div`
+  font-size: 12px;
+`;
+
+const NoticeIcon = styled.div`
+  height: 20px;
+  width: 20px;
+  margin-left: 2px;
+
+  ${IconWrapper} {
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+const NoticeTextGroup = styled.div<{ color: IFeedbackColor }>`
+  display: flex;
+  flex-direction: column;
+  margin-left: 14px;
+`;
+
+const StatusLine = styled.div<{ color: IFeedbackColor }>`
+  background-color: ${({ theme, color }) => color && theme.colors.status[color]};
   height: 3px;
   width: 100%;
 `;
 
 export interface IMediaStream extends IMediaModal {
   hasCustomState?: boolean
-  status?: IStatusLine
+  status?: IFeedbackColor
+  noticeMessage?: string
+  noticeTitle?: string
+  noticeIcon?: string
+  hasNotice?: boolean
 }
 
 const MediaStream: React.FC<IMediaStream> = ({
   hasCustomState = false,
   status = 'neutral',
+  noticeIcon = 'Information',
+  hasNotice = false,
+  noticeMessage,
+  noticeTitle,
   ...props
 }) => {
   return (
@@ -48,7 +97,15 @@ const MediaStream: React.FC<IMediaStream> = ({
       {hasCustomState
         ? <EmptyWithIcon><Icon icon='PasswordHide' color='dimmed' size={41} /></EmptyWithIcon>
         : <MediaBox {...{ ...props }} />}
-      <Notice />
+      {hasNotice && (
+        <Notice color={status}>
+          <NoticeIcon><Icon icon={noticeIcon} size={20} color='inverse' /></NoticeIcon>
+          <NoticeTextGroup color={status}>
+            <NoticeTitle>{noticeTitle}</NoticeTitle>
+            <NoticeMessage>{noticeMessage}</NoticeMessage>
+          </NoticeTextGroup>
+        </Notice>
+      )}
       <StatusLine color={status} />
     </Container>
   );
