@@ -4,6 +4,7 @@ import { CameraPanels, ICameraPanel } from 'scorer-ui-kit';
 import { boolean, select, text } from '@storybook/addon-knobs';
 import { generateIconList } from '../../helpers';
 import Photo from '../../assets/placeholder.jpg';
+import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'CameraPanels/organisms',
@@ -31,6 +32,7 @@ export const _CameraPanels = () => {
   const leftSubTitle = text('Left SubTitle', 'Camera Name');
   const rightTitle = text('Right Title', 'Analysis');
   const rightSubTitle = text('Right Subtitle', 'PeopleCount');
+  const reRouting = action('Changing to camera page');
 
 
   const ImagePanel : ICameraPanel = useMemo(() => ({
@@ -50,8 +52,9 @@ export const _CameraPanels = () => {
       leftTitle: 'Location > Zone',
       rightTitle,
       rightSubTitle
-    }
-  }),[hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, rightTitle, rightSubTitle])
+    },
+    panelOnClick : () => {reRouting()},
+  }),[hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, rightTitle, rightSubTitle, reRouting])
 
   const VideoPanel : ICameraPanel = useMemo(() => ({
     streamProps: {

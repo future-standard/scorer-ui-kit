@@ -19,7 +19,6 @@ const LeftData = styled.div`
     align-items: center;
     justify-content: center;
   }
-
 `;
 
 const RightData = styled.div`
@@ -49,12 +48,16 @@ const LeftSubTitle = styled.div`
 `;
 
 const Title = styled.div`
+  ${EllipsisStyles};
+  max-width: 80px;
   color: hsla(195, 10%, 52%, 0.72);
   font-size: 10px;
   margin-bottom: 6px;
 `;
 
 const SubTitle = styled.div`
+  ${EllipsisStyles};
+  max-width: 80px;
   color: hsl(195, 10%, 52%);
   font-size: 12px;
 `;
