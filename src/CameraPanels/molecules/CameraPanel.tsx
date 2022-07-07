@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MediaWrapper } from '../../Misc/atoms/MediaBox';
 import MediaStream, { IMediaStream } from '../atoms/MediaStream';
 import PanelMetaData, { IPanelMetaData } from '../atoms/PanelMetaData';
 
@@ -10,9 +9,6 @@ const Container = styled.div`
   border-radius: 3px;
   box-shadow: 0 2px 10px 0 hsla(211, 42%, 86%, 0.41);
   background-color: ${({theme}) => theme.styles.global.background.backgroundImage};
-
-  ${MediaWrapper} {
-    height: 100%;
   }
 `;
 

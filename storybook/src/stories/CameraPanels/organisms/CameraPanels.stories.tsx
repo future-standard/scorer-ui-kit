@@ -1,15 +1,21 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { CameraPanels, ICameraPanel } from 'scorer-ui-kit';
-import { boolean, object, select, text } from '@storybook/addon-knobs';
+import { boolean, select, text } from '@storybook/addon-knobs';
 import { generateIconList } from '../../helpers';
+import Photo from '../../assets/placeholder.jpg';
+
 export default {
   title: 'CameraPanels/organisms',
   component: CameraPanels,
   decorators: []
 };
 
-const Container = styled.div``;
+
+const Container = styled.div<{ maxWidth?: string, paddingOverride?: string}>`
+  max-width: 1200px;
+
+`;
 
 export const _CameraPanels = () => {
   const iconList = generateIconList();
@@ -18,19 +24,20 @@ export const _CameraPanels = () => {
   const hasNotice = boolean('Has Notice', false);
   const noticeMessage = text('Notice Message', 'Please wait while the first stream is processed.');
   const noticeTitle = text('Notice Title', 'Initial Stream Pending');
+  const hasCustomState = boolean('Has CustomState', false);
 
   const deviceIcon = select('Device Icon', iconList, 'Camera');
-  const leftTitle = text('Left Title', "Location > Zone")
+  // const leftTitle = text('Left Title', "Location > Zone")
   const leftSubTitle = text('Left SubTitle', 'Camera Name');
   const rightTitle = text('Right Title', 'Analysis');
   const rightSubTitle = text('Right Subtitle', 'PeopleCount');
 
 
-  const panel1 : ICameraPanel = useMemo(() => ({
+  const ImagePanel : ICameraPanel = useMemo(() => ({
     streamProps: {
-      src: 'http://placekitten.com/200/300',
+      src: Photo,
       mediaType: 'img',
-      hasCustomState: true,
+      hasCustomState,
       noticeTitle,
       noticeMessage,
       status,
@@ -40,16 +47,39 @@ export const _CameraPanels = () => {
     panelMetaData : {
       deviceIcon,
       leftSubTitle,
-      leftTitle,
+      leftTitle: 'Location > Zone',
       rightTitle,
       rightSubTitle
     }
-  }),[leftTitle, deviceIcon, leftSubTitle, hasNotice, noticeIcon, noticeMessage, noticeTitle, rightSubTitle, rightTitle, status])
+  }),[hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, rightTitle, rightSubTitle])
+
+  const VideoPanel : ICameraPanel = useMemo(() => ({
+    streamProps: {
+      src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      mediaType: 'video',
+      videoOptions: { autoPlay: false, controls: true },
+      hasCustomState,
+      noticeTitle,
+      noticeMessage,
+      status,
+      noticeIcon,
+      hasNotice
+    },
+    panelMetaData : {
+      deviceIcon,
+      leftSubTitle,
+      leftTitle: 'Location > Zone',
+      rightTitle,
+      rightSubTitle
+    }
+  }),[hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, rightTitle, rightSubTitle])
+
+
 
 
   const panelConfig: ICameraPanel[] = useMemo(() => [
-    panel1
-], [panel1]);
+    ImagePanel, VideoPanel, ImagePanel, VideoPanel, ImagePanel, VideoPanel, ImagePanel , VideoPanel, ImagePanel, VideoPanel, ImagePanel
+], [ImagePanel, VideoPanel]);
 
   return (
     <Container>

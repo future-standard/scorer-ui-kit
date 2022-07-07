@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { EllipsisStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 const Container = styled.div`
@@ -32,6 +33,8 @@ const DeviceDataGroup = styled.div`
 `;
 
 const LeftTitle = styled.div`
+  ${EllipsisStyles};
+  max-width: 140px;
   color: hsla(195, 10%, 52%, 0.72);
   font-size: 10px;
   margin-bottom: 1px;
@@ -39,6 +42,8 @@ const LeftTitle = styled.div`
 
 const LeftSubTitle = styled.div`
   font-family: ${({theme}) => theme.fontFamily.data};
+  ${EllipsisStyles};
+  max-width: 140px;
   color: hsl(208, 8%, 38%);
   font-size: 16px;
 `;
