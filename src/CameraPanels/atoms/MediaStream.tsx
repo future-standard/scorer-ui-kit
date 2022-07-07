@@ -19,6 +19,7 @@ const EmptyWithIcon = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  padding-bottom: 43px;
 
   ${IconWrapper} {
     display: flex;
@@ -35,7 +36,7 @@ const Notice = styled.div`
   height: 46px;
   width: 300px;
   position: absolute;
-  bottom: -3px;
+  bottom: 0px;
   left: 0px;
   display: flex;
   align-items: center;
@@ -56,6 +57,7 @@ const NoticeIcon = styled.div`
   margin-left: 2px;
 
   ${IconWrapper} {
+    display: flex;
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
@@ -69,7 +71,7 @@ const NoticeTextGroup = styled.div<{ color: IFeedbackColor }>`
 `;
 
 const StatusLine = styled.div<{ color: IFeedbackColor }>`
-  background-color: ${({ theme, color }) => color && theme.colors.status[color]};
+  background-color: ${({ theme, color }) => color && theme.colors.feedback[color]};
   height: 3px;
   width: 100%;
 `;

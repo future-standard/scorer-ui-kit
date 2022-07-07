@@ -108,7 +108,9 @@ import {
 // Camera Panels
 import {
   CameraPanels,
-  ICameraPanel
+  ICameraPanel,
+  IMediaStream,
+  IPanelMetaData
 } from './CameraPanels';
 
 
@@ -354,5 +356,7 @@ export type {
   IFilterResult,
   DateInterval,
   IFilterDatePicker,
-  ICameraPanel
+  ICameraPanel,
+  IMediaStream,
+  IPanelMetaData,
 };

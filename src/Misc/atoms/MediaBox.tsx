@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import { IMediaType } from '../../index';
 
-const Container = styled.div`
+export const MediaWrapper = styled.div`
   position: relative;
   line-height: 0;
 `;
@@ -92,7 +92,7 @@ const MediaBox: React.FC<IMediaModal> = ({
   }, [onMediaLoad, setLoaded]);
 
   return (
-    <Container>
+    <MediaWrapper>
       {mediaType === 'video'
         ? <Video
             {...{ src, loop, autoPlay, controls, muted, onError, hasModalLimits }}
@@ -107,7 +107,7 @@ const MediaBox: React.FC<IMediaModal> = ({
             isLoaded={loaded}
           />}
       {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
-    </Container>
+    </MediaWrapper>
   );
 };
 

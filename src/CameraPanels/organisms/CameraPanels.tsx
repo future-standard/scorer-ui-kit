@@ -5,11 +5,11 @@ import CameraPanel, { ICameraPanel } from '../molecules/CameraPanel';
 const Container = styled.div``;
 const CameraGrid = styled.div``;
 
-interface CameraPanels {
+interface ICameraPanels {
   panels : ICameraPanel[]
 }
 
-const CameraPanels: React.FC<CameraPanels> = ({panels}) => {
+const CameraPanels: React.FC<ICameraPanels> = ({panels}) => {
   return(
     <Container>
       <CameraGrid>
