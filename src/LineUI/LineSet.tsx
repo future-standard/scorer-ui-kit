@@ -181,25 +181,26 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
     }
   }, [lineSetData, updateHandleAngles, handleUsesAngles]);
 
-  const handles = lineSetData.points.map(({x,y}, index) =>
-    <HandleUnit
-      key={index+lineSetId}
-      lineSetId={lineSetId}
-      rotate={lineSetData.rotate}
-      Icon={lineSetData.icon}
-      index={index}
-      unit={unit}
-      size={size}
-      useAngles={handleUsesAngles}
-      angle={handleAngles[index]}
-      x={x}
-      y={y}
-      moveEndCB={onLineMoveEnd}
-      moveCallback={handleMoveCallback}
-      options={options}
-      styling={lineSetData.styling}
-      readOnlyHandle={lineSetData.readOnly}
-    />
+  const handles = (lineSetData?.showPointHandle === undefined || lineSetData?.showPointHandle) &&
+    lineSetData.points.map(({ x, y }, index) =>
+      <HandleUnit
+        key={index+lineSetId}
+        lineSetId={lineSetId}
+        rotate={lineSetData.rotate}
+        Icon={lineSetData.icon}
+        index={index}
+        unit={unit}
+        size={size}
+        useAngles={handleUsesAngles}
+        angle={handleAngles[index]}
+        x={x}
+        y={y}
+        moveEndCB={onLineMoveEnd}
+        moveCallback={handleMoveCallback}
+        options={options}
+        styling={lineSetData.styling}
+        readOnlyHandle={lineSetData.readOnly}
+      />
   );
 
   const points = options.showPoint && (lineSetData.points.map(({x,y}, index) => <Point styling={lineSetData.styling||'primary'} key={index} r={unit} cx={x} cy={y} />));
@@ -229,6 +230,8 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       styling={styling}
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
+      showSmallDirectionMark={lineSetData.showSmallDirectionMark}
+      overrideShowMoveHandle={lineSetData.showMoveHandle}
     />
   );});
 
