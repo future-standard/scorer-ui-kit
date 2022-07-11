@@ -11,6 +11,9 @@ import {
   Content,
   Logo,
   ButtonWithIcon,
+  Switch,
+  Button,
+  useMediaModal,
 } from 'scorer-ui-kit';
 import styled from 'styled-components';
 import {LineUIOptions} from '../../../dist/LineUI';
@@ -21,18 +24,26 @@ const StyledButton = styled(ButtonWithIcon)`
   margin-bottom: 15px;
 `
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  margin: 20px 0;
+  justify-content: flex-end;
+`;
+
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
+  const {createMediaModal} = useMediaModal();
 
-  const [options] = useState<LineUIOptions>({
+  const [options, setOptions] = useState<LineUIOptions>({
     showSetIndex: true,
     pointIndexOffset: 1,
     showPointLabel: true,
     setIndexOffset: 1,
+    showDirectionMark: false
   });
 
-  const [videoOptions]= useState<LineUIVideoOptions>({
+  const [videoOptions, setVideoOptions]= useState<LineUIVideoOptions>({
     loop: true,
     autoPlay: true
   });
@@ -136,6 +147,27 @@ const Line: React.FC<{}> = () => {
     fetchLine();
   }, [fetchLine])
 
+  const showDirection = useCallback((isChecked: boolean) => {
+    setOptions(previous => ({...previous, showDirectionMark: isChecked}));
+  }, []);
+
+  const handleModalClose = useCallback(() => {
+    setVideoOptions({
+      loop: true,
+      autoPlay: true
+    })
+  }, []);
+
+  const handleMediaModal = useCallback(() => {
+    setVideoOptions({
+      loop: false,
+      autoPlay: false,
+      muted: true,
+    })
+
+    createMediaModal({ mediaType: 'video', src: '/scorer-ui-kit/traffic.mp4', dismissCallback: handleModalClose })
+  }, [createMediaModal, handleModalClose])
+
   return (
     <Layout >
       <Sidebar>
@@ -150,6 +182,8 @@ const Line: React.FC<{}> = () => {
 
           <StyledButton  icon={'Delete'}  design='danger' onClick={()=>removeSet(state.length-1)} >Remove Shape</StyledButton>
 
+          <Switch checked={options.showDirectionMark} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
+
         </SidebarBox>
         <SidebarBox style={{ flex: '1' }} >
           <pre>
@@ -162,6 +196,9 @@ const Line: React.FC<{}> = () => {
         <LineSetContext.Provider value={{ state, dispatch }}>
           <LineUIVideo options={options} videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4' />
         </LineSetContext.Provider>
+        <ButtonWrapper>
+          <Button onClick={handleMediaModal}>Open Video Modal</Button>
+        </ButtonWrapper>
       </Content>
     </Layout>
   );

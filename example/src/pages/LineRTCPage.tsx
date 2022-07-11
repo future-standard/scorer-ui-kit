@@ -1,5 +1,5 @@
 import React, { useReducer, useCallback, useEffect, useState } from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 import {
   LineReducer,
@@ -12,19 +12,39 @@ import {
   LineUIRTC,
   Logo,
   Button,
-  AlertBar
+  AlertBar,
+  Switch,
+  useMediaModal
 } from 'scorer-ui-kit';
-import { LineUIOptions } from '../../../dist/LineUI';
+import { LineUIOptions, LineUIVideoOptions } from '../../../dist/LineUI';
+
+const SwitchBox = styled.div`
+  margin-bottom: 15px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  margin: 20px 0;
+  justify-content: flex-end;
+`;
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
   const [ws, setWS] = useState('localhost/wsapp');
   const [wsURL, setWsURL] = useState('');
+  const [isShowDirection, setShowDirection] = useState<boolean>(false);
+  const {createMediaModal} = useMediaModal();
+
+  const [videoOptions, setVideoOptions]= useState<LineUIVideoOptions>({
+    loop: true,
+    autoPlay: true
+  });
 
   const options : LineUIOptions = {
     showSetIndex: true,
-    setIndexOffset: 1
+    setIndexOffset: 1,
+    showDirectionMark: isShowDirection
   }
 
   const fetchLine = useCallback(async () => {
@@ -93,6 +113,27 @@ const Line: React.FC<{}> = () => {
     setWsURL(ws);
   },[ws]);
 
+  const showDirection = useCallback((isChecked: boolean) => {
+    setShowDirection(isChecked);
+  }, []);
+
+  const handleModalClose = useCallback(() => {
+    setVideoOptions({
+      loop: true,
+      autoPlay: true
+    })
+  }, []);
+
+  const handleMediaModal = useCallback(() => {
+    setVideoOptions({
+      loop: false,
+      autoPlay: false,
+      muted: true,
+    })
+
+    createMediaModal({ mediaType: 'video', src: `ws://${wsURL}/`, dismissCallback: handleModalClose })
+  }, [createMediaModal, handleModalClose, wsURL])
+
   return (
     <Layout >
       <Sidebar>
@@ -103,6 +144,9 @@ const Line: React.FC<{}> = () => {
           </pre>
         </SidebarBox>
         <SidebarBox>
+          <SwitchBox>
+            <Switch checked={isShowDirection} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
+          </SwitchBox>
           <Button design="secondary" onClick={fetchLine} >Cancel</Button>
           <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button>
         </SidebarBox>
@@ -112,10 +156,15 @@ const Line: React.FC<{}> = () => {
         <TextField label='Host' name='host' fieldState='default' value={ws} onChange={({target:{value}})=> setWS(value)} ></TextField>
         <Button onClick={connect}>Connect</Button>
         {
-          wsURL &&
+          wsURL && <>
             <LineSetContext.Provider value={{ state, dispatch }}>
-              <LineUIRTC options={options} ws={`ws://${wsURL}/`} />
+              <LineUIRTC ws={`ws://${wsURL}/`} {...{videoOptions, options}}/>
             </LineSetContext.Provider>
+            <ButtonWrapper>
+              <Button onClick={handleMediaModal}>Open Video Modal</Button>
+            </ButtonWrapper>
+          </>
+
         }
       </Content>
     </Layout>

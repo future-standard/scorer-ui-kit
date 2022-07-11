@@ -59,6 +59,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     header: 'Actions',
     sortable: false,
     cellStyle: 'normalImportance',
+    alignment: 'right'
   },
 
 ];

@@ -206,6 +206,10 @@ export const _FilterBar = () => {
       timeMode: 'off',
       buttonText: language === 'english' ? 'Date Range' : '日付範囲',
       buttonIcon: 'DateTime',
+      dateTimeTextUpper: language === 'english' ? 'From' : 'から',
+      dateTimeTextLower: language === 'english' ? 'To' : 'まで',
+      timeZoneTitle: language === 'english' ? 'Timezone' : '時間帯',
+      lang: language === 'english' ? 'en' : 'ja'
       // selected: myDate,
     }
   ]

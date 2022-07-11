@@ -22,6 +22,7 @@ const GlobalUI: React.FC<INavigation> = ({
   logoText,
   supportUrl,
   defaultMenuOpen,
+  canAlwaysPin,
   paddingOverride,
   maxWidth,
   children,
@@ -41,7 +42,8 @@ const GlobalUI: React.FC<INavigation> = ({
             logoMark,
             logoText,
             supportUrl,
-            defaultMenuOpen}
+            defaultMenuOpen,
+            canAlwaysPin}
           }
         />
         <MainContainer>

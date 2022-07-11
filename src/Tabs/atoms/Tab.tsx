@@ -6,6 +6,7 @@ const TabComponent = styled.div`
   margin-right: 39px;
   display: flex;
   align-items: center;
+  line-height: 20px;
 `;
 
 const TabLabel = styled.label<{ active: boolean }>`

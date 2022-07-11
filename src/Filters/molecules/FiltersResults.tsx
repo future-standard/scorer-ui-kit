@@ -11,6 +11,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   font-size: 12px;
+  min-height: 22px;
 `;
 
 const ResultsTextWrapper = styled.div`
@@ -24,7 +25,7 @@ const FilterLabel = styled.div`
   display: flex;
   align-items: center;
   padding: 0 11px 0 8px;
-  margin: 0 0 3px 3px;
+  margin-left: 3px;
   color: hsl(207, 5%, 57%);
 
   ${({ theme }) => theme && css`

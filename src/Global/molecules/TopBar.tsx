@@ -143,18 +143,27 @@ type IDrawerKeys = 'user' | 'notifications' | 'custom' | null;
 const TopBar: React.FC<ITopBar> = ({
   hasNotifications = false,
   hasLanguage = false,
+  selectedLanguageText = '',
   hasLogout = true,
   logoutLink = '/logout',
+  logoutText = 'Logout',
   hasSearch = false,
   hasCurrentUser = true,
+  currentUserText = 'Current User',
+  accountOptionText = 'Account Options',
   searchPlaceholder = 'Search for devices, analysis tasks, etc.',
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
   notificationsHistory,
   customDrawer,
+  hasSwitchTheme = false,
+  isLightMode = true,
+  switchThemeText = 'SWITCH THEME',
+  selectedThemeText = '',
   onLogout = () => { },
-  onLanguageToggle = () => { }
+  onLanguageToggle = () => { },
+  onThemeToggle = () => { }
 }) => {
 
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
@@ -206,12 +215,21 @@ const TopBar: React.FC<ITopBar> = ({
               hasLanguage,
               hasLogout,
               logoutLink,
+              logoutText,
               hasCurrentUser,
+              currentUserText,
+              accountOptionText,
               userSubmenu,
               userDrawerBespoke,
               loggedInUser,
               onLogout,
-              onLanguageToggle
+              onLanguageToggle,
+              selectedLanguageText,
+              hasSwitchTheme,
+              isLightMode,
+              switchThemeText,
+              selectedThemeText,
+              onThemeToggle
             }}
             />
           </Drawer>

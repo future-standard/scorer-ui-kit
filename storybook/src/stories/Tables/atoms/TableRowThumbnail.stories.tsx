@@ -1,9 +1,11 @@
 import React from 'react';
-import {  boolean, text } from "@storybook/addon-knobs";
+import {  boolean, select, text, } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 
 import photo from '../../assets/placeholder.jpg';
 import {TableRowThumbnail} from 'scorer-ui-kit';
+
+const video = 'https://future-standard.github.io/scorer-ui-kit/traffic.mp4'
 
 export default {
   title: 'Tables/atoms',
@@ -28,10 +30,13 @@ export const _RowThumbnail = () => {
 
   const hoverZoom = boolean("Zoom On Hover", true);
   const image = text("Image Src", photo);
+  const mediaUrl = text("Video Src", video);
+  const mediaType = select("Media Type", ['img','video'], 'video');
+  const retryImageLoad = boolean("Retry Image",false)
 
   return <Container>
     <ContainerInner>
-      <TableRowThumbnail {...{hoverZoom, image}} />
+      <TableRowThumbnail {...{hoverZoom, image, mediaUrl, mediaType, retryImageLoad}} />
     </ContainerInner>
   </Container>;
 };

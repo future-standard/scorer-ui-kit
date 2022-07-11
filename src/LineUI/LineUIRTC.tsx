@@ -5,7 +5,7 @@ import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 import WebRTCClient from '../WebRTCClient';
 import Spinner from '../Indicators/Spinner';
-import { LineUIOptions, IBoundary } from '.';
+import { LineUIOptions, IBoundary, LineUIVideoOptions } from '.';
 
 
 const Container = styled.div`
@@ -69,12 +69,14 @@ interface LineUIProps {
   onLineMoveEnd?: ()=> void;
   onLoaded?: (metadata: {height: number; width: number; }) => void;
   options?: LineUIOptions;
+  videoOptions?: LineUIVideoOptions;
 }
 const LineUI : React.FC<LineUIProps> = ({
   ws,
   onSizeChange = ()=>{},
   onLineMoveEnd = ()=>{},
   onLoaded = ()=>{},
+  videoOptions,
   options: {
     showHandleFinder,
     showSetIndex,
@@ -85,7 +87,8 @@ const LineUI : React.FC<LineUIProps> = ({
     setIndexOffset = 0,
     pointIndexOffset = 0,
     showPoint = false,
-    boundaryOffset = 0
+    boundaryOffset = 0,
+    showDirectionMark = false
   }={}
 }) => {
 
@@ -177,12 +180,13 @@ const LineUI : React.FC<LineUIProps> = ({
     showMoveHandle:  showMoveHandle || (showMoveHandle !== false && showGrabHandle !== false),
     setIndexOffset,
     pointIndexOffset,
-    showPoint
+    showPoint,
+    showDirectionMark
   };
 
   return (
     <Container>
-      <Video onLoadedMetadata={onLoadedMetadata} peerAddress={ws} id='1' enabled> </Video>
+      <Video onLoadedMetadata={onLoadedMetadata} peerAddress={ws} id='1' {...videoOptions} enabled> </Video>
       {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {
         loaded &&

@@ -45,6 +45,8 @@ const englishDataList = [
   { text: 'Gyoza', value: 2 },
   { text: 'Tempura', value: 3 },
   { text: 'Sushi', value: 4 },
+  { text: 'Natto', value: 5 },
+  { text: 'Sashimi', value: 6 },
 ];
 
 const japaneseDataList = [
@@ -53,6 +55,8 @@ const japaneseDataList = [
   { text: '餃子', value: 2 },
   { text: '天婦羅', value: 3 },
   { text: 'すし', value: 4 },
+  { text: '納豆', value: 5 },
+  { text: 'お造り', value: 6 },
 ];
 
 const englishTextList = [
@@ -87,7 +91,10 @@ const baseExample = [
   { text: "Consectetur", value: 2 },
   { text: "Dolor sit", value: 3 },
   { text: "Lorem ipsum", value: 4 },
-  { text: "Vestibulum", value: 5 }
+  { text: "Vestibulum", value: 5 },
+  { text: "Minim Veniam", value: 6 },
+  { text: "Consequat", value: 7 },
+  { text: "Fugiat Nulla", value: 8 },
 ];
 
 export const _FilterDropdown = () => {

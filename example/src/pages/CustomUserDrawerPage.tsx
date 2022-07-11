@@ -35,9 +35,9 @@ const userSubmenu = [
   }
 ]
 
-const useSearch = true;
+const hasSearch = true;
 const useNotifications = true;
-const showLanguage = true;
+const hasLanguage = true;
 const logoutLink = "#"
 const searchPlaceholder = "Search area names, etc.";
 
@@ -55,7 +55,7 @@ const CustomUserDrawerPage : React.FC = () => {
 
   // userDrawerBespoke: See examples for implementation of this prop.
 
-  return <Container><TopBar {...{userDrawerBespoke, loggedInUser, userSubmenu, useSearch, useNotifications, logoutLink, searchPlaceholder, showLanguage}}/></Container>;
+  return <Container><TopBar {...{userDrawerBespoke, loggedInUser, userSubmenu, hasSearch, useNotifications, logoutLink, searchPlaceholder, hasLanguage}}/></Container>;
 };
 
 export default CustomUserDrawerPage;

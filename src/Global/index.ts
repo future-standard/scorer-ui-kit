@@ -49,7 +49,10 @@ export interface IMenuTop {
     logoMark?: string
     logoText?: string
     supportUrl?: string
+    keepOpenText?: string
+    autoHideText? :string
     defaultMenuOpen?: boolean
+    canAlwaysPin?: boolean
   }
 
   export interface ICustomDrawer {
@@ -65,16 +68,25 @@ export interface IMenuTop {
     userSubmenu?: any[];
     loggedInUser: string;
     hasLanguage?: boolean;
+    selectedLanguageText?: string;
     hasLogout?: boolean;
+    logoutText?: string;
     logoutLink?: string;
     hasSearch?: boolean;
     hasCurrentUser?: boolean;
+    currentUserText?: string;
+    accountOptionText? : string;
     searchPlaceholder?: string;
     userDrawerBespoke?: ReactElement;
     notificationsHistory? : INotificationsHistory;
     customDrawer?: ICustomDrawer;
+    hasSwitchTheme?: boolean;
+    isLightMode?: boolean;
+    switchThemeText?: string;
+    selectedThemeText?: string;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
+    onThemeToggle?: () => void;
   }
 
   export interface INotificationItem {

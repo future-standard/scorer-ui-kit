@@ -23,6 +23,8 @@ import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
 
 import { text, object, boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import { useState } from 'react';
 
 export default {
   title: 'Global',
@@ -36,7 +38,7 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  ${({theme}) => theme.styles.global.background};
+  ${({ theme }) => theme.styles.global.background};
 
 `;
 
@@ -375,20 +377,34 @@ const customDrawer: ICustomDrawer = {
 
 export const _GlobalUI = () => {
 
+  const [isLightMode, setIsLightMode] = useState(true);
+
   const maxWidth = text("Max width", "1200px");
   const paddingOverride = text("Padding Override", "70px 90px");
   const loggedInUser = text("Logged In User", "full.name@example.com");
   const hasSearch = boolean("Has Search", true);
   const hasLogout = boolean("Has Logout", true);
   const hasNotifications = boolean("Has Notifications", true);
-  const hasLanguage = boolean("Has Language", true);
   const hasCurrentUser = boolean("Has Current User", true);
+  const currentUserText = text("Current User Text", "Current User");
   const logoutLink = text("Logout Url", "#")
+  const logoutText = text("Logout Text", "Logout");
+  const accountOptionText = text("Account Options Text", "Account Options")
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const logoMark = text("Logo Mark SVG", logoMarkSvg);
   const logoText = text("Logo Text SVG", logoTextSvg);
   const supportUrl = text("Support Url", "/support");
   const menuHomeLink = text("Home Link", "/welcome");
+  const canAlwaysPin = boolean("Can Always Pin", true);
+  const defaultMenuOpen = boolean("Default menu open", false);
+  const hasLanguage = boolean("Has Language", true);
+  const selectedLanguageText = text("Selected Language Text", "English");
+  const hasSwitchTheme = boolean("Has Switch Theme", true);
+  const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
+  const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
+  const themeToggle = action('onThemeToggle');
+  const languageToggle = action('onLanguageToggle');
+
   const menuConfig = object("Menu Config", {
     items: [
       {
@@ -484,14 +500,26 @@ export const _GlobalUI = () => {
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
 
+  const onThemeToggle = () => {
+    themeToggle();
+    setIsLightMode((prev) => !prev);
+  }
+
+  const onLanguageToggle = () => {
+    languageToggle();
+  }
+
   return (
     <Container>
       <GlobalUI
         content={menuConfig}
         home={menuHomeLink}
-        defaultMenuOpen={true}
-        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
-        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, searchPlaceholder, hasLanguage, hasCurrentUser }}
+        defaultMenuOpen={defaultMenuOpen}
+        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer, canAlwaysPin }}
+        {...{
+          loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasCurrentUser, currentUserText, accountOptionText,
+          hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle,
+        }}
       >
         <ComponentLinks />
       </GlobalUI>

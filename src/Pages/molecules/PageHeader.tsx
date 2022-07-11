@@ -13,12 +13,13 @@ interface IProps {
   icon?: string
   introductionText?: string
   updateDocTitle?: boolean
+  hideAreaInDocTitle? : boolean
 }
 
-const PageHeader : React.FC<IProps> = ({title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true}) => {
+const PageHeader : React.FC<IProps> = ({title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle}) => {
   return (
     <Container>
-      <PageTitle {...{title, icon, areaHref, areaTitle, updateDocTitle}} />
+      <PageTitle {...{title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle}} />
       {introductionText ?
         <IntroductionText>{introductionText}</IntroductionText>
       : null}

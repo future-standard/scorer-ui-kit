@@ -27,8 +27,14 @@ const StyledSelect = styled.select`
   line-height: 1.56;
   width: 100%;
   cursor: pointer;
+  ${({theme: {styles}}) => css`
+    ${styles.form.input.default.normal};
+  `}
 
   &:disabled {
+    ${({theme: {styles}}) => css`
+      ${styles.form.input.disabled.normal};
+    `}
     cursor: not-allowed;
   }
 
@@ -47,7 +53,7 @@ ${({ isCompact }) => isCompact && css`
     }
   `}
 
-${({isLabelSameRow}) => isLabelSameRow && css`
+${({ isLabelSameRow }) => isLabelSameRow && css`
   ${StyledLabel} {
     display: flex;
     align-items: center;
@@ -95,7 +101,7 @@ ${({isLabelSameRow}) => isLabelSameRow && css`
 interface ILabel {
   htmlFor: string
   text: string
-  isSameRow? : boolean
+  isSameRow?: boolean
 }
 
 interface OwnProps {
@@ -117,20 +123,20 @@ const SelectField: React.FC<ISelect> = ({
   ...props
 }) => {
 
-  const [activePlaceholder, setPlaceholderInactive] = useState<boolean>(true);
+  const [activePlaceholder, setPlaceholderStatus] = useState<boolean>(!defaultValue ? true : false);
 
   const handleOnChange = useCallback((e) => {
 
     const { value } = e.target;
 
-    setPlaceholderInactive(prev => {
+    setPlaceholderStatus(prev => {
       if (prev) { return false; }
       return prev;
     });
     changeCallback(value);
   }, [changeCallback]);
 
-  const renderSelect = (htmlFor?: string) => (
+  const renderSelect = useCallback((htmlFor?: string) => (
     <SelectWrapper>
       <StyledSelect
         id={htmlFor}
@@ -143,10 +149,10 @@ const SelectField: React.FC<ISelect> = ({
       </StyledSelect>
       <Icon icon='Down' color='dimmed' size={11} />
     </SelectWrapper>
-  );
+  ), [children, defaultValue, handleOnChange, placeholder, props]);
 
   return (
-    <Container {...{ isCompact, activePlaceholder}} isLabelSameRow={label?.isSameRow}>
+    <Container {...{ isCompact, activePlaceholder }} isLabelSameRow={label?.isSameRow}>
       {label
         ? (
           <Label htmlFor={label.htmlFor} labelText={label.text}>

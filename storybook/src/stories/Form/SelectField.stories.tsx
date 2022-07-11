@@ -24,6 +24,7 @@ export const _SelectField = () => {
 
   const isCompact = boolean('isCompact', false);
   const placeholder = text('Placeholder free width', 'Choose an option...');
+  const defaultValue = text('Default Value free width','option3');
   const disabled = boolean('Disabled', false);
   const freeSelectValue = action('Free select value');
   const fixedSelectValue = action('Free select value');
@@ -57,7 +58,8 @@ export const _SelectField = () => {
           placeholder,
           label,
           selectWidth,
-          disabled
+          disabled,
+          defaultValue
         }}
         changeCallback={freeOnChange}
       >

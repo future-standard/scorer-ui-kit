@@ -60,13 +60,13 @@ interface IProps {
   areaTitle?: string
   areaHref?: string
   updateDocTitle?: boolean
+  hideAreaInDocTitle? : boolean
 }
 
-const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true}) => {
+const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false }) => {
   // Set <title> attribute automagically.
 
-  useTitle(title, areaTitle || '', undefined, updateDocTitle);
-
+  useTitle(title, hideAreaInDocTitle ? undefined : areaTitle || '', undefined, updateDocTitle);
 
   return (
     <Container>
