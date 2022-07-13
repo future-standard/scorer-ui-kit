@@ -25,7 +25,7 @@ const InnerBox = styled.div`
   box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
   border: solid 1px hsl(207, 16%, 86%);
   border-top: unset;
-  background-color: hsl(200, 23%, 97%);
+  ${({theme}) => theme.styles.filters.dropdownContainer.background};
 `;
 
 const StyledFilterOption = styled(FilterOption)`
