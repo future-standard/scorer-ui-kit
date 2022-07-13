@@ -60,6 +60,8 @@ export const useMediaModal = () => {
       onMediaLoad,
       closeText,
       dismissCallback,
+      retryLoading = false,
+      retryLimit=5,
     } = mediaModal;
 
     createModal({
@@ -75,7 +77,9 @@ export const useMediaModal = () => {
             alt,
             videoOptions,
             onError,
-            onMediaLoad
+            onMediaLoad,
+            retryLoading,
+            retryLimit
           }}
           hasModalLimits
         />
