@@ -113,12 +113,13 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   },[image]);
 
   useEffect(()=>{
-    if(imgRef.current && imgRef.current.complete){
+    if(imgRef.current && imgRef.current.complete && imgSrc !== ''){
       setShowImage(true);
     }
-  },[]);
+  },[imgSrc]);
 
   const retryImage = useCallback(()=>{
+    setShowImage(false);
     if(!retryImageLoad || retryCount >= retryLimit) return;
     const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
     setRetryCount(count => count+1);
