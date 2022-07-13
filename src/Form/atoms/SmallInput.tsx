@@ -70,7 +70,7 @@ const Container = styled.div<{ fieldState: string }>`
   position: relative;
 
   ${StyledInput}{
-    ${({theme, fieldState}) => theme.styles.form.input[fieldState].compact};
+    ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal};
 
     &:focus {}
 
@@ -81,7 +81,9 @@ const Container = styled.div<{ fieldState: string }>`
   }
 
   &:focus-within ${InputContainer} {
-    border-color: ${({theme, fieldState}) => theme.styles.form.input[fieldState].focused.borderColor};
+    ${({theme, fieldState}) => fieldState !== 'disabled' && css`
+      border-color:${theme.styles.form.input[fieldState].focused.borderColor};
+    `
   }
 
 `;
