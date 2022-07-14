@@ -1,11 +1,12 @@
 import React from 'react';
-import {  boolean, select, text, } from "@storybook/addon-knobs";
+import {  boolean, select, text } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 
 import photo from '../../assets/placeholder.jpg';
 import {TableRowThumbnail} from 'scorer-ui-kit';
 
 const video = 'https://future-standard.github.io/scorer-ui-kit/traffic.mp4'
+
 
 export default {
   title: 'Tables/atoms',

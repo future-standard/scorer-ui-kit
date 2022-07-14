@@ -99,8 +99,10 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   const { createMediaModal } = useMediaModal();
   const [retryCount, setRetryCount] = useState(0);
   const imgRef = useRef<HTMLImageElement>(null);
+  const timeoutRef = useRef<(ReturnType<typeof setTimeout>)|null>(null);
 
   const handleModal = useCallback(async () => {
+
     if ( mediaUrl && mediaType ) {
       createMediaModal({ src: mediaUrl, mediaType });
     }
@@ -113,24 +115,37 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   },[image]);
 
   useEffect(()=>{
-    if(imgRef.current && imgRef.current.complete){
+    if(imgRef.current && imgRef.current.complete && imgSrc !== ''){
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
       setShowImage(true);
     }
-  },[]);
+  },[imgSrc]);
+
+  const retryTimeout = useCallback(()=>{
+    timeoutRef.current = null;
+    setImgSrc(`${image}?v=${Date.now()}`);
+  },[image]);
 
   const retryImage = useCallback(()=>{
-    if(!retryImageLoad || retryCount >= retryLimit) return;
+    setShowImage(false);
+    if(!retryImageLoad || retryCount >= retryLimit ||timeoutRef.current) return;
     const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
     setRetryCount(count => count+1);
-    setTimeout(()=>{
-      setImgSrc(`${image}?v=${Date.now()}`);
-    }, randomDelay);
+    timeoutRef.current = setTimeout(retryTimeout, randomDelay);
+  },[retryCount, retryImageLoad, retryLimit, retryTimeout]);
 
-  },[image, retryCount, retryImageLoad, retryLimit]);
+
+
+  const onLoad = useCallback(()=>{
+    timeoutRef.current && clearTimeout(timeoutRef.current);
+    timeoutRef.current = null;
+    setShowImage(true);
+  },[]);
 
   return (
     <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={handleModal}>
-      <Image ref={imgRef} src={imgSrc} onError={retryImage} onLoad={()=>setShowImage(true)} showImage={showImage} />
+      <Image ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} showImage={showImage} />
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
           <Icon size={12} icon='Play' color='inverse' />
