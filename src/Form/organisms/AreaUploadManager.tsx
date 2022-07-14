@@ -27,8 +27,8 @@ const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
-  background-color: hsl(204, 15%, 94%);
   position: relative;
+  ${({theme}) => theme.styles.filters.dropdownContainer.background};
 `;
 
 const Title = styled.div`
