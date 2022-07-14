@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css, keyframes } from 'styled-components';
-import Icon from '../../Icons/Icon';
+import Icon, { IconWrapper } from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
 
@@ -32,8 +32,8 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   align-items: center;
   justify-content: space-between;
   padding: 0 14px;
-  width: 900px; 
-  position: fixed;  
+  width: 900px;
+  position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -52,6 +52,12 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
     animation: ${closeAnimation} ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
     `
   };
+
+  ${IconWrapper} {
+    [stroke]{
+      stroke: ${({theme}) => theme.colors.pureBase};
+    }
+  }
 `;
 
 export const IconNames = {
@@ -70,7 +76,7 @@ const IconButton = styled.div<{selected?: boolean}>`
   &:focus {
     outline: none;
   }
- 
+
   &:hover {
     opacity: .8;
   }
@@ -171,7 +177,7 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
       mounted = false;
     };
   },[isPinned, message, handleDismiss]);
-  
+
   return( (message && !dismiss)
   ? ReactDom.createPortal(
     <Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>
@@ -179,7 +185,7 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
       <MainMessage>{message}</MainMessage>
       {actionTextButton
         ? <TextButton onClick={() => handleTextClick()}>{actionTextButton} </TextButton>
-        : 
+        :
         <IconButton onClick={() => handleDismiss()}>
           <Icon icon='CloseCompact' color='inverse' />
         </IconButton>}

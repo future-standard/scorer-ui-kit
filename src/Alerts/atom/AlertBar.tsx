@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import Icon from '../../Icons/Icon';
+import Icon, {IconWrapper} from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
 
@@ -38,6 +38,11 @@ export const AlertWrapper = styled.div<{type: AlertType}>`
   ${({type, theme}) => theme.styles.feedbackBar[type] };
   ${({theme}) => theme.typography.feedbackBar.message };
 
+  ${IconWrapper} {
+    [stroke]{
+      stroke: ${({theme}) => theme.colors.pureBase};
+    }
+  }
 `;
 
 const IconNames = {
