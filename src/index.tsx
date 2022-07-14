@@ -1,7 +1,7 @@
 // Themes
 // import lightTheme from './themes/light';
 import lightTheme from './themes/light/light';
-import darkTheme from './themes/dark';
+import darkTheme from './themes/dark/dark';
 import themeFallbackHelper from './themes/themeFallbackHelper';
 
 
@@ -54,6 +54,7 @@ import {
   FilterDropdownContainer,
   FilterButton,
   FilterDropdown,
+  SortDropdown,
   FilterInputs,
   ISearchFilter,
   IFilterDropdownExt,
@@ -112,7 +113,8 @@ import {
   ITagList,
   TagListWrapper,
   MediaBox,
-  BasicSearchInput
+  BasicSearchInput,
+  DebouncedSearcher
 } from './Misc';
 
 import {
@@ -229,6 +231,7 @@ export {
   FilterDropdownContainer,
   FilterButton,
   FilterDropdown,
+  SortDropdown,
   FilterInputs,
   FiltersResults,
   FilterBar,
@@ -302,6 +305,7 @@ export {
   TagListWrapper,
   MediaBox,
   BasicSearchInput,
+  DebouncedSearcher,
 
   //Context
   NotificationProvider,

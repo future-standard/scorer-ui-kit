@@ -2,7 +2,7 @@ name: Deploy gh-pages
 
 on:
   push:
-    branches: [ 'main', 'demo', 'deploy-test2']
+    branches: [ 'main', 'demo', 'deploy-test3']
 
 jobs:
   deploy:
@@ -18,7 +18,7 @@ jobs:
         node-version: '12.x'
 
     - name: Cache node modules
-      uses: actions/cache@v2
+      uses: actions/cache@v3.0.3
       env:
         cache-name: cache-node-modules
       with:

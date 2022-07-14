@@ -20,8 +20,6 @@ const fadeInAnimation = keyframes`
 `;
 
 const SearchInputWrapper = styled.div`
-  background-color: hsl(0, 0%, 100%);
-  border-radius: 3px;
   flex: 1 1 200px;
   max-width: 320px;
 `;
@@ -40,7 +38,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   ${SearchInputWrapper}, ${StyledDropdown}, ${StyledFilterButton}, ${StyledDropdownDatePicker} {
-    margin: 0 5px 10px 0;
+    margin: 0 3px 10px 3px;
   }
 `;
 

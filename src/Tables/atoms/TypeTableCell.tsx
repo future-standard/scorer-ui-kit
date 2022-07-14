@@ -61,13 +61,12 @@ const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCell
     padding-right: 20px;
   `};
 
-  ${({hideDivider}) => !hideDivider && css`
+  ${({theme: {styles}, hideDivider}) => !hideDivider && css`
     &::after {
+      ${styles.tables.rows.divider};
       content: '';
       display: block;
       height: 1px;
-      background: #afa9a9;
-      opacity: 0.25;
       left: 0;
       right: 0;
       width: 100%;

@@ -5,6 +5,7 @@ import React, {
   ChangeEvent,
   Fragment,
   useRef,
+  useEffect,
 } from 'react';
 import styled, {css} from 'styled-components';
 import {IFeedbackColor} from '../../index';
@@ -302,6 +303,13 @@ const SliderInput : React.FC<ISlider> = ({
 
     setIsGhostActive(false);
   },[inputCallback, onlyMarkSelect]);
+
+  useEffect(() => {
+    const initValue = (defaultValue && isInsideRange(defaultValue, minValid, maxValid)) ? defaultValue : minValid;
+    thumbValueRef.current = thumbLeftPosition(initValue, minValid, maxValid);
+    setSelectedValue(initValue);
+
+  }, [defaultValue, maxValid, minValid]);
 
   return(
     <SliderWrapper disabled={disabled}>

@@ -28,8 +28,14 @@ export const colors = {
         "caution": "hsla(57, 57.7%, 62.9%, 1.000)",
         "danger": "hsla(0, 63.5%, 64.5%, 1.000)",
         "folder": "hsla(207, 95.3%, 66.5%, 1.000)",
+        "highlight": "hsla(207, 95.3%, 66.5%, 1.000)",
         "good": "hsla(126, 48.1%, 68.2%, 1.000)",
-        "neutral": "hsla(0, 0%, 91.8%, 1.000)",
-        "highlight": "hsla(207, 95.3%, 66.5%, 1.000)"
+        "neutral": "hsla(0, 0%, 91.8%, 1.000)"
+    },
+    "transparent": "hsla(0, 0%, 0%, 0.000)",
+    "input": {
+        "border": {
+            "default": "hsla(120, 1.3%, 85.3%, 1.000)"
+        }
     }
 };

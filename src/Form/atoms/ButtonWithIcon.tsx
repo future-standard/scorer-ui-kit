@@ -39,6 +39,9 @@ const IconContainer = styled.div<{ position?: string }>`
 
   svg {
     display:block;
+    path, rect, circle, d {
+      stroke: hsla(0, 0%, 100%, 1.000);
+    }
   }
 `;
 

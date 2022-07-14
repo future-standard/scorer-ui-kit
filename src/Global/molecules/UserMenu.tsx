@@ -2,16 +2,16 @@ import React, { useCallback, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import Icon from '../../Icons/Icon';
 import { ITopBar } from '../index';
 import { resetButtonStyles } from '../../common/index';
+import DrawerBottomMenu from '../atoms/DrawerBottomMenu';
 
 const DrawerTop = styled.div``;
 const DrawerBottom = styled.div`
   ${({ theme }) => css`
     width: 100%;
     position: fixed;
-    bottom: 50px;
+    bottom: 0;
 
     @media ${theme.deviceMediaQuery.large} {
       position: static;
@@ -29,14 +29,17 @@ const CurrentUser = styled.div`
   padding: 20px 20px 15px;
 
   ${({ theme }) => css`
-    border-bottom: ${theme.colors.divider} 1px solid;
+    border-bottom: ${theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
     ${theme.typography.global.mainMenu.identity};
   `};
 `;
 
 const UserOptions = styled.div`
   padding: 20px 20px 10px 20px;
-  border-bottom: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  ${({ theme }) => css`
+    border-bottom: ${theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
+  `};
+
 `;
 
 const Logout = styled.div`
@@ -51,19 +54,6 @@ const LinkMenu = styled.ul`
 
 const LinkMenuItem = styled.li`
   padding: 10px 0;
-`;
-
-const IconWrapper = styled.div`
-  flex: 0 40px;
-  width: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
 `;
 
 const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
@@ -86,32 +76,13 @@ const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
   `};
 `;
 
-const LanguageMenu = styled.button`
-  ${resetButtonStyles};
-
-  font-family: ${({ theme }) => theme.fontFamily.ui};
-  margin-top: auto;
-  display: flex;
-  flex-direction: row;
-
-  border-top: ${({ theme: { colors } }) => colors.divider} 1px solid;
-  ${({ theme }) => css`
-    ${theme.typography.global.mainMenu.subItem.default};
-    &:hover { ${theme.typography.global.mainMenu.subItem.hover}; }
-    &:active { ${theme.typography.global.mainMenu.subItem.active}; }
-  `};
-
-  padding: 20px 10px 15px;
-  align-items: center;
-  width: 100%;
-`;
-
 interface IUserMenu extends ITopBar {
   closeOnClick?: () => void
 }
 
 const UserMenu: React.FC<IUserMenu> = ({
   hasLanguage = false,
+  selectedLanguageText = '',
   hasLogout = true,
   logoutLink = '/logout',
   logoutText = 'Logout',
@@ -121,25 +92,30 @@ const UserMenu: React.FC<IUserMenu> = ({
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
+  hasSwitchTheme = false,
+  isLightMode = true,
+  switchThemeText = 'SWITCH THEME',
+  selectedThemeText = '',
   onLogout = () => { },
   onLanguageToggle = () => { },
   closeOnClick,
+  onThemeToggle = () => { }
 }) => {
 
   const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     await onLogout();
     window.location.assign(logoutLink);
-    if(closeOnClick) {
+    if (closeOnClick) {
       closeOnClick();
     }
   }, [closeOnClick, logoutLink, onLogout]);
 
   const handleCloseWhenClick = useCallback(() => {
-    if(closeOnClick) {
+    if (closeOnClick) {
       closeOnClick();
     }
-  },[closeOnClick]);
+  }, [closeOnClick]);
 
   return (
     <Fragment>
@@ -176,16 +152,10 @@ const UserMenu: React.FC<IUserMenu> = ({
           </Logout>
           : null}
       </DrawerTop>
+
       <DrawerBottom>
-        {
-          hasLanguage &&
-            <LanguageMenu onClick={onLanguageToggle}>
-              <IconWrapper>
-                <Icon icon='Language' size={18} color='dimmed' />
-              </IconWrapper>
-              Language / 言語
-            </LanguageMenu>
-        }
+        {hasSwitchTheme && <DrawerBottomMenu icon={isLightMode ? 'LightMode' : 'DarkMode'} title={switchThemeText} subTitle={selectedThemeText} onClickCallback={onThemeToggle} />}
+        {hasLanguage && <DrawerBottomMenu icon='Language' title='LANGUAGE / 言語' subTitle={selectedLanguageText} onClickCallback={onLanguageToggle} />}
       </DrawerBottom>
     </Fragment>
   );

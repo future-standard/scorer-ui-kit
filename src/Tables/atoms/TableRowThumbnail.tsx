@@ -54,7 +54,7 @@ const Image = styled.img<{ showImage: boolean }>`
   height: 100%;
   width: 100%;
   object-fit: cover;
-  display: ${({showImage})=>showImage===true ? 'block': 'none'};
+  display: ${({showImage}) => showImage===true ? 'block': 'none'};
 `;
 
 const PlayableDrop = styled.div`
@@ -101,7 +101,8 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   const imgRef = useRef<HTMLImageElement>(null);
 
   const handleModal = useCallback(async () => {
-    if (mediaUrl && mediaType ) {
+
+    if ( mediaUrl && mediaType ) {
       createMediaModal({ src: mediaUrl, mediaType });
     }
   }, [createMediaModal, mediaType, mediaUrl]);

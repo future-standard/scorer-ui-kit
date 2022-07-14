@@ -4,10 +4,10 @@ import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
-  ${({ theme, hasBorder, disabled, noBackground, width }) => css`
+  ${({ theme: { styles }, theme, hasBorder, disabled, noBackground, width }) => css`
     ${hasBorder && css`
-      border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
-      box-shadow: 0 4px 9px 0 hsla(205, 35%, 68%, 0.07);
+      border: ${styles.filters.searchInput.default.border};
+      box-shadow: ${styles.filters.searchInput.default.boxShadow};
     `};
 
     ${disabled && css`
@@ -20,7 +20,13 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
       width: ${width};
     `};
 
-    background-color: ${noBackground ? 'transparent' : 'hsla(0, 0%, 100%, 1.000)'};
+    background-color: ${noBackground ? 'transparent' : theme.styles.filters.searchInput.default.backgroundColor};
+
+    &:focus-within {
+      background-color: ${noBackground ? 'transparent' : styles.filters.searchInput.focused.backgroundColor};
+      border: ${noBackground ? 'transparent' : styles.filters.searchInput.focused.border};
+    }
+
   `};
 
   ${IconWrapper} {
@@ -50,12 +56,13 @@ const CrossButton = styled.button`
 `;
 
 const StyledInput = styled.input<{ color: string }>`
-  ${({ theme, color }) => css`
+  ${({ theme: {typography, colors}, theme, color }) => css`
     font-family: ${theme.fontFamily.ui};
-    ${theme.typography.form.input.value.compact};
+    ${typography.filters.searchInput.value};
+
     &::placeholder {
-      ${theme.typography.form.input.placeholder.compact};
-      color: ${theme.colors.icons[color]};
+      ${typography.filters.searchInput.placeholder};
+      color: ${colors.icons[color]};
       font-size: 12px;
     }
   `};

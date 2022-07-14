@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { BasicSearchInput } from 'scorer-ui-kit';
+import { DebouncedSearcher } from 'scorer-ui-kit';
 import { text, boolean, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import { emptyCallbackForStory } from '../../helpers';
 
 export default {
-  title: 'Misc/atoms',
-  component: BasicSearchInput,
+  title: 'Misc/molecules',
+  component: DebouncedSearcher,
   decorators: [],
   parameters: {
     jsx: { skip: 1 }
@@ -18,28 +18,26 @@ const Container = styled.div`
   margin: 20px;
 `;
 
-export const _BasicSearchInput = () => {
+export const _DebouncedSearcher = () => {
 
   const inputPlaceholder = text("Placeholder", "Search by name...");
   const textValue = action('Search value');
   const hasBorder = boolean('Has border', true);
-  const noBackground = boolean('No Background', true);
-  const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle"}, "subtle");
+  const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle" }, "subtle");
   const iconSize = number('Icon size', 12);
   const disabled = boolean('Disabled', false)
+  const defaultValue = text('Default Value', '');
 
-  const handleChange = useCallback((e) => {
-    const { value } = e.target;
-    textValue(value);
+  const handleChange = useCallback((debounceInput: string) => {
+    textValue(debounceInput);
   }, [textValue]);
-
 
   return (
     <Container>
-      <BasicSearchInput
+      <DebouncedSearcher
         placeholder={inputPlaceholder}
-        onChange={emptyCallbackForStory(handleChange)}
-        {...{hasBorder, noBackground, color, iconSize, disabled}}
+        onDebouncedChange={emptyCallbackForStory(handleChange)}
+        {...{ hasBorder, color, iconSize, disabled, defaultValue }}
       />
     </Container>
   )
