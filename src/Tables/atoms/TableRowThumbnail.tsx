@@ -99,6 +99,7 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   const { createMediaModal } = useMediaModal();
   const [retryCount, setRetryCount] = useState(0);
   const imgRef = useRef<HTMLImageElement>(null);
+  const timeoutRef = useRef<(ReturnType<typeof setTimeout>)|null>(null);
 
   const handleModal = useCallback(async () => {
 
@@ -121,10 +122,11 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
 
   const retryImage = useCallback(()=>{
     setShowImage(false);
-    if(!retryImageLoad || retryCount >= retryLimit) return;
+    if(!retryImageLoad || retryCount >= retryLimit ||timeoutRef.current) return;
     const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
     setRetryCount(count => count+1);
-    setTimeout(()=>{
+    timeoutRef.current = setTimeout(()=>{
+      timeoutRef.current = null;
       setImgSrc(`${image}?v=${Date.now()}`);
     }, randomDelay);
 
