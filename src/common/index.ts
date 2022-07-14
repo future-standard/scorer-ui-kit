@@ -23,3 +23,13 @@ export const resetButtonStyles = css`
   appearance: none;
   user-select: none;
 `;
+
+// https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete
+export const removeAutoFillStyle = css`
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active{
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+`;

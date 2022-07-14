@@ -7,6 +7,7 @@ import StatusIcon from '../../Icons/StatusIcon';
 import UserMenu from '../molecules/UserMenu';
 import { ITopBar } from '../index';
 import NotificationsHistory from './NotificationsHistory';
+import { removeAutoFillStyle } from '../../common';
 
 const Container = styled.div`
   z-index: 9;
@@ -47,6 +48,7 @@ const IconWrapper = styled.div`
 `;
 
 const SearchInput = styled.input`
+  ${removeAutoFillStyle};
   font-family: ${({ theme }) => theme.fontFamily.data};
   flex: 1;
   height: 35px;

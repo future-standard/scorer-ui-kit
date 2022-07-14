@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
-import { resetButtonStyles } from '../../common';
+import { removeAutoFillStyle, resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
@@ -56,6 +56,8 @@ const CrossButton = styled.button`
 `;
 
 const StyledInput = styled.input<{ color: string }>`
+  ${removeAutoFillStyle};
+
   ${({ theme: {typography, colors}, theme, color }) => css`
     font-family: ${theme.fontFamily.ui};
     ${typography.filters.searchInput.value};

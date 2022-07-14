@@ -3,10 +3,11 @@ import styled, { css } from 'styled-components';
 
 import Label from '../atoms/Label';
 import { TypeFieldState } from '..';
-
-
+import { removeAutoFillStyle } from '../../common';
 
 const StyledInput = styled.input<{ fieldState : TypeFieldState, padRight?: number }>`
+  ${removeAutoFillStyle};
+
   ${({theme, fieldState}) => css`
     min-height: 30px;
     font-family: ${theme.fontFamily.data};
