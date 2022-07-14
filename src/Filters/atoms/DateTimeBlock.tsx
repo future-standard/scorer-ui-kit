@@ -39,6 +39,7 @@ const IconWrap = styled.div`
 const Input = styled.input<{ readOnly? : boolean }>`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.data};
+    background-color: ${theme.styles.form.input.default.normal.backgroundColor};
   `}
 
   ${({theme})=> theme.typography.filters.value};
