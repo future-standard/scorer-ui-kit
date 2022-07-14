@@ -116,25 +116,36 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
 
   useEffect(()=>{
     if(imgRef.current && imgRef.current.complete && imgSrc !== ''){
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
       setShowImage(true);
     }
   },[imgSrc]);
+
+  const retryTimeout = useCallback(()=>{
+    timeoutRef.current = null;
+    setImgSrc(`${image}?v=${Date.now()}`);
+  },[image]);
 
   const retryImage = useCallback(()=>{
     setShowImage(false);
     if(!retryImageLoad || retryCount >= retryLimit ||timeoutRef.current) return;
     const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
     setRetryCount(count => count+1);
-    timeoutRef.current = setTimeout(()=>{
-      timeoutRef.current = null;
-      setImgSrc(`${image}?v=${Date.now()}`);
-    }, randomDelay);
+    timeoutRef.current = setTimeout(retryTimeout, randomDelay);
+  },[retryCount, retryImageLoad, retryLimit, retryTimeout]);
 
-  },[image, retryCount, retryImageLoad, retryLimit]);
+
+
+  const onLoad = useCallback(()=>{
+    timeoutRef.current && clearTimeout(timeoutRef.current);
+    timeoutRef.current = null;
+    setShowImage(true);
+  },[]);
 
   return (
     <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={handleModal}>
-      <Image ref={imgRef} src={imgSrc} onError={retryImage} onLoad={()=>setShowImage(true)} showImage={showImage} />
+      <Image ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} showImage={showImage} />
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
           <Icon size={12} icon='Play' color='inverse' />
