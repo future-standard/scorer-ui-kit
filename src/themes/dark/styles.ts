@@ -129,6 +129,11 @@ export const styles = {
     "form": {
         "checkbox": {
             "unchecked": {
+                "disabled": {
+                  "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
+                  "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)",
+                  "border": "hsla(208, 24.6%, 77.6%, 1.000) 2px solid"
+                },
                 "default": {
                     "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)",
                     "border": "hsla(208, 24.6%, 77.6%, 1.000) 2px solid"
@@ -138,7 +143,11 @@ export const styles = {
                 "default": {
                     "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
                     "backgroundColor": "hsla(207, 95.3%, 66.5%, 1.000)"
-                }
+                },
+                "disabled": {
+                  "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
+                  "backgroundColor": "hsla(207, 4.8%, 37.1%, 1.000)",
+                },
             }
         },
         "button": {
