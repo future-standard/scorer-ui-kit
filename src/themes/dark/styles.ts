@@ -170,7 +170,15 @@ export const styles = {
                 "active": {
                     "backgroundColor": "hsla(205, 56.9%, 28.2%, 1.000)"
                 }
-            }
+            },
+            "danger": {
+              "disabled": {
+                  "backgroundColor": "hsla(0,54%,38%, 1.000)"
+              },
+              "divider": {
+                  "backgroundColor": "hsla(204, 18.2%, 78.4%, 0.302)"
+              }
+          },
         },
         "input": {
             "default": {
@@ -257,16 +265,6 @@ export const styles = {
                 "base": {
                     "borderColor": "hsla(0, 2%, 29.6%, 1.000)",
                     "border": "hsla(0, 2%, 29.6%, 1.000) 3px solid"
-                }
-            },
-            "danger": {
-                "base": {
-                    "borderColor": "hsla(0, 78.8%, 70.4%, 1.000)",
-                    "border": "hsla(0, 78.8%, 70.4%, 1.000) 3px solid"
-                },
-                "top": {
-                    "borderColor": "hsla(0, 91.5%, 72.2%, 1.000)",
-                    "border": "hsla(0, 91.5%, 72.2%, 1.000) 3px solid"
                 }
             },
             "simple": {
