@@ -19,19 +19,17 @@ const ButtonsWrapper = styled.div`
 
 const LeftButtons = styled.div`
   button {
-    margin-right: 10px;
     margin: 0 10px 10px 0;
   }
 `;
 
 const RightButtons = styled.div`
   flex-shrink: 0;
-  align-self: flex-end;
 `;
 
 const SelectedResults = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
-  margin-top: 40px;
+  margin-top: 29px;
   min-height: 19px;
   color: hsl(207, 5%, 57%);
   font-size: 12px;
