@@ -287,7 +287,7 @@ const MultiActionsExample: React.FC<IMultiActionsExample> = ({ language }) => {
             title={language === 'english' ? 'Actions' : 'アクション'}
             finishTextButton={language === 'english' ? 'Finish' : '為しおわる'}
             finishCallback={handleActionsFinish}
-            selectedTemplate={language === 'english' ? 'Finish' : '[SELECTED] 〜 [TOTAL]件'}
+            selectedTemplate={language === 'english' ? 'Selected [SELECTED] of [TOTAL] Results' : '[SELECTED] 〜 [TOTAL]件'}
             totalAvailable={rows.length}
             totalSelected={checkedRowIDs(rows).length}
             actionButtons={[
