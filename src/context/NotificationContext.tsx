@@ -1,10 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import Notification, { INotificationProps } from '../Alerts/atom/Notification';
-
-
-const uniqueID = (): string => {
-  return `${Date.now()}`;
-};
+import { uniqueID } from '../helpers';
 
 type NotificationContextType = {
   sendNotification: (newNotification: INotificationProps) => void
