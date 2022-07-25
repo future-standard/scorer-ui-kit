@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "82a97af8c7b1ca9625a011c71ab50a6e",
+    "revision": "9e963ad1b1ebe8927f688cc45543551e",
     "url": "/scorer-ui-kit/index.html"
   },
   {
-    "revision": "2a37d76ea099011be52a",
-    "url": "/scorer-ui-kit/static/js/2.f8e5e9f6.chunk.js"
+    "revision": "7e40c9a1b3c87b60140e",
+    "url": "/scorer-ui-kit/static/js/2.54df4bbb.chunk.js"
   },
   {
     "revision": "9b318b6fb13190fe82c0677e9264b3c7",
-    "url": "/scorer-ui-kit/static/js/2.f8e5e9f6.chunk.js.LICENSE.txt"
+    "url": "/scorer-ui-kit/static/js/2.54df4bbb.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "bc120e0757ffc0dd6b5f",
-    "url": "/scorer-ui-kit/static/js/main.be0a6a69.chunk.js"
+    "revision": "7fdccca0d377c9119e00",
+    "url": "/scorer-ui-kit/static/js/main.7850d226.chunk.js"
   },
   {
-    "revision": "283cd069f47daaf60567",
-    "url": "/scorer-ui-kit/static/js/runtime-main.1ec9fcf8.js"
+    "revision": "6f485bd5aab888f8ce90",
+    "url": "/scorer-ui-kit/static/js/runtime-main.924e406f.js"
   },
   {
     "revision": "2d15decc87393ec398f00dc3d7a2163d",
