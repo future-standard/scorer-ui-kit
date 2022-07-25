@@ -116,13 +116,14 @@ const MainMessage = styled.div`
 export type INotificationProps = {
   type: AlertType;
   message: string;
+  icon?: string;
   actionTextButton?: string;
   onTextButtonClick?: () => void;
   closeCallback?: () => void;
   isPinned?: boolean;
 }
 
-const Notification : React.FC<INotificationProps> = ({type ='info', message, isPinned = false, actionTextButton, closeCallback, onTextButtonClick}) => {
+const Notification : React.FC<INotificationProps> = ({type ='info', message, icon = '', isPinned = false, actionTextButton, closeCallback, onTextButtonClick}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
   const [textClicked, setTextClicked] = useState(false);
@@ -175,7 +176,7 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
   return( (message && !dismiss)
   ? ReactDom.createPortal(
     <Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>
-      <Icon icon={IconNames[type]} color='inverse' />
+      <Icon icon={!icon ? IconNames[type] : icon} color='inverse' />
       <MainMessage>{message}</MainMessage>
       {actionTextButton
         ? <TextButton onClick={() => handleTextClick()}>{actionTextButton} </TextButton>
