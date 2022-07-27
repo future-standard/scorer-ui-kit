@@ -62,17 +62,18 @@ const Line: React.FC<{}> = () => {
   const fetchDirectionLine = useCallback(async () => {
 
     const state: IPointSet[] = [{
-      name: 'UP',
-      points: [
-          {
-            x: 343,
-            y: 281
-          },
-          {
-            x: 898,
-            y: 389
-          }
+        name: 'UP',
+        points: [
+            {
+              x: 343,
+              y: 281
+            },
+            {
+              x: 898,
+              y: 389
+            }
         ],
+        showSmallDirectionMark: true,
         readOnly: false,
         styling: 'primary'
       },
@@ -87,10 +88,12 @@ const Line: React.FC<{}> = () => {
             x: 256,
             y: 576
           }
-          ],
-          readOnly: false,
-          styling: 'primary'
-        }
+        ],
+        showPointHandle: false,
+        showMoveHandle: false,
+        readOnly: false,
+        styling: 'primary'
+      }
     ];
 
     dispatch({

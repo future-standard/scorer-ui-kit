@@ -41,6 +41,10 @@ const NotificationProvider: React.FC = ({ children }) => {
       type: newNotification.type,
     };
 
+    if (newNotification.icon) {
+      validNotification.icon = newNotification.icon;
+    }
+
     if (newNotification.actionTextButton) {
       validNotification.actionTextButton = newNotification.actionTextButton;
     }

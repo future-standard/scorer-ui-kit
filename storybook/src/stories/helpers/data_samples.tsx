@@ -443,6 +443,10 @@ const resultTextTemplateJp = '表示結果 ([TOTAL_RESULTS]):';
 const clearEng = 'CLEAR ALL';
 const clearJp = 'すべてクリア';
 
+const emptyResultsEnglish = 'No tags available.';
+const emptyResultsJapanese = 'タグは使用できません。';
+
+
 export {
   tableData,
   tableDataJp,
@@ -464,8 +468,10 @@ export {
   showLessJp,
   resultTextTemplateEng,
   resultTextTemplateJp,
+  emptyResultsEnglish,
+  emptyResultsJapanese,
   clearEng,
-  clearJp,
+  clearJp
 };
 
 export type { ITableSampleData };
