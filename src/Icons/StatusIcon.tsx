@@ -28,13 +28,12 @@ const StatusCounter = styled.div<{ color?: IStatusDot }>`
 `;
 
 const StatusDot = styled.div<{ color?: IStatusDot }>`
-  width: 10px;
-  height: 10px;
-  border: solid 2px hsl(0, 0%, 100%);
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   position: absolute;
-  top: -6px;
-  right: -9px;
+  top: -4px;
+  right: -7px;
   ${({theme:{animation}}) => css`
     transition: background-color ${animation.speed.slow} ${animation.easing.primary.easeInOut};
   `}

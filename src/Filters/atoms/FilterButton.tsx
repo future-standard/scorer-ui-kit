@@ -48,7 +48,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>
       ${IconWrapper} {
         [stroke]{
           transition: stroke ${animation.speed.faster} ${animation.easing.primary.inOut};
-          stroke: ${theme.colors.icons.inverse};
+          stroke: ${theme.colors.pureBase};
         }
       }
     }

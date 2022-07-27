@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 import { TypeFieldState } from '..';
+import { removeAutoFillStyle } from '../../common';
 
 const ActionContainer = styled.div`
   position: absolute;
@@ -53,6 +54,8 @@ const FeedbackIcon = styled.div`
 `;
 
 const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
+  ${removeAutoFillStyle};
+
   ${({theme, fieldState}) => css`
     min-height: ${theme.dimensions.form.input.height};
     font-family: ${theme.fontFamily.data};

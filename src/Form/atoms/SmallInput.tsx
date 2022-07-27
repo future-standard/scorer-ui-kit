@@ -3,10 +3,11 @@ import styled, { css } from 'styled-components';
 
 import Label from '../atoms/Label';
 import { TypeFieldState } from '..';
-
-
+import { removeAutoFillStyle } from '../../common';
 
 const StyledInput = styled.input<{ fieldState : TypeFieldState, padRight?: number }>`
+  ${removeAutoFillStyle};
+
   ${({theme, fieldState}) => css`
     min-height: 30px;
     font-family: ${theme.fontFamily.data};
@@ -70,7 +71,7 @@ const Container = styled.div<{ fieldState: string }>`
   position: relative;
 
   ${StyledInput}{
-    ${({theme, fieldState}) => theme.styles.form.input[fieldState].compact};
+    ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal};
 
     &:focus {}
 
@@ -81,7 +82,9 @@ const Container = styled.div<{ fieldState: string }>`
   }
 
   &:focus-within ${InputContainer} {
-    border-color: ${({theme, fieldState}) => theme.styles.form.input[fieldState].focused.borderColor};
+    ${({theme, fieldState}) => fieldState !== 'disabled' && css`
+      border-color:${theme.styles.form.input[fieldState].focused.borderColor};
+    `
   }
 
 `;

@@ -129,6 +129,11 @@ export const styles = {
     "form": {
         "checkbox": {
             "unchecked": {
+                "disabled": {
+                  "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
+                  "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)",
+                  "border": "hsla(208, 24.6%, 77.6%, 1.000) 2px solid"
+                },
                 "default": {
                     "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)",
                     "border": "hsla(208, 24.6%, 77.6%, 1.000) 2px solid"
@@ -138,7 +143,11 @@ export const styles = {
                 "default": {
                     "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
                     "backgroundColor": "hsla(207, 95.3%, 66.5%, 1.000)"
-                }
+                },
+                "disabled": {
+                  "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
+                  "backgroundColor": "hsla(207, 4.8%, 37.1%, 1.000)",
+                },
             }
         },
         "button": {
@@ -161,7 +170,15 @@ export const styles = {
                 "active": {
                     "backgroundColor": "hsla(205, 56.9%, 28.2%, 1.000)"
                 }
-            }
+            },
+            "danger": {
+              "disabled": {
+                  "backgroundColor": "hsla(0,54%,38%, 1.000)"
+              },
+              "divider": {
+                  "backgroundColor": "hsla(204, 18.2%, 78.4%, 0.302)"
+              }
+          },
         },
         "input": {
             "default": {
@@ -248,16 +265,6 @@ export const styles = {
                 "base": {
                     "borderColor": "hsla(0, 2%, 29.6%, 1.000)",
                     "border": "hsla(0, 2%, 29.6%, 1.000) 3px solid"
-                }
-            },
-            "danger": {
-                "base": {
-                    "borderColor": "hsla(0, 78.8%, 70.4%, 1.000)",
-                    "border": "hsla(0, 78.8%, 70.4%, 1.000) 3px solid"
-                },
-                "top": {
-                    "borderColor": "hsla(0, 91.5%, 72.2%, 1.000)",
-                    "border": "hsla(0, 91.5%, 72.2%, 1.000) 3px solid"
                 }
             },
             "simple": {

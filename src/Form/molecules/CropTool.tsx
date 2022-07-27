@@ -52,7 +52,8 @@ const TextGroup = styled.div`
   align-items: center;
   font-size: 20px;
   font-weight: 500;
-  color: hsl(210, 6%, 47%);
+  color: ${({theme}) => theme.colors.icons.mono};
+
   ${IconWrapper} {
     display: flex;
     align-items: center;
@@ -316,7 +317,7 @@ const CropTool: React.FC<ICrop> = ({
         <InnerContainer>
           <ToolHeader>
             <TextGroup>
-              <Icon icon='Crop' size={20} color='dimmed' />
+              <Icon icon='Crop' size={20} color='mono' />
               {title}
             </TextGroup>
             <ButtonsGroup>
