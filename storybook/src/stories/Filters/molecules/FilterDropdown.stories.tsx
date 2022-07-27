@@ -13,6 +13,8 @@ import {
   searchTemplateResultJapanese,
   loadingTagsEnglish,
   genericLoadingJp,
+  emptyResultsEnglish,
+  emptyResultsJapanese,
 } from '../../helpers/data_samples';
 
 export default {
@@ -255,6 +257,30 @@ export const _FilterDropdown = () => {
         loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
         searchPlaceholder={language === 'english' ? 'Years...' : '2020...'}
         searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+        hasOptionsFilter
+      />
+    </Wrapper>
+    <Wrapper key='eje-5'>
+      <PageHeader title='Empty Example'
+        introductionText="Empty list is been sent."
+      />
+      <FilterDropdown
+        {...{
+          buttonIcon,
+          disabled,
+          isLoading,
+          loadingText,
+          maxDisplayedItems,
+        }}
+        buttonText={language === 'english' ? 'Tags' : 'タグー'}
+        selected={numberSelected}
+        list={[]}
+        onSelect={handleNumberListSelect}
+        optionType='checkbox'
+        loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
+        searchPlaceholder={language === 'english' ? 'Filter tags…' : 'フィルタータグ...'}
+        searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+        emptyResultText={language === 'english' ? emptyResultsEnglish : emptyResultsJapanese}
         hasOptionsFilter
       />
     </Wrapper>
