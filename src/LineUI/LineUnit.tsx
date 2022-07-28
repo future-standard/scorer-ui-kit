@@ -93,19 +93,23 @@ interface ILineUnitProps {
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
+  showSmallDirectionMark?: boolean;
+  overrideShowMoveHandle?: boolean;
 }
 
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling='primary', moveEndCB=()=>{}} = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling = 'primary', moveEndCB = () => { }, showSmallDirectionMark = false, overrideShowMoveHandle = true } = props;
   const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
 
-  const a = x1 - x2;
-  const b = y1 - y2;
-  const distance = Math.sqrt( a*a + b*b );
+  // const a = x1 - x2;
+  // const b = y1 - y2;
+  // const distance = Math.sqrt( a*a + b*b );
   //this distance 60 doesn't work now...
-  const hideGrabHandle = showMoveHandle === false || (showMoveHandle !== true && distance < 60);
+  // const hideGrabHandle = showMoveHandle === false || (showMoveHandle !== true && distance < 60);
+  
+  const hideGrabHandle = !showMoveHandle || !overrideShowMoveHandle;
 
 
   /** --- Toucher Events Section --- */
@@ -170,11 +174,17 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           <DMCircle r={12} cx={6} cy={7} />
           <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
         </g>
-        <g transform={`translate(0,30) rotate(${dmCoordinate.labelRotate})`}>
-          <LabelText styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
-            {label}
-          </LabelText>
-        </g>
+        {showSmallDirectionMark &&
+          <g transform='translate(5,25) rotate(-180) scale(0.8)'>
+            <DMCircle r={8} cx={3.5} cy={4.5} />
+            <Icon color='inverse' icon='Up' size={7} weight='heavy' forSvgUsage />
+          </g>}
+        {label &&
+          <g transform={`translate(0,${showSmallDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
+            <LabelText textAnchor='middle' dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
+              {label}
+            </LabelText>
+          </g>}
       </g>
     );
   };

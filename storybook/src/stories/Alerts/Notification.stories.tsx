@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { text, boolean, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
+import { IconSVGs } from '@future-standard/icons';
 
 import {
   useNotification,
@@ -49,12 +50,25 @@ const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
   )
 }
 
+const generateIconList = () => {
+  let iconList : {[key: string]: string}= {};
+
+
+  for(const key in IconSVGs){
+    iconList[key] = key;
+  }
+
+  return iconList;
+};
+
   // Provider should be at main Index level, it's here just for the story example
 export const _Notification = () => {
 
   const isPin = boolean('Is Pinned', false);
   const type = select("Type", { Error: 'error', Warning: 'warning', Info: 'info', Success: 'success', Neutral: 'neutral' }, 'info');
   const msg = text('Message', 'This is a message example');
+  const iconList = {'': '', ...generateIconList()};
+  const icon = select("Icon", iconList, Object.keys(iconList)[0]);
   const actionText = text('Action Text Button', '');
   const onTextBtnClick = action('Action was clicked');
   const closeCall = action('The message was closed by the user');
@@ -70,6 +84,7 @@ export const _Notification = () => {
         <NotificationExample
           type={type}
           message={msg}
+          icon={icon}
           closeCallback={closeCall}
           actionTextButton={actionText}
           onTextButtonClick={handleActionTextCall}
