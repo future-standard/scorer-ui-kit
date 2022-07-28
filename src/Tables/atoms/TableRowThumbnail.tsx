@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useMediaModal } from '../../hooks/useMediaModal';
 import { IMediaType } from '../..';
@@ -6,7 +6,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 
 type VideoAspects = '4:3' | '16:9';
 
-const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string, isImageValid: boolean, hasPreview: boolean }>`
+const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string}>`
   position: relative;
   height: inherit;
   background: grey;
@@ -33,11 +33,11 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
   `}
 
   &:hover {
-    ${({ mediaUrl, hasPreview }) => mediaUrl && hasPreview && css`
+    ${({ mediaUrl }) => mediaUrl && css`
       cursor: pointer;
     `};
 
-    ${({ theme, hoverZoom, isImageValid }) => theme && hoverZoom && isImageValid && css`
+    ${({ theme, hoverZoom }) => theme && hoverZoom && css`
       transform: scale(1.5);
       opacity: 1;
       transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
@@ -45,17 +45,16 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
   }
 
 `;
-const Image = styled.div<{ image?: string }>`
+const Image = styled.img<{ showImage: boolean }>`
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
-  background-image: url(${p => p.image});
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: ${p => p.image ? 'block' : 'none'};
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: ${({showImage}) => showImage===true ? 'block': 'none'};
 `;
 
 const PlayableDrop = styled.div`
@@ -74,6 +73,9 @@ const PlayableDrop = styled.div`
     display: flex;
     svg {
       padding-left: 2px;
+      path {
+        stroke: hsla(0, 0%, 100%, 1.000);
+      }
     }
   };
 `;
@@ -84,65 +86,66 @@ interface IProps {
   aspect?: VideoAspects
   mediaUrl?: string
   mediaType?: IMediaType
+  retryImageLoad?: boolean
+  retryLimit?: number;
 }
 
 // Image
 // No Image Placeholder
 
-const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image, mediaUrl, mediaType }) => {
-
-  const [hasPreview, setHasPreview] = useState(false);
-  const [isImageValid, setIsImageValid] = useState(false);
-  const { createMediaModal, isMediaUrlValid } = useMediaModal();
+const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', mediaUrl, mediaType, retryImageLoad= false, retryLimit=5}) => {
+  const [showImage, setShowImage] = useState(true);
+  const [imgSrc, setImgSrc] = useState(image);
+  const { createMediaModal } = useMediaModal();
+  const [retryCount, setRetryCount] = useState(0);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const timeoutRef = useRef<(ReturnType<typeof setTimeout>)|null>(null);
 
   const handleModal = useCallback(async () => {
 
-    if (mediaUrl && mediaType && hasPreview) {
+    if ( mediaUrl && mediaType ) {
       createMediaModal({ src: mediaUrl, mediaType });
     }
+  }, [createMediaModal, mediaType, mediaUrl]);
 
-  }, [createMediaModal, mediaType, mediaUrl, hasPreview]);
+  useEffect(()=>{
+    setShowImage(false);
+    setRetryCount(0);
+    setImgSrc(image);
+  },[image]);
 
-  const verifyPreview = useCallback(async (currentMediaUrl: string, currentMediaType: IMediaType) => {
-    const isValidUrl: boolean = await isMediaUrlValid(currentMediaUrl, currentMediaType);
-
-    setHasPreview((prev) => {
-
-      if (prev === isValidUrl) {
-        return prev;
-      }
-      return isValidUrl;
-    });
-
-  }, [isMediaUrlValid]);
-
-  useEffect(() => {
-    if ( mediaUrl && mediaType) {
-      verifyPreview(mediaUrl, mediaType);
+  useEffect(()=>{
+    if(imgRef.current && imgRef.current.complete && imgSrc !== ''){
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+      setShowImage(true);
     }
-  }, [mediaUrl, mediaType, verifyPreview]);
+  },[imgSrc]);
 
-  const validateImage = useCallback(async (currentImg: string) => {
+  const retryTimeout = useCallback(()=>{
+    timeoutRef.current = null;
+    setImgSrc(`${image}?v=${Date.now()}`);
+  },[image]);
 
-    const isValidUrl: boolean = await isMediaUrlValid(currentImg, 'img');
-    setIsImageValid((prev) => {
-      if (prev === isValidUrl) {
-        return prev;
-      }
-      return isValidUrl;
-    });
+  const retryImage = useCallback(()=>{
+    setShowImage(false);
+    if(!retryImageLoad || retryCount >= retryLimit ||timeoutRef.current) return;
+    const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
+    setRetryCount(count => count+1);
+    timeoutRef.current = setTimeout(retryTimeout, randomDelay);
+  },[retryCount, retryImageLoad, retryLimit, retryTimeout]);
 
-  }, [isMediaUrlValid]);
 
-  useEffect(() => {
-    if (image) {
-      validateImage(image);
-    }
-  }, [image, validateImage]);
+
+  const onLoad = useCallback(()=>{
+    timeoutRef.current && clearTimeout(timeoutRef.current);
+    timeoutRef.current = null;
+    setShowImage(true);
+  },[]);
 
   return (
-    <Container {...{ hoverZoom, mediaUrl, isImageValid, hasPreview }} aspect='16:9' onClick={handleModal}>
-      <Image {...{ image }} />
+    <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={handleModal}>
+      <Image ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} showImage={showImage} />
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
           <Icon size={12} icon='Play' color='inverse' />

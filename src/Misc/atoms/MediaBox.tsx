@@ -1,11 +1,13 @@
 import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
-import { IMediaType } from '../../index';
+import { Icon, IMediaType } from '../../index';
 
 const Container = styled.div`
   position: relative;
   line-height: 0;
+  min-height: 300px;
+  min-width: 300px;
 `;
 
 const mediaStyle = `
@@ -62,19 +64,27 @@ export interface IMediaModal {
   alt?: string
   videoOptions?: VideoHTMLAttributes<HTMLVideoElement>
   hasModalLimits?: boolean
-  onError?: () => void
+  onError?: (e: Event) => void
   onMediaLoad?: () => void
+  retryLoading?: boolean;
+  retryLimit?: number;
 }
 
 const MediaBox: React.FC<IMediaModal> = ({
-  src,
+  src: incomingSrc,
   alt,
   videoOptions = {},
   mediaType,
   hasModalLimits,
-  onError = () => { },
+  retryLoading= false,
+  retryLimit=5,
+  onError: onErrorCallback = () => { },
   onMediaLoad = () => { },
 }) => {
+  const [retryCount, setRetryCount] = useState(0);
+  const [src, setSrc] = useState(incomingSrc);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const {
     loop = false,
@@ -84,7 +94,23 @@ const MediaBox: React.FC<IMediaModal> = ({
     ...videoValues
   } = videoOptions;
 
-  const [loaded, setLoaded] = useState(false);
+
+
+  const onError = useCallback((e)=>{
+    if(!retryLoading || retryCount >= retryLimit) {
+      onErrorCallback(e);
+      setLoaded(true);
+      setLoadFailed(true);
+    } else {
+      const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
+      setRetryCount(count => count+1);
+      setTimeout(()=>{
+        setSrc(`${incomingSrc}?v=${Date.now()}`);
+      }, randomDelay);
+    }
+
+  },[incomingSrc, onErrorCallback, retryCount, retryLoading, retryLimit]);
+
 
   const handleLoad = useCallback(() => {
     onMediaLoad();
@@ -97,16 +123,17 @@ const MediaBox: React.FC<IMediaModal> = ({
         ? <Video
             {...{ src, loop, autoPlay, controls, muted, onError, hasModalLimits }}
             {...videoValues}
-            isLoaded={loaded}
+            isLoaded={loaded && !loadFailed}
             preload='metadata'
             onCanPlayThrough={handleLoad}
           />
         : <StyledImage
             {...{ src, alt, onError, hasModalLimits }}
             onLoad={handleLoad}
-            isLoaded={loaded}
+            isLoaded={loaded && !loadFailed}
           />}
       {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
+      {loadFailed && <LoadingOverlay><Icon icon='MissingImage' size={48} /></LoadingOverlay>}
     </Container>
   );
 };
