@@ -32,8 +32,8 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   align-items: center;
   justify-content: space-between;
   padding: 0 14px;
-  width: 900px; 
-  position: fixed;  
+  width: 900px;
+  position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -70,7 +70,7 @@ const IconButton = styled.div<{selected?: boolean}>`
   &:focus {
     outline: none;
   }
- 
+
   &:hover {
     opacity: .8;
   }
@@ -114,15 +114,18 @@ const MainMessage = styled.div`
 `;
 
 export type INotificationProps = {
-  type: AlertType;
-  message: string;
-  actionTextButton?: string;
-  onTextButtonClick?: () => void;
-  closeCallback?: () => void;
-  isPinned?: boolean;
+  id?: string
+  type: AlertType
+  message: string
+  actionTextButton?: string
+  isPinned?: boolean
+  closeNow?: boolean
+  icon?: string
+  onTextButtonClick?: () => void
+  closeCallback?: () => void
 }
 
-const Notification : React.FC<INotificationProps> = ({type ='info', message, isPinned = false, actionTextButton, closeCallback, onTextButtonClick}) => {
+const Notification : React.FC<INotificationProps> = ({id, type ='info', message, icon = '', isPinned = false, actionTextButton, closeNow = false, closeCallback, onTextButtonClick}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
   const [textClicked, setTextClicked] = useState(false);
@@ -131,7 +134,7 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
     setDismiss(false);
     setSlideUp(false);
     setTextClicked(false);
-  },[message]);
+  },[id]);
 
   const handleDismiss = useCallback(() => {
     setSlideUp(true);
@@ -143,7 +146,7 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
   },[handleDismiss]);
 
   const animationEnded = useCallback(() => {
-    // Will only trigger if the animation triggered was clossing one
+    // Will only trigger if the animation triggered was closing one
     if(slideUp){
       setDismiss(true);
 
@@ -170,16 +173,22 @@ const Notification : React.FC<INotificationProps> = ({type ='info', message, isP
     return () => {
       mounted = false;
     };
-  },[isPinned, message, handleDismiss]);
-  
+  },[isPinned, handleDismiss, id]);
+
+  useEffect(() => {
+    if(closeNow) {
+      handleDismiss();
+    }
+  },[closeNow, handleDismiss]);
+
   return( (message && !dismiss)
   ? ReactDom.createPortal(
     <Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>
-      <Icon icon={IconNames[type]} color='inverse' />
+      <Icon icon={!icon ? IconNames[type] : icon} color='inverse' />
       <MainMessage>{message}</MainMessage>
       {actionTextButton
         ? <TextButton onClick={() => handleTextClick()}>{actionTextButton} </TextButton>
-        : 
+        :
         <IconButton onClick={() => handleDismiss()}>
           <Icon icon='CloseCompact' color='inverse' />
         </IconButton>}

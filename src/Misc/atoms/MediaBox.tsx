@@ -2,10 +2,13 @@ import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import { IMediaType } from '../../index';
+import Icon from '../../Icons/Icon';
 
-export const MediaBoxWrapper = styled.div`
+export const MediaBoxWrapper = styled.div<{minWidth?: string, minHeight?: string}>`
   position: relative;
   line-height: 0;
+  ${({minHeight}) => minHeight && `min-height: ${minHeight}`};
+  ${({minWidth}) => minWidth && `min-width: ${minWidth}`};
 `;
 
 const mediaStyle = `
@@ -62,19 +65,31 @@ export interface IMediaModal {
   alt?: string
   videoOptions?: VideoHTMLAttributes<HTMLVideoElement>
   hasModalLimits?: boolean
-  onError?: () => void
+  retryLoading?: boolean
+  retryLimit?: number
+  minWidth?: string
+  minHeight?: string
+  onError?: (e: Event) => void
   onMediaLoad?: () => void
 }
 
 const MediaBox: React.FC<IMediaModal> = ({
-  src,
+  src: incomingSrc,
   alt,
   videoOptions = {},
   mediaType,
   hasModalLimits,
-  onError = () => { },
+  retryLoading= false,
+  retryLimit=5,
+  minWidth,
+  minHeight,
+  onError: onErrorCallback = () => { },
   onMediaLoad = () => { },
 }) => {
+  const [retryCount, setRetryCount] = useState(0);
+  const [src, setSrc] = useState(incomingSrc);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const {
     loop = false,
@@ -84,7 +99,20 @@ const MediaBox: React.FC<IMediaModal> = ({
     ...videoValues
   } = videoOptions;
 
-  const [loaded, setLoaded] = useState(false);
+  const onError = useCallback((e)=>{
+    if(!retryLoading || retryCount >= retryLimit) {
+      onErrorCallback(e);
+      setLoaded(true);
+      setLoadFailed(true);
+    } else {
+      const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
+      setRetryCount(count => count+1);
+      setTimeout(()=>{
+        setSrc(`${incomingSrc}?v=${Date.now()}`);
+      }, randomDelay);
+    }
+
+  },[incomingSrc, onErrorCallback, retryCount, retryLoading, retryLimit]);
 
   const handleLoad = useCallback(() => {
     onMediaLoad();
@@ -92,21 +120,22 @@ const MediaBox: React.FC<IMediaModal> = ({
   }, [onMediaLoad, setLoaded]);
 
   return (
-    <MediaBoxWrapper>
+    <MediaBoxWrapper {...{minWidth, minHeight}}>
       {mediaType === 'video'
         ? <Video
             {...{ src, loop, autoPlay, controls, muted, onError, hasModalLimits }}
             {...videoValues}
-            isLoaded={loaded}
+            isLoaded={loaded && !loadFailed}
             preload='metadata'
             onCanPlayThrough={handleLoad}
           />
         : <StyledImage
             {...{ src, alt, onError, hasModalLimits }}
             onLoad={handleLoad}
-            isLoaded={loaded}
+            isLoaded={loaded && !loadFailed}
           />}
       {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
+      {loadFailed && <LoadingOverlay><Icon icon='MissingImage' size={48} /></LoadingOverlay>}
     </MediaBoxWrapper>
   );
 };

@@ -32,7 +32,7 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   position: absolute;
   right: 0;
   top: -30px;
-  color: ${({ theme }) => theme.colors.icons['dimmed']};
+  color: ${({theme}) => theme.colors.icons.mono};
   font-size: 14px;
   font-weight: 500;
 
@@ -122,7 +122,7 @@ const Modal: React.FC<IModalProps> = ({
             ?
               <CloseButton onClick={() => dismiss()}>
                 {closeText ? closeText : 'CLOSE'}
-                <CloseIcon icon='CloseCompact' size={15} color='dimmed' weight='regular' />
+                <CloseIcon icon='CloseCompact' size={15} color='mono' weight='regular' />
               </CloseButton>
             : null}
           {customComponent}
