@@ -59,9 +59,10 @@ export interface IAlert {
 
 interface Props {
   type?: AlertType
-  message?: string;
+  message?: string
+  hideCloseButton?: boolean
 }
-const AlertBar: React.FC<Props> = ({type='info', message}) => {
+const AlertBar: React.FC<Props> = ({type='info', message, hideCloseButton= false}) => {
   const [dismiss, setDismiss] = useState(false);
 
   useEffect(()=>{
@@ -74,7 +75,7 @@ const AlertBar: React.FC<Props> = ({type='info', message}) => {
       <Icon icon={IconNames[type]} color='inverse' />
       <MessageBox>{message}</MessageBox>
 
-      <IconButton onClick={() => setDismiss(true)}><Icon icon='CloseCompact' color='inverse' /></IconButton>
+      {!hideCloseButton && <IconButton onClick={() => setDismiss(true)}><Icon icon='CloseCompact' color='inverse' /></IconButton>}
     </AlertWrapper>
     :
     null
