@@ -40,6 +40,8 @@ const rowMaker = (rowData: ITableSampleData[]): ITypeTableData => {
       id,
       header: {
         image: photo,
+        mediaUrl: photo,
+        mediaType: 'img',
         icon: 'Location',
         status,
       },
