@@ -424,6 +424,77 @@ const columnConfigSampleJp : ITableColumnConfig[] = [
   }
 ];
 
+
+const columnActionsSample : ITableColumnConfig[] = [
+  {
+    columnId: 'created',
+    groupTitle: 'Device',
+    header: 'Created',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'left',
+  },
+  {
+    columnId: 'run',
+    groupTitle: 'Time',
+    header: 'Total Run Time',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'left',
+  },
+  {
+    columnId: 'usage',
+    header: 'Usage',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'right',
+    showUnit: true
+  },
+  {
+    columnId: 'actions',
+    header: 'Actions',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'right'
+  },
+];
+
+
+
+const columnActionsSampleJp : ITableColumnConfig[] = [
+  {
+    columnId: 'created',
+    groupTitle: 'デバイス',
+    header: '作成時期',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'left',
+  },
+  {
+    columnId: 'run',
+    groupTitle: '時間',
+    header: 'ランタイム',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'left',
+  },
+  {
+    columnId: 'usage',
+    header: '使用',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'right',
+    showUnit: true
+  },
+  {
+    columnId: 'アクション',
+    header: 'Actions',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'right'
+  },
+];
+
 const searchTemplateResultEnglish = 'Showing [VISIBLE] of [TOTAL]';
 const searchTemplateResultJapanese = '[VISIBLE] 〜 [TOTAL]件';
 
@@ -443,6 +514,10 @@ const resultTextTemplateJp = '表示結果 ([TOTAL_RESULTS]):';
 const clearEng = 'CLEAR ALL';
 const clearJp = 'すべてクリア';
 
+const deleteFilesTitleEn = 'Delete selected files';
+const deleteFilesTitleJP = '選択したファイルを削除しますか？';
+const deleteMessageEn = 'Are you sure you wish to delete these files? Once deleted they cannot be recovered.';
+const deleteMessageJp = 'これらのファイルを本当に削除してよいですか？一度削除すると元に戻せません';
 const emptyResultsEnglish = 'No tags available.';
 const emptyResultsJapanese = 'タグは使用できません。';
 
@@ -452,6 +527,8 @@ export {
   tableDataJp,
   columnConfigSample,
   columnConfigSampleJp,
+  columnActionsSample,
+  columnActionsSampleJp,
   statusValuesEng,
   statusValuesJp,
   costRangeEng,
@@ -468,6 +545,10 @@ export {
   showLessJp,
   resultTextTemplateEng,
   resultTextTemplateJp,
+  deleteFilesTitleEn,
+  deleteFilesTitleJP,
+  deleteMessageEn,
+  deleteMessageJp,
   emptyResultsEnglish,
   emptyResultsJapanese,
   clearEng,
