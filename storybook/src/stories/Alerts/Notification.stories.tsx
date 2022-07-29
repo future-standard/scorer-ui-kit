@@ -10,6 +10,7 @@ import {
   INotificationProps,
   NotificationProvider,
 } from 'scorer-ui-kit';
+import { generateIconList } from '../helpers';
 
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
@@ -49,17 +50,6 @@ const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
     </>
   )
 }
-
-const generateIconList = () => {
-  let iconList : {[key: string]: string}= {};
-
-
-  for(const key in IconSVGs){
-    iconList[key] = key;
-  }
-
-  return iconList;
-};
 
   // Provider should be at main Index level, it's here just for the story example
 export const _Notification = () => {

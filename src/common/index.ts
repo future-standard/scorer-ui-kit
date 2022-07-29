@@ -24,7 +24,6 @@ export const resetButtonStyles = css`
   user-select: none;
 `;
 
-
 export const EllipsisStyles = css`
   overflow: hidden;
   text-overflow: ellipsis;

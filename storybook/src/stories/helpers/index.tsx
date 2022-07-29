@@ -13,10 +13,8 @@ export const sleep = (delay: number) => new Promise((resolve) => setTimeout(reso
   return fn;
 };
 
-
 export const generateIconList = () => {
   let iconList : {[key: string]: string}= {};
-
 
   for(const key in IconSVGs){
     iconList[key] = key;

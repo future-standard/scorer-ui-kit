@@ -86,7 +86,7 @@ const NoticeIcon = styled.div`
   }
 `;
 
-const NoticeTextGroup = styled.div<{ color: IFeedbackColor }>`
+const NoticeTextGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 14px;
@@ -124,7 +124,7 @@ const MediaStream: React.FC<IMediaStream> = ({
       {hasNotice && (
         <Notice color={status}>
           <NoticeIcon><Icon icon={noticeIcon} size={20} color='inverse' /></NoticeIcon>
-          <NoticeTextGroup color={status}>
+          <NoticeTextGroup>
             <NoticeTitle>{noticeTitle}</NoticeTitle>
             <NoticeMessage>{noticeMessage}</NoticeMessage>
           </NoticeTextGroup>
