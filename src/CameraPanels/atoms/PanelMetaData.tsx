@@ -5,6 +5,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 
 const Container = styled.div`
   display: flex;
+  height: 60px;
 `;
 
 const LeftData = styled.div`
@@ -23,20 +24,24 @@ const LeftData = styled.div`
 
 const RightData = styled.div`
   padding: 17px 12px 12px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const DeviceDataGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 14px;
+  justify-content: center;
 `;
 
-const LeftTitle = styled.div`
+const LeftTitle = styled.div<{hasMarginBottom: boolean}>`
   ${EllipsisStyles};
   max-width: 140px;
   color: hsla(195, 10%, 52%, 0.72);
   font-size: 10px;
-  margin-bottom: 1px;
+  ${({hasMarginBottom}) => hasMarginBottom && `margin-bottom: 1px;`};
 `;
 
 const LeftSubTitle = styled.div`
@@ -47,12 +52,12 @@ const LeftSubTitle = styled.div`
   font-size: 16px;
 `;
 
-const Title = styled.div`
+const Title = styled.div<{hasMarginBottom: boolean}>`
   ${EllipsisStyles};
   max-width: 80px;
   color: hsla(195, 10%, 52%, 0.72);
   font-size: 10px;
-  margin-bottom: 6px;
+  ${({hasMarginBottom}) => hasMarginBottom && `margin-bottom: 6px;`};
 `;
 
 const SubTitle = styled.div`
@@ -83,13 +88,13 @@ const PanelMetaData: React.FC<IPanelMetaData> = ({
       <LeftData>
         <Icon icon={deviceIcon} color='dimmed' size={18} />
         <DeviceDataGroup>
-          <LeftTitle>{leftTitle}</LeftTitle>
-          <LeftSubTitle>{leftSubTitle}</LeftSubTitle>
+          {leftTitle && <LeftTitle hasMarginBottom={!!leftSubTitle}>{leftTitle}</LeftTitle>}
+          {leftSubTitle && <LeftSubTitle>{leftSubTitle}</LeftSubTitle>}
         </DeviceDataGroup>
       </LeftData>
       <RightData>
-        <Title>{rightTitle}</Title>
-        <SubTitle>{rightSubTitle}</SubTitle>
+        {rightTitle && <Title hasMarginBottom={!!rightSubTitle}>{rightTitle}</Title>}
+        {rightSubTitle && <SubTitle>{rightSubTitle}</SubTitle>}
       </RightData>
     </Container>
   );
