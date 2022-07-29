@@ -108,6 +108,7 @@ import {
 // Camera Panels
 import {
   CameraPanels,
+  CameraPanelWrapper,
   ICameraPanel,
   IMediaStream,
   IPanelMetaData
@@ -310,6 +311,7 @@ export {
 
   // CameraPanels
   CameraPanels,
+  CameraPanelWrapper,
 
   // Misc
   Tag,

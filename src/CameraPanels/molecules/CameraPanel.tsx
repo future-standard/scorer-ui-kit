@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import MediaStream, { IMediaStream } from '../atoms/MediaStream';
 import PanelMetaData, { IPanelMetaData } from '../atoms/PanelMetaData';
 
-const Container = styled.div<{hasOnClick: boolean}>`
+export const CameraPanelWrapper = styled.div<{hasOnClick: boolean}>`
   width: 300px;
   height: 230px;
   border-radius: 3px;
@@ -18,20 +18,24 @@ const Container = styled.div<{hasOnClick: boolean}>`
 
 export interface ICameraPanel {
   streamProps: IMediaStream
-  panelMetaData: IPanelMetaData
+  panelMetaData?: IPanelMetaData
+  customBottom?: ReactElement
   panelOnClick?: () => void
 }
 
 const NewComponent : React.FC<ICameraPanel> = ({
   streamProps,
   panelMetaData,
+  customBottom,
   panelOnClick,
   ...props}) => {
   return(
-    <Container onClick={panelOnClick} hasOnClick={panelOnClick === undefined? false : true} {...props}>
+    <CameraPanelWrapper onClick={panelOnClick} hasOnClick={panelOnClick === undefined? false : true} {...props}>
       <MediaStream {...streamProps} />
-      <PanelMetaData {... panelMetaData} />
-    </Container>
+      {customBottom
+        ? customBottom
+        : panelMetaData && <PanelMetaData {... panelMetaData} />}
+    </CameraPanelWrapper>
   );
 };
 
