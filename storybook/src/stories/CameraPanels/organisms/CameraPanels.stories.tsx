@@ -28,6 +28,7 @@ export const _CameraPanels = () => {
   const hasCustomState = boolean('Has CustomState', false);
 
   const deviceIcon = select('Device Icon', iconList, 'Camera');
+  const hideIcon = boolean('Hide Icon', false);
   const leftTitle = text('Left Title', `Location - Zone`)
   const leftSubTitle = text('Left SubTitle', 'Camera Name');
   const rightTitle = text('Right Title', 'Analysis');
@@ -51,10 +52,11 @@ export const _CameraPanels = () => {
       leftSubTitle,
       leftTitle,
       rightTitle,
-      rightSubTitle
+      rightSubTitle,
+      hideIcon
     },
     panelOnClick : () => {reRouting()},
-  }),[hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, leftTitle, rightTitle, rightSubTitle, reRouting])
+  }),[hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, leftTitle, rightTitle, rightSubTitle, hideIcon, reRouting])
 
   const VideoPanel : ICameraPanel = useMemo(() => ({
     streamProps: {
@@ -73,9 +75,10 @@ export const _CameraPanels = () => {
       leftSubTitle,
       leftTitle,
       rightTitle,
-      rightSubTitle
+      rightSubTitle,
+      hideIcon
     }
-  }),[hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, leftTitle, rightTitle, rightSubTitle])
+  }),[hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, leftTitle, rightTitle, rightSubTitle, hideIcon])
 
 
 

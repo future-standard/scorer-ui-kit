@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useMemo } from 'react';
+import styled, { css } from 'styled-components';
 import { EllipsisStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
@@ -8,10 +8,13 @@ const Container = styled.div`
   height: 60px;
 `;
 
-const LeftData = styled.div`
-  border-right: ${({theme}) => theme.colors.divider} 1px solid;
-  padding: 17px 12px 12px 12px;
-  width: 195px;
+const LeftData = styled.div<{ hasRightData: boolean }>`
+  ${({ theme, hasRightData }) => hasRightData && css`
+    border-right: ${theme.colors.divider} 1px solid;
+    width: 195px;
+  `};
+
+  padding: 0 12px 0 12px;
   display: flex;
 
   ${IconWrapper} {
@@ -23,7 +26,7 @@ const LeftData = styled.div`
 `;
 
 const RightData = styled.div`
-  padding: 17px 12px 12px 16px;
+  padding: 0 12px 0 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,28 +39,36 @@ const DeviceDataGroup = styled.div`
   justify-content: center;
 `;
 
-const LeftTitle = styled.div<{hasMarginBottom: boolean}>`
+const LeftTitle = styled.div<{ hasMarginBottom: boolean, hasRightData: boolean }>`
   ${EllipsisStyles};
-  max-width: 140px;
+  ${({ hasRightData }) => hasRightData
+    ? `max-margin: 140px;`
+    : `max-margin: 250px;`
+  }};
+  ${({ hasMarginBottom }) => hasMarginBottom && `margin-bottom: 1px;`};
+
   color: hsla(195, 10%, 52%, 0.72);
   font-size: 10px;
-  ${({hasMarginBottom}) => hasMarginBottom && `margin-bottom: 1px;`};
 `;
 
-const LeftSubTitle = styled.div`
-  font-family: ${({theme}) => theme.fontFamily.data};
+const LeftSubTitle = styled.div<{ hasRightData: boolean }>`
+  font-family: ${({ theme }) => theme.fontFamily.data};
   ${EllipsisStyles};
-  max-width: 140px;
+  ${({ hasRightData }) => hasRightData
+    ? `max-width: 140px;`
+    : `max-width: 250px;`
+  }
+
   color: hsl(208, 8%, 38%);
   font-size: 16px;
 `;
 
-const Title = styled.div<{hasMarginBottom: boolean}>`
+const Title = styled.div<{ hasMarginBottom: boolean }>`
   ${EllipsisStyles};
   max-width: 80px;
   color: hsla(195, 10%, 52%, 0.72);
   font-size: 10px;
-  ${({hasMarginBottom}) => hasMarginBottom && `margin-bottom: 6px;`};
+  ${({ hasMarginBottom }) => hasMarginBottom && `margin-bottom: 6px;`};
 `;
 
 const SubTitle = styled.div`
@@ -73,29 +84,35 @@ export interface IPanelMetaData {
   leftTitle?: string
   rightTitle?: string
   rightSubTitle?: string
+  hideIcon?: boolean
 }
 
 const PanelMetaData: React.FC<IPanelMetaData> = ({
-    deviceIcon = 'Camera',
-    leftSubTitle,
-    leftTitle,
-    rightTitle,
-    rightSubTitle,
-  }) => {
+  deviceIcon = 'Camera',
+  leftSubTitle,
+  leftTitle,
+  rightTitle,
+  rightSubTitle,
+  hideIcon = false
+}) => {
+
+  const hasRightData = useMemo(() => (!!rightTitle || !!rightSubTitle) , [rightSubTitle, rightTitle]);
 
   return (
     <Container>
-      <LeftData>
-        <Icon icon={deviceIcon} color='dimmed' size={18} />
+      <LeftData {...{ hasRightData }}>
+        {!hideIcon && <Icon icon={deviceIcon} color='dimmed' size={18} />}
         <DeviceDataGroup>
-          {leftTitle && <LeftTitle hasMarginBottom={!!leftSubTitle}>{leftTitle}</LeftTitle>}
-          {leftSubTitle && <LeftSubTitle>{leftSubTitle}</LeftSubTitle>}
+          {leftTitle && <LeftTitle hasMarginBottom={!!leftSubTitle} {...{ hasRightData }}>{leftTitle}</LeftTitle>}
+          {leftSubTitle && <LeftSubTitle {...{ hasRightData }}>{leftSubTitle}</LeftSubTitle>}
         </DeviceDataGroup>
       </LeftData>
-      <RightData>
-        {rightTitle && <Title hasMarginBottom={!!rightSubTitle}>{rightTitle}</Title>}
-        {rightSubTitle && <SubTitle>{rightSubTitle}</SubTitle>}
-      </RightData>
+      {hasRightData && (
+        <RightData>
+          {rightTitle && <Title hasMarginBottom={!!rightSubTitle}>{rightTitle}</Title>}
+          {rightSubTitle && <SubTitle>{rightSubTitle}</SubTitle>}
+        </RightData>
+      )}
     </Container>
   );
 };
