@@ -99,7 +99,8 @@ const StatusLine = styled.div<{ color: IFeedbackColor }>`
 `;
 
 export interface IMediaStream extends IMediaModal {
-  hasCustomState?: boolean
+  isEmptyWithIcon?: boolean
+  emptyIcon?: string
   status?: IFeedbackColor
   noticeMessage?: string
   noticeTitle?: string
@@ -108,25 +109,26 @@ export interface IMediaStream extends IMediaModal {
 }
 
 const MediaStream: React.FC<IMediaStream> = ({
-  hasCustomState = false,
+  isEmptyWithIcon = false,
   status = 'neutral',
-  noticeIcon = 'Information',
+  noticeIcon,
   hasNotice = false,
   noticeMessage,
   noticeTitle,
+  emptyIcon,
   ...props
 }) => {
   return (
     <Container>
-      {hasCustomState
-        ? <EmptyWithIcon hasPadding={hasNotice}><Icon icon='PasswordHide' color='dimmed' size={41} /></EmptyWithIcon>
+      {isEmptyWithIcon
+        ? <EmptyWithIcon hasPadding={hasNotice}><Icon icon={emptyIcon ? emptyIcon : 'PasswordHide'} color='dimmed' size={41} /></EmptyWithIcon>
         : <MediaBox {...{ ...props }} />}
       {hasNotice && (
         <Notice color={status}>
-          <NoticeIcon><Icon icon={noticeIcon} size={20} color='inverse' /></NoticeIcon>
+          {noticeIcon && <NoticeIcon><Icon icon={noticeIcon} size={20} color='inverse' /></NoticeIcon>}
           <NoticeTextGroup>
-            <NoticeTitle>{noticeTitle}</NoticeTitle>
-            <NoticeMessage>{noticeMessage}</NoticeMessage>
+            {noticeTitle && <NoticeTitle>{noticeTitle}</NoticeTitle>}
+            {noticeMessage && <NoticeMessage>{noticeMessage}</NoticeMessage>}
           </NoticeTextGroup>
         </Notice>
       )}

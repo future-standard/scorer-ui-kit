@@ -61,18 +61,19 @@ const customBottom: ReactElement =
 
 
 export const _CameraPanels = () => {
-  const iconList = generateIconList();
+  const iconList = {'': '', ...generateIconList()};
   const showCustomComponent = boolean('Show Custom Component Example', false)
   const status = select('Type', { Error: 'error', Warning: 'warning', Info: 'info', Success: 'success', Neutral: 'neutral' }, 'neutral');
   const noticeIcon = select('Status Icon', iconList, 'Information');
   const hasNotice = boolean('Has Notice', false);
   const noticeMessage = text('Notice Message', 'Please wait while the first stream is processed.');
   const noticeTitle = text('Notice Title', 'Initial Stream Pending');
-  const hasCustomState = boolean('Has CustomState', false);
+  const isEmptyWithIcon = boolean('Has Empty Stream with Icon', false);
+  const emptyIcon = select('Empty stream icon', iconList, '')
 
 
   const deviceIcon = select('Device Icon', iconList, 'Camera');
-  const hideIcon = boolean('Hide Icon', false);
+  const hideIcon = boolean('Hide Panel Data Icon', false);
   const leftTitle = text('Left Title', `Location - Zone`)
   const leftSubTitle = text('Left SubTitle', 'Camera Name');
   const rightTitle = text('Right Title', 'Analysis');
@@ -84,12 +85,13 @@ export const _CameraPanels = () => {
     streamProps: {
       src: Photo,
       mediaType: 'img',
-      hasCustomState,
+      isEmptyWithIcon,
       noticeTitle,
       noticeMessage,
       status,
       noticeIcon,
-      hasNotice
+      hasNotice,
+      emptyIcon
     },
     panelMetaData: {
       deviceIcon,
@@ -97,24 +99,25 @@ export const _CameraPanels = () => {
       leftTitle,
       rightTitle,
       rightSubTitle,
-      hideIcon
+      hideIcon,
     },
     customBottom: showCustomComponent ? customBottom : undefined,
 
     panelOnClick: () => { reRouting() },
-  }), [hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, leftTitle, rightTitle, rightSubTitle, hideIcon, showCustomComponent, reRouting])
+  }), [isEmptyWithIcon, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, emptyIcon, deviceIcon, leftSubTitle, leftTitle, rightTitle, rightSubTitle, hideIcon, showCustomComponent, reRouting])
 
   const VideoPanel: ICameraPanel = useMemo(() => ({
     streamProps: {
       src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
       mediaType: 'video',
       videoOptions: { autoPlay: false, controls: true },
-      hasCustomState,
+      isEmptyWithIcon,
       noticeTitle,
       noticeMessage,
       status,
       noticeIcon,
-      hasNotice
+      hasNotice,
+      emptyIcon
     },
     panelMetaData: {
       deviceIcon,
@@ -125,7 +128,7 @@ export const _CameraPanels = () => {
       hideIcon
     },
     customBottom: showCustomComponent ? customBottom : undefined,
-  }), [hasCustomState, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, deviceIcon, leftSubTitle, leftTitle, rightTitle, rightSubTitle, hideIcon, showCustomComponent])
+  }), [isEmptyWithIcon, noticeTitle, noticeMessage, status, noticeIcon, hasNotice, emptyIcon, deviceIcon, leftSubTitle, leftTitle, rightTitle, rightSubTitle, hideIcon, showCustomComponent])
 
 
   const panelConfig: ICameraPanel[] = useMemo(() => [
