@@ -1,8 +1,9 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import {  text, select, boolean } from "@storybook/addon-knobs";
+import {ButtonWithIcon} from 'scorer-ui-kit';
+import { generateIconList } from '../../helpers';
 
-import {ButtonWithIcon, IconSVGs} from 'scorer-ui-kit';
 export default {
   title: 'Form/Buttons',
   component: ButtonWithIcon,
@@ -21,14 +22,4 @@ export const _WithIcon = () => {
   const buttonOnClick = action('button-click');
 
   return <ButtonWithIcon design={buttonDesign} size={buttonSize} onClick={buttonOnClick} icon={buttonIcon} position={buttonIconPosition} disabled={buttonDisabled}>{buttonText}</ButtonWithIcon>;
-};
-
-const generateIconList = () => {
-  let iconList : {[key: string]: string}= {};
-
-  for(const key in IconSVGs){
-    iconList[key] = key;
-  }
-
-  return iconList;
 };

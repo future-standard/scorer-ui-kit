@@ -25,7 +25,7 @@ interface IExampleModal {
 const MediaImageModal : React.FC<IExampleModal> = ({hasModalLimitsValue, imageSrc, retryLoading}) => {
   const { createModal } = useModal();
 
-  const mediaImage: ReactElement = <MediaBox hasModalLimits={hasModalLimitsValue} mediaType="img" alt="city" src={imageSrc} retryLoading={retryLoading} />
+  const mediaImage: ReactElement = <MediaBox hasModalLimits={hasModalLimitsValue} mediaType="img" alt="city" src={imageSrc} retryLoading={retryLoading} minHeight='300px' minWidth='300px'/>
 
   const modalWidth = hasModalLimitsValue ? 'auto' : '60%';
 

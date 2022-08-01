@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {  text, select } from "@storybook/addon-knobs";
 
-import {PageTitle, IconSVGs} from 'scorer-ui-kit';
+import {PageTitle} from 'scorer-ui-kit';
+import { generateIconList } from '../helpers';
 
 const Container = styled.div`
   margin: 100px;
@@ -23,16 +24,6 @@ export const _PageTitle = () => {
   const areaTitle = text("Area Title", "Area Title");
   const areaHref = text("Area Href", "#");
 
-  return <Container><PageTitle {...{title, icon, areaTitle, areaHref}} /></Container>;
+  return <Container><PageTitle {...{title, areaTitle, areaHref}} icon={icon || undefined} /></Container>;
 
-};
-
-const generateIconList = () => {
-  let iconList : {[key: string]: string}= {};
-
-  for(const key in IconSVGs){
-    iconList[key] = key;
-  }
-
-  return iconList;
 };

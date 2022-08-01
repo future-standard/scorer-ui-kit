@@ -1,3 +1,5 @@
+import {IconSVGs} from '@future-standard/icons';
+
 export const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay));
 
 /**
@@ -9,4 +11,14 @@ export const sleep = (delay: number) => new Promise((resolve) => setTimeout(reso
   // eslint-disable-next-line no-param-reassign
   fn.toString = () => '() => {}';
   return fn;
+};
+
+export const generateIconList = () => {
+  let iconList : {[key: string]: string}= {};
+
+  for(const key in IconSVGs){
+    iconList[key] = key;
+  }
+
+  return iconList;
 };
