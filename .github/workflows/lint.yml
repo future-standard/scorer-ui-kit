@@ -32,4 +32,4 @@ jobs:
       run: npm install
 
     - name: eslint
-      run: npm run test:lint
+      run: npm run test:lint -w packages/ui-lib
