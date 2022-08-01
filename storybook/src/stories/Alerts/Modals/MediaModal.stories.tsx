@@ -50,7 +50,6 @@ export const _MediaModal = () => {
   const imageSrc = text('Image Src', 'https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw');
   const retryLoading = boolean('Retry Loading', false);
 
-
   return (
     <Container>
       <ModalProvider>

@@ -75,6 +75,12 @@ const isValidImage = (file: File) => {
   return file && acceptedImageTypes.includes(file['type']);
 };
 
+const uniqueID = () =>
+  String(
+    Date.now().toString(32) +
+      Math.random().toString(16)
+  ).replace(/\./g, '');
+
 export {
   clamp,
   isValidImage,
@@ -83,4 +89,5 @@ export {
   isInsideRange,
   getShortTextTimeUnit,
   getTopLevelPath,
+  uniqueID
 };
