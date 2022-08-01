@@ -14,7 +14,7 @@ import {
   Label,
   Input
 } from 'scorer-ui-kit';
-import { IPointSet, LineUIOptions } from '../../../dist/LineUI';
+import { IPointSet, LineUIOptions } from 'scorer-ui-kit/dist/LineUI';
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);

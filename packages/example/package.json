@@ -1,10 +1,9 @@
 {
-  "name": "scorer-ui-kit-storybook",
+  "name": "scorer-ui-kit-example",
   "homepage": "https://future-standard.github.io/scorer-ui-kit/",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@future-standard/icons": "^1.1.1",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.13.4",
     "@types/react": "^16.9.34",
@@ -15,25 +14,12 @@
     "i18next-browser-languagedetector": "^4.1.1",
     "react-i18next": "^11.4.0",
     "react-scripts": "^3.4.3",
-    "scorer-ui-kit": "file:..",
     "typescript": "^4.0.2"
   },
-  "devDependencies": {
-    "@storybook/addon-actions": "6.1.21",
-    "@storybook/addon-knobs": "6.1.21",
-    "@storybook/addon-links": "6.1.21",
-    "@storybook/addons": "6.1.21",
-    "@storybook/preset-create-react-app": "3.1.7",
-    "@storybook/react": "6.1.21",
-    "storybook-addon-jsx": "^7.3.14",
-    "storybook-dark-mode": "^1.0.3"
-  },
   "scripts": {
-    "start": "npm run storybook",
-    "storybook": "start-storybook -p 9009",
-    "build-storybook": "build-storybook --output-dir ../example/build/storybook",
-    "build-storybook-dev": "build-storybook --output-dir ./build",
-    "serve": "npx serve build"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,5 +37,16 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "This example was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/future-standard/scorer-ui-kit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/future-standard/scorer-ui-kit/issues"
+  }
 }

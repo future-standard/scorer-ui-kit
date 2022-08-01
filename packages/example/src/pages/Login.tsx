@@ -90,7 +90,7 @@ const ForgotLink = styled(Link)`
 
 const ForgotLinkWrapper = styled.div`
     text-align: center;
-    margin: 10px auto; 
+    margin: 10px auto;
 `;
 
 const CopyRightStyle = css`
@@ -188,7 +188,7 @@ export const LogoContainer = styled.div`
   position: relative;
   justify-content: center;
   overflow: hidden;
-  
+
   ${({theme}) => css`
     @media ${theme.deviceMediaQuery.large} {
       height: auto;
@@ -264,10 +264,15 @@ const Login: React.FC<OwnProps> = ({
       const response = await onLogin(form);
       console.log(response, 'login');
     } catch (error) {
-      setAlert({
-        message: error.message,
-        type: 'error'
-      });
+      if(error instanceof Error) {
+        setAlert({
+          message: error.message,
+          type: 'error'
+        });
+      } else {
+        console.warn(error);
+      }
+
     }
     setLoading(false);
   },[form, onLogin]);

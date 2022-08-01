@@ -16,7 +16,7 @@ import {
   Switch,
   useMediaModal
 } from 'scorer-ui-kit';
-import { LineUIOptions, LineUIVideoOptions } from '../../../dist/LineUI';
+import { LineUIOptions, LineUIVideoOptions } from 'scorer-ui-kit/dist/LineUI';
 
 const SwitchBox = styled.div`
   margin-bottom: 15px;

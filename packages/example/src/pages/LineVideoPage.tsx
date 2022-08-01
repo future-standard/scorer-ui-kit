@@ -16,8 +16,8 @@ import {
   useMediaModal,
 } from 'scorer-ui-kit';
 import styled from 'styled-components';
-import {LineUIOptions} from '../../../dist/LineUI';
-import {LineUIVideoOptions} from '../../../dist/LineUI';
+import {LineUIOptions} from 'scorer-ui-kit/dist/LineUI';
+import {LineUIVideoOptions} from 'scorer-ui-kit/dist/LineUI';
 
 const StyledButton = styled(ButtonWithIcon)`
   width: 100%;

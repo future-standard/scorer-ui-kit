@@ -1,0 +1,99 @@
+{
+  "name": "scorer-ui-kit",
+  "version": "1.9.0-beta",
+  "description": "SCORER UI Components",
+  "author": "Josh Lipps",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/future-standard/scorer-ui-kit.git"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "source": "src/index.tsx",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "prepublishOnly": "run-s build",
+    "test": "run-s test:unit test:lint test:build",
+    "test:build": "run-s build",
+    "test:lint": "eslint ./src --ext .ts,.tsx",
+    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom",
+    "svgr": "svgr --typescript -d src/svg/ src/svg",
+    "predeploy": "cd example && npm install && npm run build && cd ../storybook && npm install && npm run build-storybook",
+    "deploy": "gh-pages -d example/build",
+    "actions-deploy": "gh-pages -d example/build",
+    "link": "npm link && npm link react && npm link react-dom && npm link react-router-dom && npm link styled-components",
+    "zeplin-connect": "zeplin connect"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-use-websocket": "^2.2.0",
+    "styled-components": "^5.1.0"
+  },
+  "devDependencies": {
+    "@svgr/cli": "^5.4.0",
+    "@types/jest": "^25.1.4",
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/lodash.defaultsdeep": "^4.6.6",
+    "@types/lodash.isequal": "^4.5.0",
+    "@types/node": "^13.13.4",
+    "@types/react": "^16.9.34",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/styled-components": "^5.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
+    "@zeplin/cli": "^1.1.12",
+    "@zeplin/cli-connect-react-plugin": "^1.1.1",
+    "@zeplin/cli-connect-storybook-plugin": "^0.5.4",
+    "babel-eslint": "^10.0.3",
+    "cross-env": "^7.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-standard-react": "^9.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-standard": "^4.0.1",
+    "gh-pages": "^2.2.0",
+    "microbundle-crl": "^0.13.8",
+    "npm-run-all": "^4.1.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.1",
+    "react-use-websocket": "^2.2.0",
+    "styled-components": "^5.2.1"
+  },
+  "files": [
+    "dist",
+    "link-ui-kit.sh"
+  ],
+  "dependencies": {
+    "@future-standard/icons": "^1.1.2",
+    "@types/react-dom": "^17.0.0",
+    "date-fns": "^2.16.1",
+    "immutability-helper": "^3.1.1",
+    "lodash.debounce": "^4.0.6",
+    "lodash.defaultsdeep": "^4.6.1",
+    "lodash.isequal": "^4.5.0"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "bugs": {
+    "url": "https://github.com/future-standard/scorer-ui-kit/issues"
+  },
+  "homepage": "https://future-standard.github.io/scorer-ui-kit/#/",
+  "bin": {
+    "link-ui-kit": "link-ui-kit.sh"
+  }
+}
