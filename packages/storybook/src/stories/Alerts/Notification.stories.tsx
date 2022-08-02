@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { text, boolean, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
-import { IconSVGs } from '@future-standard/icons';
 
 import {
   useNotification,

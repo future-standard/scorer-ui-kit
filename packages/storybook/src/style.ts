@@ -1,6 +1,16 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle, DefaultTheme } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
+interface MyThemeProps extends DefaultTheme {
+  theme: {
+    styles: {
+      global: {
+        background: {}
+      }
+    }
+  }
+}
+
+const GlobalStyle = createGlobalStyle<MyThemeProps>`
 
   * , body{
     box-sizing: border-box;

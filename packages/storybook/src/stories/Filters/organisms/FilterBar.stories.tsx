@@ -46,7 +46,7 @@ import {
   filterByCreationDate,
   filterByCreationDatePicker
 } from '../../helpers/sample_table_helpers';
-import { ITypeTableData } from '../../../../../dist/Tables';
+import { ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 
 export default {
   title: 'Filters/Organism',

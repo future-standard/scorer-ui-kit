@@ -8,7 +8,7 @@ import {
   ConfirmationModal,
   Button,
 } from 'scorer-ui-kit';
-import { TypeButtonDesigns } from '../../../../../dist/Form';
+import { TypeButtonDesigns } from 'scorer-ui-kit/dist/Form';
 
 const Container = styled.div``;
 

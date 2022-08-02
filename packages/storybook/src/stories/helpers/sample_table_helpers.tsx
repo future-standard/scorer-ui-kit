@@ -1,7 +1,7 @@
 import { ITableSampleData } from "./data_samples";
 import { DateInterval, IFilterItem, isFilterItem } from 'scorer-ui-kit';
 import photo from '../assets/placeholder.jpg';
-import { IRowData, ITypeTableData } from "../../../../dist/Tables";
+import { IRowData, ITypeTableData } from "scorer-ui-kit/dist/Tables";
 
 const sortDataBy = (unsortedData: ITableSampleData[], columnId: keyof ITableSampleData, ascending: boolean) => {
   return unsortedData.sort((itemA, itemB) => {

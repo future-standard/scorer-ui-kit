@@ -4,7 +4,9 @@
   "description": "This project is a ui library with an example project of use cases and storybook to showcase the components",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "predeploy": "cd packages/example && npm run build && cd ../storybook && npm run build-storybook",
+    "deploy": "gh-pages -d packages/example/build",
+    "actions-deploy": "gh-pages -d packages/example/build"
   },
   "repository": {
     "type": "git",
