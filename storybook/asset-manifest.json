@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.js": "./main.d6786c8a57b99c973fb6.bundle.js",
-    "main.js.map": "./main.d6786c8a57b99c973fb6.bundle.js.map",
-    "runtime~main.js": "./runtime~main.d6786c8a57b99c973fb6.bundle.js",
-    "runtime~main.js.map": "./runtime~main.d6786c8a57b99c973fb6.bundle.js.map",
-    "vendors~main.js": "./vendors~main.d6786c8a57b99c973fb6.bundle.js",
-    "vendors~main.js.map": "./vendors~main.d6786c8a57b99c973fb6.bundle.js.map",
+    "main.js": "./main.d23fa85b378f4bf6cde4.bundle.js",
+    "main.js.map": "./main.d23fa85b378f4bf6cde4.bundle.js.map",
+    "runtime~main.js": "./runtime~main.d23fa85b378f4bf6cde4.bundle.js",
+    "runtime~main.js.map": "./runtime~main.d23fa85b378f4bf6cde4.bundle.js.map",
+    "vendors~main.js": "./vendors~main.d23fa85b378f4bf6cde4.bundle.js",
+    "vendors~main.js.map": "./vendors~main.d23fa85b378f4bf6cde4.bundle.js.map",
     "iframe.html": "./iframe.html",
-    "precache-manifest.793bd1493d3623c576bfd3b11a221c90.js": "./precache-manifest.793bd1493d3623c576bfd3b11a221c90.js",
+    "main.d23fa85b378f4bf6cde4.bundle.js.LICENSE.txt": "./main.d23fa85b378f4bf6cde4.bundle.js.LICENSE.txt",
+    "precache-manifest.c831310129b1f8f9828ac8b8254e141b.js": "./precache-manifest.c831310129b1f8f9828ac8b8254e141b.js",
     "service-worker.js": "./service-worker.js",
     "static/media/Lato-Bold.ttf": "./static/media/Lato-Bold.2d15decc.ttf",
     "static/media/Lato-Light.ttf": "./static/media/Lato-Light.0f73589a.ttf",
@@ -34,11 +35,11 @@
     "static/media/logo-mark.svg": "./static/media/logo-mark.75308d30.svg",
     "static/media/logo-text.svg": "./static/media/logo-text.0ffd5079.svg",
     "static/media/placeholder.jpg": "./static/media/placeholder.8af7ef66.jpg",
-    "vendors~main.d6786c8a57b99c973fb6.bundle.js.LICENSE.txt": "./vendors~main.d6786c8a57b99c973fb6.bundle.js.LICENSE.txt"
+    "vendors~main.d23fa85b378f4bf6cde4.bundle.js.LICENSE.txt": "./vendors~main.d23fa85b378f4bf6cde4.bundle.js.LICENSE.txt"
   },
   "entrypoints": [
-    "runtime~main.d6786c8a57b99c973fb6.bundle.js",
-    "vendors~main.d6786c8a57b99c973fb6.bundle.js",
-    "main.d6786c8a57b99c973fb6.bundle.js"
+    "runtime~main.d23fa85b378f4bf6cde4.bundle.js",
+    "vendors~main.d23fa85b378f4bf6cde4.bundle.js",
+    "main.d23fa85b378f4bf6cde4.bundle.js"
   ]
 }
