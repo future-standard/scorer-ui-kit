@@ -1,4 +1,4 @@
-# Scorer UI KIT library
+# SCORER UI KIT LIBRARY
 
   SCORER UI KIT is a UI components library created in react for faster web applications development.
 
@@ -51,7 +51,7 @@ If you want to run the project follow the next steps
 
 ### Contributing
 
-This is an open source project, if you are interested in participating please contact @atomworks or @JoshLipps
+This is an open source project, if you are interested in participating please contact [@atomworks](https://github.com/atomworks) or [@JoshLipps](https://github.com/JoshLipps).
 
 Theres a list of issues and we recommend to pick one of the tagged Quick Wins as starter.
 
