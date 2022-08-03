@@ -1,6 +1,10 @@
-# Scorer UI KIT
+# SCORER UI KIT
 
 SCORER UI KIT is a UI components library created in react for faster web applications development.
+
+You can review online a React project example and test some of the components on storybook in the live page
+
+https://future-standard.github.io/scorer-ui-kit
 
 
 ## Version 1
@@ -16,9 +20,9 @@ SCORER UI KIT is a UI components library created in react for faster web applica
 
   This repository is holding the ui library with examples using 3 workspaces:
 
-  - ui-lib is the core code
-  - example is a react application using the ui-lib
-  - storybook is a showcase of some of the components in the ui lib.
+  - **ui-lib** is the core code
+  - **example** is a react application using the ui-lib
+  - **storybook** is a showcase of some of the components in the ui lib.
 
   For a quick guide on how to use it please review the [ui-lib README](packages/ui-lib/README.md).
 
