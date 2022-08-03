@@ -1,4 +1,4 @@
-# scorer-ui-kit library
+# Scorer UI KIT library
 
   SCORER UI KIT is a UI components library created in react for faster web applications development.
 
@@ -9,14 +9,14 @@
 
   You can review online a React project example and test some of the components on storybook in the live page
 
-https://future-standard.github.io/scorer-ui-kit
+  https://future-standard.github.io/scorer-ui-kit
 
 
 ## Development
 
 If you want to run the project follow the next steps
 
-- Clone repo
+- Clone repository
 ```
   git clone git@github.com:future-standard/scorer-ui-kit.git
 ```
@@ -30,6 +30,7 @@ If you want to run the project follow the next steps
 
 ```
   // Terminal 1
+
   npm start --workspace=packages/ui-lib
 ```
 
@@ -73,20 +74,22 @@ Photo by [Van Thanh](https://unsplash.com/@vanthanh2608?utm_source=unsplash&amp;
 
 ## License
 
-The Scorer UI Kit is released under the MIT license.
+The Scorer UI Kit is released under the [MIT license](../../LICENSE.md).
 
 Please note however that the icon set included in this software is included under license and remains property of Webalys LLC. These icons can be used only in the context of this open source project. For more information regarding this license, see [Streamline Icons Premium License](https://help.streamlineicons.com/license-premium).
 
 ## Release
-1. Update the version in package.json and commit it. (this can done on a branch and then merged)
+1. Update the version in package.json in this ui-lib folder and commit it. (this can done on a branch and then merged)
 2. Add a release tag with the following format: vXX.XX.XX or vXX.XX.XX-beta.x(for beta) - this should match the package.json version
 3. Push the tag to Github (this should cause the release)
 
 ```
-git commit -m "Bump 1.5.2"
-grep version package.json
-#  "version": "1.5.2",
-git tag v1.5.2
-git push origin v1.5.2
+// Updating to v1.5.2
+
+  git commit -m "Bump 1.5.2"
+  grep version package.json
+  ~  "version": "1.5.2",
+  git tag v1.5.2
+  git push origin v1.5.2
 ```
 
