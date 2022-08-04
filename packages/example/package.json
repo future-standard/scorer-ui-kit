@@ -4,16 +4,18 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.5",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.13.4",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^17.0.0",
-    "@types/styled-components": "^5.1.0",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^16.9.8",
+    "@types/styled-components": "^5.1.15",
     "history": "^5.0.0",
     "i18next": "^19.4.2",
     "i18next-browser-languagedetector": "^4.1.1",
     "react-i18next": "^11.4.0",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^5.0.1",
     "typescript": "^4.0.2"
   },
   "scripts": {
@@ -48,5 +50,8 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/future-standard/scorer-ui-kit/issues"
+  },
+  "devDependencies": {
+    "eslint-config-react-app": "^7.0.1"
   }
 }
