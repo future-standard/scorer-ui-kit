@@ -6,10 +6,10 @@
   "dependencies": {
     "@future-standard/icons": "^1.1.1",
     "@types/jest": "^25.1.4",
-    "@types/node": "^13.13.4",
+    "@types/node": "^16.11.7",
     "@types/react": "^17.0.34",
-    "@types/react-dom": "^16.9.8",
-    "@types/styled-components": "^5.1.15",
+    "@types/react-dom": "^17.0.0",
+    "@types/styled-components": "^5.1.25",
     "history": "^5.0.0",
     "i18next": "^19.4.2",
     "i18next-browser-languagedetector": "^4.1.1",
@@ -18,10 +18,10 @@
     "typescript": "^4.0.2"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "6.4.0",
+    "@storybook/addon-actions": "6.4.22",
     "@storybook/addon-knobs": "6.4.0",
-    "@storybook/addon-links": "6.4.0",
-    "@storybook/addons": "6.4.0",
+    "@storybook/addon-links": "6.4.22",
+    "@storybook/addons": "6.4.22",
     "@storybook/builder-webpack5": "^6.4.22",
     "@storybook/manager-webpack5": "^6.4.22",
     "@storybook/preset-create-react-app": "4.1.2",
