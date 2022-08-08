@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@future-standard/icons": "^1.1.1",
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^28.1.6",
     "@types/node": "^16.11.7",
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.0",
