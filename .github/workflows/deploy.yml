@@ -2,7 +2,7 @@ name: Deploy gh-pages
 
 on:
   push:
-    branches: [ 'main', 'demo', 'deploy-test3']
+    branches: [ 'main', 'demo', 'deploy-test3', 'beta/dark-mode-workspaces-update']
 
 jobs:
   deploy:
