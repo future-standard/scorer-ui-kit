@@ -39,7 +39,7 @@ const exampleMarks : ISliderMark[] = [
     label:'100%',
   },
 ];
-  
+
 export const _PercentageSlider = () => {
   const title = text('Title', 'Duration');
   const disabled = boolean('Disabled', false);
@@ -51,7 +51,6 @@ export const _PercentageSlider = () => {
 
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
-    console.log('updated value', value);
     showValue(`Returned value: ${value}`, value)
   };
 
@@ -59,11 +58,11 @@ export const _PercentageSlider = () => {
     if(value <= 20) {
       return 'neutral';
     }
-  
+
     if((value > 20) && (value <= 80)) {
       return 'info';
     }
-  
+
     return 'error';
   }
 
@@ -71,11 +70,11 @@ export const _PercentageSlider = () => {
     if(value <= 20) {
       return 'Small sound';
     }
-  
+
     if((value > 20) && (value <= 80)) {
       return 'Normal sound';
     }
-  
+
     return 'Dangerous sound';
   }
 

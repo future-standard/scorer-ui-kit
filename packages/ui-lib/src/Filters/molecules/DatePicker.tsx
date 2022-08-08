@@ -25,17 +25,17 @@ type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "ins
 type DateMode = "single" | "interval";
 type TimeMode = "off" | "single" | "interval";
 
-interface TimeProperties {
-  hours: number
-  minutes: number
-  seconds: number
-  milliseconds: number
-}
+// interface TimeProperties {
+//   hours: number
+//   minutes: number
+//   seconds: number
+//   milliseconds: number
+// }
 
-interface TimeRange {
-  start: TimeProperties
-  end: TimeProperties
-}
+// interface TimeRange {
+//   start: TimeProperties
+//   end: TimeProperties
+// }
 
 const Container = styled.div`
   display: flex;
@@ -283,7 +283,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
-  
+
   const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
 
   useEffect(() => {

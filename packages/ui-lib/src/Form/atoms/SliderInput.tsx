@@ -106,7 +106,7 @@ const thumbLeftPosition = (value: number, min: number, max: number ) => {
 
 const nearMark = (value: number, marks: ISliderMark[]) : number => {
 
-  let closest = marks.reduce((prev, curr) => {
+  const closest = marks.reduce((prev, curr) => {
     return (Math.abs(curr.value - value) < Math.abs(prev.value - value) ? curr : prev);
   });
 

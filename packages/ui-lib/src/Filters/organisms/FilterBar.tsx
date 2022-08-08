@@ -65,7 +65,7 @@ const createDropdownFilters = (
         ? filter.selected
         : null;
       const onSelect = (newSelection: IFilterValue) => { handleDropdownsSelected(newSelection, filter.id); };
-      let disabled = getDisableValue(filtersValues, singleFilter, dropdown);
+      const disabled = getDisableValue(filtersValues, singleFilter, dropdown);
       const newDropdown: IFilterDropdownExt = { ...dropdown, selected, disabled, onSelect };
       dropdownFilters.push(newDropdown);
     }
@@ -91,7 +91,7 @@ const createSearchers = (
         handleSearchers(newValue, filter.id);
       };
 
-      let disabled = getDisableValue(filtersValues, singleFilter, searcher);
+      const disabled = getDisableValue(filtersValues, singleFilter, searcher);
 
       const newSearcher: ISearchFilter = { ...searcher, value, disabled, onChange };
       searchersFilters.push(newSearcher);

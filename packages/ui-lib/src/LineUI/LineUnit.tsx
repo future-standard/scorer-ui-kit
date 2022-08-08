@@ -108,7 +108,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   // const distance = Math.sqrt( a*a + b*b );
   //this distance 60 doesn't work now...
   // const hideGrabHandle = showMoveHandle === false || (showMoveHandle !== true && distance < 60);
-  
+
   const hideGrabHandle = !showMoveHandle || !overrideShowMoveHandle;
 
 
@@ -161,8 +161,8 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     const angleMode = (Math.PI / 2) - angle;
     const x = midpoint.x + Math.sin(angleMode) -5;
     const y = midpoint.y + Math.cos(angleMode);
-    let rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
-    let labelRotate = -rotate;
+    const rotate = (180 / Math.PI) * Math.atan2(y2 - y1, x2 - x1);
+    const labelRotate = -rotate;
     return {x, y, rotate, labelRotate};
   };
 

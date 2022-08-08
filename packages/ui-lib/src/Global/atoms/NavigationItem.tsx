@@ -184,8 +184,8 @@ const generateSubmenus = (
 
   if(!submenu){ return; }
 
-  let grouping : any[] = [];
-  let output : any = [];
+  const grouping : any[] = [];
+  const output : any = [];
 
   // First submenu
   grouping.push([]);

@@ -12,8 +12,8 @@ enum SwitchPosition {
 }
 
 const intentPosition = (left: string, checked?: boolean) : string => {
-  let offset = checked ? -2 : 2;
-  let intentLeft = (parseInt(left) + offset).toString();
+  const offset = checked ? -2 : 2;
+  const intentLeft = (parseInt(left) + offset).toString();
 
   return `${intentLeft}px`;
 };

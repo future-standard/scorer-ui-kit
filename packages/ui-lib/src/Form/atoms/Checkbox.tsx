@@ -129,7 +129,7 @@ const Checkbox : React.FC<IProps> = ({ indeterminate = false, disabled, checked 
 
   useEffect(() => {
 
-    let state = checked ? CheckboxState.On : CheckboxState.Off;
+    const state = checked ? CheckboxState.On : CheckboxState.Off;
     // state = indeterminate ? CheckboxState.Indeterminate : state;
 
     setVisualState( state );

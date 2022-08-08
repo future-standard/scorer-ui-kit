@@ -108,7 +108,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
     const screenCTM = getCTM();
     if(!screenCTM){ return; }
 
-    let pointer = {
+    const pointer = {
       x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a) - handleRadius,
       y: ((pointerPosition.y - screenCTM.f ) / screenCTM.d) - handleRadius
     };
@@ -152,15 +152,15 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
 
 
   const calcAngle = (originX: number, originY: number, towardsX: number, towardsY: number) => {
-    let angle = Math.atan2(towardsY-originY,towardsX-originX);
-    let degrees = angle*180/Math.PI + 90;
+    const angle = Math.atan2(towardsY-originY,towardsX-originX);
+    const degrees = angle*180/Math.PI + 90;
     return degrees;
   };
 
   // useCallback maybe to reduce unchanged deals?
   const updateHandleAngles = useCallback((inputHandleData: IPointSet) => {
     const { points } = inputHandleData;
-    let outputData : number[] = [];
+    const outputData : number[] = [];
 
     // Update all handle angles in data set.
     inputHandleData.points.forEach((handle, index) => {
@@ -214,7 +214,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       return null;
     }
     const {x:x2,y:y2} = points[nextIndex];
-   
+
   return (
     <LineUnit
       key={index}

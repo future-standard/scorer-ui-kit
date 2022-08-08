@@ -124,7 +124,7 @@ const AvatarUploader: React.FC<IAvatar> = ({
 
   const handleCrop = useCallback(async (newFileUrl: string, fileType: string) => {
     setAvatarImg(newFileUrl);
-    let newFile = await fetch(
+    const newFile = await fetch(
       newFileUrl).then(r => r.blob()).then(blobFile => new File([blobFile], "newAvatar", { type: fileType })
       );
 

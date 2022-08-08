@@ -136,7 +136,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   // console.log(props.lineSetId, typeof props.lineSetId)
   const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0, options, readOnlyHandle = false, styling='primary'} = props;
   // console.log("Handle "+ index +" from set "+ lineSetId + " :: " + x, ", " + y)
-  let handleInstance = React.createRef<SVGSVGElement>();
+  const handleInstance = React.createRef<SVGSVGElement>();
 
   const [ touchDragging, setTouchDragging ] = useState(false);
   const [ mouseDragging, setMouseDragging ] = useState(false);
@@ -201,8 +201,8 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
   },[handleMouseMove, handleMouseUp, readOnlyHandle]);
 
-  let maskID = useAngles ? "mask-" + lineSetId + '-' + index : '';
-  let shadowGradientID = "shadowGradient-" + lineSetId + '-' + index;
+  const maskID = useAngles ? "mask-" + lineSetId + '-' + index : '';
+  const shadowGradientID = "shadowGradient-" + lineSetId + '-' + index;
   const {showPointHandle = true, showPointLabel= false, pointIndexOffset} = options as IDragLineUISharedOptions;
 
   return (

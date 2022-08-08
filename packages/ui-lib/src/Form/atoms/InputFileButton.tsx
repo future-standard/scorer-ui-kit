@@ -15,13 +15,13 @@ interface OwnProps {
   text: string
   buttonSize?: TypeButtonSizes
   buttonDesign?: TypeButtonDesigns
-  inputCallback: (newFiles: FileList) => void 
+  inputCallback: (newFiles: FileList) => void
 }
 
 type IFileInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
 const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize, inputCallback, ...props}) => {
 
-  let fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = useCallback(async(e: ChangeEvent<HTMLInputElement>) => {
     if (!(e.target.files && e.target.files.length > 0)) { return;}
@@ -40,7 +40,7 @@ const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize,
 
   return(
     <Container>
-      <HiddenInput 
+      <HiddenInput
         {...props}
         ref={fileInputRef}
         type='file'
