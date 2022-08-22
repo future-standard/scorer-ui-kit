@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  init_project:
+    build:
+      context: ./
+    container_name: scorer-ui-kit
+    volumes:
+      - ./:scorer-ui-kit
+
+  # ui_lib:
+
+
+  # storybook:
+  #   ports:
+  #     -9009:9009
+
+  # example:
+  #   ports:
+  #     -3000:3000

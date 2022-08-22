@@ -28,7 +28,7 @@ If you want to run the project follow the next steps
 
 - Use npm dedupe to fix react-refresh difference between Storybook and Example project
 ```
-  npm dedupe
+  npm dedupe react-refresh
 ```
 
 - If you want to run the example project, run library workspace first and then the example workspace in a different terminal
