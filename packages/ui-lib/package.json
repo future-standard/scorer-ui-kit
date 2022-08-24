@@ -74,8 +74,7 @@
     "styled-components": "^5.3.5"
   },
   "files": [
-    "dist",
-    "link-ui-kit.sh"
+    "dist"
   ],
   "dependencies": {
     "@future-standard/icons": "^1.1.5",
@@ -92,8 +91,5 @@
   "bugs": {
     "url": "https://github.com/future-standard/scorer-ui-kit/issues"
   },
-  "homepage": "https://future-standard.github.io/scorer-ui-kit/#/",
-  "bin": {
-    "link-ui-kit": "link-ui-kit.sh"
-  }
+  "homepage": "https://future-standard.github.io/scorer-ui-kit/#/"
 }
