@@ -1,7 +1,7 @@
 import React, { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 
-import Icon from '../../Icons/Icon';
+import Icon, { IconWrapper } from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 import { TypeFieldState } from '..';
 import { removeAutoFillStyle } from '../../common';
@@ -51,6 +51,12 @@ const FeedbackIcon = styled.div`
   display: flex;
   justify-content:center;
   align-items:center;
+
+  ${IconWrapper} {
+    [stroke]{
+      stroke: ${({theme}) => theme.colors.pureBase};
+    }
+  }
 `;
 
 const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
@@ -155,11 +161,11 @@ const Input : React.FC<InputProps> = ({
       case 'disabled':
         break;
       case 'required':
-        return <Icon icon='Required' size={20} color='inverse' />;
+        return <Icon icon='Required' size={20} />;
       case 'valid':
-        return <Icon icon='Success' size={20} color='inverse' />;
+        return <Icon icon='Success' size={20} />;
       case 'invalid':
-        return <Icon icon='Invalid' size={20} color='inverse' />;
+        return <Icon icon='Invalid' size={20} />;
       case 'processing':
         return <Spinner size='medium' styling='primary' />;
     }
