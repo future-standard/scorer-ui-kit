@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import { IconSVGs } from '@future-standard/icons';
 import styled from 'styled-components';
 import { boolean, text, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
@@ -16,6 +15,7 @@ import {
   emptyResultsEnglish,
   emptyResultsJapanese,
 } from '../../helpers/data_samples';
+import { generateIconList } from '../../helpers';
 
 export default {
   title: 'Filters/molecules',
@@ -31,15 +31,6 @@ const Wrapper = styled.div`
   display: inline-block;
 `;
 
-const generateIconList = () => {
-  let iconList: { [key: string]: string } = {};
-
-  for (const key in IconSVGs) {
-    iconList[key] = key;
-  }
-
-  return iconList;
-};
 
 const englishDataList = [
   { text: 'Ramen', value: 0 },

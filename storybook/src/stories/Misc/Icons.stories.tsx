@@ -1,9 +1,10 @@
 import React from 'react';
 import {  select, boolean, number } from "@storybook/addon-knobs";
 import styled from 'styled-components';
-
-import {Icon} from 'scorer-ui-kit';
 import {IconSVGs} from '@future-standard/icons';
+import {Icon} from 'scorer-ui-kit';
+import { generateIconList } from '../helpers';
+
 
 
 export default {
@@ -32,16 +33,7 @@ const Grid = styled.div`
   text-align: center;
 `;
 
-const generateIconList = () => {
-  let iconList : {[key: string]: string}= {};
 
-
-  for(const key in IconSVGs){
-    iconList[key] = key;
-  }
-
-  return iconList;
-};
 
 export const _Icons = () => {
 

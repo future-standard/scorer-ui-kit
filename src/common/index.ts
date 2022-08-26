@@ -23,3 +23,9 @@ export const resetButtonStyles = css`
   appearance: none;
   user-select: none;
 `;
+
+export const EllipsisStyles = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;

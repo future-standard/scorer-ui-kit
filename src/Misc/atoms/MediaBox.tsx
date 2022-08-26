@@ -1,13 +1,14 @@
 import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
-import { Icon, IMediaType } from '../../index';
+import { IMediaType } from '../../index';
+import Icon from '../../Icons/Icon';
 
-const Container = styled.div`
+export const MediaBoxWrapper = styled.div<{minWidth?: string, minHeight?: string}>`
   position: relative;
   line-height: 0;
-  min-height: 300px;
-  min-width: 300px;
+  ${({minHeight}) => minHeight && `min-height: ${minHeight}`};
+  ${({minWidth}) => minWidth && `min-width: ${minWidth}`};
 `;
 
 const mediaStyle = `
@@ -64,10 +65,12 @@ export interface IMediaModal {
   alt?: string
   videoOptions?: VideoHTMLAttributes<HTMLVideoElement>
   hasModalLimits?: boolean
+  retryLoading?: boolean
+  retryLimit?: number
+  minWidth?: string
+  minHeight?: string
   onError?: (e: Event) => void
   onMediaLoad?: () => void
-  retryLoading?: boolean;
-  retryLimit?: number;
 }
 
 const MediaBox: React.FC<IMediaModal> = ({
@@ -78,6 +81,8 @@ const MediaBox: React.FC<IMediaModal> = ({
   hasModalLimits,
   retryLoading= false,
   retryLimit=5,
+  minWidth,
+  minHeight,
   onError: onErrorCallback = () => { },
   onMediaLoad = () => { },
 }) => {
@@ -94,8 +99,6 @@ const MediaBox: React.FC<IMediaModal> = ({
     ...videoValues
   } = videoOptions;
 
-
-
   const onError = useCallback((e)=>{
     if(!retryLoading || retryCount >= retryLimit) {
       onErrorCallback(e);
@@ -111,14 +114,13 @@ const MediaBox: React.FC<IMediaModal> = ({
 
   },[incomingSrc, onErrorCallback, retryCount, retryLoading, retryLimit]);
 
-
   const handleLoad = useCallback(() => {
     onMediaLoad();
     setLoaded(true);
   }, [onMediaLoad, setLoaded]);
 
   return (
-    <Container>
+    <MediaBoxWrapper {...{minWidth, minHeight}}>
       {mediaType === 'video'
         ? <Video
             {...{ src, loop, autoPlay, controls, muted, onError, hasModalLimits }}
@@ -134,7 +136,7 @@ const MediaBox: React.FC<IMediaModal> = ({
           />}
       {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {loadFailed && <LoadingOverlay><Icon icon='MissingImage' size={48} /></LoadingOverlay>}
-    </Container>
+    </MediaBoxWrapper>
   );
 };
 
