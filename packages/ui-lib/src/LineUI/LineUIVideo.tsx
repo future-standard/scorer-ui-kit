@@ -159,7 +159,7 @@ const LineUIVideo : React.FC<LineUIProps> = ({
     setBoundaries(bounds);
   }, [videoSize, loaded, boundaryOffset]);
 
-  const onLoadedMetadata = useCallback(({target}) =>{
+  const onLoadedMetadata = useCallback(({target} : any) =>{
     if(target){
       setLoaded(true);
       initScaleAndBounds();

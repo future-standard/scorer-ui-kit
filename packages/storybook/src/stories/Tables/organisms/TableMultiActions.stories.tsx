@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import MultiActionsExample from "./MultiActionsExample";
-import { select } from "@storybook/addon-knobs";
+// import { select } from "@storybook/addon-knobs";
 import {
   ModalProvider,
   TypeTable,
@@ -24,14 +24,8 @@ export default {
 
 // Story starts here o.o
 export const _TableMultiActions = () => {
-  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
+  // const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
 
   // Provider should be at main Index level, it's here just for the example
-  return (
-    <Container>
-      <ModalProvider>
-        <MultiActionsExample {...{language}}/>
-      </ModalProvider>
-    </Container>
-  );
+  return null;
 };

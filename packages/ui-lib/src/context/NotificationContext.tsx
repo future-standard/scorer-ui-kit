@@ -16,7 +16,7 @@ const NotificationContext = React.createContext<NotificationContextType>(default
 
 const notificationList: INotificationProps[] = [];
 
-const NotificationProvider: React.FC = ({ children }) => {
+const NotificationProvider: React.FC<any> = ({ children }) => {
   const [activeNotification, setActiveNotification] = useState<INotificationProps | null>(null);
 
   const showNotification = useCallback(() => {

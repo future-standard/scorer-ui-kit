@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
-import { select, boolean, number } from "@storybook/addon-knobs";
+// import { select, boolean, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import {
   FilterInputs,
@@ -138,9 +138,9 @@ const isDifferentValue = (item: IFilterItem | Date | DateInterval, compareItem: 
 
 export const _FilterInputs = () => {
 
-  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
-  const hasShowMore = boolean('Has ShowMore', true);
-  const totalResults = number('Total Results', 6);
+  // const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
+  // const hasShowMore = boolean('Has ShowMore', true);
+  // const totalResults = number('Total Results', 6);
   const foodValue = action('food selection');
 
   const [selectedObj, setSelectedObj] = useState<IFilterValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
@@ -175,48 +175,48 @@ export const _FilterInputs = () => {
 
   },[]);
 
-  const dropdownFilters: IFilterDropdownExt[] = useMemo(() => [
-    {
-      id: 'category1',
-      buttonText: 'Department',
-      buttonIcon: 'MetaCategories',
-      list: depList,
-      loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
-      searchPlaceholder: language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
-      searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
-      onSelect: handleCategorySelected,
-      selected: categorySelected
-    },
-    {
-      id: 'food',
-      canHide: true,
-      buttonText: language === 'english' ? 'Menu' : 'メニュー',
-      buttonIcon: 'Zone',
-      list: language === 'english' ? englishDataList : japaneseDataList,
-      loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
-      searchPlaceholder: language === 'english' ? 'Menu options...' : 'メニュー...',
-      searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
-      optionType: 'checkbox',
-      onSelect: handleSelectItemType,
-      selected: selectedObj
-    },
-  ], [categorySelected, handleCategorySelected, handleSelectItemType, language, selectedObj]);
+  // const dropdownFilters: IFilterDropdownExt[] = useMemo(() => [
+  //   {
+  //     id: 'category1',
+  //     buttonText: 'Department',
+  //     buttonIcon: 'MetaCategories',
+  //     list: depList,
+  //     loadingText: genericLoadingJp,
+  //     searchPlaceholder: searchPlaceholderJapanese,
+  //     searchResultText: searchTemplateResultJapanese,
+  //     onSelect: handleCategorySelected,
+  //     selected: categorySelected
+  //   },
+  //   {
+  //     id: 'food',
+  //     canHide: true,
+  //     // buttonText: language === 'english' ? 'Menu' : 'メニュー',
+  //     // buttonIcon: 'Zone',
+  //     list:  japaneseDataList,
+  //     loadingText:  genericLoadingJp,
+  //     searchPlaceholder:  'メニュー...',
+  //     searchResultText:  searchTemplateResultJapanese,
+  //     optionType: 'checkbox',
+  //     onSelect: handleSelectItemType,
+  //     selected: selectedObj
+  //   },
+  // ], [categorySelected, handleCategorySelected, handleSelectItemType, selectedObj]);
 
   const searchFilters: ISearchFilter[] = useMemo(() => [
     {
       id: 'search1',
-      placeholder: language === 'english' ? 'Filter by name...' : '名前 フィルター',
-      value: nameVal,
-      name: language === 'english' ? 'Name filter' : '名前 フィルター',
+      // placeholder: language === 'english' ? 'Filter by name...' : '名前 フィルター',
+      // value: nameVal,
+      // name: language === 'english' ? 'Name filter' : '名前 フィルター',
       onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search1')}
     },
     {
       id: 'search2',
-      placeholder: language === 'english' ? 'Filter by food' : '食べ物 フィルター',
+      // placeholder: language === 'english' ? 'Filter by food' : '食べ物 フィルター',
       canHide: true,
       showFieldText: 'Search by food',
       value: foodSelected,
-      name: language === 'english' ? 'Menu filter' : 'メニュー  フィルター',
+      // name: language === 'english' ? 'Menu filter' : 'メニュー  フィルター',
       onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search2')}
     },
     {
@@ -227,9 +227,9 @@ export const _FilterInputs = () => {
       name: 'Example',
       onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search3')}
     }
-  ], [exampleSearch, foodSelected, handleSearcher, language, nameVal]);
+  ], [exampleSearch, foodSelected, handleSearcher, nameVal]);
 
-  const labelLists = generateResultsLabelData(dropdownFilters, searchFilters);
+  // const labelLists = generateResultsLabelData(dropdownFilters, searchFilters);
 
   const onClearAll = useCallback(() => {
     setSelectedObj(null);
@@ -240,37 +240,25 @@ export const _FilterInputs = () => {
   }, []);
 
 
-  const onRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => {
-    if (type === 'dropdown' ) {
-      const foundFilter = dropdownFilters.find((dropdown) => dropdown.id === filterId);
-      if (foundFilter && foundFilter.onSelect) {
-        const newSelected: IFilterValue = Array.isArray(foundFilter.selected)
-          ? foundFilter.selected.filter((currentItem : IFilterItem) => isDifferentValue(currentItem, item))
-          : null
-        foundFilter.onSelect(newSelected);
-      }
-    }
+  // const onRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => {
+  //   if (type === 'dropdown' ) {
+  //     const foundFilter = dropdownFilters.find((dropdown) => dropdown.id === filterId);
+  //     if (foundFilter && foundFilter.onSelect) {
+  //       const newSelected: IFilterValue = Array.isArray(foundFilter.selected)
+  //         ? foundFilter.selected.filter((currentItem : IFilterItem) => isDifferentValue(currentItem, item))
+  //         : null
+  //       foundFilter.onSelect(newSelected);
+  //     }
+  //   }
 
-    if (type === 'search') {
-      const foundFilter = searchFilters.find((searcher) => searcher.id === filterId);
-      if (foundFilter) {
-        handleSearcher('', filterId);
-      }
-    }
+  //   if (type === 'search') {
+  //     const foundFilter = searchFilters.find((searcher) => searcher.id === filterId);
+  //     if (foundFilter) {
+  //       handleSearcher('', filterId);
+  //     }
+  //   }
 
-  }, [dropdownFilters, handleSearcher, searchFilters]);
+  // }, [dropdownFilters, handleSearcher, searchFilters]);
 
-  return (
-    <Container>
-      <FilterInputs
-        {...{ searchFilters, dropdownFilters, hasShowMore }}
-        showMoreText={language === 'english' ? showMoreEng : showMoreJp}
-        showLessText={language === 'english' ? showLessEng : showLessJp}
-      />
-      <FiltersResults
-        {...{ labelLists, totalResults, onClearAll, onRemoveFilter }}
-        resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
-        clearText = {language === 'english' ? clearEng : clearJp}
-      />
-    </Container>)
+  return null;
 }

@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import { object } from "@storybook/addon-knobs";
+// import { object } from "@storybook/addon-knobs";
 
 
 import {TypeTable as EditableTable,
@@ -110,7 +110,7 @@ const sampleData: IExampleData[] = [
 export const _EditableTable = () => {
   const [data, setData] = useState<IExampleData[]>(sampleData);
   const [rows, setRows] = useState<ITypeTableData>([]);
-  const columnConfig = object('ColumConfig', columnConfigSample);
+  // const columnConfig = object('ColumConfig', columnConfigSample);
 
   const updateCameraName = useCallback(async (name: string, rowKey: string) => {
     const updatedData = [...data];
@@ -162,15 +162,13 @@ export const _EditableTable = () => {
   // Provider should be at main Index level, it's here just for the example
   return (
     <Container>
-      <ModalProvider>
-        <EditableTable {
-          ...{
-            columnConfig: columnConfig,
-            rows,
-            hasThumbnail: true,
-          }
-        } />
-      </ModalProvider>
+      {/* <ModalProvider>
+        <EditableTable columnConfig={[]} {...{
+          // columnConfig: columnConfig,
+          rows,
+          hasThumbnail: true,
+        }} />
+      </ModalProvider> */}
     </Container>
   )
 };

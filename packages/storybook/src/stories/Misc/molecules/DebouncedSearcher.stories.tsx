@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { DebouncedSearcher } from 'scorer-ui-kit';
-import { text, boolean, select, number } from "@storybook/addon-knobs";
+// import { text, boolean, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import { emptyCallbackForStory } from '../../helpers';
 
@@ -20,13 +20,13 @@ const Container = styled.div`
 
 export const _DebouncedSearcher = () => {
 
-  const inputPlaceholder = text("Placeholder", "Search by name...");
+  // const inputPlaceholder = text("Placeholder", "Search by name...");
   const textValue = action('Search value');
-  const hasBorder = boolean('Has border', true);
-  const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle" }, "subtle");
-  const iconSize = number('Icon size', 12);
-  const disabled = boolean('Disabled', false)
-  const defaultValue = text('Default Value', '');
+  // const hasBorder = boolean('Has border', true);
+  // const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle" }, "subtle");
+  // const iconSize = number('Icon size', 12);
+  // const disabled = boolean('Disabled', false)
+  // const defaultValue = text('Default Value', '');
 
   const handleChange = useCallback((debounceInput: string) => {
     textValue(debounceInput);
@@ -35,9 +35,9 @@ export const _DebouncedSearcher = () => {
   return (
     <Container>
       <DebouncedSearcher
-        placeholder={inputPlaceholder}
+
         onDebouncedChange={emptyCallbackForStory(handleChange)}
-        {...{ hasBorder, color, iconSize, disabled, defaultValue }}
+
       />
     </Container>
   )

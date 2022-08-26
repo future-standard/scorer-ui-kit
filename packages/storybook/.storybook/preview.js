@@ -6,10 +6,10 @@ import Fonts from '../src/fonts';
 import { MemoryRouter as Router } from 'react-router-dom'
 import Style from '../src/style';
 const { addDecorator } = require('@storybook/react');
-const { jsxDecorator } = require('storybook-addon-jsx');
+// const { jsxDecorator } = require('storybook-addon-jsx');
 
-// Add JSX to all components
-addDecorator(jsxDecorator);
+// // Add JSX to all components
+// addDecorator(jsxDecorator);
 
 const RouterDecorator = story => (
   <Router

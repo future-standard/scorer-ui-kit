@@ -1,5 +1,5 @@
 import React from 'react';
-import {  boolean, select, text } from "@storybook/addon-knobs";
+// import {  boolean, select, text } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 
 import photo from '../../assets/placeholder.jpg';
@@ -29,15 +29,15 @@ const ContainerInner = styled.div`
 
 export const _RowThumbnail = () => {
 
-  const hoverZoom = boolean("Zoom On Hover", true);
-  const image = text("Image Src", photo);
-  const mediaUrl = text("Video Src", video);
-  const mediaType = select("Media Type", ['img','video'], 'video');
-  const retryImageLoad = boolean("Retry Image",false)
+  // const hoverZoom = boolean("Zoom On Hover", true);
+  // const image = text("Image Src", photo);
+  // const mediaUrl = text("Video Src", video);
+  // const mediaType = select("Media Type", ['img','video'], 'video');
+  // const retryImageLoad = boolean("Retry Image",false)
 
   return <Container>
     <ContainerInner>
-      <TableRowThumbnail {...{hoverZoom, image, mediaUrl, mediaType, retryImageLoad}} />
+      {/* <TableRowThumbnail {...{hoverZoom, image, mediaUrl, mediaType, retryImageLoad}} /> */}
     </ContainerInner>
   </Container>;
 };

@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import {  boolean, text } from "@storybook/addon-knobs";
+// import {  boolean, text } from "@storybook/addon-knobs";
 import {TableHeaderTitle} from 'scorer-ui-kit';
 
 export default {
@@ -10,7 +10,7 @@ export default {
 };
 
 const Container = styled.div`
-  font-family: ${p => p.theme.fontFamily.data};
+  // font-family: ${p => p.theme.fontFamily.data};
   display: table-cell;
   height: inherit;
   vertical-align:top;
@@ -21,14 +21,14 @@ const Container = styled.div`
 
 export const _TableHeaderTitle = () => {
   const [toggleSort, setToggleSort] = useState(true);
-  const isSortActive = boolean('isSortActive', true);
-  const sortable = boolean('sortable', toggleSort);
-  const asc = boolean('ascending', toggleSort)
-  const header = text('header', 'Device Name')
+  // const isSortActive = boolean('isSortActive', true);
+  // const sortable = boolean('sortable', toggleSort);
+  // const asc = boolean('ascending', toggleSort)
+  // const header = text('header', 'Device Name')
 
-  useEffect(() => {
-    setToggleSort(asc);
-  }, [asc])
+  // useEffect(() => {
+  //   setToggleSort();
+  // }, [])
 
   const sortHandler = useCallback((indexKey: number) => {
     console.log('arriving', toggleSort);
@@ -37,14 +37,13 @@ export const _TableHeaderTitle = () => {
 
   return <Container>
       <TableHeaderTitle
-          sortable={sortable}
-          isSortActive= {isSortActive}
-          ascending={toggleSort}
-          columnId={'firstColumn'}
-          indexKey={1}
-          header={header}
-          toggleSort={sortHandler}
-        />
+      // sortable={sortable}
+      // isSortActive= {isSortActive}
+      ascending={toggleSort}
+      columnId={'firstColumn'}
+      indexKey={1}
+      // header={header}
+      toggleSort={sortHandler} header={''}        />
   </Container>
 
 };

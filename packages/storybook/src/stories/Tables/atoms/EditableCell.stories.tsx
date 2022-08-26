@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { text, select } from "@storybook/addon-knobs";
+// import { text, select } from "@storybook/addon-knobs";
 import {EditCell} from 'scorer-ui-kit';
 import {sleep} from '../../helpers';
 
@@ -27,8 +27,8 @@ const defaultVal = {id:'id-1', cameraName:'Camera1'}
 
 export const _EditCell = () => {
   const [cameraData, setCameraData] = useState(defaultVal);
-  const alignment = select('Alignment', { Left: "left", Center: "center", Right: "right" }, "left");
-  const toValue = text('ToLink', '/');
+  // const alignment = select('Alignment', { Left: "left", Center: "center", Right: "right" }, "left");
+  // const toValue = text('ToLink', '/');
 
 
   const updateCameraName = async (value: string, rowKey:string) => {
@@ -48,8 +48,8 @@ export const _EditCell = () => {
       defaultValue={cameraData.cameraName}
       rowKey={cameraData.id}
       saveCallback={updateCameraName}
-      alignment={alignment}
-      toLink={toValue}
+      // alignment={alignment}
+      // toLink={toValue}
       />
   </Container>
 };

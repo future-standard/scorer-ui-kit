@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {InputFileButton} from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
-import { boolean, select, text} from "@storybook/addon-knobs";
+// import { boolean, select, text} from "@storybook/addon-knobs";
 
 const Container = styled.div`
     margin: 20px;
@@ -16,10 +16,10 @@ export default {
 
 export const _InputFileButton = () => {
 
-  const multiple = boolean('Multiple', false);
-  const textVal = text('Text','Select a File');
-  const buttonDesign = select("Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
-  const buttonSize = select("Button Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
+  // const multiple = boolean('Multiple', false);
+  // const textVal = text('Text','Select a File');
+  // const buttonDesign = select("Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
+  // const buttonSize = select("Button Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
 
   const showValue = action('Input Callback');
 
@@ -36,8 +36,8 @@ export const _InputFileButton = () => {
   return(
     <Container>
       <InputFileButton
-        text={textVal}
-        {...{buttonDesign, buttonSize, multiple, inputCallback}}
+        text='sorrry'
+        {...{inputCallback}}
 
         />
     </Container>

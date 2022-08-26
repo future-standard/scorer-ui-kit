@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { AvatarUploader } from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
-import { text, boolean } from "@storybook/addon-knobs";
+// import { text, boolean } from "@storybook/addon-knobs";
 
 const Container = styled.div``;
 
@@ -14,17 +14,17 @@ export default {
 
 export const _AvatarUploader = () => {
 
-  const title = text('Uploader Title', 'Photograph');
-  const photoText = text('Photo Text', 'Drop Photo');
-  const buttonText = text('Button Text', 'Select File');
-  const buttonTextReplace = text('Button Text Replace', 'Replace Photo');
-  const uploaderCropText = text('Uploader Crop Text','Crop Image');
-  const cropToolTitle = text('CropTool Title', 'Crop utility');
-  const cropToolCancelTxt = text('CropTool Cancel Text', 'Cancel');
-  const cropToolConfirmTxt = text('CropTool Confirm Text', 'Crop and Save');
-  const deletePhotoText = text('Delete Photo Text', 'Remove');
-  const baseImg = boolean('Current Image', false);
-  const hasCrop = boolean('Has Crop', true);
+  // const title = text('Uploader Title', 'Photograph');
+  // const photoText = text('Photo Text', 'Drop Photo');
+  // const buttonText = text('Button Text', 'Select File');
+  // const buttonTextReplace = text('Button Text Replace', 'Replace Photo');
+  // const uploaderCropText = text('Uploader Crop Text','Crop Image');
+  // const cropToolTitle = text('CropTool Title', 'Crop utility');
+  // const cropToolCancelTxt = text('CropTool Cancel Text', 'Cancel');
+  // const cropToolConfirmTxt = text('CropTool Confirm Text', 'Crop and Save');
+  // const deletePhotoText = text('Delete Photo Text', 'Remove');
+  // const baseImg = boolean('Current Image', false);
+  // const hasCrop = boolean('Has Crop', true);
   const showValue = action('Update Callback');
   const errorValue = action('On Error');
   const onRemoveValue = action('On Remove');
@@ -47,20 +47,20 @@ export const _AvatarUploader = () => {
     <Container>
       <AvatarUploader
         onAvatarUpdate={uploadReady}
-        currentImg={baseImg ? 'http://placekitten.com/g/200/300' : ''}
+        currentImg={'http://placekitten.com/g/200/300'}
         {...{
-          title,
-          photoText,
-          buttonText,
-          buttonTextReplace,
+          // title,
+          // photoText,
+          // buttonText,
+          // buttonTextReplace,
           onError,
           onRemove,
-          uploaderCropText,
-          hasCrop,
-          cropToolTitle,
-          cropToolCancelTxt,
-          cropToolConfirmTxt,
-          deletePhotoText
+          // uploaderCropText,
+          // hasCrop,
+          // cropToolTitle,
+          // cropToolCancelTxt,
+          // cropToolConfirmTxt,
+          // deletePhotoText
         }}
       />
     </Container>

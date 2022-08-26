@@ -1,6 +1,6 @@
 import React, {useState, useCallback, ReactElement} from 'react';
 import styled from 'styled-components';
-import { object, boolean } from "@storybook/addon-knobs";
+// import { object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 
@@ -181,9 +181,9 @@ const initialRows : ITypeTableData = [
 ];
 
 export const ActionsTable = () => {
-  const hasThumbnail = boolean("Has Thumbnail", true);
-  const selectable = boolean("Selectable Rows", true);
-  const columnConfig = object("Column Configuration", columnConfigSample);
+  // const hasThumbnail = boolean("Has Thumbnail", true);
+  // const selectable = boolean("Selectable Rows", true);
+  // const columnConfig = object("Column Configuration", columnConfigSample);
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
   const toggleAllCallback = useCallback((checked:boolean) => {
     const newRows = [...rows];
@@ -207,19 +207,18 @@ export const ActionsTable = () => {
   // Provider should be at main Index level, it's here just for the example
   return (
     <Container>
-      <ModalProvider>
+      <div>hello</div>
+      {/* <ModalProvider>
         <TypeTableCustom
-          {...{
-            columnConfig,
-            rows,
-            selectable,
-            selectCallback,
-            toggleAllCallback,
-            hasThumbnail,
-          }
-          }
-        />
-      </ModalProvider>
+        columnConfig={[]} {...{
+          // columnConfig,
+          rows,
+          // selectable,
+          selectCallback,
+          toggleAllCallback,
+          // hasThumbnail,
+        }}        />
+      </ModalProvider> */}
     </Container>
   )
 };

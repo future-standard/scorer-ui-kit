@@ -1,6 +1,6 @@
 import React from 'react';
 // import { action } from '@storybook/addon-actions';
-import { boolean, number, object, text} from "@storybook/addon-knobs";
+// import { boolean, number, object, text} from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import {PercentageSlider, ISliderMark, IFeedbackColor} from 'scorer-ui-kit';
@@ -41,17 +41,17 @@ const exampleMarks : ISliderMark[] = [
 ];
 
 export const _PercentageSlider = () => {
-  const title = text('Title', 'Duration');
-  const disabled = boolean('Disabled', false);
-  const defaultValue = number('Default value', 30);
-  const customThumb = boolean("Custom colors function",false);
-  const customTitle = boolean("Custom Title function",false);
-  const showValue = action('Input Callback');
-  const marks = object('Marks', exampleMarks);
+  // const title = text('Title', 'Duration');
+  // const disabled = boolean('Disabled', false);
+  // const defaultValue = number('Default value', 30);
+  // const customThumb = boolean("Custom colors function",false);
+  // const customTitle = boolean("Custom Title function",false);
+  // const showValue = action('Input Callback');
+  // const marks = object('Marks', exampleMarks);
 
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
-    showValue(`Returned value: ${value}`, value)
+    // showValue(`Returned value: ${value}`, value)
   };
 
   const otherColorHandler = (value: number)  : IFeedbackColor =>{
@@ -81,14 +81,14 @@ export const _PercentageSlider = () => {
   return (
     <Container>
       <PercentageSlider
-          disabled={disabled}
+          // disabled={disabled}
           // step={step}
           inputCallback={handleUpdate}
-          marks={marks}
-          defaultValue={defaultValue}
-          title={title}
-          updateThumbColor={customThumb ? otherColorHandler : undefined }
-          updateTitle={customTitle ? otherTitlesHandler : undefined}
+          // marks={marks}
+          // defaultValue={defaultValue}
+          // title={title}
+          // updateThumbColor={customThumb ? otherColorHandler : undefined }
+          // updateTitle={customTitle ? otherTitlesHandler : undefined}
         />
     </Container>
   )

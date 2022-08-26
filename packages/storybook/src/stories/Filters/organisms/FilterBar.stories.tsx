@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { select, object, boolean, text } from "@storybook/addon-knobs";
+// import { select, object, boolean, text } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -110,7 +110,7 @@ const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleDat
  * Filter Bar Story Starts
  */
 export const _FilterBar = () => {
-  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
+  // const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
   const [rows, setRows] = useState<ITypeTableData>(rowMaker(dataInitialState));
   const [filters, setFilters] = useState<IFilterResult[]>([]);
@@ -118,10 +118,10 @@ export const _FilterBar = () => {
   /**
  * Story interaction section
  */
-  const singleFilter = boolean('Single Filter', false);
-  const hasShowMore = boolean('Has Show More', true);
+  // const singleFilter = boolean('Single Filter', false);
+  // const hasShowMore = boolean('Has Show More', true);
   // valid formats - https://date-fns.org/v2.25.0/docs/format
-  const resultsDateFormat = text('Results date format', 'yyyy-MM-dd');
+  // const resultsDateFormat = text('Results date format', 'yyyy-MM-dd');
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked: boolean, id?: string | number) => {
@@ -156,41 +156,41 @@ export const _FilterBar = () => {
   const searchers: ISearchFilter[] = [
     {
       id: 'inputForDeviceName',
-      placeholder: language === 'english' ? 'Filter by Device Name...' : 'デバイス名前 フィルター',
-      name: language === 'english' ? 'Device Name' : 'デバイス名前',
+      placeholder: 'デバイス名前 フィルター',
+      name:  'デバイス名前',
       // selected: {text:'OK', value: 'OK'}
     },
     {
       id: 'inputForDate',
-      placeholder: language === 'english' ? 'Filter by Date' : '年月日 フィルター',
-      name: language === 'english' ? 'Date' : '年月日',
+      placeholder:  '年月日 フィルター',
+      name:  '年月日',
       canHide: true,
-      showFieldText: language === 'english' ? 'Show Date Input' : '年月日 みる',
+      showFieldText: '年月日 みる',
     }
   ]
 
   const dropdowns: IFilterDropdownConfig[] = [
     {
       id: 'dropdownForStatus',
-      buttonText: language === 'english' ? 'Status' : 'ステータス',
-      list: language === 'english' ? statusValuesEng : statusValuesJp,
+      buttonText: 'ステータス',
+      list:  statusValuesJp,
       buttonIcon: 'Camera',
       optionType: 'checkbox',
-      loadingText: language === 'english' ? 'Loading Status ...' : genericLoadingJp,
-      searchPlaceholder: language === 'english' ? 'Status...' : 'ステータス...',
-      searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+      loadingText:  genericLoadingJp,
+      searchPlaceholder: 'ステータス...',
+      searchResultText: searchTemplateResultJapanese,
       // selected: {text: language === 'english'? 'OK' : 'OKです。', value: 'ok' }
     },
     {
       id: 'priceFilter',
       canHide: true,
-      buttonText: language === 'english' ? 'Cost' : '価格',
-      list: language === 'english' ? costRangeEng : costRangeJap,
+      buttonText:  '価格',
+      list:  costRangeJap,
       buttonIcon: 'Usage',
       optionType: 'radio',
-      loadingText: language === 'english' ? 'Loading Cost...' : genericLoadingJp,
-      searchPlaceholder: language === 'english' ? 'Cost...' : '価格...',
-      searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+      loadingText: genericLoadingJp,
+      searchPlaceholder: '価格...',
+      searchResultText:  searchTemplateResultJapanese,
     }
   ]
 
@@ -204,12 +204,12 @@ export const _FilterBar = () => {
       id: 'datePickerForRuntime',
       dateMode: 'interval',
       timeMode: 'off',
-      buttonText: language === 'english' ? 'Date Range' : '日付範囲',
+      buttonText:  '日付範囲',
       buttonIcon: 'DateTime',
-      dateTimeTextUpper: language === 'english' ? 'From' : 'から',
-      dateTimeTextLower: language === 'english' ? 'To' : 'まで',
-      timeZoneTitle: language === 'english' ? 'Timezone' : '時間帯',
-      lang: language === 'english' ? 'en' : 'ja'
+      // dateTimeTextUpper: language === 'english' ? 'From' : 'から',
+      // dateTimeTextLower: language === 'english' ? 'To' : 'まで',
+      // timeZoneTitle: language === 'english' ? 'Timezone' : '時間帯',
+      // lang: language === 'english' ? 'en' : 'ja'
       // selected: myDate,
     }
   ]
@@ -217,17 +217,17 @@ export const _FilterBar = () => {
   /**
    * objects only for display
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const searchersConfig = object('Search Filters', searchers);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dropdownsConfig = object('DropdownFilters', dropdowns);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const datePickersConfig = object('DatePickers', datePickers);
+  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const searchersConfig = object('Search Filters', searchers);
+  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const dropdownsConfig = object('DropdownFilters', dropdowns);
+  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const datePickersConfig = object('DatePickers', datePickers);
   const filtersValues = action('onChangeCallback');
 
   const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
     filtersValues(currentSelected);
-    const localData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
+    const localData = sortDataBy(tableDataJp, 'deviceName', true);
     const tempData: ITableSampleData[] = [...localData];
 
     if ((currentSelected.length === 0)) {
@@ -239,14 +239,14 @@ export const _FilterBar = () => {
       setFilters(currentSelected);
     }
 
-  }, [filtersValues, language])
+  }, [filtersValues, ])
 
 
   useEffect(() => {
-    const localizeData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
+    const localizeData =  sortDataBy(tableDataJp, 'deviceName', true);
     const newData = getFilteredData(filters, localizeData);
     setData(newData);
-  }, [filters, language])
+  }, [filters, ])
 
   useEffect(() => {
     setRows(rowMaker(data));
@@ -255,22 +255,21 @@ export const _FilterBar = () => {
   return (
     <Container>
       <FilterBar
-        {...{ singleFilter, hasShowMore }}
+        // {...{ singleFilter, hasShowMore }}
         searchersConfig={searchers}
         dropdownsConfig={dropdowns}
         datePickersConfig={datePickers}
         onChangeCallback={handleFilters}
         totalResults={rows.length}
-        showMoreText={language === 'english' ? showMoreEng : showMoreJp}
-        showLessText={language === 'english' ? showLessEng : showLessJp}
-        filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}
-        resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
-        clearText={language === 'english' ? clearEng : clearJp}
-        resultsDateFormat={resultsDateFormat}
+        showMoreText={ showMoreJp}
+        showLessText={ showLessJp}
+        filtersTitle={ 'フィルター'}
+        resultTextTemplate={resultTextTemplateJp}
+        clearText={ clearJp}
       />
       <TypeTableWrapper>
         <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}
-          columnConfig={language === 'english' ? columnConfigSample : columnConfigSampleJp}
+          columnConfig={columnConfigSampleJp}
           hasStatus
           selectable
           hasThumbnail

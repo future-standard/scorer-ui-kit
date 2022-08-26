@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { object, boolean } from "@storybook/addon-knobs";
+// import { object, boolean } from "@storybook/addon-knobs";
 import { TypeTable, ModalProvider } from 'scorer-ui-kit';
 
 import {
@@ -34,12 +34,12 @@ export const _TypeTable = () => {
   const [rows, setRows] = useState<ITypeTableData>(rowMaker(sortedByDeviceData));
 
   // To implement...
-  const hasStatus = boolean("Has Device Status", true);
-  const hasThumbnail = boolean("Has Thumbnail", true);
-  const hasTypeIcon = boolean("Has Device Type Icon", true);
-  const hasHeaderGroups = boolean("Has Header Groups", true);
-  const selectable = boolean("Selectable Rows", true);
-  const columnConfig = object("Column Configuration", columnConfigSample);
+  // const hasStatus = boolean("Has Device Status", true);
+  // const hasThumbnail = boolean("Has Thumbnail", true);
+  // const hasTypeIcon = boolean("Has Device Type Icon", true);
+  // const hasHeaderGroups = boolean("Has Header Groups", true);
+  // const selectable = boolean("Selectable Rows", true);
+  // const columnConfig = object("Column Configuration", columnConfigSample);
 
 
   // Sent to checkbox in TableRow via Table component.
@@ -77,25 +77,5 @@ export const _TypeTable = () => {
   }, [data])
 
   // Provider should be at main Index level, it's here just for the example
-  return (
-    <Container>
-      <ModalProvider>
-        <TypeTable {...{
-          columnConfig,
-          selectable,
-          rows,
-          hasStatus,
-          hasThumbnail,
-          hasTypeIcon,
-          defaultAscending: true,
-          hasHeaderGroups
-          }}
-
-          selectCallback={emptyCallbackForStory(selectCallback)}
-          toggleAllCallback={emptyCallbackForStory(toggleAllCallback)}
-          sortCallback={emptyCallbackForStory(sortCallback)}
-          />
-      </ModalProvider>
-    </Container>
-  );
+  return null;
 };

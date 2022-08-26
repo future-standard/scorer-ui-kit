@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import { action } from '@storybook/addon-actions';
-import { boolean, number, object, text, select } from "@storybook/addon-knobs";
+// import { boolean, number, object, text, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import { DurationSlider, ISliderMark, PageHeader, ITimeUnit } from 'scorer-ui-kit';
@@ -133,15 +133,15 @@ const secToMinAndHours = (seconds: number): ITimeValue => {
 
 export const _DurationSlider = () => {
 
-  const title = text('Title', 'Duration');
-  const durationUnit = select("Time Unit", { Seconds: 'seconds', Minutes: 'minutes', Hours: 'hours' }, 'hours');
-  const disabled = boolean('Disabled', false);
-  const maxValue = number('Max', 8);
-  const minValue = number('Min', 1);
-  const defaultValue = number('Default value', 6)
+  // const title = text('Title', 'Duration');
+  // const durationUnit = select("Time Unit", { Seconds: 'seconds', Minutes: 'minutes', Hours: 'hours' }, 'hours');
+  // const disabled = boolean('Disabled', false);
+  // const maxValue = number('Max', 8);
+  // const minValue = number('Min', 1);
+  // const defaultValue = number('Default value', 6)
 
   const showValue = action('Input Callback');
-  const marks = object('Marks', exampleMarks);
+  // const marks = object('Marks', exampleMarks);
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
     console.log('updated value', value);
@@ -150,15 +150,15 @@ export const _DurationSlider = () => {
 
   const [value2, setValue2] = useState<ITimeValue>({time: 30, unit: 'minutes'});
 
-  const title2 = text('Title 2', 'Time');
-  const disabled2 = boolean('Disabled 2', false);
-  const maxValue2 = number('Max 2', 3600);
-  const minValue2 = number('Min 2', 3);
-  const defaultValue2 = number('Default value 2', defaultMixValue)
-  const onlyMarkSelect = boolean('Only Mark Select', true);
+  // const title2 = text('Title 2', 'Time');
+  // const disabled2 = boolean('Disabled 2', false);
+  // const maxValue2 = number('Max 2', 3600);
+  // const minValue2 = number('Min 2', 3);
+  // const defaultValue2 = number('Default value 2', defaultMixValue)
+  // const onlyMarkSelect = boolean('Only Mark Select', true);
 
   const showValue2 = action('Input Callback');
-  const marks2 = object('Marks 2', exampleMarks2);
+  // const marks2 = object('Marks 2', exampleMarks2);
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate2 = (value: number) => {
     console.log('updated value2', value);
@@ -175,15 +175,14 @@ export const _DurationSlider = () => {
           introductionText='Values are controlled by component'
         />
         <DurationSlider
-          max={maxValue}
-          min={minValue}
-          disabled={disabled}
+          // max={maxValue}
+          // min={minValue}
+          // disabled={disabled}
           // step={step}
-          inputCallback={handleUpdate}
-          marks={marks}
-          defaultValue={defaultValue}
-          title={title}
-          timeUnit={durationUnit}
+          inputCallback={handleUpdate} title={''} timeUnit={''} max={20}          // marks={marks}
+          // defaultValue={defaultValue}
+          // title={title}
+          // timeUnit={durationUnit}
         />
       </Wrapper>
       <Wrapper>
@@ -192,17 +191,16 @@ export const _DurationSlider = () => {
           introductionText='Values are controlled from outside'
         />
         <DurationSlider
-          max={maxValue2}
-          min={minValue2}
-          disabled={disabled2}
+          // max={maxValue2}
+          // min={minValue2}
+          // disabled={disabled2}
           // step={step}
           inputCallback={handleUpdate2}
-          marks={marks2}
-          defaultValue={defaultValue2}
+          // marks={marks2}
+          // defaultValue={defaultValue2}
           controlledValue={value2.time}
-          title={title2}
-          timeUnit={value2.unit}
-          onlyMarkSelect={onlyMarkSelect}
+          // title={title2}
+          timeUnit={value2.unit} title={''} max={20}          // onlyMarkSelect={onlyMarkSelect}
         />
       </Wrapper>
     </Container>

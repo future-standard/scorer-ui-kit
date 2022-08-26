@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import {boolean, text, object} from "@storybook/addon-knobs";
+// import {boolean, text, object} from "@storybook/addon-knobs";
 
 import {TypeTable as LoadingTable } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
@@ -105,14 +105,14 @@ const dataRows : ITypeTableData = [
 ];
 
 export const _LoadingTable = () => {
-  const isLoading = boolean("IsLoading", true);
-  const emptyTable = boolean("Show Empty Table", true);
-  const emptyTableTitle = text("emptyTableTitle","No Data Available");
-  const emptyTableText = text("emptyTableText", 'There is currently no data');
-  const loadingText = text("loadingText", 'Loading Data..')
-  const selectable = boolean("Selectable Rows", true);
-  const hasGroups = boolean('Has Header Groups', true);
-  const columnConfig = object("Column Configuration", columnConfigSample);
+  // const isLoading = boolean("IsLoading", true);
+  // const emptyTable = boolean("Show Empty Table", true);
+  // const emptyTableTitle = text("emptyTableTitle","No Data Available");
+  // const emptyTableText = text("emptyTableText", 'There is currently no data');
+  // const loadingText = text("loadingText", 'Loading Data..')
+  // const selectable = boolean("Selectable Rows", true);
+  // const hasGroups = boolean('Has Header Groups', true);
+  // const columnConfig = object("Column Configuration", columnConfigSample);
 
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
@@ -137,20 +137,20 @@ export const _LoadingTable = () => {
 
     }, [rows, setRows]);
 
-  useEffect(() => {
-    if(emptyTable) {
-      setRows(initialRows)
-    } else {
-      setRows(dataRows);
-    }
-    return () => {
-      setRows(initialRows);
-    }
-  }, [emptyTable])
+  // useEffect(() => {
+  //   if(emptyTable) {
+  //     setRows(initialRows)
+  //   } else {
+  //     setRows(dataRows);
+  //   }
+  //   return () => {
+  //     setRows(initialRows);
+  //   }
+  // }, [emptyTable])
 
   return (
     <Container>
-      <LoadingTable
+      {/* <LoadingTable
         hasHeaderGroups={hasGroups}
         {...{
           columnConfig,
@@ -158,13 +158,13 @@ export const _LoadingTable = () => {
           toggleAllCallback,
           selectable,
           selectCallback,
-          isLoading,
-          loadingText,
-          hasThumbnail: true,
-          emptyTableTitle,
+          // isLoading,
+          // loadingText,
+          // hasThumbnail: true,
+          // emptyTableTitle,
           emptyTableText,
         }}
-      />
+      /> */}
     </Container>
   )
 

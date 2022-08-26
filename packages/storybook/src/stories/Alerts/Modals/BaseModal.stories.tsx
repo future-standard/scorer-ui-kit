@@ -1,6 +1,6 @@
 import React, {useState, useEffect, ReactElement} from 'react';
 import styled from 'styled-components';
-import { text, boolean } from "@storybook/addon-knobs";
+// import { text, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -43,24 +43,25 @@ const EmptyModal = (modal?: IModal) => {
 const customComponentExample : ReactElement = <h1>Hello!</h1>;
 
 export const _BaseModal = () => {
-  const closeTxt = text('Close text', 'Close')
-  const isCloseEnable = boolean('Is Close Enabled', true);
-  const padding = boolean('Padding', true);
-  const dismissAction = action('Modal dismissed');
-  const showCustom = boolean('Show Custom Component', false);
+  // const closeTxt = text('Close text', 'Close')
+  // const isCloseEnable = boolean('Is Close Enabled', true);
+  // const padding = boolean('Padding', true);
+  // const dismissAction = action('Modal dismissed');
+  // const showCustom = boolean('Show Custom Component', false);
 
   // Provider should be at main Index level, it's here just for the example
   return (
     <Container>
-      <ModalProvider>
+      {/* <ModalProvider>
+        <div></div>
         <EmptyModal
-          closeText={closeTxt}
-          isCloseEnable={isCloseEnable}
-          padding={padding}
-          dismissCallback={dismissAction}
-          customComponent={ showCustom ? customComponentExample : undefined}
+          // closeText={closeTxt}
+          // isCloseEnable={isCloseEnable}
+          // padding={padding}
+          // dismissCallback={dismissAction}
+          // customComponent={ showCustom ? customComponentExample : undefined}
         />
-      </ModalProvider>
+      </ModalProvider> */}
     </Container>
   )
 }

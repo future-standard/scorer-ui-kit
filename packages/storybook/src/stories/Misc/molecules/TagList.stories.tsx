@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {TagList, ITag} from 'scorer-ui-kit';
-import {object} from "@storybook/addon-knobs";
+// import {object} from "@storybook/addon-knobs";
 
 
 export default {
@@ -43,10 +43,10 @@ const defaultTags : ITag[] = [
 
 export const _TagList = () => {
 
-  const someTags = object("tagsConfig", defaultTags)
+  // const someTags = object("tagsConfig", defaultTags)
   return(
     <Container>
-      <TagList tagsConfig={someTags}/>
+      {/* <TagList tagsConfig={someTags}/> */}
     </Container>
   );
 };

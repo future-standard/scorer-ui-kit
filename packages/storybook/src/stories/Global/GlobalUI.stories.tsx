@@ -22,7 +22,7 @@ import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
 
-import { text, object, boolean } from '@storybook/addon-knobs';
+// import { text, object, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { useState } from 'react';
 
@@ -379,150 +379,149 @@ export const _GlobalUI = () => {
 
   const [isLightMode, setIsLightMode] = useState(true);
 
-  const maxWidth = text("Max width", "1200px");
-  const paddingOverride = text("Padding Override", "70px 90px");
-  const loggedInUser = text("Logged In User", "full.name@example.com");
-  const hasSearch = boolean("Has Search", true);
-  const hasLogout = boolean("Has Logout", true);
-  const hasNotifications = boolean("Has Notifications", true);
-  const hasCurrentUser = boolean("Has Current User", true);
-  const currentUserText = text("Current User Text", "Current User");
-  const logoutLink = text("Logout Url", "#")
-  const logoutText = text("Logout Text", "Logout");
-  const accountOptionText = text("Account Options Text", "Account Options")
-  const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
-  const logoMark = text("Logo Mark SVG", logoMarkSvg);
-  const logoText = text("Logo Text SVG", logoTextSvg);
-  const supportUrl = text("Support Url", "/support");
-  const menuHomeLink = text("Home Link", "/welcome");
-  const canAlwaysPin = boolean("Can Always Pin", true);
-  const defaultMenuOpen = boolean("Default menu open", false);
-  const hasLanguage = boolean("Has Language", true);
-  const selectedLanguageText = text("Selected Language Text", "English");
-  const hasSwitchTheme = boolean("Has Switch Theme", true);
-  const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
-  const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
+  // const maxWidth = text("Max width", "1200px");
+  // const paddingOverride = text("Padding Override", "70px 90px");
+  // const loggedInUser = text("Logged In User", "full.name@example.com");
+  // const hasSearch = boolean("Has Search", true);
+  // const hasLogout = boolean("Has Logout", true);
+  // const hasNotifications = boolean("Has Notifications", true);
+  // const hasCurrentUser = boolean("Has Current User", true);
+  // const currentUserText = text("Current User Text", "Current User");
+  // const logoutLink = text("Logout Url", "#")
+  // const logoutText = text("Logout Text", "Logout");
+  // const accountOptionText = text("Account Options Text", "Account Options")
+  // const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
+  // const logoMark = text("Logo Mark SVG", logoMarkSvg);
+  // const logoText = text("Logo Text SVG", logoTextSvg);
+  // const supportUrl = text("Support Url", "/support");
+  // const menuHomeLink = text("Home Link", "/welcome");
+  // const canAlwaysPin = boolean("Can Always Pin", true);
+  // const defaultMenuOpen = boolean("Default menu open", false);
+  // const hasLanguage = boolean("Has Language", true);
+  // const selectedLanguageText = text("Selected Language Text", "English");
+  // const hasSwitchTheme = boolean("Has Switch Theme", true);
+  // const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
+  // const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
   const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
 
-  const menuConfig = object("Menu Config", {
-    items: [
-      {
-        icon: 'Home',
-        title: 'Welcome',
-        href: '/welcome'
-      },
-      {
-        icon: 'Detection',
-        title: 'Company',
-        href: '/company',
-        submenu: [
-          {
-            title: 'About us',
-            href: '/company/about'
-          },
-          {
-            title: 'Team',
-            href: '/company/team'
-          },
-          {
-            title: 'Contact',
-            href: '/company/contact'
-          },
-          {
-            title: 'Table Example',
-            href: '/company/table-example'
-          },
-          {
-            icon: 'Language',
-            title: 'External link',
-            href: 'https://www.google.com/',
-            isExternalLink: true
-          }
-        ]
-      },
-      {
-        icon: 'Usage',
-        title: 'Services',
-        href: '/services',
-        submenu: [
-          {
-            title: 'Online Services'
-          },
-          {
-            title: 'Service custom',
-            href: '/services/custom'
-          },
-          {
-            title: 'Service special',
-            href: '/services/special'
-          },
-          {
-            title: 'Service extra special',
-            href: '/services/extra-special'
-          },
-          {
-            title: 'On site Services'
-          },
-          {
-            title: 'Service special',
-            href: '/services/special'
-          },
-          {
-            title: 'Service extra special',
-            href: '/services/extra-special'
-          }
-        ]
-      },
-      {
-        icon: 'Zone',
-        title: 'External link',
-        href: 'https://www.google.com/maps',
-        isExternalLink: true
-      }
-    ]
-  });
+  // const menuConfig = object("Menu Config", {
+  //   items: [
+  //     {
+  //       icon: 'Home',
+  //       title: 'Welcome',
+  //       href: '/welcome'
+  //     },
+  //     {
+  //       icon: 'Detection',
+  //       title: 'Company',
+  //       href: '/company',
+  //       submenu: [
+  //         {
+  //           title: 'About us',
+  //           href: '/company/about'
+  //         },
+  //         {
+  //           title: 'Team',
+  //           href: '/company/team'
+  //         },
+  //         {
+  //           title: 'Contact',
+  //           href: '/company/contact'
+  //         },
+  //         {
+  //           title: 'Table Example',
+  //           href: '/company/table-example'
+  //         },
+  //         {
+  //           icon: 'Language',
+  //           title: 'External link',
+  //           href: 'https://www.google.com/',
+  //           isExternalLink: true
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       icon: 'Usage',
+  //       title: 'Services',
+  //       href: '/services',
+  //       submenu: [
+  //         {
+  //           title: 'Online Services'
+  //         },
+  //         {
+  //           title: 'Service custom',
+  //           href: '/services/custom'
+  //         },
+  //         {
+  //           title: 'Service special',
+  //           href: '/services/special'
+  //         },
+  //         {
+  //           title: 'Service extra special',
+  //           href: '/services/extra-special'
+  //         },
+  //         {
+  //           title: 'On site Services'
+  //         },
+  //         {
+  //           title: 'Service special',
+  //           href: '/services/special'
+  //         },
+  //         {
+  //           title: 'Service extra special',
+  //           href: '/services/extra-special'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       icon: 'Zone',
+  //       title: 'External link',
+  //       href: 'https://www.google.com/maps',
+  //       isExternalLink: true
+  //     }
+  //   ]
+  // });
 
 
-  const userSubmenu = object("Submenu", [
-    {
-      text: 'Accounts',
-      href: '/user/accounts'
-    },
-    {
-      text: 'Billing',
-      href: '/user/billing'
-    },
-    {
-      text: 'Payments',
-      href: '/user/payments'
-    }
-  ])
-  const notificationsHistory = object("Notifications History", allNotifications);
+  // const userSubmenu = object("Submenu", [
+  //   {
+  //     text: 'Accounts',
+  //     href: '/user/accounts'
+  //   },
+  //   {
+  //     text: 'Billing',
+  //     href: '/user/billing'
+  //   },
+  //   {
+  //     text: 'Payments',
+  //     href: '/user/payments'
+  //   }
+  // ])
+  // const notificationsHistory = object("Notifications History", allNotifications);
 
-  const onThemeToggle = () => {
-    themeToggle();
-    setIsLightMode((prev) => !prev);
-  }
+  // const onThemeToggle = () => {
+  //   themeToggle();
+  //   setIsLightMode((prev) => !prev);
+  // }
 
-  const onLanguageToggle = () => {
-    languageToggle();
-  }
+  // const onLanguageToggle = () => {
+  //   languageToggle();
+  // }
 
   return (
     <Container>
-      <GlobalUI
-        content={menuConfig}
-        home={menuHomeLink}
-        defaultMenuOpen={defaultMenuOpen}
-        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer, canAlwaysPin }}
-        {...{
-          loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasCurrentUser, currentUserText, accountOptionText,
-          hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle,
-        }}
-      >
+      {/* <GlobalUI  loggedInUser={''} // content={menuConfig}
+      content={undefined}        // home={menuHomeLink}
+        // defaultMenuOpen={defaultMenuOpen}
+        // {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer, canAlwaysPin }}
+        // {...{
+        //   loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasCurrentUser, currentUserText, accountOptionText,
+        //   hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle,
+        // }}
+      > */}
         <ComponentLinks />
-      </GlobalUI>
+      {/* </GlobalUI> */}
     </Container>
   )
 }

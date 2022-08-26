@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TabsWithIconBar, ITabIcon, PageHeader } from 'scorer-ui-kit';
-import { text, object } from "@storybook/addon-knobs";
+// import { text, object } from "@storybook/addon-knobs";
 
 export default {
   title: 'Misc/molecules',
@@ -56,13 +56,13 @@ const list: ITabIcon[] = [
 
 export const _TabWithIconBar = () => {
 
-  const defaultTabId = text('Default Tab Id', 'example1');
-  const paddingLeft = text('Padding Left Override', PADDING_LEFT);
-  const tabList = object('TabList', list);
+  // const defaultTabId = text('Default Tab Id', 'example1');
+  // const paddingLeft = text('Padding Left Override', PADDING_LEFT);
+  // const tabList = object('TabList', list);
 
   return (
     <Container>
-      <TabsWithIconBar {...{ defaultTabId, tabList, paddingLeft }} />
+      <TabsWithIconBar defaultTabId={''} tabList={[]}  />
     </Container>
   )
 }

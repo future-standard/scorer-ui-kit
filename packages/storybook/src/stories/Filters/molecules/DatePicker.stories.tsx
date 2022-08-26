@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { select, text } from '@storybook/addon-knobs';
+// import { select, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
 
@@ -25,28 +25,28 @@ const exampleCallback = <T extends Function>(fn: T): T => {
 };
 
 export const _DatePicker = () => {
-  const language = select('Language', { English: 'en', Japanese: 'ja' }, 'ja');
-  const dateMode = select('Date Mode', { single: 'single', interval: 'interval' }, 'interval');
-  const timeMode = select('Time Mode', { off: 'off', single: 'single', interval: 'interval' }, 'interval');
-  const dateTimeTextUpper = text('Date Time Text Upper', 'From');
-  const dateTimeTextLower = text('Date Time Text Lower', 'To');
-  const timeZoneTitle = text('Time Zone Title', 'Timezone');
-  const timeZoneValueTitle = text('Time Zone Value', 'JST');
+  // const language = select('Language', { English: 'en', Japanese: 'ja' }, 'ja');
+  // const dateMode = select('Date Mode', { single: 'single', interval: 'interval' }, 'interval');
+  // const timeMode = select('Time Mode', { off: 'off', single: 'single', interval: 'interval' }, 'interval');
+  // const dateTimeTextUpper = text('Date Time Text Upper', 'From');
+  // const dateTimeTextLower = text('Date Time Text Lower', 'To');
+  // const timeZoneTitle = text('Time Zone Title', 'Timezone');
+  // const timeZoneValueTitle = text('Time Zone Value', 'JST');
   const updateCallback = action('Date / Time Updated');
 
   return (
     <Container>
       <FilterDropdownContainer>
         <DatePicker {...{
-          timeMode,
-          dateMode,
-          timeZoneValueTitle
+          // timeMode,
+          // dateMode,
+          // timeZoneValueTitle
         }}
           updateCallback={exampleCallback(updateCallback)}
-          dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}
-          dateTimeTextLower={language === 'ja' ? 'まで' : dateTimeTextLower}
-          timeZoneTitle={language === 'ja' ? '時間帯' : timeZoneTitle}
-          lang={language}
+          // dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}
+          // dateTimeTextLower={language === 'ja' ? 'まで' : dateTimeTextLower}
+          // timeZoneTitle={language === 'ja' ? '時間帯' : timeZoneTitle}
+          // lang={language}
         />
       </FilterDropdownContainer>
     </Container>);

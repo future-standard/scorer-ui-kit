@@ -1,5 +1,5 @@
 import React from 'react';
-import {  select, boolean, number } from "@storybook/addon-knobs";
+// import {  select, boolean, number } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {IconSVGs} from '@future-standard/icons';
 import {Icon} from 'scorer-ui-kit';
@@ -39,12 +39,12 @@ export const _Icons = () => {
 
   const iconList = generateIconList();
 
-  const showAll = boolean("Show All", false);
-  const forSvgUsage = boolean("For SVG Usage", false);
-  const icon = select("Name", iconList, Object.keys(iconList)[0]);
-  const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary" , Danger: "danger"}, "mono");
-  const weight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy", Strong: 'strong' }, "regular");
-  const size = number("Size", 24);
+  // const showAll = boolean("Show All", false);
+  // const forSvgUsage = boolean("For SVG Usage", false);
+  // const icon = select("Name", iconList, Object.keys(iconList)[0]);
+  // const color = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary" , Danger: "danger"}, "mono");
+  // const weight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy", Strong: 'strong' }, "regular");
+  // const size = number("Size", 24);
 
   /**
    * Generate a grid of all the icons for easy browsing and hovering to find names.
@@ -58,9 +58,9 @@ export const _Icons = () => {
   };
 
   return <Container>
-    {showAll ? <>
-      <Grid>{generateIconGrid({...{color, weight, size, forSvgUsage}})}</Grid>
-    </> : <Icon {...{icon, weight, color, size, forSvgUsage}} />}
+
+      <Grid></Grid>
+
 
   </Container>;
 };
