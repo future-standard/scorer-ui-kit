@@ -105,6 +105,16 @@ import {
   PTZContext
 } from './PTZControl';
 
+// Camera Panels
+import {
+  CameraPanels,
+  CameraPanelWrapper,
+  ICameraPanel,
+  IMediaStream,
+  IPanelMetaData
+} from './CameraPanels';
+
+
 // Misc
 import {
   Tag,
@@ -114,7 +124,9 @@ import {
   TagListWrapper,
   MediaBox,
   BasicSearchInput,
-  DebouncedSearcher
+  DebouncedSearcher,
+  ActionsBar,
+  IActionsButton,
 } from './Misc';
 
 import {
@@ -299,6 +311,10 @@ export {
   TabWithIcon,
   TabsWithIconBar,
 
+  // CameraPanels
+  CameraPanels,
+  CameraPanelWrapper,
+
   // Misc
   Tag,
   TagList,
@@ -306,6 +322,7 @@ export {
   MediaBox,
   BasicSearchInput,
   DebouncedSearcher,
+  ActionsBar,
 
   //Context
   NotificationProvider,
@@ -344,4 +361,8 @@ export type {
   IFilterResult,
   DateInterval,
   IFilterDatePicker,
+  ICameraPanel,
+  IMediaStream,
+  IPanelMetaData,
+  IActionsButton
 };

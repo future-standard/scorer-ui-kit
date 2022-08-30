@@ -62,6 +62,8 @@ export const useMediaModal = () => {
       dismissCallback,
       retryLoading = false,
       retryLimit=5,
+      minHeight='300px',
+      minWidth='300px',
     } = mediaModal;
 
     createModal({
@@ -79,7 +81,9 @@ export const useMediaModal = () => {
             onError,
             onMediaLoad,
             retryLoading,
-            retryLimit
+            retryLimit,
+            minHeight,
+            minWidth,
           }}
           hasModalLimits
         />

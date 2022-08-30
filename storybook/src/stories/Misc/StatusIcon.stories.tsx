@@ -2,7 +2,7 @@ import React from 'react';
 import {  select, number, boolean } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {StatusIcon} from 'scorer-ui-kit';
-import {IconSVGs} from '@future-standard/icons';
+import { generateIconList } from '../helpers';
 
 
 export default {
@@ -14,18 +14,6 @@ export default {
 const Container = styled.div`
   margin: 20px;
 `;
-
-
-const generateIconList = () => {
-  let iconList : {[key: string]: string}= {};
-
-
-  for(const key in IconSVGs){
-    iconList[key] = key;
-  }
-
-  return iconList;
-};
 
 export const _Status_Icon = () => {
   const iconList = generateIconList();

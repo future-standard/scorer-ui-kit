@@ -1,12 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Notification, { INotificationProps } from '../Alerts/atom/Notification';
+import { uniqueID } from '../helpers';
 
 type NotificationContextType = {
-  sendNotification: (newNotification: INotificationProps) => void;
+  sendNotification: (newNotification: INotificationProps) => void
+  clearNotifications: () => void
 };
 
 const defaultContext: NotificationContextType = {
   sendNotification: () => console.log("This is the context initialization should not appear"),
+  clearNotifications: () => console.log("This is the context initialization should not appear"),
 };
 
 const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
@@ -34,11 +37,12 @@ const NotificationProvider: React.FC = ({ children }) => {
     setActiveNotification(displayedNotification);
   }, []);
 
-  const sendNotification = async (newNotification: INotificationProps) => {
+  const sendNotification = useCallback(async (newNotification: INotificationProps) => {
 
     const validNotification: INotificationProps = {
       message: newNotification.message,
       type: newNotification.type,
+      id: uniqueID()
     };
 
     if (newNotification.icon) {
@@ -66,10 +70,24 @@ const NotificationProvider: React.FC = ({ children }) => {
     if (notificationList.length === 1 && activeNotification === null) {
       showNotification();
     }
-  };
+  },[activeNotification, showNotification]);
+
+  const clearNotifications = useCallback(() => {
+    notificationList.length = 0;
+    setActiveNotification((prev) => {
+
+      if(prev !== null) {
+        return {...prev, closeNow: true};
+      }
+
+    return prev;
+    });
+  },[]);
+
+  const contextValue = useMemo(() => ({sendNotification, clearNotifications}),[clearNotifications, sendNotification]);
 
   return (
-    <NotificationContext.Provider value={{ sendNotification }}>
+    <NotificationContext.Provider value={contextValue}>
       {activeNotification
         ? <Notification {...activeNotification} />
         : null}

@@ -1,8 +1,8 @@
 import React from 'react';
-import {IconSVGs} from '@future-standard/icons';
 import { text, select, boolean } from '@storybook/addon-knobs';
 import { FilterButton } from 'scorer-ui-kit';
 import styled from 'styled-components';
+import { generateIconList } from '../../helpers';
 
 export default {
   title: 'Filters/atoms',
@@ -11,16 +11,6 @@ export default {
 };
 
 const Content = styled.div``;
-
-const generateIconList = () => {
-  let iconList : {[key: string]: string}= {};
-
-  for(const key in IconSVGs){
-    iconList[key] = key;
-  }
-
-  return iconList;
-};
 
 export const _FilterButton = () => {
   const iconList = generateIconList();

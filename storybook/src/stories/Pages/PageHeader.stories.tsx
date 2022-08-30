@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {  text, select, boolean } from "@storybook/addon-knobs";
 
-import {PageHeader, IconSVGs} from 'scorer-ui-kit';
+import {PageHeader} from 'scorer-ui-kit';
+import { generateIconList } from '../helpers';
 
 const Container = styled.div`
   margin: 100px;
@@ -29,16 +30,6 @@ export const _PageHeader = () => {
     console.info("Note: Updating document.title in Storybook has no effect though it should work in projects.")
   }
 
-  return <Container><PageHeader icon={pageIcon} introductionText={introductionText} title={pageTitle} areaTitle={pageAreaText} areaHref={pageAreaHref} updateDocTitle={updateDocTitle} /></Container>;
+  return <Container><PageHeader icon={pageIcon || undefined} introductionText={introductionText} title={pageTitle} areaTitle={pageAreaText} areaHref={pageAreaHref} updateDocTitle={updateDocTitle} /></Container>;
 
-};
-
-const generateIconList = () => {
-  let iconList : {[key: string]: string}= {};
-
-  for(const key in IconSVGs){
-    iconList[key] = key;
-  }
-
-  return iconList;
 };
