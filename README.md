@@ -9,12 +9,12 @@ https://future-standard.github.io/scorer-ui-kit
 
 ## Version 1
   Legacy version, no mayor updates are made but will continue to do fixes.
+  [main-v1.x](https://github.com/future-standard/scorer-ui-kit/tree/main-v1.x)
 
 ## Version 2
 
   Our default branch is Version 2 release but we keep a legacy branch available.
   This version provides dark mode, the newest components and tools as well as been up to date with npm dependencies.
-
 
 ## How to use this repository.
 
