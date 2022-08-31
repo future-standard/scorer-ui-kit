@@ -11,7 +11,8 @@
 
   https://future-standard.github.io/scorer-ui-kit
 
-
+## Enabling Dark and Light theme in your project
+  You can read an example about how to configure dark and light theme in the Dark [Light Mode Usage document](../../dark_light_mode_usage.md)
 
 ## Development
 
@@ -53,9 +54,6 @@ If you want to run the project follow the next steps
 
   npm start --workspace=packages/storybook
 ```
-
-## Enabling Dark and Light theme in your project
-  You can read an example about how to configure dark and light theme in the Dark [Light Mode Usage document](../../dark_light_mode_usage.md)
 
 ## Contributing
 
