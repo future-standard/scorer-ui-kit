@@ -6,7 +6,7 @@ This is an example of how Index.tsx and App.tsx can be changed to enable Dark an
 
 Index.tsx
 
-```tsx
+```js
 import React, { FC, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { lightTheme, darkTheme, themeFallbackHelper, ModalProvider, NotificationProvider } from 'scorer-ui-kit';
@@ -54,7 +54,7 @@ ReactDOM.render(
 
 App.tsx
 
-```tsx
+```js
 export interface ITheme {
   isDarkThemeEnabled: boolean,
   onChangeTheme: () => void
@@ -69,7 +69,7 @@ const App: React.FC<ITheme> = ({ isDarkThemeEnabled, onChangeTheme }) => {
             selectedThemeText={isDarkThemeEnabled ? t('theme.darkMode') : t('theme.lightMode')}
             onThemeToggle={onChangeTheme}
           >
- </GlobalUI>
+          </GlobalUI>
 
-)
+        )
 ```
