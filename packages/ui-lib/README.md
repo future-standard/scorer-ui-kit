@@ -57,7 +57,7 @@ If you want to run the project follow the next steps
 ## Enabling Dark and Light theme in your project
   You can read an example about how to configure dark and light theme in the Dark [Light Mode Usage document](../../dark_light_mode_usage.md)
 
-### Contributing
+## Contributing
 
 This is an open source project, if you are interested in participating please contact [@atomworks](https://github.com/atomworks) or [@JoshLipps](https://github.com/JoshLipps).
 
