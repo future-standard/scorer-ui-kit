@@ -5,19 +5,6 @@ object-assign
 */
 
 /*!
- * OverlayScrollbars
- * https://github.com/KingSora/OverlayScrollbars
- *
- * Version: 1.13.0
- *
- * Copyright KingSora | Rene Haas.
- * https://github.com/KingSora
- *
- * Released under the MIT license.
- * Date: 02.08.2020
- */
-
-/*!
  * escape-html
  * Copyright(c) 2012-2013 TJ Holowaychuk
  * Copyright(c) 2015 Andreas Lubbe
@@ -29,16 +16,6 @@ object-assign
  * https://github.com/es-shims/es5-shim
  * @license es5-shim Copyright 2009-2020 by contributors, MIT License
  * see https://github.com/es-shims/es5-shim/blob/master/LICENSE
- */
-
-/*!
- * https://github.com/paulmillr/es6-shim
- * @license es6-shim Copyright 2013-2016 by Paul Miller (http://paulmillr.com)
- *   and contributors,  MIT License
- * es6-shim: v0.35.4
- * see https://github.com/paulmillr/es6-shim/blob/0.35.3/LICENSE
- * Details and documentation:
- * https://github.com/paulmillr/es6-shim/
  */
 
 /*!
@@ -55,16 +32,19 @@ object-assign
  * Released under the MIT License.
  */
 
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+
 /**
- * Prism: Lightweight, robust, elegant syntax highlighting
+ * @license React
+ * react-is.production.min.js
  *
- * @license MIT <https://opensource.org/licenses/MIT>
- * @author Lea Verou <https://lea.verou.me>
- * @namespace
- * @public
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v0.19.1
+/** @license React v0.20.2
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -82,17 +62,8 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v16.14.0
+/** @license React v17.0.2
  * react-dom.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/** @license React v16.14.0
- * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -102,6 +73,24 @@ object-assign
 
 /** @license React v17.0.2
  * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v17.0.2
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v17.0.2
+ * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
