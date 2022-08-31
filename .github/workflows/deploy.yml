@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3.0.2
 
     - name: Use Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3.4.1
       with:
-        node-version: '12.x'
+        node-version: '16.x'
 
     - name: Cache node modules
-      uses: actions/cache@v3.0.3
+      uses: actions/cache@v3.0.5
       env:
         cache-name: cache-node-modules
       with:
@@ -34,19 +34,17 @@ jobs:
       run: npm install
 
     - name: Build library
-      run: npm run build
+      run: npm run build -w packages/ui-lib
 
     - name: Build example
       run: |
-        cd example
-        npm install
+        cd packages/example
         npm run build
         date >> build/deployed.html
 
     - name: Build storybook
       run: |
-        cd storybook
-        npm install
+        cd packages/storybook
         npm run build-storybook
 
     - name: Deploy GH Pages
