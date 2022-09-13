@@ -181,7 +181,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           </g>}
         {label &&
           <g transform={`translate(0,${showSmallDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
-            <LabelText textAnchor='middle' dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
+            <LabelText textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
               {label}
             </LabelText>
           </g>}
