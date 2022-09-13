@@ -132,6 +132,18 @@ const Line: React.FC<{}> = () => {
     });
   }, [state]);
 
+  const selectLine = useCallback((lineId: number) => {
+    state.forEach((_, index) => {
+      dispatch({
+        type: 'UPDATE_SET_OPTIONS',
+        index,
+        data: {
+          showPointHandle: lineId === index,
+        }
+      });
+    });
+  }, [state]);
+
   const toggleOptions = useCallback((option: keyof LineUIOptions) => () => {
     setOptions({...options, [option]: !options[option]});
   }, [options]);
@@ -191,7 +203,7 @@ const Line: React.FC<{}> = () => {
       <Content padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUI options={options} src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
+          <LineUI options={options} onLineClick={selectLine} src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
         </LineSetContext.Provider>
       </Content>
     </Layout>
