@@ -87,7 +87,7 @@ interface ILineUnitProps {
   x2: number,
   y2: number,
   unit: number,
-  lineClickCallback: (lineSetId: number) => void,
+  lineClickCallback?: (lineSetId: number) => void,
   lineMoveCallback: any,
   lineMoveStartCallback: any,
   moveEndCB?: () => void;
