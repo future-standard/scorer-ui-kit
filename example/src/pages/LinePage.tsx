@@ -23,6 +23,7 @@ const Line: React.FC<{}> = () => {
   const [options, setOptions] = useState<LineUIOptions>({
     showSetIndex: true,
     pointIndexOffset: 1,
+    showPointHandle: true,
     showPointLabel: true,
     setIndexOffset: 1,
     showMoveHandle: true,
@@ -73,6 +74,7 @@ const Line: React.FC<{}> = () => {
               y: 389
             }
         ],
+        showPointHandle: true,
         showSmallDirectionMark: true,
         readOnly: false,
         styling: 'primary'
@@ -133,14 +135,20 @@ const Line: React.FC<{}> = () => {
   }, [state]);
 
   const selectLine = useCallback((lineId: number) => {
-    state.forEach((_, index) => {
-      dispatch({
-        type: 'UPDATE_SET_OPTIONS',
-        index,
-        data: {
-          showPointHandle: lineId === index,
-        }
-      });
+    const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
+    dispatch({
+      type: 'UPDATE_SET_OPTIONS',
+      index: deselectLineIndex,
+      data: {
+        showPointHandle: false,
+      }
+    });
+    dispatch({
+      type: 'UPDATE_SET_OPTIONS',
+      index: lineId,
+      data: {
+        showPointHandle: true,
+      }
     });
   }, [state]);
 
