@@ -141,6 +141,7 @@ const Line: React.FC<{}> = () => {
       index: deselectLineIndex,
       data: {
         showPointHandle: false,
+        showMoveHandle: false
       }
     });
     dispatch({
@@ -148,6 +149,7 @@ const Line: React.FC<{}> = () => {
       index: lineId,
       data: {
         showPointHandle: true,
+        showMoveHandle: true
       }
     });
   }, [state]);
