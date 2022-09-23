@@ -62,7 +62,7 @@ export const useMediaModal = () => {
       dismissCallback,
       retryLoading = false,
       retryLimit=5,
-      minHeight='300px',
+      minHeight='240px',
       minWidth='300px',
     } = mediaModal;
 
