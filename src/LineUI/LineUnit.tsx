@@ -5,7 +5,6 @@ import Icon from '../Icons/Icon';
 
 
 const ContrastLine = styled.line<{styling: string}>`
-  pointer-events: none;
   stroke: ${({theme, styling}) => theme.custom.lines[styling].contrastLine.stroke};
   mix-blend-mode: multiply;
 `;
@@ -88,6 +87,7 @@ interface ILineUnitProps {
   x2: number,
   y2: number,
   unit: number,
+  lineClickCallback?: (lineSetId: number) => void,
   lineMoveCallback: any,
   lineMoveStartCallback: any,
   moveEndCB?: () => void;
@@ -100,7 +100,7 @@ interface ILineUnitProps {
 
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
-  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling = 'primary', moveEndCB = () => { }, showSmallDirectionMark = false, overrideShowMoveHandle = true } = props;
+  const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling = 'primary', moveEndCB = () => { }, lineClickCallback = () => { }, showSmallDirectionMark = false, overrideShowMoveHandle = true } = props;
   const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
 
   // const a = x1 - x2;
@@ -181,7 +181,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           </g>}
         {label &&
           <g transform={`translate(0,${showSmallDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
-            <LabelText textAnchor='middle' dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
+            <LabelText textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
               {label}
             </LabelText>
           </g>}
@@ -191,7 +191,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
 
   return (
     <g>
-      <ContrastLine styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
+      <ContrastLine onClick={() => lineClickCallback(lineSetId)} styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
       <HighlightLine styling={styling} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
       <GrabHandleGroup styling={styling} showIndex={handleFinderActive && revealSetIndex} originalRadius={8 * unit}>

@@ -26,6 +26,7 @@ interface ILineSetProps {
   lineData: IPointSet,
   options: IDragLineUISharedOptions,
   onLineMoveEnd: () => void;
+  onLineClick: (lineSetId: number) => void;
   getCTM: () => DOMMatrix | null;
 }
 
@@ -50,7 +51,7 @@ const AreaLabel : React.FC<AreaLabelProps> = ( { lineSetData, unit } ) => {
   return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'} x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText>;
 };
 
-const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options , onLineMoveEnd}) => {
+const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options, onLineMoveEnd, onLineClick }) => {
   // console.log("Unit " + lineSetId + ", reporting in...")
 
   const {state, dispatch} = useContext(LineSetContext);
@@ -228,6 +229,7 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       unit={unit}
       label={name}
       styling={styling}
+      lineClickCallback={onLineClick}
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
       showSmallDirectionMark={lineSetData.showSmallDirectionMark}

@@ -67,6 +67,7 @@ interface LineUIProps {
   ws: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
+  onLineClick?: ()=> void;
   onLoaded?: (metadata: {height: number; width: number; }) => void;
   options?: LineUIOptions;
   videoOptions?: LineUIVideoOptions;
@@ -75,6 +76,7 @@ const LineUI : React.FC<LineUIProps> = ({
   ws,
   onSizeChange = ()=>{},
   onLineMoveEnd = ()=>{},
+  onLineClick = ()=>{},
   onLoaded = ()=>{},
   videoOptions,
   options: {
@@ -192,7 +194,7 @@ const LineUI : React.FC<LineUIProps> = ({
         loaded &&
           <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
             {state.map((lineSet, index) => (
-              <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
+              <LineSet key={index} onLineMoveEnd={onLineMoveEnd} onLineClick={onLineClick} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
               ))}
           </Frame>
       }
