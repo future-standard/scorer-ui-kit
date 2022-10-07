@@ -104,7 +104,7 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   const handleModal = useCallback(async () => {
 
     if ( mediaUrl && mediaType ) {
-      createMediaModal({ src: mediaUrl, mediaType });
+      createMediaModal({ src: mediaUrl, mediaType, minHeight: '240px' });
     }
   }, [createMediaModal, mediaType, mediaUrl]);
 
