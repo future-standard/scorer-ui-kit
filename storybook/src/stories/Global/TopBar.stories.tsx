@@ -103,6 +103,7 @@ export const _TopBar = () => {
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const currentUserText = text("Current User Text", "Current User");
   const logoutText = text("Logout Text", "Logout");
+  const version = text("Version", '');
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
@@ -118,6 +119,29 @@ export const _TopBar = () => {
     }
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
+
+  const userConfig = object("User Notes", {
+    items: [
+      {
+        icon: 'Home',
+        title: 'Welcome',
+        subTitle: 'In City',
+        notes: ''
+      },
+      {
+        icon: 'Detection',
+        title: 'Company',
+        subTitle: 'In City',
+        notes: ''
+      },
+      {
+        icon: 'Usage',
+        title: 'Services',
+        subTitle: 'In City',
+        notes: ''
+      },
+    ]
+  });
 
   // userDrawerBespoke: See examples for implementation of this prop.
 
@@ -135,8 +159,10 @@ export const _TopBar = () => {
         hasCurrentUser,
         notificationsHistory,
         currentUserText,
-        logoutText
+        version,
+        logoutText,
       }}
+        userDetails={userConfig}
         customDrawer={drawerProps}
       />
     </Container>

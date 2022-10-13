@@ -1,10 +1,11 @@
-import React, { useCallback, Fragment } from 'react';
+import React, { useCallback, Fragment, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import Icon from '../../Icons/Icon';
-import { ITopBar } from '../index';
+import { ITopBar, IUserDetails } from '../index';
 import { resetButtonStyles } from '../../common/index';
+import UserDetails from '../atoms/UserDetails';
 
 const DrawerTop = styled.div``;
 const DrawerBottom = styled.div`
@@ -101,10 +102,34 @@ const LanguageMenu = styled.button`
     &:active { ${theme.typography.global.mainMenu.subItem.active}; }
   `};
 
-  padding: 20px 10px 15px;
+  border-bottom: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  ${({ theme }) => css`
+    ${theme.typography.global.mainMenu.subItem.default};
+    &:hover { ${theme.typography.global.mainMenu.subItem.hover}; }
+    &:active { ${theme.typography.global.mainMenu.subItem.active}; }
+  `};
+
+  padding: 20px 10px 20px;
   align-items: center;
   width: 100%;
 `;
+
+const VersionContainer = styled.div`
+  font-family: ${({ theme }) => theme.fontFamily.ui};
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+
+  padding: 10px 10px 10px;
+  align-items: center;
+  width: 100%;
+  
+  font-size: 12px;
+  font-weight: 800;
+`;
+
+
+const NavigationContainer = styled.div``;
 
 interface IUserMenu extends ITopBar {
   closeOnClick?: () => void
@@ -124,7 +149,11 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLogout = () => { },
   onLanguageToggle = () => { },
   closeOnClick,
+  version,
+  userDetails,
 }) => {
+
+  const [focusedContext, setFocusedContext] = useState<number>(0);
 
   const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
@@ -141,6 +170,13 @@ const UserMenu: React.FC<IUserMenu> = ({
     }
   },[closeOnClick]);
 
+  ///
+  const setFocusedContextCb = useCallback(contextKey => {
+    if(contextKey === -1) { return; }
+    
+    setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
+  }, [setFocusedContext, focusedContext]);
+
   return (
     <Fragment>
       <DrawerTop>
@@ -150,6 +186,18 @@ const UserMenu: React.FC<IUserMenu> = ({
             {loggedInUser}
           </CurrentUser>
           : null}
+
+        <NavigationContainer>
+          {userDetails?.items?.map((item:IUserDetails, key:number) => {
+          return (
+            <UserDetails
+              key={key}
+              contextKey={key}
+              onClickCallback={setFocusedContextCb}
+              {...{ item, focusedContext }} />
+          );
+          })}
+        </NavigationContainer>
 
         {userSubmenu.length > 0 ?
           <UserOptions>
@@ -186,6 +234,14 @@ const UserMenu: React.FC<IUserMenu> = ({
               Language / 言語
             </LanguageMenu>
         }
+        {version ?
+        <VersionContainer>
+          <IconWrapper>
+            <Icon icon='Information' size={14} color='dimmed' />
+          </IconWrapper>
+          {version}
+        </VersionContainer>
+        : null}
       </DrawerBottom>
     </Fragment>
   );
