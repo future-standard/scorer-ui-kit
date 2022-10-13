@@ -150,6 +150,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLanguageToggle = () => { },
   closeOnClick,
   version,
+  onUserDetailsClick = () => { },
   userDetails,
 }) => {
 
@@ -191,6 +192,7 @@ const UserMenu: React.FC<IUserMenu> = ({
           {userDetails?.items?.map((item:IUserDetails, key:number) => {
           return (
             <UserDetails
+              onUserDetailsClick={onUserDetailsClick}
               key={key}
               contextKey={key}
               onClickCallback={setFocusedContextCb}

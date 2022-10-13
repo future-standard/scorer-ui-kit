@@ -88,6 +88,7 @@ export interface IMenuTop {
     customDrawer?: ICustomDrawer;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
+    onUserDetailsClick?: ()=>void;
     version? : string,
     userDetails?: any;
   }

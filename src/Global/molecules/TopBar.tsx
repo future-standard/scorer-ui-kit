@@ -158,6 +158,7 @@ const TopBar: React.FC<ITopBar> = ({
   onLanguageToggle = () => { },
   version,
   userDetails,
+  onUserDetailsClick = () => { },
 }) => {
 
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
@@ -218,6 +219,7 @@ const TopBar: React.FC<ITopBar> = ({
               loggedInUser,
               onLogout,
               onLanguageToggle,
+              onUserDetailsClick,
               version,
               userDetails,
             }}

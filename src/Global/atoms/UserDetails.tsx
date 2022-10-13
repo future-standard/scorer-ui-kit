@@ -64,9 +64,10 @@ interface IProps {
   item: IUserDetails;
   contextKey: number;
   onClickCallback?: (...args: any[]) => void;
+  onUserDetailsClick?:() => void;
 }
 
-const UserDetails : React.FC<IProps> = ({item, contextKey, onClickCallback}) => {
+const UserDetails : React.FC<IProps> = ({item, contextKey, onClickCallback, onUserDetailsClick}) => {
   const { icon, title, subTitle, notes } = item;
 
   const refSubmenu = useRef<any>(null);
@@ -81,7 +82,7 @@ const UserDetails : React.FC<IProps> = ({item, contextKey, onClickCallback}) => 
   }, [refSubmenu, setSubmenuHeight, contextKey]);
 
   return (
-    <div>
+    <div onClick={onUserDetailsClick}>
       <ExampleTitle>
         <TitleContainer>
           <TitleIcon icon={icon} size={12} />
