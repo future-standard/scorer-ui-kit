@@ -129,7 +129,12 @@ const VersionContainer = styled.div`
 `;
 
 
-const NavigationContainer = styled.div``;
+const NavigationContainer = styled.div`
+  max-height: 300px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+`;
 
 interface IUserMenu extends ITopBar {
   closeOnClick?: () => void
@@ -152,6 +157,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   version,
   onUserDetailsClick = () => { },
   userDetails,
+  hasUserDetails,
 }) => {
 
   const [focusedContext, setFocusedContext] = useState<number>(0);
@@ -188,18 +194,20 @@ const UserMenu: React.FC<IUserMenu> = ({
           </CurrentUser>
           : null}
 
-        <NavigationContainer>
-          {userDetails?.items?.map((item:IUserDetails, key:number) => {
-          return (
-            <UserDetails
-              onUserDetailsClick={onUserDetailsClick}
-              key={key}
-              contextKey={key}
-              onClickCallback={setFocusedContextCb}
-              {...{ item, focusedContext }} />
-          );
-          })}
-        </NavigationContainer>
+        {hasUserDetails?
+          <NavigationContainer>
+            {userDetails?.items?.map((item:IUserDetails, key:number) => {
+            return (
+              <UserDetails
+                onUserDetailsClick={onUserDetailsClick}
+                key={key}
+                contextKey={key}
+                onClickCallback={setFocusedContextCb}
+                {...{ item, focusedContext }} />
+            );
+            })}
+          </NavigationContainer>
+        :null}
 
         {userSubmenu.length > 0 ?
           <UserOptions>
