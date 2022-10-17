@@ -15,7 +15,6 @@ const ExampleTitle = styled.div`
 
 const LabelTitle = styled.div`
   font-size: 12px; 
-  padding-left: 10px;
   font-weight: 800;
   max-width: 200px;
   overflow-wrap: initial;
@@ -36,7 +35,7 @@ const LabelContent = styled.div`
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0 0 5px 0;
+  margin: 3px 0 5px 0;
   font-weight: 700;
   color: #585858e6;
   opacity: 0.7;
@@ -64,6 +63,7 @@ const TitleIcon = styled(Icon)`
 
 const TitleContainer = styled.div`
   display: flex;
+  gap:10px;
   flex-direction: row;
   align-items: center;
   margin-left: 10px;
