@@ -50,7 +50,7 @@ const LabelNotes = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 3px 0 5px 0;
+  margin: 4px 0 4px 0;
   font-weight: 700;
   color: #585858e6;
   opacity: 0.7;
