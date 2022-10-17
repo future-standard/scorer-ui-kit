@@ -83,6 +83,8 @@ const UserDetails : React.FC<IProps> = ({item, onUserDetailsClick}) => {
   const { icon, title, subTitle, notes } = item;
 
   return (
+    <div>
+    {(notes !== '' ) &&
       <Container onClick={onUserDetailsClick}>
         <ExampleTitle>
           <TitleContainer>
@@ -96,7 +98,8 @@ const UserDetails : React.FC<IProps> = ({item, onUserDetailsClick}) => {
             <LabelNotes title={notes}>{notes}</LabelNotes>
           : null}
         </ExampleTitle>
-      </Container>
+      </Container>}
+    </div>
   );
 };
 
