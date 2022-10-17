@@ -91,6 +91,7 @@ export interface IMenuTop {
     onUserDetailsClick?: ()=>void;
     version? : string,
     userDetails?: any;
+    hasUserDetails?: boolean,
   }
 
   export interface INotificationItem {

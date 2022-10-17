@@ -392,6 +392,7 @@ export const _GlobalUI = () => {
   const menuHomeLink = text("Home Link", "/welcome");
   const canAlwaysPin = boolean("Can Always Pin", true);
   const defaultMenuOpen = boolean("Default menu open", false);
+  const hasUserDetails = boolean("Has User Details", true);
   const menuConfig = object("Menu Config", {
     items: [
       {
@@ -487,6 +488,29 @@ export const _GlobalUI = () => {
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
 
+  const userConfig = object("User Notes", {
+    items: [
+      {
+        icon: 'Camera',
+        title: 'Camera Device',
+        subTitle: 'Building A',
+        notes: `This device is on fourth floor. connected with two USB devices.`,
+      },
+      {
+        icon: 'Information',
+        title: 'Nuc-1',
+        subTitle: 'Building B',
+        notes: `This device is on third floor. connected with two USB devices.`,
+      },
+      {
+        icon: 'Success',
+        title: 'Nuc-2',
+        subTitle: 'Building C',
+        notes: `This device is on fourth floor. connected with two USB devices.`,
+      },
+    ]
+  });
+
   return (
     <Container>
       <GlobalUI
@@ -494,8 +518,9 @@ export const _GlobalUI = () => {
         home={menuHomeLink}
         defaultMenuOpen={defaultMenuOpen}
         canAlwaysPin={canAlwaysPin}
+        userDetails={userConfig}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
-        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText }}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, hasUserDetails }}
       >
         <ComponentLinks />
       </GlobalUI>

@@ -136,6 +136,13 @@ const NavigationContainer = styled.div`
   overflow-y: auto;
 `;
 
+const Border = styled.div`
+  ${({ theme }) => css`
+  border-bottom: ${theme.colors.divider} 1px solid;
+  ${theme.typography.global.mainMenu.identity};
+  `};
+`;
+
 interface IUserMenu extends ITopBar {
   closeOnClick?: () => void
 }
@@ -195,6 +202,7 @@ const UserMenu: React.FC<IUserMenu> = ({
           : null}
 
         {hasUserDetails?
+        <div>
           <NavigationContainer>
             {userDetails?.items?.map((item:IUserDetails, key:number) => {
             return (
@@ -207,6 +215,8 @@ const UserMenu: React.FC<IUserMenu> = ({
             );
             })}
           </NavigationContainer>
+          <Border />
+        </div>
         :null}
 
         {userSubmenu.length > 0 ?

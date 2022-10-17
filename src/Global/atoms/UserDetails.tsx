@@ -34,7 +34,7 @@ const LabelContent = styled.div`
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 5px 0px;
+  margin: 0 0 5px 0;
   font-weight: 700;
   color: #585858e6;
   opacity: 0.7;

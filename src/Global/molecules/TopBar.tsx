@@ -159,6 +159,7 @@ const TopBar: React.FC<ITopBar> = ({
   version,
   userDetails,
   onUserDetailsClick = () => { },
+  hasUserDetails,
 }) => {
 
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
@@ -222,6 +223,7 @@ const TopBar: React.FC<ITopBar> = ({
               onUserDetailsClick,
               version,
               userDetails,
+              hasUserDetails,
             }}
             />
           </Drawer>

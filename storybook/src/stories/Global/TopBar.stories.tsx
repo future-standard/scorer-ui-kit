@@ -104,6 +104,7 @@ export const _TopBar = () => {
   const currentUserText = text("Current User Text", "Current User");
   const logoutText = text("Logout Text", "Logout");
   const version = text("Version", '');
+  const hasUserDetails = boolean("Has User Details", true);
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
@@ -123,22 +124,22 @@ export const _TopBar = () => {
   const userConfig = object("User Notes", {
     items: [
       {
-        icon: 'Home',
-        title: 'Welcome',
-        subTitle: 'In City',
-        notes: ''
+        icon: 'Camera',
+        title: 'Camera Device',
+        subTitle: 'Building A',
+        notes: `This device is on fourth floor. connected with two USB devices.`,
       },
       {
-        icon: 'Detection',
-        title: 'Company',
-        subTitle: 'In City',
-        notes: ''
+        icon: 'Information',
+        title: 'Nuc-1',
+        subTitle: 'Building B',
+        notes: `This device is on third floor. connected with two USB devices.`,
       },
       {
-        icon: 'Usage',
-        title: 'Services',
-        subTitle: 'In City',
-        notes: ''
+        icon: 'Success',
+        title: 'Nuc-2',
+        subTitle: 'Building C',
+        notes: `This device is on fourth floor. connected with two USB devices.`,
       },
     ]
   });
@@ -156,6 +157,7 @@ export const _TopBar = () => {
         logoutLink,
         searchPlaceholder,
         hasLanguage,
+        hasUserDetails,
         hasCurrentUser,
         notificationsHistory,
         currentUserText,
