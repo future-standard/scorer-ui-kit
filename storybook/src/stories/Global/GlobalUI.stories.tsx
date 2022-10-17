@@ -393,6 +393,7 @@ export const _GlobalUI = () => {
   const canAlwaysPin = boolean("Can Always Pin", true);
   const defaultMenuOpen = boolean("Default menu open", false);
   const hasUserDetails = boolean("Has User Details", true);
+  const version = text("Version", '');
   const menuConfig = object("Menu Config", {
     items: [
       {
@@ -520,7 +521,7 @@ export const _GlobalUI = () => {
         canAlwaysPin={canAlwaysPin}
         userDetails={userConfig}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
-        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, hasUserDetails }}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, hasUserDetails, version }}
       >
         <ComponentLinks />
       </GlobalUI>

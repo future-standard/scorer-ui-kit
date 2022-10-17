@@ -244,7 +244,7 @@ const UserMenu: React.FC<IUserMenu> = ({
             </LanguageMenu>
         }
         {version ?
-        <VersionContainer>
+        <VersionContainer title={version}>
           <IconWrapper>
             <Icon icon='Information' size={14} color='dimmed' />
           </IconWrapper>
