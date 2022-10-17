@@ -160,12 +160,10 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLanguageToggle = () => { },
   closeOnClick,
   version,
-  onUserDetailsClick = () => { },
+  onUserDetailsClick = () => { }, 
   userDetails,
   hasUserDetails,
 }) => {
-
-  const [focusedContext, setFocusedContext] = useState<number>(0);
 
   const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
@@ -193,19 +191,20 @@ const UserMenu: React.FC<IUserMenu> = ({
           : null}
 
         {hasUserDetails?
-        <div>
-          <NavigationContainer>
-            {userDetails?.items?.map((item:IUserDetails, key:number) => {
-            return (
-              <UserDetails
-                onUserDetailsClick={onUserDetailsClick}
-                key={key}
-                {...{ item }} />
-            );
-            })}
-          </NavigationContainer>
-          <Border />
-        </div>
+          <div>
+            <NavigationContainer>
+              {userDetails?.items?.map((item:IUserDetails, key:number) => {
+              return (
+                <UserDetails
+                  onUserDetailsClick={onUserDetailsClick}
+                  key={key}
+                  {...{ item }} 
+                />
+              );
+              })}
+            </NavigationContainer>
+            <Border />
+          </div>
         :null}
 
         {userSubmenu.length > 0 ?
@@ -244,13 +243,13 @@ const UserMenu: React.FC<IUserMenu> = ({
             </LanguageMenu>
         }
         {version ?
-        <VersionContainer title={version}>
-          <IconWrapper>
-            <Icon icon='Information' size={14} color='dimmed' />
-          </IconWrapper>
-          {version}
-        </VersionContainer>
-        : null}
+          <VersionContainer title={version}>
+            <IconWrapper>
+              <Icon icon='Information' size={14} color='dimmed' />
+            </IconWrapper>
+            {version}
+          </VersionContainer>
+          : null}
       </DrawerBottom>
     </Fragment>
   );

@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import styled, { css }  from 'styled-components';
+import React from 'react';
+import styled  from 'styled-components';
 import { IUserDetails } from '..';
 import Icon from '../../Icons/Icon';
 
@@ -84,21 +84,21 @@ const UserDetails : React.FC<IProps> = ({item, onUserDetailsClick}) => {
 
   return (
     <div>
-    {(notes !== '' ) &&
-      <Container onClick={onUserDetailsClick}>
-        <ExampleTitle>
-          <TitleContainer>
-            <TitleIcon icon={icon} size={12} />
-            <LabelTitle title={title}>{title}</LabelTitle>
-          </TitleContainer>
-          {subTitle !=='' ?
-            <LabelContent title={subTitle}>{subTitle}</LabelContent>
-          : null}
-          {notes !=='' ?
-            <LabelNotes title={notes}>{notes}</LabelNotes>
-          : null}
-        </ExampleTitle>
-      </Container>}
+      {(notes !== '' ) &&
+        <Container onClick={onUserDetailsClick}>
+          <ExampleTitle>
+            <TitleContainer>
+              <TitleIcon icon={icon} size={12} />
+              <LabelTitle title={title}>{title}</LabelTitle>
+            </TitleContainer>
+            {subTitle !=='' ?
+              <LabelContent title={subTitle}>{subTitle}</LabelContent>
+            : null}
+            {notes !=='' ?
+              <LabelNotes title={notes}>{notes}</LabelNotes>
+            : null}
+          </ExampleTitle>
+        </Container>}
     </div>
   );
 };
