@@ -24,6 +24,7 @@ const LabelTitle = styled.div`
   text-overflow: ellipsis;
   color: #585858e6;
   opacity: 0.7;
+  user-select: none;
 `;
 
 const LabelContent = styled.div`
@@ -38,6 +39,7 @@ const LabelContent = styled.div`
   font-weight: 700;
   color: #585858e6;
   opacity: 0.7;
+  user-select: none;
 `;
 
 const LabelNotes = styled.div`
@@ -52,6 +54,7 @@ const LabelNotes = styled.div`
   color: #585858e6;
   opacity: 0.7;
   max-height: 23px;
+  user-select: none;
 `;
 
 const TitleIcon = styled(Icon)`
