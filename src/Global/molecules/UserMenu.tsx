@@ -119,11 +119,9 @@ const VersionContainer = styled.div`
   margin-top: auto;
   display: flex;
   flex-direction: row;
-
   padding: 10px 10px 10px;
   align-items: center;
   width: 100%;
-  
   font-size: 12px;
   font-weight: 800;
 `;
