@@ -25,6 +25,7 @@ const LabelTitle = styled.div`
   color: #585858e6;
   opacity: 0.7;
   user-select: none;
+  white-space: nowrap;
 `;
 
 const LabelContent = styled.div`
@@ -40,6 +41,7 @@ const LabelContent = styled.div`
   color: #585858e6;
   opacity: 0.7;
   user-select: none;
+  white-space: nowrap;
 `;
 
 const LabelNotes = styled.div`
