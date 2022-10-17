@@ -184,13 +184,6 @@ const UserMenu: React.FC<IUserMenu> = ({
     }
   },[closeOnClick]);
 
-  ///
-  const setFocusedContextCb = useCallback(contextKey => {
-    if(contextKey === -1) { return; }
-    
-    setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
-  }, [setFocusedContext, focusedContext]);
-
   return (
     <Fragment>
       <DrawerTop>
@@ -209,9 +202,7 @@ const UserMenu: React.FC<IUserMenu> = ({
               <UserDetails
                 onUserDetailsClick={onUserDetailsClick}
                 key={key}
-                contextKey={key}
-                onClickCallback={setFocusedContextCb}
-                {...{ item, focusedContext }} />
+                {...{ item }} />
             );
             })}
           </NavigationContainer>

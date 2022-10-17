@@ -74,24 +74,11 @@ const Container = styled.div`
 
 interface IProps {
   item: IUserDetails;
-  contextKey: number;
-  onClickCallback?: (...args: any[]) => void;
   onUserDetailsClick?:() => void;
 }
 
-const UserDetails : React.FC<IProps> = ({item, contextKey, onClickCallback, onUserDetailsClick}) => {
+const UserDetails : React.FC<IProps> = ({item, onUserDetailsClick}) => {
   const { icon, title, subTitle, notes } = item;
-
-  const refSubmenu = useRef<any>(null);
-  const [submenuHeight, setSubmenuHeight] = useState<number>(0);
-
-  useEffect(() => {
-    if(refSubmenu && refSubmenu.current && refSubmenu.current.clientHeight !== 0){
-      setSubmenuHeight(refSubmenu.current.clientHeight);
-    }
-
-    // if(readyCallback){ readyCallback(contextKey); }
-  }, [refSubmenu, setSubmenuHeight, contextKey]);
 
   return (
       <Container onClick={onUserDetailsClick}>
