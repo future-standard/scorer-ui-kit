@@ -392,7 +392,7 @@ export const _GlobalUI = () => {
   const menuHomeLink = text("Home Link", "/welcome");
   const canAlwaysPin = boolean("Can Always Pin", true);
   const defaultMenuOpen = boolean("Default menu open", false);
-  const hasUserDetails = boolean("Has User Details", true);
+  const hasUserDetails = boolean("Has User Details", false);
   const version = text("Version", '');
   const menuConfig = object("Menu Config", {
     items: [

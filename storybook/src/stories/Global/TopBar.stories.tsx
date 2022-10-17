@@ -104,7 +104,7 @@ export const _TopBar = () => {
   const currentUserText = text("Current User Text", "Current User");
   const logoutText = text("Logout Text", "Logout");
   const version = text("Version", '');
-  const hasUserDetails = boolean("Has User Details", true);
+  const hasUserDetails = boolean("Has User Details", false);
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
