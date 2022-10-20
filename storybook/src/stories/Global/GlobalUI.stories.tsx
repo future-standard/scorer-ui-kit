@@ -392,8 +392,8 @@ export const _GlobalUI = () => {
   const menuHomeLink = text("Home Link", "/welcome");
   const canAlwaysPin = boolean("Can Always Pin", true);
   const defaultMenuOpen = boolean("Default menu open", false);
-  const hasUserDetails = boolean("Has User Details", false);
-  const version = text("Version", '');
+  const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
+  const footer = text("Version", '');
   const menuConfig = object("Menu Config", {
     items: [
       {
@@ -493,21 +493,21 @@ export const _GlobalUI = () => {
     items: [
       {
         icon: 'Camera',
-        title: 'Camera Device',
+        title: 'DEB-ESC4000E-N4S0CG0000K3',
         subTitle: 'Building A',
-        notes: `This device is on fourth floor. connected with two USB devices.`,
+        notes: `This is a GPU machine having 30 camera support`,
       },
       {
         icon: 'Information',
-        title: 'Nuc-1',
+        title: 'GPU machine with 4 GPU',
         subTitle: 'Building B',
-        notes: `This device is on third floor. connected with two USB devices.`,
+        notes: `TThis device is on third floor. connected with two USB devices. --> This is a GPU machine having 30 camera support`,
       },
       {
         icon: 'Success',
-        title: 'Nuc-2',
+        title: 'Device is Live',
         subTitle: 'Building C',
-        notes: `This device is on fourth floor. connected with two USB devices.`,
+        notes: `This is a GPU machine having 30 camera support`,
       },
     ]
   });
@@ -519,9 +519,9 @@ export const _GlobalUI = () => {
         home={menuHomeLink}
         defaultMenuOpen={defaultMenuOpen}
         canAlwaysPin={canAlwaysPin}
-        userDetails={userConfig}
+        userDrawerMeta={userConfig}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
-        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, hasUserDetails, version }}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, hasUserDrawerMeta, footer }}
       >
         <ComponentLinks />
       </GlobalUI>

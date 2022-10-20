@@ -1,9 +1,9 @@
 import React from 'react';
 import styled  from 'styled-components';
-import { IUserDetails } from '..';
+import { IUserDrawerMeta } from '..';
 import Icon from '../../Icons/Icon';
 
-const ExampleTitle = styled.div`
+const MetaConatiner = styled.div`
   margin: 10px 10px;
   border: 2px solid #e2e2e380;
   background-color: #eeeded80;
@@ -58,9 +58,6 @@ const LabelNotes = styled.div`
   user-select: none;
 `;
 
-const TitleIcon = styled(Icon)`
-`;
-
 const TitleContainer = styled.div`
   display: flex;
   gap:10px;
@@ -75,20 +72,20 @@ const Container = styled.div`
 `;
 
 interface IProps {
-  item: IUserDetails;
-  onUserDetailsClick?:() => void;
+  item: IUserDrawerMeta;
+  onUserDrawerMetaClick?:() => void;
 }
 
-const UserDetails : React.FC<IProps> = ({item, onUserDetailsClick}) => {
+const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick}) => {
   const { icon, title, subTitle, notes } = item;
 
   return (
     <div>
       {(notes !== '' ) &&
-        <Container onClick={onUserDetailsClick}>
-          <ExampleTitle>
+        <Container onClick={onUserDrawerMetaClick}>
+          <MetaConatiner>
             <TitleContainer>
-              <TitleIcon icon={icon} size={12} />
+              <Icon icon={icon} size={12} />
               <LabelTitle title={title}>{title}</LabelTitle>
             </TitleContainer>
             {subTitle !=='' ?
@@ -97,10 +94,10 @@ const UserDetails : React.FC<IProps> = ({item, onUserDetailsClick}) => {
             {notes !=='' ?
               <LabelNotes title={notes}>{notes}</LabelNotes>
             : null}
-          </ExampleTitle>
+          </MetaConatiner>
         </Container>}
     </div>
   );
 };
 
-export default UserDetails;
+export default UserDrawerMeta;

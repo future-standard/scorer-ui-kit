@@ -103,8 +103,8 @@ export const _TopBar = () => {
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const currentUserText = text("Current User Text", "Current User");
   const logoutText = text("Logout Text", "Logout");
-  const version = text("Version", '');
-  const hasUserDetails = boolean("Has User Details", false);
+  const footer = text("Footer", '');
+  const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
@@ -125,21 +125,21 @@ export const _TopBar = () => {
     items: [
       {
         icon: 'Camera',
-        title: 'Camera Device',
+        title: 'DEB-ESC4000E-N4S0CG0000K3',
         subTitle: 'Building A',
-        notes: `This device is on fourth floor. connected with two USB devices.`,
+        notes: `This is a GPU machine having 30 camera support`,
       },
       {
         icon: 'Information',
-        title: 'Nuc-1',
+        title: 'GPU machine with 4 GPU',
         subTitle: 'Building B',
-        notes: `This device is on third floor. connected with two USB devices.`,
+        notes: `TThis device is on third floor. connected with two USB devices. --> This is a GPU machine having 30 camera support`,
       },
       {
         icon: 'Success',
-        title: 'Nuc-2',
+        title: 'Device is Live',
         subTitle: 'Building C',
-        notes: `This device is on fourth floor. connected with two USB devices.`,
+        notes: `This is a GPU machine having 30 camera support`,
       },
     ]
   });
@@ -157,14 +157,14 @@ export const _TopBar = () => {
         logoutLink,
         searchPlaceholder,
         hasLanguage,
-        hasUserDetails,
+        hasUserDrawerMeta,
         hasCurrentUser,
         notificationsHistory,
         currentUserText,
-        version,
+        footer,
         logoutText,
       }}
-        userDetails={userConfig}
+        userDrawerMeta={userConfig}
         customDrawer={drawerProps}
       />
     </Container>

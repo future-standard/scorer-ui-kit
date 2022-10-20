@@ -36,7 +36,7 @@ export interface IMenuTop {
     submenu?: IMenuItemSubmenu[]
   }
 
-  export interface IUserDetails {
+  export interface IUserDrawerMeta {
     title?: string,
     icon?: any,
     subTitle?: string,
@@ -88,10 +88,10 @@ export interface IMenuTop {
     customDrawer?: ICustomDrawer;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
-    onUserDetailsClick?: ()=>void;
+    onUserDrawerMetaClick?: ()=>void;
     version? : string,
-    userDetails?: any;
-    hasUserDetails?: boolean,
+    userDrawerMeta?: any;
+    hasUserDrawerMeta?: boolean,
   }
 
   export interface INotificationItem {

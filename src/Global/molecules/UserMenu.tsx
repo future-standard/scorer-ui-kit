@@ -3,9 +3,9 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import Icon from '../../Icons/Icon';
-import { ITopBar, IUserDetails } from '../index';
+import { ITopBar, IUserDrawerMeta } from '../index';
 import { resetButtonStyles } from '../../common/index';
-import UserDetails from '../atoms/UserDetails';
+import UserDetails from '../atoms/UserDrawerMeta';
 
 const DrawerTop = styled.div``;
 const DrawerBottom = styled.div`
@@ -114,7 +114,7 @@ const LanguageMenu = styled.button`
   width: 100%;
 `;
 
-const VersionContainer = styled.div`
+const FooterContainer = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
   margin-top: auto;
   display: flex;
@@ -160,9 +160,9 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLanguageToggle = () => { },
   closeOnClick,
   version,
-  onUserDetailsClick = () => { }, 
-  userDetails,
-  hasUserDetails,
+  onUserDrawerMetaClick = () => { }, 
+  userDrawerMeta,
+  hasUserDrawerMeta,
 }) => {
 
   const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -190,13 +190,13 @@ const UserMenu: React.FC<IUserMenu> = ({
           </CurrentUser>
           : null}
 
-        {hasUserDetails?
+        {hasUserDrawerMeta?
           <div>
             <NavigationContainer>
-              {userDetails?.items?.map((item:IUserDetails, key:number) => {
+              {userDrawerMeta?.items?.map((item:IUserDrawerMeta, key:number) => {
               return (
                 <UserDetails
-                  onUserDetailsClick={onUserDetailsClick}
+                  onUserDrawerMetaClick={onUserDrawerMetaClick}
                   key={key}
                   {...{ item }} 
                 />
@@ -243,12 +243,12 @@ const UserMenu: React.FC<IUserMenu> = ({
             </LanguageMenu>
         }
         {version ?
-          <VersionContainer title={version}>
+          <FooterContainer title={version}>
             <IconWrapper>
               <Icon icon='Information' size={14} color='dimmed' />
             </IconWrapper>
             {version}
-          </VersionContainer>
+          </FooterContainer>
           : null}
       </DrawerBottom>
     </Fragment>
