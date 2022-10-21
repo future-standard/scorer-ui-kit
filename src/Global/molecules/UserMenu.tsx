@@ -119,7 +119,7 @@ const FooterContainer = styled.div`
   margin-top: auto;
   display: flex;
   flex-direction: row;
-  padding: 10px 10px 10px 20px;
+  padding: 10px 10px 10px 27px;
   align-items: center;
   width: 100%;
   font-size: 12px;
