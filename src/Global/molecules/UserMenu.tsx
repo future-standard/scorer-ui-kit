@@ -125,7 +125,7 @@ const FooterContainer = styled.div`
   font-size: 12px;
   font-weight: 800;
   display: flex;
-  gap: 10px;
+  gap: 16px;
 `;
 
 const NavigationContainer = styled.div`
