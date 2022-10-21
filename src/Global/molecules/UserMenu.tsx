@@ -124,6 +124,8 @@ const FooterContainer = styled.div`
   width: 100%;
   font-size: 12px;
   font-weight: 800;
+  display: flex;
+  gap: 10px;
 `;
 
 
@@ -132,6 +134,14 @@ const NavigationContainer = styled.div`
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
+`;
+
+const FooterConatiner = styled.div`
+  white-space: break-spaces;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  white-space: nowrap;
 `;
 
 const Border = styled.div`
@@ -247,7 +257,9 @@ const UserMenu: React.FC<IUserMenu> = ({
             <IconWrapper>
               <Icon icon='Information' size={14} color='dimmed' />
             </IconWrapper>
-            {userDrawerFooter?.title}
+            <FooterConatiner>
+              {userDrawerFooter?.title}
+            </FooterConatiner>
           </FooterContainer>
           : null}
       </DrawerBottom>
