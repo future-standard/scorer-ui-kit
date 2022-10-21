@@ -63,7 +63,7 @@ const LabelNotes = styled.div`
 
 const TitleContainer = styled.div`
   display: flex;
-  gap:10px;
+  gap:6px;
   flex-direction: row;
   align-items: center;
   margin-left: 10px;
@@ -88,7 +88,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick}) => {
         <Container onClick={onUserDrawerMetaClick}>
           <MetaConatiner>
             <TitleContainer>
-              <Icon icon={icon as string} size={12} />
+              <Icon icon={icon as string} size={10} />
               <LabelTitle title={title}>{title}</LabelTitle>
             </TitleContainer>
             {subTitle !=='' ?

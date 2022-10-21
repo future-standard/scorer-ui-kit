@@ -70,7 +70,7 @@ export interface IMenuTop {
     width?: string
   }
 
-  export interface IUserDrawerMeta {
+  export interface IUserDrawerMetaDetails {
     icon?: string,
     title?: string,
     subTitle?: string,
@@ -97,7 +97,7 @@ export interface IMenuTop {
     onLanguageToggle?: ()=>void;
     onUserDrawerMetaClick?: ()=>void;
     version? : string,
-    userDrawerMeta?: any;
+    userDrawerMeta?: IUserDrawerMetaDetails;
     hasUserDrawerMeta?: boolean,
   }
 
