@@ -124,28 +124,27 @@ export const _TopBar = () => {
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
 
-  const userDrawerMetaConfig = object("User Drawer Meta", {
-    items: [
-      {
-        icon: '',
-        title: 'Device ID:',
-        subTitle: '',
-        notes: `DEB-NUC8i7BE-G6BE935008VH`,
-      },
-      {
-        icon: 'Information',
-        title: 'GPU machine with 4 GPU',
-        subTitle: 'Building B',
-        notes: `This is a GPU machine having 30 camera support`,
-      },
-      {
-        icon: 'Success',
-        title: 'Device is Live',
-        subTitle: 'Building C',
-        notes: `This is a GPU machine having 30 camera support`,
-      },
-    ]
-  });
+  const userDrawerMetaConfig = object("User Drawer Meta", [
+    {
+      icon: '',
+      title: 'Device ID:',
+      subTitle: '',
+      notes: `DEB-NUC8i7BE-G6BE935008VH`,
+    },
+    {
+      icon: 'Information',
+      title: 'GPU machine with 4 GPU',
+      subTitle: 'Building B',
+      notes: `This is a GPU machine having 30 camera support`,
+    },
+    {
+      icon: 'Success',
+      title: 'Device is Live',
+      subTitle: 'Building C',
+      notes: `This is a GPU machine having 30 camera support`,
+    },
+  ]
+);
 
   // userDrawerBespoke: See examples for implementation of this prop.
 

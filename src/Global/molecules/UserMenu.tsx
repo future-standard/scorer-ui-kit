@@ -193,7 +193,7 @@ const UserMenu: React.FC<IUserMenu> = ({
         {hasUserDrawerMeta?
           <div>
             <NavigationContainer>
-              {userDrawerMeta?.items?.map((item:IUserDrawerMeta, key:number) => {
+              {userDrawerMeta?.map((item:IUserDrawerMeta, key:number) => {
               return (
                 <UserDetails
                   onUserDrawerMetaClick={onUserDrawerMetaClick}

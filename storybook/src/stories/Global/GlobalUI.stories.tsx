@@ -492,8 +492,7 @@ export const _GlobalUI = () => {
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
 
-  const userDrawerMetaConfig = object("User Drawer Meta", {
-    items: [
+  const userDrawerMetaConfig = object("User Drawer Meta", [
       {
         icon: '',
         title: 'Device ID:',
@@ -513,7 +512,7 @@ export const _GlobalUI = () => {
         notes: `This is a GPU machine having 30 camera support`,
       },
     ]
-  });
+  );
 
   return (
     <Container>
