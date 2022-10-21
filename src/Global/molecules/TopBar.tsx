@@ -156,7 +156,7 @@ const TopBar: React.FC<ITopBar> = ({
   customDrawer,
   onLogout = () => { },
   onLanguageToggle = () => { },
-  version,
+  userDrawerFooter,
   userDrawerMeta,
   onUserDrawerMetaClick = () => { },
   hasUserDrawerMeta,
@@ -221,7 +221,7 @@ const TopBar: React.FC<ITopBar> = ({
               onLogout,
               onLanguageToggle,
               onUserDrawerMetaClick,
-              version,
+              userDrawerFooter,
               userDrawerMeta,
               hasUserDrawerMeta,
             }}

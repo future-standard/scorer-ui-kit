@@ -159,7 +159,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLogout = () => { },
   onLanguageToggle = () => { },
   closeOnClick,
-  version,
+  userDrawerFooter,
   onUserDrawerMetaClick = () => { }, 
   userDrawerMeta,
   hasUserDrawerMeta,
@@ -242,12 +242,12 @@ const UserMenu: React.FC<IUserMenu> = ({
               Language / 言語
             </LanguageMenu>
         }
-        {version ?
-          <FooterContainer title={version}>
+        {(userDrawerFooter?.icon !== '' || userDrawerFooter?.title !== '' ) ?
+          <FooterContainer title={userDrawerFooter?.icon}>
             <IconWrapper>
               <Icon icon='Information' size={14} color='dimmed' />
             </IconWrapper>
-            {version}
+            {userDrawerFooter?.title}
           </FooterContainer>
           : null}
       </DrawerBottom>

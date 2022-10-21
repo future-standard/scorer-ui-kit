@@ -77,6 +77,11 @@ export interface IMenuTop {
     notes?: string,
   } []
 
+  export interface IUserDrawerFooter {
+    icon:string,
+    title:string,
+  }
+
   export interface ITopBar {
     hasNotifications?: boolean;
     userSubmenu?: any[];
@@ -96,8 +101,8 @@ export interface IMenuTop {
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
     onUserDrawerMetaClick?: ()=>void;
-    version? : string,
-    userDrawerMeta?: IUserDrawerMetaDetails;
+    userDrawerFooter? : IUserDrawerFooter ,
+    userDrawerMeta?: any;
     hasUserDrawerMeta?: boolean,
   }
 

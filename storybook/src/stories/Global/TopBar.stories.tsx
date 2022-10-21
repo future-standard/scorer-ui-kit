@@ -103,8 +103,11 @@ export const _TopBar = () => {
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const currentUserText = text("Current User Text", "Current User");
   const logoutText = text("Logout Text", "Logout");
-  const footer = text("Footer", '');
   const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
+  const userDrawerFooter = object("User Drawer Footer", {
+    icon: 'Information',
+    title: 'V12.3.4',
+  });
   const userSubmenu = object("Submenu", [
     {
       text: 'Accounts',
@@ -161,7 +164,7 @@ export const _TopBar = () => {
         hasCurrentUser,
         notificationsHistory,
         currentUserText,
-        footer,
+        userDrawerFooter,
         logoutText,
       }}
         userDrawerMeta={userDrawerMetaConfig}

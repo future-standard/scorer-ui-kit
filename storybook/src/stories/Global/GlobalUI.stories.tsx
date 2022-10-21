@@ -392,8 +392,10 @@ export const _GlobalUI = () => {
   const menuHomeLink = text("Home Link", "/welcome");
   const canAlwaysPin = boolean("Can Always Pin", true);
   const defaultMenuOpen = boolean("Default menu open", false);
-  const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
-  const footer = text("Version", '');
+  const userDrawerFooter = object("User Drawer Footer", {
+    icon: 'Information',
+    title: 'V12.3.4',
+  });
   const menuConfig = object("Menu Config", {
     items: [
       {
@@ -521,7 +523,7 @@ export const _GlobalUI = () => {
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
-        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, hasUserDrawerMeta, footer }}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter }}
       >
         <ComponentLinks />
       </GlobalUI>
