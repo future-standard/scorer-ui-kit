@@ -128,8 +128,8 @@ export const _TopBar = () => {
     {
       icon: '',
       title: 'Device ID:',
-      subTitle: '',
-      notes: `DEB-NUC8i7BE-G6BE935008VH`,
+      subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
+      notes: '',
     },
     {
       icon: 'Information',

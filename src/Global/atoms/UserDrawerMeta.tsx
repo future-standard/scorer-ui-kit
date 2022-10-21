@@ -27,6 +27,7 @@ const LabelTitle = styled.div`
   letter-spacing: 0.29px;
   color: #575757;
   font-family: ${({ theme }) => theme.fontFamily.ui};
+  margin-top:3px;
 `;
 
 const LabelContent = styled.div`
@@ -40,7 +41,7 @@ const LabelContent = styled.div`
   margin: 4px 0 5px 0;
   user-select: none;
   white-space: nowrap;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.29px;
   color: rgba(87, 87, 87, 0.5);
 `;
@@ -67,7 +68,7 @@ const TitleContainer = styled.div`
   flex-direction: row;
   align-items: center;
   margin-left: 10px;
-  margin: 6px 0 5px 10px;
+  margin: 3px 0 5px 10px;
 `;
 
 const Container = styled.div`
@@ -84,11 +85,11 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick}) => {
 
   return (
     <div>
-      {(notes !== '' ) &&
+      {(title !== '' ) &&
         <Container onClick={onUserDrawerMetaClick}>
           <MetaConatiner>
             <TitleContainer>
-              <Icon icon={icon as string} size={10} />
+              <Icon icon={icon as string} size={10} color='dimmed' />
               <LabelTitle title={title}>{title}</LabelTitle>
             </TitleContainer>
             {subTitle !=='' ?
