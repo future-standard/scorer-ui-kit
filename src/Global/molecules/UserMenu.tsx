@@ -119,7 +119,7 @@ const FooterContainer = styled.div`
   margin-top: auto;
   display: flex;
   flex-direction: row;
-  padding: 10px 10px 10px;
+  padding: 10px 10px 10px 20px;
   align-items: center;
   width: 100%;
   font-size: 12px;
@@ -127,7 +127,6 @@ const FooterContainer = styled.div`
   display: flex;
   gap: 10px;
 `;
-
 
 const NavigationContainer = styled.div`
   max-height: 300px;
@@ -253,10 +252,8 @@ const UserMenu: React.FC<IUserMenu> = ({
             </LanguageMenu>
         }
         {(userDrawerFooter?.icon !== '' || userDrawerFooter?.title !== '' ) ?
-          <FooterContainer title={userDrawerFooter?.icon}>
-            <IconWrapper>
-              <Icon icon='Information' size={14} color='dimmed' />
-            </IconWrapper>
+          <FooterContainer title={userDrawerFooter?.title}>
+            <Icon icon='Information' size={14} color='dimmed' />
             <FooterConatiner>
               {userDrawerFooter?.title}
             </FooterConatiner>
