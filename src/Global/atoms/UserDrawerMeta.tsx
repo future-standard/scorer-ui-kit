@@ -14,48 +14,51 @@ const MetaConatiner = styled.div`
 `;
 
 const LabelTitle = styled.div`
-  font-size: 12px; 
-  font-weight: 800;
   max-width: 200px;
   overflow-wrap: initial;
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #585858e6;
-  opacity: 0.7;
   user-select: none;
   white-space: nowrap;
+  opacity: 0.76;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.29px;
+  color: #575757;
+  font-family: ${({ theme }) => theme.fontFamily.ui};
 `;
 
 const LabelContent = styled.div`
-  font-size: 12px; 
+  font-size: 10px;
   padding-left: 10px;
   max-width: 200px;
   overflow-wrap: initial;
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 3px 0 5px 0;
-  font-weight: 700;
-  color: #585858e6;
-  opacity: 0.7;
+  margin: 4px 0 5px 0;
   user-select: none;
   white-space: nowrap;
+  font-weight: 600;
+  letter-spacing: 0.29px;
+  color: rgba(87, 87, 87, 0.5);
 `;
 
 const LabelNotes = styled.div`
-  font-size: 10px;
   padding-left: 10px;
   max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 4px 0 4px 0;
-  font-weight: 700;
-  color: #585858e6;
-  opacity: 0.7;
+  margin: 5px 0 8px 0;
   max-height: 23px;
   user-select: none;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.29px;
+  color: rgba(87, 87, 87, 0.5);
+  font-family: ${({ theme }) => theme.fontFamily.ui};
 `;
 
 const TitleContainer = styled.div`
@@ -64,7 +67,7 @@ const TitleContainer = styled.div`
   flex-direction: row;
   align-items: center;
   margin-left: 10px;
-  margin: 3px 0 3px 10px;
+  margin: 6px 0 5px 10px;
 `;
 
 const Container = styled.div`
@@ -85,7 +88,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick}) => {
         <Container onClick={onUserDrawerMetaClick}>
           <MetaConatiner>
             <TitleContainer>
-              <Icon icon={icon} size={12} />
+              <Icon icon={icon as string} size={12} />
               <LabelTitle title={title}>{title}</LabelTitle>
             </TitleContainer>
             {subTitle !=='' ?

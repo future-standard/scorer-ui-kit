@@ -38,7 +38,7 @@ export interface IMenuTop {
 
   export interface IUserDrawerMeta {
     title?: string,
-    icon?: any,
+    icon?: string,
     subTitle?: string,
     notes?: string,
   }
@@ -69,6 +69,13 @@ export interface IMenuTop {
     counter?: number
     width?: string
   }
+
+  export interface IUserDrawerMeta {
+    icon?: string,
+    title?: string,
+    subTitle?: string,
+    notes?: string,
+  } []
 
   export interface ITopBar {
     hasNotifications?: boolean;

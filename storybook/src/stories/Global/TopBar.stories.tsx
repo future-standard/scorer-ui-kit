@@ -121,19 +121,19 @@ export const _TopBar = () => {
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
 
-  const userConfig = object("User Notes", {
+  const userDrawerMetaConfig = object("User Drawer Meta", {
     items: [
       {
-        icon: 'Camera',
-        title: 'DEB-ESC4000E-N4S0CG0000K3',
-        subTitle: 'Building A',
-        notes: `This is a GPU machine having 30 camera support`,
+        icon: '',
+        title: 'Device ID:',
+        subTitle: '',
+        notes: `DEB-NUC8i7BE-G6BE935008VH`,
       },
       {
         icon: 'Information',
         title: 'GPU machine with 4 GPU',
         subTitle: 'Building B',
-        notes: `TThis device is on third floor. connected with two USB devices. --> This is a GPU machine having 30 camera support`,
+        notes: `This is a GPU machine having 30 camera support`,
       },
       {
         icon: 'Success',
@@ -164,7 +164,7 @@ export const _TopBar = () => {
         footer,
         logoutText,
       }}
-        userDrawerMeta={userConfig}
+        userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}
       />
     </Container>
