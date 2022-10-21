@@ -70,12 +70,6 @@ export interface IMenuTop {
     width?: string
   }
 
-  export interface IUserDrawerMetaDetails {
-    icon?: string,
-    title?: string,
-    subTitle?: string,
-    notes?: string,
-  } []
 
   export interface IUserDrawerFooter {
     icon:string,
