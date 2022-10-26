@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled  from 'styled-components';
 import { IUserDrawerMeta } from '..';
 import Icon from '../../Icons/Icon';
 
 const MetaConatiner = styled.div`
   margin: 10px 10px;
-  border: 2px solid #e2e2e380;
+  border: 1px solid #e2e2e380;
   background-color: #eeeded80;
   border-radius: 5px;
   &:active { 
-    box-shadow: 4px 4px #eeeded80;;
+    box-shadow: 4px 4px #eeeded80;
   }
 `;
 
@@ -27,7 +27,7 @@ const LabelTitle = styled.div`
   letter-spacing: 0.29px;
   color: #575757;
   font-family: ${({ theme }) => theme.fontFamily.ui};
-  margin-top:3px;
+  margin-top: 2px;
 `;
 
 const LabelContent = styled.div`
@@ -84,7 +84,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick}) => {
   const { icon, title, subTitle, notes } = item;
 
   return (
-    <div>
+    <Fragment>
       {(title !== '' ) &&
         <Container onClick={onUserDrawerMetaClick}>
           <MetaConatiner>
@@ -100,7 +100,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick}) => {
             : null}
           </MetaConatiner>
         </Container>}
-    </div>
+    </Fragment>
   );
 };
 
