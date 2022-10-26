@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import Icon from '../../Icons/Icon';
-import { ITopBar, IUserDrawerMeta } from '../index';
+import { ITopBar, IUserDrawerFooter, IUserDrawerMeta } from '../index';
 import { resetButtonStyles } from '../../common/index';
 import UserDetails from '../atoms/UserDrawerMeta';
 
@@ -114,18 +114,18 @@ const LanguageMenu = styled.button`
   width: 100%;
 `;
 
-const FooterContainer = styled.div`
+const FooterMeta = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
   margin-top: auto;
   display: flex;
   flex-direction: row;
-  padding: 10px 10px 10px 27px;
+  padding: 10px;
   align-items: center;
   width: 100%;
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(87, 87, 87, 0.5);
   display: flex;
-  gap: 16px;
 `;
 
 const NavigationContainer = styled.div`
@@ -133,21 +133,17 @@ const NavigationContainer = styled.div`
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
+  ${({ theme }) => css`
+    border-bottom: ${theme.colors.divider} 1px solid;
+  `};
 `;
 
-const FooterConatiner = styled.div`
+const FooterText = styled.div`
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
   user-select: none;
   white-space: nowrap;
-`;
-
-const Border = styled.div`
-  ${({ theme }) => css`
-  border-bottom: ${theme.colors.divider} 1px solid;
-  ${theme.typography.global.mainMenu.identity};
-  `};
 `;
 
 interface IUserMenu extends ITopBar {
@@ -173,6 +169,8 @@ const UserMenu: React.FC<IUserMenu> = ({
   userDrawerMeta,
   hasUserDrawerMeta,
 }) => {
+
+  const {icon, title} = userDrawerFooter as IUserDrawerFooter;
 
   const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
@@ -200,20 +198,17 @@ const UserMenu: React.FC<IUserMenu> = ({
           : null}
 
         {hasUserDrawerMeta?
-          <div>
-            <NavigationContainer>
-              {userDrawerMeta?.map((item:IUserDrawerMeta, key:number) => {
-              return (
-                <UserDetails
-                  onUserDrawerMetaClick={onUserDrawerMetaClick}
-                  key={key}
-                  {...{ item }} 
-                />
-              );
-              })}
-            </NavigationContainer>
-            <Border />
-          </div>
+          <NavigationContainer>
+            {userDrawerMeta?.map((item:IUserDrawerMeta, key:number) => {
+            return (
+              <UserDetails
+                onUserDrawerMetaClick={onUserDrawerMetaClick}
+                key={key}
+                {...{ item }} 
+              />
+            );
+            })}
+          </NavigationContainer>
         :null}
 
         {userSubmenu.length > 0 ?
@@ -251,14 +246,16 @@ const UserMenu: React.FC<IUserMenu> = ({
               Language / 言語
             </LanguageMenu>
         }
-        {(userDrawerFooter?.icon !== '' || userDrawerFooter?.title !== '' ) ?
-          <FooterContainer title={userDrawerFooter?.title}>
-            <Icon icon='Information' size={14} color='dimmed' />
-            <FooterConatiner>
-              {userDrawerFooter?.title}
-            </FooterConatiner>
-          </FooterContainer>
-          : null}
+        {(icon || title ) ?
+          <FooterMeta title={title}>
+            <IconWrapper>
+              <Icon icon={icon} size={14} color='dimmed' />
+            </IconWrapper>
+            <FooterText>
+              {title}
+            </FooterText>
+          </FooterMeta>
+        : null}
       </DrawerBottom>
     </Fragment>
   );
