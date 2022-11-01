@@ -259,7 +259,7 @@ const UserMenu: React.FC<IUserMenu> = ({
                 <Icon icon={icon} size={14} color='dimmed' />
               </IconWrapper>
             :
-              <FooterAlignemnt/>}
+              <FooterAlignemnt />}
             <FooterText>
               {title}
             </FooterText>
