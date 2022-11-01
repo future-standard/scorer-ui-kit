@@ -144,6 +144,11 @@ const FooterText = styled.div`
   text-overflow: ellipsis;
   user-select: none;
   white-space: nowrap;
+  max-width: 136px;
+`;
+
+const FooterAlignemnt = styled.div`
+  width: 12px;
 `;
 
 interface IUserMenu extends ITopBar {
@@ -168,6 +173,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   onUserDrawerMetaClick = () => { }, 
   userDrawerMeta,
   hasUserDrawerMeta,
+  hasUserDrawerFooter,
 }) => {
 
   const {icon, title} = userDrawerFooter as IUserDrawerFooter;
@@ -246,11 +252,14 @@ const UserMenu: React.FC<IUserMenu> = ({
               Language / 言語
             </LanguageMenu>
         }
-        {(icon || title ) ?
+        {(hasUserDrawerFooter) ?
           <FooterMeta title={title}>
-            <IconWrapper>
-              <Icon icon={icon} size={14} color='dimmed' />
-            </IconWrapper>
+            {icon ?
+              <IconWrapper>
+                <Icon icon={icon} size={14} color='dimmed' />
+              </IconWrapper>
+            :
+              <FooterAlignemnt/>}
             <FooterText>
               {title}
             </FooterText>
