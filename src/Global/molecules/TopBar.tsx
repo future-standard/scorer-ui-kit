@@ -155,7 +155,11 @@ const TopBar: React.FC<ITopBar> = ({
   notificationsHistory,
   customDrawer,
   onLogout = () => { },
-  onLanguageToggle = () => { }
+  onLanguageToggle = () => { },
+  userDrawerFooter,
+  userDrawerMeta,
+  onUserDrawerMetaClick = () => { },
+  hasUserDrawerMeta,
 }) => {
 
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
@@ -215,7 +219,11 @@ const TopBar: React.FC<ITopBar> = ({
               userDrawerBespoke,
               loggedInUser,
               onLogout,
-              onLanguageToggle
+              onLanguageToggle,
+              onUserDrawerMetaClick,
+              userDrawerFooter,
+              userDrawerMeta,
+              hasUserDrawerMeta,
             }}
             />
           </Drawer>

@@ -392,6 +392,11 @@ export const _GlobalUI = () => {
   const menuHomeLink = text("Home Link", "/welcome");
   const canAlwaysPin = boolean("Can Always Pin", true);
   const defaultMenuOpen = boolean("Default menu open", false);
+  const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
+  const userDrawerFooter = object("User Drawer Footer", {
+    icon: 'Information',
+    title: 'V12.3.4',
+  });
   const menuConfig = object("Menu Config", {
     items: [
       {
@@ -487,6 +492,28 @@ export const _GlobalUI = () => {
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
 
+  const userDrawerMetaConfig = object("User Drawer Meta", [
+      {
+        icon: '',
+        title: 'Device ID:',
+        subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
+        notes: '',
+      },
+      {
+        icon: 'Information',
+        title: 'GPU machine with 4 GPU',
+        subTitle: 'Building B',
+        notes: `This is a GPU machine having 30 camera support`,
+      },
+      {
+        icon: 'Success',
+        title: 'Device is Live',
+        subTitle: 'Building C',
+        notes: `This is a GPU machine having 30 camera support`,
+      },
+    ]
+  );
+
   return (
     <Container>
       <GlobalUI
@@ -494,8 +521,9 @@ export const _GlobalUI = () => {
         home={menuHomeLink}
         defaultMenuOpen={defaultMenuOpen}
         canAlwaysPin={canAlwaysPin}
+        userDrawerMeta={userDrawerMetaConfig}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
-        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText }}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta }}
       >
         <ComponentLinks />
       </GlobalUI>

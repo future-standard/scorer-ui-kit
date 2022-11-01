@@ -3,8 +3,9 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import Icon from '../../Icons/Icon';
-import { ITopBar } from '../index';
+import { ITopBar, IUserDrawerFooter, IUserDrawerMeta } from '../index';
 import { resetButtonStyles } from '../../common/index';
+import UserDetails from '../atoms/UserDrawerMeta';
 
 const DrawerTop = styled.div``;
 const DrawerBottom = styled.div`
@@ -101,9 +102,48 @@ const LanguageMenu = styled.button`
     &:active { ${theme.typography.global.mainMenu.subItem.active}; }
   `};
 
-  padding: 20px 10px 15px;
+  border-bottom: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  ${({ theme }) => css`
+    ${theme.typography.global.mainMenu.subItem.default};
+    &:hover { ${theme.typography.global.mainMenu.subItem.hover}; }
+    &:active { ${theme.typography.global.mainMenu.subItem.active}; }
+  `};
+
+  padding: 20px 10px 20px;
   align-items: center;
   width: 100%;
+`;
+
+const FooterMeta = styled.div`
+  font-family: ${({ theme }) => theme.fontFamily.ui};
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  align-items: center;
+  width: 100%;
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(87, 87, 87, 0.5);
+  display: flex;
+`;
+
+const NavigationContainer = styled.div`
+  max-height: 300px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  ${({ theme }) => css`
+    border-bottom: ${theme.colors.divider} 1px solid;
+  `};
+`;
+
+const FooterText = styled.div`
+  white-space: break-spaces;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  white-space: nowrap;
 `;
 
 interface IUserMenu extends ITopBar {
@@ -124,7 +164,13 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLogout = () => { },
   onLanguageToggle = () => { },
   closeOnClick,
+  userDrawerFooter,
+  onUserDrawerMetaClick = () => { }, 
+  userDrawerMeta,
+  hasUserDrawerMeta,
 }) => {
+
+  const {icon, title} = userDrawerFooter as IUserDrawerFooter;
 
   const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
@@ -150,6 +196,20 @@ const UserMenu: React.FC<IUserMenu> = ({
             {loggedInUser}
           </CurrentUser>
           : null}
+
+        {hasUserDrawerMeta?
+          <NavigationContainer>
+            {userDrawerMeta?.map((item:IUserDrawerMeta, key:number) => {
+            return (
+              <UserDetails
+                onUserDrawerMetaClick={onUserDrawerMetaClick}
+                key={key}
+                {...{ item }} 
+              />
+            );
+            })}
+          </NavigationContainer>
+        :null}
 
         {userSubmenu.length > 0 ?
           <UserOptions>
@@ -186,6 +246,16 @@ const UserMenu: React.FC<IUserMenu> = ({
               Language / 言語
             </LanguageMenu>
         }
+        {(icon || title ) ?
+          <FooterMeta title={title}>
+            <IconWrapper>
+              <Icon icon={icon} size={14} color='dimmed' />
+            </IconWrapper>
+            <FooterText>
+              {title}
+            </FooterText>
+          </FooterMeta>
+        : null}
       </DrawerBottom>
     </Fragment>
   );

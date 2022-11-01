@@ -36,6 +36,13 @@ export interface IMenuTop {
     submenu?: IMenuItemSubmenu[]
   }
 
+  export interface IUserDrawerMeta {
+    title?: string,
+    icon?: string,
+    subTitle?: string,
+    notes?: string,
+  }
+
   export interface IMenuItemSubmenu {
     title: string
     href?: string
@@ -63,6 +70,19 @@ export interface IMenuTop {
     width?: string
   }
 
+
+  export interface IUserDrawerFooter {
+    icon:string,
+    title:string,
+  }
+
+  export interface IUserDrawerMeta {
+    icon?: string,
+    title?: string, 
+    subTitle?: string, 
+    notes?: string,
+  }
+
   export interface ITopBar {
     hasNotifications?: boolean;
     userSubmenu?: any[];
@@ -81,6 +101,10 @@ export interface IMenuTop {
     customDrawer?: ICustomDrawer;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
+    onUserDrawerMetaClick?: ()=>void;
+    userDrawerFooter? : IUserDrawerFooter ,
+    userDrawerMeta?: IUserDrawerMeta[];
+    hasUserDrawerMeta?: boolean,
   }
 
   export interface INotificationItem {
