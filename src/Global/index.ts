@@ -73,7 +73,7 @@ export interface IMenuTop {
 
   export interface IUserDrawerFooter {
     icon?:string,
-    title?:string,
+    title:string,
   }
 
   export interface IUserDrawerMeta {

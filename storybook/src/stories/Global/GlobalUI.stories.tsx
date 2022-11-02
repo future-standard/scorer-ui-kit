@@ -523,7 +523,7 @@ export const _GlobalUI = () => {
         defaultMenuOpen={defaultMenuOpen}
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
-        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}   
+        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, hasUserDrawerFooter }}
       >
         <ComponentLinks />

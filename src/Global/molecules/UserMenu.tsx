@@ -67,6 +67,19 @@ const IconWrapper = styled.div`
   }
 `;
 
+const IconWrapperFooter = styled.div`
+  width: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  padding-right: 20px;
+`;
+
 const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
   ${resetButtonStyles};
   display: block;
@@ -114,18 +127,18 @@ const LanguageMenu = styled.button`
   width: 100%;
 `;
 
-const FooterMeta = styled.div`
+const FooterMeta = styled.div <{ icon?: string }>`
   font-family: ${({ theme }) => theme.fontFamily.ui};
   margin-top: auto;
   display: flex;
   flex-direction: row;
-  padding: 10px;
   align-items: center;
   width: 100%;
   font-size: 10px;
   font-weight: 400;
   color: rgba(87, 87, 87, 0.5);
-  display: flex;
+  padding: 10px;
+  padding-left:  ${({ icon }) => icon !== '' ? '31px;' : '21px;'};
 `;
 
 const NavigationContainer = styled.div`
@@ -138,17 +151,14 @@ const NavigationContainer = styled.div`
   `};
 `;
 
-const FooterText = styled.div`
+const FooterText = styled.div <{ icon?: string }>`
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
   user-select: none;
   white-space: nowrap;
   max-width: 136px;
-`;
-
-const FooterAlignemnt = styled.div`
-  width: 12px;
+  max-width: ${({ icon }) => icon !== '' ? '136px;' : '164px;'};
 `;
 
 interface IUserMenu extends ITopBar {
@@ -253,14 +263,14 @@ const UserMenu: React.FC<IUserMenu> = ({
             </LanguageMenu>
         }
         {(hasUserDrawerFooter) ?
-          <FooterMeta title={title}>
+          <FooterMeta title={title} icon={icon}>
             {icon ?
-              <IconWrapper>
+              <IconWrapperFooter>
                 <Icon icon={icon} size={14} color='dimmed' />
-              </IconWrapper>
+              </IconWrapperFooter>
             :
-              <FooterAlignemnt />}
-            <FooterText>
+              null}
+            <FooterText icon={icon}>
               {title}
             </FooterText>
           </FooterMeta>
