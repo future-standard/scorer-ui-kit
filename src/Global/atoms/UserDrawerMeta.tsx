@@ -28,6 +28,7 @@ const LabelTitle = styled.div`
   color: #575757;
   font-family: ${({ theme }) => theme.fontFamily.ui};
   margin-top: 2px;
+  user-select: all;
 `;
 
 const LabelContent = styled.div`
@@ -44,6 +45,7 @@ const LabelContent = styled.div`
   font-weight: 500;
   letter-spacing: 0.29px;
   color: rgba(87, 87, 87, 0.5);
+  user-select: all;
 `;
 
 const LabelNotes = styled.div`
@@ -60,6 +62,7 @@ const LabelNotes = styled.div`
   letter-spacing: 0.29px;
   color: rgba(87, 87, 87, 0.5);
   font-family: ${({ theme }) => theme.fontFamily.ui};
+  user-select: all;
 `;
 
 const TitleContainer = styled.div`
