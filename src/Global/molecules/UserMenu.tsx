@@ -155,7 +155,6 @@ const FooterText = styled.div <{ icon?: string }>`
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
-  user-select: none;
   white-space: nowrap;
   max-width: 136px;
   max-width: ${({ icon }) => icon !== '' ? '136px;' : '164px;'};
