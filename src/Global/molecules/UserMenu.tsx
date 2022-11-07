@@ -158,7 +158,6 @@ const FooterText = styled.div <{ icon?: string }>`
   white-space: nowrap;
   max-width: 136px;
   max-width: ${({ icon }) => icon !== '' ? '136px;' : '164px;'};
-  user-select: all;
 `;
 
 interface IUserMenu extends ITopBar {

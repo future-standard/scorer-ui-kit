@@ -19,7 +19,6 @@ const LabelTitle = styled.div`
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
-  user-select: none;
   white-space: nowrap;
   opacity: 0.76;
   font-size: 10px;
@@ -28,7 +27,6 @@ const LabelTitle = styled.div`
   color: #575757;
   font-family: ${({ theme }) => theme.fontFamily.ui};
   margin-top: 2px;
-  user-select: all;
 `;
 
 const LabelContent = styled.div`
@@ -40,12 +38,10 @@ const LabelContent = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 4px 0 5px 0;
-  user-select: none;
   white-space: nowrap;
   font-weight: 500;
   letter-spacing: 0.29px;
   color: rgba(87, 87, 87, 0.5);
-  user-select: all;
 `;
 
 const LabelNotes = styled.div`
@@ -56,13 +52,11 @@ const LabelNotes = styled.div`
   text-overflow: ellipsis;
   margin: 5px 0 8px 0;
   max-height: 23px;
-  user-select: none;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.29px;
   color: rgba(87, 87, 87, 0.5);
   font-family: ${({ theme }) => theme.fontFamily.ui};
-  user-select: all;
 `;
 
 const TitleContainer = styled.div`
