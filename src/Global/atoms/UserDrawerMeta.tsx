@@ -74,16 +74,17 @@ const Container = styled.div`
 
 interface IProps {
   item: IUserDrawerMeta;
-  onUserDrawerMetaClick?:() => void;
+  onUserDrawerMetaClick?:(data:number) => void;
+  dataObjKey: number;
 }
 
-const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick}) => {
+const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick = () => { }, dataObjKey}) => {
   const { icon, title, subTitle, notes } = item;
 
   return (
     <Fragment>
       {(title !== '' ) &&
-        <Container onClick={onUserDrawerMetaClick}>
+        <Container onClick={()=>onUserDrawerMetaClick(dataObjKey)}>
           <MetaConatiner>
             <TitleContainer>
               <Icon icon={icon as string} size={10} color='dimmed' />
