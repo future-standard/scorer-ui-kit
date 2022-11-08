@@ -218,6 +218,7 @@ const UserMenu: React.FC<IUserMenu> = ({
             return (
               <UserDetails
                 onUserDrawerMetaClick={onUserDrawerMetaClick}
+                key={key}
                 dataObjKey={key}
                 {...{ item }} 
               />
