@@ -214,11 +214,11 @@ const UserMenu: React.FC<IUserMenu> = ({
 
         {hasUserDrawerMeta?
           <NavigationContainer>
-            {userDrawerMeta?.map((item:IUserDrawerMeta, index:number) => {
+            {userDrawerMeta?.map((item:IUserDrawerMeta, key:number) => {
             return (
               <UserDetails
                 onUserDrawerMetaClick={onUserDrawerMetaClick}
-                dataObjKey={index}
+                dataObjKey={key}
                 {...{ item }} 
               />
             );
