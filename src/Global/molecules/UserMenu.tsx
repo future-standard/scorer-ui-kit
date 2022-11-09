@@ -219,7 +219,7 @@ const UserMenu: React.FC<IUserMenu> = ({
               <UserDetails
                 onUserDrawerMetaClick={onUserDrawerMetaClick}
                 key={key}
-                dataObjKey={key}
+                userMetaIndex={key}
                 {...{ item }} 
               />
             );
