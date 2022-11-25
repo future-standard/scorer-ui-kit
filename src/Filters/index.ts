@@ -3,6 +3,7 @@ import FilterDropdownContainer from './atoms/FilterDropdownContainer';
 import FilterButton from './atoms/FilterButton';
 import FilterDropdown from './molecules/FilterDropdown';
 import SortDropdown from './molecules/SortDropdown';
+import TableLayoutToggle from './molecules/TableLayoutToggle'; 
 import FilterInputs, { IFilterInputs } from './molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from './molecules/FiltersResults';
 import FilterBar from './organisms/FilterBar';
@@ -24,6 +25,7 @@ export {
   FilterButton,
   FilterDropdown,
   SortDropdown,
+  TableLayoutToggle,
   FilterInputs,
   FiltersResults,
   FilterBar,
