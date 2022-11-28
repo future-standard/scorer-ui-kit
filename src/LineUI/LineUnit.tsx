@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { IDragLineUISharedOptions } from '.';
 import Icon from '../Icons/Icon';
 
 
-const ContrastLine = styled.line<{styling: string, lineClickSensing?: number}>`
+const ContrastLine = styled.line<{styling: string, lineClickSensing?: number, showLineBorder?: boolean}>`
   stroke: ${({theme, styling}) => theme.custom.lines[styling].contrastLine.stroke};
   mix-blend-mode: multiply;
   stroke-width: ${({ lineClickSensing }) => lineClickSensing}px;
-  stroke-opacity: 0;
+  stroke-opacity: ${({ showLineBorder }) => showLineBorder ? '0.10' : '0'};
 `;
 
 const HighlightLine = styled.line<{styling: string}>`
@@ -104,6 +104,7 @@ interface ILineUnitProps {
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
   const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling = 'primary', moveEndCB = () => { }, lineClickCallback = () => { }, showSmallDirectionMark = false, overrideShowMoveHandle = true } = props;
   const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
+  const [showLineBorder, setShowLineBorder] = useState<boolean>();
 
   // const a = x1 - x2;
   // const b = y1 - y2;
@@ -191,10 +192,19 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
       </g>
     );
   };
+  
+  //hover on line show border
+  const getMouseOver = useCallback(() =>{
+    setShowLineBorder(true);
+  }, []);
+
+  const getMouseOut = useCallback(() =>{
+    setShowLineBorder(false);
+  }, []);
 
   return (
     <g>
-      <ContrastLine {...{lineClickSensing}} onDoubleClick={() => lineClickCallback(lineSetId)} styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
+      <ContrastLine onMouseOver={getMouseOver} onMouseOut={getMouseOut} {...{lineClickSensing, showLineBorder}} onDoubleClick={() => lineClickCallback(lineSetId)} styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
       <HighlightLine styling={styling} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
       <GrabHandleGroup styling={styling} showIndex={handleFinderActive && revealSetIndex} originalRadius={8 * unit}>
