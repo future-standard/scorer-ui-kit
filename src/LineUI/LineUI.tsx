@@ -76,7 +76,7 @@ const LineUI: React.FC<LineUIProps> = ({
   onSizeChange = () => { },
   onLineMoveEnd = () => { },
   onLineClick = () => { },
-  lineClickSensingBorder = '100',
+  lineClickSensingBorder = '65',
   options: {
     showHandleFinder,
     showSetIndex,
