@@ -4,14 +4,17 @@ import { IDragLineUISharedOptions } from '.';
 import Icon from '../Icons/Icon';
 
 
-const ContrastLine = styled.line<{styling: string}>`
+const ContrastLine = styled.line<{styling: string, lineClickSensing?: number}>`
   stroke: ${({theme, styling}) => theme.custom.lines[styling].contrastLine.stroke};
   mix-blend-mode: multiply;
+  stroke-width: ${({ lineClickSensing }) => lineClickSensing}px;
+  stroke-opacity: 0;
 `;
 
 const HighlightLine = styled.line<{styling: string}>`
   pointer-events: none;
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].highlightLine.stroke};
+  // stroke: ${({theme, styling}) => theme.custom.lines[styling].highlightLine.stroke};
+  stroke: #3781b5;
 `;
 
 
@@ -94,6 +97,7 @@ interface ILineUnitProps {
   styling?: string;
   showSmallDirectionMark?: boolean;
   overrideShowMoveHandle?: boolean;
+  lineClickSensingBorder?: string;
 }
 
 
@@ -109,6 +113,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   // const hideGrabHandle = showMoveHandle === false || (showMoveHandle !== true && distance < 60);
   
   const hideGrabHandle = !showMoveHandle || !overrideShowMoveHandle;
+  const lineClickSensing = parseInt(props.lineClickSensingBorder as string);
 
 
   /** --- Toucher Events Section --- */
@@ -190,7 +195,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
 
   return (
     <g>
-      <ContrastLine onDoubleClick={() => lineClickCallback(lineSetId)} styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
+      <ContrastLine {...{lineClickSensing}} onDoubleClick={() => lineClickCallback(lineSetId)} styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
       <HighlightLine styling={styling} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
       <GrabHandleGroup styling={styling} showIndex={handleFinderActive && revealSetIndex} originalRadius={8 * unit}>
