@@ -105,6 +105,8 @@ export interface IMenuTop {
     userDrawerFooter? : IUserDrawerFooter ,
     userDrawerMeta?: IUserDrawerMeta[];
     hasUserDrawerMeta?: boolean,
+    tooltipText?: string,
+    copyTitleAlso?: boolean,
   }
 
   export interface INotificationItem {

@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import styled  from 'styled-components';
 import { IUserDrawerMeta } from '..';
+import { useCopyToClipboard } from '../../hooks';
 import Icon from '../../Icons/Icon';
 
 const MetaConatiner = styled.div`
@@ -14,7 +15,7 @@ const MetaConatiner = styled.div`
 `;
 
 const LabelTitle = styled.div`
-  max-width: 200px;
+  max-width: 130px;
   overflow-wrap: initial;
   white-space: break-spaces;
   overflow: hidden;
@@ -75,23 +76,85 @@ const Container = styled.div`
   cursor: pointer;
 `;
 
+const TitleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const IconBox = styled.div`
+  padding: 1px 5px 0 0;
+`;
+
+const CopyTextBox = styled.div`
+  text-align: center;
+  padding: 5px;
+  font-size: 10px;
+  line-height: 1.2;
+  box-shadow: 2px 2px 4px (195deg 16% 72% / 72%);
+  border: 1px solid hsl(195deg 5% 60% / 72%);
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  position: absolute;
+  top: -24px;
+  right: -9px;
+  opacity: 0.76;
+  font-size: 10px;
+  font-weight: 500;
+  color: #575757;
+`;
+
+const CopyBox = styled.div`
+  position: relative;
+`;
+
 interface IProps {
   item: IUserDrawerMeta;
   onUserDrawerMetaClick?:() => void;
+  copyTitleAlso?: boolean;
+  tooltipText?: string;
 }
 
-const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick}) => {
+const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, tooltipText, copyTitleAlso}) => {
   const { icon, title, subTitle, notes } = item;
+  const { copyToClipboard } = useCopyToClipboard();
+  const [ showCopyText, setShowCopyText ] = useState<boolean>(false);
+
+  const onClickCopyText = useCallback((title , subTitle, notes)=>{
+    let copyText;
+    if(copyTitleAlso){
+      copyText = title + '\n' + subTitle + '\n' + notes;
+    } else {
+      copyText = subTitle + '\n' + notes;
+    }
+    copyToClipboard(copyText);
+    setShowCopyText(true);
+    setTimeout(()=>{
+      setShowCopyText(false);
+    }, 400);
+  },[copyTitleAlso, copyToClipboard]);
 
   return (
     <Fragment>
       {(title !== '' ) &&
         <Container onClick={onUserDrawerMetaClick}>
           <MetaConatiner>
-            <TitleContainer>
-              <Icon icon={icon as string} size={10} color='dimmed' />
-              <LabelTitle title={title}>{title}</LabelTitle>
-            </TitleContainer>
+            <TitleBox>
+              <TitleContainer>
+                <Icon icon={icon as string} size={10} color='dimmed' />
+                <LabelTitle title={title}>{title}</LabelTitle>
+              </TitleContainer>
+              <CopyBox>
+                {showCopyText &&
+                  <CopyTextBox>
+                    {tooltipText}
+                  </CopyTextBox>}
+                <IconBox onClick={() => onClickCopyText(title , subTitle, notes)}>
+                  <Icon icon='Copy' size={12} />
+                </IconBox>
+              </CopyBox>  
+            </TitleBox>
+            
             {subTitle !=='' ?
               <LabelContent title={subTitle}>{subTitle}</LabelContent>
             : null}

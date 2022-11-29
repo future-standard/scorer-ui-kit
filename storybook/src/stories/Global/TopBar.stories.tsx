@@ -104,6 +104,8 @@ export const _TopBar = () => {
   const currentUserText = text("Current User Text", "Current User");
   const logoutText = text("Logout Text", "Logout");
   const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
+  const tooltipText= text("Tooltip text", "Copy");
+  const copyTitleAlso = boolean("Has Title", true);
   const userDrawerFooter = object("User Drawer Footer", {
     icon: 'Information',
     title: 'V12.3.4',
@@ -165,6 +167,8 @@ export const _TopBar = () => {
         currentUserText,
         userDrawerFooter,
         logoutText,
+        tooltipText,
+        copyTitleAlso,
       }}
         userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}

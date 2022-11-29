@@ -165,6 +165,8 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLanguageToggle = () => { },
   closeOnClick,
   userDrawerFooter,
+  tooltipText,
+  copyTitleAlso,
   onUserDrawerMetaClick = () => { }, 
   userDrawerMeta,
   hasUserDrawerMeta,
@@ -204,7 +206,7 @@ const UserMenu: React.FC<IUserMenu> = ({
               <UserDetails
                 onUserDrawerMetaClick={onUserDrawerMetaClick}
                 key={key}
-                {...{ item }} 
+                {...{ item, copyTitleAlso, tooltipText }}
               />
             );
             })}
