@@ -95,17 +95,16 @@ const CopyTextBox = styled.div`
   border: 1px solid hsl(195deg 5% 60% / 72%);
   background-color: #f8f9fa;
   border-radius: 5px;
-  position: absolute;
-  top: -24px;
-  right: -9px;
   opacity: 0.76;
   font-size: 10px;
   font-weight: 500;
   color: #575757;
+  margin-left: -5%;
+  margin-top: -23px;
+  position: absolute;
 `;
 
 const CopyBox = styled.div`
-  position: relative;
 `;
 
 interface IProps {
@@ -154,7 +153,6 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, tooltip
                 </IconBox>
               </CopyBox>  
             </TitleBox>
-            
             {subTitle !=='' ?
               <LabelContent title={subTitle}>{subTitle}</LabelContent>
             : null}
