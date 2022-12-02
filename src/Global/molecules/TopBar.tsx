@@ -161,7 +161,7 @@ const TopBar: React.FC<ITopBar> = ({
   onUserDrawerMetaClick = () => { },
   hasUserDrawerMeta,
   tooltipText,
-  copyTitleAlso,
+  includeCopyTitle,
 }) => {
 
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
@@ -227,7 +227,7 @@ const TopBar: React.FC<ITopBar> = ({
               userDrawerMeta,
               hasUserDrawerMeta,
               tooltipText,
-              copyTitleAlso,
+              includeCopyTitle,
             }}
             />
           </Drawer>

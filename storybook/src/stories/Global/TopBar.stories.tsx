@@ -105,7 +105,7 @@ export const _TopBar = () => {
   const logoutText = text("Logout Text", "Logout");
   const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
   const tooltipText= text("Tooltip text", "Copy");
-  const copyTitleAlso = boolean("Has Title", true);
+  const includeCopyTitle = boolean("Include Title Copy", true);
   const userDrawerFooter = object("User Drawer Footer", {
     icon: 'Information',
     title: 'V12.3.4',
@@ -132,12 +132,14 @@ export const _TopBar = () => {
       title: 'Device ID:',
       subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
       notes: '',
+      copy:true,
     },
     {
       icon: 'Information',
       title: 'GPU machine with 4 GPU',
       subTitle: 'Building B',
       notes: `This is a GPU machine having 30 camera support`,
+      copy:true,
     },
     {
       icon: 'Success',
@@ -168,7 +170,7 @@ export const _TopBar = () => {
         userDrawerFooter,
         logoutText,
         tooltipText,
-        copyTitleAlso,
+        includeCopyTitle,
       }}
         userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}

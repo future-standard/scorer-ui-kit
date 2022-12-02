@@ -166,7 +166,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   closeOnClick,
   userDrawerFooter,
   tooltipText,
-  copyTitleAlso,
+  includeCopyTitle,
   onUserDrawerMetaClick = () => { }, 
   userDrawerMeta,
   hasUserDrawerMeta,
@@ -206,7 +206,8 @@ const UserMenu: React.FC<IUserMenu> = ({
               <UserDetails
                 onUserDrawerMetaClick={onUserDrawerMetaClick}
                 key={key}
-                {...{ item, copyTitleAlso, tooltipText }}
+                userMetaIndex={key}
+                {...{ item, includeCopyTitle, tooltipText }}
               />
             );
             })}

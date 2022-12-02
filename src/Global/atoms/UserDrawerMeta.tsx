@@ -110,18 +110,25 @@ const CopyBox = styled.div`
 interface IProps {
   item: IUserDrawerMeta;
   onUserDrawerMetaClick?:() => void;
-  copyTitleAlso?: boolean;
+  includeCopyTitle?: boolean;
   tooltipText?: string;
+  userMetaIndex?: number;
 }
 
-const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, tooltipText, copyTitleAlso}) => {
-  const { icon, title, subTitle, notes } = item;
+interface IShowCopyIcon {
+  id?: number;
+  value?: boolean;
+}
+
+const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, tooltipText, includeCopyTitle, userMetaIndex}) => {
+  const { icon, title, subTitle, notes, copy } = item;
   const { copyToClipboard } = useCopyToClipboard();
   const [ showCopyText, setShowCopyText ] = useState<boolean>(false);
+  const [showCopyIcon, setShowCopyIcon] = useState<IShowCopyIcon>({id: 0, value: false});
 
   const onClickCopyText = useCallback((title , subTitle, notes)=>{
     let copyText;
-    if(copyTitleAlso){
+    if(includeCopyTitle){
       copyText = title + '\n' + subTitle + '\n' + notes;
     } else {
       copyText = subTitle + '\n' + notes;
@@ -131,12 +138,12 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, tooltip
     setTimeout(()=>{
       setShowCopyText(false);
     }, 400);
-  },[copyTitleAlso, copyToClipboard]);
+  },[includeCopyTitle, copyToClipboard]);
 
   return (
     <Fragment>
       {(title !== '' ) &&
-        <Container onClick={onUserDrawerMetaClick}>
+        <Container onClick={onUserDrawerMetaClick} onMouseEnter={() =>setShowCopyIcon({id: userMetaIndex, value: true})} onMouseLeave={() =>setShowCopyIcon({id: userMetaIndex, value: false})}>
           <MetaConatiner>
             <TitleBox>
               <TitleContainer>
@@ -148,9 +155,11 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, tooltip
                   <CopyTextBox>
                     {tooltipText}
                   </CopyTextBox>}
-                <IconBox onClick={() => onClickCopyText(title , subTitle, notes)}>
-                  <Icon icon='Copy' size={12} />
-                </IconBox>
+                {(copy && showCopyIcon?.value) ?
+                  <IconBox onClick={() => onClickCopyText(title , subTitle, notes)}>
+                    <Icon icon='Copy' size={12} />
+                  </IconBox>:
+                  null}
               </CopyBox>  
             </TitleBox>
             {subTitle !=='' ?
