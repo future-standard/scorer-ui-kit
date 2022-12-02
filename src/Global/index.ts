@@ -107,7 +107,7 @@ export interface IMenuTop {
     userDrawerFooter? : IUserDrawerFooter ,
     userDrawerMeta?: IUserDrawerMeta[];
     hasUserDrawerMeta?: boolean,
-    tooltipText?: string,
+    languageChoose?: string,
     includeCopyTitle?: boolean,
   }
 
