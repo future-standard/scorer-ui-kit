@@ -29,6 +29,7 @@ interface ILineSetProps {
   onLineClick: (lineSetId: number) => void;
   getCTM: () => DOMMatrix | null;
   lineClickSensingBorder?: string;
+  hasLineBorder?: boolean;
 }
 
 interface AreaLabelProps {
@@ -52,7 +53,7 @@ const AreaLabel : React.FC<AreaLabelProps> = ( { lineSetData, unit } ) => {
   return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'} x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText>;
 };
 
-const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options, onLineMoveEnd, onLineClick, lineClickSensingBorder }) => {
+const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options, onLineMoveEnd, onLineClick, lineClickSensingBorder, hasLineBorder }) => {
   // console.log("Unit " + lineSetId + ", reporting in...")
 
   const {state, dispatch} = useContext(LineSetContext);
@@ -236,6 +237,7 @@ const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, line
       showSmallDirectionMark={lineSetData.showSmallDirectionMark}
       overrideShowMoveHandle={lineSetData.showMoveHandle}
       lineClickSensingBorder={lineClickSensingBorder}
+      hasLineBorder={hasLineBorder}
     />
   );});
 

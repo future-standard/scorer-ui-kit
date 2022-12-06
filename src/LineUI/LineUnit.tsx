@@ -97,6 +97,7 @@ interface ILineUnitProps {
   showSmallDirectionMark?: boolean;
   overrideShowMoveHandle?: boolean;
   lineClickSensingBorder?: string;
+  hasLineBorder?: boolean;
 }
 
 
@@ -195,12 +196,16 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   
   //hover on line show border
   const getMouseOver = useCallback(() =>{
-    setShowLineBorder(true);
-  }, []);
+    if(props.hasLineBorder){
+      setShowLineBorder(true);
+    }
+  }, [props.hasLineBorder]);
 
   const getMouseOut = useCallback(() =>{
-    setShowLineBorder(false);
-  }, []);
+    if(props.hasLineBorder){
+      setShowLineBorder(false);
+    }
+  }, [props.hasLineBorder]);
 
   return (
     <g>
