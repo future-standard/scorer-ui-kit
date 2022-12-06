@@ -137,9 +137,9 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, languag
   const onClickCopyText = useCallback((title , subTitle, notes)=>{
     let copyText;
     if(includeCopyTitle){
-      copyText = title + '\n' + subTitle + '\n' + notes;
+      copyText = (title ? title : '') + '\n' + (subTitle ? subTitle : '') + '\n' + (notes ? notes : '');
     } else {
-      copyText = subTitle + '\n' + notes;
+      copyText = (subTitle ? subTitle : '') + '\n' + (notes ? notes : '');
     }
     copyToClipboard(copyText);
     setShowCopyText(true);
