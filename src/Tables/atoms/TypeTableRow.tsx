@@ -25,9 +25,10 @@ interface IProps {
   columnConfig: ITableColumnConfig[]
   rowData: IRowData
   selectCallback? : (event: any, id?: string | number) => void
+  closeText?: string
 }
 
-const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, hasStatus, hasThumbnail, hasTypeIcon, rowData, isLastRow, columnConfig }) => {
+const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, hasStatus, hasThumbnail, hasTypeIcon, rowData, isLastRow, columnConfig, closeText }) => {
 
   const wrappedSelectCallback = useCallback((checked) => {
     if(selectCallback){ selectCallback(checked, rowData.id); }
@@ -39,7 +40,7 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, ha
     <RowContainer isEmpty={isEmpty}>
       {selectable ? <TypeTableCell hideDivider><Checkbox checked={rowData._checked} onChangeCallback={wrappedSelectCallback} /></TypeTableCell> : null}
       {hasStatus ?  <TypeTableCell hideDivider><TypeTableDeviceStatus status={rowData.header?.status} /></TypeTableCell> : null}
-      {hasThumbnail ? <TypeTableCell hideDivider><TableRowThumbnail image={rowData.header?.image} mediaUrl={rowData.header?.mediaUrl} mediaType={rowData.header?.mediaType} /></TypeTableCell> : null}
+      {hasThumbnail ? <TypeTableCell hideDivider><TableRowThumbnail image={rowData.header?.image} mediaUrl={rowData.header?.mediaUrl} mediaType={rowData.header?.mediaType} closeText={closeText} /></TypeTableCell> : null}
       {hasTypeIcon ? <TypeTableCell hideDivider><Icon icon={rowData.header?.icon || ''} color='dimmed' weight='regular' size={16} /></TypeTableCell> : null}
 
       {rowData.columns.map((cell, key) => {
