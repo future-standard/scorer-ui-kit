@@ -9,6 +9,7 @@ import { PTZProvider } from 'scorer-ui-kit';
 //pages
 import FormPage from './pages/FormPage';
 import LinePage from './pages/LinePage';
+import DummyModal from './pages/DummyModal';
 import LineRTCPage from './pages/LineRTCPage';
 import LineVideoPage from './pages/LineVideoPage';
 import LinksPage from './pages/LinksPage';
@@ -38,6 +39,7 @@ const App: React.FC<{}> = () => {
           </PTZProvider>
         </Route>
         <Route path={`/tabs`} exact={true} component={TabsPage} />
+        <Route path={`/dummy`} exact={true} component={DummyModal} />
         <Route path='/globalUI' exact component={GlobalUIPage} />
       </Switch>
     </Router>
