@@ -8,7 +8,7 @@ const ContrastLine = styled.line<{styling: string, lineClickSensing?: number, sh
   stroke: ${({theme, styling}) => theme.custom.lines[styling].contrastLine.stroke};
   mix-blend-mode: multiply;
   stroke-width: ${({ lineClickSensing }) => lineClickSensing}px;
-  stroke-opacity: ${({ showLineBorder }) => showLineBorder ? '0.10' : '0'};
+  stroke-opacity: ${({ showLineBorder }) => showLineBorder ? '0.35' : '0'};
 `;
 
 const HighlightLine = styled.line<{styling: string}>`
