@@ -112,27 +112,22 @@ const InnerBox = styled.div`
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
-  border-right: solid 1px hsl(207, 16%, 86%);
-  border-bottom: solid 1px hsl(207, 16%, 86%);
-  border-left: solid 1px hsl(207, 16%, 86%);
+  border: solid 1px hsl(207,16%,86%);
+  border-top: none;
   background-color: hsl(200, 23%, 97%);
 `;
 
 const LayoutGroup = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-top: 8px;
-  padding-right: 8px;
-  padding-left: 10px;
+  padding: 8px 8px 0 10px;
   width: 250px;
 `;
 
 const PaginationGroup = styled.div`
   display: flex;
   border-top: ${({ theme: { colors } }) => colors.divider} 1px solid;
-  padding-top: 8px;
-  padding-right: 20px;
-  padding-left: 10px;
+  padding: 8px 20px 0 10px;
   align-items: center;
   justify-content: space-between;
   width: 250px;
@@ -161,6 +156,7 @@ const PageSizeContainer = styled.div`
 const SelectFieldContainer  = styled.div`
   select{
     background-color: #fff;
+    width: 60px;
   }
 `;
 
