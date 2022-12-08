@@ -159,7 +159,7 @@ const TypeTable: React.FC<IProps> = ({
                 hasStatus,
                 hasThumbnail,
                 hasTypeIcon,
-                closeText,
+                closeText
               }}
             />
           );
