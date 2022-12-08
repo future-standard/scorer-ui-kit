@@ -10,6 +10,9 @@ export const custom = {
       highlightLine: {
           stroke: 'hsla(205deg, 45%, 90%, 90%);'
       },
+      highlightLineBorder: {
+          stroke:  'hsla(204.762deg, 53%, 46%, 1);'
+      },
       grabHandle: {
           fill: 'hsla(205deg, 45%, 90%, 100%)',
           stroke: 'hsla(205deg, 45%, 100%, 100%)'

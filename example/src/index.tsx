@@ -24,9 +24,6 @@ lightTheme.custom.lines['weird'] = {
   highlightLine: {
       stroke:  'transparent;'
   },
-  highlightLineBorder: {
-      stroke:  'hsla(204.762deg, 53%, 46%, 1);'
-  },
   grabHandle: {
     fill: 'transparent;',
     stroke: 'transparent;'
