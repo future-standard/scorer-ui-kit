@@ -127,7 +127,7 @@ const LayoutGroup = styled.div`
 const PaginationGroup = styled.div`
   display: flex;
   border-top: ${({ theme: { colors } }) => colors.divider} 1px solid;
-  padding: 8px 20px 0 10px;
+  padding: 8px 8px 0 10px;
   align-items: center;
   justify-content: space-between;
   width: 250px;
@@ -156,7 +156,6 @@ const PageSizeContainer = styled.div`
 const SelectFieldContainer  = styled.div`
   select{
     background-color: #fff;
-    width: 60px;
   }
 `;
 
