@@ -70,7 +70,7 @@ interface LineUIProps {
   options?: LineUIOptions;
   showDirectionMark?: boolean;
   lineClickSensingBorder?: string;
-  hasLineBorder?: boolean;
+  hasClickSensingBorder?: boolean;
 }
 const LineUI: React.FC<LineUIProps> = ({
   src,
@@ -78,7 +78,7 @@ const LineUI: React.FC<LineUIProps> = ({
   onLineMoveEnd = () => { },
   onLineClick = () => { },
   lineClickSensingBorder = '65',
-  hasLineBorder = true,
+  hasClickSensingBorder = true,
   options: {
     showHandleFinder,
     showSetIndex,
@@ -199,7 +199,7 @@ const LineUI: React.FC<LineUIProps> = ({
         (loaded && boundaries) ?
           <Frame ref={frame} viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
             {state.map((lineSet, index) => (
-              <LineSet hasLineBorder={hasLineBorder} lineClickSensingBorder={lineClickSensingBorder} key={index} onLineMoveEnd={onLineMoveEnd} onLineClick={onLineClick} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
+              <LineSet hasClickSensingBorder={hasClickSensingBorder} lineClickSensingBorder={lineClickSensingBorder} key={index} onLineMoveEnd={onLineMoveEnd} onLineClick={onLineClick} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
             ))}
           </Frame>
           :
