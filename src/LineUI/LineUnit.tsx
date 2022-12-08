@@ -13,7 +13,7 @@ const ContrastLine = styled.line<{styling: string, lineClickSensing?: number, sh
 
 const HighlightLine = styled.line<{styling: string}>`
   pointer-events: none;
-  stroke: #3781b5;
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].highlightLineBorder.stroke};
 `;
 
 
