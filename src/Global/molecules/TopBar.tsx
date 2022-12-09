@@ -160,7 +160,7 @@ const TopBar: React.FC<ITopBar> = ({
   userDrawerMeta,
   onUserDrawerMetaClick = () => { },
   hasUserDrawerMeta,
-  languageChoose,
+  copySuccessMessage,
   includeCopyTitle,
 }) => {
 
@@ -226,7 +226,7 @@ const TopBar: React.FC<ITopBar> = ({
               userDrawerFooter,
               userDrawerMeta,
               hasUserDrawerMeta,
-              languageChoose,
+              copySuccessMessage,
               includeCopyTitle,
             }}
             />
