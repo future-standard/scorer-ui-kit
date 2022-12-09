@@ -131,7 +131,7 @@ import {
 
 import {
   ConfirmationModal,
-  BoxModal,
+  BoxModal
 } from './Modals';
 
 // Other
