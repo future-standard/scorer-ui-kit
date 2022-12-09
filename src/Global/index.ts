@@ -82,7 +82,7 @@ export interface IMenuTop {
     title?: string,
     subTitle?: string,
     notes?: string,
-    copy?:boolean,
+    hasCopyIcon?:boolean,
   }
 
   export interface ITopBar {
@@ -107,7 +107,7 @@ export interface IMenuTop {
     userDrawerFooter? : IUserDrawerFooter ,
     userDrawerMeta?: IUserDrawerMeta[];
     hasUserDrawerMeta?: boolean,
-    copySuccessMessage?: string,
+    languageChoose?: string,
     includeCopyTitle?: boolean,
   }
 
