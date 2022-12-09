@@ -111,7 +111,7 @@ const BoxModal: React.FC<IBoxModal> = ({
 
   return (isOpen
     ? ReactDom.createPortal(
-      <Container>s
+      <Container>
         <SubContainer ref={lightBoxRef}>
           {isCloseEnable
               ?
