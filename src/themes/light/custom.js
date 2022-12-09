@@ -107,7 +107,7 @@ export const custom = {
           stroke: 'hsla(0, 80%, 45%, 100%);'
       },
       highlightLine: {
-        stroke: 'hsla(0, 45%, 90%, 90%);'
+          stroke: 'hsla(0, 45%, 90%, 90%);'
       },
       highlightLineBorder: {
           stroke: 'hsla(0deg, 86%, 70%, 100%);'
