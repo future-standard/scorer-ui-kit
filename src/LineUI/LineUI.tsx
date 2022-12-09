@@ -91,7 +91,7 @@ const LineUI: React.FC<LineUIProps> = ({
     showPoint = false,
     fixedImgDimensions,
     boundaryOffset = 0,
-    showDirectionMark = false,
+    showDirectionMark = false
   } = {}
 }) => {
 
