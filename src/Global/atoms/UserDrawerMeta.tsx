@@ -160,7 +160,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
               <CopyBox>
                 {showCopyText &&
                   <CopyTextBox languageValue={language=== 'en' ? true : false}>
-                    {copySuccessMessage}
+                    {copySuccessMessage !== '' ? (copySuccessMessage as string).substring(0,8) : (language=== 'en' ? 'Copied!' : 'コピーしました!')}
                   </CopyTextBox>}
                 {(hasCopyIcon && showCopyIcon?.value) ?
                   <IconBox onClick={() => onClickCopyText(title , subTitle, notes)}>
