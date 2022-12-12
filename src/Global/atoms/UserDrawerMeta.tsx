@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import styled  from 'styled-components';
+import styled, { css }  from 'styled-components';
 import { IUserDrawerMeta } from '..';
 import { useCopyToClipboard } from '../../hooks';
 import Icon from '../../Icons/Icon';
@@ -60,7 +60,9 @@ const LabelNotes = styled.div`
   font-weight: 500;
   letter-spacing: 0.29px;
   color: rgba(87, 87, 87, 0.5);
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  ${({ theme }) => theme && css`
+    font-family: ${theme.fontFamily.data};
+  `}
 `;
 
 const TitleContainer = styled.div`
@@ -100,10 +102,11 @@ const CopyTextBox = styled.pre<{languageValue:boolean, leftValue:number, topValu
   color: #575757;
   margin-top: ${({ topValue }) => topValue}px;
   position: absolute; 
-  max-width: 90px;
+  max-width: 100px;
   left: ${({ leftValue }) => leftValue}px;
   white-space: pre-wrap;
   justify-content: center;
+  font-family: ${({ theme }) => theme.fontFamily.data};
 `;
 
 const CopyBox = styled.div`
