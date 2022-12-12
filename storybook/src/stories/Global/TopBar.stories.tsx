@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { object, text, boolean, select } from "@storybook/addon-knobs";
+import { object, text, boolean } from "@storybook/addon-knobs";
 import { TopBar, ICustomDrawer, INotificationItem, INotificationsHistory } from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -105,7 +105,6 @@ export const _TopBar = () => {
   const logoutText = text("Logout Text", "Logout");
   const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
   const copySuccessMessage= text("Tooltip Text", "Copied");
-  const language = select('Language', { English: 'en', Japanese: 'ja' }, 'en');
   const includeCopyTitle = boolean("Include Title Copy", true);
   const userDrawerFooter = object("User Drawer Footer", {
     icon: 'Information',
@@ -171,8 +170,7 @@ export const _TopBar = () => {
         userDrawerFooter,
         logoutText,
         copySuccessMessage,
-        includeCopyTitle,
-        language
+        includeCopyTitle
       }}
         userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}

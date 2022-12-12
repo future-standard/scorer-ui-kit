@@ -22,7 +22,7 @@ import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
 
-import { text, object, boolean, select } from '@storybook/addon-knobs';
+import { text, object, boolean } from '@storybook/addon-knobs';
 
 export default {
   title: 'Global',
@@ -394,7 +394,6 @@ export const _GlobalUI = () => {
   const defaultMenuOpen = boolean("Default menu open", false);
   const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
   const copySuccessMessage= text("Tooltip Text", "Copied!");
-  const language = select('Language', { English: 'en', Japanese: 'ja' }, 'en');
   const includeCopyTitle = boolean("Include Title Copy", true);
   const userDrawerFooter = object("User Drawer Footer", {
     icon: 'Information',
@@ -528,7 +527,7 @@ export const _GlobalUI = () => {
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
-        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, language }}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle }}
       >
         <ComponentLinks />
       </GlobalUI>
