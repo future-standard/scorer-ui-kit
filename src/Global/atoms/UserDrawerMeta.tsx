@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import styled  from 'styled-components';
 import { IUserDrawerMeta } from '..';
 import { useCopyToClipboard } from '../../hooks';
@@ -86,7 +86,7 @@ const IconBox = styled.div`
   padding: 1px 5px 0 0;
 `;
 
-const CopyTextBox = styled.div<{languageValue:boolean}>`
+const CopyTextBox = styled.pre<{languageValue:boolean, leftValue:number, topValue: number}>`
   text-align: center;
   padding: 5px;
   font-size: 10px;
@@ -98,16 +98,12 @@ const CopyTextBox = styled.div<{languageValue:boolean}>`
   opacity: 0.76;
   font-weight: 500;
   color: #575757;
-  margin-top: -23px;
-  position: absolute;
-  ${({ languageValue }) => languageValue
-    ? `margin-left: -14%;`
-    : `margin-left: -33%;`
-  };
-  ${({ languageValue }) => languageValue
-    ? `max-width: 45px;`
-    : `max-width: 86px;`
-  };
+  margin-top: ${({ topValue }) => topValue}px;
+  position: absolute; 
+  max-width: 90px;
+  left: ${({ leftValue }) => leftValue}px;
+  white-space: pre-wrap;
+  justify-content: center;
 `;
 
 const CopyBox = styled.div`
@@ -127,11 +123,29 @@ interface IShowCopyIcon {
   value?: boolean;
 }
 
+interface IStyledForTooltip {
+  leftValue: number;
+  topValue: number;
+}
+
 const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuccessMessage, includeCopyTitle, userMetaIndex, language}) => {
   const { icon, title, subTitle, notes, hasCopyIcon } = item;
   const { copyToClipboard } = useCopyToClipboard();
   const [ showCopyText, setShowCopyText ] = useState<boolean>(false);
   const [showCopyIcon, setShowCopyIcon] = useState<IShowCopyIcon>({id: 0, value: false});
+  const [styledForTooltip, setStyledForTooltip] = useState<IStyledForTooltip>({leftValue: 128, topValue: -23});
+  
+  useEffect(()=>{
+    if(language === 'ja'){
+      setStyledForTooltip({leftValue: 90, topValue: -23});
+    }
+    if((copySuccessMessage as string).length > 8){
+      setStyledForTooltip({leftValue: 90, topValue: -23});
+    }
+    if((copySuccessMessage as string).length > 17){
+      setStyledForTooltip({leftValue: 90, topValue: -32});
+    }
+  }, [copySuccessMessage, language]);
 
   const onClickCopyText = useCallback((title , subTitle, notes)=>{
     let copyText;
@@ -159,15 +173,15 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
               </TitleContainer>
               <CopyBox>
                 {showCopyText &&
-                  <CopyTextBox languageValue={language=== 'en' ? true : false}>
-                    {copySuccessMessage !== '' ? (copySuccessMessage as string).substring(0,8) : (language=== 'en' ? 'Copied!' : 'コピーしました!')}
+                  <CopyTextBox languageValue={language=== 'en' ? true : false} leftValue={styledForTooltip.leftValue} topValue={styledForTooltip.topValue}>
+                    {copySuccessMessage !== '' ? copySuccessMessage : (language=== 'en' ? 'Copied!' : 'コピーしました!')}
                   </CopyTextBox>}
                 {(hasCopyIcon && showCopyIcon?.value) ?
                   <IconBox onClick={() => onClickCopyText(title , subTitle, notes)}>
                     <Icon icon='Copy' size={12} />
                   </IconBox>:
                   null}
-              </CopyBox>  
+              </CopyBox>
             </TitleBox>
             {subTitle !=='' ?
               <LabelContent title={subTitle}>{subTitle}</LabelContent>
