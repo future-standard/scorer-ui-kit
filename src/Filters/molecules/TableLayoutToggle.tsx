@@ -159,6 +159,11 @@ const SelectFieldContainer  = styled.div`
   }
 `;
 
+interface IOptionsItem {
+  value: string
+  icon: string
+}
+
 interface IProps {
   disabled?: boolean
   onToggleOpenCallback?: (isOpen: boolean) => void
@@ -169,7 +174,13 @@ interface IProps {
   defaultPageSize: number,
   getLayout: (layout: string) => void,
   layoutText?: string,
-  pageSizeText?: string
+  pageSizeText?: string,
+  icon1: string,
+  icon2: string,
+  icon3?: string,
+  buttonValue1: string,
+  buttonValue2: string,
+  buttonValue3?: string
 }
 
 const getDropPosition = (buttonRect: DOMRect, minWidth: number, minHeight: number): IOpenPos => {
@@ -196,11 +207,11 @@ interface IDropOpen {
   position: IOpenPos,
 }
 
-const TableLayoutToggle: React.FC<IProps> = ({disabled = false, onToggleOpenCallback = () => { }, onCloseCallback= () => { }, pageSizeOptions = [10, 20, 30, 50, 100], onPageSizeChange = () =>{}, defaultPageSize = 10, getLayout = () => {}, layoutText='Layout', pageSizeText='Items Per Page'}) => {
+const TableLayoutToggle: React.FC<IProps> = ({disabled = false, onToggleOpenCallback = () => { }, onCloseCallback= () => { }, pageSizeOptions = [10, 20, 30, 50, 100], onPageSizeChange = () =>{}, defaultPageSize = 10, getLayout = () => {}, layoutText='Layout', pageSizeText='Items Per Page', icon1 = 'LayoutGrid', icon2 = 'LayoutList', icon3, buttonValue1, buttonValue2, buttonValue3}) => {
   const [openState, setOpenState] = useState<IDropOpen>({ isOpen: false, position: 'bottom-right'});
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
-  const [isGridLayout, setIsGridLayout] = useState<boolean>(true);
+  const [isGridLayout, setIsGridLayout] = useState<string>('grid');
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const minWidth = 250;
   const minHeight = 96;
@@ -233,13 +244,9 @@ const TableLayoutToggle: React.FC<IProps> = ({disabled = false, onToggleOpenCall
     }); 
   }, [onToggleOpenCallback, openState.isOpen]);
 
-  const switchLayout = useCallback((layout: boolean) => {
+  const switchLayout = useCallback((layout: string) => {
     setIsGridLayout(layout);
-    if(layout) {
-      getLayout('grid');
-    } else {
-      getLayout('list');
-    }
+    getLayout(layout);
   },[getLayout]);
 
   const handlePageSizeChange = useCallback((size:string)=> {
@@ -274,16 +281,22 @@ const TableLayoutToggle: React.FC<IProps> = ({disabled = false, onToggleOpenCall
           <LayoutGroup>
             <LayoutText>{layoutText}</LayoutText>
             <IconWrapper>
-              <ContextActionButton isInnerContextButton isActive={isGridLayout} onClick={() => switchLayout(true)}>
+              <ContextActionButton isInnerContextButton isActive={isGridLayout === buttonValue1} onClick={() => switchLayout(buttonValue1)}>
                 <ContextIcon>
-                  <Icon icon='LayoutGrid' color={isGridLayout ? 'inverse' : 'dimmed'} size={16}  />
+                  <Icon icon={icon1} color={isGridLayout === buttonValue1 ? 'inverse' : 'dimmed'} size={16}  />
                 </ContextIcon>
               </ContextActionButton>
-              <ContextActionButton isActive={!isGridLayout} onClick={() => switchLayout(false)}>
+              <ContextActionButton isInnerContextButton isActive={isGridLayout === buttonValue2} onClick={() => switchLayout(buttonValue2)}>
                 <ContextIcon>
-                  <Icon icon='LayoutList' color={!isGridLayout ? 'inverse' : 'dimmed'} size={16} />
+                  <Icon icon={icon2} color={isGridLayout === buttonValue2 ? 'inverse' : 'dimmed'} size={16} />
                 </ContextIcon>
               </ContextActionButton>
+              {icon3 && buttonValue3 &&
+              <ContextActionButton isActive={isGridLayout === buttonValue3} onClick={() => switchLayout(buttonValue3)}>
+                <ContextIcon>
+                  <Icon icon={icon3} color={isGridLayout === buttonValue3 ? 'inverse' : 'dimmed'} size={16} />
+                </ContextIcon>
+              </ContextActionButton>}
             </IconWrapper>
           </LayoutGroup>
           <PaginationGroup>

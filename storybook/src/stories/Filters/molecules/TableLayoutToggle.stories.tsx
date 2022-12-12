@@ -32,6 +32,10 @@ export const _TableLayoutToggle = () => {
         pageSizeOptions: sizeOptions,
         defaultPageSize: pageSize,
         getLayout: handleLayout,
+        buttonValue1: 'grid',
+        buttonValue2: 'list',
+        icon1: 'LayoutGrid',
+        icon2: 'LayoutList',
         layoutText: language === 'english' ? 'Layout' : 'レイアウト',
         pageSizeText: language === 'english' ? 'Items Per Page' : '１ページのアイテム数'
       }}
