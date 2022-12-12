@@ -207,7 +207,7 @@ interface IDropOpen {
   position: IOpenPos,
 }
 
-const TableLayoutToggle: React.FC<IProps> = ({disabled = false, onToggleOpenCallback = () => { }, onCloseCallback= () => { }, pageSizeOptions = [10, 20, 30, 50, 100], onPageSizeChange = () =>{}, defaultPageSize = 10, getLayout = () => {}, layoutText='Layout', pageSizeText='Items Per Page', icon1 = 'LayoutGrid', icon2 = 'LayoutList', icon3, buttonValue1, buttonValue2, buttonValue3}) => {
+const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback = () => { }, onCloseCallback= () => { }, pageSizeOptions = [10, 20, 30, 50, 100], onPageSizeChange = () =>{}, defaultPageSize = 10, getLayout = () => {}, layoutText='Layout', pageSizeText='Items Per Page', icon1 = 'LayoutGrid', icon2 = 'LayoutList', icon3, buttonValue1, buttonValue2, buttonValue3}) => {
   const [openState, setOpenState] = useState<IDropOpen>({ isOpen: false, position: 'bottom-right'});
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -321,4 +321,4 @@ const TableLayoutToggle: React.FC<IProps> = ({disabled = false, onToggleOpenCall
   );
 };
 
-export default TableLayoutToggle; 
+export default FilterLayout; 
