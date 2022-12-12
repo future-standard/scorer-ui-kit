@@ -115,7 +115,7 @@ interface IProps {
   onUserDrawerMetaClick?:() => void;
   includeCopyTitle?: boolean;
   copySuccessMessage?: string;
-  userMetaIndex?: number;
+  userMetaIndex?: number
 }
 
 interface IShowCopyIcon {
