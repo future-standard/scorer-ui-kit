@@ -41,7 +41,7 @@ export interface IMenuTop {
     icon?: string,
     subTitle?: string,
     notes?: string,
-    copy?: boolean,
+    hasCopyIcon?: boolean,
   }
 
   export interface IMenuItemSubmenu {

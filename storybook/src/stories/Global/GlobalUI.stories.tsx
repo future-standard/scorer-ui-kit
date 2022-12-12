@@ -501,14 +501,14 @@ export const _GlobalUI = () => {
         title: 'Device ID:',
         subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
         notes: '',
-        hasCopyIcon:true,
+        hasCopyIcon:true
       },
       {
         icon: 'Information',
         title: 'GPU machine with 4 GPU',
         subTitle: 'Building B',
         notes: `This is a GPU machine having 30 camera support`,
-        hasCopyIcon:true,
+        hasCopyIcon:true
       },
       {
         icon: 'Success',
