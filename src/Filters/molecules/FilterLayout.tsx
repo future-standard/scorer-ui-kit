@@ -207,7 +207,7 @@ interface IDropOpen {
   position: IOpenPos,
 }
 
-const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback = () => { }, onCloseCallback= () => { }, pageSizeOptions = [10, 20, 30, 50, 100], onPageSizeChange = () =>{}, defaultPageSize = 10, getLayout = () => {}, layoutText='Layout', pageSizeText='Items Per Page', icon1 = 'LayoutGrid', icon2 = 'LayoutList', icon3, buttonValue1, buttonValue2, buttonValue3}) => {
+const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback = () => { }, onCloseCallback= () => { }, pageSizeOptions = [10, 20, 30, 50, 100], onPageSizeChange = () =>{}, defaultPageSize = 10, getLayout = () => {}, layoutText='Layout', pageSizeText='Items Per Page', icon1 = 'LayoutGrid', icon2 = 'LayoutList', icon3 = '', buttonValue1, buttonValue2, buttonValue3 = ''}) => {
   const [openState, setOpenState] = useState<IDropOpen>({ isOpen: false, position: 'bottom-right'});
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -286,7 +286,7 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
                   <Icon icon={icon1} color={isGridLayout === buttonValue1 ? 'inverse' : 'dimmed'} size={16}  />
                 </ContextIcon>
               </ContextActionButton>
-              <ContextActionButton isInnerContextButton isActive={isGridLayout === buttonValue2} onClick={() => switchLayout(buttonValue2)}>
+              <ContextActionButton isInnerContextButton={icon3 !== '' && buttonValue3 !== ''} isActive={isGridLayout === buttonValue2} onClick={() => switchLayout(buttonValue2)}>
                 <ContextIcon>
                   <Icon icon={icon2} color={isGridLayout === buttonValue2 ? 'inverse' : 'dimmed'} size={16} />
                 </ContextIcon>
