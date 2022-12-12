@@ -86,7 +86,7 @@ const IconBox = styled.div`
   padding: 1px 5px 0 0;
 `;
 
-const CopyTextBox = styled.div<{ tooltipValue: boolean }>`
+const CopyTextBox = styled.div<{languageValue:boolean}>`
   text-align: center;
   padding: 5px;
   font-size: 10px;
@@ -98,15 +98,15 @@ const CopyTextBox = styled.div<{ tooltipValue: boolean }>`
   opacity: 0.76;
   font-weight: 500;
   color: #575757;
-  ${({ tooltipValue }) => tooltipValue
-    ? `margin-left: -14%;`
-    : `margin-left: -31%;`
-  };
   margin-top: -23px;
   position: absolute;
-  ${({ tooltipValue }) => tooltipValue
-    ? `min-width: 45px;`
-    : `min-width: 82px;`
+  ${({ languageValue }) => languageValue
+    ? `margin-left: -14%;`
+    : `margin-left: -33%;`
+  };
+  ${({ languageValue }) => languageValue
+    ? `max-width: 45px;`
+    : `max-width: 86px;`
   };
 `;
 
@@ -117,8 +117,9 @@ interface IProps {
   item: IUserDrawerMeta;
   onUserDrawerMetaClick?:() => void;
   includeCopyTitle?: boolean;
-  languageChoose?: string;
+  copySuccessMessage?: string;
   userMetaIndex?: number;
+  language?: string;
 }
 
 interface IShowCopyIcon {
@@ -126,12 +127,11 @@ interface IShowCopyIcon {
   value?: boolean;
 }
 
-const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, languageChoose, includeCopyTitle, userMetaIndex}) => {
+const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuccessMessage, includeCopyTitle, userMetaIndex, language}) => {
   const { icon, title, subTitle, notes, hasCopyIcon } = item;
   const { copyToClipboard } = useCopyToClipboard();
   const [ showCopyText, setShowCopyText ] = useState<boolean>(false);
   const [showCopyIcon, setShowCopyIcon] = useState<IShowCopyIcon>({id: 0, value: false});
-  const tooltipText =  languageChoose === 'en' ? 'Copied' :'コピーしました';
 
   const onClickCopyText = useCallback((title , subTitle, notes)=>{
     let copyText;
@@ -159,8 +159,8 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, languag
               </TitleContainer>
               <CopyBox>
                 {showCopyText &&
-                  <CopyTextBox tooltipValue={tooltipText==='Copied'}>
-                    {tooltipText}
+                  <CopyTextBox languageValue={language=== 'en' ? true : false}>
+                    {copySuccessMessage}
                   </CopyTextBox>}
                 {(hasCopyIcon && showCopyIcon?.value) ?
                   <IconBox onClick={() => onClickCopyText(title , subTitle, notes)}>
