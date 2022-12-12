@@ -123,10 +123,6 @@ interface IShowCopyIcon {
   value?: boolean
 }
 
-interface IStyledForTooltip {
-  leftValue: number;
-  topValue: number
-}
 
 const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuccessMessage, includeCopyTitle, userMetaIndex}) => {
   const { icon, title, subTitle, notes, hasCopyIcon } = item;
