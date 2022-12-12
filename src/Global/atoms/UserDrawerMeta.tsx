@@ -118,17 +118,17 @@ interface IProps {
   includeCopyTitle?: boolean;
   copySuccessMessage?: string;
   userMetaIndex?: number;
-  language?: string;
+  language?: string
 }
 
 interface IShowCopyIcon {
   id?: number;
-  value?: boolean;
+  value?: boolean
 }
 
 interface IStyledForTooltip {
   leftValue: number;
-  topValue: number;
+  topValue: number
 }
 
 const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuccessMessage, includeCopyTitle, userMetaIndex, language}) => {
