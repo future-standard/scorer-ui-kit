@@ -166,7 +166,6 @@ const UserMenu: React.FC<IUserMenu> = ({
   closeOnClick,
   userDrawerFooter,
   copySuccessMessage,
-  language,
   includeCopyTitle,
   onUserDrawerMetaClick = () => { }, 
   userDrawerMeta,
@@ -208,7 +207,7 @@ const UserMenu: React.FC<IUserMenu> = ({
                 onUserDrawerMetaClick={onUserDrawerMetaClick}
                 key={key}
                 userMetaIndex={key}
-                {...{ item, includeCopyTitle, copySuccessMessage, language }}
+                {...{ item, includeCopyTitle, copySuccessMessage }}
               />
             );
             })}
