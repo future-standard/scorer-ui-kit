@@ -131,6 +131,7 @@ import {
 
 import {
   ConfirmationModal,
+  BoxModal
 } from './Modals';
 
 // Other
@@ -237,6 +238,7 @@ export {
 
   // Modals
   ConfirmationModal,
+  BoxModal,
 
   // Filters
   DatePicker,
