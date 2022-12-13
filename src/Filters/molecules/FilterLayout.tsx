@@ -121,7 +121,7 @@ const LayoutGroup = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 8px 8px 0 10px;
-  width: 250px;
+  width: auto;
 `;
 
 const PaginationGroup = styled.div`
@@ -130,7 +130,7 @@ const PaginationGroup = styled.div`
   padding: 8px 8px 0 10px;
   align-items: center;
   justify-content: space-between;
-  width: 250px;
+  width: auto;
 `;
 
 const IconWrapper = styled.div`
@@ -160,8 +160,9 @@ const SelectFieldContainer  = styled.div`
 `;
 
 interface IOptionsItem {
-  value: string
+  id: string
   icon: string
+  tooltipText: string
 }
 
 interface IProps {
@@ -171,16 +172,14 @@ interface IProps {
   pageSizeOptions?: number[],
   onPageSizeChange: (size: number) => void,
   defaultPage?: number,
-  defaultPageSize: number,
+  defaultPageSize?: number,
   getLayout: (layout: string) => void,
   layoutText?: string,
   pageSizeText?: string,
-  icon1: string,
-  icon2: string,
-  icon3?: string,
-  buttonValue1: string,
-  buttonValue2: string,
-  buttonValue3?: string
+  contentArray: IOptionsItem[];
+  minWidth?: number;
+  minHeight?: number;
+  hasPageSettings?: boolean
 }
 
 const getDropPosition = (buttonRect: DOMRect, minWidth: number, minHeight: number): IOpenPos => {
@@ -207,14 +206,12 @@ interface IDropOpen {
   position: IOpenPos,
 }
 
-const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback = () => { }, onCloseCallback= () => { }, pageSizeOptions = [10, 20, 30, 50, 100], onPageSizeChange = () =>{}, defaultPageSize = 10, getLayout = () => {}, layoutText='Layout', pageSizeText='Items Per Page', icon1 = 'LayoutGrid', icon2 = 'LayoutList', icon3 = '', buttonValue1, buttonValue2, buttonValue3 = ''}) => {
+const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback = () => { }, onCloseCallback= () => { }, pageSizeOptions = [10, 20, 30, 50, 100], onPageSizeChange = () =>{}, defaultPageSize = 10, getLayout = () => {}, layoutText='Layout', pageSizeText='Items Per Page', contentArray, minWidth=250, minHeight=90, hasPageSettings=true}) => {
   const [openState, setOpenState] = useState<IDropOpen>({ isOpen: false, position: 'bottom-right'});
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const [isGridLayout, setIsGridLayout] = useState<string>('grid');
   const [pageSize, setPageSize] = useState(defaultPageSize);
-  const minWidth = 250;
-  const minHeight = 96;
 
   const handleClose = useCallback(() => {
     if (openState.isOpen) {
@@ -281,40 +278,34 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
           <LayoutGroup>
             <LayoutText>{layoutText}</LayoutText>
             <IconWrapper>
-              <ContextActionButton isInnerContextButton isActive={isGridLayout === buttonValue1} onClick={() => switchLayout(buttonValue1)}>
-                <ContextIcon>
-                  <Icon icon={icon1} color={isGridLayout === buttonValue1 ? 'inverse' : 'dimmed'} size={16}  />
-                </ContextIcon>
-              </ContextActionButton>
-              <ContextActionButton isInnerContextButton={icon3 !== '' && buttonValue3 !== ''} isActive={isGridLayout === buttonValue2} onClick={() => switchLayout(buttonValue2)}>
-                <ContextIcon>
-                  <Icon icon={icon2} color={isGridLayout === buttonValue2 ? 'inverse' : 'dimmed'} size={16} />
-                </ContextIcon>
-              </ContextActionButton>
-              {icon3 && buttonValue3 &&
-              <ContextActionButton isActive={isGridLayout === buttonValue3} onClick={() => switchLayout(buttonValue3)}>
-                <ContextIcon>
-                  <Icon icon={icon3} color={isGridLayout === buttonValue3 ? 'inverse' : 'dimmed'} size={16} />
-                </ContextIcon>
-              </ContextActionButton>}
+              {contentArray.map((item, index) => {
+                return (
+                  <ContextActionButton key={index} isInnerContextButton={index !== contentArray.length-1} isActive={isGridLayout === item.id} onClick={() => switchLayout(item.id)}>
+                    <ContextIcon title={item.tooltipText}>
+                      <Icon icon={item.icon} color={isGridLayout === item.id ? 'inverse' : 'dimmed'} size={16} />
+                    </ContextIcon>
+                  </ContextActionButton>
+                );
+              })}
             </IconWrapper>
           </LayoutGroup>
-          <PaginationGroup>
-            <PaginationText>{pageSizeText}</PaginationText>
-            {pageSizeOptions &&
-              <PageSizeContainer>
-                <SelectFieldContainer>
-                  <SelectField
-                    changeCallback={handlePageSizeChange}
-                    defaultValue={pageSize}
-                    isCompact
-                    value={pageSize}
-                  >
-                    {pageSizeOptions.map((size: number, index: number) => <option key={index} value={size}>{size}</option>)}
-                  </SelectField>
-                </SelectFieldContainer>
-              </PageSizeContainer>}
-          </PaginationGroup>
+          {hasPageSettings &&
+            <PaginationGroup>
+              <PaginationText>{pageSizeText}</PaginationText>
+              {pageSizeOptions &&
+                <PageSizeContainer>
+                  <SelectFieldContainer>
+                    <SelectField
+                      changeCallback={handlePageSizeChange}
+                      defaultValue={pageSize}
+                      isCompact
+                      value={pageSize}
+                    >
+                      {pageSizeOptions.map((size: number, index: number) => <option key={index} value={size}>{size}</option>)}
+                    </SelectField>
+                  </SelectFieldContainer>
+                </PageSizeContainer>}
+            </PaginationGroup>}
         </InnerBox>
       </ContentBox>
     </Container>
