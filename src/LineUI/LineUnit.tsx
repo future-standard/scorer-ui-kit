@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { IDragLineUISharedOptions } from '.';
 import Icon from '../Icons/Icon';
 
 
-const ContrastLine = styled.line<{styling: string}>`
+const ContrastLine = styled.line<{styling: string, lineClickSensing?: number, showLineBorder?: boolean}>`
   stroke: ${({theme, styling}) => theme.custom.lines[styling].contrastLine.stroke};
   mix-blend-mode: multiply;
+  stroke-width: ${({ lineClickSensing }) => lineClickSensing}px;
+  stroke-opacity: ${({ showLineBorder }) => showLineBorder ? '0.35' : '0'};
 `;
 
 const HighlightLine = styled.line<{styling: string}>`
   pointer-events: none;
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].highlightLine.stroke};
+  stroke: ${({theme, styling}) => theme.custom.lines[styling].highlightLineBorder.stroke};
 `;
 
 
@@ -53,7 +55,6 @@ const LabelText = styled.text<{showIndex: boolean, styling: string}>`
   fill: ${({theme, styling}) => theme.custom.lines[styling].label.fill};
   font-weight: bold;
   transition: opacity 250ms ease;
-  pointer-events: none;
 `;
 
 const GrabHandleContrast = styled(GrabHandle)`
@@ -95,6 +96,8 @@ interface ILineUnitProps {
   styling?: string;
   showSmallDirectionMark?: boolean;
   overrideShowMoveHandle?: boolean;
+  lineClickSensingBorder?: string;
+  hasClickSensingBorder?: boolean;
 }
 
 
@@ -102,6 +105,7 @@ interface ILineUnitProps {
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
   const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling = 'primary', moveEndCB = () => { }, lineClickCallback = () => { }, showSmallDirectionMark = false, overrideShowMoveHandle = true } = props;
   const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
+  const [showLineBorder, setShowLineBorder] = useState<boolean>();
 
   // const a = x1 - x2;
   // const b = y1 - y2;
@@ -110,6 +114,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   // const hideGrabHandle = showMoveHandle === false || (showMoveHandle !== true && distance < 60);
   
   const hideGrabHandle = !showMoveHandle || !overrideShowMoveHandle;
+  const lineClickSensing = parseInt(props.lineClickSensingBorder as string);
 
 
   /** --- Toucher Events Section --- */
@@ -170,28 +175,41 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     const dmCoordinate = directionMarkCoordinate();
     return (
       <g transform={`translate(${dmCoordinate.x},${dmCoordinate.y}) rotate(${dmCoordinate.rotate}) scale(${unit * 1})`}>
-        <g transform='translate(-3,-30) scale(0.8)'>
+        <g onClick={() => lineClickCallback(lineSetId)} transform='translate(-3,-30) scale(0.8)'>
           <DMCircle r={12} cx={6} cy={7} />
           <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
         </g>
         {showSmallDirectionMark &&
-          <g transform='translate(5,25) rotate(-180) scale(0.8)'>
+          <g onClick={() => lineClickCallback(lineSetId)} transform='translate(5,25) rotate(-180) scale(0.8)'>
             <DMCircle r={8} cx={3.5} cy={4.5} />
             <Icon color='inverse' icon='Up' size={7} weight='heavy' forSvgUsage />
           </g>}
         {label &&
           <g transform={`translate(0,${showSmallDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
-            <LabelText textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
+            <LabelText onClick={() => lineClickCallback(lineSetId)} textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
               {label}
             </LabelText>
           </g>}
       </g>
     );
   };
+  
+  //hover on line show border
+  const getMouseOver = useCallback(() =>{
+    if(props.hasClickSensingBorder){
+      setShowLineBorder(true);
+    }
+  }, [props.hasClickSensingBorder]);
+
+  const getMouseOut = useCallback(() =>{
+    if(props.hasClickSensingBorder){
+      setShowLineBorder(false);
+    }
+  }, [props.hasClickSensingBorder]);
 
   return (
     <g>
-      <ContrastLine onClick={() => lineClickCallback(lineSetId)} styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
+      <ContrastLine onMouseOver={getMouseOver} onMouseOut={getMouseOut} {...{lineClickSensing, showLineBorder}} onClick={() => lineClickCallback(lineSetId)} styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
       <HighlightLine styling={styling} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
       <GrabHandleGroup styling={styling} showIndex={handleFinderActive && revealSetIndex} originalRadius={8 * unit}>
