@@ -41,6 +41,7 @@ export interface IMenuTop {
     icon?: string,
     subTitle?: string,
     notes?: string,
+    hasCopyIcon?: boolean
   }
 
   export interface IMenuItemSubmenu {
@@ -78,9 +79,10 @@ export interface IMenuTop {
 
   export interface IUserDrawerMeta {
     icon?: string,
-    title?: string, 
-    subTitle?: string, 
+    title?: string,
+    subTitle?: string,
     notes?: string,
+    hasCopyIcon?:boolean
   }
 
   export interface ITopBar {
@@ -106,6 +108,8 @@ export interface IMenuTop {
     userDrawerMeta?: IUserDrawerMeta[];
     hasUserDrawerMeta?: boolean,
     hasUserDrawerFooter?: boolean,
+    copySuccessMessage?: string,
+    includeCopyTitle?: boolean
   }
 
   export interface INotificationItem {

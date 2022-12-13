@@ -180,10 +180,12 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLanguageToggle = () => { },
   closeOnClick,
   userDrawerFooter,
+  copySuccessMessage,
+  includeCopyTitle,
   onUserDrawerMetaClick = () => { }, 
   userDrawerMeta,
-  hasUserDrawerMeta,
   hasUserDrawerFooter,
+  hasUserDrawerMeta
 }) => {
 
   const {icon, title} = userDrawerFooter as IUserDrawerFooter;
@@ -221,7 +223,7 @@ const UserMenu: React.FC<IUserMenu> = ({
                 onUserDrawerMetaClick={onUserDrawerMetaClick}
                 key={key}
                 userMetaIndex={key}
-                {...{ item }} 
+                {...{ item, includeCopyTitle, copySuccessMessage }}
               />
             );
             })}
