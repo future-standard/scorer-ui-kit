@@ -179,7 +179,7 @@ interface IProps {
   contentArray: IOptionsItem[];
   minWidth?: number;
   minHeight?: number;
-  hasPageSettings?: boolean
+  hasPageSettings?: boolean;
 }
 
 const getDropPosition = (buttonRect: DOMRect, minWidth: number, minHeight: number): IOpenPos => {
