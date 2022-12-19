@@ -9,6 +9,7 @@ const ContrastLine = styled.line<{styling: string, lineClickSensing?: number, sh
   mix-blend-mode: multiply;
   stroke-width: ${({ lineClickSensing }) => lineClickSensing}px;
   stroke-opacity: ${({ showLineBorder }) => showLineBorder ? '0.35' : '0'};
+  cursor: pointer;
 `;
 
 const HighlightLine = styled.line<{styling: string}>`
@@ -55,6 +56,7 @@ const LabelText = styled.text<{showIndex: boolean, styling: string}>`
   fill: ${({theme, styling}) => theme.custom.lines[styling].label.fill};
   font-weight: bold;
   transition: opacity 250ms ease;
+  cursor: pointer;
 `;
 
 const GrabHandleContrast = styled(GrabHandle)`
@@ -78,6 +80,11 @@ const GrabHandleGroup = styled.g<{ showIndex: boolean, originalRadius: number, s
 
 const DMCircle = styled.circle`
   fill: hsla(203, 100%, 35%, 0.49);
+  cursor: pointer;
+`;
+
+const IconFormat = styled(Icon)`
+  cursor: pointer;
 `;
 
 interface ILineUnitProps {
@@ -174,15 +181,15 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
   const getDirectionMarkLine = () => {
     const dmCoordinate = directionMarkCoordinate();
     return (
-      <g transform={`translate(${dmCoordinate.x},${dmCoordinate.y}) rotate(${dmCoordinate.rotate}) scale(${unit * 1})`}>
+      <g transform={`translate(${dmCoordinate.x},${dmCoordinate.y}) rotate(${dmCoordinate.rotate}) scale(${unit * 1})`} style={{cursor:'pointer'}}>
         <g onClick={() => lineClickCallback(lineSetId)} transform='translate(-3,-30) scale(0.8)'>
           <DMCircle r={12} cx={6} cy={7} />
-          <Icon color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
+          <IconFormat color='inverse' icon='Up' size={12} weight='heavy' forSvgUsage />
         </g>
         {showSmallDirectionMark &&
           <g onClick={() => lineClickCallback(lineSetId)} transform='translate(5,25) rotate(-180) scale(0.8)'>
             <DMCircle r={8} cx={3.5} cy={4.5} />
-            <Icon color='inverse' icon='Up' size={7} weight='heavy' forSvgUsage />
+            <IconFormat color='inverse' icon='Up' size={7} weight='heavy' forSvgUsage />
           </g>}
         {label &&
           <g transform={`translate(0,${showSmallDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
