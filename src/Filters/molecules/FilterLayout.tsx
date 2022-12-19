@@ -120,14 +120,14 @@ const InnerBox = styled.div`
 const LayoutGroup = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 8px 8px 0 10px;
+  padding: 4px 8px 4px 10px;
   width: auto;
 `;
 
 const PaginationGroup = styled.div`
   display: flex;
   border-top: ${({ theme: { colors } }) => colors.divider} 1px solid;
-  padding: 8px 8px 0 10px;
+  padding: 4px 8px 4px 10px;
   align-items: center;
   justify-content: space-between;
   width: auto;
