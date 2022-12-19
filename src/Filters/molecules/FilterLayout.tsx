@@ -74,22 +74,22 @@ const ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean, minWidt
   ${({ openState, disabled }) => openState && css`
     display: ${openState.isOpen ? 'inline-block' : 'none'};
     display: ${disabled && 'none'};
-    ${openState.position === 'bottom-right' && `
+    ${openState.position === 'bottom-right' && css`
       bottom: 0;
       left: 0;
       transform: translateY(calc(100% + 5px ));
     `};
-    ${openState.position === 'bottom-left' && `
+    ${openState.position === 'bottom-left' && css`
       bottom: 0;
       right: 0;
       transform: translateY(calc(100% + 5px ));
     `};
-    ${openState.position === 'top-left' && `
+    ${openState.position === 'top-left' && css`
       top: 0;
       right: 0;
       transform: translateY(calc( -100% - 5px ));
     `};
-    ${openState.position === 'top-right' && `
+    ${openState.position === 'top-right' && css`
       top: 0;
       left: 0;
       transform: translateY(calc( -100% - 5px ));
