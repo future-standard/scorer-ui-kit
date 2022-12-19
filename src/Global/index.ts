@@ -72,7 +72,7 @@ export interface IMenuTop {
 
 
   export interface IUserDrawerFooter {
-    icon:string,
+    icon?:string,
     title:string,
   }
 
@@ -105,6 +105,7 @@ export interface IMenuTop {
     userDrawerFooter? : IUserDrawerFooter ,
     userDrawerMeta?: IUserDrawerMeta[];
     hasUserDrawerMeta?: boolean,
+    hasUserDrawerFooter?: boolean,
   }
 
   export interface INotificationItem {

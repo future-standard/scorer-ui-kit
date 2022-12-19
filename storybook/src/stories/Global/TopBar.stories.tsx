@@ -104,6 +104,7 @@ export const _TopBar = () => {
   const currentUserText = text("Current User Text", "Current User");
   const logoutText = text("Logout Text", "Logout");
   const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
+  const hasUserDrawerFooter = boolean("Has User Drawer Footer", false);
   const userDrawerFooter = object("User Drawer Footer", {
     icon: 'Information',
     title: 'V12.3.4',
@@ -160,6 +161,7 @@ export const _TopBar = () => {
         searchPlaceholder,
         hasLanguage,
         hasUserDrawerMeta,
+        hasUserDrawerFooter,
         hasCurrentUser,
         notificationsHistory,
         currentUserText,
