@@ -88,12 +88,13 @@ interface IProps {
   mediaType?: IMediaType
   retryImageLoad?: boolean
   retryLimit?: number;
+  closeText?: string;
 }
 
 // Image
 // No Image Placeholder
 
-const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', mediaUrl, mediaType, retryImageLoad= false, retryLimit=5}) => {
+const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', mediaUrl, mediaType, retryImageLoad= false, retryLimit=5, closeText}) => {
   const [showImage, setShowImage] = useState(true);
   const [imgSrc, setImgSrc] = useState(image);
   const { createMediaModal } = useMediaModal();
@@ -104,9 +105,9 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   const handleModal = useCallback(async () => {
 
     if ( mediaUrl && mediaType ) {
-      createMediaModal({ src: mediaUrl, mediaType, minHeight: '240px' });
+      createMediaModal({ src: mediaUrl, mediaType, minHeight: '240px', closeText });
     }
-  }, [createMediaModal, mediaType, mediaUrl]);
+  }, [closeText, createMediaModal, mediaType, mediaUrl]);
 
   useEffect(()=>{
     setShowImage(false);
