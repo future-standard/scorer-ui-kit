@@ -206,7 +206,6 @@ const UserMenu: React.FC<IUserMenu> = ({
               <UserDetails
                 onUserDrawerMetaClick={onUserDrawerMetaClick}
                 key={key}
-                userMetaIndex={key}
                 {...{ item, includeCopyTitle, copySuccessMessage }}
               />
             );

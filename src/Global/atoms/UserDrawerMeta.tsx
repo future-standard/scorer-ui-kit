@@ -115,7 +115,6 @@ interface IProps {
   onUserDrawerMetaClick?:() => void;
   includeCopyTitle?: boolean;
   copySuccessMessage?: string;
-  userMetaIndex?: number
 }
 
 interface IShowCopyIcon {
@@ -124,11 +123,11 @@ interface IShowCopyIcon {
 }
 
 
-const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuccessMessage, includeCopyTitle, userMetaIndex}) => {
+const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuccessMessage, includeCopyTitle}) => {
   const { icon, title, subTitle, notes, hasCopyIcon } = item;
   const { copyToClipboard } = useCopyToClipboard();
   const [ showCopyText, setShowCopyText ] = useState<boolean>(false);
-  const [showCopyIcon, setShowCopyIcon] = useState<IShowCopyIcon>({id: 0, value: false});
+  const [onHoverColorValue, setOnHoverColorValue] = useState<'mono' | 'dimmed' | 'subtle' | 'inverse' | 'primary' | 'danger'>('dimmed');
 
   const onClickCopyText = useCallback((title , subTitle, notes)=>{
     let copyText;
@@ -141,13 +140,21 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
     setShowCopyText(true);
     setTimeout(()=>{
       setShowCopyText(false);
-    }, 300);
+    }, 1500);
   },[includeCopyTitle, copyToClipboard]);
+
+  const onHoverMetaInfo = useCallback(() => {
+    setOnHoverColorValue('mono');
+  }, []);
+
+  const onLeaveMeatInfo = useCallback(() => {
+    setOnHoverColorValue('dimmed');
+  }, []);
  
   return (
     <Fragment>
       {(title !== '' ) &&
-        <Container onClick={onUserDrawerMetaClick} onMouseEnter={() =>setShowCopyIcon({id: userMetaIndex, value: true})} onMouseLeave={() =>setShowCopyIcon({id: userMetaIndex, value: false})}>
+        <Container onClick={onUserDrawerMetaClick} onMouseEnter={onHoverMetaInfo} onMouseLeave={onLeaveMeatInfo}>
           <MetaConatiner>
             <TitleBox>
               <TitleContainer>
@@ -159,9 +166,9 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
                   <CopyTextBox>
                     {copySuccessMessage !== '' ? copySuccessMessage : 'Copied!'}
                   </CopyTextBox>}
-                {(hasCopyIcon && showCopyIcon?.value) ?
+                {(hasCopyIcon) ?
                   <IconBox onClick={() => onClickCopyText(title , subTitle, notes)}>
-                    <Icon icon='Copy' size={12} />
+                    <Icon icon='Copy' size={12} color={onHoverColorValue} />
                   </IconBox>:
                   null}
               </CopyBox>
