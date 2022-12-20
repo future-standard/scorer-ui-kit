@@ -73,7 +73,7 @@ export interface IMenuTop {
 
 
   export interface IUserDrawerFooter {
-    icon:string,
+    icon?:string,
     title:string,
   }
 
@@ -109,6 +109,7 @@ export interface IMenuTop {
     hasUserDrawerMeta?: boolean,
     copySuccessMessage?: string,
     includeCopyTitle?: boolean
+    hasUserDrawerFooter?: boolean
   }
 
   export interface INotificationItem {

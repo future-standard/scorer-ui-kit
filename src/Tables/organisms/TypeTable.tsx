@@ -72,12 +72,14 @@ interface IProps {
   selectCallback?: (checked: boolean, id?: string | number) => void
   toggleAllCallback?: (checked: boolean) => void
   sortCallback?: (ascending: boolean, columnId: string) => void
+  closeText?:string
 }
 
 const TypeTable: React.FC<IProps> = ({
   columnConfig,
   selectable,
   rows = [],
+  closeText,
   hasStatus = false,
   hasThumbnail = false,
   hasTypeIcon = false,
@@ -156,7 +158,8 @@ const TypeTable: React.FC<IProps> = ({
                 columnConfig,
                 hasStatus,
                 hasThumbnail,
-                hasTypeIcon
+                hasTypeIcon,
+                closeText
               }}
             />
           );

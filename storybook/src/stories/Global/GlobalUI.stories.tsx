@@ -395,6 +395,7 @@ export const _GlobalUI = () => {
   const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
   const copySuccessMessage= text("Tooltip Text", "Copied!");
   const includeCopyTitle = boolean("Include Title Copy", true);
+  const hasUserDrawerFooter = boolean("Has User Drawer Footer", false);
   const userDrawerFooter = object("User Drawer Footer", {
     icon: 'Information',
     title: 'V12.3.4',
@@ -527,7 +528,7 @@ export const _GlobalUI = () => {
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
-        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle }}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, hasUserDrawerFooter }}
       >
         <ComponentLinks />
       </GlobalUI>

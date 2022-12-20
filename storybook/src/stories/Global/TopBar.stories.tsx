@@ -106,6 +106,7 @@ export const _TopBar = () => {
   const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
   const copySuccessMessage= text("Tooltip Text", "Copied");
   const includeCopyTitle = boolean("Include Title Copy", true);
+  const hasUserDrawerFooter = boolean("Has User Drawer Footer", false);
   const userDrawerFooter = object("User Drawer Footer", {
     icon: 'Information',
     title: 'V12.3.4',
@@ -164,6 +165,7 @@ export const _TopBar = () => {
         searchPlaceholder,
         hasLanguage,
         hasUserDrawerMeta,
+        hasUserDrawerFooter,
         hasCurrentUser,
         notificationsHistory,
         currentUserText,

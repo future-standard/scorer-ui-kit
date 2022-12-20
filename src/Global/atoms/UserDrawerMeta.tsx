@@ -20,7 +20,6 @@ const LabelTitle = styled.div`
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
-  user-select: none;
   white-space: nowrap;
   opacity: 0.76;
   font-size: 10px;
@@ -40,7 +39,6 @@ const LabelContent = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 4px 0 5px 0;
-  user-select: none;
   white-space: nowrap;
   font-weight: 500;
   letter-spacing: 0.29px;
@@ -55,7 +53,6 @@ const LabelNotes = styled.div`
   text-overflow: ellipsis;
   margin: 5px 0 8px 0;
   max-height: 23px;
-  user-select: none;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.29px;
@@ -114,7 +111,7 @@ interface IProps {
   item: IUserDrawerMeta;
   onUserDrawerMetaClick?:() => void;
   includeCopyTitle?: boolean;
-  copySuccessMessage?: string;
+  copySuccessMessage?: string
 }
 
 interface IShowCopyIcon {
