@@ -151,7 +151,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
   return (
     <Fragment>
       {(title !== '' ) &&
-        <Container onClick={onUserDrawerMetaClick} onMouseEnter={onHoverMetaInfo} onMouseLeave={onLeaveMeatInfo}>
+        <Container onClick={onUserDrawerMetaClick}>
           <MetaConatiner>
             <TitleBox>
               <TitleContainer>
@@ -164,7 +164,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
                     {copySuccessMessage !== '' ? copySuccessMessage : 'Copied!'}
                   </CopyTextBox>}
                 {(hasCopyIcon) ?
-                  <IconBox onClick={() => onClickCopyText(title , subTitle, notes)}>
+                  <IconBox onClick={() => onClickCopyText(title , subTitle, notes)} onMouseEnter={onHoverMetaInfo} onMouseLeave={onLeaveMeatInfo}>
                     <Icon icon='Copy' size={12} color={onHoverColorValue} />
                   </IconBox>:
                   null}
