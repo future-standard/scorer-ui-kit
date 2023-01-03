@@ -36,6 +36,26 @@ const IconWrap = styled.div`
   padding-top: 2px;
 `;
 
+const InputValue = styled.input<{ readOnly? : boolean, checkTimeValidation?:boolean }>`
+  ${({theme}) => css`
+    font-family: ${theme.fontFamily.data};
+  `}
+
+  ${({theme})=> theme.typography.filters.value};
+
+  width: 100%;
+  border: none;
+  border: ${({ checkTimeValidation }) => checkTimeValidation ? 'red 1px solid' : 'hsl(0deg 14% 90%) 1px solid'};
+  outline: none;
+  flex: 1;
+  justify-content: space-between;
+  border-radius: 3px;
+  &:focus, &:hover {
+    border-color: ${({ checkTimeValidation }) => checkTimeValidation ? 'red' : 'blue'};
+  }
+`;
+
+
 const Input = styled.input<{ readOnly? : boolean, checkTimeValidation?:boolean }>`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.data};
@@ -57,7 +77,8 @@ const Input = styled.input<{ readOnly? : boolean, checkTimeValidation?:boolean }
 
 const TimeColon = styled.div`
   flex: 0 0 20px;
-`;
+  text-align: center;
+`;  
 
 const InputWrap = styled.div`
   display: flex;
@@ -75,8 +96,6 @@ const InputWrap = styled.div`
     }
   }
 `;
-
-
 
 interface IProps {
   title: string
@@ -104,6 +123,9 @@ const DateTimeBlock : React.FC<IProps> = ({
   const [displayMinutes, setDisplayMinutes] = useState<string>(format(date,'HH'));
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    if(Number(value)>99){
+      return;
+    }
     setDateCallback(
       min([
         endOfDay(date),
@@ -118,6 +140,9 @@ const DateTimeBlock : React.FC<IProps> = ({
   }, [date, displayMinutes, setDateCallback]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    if(Number(value)>99){
+      return;
+    }
     setDateCallback(
       min([
         endOfDay(date),
@@ -162,9 +187,9 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <Input {...{checkTimeValidation}} name='hours' type='number' min='0' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} />
+            <InputValue {...{checkTimeValidation}} name='hours' type='text' min='0' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} />
             <TimeColon>:</TimeColon>
-            <Input {...{checkTimeValidation}} name='minutes' type='number' min='0' max='59' value={displayMinutes} onChange={setDateMinutes} />
+            <InputValue {...{checkTimeValidation}} name='minutes' type='text' min='0' max='59' value={displayMinutes} onChange={setDateMinutes} />
           </InputWrap>
         </Item>
       )}
