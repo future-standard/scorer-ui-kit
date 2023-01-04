@@ -45,13 +45,13 @@ const InputValue = styled.input<{ readOnly? : boolean, checkTimeValidation?:bool
 
   width: 100%;
   border: none;
-  border: ${({ checkTimeValidation }) => checkTimeValidation ? 'red 1px solid' : 'hsl(0deg 14% 90%) 1px solid'};
+  border: ${({ checkTimeValidation }) => checkTimeValidation ? 'rgb(255,0,0) 1px solid' : 'hsl(0deg 14% 90%) 1px solid'};
   outline: none;
   flex: 1;
   justify-content: space-between;
   border-radius: 3px;
   &:focus, &:hover {
-    border-color: ${({ checkTimeValidation }) => checkTimeValidation ? 'red' : 'blue'};
+    border-color: ${({ checkTimeValidation }) => checkTimeValidation ? 'rgb(255,0,0)' : 'blue'};
   }
 `;
 
@@ -65,13 +65,13 @@ const Input = styled.input<{ readOnly? : boolean, checkTimeValidation?:boolean }
 
   width: 100%;
   border: none;
-  border: ${({ checkTimeValidation }) => checkTimeValidation ? 'red 1px solid' : 'transparent 1px solid'};
+  border: ${({ checkTimeValidation }) => checkTimeValidation ? 'rgb(255,0,0) 1px solid' : 'transparent 1px solid'};
   outline: none;
   flex: 1;
   justify-content: space-between;
   border-radius: 3px;
   &:focus, &:hover {
-    border-color: ${({ checkTimeValidation }) => checkTimeValidation ? 'red' : 'blue'};
+    border-color: ${({ checkTimeValidation }) => checkTimeValidation ? 'rgb(255,0,0)' : 'blue'};
   }
 `;
 
