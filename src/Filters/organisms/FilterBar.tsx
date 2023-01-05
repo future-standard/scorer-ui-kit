@@ -207,7 +207,7 @@ const createLabelResults = (
       const newLabel: IFilterLabel = {
         filterId: foundPicker.id,
         item: foundPicker.selected,
-        icon: 'Date',
+        icon: datePicker.buttonIcon,
         filterName: datePicker.name,
         type: foundPicker.type
       };
