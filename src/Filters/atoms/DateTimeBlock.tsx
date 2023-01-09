@@ -120,8 +120,8 @@ const DateTimeBlock : React.FC<IProps> = ({
 
   const convertHours = (date.getHours()).toString();
   const convertMinutes = date.getMinutes().toString();
-  const [displayHours, setDisplayHours] = useState<string>(convertHours);
-  const [displayMinutes, setDisplayMinutes] = useState<string>(convertMinutes);
+  const [displayHours, setDisplayHours] = useState<string>(convertHours === '0'?'00':convertHours);
+  const [displayMinutes, setDisplayMinutes] = useState<string>(convertMinutes === '0'?'00':convertMinutes);
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
     const isContainsSymbolN = /^[0-1]{0,1}[0-9]$|(^2[0-4])$/;
@@ -168,7 +168,7 @@ const DateTimeBlock : React.FC<IProps> = ({
   useEffect(()=>{
     if(allowAfterMidnight && isEqual(date, endOfDay(date))){
       setDisplayHours('24');
-      setDisplayMinutes('0');
+      setDisplayMinutes('00');
     }
   },[date, allowAfterMidnight]);
 
