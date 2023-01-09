@@ -124,15 +124,11 @@ const DateTimeBlock : React.FC<IProps> = ({
   const [displayMinutes, setDisplayMinutes] = useState<string>(convertMinutes);
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const isContainsSymbolN =  /^[0-9]+[0-9]*$/;
-    if(value === '000' || value.length>2){
-      return;
-    } else if (Number(value)>24){
+    const isContainsSymbolN = /^[0-1]{0,1}[0-9]$|(^2[0-4])$/;
+    if(Number(value)>24){
       value = '24';
-    } else if (!isContainsSymbolN.test(value)) {
-      if(value !== ''){
-        return ;
-      }
+    } else if (!isContainsSymbolN.test(value) && value !== '') {
+      return;
     }
     setDisplayHours(value);
     setDateCallback(
@@ -149,15 +145,11 @@ const DateTimeBlock : React.FC<IProps> = ({
   }, [date, displayMinutes, setDateCallback]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const isContainsSymbolN =  /^[0-9]+[0-9]*$/;
-    if(value === '000'|| value.length>2){
-      return;
-    } else if (Number(value)>59){
+    const isContainsSymbolN = /^[0-5]{0,1}[0-9]$/;
+    if(Number(value)>59){
       value = '59';
-    } else if (!isContainsSymbolN.test(value)) {
-      if(value !== ''){
-        return ;
-      }
+    } else if (!isContainsSymbolN.test(value) && value !== '') {
+      return;
     }
     setDisplayMinutes(value);
     setDateCallback(
@@ -181,16 +173,10 @@ const DateTimeBlock : React.FC<IProps> = ({
   },[date, allowAfterMidnight]);
 
   const onBlurInputs = useCallback(() =>{
-    if(displayHours === '0'){
+    if(displayHours === '0' || displayHours === ''){
       setDisplayHours('00');
     }
-    if(displayMinutes ==='0'){
-      setDisplayMinutes('00');
-    } 
-    if(displayHours === ''){
-      setDisplayHours('00');
-    }
-    if(displayMinutes ===''){
+    if(displayMinutes ==='0' || displayMinutes ===''){
       setDisplayMinutes('00');
     }
   }, [displayHours, displayMinutes]);
