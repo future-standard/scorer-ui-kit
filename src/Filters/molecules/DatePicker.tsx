@@ -381,7 +381,7 @@ const DatePicker: React.FC<IDatePicker> = ({
     <Container>
 
       <DateTimeArea>
-        <DateTimeBlock title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
+        <DateTimeBlock {...{checkTimeValidation}} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
         <DateTimeBlock {...{checkTimeValidation}} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>

@@ -118,14 +118,23 @@ const DateTimeBlock : React.FC<IProps> = ({
   setDateCallback = ()=>{},
 }) => {
 
-
-  const [displayHours, setDisplayHours] = useState<string>(format(date, "mm"));
-  const [displayMinutes, setDisplayMinutes] = useState<string>(format(date,'HH'));
+  const convertHours = (date.getHours()).toString();
+  const convertMinutes = date.getMinutes().toString();
+  const [displayHours, setDisplayHours] = useState<string>(convertHours);
+  const [displayMinutes, setDisplayMinutes] = useState<string>(convertMinutes);
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    if(Number(value)>99){
+    const isContainsSymbolN =  /^[0-9]+[0-9]*$/;
+    if(value === '000' || value.length>2){
       return;
+    } else if (Number(value)>24){
+      value = '24';
+    } else if (!isContainsSymbolN.test(value)) {
+      if(value !== ''){
+        return ;
+      }
     }
+    setDisplayHours(value);
     setDateCallback(
       min([
         endOfDay(date),
@@ -140,9 +149,17 @@ const DateTimeBlock : React.FC<IProps> = ({
   }, [date, displayMinutes, setDateCallback]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    if(Number(value)>99){
+    const isContainsSymbolN =  /^[0-9]+[0-9]*$/;
+    if(value === '000'|| value.length>2){
       return;
+    } else if (Number(value)>59){
+      value = '59';
+    } else if (!isContainsSymbolN.test(value)) {
+      if(value !== ''){
+        return ;
+      }
     }
+    setDisplayMinutes(value);
     setDateCallback(
       min([
         endOfDay(date),
@@ -159,10 +176,7 @@ const DateTimeBlock : React.FC<IProps> = ({
   useEffect(()=>{
     if(allowAfterMidnight && isEqual(date, endOfDay(date))){
       setDisplayHours('24');
-      setDisplayMinutes('00');
-    } else {
-      setDisplayMinutes(format(date, 'mm'));
-      setDisplayHours(format(date,'HH'));
+      setDisplayMinutes('0');
     }
   },[date, allowAfterMidnight]);
 
@@ -187,18 +201,14 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <InputValue {...{checkTimeValidation}} name='hours' type='text' min='0' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} />
+            <InputValue {...{checkTimeValidation}} name='hours' type='text' value={displayHours} onChange={setDateHours} autoComplete='off' />
             <TimeColon>:</TimeColon>
-            <InputValue {...{checkTimeValidation}} name='minutes' type='text' min='0' max='59' value={displayMinutes} onChange={setDateMinutes} />
+            <InputValue {...{checkTimeValidation}} name='minutes' type='text' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
         </Item>
       )}
-
     </Container>
   );
 };
 
-
-
 export default DateTimeBlock;
-
