@@ -185,8 +185,8 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   return (
     <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={handleModal}>
       {showImage ? 
-      <ImageWrapper ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} /> :
-      <NoImageWrapper><NoImage /></NoImageWrapper>}
+        <ImageWrapper ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} /> :
+        <NoImageWrapper><NoImage /></NoImageWrapper>}
       {mediaUrl && (mediaType === 'video') &&
         <PlayableDrop>
           <Icon size={12} icon='Play' color='inverse' />
