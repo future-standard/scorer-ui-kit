@@ -183,11 +183,14 @@ const DateTimeBlock : React.FC<IProps> = ({
   const onBlurInputs = useCallback(() =>{
     if(displayHours === '0'){
       setDisplayHours('00');
-    } else if(displayMinutes ==='0'){
+    }
+    if(displayMinutes ==='0'){
       setDisplayMinutes('00');
-    } else if(displayHours === ''){
+    } 
+    if(displayHours === ''){
       setDisplayHours('00');
-    } else if(displayMinutes ===''){
+    }
+    if(displayMinutes ===''){
       setDisplayMinutes('00');
     }
   }, [displayHours, displayMinutes]);
