@@ -124,8 +124,8 @@ const DateTimeBlock : React.FC<IProps> = ({
   const [displayMinutes, setDisplayMinutes] = useState<string>(convertMinutes === '0'?'00':convertMinutes);
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const isContainsSymbolN = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
-    if (!isContainsSymbolN.test(value)) {
+    const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
+    if (!hourRegex.test(value)) {
       return;
     }
     setDisplayHours(value);
@@ -143,8 +143,8 @@ const DateTimeBlock : React.FC<IProps> = ({
   }, [date, displayMinutes, setDateCallback]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const isContainsSymbolN = /^[0-5]{0,1}[0-9]{0,1}$/;
-    if (!isContainsSymbolN.test(value)) {
+    const minuteRegex = /^[0-5]{0,1}[0-9]{0,1}$/;
+    if (!minuteRegex.test(value)) {
       return;
     }
     setDisplayMinutes(value);
