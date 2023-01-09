@@ -155,19 +155,19 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
     setShowImage(true);
   },[]);
 
-  const checkIfImageExists = (url: string, callback: (exists: boolean) => void) => {
+  const checkIfImageExists = (url: string, imageExistsCallback: (exists: boolean) => void) => {
     const img = new Image();
     img.src = url;
   
     if (img.complete) {
-      callback(true);
+      imageExistsCallback(true);
     } else {
       img.onload = () => {
-        callback(true);
+        imageExistsCallback(true);
       };
   
       img.onerror = () => {
-        callback(false);
+        imageExistsCallback(false);
       };
     }
   };
