@@ -180,6 +180,18 @@ const DateTimeBlock : React.FC<IProps> = ({
     }
   },[date, allowAfterMidnight]);
 
+  const onBlurInputs = useCallback(() =>{
+    if(displayHours === '0'){
+      setDisplayHours('00');
+    } else if(displayMinutes ==='0'){
+      setDisplayMinutes('00');
+    } else if(displayHours === ''){
+      setDisplayHours('00');
+    } else if(displayMinutes ===''){
+      setDisplayMinutes('00');
+    }
+  }, [displayHours, displayMinutes]);
+
   return (
     <Container hide={!hasDate && !hasTime}>
       <Label>{title}</Label>
@@ -201,9 +213,9 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <InputValue {...{checkTimeValidation}} name='hours' type='text' value={displayHours} onChange={setDateHours} autoComplete='off' />
+            <InputValue onBlur={onBlurInputs} {...{checkTimeValidation}} name='hours' type='text' value={displayHours} onChange={setDateHours} autoComplete='off' />
             <TimeColon>:</TimeColon>
-            <InputValue {...{checkTimeValidation}} name='minutes' type='text' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <InputValue onBlur={onBlurInputs} {...{checkTimeValidation}} name='minutes' type='text' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
         </Item>
       )}
