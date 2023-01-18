@@ -36,7 +36,7 @@ const IconWrap = styled.div`
   padding-top: 2px;
 `;
 
-const InputValue = styled.input<{ readOnly? : boolean, checkTimeValidation?:boolean }>`
+const InputValue = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean }>`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.data};
   `}
@@ -45,18 +45,18 @@ const InputValue = styled.input<{ readOnly? : boolean, checkTimeValidation?:bool
 
   width: 100%;
   border: none;
-  border: ${({ checkTimeValidation }) => checkTimeValidation ? 'rgb(255,0,0) 1px solid' : 'hsl(0deg 14% 90%) 1px solid'};
+  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0) 1px solid' : 'hsl(0deg 14% 90%) 1px solid'};
   outline: none;
   flex: 1;
   justify-content: space-between;
   border-radius: 3px;
   &:focus, &:hover {
-    border-color: ${({ checkTimeValidation }) => checkTimeValidation ? 'rgb(255,0,0)' : 'blue'};
+    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0)' : 'blue'};
   }
 `;
 
 
-const Input = styled.input<{ readOnly? : boolean, checkTimeValidation?:boolean }>`
+const Input = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean }>`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.data};
   `}
@@ -65,13 +65,13 @@ const Input = styled.input<{ readOnly? : boolean, checkTimeValidation?:boolean }
 
   width: 100%;
   border: none;
-  border: ${({ checkTimeValidation }) => checkTimeValidation ? 'rgb(255,0,0) 1px solid' : 'transparent 1px solid'};
+  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0) 1px solid' : 'transparent 1px solid'};
   outline: none;
   flex: 1;
   justify-content: space-between;
   border-radius: 3px;
   &:focus, &:hover {
-    border-color: ${({ checkTimeValidation }) => checkTimeValidation ? 'rgb(255,0,0)' : 'blue'};
+    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0)' : 'blue'};
   }
 `;
 
@@ -105,7 +105,7 @@ interface IProps {
   setDateCallback?: (date: Date) => void
   setTimeCallback?: (date: Date) => void
   allowAfterMidnight?: boolean,
-  checkTimeValidation?: boolean,
+  allowManualTimeChange?: boolean,
 }
 
 const DateTimeBlock : React.FC<IProps> = ({
@@ -113,7 +113,7 @@ const DateTimeBlock : React.FC<IProps> = ({
   title,
   hasDate,
   hasTime,
-  checkTimeValidation,
+  allowManualTimeChange,
   date = new Date(),
   setDateCallback = ()=>{},
 }) => {
@@ -198,9 +198,9 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <InputValue onBlur={onBlurInputs} {...{checkTimeValidation}} name='hours' type='text' value={displayHours} onChange={setDateHours} autoComplete='off' />
+            <InputValue onBlur={onBlurInputs} {...{allowManualTimeChange}} name='hours' type='text' value={displayHours} onChange={setDateHours} autoComplete='off' />
             <TimeColon>:</TimeColon>
-            <InputValue onBlur={onBlurInputs} {...{checkTimeValidation}} name='minutes' type='text' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <InputValue onBlur={onBlurInputs} {...{allowManualTimeChange}} name='minutes' type='text' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
         </Item>
       )}

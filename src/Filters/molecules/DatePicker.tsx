@@ -283,7 +283,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
-  const [checkTimeValidation, setCheckTimeValidation] = useState<boolean>();  
+  const [allowManualTimeChange, setAllowManualTimeChange] = useState<boolean>();  
   const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
 
   useEffect(() => {
@@ -360,9 +360,9 @@ const DatePicker: React.FC<IDatePicker> = ({
   const updateStartDate = useCallback((start: Date) => {
     const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
     if((isAfter(add(start, { minutes: 1 }), end))){
-      setCheckTimeValidation(true);
+      setAllowManualTimeChange(true);
     } else {
-      setCheckTimeValidation(false);
+      setAllowManualTimeChange(false);
     }
     setSelectedRange({ start, end });
   }, [selectedRange]);
@@ -370,9 +370,9 @@ const DatePicker: React.FC<IDatePicker> = ({
   const updateEndDate = useCallback((end: Date) => {
     const { start } = selectedRange ? selectedRange : TODAY_INTERVAL;
     if(isAfter(add(start, { minutes: 1 }), end)){
-      setCheckTimeValidation(true);
+      setAllowManualTimeChange(true);
     } else {
-      setCheckTimeValidation(false);
+      setAllowManualTimeChange(false);
     }
     setSelectedRange({ start, end });
   }, [selectedRange]);
@@ -381,8 +381,8 @@ const DatePicker: React.FC<IDatePicker> = ({
     <Container>
 
       <DateTimeArea>
-        <DateTimeBlock {...{checkTimeValidation}} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
-        <DateTimeBlock {...{checkTimeValidation}} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
+        <DateTimeBlock {...{allowManualTimeChange}} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
+        <DateTimeBlock {...{allowManualTimeChange}} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>
           <TimeZoneLabel>{timeZoneTitle}</TimeZoneLabel>
