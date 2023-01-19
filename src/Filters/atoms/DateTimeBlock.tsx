@@ -175,6 +175,12 @@ const DateTimeBlock : React.FC<IProps> = ({
     if(displayMinutes ==='0' || displayMinutes ===''){
       setDisplayMinutes('00');
     }
+    if(displayMinutes.length === 1){
+      setDisplayMinutes('0' + displayMinutes);
+    }
+    if(displayHours.length === 1){
+      setDisplayHours('0' + displayHours);
+    }
   }, [displayHours, displayMinutes]);
 
   return (
@@ -198,9 +204,9 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <InputValue onBlur={onBlurInputs} {...{allowManualTimeChange}} name='hours' type='text' value={displayHours} onChange={setDateHours} autoComplete='off' />
+            <InputValue onBlur={onBlurInputs} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
             <TimeColon>:</TimeColon>
-            <InputValue onBlur={onBlurInputs} {...{allowManualTimeChange}} name='minutes' type='text' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <InputValue onBlur={onBlurInputs} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
         </Item>
       )}
