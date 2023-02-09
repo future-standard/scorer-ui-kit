@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import {endOfDay, format,isEqual,min,set } from 'date-fns';
 
 import Icon from '../../Icons/Icon';
+import { getFormatedTime } from '../../helpers';
 
 const Container = styled.div<{hide:boolean}>`
   display: flex;
@@ -118,10 +119,10 @@ const DateTimeBlock : React.FC<IProps> = ({
   setDateCallback = ()=>{},
 }) => {
 
-  const convertHours = (date.getHours()).toString();
-  const convertMinutes = date.getMinutes().toString();
-  const [displayHours, setDisplayHours] = useState<string>(convertHours === '0'?'00':convertHours);
-  const [displayMinutes, setDisplayMinutes] = useState<string>(convertMinutes === '0'?'00':convertMinutes);
+  const convertHours = (date?.getHours()).toString();
+  const convertMinutes = (date?.getMinutes()).toString();
+  const [displayHours, setDisplayHours] = useState<string>(getFormatedTime(convertHours) as string);
+  const [displayMinutes, setDisplayMinutes] = useState<string>(getFormatedTime(convertMinutes) as string);
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
     const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
@@ -168,20 +169,14 @@ const DateTimeBlock : React.FC<IProps> = ({
     }
   },[date, allowAfterMidnight]);
 
-  const onBlurInputs = useCallback(() =>{
-    if(displayHours === '0' || displayHours === ''){
-      setDisplayHours('00');
+  const onBlurInputs = useCallback((blurValue: string, value) =>{
+    const convertedValue = getFormatedTime(blurValue);
+    if(value === 'Minutes'){
+      setDisplayMinutes(convertedValue as string);
+    }else {
+      setDisplayHours(convertedValue as string);
     }
-    if(displayMinutes ==='0' || displayMinutes ===''){
-      setDisplayMinutes('00');
-    }
-    if(displayMinutes.length === 1){
-      setDisplayMinutes('0' + displayMinutes);
-    }
-    if(displayHours.length === 1){
-      setDisplayHours('0' + displayHours);
-    }
-  }, [displayHours, displayMinutes]);
+  }, []);
 
   return (
     <Container hide={!hasDate && !hasTime}>
@@ -204,9 +199,9 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <InputValue onBlur={onBlurInputs} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
+            <InputValue onBlur={()=>onBlurInputs(displayHours, 'Hours')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
             <TimeColon>:</TimeColon>
-            <InputValue onBlur={onBlurInputs} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <InputValue onBlur={()=>onBlurInputs(displayMinutes, 'Minutes')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
         </Item>
       )}
