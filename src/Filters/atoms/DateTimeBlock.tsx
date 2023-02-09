@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import {endOfDay, format,isEqual,min,set } from 'date-fns';
 
 import Icon from '../../Icons/Icon';
-import { getFormatedTime } from '../../helpers';
+import { getFormattedTime } from '../../helpers';
 
 const Container = styled.div<{hide:boolean}>`
   display: flex;
@@ -121,8 +121,8 @@ const DateTimeBlock : React.FC<IProps> = ({
 
   const convertHours = (date?.getHours()).toString();
   const convertMinutes = (date?.getMinutes()).toString();
-  const [displayHours, setDisplayHours] = useState<string>(getFormatedTime(convertHours) as string);
-  const [displayMinutes, setDisplayMinutes] = useState<string>(getFormatedTime(convertMinutes) as string);
+  const [displayHours, setDisplayHours] = useState<string>(getFormattedTime(convertHours) as string);
+  const [displayMinutes, setDisplayMinutes] = useState<string>(getFormattedTime(convertMinutes) as string);
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
     const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
@@ -169,8 +169,8 @@ const DateTimeBlock : React.FC<IProps> = ({
     }
   },[date, allowAfterMidnight]);
 
-  const onBlurInputs = useCallback((blurValue: string, value) =>{
-    const convertedValue = getFormatedTime(blurValue);
+  const onBlurInputs = useCallback((blurValue: string, value:string) =>{
+    const convertedValue = getFormattedTime(blurValue);
     if(value === 'Minutes'){
       setDisplayMinutes(convertedValue as string);
     }else {

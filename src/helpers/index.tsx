@@ -81,7 +81,7 @@ const uniqueID = () =>
       Math.random().toString(16)
   ).replace(/\./g, '');
 
-const getFormatedTime = (value:string) =>{
+const getFormattedTime = (value:string) =>{
   if(value ==='0' || value ===''){
     return '00';
   }
@@ -101,5 +101,5 @@ export {
   getShortTextTimeUnit,
   getTopLevelPath,
   uniqueID,
-  getFormatedTime
+  getFormattedTime
 };
