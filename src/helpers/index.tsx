@@ -82,7 +82,6 @@ const uniqueID = () =>
   ).replace(/\./g, '');
 
 const getFormatedTime = (value:string) =>{
-  console.log(value, value.length, 'JHBVNJMK,MNJBNHJMKJNHBGH');
   if(value ==='0' || value ===''){
     return '00';
   }
