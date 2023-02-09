@@ -81,6 +81,18 @@ const uniqueID = () =>
       Math.random().toString(16)
   ).replace(/\./g, '');
 
+const getFormatedTime = (value:string) =>{
+  console.log(value, value.length, 'JHBVNJMK,MNJBNHJMKJNHBGH');
+  if(value ==='0' || value ===''){
+    return '00';
+  }
+  if(value?.length === 1){
+    return('0' + value);
+  } else {
+    return value;
+  }
+};
+
 export {
   clamp,
   isValidImage,
@@ -89,5 +101,6 @@ export {
   isInsideRange,
   getShortTextTimeUnit,
   getTopLevelPath,
-  uniqueID
+  uniqueID,
+  getFormatedTime
 };
