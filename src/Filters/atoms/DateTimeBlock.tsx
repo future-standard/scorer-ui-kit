@@ -121,8 +121,8 @@ const DateTimeBlock : React.FC<IProps> = ({
 
   const convertHours = (date?.getHours()).toString();
   const convertMinutes = (date?.getMinutes()).toString();
-  const [displayHours, setDisplayHours] = useState<string>(getFormattedTime(convertHours) as string);
-  const [displayMinutes, setDisplayMinutes] = useState<string>(getFormattedTime(convertMinutes) as string);
+  const [displayHours, setDisplayHours] = useState<string>(getFormattedTime(convertHours));
+  const [displayMinutes, setDisplayMinutes] = useState<string>(getFormattedTime(convertMinutes));
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
     const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
@@ -172,9 +172,9 @@ const DateTimeBlock : React.FC<IProps> = ({
   const onBlurInputs = useCallback((blurValue: string, value:string) =>{
     const convertedValue = getFormattedTime(blurValue);
     if(value === 'Minutes'){
-      setDisplayMinutes(convertedValue as string);
+      setDisplayMinutes(convertedValue);
     }else {
-      setDisplayHours(convertedValue as string);
+      setDisplayHours(convertedValue);
     }
   }, []);
 
