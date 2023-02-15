@@ -84,11 +84,12 @@ const uniqueID = () =>
 const getFormattedTime = (value:string) =>{
   if(value ==='0' || value ===''){
     return '00';
-  }
-  if(value?.length === 1){
+  } else if (value?.length === 1){
     return('0' + value);
-  } else {
+  } else if (value){
     return value;
+  } else {
+    return '00';
   }
 };
 

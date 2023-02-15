@@ -169,9 +169,9 @@ const DateTimeBlock : React.FC<IProps> = ({
     }
   },[date, allowAfterMidnight]);
 
-  const onBlurInputs = useCallback((blurValue: string, value:string) =>{
-    const convertedValue = getFormattedTime(blurValue);
-    if(value === 'Minutes'){
+  const onBlurInputs = useCallback((time: string, condition:string) =>{
+    const convertedValue = getFormattedTime(time);
+    if(condition === 'min'){
       setDisplayMinutes(convertedValue);
     }else {
       setDisplayHours(convertedValue);
@@ -199,9 +199,9 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <InputValue onBlur={()=>onBlurInputs(displayHours, 'Hours')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
+            <InputValue onBlur={()=>onBlurInputs(displayHours, 'hour')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
             <TimeColon>:</TimeColon>
-            <InputValue onBlur={()=>onBlurInputs(displayMinutes, 'Minutes')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <InputValue onBlur={()=>onBlurInputs(displayMinutes, 'min')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
         </Item>
       )}
