@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import BigIconsSummary from '../../Misc/atoms/BigIconsSummary';
 import DropArea from '../atoms/DropArea';
 import InputFileButton from '../atoms/InputFileButton';
+import Button from '../atoms/Button';
 
 const Container = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -16,9 +17,12 @@ const StyledDropArea = styled(DropArea)`
   width: 100%;
 `;
 
-const InputButtonWrapper = styled.div`
+const InputButtonWrapper = styled.div<{ hasWidth: boolean }>`
   z-index: 99;
   margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: ${({ hasWidth }) => hasWidth && '285px'};
 `;
 
 const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
@@ -102,9 +106,11 @@ interface IAreaUploaderManager {
   fileIcons?: string[]
   selectFilesText?: string
   addMoreFilesText?: string
+  beginUploadText?: string
   allowedFileTypes?: string[]
   customComponent?: ReactElement
   onChangeCallback?: (goodFiles: FileList, rejectedFiles: FileList) => void
+  beginUploadCallback?: () => void
 }
 
 const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
@@ -113,15 +119,16 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   fileIcons,
   selectFilesText = 'Select Files',
   addMoreFilesText = 'Add More Files',
+  beginUploadText = 'Begin Upload',
   allowedFileTypes,
   customComponent,
   onChangeCallback = () => { },
+  beginUploadCallback = () => { }
 }) => {
 
   const [files, setFiles] = useState<FileList | null>(null);
 
   const handleFiles = useCallback((newFiles: FileList) => {
-    console.log('files received', newFiles);
 
     if (newFiles === null) {
       return;
@@ -148,7 +155,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             )
         }
 
-        <InputButtonWrapper>
+        <InputButtonWrapper hasWidth={files !== null}>
           <InputFileButton
             buttonSize='small'
             text={files !== null ? addMoreFilesText : selectFilesText}
@@ -156,6 +163,13 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             multiple
             buttonDesign={files !== null ? 'secondary' : 'primary'}
           />
+          {files !== null && 
+            <Button
+              size='small'
+              onClick={beginUploadCallback}
+              design='primary'
+            >{beginUploadText}</Button>
+          }
         </InputButtonWrapper>
       </FilesUploadGroup>
     </Container>
