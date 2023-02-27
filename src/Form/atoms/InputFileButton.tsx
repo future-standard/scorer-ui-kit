@@ -45,6 +45,7 @@ const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize,
         ref={fileInputRef}
         type='file'
         onChange={handleFile}
+        accept='.jpeg, .png, .csv'
       />
       <StyledButton
         onClick={forwardClick}
