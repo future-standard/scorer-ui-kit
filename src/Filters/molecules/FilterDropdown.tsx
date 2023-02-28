@@ -358,7 +358,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
                     : <EmptyResultText>{emptyResultText}</EmptyResultText>}
                 </OptionList>
-                {list.length > 5 && <Gradient hasSearchOption={hasOptionsFilter ? true : false}/>}
+                {list.length > 5 && <Gradient hasSearchOption={hasOptionsFilter ? true : false} />}
               </ResultsContainer>)}
         </InnerBox>
       </FilterDropHandler>
