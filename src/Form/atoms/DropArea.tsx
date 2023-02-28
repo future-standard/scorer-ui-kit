@@ -28,11 +28,9 @@ interface IDropArea {
 const DropArea : React.FC<IDropArea> = ({height, text, dropCallback, ...props}) => {
   const [inDropZone, setInDropZone] = useState(false);
   window.addEventListener("dragover",function(e){
-    e = e || event;
     e.preventDefault();
   },false);
   window.addEventListener("drop",function(e){
-    e = e || event;
     e.preventDefault();
   },false);
 

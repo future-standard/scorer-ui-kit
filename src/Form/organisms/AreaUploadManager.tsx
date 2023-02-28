@@ -168,8 +168,8 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
               size='small'
               onClick={beginUploadCallback}
               design='primary'
-            >{beginUploadText}</Button>
-          }
+            >{beginUploadText}
+            </Button>}
         </InputButtonWrapper>
       </FilesUploadGroup>
     </Container>
