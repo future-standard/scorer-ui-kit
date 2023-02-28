@@ -35,8 +35,9 @@ const StyledFilterOption = styled(FilterOption)`
 `;
 
 const OptionList = styled.div`
-  max-height: 170px;
+  max-height: 162px;
   min-height: 40px;
+  position: relative;
   overflow-y: scroll;
   ::-webkit-scrollbar {  /* Hide scrollbar for Chrome, Safari and Opera */
     display: none;
@@ -87,6 +88,15 @@ const EmptyResultText = styled.div`
   display: flex;
   align-items: center;
   font-size: 12px;
+`;
+
+const Gradient = styled.div<{hasSearchOption: boolean}>`
+  position: absolute;
+  right: 0px;
+  top: ${({ hasSearchOption }) => hasSearchOption ? '223px' : '149px'};
+  height: 25px;
+  background-image: linear-gradient(to top,hsl(200deg 23% 97%),hsl(0deg 0% 0% / 0%));
+  width: 100%;
 `;
 
 const isValueSelected = (item: IFilterItem, selected: IFilterValue) => {
@@ -348,6 +358,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
                     : <EmptyResultText>{emptyResultText}</EmptyResultText>}
                 </OptionList>
+                {list.length > 5 && <Gradient hasSearchOption={hasOptionsFilter ? true : false}/>}
               </ResultsContainer>)}
         </InnerBox>
       </FilterDropHandler>
