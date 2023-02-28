@@ -57,14 +57,18 @@ const onDrop = useCallback((e ) => {
   setInDropZone(false);
 },[dropCallback]);
 
+const handleWindowDragAndDrop = useCallback((e) => {
+  e.preventDefault();
+}, []);
+
 useEffect(() => {
-  window.addEventListener("dragover",function(e){
-    e.preventDefault();
-  },false);
-  window.addEventListener("drop",function(e){
-    e.preventDefault();
-  },false);
-},[]);
+  window.addEventListener("dragover", handleWindowDragAndDrop);
+  window.addEventListener("drop", handleWindowDragAndDrop);
+  return () => {
+    window.removeEventListener('dragover', handleWindowDragAndDrop);
+    window.removeEventListener('drop', handleWindowDragAndDrop);
+  };
+}, [handleWindowDragAndDrop]);
 
   return(
     <Container {...{height}} {...props}>
