@@ -26,7 +26,7 @@ export const _AreaUploadManager = () => {
   const addMoreFilesText = text('Add More Files Text', 'Add More files')
   const fileIcons = object('File Icons', defaultIcons)
   const showValue = action('Input Callback');
-  const allowedFileTypes = object('allowedFileTypes', fileTypes);
+  const allowedFileTypes = object('Allowed File Types', fileTypes);
   const beginUploadMsg = action('Begin Upload Button Click');
 
   const inputCallback = (goodFiles: FileList, rejectedFiles: FileList) => {

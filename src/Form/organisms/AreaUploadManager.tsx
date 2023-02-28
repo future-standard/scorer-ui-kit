@@ -17,12 +17,11 @@ const StyledDropArea = styled(DropArea)`
   width: 100%;
 `;
 
-const InputButtonWrapper = styled.div<{ hasWidth: boolean }>`
+const InputButtonWrapper = styled.div`
   z-index: 99;
   margin-top: 20px;
   display: flex;
-  justify-content: space-between;
-  width: ${({ hasWidth }) => hasWidth && '285px'};
+  gap: 20px;
 `;
 
 const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
@@ -155,7 +154,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             )
         }
 
-        <InputButtonWrapper hasWidth={files !== null}>
+        <InputButtonWrapper>
           <InputFileButton
             buttonSize='small'
             text={files !== null ? addMoreFilesText : selectFilesText}

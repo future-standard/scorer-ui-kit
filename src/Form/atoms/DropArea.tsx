@@ -1,4 +1,4 @@
-import React, { useState, useCallback} from 'react';
+import React, { useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div<{height?: string}>`
@@ -27,12 +27,6 @@ interface IDropArea {
 
 const DropArea : React.FC<IDropArea> = ({height, text, dropCallback, ...props}) => {
   const [inDropZone, setInDropZone] = useState(false);
-  window.addEventListener("dragover",function(e){
-    e.preventDefault();
-  },false);
-  window.addEventListener("drop",function(e){
-    e.preventDefault();
-  },false);
 
 const onDragEnter = useCallback((e) => {
   e.preventDefault();
@@ -62,6 +56,15 @@ const onDrop = useCallback((e ) => {
   }
   setInDropZone(false);
 },[dropCallback]);
+
+useEffect(() => {
+  window.addEventListener("dragover",function(e){
+    e.preventDefault();
+  },false);
+  window.addEventListener("drop",function(e){
+    e.preventDefault();
+  },false);
+},[]);
 
   return(
     <Container {...{height}} {...props}>
