@@ -95,7 +95,7 @@ const Gradient = styled.div<{hasSearchOption: boolean}>`
   right: 0px;
   top: ${({ hasSearchOption }) => hasSearchOption ? '223px' : '149px'};
   height: 25px;
-  background-image: linear-gradient(to top,hsl(200deg 23% 97%),hsl(0deg 0% 0% / 0%));
+  background-image: linear-gradient(to bottom, rgba(246, 247, 249, 0) 1%, #F6F7F9 81%);
   width: 100%;
 `;
 
