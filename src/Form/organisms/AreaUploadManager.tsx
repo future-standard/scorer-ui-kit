@@ -161,6 +161,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             inputCallback={handleFiles}
             multiple
             buttonDesign={files !== null ? 'secondary' : 'primary'}
+            accept={allowedFileTypes?.join(', ')}
           />
           {files !== null && 
             <Button
