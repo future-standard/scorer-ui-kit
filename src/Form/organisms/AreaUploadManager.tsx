@@ -128,7 +128,6 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   const [files, setFiles] = useState<FileList | null>(null);
 
   const handleFiles = useCallback((newFiles: FileList) => {
-
     if (newFiles === null) {
       return;
     }
