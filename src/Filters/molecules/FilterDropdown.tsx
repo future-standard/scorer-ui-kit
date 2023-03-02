@@ -90,12 +90,12 @@ const EmptyResultText = styled.div`
   font-size: 12px;
 `;
 
-const Gradient = styled.div<{hasSearchOption: boolean}>`
+const Gradient = styled.div`
   position: absolute;
   right: 0px;
-  top: ${({ hasSearchOption }) => hasSearchOption ? '223px' : '149px'};
+  bottom: 9px;
   height: 25px;
-  background-image: linear-gradient(to bottom, rgba(246, 247, 249, 0) 1%, #F6F7F9 81%);
+  background-image: linear-gradient(to bottom, rgba(246, 247, 249, 0) 1%, #F6F7F9 120%);
   width: 100%;
 `;
 
@@ -358,7 +358,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
                     : <EmptyResultText>{emptyResultText}</EmptyResultText>}
                 </OptionList>
-                {list.length > 5 && <Gradient hasSearchOption={hasOptionsFilter ? true : false} />}
+                {list.length > 5 && <Gradient />}
               </ResultsContainer>)}
         </InnerBox>
       </FilterDropHandler>
