@@ -77,6 +77,7 @@ const EmptyBar = styled.div`
   box-sizing: border-box;
   flex: 1;
   height: inherit;
+  border: 1px solid #DDD;
 `;
 
 interface ISegments {
