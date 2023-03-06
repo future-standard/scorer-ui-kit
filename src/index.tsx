@@ -128,6 +128,7 @@ import {
   DebouncedSearcher,
   ActionsBar,
   IActionsButton,
+  SegmentedProgressBar
 } from './Misc';
 
 import {
@@ -325,6 +326,7 @@ export {
   BasicSearchInput,
   DebouncedSearcher,
   ActionsBar,
+  SegmentedProgressBar,
 
   //Context
   NotificationProvider,
