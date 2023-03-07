@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const Container = styled.div<{width?: string}>`
   width: ${({ width }) => width ? width : '120px'};
@@ -28,6 +28,15 @@ const CompletedFailedBar = styled.div<{status: string}>`
 
 const ProgressBarText = styled.div``;
 
+const barberpole = keyframes`
+  0% {
+    background-position: 100px 100px;
+  }
+  100% {
+    background-position: 300px 300px;
+  }
+`;
+
 const ProcessingBar = styled.div`
   box-sizing: border-box;
   flex: 1;
@@ -42,7 +51,7 @@ const ProcessingBar = styled.div`
     #4DB5FF 10px
   );
   background-size: 400px 400px;
-  animation: barberpole 20s linear infinite;
+  animation: ${barberpole} 20s linear infinite;
 `;
 
 const EmptyBar = styled.div`
