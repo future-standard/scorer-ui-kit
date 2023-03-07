@@ -21,5 +21,5 @@ export const SegmentedProgress = () => {
     const width = text("width", '');
     const height = text("height", '');
   
-  return <Container><SegmentedProgressBar {...{statusText, statusSegments, width, height}}></SegmentedProgressBar></Container>;
+  return <Container><SegmentedProgressBar {...{statusText, statusSegments, width, height}} /></Container>;
 };

@@ -19,7 +19,8 @@ const CompletedFailedBar = styled.div<{status: string}>`
   box-sizing: border-box;
   flex: 1;
   height: inherit;
-  border: ${({status})=> status === 'completed' ? '1px solid #4DB5FF': '1px solid #EF7878'};
+  border: 1px solid;
+  border-color: ${({status})=> status === 'completed' ? '#4DB5FF': '#EF7878'};
   border-left: none;
   border-right: none;
   background: ${({status})=> status === 'completed' ? '#4DB5FF': '#EF7878'};
@@ -67,24 +68,20 @@ const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegm
 
   const renderSegmentsConditionally = useCallback((item: ISegments):ReactElement => {
     if(item.status === 'completed' || item.status === 'failed') {
-      return <CompletedFailedBar status={item.status} title={item.displayText}></CompletedFailedBar>;
+      return <CompletedFailedBar status={item.status} title={item.displayText} />;
     }
     else if(item.status === 'processing') {
-      return <ProcessingBar title={item.displayText}></ProcessingBar>;
+      return <ProcessingBar title={item.displayText} />;
     }
     else {
-      return <EmptyBar title={item.displayText}></EmptyBar>;
+      return <EmptyBar title={item.displayText} />;
     }
   },[]);
   
   return (
     <Container width={width}>
       <ProgressBarText>{statusText}</ProgressBarText>
-      <ProgressBar height={height}>
-        {statusSegments?.map((item) => {
-          return renderSegmentsConditionally(item)
-        })}
-      </ProgressBar>
+      <ProgressBar height={height}>{statusSegments?.map((item) => {return renderSegmentsConditionally(item)})}</ProgressBar>
     </Container>
   );
 };
