@@ -13,6 +13,7 @@ const ProgressBar = styled.div<{height?: string}>`
   background: #ddd;
   height: ${({height}) => height ? height : '6px'};
   border-radius: 5px;
+  overflow: hidden;
 `;
 
 const CompletedFailedBar = styled.div<{status: string}>`
@@ -60,7 +61,6 @@ const EmptyBar = styled.div`
   box-sizing: border-box;
   flex: 1;
   height: inherit;
-  border: 1px solid #DDD;
 `;
 
 interface ISegments {
