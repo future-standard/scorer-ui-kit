@@ -81,7 +81,7 @@ const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegm
   return (
     <Container width={width}>
       <ProgressBarText>{statusText}</ProgressBarText>
-      <ProgressBar height={height}>{statusSegments?.map((item) => {return renderSegmentsConditionally(item)})}</ProgressBar>
+      <ProgressBar height={height}>{statusSegments?.map((item) => {return renderSegmentsConditionally(item)})}</ProgressBar>;
     </Container>
   );
 };
