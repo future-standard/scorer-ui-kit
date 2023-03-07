@@ -5,23 +5,6 @@ const Container = styled.div<{width?: string}>`
   width: ${({ width }) => width ? width : '120px'};
 `;
 
-const TooltipText = styled.span`
-  visibility: hidden;
-  padding: 5px;
-  font-size: 10px;
-  line-height: 1.2;
-  text-align: left;
-  border: 1px solid hsl(195deg 5% 60% / 72%);
-  box-shadow: 2px 2px 4px hsl(195deg 16% 72% / 72%);
-  background-color: #f8f9fa;
-  outline: none !important;
-  position: absolute;
-  top: -750%;
-  left: -12px;
-  z-index: 1;
-  width: 215px;
-`;
-
 const ProgressBar = styled.div<{height?: string}>`
   position: relative;
   display: flex;
@@ -33,10 +16,6 @@ const ProgressBar = styled.div<{height?: string}>`
 `;
 
 const CompletedFailedBar = styled.div<{status: string}>`
-  position: relative;
-  &:hover ${TooltipText} {
-    visibility: visible;
-  }
   box-sizing: border-box;
   flex: 1;
   height: inherit;
@@ -49,10 +28,6 @@ const CompletedFailedBar = styled.div<{status: string}>`
 const ProgressBarText = styled.div``;
 
 const ProcessingBar = styled.div`
-  position: relative;
-  &:hover ${TooltipText} {
-    visibility: visible;
-  }
   box-sizing: border-box;
   flex: 1;
   height: inherit;
@@ -70,10 +45,6 @@ const ProcessingBar = styled.div`
 `;
 
 const EmptyBar = styled.div`
-  position: relative;
-  &:hover ${TooltipText} {
-    visibility: visible;
-  }
   box-sizing: border-box;
   flex: 1;
   height: inherit;
@@ -96,13 +67,13 @@ const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegm
 
   const renderSegmentsConditionally = useCallback((item: ISegments):ReactElement => {
     if(item.status === 'completed' || item.status === 'failed') {
-      return <CompletedFailedBar status={item.status}><TooltipText>{item.displayText}</TooltipText></CompletedFailedBar>;
+      return <CompletedFailedBar status={item.status} title={item.displayText}></CompletedFailedBar>;
     }
     else if(item.status === 'processing') {
-      return <ProcessingBar><TooltipText>{item.displayText}</TooltipText></ProcessingBar>;
+      return <ProcessingBar title={item.displayText}></ProcessingBar>;
     }
     else {
-      return <EmptyBar><TooltipText>{item.displayText}</TooltipText></EmptyBar>;
+      return <EmptyBar title={item.displayText}></EmptyBar>;
     }
   },[]);
   
