@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div<{width?: string}>`
@@ -93,16 +93,25 @@ interface ISegmentedProgressBarProps {
 }
 
 const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegments, statusText, width, height }) => {
+
+  const renderSegmentsConditionally = useCallback((item: ISegments):ReactElement => {
+    if(item.status === 'completed' || item.status === 'failed') {
+      return <CompletedFailedBar status={item.status}><TooltipText>{item.displayText}</TooltipText></CompletedFailedBar>;
+    }
+    else if(item.status === 'processing') {
+      return <ProcessingBar><TooltipText>{item.displayText}</TooltipText></ProcessingBar>;
+    }
+    else {
+      return <EmptyBar><TooltipText>{item.displayText}</TooltipText></EmptyBar>;
+    }
+  },[]);
   
   return (
     <Container width={width}>
       <ProgressBarText>{statusText}</ProgressBarText>
       <ProgressBar height={height}>
         {statusSegments?.map((item) => {
-          return (
-            item.status === 'completed' || item.status === 'failed' ? <CompletedFailedBar status={item.status}><TooltipText>{item.displayText}</TooltipText></CompletedFailedBar> :
-              item.status === 'processing' ? <ProcessingBar><TooltipText>{item.displayText}</TooltipText></ProcessingBar> : <EmptyBar><TooltipText>{item.displayText}</TooltipText></EmptyBar>
-          );
+          return renderSegmentsConditionally(item)
         })}
       </ProgressBar>
     </Container>
