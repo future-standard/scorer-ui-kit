@@ -26,7 +26,9 @@ const CompletedFailedBar = styled.div<{status: string}>`
   background: ${({status})=> status === 'completed' ? '#4DB5FF': '#EF7878'};
 `;
 
-const ProgressBarText = styled.div``;
+const ProgressBarText = styled.div`
+  margin-bottom: 3px;
+`;
 
 const barberpole = keyframes`
   0% {
