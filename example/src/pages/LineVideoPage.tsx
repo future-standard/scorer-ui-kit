@@ -62,6 +62,26 @@ const Line: React.FC<{}> = () => {
             y: 1393
           }
         ],
+        showPointHandle: true,
+        showSmallDirectionMark: true,
+        readOnly: false,
+        styling: 'primary'
+      },
+      {
+        name: 'Line 2',
+        points: [
+          {
+            x: 568,
+            y: 1097
+          },
+          {
+            x: 1649,
+            y: 1193
+          }
+        ],
+        showPointHandle: false,
+        showMoveHandle: false,
+        readOnly: false,
         styling: 'primary'
       },
       {
@@ -168,6 +188,26 @@ const Line: React.FC<{}> = () => {
     createMediaModal({ mediaType: 'video', src: '/scorer-ui-kit/traffic.mp4', dismissCallback: handleModalClose })
   }, [createMediaModal, handleModalClose])
 
+  const selectLine = useCallback((lineId: number) => {
+    const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
+    dispatch({
+      type: 'UPDATE_SET_OPTIONS',
+      index: deselectLineIndex,
+      data: {
+        showPointHandle: false,
+        showMoveHandle: false
+      }
+    });
+    dispatch({
+      type: 'UPDATE_SET_OPTIONS',
+      index: lineId,
+      data: {
+        showPointHandle: true,
+        showMoveHandle: true
+      }
+    });
+  }, [state]);
+
   return (
     <Layout >
       <Sidebar>
@@ -194,7 +234,7 @@ const Line: React.FC<{}> = () => {
       <Content padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUIVideo options={options} videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4' />
+          <LineUIVideo options={options} onLineClick={selectLine} videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4' />
         </LineSetContext.Provider>
         <ButtonWrapper>
           <Button onClick={handleMediaModal}>Open Video Modal</Button>

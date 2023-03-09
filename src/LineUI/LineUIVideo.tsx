@@ -66,7 +66,7 @@ interface LineUIProps {
   src: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
-  onLineClick?: ()=> void;
+  onLineClick?: (lineSetId: number) => void;
   onLoaded?: (metadata: {height: number; width: number; }) => void;
   options?: LineUIOptions;
   videoOptions: LineUIVideoOptions;
