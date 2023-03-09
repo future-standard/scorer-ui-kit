@@ -70,6 +70,8 @@ interface LineUIProps {
   onLoaded?: (metadata: {height: number; width: number; }) => void;
   options?: LineUIOptions;
   videoOptions: LineUIVideoOptions;
+  lineClickSensingBorder?: string;
+  hasClickSensingBorder?: boolean;
 }
 const LineUIVideo : React.FC<LineUIProps> = ({
   src,
@@ -77,6 +79,8 @@ const LineUIVideo : React.FC<LineUIProps> = ({
   onLineMoveEnd = ()=>{},
   onLineClick = ()=>{},
   onLoaded = ()=>{},
+  lineClickSensingBorder = '65',
+  hasClickSensingBorder = true,
   videoOptions: {
     loop = false,
     autoPlay = false,
@@ -198,7 +202,7 @@ const LineUIVideo : React.FC<LineUIProps> = ({
         loaded &&
           <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
             {state.map((lineSet, index) => (
-              <LineSet key={index} onLineMoveEnd={onLineMoveEnd} onLineClick={onLineClick} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
+              <LineSet key={index} hasClickSensingBorder={hasClickSensingBorder} lineClickSensingBorder={lineClickSensingBorder} onLineMoveEnd={onLineMoveEnd} onLineClick={onLineClick} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
               ))}
           </Frame>
       }
