@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 ​
-const TooltipText = styled.span`
+const TooltipText = styled.span<{width?: string}>`
   visibility: hidden;
   padding: 5px;
   font-size: 10px;
@@ -16,11 +16,11 @@ const TooltipText = styled.span`
   top: 222%;
   left: 12px;
   z-index: 1;
-  width: 250px;
+  width: ${({ width }) => width ? (parseInt(width) * 1.5)+'px' : '120px'};
 `;
 
 const Container = styled.div<{width?: string}>`
-  width: ${({ width }) => width ? width : '80px'};
+  width: ${({ width }) => width ? width+'px' : '80px'};
 `;
 ​
 const ProgressBar = styled.div<{height?: string}>`
@@ -105,13 +105,13 @@ const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegm
 ​
   const renderSegmentsConditionally = useCallback((item: ISegments):ReactElement => {
     if(item.status === 'completed') {
-      return <CompletedBar><TooltipText>{item.displayText}</TooltipText></CompletedBar>;
+      return <CompletedBar><TooltipText width={width}>{item.displayText}</TooltipText></CompletedBar>;
     } else if(item.status === 'failed') {
-      return <FailedBar><TooltipText>{item.displayText}</TooltipText></FailedBar>;
+      return <FailedBar><TooltipText width={width}>{item.displayText}</TooltipText></FailedBar>;
     } else if(item.status === 'processing') {
-      return <ProcessingBar><TooltipText>{item.displayText}</TooltipText></ProcessingBar>;
+      return <ProcessingBar><TooltipText width={width}>{item.displayText}</TooltipText></ProcessingBar>;
     } else {
-      return <Bar><TooltipText>{item.displayText}</TooltipText></Bar>;
+      return <Bar><TooltipText width={width}>{item.displayText}</TooltipText></Bar>;
     }
   },[]);
 ​
