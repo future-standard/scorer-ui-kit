@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
-​
+
 const TooltipText = styled.span<{width?: string}>`
   visibility: hidden;
   padding: 5px;
@@ -22,7 +22,7 @@ const TooltipText = styled.span<{width?: string}>`
 const Container = styled.div<{width?: string}>`
   width: ${({ width }) => width ? width+'px' : '80px'};
 `;
-​
+
 const ProgressBar = styled.div<{height?: string}>`
   position: relative;
   display: flex;
@@ -40,7 +40,7 @@ const ProgressBar = styled.div<{height?: string}>`
     border-bottom-right-radius: 5px
   }
 `;
-​
+
 const Bar = styled.div`
   box-sizing: border-box;
   flex: 1;
@@ -50,18 +50,18 @@ const Bar = styled.div`
     visibility: visible;
   }
 `;
-​
+
 const CompletedBar = styled(Bar)`
   border: 1px solid #4DB5FF;
   background: #4DB5FF;
 `;
-​
+
 const FailedBar = styled(Bar)`
   border: 1px solid #EF7878;
   background: #EF7878;
   cursor: pointer;
 `;
-​
+
 const barberpole = keyframes`
   0% {
     background-position: 100px 100px;
@@ -70,7 +70,7 @@ const barberpole = keyframes`
     background-position: 300px 300px;
   }
 `;
-​
+
 const ProcessingBar = styled(Bar)`
   border: 1px solid #9BD3FA;
   background: repeating-linear-gradient(
@@ -83,26 +83,26 @@ const ProcessingBar = styled(Bar)`
   background-size: 400px 400px;
   animation: ${barberpole} 20s linear infinite;
 `;
-​
+
 const ProgressBarText = styled.div`
   font-size: 12px;
   font-family: ${({ theme }) => theme.fontFamily.data };
 `;
-​
+
 interface ISegments {
   status: string;
   displayText: string;
 }
-​
+
 interface ISegmentedProgressBarProps {
   statusSegments?: ISegments[];
   statusText?: string;
   width?: string;
   height?: string;
 }
-​
+
 const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegments, statusText, width, height }) => {
-​
+
   const renderSegmentsConditionally = useCallback((item: ISegments):ReactElement => {
     if(item.status === 'completed') {
       return <CompletedBar><TooltipText width={width}>{item.displayText}</TooltipText></CompletedBar>;
@@ -114,7 +114,7 @@ const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegm
       return <Bar><TooltipText width={width}>{item.displayText}</TooltipText></Bar>;
     }
   },[]);
-​
+
   return (
     <Container width={width}>
       <ProgressBarText>{statusText}</ProgressBarText>
@@ -122,5 +122,5 @@ const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegm
     </Container>
   );
 };
-​
+
 export default SegmentedProgressBar;
