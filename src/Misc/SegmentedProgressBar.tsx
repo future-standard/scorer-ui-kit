@@ -1,36 +1,67 @@
 import React, { ReactElement, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
-
-const Container = styled.div<{width?: string}>`
-  width: ${({ width }) => width ? width : '120px'};
+​
+const TooltipText = styled.span`
+  visibility: hidden;
+  padding: 5px;
+  font-size: 10px;
+  color: #000000;
+  line-height: 1.5;
+  text-align: left;
+  border: 1px solid hsl(195deg 5% 60% / 72%);
+  box-shadow: 2px 2px 4px hsl(195deg 16% 72% / 72%);
+  background-color: #ffffff;
+  outline: none !important;
+  position: absolute;
+  top: 222%;
+  left: 12px;
+  z-index: 1;
+  width: 250px;
 `;
 
+const Container = styled.div<{width?: string}>`
+  width: ${({ width }) => width ? width : '80px'};
+`;
+​
 const ProgressBar = styled.div<{height?: string}>`
   position: relative;
   display: flex;
   align-items: flex-start;
   flex-wrap: nowrap;
   background: #ddd;
-  height: ${({height}) => height ? height : '6px'};
+  height: ${({height}) => height ? height : '5px'};
   border-radius: 5px;
-  overflow: hidden;
+  > div:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  > div:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px
+  }
 `;
-
-const CompletedFailedBar = styled.div<{status: string}>`
+​
+const Bar = styled.div`
   box-sizing: border-box;
   flex: 1;
   height: inherit;
-  border: 1px solid;
-  border-color: ${({status})=> status === 'completed' ? '#4DB5FF': '#EF7878'};
-  border-left: none;
-  border-right: none;
-  background: ${({status})=> status === 'completed' ? '#4DB5FF': '#EF7878'};
+  position: relative;
+  &:hover ${TooltipText} {
+    visibility: visible;
+  }
 `;
-
-const ProgressBarText = styled.div`
-  margin-bottom: 3px;
+​
+const CompletedBar = styled(Bar)`
+  border: 1px solid #4DB5FF;
+  background: #4DB5FF;
 `;
-
+​
+const FailedBar = styled(Bar)`
+  border: 1px solid #EF7878;
+  background: #EF7878;
+  cursor: pointer;
+`;
+​
 const barberpole = keyframes`
   0% {
     background-position: 100px 100px;
@@ -39,13 +70,9 @@ const barberpole = keyframes`
     background-position: 300px 300px;
   }
 `;
-
-const ProcessingBar = styled.div`
-  box-sizing: border-box;
-  flex: 1;
-  height: inherit;
-  border: 1px solid #9BD3FA;  
-  border-right:none;
+​
+const ProcessingBar = styled(Bar)`
+  border: 1px solid #9BD3FA;
   background: repeating-linear-gradient(
     -45deg,
     #9BD3FA,
@@ -56,39 +83,38 @@ const ProcessingBar = styled.div`
   background-size: 400px 400px;
   animation: ${barberpole} 20s linear infinite;
 `;
-
-const EmptyBar = styled.div`
-  box-sizing: border-box;
-  flex: 1;
-  height: inherit;
+​
+const ProgressBarText = styled.div`
+  font-size: 12px;
+  font-family: ${({ theme }) => theme.fontFamily.data };
 `;
-
+​
 interface ISegments {
   status: string;
   displayText: string;
 }
-
+​
 interface ISegmentedProgressBarProps {
   statusSegments?: ISegments[];
   statusText?: string;
   width?: string;
   height?: string;
 }
-
+​
 const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegments, statusText, width, height }) => {
-
+​
   const renderSegmentsConditionally = useCallback((item: ISegments):ReactElement => {
-    if(item.status === 'completed' || item.status === 'failed') {
-      return <CompletedFailedBar status={item.status} title={item.displayText} />;
-    }
-    else if(item.status === 'processing') {
-      return <ProcessingBar title={item.displayText} />;
-    }
-    else {
-      return <EmptyBar title={item.displayText} />;
+    if(item.status === 'completed') {
+      return <CompletedBar><TooltipText>{item.displayText}</TooltipText></CompletedBar>;
+    } else if(item.status === 'failed') {
+      return <FailedBar><TooltipText>{item.displayText}</TooltipText></FailedBar>;
+    } else if(item.status === 'processing') {
+      return <ProcessingBar><TooltipText>{item.displayText}</TooltipText></ProcessingBar>;
+    } else {
+      return <Bar><TooltipText>{item.displayText}</TooltipText></Bar>;
     }
   },[]);
-  
+​
   return (
     <Container width={width}>
       <ProgressBarText>{statusText}</ProgressBarText>
@@ -96,5 +122,5 @@ const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegm
     </Container>
   );
 };
-
+​
 export default SegmentedProgressBar;
