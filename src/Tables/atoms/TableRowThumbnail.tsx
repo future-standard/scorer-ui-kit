@@ -64,7 +64,7 @@ const NoImageWrapper = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  heigh: 41px;
+  height: 41px;
   width: 55px;
   object-fit: cover;
   display: block;
@@ -120,7 +120,7 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
     if ( mediaUrl && mediaType && showImage ) {
       createMediaModal({ src: mediaUrl, mediaType, minHeight: '240px', closeText });
     }
-  }, [closeText, createMediaModal, mediaType, mediaUrl]);
+  }, [closeText, createMediaModal, mediaType, mediaUrl, showImage]);
 
   useEffect(()=>{
     setShowImage(false);
