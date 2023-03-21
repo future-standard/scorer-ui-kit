@@ -125,16 +125,27 @@ const DateTimeBlock : React.FC<IProps> = ({
   const [displayMinutes, setDisplayMinutes] = useState<string>(getFormattedTime(convertMinutes));
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
-    if (!hourRegex.test(value)) {
-      return;
+    let newVal = '0';
+    if(value.length === 1){
+      if(value === '0'){
+        newVal = ('0' + '');
+      } else {
+        newVal = ('0' + value).slice(-2) ;
+      }
+    } else {
+      newVal = value.slice(-2);
     }
-    setDisplayHours(value);
+    if(Number(newVal) > 24){
+      newVal = '24';
+    } else if(Number(newVal) < 0){
+      newVal = '0';
+    }
+    setDisplayHours(newVal);
     setDateCallback(
       min([
         endOfDay(date),
         set(date, {
-          hours: Number(value),
+          hours: Number(newVal),
           minutes: Number(displayMinutes),
           seconds: 0,
           milliseconds: 0
