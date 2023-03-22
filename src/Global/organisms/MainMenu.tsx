@@ -46,7 +46,16 @@ const SVGObjectText = styled.object`
   max-width: 180px;
 `;
 
-const NavigationContainer = styled.div``;
+const NavigationContainer = styled.div`
+  max-height: 300px;
+  min-height: 200px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {  /* Hide scrollbar for Chrome, Safari and Opera */
+    display: none;
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+`;
 
 const MenuFooter = styled.div`
   ${({ theme }) => theme && css`
