@@ -155,7 +155,7 @@ const DateTimeBlock : React.FC<IProps> = ({
       newVal = '59';
     } else if(value.length === 1){
       if(value === '0'){
-        newVal = ('0');
+        newVal = ('00');
       } else {
         newVal = ('0' + value).slice(-2) ;
       }
@@ -196,7 +196,9 @@ const DateTimeBlock : React.FC<IProps> = ({
   const onKeyDownChange = useCallback((event) => {
     if(event.key==='.' || event.key==='e' || event.key==='-'){
       event.preventDefault()
-    };
+    } else if (event.key==='Backspace'){
+      setDisplayMinutes('');
+    }
   },[]);
 
   return (
