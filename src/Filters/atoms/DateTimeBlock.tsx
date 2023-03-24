@@ -195,7 +195,7 @@ const DateTimeBlock : React.FC<IProps> = ({
 
   const onKeyDownChange = useCallback((event) => {
     if(event.key==='.' || event.key==='e' || event.key==='-'){
-      event.preventDefault()
+      event.preventDefault();
     } else if (event.key==='Backspace'){
       setDisplayMinutes('');
     }
