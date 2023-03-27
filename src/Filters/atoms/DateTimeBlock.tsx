@@ -127,8 +127,8 @@ const DateTimeBlock : React.FC<IProps> = ({
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
     let newVal;
     if(Number(value) > 24){
-      const minuteRegex = /^-?\d{1,2}$|^$/;
-      if (!minuteRegex.test(value)) {
+      const hourRegex = /^-?\d{1,2}$|^$/;
+      if (!hourRegex.test(value)) {
         return;
       }
       newVal = '24';
