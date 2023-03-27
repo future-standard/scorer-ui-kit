@@ -46,15 +46,37 @@ const SVGObjectText = styled.object`
   max-width: 180px;
 `;
 
+const GradientContainer = styled.div`
+  &::after {
+    content: '';
+    background: radial-gradient(farthest-side at 50% 100%,rgba(246, 247, 249, 0) 1%, #F6F7F9 120%) center bottom; //Shodow bottom
+    height: 10px;
+    display: block;
+    position: absolute;
+    margin-top: -10px;
+    width: 300px;
+  }
+`;
+
 const NavigationContainer = styled.div`
-  max-height: 300px;
   min-height: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
   ::-webkit-scrollbar {  /* Hide scrollbar for Chrome, Safari and Opera */
     display: none;
   }
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  max-height: 400px;
+
+  &::after {
+    background: linear-gradient(rgba(246, 247, 249, 0) 1%, #F6F7F9 120%) center bottom;
+    content: '';
+    background: white;
+    display: block;
+    position: sticky;
+    height: 10px;
+    z-index: 1;
+  }
 `;
 
 const MenuFooter = styled.div`
@@ -68,7 +90,7 @@ const MenuFooter = styled.div`
 `;
 
 const FooterItemContainer = styled.div`
-  min-height: 70px;
+  min-height: 50px;
 `;
 
 const PushContainer = styled.div<{ isPinned: boolean; }>`
@@ -111,7 +133,6 @@ const ContainerInner = styled.div`
   flex-direction: column;
   height: 100%;
 `;
-
 
 const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, defaultMenuOpen = true, canAlwaysPin = false }) => {
 
@@ -172,7 +193,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
               <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
               <LogoType>{logoText ? <SVGObjectText type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
             </Logo>
-
+            <GradientContainer>
             <NavigationContainer>
               {content.items.map((item, key) => {
               return (
@@ -188,7 +209,8 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
               );
               })}
             </NavigationContainer>
-
+            </GradientContainer>
+            
             <MenuFooter>
 
               {supportUrl && (
