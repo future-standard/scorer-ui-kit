@@ -194,21 +194,21 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
               <LogoType>{logoText ? <SVGObjectText type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
             </Logo>
             <GradientContainer>
-            <NavigationContainer>
-              {content.items.map((item, key) => {
-              return (
-                <NavigationItem
-                  topLevelPath={getTopLevelPath(location.pathname)}
-                  key={key}
-                  contextKey={key}
-                  menuOpen={menuState.isMenuOpen}
-                  submenuOpen={key === focusedContext && menuState.isMenuOpen}
-                  onClickCallback={setFocusedContextCb}
-                  {...{ item, loading, focusedContext, readyCallback }}
-                />
-              );
-              })}
-            </NavigationContainer>
+              <NavigationContainer>
+                {content.items.map((item, key) => {
+                return (
+                  <NavigationItem
+                    topLevelPath={getTopLevelPath(location.pathname)}
+                    key={key}
+                    contextKey={key}
+                    menuOpen={menuState.isMenuOpen}
+                    submenuOpen={key === focusedContext && menuState.isMenuOpen}
+                    onClickCallback={setFocusedContextCb}
+                    {...{ item, loading, focusedContext, readyCallback }}
+                  />
+                );
+                })}
+              </NavigationContainer>
             </GradientContainer>
             
             <MenuFooter>
