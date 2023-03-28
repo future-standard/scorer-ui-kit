@@ -49,12 +49,12 @@ const SVGObjectText = styled.object`
 const GradientContainer = styled.div`
   &::after {
     content: '';
-    background: radial-gradient(farthest-side at 50% 100%,rgba(246, 247, 249, 0) 1%, #F6F7F9 120%) center bottom; //Shodow bottom
+    background: linear-gradient(to bottom, transparent, #e5e5e5); //Shodow bottom
     height: 10px;
     display: block;
     position: absolute;
     margin-top: -10px;
-    width: 300px;
+    width: 100%;
   }
 `;
 
