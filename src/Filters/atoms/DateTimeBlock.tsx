@@ -155,7 +155,7 @@ const DateTimeBlock : React.FC<IProps> = ({
       newVal = '59';
     } else if(value.length === 1){
       if(value === '0'){
-        newVal = ('00');
+        newVal = '00';
       } else {
         newVal = ('0' + value).slice(-2) ;
       }
