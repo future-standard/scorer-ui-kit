@@ -66,7 +66,7 @@ const NavigationContainer = styled.div`
   }
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  max-height: 400px;
+  max-height: 500px;
 
   &::after {
     background: linear-gradient(rgba(246, 247, 249, 0) 1%, #F6F7F9 120%) center bottom;
