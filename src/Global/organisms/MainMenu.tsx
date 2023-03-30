@@ -66,7 +66,7 @@ const NavigationContainer = styled.div`
   }
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  max-height: 500px;
+  max-height: 550px;
 
   &::after {
     background: linear-gradient(rgba(246, 247, 249, 0) 1%, #F6F7F9 120%) center bottom;
@@ -90,7 +90,7 @@ const MenuFooter = styled.div`
 `;
 
 const FooterItemContainer = styled.div`
-  min-height: 50px;
+  min-height: 30px;
 `;
 
 const PushContainer = styled.div<{ isPinned: boolean; }>`
