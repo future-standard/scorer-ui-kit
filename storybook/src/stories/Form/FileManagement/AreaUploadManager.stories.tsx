@@ -27,6 +27,7 @@ export const _AreaUploadManager = () => {
   const fileIcons = object('File Icons', defaultIcons)
   const showValue = action('Input Callback');
   const allowedFileTypes = object('allowedFileTypes', fileTypes);
+  let clearState = boolean('Clear selected Files', false);
 
   const inputCallback = (goodFiles: FileList, rejectedFiles: FileList) => {
     console.log('good Files', goodFiles);
@@ -39,6 +40,7 @@ export const _AreaUploadManager = () => {
       <AreaUploadManager
         {...{ selectFilesText, title, fileIcons, description, allowedFileTypes, addMoreFilesText }}
         onChangeCallback={inputCallback}
+        clearState={clearState}
         customComponent={showCustomComponent
           ? <PageHeader
             title="CustomComponent Example"
