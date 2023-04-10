@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, ReactElement, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BigIconsSummary from '../../Misc/atoms/BigIconsSummary';
 import DropArea from '../atoms/DropArea';
@@ -105,7 +105,7 @@ interface IAreaUploaderManager {
   allowedFileTypes?: string[]
   customComponent?: ReactElement
   onChangeCallback?: (goodFiles: FileList, rejectedFiles: FileList) => void
-  clearState?: boolean;
+  clearFiles?: boolean;
 }
 
 const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
@@ -117,7 +117,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   allowedFileTypes,
   customComponent,
   onChangeCallback = () => { },
-  clearState
+  clearFiles
 }) => {
 
   const [files, setFiles] = useState<FileList | null>(null);
@@ -133,10 +133,10 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   }, [files, allowedFileTypes, onChangeCallback]);
 
   useEffect(() => {
-    if(clearState){
+    if(clearFiles){
       setFiles(null);
     }
-  },[clearState]);
+  },[clearFiles]);
 
   return (
     <Container>
