@@ -185,8 +185,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
                 design='secondary'
               >{clearFilesText}
               </Button>
-            </Fragment>
-          }
+            </Fragment>}
         </InputButtonWrapper>
       </FilesUploadGroup>
     </Container>
