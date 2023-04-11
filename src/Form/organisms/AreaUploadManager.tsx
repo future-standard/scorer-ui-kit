@@ -106,10 +106,12 @@ interface IAreaUploaderManager {
   selectFilesText?: string
   addMoreFilesText?: string
   clearFilesText?: string
+  beginUploadText?: string
   allowedFileTypes?: string[]
   customComponent?: ReactElement
   onChangeCallback?: (goodFiles: FileList, rejectedFiles: FileList) => void
   clearFilesCallback?: () => void
+  beginUploadCallback?: () => void
 }
 
 const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
@@ -119,10 +121,12 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   selectFilesText = 'Select Files',
   addMoreFilesText = 'Add More Files',
   clearFilesText = 'Clear Files',
+  beginUploadText = 'Begin Upload',
   allowedFileTypes,
   customComponent,
   onChangeCallback = () => { },
-  clearFilesCallback = () => { }
+  clearFilesCallback = () => { },
+  beginUploadCallback = () => { }
 }) => {
 
   const [files, setFiles] = useState<FileList | null>(null);
@@ -165,14 +169,24 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             inputCallback={handleFiles}
             multiple
             buttonDesign={files !== null ? 'secondary' : 'primary'}
+            accept={allowedFileTypes?.join(', ')}
           />
           {files !== null && 
-            <Button
-              size='small'
-              onClick={clearFiles}
-              design='secondary'
-            >{clearFilesText}
-            </Button>}
+            <Fragment>
+              <Button
+                size='small'
+                onClick={beginUploadCallback}
+                design='primary'
+              >{beginUploadText}
+              </Button>
+              <Button
+                size='small'
+                onClick={clearFiles}
+                design='secondary'
+              >{clearFilesText}
+              </Button>
+            </Fragment>
+          }
         </InputButtonWrapper>
       </FilesUploadGroup>
     </Container>
