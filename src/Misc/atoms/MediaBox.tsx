@@ -2,7 +2,7 @@ import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import { IMediaType } from '../../index';
-import { ReactComponent as LargeNoImage } from '../../svg/Large-No-image.svg';
+import { ReactComponent as NoImage } from '../../svg/NoImageBig.svg';
 
 export const MediaBoxWrapper = styled.div<{minWidth?: string, minHeight?: string}>`
   position: relative;
@@ -137,7 +137,7 @@ const MediaBox: React.FC<IMediaModal> = ({
             isLoaded={loaded && !loadFailed}
           />}
       {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
-      {loadFailed && <LargeNoImage />}
+      {loadFailed && <NoImage />}
     </MediaBoxWrapper>
   );
 };
