@@ -7,7 +7,7 @@ import { NoImage } from '../../svg';
 
 type VideoAspects = '4:3' | '16:9';
 
-const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string, showImage?: boolean}>`
+const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string}>`
   position: relative;
   height: inherit;
   background: grey;
@@ -178,7 +178,7 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   },[image]);
   
   return (
-    <Container {...{ hoverZoom, mediaUrl, showImage }} aspect='16:9' onClick={handleModal}>
+    <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={handleModal}>
       {showImage ? 
         <ImageWrapper ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} /> :
         <NoImageWrapper><NoImage /></NoImageWrapper>}
