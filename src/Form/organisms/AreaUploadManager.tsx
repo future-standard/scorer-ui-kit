@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import BigIconsSummary from '../../Misc/atoms/BigIconsSummary';
 import DropArea from '../atoms/DropArea';
 import InputFileButton from '../atoms/InputFileButton';
+import Button from '../atoms/Button';
 
 const Container = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -19,6 +20,8 @@ const StyledDropArea = styled(DropArea)`
 const InputButtonWrapper = styled.div`
   z-index: 99;
   margin-top: 20px;
+  display: flex;
+  gap: 20px;
 `;
 
 const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
@@ -102,10 +105,11 @@ interface IAreaUploaderManager {
   fileIcons?: string[]
   selectFilesText?: string
   addMoreFilesText?: string
+  clearFilesText?: string
   allowedFileTypes?: string[]
   customComponent?: ReactElement
   onChangeCallback?: (goodFiles: FileList, rejectedFiles: FileList) => void
-  clearFiles?: boolean;
+  clearFilesCallback?: () => void
 }
 
 const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
@@ -114,10 +118,11 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   fileIcons,
   selectFilesText = 'Select Files',
   addMoreFilesText = 'Add More Files',
+  clearFilesText = 'Clear Files',
   allowedFileTypes,
   customComponent,
   onChangeCallback = () => { },
-  clearFiles
+  clearFilesCallback = () => { }
 }) => {
 
   const [files, setFiles] = useState<FileList | null>(null);
@@ -132,11 +137,10 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
 
   }, [files, allowedFileTypes, onChangeCallback]);
 
-  useEffect(() => {
-    if(clearFiles){
-      setFiles(null);
-    }
-  },[clearFiles]);
+  const clearFiles = useCallback(() => {
+    setFiles(null);
+    clearFilesCallback();
+  },[]);
 
   return (
     <Container>
@@ -162,6 +166,13 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             multiple
             buttonDesign={files !== null ? 'secondary' : 'primary'}
           />
+          {files !== null && 
+            <Button
+              size='small'
+              onClick={clearFiles}
+              design='secondary'
+            >{clearFilesText}
+            </Button>}
         </InputButtonWrapper>
       </FilesUploadGroup>
     </Container>

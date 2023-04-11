@@ -27,7 +27,8 @@ export const _AreaUploadManager = () => {
   const fileIcons = object('File Icons', defaultIcons)
   const showValue = action('Input Callback');
   const allowedFileTypes = object('allowedFileTypes', fileTypes);
-  let clearFiles = boolean('Clear selected Files', false);
+  const clearedFilesText = text('Message', 'Cleared all selected files');
+  const onClearFilesBtnClick = action('Action was clicked');
 
   const inputCallback = (goodFiles: FileList, rejectedFiles: FileList) => {
     console.log('good Files', goodFiles);
@@ -35,12 +36,16 @@ export const _AreaUploadManager = () => {
     showValue({ goodFiles, rejectedFiles });
   };
 
+  const clearFilesInputCallback = () => {
+    onClearFilesBtnClick(clearedFilesText);
+  }
+
   return (
     <Container>
       <AreaUploadManager
         {...{ selectFilesText, title, fileIcons, description, allowedFileTypes, addMoreFilesText }}
         onChangeCallback={inputCallback}
-        clearFiles={clearFiles}
+        clearFilesCallback={clearFilesInputCallback}
         customComponent={showCustomComponent
           ? <PageHeader
             title="CustomComponent Example"
