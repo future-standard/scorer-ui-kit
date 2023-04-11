@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useCallback, useState, useEffect } from 'react';
+import React, { Fragment, ReactElement, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import BigIconsSummary from '../../Misc/atoms/BigIconsSummary';
 import DropArea from '../atoms/DropArea';
@@ -140,7 +140,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   const clearFiles = useCallback(() => {
     setFiles(null);
     clearFilesCallback();
-  },[]);
+  },[clearFilesCallback]);
 
   return (
     <Container>
