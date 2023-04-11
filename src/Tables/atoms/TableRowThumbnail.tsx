@@ -34,9 +34,7 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
   `}
 
   &:hover {
-    ${({ mediaUrl, showImage }) => mediaUrl && showImage && css`
       cursor: pointer;
-    `};
 
     ${({ theme, hoverZoom }) => theme && hoverZoom && css`
       transform: scale(1.5);
@@ -116,11 +114,8 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   const timeoutRef = useRef<(ReturnType<typeof setTimeout>)|null>(null);
 
   const handleModal = useCallback(async () => {
-
-    if ( mediaUrl && mediaType && showImage ) {
-      createMediaModal({ src: mediaUrl, mediaType, minHeight: '240px', closeText });
-    }
-  }, [closeText, createMediaModal, mediaType, mediaUrl, showImage]);
+      createMediaModal({ src: showImage && mediaUrl ? mediaUrl : '', mediaType: mediaType ? mediaType : 'img', minHeight: '240px', closeText });
+  }, [closeText, createMediaModal, mediaType, mediaUrl]);
 
   useEffect(()=>{
     setShowImage(false);
