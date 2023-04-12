@@ -26,6 +26,8 @@ export const _AreaUploadManager = () => {
   const addMoreFilesText = text('Add More Files Text', 'Add More files')
   const fileIcons = object('File Icons', defaultIcons)
   const showValue = action('Input Callback');
+  const clearedFilesText = text('Message', 'Cleared all selected files');
+  const onClearFilesBtnClick = action('Action was clicked');
   const allowedFileTypes = object('Allowed File Types', fileTypes);
   const beginUploadMsg = action('Begin Upload Button Click');
 
@@ -35,11 +37,16 @@ export const _AreaUploadManager = () => {
     showValue({ goodFiles, rejectedFiles });
   };
 
+  const clearFilesInputCallback = () => {
+    onClearFilesBtnClick(clearedFilesText);
+  }
+
   return (
     <Container>
       <AreaUploadManager
         {...{ selectFilesText, title, fileIcons, description, allowedFileTypes, addMoreFilesText }}
         onChangeCallback={inputCallback}
+        clearFilesCallback={clearFilesInputCallback}
         beginUploadCallback={beginUploadMsg}
         customComponent={showCustomComponent
           ? <PageHeader
