@@ -4,7 +4,7 @@ import { DateInterval } from './molecules/DatePicker';
 import { IDropdownDatePicker } from './molecules/DropdownDatePicker';
 import { IFilterDropdown } from './molecules/FilterDropdown';
 
-type IFilterItem = { text: string; value: string | number; }
+type IFilterItem = { text: string | HTMLElement; value: string | number; }
 type IFilterValue = IFilterItem | IFilterItem[] | null;
 type IFilterType = 'search' | 'dropdown' | 'datepicker';
 

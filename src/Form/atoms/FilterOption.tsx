@@ -136,7 +136,7 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
 `;
 
 interface IFilterOption {
-  title: string
+  title: string | null
   value?: string | number
   optionType?: IInputOptionsType
   selected?: boolean
