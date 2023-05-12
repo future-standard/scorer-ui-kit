@@ -34,11 +34,26 @@ const StyledFilterOption = styled(FilterOption)`
   letter-spacing: 0.2px;
 `;
 
-const OptionList = styled.div<{hideVerticleScrollbar: boolean}>`
+const OptionList = styled.div`
   max-height: 162px;
   min-height: 40px;
   position: relative;
-  overflow-y: ${props => (props.hideVerticleScrollbar ? 'hidden' : 'scroll')};
+  overflow-y: auto;
+  margin-right: 5px;
+
+  /* Customize the scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 34%;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #44444487;
+    opacity: 0.5;
+    transform: translate(0px, 0px);
+    transition: background-color .3s;
+  }
 
   ${StyledFilterOption} {
     height: 35px;
@@ -334,7 +349,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
             : (
               <ResultsContainer>
                 {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
-                <OptionList hideVerticleScrollbar={list.length < 5 || list.length === 5}>
+                <OptionList>
                   {(visibleList.length > 0)
 
                     ? visibleList.map((item: IFilterItem, index) => {
