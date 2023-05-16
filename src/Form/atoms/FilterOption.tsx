@@ -12,7 +12,10 @@ const Title = styled.div`
   font-weight: 500;
   margin-left: 12px;
   user-select: none;
-  pointer-events: none;
+  white-space: nowrap;  
+  overflow: hidden;  
+  text-overflow: ellipsis;  
+  max-width: 210px;
 `;
 
 const FakeCheckbox = styled.div`
@@ -170,7 +173,7 @@ const FilterOption: React.FC<IFilterOption> = ({
         </FakeCheckbox>
       )}
       {(optionType === 'radio') && <FakeRadioButton><FakeInnerRadio /></FakeRadioButton>}
-      <Title>{title}</Title>
+      <Title title={title}>{title}</Title>
     </Container>
   );
 };

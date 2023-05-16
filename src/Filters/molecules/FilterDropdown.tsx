@@ -345,7 +345,6 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                     ? visibleList.map((item: IFilterItem, index) => {
                       const value = item.value;
                       const text = item.text;
-                      
                       return (
                         <StyledFilterOption
                           key={index}
