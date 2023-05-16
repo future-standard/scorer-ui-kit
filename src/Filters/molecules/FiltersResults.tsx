@@ -88,12 +88,11 @@ const renderResults = (template: string, total: number) => {
 
 const renderLabel = (item: IFilterItem | DateInterval | Date, resultsDateFormat: string, icon?: string, filterName?: string) => {
 
-  let textLabel: string | null = '';
+  let textLabel: string = "";
   const isDateFormatValid = validateDateFormat(resultsDateFormat);
 
   if (filterName && isFilterItem(item)) {
-    let text = typeof item.text === 'string' ? item.text : item.text instanceof HTMLElement ? item.text?.textContent : '';
-    textLabel = `${filterName}: ${text}`;
+    textLabel = `${filterName}: ${item.text}`;
   } else if (filterName && item instanceof Date) {
     textLabel = isDateFormatValid
       ? `${filterName}: ${format(item, resultsDateFormat)}`
@@ -103,7 +102,7 @@ const renderLabel = (item: IFilterItem | DateInterval | Date, resultsDateFormat:
       ? `${filterName}: ${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}`
       : `${filterName}: ${item.start.toDateString()} - ${item.end.toDateString()}`;
   } else if (!filterName && isFilterItem(item)) {
-    textLabel = typeof item.text === 'string' ? item.text : item.text instanceof HTMLElement ? item.text?.textContent : '';
+    textLabel = item.text;
   } else if (!filterName && item instanceof Date) {
     textLabel = isDateFormatValid
       ? format(item, resultsDateFormat)

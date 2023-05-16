@@ -218,14 +218,8 @@ const selectedOrderList = (list: IFilterItem[], maxItems: number, selected: IFil
 
 const getFilteredList = (list: IFilterItem[], newValue: string): IFilterItem[] => {
   return list.filter(element => {
-    let valueString: string | undefined;
-    if (typeof element.text === 'string') {
-      valueString = element.text.toLowerCase();
-    } else if (element.text instanceof HTMLElement) {
-      valueString = element.text.textContent?.toLowerCase();
-    }
-
-    return valueString !== undefined && valueString.includes(newValue.toLowerCase());
+    const valueString = element.text.toLowerCase();
+    return valueString.includes(newValue.toLowerCase());
   });
 };
 
@@ -350,8 +344,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
                     ? visibleList.map((item: IFilterItem, index) => {
                       const value = item.value;
-                      let text = typeof item.text === 'string' ? item.text :
-                      item.text instanceof HTMLElement ? item.text?.textContent : '';
+                      const text = item.text;
                       
                       return (
                         <StyledFilterOption
