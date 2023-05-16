@@ -50,9 +50,6 @@ const OptionList = styled.div`
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #44444487;
-    opacity: 0.5;
-    transform: translate(0px, 0px);
-    transition: background-color .3s;
   }
 
   ${StyledFilterOption} {
