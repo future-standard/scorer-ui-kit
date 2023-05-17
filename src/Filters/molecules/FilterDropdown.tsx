@@ -34,19 +34,15 @@ const StyledFilterOption = styled(FilterOption)`
   letter-spacing: 0.2px;
 `;
 
-const OptionList = styled.div<{isChromeOrSafari: boolean}>`
+const OptionList = styled.div`
   max-height: 162px;
   min-height: 40px;
   position: relative;
   overflow-y: auto;
+  margin-right: 2px;
   
   /* Firefox supports the scrollbar-width property */
   scrollbar-width: thin;
-
-  /* Apply margin-right to scrollbar for Chrome and Safari */
-  ${({ isChromeOrSafari }) => isChromeOrSafari && `
-    margin-right: 2px;
-  `}
 
   /* Customize the scrollbar width for Chrome and Safari */
   ::-webkit-scrollbar {
@@ -278,7 +274,6 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
   const [visibleList, setVisibleList] = useState(selectedOrderList(list, maxDisplayedItems, selected));
   const [searchText, setSearchText] = useState<string>('');
-  const isChromeOrSafari = /Chrome|Safari/.test(navigator.userAgent);
 
   const handleClose = useCallback(() => {
     setSearchText('');
@@ -353,7 +348,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
             : (
               <ResultsContainer>
                 {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
-                <OptionList isChromeOrSafari={isChromeOrSafari}>
+                <OptionList>
                   {(visibleList.length > 0)
 
                     ? visibleList.map((item: IFilterItem, index) => {
