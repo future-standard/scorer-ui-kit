@@ -123,38 +123,61 @@ const DateTimeBlock : React.FC<IProps> = ({
   const convertMinutes = (date?.getMinutes()).toString();
   const [displayHours, setDisplayHours] = useState<string>(getFormattedTime(convertHours));
   const [displayMinutes, setDisplayMinutes] = useState<string>(getFormattedTime(convertMinutes));
+  const [isKeyboardEvent, setIsKeyboardEvent] = useState(false);
 
-  const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    let newVal;
-    if(Number(value) > 24){
-      const hourRegex = /^-?\d{1,2}$|^$/;
-      if (!hourRegex.test(value)) {
-        return;
-      }
-      newVal = '24';
-    } else if(Number(value) < 0){
-      newVal = '00';
-    } else if(value.length === 1){
-      if(value === '0'){
-        newVal = '00';
-      } else {
-        newVal = ('0' + value).slice(-2) ;
-      }
+  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+    let value = event.currentTarget.value;
+    const key = event.key;
+    // const hourRegex  = /^[0-1]{0,1}[1-9]{0,1}$|(^2[0-3])$/;
+    // if (!hourRegex.test(value)) {
+    //   return;
+    // }
+    if (key === "ArrowUp") {
+      setIsKeyboardEvent(false);
+      // event.preventDefault();
+      // let hours = parseInt(value);
+      // setDisplayHours((hours + 1).toString().padStart(2, '0'));
+    } else if (key === "ArrowDown") {
+      setIsKeyboardEvent(false);
+      // event.preventDefault();
+      // let hours = parseInt(value);
+      // setDisplayHours((hours - 1).toString().padStart(2, '0'));
     } else {
-      newVal = value.slice(-2);
+      console.log('else');
+      setIsKeyboardEvent(true);
     }
-    setDisplayHours(newVal);
     setDateCallback(
       min([
         endOfDay(date),
         set(date, {
-          hours: Number(newVal),
+          hours: Number(value),
           minutes: Number(displayMinutes),
           seconds: 0,
           milliseconds: 0
         })
       ])
     );
+  },[]);
+
+  const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('2', isKeyboardEvent);
+    const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
+    if (!hourRegex.test(value)) {
+      return;
+    }
+    isKeyboardEvent ? setDisplayHours(value) : setDisplayHours(value.padStart(2, '0'));
+    setDateCallback(
+      min([
+        endOfDay(date),
+        set(date, {
+          hours: Number(value),
+          minutes: Number(displayMinutes),
+          seconds: 0,
+          milliseconds: 0
+        })
+      ])
+    );
+    setIsKeyboardEvent(false);
   }, [date, displayMinutes, setDateCallback]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
@@ -192,14 +215,6 @@ const DateTimeBlock : React.FC<IProps> = ({
     }
   }, []);
 
-  const onKeyDownChange = useCallback((event) => {
-    if(event.key==='.' || event.key==='e' || event.key==='-'){
-      event.preventDefault();
-    } else if (event.key==='Backspace'){
-      event.target.name === 'hours' ? setDisplayHours('') : setDisplayMinutes('');
-    }
-  },[]);
-
   return (
     <Container hide={!hasDate && !hasTime}>
       <Label>{title}</Label>
@@ -221,7 +236,7 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <InputValue onKeyDown={(e) => onKeyDownChange(e)} onBlur={()=>onBlurInputs(displayHours, 'hours')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
+            <InputValue onKeyDown={(e) => handleKeyDown(e)} onBlur={()=>onBlurInputs(displayHours, 'hours')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} autoComplete='off' onChange={(e) => setDateHours(e)}/>
             <TimeColon>:</TimeColon>
             <InputValue onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
