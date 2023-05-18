@@ -144,32 +144,18 @@ const DateTimeBlock : React.FC<IProps> = ({
   }, [date, displayMinutes, setDateCallback]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    let newVal;
-    if(Number(value) > 59){
-      const minuteRegex = /^-?\d{1,2}$|^$/;
-      if (!minuteRegex.test(value)) {
-        return;
-      }
-      newVal = '00';
-    } else if(Number(value) < 0){
-      newVal = '59';
-    } else if(value.length === 1){
-      if(value === '0'){
-        newVal = '00';
-      } else {
-        newVal = ('0' + value).slice(-2) ;
-      }
-    } else {
-      newVal = value.slice(-2);
+    const minuteRegex = /^[0-5]{0,1}[0-9]{0,1}$/;
+    if (!minuteRegex.test(value)) {
+      return;
     }
-    setDisplayMinutes(newVal);
+    setDisplayMinutes(value);
     
     setDateCallback(
       min([
         endOfDay(date),
         set(date, {
           hours: displayHours === '24' ? 23 : Number(displayHours),
-          minutes: Number(newVal),
+          minutes: Number(value) % 60,
           seconds: 0,
           milliseconds: 0
         })
@@ -192,14 +178,6 @@ const DateTimeBlock : React.FC<IProps> = ({
       setDisplayHours(convertedValue);
     }
   }, []);
-
-  const onKeyDownChange = useCallback((event) => {
-    if(event.key==='.' || event.key==='e' || event.key==='-'){
-      event.preventDefault();
-    } else if (event.key==='Backspace'){
-      setDisplayMinutes('');
-    }
-  },[]);
 
   return (
     <Container hide={!hasDate && !hasTime}>
@@ -224,7 +202,7 @@ const DateTimeBlock : React.FC<IProps> = ({
           <InputWrap>
             <InputValue onBlur={()=>onBlurInputs(displayHours, 'hours')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
             <TimeColon>:</TimeColon>
-            <InputValue onKeyDown={(e) => onKeyDownChange(e)} onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <InputValue onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
         </Item>
       )}
