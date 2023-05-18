@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useRef} from 'react';
 import styled, { css } from 'styled-components';
 import { CheckMark } from '../../svg';
 import { IInputOptionsType } from '..';
@@ -160,12 +160,11 @@ const FilterOption: React.FC<IFilterOption> = ({
   const iconWeight: number = dimensions.icons.weights['regular'];
 
   const titleRef = useRef(null);
-  const [isOverflowing, setIsOverflowing] = useState(false);
 
   const handleMouseEnter = () => {
     const titleElement = titleRef.current as unknown as HTMLDivElement;
     if (titleElement) {
-      setIsOverflowing(titleElement.scrollWidth > titleElement.clientWidth);
+      titleElement.title = titleElement.scrollWidth > titleElement.clientWidth ? title : '';
     }
   };
 
@@ -183,7 +182,7 @@ const FilterOption: React.FC<IFilterOption> = ({
         </FakeCheckbox>
       )}
       {(optionType === 'radio') && <FakeRadioButton><FakeInnerRadio /></FakeRadioButton>}
-      <Title ref={titleRef} title={isOverflowing ? title : undefined} onMouseEnter={handleMouseEnter}>{title}</Title>
+      <Title ref={titleRef} onMouseEnter={handleMouseEnter}>{title}</Title>
     </Container>
   );
 };
