@@ -123,14 +123,14 @@ const DateTimeBlock : React.FC<IProps> = ({
   const convertMinutes = (date?.getMinutes()).toString();
   const [displayHours, setDisplayHours] = useState<string>(getFormattedTime(convertHours));
   const [displayMinutes, setDisplayMinutes] = useState<string>(getFormattedTime(convertMinutes));
-  const [isKeyboardEvent, setIsKeyboardEvent] = useState(false);
+  const [isNonArrowKey, setIsNonArrowKey] = useState(false);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
     const key = event.key;
     if (key === "ArrowUp" || key === "ArrowDown") {
-      setIsKeyboardEvent(false);
+      setIsNonArrowKey(false);
     } else {
-      setIsKeyboardEvent(true);
+      setIsNonArrowKey(true);
     }
   },[]);
 
@@ -139,7 +139,7 @@ const DateTimeBlock : React.FC<IProps> = ({
     if (!hourRegex.test(value)) {
       return;
     }
-    isKeyboardEvent ? setDisplayHours(value) : setDisplayHours(value.padStart(2, '0'));
+    isNonArrowKey ? setDisplayHours(value) : setDisplayHours(value.padStart(2, '0'));
     setDateCallback(
       min([
         endOfDay(date),
@@ -151,8 +151,8 @@ const DateTimeBlock : React.FC<IProps> = ({
         })
       ])
     );
-    setIsKeyboardEvent(false);
-  }, [date, displayMinutes, setDateCallback, isKeyboardEvent]);
+    setIsNonArrowKey(false);
+  }, [date, displayMinutes, setDateCallback, isNonArrowKey]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
     const minuteRegex = /^[0-5]{0,1}[0-9]{0,1}$/;
