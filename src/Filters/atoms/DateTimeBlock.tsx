@@ -221,7 +221,7 @@ const DateTimeBlock : React.FC<IProps> = ({
           <InputWrap>
             <InputValue onBlur={()=>onBlurInputs(displayHours, 'hours')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
             <TimeColon>:</TimeColon>
-            <InputValue  onKeyDown={(e) => handleKeyDown(e)} onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <InputValue onKeyDown={(e) => handleKeyDown(e)} onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
         </Item>
       )}
