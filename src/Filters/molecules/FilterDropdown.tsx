@@ -37,6 +37,7 @@ const StyledFilterOption = styled(FilterOption)`
 const OptionList = styled.div`
   max-height: 162px;
   min-height: 40px;
+  position: relative;
   overflow-y: scroll;
   ::-webkit-scrollbar {  /* Hide scrollbar for Chrome, Safari and Opera */
     display: none;
@@ -87,6 +88,15 @@ const EmptyResultText = styled.div`
   display: flex;
   align-items: center;
   font-size: 12px;
+`;
+
+const Gradient = styled.div`
+  position: absolute;
+  right: 0px;
+  bottom: 9px;
+  height: 25px;
+  background-image: linear-gradient(to bottom, rgba(246, 247, 249, 0) 1%, #F6F7F9 120%);
+  width: 100%;
 `;
 
 const isValueSelected = (item: IFilterItem, selected: IFilterValue) => {
@@ -348,6 +358,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
                     : <EmptyResultText>{emptyResultText}</EmptyResultText>}
                 </OptionList>
+                {list.length > 5 && <Gradient />}
               </ResultsContainer>)}
         </InnerBox>
       </FilterDropHandler>
