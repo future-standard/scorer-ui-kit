@@ -22,6 +22,8 @@ export interface IPointSet {
   showPointHandle?: boolean;
   showSmallDirectionMark?: boolean;
   showMoveHandle?: boolean;
+  color?: string;
+  opacity?: string;
 }
 
 export interface IMinMax {

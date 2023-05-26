@@ -6,6 +6,11 @@ import { LineSetContext } from './Contexts';
 import { IPointSet, IDragLineUISharedOptions, IVector2 } from '.';
 import styled from 'styled-components';
 
+const SelectedArea = styled.polygon<{ color: string; opacity: string }>`
+  fill: ${({ color }) => color };
+  opacity: ${({ opacity }) => opacity };
+`;
+
 const Point = styled.circle<{styling: string}>`
   fill: ${({theme, styling}) => theme.custom.lines[styling].point.fill};
 `;
@@ -241,8 +246,11 @@ const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, line
     />
   );});
 
+  const check = lineSetData.points.map((point) => `${point.x},${point.y}`).join(" ");
+  
   return (
     <g>
+      <SelectedArea points={check} color={lineSetData.color ? lineSetData.color : 'transparent'} opacity={lineSetData.opacity ? lineSetData.opacity : ''} />
       {lines}
       {handles}
       {points}
