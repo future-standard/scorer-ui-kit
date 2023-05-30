@@ -23,7 +23,7 @@ export interface IPointSet {
   showSmallDirectionMark?: boolean;
   showMoveHandle?: boolean;
   areaFillColor?: string;
-  areaTransparencyLevel?: string;
+  areaTransparencyLevel?: number;
 }
 
 export interface IMinMax {
