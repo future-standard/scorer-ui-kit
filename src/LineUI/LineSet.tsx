@@ -16,6 +16,11 @@ const AreaLabelText = styled.text<{styling: string}>`
   font-weight: bold;
   transition: opacity 250ms ease;
   pointer-events: none;
+  text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
 `;
 
 interface ILineSetProps {
