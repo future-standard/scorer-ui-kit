@@ -57,6 +57,11 @@ const LabelText = styled.text<{showIndex: boolean, styling: string}>`
   font-weight: bold;
   transition: opacity 250ms ease;
   cursor: pointer;
+  text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
 `;
 
 const GrabHandleContrast = styled(GrabHandle)`
