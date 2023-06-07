@@ -40,7 +40,8 @@ const Line: React.FC<{}> = () => {
     pointIndexOffset: 1,
     showPointLabel: true,
     setIndexOffset: 1,
-    showDirectionMark: false
+    showDirectionMark: false,
+    showLabelShadow: false
   });
 
   const [videoOptions, setVideoOptions]= useState<LineUIVideoOptions>({
@@ -171,6 +172,10 @@ const Line: React.FC<{}> = () => {
     setOptions(previous => ({...previous, showDirectionMark: isChecked}));
   }, []);
 
+  const showLabelTextShadow = useCallback((isChecked: boolean) => {
+    setOptions(previous => ({...previous, showLabelShadow: isChecked}));
+  }, []);
+
   const handleModalClose = useCallback(() => {
     setVideoOptions({
       loop: true,
@@ -223,6 +228,8 @@ const Line: React.FC<{}> = () => {
           <StyledButton  icon={'Delete'}  design='danger' onClick={()=>removeSet(state.length-1)} >Remove Shape</StyledButton>
 
           <Switch checked={options.showDirectionMark} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
+          <br />
+          <Switch checked={options.showLabelShadow} labelText='Show Label Shadow' leftTheme='off' onChangeCallback={showLabelTextShadow} rightTheme='on' state='default' />
 
         </SidebarBox>
         <SidebarBox style={{ flex: '1' }} >
