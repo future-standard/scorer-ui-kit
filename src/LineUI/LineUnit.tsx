@@ -200,7 +200,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           </g>}
         {label &&
           <g transform={`translate(0,${showSmallDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
-            <LabelText onClick={() => lineClickCallback(lineSetId)} textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive} showLabelShadow={showLabelShadow} >
+            <LabelText onClick={() => lineClickCallback(lineSetId)} textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive} showLabelShadow={showLabelShadow}>
               {label}
             </LabelText>
           </g>}
@@ -244,7 +244,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
         getDirectionMarkLine()
         :
         label &&
-          <LabelText styling={styling} fontSize={`${unit * 14}px`} x={midpoint.x - (16 * unit)} y={midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive} showLabelShadow={showLabelShadow} >
+          <LabelText styling={styling} fontSize={`${unit * 14}px`} x={midpoint.x - (16 * unit)} y={midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive} showLabelShadow={showLabelShadow}>
             {label}
           </LabelText>}
     </g>
