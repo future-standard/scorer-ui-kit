@@ -65,19 +65,29 @@ const Line: React.FC<{}> = () => {
     const state: IPointSet[] = [{
         name: 'UP',
         points: [
-            {
-              x: 343,
-              y: 281
-            },
-            {
-              x: 898,
-              y: 389
-            }
+          {
+            x: 1048,
+            y: 456
+          },
+          {
+            x: 1613,
+            y: 584
+          },
+          {
+            x: 1322,
+            y: 985
+          },
+          {
+            x: 922,
+            y: 785
+          }
         ],
         showPointHandle: true,
         showSmallDirectionMark: true,
         readOnly: false,
-        styling: 'primary'
+        styling: 'primary',
+        areaFillColor: 'rgb(0,0,0)',
+        areaTransparencyLevel: 40
       },
       {
         name: 'DOWN',
@@ -213,7 +223,7 @@ const Line: React.FC<{}> = () => {
       <Content padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUI options={options} onLineClick={selectLine} src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
+          <LineUI options={options} onLineClick={selectLine} src="https://picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
         </LineSetContext.Provider>
       </Content>
     </Layout>
