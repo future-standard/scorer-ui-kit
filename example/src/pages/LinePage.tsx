@@ -32,7 +32,9 @@ const Line: React.FC<{}> = () => {
       y: 1535
     },
     boundaryOffset: 0,
-    showDirectionMark: true
+    showDirectionMark: true,
+    areaFillColor: '',
+    areaTransparencyLevel: 0
   });
 
   const fetchLine = useCallback(async () => {
@@ -134,6 +136,26 @@ const Line: React.FC<{}> = () => {
     });
   }, []);
 
+  const changeFillColor = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'UPDATE_FILL_COLOR',
+      index: lineIndex,
+      data: {
+        areaFillColor: value
+      }
+    });
+  }, []);
+
+  const changeTranparencyLevel = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'UPDATE_TRANSPARENCY_LEVEL',
+      index: lineIndex,
+      data: {
+        areaTransparencyLevel: parseInt(value)
+      }
+    });
+  }, []);
+
   const toggleReadOnly = useCallback((index=0) => () => {
     dispatch({
       type: 'UPDATE_SET_OPTIONS',
@@ -214,6 +236,8 @@ const Line: React.FC<{}> = () => {
           <Label labelText='Boundary Offset' htmlFor='boundaryOffset' >
             <Input type='number' name='boundaryOffset' min={0} value={options.boundaryOffset} onChange={updateBoudaryOffset}/>
           </Label>
+          <TextField label='Area Fill Color' fieldState='default' name='fillColor' value={state[0]?.areaFillColor ||''} onChange={(e) => changeFillColor(0, e)}/>
+          <TextField label='Area Tranparency Level' fieldState='default' name='transparencyLevel' value={state[0]?.areaTransparencyLevel ||''} onChange={(e) => changeTranparencyLevel(0, e)}/>
         </SidebarBox>
         <SidebarBox>
           <Button design="secondary" onClick={toggleReadOnly()} >Toggle Read Only</Button>
