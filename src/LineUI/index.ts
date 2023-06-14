@@ -71,7 +71,9 @@ export interface LineUIOptions {
   };
 
   boundaryOffset?: number,
-  showDirectionMark?: boolean
+  showDirectionMark?: boolean,
+  areaFillColor?: string;
+  areaTransparencyLevel?: number;
 }
 
 export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>

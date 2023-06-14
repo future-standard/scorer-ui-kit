@@ -88,7 +88,7 @@ const Line: React.FC<{}> = () => {
         showSmallDirectionMark: true,
         readOnly: false,
         styling: 'primary',
-        areaFillColor: 'rgb(0,0,0)',
+        areaFillColor: '#0B0B0B',
         areaTransparencyLevel: 40
       },
       {
