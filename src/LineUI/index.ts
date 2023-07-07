@@ -22,6 +22,8 @@ export interface IPointSet {
   showPointHandle?: boolean;
   showSmallDirectionMark?: boolean;
   showMoveHandle?: boolean;
+  areaFillColor?: string;
+  areaTransparencyLevel?: number;
 }
 
 export interface IMinMax {
@@ -71,7 +73,9 @@ export interface LineUIOptions {
   };
 
   boundaryOffset?: number,
-  showDirectionMark?: boolean
+  showDirectionMark?: boolean,
+  areaFillColor?: string;
+  areaTransparencyLevel?: number;
 }
 
 export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>

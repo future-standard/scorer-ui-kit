@@ -107,7 +107,9 @@ const Line: React.FC<{}> = () => {
           }
         ],
         readOnly: false,
-        styling: 'secondary'
+        styling: 'secondary',
+        areaFillColor: '#0B0B0B',
+        areaTransparencyLevel: 40
       }
     ];
 
