@@ -34,6 +34,7 @@ const Line: React.FC<{}> = () => {
   const [ws, setWS] = useState('localhost/wsapp');
   const [wsURL, setWsURL] = useState('');
   const [isShowDirection, setShowDirection] = useState<boolean>(false);
+  const [isLabelShadow, setLabelShadow] = useState<boolean>(false);
   const {createMediaModal} = useMediaModal();
 
   const [videoOptions, setVideoOptions]= useState<LineUIVideoOptions>({
@@ -43,6 +44,7 @@ const Line: React.FC<{}> = () => {
 
   const options : LineUIOptions = {
     showSetIndex: true,
+    showLabelShadow: true,
     setIndexOffset: 1,
     showDirectionMark: isShowDirection
   }
@@ -117,6 +119,10 @@ const Line: React.FC<{}> = () => {
     setShowDirection(isChecked);
   }, []);
 
+  const showLabelTextShadow = useCallback((isChecked: boolean) => {
+    setLabelShadow(isChecked);
+  }, []);
+
   const handleModalClose = useCallback(() => {
     setVideoOptions({
       loop: true,
@@ -146,6 +152,9 @@ const Line: React.FC<{}> = () => {
         <SidebarBox>
           <SwitchBox>
             <Switch checked={isShowDirection} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
+          </SwitchBox>
+          <SwitchBox>
+            <Switch checked={isLabelShadow} labelText='Show Label Shadow' leftTheme='off' onChangeCallback={showLabelTextShadow} rightTheme='on' state='default' />
           </SwitchBox>
           <Button design="secondary" onClick={fetchLine} >Cancel</Button>
           <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button>

@@ -25,6 +25,7 @@ const Line: React.FC<{}> = () => {
     pointIndexOffset: 1,
     showPointHandle: true,
     showPointLabel: true,
+    showLabelShadow: true,
     setIndexOffset: 1,
     showMoveHandle: true,
     fixedImgDimensions: {
@@ -190,6 +191,9 @@ const Line: React.FC<{}> = () => {
           </Label>
           <Label labelText='Show Direction Mark' htmlFor='showDirectionMark' >
             <input type='checkbox' name='showDirectionMark' checked={options.showDirectionMark} onChange={toggleOptions('showDirectionMark')}/>
+          </Label>
+          <Label labelText='Show Label Shadow' htmlFor='showLabelShadow' >
+            <input type='checkbox' name='showLabelShadow' checked={options.showLabelShadow} onChange={toggleOptions('showLabelShadow')}/>
           </Label>
         </SidebarBox>
         <SidebarBox>
