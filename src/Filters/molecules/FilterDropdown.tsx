@@ -97,6 +97,7 @@ const Gradient = styled.div`
   height: 25px;
   background-image: linear-gradient(to bottom, rgba(246, 247, 249, 0) 1%, #F6F7F9 120%);
   width: 100%;
+  pointer-events: none;
 `;
 
 const isValueSelected = (item: IFilterItem, selected: IFilterValue) => {
