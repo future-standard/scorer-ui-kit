@@ -104,7 +104,7 @@ const ContainerInner = styled.div`
 `;
 
 
-const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, defaultMenuOpen = true, canAlwaysPin = false }) => {
+const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, defaultMenuOpen = true, canAlwaysPin = false, onMenuToggle}) => {
 
   const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen, canAlwaysPin);
 
@@ -117,17 +117,26 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
   const autoMenuOpen = useCallback((e: any) => {
     if (e.pointerType === 'touch') { return; }
     setMenuOpen();
-  }, [setMenuOpen]);
+    if(onMenuToggle) {
+      onMenuToggle(true);
+    }
+  }, [onMenuToggle, setMenuOpen]);
 
   const autoMenuClose = useCallback(() => {
     // TODO: Move the focused back to the active view so it re-opens on current context.
     setMenuClose();
-  }, [setMenuClose]);
+    if(onMenuToggle) {
+      onMenuToggle(false);
+    }
+  }, [onMenuToggle, setMenuClose]);
 
   const toggleMenuPin = useCallback((e: any) => {
     if (e.pointerType === 'touch') { return; }
     togglePinned();
-  }, [togglePinned]);
+    if(onMenuToggle) {
+      onMenuToggle(true);
+    }
+  }, [onMenuToggle, togglePinned]);
 
   /** Manage which context is open. */
   /** Submenu sends -1 because context only is for the parent

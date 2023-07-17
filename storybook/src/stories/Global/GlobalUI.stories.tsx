@@ -519,6 +519,10 @@ export const _GlobalUI = () => {
     ]
   );
 
+  const getToggleValue = (isMenuOpen: boolean) => {
+    console.log(isMenuOpen);
+  };
+
   return (
     <Container>
       <GlobalUI
@@ -527,6 +531,7 @@ export const _GlobalUI = () => {
         defaultMenuOpen={defaultMenuOpen}
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
+        onMenuToggle={getToggleValue}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer }}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage, hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, hasUserDrawerFooter }}
       >
