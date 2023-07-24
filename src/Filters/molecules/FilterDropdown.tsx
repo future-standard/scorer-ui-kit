@@ -92,11 +92,12 @@ const EmptyResultText = styled.div`
 
 const Gradient = styled.div`
   position: absolute;
-  right: 0px;
   bottom: 9px;
   height: 25px;
   background-image: linear-gradient(to bottom, rgba(246, 247, 249, 0) 1%, #F6F7F9 120%);
-  width: 100%;
+  width: 98%;
+  left: 50%;
+  transform: translateX(-50%);
   pointer-events: none;
 `;
 
