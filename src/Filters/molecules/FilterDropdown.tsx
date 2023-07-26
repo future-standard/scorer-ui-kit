@@ -35,7 +35,7 @@ const StyledFilterOption = styled(FilterOption)`
 `;
 
 const OptionList = styled.div`
-  max-height: 162px;
+  max-height: 170px;
   min-height: 40px;
   position: relative;
   overflow-y: scroll;
