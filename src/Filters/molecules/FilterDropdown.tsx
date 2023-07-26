@@ -273,15 +273,17 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   // State to track the visibility of the Gradient
   const [isGradientVisible, setIsGradientVisible] = useState(true);
 
+  // Callback function to check if the OptionList is scrolled to the bottom
+  const handleScroll = useCallback(() => {
+    if (optionListRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = optionListRef.current;
+      const buffer = 20; // Set your desired buffer value
+      const atBottom = scrollTop + clientHeight >= scrollHeight - buffer;
+      setIsGradientVisible(!atBottom);
+    }
+  }, []);
+
   useEffect(() => {
-    // Function to check if the OptionList is scrolled to the bottom
-    const handleScroll = () => {
-      if (optionListRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = optionListRef.current;
-        const atBottom = scrollHeight - scrollTop === clientHeight;
-        setIsGradientVisible(!atBottom);
-      }
-    };
 
     // Add event listener to the OptionList for scroll events
     if (optionListRef.current) {
