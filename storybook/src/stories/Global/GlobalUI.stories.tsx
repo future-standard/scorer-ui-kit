@@ -367,7 +367,8 @@ const customDrawer: ICustomDrawer = {
   customComponent: MyCustomDrawer,
   icon: 'Add',
   status: 'danger',
-  // counter: 5,
+  counter: 1001,
+  // maxCounter: 1000,
   width: '280px;'
 }
 

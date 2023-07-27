@@ -12,7 +12,7 @@ const StatusCounter = styled.div<{ color?: IStatusDot }>`
   position: absolute;
   left: 14px;;
   top: -12px;
-  border-radius: 50%;
+  border-radius: 4px;
   height: 14px;
   min-width: 14px;
   padding: 2px;
@@ -45,14 +45,15 @@ interface IStatusIcon {
   icon: string
   status?: IStatusDot
   counter?: number
+  maxCounter: number
 }
 
-const StatusIcon: React.FC<IStatusIcon> = ({icon, status, counter}) => {
+const StatusIcon: React.FC<IStatusIcon> = ({icon, status, counter, maxCounter = 999}) => {
   return (
     <Container>
       {status && (counter === undefined)
         ? <StatusDot color={status} />
-        :  (counter === undefined) ? null : <StatusCounter color={status}>{counter}</StatusCounter>}
+        :  (counter === undefined) ? null : <StatusCounter color={status}>{counter > maxCounter ? `${maxCounter}+` : counter}</StatusCounter>}
       <Icon icon={icon} size={18} color='dimmed' />
     </Container>
   );

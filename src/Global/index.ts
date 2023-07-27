@@ -69,6 +69,7 @@ export interface IMenuTop {
     status?: IStatusDot
     counter?: number | string
     width?: string
+    maxCounter?: number
   }
 
 
