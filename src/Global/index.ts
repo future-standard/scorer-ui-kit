@@ -67,7 +67,7 @@ export interface IMenuTop {
     customComponent: ReactElement
     icon: string
     status?: IStatusDot
-    counter?: number | string
+    counter?: number
     width?: string
     maxCounter?: number
   }
