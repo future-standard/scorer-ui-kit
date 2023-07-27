@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { IInputOptionsType } from '../../Form';
 import FilterOption from '../../Form/atoms/FilterOption';
@@ -53,7 +53,7 @@ const OptionList = styled.div`
 
 const ResultsContainer = styled.div`
   border-top: 1px solid hsl(0, 0%, 91%);
-  padding-bottom: 8px;
+  padding-bottom: 4px;
 `;
 
 const ResultCounter = styled.div`
@@ -92,7 +92,7 @@ const EmptyResultText = styled.div`
 
 const Gradient = styled.div`
   position: absolute;
-  bottom: 9px;
+  bottom: 1px;
   height: 25px;
   background-image: linear-gradient(to bottom, rgba(246, 247, 249, 0) 1%, #F6F7F9 120%);
   width: 98%;
@@ -268,33 +268,6 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   const [visibleList, setVisibleList] = useState(selectedOrderList(list, maxDisplayedItems, selected));
   const [searchText, setSearchText] = useState<string>('');
 
-  const optionListRef = useRef<HTMLDivElement | null>(null);
-  
-  // State to track the visibility of the Gradient
-  const [isGradientVisible, setIsGradientVisible] = useState(true);
-
-  useEffect(() => {
-    const optionList = optionListRef.current; // Store the current value in a variable
-    const handleScroll = () => {
-      if (optionList) {
-        const { scrollTop, scrollHeight, clientHeight } = optionList;
-        const buffer = 20; // Set your desired buffer value
-        const atBottom = scrollTop + clientHeight >= scrollHeight - buffer;
-        setIsGradientVisible(!atBottom);
-      }
-    };
-
-    if (optionList) {
-      optionList.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      if (optionList) {
-        optionList.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
-
   const handleClose = useCallback(() => {
     setSearchText('');
     setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
@@ -368,7 +341,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
             : (
               <ResultsContainer>
                 {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
-                <OptionList ref={optionListRef}>
+                <OptionList>
                   {(visibleList.length > 0)
 
                     ? visibleList.map((item: IFilterItem, index) => {
@@ -387,7 +360,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
                     : <EmptyResultText>{emptyResultText}</EmptyResultText>}
                 </OptionList>
-                {list.length > 5 && isGradientVisible && <Gradient />}
+                {list.length > 5 && <Gradient />}
               </ResultsContainer>)}
         </InnerBox>
       </FilterDropHandler>
