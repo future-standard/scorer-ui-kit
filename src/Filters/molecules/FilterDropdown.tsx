@@ -34,8 +34,8 @@ const StyledFilterOption = styled(FilterOption)`
   letter-spacing: 0.2px;
 `;
 
-const OptionList = styled.div`
-  max-height: 175px;
+const OptionList = styled.div<{moreItem?: boolean}>`
+  max-height: ${({moreItem}) => moreItem ? '168px' : '175px'};
   min-height: 40px;
   position: relative;
   overflow-y: scroll;
@@ -92,10 +92,10 @@ const EmptyResultText = styled.div`
 
 const Gradient = styled.div`
   position: absolute;
-  bottom: 9px;
+  bottom: 1px;
   height: 25px;
-  background-image: linear-gradient(to bottom, rgba(246, 247, 249, 0) 1%, #F6F7F9 120%);
-  width: 98%;
+  background-image: linear-gradient(to bottom, transparent, #e5e5e5);
+  width: 99%;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: none;
@@ -363,7 +363,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
             : (
               <ResultsContainer>
                 {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
-                <OptionList ref={optionListRef}>
+                <OptionList ref={optionListRef} moreItem={list.length > 5}>
                   {(visibleList.length > 0)
 
                     ? visibleList.map((item: IFilterItem, index) => {
