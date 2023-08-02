@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { IInputOptionsType } from '../../Form';
 import FilterOption from '../../Form/atoms/FilterOption';
@@ -93,7 +93,7 @@ const EmptyResultText = styled.div`
 const Gradient = styled.div`
   position: absolute;
   bottom: 1px;
-  height: 25px;
+  height: 15px;
   background-image: linear-gradient(to bottom, transparent, #e5e5e5);
   width: 99%;
   left: 50%;
