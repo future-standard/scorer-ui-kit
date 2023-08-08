@@ -38,12 +38,21 @@ const OptionList = styled.div`
   max-height: 162px;
   min-height: 40px;
   position: relative;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {  /* Hide scrollbar for Chrome, Safari and Opera */
-    display: none;
+  overflow-y: auto;
+  margin-right: 2px;
+  
+  /* Firefox supports the scrollbar-width property */
+  scrollbar-width: thin;
+
+  /* Customize the scrollbar width for Chrome and Safari */
+  ::-webkit-scrollbar {
+    width: 2px;
   }
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #44444499;
+  }
 
   ${StyledFilterOption} {
     height: 35px;
