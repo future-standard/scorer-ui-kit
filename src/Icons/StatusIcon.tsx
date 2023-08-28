@@ -45,7 +45,7 @@ interface IStatusIcon {
   icon: string
   status?: IStatusDot
   counter?: number
-  maxCounter: number
+  maxCounter?: number
 }
 
 const StatusIcon: React.FC<IStatusIcon> = ({icon, status, counter, maxCounter = 999}) => {
