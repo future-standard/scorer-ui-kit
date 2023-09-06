@@ -9,7 +9,8 @@ import useBreakpoints from '../../hooks/useBreakpoints';
 
 interface OwnProps {
   maxWidth?: string,
-  paddingOverride?: string
+  paddingOverride?: string,
+  onMenuToggle?: (isMenuOpen: boolean) =>  void
 }
 
 type INavigation = OwnProps & IMenu & ITopBar;
@@ -26,6 +27,7 @@ const GlobalUI: React.FC<INavigation> = ({
   paddingOverride,
   maxWidth,
   children,
+  onMenuToggle,
   ...props
 }) => {
 
@@ -50,7 +52,7 @@ const GlobalUI: React.FC<INavigation> = ({
           <TopBar
             {...{...props}}
           />
-          <ContentArea {...{maxWidth, paddingOverride}}>
+          <ContentArea {...{maxWidth, paddingOverride, onMenuToggle}}>
             {children}
           </ContentArea>
         </MainContainer>
@@ -65,6 +67,7 @@ const GlobalUI: React.FC<INavigation> = ({
             logoMark,
             supportUrl,
             defaultMenuOpen,
+            onMenuToggle,
             ...props
             }
           }
