@@ -509,16 +509,21 @@ export const _GlobalUI = () => {
     languageToggle();
   }
 
+  const getToggleValue = (isMenuOpen: boolean) => {
+    console.log(isMenuOpen);
+  };
+
   return (
     <Container>
       <GlobalUI
         content={menuConfig}
         home={menuHomeLink}
         defaultMenuOpen={defaultMenuOpen}
+        onMenuToggle={getToggleValue}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer, canAlwaysPin }}
         {...{
           loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasCurrentUser, currentUserText, accountOptionText,
-          hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle,
+          hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle
         }}
       >
         <ComponentLinks />
