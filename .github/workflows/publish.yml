@@ -18,4 +18,5 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           package: ./packages/ui-lib/package.json
+          ignore-scripts: false
           # dry-run: true
