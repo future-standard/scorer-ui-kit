@@ -18,5 +18,5 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           ignore-scripts: false
-          tag: vl.x-latest
+          tag: v1.x-latest
           # dry-run: true
