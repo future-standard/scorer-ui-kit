@@ -45,14 +45,16 @@ const GlobalUI: React.FC<INavigation> = ({
             logoText,
             supportUrl,
             defaultMenuOpen,
-            canAlwaysPin}
+            canAlwaysPin,
+            onMenuToggle,
+          }
           }
         />
         <MainContainer>
           <TopBar
             {...{...props}}
           />
-          <ContentArea {...{maxWidth, paddingOverride, onMenuToggle}}>
+          <ContentArea {...{maxWidth, paddingOverride}}>
             {children}
           </ContentArea>
         </MainContainer>
@@ -67,7 +69,6 @@ const GlobalUI: React.FC<INavigation> = ({
             logoMark,
             supportUrl,
             defaultMenuOpen,
-            onMenuToggle,
             ...props
             }
           }
