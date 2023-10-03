@@ -81,8 +81,15 @@ const TitleBox = styled.div`
   align-items: center;
 `;
 
-const IconBox = styled.div`
+const IconBox = styled.div<{hasHoverCopyIcon?: boolean}>`
   padding: 1px 5px 0 0;
+  ${({ hasHoverCopyIcon }) => hasHoverCopyIcon && css`
+    opacity: 0;
+    ${Container}:hover & {
+      opacity: 1;
+      cursor: pointer;
+    }
+  `}
 `;
 
 const CopyTextBox = styled.pre`
@@ -121,7 +128,7 @@ interface IShowCopyIcon {
 
 
 const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuccessMessage, includeCopyTitle}) => {
-  const { icon, title, subTitle, notes, hasCopyIcon } = item;
+  const { icon, title, subTitle, notes, hasCopyIcon, hasHoverCopyIcon } = item;
   const { copyToClipboard } = useCopyToClipboard();
   const [ showCopyText, setShowCopyText ] = useState<boolean>(false);
   const [onHoverColorValue, setOnHoverColorValue] = useState<'mono' | 'dimmed' | 'subtle' | 'inverse' | 'primary' | 'danger'>('dimmed');
@@ -164,7 +171,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
                     {copySuccessMessage !== '' ? copySuccessMessage : 'Copied!'}
                   </CopyTextBox>}
                 {(hasCopyIcon) ?
-                  <IconBox onClick={() => onClickCopyText(title , subTitle, notes)} onMouseEnter={onHoverMetaInfo} onMouseLeave={onLeaveMeatInfo}>
+                  <IconBox onClick={() => onClickCopyText(title , subTitle, notes)} onMouseEnter={onHoverMetaInfo} onMouseLeave={onLeaveMeatInfo} hasHoverCopyIcon={hasHoverCopyIcon}>
                     <Icon icon='Copy' size={12} color={onHoverColorValue} />
                   </IconBox>:
                   null}

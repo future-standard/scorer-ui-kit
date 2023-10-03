@@ -103,7 +103,7 @@ export const _TopBar = () => {
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const currentUserText = text("Current User Text", "Current User");
   const logoutText = text("Logout Text", "Logout");
-  const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
+  const hasUserDrawerMeta = boolean("Has User Drawer Meta", true);
   const copySuccessMessage= text("Tooltip Text", "Copied");
   const includeCopyTitle = boolean("Include Title Copy", true);
   const hasUserDrawerFooter = boolean("Has User Drawer Footer", false);
@@ -133,14 +133,16 @@ export const _TopBar = () => {
       title: 'Device ID:',
       subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
       notes: '',
-      hasCopyIcon:true
+      hasCopyIcon:true,
+      hasHoverCopyIcon: false
     },
     {
       icon: 'Information',
       title: 'GPU machine with 4 GPU',
       subTitle: 'Building B',
       notes: `This is a GPU machine having 30 camera support`,
-      hasCopyIcon:true
+      hasCopyIcon:true,
+      hasHoverCopyIcon: true
     },
     {
       icon: 'Success',
