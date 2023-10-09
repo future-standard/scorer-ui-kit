@@ -224,6 +224,7 @@ interface ISliderOwnProps {
   value?: number
   thumbColor?: IFeedbackColor
   onlyMarkSelect?: boolean
+  showValueTitle?: boolean
   inputCallback?: (value: number) => void
   onChangeCallback?: (value: number) => void
 }
