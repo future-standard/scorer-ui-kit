@@ -4,7 +4,7 @@ function SvgAvatarPlaceholder(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg width={48} height={48} {...props} viewBox='0 0 48 48'>
       <g fill='none' fillRule='evenodd' strokeLinecap='round' strokeLinejoin='round'>
-        <g stroke='#C1C1C1' strokeWidth='1.5'>
+        <g stroke='var(--grey-8)' strokeWidth='1.5'>
           <g>
             <g>
               <g transform='translate(-789 -294) translate(772 277) translate(10.25 10.25) translate(7.688 7.688)'>

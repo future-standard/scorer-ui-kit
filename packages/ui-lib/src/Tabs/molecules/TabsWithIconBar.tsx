@@ -10,8 +10,8 @@ const Container = styled.div``;
 const TabListWrapper = styled.div<{ paddingLeft?: string }>`
   padding-top: 10px;
   padding-left: ${({ paddingLeft }) => paddingLeft ? paddingLeft : '87px'};
-  box-shadow: 0 -5px 5px 0 hsla(0, 0%, 0%, 0.01);
-  border-bottom: 1px solid hsl(0, 0%, 89%);
+  box-shadow: 0 -5px 5px 0 var(--white-a1);
+  border-bottom: 1px solid var(--grey-6);
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* Internet Explorer 10+ */

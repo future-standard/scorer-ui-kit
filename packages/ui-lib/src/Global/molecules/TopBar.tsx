@@ -21,7 +21,7 @@ const Container = styled.div`
 
   ${({ theme, theme: { colors } }) => colors && css`
     border-bottom: ${theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
-    // box-shadow: 5px 7px 10px 0 hsla(205, 16%, 77%, 0.1);
+    // box-shadow: 5px 7px 10px 0 var(--grey-8);
     background-color:${theme.styles.global.mainMenu.background.backgroundColor};
   `}
 `;

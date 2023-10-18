@@ -6,7 +6,7 @@ function SvgSuccess(props: React.SVGProps<SVGSVGElement>) {
       <g
         fill='none'
         fillRule='evenodd'
-        stroke='#000'
+        stroke='var(--white-a1)'
         strokeLinecap='round'
         strokeLinejoin='round'
         strokeWidth={1.5}

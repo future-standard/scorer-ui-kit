@@ -50,7 +50,7 @@ const PhotoContainerStyle = css`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  background-color: hsl(0, 0%, 90%);
+  background-color: var(--grey-5);
 `;
 const PreviewImage = styled.img`
   ${PhotoContainerStyle}
@@ -58,7 +58,7 @@ const PreviewImage = styled.img`
 `;
 
 const PlaceholderText = styled.div`
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-9);
   font-size: 14px;
 `;
 

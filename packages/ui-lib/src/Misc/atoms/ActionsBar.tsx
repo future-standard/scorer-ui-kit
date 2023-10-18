@@ -6,7 +6,7 @@ import ButtonWithIcon, { IButtonWithIcon } from '../../Form/atoms/ButtonWithIcon
 const Container = styled.div``;
 const Title = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-9);
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 17px;
@@ -31,7 +31,7 @@ const SelectedResults = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
   margin-top: 29px;
   min-height: 19px;
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-9);
   font-size: 12px;
 `;
 

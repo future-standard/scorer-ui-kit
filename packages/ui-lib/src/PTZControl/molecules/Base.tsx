@@ -9,12 +9,12 @@ const PTZControl: React.FC<Props> = ({children}) => {
     <svg width='237px' height='245px' viewBox='0 0 237 245' version='1.1'>
       <defs>
         <linearGradient x1='50%' y1='0%' x2='50%' y2='100%' id='linearGradient-1'>
-          <stop stopColor='#2E3F4B' offset='0%' />
-          <stop stopColor='#273743' offset='100%' />
+          <stop stopColor='var(--info-12)' offset='0%' />
+          <stop stopColor='var(--info-12)' offset='100%' />
         </linearGradient>
         <linearGradient x1='50%' y1='0%' x2='50%' y2='100%' id='linearGradient-2'>
-          <stop stopColor='#2F4555' offset='0%' />
-          <stop stopColor='#1F2F3A' offset='100%' />
+          <stop stopColor='var(--grey-a2)' offset='0%' />
+          <stop stopColor='var(--info-12)' offset='100%' />
         </linearGradient>
         <circle id='path-3' cx='138.5' cy='137.5' r='106.5' />
         <filter x='-9.9%' y='-12.2%' width='119.7%' height='124.4%' filterUnits='objectBoundingBox' id='filter-4'>
@@ -34,8 +34,8 @@ const PTZControl: React.FC<Props> = ({children}) => {
           </feMerge>
         </filter>
         <linearGradient x1='50%' y1='100%' x2='50%' y2='2.48363598%' id='linearGradient-5'>
-          <stop stopColor='#262E37' stopOpacity='0.65' offset='0%' />
-          <stop stopColor='#262E37' stopOpacity='0.66' offset='100%' />
+          <stop stopColor='var(--success-12)' stopOpacity='0.65' offset='0%' />
+          <stop stopColor='var(--success-12)' stopOpacity='0.66' offset='100%' />
         </linearGradient>
         <path d='M96.5,0 C149.795478,0 193,43.2045216 193,96.5 C193,149.795478 149.795478,193 96.5,193 C43.2045216,193 0,149.795478 0,96.5 C0,43.2045216 43.2045216,0 96.5,0 Z' id='path-6' />
         <filter x='-0.8%' y='-0.8%' width='101.6%' height='101.6%' filterUnits='objectBoundingBox' id='filter-8'>
@@ -53,48 +53,48 @@ const PTZControl: React.FC<Props> = ({children}) => {
           </feMerge>
         </filter>
         <linearGradient x1='49.8274193%' y1='13.7528099%' x2='50.1815273%' y2='82.6324827%' id='linearGradient-9'>
-          <stop stopColor='#324659' offset='0%' />
-          <stop stopColor='#263647' offset='100%' />
+          <stop stopColor='var(--grey-a2)' offset='0%' />
+          <stop stopColor='var(--grey-a2)' offset='100%' />
         </linearGradient>
         <linearGradient x1='50.170103%' y1='15.6407997%' x2='49.8181984%' y2='84.5265853%' id='linearGradient-10'>
-          <stop stopColor='#324659' offset='0%' />
-          <stop stopColor='#263647' offset='100%' />
+          <stop stopColor='var(--grey-a2)' offset='0%' />
+          <stop stopColor='var(--grey-a2)' offset='100%' />
         </linearGradient>
         <linearGradient x1='99.9976822%' y1='100%' x2='30.4274195%' y2='28.550434%' id='linearGradient-11'>
-          <stop stopColor='#46596D' stopOpacity='0.65' offset='0%' />
-          <stop stopColor='#577393' stopOpacity='0.66' offset='100%' />
+          <stop stopColor='var(--grey-11)' stopOpacity='0.65' offset='0%' />
+          <stop stopColor='var(--grey-11)' stopOpacity='0.66' offset='100%' />
         </linearGradient>
         <linearGradient x1='87.5668564%' y1='87.9295401%' x2='33.2810997%' y2='28.936849%' id='linearGradient-12'>
-          <stop stopColor='#508ED3' stopOpacity='0.65' offset='0%' />
-          <stop stopColor='#79AEEB' stopOpacity='0.66' offset='100%' />
+          <stop stopColor='var(--primary-8)' stopOpacity='0.65' offset='0%' />
+          <stop stopColor='var(--primary-7)' stopOpacity='0.66' offset='100%' />
         </linearGradient>
         <linearGradient x1='87.568598%' y1='87.9277819%' x2='33.2803247%' y2='28.9378254%' id='linearGradient-13'>
-          <stop stopColor='#508ED3' stopOpacity='0.65' offset='0%' />
-          <stop stopColor='#79AEEB' stopOpacity='0.66' offset='100%' />
+          <stop stopColor='var(--primary-8)' stopOpacity='0.65' offset='0%' />
+          <stop stopColor='var(--primary-7)' stopOpacity='0.66' offset='100%' />
         </linearGradient>
         <linearGradient x1='22.297939%' y1='79.0413218%' x2='39.761035%' y2='60.7027769%' id='linearGradient-14'>
-          <stop stopColor='#A2B9FF' offset='0%' />
-          <stop stopColor='#3393FF' stopOpacity='0' offset='100%' />
+          <stop stopColor='var(--primary-6)' offset='0%' />
+          <stop stopColor='var(--primary-8)' stopOpacity='0' offset='100%' />
         </linearGradient>
         <linearGradient x1='80.348219%' y1='76.4229599%' x2='62.8569051%' y2='60.0361013%' id='linearGradient-15'>
-          <stop stopColor='#A2B9FF' offset='0%' />
-          <stop stopColor='#3393FF' stopOpacity='0' offset='100%' />
+          <stop stopColor='var(--primary-6)' offset='0%' />
+          <stop stopColor='var(--primary-8)' stopOpacity='0' offset='100%' />
         </linearGradient>
         <linearGradient x1='77.520937%' y1='22.5831044%' x2='57.8137717%' y2='41.946341%' id='linearGradient-16'>
-          <stop stopColor='#A2B9FF' offset='0%' />
-          <stop stopColor='#3393FF' stopOpacity='0' offset='100%' />
+          <stop stopColor='var(--primary-6)' offset='0%' />
+          <stop stopColor='var(--primary-8)' stopOpacity='0' offset='100%' />
         </linearGradient>
         <linearGradient x1='50%' y1='43.428843%' x2='25.1751595%' y2='28.0552504%' id='linearGradient-17'>
-          <stop stopColor='#508ED3' stopOpacity='0.65' offset='0%' />
-          <stop stopColor='#79AEEB' stopOpacity='0.66' offset='100%' />
+          <stop stopColor='var(--primary-8)' stopOpacity='0.65' offset='0%' />
+          <stop stopColor='var(--primary-7)' stopOpacity='0.66' offset='100%' />
         </linearGradient>
         <linearGradient x1='30.6678499%' y1='23.1406239%' x2='41.9194217%' y2='34.4210798%' id='linearGradient-18'>
-          <stop stopColor='#A2B9FF' offset='0%' />
-          <stop stopColor='#3393FF' stopOpacity='0' offset='100%' />
+          <stop stopColor='var(--primary-6)' offset='0%' />
+          <stop stopColor='var(--primary-8)' stopOpacity='0' offset='100%' />
         </linearGradient>
         <linearGradient x1='50%' y1='0.918284083%' x2='50%' y2='98.6410535%' id='linearGradient-19'>
-          <stop stopColor='#F0F7FF' offset='0%' />
-          <stop stopColor='#B2C9D9' offset='100%' />
+          <stop stopColor='var(--primary-2)' offset='0%' />
+          <stop stopColor='var(--grey-8)' offset='100%' />
         </linearGradient>
         <path d='M25.6553811,77.370593 L14.0428746,58.1532717 C13.6102476,57.4373681 12.8355055,57 12,57 C11.1644945,57 10.3897524,57.4373681 9.95712537,58.1532717 L-1.65538114,77.370593 C-2.10132346,78.1091204 -2.11539958,79.0310048 -1.69221345,79.7828447 C-1.26902733,80.5346846 -0.474230758,81 0.387493489,81 L23.6125065,81 C24.4742308,81 25.2690273,80.5346846 25.6922135,79.7828447 C26.1153996,79.0310048 26.1013235,78.1091204 25.6553811,77.370593 Z' id='path-20' />
         <filter x='-3.6%' y='-4.2%' width='107.1%' height='108.3%' filterUnits='objectBoundingBox' id='filter-21'>

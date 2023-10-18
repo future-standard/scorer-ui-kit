@@ -77,7 +77,7 @@ const GrabHandleGroup = styled.g<{ showIndex: boolean, originalRadius: number, s
 `;
 
 const DMCircle = styled.circle`
-  fill: hsla(203, 100%, 35%, 0.49);
+  fill: var(--primary-a10);
 `;
 
 interface ILineUnitProps {

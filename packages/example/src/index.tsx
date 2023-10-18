@@ -12,6 +12,7 @@ import * as serviceWorker from './serviceWorker';
 import './i18n';
 import Fonts from './fonts';
 import Style from './style';
+import './colors.css';
 
 //@ts-ignore
 lightTheme.custom.lines['weird'] = {

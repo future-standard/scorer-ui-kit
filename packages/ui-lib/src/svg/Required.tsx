@@ -5,7 +5,7 @@ function SvgRequired(props: React.SVGProps<SVGSVGElement>) {
     <svg width={24} height={24} {...props}>
       <path
         fill='none'
-        stroke='#000'
+        stroke='var(--white-a1)'
         strokeLinecap='round'
         strokeLinejoin='round'
         strokeWidth={1.5}

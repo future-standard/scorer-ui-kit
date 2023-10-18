@@ -7,7 +7,7 @@ import { resetButtonStyles } from '../../common/index';
 const IconButton = styled.button<{selected?: boolean}>`
   ${resetButtonStyles};
   ${({selected=false}) => selected && css`
-    border-bottom: 5px solid hsl(207, 80%, 64%);
+    border-bottom: 5px solid var(--primary-8);
   `}
   &:focus {
     outline: none;

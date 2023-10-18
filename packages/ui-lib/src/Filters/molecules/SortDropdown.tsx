@@ -22,8 +22,8 @@ const TopLine = styled.div`
 const InnerBox = styled.div`
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-  box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
-  border: solid 1px hsl(207, 16%, 86%);
+  box-shadow: 0 4px 9px 0 var(--info-7);
+  border: solid 1px var(--grey-7);
   border-top: unset;
   ${({theme}) => theme.styles.filters.dropdownContainer.background};
 `;
@@ -54,7 +54,7 @@ const OrderButton = styled.button<{ isSelected: boolean }>`
   display: flex;
   align-items: center;
   font-family: ${({ theme }) => theme.fontFamily.data};
-  color: hsl(0, 0%, 56%);
+  color: var(--grey-9);
   font-size: 14px;
   height: 35px;
   ${({ theme, isSelected }) => theme && css`

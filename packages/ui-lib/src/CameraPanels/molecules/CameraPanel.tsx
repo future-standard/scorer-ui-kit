@@ -7,7 +7,7 @@ export const CameraPanelWrapper = styled.div<{hasOnClick: boolean}>`
   width: 300px;
   height: 230px;
   border-radius: 3px;
-  box-shadow: 0 2px 10px 0 hsla(211, 42%, 86%, 0.41);
+  box-shadow: 0 2px 10px 0 var(--grey-7);
   background-color: ${({theme}) => theme.styles.global.background.backgroundImage};
   }
 

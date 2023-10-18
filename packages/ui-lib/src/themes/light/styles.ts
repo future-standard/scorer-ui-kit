@@ -8,150 +8,150 @@ export const styles = {
         "input": {
             "default": {
                 "normal": {
-                    "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
+                    "backgroundColor": "var(--white-a12)",
                     "borderColor": colors.input.border.default,
                     "border": colors.input.border.default + " 1px solid"
                 },
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px hsla(207, 65.8%, 31%, 0.078)",
-                    "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                    "borderColor": "hsla(205, 58.9%, 71.4%, 1.000)",
-                    "border": "hsla(205, 58.9%, 71.4%, 1.000) 1px solid"
+                    "boxShadow": "0px 3px 7px 0px var(--grey-a1)",
+                    "backgroundColor": "var(--white-a12)",
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 1px solid"
                 }
             },
             "disabled": {
                 "normal": {
-                    "backgroundColor": "hsla(206, 36.8%, 96.3%, 1.000)",
-                    "borderColor": "hsla(120, 1.3%, 85.3%, 1.000)",
-                    "border": "hsla(120, 1.3%, 85.3%, 1.000) 1px solid"
+                    "backgroundColor": "var(--grey-3)",
+                    "borderColor": "var(--grey-7)",
+                    "border": "var(--grey-7) 1px solid"
                 }
             },
             "subdivision": {
-                "backgroundColor": "hsla(120, 1.3%, 85.3%, 1.000)"
+                "backgroundColor": "var(--grey-7)"
             },
             "required": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px hsla(207, 67.8%, 35.3%, 0.071)",
-                    "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                    "borderColor": "hsla(205, 58.9%, 71.4%, 1.000)",
-                    "border": "hsla(205, 58.9%, 71.4%, 1.000) 2px solid"
+                    "boxShadow": "0px 3px 7px 0px var(--primary-11)",
+                    "backgroundColor": "var(--white-a12)",
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 2px solid"
                 },
                 "normal": {
-                    "borderColor": "hsla(205, 58.9%, 71.4%, 1.000)",
-                    "border": "hsla(205, 58.9%, 71.4%, 1.000) 1px solid"
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 1px solid"
                 }
             },
             "valid": {
                 "focused": {
-                    "boxShadow": "0px 3px 5px 0px hsla(120, 76.6%, 15.1%, 0.071)",
-                    "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                    "borderColor": "hsla(120, 35.2%, 71.6%, 1.000)",
-                    "border": "hsla(120, 35.2%, 71.6%, 1.000) 2px solid"
+                    "boxShadow": "0px 3px 5px 0px var(--success-12)",
+                    "backgroundColor": "var(--white-a12)",
+                    "borderColor": "var(--success-7)",
+                    "border": "var(--success-7) 2px solid"
                 },
                 "normal": {
-                    "borderColor": "hsla(120, 35.2%, 71.6%, 1.000)",
-                    "border": "hsla(120, 35.2%, 71.6%, 1.000) 1px solid"
+                    "borderColor": "var(--success-7)",
+                    "border": "var(--success-7) 1px solid"
                 }
             },
             "invalid": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px hsla(0, 100%, 50%, 0.102)",
-                    "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                    "borderColor": "hsla(0, 78.8%, 70.4%, 1.000)",
-                    "border": "hsla(0, 78.8%, 70.4%, 1.000) 2px solid"
+                    "boxShadow": "0px 3px 7px 0px var(--error-a1)",
+                    "backgroundColor": "var(--white-a12)",
+                    "borderColor": "var(--error-8)",
+                    "border": "var(--error-8) 2px solid"
                 },
                 "normal": {
-                    "borderColor": "hsla(0, 78.8%, 70.4%, 1.000)",
-                    "border": "hsla(0, 78.8%, 70.4%, 1.000) 1px solid"
+                    "borderColor": "var(--error-8)",
+                    "border": "var(--error-8) 1px solid"
                 }
             },
             "processing": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px hsla(195, 67.8%, 35.3%, 0.071)",
-                    "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                    "borderColor": "hsla(195, 79.5%, 71.4%, 1.000)",
-                    "border": "hsla(195, 79.5%, 71.4%, 1.000) 2px solid"
+                    "boxShadow": "0px 3px 7px 0px var(--primary-11)",
+                    "backgroundColor": "var(--white-a12)",
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 2px solid"
                 },
                 "normal": {
-                    "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                    "borderColor": "hsla(195, 79.5%, 71.4%, 1.000)",
-                    "border": "hsla(195, 79.5%, 71.4%, 1.000) 1px solid"
+                    "backgroundColor": "var(--white-a12)",
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 1px solid"
                 }
             },
             "seperatedValues": {
                 "background": {
-                    "backgroundColor": "hsla(205, 82.4%, 64.3%, 1.000)",
-                    "backgroundImage": "linear-gradient(315.00deg, hsla(205, 82.4%, 64.3%, 1.000) 0%, hsla(195, 83.5%, 54.7%, 1.000) 100%)"
+                    "backgroundColor": "var(--primary-8)",
+                    "backgroundImage": "linear-gradient(315.00deg, var(--primary-8) 0%, var(--primary-8) 100%)"
                 },
                 "hoverHighlight": {
-                    "backgroundColor": "hsla(195, 84.3%, 67.5%, 1.000)"
+                    "backgroundColor": "var(--primary-7)"
                 }
             }
         },
         "button": {
             "primary": {
                 "default": {
-                    "backgroundColor": "hsla(200, 77.5%, 68.6%, 1.000)",
-                    "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)"
+                    "backgroundColor": "var(--primary-7)",
+                    "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-8) 100%)"
                 },
                 "hover": {
-                    "backgroundColor": "hsla(207, 88.2%, 60%, 1.000)"
+                    "backgroundColor": "var(--primary-8)"
                 },
                 "active": {
-                    "backgroundColor": "hsla(195, 79.5%, 71.4%, 1.000)"
+                    "backgroundColor": "var(--primary-7)"
                 },
                 "divider": {
-                    "backgroundColor": "hsla(202, 70.4%, 62.9%, 1.000)"
+                    "backgroundColor": "var(--primary-8)"
                 },
                 "disabled": {
-                    "backgroundColor": "hsla(200, 77.5%, 68.6%, 1.000)",
-                    "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)"
+                    "backgroundColor": "var(--primary-7)",
+                    "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-8) 100%)"
                 },
                 "actionArea": {
-                    "backgroundColor": "hsla(200, 77.5%, 68.6%, 1.000)",
-                    "backgroundImage": "linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)"
+                    "backgroundColor": "var(--primary-7)",
+                    "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-8) 100%)"
                 }
             },
             "secondary": {
                 "default": {
-                    "backgroundColor": "hsla(206, 42.1%, 92.5%, 1.000)"
+                    "backgroundColor": "var(--grey-4)"
                 },
                 "hover": {
-                    "backgroundColor": "hsla(207, 42.9%, 91.8%, 1.000)"
+                    "backgroundColor": "var(--grey-5)"
                 },
                 "active": {
-                    "backgroundColor": "hsla(207, 29.7%, 82.2%, 1.000)"
+                    "backgroundColor": "var(--grey-7)"
                 },
                 "disabled": {
-                    "backgroundColor": "hsla(0, 0%, 97.3%, 1.000)"
+                    "backgroundColor": "var(--grey-2)"
                 },
                 "divider": {
-                    "backgroundColor": "hsla(204, 18.2%, 78.4%, 0.302)"
+                    "backgroundColor": "var(--grey-8)"
                 },
                 "actionArea": {
-                    "backgroundColor": "hsla(0, 0%, 94.9%, 0.302)"
+                    "backgroundColor": "var(--grey-3)"
                 }
             },
             "danger": {
                 "default": {
-                    "backgroundColor": "hsla(0, 54%, 60.8%, 1.000)",
-                    "backgroundImage": "linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)"
+                    "backgroundColor": "var(--error-8)",
+                    "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0%, var(--error-8) 100%)"
                 },
                 "hover": {
-                    "backgroundColor": "hsla(0, 88.4%, 66.3%, 1.000)"
+                    "backgroundColor": "var(--error-9)"
                 },
                 "active": {
-                    "backgroundColor": "hsla(0, 78.8%, 70.4%, 1.000)"
+                    "backgroundColor": "var(--error-8)"
                 },
                 "disabled": {
-                    "backgroundColor": "hsla(0, 78.7%, 85.3%, 1.000)"
+                    "backgroundColor": "var(--error-6)"
                 },
                 "divider": {
-                    "backgroundColor": "hsla(0, 62.1%, 61.8%, 1.000)"
+                    "backgroundColor": "var(--error-9)"
                 },
                 "actionArea": {
-                    "backgroundColor": "hsla(0, 54%, 60.8%, 1.000)",
-                    "backgroundImage": "linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)"
+                    "backgroundColor": "var(--error-8)",
+                    "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0%, var(--error-8) 100%)"
                 }
             }
         },
@@ -159,134 +159,134 @@ export const styles = {
             "off": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "hsla(210, 30%, 96.1%, 1.000)",
-                        "backgroundImage": "linear-gradient(180.00deg, hsla(210, 30%, 96.1%, 1.000) 0%, hsla(203, 41.9%, 93.9%, 1.000) 100%)",
-                        "borderColor": "hsla(208, 24.6%, 77.6%, 0.651)",
-                        "border": "hsla(208, 24.6%, 77.6%, 0.651) 1px solid"
+                        "backgroundColor": "var(--grey-3)",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--grey-3) 0%, var(--grey-4) 100%)",
+                        "borderColor": "var(--grey-8)",
+                        "border": "var(--grey-8) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(205, 82.4%, 64.3%, 1.000)",
-                        "backgroundImage": "linear-gradient(315.00deg, hsla(205, 82.4%, 64.3%, 1.000) 0%, hsla(195, 83.5%, 54.7%, 1.000) 100%)"
+                        "backgroundColor": "var(--primary-8)",
+                        "backgroundImage": "linear-gradient(315.00deg, var(--primary-8) 0%, var(--primary-8) 100%)"
                     }
                 },
                 "disabled": {
                     "outer": {
-                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                        "backgroundImage": "linear-gradient(180.00deg, hsla(0, 0%, 100%, 1.000) 0%, hsla(0, 0%, 98.8%, 1.000) 100%)",
-                        "borderColor": "hsla(208, 22.7%, 85.3%, 0.651)",
-                        "border": "hsla(208, 22.7%, 85.3%, 0.651) 1px solid"
+                        "backgroundColor": "var(--white-a12)",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--white-a12) 0%, var(--grey-1) 100%)",
+                        "borderColor": "var(--grey-7)",
+                        "border": "var(--grey-7) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(120, 1.3%, 85.3%, 1.000)"
+                        "backgroundColor": "var(--grey-7)"
                     }
                 },
                 "loading": {
                     "outer": {
-                        "backgroundColor": "hsla(210, 30%, 96.1%, 1.000)",
-                        "backgroundImage": "linear-gradient(180.00deg, hsla(210, 30%, 96.1%, 1.000) 0%, hsla(203, 41.9%, 93.9%, 1.000) 100%)",
-                        "borderColor": "hsla(208, 24.6%, 77.6%, 0.651)",
-                        "border": "hsla(208, 24.6%, 77.6%, 0.651) 1px solid"
+                        "backgroundColor": "var(--grey-3)",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--grey-3) 0%, var(--grey-4) 100%)",
+                        "borderColor": "var(--grey-8)",
+                        "border": "var(--grey-8) 1px solid"
                     }
                 }
             },
             "on": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "hsla(204, 78.4%, 72.7%, 1.000)",
-                        "backgroundImage": "linear-gradient(317.51deg, hsla(204, 78.4%, 72.7%, 1.000) 0%, hsla(195, 83.2%, 67.3%, 1.000) 100%)",
-                        "borderColor": "hsla(205, 66.5%, 61.4%, 1.000)",
-                        "border": "hsla(205, 66.5%, 61.4%, 1.000) 1px solid"
+                        "backgroundColor": "var(--primary-7)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--primary-7) 0%, var(--primary-7) 100%)",
+                        "borderColor": "var(--primary-8)",
+                        "border": "var(--primary-8) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
+                        "backgroundColor": "var(--white-a12)"
                     }
                 },
                 "disabled": {
                     "outer": {
-                        "backgroundColor": "hsla(205, 61.9%, 87.6%, 1.000)",
-                        "backgroundImage": "linear-gradient(180.00deg, hsla(205, 61.9%, 87.6%, 1.000) 0%, hsla(204, 45.5%, 84.9%, 1.000) 100%)",
-                        "borderColor": "hsla(205, 89.5%, 85.1%, 1.000)",
-                        "border": "hsla(205, 89.5%, 85.1%, 1.000) 1px solid"
+                        "backgroundColor": "var(--primary-5)",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--primary-5) 0%, var(--primary-5) 100%)",
+                        "borderColor": "var(--primary-5)",
+                        "border": "var(--primary-5) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
+                        "backgroundColor": "var(--white-a12)"
                     }
                 },
                 "loading": {
                     "outer": {
-                        "backgroundColor": "hsla(204, 68.3%, 72.7%, 0.647)",
-                        "backgroundImage": "linear-gradient(315.00deg, hsla(204, 68.3%, 72.7%, 0.647) 0%, hsla(195, 83.2%, 67.3%, 0.655) 100%)",
-                        "borderColor": "hsla(205, 66.5%, 61.4%, 0.651)",
-                        "border": "hsla(205, 66.5%, 61.4%, 0.651) 1px solid"
+                        "backgroundColor": "var(--primary-7)",
+                        "backgroundImage": "linear-gradient(315.00deg, var(--primary-7) 0%, var(--primary-7) 100%)",
+                        "borderColor": "var(--primary-8)",
+                        "border": "var(--primary-8) 1px solid"
                     }
                 }
             },
             "failure": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "hsla(0, 68.5%, 67.6%, 1.000)",
-                        "backgroundImage": "linear-gradient(317.51deg, hsla(0, 68.5%, 67.6%, 1.000) 0%, hsla(0, 69.1%, 65.7%, 1.000) 100%)",
-                        "borderColor": "hsla(0, 66.5%, 61.4%, 1.000)",
-                        "border": "hsla(0, 66.5%, 61.4%, 1.000) 1px solid"
+                        "backgroundColor": "var(--error-8)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0%, var(--error-8) 100%)",
+                        "borderColor": "var(--error-9)",
+                        "border": "var(--error-9) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
+                        "backgroundColor": "var(--white-a12)"
                     }
                 },
                 "loading": {
                     "outer": {
-                        "backgroundColor": "hsla(0, 60.6%, 73.1%, 1.000)",
-                        "backgroundImage": "linear-gradient(317.51deg, hsla(0, 60.6%, 73.1%, 1.000) 0.4%, hsla(0, 57.9%, 73.9%, 1.000) 100%)",
-                        "borderColor": "hsla(0, 54.2%, 67.5%, 1.000)",
-                        "border": "hsla(0, 54.2%, 67.5%, 1.000) 1px solid"
+                        "backgroundColor": "var(--error-8)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0.4%, var(--error-8) 100%)",
+                        "borderColor": "var(--error-8)",
+                        "border": "var(--error-8) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
+                        "backgroundColor": "var(--white-a12)"
                     }
                 }
             },
             "danger": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "hsla(0, 68%, 66.9%, 1.000)",
-                        "backgroundImage": "linear-gradient(317.51deg, hsla(0, 68%, 66.9%, 1.000) 0%, hsla(20, 81.2%, 64.5%, 1.000) 100%)",
-                        "borderColor": "hsla(0, 51.2%, 60.6%, 1.000)",
-                        "border": "hsla(0, 51.2%, 60.6%, 1.000) 1px solid"
+                        "backgroundColor": "var(--error-8)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0%, var(--warning-8) 100%)",
+                        "borderColor": "var(--error-8)",
+                        "border": "var(--error-8) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
+                        "backgroundColor": "var(--white-a12)"
                     }
                 },
                 "loading": {
                     "outer": {
-                        "backgroundColor": "hsla(0, 79.5%, 77.1%, 1.000)",
-                        "backgroundImage": "linear-gradient(317.51deg, hsla(0, 79.5%, 77.1%, 1.000) 0%, hsla(20, 96%, 80.4%, 1.000) 100%)",
-                        "borderColor": "hsla(0, 62%, 73.1%, 1.000)",
-                        "border": "hsla(0, 62%, 73.1%, 1.000) 1px solid"
+                        "backgroundColor": "var(--error-8)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0%, var(--error-7) 100%)",
+                        "borderColor": "var(--error-8)",
+                        "border": "var(--error-8) 1px solid"
                     }
                 },
                 "disabled": {
                     "outer": {
-                        "backgroundColor": "hsla(0, 57%, 81.8%, 1.000)",
-                        "backgroundImage": "linear-gradient(317.51deg, hsla(0, 57%, 81.8%, 1.000) 0%, hsla(19, 100%, 84.9%, 1.000) 100%)",
-                        "borderColor": "hsla(0, 78.7%, 85.3%, 1.000)",
-                        "border": "hsla(0, 78.7%, 85.3%, 1.000) 1px solid"
+                        "backgroundColor": "var(--error-7)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--error-7) 0%, var(--warning-6) 100%)",
+                        "borderColor": "var(--error-6)",
+                        "border": "var(--error-6) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
+                        "backgroundColor": "var(--white-a12)"
                     }
                 }
             },
             "locked": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                        "backgroundImage": "linear-gradient(180.00deg, hsla(0, 0%, 100%, 1.000) 0%, hsla(0, 0%, 98.8%, 1.000) 100%)",
-                        "borderColor": "hsla(208, 22.7%, 85.3%, 0.651)",
-                        "border": "hsla(208, 22.7%, 85.3%, 0.651) 1px solid"
+                        "backgroundColor": "var(--white-a12)",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--white-a12) 0%, var(--grey-1) 100%)",
+                        "borderColor": "var(--grey-7)",
+                        "border": "var(--grey-7) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "hsla(0, 0%, 89.4%, 1.000)"
+                        "backgroundColor": "var(--grey-6)"
                     }
                 }
             }
@@ -294,41 +294,41 @@ export const styles = {
         "checkbox": {
             "unchecked": {
                 "disabled": {
-                    "backgroundColor": "hsla(0, 0%, 98.8%, 1.000)",
-                    "borderColor": "hsla(210, 20%, 90.2%, 1.000)",
-                    "border": "hsla(210, 20%, 90.2%, 1.000) 2px solid"
+                    "backgroundColor": "var(--grey-1)",
+                    "borderColor": "var(--grey-5)",
+                    "border": "var(--grey-5) 2px solid"
                 },
                 "default": {
-                    "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)",
-                    "border": "hsla(208, 24.6%, 77.6%, 1.000) 2px solid"
+                    "borderColor": "var(--grey-8)",
+                    "border": "var(--grey-8) 2px solid"
                 },
                 "hover": {
-                    "borderColor": "hsla(195, 94.2%, 66.1%, 1.000)",
-                    "border": "hsla(195, 94.2%, 66.1%, 1.000) 2px solid"
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 2px solid"
                 }
             },
             "checked": {
                 "disabled": {
-                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
-                    "backgroundColor": "hsla(210, 20%, 90.2%, 1.000)"
+                    "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
+                    "backgroundColor": "var(--grey-5)"
                 },
                 "default": {
-                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
-                    "backgroundColor": "hsla(207, 95.3%, 66.5%, 1.000)"
+                    "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
+                    "backgroundColor": "var(--primary-8)"
                 },
                 "hover": {
-                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
-                    "backgroundColor": "hsla(195, 95.3%, 66.5%, 1.000)"
+                    "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
+                    "backgroundColor": "var(--primary-7)"
                 }
             },
             "indeterminate": {
                 "hover": {
-                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
-                    "backgroundColor": "hsla(195, 85.4%, 73.1%, 1.000)"
+                    "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
+                    "backgroundColor": "var(--primary-7)"
                 },
                 "default": {
-                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
-                    "backgroundColor": "hsla(205, 89.5%, 77.6%, 1.000)"
+                    "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
+                    "backgroundColor": "var(--primary-6)"
                 }
             }
         }
@@ -347,29 +347,29 @@ export const styles = {
                 }
             },
             "background": {
-                "boxShadow": "5px 0px 10px 0px hsla(205, 16%, 76.7%, 0.102)",
-                "backgroundColor": "hsla(0, 0%, 99.6%, 1.000)"
+                "boxShadow": "5px 0px 10px 0px var(--grey-8)",
+                "backgroundColor": "var(--white-a12)"
             },
             "lines": {
-                "backgroundColor": "hsla(0, 0%, 93.3%, 1.000)"
+                "backgroundColor": "var(--grey-4)"
             },
             "footerBackground": {
-                "backgroundColor": "hsla(0, 0%, 99.6%, 0.851)"
+                "backgroundColor": "var(--white-a12)"
             }
         },
         "background": {
-            "backgroundColor": "hsla(210, 20%, 98%, 1.000)",
-            "backgroundImage": "linear-gradient(180.00deg, hsla(210, 20%, 98%, 1.000) 0%, hsla(210, 20%, 96.1%, 1.000) 100%)"
+            "backgroundColor": "var(--grey-2)",
+            "backgroundImage": "linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%)"
         },
         "drawer": {
             "background": {
-                "boxShadow": "-5px 0px 10px 0px hsla(205, 16%, 76.7%, 0.102)",
-                "backgroundColor": "hsla(0, 0%, 100%, 1.000)"
+                "boxShadow": "-5px 0px 10px 0px var(--grey-8)",
+                "backgroundColor": "var(--white-a12)"
             }
         },
         "topBar": {
             "lines": {
-                "backgroundColor": "hsla(0, 0%, 89.4%, 1.000)"
+                "backgroundColor": "var(--grey-6)"
             }
         }
     },
@@ -377,42 +377,42 @@ export const styles = {
         "spinner": {
             "danger": {
                 "base": {
-                    "borderColor": "hsla(0, 78.8%, 70.4%, 1.000)",
-                    "border": "hsla(0, 78.8%, 70.4%, 1.000) 3px solid"
+                    "borderColor": "var(--error-8)",
+                    "border": "var(--error-8) 3px solid"
                 },
                 "top": {
-                    "borderColor": "hsla(0, 0%, 100%, 1.000)",
-                    "border": "hsla(0, 0%, 100%, 1.000) 3px solid"
+                    "borderColor": "var(--white-a12)",
+                    "border": "var(--white-a12) 3px solid"
                 }
             },
             "secondary": {
                 "top": {
-                    "borderColor": "hsla(0, 0%, 100%, 1.000)",
-                    "border": "hsla(0, 0%, 100%, 1.000) 3px solid"
+                    "borderColor": "var(--white-a12)",
+                    "border": "var(--white-a12) 3px solid"
                 },
                 "base": {
-                    "borderColor": "hsla(0, 0%, 75.7%, 1.000)",
-                    "border": "hsla(0, 0%, 75.7%, 1.000) 3px solid"
+                    "borderColor": "var(--grey-8)",
+                    "border": "var(--grey-8) 3px solid"
                 }
             },
             "primary": {
                 "top": {
-                    "borderColor": "hsla(0, 0%, 100%, 1.000)",
-                    "border": "hsla(0, 0%, 100%, 1.000) 3px solid"
+                    "borderColor": "var(--white-a12)",
+                    "border": "var(--white-a12) 3px solid"
                 },
                 "base": {
-                    "borderColor": "hsla(195, 89.4%, 81.6%, 1.000)",
-                    "border": "hsla(195, 89.4%, 81.6%, 1.000) 3px solid"
+                    "borderColor": "var(--primary-6)",
+                    "border": "var(--primary-6) 3px solid"
                 }
             },
             "simple": {
                 "top": {
-                    "borderColor": "hsla(0, 0%, 100%, 1.000)",
-                    "border": "hsla(0, 0%, 100%, 1.000) 3px solid"
+                    "borderColor": "var(--white-a12)",
+                    "border": "var(--white-a12) 3px solid"
                 },
                 "base": {
-                    "borderColor": "hsla(0, 0%, 76.9%, 0.329)",
-                    "border": "hsla(0, 0%, 76.9%, 0.329) 3px solid"
+                    "borderColor": "var(--grey-8)",
+                    "border": "var(--grey-8) 3px solid"
                 }
             }
         }
@@ -420,57 +420,57 @@ export const styles = {
     "filters": {
         "dropdownContainer": {
             "background": {
-                "boxShadow": "0px 5px 25px 0px hsla(210, 66.9%, 46.3%, 0.122)",
-                "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                "borderColor": "hsla(0, 0%, 90.6%, 1.000)",
-                "border": "hsla(0, 0%, 90.6%, 1.000) 1px solid"
+                "boxShadow": "0px 5px 25px 0px var(--primary-10)",
+                "backgroundColor": "var(--white-a12)",
+                "borderColor": "var(--grey-5)",
+                "border": "var(--grey-5) 1px solid"
             },
             "topBorder": {
-                "backgroundColor": "hsla(205, 100%, 72%, 1.000)"
+                "backgroundColor": "var(--primary-7)"
             }
         },
         "filterButton": {
             "default": {
-                "boxShadow": "0px 4px 9px 0px hsla(204, 21.9%, 66.9%, 0.071)",
-                "backgroundColor": "hsla(200, 23.1%, 97.5%, 1.000)",
-                "borderColor": "hsla(207, 15.9%, 86.5%, 1.000)",
-                "border": "hsla(207, 15.9%, 86.5%, 1.000) 1px solid",
-                "textColor": "hsla(0, 0%, 50.2%, 1.000)"
+                "boxShadow": "0px 4px 9px 0px var(--info-7)",
+                "backgroundColor": "var(--grey-2)",
+                "borderColor": "var(--grey-7)",
+                "border": "var(--grey-7) 1px solid",
+                "textColor": "var(--grey-10)"
             },
             "active": {
-                "boxShadow": "0px 4px 9px 0px hsla(204, 21.9%, 66.9%, 0.071)",
-                "backgroundColor": "hsla(205, 100%, 72%, 1.000)",
-                "borderColor": "hsla(205, 100%, 72%, 1.000)",
-                "border": "hsla(205, 100%, 72%, 1.000) 1px solid",
-                "textColor": "hsla(0, 0%, 100%, 1.000)"
+                "boxShadow": "0px 4px 9px 0px var(--info-7)",
+                "backgroundColor": "var(--primary-7)",
+                "borderColor": "var(--primary-7)",
+                "border": "var(--primary-7) 1px solid",
+                "textColor": "var(--white-a12)"
             },
             "hover": {
-                "boxShadow": "0px 4px 9px 0px hsla(204, 21.9%, 66.9%, 0.071)",
-                "backgroundColor": "hsla(205, 100%, 78.6%, 1.000)",
-                "borderColor": "hsla(205, 100%, 72%, 1.000)",
-                "border": "hsla(205, 100%, 72%, 1.000) 1px solid",
-                "textColor": "hsla(0, 0%, 100%, 1.000)"
+                "boxShadow": "0px 4px 9px 0px var(--info-7)",
+                "backgroundColor": "var(--primary-6)",
+                "borderColor": "var(--primary-7)",
+                "border": "var(--primary-7) 1px solid",
+                "textColor": "var(--white-a12)"
             }
         },
         "searchInput": {
             "default": {
-                "boxShadow": "0px 4px 9px 0px hsla(205, 34.6%, 68.2%, 0.071)",
-                "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                "borderColor": "hsla(207, 15.9%, 86.5%, 1.000)",
-                "border": "hsla(207, 15.9%, 86.5%, 1.000) 1px solid"
+                "boxShadow": "0px 4px 9px 0px var(--info-7)",
+                "backgroundColor": "var(--white-a12)",
+                "borderColor": "var(--grey-7)",
+                "border": "var(--grey-7) 1px solid"
             },
             "focused": {
-                "boxShadow": "0px 4px 9px 0px hsla(205, 34.6%, 68.2%, 0.071)",
-                "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-                "borderColor": "hsla(208, 50%, 81.2%, 1.000)",
-                "border": "hsla(208, 50%, 81.2%, 1.000) 1px solid"
+                "boxShadow": "0px 4px 9px 0px var(--info-7)",
+                "backgroundColor": "var(--white-a12)",
+                "borderColor": "var(--primary-6)",
+                "border": "var(--primary-6) 1px solid"
             }
         }
     },
     "tables": {
         "loadingOverlay": {
-            "backgroundColor": "hsla(210, 20%, 98%, 0.851)",
-            "backgroundImage": "linear-gradient(180.00deg, hsla(210, 20%, 98%, 0.851) 0%, hsla(210, 20%, 96.1%, 1.000) 100%)"
+            "backgroundColor": "var(--grey-2)",
+            "backgroundImage": "linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%)"
         },
         "rows": {
             "divider": {
@@ -486,10 +486,10 @@ export const styles = {
             },
             "sortable": {
                 "hover": {
-                    "backgroundColor": "hsla(220, 33.3%, 94.7%, 1.000)"
+                    "backgroundColor": "var(--grey-3)"
                 },
                 "default": {
-                    "backgroundColor": "hsla(220, 33.3%, 94.7%, 0.000)"
+                    "backgroundColor": "var(--grey-3)"
                 }
             }
         }
@@ -518,21 +518,21 @@ export const styles = {
     },
     "filterButton": {
         "active": {
-            "boxShadow": "0px 4px 9px 0px hsla(204, 21.9%, 66.9%, 0.071)",
-            "backgroundColor": "hsla(200, 23.1%, 97.5%, 1.000)",
-            "borderColor": "hsla(205, 100%, 72%, 1.000)",
-            "border": "hsla(205, 100%, 72%, 1.000) 1px solid"
+            "boxShadow": "0px 4px 9px 0px var(--info-7)",
+            "backgroundColor": "var(--grey-2)",
+            "borderColor": "var(--primary-7)",
+            "border": "var(--primary-7) 1px solid"
         }
     },
     "modal": {
         "overlay": {
-            "backgroundColor": "hsla(202, 33.3%, 95.3%, 0.510)"
+            "backgroundColor": "var(--grey-3)"
         },
         "container": {
-            "boxShadow": "0px 10px 15px 0px hsla(205, 42.2%, 60%, 0.149)",
-            "backgroundColor": "hsla(0, 0%, 100%, 1.000)",
-            "borderColor": "hsla(0, 14.3%, 90.4%, 1.000)",
-            "border": "hsla(0, 14.3%, 90.4%, 1.000) 1px solid"
+            "boxShadow": "0px 10px 15px 0px var(--info-8)",
+            "backgroundColor": "var(--white-a12)",
+            "borderColor": "var(--grey-5)",
+            "border": "var(--grey-5) 1px solid"
         }
     }
 };

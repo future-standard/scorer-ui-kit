@@ -2,7 +2,7 @@ export const custom = {
   "lines":{
     "primary": {
       label: {
-          fill: "#fff"//"hsla(205deg, 80%, 25%, 100%)"
+          fill: "var(--white-a12)"//"hsla(205deg, 80%, 25%, 100%)"
       },
       contrastLine: {
           stroke: 'hsla(205deg, 80%, 45%, 100%);'
@@ -49,7 +49,7 @@ export const custom = {
   },
   "secondary": {
       label: {
-          fill: "#fff"//"hsla(205deg, 80%, 25%, 100%)"
+          fill: "var(--white-a12)"//"hsla(205deg, 80%, 25%, 100%)"
       },
       contrastLine: {
           stroke: 'hsla(120deg, 80%, 45%, 100%);'
@@ -95,7 +95,7 @@ export const custom = {
   },
   "danger": {
       label: {
-          fill: "#fff"//"hsla(205deg, 80%, 25%, 100%)"
+          fill: "var(--white-a12)"//"hsla(205deg, 80%, 25%, 100%)"
       },
       contrastLine: {
           stroke: 'hsla(0, 80%, 45%, 100%);'

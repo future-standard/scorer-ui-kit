@@ -12,7 +12,7 @@ const Container = styled.div<{ active: boolean }>`
   cursor: pointer;
 
   ${({ active }) => active ? css`
-    border-bottom: 3px solid hsl(196, 100%, 40%);
+    border-bottom: 3px solid var(--primary-a1);
     `
     : css`
     border-bottom: 3px solid transparent;
@@ -28,7 +28,7 @@ const Title = styled.div<{ active: boolean }>`
   font-family: ${({ theme }) => theme.fontFamily.ui};
   letter-spacing: 0.09px;
   font-weight: 500;
-  color: ${({ active }) => active ? 'hsl(196, 100%, 40%)' : 'hsl(0, 0%, 46%)'};
+  color: ${({ active }) => active ? 'var(--primary-a1)' : 'var(--grey-11)'};
   margin-bottom: 5px;
   flex-shrink: 0;
   white-space: nowrap;
@@ -40,7 +40,7 @@ const SubTitle = styled.div`
   font-size: 12px;
   font-family: ${({ theme }) => theme.fontFamily.data};
   font-style: italic;
-  color: hsla(195, 10%, 52%, 0.72);
+  color: var(--grey-10);
   flex-shrink: 0;
   white-space: nowrap;
   text-overflow: ellipsis;

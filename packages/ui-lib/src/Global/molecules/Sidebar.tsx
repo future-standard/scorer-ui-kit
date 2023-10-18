@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 const LogoContainer = styled.div`
   height: 84px;
-  color: hsl(205, 7%, 35%);
+  color: var(--grey-11);
   border-bottom: 1px solid hsla(0, 0%, 84%, 50%);
   display: flex;
   flex-direction: column;
@@ -50,7 +50,7 @@ export const SidebarHeading = styled.div`
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.35px;
-  color: hsl(0, 0%, 50%);
+  color: var(--grey-10);
   margin-bottom: 18px;
 `;
 
@@ -58,14 +58,14 @@ export const SidebarLinkHeading = styled.div`
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.35px;
-  color: hsl(0, 0%, 50%);
+  color: var(--grey-10);
 `;
 
 export const BackLink = styled(Link)`
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.35px;
-  color: hsl(0, 0%, 50%);
+  color: var(--grey-10);
 `;
 
 const SLink = styled(Link)`
@@ -77,9 +77,9 @@ const SLink = styled(Link)`
   font-size: 14px;
   font-weight: 600;
   text-align: center;
-  color: hsl(0, 0%, 55%);
+  color: var(--grey-9);
   border-radius: 3px;
-  background-color: hsl(206, 70%, 96%);
+  background-color: var(--info-2);
   text-decoration: none;
   padding: 7px 20px;
 `;

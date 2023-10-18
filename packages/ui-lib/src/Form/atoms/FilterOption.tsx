@@ -7,7 +7,7 @@ import { dimensions } from '../../themes/common';
 const Title = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.data};
   display: block;
-  color: hsl(0, 0%, 56%);
+  color: var(--grey-9);
   font-size: 14px;
   font-weight: 500;
   margin-left: 12px;

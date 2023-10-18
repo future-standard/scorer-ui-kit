@@ -8,14 +8,14 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 146px;
-  border-top: 1px solid hsl(0, 0%, 91%);
+  border-top: 1px solid var(--grey-5);
 `;
 
 const LoadingText = styled.div`
   ${({ theme }) => theme && css`
     font-family: ${theme.fontFamily.data};
   `}
-  color: hsl(0, 0%, 55%);
+  color: var(--grey-9);
   font-size: 12px;
   font-style: italic;
   padding: 15px 0;

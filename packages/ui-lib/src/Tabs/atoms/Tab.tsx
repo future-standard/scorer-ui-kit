@@ -17,9 +17,9 @@ const TabLabel = styled.label<{ active: boolean }>`
   font-size: 15px;
   font-weight: ${({ active }) => active ? '600' : '500'};
   letter-spacing: 0.09px;
-  color: ${({ active }) => active ? '#0097ce' : '#787878'};
+  color: ${({ active }) => active ? 'var(--primary-a1)' : 'var(--grey-11)'};
   cursor: pointer;
-  border-bottom: ${({ active }) => active ? '2px solid #0097ce' : '2px solid transparent'};
+  border-bottom: ${({ active }) => active ? '2px solid var(--primary-a1)' : '2px solid transparent'};
   padding-top: 6px;
   padding-bottom: 14px;
   flex-shrink: 0;

@@ -4,14 +4,14 @@ export const styles = {
     "global": {
         "mainMenu": {
             "background": {
-                "boxShadow": "5px 0px 10px 0px hsla(205, 14%, 16.9%, 0.251)",
-                "backgroundColor": "hsla(210, 7.9%, 14.9%, 1.000)"
+                "boxShadow": "5px 0px 10px 0px var(--success-12)",
+                "backgroundColor": "var(--success-12)"
             },
             "footerBackground": {
-                "backgroundColor": "hsla(210, 7.9%, 14.9%, 0.800)"
+                "backgroundColor": "var(--success-12)"
             },
             "lines": {
-                "backgroundColor": "hsla(225, 3.5%, 22.4%, 1.000)"
+                "backgroundColor": "var(--success-12)"
             },
             "iconBackground": {
                 "default": {
@@ -30,29 +30,29 @@ export const styles = {
         },
         "drawer": {
             "background": {
-                "boxShadow": "5px 0px 10px 0px hsla(205, 14%, 16.9%, 0.251)",
-                "backgroundColor": "hsla(210, 7.9%, 14.9%, 1.000)"
+                "boxShadow": "5px 0px 10px 0px var(--success-12)",
+                "backgroundColor": "var(--success-12)"
             }
         },
         "topBar": {
             "lines": {
-                "backgroundColor": "hsla(225, 3.5%, 22.4%, 1.000)"
+                "backgroundColor": "var(--success-12)"
             }
         },
         "background": {
-            "backgroundColor": "hsla(220, 4.2%, 13.9%, 1.000)",
-            "backgroundImage": "linear-gradient(180.00deg, hsla(220, 4.2%, 13.9%, 1.000) 0%, hsla(220, 4.9%, 12%, 1.000) 100%)"
+            "backgroundColor": "var(--success-12)",
+            "backgroundImage": "linear-gradient(180.00deg, var(--success-12) 0%, var(--grey-12) 100%)"
         }
     },
     "general": {
         "divider": {
-            "backgroundColor": "hsla(213, 11.6%, 18.6%, 1.000)"
+            "backgroundColor": "var(--success-12)"
         }
     },
     "tables": {
         "loadingOverlay": {
-            "backgroundColor": "hsla(220, 4.2%, 13.9%, 0.851)",
-            "backgroundImage": "linear-gradient(180.00deg, hsla(220, 4.2%, 13.9%, 0.851) 0%, hsla(220, 4.2%, 13.9%, 1.000) 100%)"
+            "backgroundColor": "var(--success-12)",
+            "backgroundImage": "linear-gradient(180.00deg, var(--success-12) 0%, var(--success-12) 100%)"
         },
         "rows": {
             "divider": {
@@ -61,17 +61,17 @@ export const styles = {
         },
         "header": {
             "groupLine": {
-                "backgroundColor": "hsla(240, 4.7%, 25.1%, 1.000)"
+                "backgroundColor": "var(--success-12)"
             },
             "divider": {
                 "backgroundColor": colors.divider
             },
             "sortable": {
                 "default": {
-                    "backgroundColor": "hsla(221, 15.9%, 38.2%, 0.000)"
+                    "backgroundColor": "var(--grey-11)"
                 },
                 "hover": {
-                    "backgroundColor": "hsla(221, 15.9%, 38.2%, 1.000)"
+                    "backgroundColor": "var(--grey-11)"
                 }
             }
         }
@@ -79,48 +79,48 @@ export const styles = {
     "filters": {
         "filterButton": {
             "hover": {
-                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
-                "backgroundColor": "hsla(205, 86.8%, 70.4%, 1.000)",
-                "borderColor": "hsla(205, 100%, 72%, 1.000)",
-                "border": "hsla(205, 100%, 72%, 1.000) 1px solid",
-                "textColor": "hsla(0, 0%, 100%, 1.000)"
+                "boxShadow": "0px 4px 9px 0px var(--grey-a9)",
+                "backgroundColor": "var(--primary-7)",
+                "borderColor": "var(--primary-7)",
+                "border": "var(--primary-7) 1px solid",
+                "textColor": "var(--white-a12)"
             },
             "default": {
-                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
-                "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                "borderColor": "hsla(210, 3.5%, 22.4%, 1.000)",
-                "border": "hsla(210, 3.5%, 22.4%, 1.000) 1px solid",
-                "textColor": "hsla(0, 0%, 86.3%, 1.000)"
+                "boxShadow": "0px 4px 9px 0px var(--grey-a9)",
+                "backgroundColor": "var(--success-12)",
+                "borderColor": "var(--success-12)",
+                "border": "var(--success-12) 1px solid",
+                "textColor": "var(--grey-7)"
             },
             "active": {
-                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
-                "backgroundColor": "hsla(205, 81.2%, 64.5%, 1.000)",
-                "borderColor": "hsla(205, 100%, 72%, 1.000)",
-                "border": "hsla(205, 100%, 72%, 1.000) 1px solid",
-                "textColor": "hsla(0, 0%, 100%, 1.000)"
+                "boxShadow": "0px 4px 9px 0px var(--grey-a9)",
+                "backgroundColor": "var(--primary-8)",
+                "borderColor": "var(--primary-7)",
+                "border": "var(--primary-7) 1px solid",
+                "textColor": "var(--white-a12)"
             }
         },
         "searchInput": {
             "default": {
-                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
-                "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                "borderColor": "hsla(210, 3.5%, 22.4%, 1.000)",
-                "border": "hsla(210, 3.5%, 22.4%, 1.000) 1px solid"
+                "boxShadow": "0px 4px 9px 0px var(--grey-a9)",
+                "backgroundColor": "var(--success-12)",
+                "borderColor": "var(--success-12)",
+                "border": "var(--success-12) 1px solid"
             },
             "focused": {
-                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
-                "backgroundColor": "hsla(210, 14.3%, 19.2%, 1.000)",
-                "borderColor": "hsla(207, 19.8%, 34.7%, 1.000)",
-                "border": "hsla(207, 19.8%, 34.7%, 1.000) 1px solid"
+                "boxShadow": "0px 4px 9px 0px var(--grey-a9)",
+                "backgroundColor": "var(--success-12)",
+                "borderColor": "var(--grey-11)",
+                "border": "var(--grey-11) 1px solid"
             }
         },
         "dropdownContainer": {
             "topBorder": {
-                "backgroundColor": "hsla(205, 100%, 72%, 1.000)"
+                "backgroundColor": "var(--primary-7)"
             },
             "background": {
-                "boxShadow": "0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)",
-                "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
+                "boxShadow": "0px 4px 9px 0px var(--grey-a9)",
+                "backgroundColor": "var(--success-12)",
                 "borderColor": colors.divider,
                 "border": colors.divider + " 1px solid"
             }
@@ -130,127 +130,127 @@ export const styles = {
         "checkbox": {
             "unchecked": {
                 "disabled": {
-                  "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                  "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)",
-                  "border": "hsla(208, 24.6%, 77.6%, 1.000) 2px solid"
+                  "backgroundColor": "var(--success-12)",
+                  "borderColor": "var(--grey-8)",
+                  "border": "var(--grey-8) 2px solid"
                 },
                 "default": {
-                    "borderColor": "hsla(208, 24.6%, 77.6%, 1.000)",
-                    "border": "hsla(208, 24.6%, 77.6%, 1.000) 2px solid"
+                    "borderColor": "var(--grey-8)",
+                    "border": "var(--grey-8) 2px solid"
                 }
             },
             "checked": {
                 "default": {
-                    "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
-                    "backgroundColor": "hsla(207, 95.3%, 66.5%, 1.000)"
+                    "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
+                    "backgroundColor": "var(--primary-8)"
                 },
                 "disabled": {
-                  "boxShadow": "inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)",
-                  "backgroundColor": "hsla(207, 4.8%, 37.1%, 1.000)",
+                  "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
+                  "backgroundColor": "var(--grey-11)",
                 },
             }
         },
         "button": {
             "secondary": {
                 "hover": {
-                    "backgroundColor": "hsla(205, 33.3%, 32.9%, 1.000)"
+                    "backgroundColor": "var(--grey-11)"
                 },
                 "disabled": {
-                    "backgroundColor": "hsla(205, 12.8%, 18.4%, 1.000)"
+                    "backgroundColor": "var(--success-12)"
                 },
                 "actionArea": {
-                    "backgroundColor": "hsla(0, 0%, 94.9%, 0.302)"
+                    "backgroundColor": "var(--grey-3)"
                 },
                 "default": {
-                    "backgroundColor": "hsla(205, 15.1%, 28.6%, 1.000)"
+                    "backgroundColor": "var(--success-11)"
                 },
                 "divider": {
-                    "backgroundColor": "hsla(204, 18.2%, 78.4%, 0.302)"
+                    "backgroundColor": "var(--grey-8)"
                 },
                 "active": {
-                    "backgroundColor": "hsla(205, 56.9%, 28.2%, 1.000)"
+                    "backgroundColor": "var(--grey-a1)"
                 }
             },
             "danger": {
               "disabled": {
-                  "backgroundColor": "hsla(0,54%,38%, 1.000)"
+                  "backgroundColor": "var(--error-11)"
               },
               "divider": {
-                  "backgroundColor": "hsla(204, 18.2%, 78.4%, 0.302)"
+                  "backgroundColor": "var(--grey-8)"
               }
           },
         },
         "input": {
             "default": {
                 "normal": {
-                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                    "borderColor": "hsla(216, 3.4%, 28.8%, 1.000)",
-                    "border": "hsla(216, 3.4%, 28.8%, 1.000) 1px solid"
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--grey-11)",
+                    "border": "var(--grey-11) 1px solid"
                 },
                 "focused": {
-                    "backgroundColor": "hsla(210, 14.3%, 19.2%, 1.000)",
-                    "borderColor": "hsla(207, 19.8%, 34.7%, 1.000)",
-                    "border": "hsla(207, 19.8%, 34.7%, 1.000) 1px solid",
-                    "boxShadow": "0px 3px 7px 0px hsla(205, 68.4%, 7.5%, 0.071)"
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--grey-11)",
+                    "border": "var(--grey-11) 1px solid",
+                    "boxShadow": "0px 3px 7px 0px var(--grey-a9)"
                 }
             },
             "required": {
                 "normal": {
-                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                    "borderColor": "hsla(205, 58.9%, 71.4%, 1.000)",
-                    "border": "hsla(205, 58.9%, 71.4%, 1.000) 1px solid"
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 1px solid"
                 },
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px hsla(207, 67.8%, 35.3%, 0.071)",
-                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                    "borderColor": "hsla(205, 58.9%, 71.4%, 1.000)",
-                    "border": "hsla(205, 58.9%, 71.4%, 1.000) 2px solid"
+                    "boxShadow": "0px 3px 7px 0px var(--primary-11)",
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 2px solid"
                 }
             },
             "processing": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px hsla(195, 67.8%, 35.3%, 0.071)",
-                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                    "borderColor": "hsla(195, 79.5%, 71.4%, 1.000)",
-                    "border": "hsla(195, 79.5%, 71.4%, 1.000) 2px solid"
+                    "boxShadow": "0px 3px 7px 0px var(--primary-11)",
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 2px solid"
                 },
                 "normal": {
-                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                    "borderColor": "hsla(195, 79.5%, 71.4%, 1.000)",
-                    "border": "hsla(195, 79.5%, 71.4%, 1.000) 1px solid"
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 1px solid"
                 }
             },
             "disabled": {
                 "normal": {
-                    "backgroundColor": "hsla(220, 3.6%, 16.3%, 1.000)",
-                    "borderColor": "hsla(220, 2.9%, 20.6%, 1.000)",
-                    "border": "hsla(220, 2.9%, 20.6%, 1.000) 1px solid"
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--success-12)",
+                    "border": "var(--success-12) 1px solid"
                 }
             },
             "valid": {
                 "normal": {
-                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                    "borderColor": "hsla(120, 35.2%, 71.6%, 1.000)",
-                    "border": "hsla(120, 35.2%, 71.6%, 1.000) 1px solid"
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--success-7)",
+                    "border": "var(--success-7) 1px solid"
                 },
                 "focused": {
-                    "boxShadow": "0px 3px 5px 0px hsla(120, 76.6%, 15.1%, 0.071)",
-                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                    "borderColor": "hsla(120, 35.2%, 71.6%, 1.000)",
-                    "border": "hsla(120, 35.2%, 71.6%, 1.000) 2px solid"
+                    "boxShadow": "0px 3px 5px 0px var(--success-12)",
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--success-7)",
+                    "border": "var(--success-7) 2px solid"
                 }
             },
             "invalid": {
                 "normal": {
-                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                    "borderColor": "hsla(0, 78.8%, 70.4%, 1.000)",
-                    "border": "hsla(0, 78.8%, 70.4%, 1.000) 1px solid"
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--error-8)",
+                    "border": "var(--error-8) 1px solid"
                 },
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px hsla(0, 100%, 50%, 0.102)",
-                    "backgroundColor": "hsla(210, 4.3%, 18%, 1.000)",
-                    "borderColor": "hsla(0, 78.8%, 70.4%, 1.000)",
-                    "border": "hsla(0, 78.8%, 70.4%, 1.000) 2px solid"
+                    "boxShadow": "0px 3px 7px 0px var(--error-a1)",
+                    "backgroundColor": "var(--success-12)",
+                    "borderColor": "var(--error-8)",
+                    "border": "var(--error-8) 2px solid"
                 }
             }
         }
@@ -259,45 +259,45 @@ export const styles = {
         "spinner": {
             "secondary": {
                 "top": {
-                    "borderColor": "hsla(195, 59.4%, 72%, 1.000)",
-                    "border": "hsla(195, 59.4%, 72%, 1.000) 3px solid"
+                    "borderColor": "var(--primary-7)",
+                    "border": "var(--primary-7) 3px solid"
                 },
                 "base": {
-                    "borderColor": "hsla(0, 2%, 29.6%, 1.000)",
-                    "border": "hsla(0, 2%, 29.6%, 1.000) 3px solid"
+                    "borderColor": "var(--grey-11)",
+                    "border": "var(--grey-11) 3px solid"
                 }
             },
             "simple": {
                 "base": {
-                    "borderColor": "hsla(0, 0%, 76.9%, 0.329)",
-                    "border": "hsla(0, 0%, 76.9%, 0.329) 3px solid"
+                    "borderColor": "var(--grey-8)",
+                    "border": "var(--grey-8) 3px solid"
                 },
                 "top": {
-                    "borderColor": "hsla(0, 0%, 100%, 1.000)",
-                    "border": "hsla(0, 0%, 100%, 1.000) 3px solid"
+                    "borderColor": "var(--white-a12)",
+                    "border": "var(--white-a12) 3px solid"
                 }
             },
             "primary": {
                 "base": {
-                    "borderColor": "hsla(195, 54.1%, 30.8%, 1.000)",
-                    "border": "hsla(195, 54.1%, 30.8%, 1.000) 3px solid"
+                    "borderColor": "var(--info-11)",
+                    "border": "var(--info-11) 3px solid"
                 },
                 "top": {
-                    "borderColor": "hsla(210, 100%, 65.9%, 1.000)",
-                    "border": "hsla(210, 100%, 65.9%, 1.000) 3px solid"
+                    "borderColor": "var(--primary-8)",
+                    "border": "var(--primary-8) 3px solid"
                 }
             }
         }
     },
     "modal": {
         "container": {
-            "boxShadow": "0px 10px 15px 0px hsla(205, 38.7%, 12.2%, 0.149)",
-            "backgroundColor": "hsla(210, 17.1%, 13.7%, 1.000)",
-            "borderColor": "hsla(206, 7.1%, 19.4%, 1.000)",
-            "border": "hsla(206, 7.1%, 19.4%, 1.000) 1px solid"
+            "boxShadow": "0px 10px 15px 0px var(--info-12)",
+            "backgroundColor": "var(--success-12)",
+            "borderColor": "var(--success-12)",
+            "border": "var(--success-12) 1px solid"
         },
         "overlay": {
-            "backgroundColor": "hsla(203, 100%, 4.7%, 0.647)"
+            "backgroundColor": "var(--grey-a11)"
         }
     }
 };

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const StyledLabel = styled.label<{ rightAlign: boolean }>`
   font-family: ${({ theme }) => theme.fontFamily.ui};
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-9);
   font-size: 14px;
   font-weight: 500;
   ${({ rightAlign }) => rightAlign

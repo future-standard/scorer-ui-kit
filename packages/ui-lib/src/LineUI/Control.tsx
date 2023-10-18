@@ -27,7 +27,7 @@ const DebugContainer = styled.div`
   button {
     display: block;
     border: none;
-    background: hsl(195deg, 90%, 45%);
+    background: var(--primary-a1);
     padding: 10px;
     width: 100%;
     font-size: 16px;
@@ -39,9 +39,9 @@ const DebugContainer = styled.div`
 `;
 
 const DebugOutput = styled.pre`
-  color: #fff;
+  color: var(--white-a12);
   text-align: left;
-  background: hsl(205deg, 15%, 5%);
+  background: var(--grey-a12);
   padding: 20px;
   overflow: auto;
   border-radius: 2px;

@@ -19,7 +19,7 @@ const ImgWrapper = styled.div`
 `;
 
 const EmptyImg = styled.div`
-  background-color: hsl(210, 22%, 91%);
+  background-color: var(--grey-5);
   width: 100%;
   height: 100%;
 `;
@@ -44,14 +44,14 @@ const InfoContainer = styled.div`
 const Title = styled.div`
   font-size: 16px;
   font-weight: 500;
-  color: hsl(0, 0%, 34%);
+  color: var(--grey-11);
 `;
 
 const Message = styled.div`
   font-size: 13px;
   font-weight: 500;
   overflow: hidden;
-  color: hsl(0, 0%, 34%);
+  color: var(--grey-11);
   margin: 4px 0;
   height: 30px;
   text-overflow: ellipsis;
@@ -63,7 +63,7 @@ const Message = styled.div`
 const TimeMsg = styled.div`
   font-size: 13px;
   font-weight: 500;
-  color: hsl(0, 0%, 67%);
+  color: var(--success-7);
   margin-top: 15px;
 `;
 

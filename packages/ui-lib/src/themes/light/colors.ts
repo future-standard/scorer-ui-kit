@@ -1,41 +1,41 @@
 export const colors = {
-    "pureBase": "hsla(0, 0%, 100%, 1.000)",
-    "pureTop": "hsla(0, 0%, 0%, 1.000)",
-    "divider": "hsla(0, 0%, 93.3%, 1.000)",
+    "pureBase": "var(--white-a12)",
+    "pureTop": "var(--white-a1)",
+    "divider": "var(--grey-4)",
     "icons": {
-        "inverse": "hsla(0, 0%, 100%, 1.000)",
-        "mono": "hsla(0, 0%, 25.1%, 1.000)",
-        "dimmed": "hsla(0, 0%, 65.1%, 1.000)",
-        "subtle": "hsla(0, 0%, 85.1%, 1.000)",
-        "primary": "hsla(205, 100%, 65.1%, 1.000)",
-        "danger": "hsla(0, 100%, 70%, 1.000)"
+        "inverse": "var(--white-a12)",
+        "mono": "var(--success-12)",
+        "dimmed": "var(--grey-9)",
+        "subtle": "var(--grey-7)",
+        "primary": "var(--primary-8)",
+        "danger": "var(--warning-8)"
     },
     "menu": {
-        "active": "hsla(215, 100%, 75.1%, 1.000)",
-        "hover": "hsla(200, 77.8%, 77.1%, 1.000)",
-        "default": "hsla(200, 77.8%, 77.1%, 0.000)",
-        "indicator": "hsla(240, 1.2%, 84.1%, 0.502)",
-        "passive": "hsla(215, 100%, 75.1%, 0.149)"
+        "active": "var(--primary-7)",
+        "hover": "var(--primary-6)",
+        "default": "var(--primary-6)",
+        "indicator": "var(--grey-7)",
+        "passive": "var(--primary-7)"
     },
     "feedback": {
-        "error": "hsla(0, 78.8%, 70.4%, 1.000)",
-        "info": "hsla(205, 77.4%, 63.5%, 1.000)",
-        "neutral": "hsla(205, 22.1%, 66.3%, 1.000)",
-        "success": "hsla(136, 49.5%, 57.3%, 1.000)",
-        "warning": "hsla(30, 91%, 61%, 1.000)"
+        "error": "var(--error-8)",
+        "info": "var(--primary-8)",
+        "neutral": "var(--info-7)",
+        "success": "var(--success-8)",
+        "warning": "var(--warning-8)"
     },
     "status": {
-        "caution": "hsla(57, 57.7%, 62.9%, 1.000)",
-        "danger": "hsla(0, 63.5%, 64.5%, 1.000)",
-        "folder": "hsla(207, 95.3%, 66.5%, 1.000)",
-        "highlight": "hsla(207, 95.3%, 66.5%, 1.000)",
-        "good": "hsla(126, 48.1%, 68.2%, 1.000)",
-        "neutral": "hsla(0, 0%, 91.8%, 1.000)"
+        "caution": "var(--warning-7)",
+        "danger": "var(--error-8)",
+        "folder": "var(--primary-8)",
+        "highlight": "var(--primary-8)",
+        "good": "var(--success-7)",
+        "neutral": "var(--grey-5)"
     },
-    "transparent": "hsla(0, 0%, 0%, 0.000)",
+    "transparent": "var(--white-a1)",
     "input": {
         "border": {
-            "default": "hsla(120, 1.3%, 85.3%, 1.000)"
+            "default": "var(--grey-7)"
         }
     }
 };

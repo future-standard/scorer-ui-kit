@@ -61,7 +61,7 @@ const UnitKey = styled.div`
   top:0;
   font-family: ${({ theme }) => theme.fontFamily.ui };
   font-size: 12px;
-  color: #99a1a3;
+  color: var(--grey-9);
   line-height:30px;
 `;
 
