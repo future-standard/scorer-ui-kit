@@ -48,7 +48,7 @@ export const _PercentageSlider = () => {
   const customTitle = boolean("Custom Title function",false);
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
-  const showValueTitle = boolean("Value title visible", false);
+  const showValueTitle = boolean("Show Value Title", false);
 
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
