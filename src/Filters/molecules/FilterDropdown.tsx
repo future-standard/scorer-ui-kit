@@ -40,19 +40,6 @@ const OptionList = styled.div<{moreItem?: boolean}>`
   position: relative;
   overflow-y: auto;
   margin-right: 2px;
-  
-  /* Firefox supports the scrollbar-width property */
-  scrollbar-width: thin;
-
-  /* Customize the scrollbar width for Chrome and Safari */
-  ::-webkit-scrollbar {
-    width: 2px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: #44444499;
-  }
 
   ${StyledFilterOption} {
     height: 35px;
