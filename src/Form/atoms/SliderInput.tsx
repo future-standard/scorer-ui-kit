@@ -64,7 +64,7 @@ const Mark = styled.span<{leftValue: number}>`
 const MarkLabel = styled.span<{leftValue: number, alignment?: IMartAlignment,}>`
   position: absolute;
   top: -24px;
-  left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
+  left: ${({ leftValue }) => `calc(${leftValue}% + ${leftValue === 0 ? 2 : leftValue === 100 ? 22 : 7}px)`};
 
   font-size: 10px;
   font-style: italic;
