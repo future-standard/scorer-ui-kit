@@ -48,6 +48,7 @@ export const _PercentageSlider = () => {
   const customTitle = boolean("Custom Title function",false);
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
+  const showTitle = boolean("Show Value", true);
 
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
@@ -90,6 +91,7 @@ export const _PercentageSlider = () => {
           title={title}
           updateThumbColor={customThumb ? otherColorHandler : undefined }
           updateTitle={customTitle ? otherTitlesHandler : undefined}
+          showValue={showTitle}
         />
     </Container>
   )
