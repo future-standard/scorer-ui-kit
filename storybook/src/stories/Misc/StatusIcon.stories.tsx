@@ -22,10 +22,11 @@ export const _Status_Icon = () => {
   const counter = number('Counter', 5);
   const status = select("Status", { Caution: 'caution', Danger: 'danger', Good: 'good', Neutral:'neutral', Highlight:'highlight'}, 'danger');
   const undefineCounter = boolean('Show empty counter', false);
+  const maxCounter = number('MaxCounter', 999);
 
   return (
     <Container>
-      <StatusIcon {...{icon, status}} counter={undefineCounter ? undefined : counter}/>
+      <StatusIcon {...{icon, status}} counter={undefineCounter ? undefined : counter} maxCounter={maxCounter}/>
     </Container>
   );
 }

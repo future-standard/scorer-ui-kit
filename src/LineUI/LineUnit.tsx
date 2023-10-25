@@ -51,12 +51,19 @@ const GrabHandleIndexText = styled.text<{showIndex: boolean, styling: string}>`
   pointer-events: none;
 `;
 
-const LabelText = styled.text<{showIndex: boolean, styling: string}>`
+const LabelText = styled.text<{showIndex: boolean, styling: string, showLabelShadow: boolean}>`
   text-align: center;
   fill: ${({theme, styling}) => theme.custom.lines[styling].label.fill};
   font-weight: bold;
   transition: opacity 250ms ease;
   cursor: pointer;
+  ${({showLabelShadow}) => showLabelShadow && css`
+    text-shadow:
+      -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+  `}
 `;
 
 const GrabHandleContrast = styled(GrabHandle)`
@@ -111,7 +118,7 @@ interface ILineUnitProps {
 
 const LineUnit : React.FC<ILineUnitProps> = (props) => {
   const { x1, y1, x2, y2, unit, lineMoveCallback, lineMoveStartCallback, options, lineSetId, label, styling = 'primary', moveEndCB = () => { }, lineClickCallback = () => { }, showSmallDirectionMark = false, overrideShowMoveHandle = true } = props;
-  const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark} = options;
+  const { handleFinderActive, revealSetIndex, showMoveHandle, setIndexOffset, showDirectionMark, showLabelShadow = false } = options;
   const [showLineBorder, setShowLineBorder] = useState<boolean>();
 
   // const a = x1 - x2;
@@ -193,7 +200,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           </g>}
         {label &&
           <g transform={`translate(0,${showSmallDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
-            <LabelText onClick={() => lineClickCallback(lineSetId)} textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive}>
+            <LabelText onClick={() => lineClickCallback(lineSetId)} textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive} showLabelShadow={showLabelShadow}>
               {label}
             </LabelText>
           </g>}
@@ -237,7 +244,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
         getDirectionMarkLine()
         :
         label &&
-          <LabelText styling={styling} fontSize={`${unit * 14}px`} x={midpoint.x - (16 * unit)} y={midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive}>
+          <LabelText styling={styling} fontSize={`${unit * 14}px`} x={midpoint.x - (16 * unit)} y={midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive} showLabelShadow={showLabelShadow}>
             {label}
           </LabelText>}
     </g>

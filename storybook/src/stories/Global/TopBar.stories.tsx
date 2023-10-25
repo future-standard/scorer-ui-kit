@@ -103,7 +103,7 @@ export const _TopBar = () => {
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const currentUserText = text("Current User Text", "Current User");
   const logoutText = text("Logout Text", "Logout");
-  const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
+  const hasUserDrawerMeta = boolean("Has User Drawer Meta", true);
   const copySuccessMessage= text("Tooltip Text", "Copied");
   const includeCopyTitle = boolean("Include Title Copy", true);
   const hasUserDrawerFooter = boolean("Has User Drawer Footer", false);

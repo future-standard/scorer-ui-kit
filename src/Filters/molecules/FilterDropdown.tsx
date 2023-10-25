@@ -34,15 +34,12 @@ const StyledFilterOption = styled(FilterOption)`
   letter-spacing: 0.2px;
 `;
 
-const OptionList = styled.div`
-  max-height: 162px;
+const OptionList = styled.div<{moreItem?: boolean}>`
+  max-height: ${({moreItem}) => moreItem ? '168px' : '175px'};
   min-height: 40px;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {  /* Hide scrollbar for Chrome, Safari and Opera */
-    display: none;
-  }
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  position: relative;
+  overflow-y: auto;
+  margin-right: 2px;
 
   ${StyledFilterOption} {
     height: 35px;
@@ -87,6 +84,17 @@ const EmptyResultText = styled.div`
   display: flex;
   align-items: center;
   font-size: 12px;
+`;
+
+const Gradient = styled.div`
+  position: absolute;
+  bottom: 1px;
+  height: 15px;
+  background-image: linear-gradient(to bottom, transparent, #e5e5e5);
+  width: 99%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
 `;
 
 const isValueSelected = (item: IFilterItem, selected: IFilterValue) => {
@@ -329,7 +337,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
             : (
               <ResultsContainer>
                 {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
-                <OptionList>
+                <OptionList moreItem={list.length > 5}>
                   {(visibleList.length > 0)
 
                     ? visibleList.map((item: IFilterItem, index) => {
@@ -348,6 +356,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
                     : <EmptyResultText>{emptyResultText}</EmptyResultText>}
                 </OptionList>
+                {list.length > 5 && <Gradient />}
               </ResultsContainer>)}
         </InnerBox>
       </FilterDropHandler>

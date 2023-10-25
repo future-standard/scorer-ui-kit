@@ -49,6 +49,7 @@ interface IPercentageSliderProps {
   marks?: ISliderMark[]
   defaultValue?: number
   value?: number
+  showValue?: boolean
   inputCallback?: (value: number) => void
   updateThumbColor?:  (value: number) => IFeedbackColor
   updateTitle?: (value: number) => string
@@ -63,6 +64,7 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
     inputCallback,
     updateThumbColor,
     updateTitle,
+    showValue,
     ...props
   }
   ) => {
@@ -82,7 +84,7 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
           htmlFor='percentage-slider'
           labelText={updateTitle ? updateTitle(selectedValue) : getTitleLevel(selectedValue)}
         />
-        <ValueTitle htmlFor='percentage-slider' labelText={`${selectedValue}%`} />
+        {showValue && <ValueTitle htmlFor='percentage-slider' labelText={`${selectedValue}%`} />}
       </Headers>
       <SliderInput
         {...props}
@@ -90,6 +92,7 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
         max={100}
         min={0}
         defaultValue={defaultValue}
+        showValue={showValue}
         onChangeCallback={handleSelectedValue}
         thumbColor={
             updateThumbColor
