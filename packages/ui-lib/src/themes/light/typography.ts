@@ -7,21 +7,21 @@ export const typography = {
             "fontWeight": 300,
             "lineHeight": "25px",
             "textDecoration": "none",
-            "color": "hsla(207, 5%, 56.7%, 1.000)"
+            "color": "var(--text-18)"
         },
         "areaTitle": {
             "textAlign": "left",
             "fontSize": "12px",
             "fontWeight": 400,
             "textDecoration": "none",
-            "color": "hsla(0, 0%, 46.3%, 1.000)"
+            "color": "var(--text-13)"
         },
         "mainTitle": {
             "textAlign": "left",
             "fontSize": "26px",
             "fontWeight": 600,
             "textDecoration": "none",
-            "color": "hsla(208, 7.7%, 38.2%, 1.000)"
+            "color": "var(--text-19)"
         }
     },
     "form": {
@@ -31,35 +31,35 @@ export const typography = {
                 "fontSize": "14px",
                 "fontWeight": 300,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 56.1%, 1.000)"
+                "color": "var(--text-16)"
             },
             "default": {
                 "textAlign": "left",
                 "fontSize": "14px",
                 "fontWeight": 400,
                 "textDecoration": "none",
-                "color": "hsla(207, 5%, 56.7%, 1.000)"
+                "color": "var(--text-18)"
             },
             "disabled": {
                 "textAlign": "left",
                 "fontSize": "16px",
                 "fontWeight": 300,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 46.3%, 0.651)"
+                "color": "var(--text-12)"
             },
             "failure": {
                 "textAlign": "left",
                 "fontSize": "16px",
                 "fontWeight": 400,
                 "textDecoration": "none",
-                "color": "hsla(0, 67.9%, 67.1%, 1.000)"
+                "color": "var(--form-failure-label-text)"
             },
             "meta(Selected)": {
                 "textAlign": "left",
                 "fontSize": "14px",
                 "fontWeight": 600,
                 "textDecoration": "none",
-                "color": "hsla(207, 94.2%, 66.1%, 1.000)"
+                "color": "var(--meta-text)"
             }
         },
         "tip": {
@@ -69,7 +69,7 @@ export const typography = {
             "fontWeight": 500,
             "lineHeight": "25px",
             "textDecoration": "none",
-            "color": "hsla(205, 59.7%, 71.8%, 1.000)"
+            "color": "var(--form-tip-text)"
         },
         "button": {
             "secondary": {
@@ -78,28 +78,28 @@ export const typography = {
                     "fontSize": "16px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 55.3%, 1.000)"
+                    "color": "var(--text-15)"
                 },
                 "large": {
                     "textAlign": "center",
                     "fontSize": "20px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 55.3%, 1.000)"
+                    "color": "var(--text-15)"
                 },
                 "small": {
                     "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 55.3%, 1.000)"
+                    "color": "var(--text-15)"
                 },
                 "xsmall": {
                     "textAlign": "center",
                     "fontSize": "12px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 55.3%, 1.000)"
+                    "color": "var(--text-15)"
                 }
             },
             "primary": {
@@ -108,28 +108,28 @@ export const typography = {
                     "fontSize": "20px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 },
                 "normal": {
                     "textAlign": "center",
                     "fontSize": "16px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 },
                 "small": {
                     "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 },
                 "xsmall": {
                     "textAlign": "center",
                     "fontSize": "12px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 }
             },
             "danger": {
@@ -138,28 +138,28 @@ export const typography = {
                     "fontSize": "20px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 },
                 "normal": {
                     "textAlign": "center",
                     "fontSize": "16px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 },
                 "small": {
                     "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 },
                 "xsmall": {
                     "textAlign": "center",
                     "fontSize": "12px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 }
             }
         },
@@ -169,7 +169,7 @@ export const typography = {
                 "fontSize": "14px",
                 "fontWeight": 400,
                 "textDecoration": "none",
-                "color": "hsla(207, 5%, 56.7%, 1.000)"
+                "color": "var(--text-18)"
             },
             "placeholder": {
                 "normal": {
@@ -178,7 +178,7 @@ export const typography = {
                     "fontSize": "16px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 46.3%, 0.502)"
+                    "color": "var(--text-10)"
                 },
                 "compact": {
                     "textAlign": "left",
@@ -187,7 +187,7 @@ export const typography = {
                     "fontWeight": 500,
                     "lineHeight": "15px",
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 46.3%, 0.502)"
+                    "color": "var(--text-10)"
                 }
             },
             "value": {
@@ -197,7 +197,7 @@ export const typography = {
                     "fontWeight": 500,
                     "lineHeight": "25px",
                     "textDecoration": "none",
-                    "color": "hsla(207, 5%, 56.7%, 1.000)"
+                    "color": "var(--text-18)"
                 },
                 "compact": {
                     "textAlign": "left",
@@ -205,7 +205,7 @@ export const typography = {
                     "fontWeight": 500,
                     "lineHeight": "15px",
                     "textDecoration": "none",
-                    "color": "hsla(207, 5%, 56.7%, 1.000)"
+                    "color": "var(--text-18)"
                 }
             }
         },
@@ -216,7 +216,7 @@ export const typography = {
             "fontWeight": 300,
             "lineHeight": "25px",
             "textDecoration": "none",
-            "color": "hsla(207, 5%, 56.7%, 1.000)"
+            "color": "var(--text-18)"
         },
         "select": {
             "option": {
@@ -225,7 +225,7 @@ export const typography = {
                 "fontWeight": 500,
                 "lineHeight": "15px",
                 "textDecoration": "none",
-                "color": "hsla(207, 5%, 56.7%, 1.000)"
+                "color": "var(--text-18)"
             },
             "selectedValue": {
                 "textAlign": "left",
@@ -233,7 +233,7 @@ export const typography = {
                 "fontWeight": 500,
                 "lineHeight": "15px",
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 17.6%, 1.000)"
+                "color": "var(--text-2)"
             },
             "option(Hover)": {
                 "textAlign": "left",
@@ -241,7 +241,7 @@ export const typography = {
                 "fontWeight": 500,
                 "lineHeight": "15px",
                 "textDecoration": "none",
-                "color": "hsla(207, 41.2%, 53.3%, 1.000)"
+                "color": "var(--select-hover-text)"
             }
         },
         "feedback": {
@@ -252,7 +252,7 @@ export const typography = {
                 "fontWeight": 500,
                 "lineHeight": "20px",
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 100%, 1.000)"
+                "color": "var(--white-1)"
             }
         }
     },
@@ -264,21 +264,21 @@ export const typography = {
                     "fontSize": "16px",
                     "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.5%, 0.847)"
+                    "color": "var(--text-5)"
                 },
                 "active": {
                     "textAlign": "left",
                     "fontSize": "16px",
                     "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.5%, 0.851)"
+                    "color": "var(--text-6)"
                 },
                 "hover": {
                     "textAlign": "left",
                     "fontSize": "16px",
                     "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.5%, 0.851)"
+                    "color": "var(--text-6)"
                 }
             },
             "subheader": {
@@ -288,14 +288,14 @@ export const typography = {
                 "textTransform": "uppercase",
                 "letterSpacing": "0.35px",
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 34.5%, 0.902)"
+                "color": "var(--text-7)"
             },
             "hidePrompt": {
                 "textAlign": "left",
                 "fontSize": "14px",
                 "fontWeight": 300,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 34.5%, 1.000)"
+                "color": "var(--text-8)"
             },
             "subItem": {
                 "default": {
@@ -303,21 +303,21 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.5%, 0.647)"
+                    "color": "var(--text-4)"
                 },
                 "active": {
                     "textAlign": "left",
                     "fontSize": "14px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(214, 14.4%, 46.3%, 1.000)"
+                    "color": "var(--text-20)"
                 },
                 "hover": {
                     "textAlign": "left",
                     "fontSize": "14px",
                     "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(214, 14.4%, 46.3%, 1.000)"
+                    "color": "var(--text-20)"
                 }
             },
             "identity": {
@@ -325,7 +325,7 @@ export const typography = {
                 "fontSize": "12px",
                 "fontWeight": 400,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 34.1%, 0.749)"
+                "color": "var(--text-3)"
             }
         },
         "topBar": {
@@ -335,7 +335,7 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 34.9%, 1.000)"
+                    "color": "var(--text-9)"
                 },
                 "placeholder": {
                     "textAlign": "left",
@@ -343,7 +343,7 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 65.5%, 1.000)"
+                    "color": "var(--text-17)"
                 }
             }
         }
@@ -354,14 +354,14 @@ export const typography = {
             "fontSize": "20px",
             "fontWeight": 400,
             "textDecoration": "none",
-            "color": "hsla(208, 7.7%, 38.2%, 1.000)"
+            "color": "var(--text-19)"
         },
         "sectionH3": {
             "textAlign": "left",
             "fontSize": "16px",
             "fontWeight": 400,
             "textDecoration": "none",
-            "color": "hsla(208, 7.7%, 38.2%, 1.000)"
+            "color": "var(--text-19)"
         },
         "actionParagraph": {
             "textAlign": "left",
@@ -369,7 +369,7 @@ export const typography = {
             "fontWeight": 300,
             "lineHeight": "25px",
             "textDecoration": "none",
-            "color": "hsla(207, 5%, 56.7%, 1.000)"
+            "color": "var(--text-18)"
         },
         "hyperlink": {
             "hover": {
@@ -379,7 +379,7 @@ export const typography = {
                 "fontWeight": 500,
                 "lineHeight": "25px",
                 "textDecoration": "none",
-                "color": "hsla(195, 98.3%, 45.1%, 1.000)"
+                "color": "var(--content-hyperlink-hover)"
             },
             "base": {
                 "textAlign": "left",
@@ -388,7 +388,7 @@ export const typography = {
                 "fontWeight": 500,
                 "lineHeight": "25px",
                 "textDecoration": "none",
-                "color": "hsla(205, 62.3%, 55.3%, 1.000)"
+                "color": "var(--content-hyperlink-text)"
             }
         }
     },
@@ -400,7 +400,7 @@ export const typography = {
             "lineHeight": "15px",
             "letterSpacing": "-0.2px",
             "textDecoration": "none",
-            "color": "hsla(0, 0%, 100%, 1.000)"
+            "color": "var(--white-1)"
         }
     },
     "searchBar": {
@@ -410,14 +410,14 @@ export const typography = {
             "fontSize": "14px",
             "fontWeight": 700,
             "textDecoration": "none",
-            "color": "hsla(0, 0%, 46.3%, 0.647)"
+            "color": "var(--text-11)"
         },
         "value": {
             "textAlign": "left",
             "fontSize": "14px",
             "fontWeight": 600,
             "textDecoration": "none",
-            "color": "hsla(207, 5%, 56.7%, 1.000)"
+            "color": "var(--text-18)"
         }
     },
     "meta": {
@@ -429,7 +429,7 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 46.3%, 1.000)"
+                    "color": "var(--text-13)"
                 },
                 "small": {
                     "textAlign": "left",
@@ -437,7 +437,7 @@ export const typography = {
                     "fontSize": "12px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 46.3%, 1.000)"
+                    "color": "var(--text-13)"
                 }
             },
             "item": {
@@ -446,14 +446,14 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(200, 3%, 38.8%, 1.000)"
+                    "color": "var(--tag-text)"
                 },
                 "small": {
                     "textAlign": "left",
                     "fontSize": "12px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(200, 3%, 38.8%, 1.000)"
+                    "color": "var(--tag-text)"
                 }
             }
         }
@@ -466,21 +466,21 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(195, 9.8%, 51.8%, 0.722)"
+                    "color": "var(--table-column-data-text-2)"
                 },
                 "left": {
                     "textAlign": "left",
                     "fontSize": "14px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(195, 9.8%, 51.8%, 0.722)"
+                    "color": "var(--table-column-data-text-2)"
                 },
                 "center": {
                     "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(195, 9.8%, 51.8%, 0.722)"
+                    "color": "var(--table-column-data-text-2)"
                 }
             },
             "highImportance": {
@@ -489,21 +489,21 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 900,
                     "textDecoration": "none",
-                    "color": "hsla(196, 9.7%, 55.7%, 1.000)"
+                    "color": "var(--table-high-importance-text)"
                 },
                 "center": {
                     "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 900,
                     "textDecoration": "none",
-                    "color": "hsla(196, 9.7%, 55.7%, 1.000)"
+                    "color": "var(--table-high-importance-text)"
                 },
                 "left": {
                     "textAlign": "left",
                     "fontSize": "14px",
                     "fontWeight": 900,
                     "textDecoration": "none",
-                    "color": "hsla(196, 9.7%, 55.7%, 1.000)"
+                    "color": "var(--table-high-importance-text)"
                 }
             },
             "firstColumn": {
@@ -511,7 +511,7 @@ export const typography = {
                 "fontSize": "14px",
                 "fontWeight": 500,
                 "textDecoration": "none",
-                "color": "hsla(194, 10.2%, 52%, 1.000)"
+                "color": "var(--table-column-data-text)"
             },
             "lowImportance": {
                 "right": {
@@ -520,7 +520,7 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(195, 9.8%, 51.8%, 0.722)"
+                    "color": "var(--table-column-data-text-2)"
                 },
                 "center": {
                     "textAlign": "center",
@@ -528,7 +528,7 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(195, 9.8%, 51.8%, 0.722)"
+                    "color": "var(--table-column-data-text-2)"
                 },
                 "left": {
                     "textAlign": "left",
@@ -536,7 +536,7 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 500,
                     "textDecoration": "none",
-                    "color": "hsla(195, 9.8%, 51.8%, 0.722)"
+                    "color": "var(--table-column-data-text-2)"
                 }
             },
             "unit": {
@@ -545,7 +545,7 @@ export const typography = {
                 "fontSize": "12px",
                 "fontWeight": 500,
                 "textDecoration": "none",
-                "color": "hsla(195, 9.8%, 51.8%, 0.722)"
+                "color": "var(--table-column-data-text-2)"
             }
         },
         "header": {
@@ -555,7 +555,7 @@ export const typography = {
                 "fontWeight": 700,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
-                "color": "hsla(204, 2.4%, 59%, 1.000)"
+                "color": "var(--table-header-text)"
             },
             "left": {
                 "textAlign": "left",
@@ -563,7 +563,7 @@ export const typography = {
                 "fontWeight": 700,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
-                "color": "hsla(204, 2.4%, 59%, 1.000)"
+                "color": "var(--table-header-text)"
             },
             "right": {
                 "textAlign": "right",
@@ -571,7 +571,7 @@ export const typography = {
                 "fontWeight": 700,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
-                "color": "hsla(204, 2.4%, 59%, 1.000)"
+                "color": "var(--table-header-text)"
             }
         },
         "subHeader": {
@@ -581,7 +581,7 @@ export const typography = {
                 "fontWeight": 700,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
-                "color": "hsla(204, 2.4%, 59%, 1.000)"
+                "color": "var(--table-header-text)"
             },
             "left": {
                 "textAlign": "left",
@@ -589,7 +589,7 @@ export const typography = {
                 "fontWeight": 700,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
-                "color": "hsla(204, 2.4%, 59%, 1.000)"
+                "color": "var(--table-header-text)"
             },
             "right": {
                 "textAlign": "right",
@@ -597,7 +597,7 @@ export const typography = {
                 "fontWeight": 700,
                 "letterSpacing": "0.4px",
                 "textDecoration": "none",
-                "color": "hsla(204, 2.4%, 59%, 1.000)"
+                "color": "var(--table-header-text)"
             }
         }
     },
@@ -609,14 +609,14 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 300,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 56.1%, 1.000)"
+                    "color": "var(--text-16)"
                 },
                 "active": {
                     "textAlign": "left",
                     "fontSize": "14px",
                     "fontWeight": 600,
                     "textDecoration": "none",
-                    "color": "hsla(207, 94.2%, 66.1%, 1.000)"
+                    "color": "var(--meta-text)"
                 }
             },
             "calendar": {
@@ -625,28 +625,28 @@ export const typography = {
                     "fontSize": "14px",
                     "fontWeight": 400,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 },
                 "otherMonth": {
                     "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 400,
                     "textDecoration": "none",
-                    "color": "hsla(206, 6.3%, 49.4%, 0.502)"
+                    "color": "var(--datepicker-other-month-text)"
                 },
                 "default": {
                     "textAlign": "center",
                     "fontSize": "14px",
                     "fontWeight": 400,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 46.3%, 1.000)"
+                    "color": "var(--text-13)"
                 },
                 "header": {
                     "textAlign": "center",
                     "fontSize": "12px",
                     "fontWeight": 700,
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 82%, 1.000)"
+                    "color": "calendar: "
                 }
             },
             "monthLink": {
@@ -658,7 +658,7 @@ export const typography = {
                     "textTransform": "uppercase",
                     "letterSpacing": "0.4px",
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 75.7%, 1.000)"
+                    "color": "var(--border-1)"
                 },
                 "hover": {
                     "textAlign": "center",
@@ -668,7 +668,7 @@ export const typography = {
                     "textTransform": "uppercase",
                     "letterSpacing": "0.4px",
                     "textDecoration": "none",
-                    "color": "hsla(0, 0%, 100%, 1.000)"
+                    "color": "var(--white-1)"
                 }
             },
             "focusedMonth": {
@@ -678,7 +678,7 @@ export const typography = {
                 "lineHeight": "20px",
                 "letterSpacing": "0.5px",
                 "textDecoration": "none",
-                "color": "hsla(215, 23.5%, 64.1%, 1.000)"
+                "color": "var(--datepicker-focus-text)"
             },
             "focusedYear": {
                 "textAlign": "center",
@@ -688,7 +688,7 @@ export const typography = {
                 "textTransform": "uppercase",
                 "letterSpacing": "0.3333333px",
                 "textDecoration": "none",
-                "color": "hsla(215, 23.5%, 64.1%, 1.000)"
+                "color": "var(--datepicker-focus-text)"
             }
         },
         "value": {
@@ -697,7 +697,7 @@ export const typography = {
             "fontWeight": 500,
             "letterSpacing": "0.2px",
             "textDecoration": "none",
-            "color": "hsla(0, 0%, 56.1%, 1.000)"
+            "color": "var(--text-16)"
         },
         "subOption": {
             "label": {
@@ -705,14 +705,14 @@ export const typography = {
                 "fontSize": "12px",
                 "fontWeight": 300,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 46.3%, 1.000)"
+                "color": "var(--text-13)"
             },
             "value": {
                 "textAlign": "left",
                 "fontSize": "13px",
                 "fontWeight": 500,
                 "textDecoration": "none",
-                "color": "hsla(202, 6.2%, 74.5%, 1.000)"
+                "color": "var(--filter-text)"
             }
         },
         "presetAction": {
@@ -720,7 +720,7 @@ export const typography = {
             "fontSize": "13px",
             "fontWeight": 500,
             "textDecoration": "none",
-            "color": "hsla(202, 6.2%, 74.5%, 1.000)"
+            "color": "var(--filter-text)"
         },
         "filterButton": {
             "default": {
@@ -728,21 +728,21 @@ export const typography = {
                 "fontSize": "12px",
                 "fontWeight": 400,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 50.2%, 1.000)"
+                "color": "var(--text-14)"
             },
             "active": {
                 "textAlign": "left",
                 "fontSize": "12px",
                 "fontWeight": 400,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 100%, 1.000)"
+                "color": "var(--white-1)"
             },
             "hover": {
                 "textAlign": "left",
                 "fontSize": "12px",
                 "fontWeight": 400,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 100%, 1.000)"
+                "color": "var(--white-1)"
             }
         },
         "searchInput": {
@@ -752,14 +752,14 @@ export const typography = {
                 "fontSize": "12px",
                 "fontWeight": 500,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 46.3%, 0.647)"
+                "color": "var(--text-11)"
             },
             "value": {
                 "textAlign": "left",
                 "fontSize": "12px",
                 "fontWeight": 400,
                 "textDecoration": "none",
-                "color": "hsla(0, 0%, 50.2%, 1.000)"
+                "color": "var(--text-14)"
             }
         }
     },
@@ -770,7 +770,7 @@ export const typography = {
             "fontWeight": 400,
             "letterSpacing": "0.3px",
             "textDecoration": "none",
-            "color": "hsla(210, 2.4%, 51%, 0.651)"
+            "color": "var(--table-groupname-text)"
         }
     },
     "modal": {
@@ -780,7 +780,7 @@ export const typography = {
             "fontWeight": 400,
             "textShadow": "0px 0px 10px #ffffffcc",
             "textDecoration": "none",
-            "color": "hsla(210, 5.8%, 47.5%, 1.000)"
+            "color": "var(--modal-title-text)"
         },
         "basicContent": {
             "textAlign": "left",
@@ -788,7 +788,7 @@ export const typography = {
             "fontWeight": 400,
             "lineHeight": "25px",
             "textDecoration": "none",
-            "color": "hsla(200, 1.2%, 49.2%, 1.000)"
+            "color": "var(--modal-content-text)"
         }
     }
 };

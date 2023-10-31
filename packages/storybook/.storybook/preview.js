@@ -7,6 +7,7 @@ import { MemoryRouter as Router } from 'react-router-dom'
 import Style from '../src/style';
 const { addDecorator } = require('@storybook/react');
 const { jsxDecorator } = require('storybook-addon-jsx');
+import '../src/theme/theme-variables.css';
 
 // Add JSX to all components
 addDecorator(jsxDecorator);
