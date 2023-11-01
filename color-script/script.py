@@ -115,6 +115,3 @@ find_and_replace_color_variables("./target/colors.ts", color_variables)
 find_and_replace_color_variables("./target/custom.ts", color_variables)
 find_and_replace_color_variables("./target/styles.ts", color_variables)
 find_and_replace_color_variables("./target/typography.ts", color_variables)
-
-#packages/ui-lib/src/themes/light/color-script/script.py
-#packages/ui-lib/src/themes/light/light.ts
