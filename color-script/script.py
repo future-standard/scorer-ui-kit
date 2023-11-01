@@ -97,7 +97,10 @@ def find_and_replace_color_variables(file_path, source_dict):
         for line in file.readlines():
             new_line = line
             for key in source_dict:
-                var_template = 'var({color})'.format(color = source_dict[key]["variable"]);
+
+                color_variable = source_dict[key]["variable"]
+                var_template = f"var({color_variable})"
+
                 new_line = new_line.replace(key, var_template)
             new_content += new_line
 
