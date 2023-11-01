@@ -1,0 +1,1417 @@
+{
+  "#0097ce": [
+    "  color: ${({ active }) => active ? '#0097ce' : '#787878'}; in packages/ui-lib/src/Tabs/atoms/Tab.tsx",
+    "  border-bottom: ${({ active }) => active ? '2px solid #0097ce' : '2px solid transparent'}; in packages/ui-lib/src/Tabs/atoms/Tab.tsx"
+  ],
+  "#1F2F3A": [
+    "          <stop stopColor='#1F2F3A' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#1F2F3A' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#1a97e9": [
+    "            \"textShadow\": \"0px 0px 10px #1a97e959\", in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "#262E37": [
+    "          <stop stopColor='#262E37' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#262E37' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#262E37' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx",
+    "          <stop stopColor='#262E37' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#263647": [
+    "          <stop stopColor='#263647' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#263647' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#263647' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#273743": [
+    "          <stop stopColor='#273743' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#273743' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#2E3F4B": [
+    "          <stop stopColor='#2E3F4B' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#2E3F4B' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#2F4555": [
+    "          <stop stopColor='#2F4555' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#2F4555' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#324659": [
+    "          <stop stopColor='#324659' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#324659' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#324659' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#3393FF": [
+    "          <stop stopColor='#3393FF' stopOpacity='0' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#3393FF' stopOpacity='0' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#3393FF' stopOpacity='0' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#3393FF' stopOpacity='0' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#3393FF' stopOpacity='0' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#46596D": [
+    "          <stop stopColor='#46596D' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#46596D' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx",
+    "          <stop stopColor='#46596D' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#508ED3": [
+    "          <stop stopColor='#508ED3' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#508ED3' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#508ED3' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#508ED3' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx",
+    "          <stop stopColor='#508ED3' stopOpacity='0.65' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#577393": [
+    "          <stop stopColor='#577393' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#577393' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx",
+    "          <stop stopColor='#577393' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#5CA0D1": [
+    "          <stop offset='100%' stopColor='#5CA0D1' /> in packages/ui-lib/src/svg/LogoMark.tsx"
+  ],
+  "#6A839E": [
+    "          <path d='M105.820053,40.7088832 L99.6638296,34.5975949 C102.060022,31.621888 101.697137,27.3062591 98.8371361,24.766097 C95.9771351,22.2259349 91.6163355,22.346137 88.902734,25.0399314 C86.1891326,27.7337257 86.0680466,32.0626948 88.6268862,34.90182 C91.1857259,37.7409453 95.5330871,38.1011814 98.5306741,35.7224793 L104.686898,41.8337675 C105.002147,42.1387442 105.504804,42.1387442 105.820053,41.8337675 C106.132899,41.5231118 106.132899,41.0195389 105.820053,40.7088832 Z M88.425235,30.1282878 C88.425235,27.0527607 90.9367746,24.5595534 94.0349157,24.5595534 C97.1330568,24.5595534 99.6445964,27.0527607 99.6445964,30.1282878 C99.6445964,33.2038149 97.1330568,35.6970222 94.0349157,35.6970222 C90.9382392,35.693515 88.428768,33.202361 88.425235,30.1282878 Z' id='PTZ-Zoom-Divider-Section-Icon' fill='#6A839E' fillRule='nonzero' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#787878": [
+    "  color: ${({ active }) => active ? '#0097ce' : '#787878'}; in packages/ui-lib/src/Tabs/atoms/Tab.tsx"
+  ],
+  "#79AEEB": [
+    "          <stop stopColor='#79AEEB' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#79AEEB' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#79AEEB' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#79AEEB' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx",
+    "          <stop stopColor='#79AEEB' stopOpacity='0.66' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#7DB8DB": [
+    "          <stop offset='0%' stopColor='#7DB8DB' /> in packages/ui-lib/src/svg/LogoMark.tsx"
+  ],
+  "#93A5B2": [
+    "        fill='#93A5B2' in packages/ui-lib/src/svg/LogoText.tsx"
+  ],
+  "#99a1a3": [
+    "  color: #99a1a3; in packages/ui-lib/src/Form/atoms/SmallInput.tsx"
+  ],
+  "#A2B9FF": [
+    "          <stop stopColor='#A2B9FF' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#A2B9FF' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#A2B9FF' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#A2B9FF' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#A2B9FF' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#B2C9D9": [
+    "          <stop stopColor='#B2C9D9' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#B2C9D9' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx",
+    "          <stop stopColor='#B2C9D9' offset='100%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#C1C1C1": [
+    "        <g stroke='#C1C1C1' strokeWidth='1.5'> in packages/ui-lib/src/svg/AvatarPlaceholder.tsx"
+  ],
+  "#F0F7FF": [
+    "          <stop stopColor='#F0F7FF' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/Base.tsx",
+    "          <stop stopColor='#F0F7FF' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx",
+    "          <stop stopColor='#F0F7FF' offset='0%' /> in packages/ui-lib/src/PTZControl/molecules/ZoomBase.tsx"
+  ],
+  "#afa9a9": [
+    "  border: ${({inDropZone}) => inDropZone ? `dashed #afa9a9 2px` : null}; in packages/ui-lib/src/Form/atoms/DropArea.tsx"
+  ],
+  "#ffffff": [
+    "            \"textShadow\": \"0px 0px 10px #ffffffcc\", in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsl(0, 0%, 100%)": [
+    "  background-color: hsl(0, 0%, 100%); in packages/ui-lib/src/Form/atoms/CropArea.tsx",
+    "  background-color: hsl(0, 0%, 100%); in packages/ui-lib/src/Tables/molecules/EditCell.tsx"
+  ],
+  "hsl(0, 0%, 24%)": [
+    "  border: dashed 1px hsl(0, 0%, 24%); in packages/ui-lib/src/Form/molecules/CropTool.tsx"
+  ],
+  "hsl(0, 0%, 34%)": [
+    "  color: hsl(0, 0%, 34%); in packages/ui-lib/src/Global/atoms/NotificationItem.tsx",
+    "  color: hsl(0, 0%, 34%); in packages/ui-lib/src/Global/atoms/NotificationItem.tsx",
+    "    color: hsl(0, 0%, 34%); in packages/ui-lib/src/Global/molecules/NotificationsHistory.tsx"
+  ],
+  "hsl(0, 0%, 46%)": [
+    "  color: ${({ active }) => active ? 'hsl(196, 100%, 40%)' : 'hsl(0, 0%, 46%)'}; in packages/ui-lib/src/Tabs/atoms/TabWithIcon.tsx"
+  ],
+  "hsl(0, 0%, 50%)": [
+    "  color: hsl(0, 0%, 50%); in packages/ui-lib/src/Global/molecules/Sidebar.tsx",
+    "  color: hsl(0, 0%, 50%); in packages/ui-lib/src/Global/molecules/Sidebar.tsx",
+    "  color: hsl(0, 0%, 50%); in packages/ui-lib/src/Global/molecules/Sidebar.tsx"
+  ],
+  "hsl(0, 0%, 55%)": [
+    "  color: hsl(0, 0%, 55%); in packages/ui-lib/src/Filters/atoms/LoadingBox.tsx",
+    "  color: hsl(0, 0%, 55%); in packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx",
+    "  color: hsl(0, 0%, 55%); in packages/ui-lib/src/Global/molecules/Sidebar.tsx"
+  ],
+  "hsl(0, 0%, 56%)": [
+    "  color: hsl(0, 0%, 56%); in packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx",
+    "  color: hsl(0, 0%, 56%); in packages/ui-lib/src/Filters/molecules/SortDropdown.tsx",
+    "  color: hsl(0, 0%, 56%); in packages/ui-lib/src/Form/atoms/FilterOption.tsx"
+  ],
+  "hsl(0, 0%, 67%)": [
+    "  color: hsl(0, 0%, 67%); in packages/ui-lib/src/Global/atoms/NotificationItem.tsx"
+  ],
+  "hsl(0, 0%, 89%)": [
+    "  border-bottom: 1px solid hsl(0, 0%, 89%); in packages/ui-lib/src/Tabs/molecules/TabsWithIconBar.tsx"
+  ],
+  "hsl(0, 0%, 90%)": [
+    "  background-color: hsl(0, 0%, 90%); in packages/ui-lib/src/Form/organisms/AvatarUploader.tsx"
+  ],
+  "hsl(0, 0%, 91%)": [
+    "  border-top: 1px solid hsl(0, 0%, 91%); in packages/ui-lib/src/Filters/atoms/LoadingBox.tsx"
+  ],
+  "hsl(0, 1%, 28%)": [
+    "  border: solid 1px hsl(0, 1%, 28%); in packages/ui-lib/src/Form/atoms/CropArea.tsx"
+  ],
+  "hsl(120, 1%, 85%)": [
+    "  border: solid 1px hsl(120, 1%, 85%); in packages/ui-lib/src/Misc/atoms/Tag.tsx"
+  ],
+  "hsl(195, 10%, 52%)": [
+    "  color: hsl(195, 10%, 52%); in packages/ui-lib/src/CameraPanels/atoms/PanelMetaData.tsx"
+  ],
+  "hsl(195deg, 90%, 45%)": [
+    "    background: hsl(195deg, 90%, 45%); in packages/ui-lib/src/LineUI/Control.tsx"
+  ],
+  "hsl(196, 100%, 40%)": [
+    "    border-bottom: 3px solid hsl(196, 100%, 40%); in packages/ui-lib/src/Tabs/atoms/TabWithIcon.tsx",
+    "  color: ${({ active }) => active ? 'hsl(196, 100%, 40%)' : 'hsl(0, 0%, 46%)'}; in packages/ui-lib/src/Tabs/atoms/TabWithIcon.tsx"
+  ],
+  "hsl(200, 3%, 39%)": [
+    "  color: hsl(200, 3%, 39%); in packages/ui-lib/src/Misc/atoms/Tag.tsx"
+  ],
+  "hsl(203, 42%, 94%)": [
+    "  background-image: linear-gradient(to bottom, hsl(210, 30%, 96%), hsl(203, 42%, 94%) 98%); in packages/ui-lib/src/Form/atoms/SliderInput.tsx"
+  ],
+  "hsl(205, 100%, 72%)": [
+    "    background-color: hsl(205, 100%, 72%); in packages/ui-lib/src/Filters/atoms/FilterButton.tsx",
+    "    border: solid 1px hsl(205, 100%, 72%); in packages/ui-lib/src/Filters/atoms/FilterButton.tsx"
+  ],
+  "hsl(205, 22%, 66%)": [
+    "      stroke: hsl(205, 22%, 66%); in packages/ui-lib/src/Misc/atoms/BigIconsSummary.tsx"
+  ],
+  "hsl(205, 7%, 35%)": [
+    "  color: hsl(205, 7%, 35%); in packages/ui-lib/src/Global/molecules/Sidebar.tsx"
+  ],
+  "hsl(205, 77%, 64%)": [
+    "  background-color: hsl(205, 77%, 64%); in packages/ui-lib/src/Form/atoms/SliderInput.tsx"
+  ],
+  "hsl(205deg, 15%, 5%)": [
+    "  background: hsl(205deg, 15%, 5%); in packages/ui-lib/src/LineUI/Control.tsx"
+  ],
+  "hsl(205deg, 45%, 5%, 35%)": [
+    "  box-shadow: 0 10px 20px hsl(205deg, 45%, 5%, 35%); in packages/ui-lib/src/LineUI/Control.tsx"
+  ],
+  "hsl(206, 70%, 96%)": [
+    "  background-color: hsl(206, 70%, 96%); in packages/ui-lib/src/Global/molecules/Sidebar.tsx"
+  ],
+  "hsl(207, 16%, 86%)": [
+    "  border: solid 1px hsl(207, 16%, 86%); in packages/ui-lib/src/Filters/molecules/SortDropdown.tsx"
+  ],
+  "hsl(207, 5%, 57%)": [
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Filters/molecules/FiltersResults.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Filters/molecules/FiltersResults.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Filters/organisms/FilterBar.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Form/atoms/Label.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Form/molecules/DurationSlider.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Form/molecules/PercentageSlider.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Form/organisms/AreaUploadManager.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Form/organisms/AvatarUploader.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Misc/atoms/ActionsBar.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Misc/atoms/ActionsBar.tsx",
+    "  color: hsl(207, 5%, 57%); in packages/ui-lib/src/Tables/organisms/TypeTable.tsx"
+  ],
+  "hsl(207, 80%, 64%)": [
+    "    border-bottom: 5px solid hsl(207, 80%, 64%); in packages/ui-lib/src/Alerts/atom/AlertBar.tsx",
+    "    border-bottom: 5px solid hsl(207, 80%, 64%); in packages/ui-lib/src/Alerts/atom/Notification.tsx",
+    "    border-bottom: 5px solid hsl(207, 80%, 64%); in packages/ui-lib/src/Modals/Modal.tsx"
+  ],
+  "hsl(208, 8%, 38%)": [
+    "  color: hsl(208, 8%, 38%); in packages/ui-lib/src/CameraPanels/atoms/PanelMetaData.tsx",
+    "  color: hsl(208, 8%, 38%); in packages/ui-lib/src/Form/organisms/AreaUploadManager.tsx",
+    "    color: hsl(208, 8%, 38%); in packages/ui-lib/src/Tables/organisms/TypeTable.tsx"
+  ],
+  "hsl(210, 22%, 91%)": [
+    "  background-color: hsl(210, 22%, 91%); in packages/ui-lib/src/Global/atoms/NotificationItem.tsx"
+  ],
+  "hsl(210, 30%, 96%)": [
+    "  background-image: linear-gradient(to bottom, hsl(210, 30%, 96%), hsl(203, 42%, 94%) 98%); in packages/ui-lib/src/Form/atoms/SliderInput.tsx"
+  ],
+  "hsl(216, 4%, 77%)": [
+    "  color: hsl(216, 4%, 77%); in packages/ui-lib/src/Filters/molecules/FiltersResults.tsx"
+  ],
+  "hsla(0, 0%, 0%, .5)": [
+    "  background-color: hsla(0, 0%, 0%, .5); in packages/ui-lib/src/Tables/atoms/TableRowThumbnail.tsx"
+  ],
+  "hsla(0, 0%, 0%, 0.000)": [
+    "    \"transparent\": \"hsla(0, 0%, 0%, 0.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(0, 0%, 0%, 0.01)": [
+    "  box-shadow: 0 -5px 5px 0 hsla(0, 0%, 0%, 0.01); in packages/ui-lib/src/Tabs/molecules/TabsWithIconBar.tsx"
+  ],
+  "hsla(0, 0%, 0%, 1.000)": [
+    "    \"pureTop\": \"hsla(0, 0%, 0%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(0, 0%, 100%, 0.545)": [
+    "                \"color\": \"hsla(0, 0%, 100%, 0.545)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 100%, 0.549)": [
+    "                    \"color\": \"hsla(0, 0%, 100%, 0.549)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 100%, 0.800)": [
+    "                    \"color\": \"hsla(0, 0%, 100%, 0.800)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "        \"color\": \"hsla(0, 0%, 100%, 0.800)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 100%, 1.000)": [
+    "      stroke: hsla(0, 0%, 100%, 1.000); in packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx",
+    "        stroke: hsla(0, 0%, 100%, 1.000); in packages/ui-lib/src/Tables/atoms/TableRowThumbnail.tsx",
+    "        \"mono\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/dark/colors.ts",
+    "                \"textColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"textColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(0, 0%, 100%, 1.000) 3px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "    \"pureBase\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts",
+    "        \"inverse\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts",
+    "                    \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(0, 0%, 100%, 1.000) 0%, hsla(0, 0%, 98.8%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(0, 0%, 100%, 1.000) 0%, hsla(0, 0%, 98.8%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(0, 0%, 100%, 1.000) 3px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(0, 0%, 100%, 1.000) 3px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(0, 0%, 100%, 1.000) 3px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(0, 0%, 100%, 1.000) 3px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"textColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"textColor\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "            \"backgroundColor\": \"hsla(0, 0%, 100%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "            \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 100%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 13%, 0.16)": [
+    "  border-right: 1px solid hsla(0, 0%, 13%, 0.16); in packages/ui-lib/src/Filters/molecules/FiltersResults.tsx"
+  ],
+  "hsla(0, 0%, 17.6%, 1.000)": [
+    "                \"color\": \"hsla(0, 0%, 17.6%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 22.7%, 1.000)": [
+    "            \"color\": \"hsla(0, 0%, 22.7%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 25.1%, 1.000)": [
+    "        \"inverse\": \"hsla(0, 0%, 25.1%, 1.000)\", in packages/ui-lib/src/themes/dark/colors.ts",
+    "        \"mono\": \"hsla(0, 0%, 25.1%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(0, 0%, 32%, 0.75)": [
+    "  box-shadow: 0 0 0 9999em hsla(0, 0%, 32%, 0.75); in packages/ui-lib/src/Form/molecules/CropTool.tsx"
+  ],
+  "hsla(0, 0%, 34.1%, 0.749)": [
+    "                \"color\": \"hsla(0, 0%, 34.1%, 0.749)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 34.5%, 0.647)": [
+    "                    \"color\": \"hsla(0, 0%, 34.5%, 0.647)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 34.5%, 0.847)": [
+    "                    \"color\": \"hsla(0, 0%, 34.5%, 0.847)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 34.5%, 0.851)": [
+    "                    \"color\": \"hsla(0, 0%, 34.5%, 0.851)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 34.5%, 0.851)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 34.5%, 0.902)": [
+    "                \"color\": \"hsla(0, 0%, 34.5%, 0.902)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 34.5%, 1.000)": [
+    "                \"color\": \"hsla(0, 0%, 34.5%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 34.9%, 1.000)": [
+    "                    \"color\": \"hsla(0, 0%, 34.9%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 34.9%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 46.3%, 0.502)": [
+    "                    \"color\": \"hsla(0, 0%, 46.3%, 0.502)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 46.3%, 0.502)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 46.3%, 0.647)": [
+    "            \"color\": \"hsla(0, 0%, 46.3%, 0.647)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "            \"color\": \"hsla(0, 0%, 46.3%, 0.647)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 46.3%, 0.647)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 46.3%, 0.651)": [
+    "                \"color\": \"hsla(0, 0%, 46.3%, 0.651)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 46.3%, 1.000)": [
+    "                    \"color\": \"hsla(0, 0%, 46.3%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 46.3%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "            \"color\": \"hsla(0, 0%, 46.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 46.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 46.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 46.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 46.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 48.2%, 1.000)": [
+    "            \"color\": \"hsla(0, 0%, 48.2%, 1.000)\", in packages/ui-lib/src/themes/dark/typography.ts",
+    "            \"color\": \"hsla(0, 0%, 48.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "            \"color\": \"hsla(0, 0%, 48.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "            \"color\": \"hsla(0, 0%, 48.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 50.2%, 1.000)": [
+    "                \"textColor\": \"hsla(0, 0%, 50.2%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"color\": \"hsla(0, 0%, 50.2%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 50.2%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 55.3%, 1.000)": [
+    "                    \"color\": \"hsla(0, 0%, 55.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 55.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 55.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 55.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 56.1%, 1.000)": [
+    "                \"color\": \"hsla(0, 0%, 56.1%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 56.1%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "            \"color\": \"hsla(0, 0%, 56.1%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 56.5%, 1.000)": [
+    "            \"color\": \"hsla(0, 0%, 56.5%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 65.1%, 1.000)": [
+    "        \"dimmed\": \"hsla(0, 0%, 65.1%, 1.000)\", in packages/ui-lib/src/themes/dark/colors.ts",
+    "        \"dimmed\": \"hsla(0, 0%, 65.1%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(0, 0%, 65.5%, 1.000)": [
+    "                    \"color\": \"hsla(0, 0%, 65.5%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 75.7%, 1.000)": [
+    "                    \"borderColor\": \"hsla(0, 0%, 75.7%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(0, 0%, 75.7%, 1.000) 3px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"color\": \"hsla(0, 0%, 75.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 76.9%, 0.329)": [
+    "                    \"borderColor\": \"hsla(0, 0%, 76.9%, 0.329)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(0, 0%, 76.9%, 0.329) 3px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(0, 0%, 76.9%, 0.329)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(0, 0%, 76.9%, 0.329) 3px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 0%, 82%, 1.000)": [
+    "                    \"color\": \"hsla(0, 0%, 82%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 0%, 84%, 50%)": [
+    "  border-right: 1px solid hsla(0, 0%, 84%, 50%); in packages/ui-lib/src/Global/molecules/Sidebar.tsx",
+    "  border-bottom: 1px solid hsla(0, 0%, 84%, 50%); in packages/ui-lib/src/Global/molecules/Sidebar.tsx",
+    "  border-bottom: 1px solid hsla(0, 0%, 84%, 50%); in packages/ui-lib/src/Global/molecules/Sidebar.tsx"
+  ],
+  "hsla(0, 0%, 85.1%, 1.000)": [
+    "        \"subtle\": \"hsla(0, 0%, 85.1%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(0, 0%, 85.9%, 1.000)": [
+    "            \"color\": \"hsla(0, 0%, 85.9%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 86.3%, 1.000)": [
+    "                \"textColor\": \"hsla(0, 0%, 86.3%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"color\": \"hsla(0, 0%, 86.3%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "            \"color\": \"hsla(0, 0%, 86.3%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "            \"color\": \"hsla(0, 0%, 86.3%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 88.6%, 0.651)": [
+    "                \"color\": \"hsla(0, 0%, 88.6%, 0.651)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 89.4%, 1.000)": [
+    "                        \"backgroundColor\": \"hsla(0, 0%, 89.4%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"backgroundColor\": \"hsla(0, 0%, 89.4%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 0%, 90.6%, 1.000)": [
+    "                \"borderColor\": \"hsla(0, 0%, 90.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"border\": \"hsla(0, 0%, 90.6%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 0%, 91.4%, 1.000)": [
+    "                    \"color\": \"hsla(0, 0%, 91.4%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 91.4%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 91.4%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(0, 0%, 91.4%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 91.8%, 0)": [
+    "  background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'hsla(0, 0%, 91.8%, 0)'}; in packages/ui-lib/src/Icons/StatusIcon.tsx",
+    "  background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'hsla(0, 0%, 91.8%, 0)'}; in packages/ui-lib/src/Icons/StatusIcon.tsx"
+  ],
+  "hsla(0, 0%, 91.8%, 1.000)": [
+    "        \"neutral\": \"hsla(0, 0%, 91.8%, 1.000)\" in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(0, 0%, 93.3%, 1.000)": [
+    "    \"divider\": \"hsla(0, 0%, 93.3%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts",
+    "                \"backgroundColor\": \"hsla(0, 0%, 93.3%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 0%, 94.9%, 0.302)": [
+    "                    \"backgroundColor\": \"hsla(0, 0%, 94.9%, 0.302)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 0%, 94.9%, 0.302)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 0%, 96.9%, 1.000)": [
+    "                    \"color\": \"hsla(0, 0%, 96.9%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(0, 0%, 96.9%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(0, 0%, 97.3%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(0, 0%, 97.3%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 0%, 98.8%, 1.000)": [
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(0, 0%, 100%, 1.000) 0%, hsla(0, 0%, 98.8%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(0, 0%, 100%, 1.000) 0%, hsla(0, 0%, 98.8%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 0%, 98.8%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 0%, 99.6%, 0.851)": [
+    "                \"backgroundColor\": \"hsla(0, 0%, 99.6%, 0.851)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 0%, 99.6%, 1.000)": [
+    "                \"backgroundColor\": \"hsla(0, 0%, 99.6%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 100%, 15%, 0%)": [
+    "          stopColor: 'hsla(0, 100%, 15%, 0%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stopColor: 'hsla(0, 100%, 15%, 0%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(0, 100%, 15%, 35%)": [
+    "          stopColor:' hsla(0, 100%, 15%, 35%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stopColor:' hsla(0, 100%, 15%, 35%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(0, 100%, 50%, 0.102)": [
+    "      box-shadow: 0px 3px 7px 0px hsla(0, 100%, 50%, 0.102); in packages/ui-lib/src/Form/atoms/TextArea.tsx",
+    "                    \"boxShadow\": \"0px 3px 7px 0px hsla(0, 100%, 50%, 0.102)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"boxShadow\": \"0px 3px 7px 0px hsla(0, 100%, 50%, 0.102)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 100%, 70%, 1.000)": [
+    "        \"danger\": \"hsla(0, 100%, 70%, 1.000)\", in packages/ui-lib/src/themes/dark/colors.ts",
+    "        \"danger\": \"hsla(0, 100%, 70%, 1.000)\" in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(0, 100%, 89%, 100%)": [
+    "          stroke: 'hsla(0, 100%, 89%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(0, 100%, 89%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(0, 14.3%, 90.4%, 1.000)": [
+    "            \"borderColor\": \"hsla(0, 14.3%, 90.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "            \"border\": \"hsla(0, 14.3%, 90.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 2%, 29.6%, 1.000)": [
+    "                    \"borderColor\": \"hsla(0, 2%, 29.6%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(0, 2%, 29.6%, 1.000) 3px solid\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(0, 45%, 100%, 100%)": [
+    "          stroke: 'hsla(0, 45%, 100%, 100%)' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(0, 45%, 100%, 100%)' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(0, 45%, 90%, 100%)": [
+    "          fill: 'hsla(0, 45%, 90%, 100%)', in packages/ui-lib/src/themes/dark/custom.ts",
+    "        fill: 'hsla(0, 45%, 90%, 100%)', in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(0, 45%, 90%, 100%)', in packages/ui-lib/src/themes/light/custom.ts",
+    "        fill: 'hsla(0, 45%, 90%, 100%)', in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(0, 45%, 90%, 90%)": [
+    "          stroke: 'hsla(0, 45%, 90%, 90%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(0, 45%, 90%, 90%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(0, 51.2%, 60.6%, 1.000)": [
+    "                        \"borderColor\": \"hsla(0, 51.2%, 60.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(0, 51.2%, 60.6%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 54%, 60.8%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(0, 54%, 60.8%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 54%, 60.8%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 54.2%, 67.5%, 1.000)": [
+    "                        \"borderColor\": \"hsla(0, 54.2%, 67.5%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(0, 54.2%, 67.5%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 57%, 81.8%, 1.000)": [
+    "                        \"backgroundColor\": \"hsla(0, 57%, 81.8%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 57%, 81.8%, 1.000) 0%, hsla(19, 100%, 84.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 57.9%, 73.9%, 1.000)": [
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 60.6%, 73.1%, 1.000) 0.4%, hsla(0, 57.9%, 73.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 60.6%, 73.1%, 1.000)": [
+    "                        \"backgroundColor\": \"hsla(0, 60.6%, 73.1%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 60.6%, 73.1%, 1.000) 0.4%, hsla(0, 57.9%, 73.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 62%, 73.1%, 1.000)": [
+    "                        \"borderColor\": \"hsla(0, 62%, 73.1%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(0, 62%, 73.1%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 62.1%, 61.8%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(0, 62.1%, 61.8%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 63.5%, 64.5%, 1.000)": [
+    "        \"danger\": \"hsla(0, 63.5%, 64.5%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(0, 66.5%, 61.4%, 1.000)": [
+    "                        \"borderColor\": \"hsla(0, 66.5%, 61.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(0, 66.5%, 61.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 67.9%, 67.1%, 1.000)": [
+    "                \"color\": \"hsla(0, 67.9%, 67.1%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(0, 68%, 66.9%, 1.000)": [
+    "                        \"backgroundColor\": \"hsla(0, 68%, 66.9%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 68%, 66.9%, 1.000) 0%, hsla(20, 81.2%, 64.5%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 68.5%, 67.6%, 1.000)": [
+    "                        \"backgroundColor\": \"hsla(0, 68.5%, 67.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 68.5%, 67.6%, 1.000) 0%, hsla(0, 69.1%, 65.7%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 69.1%, 65.7%, 1.000)": [
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 68.5%, 67.6%, 1.000) 0%, hsla(0, 69.1%, 65.7%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 71.4%, 67.1%, 1.000)": [
+    "                    \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 54%, 60.8%, 1.000) 0%, hsla(0, 71.4%, 67.1%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 78.7%, 85.3%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(0, 78.7%, 85.3%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"borderColor\": \"hsla(0, 78.7%, 85.3%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(0, 78.7%, 85.3%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 78.8%, 70.4%, 1.000)": [
+    "                    \"borderColor\": \"hsla(0, 78.8%, 70.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(0, 78.8%, 70.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(0, 78.8%, 70.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(0, 78.8%, 70.4%, 1.000) 2px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "        \"error\": \"hsla(0, 78.8%, 70.4%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts",
+    "                    \"borderColor\": \"hsla(0, 78.8%, 70.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(0, 78.8%, 70.4%, 1.000) 2px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(0, 78.8%, 70.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(0, 78.8%, 70.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(0, 78.8%, 70.4%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(0, 78.8%, 70.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(0, 78.8%, 70.4%, 1.000) 3px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 79.5%, 77.1%, 1.000)": [
+    "                        \"backgroundColor\": \"hsla(0, 79.5%, 77.1%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 79.5%, 77.1%, 1.000) 0%, hsla(20, 96%, 80.4%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0, 80%, 25%, 100%)": [
+    "          fill: 'hsla(0, 80%, 25%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(0, 80%, 25%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(0, 80%, 45%, 100%)": [
+    "          stroke: 'hsla(0, 80%, 45%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(0, 80%, 45%, 100%)' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(0, 80%, 45%, 100%);' in packages/ui-lib/src/themes/light/custom.ts",
+    "          stroke: 'hsla(0, 80%, 45%, 100%)' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(0, 88.4%, 66.3%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(0, 88.4%, 66.3%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(0,54%,38%, 1.000)": [
+    "                  \"backgroundColor\": \"hsla(0,54%,38%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(0deg, 0%, 0%, 0%)": [
+    "  background: hsla(0deg, 0%, 0%, 0%); in packages/ui-lib/src/LineUI/LineUI.tsx",
+    "  background: hsla(0deg, 0%, 0%, 0%); in packages/ui-lib/src/LineUI/LineUIRTC.tsx",
+    "  background: hsla(0deg, 0%, 0%, 0%); in packages/ui-lib/src/LineUI/LineUIVideo.tsx"
+  ],
+  "hsla(0deg, 0%, 0%, 35%)": [
+    "    background: hsla(0deg, 0%, 0%, 35%); in packages/ui-lib/src/LineUI/LineUI.tsx",
+    "  background-color: hsla(0deg, 0%, 0%, 35%); in packages/ui-lib/src/LineUI/LineUIRTC.tsx",
+    "    background: hsla(0deg, 0%, 0%, 35%); in packages/ui-lib/src/LineUI/LineUIRTC.tsx",
+    "  background-color: hsla(0deg, 0%, 0%, 35%); in packages/ui-lib/src/LineUI/LineUIVideo.tsx",
+    "    background: hsla(0deg, 0%, 0%, 35%); in packages/ui-lib/src/LineUI/LineUIVideo.tsx",
+    "  background-color: hsla(0deg, 0%, 0%, 35%); in packages/ui-lib/src/Misc/atoms/MediaBox.tsx"
+  ],
+  "hsla(0deg, 100%, 36%, 15%)": [
+    "          stroke: 'hsla(0deg, 100%, 36%, 15%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(0deg, 100%, 36%, 15%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(0deg, 100%, 36%, 27%)": [
+    "          stroke: 'hsla(0deg, 100%, 36%, 27%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(0deg, 100%, 36%, 27%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(108deg, 100%, 45%, 100%)": [
+    "          fill: 'hsla(108deg, 100%, 45%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(108deg, 100%, 45%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120, 1.3%, 85.3%, 1.000)": [
+    "            \"default\": \"hsla(120, 1.3%, 85.3%, 1.000)\" in packages/ui-lib/src/themes/dark/colors.ts",
+    "            \"default\": \"hsla(120, 1.3%, 85.3%, 1.000)\" in packages/ui-lib/src/themes/light/colors.ts",
+    "                    \"borderColor\": \"hsla(120, 1.3%, 85.3%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(120, 1.3%, 85.3%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"backgroundColor\": \"hsla(120, 1.3%, 85.3%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(120, 1.3%, 85.3%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(120, 35.2%, 71.6%, 1.000)": [
+    "                    \"borderColor\": \"hsla(120, 35.2%, 71.6%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(120, 35.2%, 71.6%, 1.000) 1px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(120, 35.2%, 71.6%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(120, 35.2%, 71.6%, 1.000) 2px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(120, 35.2%, 71.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(120, 35.2%, 71.6%, 1.000) 2px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(120, 35.2%, 71.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(120, 35.2%, 71.6%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(120, 76.6%, 15.1%, 0.071)": [
+    "      box-shadow: 0px 3px 5px 0px hsla(120, 76.6%, 15.1%, 0.071); in packages/ui-lib/src/Form/atoms/TextArea.tsx",
+    "                    \"boxShadow\": \"0px 3px 5px 0px hsla(120, 76.6%, 15.1%, 0.071)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"boxShadow\": \"0px 3px 5px 0px hsla(120, 76.6%, 15.1%, 0.071)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(120deg, 100%, 15%, 0%)": [
+    "          stopColor: 'hsla(120deg, 100%, 15%, 0%)' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stopColor: 'hsla(120deg, 100%, 15%, 0%)' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120deg, 100%, 15%, 35%)": [
+    "          stopColor:' hsla(120deg, 100%, 15%, 35%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stopColor:' hsla(120deg, 100%, 15%, 35%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120deg, 100%, 36%, 15%)": [
+    "          stroke: 'hsla(120deg, 100%, 36%, 15%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(120deg, 100%, 36%, 15%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120deg, 100%, 36%, 27%)": [
+    "          stroke: 'hsla(120deg, 100%, 36%, 27%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(120deg, 100%, 36%, 27%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120deg, 100%, 89%, 100%)": [
+    "          stroke: 'hsla(120deg, 100%, 89%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(120deg, 100%, 89%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120deg, 45%, 100%, 100%)": [
+    "          stroke: 'hsla(120deg, 45%, 100%, 100%)' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(120deg, 45%, 100%, 100%)' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120deg, 45%, 90%, 100%)": [
+    "          fill: 'hsla(120deg, 45%, 90%, 100%)', in packages/ui-lib/src/themes/dark/custom.ts",
+    "        fill: 'hsla(120deg, 45%, 90%, 100%)', in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(120deg, 45%, 90%, 100%)', in packages/ui-lib/src/themes/light/custom.ts",
+    "        fill: 'hsla(120deg, 45%, 90%, 100%)', in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120deg, 45%, 90%, 90%)": [
+    "          stroke: 'hsla(120deg, 45%, 90%, 90%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(120deg, 45%, 90%, 90%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120deg, 80%, 25%, 100%)": [
+    "          fill: 'hsla(120deg, 80%, 25%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(120deg, 80%, 25%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(120deg, 80%, 45%, 100%)": [
+    "          stroke: 'hsla(120deg, 80%, 45%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(120deg, 80%, 45%, 100%)' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(120deg, 80%, 45%, 100%);' in packages/ui-lib/src/themes/light/custom.ts",
+    "          stroke: 'hsla(120deg, 80%, 45%, 100%)' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(126, 48.1%, 68.2%, 1.000)": [
+    "        \"good\": \"hsla(126, 48.1%, 68.2%, 1.000)\" in packages/ui-lib/src/themes/dark/colors.ts",
+    "        \"good\": \"hsla(126, 48.1%, 68.2%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(136, 49.5%, 57.3%, 1.000)": [
+    "        \"success\": \"hsla(136, 49.5%, 57.3%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(150deg, 100%, 80%, 100%)": [
+    "          fill: 'hsla(150deg, 100%, 80%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(150deg, 100%, 80%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ]": [
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 57%, 81.8%, 1.000) 0%, hsla(19, 100%, 84.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(192deg, 100%, 45%, 100%)": [
+    "          fill: 'hsla(192deg, 100%, 45%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(192deg, 100%, 45%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(193, 9.7%, 63.5%, 1.000)": [
+    "                \"color\": \"hsla(193, 9.7%, 63.5%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(194, 10.2%, 52%, 1.000)": [
+    "                \"color\": \"hsla(194, 10.2%, 52%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(195, 10%, 52%, 0.72)": [
+    "  color: hsla(195, 10%, 52%, 0.72); in packages/ui-lib/src/CameraPanels/atoms/PanelMetaData.tsx",
+    "  color: hsla(195, 10%, 52%, 0.72); in packages/ui-lib/src/CameraPanels/atoms/PanelMetaData.tsx",
+    "  color: hsla(195, 10%, 52%, 0.72); in packages/ui-lib/src/Form/atoms/SliderInput.tsx",
+    "  color: hsla(195, 10%, 52%, 0.72); in packages/ui-lib/src/Form/molecules/DurationSlider.tsx",
+    "  color: hsla(195, 10%, 52%, 0.72); in packages/ui-lib/src/Tables/organisms/TypeTable.tsx",
+    "  color: hsla(195, 10%, 52%, 0.72); in packages/ui-lib/src/Tabs/atoms/TabWithIcon.tsx"
+  ],
+  "hsla(195, 54.1%, 30.8%, 1.000)": [
+    "                    \"borderColor\": \"hsla(195, 54.1%, 30.8%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(195, 54.1%, 30.8%, 1.000) 3px solid\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(195, 59.4%, 72%, 1.000)": [
+    "                    \"borderColor\": \"hsla(195, 59.4%, 72%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(195, 59.4%, 72%, 1.000) 3px solid\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(195, 67.8%, 35.3%, 0.071)": [
+    "                    \"boxShadow\": \"0px 3px 7px 0px hsla(195, 67.8%, 35.3%, 0.071)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"boxShadow\": \"0px 3px 7px 0px hsla(195, 67.8%, 35.3%, 0.071)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 79.5%, 71.4%, 1.000)": [
+    "                    \"borderColor\": \"hsla(195, 79.5%, 71.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(195, 79.5%, 71.4%, 1.000) 2px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(195, 79.5%, 71.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(195, 79.5%, 71.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(195, 79.5%, 71.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(195, 79.5%, 71.4%, 1.000) 2px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(195, 79.5%, 71.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(195, 79.5%, 71.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(195, 79.5%, 71.4%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 83.2%, 67.3%, 0.655)": [
+    "                        \"backgroundImage\": \"linear-gradient(315.00deg, hsla(204, 68.3%, 72.7%, 0.647) 0%, hsla(195, 83.2%, 67.3%, 0.655) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 83.2%, 67.3%, 1.000)": [
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(204, 78.4%, 72.7%, 1.000) 0%, hsla(195, 83.2%, 67.3%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 83.5%, 54.7%, 1.000)": [
+    "                    \"backgroundImage\": \"linear-gradient(315.00deg, hsla(205, 82.4%, 64.3%, 1.000) 0%, hsla(195, 83.5%, 54.7%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(315.00deg, hsla(205, 82.4%, 64.3%, 1.000) 0%, hsla(195, 83.5%, 54.7%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 84.3%, 67.5%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(195, 84.3%, 67.5%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 85.4%, 73.1%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(195, 85.4%, 73.1%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 89.4%, 81.6%, 1.000)": [
+    "                    \"borderColor\": \"hsla(195, 89.4%, 81.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(195, 89.4%, 81.6%, 1.000) 3px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 9.8%, 51.8%, 0.722)": [
+    "                    \"color\": \"hsla(195, 9.8%, 51.8%, 0.722)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(195, 9.8%, 51.8%, 0.722)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(195, 9.8%, 51.8%, 0.722)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(195, 9.8%, 51.8%, 0.722)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(195, 9.8%, 51.8%, 0.722)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(195, 9.8%, 51.8%, 0.722)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(195, 9.8%, 51.8%, 0.722)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(195, 94.2%, 66.1%, 1.000)": [
+    "                    \"borderColor\": \"hsla(195, 94.2%, 66.1%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(195, 94.2%, 66.1%, 1.000) 2px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 95.3%, 66.5%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(195, 95.3%, 66.5%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(195, 98.3%, 45.1%, 1.000)": [
+    "                \"color\": \"hsla(195, 98.3%, 45.1%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(195deg, 45%, 35%, 45%)": [
+    "  background: hsla(195deg, 45%, 35%, 45%); in packages/ui-lib/src/LineUI/Control.tsx",
+    "  /* border: 10px solid hsla(195deg, 45%, 35%, 45%); */ in packages/ui-lib/src/LineUI/LineUI.tsx",
+    "  /* border: 10px solid hsla(195deg, 45%, 35%, 45%); */ in packages/ui-lib/src/LineUI/LineUIRTC.tsx",
+    "  /* border: 10px solid hsla(195deg, 45%, 35%, 45%); */ in packages/ui-lib/src/LineUI/LineUIVideo.tsx"
+  ],
+  "hsla(195deg, 65%, 5%, 35%)": [
+    "  /* box-shadow: 0 10px 20px hsla(195deg, 65%, 5%, 35%); */ in packages/ui-lib/src/LineUI/LineUI.tsx",
+    "  /* box-shadow: 0 10px 20px hsla(195deg, 65%, 5%, 35%); */ in packages/ui-lib/src/LineUI/LineUIRTC.tsx",
+    "  /* box-shadow: 0 10px 20px hsla(195deg, 65%, 5%, 35%); */ in packages/ui-lib/src/LineUI/LineUIVideo.tsx"
+  ],
+  "hsla(196, 10.9%, 73.1%, 1.000)": [
+    "                    \"color\": \"hsla(196, 10.9%, 73.1%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(196, 10.9%, 73.1%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(196, 10.9%, 73.1%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(196, 25.3%, 82.2%, 1.000)": [
+    "                \"color\": \"hsla(196, 25.3%, 82.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(196, 25.3%, 82.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(196, 25.3%, 82.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(196, 25.3%, 82.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(196, 9.7%, 55.7%, 1.000)": [
+    "                    \"color\": \"hsla(196, 9.7%, 55.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(196, 9.7%, 55.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(196, 9.7%, 55.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(197, 7.4%, 52.2%, 1.000)": [
+    "                    \"color\": \"hsla(197, 7.4%, 52.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(197, 7.4%, 52.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(197, 7.4%, 52.2%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(20, 81.2%, 64.5%, 1.000)": [
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 68%, 66.9%, 1.000) 0%, hsla(20, 81.2%, 64.5%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(20, 96%, 80.4%, 1.000)": [
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(0, 79.5%, 77.1%, 1.000) 0%, hsla(20, 96%, 80.4%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(200, 1.2%, 49.2%, 1.000)": [
+    "            \"color\": \"hsla(200, 1.2%, 49.2%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(200, 23.1%, 97.5%, 1.000)": [
+    "                \"backgroundColor\": \"hsla(200, 23.1%, 97.5%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "            \"backgroundColor\": \"hsla(200, 23.1%, 97.5%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(200, 3%, 38.8%, 1.000)": [
+    "                    \"color\": \"hsla(200, 3%, 38.8%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(200, 3%, 38.8%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(200, 3%, 38.8%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(200, 77.5%, 68.6%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(200, 77.5%, 68.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundImage\": \"linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(200, 77.5%, 68.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundImage\": \"linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(200, 77.5%, 68.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundImage\": \"linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(200, 77.8%, 77.1%, 0.000)": [
+    "        \"default\": \"hsla(200, 77.8%, 77.1%, 0.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(200, 77.8%, 77.1%, 1.000)": [
+    "        \"hover\": \"hsla(200, 77.8%, 77.1%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(202, 33%, 95%, 0.51)": [
+    "  background-color: hsla(202, 33%, 95%, 0.51); in packages/ui-lib/src/Form/molecules/CropTool.tsx",
+    "  background-color: hsla(202, 33%, 95%, 0.51); in packages/ui-lib/src/Modals/Modal.tsx"
+  ],
+  "hsla(202, 33%, 95%, 0.8)": [
+    "  background-color: hsla(202, 33%, 95%, 0.8); in packages/ui-lib/src/Form/molecules/CropTool.tsx"
+  ],
+  "hsla(202, 33.3%, 95.3%, 0.510)": [
+    "            \"backgroundColor\": \"hsla(202, 33.3%, 95.3%, 0.510)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(202, 6.2%, 74.5%, 1.000)": [
+    "                \"color\": \"hsla(202, 6.2%, 74.5%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "            \"color\": \"hsla(202, 6.2%, 74.5%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(202, 70.4%, 62.9%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(202, 70.4%, 62.9%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(203, 100%, 35%, 0.49)": [
+    "  fill: hsla(203, 100%, 35%, 0.49); in packages/ui-lib/src/LineUI/LineUnit.tsx"
+  ],
+  "hsla(203, 100%, 4.7%, 0.647)": [
+    "            \"backgroundColor\": \"hsla(203, 100%, 4.7%, 0.647)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(203, 13.2%, 73.3%, 1.000)": [
+    "                \"color\": \"hsla(203, 13.2%, 73.3%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(203, 41.9%, 93.9%, 1.000)": [
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(210, 30%, 96.1%, 1.000) 0%, hsla(203, 41.9%, 93.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(210, 30%, 96.1%, 1.000) 0%, hsla(203, 41.9%, 93.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(203, 6.6%, 76.1%, 1.000)": [
+    "                    \"color\": \"hsla(203, 6.6%, 76.1%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(203, 6.6%, 76.1%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                    \"color\": \"hsla(203, 6.6%, 76.1%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(204, 10.6%, 81.6%, 1.000)": [
+    "                \"color\": \"hsla(204, 10.6%, 81.6%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(204, 10.6%, 81.6%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(204, 10.6%, 81.6%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(204, 10.6%, 81.6%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(204, 10.6%, 81.6%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(204, 10.6%, 81.6%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(204, 18.2%, 78.4%, 0.302)": [
+    "                    \"backgroundColor\": \"hsla(204, 18.2%, 78.4%, 0.302)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                  \"backgroundColor\": \"hsla(204, 18.2%, 78.4%, 0.302)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(204, 18.2%, 78.4%, 0.302)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(204, 2.4%, 59%, 1.000)": [
+    "                \"color\": \"hsla(204, 2.4%, 59%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(204, 2.4%, 59%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(204, 2.4%, 59%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(204, 2.4%, 59%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(204, 2.4%, 59%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(204, 2.4%, 59%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(204, 21.9%, 66.9%, 0.071)": [
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(204, 21.9%, 66.9%, 0.071)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(204, 21.9%, 66.9%, 0.071)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(204, 21.9%, 66.9%, 0.071)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "            \"boxShadow\": \"0px 4px 9px 0px hsla(204, 21.9%, 66.9%, 0.071)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(204, 22%, 67%, 0.07)": [
+    "  box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07); in packages/ui-lib/src/Filters/molecules/SortDropdown.tsx"
+  ],
+  "hsla(204, 45.5%, 84.9%, 1.000)": [
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(205, 61.9%, 87.6%, 1.000) 0%, hsla(204, 45.5%, 84.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(204, 68.3%, 72.7%, 0.647)": [
+    "                        \"backgroundColor\": \"hsla(204, 68.3%, 72.7%, 0.647)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(315.00deg, hsla(204, 68.3%, 72.7%, 0.647) 0%, hsla(195, 83.2%, 67.3%, 0.655) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(204, 78.4%, 72.7%, 1.000)": [
+    "                        \"backgroundColor\": \"hsla(204, 78.4%, 72.7%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(317.51deg, hsla(204, 78.4%, 72.7%, 1.000) 0%, hsla(195, 83.2%, 67.3%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 100%, 65.1%, 1.000)": [
+    "        \"primary\": \"hsla(205, 100%, 65.1%, 1.000)\" in packages/ui-lib/src/themes/dark/colors.ts",
+    "        \"primary\": \"hsla(205, 100%, 65.1%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(205, 100%, 72%, 1.000)": [
+    "                \"borderColor\": \"hsla(205, 100%, 72%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"border\": \"hsla(205, 100%, 72%, 1.000) 1px solid\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"borderColor\": \"hsla(205, 100%, 72%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"border\": \"hsla(205, 100%, 72%, 1.000) 1px solid\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"backgroundColor\": \"hsla(205, 100%, 72%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"backgroundColor\": \"hsla(205, 100%, 72%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"backgroundColor\": \"hsla(205, 100%, 72%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"borderColor\": \"hsla(205, 100%, 72%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"border\": \"hsla(205, 100%, 72%, 1.000) 1px solid\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"borderColor\": \"hsla(205, 100%, 72%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"border\": \"hsla(205, 100%, 72%, 1.000) 1px solid\", in packages/ui-lib/src/themes/light/styles.ts",
+    "            \"borderColor\": \"hsla(205, 100%, 72%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "            \"border\": \"hsla(205, 100%, 72%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 100%, 78.6%, 1.000)": [
+    "                \"backgroundColor\": \"hsla(205, 100%, 78.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 12.8%, 18.4%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(205, 12.8%, 18.4%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(205, 14%, 16.9%, 0.251)": [
+    "                \"boxShadow\": \"5px 0px 10px 0px hsla(205, 14%, 16.9%, 0.251)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"boxShadow\": \"5px 0px 10px 0px hsla(205, 14%, 16.9%, 0.251)\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(205, 15.1%, 28.6%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(205, 15.1%, 28.6%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(205, 16%, 76.7%, 0.102)": [
+    "                \"boxShadow\": \"5px 0px 10px 0px hsla(205, 16%, 76.7%, 0.102)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"boxShadow\": \"-5px 0px 10px 0px hsla(205, 16%, 76.7%, 0.102)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 16%, 77%, 0.1)": [
+    "    // box-shadow: 5px 7px 10px 0 hsla(205, 16%, 77%, 0.1); in packages/ui-lib/src/Global/molecules/TopBar.tsx"
+  ],
+  "hsla(205, 22.1%, 66.3%, 1.000)": [
+    "        \"neutral\": \"hsla(205, 22.1%, 66.3%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(205, 33.3%, 32.9%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(205, 33.3%, 32.9%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(205, 34.6%, 68.2%, 0.071)": [
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(205, 34.6%, 68.2%, 0.071)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(205, 34.6%, 68.2%, 0.071)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 38.7%, 12.2%, 0.149)": [
+    "            \"boxShadow\": \"0px 10px 15px 0px hsla(205, 38.7%, 12.2%, 0.149)\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(205, 42.2%, 60%, 0.149)": [
+    "            \"boxShadow\": \"0px 10px 15px 0px hsla(205, 42.2%, 60%, 0.149)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 50.3%, 30%, 0.051)": [
+    "                    \"boxShadow\": \"inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                  \"boxShadow\": \"inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"boxShadow\": \"inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"boxShadow\": \"inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"boxShadow\": \"inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"boxShadow\": \"inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"boxShadow\": \"inset 0px 1px 5px 0px hsla(205, 50.3%, 30%, 0.051)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 56.9%, 28.2%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(205, 56.9%, 28.2%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(205, 58.9%, 71.4%, 1.000)": [
+    "                    \"borderColor\": \"hsla(205, 58.9%, 71.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(205, 58.9%, 71.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(205, 58.9%, 71.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(205, 58.9%, 71.4%, 1.000) 2px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(205, 58.9%, 71.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(205, 58.9%, 71.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(205, 58.9%, 71.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(205, 58.9%, 71.4%, 1.000) 2px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"borderColor\": \"hsla(205, 58.9%, 71.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(205, 58.9%, 71.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 59.7%, 71.8%, 1.000)": [
+    "            \"color\": \"hsla(205, 59.7%, 71.8%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(205, 61.9%, 87.6%, 1.000)": [
+    "                        \"backgroundColor\": \"hsla(205, 61.9%, 87.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(205, 61.9%, 87.6%, 1.000) 0%, hsla(204, 45.5%, 84.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 62.3%, 55.3%, 1.000)": [
+    "                \"color\": \"hsla(205, 62.3%, 55.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(205, 66.5%, 61.4%, 0.651)": [
+    "                        \"borderColor\": \"hsla(205, 66.5%, 61.4%, 0.651)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(205, 66.5%, 61.4%, 0.651) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 66.5%, 61.4%, 1.000)": [
+    "                        \"borderColor\": \"hsla(205, 66.5%, 61.4%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(205, 66.5%, 61.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 68.4%, 7.5%, 0.071)": [
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"boxShadow\": \"0px 4px 9px 0px hsla(205, 68.4%, 7.5%, 0.071)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"boxShadow\": \"0px 3px 7px 0px hsla(205, 68.4%, 7.5%, 0.071)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(205, 7.6%, 69%, 1.000)": [
+    "            \"color\": \"hsla(205, 7.6%, 69%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(205, 77.4%, 63.5%, 1.000)": [
+    "        \"info\": \"hsla(205, 77.4%, 63.5%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(205, 81.2%, 64.5%, 1.000)": [
+    "                \"backgroundColor\": \"hsla(205, 81.2%, 64.5%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(205, 82.4%, 64.3%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(205, 82.4%, 64.3%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundImage\": \"linear-gradient(315.00deg, hsla(205, 82.4%, 64.3%, 1.000) 0%, hsla(195, 83.5%, 54.7%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(205, 82.4%, 64.3%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(315.00deg, hsla(205, 82.4%, 64.3%, 1.000) 0%, hsla(195, 83.5%, 54.7%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 86.8%, 70.4%, 1.000)": [
+    "                \"backgroundColor\": \"hsla(205, 86.8%, 70.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(205, 89.5%, 77.6%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(205, 89.5%, 77.6%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205, 89.5%, 85.1%, 1.000)": [
+    "                        \"borderColor\": \"hsla(205, 89.5%, 85.1%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(205, 89.5%, 85.1%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(205deg, 100%, 15%, 0%)": [
+    "          stopColor: 'hsla(205deg, 100%, 15%, 0%)' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stopColor: 'hsla(205deg, 100%, 15%, 0%)' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(205deg, 100%, 15%, 35%)": [
+    "          stopColor:' hsla(205deg, 100%, 15%, 35%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stopColor:' hsla(205deg, 100%, 15%, 35%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(205deg, 100%, 36%, 15%)": [
+    "          stroke: 'hsla(205deg, 100%, 36%, 15%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(205deg, 100%, 36%, 15%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(205deg, 100%, 36%, 27%)": [
+    "          stroke: 'hsla(205deg, 100%, 36%, 27%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(205deg, 100%, 36%, 27%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(205deg, 100%, 89%, 100%)": [
+    "          stroke: 'hsla(205deg, 100%, 89%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(205deg, 100%, 89%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(205deg, 45%, 100%, 100%)": [
+    "          stroke: 'hsla(205deg, 45%, 100%, 100%)' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(205deg, 45%, 100%, 100%)' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(205deg, 45%, 90%, 100%)": [
+    "          fill: 'hsla(205deg, 45%, 90%, 100%)', in packages/ui-lib/src/themes/dark/custom.ts",
+    "        fill: 'hsla(205deg, 45%, 90%, 100%)', in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(205deg, 45%, 90%, 100%)', in packages/ui-lib/src/themes/light/custom.ts",
+    "        fill: 'hsla(205deg, 45%, 90%, 100%)', in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(205deg, 45%, 90%, 90%)": [
+    "          stroke: 'hsla(205deg, 45%, 90%, 90%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(205deg, 45%, 90%, 90%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(205deg, 80%, 25%, 100%)": [
+    "          fill: \"#fff\"//\"hsla(205deg, 80%, 25%, 100%)\" in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(205deg, 80%, 25%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: \"#fff\"//\"hsla(205deg, 80%, 25%, 100%)\" in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: \"#fff\"//\"hsla(205deg, 80%, 25%, 100%)\" in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: \"#fff\"//\"hsla(205deg, 80%, 25%, 100%)\" in packages/ui-lib/src/themes/light/custom.ts",
+    "          fill: 'hsla(205deg, 80%, 25%, 100%);' in packages/ui-lib/src/themes/light/custom.ts",
+    "          fill: \"#fff\"//\"hsla(205deg, 80%, 25%, 100%)\" in packages/ui-lib/src/themes/light/custom.ts",
+    "          fill: \"#fff\"//\"hsla(205deg, 80%, 25%, 100%)\" in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(205deg, 80%, 45%, 100%)": [
+    "          stroke: 'hsla(205deg, 80%, 45%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(205deg, 80%, 45%, 100%)' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          stroke: 'hsla(205deg, 80%, 45%, 100%);' in packages/ui-lib/src/themes/light/custom.ts",
+    "          stroke: 'hsla(205deg, 80%, 45%, 100%)' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(206, 36.8%, 96.3%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(206, 36.8%, 96.3%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(206, 42.1%, 92.5%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(206, 42.1%, 92.5%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(206, 6.3%, 49.4%, 0.502)": [
+    "                    \"color\": \"hsla(206, 6.3%, 49.4%, 0.502)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(206, 7.1%, 19.4%, 1.000)": [
+    "            \"borderColor\": \"hsla(206, 7.1%, 19.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "            \"border\": \"hsla(206, 7.1%, 19.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(207, 15.9%, 86.5%, 1.000)": [
+    "                \"borderColor\": \"hsla(207, 15.9%, 86.5%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"border\": \"hsla(207, 15.9%, 86.5%, 1.000) 1px solid\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"borderColor\": \"hsla(207, 15.9%, 86.5%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"border\": \"hsla(207, 15.9%, 86.5%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(207, 19.8%, 34.7%, 1.000)": [
+    "                \"borderColor\": \"hsla(207, 19.8%, 34.7%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"border\": \"hsla(207, 19.8%, 34.7%, 1.000) 1px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(207, 19.8%, 34.7%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(207, 19.8%, 34.7%, 1.000) 1px solid\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(207, 29.7%, 82.2%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(207, 29.7%, 82.2%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(207, 4.8%, 37.1%, 1.000)": [
+    "        \"subtle\": \"hsla(207, 4.8%, 37.1%, 1.000)\", in packages/ui-lib/src/themes/dark/colors.ts",
+    "                  \"backgroundColor\": \"hsla(207, 4.8%, 37.1%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(207, 41.2%, 53.3%, 1.000)": [
+    "                \"color\": \"hsla(207, 41.2%, 53.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(207, 42.9%, 91.8%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(207, 42.9%, 91.8%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(207, 5%, 56.7%, 1.000)": [
+    "                \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "                \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts",
+    "            \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "            \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "            \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "            \"color\": \"hsla(207, 5%, 56.7%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(207, 65.8%, 31%, 0.078)": [
+    "      box-shadow: 0px 3px 7px 0px hsla(207, 65.8%, 31%, 0.078); in packages/ui-lib/src/Form/atoms/TextArea.tsx",
+    "                    \"boxShadow\": \"0px 3px 7px 0px hsla(207, 65.8%, 31%, 0.078)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(207, 67.8%, 35.3%, 0.071)": [
+    "      box-shadow: 0px 3px 7px 0px hsla(207, 67.8%, 35.3%, 0.071); in packages/ui-lib/src/Form/atoms/TextArea.tsx",
+    "                    \"boxShadow\": \"0px 3px 7px 0px hsla(207, 67.8%, 35.3%, 0.071)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"boxShadow\": \"0px 3px 7px 0px hsla(207, 67.8%, 35.3%, 0.071)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(207, 80.2%, 64.3%, 1.000)": [
+    "                    \"backgroundImage\": \"linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundImage\": \"linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundImage\": \"linear-gradient(135.00deg, hsla(200, 77.5%, 68.6%, 1.000) 0%, hsla(207, 80.2%, 64.3%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(207, 88.2%, 60%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(207, 88.2%, 60%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(207, 94.2%, 66.1%, 1.000)": [
+    "                \"color\": \"hsla(207, 94.2%, 66.1%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(207, 94.2%, 66.1%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(207, 95.3%, 66.5%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(207, 95.3%, 66.5%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "        \"folder\": \"hsla(207, 95.3%, 66.5%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts",
+    "        \"highlight\": \"hsla(207, 95.3%, 66.5%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts",
+    "                    \"backgroundColor\": \"hsla(207, 95.3%, 66.5%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(208, 17.8%, 85.7%, 1.000)": [
+    "            \"color\": \"hsla(208, 17.8%, 85.7%, 1.000)\" in packages/ui-lib/src/themes/dark/typography.ts"
+  ],
+  "hsla(208, 22.7%, 85.3%, 0.651)": [
+    "                        \"borderColor\": \"hsla(208, 22.7%, 85.3%, 0.651)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(208, 22.7%, 85.3%, 0.651) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"borderColor\": \"hsla(208, 22.7%, 85.3%, 0.651)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(208, 22.7%, 85.3%, 0.651) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(208, 24.6%, 77.6%, 0.651)": [
+    "                        \"borderColor\": \"hsla(208, 24.6%, 77.6%, 0.651)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(208, 24.6%, 77.6%, 0.651) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"borderColor\": \"hsla(208, 24.6%, 77.6%, 0.651)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"border\": \"hsla(208, 24.6%, 77.6%, 0.651) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(208, 24.6%, 77.6%, 1.000)": [
+    "                  \"borderColor\": \"hsla(208, 24.6%, 77.6%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                  \"border\": \"hsla(208, 24.6%, 77.6%, 1.000) 2px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(208, 24.6%, 77.6%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(208, 24.6%, 77.6%, 1.000) 2px solid\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"borderColor\": \"hsla(208, 24.6%, 77.6%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(208, 24.6%, 77.6%, 1.000) 2px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(208, 50%, 81.2%, 1.000)": [
+    "                \"borderColor\": \"hsla(208, 50%, 81.2%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                \"border\": \"hsla(208, 50%, 81.2%, 1.000) 1px solid\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(208, 7.7%, 38.2%, 1.000)": [
+    "            \"color\": \"hsla(208, 7.7%, 38.2%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "            \"color\": \"hsla(208, 7.7%, 38.2%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "            \"color\": \"hsla(208, 7.7%, 38.2%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(210, 100%, 65.9%, 1.000)": [
+    "                    \"borderColor\": \"hsla(210, 100%, 65.9%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(210, 100%, 65.9%, 1.000) 3px solid\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(210, 14.3%, 19.2%, 1.000)": [
+    "                \"backgroundColor\": \"hsla(210, 14.3%, 19.2%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 14.3%, 19.2%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(210, 17.1%, 13.7%, 1.000)": [
+    "            \"backgroundColor\": \"hsla(210, 17.1%, 13.7%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(210, 2.4%, 51%, 0.651)": [
+    "            \"color\": \"hsla(210, 2.4%, 51%, 0.651)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(210, 20%, 90.2%, 1.000)": [
+    "                    \"borderColor\": \"hsla(210, 20%, 90.2%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"border\": \"hsla(210, 20%, 90.2%, 1.000) 2px solid\" in packages/ui-lib/src/themes/light/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 20%, 90.2%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(210, 20%, 96.1%, 1.000)": [
+    "            \"backgroundImage\": \"linear-gradient(180.00deg, hsla(210, 20%, 98%, 1.000) 0%, hsla(210, 20%, 96.1%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts",
+    "            \"backgroundImage\": \"linear-gradient(180.00deg, hsla(210, 20%, 98%, 0.851) 0%, hsla(210, 20%, 96.1%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(210, 20%, 98%, 0.851)": [
+    "            \"backgroundColor\": \"hsla(210, 20%, 98%, 0.851)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "            \"backgroundImage\": \"linear-gradient(180.00deg, hsla(210, 20%, 98%, 0.851) 0%, hsla(210, 20%, 96.1%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(210, 20%, 98%, 1.000)": [
+    "            \"backgroundColor\": \"hsla(210, 20%, 98%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "            \"backgroundImage\": \"linear-gradient(180.00deg, hsla(210, 20%, 98%, 1.000) 0%, hsla(210, 20%, 96.1%, 1.000) 100%)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(210, 3.5%, 22.4%, 1.000)": [
+    "                \"borderColor\": \"hsla(210, 3.5%, 22.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"border\": \"hsla(210, 3.5%, 22.4%, 1.000) 1px solid\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"borderColor\": \"hsla(210, 3.5%, 22.4%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"border\": \"hsla(210, 3.5%, 22.4%, 1.000) 1px solid\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(210, 30%, 96.1%, 1.000)": [
+    "                        \"backgroundColor\": \"hsla(210, 30%, 96.1%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(210, 30%, 96.1%, 1.000) 0%, hsla(203, 41.9%, 93.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundColor\": \"hsla(210, 30%, 96.1%, 1.000)\", in packages/ui-lib/src/themes/light/styles.ts",
+    "                        \"backgroundImage\": \"linear-gradient(180.00deg, hsla(210, 30%, 96.1%, 1.000) 0%, hsla(203, 41.9%, 93.9%, 1.000) 100%)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(210, 4.3%, 18%, 1.000)": [
+    "                \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                  \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"backgroundColor\": \"hsla(210, 4.3%, 18%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(210, 5.8%, 47.5%, 1.000)": [
+    "            \"color\": \"hsla(210, 5.8%, 47.5%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(210, 66.9%, 46.3%, 0.122)": [
+    "                \"boxShadow\": \"0px 5px 25px 0px hsla(210, 66.9%, 46.3%, 0.122)\", in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(210, 7.9%, 14.9%, 0.800)": [
+    "                \"backgroundColor\": \"hsla(210, 7.9%, 14.9%, 0.800)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(210, 7.9%, 14.9%, 1.000)": [
+    "                \"backgroundColor\": \"hsla(210, 7.9%, 14.9%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"backgroundColor\": \"hsla(210, 7.9%, 14.9%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(211, 42%, 86%, 0.41)": [
+    "  box-shadow: 0 2px 10px 0 hsla(211, 42%, 86%, 0.41); in packages/ui-lib/src/CameraPanels/molecules/CameraPanel.tsx"
+  ],
+  "hsla(213, 11.6%, 18.6%, 1.000)": [
+    "            \"backgroundColor\": \"hsla(213, 11.6%, 18.6%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(214, 14.4%, 46.3%, 1.000)": [
+    "                    \"color\": \"hsla(214, 14.4%, 46.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                    \"color\": \"hsla(214, 14.4%, 46.3%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(215, 100%, 75.1%, 0.149)": [
+    "        \"passive\": \"hsla(215, 100%, 75.1%, 0.149)\" in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(215, 100%, 75.1%, 1.000)": [
+    "        \"active\": \"hsla(215, 100%, 75.1%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(215, 19.1%, 36.9%, 0.000)": [
+    "        \"default\": \"hsla(215, 19.1%, 36.9%, 0.000)\" in packages/ui-lib/src/themes/dark/colors.ts"
+  ],
+  "hsla(215, 19.1%, 36.9%, 1.000)": [
+    "        \"hover\": \"hsla(215, 19.1%, 36.9%, 1.000)\", in packages/ui-lib/src/themes/dark/colors.ts"
+  ],
+  "hsla(215, 23.5%, 64.1%, 1.000)": [
+    "                \"color\": \"hsla(215, 23.5%, 64.1%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts",
+    "                \"color\": \"hsla(215, 23.5%, 64.1%, 1.000)\" in packages/ui-lib/src/themes/light/typography.ts"
+  ],
+  "hsla(215, 66.3%, 59.2%, 1.000)": [
+    "        \"active\": \"hsla(215, 66.3%, 59.2%, 1.000)\", in packages/ui-lib/src/themes/dark/colors.ts"
+  ],
+  "hsla(216, 3.4%, 28.8%, 1.000)": [
+    "                    \"borderColor\": \"hsla(216, 3.4%, 28.8%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(216, 3.4%, 28.8%, 1.000) 1px solid\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(220, 2.9%, 20.6%, 1.000)": [
+    "                    \"borderColor\": \"hsla(220, 2.9%, 20.6%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "                    \"border\": \"hsla(220, 2.9%, 20.6%, 1.000) 1px solid\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(220, 3.6%, 16.3%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(220, 3.6%, 16.3%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(220, 33.3%, 94.7%, 0.000)": [
+    "                    \"backgroundColor\": \"hsla(220, 33.3%, 94.7%, 0.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(220, 33.3%, 94.7%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(220, 33.3%, 94.7%, 1.000)\" in packages/ui-lib/src/themes/light/styles.ts"
+  ],
+  "hsla(220, 4.2%, 13.9%, 0.851)": [
+    "            \"backgroundColor\": \"hsla(220, 4.2%, 13.9%, 0.851)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "            \"backgroundImage\": \"linear-gradient(180.00deg, hsla(220, 4.2%, 13.9%, 0.851) 0%, hsla(220, 4.2%, 13.9%, 1.000) 100%)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(220, 4.2%, 13.9%, 1.000)": [
+    "            \"backgroundColor\": \"hsla(220, 4.2%, 13.9%, 1.000)\", in packages/ui-lib/src/themes/dark/styles.ts",
+    "            \"backgroundImage\": \"linear-gradient(180.00deg, hsla(220, 4.2%, 13.9%, 1.000) 0%, hsla(220, 4.9%, 12%, 1.000) 100%)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "            \"backgroundImage\": \"linear-gradient(180.00deg, hsla(220, 4.2%, 13.9%, 0.851) 0%, hsla(220, 4.2%, 13.9%, 1.000) 100%)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(220, 4.9%, 12%, 1.000)": [
+    "            \"backgroundImage\": \"linear-gradient(180.00deg, hsla(220, 4.2%, 13.9%, 1.000) 0%, hsla(220, 4.9%, 12%, 1.000) 100%)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(221, 15.9%, 38.2%, 0.000)": [
+    "                    \"backgroundColor\": \"hsla(221, 15.9%, 38.2%, 0.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(221, 15.9%, 38.2%, 1.000)": [
+    "                    \"backgroundColor\": \"hsla(221, 15.9%, 38.2%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(225, 3.5%, 22.4%, 1.000)": [
+    "                \"backgroundColor\": \"hsla(225, 3.5%, 22.4%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts",
+    "                \"backgroundColor\": \"hsla(225, 3.5%, 22.4%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(235deg, 100%, 80%, 100%)": [
+    "          fill: 'hsla(235deg, 100%, 80%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(235deg, 100%, 80%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(240, 1.2%, 84.1%, 0.502)": [
+    "        \"indicator\": \"hsla(240, 1.2%, 84.1%, 0.502)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(240, 4.7%, 25.1%, 1.000)": [
+    "    \"divider\": \"hsla(240, 4.7%, 25.1%, 1.000)\", in packages/ui-lib/src/themes/dark/colors.ts",
+    "                \"backgroundColor\": \"hsla(240, 4.7%, 25.1%, 1.000)\" in packages/ui-lib/src/themes/dark/styles.ts"
+  ],
+  "hsla(30, 91%, 61%, 1.000)": [
+    "        \"warning\": \"hsla(30, 91%, 61%, 1.000)\" in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "hsla(30deg, 100%, 80%, 100%)": [
+    "          fill: 'hsla(30deg, 100%, 80%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(30deg, 100%, 80%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(348deg, 100%, 45%, 100%)": [
+    "          fill: 'hsla(348deg, 100%, 45%, 100%);' in packages/ui-lib/src/themes/dark/custom.ts",
+    "          fill: 'hsla(348deg, 100%, 45%, 100%);' in packages/ui-lib/src/themes/light/custom.ts"
+  ],
+  "hsla(57, 57.7%, 62.9%, 1.000)": [
+    "        \"caution\": \"hsla(57, 57.7%, 62.9%, 1.000)\", in packages/ui-lib/src/themes/light/colors.ts"
+  ],
+  "rgba(255,255,255,.8)": [
+    "  background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.8) 35px, rgba(255,255,255,.8) 70px); in packages/ui-lib/src/Form/molecules/CropTool.tsx",
+    "  background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.8) 35px, rgba(255,255,255,.8) 70px); in packages/ui-lib/src/Form/molecules/CropTool.tsx"
+  ]
+}
