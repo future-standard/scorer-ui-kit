@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import {
   GlobalUI,
   PageHeader,
@@ -379,6 +379,21 @@ export const _GlobalUI = () => {
 
   const [isLightMode, setIsLightMode] = useState(true);
 
+  const onChangeTheme = useCallback(() => {
+    setIsLightMode((enabled) => {
+      localStorage.isDarkThemeEnabled = !enabled;
+      if (enabled) {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+      } else {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+      }
+      return !enabled;
+    });
+
+  }, []);
+
   const maxWidth = text("Max width", "1200px");
   const paddingOverride = text("Padding Override", "70px 90px");
   const loggedInUser = text("Logged In User", "full.name@example.com");
@@ -402,7 +417,6 @@ export const _GlobalUI = () => {
   const hasSwitchTheme = boolean("Has Switch Theme", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
   const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
-  const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
 
   const menuConfig = object("Menu Config", {
@@ -500,10 +514,10 @@ export const _GlobalUI = () => {
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
 
-  const onThemeToggle = () => {
-    themeToggle();
-    setIsLightMode((prev) => !prev);
-  }
+  // const onThemeToggle = () => {
+  //   themeToggle();
+  //   setIsLightMode((prev) => !prev);
+  // }
 
   const onLanguageToggle = () => {
     languageToggle();
@@ -523,7 +537,7 @@ export const _GlobalUI = () => {
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer, canAlwaysPin }}
         {...{
           loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasCurrentUser, currentUserText, accountOptionText,
-          hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle
+          hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle: onChangeTheme, onLanguageToggle
         }}
       >
         <ComponentLinks />

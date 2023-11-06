@@ -1,10 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { GlobalUI, lightTheme, PageHeader } from "scorer-ui-kit";
 
-const Container = styled.div`
-  min-height: 100vh;
-`;
 
 const GlobalUIPage: FC = () => {
 
@@ -13,12 +10,19 @@ const GlobalUIPage: FC = () => {
   const onChangeTheme = useCallback(() => {
     setIsDarkThemeEnabled((enabled) => {
       localStorage.isDarkThemeEnabled = !enabled;
+      if (enabled) {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+      } else {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+      }
       return !enabled;
     });
+
   }, []);
 
   return (
-    <Container style={{colorScheme: !isDarkThemeEnabled ? 'dark': 'light'}}>
       <ThemeProvider theme={lightTheme}>
         <GlobalUI
           accountOptionText="Account Options"
@@ -207,7 +211,6 @@ const GlobalUIPage: FC = () => {
           </MainBG> */}
         </GlobalUI>
       </ThemeProvider>
-    </Container>
   );
 };
 
