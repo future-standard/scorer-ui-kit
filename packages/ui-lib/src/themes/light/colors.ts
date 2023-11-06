@@ -1,41 +1,41 @@
 export const colors = {
-  "pureBase": "var(--white-1)",
-  "pureTop": "var(--text-1)",
-  "divider": "var(--border-5)",
+  "pureBase": "var(--white-12)",
+  "pureTop": "var(--white-1)",
+  "divider": "var(--grey-4)",
   "icons": {
-      "inverse": "var(--white-1)",
-      "mono": "var(--icon-mono)",
-      "dimmed": "var(--icon-dimmed)",
-      "subtle": "var(--icon-subtle)",
-      "primary": "var(--icons-primary)",
-      "danger": "var(--icon-danger)"
+      "inverse": "var(--white-12)",
+      "mono": "var(--success-12)",
+      "dimmed": "var(--grey-9)",
+      "subtle": "var(--grey-7)",
+      "primary": "var(--primary-8)",
+      "danger": "var(--warning-8)"
   },
   "menu": {
-      "active": "var(--menu-active)",
-      "hover": "var(--menu-hover)",
-      "default": "var(--menu-default)",
-      "indicator": "var(--menu-indicator)",
-      "passive": "var(--menu-passive)"
+      "active": "var(--primary-7)",
+      "hover": "var(--primary-6)",
+      "default": "var(--primary-6)",
+      "indicator": "var(--grey-7)",
+      "passive": "var(--primary-7)"
   },
   "feedback": {
-      "error": "var(--spinner-danger-border)",
-      "info": "var(--feedback-info)",
-      "neutral": "var(--feedback-neutral)",
-      "success": "var(--feedback-success)",
-      "warning": "var(--menu-feedback-warning)"
+      "error": "var(--error-8)",
+      "info": "var(--primary-8)",
+      "neutral": "var(--info-7)",
+      "success": "var(--success-8)",
+      "warning": "var(--warning-8)"
   },
   "status": {
-      "caution": "var(--status-caution)",
-      "danger": "var(--status-danger)",
-      "folder": "var(--highlight)",
-      "highlight": "var(--highlight)",
-      "good": "var(--status-good)",
-      "neutral": "var(--status-neutral)"
+      "caution": "var(--warning-7)",
+      "danger": "var(--error-8)",
+      "folder": "var(--primary-8)",
+      "highlight": "var(--primary-8)",
+      "good": "var(--success-7)",
+      "neutral": "var(--grey-5)"
   },
-  "transparent": "var(--transparent)",
+  "transparent": "hsla(0, 0%, 0%, 0.000)",
   "input": {
       "border": {
-          "default": "var(--border-6)"
+          "default": "var(--grey-7)"
       }
   }
 };
