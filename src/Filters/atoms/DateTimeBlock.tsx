@@ -135,16 +135,25 @@ const DateTimeBlock : React.FC<IProps> = ({
   },[]);
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
-    if (!hourRegex.test(value)) {
+    const parsedValue = Number(value);
+    let rolledValue;
+    if (parsedValue === 24) {
+      rolledValue = '00';
+    } else if (parsedValue === -1) {
+      rolledValue = '23';
+    } else {
+      rolledValue = value;
+    }
+    const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-3])$/;
+    if (!hourRegex.test(rolledValue)) {
       return;
     }
-    isNonArrowKey ? setDisplayHours(value) : setDisplayHours(value.padStart(2, '0'));
+    isNonArrowKey ? setDisplayHours(rolledValue) : setDisplayHours(rolledValue.padStart(2, '0'));
     setDateCallback(
       min([
         endOfDay(date),
         set(date, {
-          hours: Number(value),
+          hours: Number(rolledValue),
           minutes: Number(displayMinutes),
           seconds: 0,
           milliseconds: 0
@@ -155,23 +164,33 @@ const DateTimeBlock : React.FC<IProps> = ({
   }, [date, displayMinutes, setDateCallback, isNonArrowKey]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    const parsedValue = Number(value);
+    let rolledValue;
+    if (parsedValue === 60) {
+      rolledValue = '00';
+    } else if (parsedValue === -1) {
+      rolledValue = '59';
+    } else {
+      rolledValue = value;
+    }
     const minuteRegex = /^[0-5]{0,1}[0-9]{0,1}$/;
-    if (!minuteRegex.test(value)) {
+    if (!minuteRegex.test(rolledValue)) {
       return;
     }
-    setDisplayMinutes(value);
+    isNonArrowKey ? setDisplayMinutes(rolledValue) : setDisplayMinutes(rolledValue.padStart(2, '0'));
     setDateCallback(
       min([
         endOfDay(date),
         set(date, {
           hours: displayHours === '24' ? 23 : Number(displayHours),
-          minutes: Number(value) % 60,
+          minutes: Number(rolledValue) % 60,
           seconds: 0,
           milliseconds: 0
         })
       ])
     );
-  }, [date, displayHours, setDateCallback]);
+    setIsNonArrowKey(false);
+  }, [date, displayHours, setDateCallback, isNonArrowKey]);
 
   useEffect(()=>{
     if(allowAfterMidnight && isEqual(date, endOfDay(date))){
@@ -212,7 +231,7 @@ const DateTimeBlock : React.FC<IProps> = ({
           <InputWrap>
             <InputValue onKeyDown={(e) => handleKeyDown(e)} onBlur={()=>onBlurInputs(displayHours, 'hours')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
             <TimeColon>:</TimeColon>
-            <InputValue onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <InputValue onKeyDown={(e) => handleKeyDown(e)} onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
           </InputWrap>
         </Item>
       )}
