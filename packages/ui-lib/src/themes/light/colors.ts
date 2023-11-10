@@ -1,38 +1,38 @@
 export const colors = {
-  "pureBase": "var(--white-12)",
-  "pureTop": "var(--white-1)",
-  "divider": "var(--grey-4)",
+  "pureBase": "var(--white-1)",
+  "pureTop": "var(--black-1)",
+  "divider": "var(--grey-6)",
   "icons": {
-      "inverse": "var(--white-12)",
-      "mono": "var(--success-12)",
+      "inverse": "var(--white-1)",
+      "mono": "var(--black-9)",
       "dimmed": "var(--grey-9)",
-      "subtle": "var(--grey-7)",
-      "primary": "var(--primary-8)",
-      "danger": "var(--warning-8)"
+      "subtle": "var(--white-9)",
+      "primary": "var(--primary-9)",
+      "danger": "var(--error-9)"
   },
   "menu": {
-      "active": "var(--primary-7)",
+      "active": "var(--primary-9)",
       "hover": "var(--primary-6)",
-      "default": "var(--primary-6)",
-      "indicator": "var(--grey-7)",
-      "passive": "var(--primary-7)"
+      "default": "var(--primary-a6)",
+      "indicator": "var(--grey-a1)",
+      "passive": "var(--primary-a7)"
   },
   "feedback": {
       "error": "var(--error-8)",
-      "info": "var(--primary-8)",
-      "neutral": "var(--info-7)",
+      "info": "var(--primary-7)",
+      "neutral": "var(--grey-9)",
       "success": "var(--success-8)",
       "warning": "var(--warning-8)"
   },
   "status": {
       "caution": "var(--warning-7)",
       "danger": "var(--error-8)",
-      "folder": "var(--primary-8)",
-      "highlight": "var(--primary-8)",
+      "folder": "var(--primary-7)",
+      "highlight": "var(--primary-7)",
       "good": "var(--success-7)",
       "neutral": "var(--grey-5)"
   },
-  "transparent": "hsla(0, 0%, 0%, 0.000)",
+  "transparent": "var(--black-a1)",
   "input": {
       "border": {
           "default": "var(--grey-7)"

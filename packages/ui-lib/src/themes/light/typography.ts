@@ -7,7 +7,7 @@ export const typography = {
           "fontWeight": 300,
           "lineHeight": "25px",
           "textDecoration": "none",
-          "color": "var(--grey-9)"
+          "color": "var(--grey-11)"
       },
       "areaTitle": {
           "textAlign": "left",
@@ -21,7 +21,7 @@ export const typography = {
           "fontSize": "26px",
           "fontWeight": 600,
           "textDecoration": "none",
-          "color": "var(--grey-11)"
+          "color": "var(--grey-12)"
       }
   },
   "form": {
@@ -31,14 +31,14 @@ export const typography = {
               "fontSize": "14px",
               "fontWeight": 300,
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           },
           "default": {
               "textAlign": "left",
               "fontSize": "14px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           },
           "disabled": {
               "textAlign": "left",
@@ -78,28 +78,28 @@ export const typography = {
                   "fontSize": "16px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-11)"
               },
               "large": {
                   "textAlign": "center",
                   "fontSize": "20px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-11)"
               },
               "small": {
                   "textAlign": "center",
                   "fontSize": "14px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-11)"
               },
               "xsmall": {
                   "textAlign": "center",
                   "fontSize": "12px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-11)"
               }
           },
           "primary": {
@@ -108,28 +108,28 @@ export const typography = {
                   "fontSize": "20px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               },
               "normal": {
                   "textAlign": "center",
                   "fontSize": "16px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               },
               "small": {
                   "textAlign": "center",
                   "fontSize": "14px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               },
               "xsmall": {
                   "textAlign": "center",
                   "fontSize": "12px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               }
           },
           "danger": {
@@ -138,28 +138,28 @@ export const typography = {
                   "fontSize": "20px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               },
               "normal": {
                   "textAlign": "center",
                   "fontSize": "16px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               },
               "small": {
                   "textAlign": "center",
                   "fontSize": "14px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               },
               "xsmall": {
                   "textAlign": "center",
                   "fontSize": "12px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               }
           }
       },
@@ -169,7 +169,7 @@ export const typography = {
               "fontSize": "14px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           },
           "placeholder": {
               "normal": {
@@ -197,7 +197,7 @@ export const typography = {
                   "fontWeight": 500,
                   "lineHeight": "25px",
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-11)"
               },
               "compact": {
                   "textAlign": "left",
@@ -205,7 +205,7 @@ export const typography = {
                   "fontWeight": 500,
                   "lineHeight": "15px",
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-11)"
               }
           }
       },
@@ -216,7 +216,7 @@ export const typography = {
           "fontWeight": 300,
           "lineHeight": "25px",
           "textDecoration": "none",
-          "color": "var(--grey-9)"
+          "color": "var(--grey-11)"
       },
       "select": {
           "option": {
@@ -225,7 +225,7 @@ export const typography = {
               "fontWeight": 500,
               "lineHeight": "15px",
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           },
           "selectedValue": {
               "textAlign": "left",
@@ -233,7 +233,7 @@ export const typography = {
               "fontWeight": 500,
               "lineHeight": "15px",
               "textDecoration": "none",
-              "color": "var(--success-12)"
+              "color": "var(--black-11)"
           },
           "option(Hover)": {
               "textAlign": "left",
@@ -241,7 +241,7 @@ export const typography = {
               "fontWeight": 500,
               "lineHeight": "15px",
               "textDecoration": "none",
-              "color": "var(--info-8)"
+              "color": "var(--primary-11)"
           }
       },
       "feedback": {
@@ -252,7 +252,7 @@ export const typography = {
               "fontWeight": 500,
               "lineHeight": "20px",
               "textDecoration": "none",
-              "color": "var(--white-12)"
+              "color": "var(--white-1)"
           }
       }
   },
@@ -264,21 +264,21 @@ export const typography = {
                   "fontSize": "16px",
                   "fontWeight": 300,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--grey-a11)"
               },
               "active": {
                   "textAlign": "left",
                   "fontSize": "16px",
                   "fontWeight": 300,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--grey-a11)"
               },
               "hover": {
                   "textAlign": "left",
                   "fontSize": "16px",
                   "fontWeight": 300,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--grey-a11)"
               }
           },
           "subheader": {
@@ -288,7 +288,7 @@ export const typography = {
               "textTransform": "uppercase",
               "letterSpacing": "0.35px",
               "textDecoration": "none",
-              "color": "var(--grey-11)"
+              "color": "var(--grey-a11)"
           },
           "hidePrompt": {
               "textAlign": "left",
@@ -303,21 +303,21 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 300,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--grey-a11)"
               },
               "active": {
                   "textAlign": "left",
                   "fontSize": "14px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--grey-8)"
               },
               "hover": {
                   "textAlign": "left",
                   "fontSize": "14px",
                   "fontWeight": 300,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--grey-8)"
               }
           },
           "identity": {
@@ -325,7 +325,7 @@ export const typography = {
               "fontSize": "12px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--grey-11)"
+              "color": "var(--grey-a11)"
           }
       },
       "topBar": {
@@ -343,7 +343,7 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 300,
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-11)"
               }
           }
       }
@@ -354,14 +354,14 @@ export const typography = {
           "fontSize": "20px",
           "fontWeight": 400,
           "textDecoration": "none",
-          "color": "var(--grey-11)"
+          "color": "var(--grey-12)"
       },
       "sectionH3": {
           "textAlign": "left",
           "fontSize": "16px",
           "fontWeight": 400,
           "textDecoration": "none",
-          "color": "var(--grey-11)"
+          "color": "var(--grey-12)"
       },
       "actionParagraph": {
           "textAlign": "left",
@@ -369,7 +369,7 @@ export const typography = {
           "fontWeight": 300,
           "lineHeight": "25px",
           "textDecoration": "none",
-          "color": "var(--grey-9)"
+          "color": "var(--grey-11)"
       },
       "hyperlink": {
           "hover": {
@@ -379,7 +379,7 @@ export const typography = {
               "fontWeight": 500,
               "lineHeight": "25px",
               "textDecoration": "none",
-              "color": "var(--primary-a3)"
+              "color": "var(--primary-8)"
           },
           "base": {
               "textAlign": "left",
@@ -388,7 +388,7 @@ export const typography = {
               "fontWeight": 500,
               "lineHeight": "25px",
               "textDecoration": "none",
-              "color": "var(--primary-8)"
+              "color": "var(--primary-9)"
           }
       }
   },
@@ -400,7 +400,7 @@ export const typography = {
           "lineHeight": "15px",
           "letterSpacing": "-0.2px",
           "textDecoration": "none",
-          "color": "var(--white-12)"
+          "color": "var(--white-1)"
       }
   },
   "searchBar": {
@@ -417,7 +417,7 @@ export const typography = {
           "fontSize": "14px",
           "fontWeight": 600,
           "textDecoration": "none",
-          "color": "var(--grey-9)"
+          "color": "var(--grey-11)"
       }
   },
   "meta": {
@@ -466,21 +466,21 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 500,
                   "textDecoration": "none",
-                  "color": "var(--grey-10)"
+                  "color": "var(--grey-a11)"
               },
               "left": {
                   "textAlign": "left",
                   "fontSize": "14px",
                   "fontWeight": 500,
                   "textDecoration": "none",
-                  "color": "var(--grey-10)"
+                  "color": "var(--grey-a11)"
               },
               "center": {
                   "textAlign": "center",
                   "fontSize": "14px",
                   "fontWeight": 500,
                   "textDecoration": "none",
-                  "color": "var(--grey-10)"
+                  "color": "var(--grey-a11)"
               }
           },
           "highImportance": {
@@ -489,21 +489,21 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 900,
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-12)"
               },
               "center": {
                   "textAlign": "center",
                   "fontSize": "14px",
                   "fontWeight": 900,
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-12)"
               },
               "left": {
                   "textAlign": "left",
                   "fontSize": "14px",
                   "fontWeight": 900,
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-12)"
               }
           },
           "firstColumn": {
@@ -511,7 +511,7 @@ export const typography = {
               "fontSize": "14px",
               "fontWeight": 500,
               "textDecoration": "none",
-              "color": "var(--grey-10)"
+              "color": "var(--grey-12)"
           },
           "lowImportance": {
               "right": {
@@ -520,7 +520,7 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 500,
                   "textDecoration": "none",
-                  "color": "var(--grey-10)"
+                  "color": "var(--grey-a11)"
               },
               "center": {
                   "textAlign": "center",
@@ -528,7 +528,7 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 500,
                   "textDecoration": "none",
-                  "color": "var(--grey-10)"
+                  "color": "var(--grey-a11)"
               },
               "left": {
                   "textAlign": "left",
@@ -536,7 +536,7 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 500,
                   "textDecoration": "none",
-                  "color": "var(--grey-10)"
+                  "color": "var(--grey-a11)"
               }
           },
           "unit": {
@@ -545,7 +545,7 @@ export const typography = {
               "fontSize": "12px",
               "fontWeight": 500,
               "textDecoration": "none",
-              "color": "var(--grey-10)"
+              "color": "var(--grey-a11)"
           }
       },
       "header": {
@@ -555,7 +555,7 @@ export const typography = {
               "fontWeight": 700,
               "letterSpacing": "0.4px",
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           },
           "left": {
               "textAlign": "left",
@@ -563,7 +563,7 @@ export const typography = {
               "fontWeight": 700,
               "letterSpacing": "0.4px",
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           },
           "right": {
               "textAlign": "right",
@@ -571,7 +571,7 @@ export const typography = {
               "fontWeight": 700,
               "letterSpacing": "0.4px",
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           }
       },
       "subHeader": {
@@ -581,7 +581,7 @@ export const typography = {
               "fontWeight": 700,
               "letterSpacing": "0.4px",
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           },
           "left": {
               "textAlign": "left",
@@ -589,7 +589,7 @@ export const typography = {
               "fontWeight": 700,
               "letterSpacing": "0.4px",
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           },
           "right": {
               "textAlign": "right",
@@ -597,7 +597,7 @@ export const typography = {
               "fontWeight": 700,
               "letterSpacing": "0.4px",
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           }
       }
   },
@@ -609,7 +609,7 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 300,
                   "textDecoration": "none",
-                  "color": "var(--grey-9)"
+                  "color": "var(--grey-11)"
               },
               "active": {
                   "textAlign": "left",
@@ -625,14 +625,14 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 400,
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               },
               "otherMonth": {
                   "textAlign": "center",
                   "fontSize": "14px",
                   "fontWeight": 400,
                   "textDecoration": "none",
-                  "color": "var(--grey-10)"
+                  "color": "var(--grey-a11)"
               },
               "default": {
                   "textAlign": "center",
@@ -668,7 +668,7 @@ export const typography = {
                   "textTransform": "uppercase",
                   "letterSpacing": "0.4px",
                   "textDecoration": "none",
-                  "color": "var(--white-12)"
+                  "color": "var(--white-1)"
               }
           },
           "focusedMonth": {
@@ -678,7 +678,7 @@ export const typography = {
               "lineHeight": "20px",
               "letterSpacing": "0.5px",
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           },
           "focusedYear": {
               "textAlign": "center",
@@ -688,7 +688,7 @@ export const typography = {
               "textTransform": "uppercase",
               "letterSpacing": "0.3333333px",
               "textDecoration": "none",
-              "color": "var(--grey-9)"
+              "color": "var(--grey-11)"
           }
       },
       "value": {
@@ -697,7 +697,7 @@ export const typography = {
           "fontWeight": 500,
           "letterSpacing": "0.2px",
           "textDecoration": "none",
-          "color": "var(--grey-9)"
+          "color": "var(--grey-11)"
       },
       "subOption": {
           "label": {
@@ -712,7 +712,7 @@ export const typography = {
               "fontSize": "13px",
               "fontWeight": 500,
               "textDecoration": "none",
-              "color": "var(--grey-8)"
+              "color": "var(--white-11)"
           }
       },
       "presetAction": {
@@ -720,7 +720,7 @@ export const typography = {
           "fontSize": "13px",
           "fontWeight": 500,
           "textDecoration": "none",
-          "color": "var(--grey-8)"
+          "color": "var(--white-11)"
       },
       "filterButton": {
           "default": {
@@ -728,21 +728,21 @@ export const typography = {
               "fontSize": "12px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--grey-10)"
+              "color": "var(--grey-11-)"
           },
           "active": {
               "textAlign": "left",
               "fontSize": "12px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--white-12)"
+              "color": "var(--white-1)"
           },
           "hover": {
               "textAlign": "left",
               "fontSize": "12px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--white-12)"
+              "color": "var(--white-1)"
           }
       },
       "searchInput": {
@@ -759,7 +759,7 @@ export const typography = {
               "fontSize": "12px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--grey-10)"
+              "color": "var(--grey-11-)"
           }
       }
   },
@@ -770,7 +770,7 @@ export const typography = {
           "fontWeight": 400,
           "letterSpacing": "0.3px",
           "textDecoration": "none",
-          "color": "var(--grey-10)"
+          "color": "var(--grey-a11)"
       }
   },
   "modal": {
@@ -788,7 +788,7 @@ export const typography = {
           "fontWeight": 400,
           "lineHeight": "25px",
           "textDecoration": "none",
-          "color": "var(--grey-10)"
+          "color": "var(--grey-11)"
       }
   }
 };

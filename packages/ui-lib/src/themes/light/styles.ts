@@ -8,20 +8,20 @@ export const styles = {
         "input": {
             "default": {
                 "normal": {
-                    "backgroundColor": "var(--white-12)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": colors.input.border.default,
                     "border": colors.input.border.default + " 1px solid"
                 },
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px var(--grey-a1)",
-                    "backgroundColor": "var(--white-12)",
+                    "boxShadow": "0px 3px 7px 0px var(--primary-a11)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 1px solid"
                 }
             },
             "disabled": {
                 "normal": {
-                    "backgroundColor": "var(--grey-3)",
+                    "backgroundColor": "var(--primary-2)",
                     "borderColor": "var(--grey-7)",
                     "border": "var(--grey-7) 1px solid"
                 }
@@ -31,8 +31,8 @@ export const styles = {
             },
             "required": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px var(--primary-11)",
-                    "backgroundColor": "var(--white-12)",
+                    "boxShadow": "0px 3px 7px 0px var(--primary-a11)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 2px solid"
                 },
@@ -43,8 +43,8 @@ export const styles = {
             },
             "valid": {
                 "focused": {
-                    "boxShadow": "0px 3px 5px 0px var(--success-12)",
-                    "backgroundColor": "var(--white-12)",
+                    "boxShadow": "0px 3px 5px 0px var(--success-a12)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--success-7)",
                     "border": "var(--success-7) 2px solid"
                 },
@@ -56,7 +56,7 @@ export const styles = {
             "invalid": {
                 "focused": {
                     "boxShadow": "0px 3px 7px 0px var(--error-a1)",
-                    "backgroundColor": "var(--white-12)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--error-8)",
                     "border": "var(--error-8) 2px solid"
                 },
@@ -67,21 +67,21 @@ export const styles = {
             },
             "processing": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px var(--primary-11)",
-                    "backgroundColor": "var(--white-12)",
+                    "boxShadow": "0px 3px 7px 0px var(--primary-a10)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 2px solid"
                 },
                 "normal": {
-                    "backgroundColor": "var(--white-12)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 1px solid"
                 }
             },
             "seperatedValues": {
                 "background": {
-                    "backgroundColor": "var(--primary-8)",
-                    "backgroundImage": "linear-gradient(315.00deg, var(--primary-8) 0%, var(--primary-8) 100%)"
+                    "backgroundColor": "var(--primary-7)",
+                    "backgroundImage": "linear-gradient(315.00deg, var(--primary-7) 0%, var(--primary-8) 100%)"
                 },
                 "hoverHighlight": {
                     "backgroundColor": "var(--primary-7)"
@@ -92,7 +92,7 @@ export const styles = {
             "primary": {
                 "default": {
                     "backgroundColor": "var(--primary-7)",
-                    "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-8) 100%)"
+                    "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-7) 100%)"
                 },
                 "hover": {
                     "backgroundColor": "var(--primary-8)"
@@ -101,15 +101,15 @@ export const styles = {
                     "backgroundColor": "var(--primary-7)"
                 },
                 "divider": {
-                    "backgroundColor": "var(--primary-8)"
+                    "backgroundColor": "var(--primary-7)"
                 },
                 "disabled": {
                     "backgroundColor": "var(--primary-7)",
-                    "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-8) 100%)"
+                    "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-7) 100%)"
                 },
                 "actionArea": {
                     "backgroundColor": "var(--primary-7)",
-                    "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-8) 100%)"
+                    "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-7) 100%)"
                 }
             },
             "secondary": {
@@ -120,16 +120,16 @@ export const styles = {
                     "backgroundColor": "var(--grey-5)"
                 },
                 "active": {
-                    "backgroundColor": "var(--grey-8)"
+                    "backgroundColor": "var(--grey-6)"
                 },
                 "disabled": {
                     "backgroundColor": "var(--grey-2)"
                 },
                 "divider": {
-                    "backgroundColor": "var(--grey-8)"
+                    "backgroundColor": "var(--grey-a8)"
                 },
                 "actionArea": {
-                    "backgroundColor": "var(--grey-3)"
+                    "backgroundColor": "var(--grey-a3)"
                 }
             },
             "danger": {
@@ -147,7 +147,7 @@ export const styles = {
                     "backgroundColor": "var(--error-6)"
                 },
                 "divider": {
-                    "backgroundColor": "var(--error-9)"
+                    "backgroundColor": "var(--error-8)"
                 },
                 "actionArea": {
                     "backgroundColor": "var(--error-9)",
@@ -160,21 +160,21 @@ export const styles = {
                 "default": {
                     "outer": {
                         "backgroundColor": "var(--grey-3)",
-                        "backgroundImage": "linear-gradient(180.00deg, var(--grey-3) 0%, var(--grey-4) 100%)",
-                        "borderColor": "var(--grey-8)",
-                        "border": "var(--grey-8) 1px solid"
+                        "backgroundImage": "linear-gradient(180.00deg, var(--grey-3) 0%, var(--primary-3) 100%)",
+                        "borderColor": "var(--grey-a8)",
+                        "border": "var(--grey-a8) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "var(--primary-8)",
-                        "backgroundImage": "linear-gradient(315.00deg, var(--primary-8) 0%, var(--primary-8) 100%)"
+                        "backgroundColor": "var(--primary-7)",
+                        "backgroundImage": "linear-gradient(315.00deg, var(--primary-7) 0%, var(--primary-8) 100%)"
                     }
                 },
                 "disabled": {
                     "outer": {
-                        "backgroundColor": "var(--white-12)",
-                        "backgroundImage": "linear-gradient(180.00deg, var(--white-12) 0%, var(--grey-1) 100%)",
-                        "borderColor": "var(--grey-7)",
-                        "border": "var(--grey-7) 1px solid"
+                        "backgroundColor": "var(--white-1)",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--white-1) 0%, var(--grey-1) 100%)",
+                        "borderColor": "var(--grey-a7)",
+                        "border": "var(--grey-a7) 1px solid"
                     },
                     "inner": {
                         "backgroundColor": "var(--grey-7)"
@@ -183,9 +183,9 @@ export const styles = {
                 "loading": {
                     "outer": {
                         "backgroundColor": "var(--grey-3)",
-                        "backgroundImage": "linear-gradient(180.00deg, var(--grey-3) 0%, var(--grey-4) 100%)",
-                        "borderColor": "var(--grey-8)",
-                        "border": "var(--grey-8) 1px solid"
+                        "backgroundImage": "linear-gradient(180.00deg, var(--grey-3) 0%, var(--primary-3) 100%)",
+                        "borderColor": "var(--grey-a8)",
+                        "border": "var(--grey-a8) 1px solid"
                     }
                 }
             },
@@ -198,7 +198,7 @@ export const styles = {
                         "border": "var(--primary-8) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "var(--white-12)"
+                        "backgroundColor": "var(--white-1)"
                     }
                 },
                 "disabled": {
@@ -209,28 +209,28 @@ export const styles = {
                         "border": "var(--primary-6) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "var(--white-12)"
+                        "backgroundColor": "var(--white-1)"
                     }
                 },
                 "loading": {
                     "outer": {
-                        "backgroundColor": "var(--primary-7)",
-                        "backgroundImage": "linear-gradient(315.00deg, var(--primary-7) 0%, var(--primary-7) 100%)",
-                        "borderColor": "var(--primary-8)",
-                        "border": "var(--primary-8) 1px solid"
+                        "backgroundColor": "var(--primary-a7)",
+                        "backgroundImage": "linear-gradient(315.00deg, var(--primary-a7) 0%, var(--primary-a7) 100%)",
+                        "borderColor": "var(--primary-a8)",
+                        "border": "var(--primary-a8) 1px solid"
                     }
                 }
             },
             "failure": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "var(--error-8)",
-                        "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0%, var(--error-8) 100%)",
+                        "backgroundColor": "var(--error-9)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--error-9) 0%, var(--error-8) 100%)",
                         "borderColor": "var(--error-9)",
                         "border": "var(--error-9) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "var(--white-12)"
+                        "backgroundColor": "var(--white-1)"
                     }
                 },
                 "loading": {
@@ -241,20 +241,20 @@ export const styles = {
                         "border": "var(--error-8) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "var(--white-12)"
+                        "backgroundColor": "var(--white-1)"
                     }
                 }
             },
             "danger": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "var(--error-8)",
-                        "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0%, var(--warning-8) 100%)",
+                        "backgroundColor": "var(--error-11)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--error-11) 0%, var(--error-8) 100%)",
                         "borderColor": "var(--error-8)",
                         "border": "var(--error-8) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "var(--white-12)"
+                        "backgroundColor": "var(--white-1)"
                     }
                 },
                 "loading": {
@@ -273,17 +273,17 @@ export const styles = {
                         "border": "var(--error-6) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "var(--white-12)"
+                        "backgroundColor": "var(--white-1)"
                     }
                 }
             },
             "locked": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "var(--white-12)",
-                        "backgroundImage": "linear-gradient(180.00deg, var(--white-12) 0%, var(--grey-1) 100%)",
-                        "borderColor": "var(--grey-7)",
-                        "border": "var(--grey-7) 1px solid"
+                        "backgroundColor": "var(--white-1)",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--white-1) 0%, var(--grey-1) 100%)",
+                        "borderColor": "var(--grey-a7)",
+                        "border": "var(--grey-a7) 1px solid"
                     },
                     "inner": {
                         "backgroundColor": "var(--grey-6)"
@@ -295,8 +295,8 @@ export const styles = {
             "unchecked": {
                 "disabled": {
                     "backgroundColor": "var(--grey-1)",
-                    "borderColor": "var(--grey-5)",
-                    "border": "var(--grey-5) 2px solid"
+                    "borderColor": "var(--grey-6)",
+                    "border": "var(--grey-6) 2px solid"
                 },
                 "default": {
                     "borderColor": "var(--grey-8)",
@@ -310,11 +310,11 @@ export const styles = {
             "checked": {
                 "disabled": {
                     "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
-                    "backgroundColor": "var(--grey-5)"
+                    "backgroundColor": "var(--grey-6)"
                 },
                 "default": {
                     "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
-                    "backgroundColor": "var(--primary-8)"
+                    "backgroundColor": "var(--primary-7)"
                 },
                 "hover": {
                     "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
@@ -324,11 +324,11 @@ export const styles = {
             "indeterminate": {
                 "hover": {
                     "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
-                    "backgroundColor": "var(--primary-7)"
+                    "backgroundColor": "var(--primary-6)"
                 },
                 "default": {
                     "boxShadow": "inset 0px 1px 5px 0px var(--grey-a1)",
-                    "backgroundColor": "var(--primary-7)"
+                    "backgroundColor": "var(--primary-6)"
                 }
             }
         }
@@ -347,14 +347,14 @@ export const styles = {
                 }
             },
             "background": {
-                "boxShadow": "5px 0px 10px 0px var(--grey-8)",
-                "backgroundColor": "var(--warning-1)"
+                "boxShadow": "5px 0px 10px 0px var(--white-a2)",
+                "backgroundColor": "var(--grey-1)"
             },
             "lines": {
-                "backgroundColor": "var(--grey-4)"
+                "backgroundColor": "var(--grey-6)"
             },
             "footerBackground": {
-                "backgroundColor": "var(--warning-1)"
+                "backgroundColor": "var(--grey-1)"
             }
         },
         "background": {
@@ -363,8 +363,8 @@ export const styles = {
         },
         "drawer": {
             "background": {
-                "boxShadow": "-5px 0px 10px 0px var(--grey-8)",
-                "backgroundColor": "var(--white-12)"
+                "boxShadow": "-5px 0px 10px 0px var(--white-a2)",
+                "backgroundColor": "var(--white-1)"
             }
         },
         "topBar": {
@@ -381,14 +381,14 @@ export const styles = {
                     "border": "var(--error-8) 3px solid"
                 },
                 "top": {
-                    "borderColor": "var(--white-12)",
-                    "border": "var(--white-12) 3px solid"
+                    "borderColor": "var(--white-1)",
+                    "border": "var(--white-1) 3px solid"
                 }
             },
             "secondary": {
                 "top": {
-                    "borderColor": "var(--white-12)",
-                    "border": "var(--white-12) 3px solid"
+                    "borderColor": "var(--white-1)",
+                    "border": "var(--white-1) 3px solid"
                 },
                 "base": {
                     "borderColor": "var(--grey-8)",
@@ -397,8 +397,8 @@ export const styles = {
             },
             "primary": {
                 "top": {
-                    "borderColor": "var(--white-12)",
-                    "border": "var(--white-12) 3px solid"
+                    "borderColor": "var(--white-1)",
+                    "border": "var(--white-1) 3px solid"
                 },
                 "base": {
                     "borderColor": "var(--primary-6)",
@@ -407,12 +407,12 @@ export const styles = {
             },
             "simple": {
                 "top": {
-                    "borderColor": "var(--white-12)",
-                    "border": "var(--white-12) 3px solid"
+                    "borderColor": "var(--white-1)",
+                    "border": "var(--white-1) 3px solid"
                 },
                 "base": {
-                    "borderColor": "var(--grey-8)",
-                    "border": "var(--grey-8) 3px solid"
+                    "borderColor": "var(--grey-a8)",
+                    "border": "var(--grey-a8) 3px solid"
                 }
             }
         }
@@ -420,10 +420,10 @@ export const styles = {
     "filters": {
         "dropdownContainer": {
             "background": {
-                "boxShadow": "0px 5px 25px 0px var(--primary-10)",
-                "backgroundColor": "var(--white-12)",
-                "borderColor": "var(--grey-5)",
-                "border": "var(--grey-5) 1px solid"
+                "boxShadow": "0px 5px 25px 0px var(--primary-a1)",
+                "backgroundColor": "var(--white-1)",
+                "borderColor": "var(--grey-6)",
+                "border": "var(--grey-6) 1px solid"
             },
             "topBorder": {
                 "backgroundColor": "var(--primary-7)"
@@ -431,37 +431,37 @@ export const styles = {
         },
         "filterButton": {
             "default": {
-                "boxShadow": "0px 4px 9px 0px var(--info-7)",
+                "boxShadow": "0px 4px 9px 0px var(--primary-a1)",
                 "backgroundColor": "var(--grey-2)",
                 "borderColor": "var(--grey-7)",
                 "border": "var(--grey-7) 1px solid",
-                "textColor": "var(--grey-10)"
+                "textColor": "var(--grey-11-)"
             },
             "active": {
-                "boxShadow": "0px 4px 9px 0px var(--info-7)",
+                "boxShadow": "0px 4px 9px 0px var(--primary-a1)",
                 "backgroundColor": "var(--primary-7)",
                 "borderColor": "var(--primary-7)",
                 "border": "var(--primary-7) 1px solid",
-                "textColor": "var(--white-12)"
+                "textColor": "var(--white-1)"
             },
             "hover": {
-                "boxShadow": "0px 4px 9px 0px var(--info-7)",
+                "boxShadow": "0px 4px 9px 0px var(--primary-a1)",
                 "backgroundColor": "var(--primary-6)",
                 "borderColor": "var(--primary-7)",
                 "border": "var(--primary-7) 1px solid",
-                "textColor": "var(--white-12)"
+                "textColor": "var(--white-1)"
             }
         },
         "searchInput": {
             "default": {
-                "boxShadow": "0px 4px 9px 0px var(--info-7)",
-                "backgroundColor": "var(--white-12)",
+                "boxShadow": "0px 4px 9px 0px var(--primary-a2)",
+                "backgroundColor": "var(--white-1)",
                 "borderColor": "var(--grey-7)",
                 "border": "var(--grey-7) 1px solid"
             },
             "focused": {
-                "boxShadow": "0px 4px 9px 0px var(--info-7)",
-                "backgroundColor": "var(--white-12)",
+                "boxShadow": "0px 4px 9px 0px var(--primary-a2)",
+                "backgroundColor": "var(--white-1)",
                 "borderColor": "var(--primary-6)",
                 "border": "var(--primary-6) 1px solid"
             }
@@ -489,7 +489,7 @@ export const styles = {
                     "backgroundColor": "var(--grey-4)"
                 },
                 "default": {
-                    "backgroundColor": "var(--grey-4)"
+                    "backgroundColor": "var(--grey-a4)"
                 }
             }
         }
@@ -518,7 +518,7 @@ export const styles = {
     },
     "filterButton": {
         "active": {
-            "boxShadow": "0px 4px 9px 0px var(--info-7)",
+            "boxShadow": "0px 4px 9px 0px var(--primary-a1)",
             "backgroundColor": "var(--grey-2)",
             "borderColor": "var(--primary-7)",
             "border": "var(--primary-7) 1px solid"
@@ -526,13 +526,13 @@ export const styles = {
     },
     "modal": {
         "overlay": {
-            "backgroundColor": "var(--grey-3)"
+            "backgroundColor": "var(--grey-a3)"
         },
         "container": {
-            "boxShadow": "0px 10px 15px 0px var(--info-8)",
-            "backgroundColor": "var(--white-12)",
-            "borderColor": "var(--grey-5)",
-            "border": "var(--grey-5) 1px solid"
+            "boxShadow": "0px 10px 15px 0px var(--primary-a1)",
+            "backgroundColor": "var(--white-1)",
+            "borderColor": "var(--grey-6)",
+            "border": "var(--grey-6) 1px solid"
         }
     }
 };
