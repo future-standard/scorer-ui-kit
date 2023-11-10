@@ -435,7 +435,7 @@ export const styles = {
                 "backgroundColor": "var(--grey-2)",
                 "borderColor": "var(--grey-7)",
                 "border": "var(--grey-7) 1px solid",
-                "textColor": "var(--grey-11-)"
+                "textColor": "var(--grey-11)"
             },
             "active": {
                 "boxShadow": "0px 4px 9px 0px var(--primary-a1)",

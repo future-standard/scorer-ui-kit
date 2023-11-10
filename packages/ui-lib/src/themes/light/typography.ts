@@ -728,7 +728,7 @@ export const typography = {
               "fontSize": "12px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--grey-11-)"
+              "color": "var(--grey-11)"
           },
           "active": {
               "textAlign": "left",
@@ -759,7 +759,7 @@ export const typography = {
               "fontSize": "12px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--grey-11-)"
+              "color": "var(--grey-11)"
           }
       }
   },
