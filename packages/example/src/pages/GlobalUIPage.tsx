@@ -1,36 +1,21 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC } from "react";
 import { ThemeProvider } from 'styled-components';
-import { GlobalUI, lightTheme, PageHeader } from "scorer-ui-kit";
+import { GlobalUI, lightTheme, PageHeader, useThemeToggle } from "scorer-ui-kit";
 
 
 const GlobalUIPage: FC = () => {
 
-  const [isDarkThemeEnabled, setIsDarkThemeEnabled] = useState(localStorage.getItem('isDarkThemeEnabled') !== 'false');
-
-  const onChangeTheme = useCallback(() => {
-    setIsDarkThemeEnabled((enabled) => {
-      localStorage.isDarkThemeEnabled = !enabled;
-      if (enabled) {
-        document.body.classList.add('dark-theme');
-        document.body.classList.remove('light-theme');
-      } else {
-        document.body.classList.add('light-theme');
-        document.body.classList.remove('dark-theme');
-      }
-      return !enabled;
-    });
-
-  }, []);
+  const {onThemeToggle, isLightMode} = useThemeToggle();
 
   return (
       <ThemeProvider theme={lightTheme}>
         <GlobalUI
           accountOptionText="Account Options"
           canAlwaysPin
-          isLightMode={!isDarkThemeEnabled}
+          isLightMode={isLightMode}
           switchThemeText='SWITCH THEME'
-          selectedThemeText={isDarkThemeEnabled ? 'DARK MODE' : 'LIGHT MODE'}
-          onThemeToggle={onChangeTheme}
+          selectedThemeText={isLightMode ? 'LIGHT MODE' : 'DARK MODE' }
+          onThemeToggle={onThemeToggle}
           hasSwitchTheme
           content={{
             items: [
