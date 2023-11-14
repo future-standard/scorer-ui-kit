@@ -22,7 +22,7 @@ const RouterDecorator = story => (
 );
 
 const ThemeDecorator = story => (
-  <ThemeProvider theme={lightTheme}>
+  <ThemeProvider theme={lightTheme} >
     <Fonts />
     <Style/>
     {story()}

@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { lightTheme,
           NotificationProvider,
           ModalProvider,
+          useThemeToggle,
         } from 'scorer-ui-kit';
 
 import App from './App';
@@ -62,6 +63,8 @@ lightTheme.custom.lines['weird'] = {
 };
 
 const Index : FC = () => {
+  //For the real reference of usage please look at the GlobalUI Page
+  const _initialize = useThemeToggle();
 
   return (
     <ThemeProvider theme={lightTheme}>
