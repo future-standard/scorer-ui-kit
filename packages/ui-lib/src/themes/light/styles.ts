@@ -8,7 +8,7 @@ export const styles = {
         "input": {
             "default": {
                 "normal": {
-                    "backgroundColor": "var(--grey-5)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": colors.input.border.default,
                     "border": colors.input.border.default + " 1px solid"
                 },
@@ -32,51 +32,48 @@ export const styles = {
             "required": {
                 "focused": {
                     "boxShadow": "0px 3px 7px 0px var(--primary-a11)",
-                    "backgroundColor": "var(--grey-5)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 2px solid"
                 },
                 "normal": {
                     "borderColor": "var(--primary-7)",
-                    "border": "var(--primary-7) 1px solid",
-                    "backgroundColor": "var(--grey-5)",
+                    "border": "var(--primary-7) 1px solid"
                 }
             },
             "valid": {
                 "focused": {
                     "boxShadow": "0px 3px 5px 0px var(--success-a12)",
-                    "backgroundColor": "var(--grey-5)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--success-7)",
                     "border": "var(--success-7) 2px solid"
                 },
                 "normal": {
                     "borderColor": "var(--success-7)",
-                    "border": "var(--success-7) 1px solid",
-                    "backgroundColor": "var(--grey-5)"
+                    "border": "var(--success-7) 1px solid"
                 }
             },
             "invalid": {
                 "focused": {
                     "boxShadow": "0px 3px 7px 0px var(--error-a1)",
-                    "backgroundColor": "var(--grey-5)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--error-8)",
                     "border": "var(--error-8) 2px solid"
                 },
                 "normal": {
                     "borderColor": "var(--error-8)",
-                    "border": "var(--error-8) 1px solid",
-                    "backgroundColor": "var(--grey-5)",
+                    "border": "var(--error-8) 1px solid"
                 }
             },
             "processing": {
                 "focused": {
                     "boxShadow": "0px 3px 7px 0px var(--primary-a10)",
-                    "backgroundColor": "var(--grey-5)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 2px solid"
                 },
                 "normal": {
-                  "backgroundColor": "var(--grey-5)",
+                    "backgroundColor": "var(--white-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 1px solid"
                 }
@@ -424,7 +421,7 @@ export const styles = {
         "dropdownContainer": {
             "background": {
                 "boxShadow": "0px 5px 25px 0px var(--primary-a1)",
-                "backgroundColor": "var(--grey-5)",
+                "backgroundColor": "var(--white-1)",
                 "borderColor": "var(--grey-6)",
                 "border": "var(--grey-6) 1px solid"
             },
@@ -435,7 +432,7 @@ export const styles = {
         "filterButton": {
             "default": {
                 "boxShadow": "0px 4px 9px 0px var(--primary-a1)",
-                "backgroundColor": "var(--grey-5)",
+                "backgroundColor": "var(--grey-2)",
                 "borderColor": "var(--grey-7)",
                 "border": "var(--grey-7) 1px solid",
                 "textColor": "var(--grey-11)"
@@ -458,7 +455,7 @@ export const styles = {
         "searchInput": {
             "default": {
                 "boxShadow": "0px 4px 9px 0px var(--primary-a2)",
-                "backgroundColor": "var(--grey-5)",
+                "backgroundColor": "var(--white-1)",
                 "borderColor": "var(--grey-7)",
                 "border": "var(--grey-7) 1px solid"
             },
