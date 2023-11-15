@@ -367,7 +367,7 @@ const DatePicker: React.FC<IDatePicker> = ({
       setAllowManualTimeChange(false);
     }
     setSelectedRange({ start, end });
-  }, [selectedRange]);
+  }, [selectedRange, dateMode, timeMode]);
 
   const updateEndDate = useCallback((end: Date) => {
     const { start } = selectedRange ? selectedRange : TODAY_INTERVAL;
