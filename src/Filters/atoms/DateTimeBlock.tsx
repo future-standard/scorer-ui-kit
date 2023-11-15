@@ -194,8 +194,8 @@ const DateTimeBlock : React.FC<IProps> = ({
 
   useEffect(()=>{
     if(allowAfterMidnight && isEqual(date, endOfDay(date))){
-      setDisplayHours('24');
-      setDisplayMinutes('00');
+      setDisplayHours('23');
+      setDisplayMinutes('59');
     }
   },[date, allowAfterMidnight]);
 
