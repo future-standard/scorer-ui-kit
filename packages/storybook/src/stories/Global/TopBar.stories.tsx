@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { object, text, boolean } from "@storybook/addon-knobs";
-import { TopBar, ICustomDrawer, INotificationItem, INotificationsHistory } from 'scorer-ui-kit';
+import { TopBar, ICustomDrawer, INotificationItem, INotificationsHistory, useThemeToggle } from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
 import { useState } from 'react';
 
@@ -93,7 +93,7 @@ const allNotifications: INotificationsHistory = {
 }
 
 export const _TopBar = () => {
-  const [isLightMode, setIsLightMode] = useState(true);
+  const {onThemeToggle, isLightMode} = useThemeToggle();
 
   const loggedInUser = text("Logged In User", "full.name@example.com");
 
@@ -108,7 +108,6 @@ export const _TopBar = () => {
   const hasSwitchTheme = boolean("Has Switch Theme", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
   const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
-  const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
 
   const currentUserText = text("Current User Text", "Current User");
@@ -130,11 +129,6 @@ export const _TopBar = () => {
   const notificationsHistory = object("Notifications History", allNotifications);
 
   // userDrawerBespoke: See examples for implementation of this prop.
-
-  const onThemeToggle = () => {
-    themeToggle();
-    setIsLightMode((prev) => !prev);
-  }
 
   const onLanguageToggle = () => {
     languageToggle();

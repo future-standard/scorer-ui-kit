@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { ThemeProvider } from 'styled-components';
-import { GlobalUI, lightTheme, PageHeader, useThemeToggle } from "scorer-ui-kit";
+import { GlobalUI, scorerTheme, PageHeader, useThemeToggle } from "scorer-ui-kit";
 
 
 const GlobalUIPage: FC = () => {
@@ -8,7 +8,7 @@ const GlobalUIPage: FC = () => {
   const {onThemeToggle, isLightMode} = useThemeToggle();
 
   return (
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={scorerTheme}>
         <GlobalUI
           accountOptionText="Account Options"
           canAlwaysPin

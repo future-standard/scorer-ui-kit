@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme,
+import { scorerTheme,
           NotificationProvider,
           ModalProvider,
           useThemeToggle,
@@ -16,7 +16,7 @@ import Style from './style';
 import './theme/theme-variables.css';
 
 //@ts-ignore
-lightTheme.custom.lines['weird'] = {
+scorerTheme.custom.lines['weird'] = {
   label: {
       fill: "#fff"
   },
@@ -67,7 +67,7 @@ const Index : FC = () => {
   const _initialize = useThemeToggle();
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={scorerTheme}>
     <ModalProvider>
       <NotificationProvider>
         <App />
