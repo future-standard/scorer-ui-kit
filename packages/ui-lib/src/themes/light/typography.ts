@@ -78,28 +78,28 @@ export const typography = {
                   "fontSize": "16px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--white-1)"
               },
               "large": {
                   "textAlign": "center",
                   "fontSize": "20px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--white-1)"
               },
               "small": {
                   "textAlign": "center",
                   "fontSize": "14px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--white-1)"
               },
               "xsmall": {
                   "textAlign": "center",
                   "fontSize": "12px",
                   "fontWeight": 600,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--white-1)"
               }
           },
           "primary": {

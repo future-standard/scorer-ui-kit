@@ -8,13 +8,13 @@ export const styles = {
         "input": {
             "default": {
                 "normal": {
-                    "backgroundColor": "var(--white-1)",
+                    "backgroundColor": "var(--grey-1)",
                     "borderColor": colors.input.border.default,
                     "border": colors.input.border.default + " 1px solid"
                 },
                 "focused": {
                     "boxShadow": "0px 3px 7px 0px var(--primary-a11)",
-                    "backgroundColor": "var(--white-1)",
+                    "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 1px solid"
                 }
@@ -32,48 +32,51 @@ export const styles = {
             "required": {
                 "focused": {
                     "boxShadow": "0px 3px 7px 0px var(--primary-a11)",
-                    "backgroundColor": "var(--white-1)",
+                    "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 2px solid"
                 },
                 "normal": {
                     "borderColor": "var(--primary-7)",
-                    "border": "var(--primary-7) 1px solid"
+                    "border": "var(--primary-7) 1px solid",
+                    "backgroundColor": "var(--grey-1)",
                 }
             },
             "valid": {
                 "focused": {
                     "boxShadow": "0px 3px 5px 0px var(--success-a12)",
-                    "backgroundColor": "var(--white-1)",
+                    "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--success-7)",
                     "border": "var(--success-7) 2px solid"
                 },
                 "normal": {
                     "borderColor": "var(--success-7)",
-                    "border": "var(--success-7) 1px solid"
+                    "border": "var(--success-7) 1px solid",
+                    "backgroundColor": "var(--grey-1)",
                 }
             },
             "invalid": {
                 "focused": {
                     "boxShadow": "0px 3px 7px 0px var(--error-a1)",
-                    "backgroundColor": "var(--white-1)",
+                    "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--error-8)",
                     "border": "var(--error-8) 2px solid"
                 },
                 "normal": {
                     "borderColor": "var(--error-8)",
-                    "border": "var(--error-8) 1px solid"
+                    "border": "var(--error-8) 1px solid",
+                    "backgroundColor": "var(--grey-1)",
                 }
             },
             "processing": {
                 "focused": {
                     "boxShadow": "0px 3px 7px 0px var(--primary-a10)",
-                    "backgroundColor": "var(--white-1)",
+                    "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 2px solid"
                 },
                 "normal": {
-                    "backgroundColor": "var(--white-1)",
+                    "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 1px solid"
                 }
@@ -91,45 +94,45 @@ export const styles = {
         "button": {
             "primary": {
                 "default": {
-                    "backgroundColor": "var(--primary-7)",
+                    "backgroundColor": "var(--primary-9)",
                     "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-7) 100%)"
                 },
                 "hover": {
-                    "backgroundColor": "var(--primary-8)"
+                    "backgroundColor": "var(--primary-10)"
                 },
                 "active": {
-                    "backgroundColor": "var(--primary-7)"
+                    "backgroundColor": "var(--primary-9)"
                 },
                 "divider": {
-                    "backgroundColor": "var(--primary-7)"
+                    "backgroundColor": "var(--primary-a8)"
                 },
                 "disabled": {
-                    "backgroundColor": "var(--primary-7)",
+                    "backgroundColor": "var(--primary-a10)",
                     "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-7) 100%)"
                 },
                 "actionArea": {
-                    "backgroundColor": "var(--primary-7)",
+                    "backgroundColor": "var(--primary-9)",
                     "backgroundImage": "linear-gradient(135.00deg, var(--primary-7) 0%, var(--primary-7) 100%)"
                 }
             },
             "secondary": {
                 "default": {
-                    "backgroundColor": "var(--grey-5)"
+                    "backgroundColor": "var(--grey-9)"
                 },
                 "hover": {
-                    "backgroundColor": "var(--grey-5)"
+                    "backgroundColor": "var(--grey-10)"
                 },
                 "active": {
-                    "backgroundColor": "var(--grey-6)"
+                    "backgroundColor": "var(--grey-9)"
                 },
                 "disabled": {
-                    "backgroundColor": "var(--grey-2)"
+                    "backgroundColor": "var(--grey-a10)"
                 },
                 "divider": {
                     "backgroundColor": "var(--grey-a8)"
                 },
                 "actionArea": {
-                    "backgroundColor": "var(--grey-a3)"
+                    "backgroundColor": "var(--grey-9)"
                 }
             },
             "danger": {
@@ -138,13 +141,13 @@ export const styles = {
                     "backgroundImage": "linear-gradient(317.51deg, var(--error-9) 0%, var(--error-8) 100%)"
                 },
                 "hover": {
-                    "backgroundColor": "var(--error-9)"
+                    "backgroundColor": "var(--error-10)"
                 },
                 "active": {
-                    "backgroundColor": "var(--error-8)"
+                    "backgroundColor": "var(--error-9)"
                 },
                 "disabled": {
-                    "backgroundColor": "var(--error-6)"
+                    "backgroundColor": "var(--error-a10)"
                 },
                 "divider": {
                     "backgroundColor": "var(--error-8)"
@@ -364,7 +367,7 @@ export const styles = {
         "drawer": {
             "background": {
                 "boxShadow": "-5px 0px 10px 0px var(--white-a2)",
-                "backgroundColor": "var(--white-1)"
+                "backgroundColor": "var(--grey-1)"
             }
         },
         "topBar": {
@@ -421,7 +424,7 @@ export const styles = {
         "dropdownContainer": {
             "background": {
                 "boxShadow": "0px 5px 25px 0px var(--primary-a1)",
-                "backgroundColor": "var(--white-1)",
+                "backgroundColor": "var(--grey-1)",
                 "borderColor": "var(--grey-6)",
                 "border": "var(--grey-6) 1px solid"
             },
@@ -432,7 +435,7 @@ export const styles = {
         "filterButton": {
             "default": {
                 "boxShadow": "0px 4px 9px 0px var(--primary-a1)",
-                "backgroundColor": "var(--grey-2)",
+                "backgroundColor": "var(--grey-1)",
                 "borderColor": "var(--grey-7)",
                 "border": "var(--grey-7) 1px solid",
                 "textColor": "var(--grey-11)"
@@ -455,13 +458,13 @@ export const styles = {
         "searchInput": {
             "default": {
                 "boxShadow": "0px 4px 9px 0px var(--primary-a2)",
-                "backgroundColor": "var(--white-1)",
+                "backgroundColor": "var(--grey-1)",
                 "borderColor": "var(--grey-7)",
                 "border": "var(--grey-7) 1px solid"
             },
             "focused": {
                 "boxShadow": "0px 4px 9px 0px var(--primary-a2)",
-                "backgroundColor": "var(--white-1)",
+                "backgroundColor": "var(--grey-1)",
                 "borderColor": "var(--primary-6)",
                 "border": "var(--primary-6) 1px solid"
             }
@@ -519,7 +522,7 @@ export const styles = {
     "filterButton": {
         "active": {
             "boxShadow": "0px 4px 9px 0px var(--primary-a1)",
-            "backgroundColor": "var(--grey-2)",
+            "backgroundColor": "var(--grey-1)",
             "borderColor": "var(--primary-7)",
             "border": "var(--primary-7) 1px solid"
         }
@@ -530,7 +533,7 @@ export const styles = {
         },
         "container": {
             "boxShadow": "0px 10px 15px 0px var(--primary-a1)",
-            "backgroundColor": "var(--white-1)",
+            "backgroundColor": "var(--grey-1)",
             "borderColor": "var(--grey-6)",
             "border": "var(--grey-6) 1px solid"
         }
