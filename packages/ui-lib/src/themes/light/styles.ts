@@ -13,7 +13,7 @@ export const styles = {
                     "border": colors.input.border.default + " 1px solid"
                 },
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px var(--primary-a11)",
+                    "boxShadow": "0px 3px 7px 0px var(--primary-a2)",
                     "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 1px solid"
@@ -31,7 +31,7 @@ export const styles = {
             },
             "required": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px var(--primary-a11)",
+                    "boxShadow": "0px 3px 7px 0px var(--primary-a2)",
                     "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 2px solid"
@@ -44,7 +44,7 @@ export const styles = {
             },
             "valid": {
                 "focused": {
-                    "boxShadow": "0px 3px 5px 0px var(--success-a12)",
+                    "boxShadow": "0px 3px 5px 0px var(--success-a2)",
                     "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--success-7)",
                     "border": "var(--success-7) 2px solid"
@@ -57,7 +57,7 @@ export const styles = {
             },
             "invalid": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px var(--error-a1)",
+                    "boxShadow": "0px 3px 7px 0px var(--error-a2)",
                     "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--error-8)",
                     "border": "var(--error-8) 2px solid"
@@ -70,7 +70,7 @@ export const styles = {
             },
             "processing": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px var(--primary-a10)",
+                    "boxShadow": "0px 3px 7px 0px var(--primary-a2)",
                     "backgroundColor": "var(--grey-1)",
                     "borderColor": "var(--primary-7)",
                     "border": "var(--primary-7) 2px solid"

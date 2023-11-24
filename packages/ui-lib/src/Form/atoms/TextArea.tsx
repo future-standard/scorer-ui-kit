@@ -69,6 +69,10 @@ const Container =  styled.div<{ fieldState: string }>`
       box-shadow: 0px 3px 7px 0px hsla(207, 65.8%, 31%, 0.078);
     }
 
+    &:disabled {
+      cursor: not-allowed;
+    }
+
     ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
       border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
@@ -137,7 +141,7 @@ const TextArea : React.FC<Props> = ({
   return (
     <Container fieldState={fieldState || 'default'}>
       <StyledTextArea
-        fieldState={fieldState || 'default'} 
+        fieldState={fieldState || 'default'}
         placeholder={placeholder}
         disabled={fieldState === 'disabled' || fieldState === 'processing'}
         {...props}
