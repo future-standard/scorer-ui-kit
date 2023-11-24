@@ -174,8 +174,8 @@ export const styles = {
                 },
                 "disabled": {
                     "outer": {
-                        "backgroundColor": "var(--white-1)",
-                        "backgroundImage": "linear-gradient(180.00deg, var(--white-1) 0%, var(--grey-1) 100%)",
+                        "backgroundColor": "var(--grey-1)",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--grey-1)0%, var(--grey-1) 100%)",
                         "borderColor": "var(--grey-a7)",
                         "border": "var(--grey-a7) 1px solid"
                     },
@@ -283,13 +283,13 @@ export const styles = {
             "locked": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "var(--white-1)",
-                        "backgroundImage": "linear-gradient(180.00deg, var(--white-1) 0%, var(--grey-1) 100%)",
-                        "borderColor": "var(--grey-a7)",
-                        "border": "var(--grey-a7) 1px solid"
+                        "backgroundColor": "var(--grey-1) ",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--grey-1) 0%, var(--grey-1) 100%)",
+                        "borderColor": "var(--grey-a8)",
+                        "border": "var(--grey-a8) 1px solid"
                     },
                     "inner": {
-                        "backgroundColor": "var(--grey-6)"
+                        "backgroundColor": "var(--grey-8)"
                     }
                 }
             }

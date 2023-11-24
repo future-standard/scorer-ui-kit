@@ -3,10 +3,10 @@ export const colors = {
   "pureTop": "var(--black-1)",
   "divider": "var(--grey-6)",
   "icons": {
-      "inverse": "var(--white-1)",
-      "mono": "var(--black-9)",
-      "dimmed": "var(--grey-9)",
-      "subtle": "var(--white-9)",
+      "inverse": "var(--grey-1)",
+      "mono": "var(--grey-12)",
+      "dimmed": "var(--grey-11)",
+      "subtle": "var(--grey-10)",
       "primary": "var(--primary-9)",
       "danger": "var(--error-9)"
   },
