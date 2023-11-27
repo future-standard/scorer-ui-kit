@@ -49,6 +49,7 @@ export const _PercentageSlider = () => {
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
   const showTitle = boolean("Show Value", true);
+  const isCenterAlignedEndNum = boolean('Center aligned end numbers', false);
 
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
@@ -92,6 +93,7 @@ export const _PercentageSlider = () => {
           updateThumbColor={customThumb ? otherColorHandler : undefined }
           updateTitle={customTitle ? otherTitlesHandler : undefined}
           showValue={showTitle}
+          isCenterAlignedEndNum={isCenterAlignedEndNum}
         />
     </Container>
   )
