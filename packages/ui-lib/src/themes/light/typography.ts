@@ -197,7 +197,7 @@ export const typography = {
                   "fontWeight": 500,
                   "lineHeight": "25px",
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--grey-12)"
               },
               "compact": {
                   "textAlign": "left",
@@ -205,7 +205,7 @@ export const typography = {
                   "fontWeight": 500,
                   "lineHeight": "15px",
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--grey-12)"
               }
           }
       },
@@ -335,7 +335,7 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 300,
                   "textDecoration": "none",
-                  "color": "var(--grey-11)"
+                  "color": "var(--grey-12)"
               },
               "placeholder": {
                   "textAlign": "left",
@@ -417,7 +417,7 @@ export const typography = {
           "fontSize": "14px",
           "fontWeight": 600,
           "textDecoration": "none",
-          "color": "var(--grey-11)"
+          "color": "var(--grey-12)"
       }
   },
   "meta": {
@@ -632,7 +632,7 @@ export const typography = {
                   "fontSize": "14px",
                   "fontWeight": 400,
                   "textDecoration": "none",
-                  "color": "var(--grey-a11)"
+                  "color": "var(--grey-a8)"
               },
               "default": {
                   "textAlign": "center",
@@ -646,7 +646,7 @@ export const typography = {
                   "fontSize": "12px",
                   "fontWeight": 700,
                   "textDecoration": "none",
-                  "color": "calendar: "
+                  "color": "var(--grey-a12)"
               }
           },
           "monthLink": {
@@ -658,7 +658,7 @@ export const typography = {
                   "textTransform": "uppercase",
                   "letterSpacing": "0.4px",
                   "textDecoration": "none",
-                  "color": "var(--grey-8)"
+                  "color": "var(--grey-9)"
               },
               "hover": {
                   "textAlign": "center",
@@ -712,7 +712,7 @@ export const typography = {
               "fontSize": "13px",
               "fontWeight": 500,
               "textDecoration": "none",
-              "color": "var(--white-11)"
+              "color": "var(--grey-a12)"
           }
       },
       "presetAction": {
@@ -720,7 +720,7 @@ export const typography = {
           "fontSize": "13px",
           "fontWeight": 500,
           "textDecoration": "none",
-          "color": "var(--white-11)"
+          "color": "var(--gray-12)"
       },
       "filterButton": {
           "default": {
@@ -759,7 +759,7 @@ export const typography = {
               "fontSize": "12px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--grey-11)"
+              "color": "var(--grey-12)"
           }
       }
   },
@@ -778,7 +778,7 @@ export const typography = {
           "textAlign": "left",
           "fontSize": "20px",
           "fontWeight": 400,
-          "textShadow": "0px 0px 10px #ffffffcc",
+          "textShadow": "0px 0px 10px var(--white-a5)",
           "textDecoration": "none",
           "color": "var(--grey-11)"
       },

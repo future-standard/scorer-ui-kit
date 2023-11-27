@@ -12,8 +12,8 @@ export const colors = {
   },
   "menu": {
       "active": "var(--primary-9)",
-      "hover": "var(--primary-6)",
-      "default": "var(--primary-a6)",
+      "hover": "var(--primary-8)",
+      "default": "var(--gray-2)",
       "indicator": "var(--grey-a1)",
       "passive": "var(--primary-a7)"
   },
@@ -25,7 +25,7 @@ export const colors = {
       "warning": "var(--warning-8)"
   },
   "status": {
-      "caution": "var(--warning-7)",
+      "caution": "var(--warning-10)",
       "danger": "var(--error-8)",
       "folder": "var(--primary-7)",
       "highlight": "var(--primary-7)",
