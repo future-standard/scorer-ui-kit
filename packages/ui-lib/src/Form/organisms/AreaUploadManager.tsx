@@ -32,7 +32,7 @@ const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
 `;
 
 const Title = styled.div`
-  color: hsl(208, 8%, 38%);
+  color: var(--grey-11);
   font-size: 20px;
 `;
 
@@ -40,7 +40,7 @@ const Description = styled.div`
   font-size: 14px;
   line-height: 2.14;
   text-align: center;
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-10);
   margin-top: 10px;
   max-width: 386px;
 `;

@@ -8,7 +8,7 @@ import Label from '../atoms/Label';
 const Container = styled.div``;
 const Headers = styled.div`
   font-size: 14px;
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-10);
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;

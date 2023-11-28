@@ -16,7 +16,7 @@ import Label from '../atoms/Label';
 const Container = styled.div``;
 const Headers = styled.div`
   font-size: 14px;
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-10);
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
@@ -30,7 +30,7 @@ const ValueLabel = styled(Label)`
 
 const Unit = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.data};
-  color: hsla(195, 10%, 52%, 0.72);
+  color: var(--grey-a11);
   font-style: italic;
   font-size: 12px;
   line-height: 1.5;

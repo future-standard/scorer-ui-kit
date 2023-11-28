@@ -62,7 +62,7 @@ const PlayableDrop = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: hsla(0, 0%, 0%, .5);
+  background-color: var(--black-a1);
   height: 24px;
   width: 24px;
   border-radius: 50%;
@@ -74,7 +74,7 @@ const PlayableDrop = styled.div`
     svg {
       padding-left: 2px;
       path {
-        stroke: hsla(0, 0%, 100%, 1.000);
+        stroke: var(--white-1);
       }
     }
   };

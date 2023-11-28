@@ -15,7 +15,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: hsla(202, 33%, 95%, 0.51);
+  background-color: var(--grey-3);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   z-index: 999;
@@ -44,7 +44,7 @@ const CloseButton = styled.button<{ selected?: boolean }>`
     margin-left: 12px;
   }
   ${({ selected = false }) => selected && css`
-    border-bottom: 5px solid hsl(207, 80%, 64%);
+    border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
     outline: none;

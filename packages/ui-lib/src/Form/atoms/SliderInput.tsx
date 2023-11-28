@@ -48,7 +48,7 @@ const Rail = styled.div`
   width: calc(100% - ${ThumbDiameter}px);
   height: 2px;
   border-radius: 11px;
-  background-image: linear-gradient(to bottom, hsl(210, 30%, 96%), hsl(203, 42%, 94%) 98%);
+  background-image: linear-gradient(to bottom, var(--grey-10), var(--primary-10) 98%);
 `;
 
 const Mark = styled.span<{leftValue: number}>`
@@ -58,7 +58,7 @@ const Mark = styled.span<{leftValue: number}>`
   width: 1px;
   height: 9px;
   opacity: 0.25;
-  background-color: hsl(205, 77%, 64%);
+  background-color: var(--primary-11);
 `;
 
 const MarkLabel = styled.span<{leftValue: number, alignment?: IMartAlignment,}>`
@@ -70,7 +70,7 @@ const MarkLabel = styled.span<{leftValue: number, alignment?: IMartAlignment,}>`
   font-style: italic;
   line-height: normal;
   text-align: center;
-  color: hsla(195, 10%, 52%, 0.72);
+  color: var(--grey-a11);
 
   ${({alignment}) => (alignment === 'center') && css`transform: translateX(-50%);;`}
   ${({alignment}) => (alignment === 'right') && css`transform: translateX(5%);`}

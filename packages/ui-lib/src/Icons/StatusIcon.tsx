@@ -24,7 +24,7 @@ const StatusCounter = styled.div<{ color?: IStatusDot }>`
   ${({theme:{animation}}) => css`
     transition: background-color ${animation.speed.slow} ${animation.easing.primary.easeInOut};
   `}
-  background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'hsla(0, 0%, 91.8%, 0)'};
+  background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'var(--grey-5)'};
 `;
 
 const StatusDot = styled.div<{ color?: IStatusDot }>`
@@ -37,7 +37,7 @@ const StatusDot = styled.div<{ color?: IStatusDot }>`
   ${({theme:{animation}}) => css`
     transition: background-color ${animation.speed.slow} ${animation.easing.primary.easeInOut};
   `}
-  background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'hsla(0, 0%, 91.8%, 0)'};
+  background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'var(--grey-5)'};
 `;
 
 interface IStatusIcon {

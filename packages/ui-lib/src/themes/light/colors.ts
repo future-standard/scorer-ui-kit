@@ -8,7 +8,8 @@ export const colors = {
       "dimmed": "var(--grey-11)",
       "subtle": "var(--grey-10)",
       "primary": "var(--primary-9)",
-      "danger": "var(--error-9)"
+      "danger": "var(--error-9)",
+      "white": "var(--white-1)"
   },
   "menu": {
       "active": "var(--primary-9)",

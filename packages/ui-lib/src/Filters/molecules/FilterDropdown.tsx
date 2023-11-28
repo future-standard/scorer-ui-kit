@@ -58,7 +58,7 @@ const ResultsContainer = styled.div`
 const ResultCounter = styled.div`
   opacity: 0.75;
   font-family: ${({ theme }) => theme.fontFamily.data};
-  color: hsl(0, 0%, 55%);
+  color: var(--grey-10);
   font-size: 12px;
   font-style: italic;
   font-weight: 300;
@@ -79,7 +79,7 @@ const SearchWrapper = styled.div`
 
 const EmptyResultText = styled.div`
   display: block;
-  color: hsl(0, 0%, 56%);
+  color: var(--grey-10);
   margin-left: 12px;
   user-select: none;
   pointer-events: none;

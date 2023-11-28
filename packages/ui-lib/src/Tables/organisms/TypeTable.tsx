@@ -14,7 +14,7 @@ const TableContainer = styled.div`
 `;
 
 const LoadingText = styled.div`
-  color: hsla(195, 10%, 52%, 0.72);
+  color: var(--grey-a11);
 `;
 
 const LoadingBox = styled.div`
@@ -46,9 +46,9 @@ const EmptyTableBox = styled.div`
   text-align: center;
   h3 {
     font-weight: 500;
-    color: hsl(208, 8%, 38%);
+    color: var(--grey-11);
   }
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-10);
 `;
 
 const isChecked = ({ _checked = false }: IRowData) => {
