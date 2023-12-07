@@ -164,7 +164,7 @@ export const styles = {
                 "default": {
                     "outer": {
                         "backgroundColor": "var(--grey-3)",
-                        "backgroundImage": "linear-gradient(180.00deg, var(--grey-3) 0%, var(--primary-3) 100%)",
+                        "backgroundImage": "linear-gradient(180.00deg, var(--primary-2) 0%, var(--primary-3) 100%)",
                         "borderColor": "var(--grey-a8)",
                         "border": "var(--grey-a8) 1px solid"
                     },
