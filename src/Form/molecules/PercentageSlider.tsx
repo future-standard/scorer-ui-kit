@@ -53,7 +53,7 @@ interface IPercentageSliderProps {
   inputCallback?: (value: number) => void
   updateThumbColor?:  (value: number) => IFeedbackColor
   updateTitle?: (value: number) => string
-  isCenterAlignedEndNum: boolean
+  isCenterAlignedEndNum?: boolean
 }
 
 type IPercentageSlider = IPercentageSliderProps & InputHTMLAttributes<HTMLInputElement>;

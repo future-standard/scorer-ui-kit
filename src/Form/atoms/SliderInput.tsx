@@ -61,7 +61,7 @@ const Mark = styled.span<{leftValue: number}>`
   background-color: hsl(205, 77%, 64%);
 `;
 
-const MarkLabel = styled.span<{leftValue: number; alignment?: IMartAlignment; isCenterAlignedEndNum: boolean}>`
+const MarkLabel = styled.span<{leftValue: number; alignment?: IMartAlignment; isCenterAlignedEndNum?: boolean}>`
   position: absolute;
   top: -24px;
   font-size: 10px;
@@ -188,7 +188,7 @@ const getMarkAlignment = (value: number, min: number, max: number) : IMartAlignm
   return 'center';
 };
 
-const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string, isCenterAlignedEndNum: boolean) => {
+const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string, isCenterAlignedEndNum?: boolean) => {
 
   const listOptions : JSX.Element[] = [];
   const marksElements = markList.map(({value, label}, index) => {
@@ -243,7 +243,7 @@ interface ISliderOwnProps {
   showValue?: boolean
   inputCallback?: (value: number) => void
   onChangeCallback?: (value: number) => void
-  isCenterAlignedEndNum: boolean
+  isCenterAlignedEndNum?: boolean
 }
 
 export type ISlider = ISliderOwnProps & InputHTMLAttributes<HTMLInputElement>;
