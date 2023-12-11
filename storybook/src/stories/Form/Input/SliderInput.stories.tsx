@@ -79,6 +79,7 @@ export const _SliderInput = () => {
           marks={marks}
           defaultValue={defaultValue}
           isCenterAlignedEndNum={isCenterAlignedEndNum}
+          isFromSliderStory={isCenterAlignedEndNum}
         />
     </Container>
   )

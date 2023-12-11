@@ -61,7 +61,7 @@ const Mark = styled.span<{leftValue: number}>`
   background-color: hsl(205, 77%, 64%);
 `;
 
-const MarkLabel = styled.span<{leftValue: number; alignment?: IMartAlignment; isCenterAlignedEndNum?: boolean}>`
+const MarkLabel = styled.span<{leftValue: number; alignment?: IMartAlignment; isCenterAlignedEndNum?: boolean; isFromSliderStory?: boolean}>`
   position: absolute;
   top: -24px;
   font-size: 10px;
@@ -69,7 +69,7 @@ const MarkLabel = styled.span<{leftValue: number; alignment?: IMartAlignment; is
   line-height: normal;
   text-align: center;
   color: hsla(195, 10%, 52%, 0.72);
-  left: ${({ leftValue, isCenterAlignedEndNum }) => {
+  left: ${({ leftValue, isCenterAlignedEndNum, isFromSliderStory }) => {
     if (isCenterAlignedEndNum) {
       let baseValue;
       switch (leftValue) {
@@ -77,7 +77,7 @@ const MarkLabel = styled.span<{leftValue: number; alignment?: IMartAlignment; is
           baseValue = 2;
           break;
         case 100:
-          baseValue = 22;
+          baseValue = isFromSliderStory ? 15 : 22;
           break;
         default:
           baseValue = 7;
@@ -188,7 +188,7 @@ const getMarkAlignment = (value: number, min: number, max: number) : IMartAlignm
   return 'center';
 };
 
-const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string, isCenterAlignedEndNum?: boolean) => {
+const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string, isCenterAlignedEndNum?: boolean, isFromSliderStory?: boolean) => {
 
   const listOptions : JSX.Element[] = [];
   const marksElements = markList.map(({value, label}, index) => {
@@ -206,6 +206,7 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
           leftValue={left}
           alignment={getMarkAlignment(value, min, max)}
           isCenterAlignedEndNum={isCenterAlignedEndNum}
+          isFromSliderStory={isFromSliderStory}
         >
           {label}
         </MarkLabel>
@@ -244,6 +245,7 @@ interface ISliderOwnProps {
   inputCallback?: (value: number) => void
   onChangeCallback?: (value: number) => void
   isCenterAlignedEndNum?: boolean
+  isFromSliderStory?: boolean
 }
 
 export type ISlider = ISliderOwnProps & InputHTMLAttributes<HTMLInputElement>;
@@ -261,6 +263,7 @@ const SliderInput : React.FC<ISlider> = ({
   inputCallback = () => {},
   onChangeCallback = () => {},
   isCenterAlignedEndNum,
+  isFromSliderStory,
   ...props
 }) => {
 
@@ -334,7 +337,7 @@ const SliderInput : React.FC<ISlider> = ({
     <SliderWrapper disabled={disabled}>
       <Rail />
       <ThumbWrapper>
-        {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`, isCenterAlignedEndNum)}
+        {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`, isCenterAlignedEndNum, isFromSliderStory)}
         {isGhostActive && onlyMarkSelect
           ? (
             <GhostThumb
