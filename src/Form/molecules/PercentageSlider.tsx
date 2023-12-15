@@ -53,7 +53,7 @@ interface IPercentageSliderProps {
   inputCallback?: (value: number) => void
   updateThumbColor?:  (value: number) => IFeedbackColor
   updateTitle?: (value: number) => string
-  isCenterAlignedEndNum?: boolean
+  allMarkCentered?: boolean
 }
 
 type IPercentageSlider = IPercentageSliderProps & InputHTMLAttributes<HTMLInputElement>;
@@ -66,7 +66,7 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
     updateThumbColor,
     updateTitle,
     showValue,
-    isCenterAlignedEndNum,
+    allMarkCentered,
     ...props
   }
   ) => {
@@ -101,7 +101,7 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
             ? updateThumbColor(selectedValue)
             : getThumbColor(selectedValue)
           }
-        isCenterAlignedEndNum={isCenterAlignedEndNum}
+        allMarkCentered={allMarkCentered}
       />
     </Container>
   );

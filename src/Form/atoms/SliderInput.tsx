@@ -61,32 +61,17 @@ const Mark = styled.span<{leftValue: number}>`
   background-color: hsl(205, 77%, 64%);
 `;
 
-const MarkLabel = styled.span<{leftValue: number; alignment?: IMartAlignment; isCenterAlignedEndNum?: boolean; isFromSliderStory?: boolean}>`
+const MarkLabel = styled.span<{leftValue: number, alignment?: IMarkAlignment,}>`
   position: absolute;
   top: -24px;
+  left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
+
   font-size: 10px;
   font-style: italic;
   line-height: normal;
   text-align: center;
   color: hsla(195, 10%, 52%, 0.72);
-  left: ${({ leftValue, isCenterAlignedEndNum, isFromSliderStory }) => {
-    if (isCenterAlignedEndNum) {
-      let baseValue;
-      switch (leftValue) {
-        case 0:
-          baseValue = 2;
-          break;
-        case 100:
-          baseValue = isFromSliderStory ? 15 : 22;
-          break;
-        default:
-          baseValue = 7;
-      }
-      return `calc(${leftValue}% + ${baseValue}px)`;
-    } else {
-      return `calc(${leftValue}% + 7px)`;
-    }
-  }};
+
   ${({alignment}) => (alignment === 'center') && css`transform: translateX(-50%);;`}
   ${({alignment}) => (alignment === 'right') && css`transform: translateX(5%);`}
   ${({alignment}) => (alignment === 'left') && css`transform: translateX(-95%);`}
@@ -176,7 +161,7 @@ const  valueToPercent = (value: number, min: number, max: number) : number => {
 // };
 
 
-const getMarkAlignment = (value: number, min: number, max: number) : IMartAlignment => {
+const getMarkAlignment = (value: number, min: number, max: number) : IMarkAlignment => {
   if(value === min) {
     return 'right';
   }
@@ -188,7 +173,7 @@ const getMarkAlignment = (value: number, min: number, max: number) : IMartAlignm
   return 'center';
 };
 
-const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string, isCenterAlignedEndNum?: boolean, isFromSliderStory?: boolean) => {
+const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string, allMarkCentered?: boolean) => {
 
   const listOptions : JSX.Element[] = [];
   const marksElements = markList.map(({value, label}, index) => {
@@ -204,9 +189,7 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
         />
         <MarkLabel
           leftValue={left}
-          alignment={getMarkAlignment(value, min, max)}
-          isCenterAlignedEndNum={isCenterAlignedEndNum}
-          isFromSliderStory={isFromSliderStory}
+          alignment={allMarkCentered ? 'center' : getMarkAlignment(value, min, max)}
         >
           {label}
         </MarkLabel>
@@ -225,7 +208,7 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
 
 };
 
-export type IMartAlignment = 'left' | 'center' | 'right';
+export type IMarkAlignment = 'left' | 'center' | 'right';
 
 export interface ISliderMark {
   value: number
@@ -244,8 +227,7 @@ interface ISliderOwnProps {
   showValue?: boolean
   inputCallback?: (value: number) => void
   onChangeCallback?: (value: number) => void
-  isCenterAlignedEndNum?: boolean
-  isFromSliderStory?: boolean
+  allMarkCentered?: boolean
 }
 
 export type ISlider = ISliderOwnProps & InputHTMLAttributes<HTMLInputElement>;
@@ -262,8 +244,7 @@ const SliderInput : React.FC<ISlider> = ({
   onlyMarkSelect = false,
   inputCallback = () => {},
   onChangeCallback = () => {},
-  isCenterAlignedEndNum,
-  isFromSliderStory,
+  allMarkCentered,
   ...props
 }) => {
 
@@ -337,7 +318,7 @@ const SliderInput : React.FC<ISlider> = ({
     <SliderWrapper disabled={disabled}>
       <Rail />
       <ThumbWrapper>
-        {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`, isCenterAlignedEndNum, isFromSliderStory)}
+        {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`, allMarkCentered)}
         {isGhostActive && onlyMarkSelect
           ? (
             <GhostThumb
