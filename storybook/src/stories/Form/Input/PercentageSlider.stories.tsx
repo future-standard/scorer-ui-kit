@@ -49,7 +49,7 @@ export const _PercentageSlider = () => {
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
   const showTitle = boolean("Show Value", true);
-  const allMarkCentered = boolean('Center aligned end numbers', false);
+  const allMarkCentered = boolean('Center all mark values', false);
 
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {

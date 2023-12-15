@@ -61,7 +61,7 @@ const Mark = styled.span<{leftValue: number}>`
   background-color: hsl(205, 77%, 64%);
 `;
 
-const MarkLabel = styled.span<{leftValue: number, alignment?: IMarkAlignment,}>`
+const MarkLabel = styled.span<{leftValue: number, alignment?: IMarkAlignment}>`
   position: absolute;
   top: -24px;
   left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
@@ -244,7 +244,7 @@ const SliderInput : React.FC<ISlider> = ({
   onlyMarkSelect = false,
   inputCallback = () => {},
   onChangeCallback = () => {},
-  allMarkCentered,
+  allMarkCentered = false,
   ...props
 }) => {
 
