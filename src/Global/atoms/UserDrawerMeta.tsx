@@ -83,6 +83,11 @@ const TitleBox = styled.div`
 
 const IconBox = styled.div`
   padding: 1px 5px 0 0;
+  opacity: 0;
+  ${Container}:hover & {
+    opacity: 1;
+    cursor: pointer;
+  }
 `;
 
 const CopyTextBox = styled.pre`
