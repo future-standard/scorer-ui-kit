@@ -113,7 +113,7 @@ const SegmentedProgressBar: React.FC<ISegmentedProgressBarProps> = ({ statusSegm
     } else {
       return <Bar><TooltipText width={width}>{item.displayText}</TooltipText></Bar>;
     }
-  },[]);
+  },[width]);
 
   return (
     <Container width={width}>
