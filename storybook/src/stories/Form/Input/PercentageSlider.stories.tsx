@@ -39,7 +39,7 @@ const exampleMarks : ISliderMark[] = [
     label:'100%',
   },
 ];
-  
+
 export const _PercentageSlider = () => {
   const title = text('Title', 'Duration');
   const disabled = boolean('Disabled', false);
@@ -49,6 +49,7 @@ export const _PercentageSlider = () => {
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
   const showTitle = boolean("Show Value", true);
+  const allMarkCentered = boolean('Center all mark values', false);
 
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
@@ -60,11 +61,11 @@ export const _PercentageSlider = () => {
     if(value <= 20) {
       return 'neutral';
     }
-  
+
     if((value > 20) && (value <= 80)) {
       return 'info';
     }
-  
+
     return 'error';
   }
 
@@ -72,11 +73,11 @@ export const _PercentageSlider = () => {
     if(value <= 20) {
       return 'Small sound';
     }
-  
+
     if((value > 20) && (value <= 80)) {
       return 'Normal sound';
     }
-  
+
     return 'Dangerous sound';
   }
 
@@ -92,6 +93,7 @@ export const _PercentageSlider = () => {
           updateThumbColor={customThumb ? otherColorHandler : undefined }
           updateTitle={customTitle ? otherTitlesHandler : undefined}
           showValue={showTitle}
+          allMarkCentered={allMarkCentered}
         />
     </Container>
   )
