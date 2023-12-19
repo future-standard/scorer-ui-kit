@@ -4,18 +4,30 @@ import LineUnit from './LineUnit';
 import update from 'immutability-helper';
 import { LineSetContext } from './Contexts';
 import { IPointSet, IDragLineUISharedOptions, IVector2 } from '.';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const FilledPolygon = styled.polygon<{ color: string; opacity: number }>`
+  fill: ${({ color }) => color };
+  opacity: ${({ opacity }) => opacity };
+`;
 
 const Point = styled.circle<{styling: string}>`
   fill: ${({theme, styling}) => theme.custom.lines[styling].point.fill};
 `;
 
-const AreaLabelText = styled.text<{styling: string}>`
+const AreaLabelText = styled.text<{styling: string, showAreaLabelShadow: boolean}>`
   text-align: center;
   fill: ${({theme, styling}) => theme.custom.lines[styling].label.fill};
   font-weight: bold;
   transition: opacity 250ms ease;
   pointer-events: none;
+  ${({showAreaLabelShadow}) => showAreaLabelShadow && css`
+    text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+  `}
 `;
 
 interface ILineSetProps {
@@ -26,15 +38,19 @@ interface ILineSetProps {
   lineData: IPointSet,
   options: IDragLineUISharedOptions,
   onLineMoveEnd: () => void;
+  onLineClick: (lineSetId: number) => void;
   getCTM: () => DOMMatrix | null;
+  lineClickSensingBorder?: string;
+  hasClickSensingBorder?: boolean;
 }
 
 interface AreaLabelProps {
   lineSetData: IPointSet,
-  unit: number
+  unit: number,
+  showAreaLabelShadow: boolean
 }
 
-const AreaLabel : React.FC<AreaLabelProps> = ( { lineSetData, unit } ) => {
+const AreaLabel : React.FC<AreaLabelProps> = ( { lineSetData, unit, showAreaLabelShadow } ) => {
   const pointsLength = lineSetData.points.length;
   if (pointsLength < 3) return null;
   let midpoint = { x: 0, y: 0 };
@@ -47,14 +63,15 @@ const AreaLabel : React.FC<AreaLabelProps> = ( { lineSetData, unit } ) => {
 
   midpoint = { x: midpoint.x / pointsLength, y: midpoint.y / pointsLength };
   const Textlen = lineSetData.areaName?.length || 1;
-  return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'} x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)}>{lineSetData.areaName}</AreaLabelText>;
+  return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'} x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)} showAreaLabelShadow={showAreaLabelShadow}>{lineSetData.areaName}</AreaLabelText>;
 };
 
-const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options , onLineMoveEnd}) => {
+const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options, onLineMoveEnd, onLineClick, lineClickSensingBorder, hasClickSensingBorder }) => {
   // console.log("Unit " + lineSetId + ", reporting in...")
 
   const {state, dispatch} = useContext(LineSetContext);
   const lineSetData = state[lineSetId];
+  const { showLabelShadow = false } = options;
 
   const [handleAngles, setHandleAngles] = useState<number[]>([]);
 
@@ -228,19 +245,25 @@ const LineSet : React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lin
       unit={unit}
       label={name}
       styling={styling}
+      lineClickCallback={onLineClick}
       lineMoveCallback={lineDragUpdate}
       lineMoveStartCallback={lineDragStart}
       showSmallDirectionMark={lineSetData.showSmallDirectionMark}
       overrideShowMoveHandle={lineSetData.showMoveHandle}
+      lineClickSensingBorder={lineClickSensingBorder}
+      hasClickSensingBorder={hasClickSensingBorder}
     />
   );});
 
+  const polygonPoints = lineSetData.points.map((point) => `${point.x},${point.y}`).join(" ");
+
   return (
     <g>
+      <FilledPolygon points={polygonPoints} color={lineSetData.areaFillColor ? lineSetData.areaFillColor : 'transparent'} opacity={lineSetData.areaTransparencyLevel ? lineSetData.areaTransparencyLevel / 100 : 0} />
       {lines}
       {handles}
       {points}
-      <AreaLabel lineSetData={lineSetData} unit={unit} />
+      <AreaLabel lineSetData={lineSetData} unit={unit} showAreaLabelShadow={showLabelShadow} />
     </g>
   );
 };

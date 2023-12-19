@@ -34,6 +34,7 @@ const Line: React.FC<{}> = () => {
   const [ws, setWS] = useState('localhost/wsapp');
   const [wsURL, setWsURL] = useState('');
   const [isShowDirection, setShowDirection] = useState<boolean>(false);
+  const [isLabelShadow, setLabelShadow] = useState<boolean>(false);
   const {createMediaModal} = useMediaModal();
 
   const [videoOptions, setVideoOptions]= useState<LineUIVideoOptions>({
@@ -43,6 +44,7 @@ const Line: React.FC<{}> = () => {
 
   const options : LineUIOptions = {
     showSetIndex: true,
+    showLabelShadow: true,
     setIndexOffset: 1,
     showDirectionMark: isShowDirection
   }
@@ -60,6 +62,8 @@ const Line: React.FC<{}> = () => {
             y: 531
           }
         ],
+        showPointHandle: true,
+        showMoveHandle: true,
         readOnly: false,
         styling: "primary"
       },
@@ -75,8 +79,10 @@ const Line: React.FC<{}> = () => {
             y: 283
           }
         ],
-        "readOnly": false,
-        "styling": "secondary"
+        showPointHandle: false,
+        showMoveHandle: false,
+        readOnly: false,
+        styling: "secondary"
       },
       {
         name: "Yikes!",
@@ -90,8 +96,36 @@ const Line: React.FC<{}> = () => {
             y: 1000
           }
         ],
+        showPointHandle: false,
+        showMoveHandle: false,
         readOnly: false,
         styling: "danger"
+      },
+      {
+        name: 'Shape 1',
+        areaName: 'Traffic Area',
+        points: [
+          {
+            x: 502,
+            y: 453
+          },
+          {
+            x: 1067,
+            y: 581
+          },
+          {
+            x: 776,
+            y: 982
+          },
+          {
+            x: 376,
+            y: 782
+          }
+        ],
+        readOnly: false,
+        styling: 'secondary',
+        areaFillColor: '#0B0B0B',
+        areaTransparencyLevel: 40
       }
     ];
 
@@ -117,6 +151,10 @@ const Line: React.FC<{}> = () => {
     setShowDirection(isChecked);
   }, []);
 
+  const showLabelTextShadow = useCallback((isChecked: boolean) => {
+    setLabelShadow(isChecked);
+  }, []);
+
   const handleModalClose = useCallback(() => {
     setVideoOptions({
       loop: true,
@@ -134,6 +172,26 @@ const Line: React.FC<{}> = () => {
     createMediaModal({ mediaType: 'video', src: `ws://${wsURL}/`, dismissCallback: handleModalClose })
   }, [createMediaModal, handleModalClose, wsURL])
 
+  const selectLine = useCallback((lineId: number) => {
+    const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
+    dispatch({
+      type: 'UPDATE_SET_OPTIONS',
+      index: deselectLineIndex,
+      data: {
+        showPointHandle: false,
+        showMoveHandle: false
+      }
+    });
+    dispatch({
+      type: 'UPDATE_SET_OPTIONS',
+      index: lineId,
+      data: {
+        showPointHandle: true,
+        showMoveHandle: true
+      }
+    });
+  }, [state]);
+
   return (
     <Layout >
       <Sidebar>
@@ -147,6 +205,9 @@ const Line: React.FC<{}> = () => {
           <SwitchBox>
             <Switch checked={isShowDirection} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
           </SwitchBox>
+          <SwitchBox>
+            <Switch checked={isLabelShadow} labelText='Show Label Shadow' leftTheme='off' onChangeCallback={showLabelTextShadow} rightTheme='on' state='default' />
+          </SwitchBox>
           <Button design="secondary" onClick={fetchLine} >Cancel</Button>
           <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button>
         </SidebarBox>
@@ -158,7 +219,7 @@ const Line: React.FC<{}> = () => {
         {
           wsURL && <>
             <LineSetContext.Provider value={{ state, dispatch }}>
-              <LineUIRTC ws={`ws://${wsURL}/`} {...{videoOptions, options}}/>
+              <LineUIRTC ws={`ws://${wsURL}/`} {...{videoOptions, options}} onLineClick={selectLine} />
             </LineSetContext.Provider>
             <ButtonWrapper>
               <Button onClick={handleMediaModal}>Open Video Modal</Button>
