@@ -119,12 +119,6 @@ interface IProps {
   copySuccessMessage?: string
 }
 
-interface IShowCopyIcon {
-  id?: number;
-  value?: boolean
-}
-
-
 const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuccessMessage, includeCopyTitle}) => {
   const { icon, title, subTitle, notes, hasCopyIcon } = item;
   const { copyToClipboard } = useCopyToClipboard();
