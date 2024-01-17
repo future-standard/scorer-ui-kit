@@ -25,12 +25,12 @@ type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "ins
 type DateMode = "single" | "interval";
 type TimeMode = "off" | "single" | "interval";
 
-interface TimeProperties {
-  hours: number
-  minutes: number
-  seconds: number
-  milliseconds: number
-}
+// interface TimeProperties {
+//   hours: number
+//   minutes: number
+//   seconds: number
+//   milliseconds: number
+// }
 
 // interface TimeRange {
 //   start: TimeProperties

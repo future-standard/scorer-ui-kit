@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { object, boolean } from "@storybook/addon-knobs";
+import { object, boolean, text } from "@storybook/addon-knobs";
 import { TypeTable, ModalProvider } from 'scorer-ui-kit';
 
 import {
@@ -36,6 +36,7 @@ export const _TypeTable = () => {
   // To implement...
   const hasStatus = boolean("Has Device Status", true);
   const hasThumbnail = boolean("Has Thumbnail", true);
+  const closeText = text("Close Text", 'CLOSE');
   const hasTypeIcon = boolean("Has Device Type Icon", true);
   const hasHeaderGroups = boolean("Has Header Groups", true);
   const selectable = boolean("Selectable Rows", true);
@@ -86,6 +87,7 @@ export const _TypeTable = () => {
           rows,
           hasStatus,
           hasThumbnail,
+          closeText,
           hasTypeIcon,
           defaultAscending: true,
           hasHeaderGroups
