@@ -114,7 +114,12 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   const timeoutRef = useRef<(ReturnType<typeof setTimeout>)|null>(null);
 
   const handleModal = useCallback(async () => {
-      createMediaModal({ src: showImage && mediaUrl ? mediaUrl : '', mediaType: mediaType ? mediaType : 'img', minHeight: '240px', closeText });
+      createMediaModal({
+        src: showImage && mediaUrl ? mediaUrl :'',
+        mediaType: mediaType ? mediaType : 'img',
+        minHeight: '240px',
+        closeText
+      });
   }, [closeText, createMediaModal, mediaType, mediaUrl, showImage]);
 
   useEffect(()=>{
@@ -153,20 +158,20 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   const checkIfImageExists = (url: string, imageExistsCallback: (exists: boolean) => void) => {
     const img = new Image();
     img.src = url;
-  
+
     if (img.complete) {
       imageExistsCallback(true);
     } else {
       img.onload = () => {
         imageExistsCallback(true);
       };
-  
+
       img.onerror = () => {
         imageExistsCallback(false);
       };
     }
   };
-  
+
   useEffect(() => {
     checkIfImageExists(image, (exists) => {
       if (exists) {
@@ -176,10 +181,10 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
       }
     });
   },[image]);
-  
+
   return (
     <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={handleModal}>
-      {showImage ? 
+      {showImage ?
         <ImageWrapper ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} /> :
         <NoImageWrapper><NoImage /></NoImageWrapper>}
       {mediaUrl && (mediaType === 'video') &&
