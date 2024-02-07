@@ -16,7 +16,7 @@ const ExampleText = styled.div`
   font-size: 14px;
   font-style: italic;
   line-height: 20px;
-  color: #999999;
+  color: var(--grey-9);
 `
 
 const loggedInUser = "full.name@example.com";
