@@ -21,8 +21,9 @@ const LoadingBox = styled.div`
   position: absolute;
   left: 0;
   z-index: 99;
-  background-color: ${({ theme }) => theme.styles.tables.loadingOverlay};
+  background-color: ${({ theme }) => theme.colors["pureBase"]};
   height: calc(100% - 50px);
+  opacity: 85%;
   width: 100%;
   min-height: 100px;
   display: flex;
@@ -71,12 +72,14 @@ interface IProps {
   selectCallback?: (checked: boolean, id?: string | number) => void
   toggleAllCallback?: (checked: boolean) => void
   sortCallback?: (ascending: boolean, columnId: string) => void
+  closeText?:string
 }
 
 const TypeTable: React.FC<IProps> = ({
   columnConfig,
   selectable,
   rows = [],
+  closeText,
   hasStatus = false,
   hasThumbnail = false,
   hasTypeIcon = false,
@@ -155,7 +158,8 @@ const TypeTable: React.FC<IProps> = ({
                 columnConfig,
                 hasStatus,
                 hasThumbnail,
-                hasTypeIcon
+                hasTypeIcon,
+                closeText
               }}
             />
           );

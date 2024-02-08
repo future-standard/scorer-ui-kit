@@ -10,6 +10,8 @@ export type IReducerActions =
   | RemovePointAction
   | UpdateSetOptions
   | RenameSetAction
+  | ChangeFillColorAction
+  | ChangeTranparencyLevelAction
   ;
 
 interface AddSetAction{
@@ -49,6 +51,22 @@ interface AddPointAction {
 interface RemovePointAction {
   type: 'REMOVE_POINT';
   index: number;
+}
+
+interface ChangeFillColorAction {
+  type: 'UPDATE_FILL_COLOR';
+  index: number;
+  data: {
+    areaFillColor: string;
+  };
+}
+
+interface ChangeTranparencyLevelAction {
+  type: 'UPDATE_TRANSPARENCY_LEVEL';
+  index: number;
+  data: {
+    areaTransparencyLevel: number;
+  };
 }
 
 const getMidpoint = (pointA : IVector2, pointB : IVector2) => {
@@ -102,6 +120,16 @@ export default (state : IPointSet[], action: IReducerActions) => {
           })
         );
       return newState;
+    }
+
+    case "UPDATE_FILL_COLOR": {
+      const set = { ...state[action.index], areaFillColor: action.data.areaFillColor};
+      return update(state, {[action.index]: {$set: set}});
+    }
+
+    case "UPDATE_TRANSPARENCY_LEVEL": {
+      const set = { ...state[action.index], areaTransparencyLevel: action.data.areaTransparencyLevel};
+      return update(state, {[action.index]: {$set: set}});
     }
 
     default:
