@@ -30,7 +30,7 @@ const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
-  background-color: hsl(204, 15%, 94%);
+  background-color: var(--grey-4);
   position: relative;
 `;
 
@@ -171,7 +171,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             buttonDesign={files !== null ? 'secondary' : 'primary'}
             accept={allowedFileTypes?.join(', ')}
           />
-          {files !== null && 
+          {files !== null &&
             <Fragment>
               <Button
                 size='small'

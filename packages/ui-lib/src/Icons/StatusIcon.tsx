@@ -30,7 +30,7 @@ const StatusCounter = styled.div<{ color?: IStatusDot }>`
 const StatusDot = styled.div<{ color?: IStatusDot }>`
   width: 10px;
   height: 10px;
-  border: solid 2px hsl(0, 0%, 100%);
+  border: solid 2px var(--grey-1);
   border-radius: 50%;
   position: absolute;
   top: -6px;
