@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 const LogoContainer = styled.div`
   height: 84px;
-  color: hsl(205, 7%, 35%);
+  color: var(--grey-11);
   border-bottom: 1px solid var(--grey-a7);
   display: flex;
   flex-direction: column;

@@ -2,8 +2,10 @@ import React, { useCallback, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { ITopBar } from '../index';
+import Icon from '../../Icons/Icon';
+import { ITopBar, IUserDrawerFooter, IUserDrawerMeta } from '../index';
 import { resetButtonStyles } from '../../common/index';
+import UserDetails from '../atoms/UserDrawerMeta';
 import DrawerBottomMenu from '../atoms/DrawerBottomMenu';
 
 const DrawerTop = styled.div``;
@@ -11,9 +13,9 @@ const DrawerBottom = styled.div`
   ${({ theme }) => css`
     width: 100%;
     position: fixed;
-    bottom: 0;
+    bottom: 50px;
 
-    @media ${theme.deviceMediaQuery.large} {
+    @media ${theme.deviceMediaQuery.medium} {
       position: static;
       bottom: 0;
     }
@@ -56,6 +58,19 @@ const LinkMenuItem = styled.li`
   padding: 10px 0;
 `;
 
+const IconWrapperFooter = styled.div`
+  width: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  padding-right: 20px;
+`;
+
 const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
   ${resetButtonStyles};
   display: block;
@@ -74,6 +89,42 @@ const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
       ${theme.typography.global.mainMenu.subItem.active};
     }
   `};
+`;
+
+const FooterMeta = styled.div <{ icon?: string }>`
+  font-family: ${({ theme }) => theme.fontFamily.ui};
+  border-top: ${({ theme }) => theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--grey-a11);
+  padding: 10px;
+  padding-left:  ${({ icon }) => icon !== '' ? '31px;' : '21px;'};
+`;
+
+const NavigationContainer = styled.div`
+  max-height: 300px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  ${({ theme }) => css`
+    border-bottom: ${theme.colors.divider} 1px solid;
+  `};
+`;
+
+const FooterText = styled.div <{ icon?: string }>`
+  white-space: break-spaces;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 136px;
+  max-width: ${({ icon }) => icon !== '' ? '136px;' : '164px;'};
+  color: var(--grey-11);
+  opacity: 0.5;
 `;
 
 interface IUserMenu extends ITopBar {
@@ -99,8 +150,17 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLogout = () => { },
   onLanguageToggle = () => { },
   closeOnClick,
-  onThemeToggle = () => { }
+  onThemeToggle = () => { },
+  userDrawerFooter,
+  copySuccessMessage,
+  includeCopyTitle,
+  onUserDrawerMetaClick = () => { },
+  userDrawerMeta,
+  hasUserDrawerMeta,
+  hasUserDrawerFooter
 }) => {
+
+  const {icon, title} = userDrawerFooter as IUserDrawerFooter;
 
   const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
@@ -126,6 +186,20 @@ const UserMenu: React.FC<IUserMenu> = ({
             {loggedInUser}
           </CurrentUser>
           : null}
+
+        {hasUserDrawerMeta?
+          <NavigationContainer>
+            {userDrawerMeta?.map((item:IUserDrawerMeta, key:number) => {
+            return (
+              <UserDetails
+                onUserDrawerMetaClick={onUserDrawerMetaClick}
+                key={key}
+                {...{ item, includeCopyTitle, copySuccessMessage }}
+              />
+            );
+            })}
+          </NavigationContainer>
+        :null}
 
         {userSubmenu.length > 0 ?
           <UserOptions>
@@ -156,6 +230,19 @@ const UserMenu: React.FC<IUserMenu> = ({
       <DrawerBottom>
         {hasSwitchTheme && <DrawerBottomMenu icon={isLightMode ? 'LightMode' : 'DarkMode'} title={switchThemeText} subTitle={selectedThemeText} onClickCallback={onThemeToggle} />}
         {hasLanguage && <DrawerBottomMenu icon='Language' title='LANGUAGE / 言語' subTitle={selectedLanguageText} onClickCallback={onLanguageToggle} />}
+        {(hasUserDrawerFooter) ?
+          <FooterMeta title={title} icon={icon}>
+            {icon ?
+              <IconWrapperFooter>
+                <Icon icon={icon} size={14} color='dimmed' />
+              </IconWrapperFooter>
+            :
+              null}
+            <FooterText icon={icon}>
+              {title}
+            </FooterText>
+          </FooterMeta>
+        : null}
       </DrawerBottom>
     </Fragment>
   );
