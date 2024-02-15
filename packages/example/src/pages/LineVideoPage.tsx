@@ -40,8 +40,7 @@ const Line: React.FC<{}> = () => {
     pointIndexOffset: 1,
     showPointLabel: true,
     setIndexOffset: 1,
-    showDirectionMark: false,
-    showLabelShadow: false
+    showDirectionMark: false
   });
 
   const [videoOptions, setVideoOptions]= useState<LineUIVideoOptions>({
@@ -63,26 +62,6 @@ const Line: React.FC<{}> = () => {
             y: 1393
           }
         ],
-        showPointHandle: true,
-        showSmallDirectionMark: true,
-        readOnly: false,
-        styling: 'primary'
-      },
-      {
-        name: 'Line 2',
-        points: [
-          {
-            x: 568,
-            y: 1097
-          },
-          {
-            x: 1649,
-            y: 1193
-          }
-        ],
-        showPointHandle: false,
-        showMoveHandle: false,
-        readOnly: false,
         styling: 'primary'
       },
       {
@@ -107,9 +86,7 @@ const Line: React.FC<{}> = () => {
           }
         ],
         readOnly: false,
-        styling: 'secondary',
-        areaFillColor: '#0B0B0B',
-        areaTransparencyLevel: 40
+        styling: 'secondary'
       }
     ];
 
@@ -174,10 +151,6 @@ const Line: React.FC<{}> = () => {
     setOptions(previous => ({...previous, showDirectionMark: isChecked}));
   }, []);
 
-  const showLabelTextShadow = useCallback((isChecked: boolean) => {
-    setOptions(previous => ({...previous, showLabelShadow: isChecked}));
-  }, []);
-
   const handleModalClose = useCallback(() => {
     setVideoOptions({
       loop: true,
@@ -195,26 +168,6 @@ const Line: React.FC<{}> = () => {
     createMediaModal({ mediaType: 'video', src: '/scorer-ui-kit/traffic.mp4', dismissCallback: handleModalClose })
   }, [createMediaModal, handleModalClose])
 
-  const selectLine = useCallback((lineId: number) => {
-    const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
-    dispatch({
-      type: 'UPDATE_SET_OPTIONS',
-      index: deselectLineIndex,
-      data: {
-        showPointHandle: false,
-        showMoveHandle: false
-      }
-    });
-    dispatch({
-      type: 'UPDATE_SET_OPTIONS',
-      index: lineId,
-      data: {
-        showPointHandle: true,
-        showMoveHandle: true
-      }
-    });
-  }, [state]);
-
   return (
     <Layout >
       <Sidebar>
@@ -230,8 +183,6 @@ const Line: React.FC<{}> = () => {
           <StyledButton  icon={'Delete'}  design='danger' onClick={()=>removeSet(state.length-1)} >Remove Shape</StyledButton>
 
           <Switch checked={options.showDirectionMark} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
-          <br />
-          <Switch checked={options.showLabelShadow} labelText='Show Label Shadow' leftTheme='off' onChangeCallback={showLabelTextShadow} rightTheme='on' state='default' />
 
         </SidebarBox>
         <SidebarBox style={{ flex: '1' }} >
@@ -243,7 +194,7 @@ const Line: React.FC<{}> = () => {
       <Content padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUIVideo options={options} onLineClick={selectLine} videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4' />
+          <LineUIVideo options={options} videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4' />
         </LineSetContext.Provider>
         <ButtonWrapper>
           <Button onClick={handleMediaModal}>Open Video Modal</Button>

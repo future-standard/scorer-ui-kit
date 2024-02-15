@@ -7,4 +7,3 @@ export { default as Required } from './Required';
 export { default as Success } from './Success';
 export { default as AvatarPlaceholder} from './AvatarPlaceholder';
 export { default as CheckMark} from './checkmark';
-export { default as NoImage} from './NoImage';

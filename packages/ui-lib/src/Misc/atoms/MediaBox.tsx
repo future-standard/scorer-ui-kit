@@ -2,7 +2,7 @@ import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import { IMediaType } from '../../index';
-import { ReactComponent as NoImage } from '../../svg/NoImageBig.svg';
+import Icon from '../../Icons/Icon';
 
 export const MediaBoxWrapper = styled.div<{minWidth?: string, minHeight?: string}>`
   position: relative;
@@ -123,21 +123,19 @@ const MediaBox: React.FC<IMediaModal> = ({
     <MediaBoxWrapper {...{minWidth, minHeight}}>
       {mediaType === 'video'
         ? <Video
-            {...{ loop, autoPlay, controls, muted, onError, hasModalLimits }}
+            {...{ src, loop, autoPlay, controls, muted, onError, hasModalLimits }}
             {...videoValues}
-            src={loadFailed ? '' : src}
             isLoaded={loaded && !loadFailed}
             preload='metadata'
             onCanPlayThrough={handleLoad}
           />
         : <StyledImage
-            {...{ alt, onError, hasModalLimits }}
-            src={loadFailed ? '' : src}
+            {...{ src, alt, onError, hasModalLimits }}
             onLoad={handleLoad}
             isLoaded={loaded && !loadFailed}
           />}
       {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
-      {loadFailed && <NoImage />}
+      {loadFailed && <LoadingOverlay><Icon icon='MissingImage' size={48} /></LoadingOverlay>}
     </MediaBoxWrapper>
   );
 };

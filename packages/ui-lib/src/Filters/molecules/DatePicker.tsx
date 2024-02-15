@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, add, set } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
 
 /**
@@ -283,7 +283,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
-  const [allowManualTimeChange, setAllowManualTimeChange] = useState<boolean>();
+
   const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
 
   useEffect(() => {
@@ -359,21 +359,13 @@ const DatePicker: React.FC<IDatePicker> = ({
 
   const updateStartDate = useCallback((start: Date) => {
     const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
-    if((isAfter(add(start, { minutes: 1 }), end))){
-      setAllowManualTimeChange(true);
-    } else {
-      setAllowManualTimeChange(false);
-    }
+    if (isAfter(add(start, { minutes: 1 }), end)) return;
     setSelectedRange({ start, end });
   }, [selectedRange]);
 
   const updateEndDate = useCallback((end: Date) => {
     const { start } = selectedRange ? selectedRange : TODAY_INTERVAL;
-    if(isAfter(add(start, { minutes: 1 }), end)){
-      setAllowManualTimeChange(true);
-    } else {
-      setAllowManualTimeChange(false);
-    }
+    if (isAfter(add(start, { minutes: 1 }), end)) return;
     setSelectedRange({ start, end });
   }, [selectedRange]);
 
@@ -381,8 +373,8 @@ const DatePicker: React.FC<IDatePicker> = ({
     <Container>
 
       <DateTimeArea>
-        <DateTimeBlock {...{allowManualTimeChange}} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
-        <DateTimeBlock {...{allowManualTimeChange}} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
+        <DateTimeBlock title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
+        <DateTimeBlock title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>
           <TimeZoneLabel>{timeZoneTitle}</TimeZoneLabel>

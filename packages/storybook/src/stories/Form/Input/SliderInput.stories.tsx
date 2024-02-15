@@ -51,7 +51,7 @@ const exampleMarks : ISliderMark[] = [
     label:'8H',
   },
 ];
-
+  
 
 export const _SliderInput = () => {
   const disabled = boolean('Disabled', false);
@@ -60,7 +60,6 @@ export const _SliderInput = () => {
   const defaultValue = number('Default value', 6)
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
-  const allMarkCentered = boolean('Center aligned end numbers', false);
   // const step = number('Step', 1); // still fixing step option
 
   const handleUpdate = (value: number) => {
@@ -78,7 +77,6 @@ export const _SliderInput = () => {
           inputCallback={handleUpdate}
           marks={marks}
           defaultValue={defaultValue}
-          allMarkCentered={allMarkCentered}
         />
     </Container>
   )

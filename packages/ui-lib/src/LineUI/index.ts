@@ -22,8 +22,6 @@ export interface IPointSet {
   showPointHandle?: boolean;
   showSmallDirectionMark?: boolean;
   showMoveHandle?: boolean;
-  areaFillColor?: string;
-  areaTransparencyLevel?: number;
 }
 
 export interface IMinMax {
@@ -40,7 +38,6 @@ export interface IDragLineUISharedOptions {
   revealSetIndex: boolean;
   handleFinderActive: boolean;
   showPointLabel: boolean;
-  showLabelShadow?: boolean;
   showPointHandle: boolean;
   showMoveHandle: boolean;
   setIndexOffset: number;
@@ -53,7 +50,6 @@ export interface LineUIOptions {
   showHandleFinder?: boolean;
   showSetIndex?: boolean;
   showPointLabel?: boolean;
-  showLabelShadow?: boolean;
   // Show/Hide Point Handle
   showPointHandle?: boolean;
   // Show/Hide Move Handle
@@ -73,9 +69,7 @@ export interface LineUIOptions {
   };
 
   boundaryOffset?: number,
-  showDirectionMark?: boolean,
-  areaFillColor?: string;
-  areaTransparencyLevel?: number;
+  showDirectionMark?: boolean
 }
 
 export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>

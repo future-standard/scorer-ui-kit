@@ -64,7 +64,6 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   customDrawer,
   onLogout,
   onLanguageToggle,
-  ...props
 }) => {
 
   return (
@@ -97,8 +96,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
               userDrawerBespoke,
               loggedInUser,
               onLogout,
-              onLanguageToggle,
-              ...props
+              onLanguageToggle
             }}
               closeId={CLOSE_ID}
             />

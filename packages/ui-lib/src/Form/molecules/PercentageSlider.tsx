@@ -6,17 +6,13 @@ import Label from '../atoms/Label';
 
 
 const Container = styled.div``;
-const Headers = styled.div<{allMarkCentered?:boolean}>`
+const Headers = styled.div`
   font-size: 14px;
   color: var(--grey-10);
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  ${({allMarkCentered}) => allMarkCentered ?
-      `padding: 0;`
-    :
-      `padding: 0 6px;`
-  };
+  padding: 0 6px;
 `;
 
 const ValueTitle = styled(Label)`
@@ -53,11 +49,9 @@ interface IPercentageSliderProps {
   marks?: ISliderMark[]
   defaultValue?: number
   value?: number
-  showValue?: boolean
   inputCallback?: (value: number) => void
   updateThumbColor?:  (value: number) => IFeedbackColor
   updateTitle?: (value: number) => string
-  allMarkCentered?: boolean
 }
 
 type IPercentageSlider = IPercentageSliderProps & InputHTMLAttributes<HTMLInputElement>;
@@ -69,8 +63,6 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
     inputCallback,
     updateThumbColor,
     updateTitle,
-    showValue,
-    allMarkCentered,
     ...props
   }
   ) => {
@@ -85,12 +77,12 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
 
   return(
     <Container>
-      <Headers allMarkCentered={allMarkCentered}>
+      <Headers>
         <Label
           htmlFor='percentage-slider'
           labelText={updateTitle ? updateTitle(selectedValue) : getTitleLevel(selectedValue)}
         />
-        {showValue && <ValueTitle htmlFor='percentage-slider' labelText={`${selectedValue}%`} />}
+        <ValueTitle htmlFor='percentage-slider' labelText={`${selectedValue}%`} />
       </Headers>
       <SliderInput
         {...props}
@@ -98,14 +90,12 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
         max={100}
         min={0}
         defaultValue={defaultValue}
-        showValue={showValue}
         onChangeCallback={handleSelectedValue}
         thumbColor={
             updateThumbColor
             ? updateThumbColor(selectedValue)
             : getThumbColor(selectedValue)
           }
-        allMarkCentered={allMarkCentered}
       />
     </Container>
   );

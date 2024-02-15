@@ -164,14 +164,7 @@ const TopBar: React.FC<ITopBar> = ({
   selectedThemeText = '',
   onLogout = () => { },
   onLanguageToggle = () => { },
-  onThemeToggle = () => { },
-  userDrawerFooter,
-  userDrawerMeta,
-  onUserDrawerMetaClick = () => { },
-  hasUserDrawerMeta,
-  copySuccessMessage,
-  includeCopyTitle,
-  hasUserDrawerFooter
+  onThemeToggle = () => { }
 }) => {
 
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
@@ -237,14 +230,7 @@ const TopBar: React.FC<ITopBar> = ({
               isLightMode,
               switchThemeText,
               selectedThemeText,
-              onThemeToggle,
-              onUserDrawerMetaClick,
-              userDrawerFooter,
-              userDrawerMeta,
-              hasUserDrawerMeta,
-              copySuccessMessage,
-              includeCopyTitle,
-              hasUserDrawerFooter
+              onThemeToggle
             }}
             />
           </Drawer>

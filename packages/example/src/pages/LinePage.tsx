@@ -23,9 +23,7 @@ const Line: React.FC<{}> = () => {
   const [options, setOptions] = useState<LineUIOptions>({
     showSetIndex: true,
     pointIndexOffset: 1,
-    showPointHandle: true,
     showPointLabel: true,
-    showLabelShadow: true,
     setIndexOffset: 1,
     showMoveHandle: true,
     fixedImgDimensions: {
@@ -33,9 +31,7 @@ const Line: React.FC<{}> = () => {
       y: 1535
     },
     boundaryOffset: 0,
-    showDirectionMark: true,
-    areaFillColor: '',
-    areaTransparencyLevel: 0
+    showDirectionMark: true
   });
 
   const fetchLine = useCallback(async () => {
@@ -68,29 +64,18 @@ const Line: React.FC<{}> = () => {
     const state: IPointSet[] = [{
         name: 'UP',
         points: [
-          {
-            x: 1048,
-            y: 456
-          },
-          {
-            x: 1613,
-            y: 584
-          },
-          {
-            x: 1322,
-            y: 985
-          },
-          {
-            x: 922,
-            y: 785
-          }
+            {
+              x: 343,
+              y: 281
+            },
+            {
+              x: 898,
+              y: 389
+            }
         ],
-        showPointHandle: true,
         showSmallDirectionMark: true,
         readOnly: false,
-        styling: 'primary',
-        areaFillColor: '#0B0B0B',
-        areaTransparencyLevel: 40
+        styling: 'primary'
       },
       {
         name: 'DOWN',
@@ -137,52 +122,12 @@ const Line: React.FC<{}> = () => {
     });
   }, []);
 
-  const changeFillColor = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: 'UPDATE_FILL_COLOR',
-      index: lineIndex,
-      data: {
-        areaFillColor: value
-      }
-    });
-  }, []);
-
-  const changeTranparencyLevel = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: 'UPDATE_TRANSPARENCY_LEVEL',
-      index: lineIndex,
-      data: {
-        areaTransparencyLevel: parseInt(value)
-      }
-    });
-  }, []);
-
   const toggleReadOnly = useCallback((index=0) => () => {
     dispatch({
       type: 'UPDATE_SET_OPTIONS',
       index,
       data: {
         readOnly: !(state[0]?.readOnly)
-      }
-    });
-  }, [state]);
-
-  const selectLine = useCallback((lineId: number) => {
-    const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
-    dispatch({
-      type: 'UPDATE_SET_OPTIONS',
-      index: deselectLineIndex,
-      data: {
-        showPointHandle: false,
-        showMoveHandle: false
-      }
-    });
-    dispatch({
-      type: 'UPDATE_SET_OPTIONS',
-      index: lineId,
-      data: {
-        showPointHandle: true,
-        showMoveHandle: true
       }
     });
   }, [state]);
@@ -224,9 +169,6 @@ const Line: React.FC<{}> = () => {
           <Label labelText='Show Direction Mark' htmlFor='showDirectionMark' >
             <input type='checkbox' name='showDirectionMark' checked={options.showDirectionMark} onChange={toggleOptions('showDirectionMark')}/>
           </Label>
-          <Label labelText='Show Label Shadow' htmlFor='showLabelShadow' >
-            <input type='checkbox' name='showLabelShadow' checked={options.showLabelShadow} onChange={toggleOptions('showLabelShadow')}/>
-          </Label>
         </SidebarBox>
         <SidebarBox>
           { options.showDirectionMark ?
@@ -240,8 +182,6 @@ const Line: React.FC<{}> = () => {
           <Label labelText='Boundary Offset' htmlFor='boundaryOffset' >
             <Input type='number' name='boundaryOffset' min={0} value={options.boundaryOffset} onChange={updateBoudaryOffset}/>
           </Label>
-          <TextField label='Area Fill Color' fieldState='default' name='fillColor' value={state[0]?.areaFillColor ||''} onChange={(e) => changeFillColor(0, e)}/>
-          <TextField label='Area Transparency Level' fieldState='default' name='transparencyLevel' value={state[0]?.areaTransparencyLevel ||''} onChange={(e) => changeTranparencyLevel(0, e)}/>
         </SidebarBox>
         <SidebarBox>
           <Button design="secondary" onClick={toggleReadOnly()} >Toggle Read Only</Button>
@@ -251,7 +191,7 @@ const Line: React.FC<{}> = () => {
       <Content padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUI options={options} onLineClick={selectLine} src="https://picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
+          <LineUI options={options} src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
         </LineSetContext.Provider>
       </Content>
     </Layout>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect} from 'react';
+import React, { useState, useCallback} from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div<{height?: string}>`
@@ -56,19 +56,6 @@ const onDrop = useCallback((e ) => {
   }
   setInDropZone(false);
 },[dropCallback]);
-
-const handleWindowDragAndDrop = useCallback((e) => {
-  e.preventDefault();
-}, []);
-
-useEffect(() => {
-  window.addEventListener("dragover", handleWindowDragAndDrop);
-  window.addEventListener("drop", handleWindowDragAndDrop);
-  return () => {
-    window.removeEventListener('dragover', handleWindowDragAndDrop);
-    window.removeEventListener('drop', handleWindowDragAndDrop);
-  };
-}, [handleWindowDragAndDrop]);
 
   return(
     <Container {...{height}} {...props}>

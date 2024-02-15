@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import {endOfDay, format,isEqual,min,set } from 'date-fns';
 
 import Icon from '../../Icons/Icon';
-import { getFormattedTime } from '../../helpers';
 
 const Container = styled.div<{hide:boolean}>`
   display: flex;
@@ -37,48 +36,33 @@ const IconWrap = styled.div`
   padding-top: 2px;
 `;
 
-const InputValue = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean }>`
+const Input = styled.input<{ readOnly? : boolean }>`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.data};
+    background-color: ${theme.styles.form.input.default.normal.backgroundColor};
   `}
 
   ${({theme})=> theme.typography.filters.value};
 
   width: 100%;
   border: none;
-  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'var(--error-a9) 1px solid' : 'var(--grey-6) 1px solid'};
+  border: transparent 1px solid;
   outline: none;
   flex: 1;
   justify-content: space-between;
   border-radius: 3px;
+
   &:focus, &:hover {
-    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'var(--error-a9)' : 'blue'};
+    border-color: blue;
   }
-`;
 
-
-const Input = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean }>`
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.data};
+  ${({readOnly}) => readOnly && css`
+    border-color: transparent;
   `}
-
-  ${({theme})=> theme.typography.filters.value};
-
-  width: 100%;
-  border: none;
-  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'var(--error-a9) 1px solid' : 'transparent 1px solid'};
-  outline: none;
-  flex: 1;
-  justify-content: space-between;
-  border-radius: 3px;
-  &:focus, &:hover {
-    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'var(--error-a9)' : 'blue'};
-  }
 `;
 
 const TimeColon = styled.div`
   flex: 0 0 20px;
-  text-align: center;
 `;
 
 const InputWrap = styled.div`
@@ -88,8 +72,13 @@ const InputWrap = styled.div`
   border-radius: 3px;
 
   &:focus-within {
+
     background: ${({theme}) => theme.colors.menu.passive};
     box-shadow: 0px 0px 0px 5px ${({theme}) => theme.colors.menu.passive};
+
+    ${Input} {
+      border-color: ${({theme}) => theme.colors.divider};
+    }
 
     ${TimeColon}{
       color: ${({theme}) => theme.colors.pureTop};
@@ -97,6 +86,8 @@ const InputWrap = styled.div`
     }
   }
 `;
+
+
 
 interface IProps {
   title: string
@@ -106,7 +97,6 @@ interface IProps {
   setDateCallback?: (date: Date) => void
   setTimeCallback?: (date: Date) => void
   allowAfterMidnight?: boolean,
-  allowManualTimeChange?: boolean,
 }
 
 const DateTimeBlock : React.FC<IProps> = ({
@@ -114,22 +104,15 @@ const DateTimeBlock : React.FC<IProps> = ({
   title,
   hasDate,
   hasTime,
-  allowManualTimeChange,
   date = new Date(),
   setDateCallback = ()=>{},
 }) => {
 
-  const convertHours = (date?.getHours()).toString();
-  const convertMinutes = (date?.getMinutes()).toString();
-  const [displayHours, setDisplayHours] = useState<string>(getFormattedTime(convertHours));
-  const [displayMinutes, setDisplayMinutes] = useState<string>(getFormattedTime(convertMinutes));
+
+  const [displayHours, setDisplayHours] = useState<string>(format(date, "mm"));
+  const [displayMinutes, setDisplayMinutes] = useState<string>(format(date,'HH'));
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
-    if (!hourRegex.test(value)) {
-      return;
-    }
-    setDisplayHours(value);
     setDateCallback(
       min([
         endOfDay(date),
@@ -144,11 +127,6 @@ const DateTimeBlock : React.FC<IProps> = ({
   }, [date, displayMinutes, setDateCallback]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const minuteRegex = /^[0-5]{0,1}[0-9]{0,1}$/;
-    if (!minuteRegex.test(value)) {
-      return;
-    }
-    setDisplayMinutes(value);
     setDateCallback(
       min([
         endOfDay(date),
@@ -166,17 +144,11 @@ const DateTimeBlock : React.FC<IProps> = ({
     if(allowAfterMidnight && isEqual(date, endOfDay(date))){
       setDisplayHours('24');
       setDisplayMinutes('00');
+    } else {
+      setDisplayMinutes(format(date, 'mm'));
+      setDisplayHours(format(date,'HH'));
     }
   },[date, allowAfterMidnight]);
-
-  const onBlurInputs = useCallback((time: string, timeType:string) =>{
-    const convertedValue = getFormattedTime(time);
-    if(timeType === 'mins'){
-      setDisplayMinutes(convertedValue);
-    }else {
-      setDisplayHours(convertedValue);
-    }
-  }, []);
 
   return (
     <Container hide={!hasDate && !hasTime}>
@@ -199,14 +171,18 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <InputValue onBlur={()=>onBlurInputs(displayHours, 'hours')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
+            <Input name='hours' type='number' min='0' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} />
             <TimeColon>:</TimeColon>
-            <InputValue onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <Input name='minutes' type='number' min='0' max='59' value={displayMinutes} onChange={setDateMinutes} />
           </InputWrap>
         </Item>
       )}
+
     </Container>
   );
 };
 
+
+
 export default DateTimeBlock;
+

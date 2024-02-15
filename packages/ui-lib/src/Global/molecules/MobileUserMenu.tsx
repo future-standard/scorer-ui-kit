@@ -25,8 +25,7 @@ const MobileUserMenu: React.FC<IMobileUserMenu> = ({
   userDrawerBespoke,
   loggedInUser,
   onLogout,
-  onLanguageToggle,
-  ...props
+  onLanguageToggle
 }) => {
   const { setSelected }: ContextProps = useContext(TabContext);
 
@@ -47,7 +46,6 @@ const MobileUserMenu: React.FC<IMobileUserMenu> = ({
         loggedInUser,
         onLogout,
         onLanguageToggle,
-        ...props
       }}
         closeOnClick={handleCloseMenu}
       />

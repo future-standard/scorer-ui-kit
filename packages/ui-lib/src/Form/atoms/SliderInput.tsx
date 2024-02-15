@@ -61,7 +61,7 @@ const Mark = styled.span<{leftValue: number}>`
   background-color: var(--primary-11);
 `;
 
-const MarkLabel = styled.span<{leftValue: number, alignment?: IMarkAlignment}>`
+const MarkLabel = styled.span<{leftValue: number, alignment?: IMartAlignment,}>`
   position: absolute;
   top: -24px;
   left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
@@ -161,7 +161,7 @@ const  valueToPercent = (value: number, min: number, max: number) : number => {
 // };
 
 
-const getMarkAlignment = (value: number, min: number, max: number) : IMarkAlignment => {
+const getMarkAlignment = (value: number, min: number, max: number) : IMartAlignment => {
   if(value === min) {
     return 'right';
   }
@@ -173,7 +173,7 @@ const getMarkAlignment = (value: number, min: number, max: number) : IMarkAlignm
   return 'center';
 };
 
-const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string, allMarkCentered?: boolean) => {
+const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string) => {
 
   const listOptions : JSX.Element[] = [];
   const marksElements = markList.map(({value, label}, index) => {
@@ -189,7 +189,7 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
         />
         <MarkLabel
           leftValue={left}
-          alignment={allMarkCentered ? 'center' : getMarkAlignment(value, min, max)}
+          alignment={getMarkAlignment(value, min, max)}
         >
           {label}
         </MarkLabel>
@@ -208,7 +208,7 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
 
 };
 
-export type IMarkAlignment = 'left' | 'center' | 'right';
+export type IMartAlignment = 'left' | 'center' | 'right';
 
 export interface ISliderMark {
   value: number
@@ -224,10 +224,8 @@ interface ISliderOwnProps {
   value?: number
   thumbColor?: IFeedbackColor
   onlyMarkSelect?: boolean
-  showValue?: boolean
   inputCallback?: (value: number) => void
   onChangeCallback?: (value: number) => void
-  allMarkCentered?: boolean
 }
 
 export type ISlider = ISliderOwnProps & InputHTMLAttributes<HTMLInputElement>;
@@ -244,7 +242,6 @@ const SliderInput : React.FC<ISlider> = ({
   onlyMarkSelect = false,
   inputCallback = () => {},
   onChangeCallback = () => {},
-  allMarkCentered = false,
   ...props
 }) => {
 
@@ -318,7 +315,7 @@ const SliderInput : React.FC<ISlider> = ({
     <SliderWrapper disabled={disabled}>
       <Rail />
       <ThumbWrapper>
-        {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`, allMarkCentered)}
+        {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`)}
         {isGhostActive && onlyMarkSelect
           ? (
             <GhostThumb
