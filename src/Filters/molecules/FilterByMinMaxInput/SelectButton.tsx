@@ -100,7 +100,7 @@ const SelectButton: React.FC<ISelectButtonProps> = ({ title, expanded = false, o
       {
         icon &&
           <IconContainer>
-            <Icon size={12} icon={icon} weight='light'/>
+            <Icon size={12} icon={icon} weight='light' />
           </IconContainer>
       }
 
