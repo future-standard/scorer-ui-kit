@@ -4,6 +4,7 @@ import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import FilterDropdown from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
 import DropdownDatePicker from './DropdownDatePicker';
+import FilterByMinMaxInput, { ISortByProps } from './FilterByMinMaxInput';
 import { IFilterDatePicker, IFilterDropdownExt, ISearchFilter } from '../FilterTypes';
 
 const fadeInAnimation = keyframes`
@@ -20,8 +21,6 @@ const fadeInAnimation = keyframes`
 `;
 
 const SearchInputWrapper = styled.div`
-  background-color: hsl(0, 0%, 100%);
-  border-radius: 3px;
   flex: 1 1 200px;
   max-width: 320px;
 `;
@@ -127,6 +126,7 @@ export interface IFilterInputs {
   searchFilters?: ISearchFilter[]
   dropdownFilters?: IFilterDropdownExt[]
   datePickerFilters?: IFilterDatePicker[]
+  filterByMinMaxProps?:ISortByProps | null | undefined
   hasShowMore?: boolean
   showMoreText?: string
   showLessText?: string
@@ -135,6 +135,7 @@ export interface IFilterInputs {
 const FilterInputs: React.FC<IFilterInputs> = ({
   hasShowMore = false,
   searchFilters = [],
+  filterByMinMaxProps,
   datePickerFilters = [],
   dropdownFilters = [],
   showMoreText = 'Show More',
@@ -166,7 +167,7 @@ const FilterInputs: React.FC<IFilterInputs> = ({
       {renderSearchInputs(searchFilters, visibleSearchInputs, handleVisibleSearch)}
       {renderDatePickers(datePickerFilters)}
       {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}
-
+      {filterByMinMaxProps && <FilterByMinMaxInput {...{...filterByMinMaxProps}} />}
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
       {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
       {hasShowMore && (

@@ -14,6 +14,7 @@ import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersRes
 import { DateInterval, isDateInterval } from '../molecules/DatePicker';
 import isequal from 'lodash.isequal';
 import debounce from 'lodash.debounce';
+import { IMinMax, ISortByProps } from '../molecules/FilterByMinMaxInput';
 
 const Title = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -149,6 +150,7 @@ const createLabelResults = (
   dropdownsConfig: IFilterDropdownConfig[],
   datePickersConfig: IFilterDatePicker[],
   filtersValues: IFilterResult[],
+  filterByMinMaxProps:ISortByProps | undefined | null
 ): IFilterLabel[] => {
 
   const labelLists: IFilterLabel[] = [];
@@ -215,6 +217,22 @@ const createLabelResults = (
     }
   });
 
+  if(filterByMinMaxProps && filterByMinMaxProps.selected && (filterByMinMaxProps.selected.isMaxSelected || filterByMinMaxProps.selected.isMinSelected)){
+    const selectedMinMax:IMinMax=filterByMinMaxProps.selected;
+    let minMaxText='';
+    if(selectedMinMax.isMinSelected && !selectedMinMax.isMaxSelected) minMaxText=` ( ${filterByMinMaxProps.input1Label}- ${selectedMinMax.min} )`;
+    if(selectedMinMax.isMaxSelected && selectedMinMax.isMinSelected) minMaxText=` ( ${filterByMinMaxProps.input1Label}- ${selectedMinMax.min}, ${filterByMinMaxProps.input2Label}- ${selectedMinMax.max} )`;
+    if(!selectedMinMax.isMinSelected && selectedMinMax.isMaxSelected) minMaxText=` ( ${filterByMinMaxProps.input2Label}- ${selectedMinMax.max} )`;
+    const newLabel: IFilterLabel = {
+      filterId: 'kmpost',
+      item: {text:minMaxText,value:'kmpost'},
+      icon: filterByMinMaxProps.icon,
+      filterName: filterByMinMaxProps.title,
+      type: 'dropdown'
+    };
+    labelLists.push(newLabel);
+  }
+
   return labelLists;
 };
 
@@ -266,6 +284,8 @@ const initFilters = (
     newFilters.push({ id, type: 'datepicker', selected: validSelected });
   });
 
+  newFilters.push({ id:'kmpost', type: 'dropdown', selected:null  });
+
   return newFilters;
 };
 
@@ -283,6 +303,7 @@ interface IFilterBar {
   isLoading?: boolean
   singleFilter?: boolean
   resultsDateFormat?: string
+  filterByMinMaxProps?:ISortByProps | null | undefined
   onChangeCallback?: (currentSelected: IFilterResult[]) => void
 }
 
@@ -299,6 +320,7 @@ const FilterBar: React.FC<IFilterBar> = ({
   totalResults,
   singleFilter = false,
   resultsDateFormat,
+  filterByMinMaxProps,
   onChangeCallback = () => { },
   ...props
 }) => {
@@ -356,7 +378,7 @@ const FilterBar: React.FC<IFilterBar> = ({
       }
       filterElement.selected = null;
     });
-
+    if(filterByMinMaxProps) filterByMinMaxProps.onChange({...filterByMinMaxProps.selected,isMaxSelected:false,isMinSelected:false});
     handleChange(updatedFilters);
     setFiltersValues(updatedFilters);
   }, [filtersValues, handleChange]);
@@ -370,6 +392,8 @@ const FilterBar: React.FC<IFilterBar> = ({
 
       if (!foundFilter) {
         return prev;
+      } else if(foundFilter.id==='kmpost' && filterByMinMaxProps){
+        filterByMinMaxProps.onChange({...filterByMinMaxProps.selected,isMinSelected:false,isMaxSelected:false});
       } else if (Array.isArray(foundFilter.selected) && type === 'dropdown') {
         const selectedFiltered = foundFilter.selected.filter((oldItem) => {
           if (isFilterItem(oldItem) && isFilterItem(item)) {
@@ -457,6 +481,7 @@ const FilterBar: React.FC<IFilterBar> = ({
       <Title>{filtersTitle}</Title>
       <FilterInputs
         {...{
+          filterByMinMaxProps,
           hasShowMore,
           showMoreText,
           showLessText,
@@ -467,7 +492,7 @@ const FilterBar: React.FC<IFilterBar> = ({
       />
       <StyledFilterResults
         {...{ resultTextTemplate, clearText, totalResults, resultsDateFormat }}
-        labelLists={createLabelResults(searchersConfig, dropdownsConfigRef.current, datePickersConfig, filtersValues)}
+        labelLists={createLabelResults(searchersConfig, dropdownsConfigRef.current, datePickersConfig, filtersValues, filterByMinMaxProps)}
         onClearAll={handleOnClear}
         onRemoveFilter={handleOnRemoveFilter}
       />
