@@ -2,6 +2,8 @@
 
 The purpose of this tool is to help to update projects to use the the same CSS variables as the UI KIT. This will also help to have better customization integration with the UI KIT library.
 
+The reference of how to use the theming and the external css variables can be found [here](dark_light_mode_usage.md).
+
 ### Supported files
 
   The replacement script will look in all the folders and files of the provided path with the extensions `.ts, .tsx, .js, .jsx, .css, .scss`, to find color bases properties and values.
