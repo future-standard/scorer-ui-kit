@@ -193,10 +193,12 @@ def color_files_paths(path):
     if os.path.isdir(path):
       directory_path = Path(path)
       file_list = list(directory_path.rglob('*'))
-      color_files = [
-          str(file) for file in file_list
-          if file.suffix in allowedExtensions and  "theme" not in file.name
-          ]
+      color_files = []
+
+      for file in file_list:
+        if file.suffix in allowedExtensions and  "theme" not in file.name:
+            color_files.append(str(file))
+
       return color_files
 
     elif os.path.isfile(path):
@@ -208,8 +210,6 @@ def color_files_paths(path):
     else:
         print(f"{path} does not exist or is neither a file nor a directory.")
         return None
-
-
 
 # hex_3dig = "#c2c" ## -> #CC22CCFF
 # hex_4dig = "#2468" ## -> #22446688
