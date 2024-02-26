@@ -18,7 +18,7 @@ Copy the [replacement_app](color_replacer_app) folder to your local project
 
 Run the the python script [color_replacer.py](color_replacer_app/color_replacer.py) using Python 3 the main arguments are, css, filepath and overwrite.
 
-**css**: css variables file you will be using in your project. Also there is an available file in this folder named [dictionary.css](color_replacer_app/dictionary.css)
+**css**: css variables file you will be using in your project, current script only uses hexadecimal as variables input but this can be updated if it's requested . Also there is an available file in this folder named [dictionary.css](color_replacer_app/dictionary.css)
 
 **filepath**: The file or folder you want to update.
 
