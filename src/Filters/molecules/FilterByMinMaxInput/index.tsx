@@ -69,6 +69,7 @@ export interface IMinMax{
 export interface ISortByProps {
   title: string;
   icon: string;
+  language:string,
   input1Label:string,
   input2Label:string,
   selected: IMinMax;
@@ -81,7 +82,7 @@ export interface ISortItem {
   title: string;
 }
 
-const FilterByMinMaxInput: React.FC<ISortByProps> = ({title,input1Label, input2Label, icon, selected:{ min,isMinSelected,max,isMaxSelected }, selected, onChange} ) => {
+const FilterByMinMaxInput: React.FC<ISortByProps> = ({title, language,input1Label, input2Label, icon, selected:{ min,isMinSelected,max,isMaxSelected }, selected, onChange} ) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggle = useCallback(() => {
@@ -117,13 +118,13 @@ const FilterByMinMaxInput: React.FC<ISortByProps> = ({title,input1Label, input2L
         <DisplayFlex>
           <FlexItem><Checkbox disabled={!(min>-1)} onChangeCallback={()=>checkItem(0)} checked={isMinSelected} /></FlexItem>
           <FlexItem margin='0 12px 0 4px'><CheckboxLabel>{input1Label}</CheckboxLabel></FlexItem>
-          <FlexItem><InputField value={min} onChange={handleChange('min')} fieldState='default' name='min' label='' placeholder='0' unit='Min' /></FlexItem>
+          <FlexItem><InputField value={min} onChange={handleChange('min')} fieldState='default' name='min' label='' placeholder='0' unit={language==='ja'?'分':'Min'} /></FlexItem>
         </DisplayFlex>
         <Divider />
         <DisplayFlex>
           <FlexItem><Checkbox disabled={!(max>-1 || min<max)} onChangeCallback={()=>checkItem(1)} checked={isMaxSelected} /></FlexItem>
           <FlexItem margin='0 12px 0 4px'><CheckboxLabel>{input2Label}</CheckboxLabel></FlexItem>
-          <FlexItem><InputField value={max} onChange={handleChange('max')} fieldState='default' name='max' label='' placeholder='0' unit='Max' /></FlexItem>
+          <FlexItem><InputField value={max} onChange={handleChange('max')} fieldState='default' name='max' label='' placeholder='0' unit={language==='ja'?'最大':'Max'} /></FlexItem>
         </DisplayFlex>
       </SelectList>
     </Container>

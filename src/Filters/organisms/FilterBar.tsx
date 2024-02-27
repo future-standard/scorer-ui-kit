@@ -220,14 +220,14 @@ const createLabelResults = (
   if(filterByMinMaxProps && filterByMinMaxProps.selected && (filterByMinMaxProps.selected.isMaxSelected || filterByMinMaxProps.selected.isMinSelected)){
     const selectedMinMax:IMinMax=filterByMinMaxProps.selected;
     let minMaxText='';
-    if(selectedMinMax.isMinSelected && !selectedMinMax.isMaxSelected) minMaxText=` ( ${filterByMinMaxProps.input1Label}- ${selectedMinMax.min} )`;
-    if(selectedMinMax.isMaxSelected && selectedMinMax.isMinSelected) minMaxText=` ( ${filterByMinMaxProps.input1Label}- ${selectedMinMax.min}, ${filterByMinMaxProps.input2Label}- ${selectedMinMax.max} )`;
-    if(!selectedMinMax.isMinSelected && selectedMinMax.isMaxSelected) minMaxText=` ( ${filterByMinMaxProps.input2Label}- ${selectedMinMax.max} )`;
+    if(selectedMinMax.isMinSelected && !selectedMinMax.isMaxSelected) minMaxText=`${filterByMinMaxProps.input1Label}: ${selectedMinMax.min}`;
+    if(selectedMinMax.isMaxSelected && selectedMinMax.isMinSelected) minMaxText=`${filterByMinMaxProps.input1Label}: ${selectedMinMax.min} - ${filterByMinMaxProps.input2Label}: ${selectedMinMax.max}`;
+    if(!selectedMinMax.isMinSelected && selectedMinMax.isMaxSelected) minMaxText=`${filterByMinMaxProps.input2Label}: ${selectedMinMax.max}`;
     const newLabel: IFilterLabel = {
       filterId: 'kmpost',
       item: {text:minMaxText,value:'kmpost'},
       icon: filterByMinMaxProps.icon,
-      filterName: filterByMinMaxProps.title,
+      filterName: "",
       type: 'dropdown'
     };
     labelLists.push(newLabel);
