@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select, boolean } from "@storybook/addon-knobs";
 
 import {AlertBar} from 'scorer-ui-kit';
 
@@ -9,16 +8,44 @@ const Container = styled.div`
 `;
 
 export default {
-  title: 'Alerts/atoms',
   component: AlertBar,
-  decorators: []
-};
+  title: 'Alerts/atoms',
+}
 
-export const _AlertBar = () => {
-  const message = text("Message", 'Look Out!');
-  const type = select("Type", { Error: 'error', Warning: 'warning', Info: 'info', Success:'success', Neutral:'neutral'}, 'error');
-  const hideCloseButton = boolean('Hide close icon', false);
+export const _AlertBar = (args: any) => {
 
-  return <Container><AlertBar {...{message, type, hideCloseButton}} ></AlertBar></Container>;
+    return <Container><AlertBar {...args} ></AlertBar></Container>;
 
-};
+}
+
+_AlertBar.argTypes = {
+  message: {name:'Message', control: 'text' , defaultValue: 'Look Out!'},
+  type: {
+    name: 'Type',
+    options: ['error', 'warning','info', 'success', 'neutral'],
+    mapping: {
+      error: 'error',
+      warning: 'warning',
+      info: 'info',
+      success:'success',
+      neutral:'neutral'
+    },
+    control: {
+      type: 'select',
+      labels: {
+        error: 'Error',
+        warning: 'Warning',
+        info: 'Info',
+        success:'Success',
+        neutral:'Neutral'
+      }
+    }
+  },
+  hideCloseButton: false
+}
+
+_AlertBar.args = {
+  message: 'Look Out!',
+  type: 'warning',
+  hideCloseButton: false
+}

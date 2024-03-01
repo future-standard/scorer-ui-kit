@@ -1,32 +1,34 @@
 import React from 'react';
-import { text, select, boolean } from '@storybook/addon-knobs';
 import { FilterButton } from 'scorer-ui-kit';
 import styled from 'styled-components';
 import { generateIconList } from '../../helpers';
 
 export default {
-  title: 'Filters/atoms',
   component: FilterButton,
-  decorators: []
+  title: 'Filters/atoms',
 };
 
 const Content = styled.div``;
 
-export const _FilterButton = () => {
-  const iconList = generateIconList();
-
-  const buttonText = text('Text', 'Search Example String Field');
-  const iconName = select("Icon", iconList, Object.keys(iconList)[0]);
-  const hasFlipArrow = boolean('Has Flip Arrow', false);
-  const isOpen = boolean('is Open', false);
-  const disabled = boolean('disable', false);
-
-  return <Content>
-    <FilterButton
-      icon = {iconName}
-      {...{hasFlipArrow, isOpen, disabled}}
-    >
-      {buttonText}
-    </FilterButton>
-  </Content>
+export const _FilterButton = (args: any) => {
+  return (
+    <Content>
+      <FilterButton {...args}>
+        {args.text}
+      </FilterButton>
+    </Content>
+  );
 }
+
+_FilterButton.argTypes = {
+  text: {name: 'Text', control: 'text', defaultValue: 'Search Example String Field' },
+  icon: {
+    name: 'Icon',
+    options: Object.keys(generateIconList()),
+    control: { type: 'select' },
+    defaultValue: Object.keys(generateIconList())[0],
+  },
+  hasFlipArrow: { name: 'Has Flip Arrow',  control: 'boolean', defaultValue: false },
+  isOpen: { name: 'is Open', control: 'boolean', defaultValue: false },
+  disabled: {name: 'disable', control: 'boolean', defaultValue: false },
+};

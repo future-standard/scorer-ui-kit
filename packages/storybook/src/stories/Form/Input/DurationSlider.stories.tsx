@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-// import { action } from '@storybook/addon-actions';
-import { boolean, number, object, text, select } from "@storybook/addon-knobs";
+import { DurationSlider, ISliderMark, ITimeUnit, PageHeader } from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
-import { DurationSlider, ISliderMark, PageHeader, ITimeUnit } from 'scorer-ui-kit';
-
 
 export default {
   title: 'Form/Input',
   component: DurationSlider,
-  decorators: []
 };
 
 const Container = styled.div`
@@ -131,39 +127,37 @@ const secToMinAndHours = (seconds: number): ITimeValue => {
   }
 }
 
-export const _DurationSlider = () => {
-
-  const title = text('Title', 'Duration');
-  const durationUnit = select("Time Unit", { Seconds: 'seconds', Minutes: 'minutes', Hours: 'hours' }, 'hours');
-  const disabled = boolean('Disabled', false);
-  const maxValue = number('Max', 8);
-  const minValue = number('Min', 1);
-  const defaultValue = number('Default value', 6)
+export const _DurationSlider = (args: any) => {
+  const {
+    title,
+    durationUnit,
+    disabled,
+    maxValue,
+    minValue,
+    defaultValue,
+    marks,
+    title2,
+    disabled2,
+    maxValue2,
+    minValue2,
+    defaultValue2,
+    marks2,
+    onlyMarkSelect,
+  } = args;
 
   const showValue = action('Input Callback');
-  const marks = object('Marks', exampleMarks);
-  // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
     console.log('updated value', value);
-    showValue(`Returned value: ${value}`, value)
+    showValue(`Returned value: ${value}`, value);
   };
 
-  const [value2, setValue2] = useState<ITimeValue>({time: 30, unit: 'minutes'});
-
-  const title2 = text('Title 2', 'Time');
-  const disabled2 = boolean('Disabled 2', false);
-  const maxValue2 = number('Max 2', 3600);
-  const minValue2 = number('Min 2', 3);
-  const defaultValue2 = number('Default value 2', defaultMixValue)
-  const onlyMarkSelect = boolean('Only Mark Select', true);
+  const [value2, setValue2] = useState<ITimeValue>({ time: 30, unit: 'minutes' });
 
   const showValue2 = action('Input Callback');
-  const marks2 = object('Marks 2', exampleMarks2);
-  // const step = number('Step', 1); // still fixing step option
   const handleUpdate2 = (value: number) => {
     console.log('updated value2', value);
-    showValue2(`Returned value2: ${value}`, value)
-    const newValue = secToMinAndHours(value)
+    showValue2(`Returned value2: ${value}`, value);
+    const newValue = secToMinAndHours(value);
     setValue2(newValue);
   };
 
@@ -178,7 +172,6 @@ export const _DurationSlider = () => {
           max={maxValue}
           min={minValue}
           disabled={disabled}
-          // step={step}
           inputCallback={handleUpdate}
           marks={marks}
           defaultValue={defaultValue}
@@ -195,7 +188,6 @@ export const _DurationSlider = () => {
           max={maxValue2}
           min={minValue2}
           disabled={disabled2}
-          // step={step}
           inputCallback={handleUpdate2}
           marks={marks2}
           defaultValue={defaultValue2}
@@ -206,5 +198,22 @@ export const _DurationSlider = () => {
         />
       </Wrapper>
     </Container>
-  )
-}
+  );
+};
+
+_DurationSlider.argTypes = {
+  title: { name: 'Title', control: 'text', defaultValue: 'Duration' },
+  durationUnit: { name: 'Time Unit', control: { type: 'select', options: ['seconds', 'minutes', 'hours'] }, defaultValue: 'hours' },
+  disabled: { name: 'Disabled', control: 'boolean', defaultValue: false },
+  maxValue: { control: 'number', name: 'Max', defaultValue: 8 },
+  minValue: { control: 'number', name: 'Min', defaultValue: 1 },
+  defaultValue: { control: 'number', name: 'Default value', defaultValue: 6 },
+  marks: { name: 'Marks', control: 'object', defaultValue: exampleMarks },
+  onlyMarkSelect: { control: 'boolean', name: 'Only Mark Select', defaultValue: true },
+  title2: { name: 'Title 2', control: 'text', defaultValue: 'Time' },
+  disabled2: { control: 'boolean', name: 'Disabled 2', defaultValue: false },
+  maxValue2: { control: 'number', name: 'Max 2', defaultValue: 3600 },
+  minValue2: { control: 'number', name: 'Min 2', defaultValue: 3 },
+  defaultValue2: { control: 'number', name: 'Default value 2', defaultValue: defaultMixValue },
+  marks2: { control: 'object', name:'Marks 2', defaultValue: exampleMarks2 },
+};

@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { text, object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import { SelectField, PageHeader, SelectWrapper} from 'scorer-ui-kit';
 
 export default {
   title: 'Form/atoms',
   component: SelectField,
-  decorators: []
 };
 
 const Container = styled.div`
@@ -20,25 +18,9 @@ const FixedSelect = styled.div<{ width?: string }>`
   }
 `;
 
-export const _SelectField = () => {
-
-  const isCompact = boolean('isCompact', false);
-  const placeholder = text('Placeholder free width', 'Choose an option...');
-  const defaultValue = text('Default Value free width','option3');
-  const disabled = boolean('Disabled', false);
+export const _SelectField = (args: any) => {
   const freeSelectValue = action('Free select value');
   const fixedSelectValue = action('Free select value');
-
-  const selectWidth = text('Fix width', '60px');
-  const label = object('Free Select Label', {
-    htmlFor: 'free_select',
-    text: 'Field Label'
-  })
-  const fixLabel = object('Fix Select Label', {
-    htmlFor: 'fix_select',
-    text: 'Page',
-    isSameRow: true
-  })
 
   const freeOnChange = (value: string) => {
     freeSelectValue(value);
@@ -47,20 +29,12 @@ export const _SelectField = () => {
   const fixSelectOnChange = (value: string) => {
     fixedSelectValue(value);
   }
+
   return (
     <Container>
-      <PageHeader
-        title='Select free width'
-      />
+      <PageHeader title='Select free width' />
       <SelectField
-        {...{
-          isCompact,
-          placeholder,
-          label,
-          selectWidth,
-          disabled,
-          defaultValue
-        }}
+        {...args}
         changeCallback={freeOnChange}
       >
         <option value="option1">Example Option 1</option>
@@ -68,13 +42,11 @@ export const _SelectField = () => {
         <option value="option3">Example Option 3</option>
         <option value="option4">Example Option 4</option>
       </SelectField>
-      <PageHeader
-        title='Select fixed width'
-      />
-      <FixedSelect width={selectWidth}>
+      <PageHeader title='Select fixed width' />
+      <FixedSelect width={args.selectWidth}>
         <SelectField
-          {...{ isCompact, disabled }}
-          label={fixLabel}
+          {...args}
+          label={args.fixLabel}
           defaultValue={1}
           changeCallback={fixSelectOnChange}
         >
@@ -88,3 +60,13 @@ export const _SelectField = () => {
     </Container>
   );
 }
+
+_SelectField.argTypes = {
+  isCompact: { control: 'boolean', defaultValue: false },
+  placeholder: { name: 'Placeholder free width',  control: 'text', defaultValue: 'Choose an option...' },
+  label: { name: 'Free Select Label', control: 'object', defaultValue: { htmlFor: 'free_select', text: 'Field Label' } },
+  fixLabel: { name: 'Fix Select Label', control: 'object', defaultValue: { htmlFor: 'fix_select', text: 'Page', isSameRow: true } },
+  selectWidth: { name: 'Fix width', control: 'text', defaultValue: '60px' },
+  disabled: { control: 'boolean', defaultValue: false },
+  defaultValue: {name: 'Default Value free width', control: 'text', defaultValue: 'option3' },
+};

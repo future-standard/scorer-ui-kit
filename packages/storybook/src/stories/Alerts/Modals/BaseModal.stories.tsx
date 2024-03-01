@@ -1,6 +1,5 @@
-import React, {useState, useEffect, ReactElement} from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import styled from 'styled-components';
-import { text, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -13,8 +12,7 @@ import {
 export default {
   title: 'Alerts/Modals',
   components: ModalProvider,
-  decorator: []
-}
+};
 
 const Container = styled.div``;
 
@@ -23,44 +21,40 @@ const EmptyModal = (modal?: IModal) => {
   const { createModal } = useModal();
 
   const openImageModal = () => {
-    createModal({...modalProps})
-  }
+    createModal({ ...modalProps });
+  };
 
   useEffect(() => {
     setModalProps(modal);
-  }, [modal])
+  }, [modal]);
 
   return (
-    <Button
-      design='secondary'
-      onClick={openImageModal}
-    >
+    <Button design="secondary" onClick={openImageModal}>
       Base Modal
     </Button>
-  )
-}
+  );
+};
 
-const customComponentExample : ReactElement = <h1>Hello!</h1>;
+const customComponentExample: ReactElement = <h1>Hello!</h1>;
 
-export const _BaseModal = () => {
-  const closeTxt = text('Close text', 'Close')
-  const isCloseEnable = boolean('Is Close Enabled', true);
-  const padding = boolean('Padding', true);
-  const dismissAction = action('Modal dismissed');
-  const showCustom = boolean('Show Custom Component', false);
-
-  // Provider should be at main Index level, it's here just for the example
+export const _BaseModal = (args: any) => {
+  // Provider should be at the main Index level; it's here just for the example
   return (
     <Container>
       <ModalProvider>
         <EmptyModal
-          closeText={closeTxt}
-          isCloseEnable={isCloseEnable}
-          padding={padding}
-          dismissCallback={dismissAction}
-          customComponent={ showCustom ? customComponentExample : undefined}
+        customComponent={ args.showCustom ? customComponentExample : undefined}
+        {...args}
         />
       </ModalProvider>
     </Container>
-  )
-}
+  );
+};
+
+_BaseModal.argTypes = {
+  closeText: {name:'Close text', control: 'text', defaultValue: 'Close' },
+  isCloseEnable: {name:'Is Close Enabled', control: 'boolean', defaultValue: true },
+  padding: { name:'Padding', control: 'boolean', defaultValue: true },
+  dismissCallback: { control: 'function', defaultValue: action('Modal dismissed') },
+  showCustom: {name: 'Show Custom Component', control: 'boolean', defaultValue: false },
+};

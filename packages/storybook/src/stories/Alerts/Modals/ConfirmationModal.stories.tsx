@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { text, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import {
   ModalProvider,
@@ -15,7 +14,6 @@ const Container = styled.div``;
 export default {
   title: 'Alerts/Modals',
   components: ConfirmationModal,
-  decorator: []
 }
 
 interface IExampleModal {
@@ -64,30 +62,39 @@ const ModalExample: React.FC<IExampleModal> = ({
   )
 }
 
-export const _ConfirmationTemplate = () => {
-  const title = text("Title", 'Modal Title');
-  const msg = text('Message', 'This is an example of some information provided to the customer to confirm an option');
-  const leftBtnTxt = text('Left Button Text', 'Back');
-  const buttonDesignLeft = select("Left Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "secondary");
-  const leftBtnCallback = action('Back button pressed');
-  const RightBtnTxt = text('Right Button Text', 'I understand');
-  const buttonDesignRight = select("Right Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
-  const rightBtnCallback = action('Accept button pressed');
+export const _ConfirmationTemplate = (args: IExampleModal) => {
+  // Provider should be at the main Index level; it's here just for the story example
+  return (
+    <Container>
+      <ModalProvider>
+        <ModalExample {...args} />
+      </ModalProvider>
+    </Container>
+  );
+};
 
-
-  // Provider should be at main Index level, it's here just for the story example
-  return <Container>
-    <ModalProvider>
-      <ModalExample
-        title={title}
-        message={msg}
-        leftButtonText={leftBtnTxt}
-        leftButtonDesign={buttonDesignLeft}
-        leftButtonCallback={leftBtnCallback}
-        rightButtonText={RightBtnTxt}
-        rightButtonDesign={buttonDesignRight}
-        rightButtonCallback={rightBtnCallback}
-      />
-    </ModalProvider>
-  </Container>
-}
+_ConfirmationTemplate.argTypes = {
+  title: { name:'Title', control: 'text', defaultValue: 'Modal Title' },
+  message: {
+    name:'Message',
+    control: 'text',
+    defaultValue:
+      'This is an example of some information provided to the customer to confirm an option',
+  },
+  leftButtonText: { name:'Left Button Text', control: 'text', defaultValue: 'Back' },
+  leftButtonDesign: {
+    name: 'Left Button Design',
+    options: ['primary', 'secondary', 'danger'],
+    control: { type: 'select' },
+    defaultValue: 'secondary',
+  },
+  leftButtonCallback: { control: 'function', defaultValue:  action('Back button pressed') },
+  rightButtonText: { name: 'Right Button Text', control: 'text', defaultValue: 'I understand' },
+  rightButtonDesign: {
+    name: 'Right Button Design',
+    options: ['primary', 'secondary', 'danger'],
+    control: { type: 'select' },
+    defaultValue: 'primary',
+  },
+  rightButtonCallback: { control: 'function', defaultValue: action('Accept button pressed') },
+};

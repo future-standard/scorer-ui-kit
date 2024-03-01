@@ -1,20 +1,18 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean } from "@storybook/addon-knobs";
-import {Checkbox} from 'scorer-ui-kit';
+import { Checkbox } from 'scorer-ui-kit';
 
 export default {
   title: 'Form/atoms',
   component: Checkbox,
-  decorators: []
 };
 
-export const _Checkbox = () => {
+export const _Checkbox = (args: any) => {
+  return <Checkbox {...args} />;
+};
 
-  // const indeterminate = boolean("Indeterminate", false);
-  const disabled = boolean("Disabled", false);
-  const checked = boolean("Checked", false);
-  const onChange = action('value-changed');
-
-  return <Checkbox {...{checked, disabled, onChange}} />;
+_Checkbox.argTypes = {
+  checked: { name: 'Checked', control: 'boolean', defaultValue: false },
+  disabled: { name:'Disabled',  control: 'boolean', defaultValue: false },
+  onChange: { control: 'function', defaultValue: action('value-changed') },
 };

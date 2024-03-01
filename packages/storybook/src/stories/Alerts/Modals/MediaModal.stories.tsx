@@ -1,17 +1,16 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
+
 import {
   ModalProvider,
   useModal,
   MediaBox,
   Button
 } from 'scorer-ui-kit';
-import { boolean, text } from '@storybook/addon-knobs';
 
 export default {
   title: 'Alerts/Modals',
   components: MediaBox,
-  decorator: []
 }
 
 const Container = styled.div``;
@@ -40,21 +39,22 @@ const MediaImageModal : React.FC<IExampleModal> = ({hasModalLimitsValue, imageSr
     >
       Image Modal
     </Button>
-  )
-}
+  );
+};
 
-  // Provider should be at main Index level, it's here just for the story example
-export const _MediaModal = () => {
-
-  const hasModalLimits = boolean('Has Modal Limits', true);
-  const imageSrc = text('Image Src', 'https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw');
-  const retryLoading = boolean('Retry Loading', false);
-
+export const _MediaModal = (args: IExampleModal) => {
+  // Provider should be at the main Index level; it's here just for the story example
   return (
     <Container>
       <ModalProvider>
-        <MediaImageModal hasModalLimitsValue={hasModalLimits} imageSrc={imageSrc} retryLoading={retryLoading}/>
+        <MediaImageModal {...args} />
       </ModalProvider>
     </Container>
-  )
-}
+  );
+};
+
+_MediaModal.argTypes = {
+  hasModalLimitsValue: { name: 'Has Modal Limits', control: 'boolean', defaultValue: true },
+  imageSrc: { name: 'Image Src', control: 'text', defaultValue: 'https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw' },
+  retryLoading: { name: 'Retry Loading', control: 'boolean', defaultValue: false },
+};

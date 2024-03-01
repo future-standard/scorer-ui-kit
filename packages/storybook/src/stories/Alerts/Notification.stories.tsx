@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { text, boolean, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
-
 import {
   useNotification,
   Button,
@@ -21,8 +19,7 @@ const Container = styled.div`
 export default {
   title: 'Alerts/atoms',
   components: useNotification,
-  decorator: []
-}
+};
 
 const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
   const { sendNotification, clearNotifications } = useNotification();
@@ -47,39 +44,35 @@ const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
         Clear Notifications
       </Button>
     </>
-  )
-}
+  );
+};
 
-  // Provider should be at main Index level, it's here just for the story example
-export const _Notification = () => {
-
-  const isPin = boolean('Is Pinned', false);
-  const type = select("Type", { Error: 'error', Warning: 'warning', Info: 'info', Success: 'success', Neutral: 'neutral' }, 'info');
-  const msg = text('Message', 'This is a message example');
-  const iconList = {'': '', ...generateIconList()};
-  const icon = select("Icon", iconList, Object.keys(iconList)[0]);
-  const actionText = text('Action Text Button', '');
-  const onTextBtnClick = action('Action was clicked');
-  const closeCall = action('The message was closed by the user');
-
-  const handleActionTextCall = () => {
-    const text = `User clicked on [${actionText}] button`;
-    onTextBtnClick(text);
-  }
-
+export const _Notification = (args: INotificationProps) => {
   return (
     <Container>
       <NotificationProvider>
-        <NotificationExample
-          type={type}
-          message={msg}
-          icon={icon}
-          closeCallback={closeCall}
-          actionTextButton={actionText}
-          onTextButtonClick={handleActionTextCall}
-          isPinned={isPin}
-        />
+        <NotificationExample {...args} />
       </NotificationProvider>
     </Container>
   );
-}
+};
+
+_Notification.argTypes = {
+  type: {
+    name: 'Type',
+    control: 'select',
+    options: ['error', 'warning', 'info', 'success', 'neutral'],
+    defaultValue: 'info',
+  },
+  message: { name:'Message', control: 'text', defaultValue: 'This is a message example' },
+  icon: {
+    name: 'Icon',
+    control: 'select',
+    options: Object.keys(generateIconList()),
+    defaultValue: Object.keys(generateIconList())[0],
+  },
+  closeCallback: { control: 'function', defaultValue: action('The message was closed by the user') },
+  actionTextButton: { name:'Action Text Button', control: 'text', defaultValue: '' },
+  onTextButtonClick: { control: 'function', defaultValue:  action('Action was clicked')},
+  isPinned: {name:'Is Pinned', control: 'boolean', defaultValue: false },
+};

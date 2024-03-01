@@ -1,22 +1,33 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { text, select, boolean } from "@storybook/addon-knobs";
-import {Switch} from 'scorer-ui-kit';
+import { Switch } from 'scorer-ui-kit';
 
 export default {
   title: 'Form/atoms',
   component: Switch,
-  decorators: []
 };
 
-export const _Switch = () => {
+export const _Switch = (args: any) => {
+  return <Switch {...args} />;
+};
 
-  const labelText = text("Label Text", "The Label");
-  const checked = boolean("Default Checked", true)
-  const state = select("State", { Default: "default", Disabled: "disabled", Locked: "locked", Loading: "loading", Failure: "failure" }, "default");
-  const leftTheme = select("Left Theme", { Off: "off", On: "on", Danger: "danger" }, "off");
-  const rightTheme = select("Right Theme", { Off: "off", On: "on", Danger: "danger" }, "on");
-  const onChangeCallback = action('value-changed');
-
-  return <Switch {...{state, leftTheme, rightTheme, labelText, checked, onChangeCallback}} />;
+_Switch.argTypes = {
+  labelText: { name: 'Label Text', control: 'text', defaultValue: 'The Label' },
+  checked: { name: 'Default Checked', control: 'boolean', defaultValue: true },
+  state: {
+    name: 'State',
+    control: { type: 'select', options: ['default', 'disabled', 'locked', 'loading', 'failure'] },
+    defaultValue: 'default',
+  },
+  leftTheme: {
+    name: 'Left Theme',
+    control: { type: 'select', options: ['off', 'on', 'danger'] },
+    defaultValue: 'off',
+  },
+  rightTheme: {
+    name: 'Right Theme',
+    control: { type: 'select', options: ['off', 'on', 'danger'] },
+    defaultValue: 'on',
+  },
+  onChangeCallback: { control: 'function', defaultValue: action('value-changed') },
 };
