@@ -1,25 +1,31 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import {  text, select, boolean } from "@storybook/addon-knobs";
-import {ButtonWithIcon} from 'scorer-ui-kit';
+import { ButtonWithIcon } from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';
 
 export default {
   title: 'Form/Buttons',
   component: ButtonWithIcon,
-  decorators: []
 };
 
-export const _WithIcon = () => {
-  const iconList = generateIconList();
+export const _WithIcon = (args: any) => {
+  const onClick = action('button-click');
 
-  const buttonText = text("Button Text", "Example Title");
-  const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
-  const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "normal");
-  const buttonDisabled = boolean("Disabled", false);
-  const buttonIcon = select("Icon", iconList, Object.keys(iconList)[0]);
-  const buttonIconPosition = select("Icon Position", { Left: "left", Right: "right"}, "right");
-  const buttonOnClick = action('button-click');
+  return (
+    <ButtonWithIcon
+      {...args}
+      onClick={onClick}
+    >
+      {args.buttonText}
+    </ButtonWithIcon>
+  );
+};
 
-  return <ButtonWithIcon design={buttonDesign} size={buttonSize} onClick={buttonOnClick} icon={buttonIcon} position={buttonIconPosition} disabled={buttonDisabled}>{buttonText}</ButtonWithIcon>;
+_WithIcon.argTypes = {
+  buttonText: { name: 'text', control: 'text', defaultValue: 'Example Title' },
+  design: { name: 'design', control: 'select', options: ['primary', 'secondary', 'danger'], defaultValue: 'primary' },
+  size: { name: 'size', control: 'select', options: ['xsmall', 'small', 'normal', 'large'], defaultValue: 'normal' },
+  disabled: { name: 'disabled', control: 'boolean', defaultValue: false },
+  icon: { name: 'icon', control: 'select', options: generateIconList(), defaultValue: Object.keys(generateIconList())[0] },
+  position: { name: 'position', control: 'select', options: ['left', 'right'], defaultValue: 'right' },
 };
