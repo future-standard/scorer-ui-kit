@@ -1,15 +1,12 @@
 import React from 'react';
-// import { action } from '@storybook/addon-actions';
-import { boolean, number, object } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
-import {SliderInput, ISliderMark} from 'scorer-ui-kit';
-
+import { SliderInput, ISliderMark } from 'scorer-ui-kit';
+import { ISlider } from 'scorer-ui-kit/dist/Form/atoms/SliderInput';
 
 export default {
   title: 'Form/Input',
   component: SliderInput,
-  decorators: []
 };
 
 const Container = styled.div`
@@ -52,34 +49,30 @@ const exampleMarks : ISliderMark[] = [
   },
 ];
 
+export const _SliderInput = (args: ISlider) => {
 
-export const _SliderInput = () => {
-  const disabled = boolean('Disabled', false);
-  const maxValue = number('Max', 8);
-  const minValue = number('Min', 1);
-  const defaultValue = number('Default value', 6)
   const showValue = action('Input Callback');
-  const marks = object('Marks', exampleMarks);
-  const allMarkCentered = boolean('Center aligned end numbers', false);
-  // const step = number('Step', 1); // still fixing step option
-
   const handleUpdate = (value: number) => {
     console.log('updated value', value);
-    showValue(`Returned value: ${value}`, value)
+    showValue(`Returned value: ${value}`, value);
   };
 
   return (
     <Container>
       <SliderInput
-          max={maxValue}
-          min={minValue}
-          disabled={disabled}
-          // step={step}
-          inputCallback={handleUpdate}
-          marks={marks}
-          defaultValue={defaultValue}
-          allMarkCentered={allMarkCentered}
-        />
+        {...args}
+        inputCallback={handleUpdate}
+      />
     </Container>
-  )
+  );
+};
+
+_SliderInput.argTypes = {
+  disabled: {name: 'Disabled', control: 'boolean', defaultValue: false },
+  max: { name: 'Max', control: 'number', defaultValue: 8 },
+  min: { name: 'Min', control: 'number', defaultValue: 1 },
+  defaultValue: { name: 'Default Value', control: 'number', defaultValue: 6 },
+  marks: { name: 'Marks', control: 'object', defaultValue: exampleMarks },
+  allMarkCentered: { name: 'All Marks Centered', control: 'boolean', defaultValue: false },
+  inputCallback: { control: null }, // to hide it from controls as it's a callback
 }

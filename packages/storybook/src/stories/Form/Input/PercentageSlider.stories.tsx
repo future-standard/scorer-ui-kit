@@ -1,15 +1,11 @@
 import React from 'react';
-// import { action } from '@storybook/addon-actions';
-import { boolean, number, object, text} from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
-import {PercentageSlider, ISliderMark, IFeedbackColor} from 'scorer-ui-kit';
-
+import { IFeedbackColor, ISliderMark, PercentageSlider } from 'scorer-ui-kit';
 
 export default {
   title: 'Form/Input',
   component: PercentageSlider,
-  decorators: []
 };
 
 const Container = styled.div`
@@ -39,19 +35,11 @@ const exampleMarks : ISliderMark[] = [
     label:'100%',
   },
 ];
-
-export const _PercentageSlider = () => {
-  const title = text('Title', 'Duration');
-  const disabled = boolean('Disabled', false);
-  const defaultValue = number('Default value', 30);
-  const customThumb = boolean("Custom colors function",false);
-  const customTitle = boolean("Custom Title function",false);
+export const _PercentageSlider = ({
+  ...args
+}) => {
   const showValue = action('Input Callback');
-  const marks = object('Marks', exampleMarks);
-  const showTitle = boolean("Show Value", true);
-  const allMarkCentered = boolean('Center all mark values', false);
 
-  // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
     console.log('updated value', value);
     showValue(`Returned value: ${value}`, value)
@@ -62,39 +50,48 @@ export const _PercentageSlider = () => {
       return 'neutral';
     }
 
-    if((value > 20) && (value <= 80)) {
+    if (value > 20 && value <= 80) {
       return 'info';
     }
 
     return 'error';
-  }
+  };
 
-  const otherTitlesHandler = (value: number) : string => {
-    if(value <= 20) {
+  const otherTitlesHandler = (value: number) => {
+    if (value <= 20) {
       return 'Small sound';
     }
 
-    if((value > 20) && (value <= 80)) {
+    if (value > 20 && value <= 80) {
       return 'Normal sound';
     }
 
     return 'Dangerous sound';
-  }
+  };
 
   return (
     <Container>
       <PercentageSlider
-          disabled={disabled}
-          // step={step}
-          inputCallback={handleUpdate}
-          marks={marks}
-          defaultValue={defaultValue}
-          title={title}
-          updateThumbColor={customThumb ? otherColorHandler : undefined }
-          updateTitle={customTitle ? otherTitlesHandler : undefined}
-          showValue={showTitle}
-          allMarkCentered={allMarkCentered}
-        />
+        {...args}
+        inputCallback={handleUpdate}
+        updateThumbColor={args.customThumb ? otherColorHandler : undefined}
+        updateTitle={args.customTitle ? otherTitlesHandler : undefined}
+      />
     </Container>
-  )
-}
+  );
+};
+
+_PercentageSlider.argTypes = {
+  disabled: {name: 'Disabled', control: 'boolean', defaultValue: false },
+  defaultValue: {name: 'Default Value', control: 'number', defaultValue: 40 },
+  customThumb: { name: 'Custom colors function',  control: 'boolean', defaultValue: false },
+  customTitle: { name: "Custom Title function", control: 'boolean', defaultValue: false },
+  showValue: {  name: "Show Value", control: 'boolean', defaultValue: true },
+  allMarkCentered: { name: 'Center all mark values', control: 'boolean', defaultValue: false },
+  title: { name: 'Title', control: 'text', defaultValue: 'Levels' },
+  marks: {
+    name: 'Marks',
+    control: 'object',
+    defaultValue: exampleMarks,
+  },
+};

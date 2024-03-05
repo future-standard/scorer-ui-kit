@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select } from "@storybook/addon-knobs";
-import {PasswordField} from 'scorer-ui-kit';
+import { PasswordField } from 'scorer-ui-kit';
 
 const Container = styled.div`
     margin: 20px;
@@ -10,17 +9,27 @@ const Container = styled.div`
 export default {
   title: 'Form/Input',
   component: PasswordField,
-  decorators: []
 };
 
-export const PasswordInput = () => {
-
-  const inputName = text("Input Name", "my_input");
-  const inputLabel = text("Label", "My Input");
-  const inputValue = text("Value", "Test");
-  const inputPlaceholder = text("Placeholder", "Placeholder...");
-  const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
-
-  return <Container><PasswordField name={inputName} label={inputLabel} defaultValue={inputValue} placeholder={inputPlaceholder} fieldState={inputState} /></Container>;
-
+export const PasswordInput = (args : any) => {
+  return (
+    <Container>
+      <PasswordField {...args} />
+    </Container>
+  );
 };
+
+PasswordInput.argTypes = {
+  name: { name: 'Input Name', control: 'text', defaultValue: 'my_input' },
+  label: { name: 'Label', control: 'text', defaultValue: 'My Input' },
+  defaultValue: { name: 'Value', control: 'text', defaultValue: 'Test' },
+  placeholder: { name: 'Placeholder', control: 'text', defaultValue: 'Placeholder...' },
+  fieldState: {
+    name: 'State',
+    control: {
+      type: 'select',
+      options: ['default', 'disabled', 'required', 'valid', 'invalid', 'processing'],
+    },
+    defaultValue: 'default',
+  },
+}
