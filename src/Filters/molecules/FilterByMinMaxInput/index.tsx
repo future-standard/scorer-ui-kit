@@ -118,7 +118,7 @@ const FilterByMinMaxInput: React.FC<ISortByProps> = ({title, language,input1Labe
         <DisplayFlex>
           <FlexItem><Checkbox disabled={!(min>-1)} onChangeCallback={()=>checkItem(0)} checked={isMinSelected} /></FlexItem>
           <FlexItem margin='0 12px 0 4px'><CheckboxLabel>{input1Label}</CheckboxLabel></FlexItem>
-          <FlexItem><InputField value={min} onChange={handleChange('min')} fieldState='default' name='min' label='' placeholder='0' unit={language==='ja'?'分':'Min'} /></FlexItem>
+          <FlexItem><InputField value={min} onChange={handleChange('min')} fieldState='default' name='min' label='' placeholder='0' unit={language==='ja'?'最小':'Min'} /></FlexItem>
         </DisplayFlex>
         <Divider />
         <DisplayFlex>
