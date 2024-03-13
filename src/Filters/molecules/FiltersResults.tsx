@@ -105,8 +105,6 @@ const renderLabel = (item: IFilterItem | DateInterval | Date, resultsDateFormat:
   let textLabel: string = "";
   const isDateFormatValid = validateDateFormat(resultsDateFormat);
 
-  console.log('date received', resultsDateFormat, item);
-
   if (filterName && isFilterItem(item)) {
     textLabel = `${filterName}: ${item.text}`;
   } else if (filterName && item instanceof Date) {
@@ -128,8 +126,6 @@ const renderLabel = (item: IFilterItem | DateInterval | Date, resultsDateFormat:
       ? `${format(item.start, resultsDateFormat)} - ${validWithMidnight(item.end, resultsDateFormat)}`
       : `${item.start.toDateString()} - ${item.end.toDateString()}`;
   }
-
-  console.log('Inputs results', textLabel);
 
   return <FilterLabelText hasIcon={!!icon}>{textLabel}</FilterLabelText>;
 };
