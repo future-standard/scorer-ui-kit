@@ -98,6 +98,7 @@ const InputWrap = styled.div`
   }
 `;
 
+
 interface IProps {
   title: string
   hasDate: boolean
@@ -108,6 +109,52 @@ interface IProps {
   allowAfterMidnight?: boolean,
   allowManualTimeChange?: boolean,
 }
+
+
+/**
+ *
+ * Rules with explanation can be found in this document - https://docs.google.com/spreadsheets/d/1POe9uZxKXtLhQFF6DIV-RclUp7T7oXgSeSLlbYmE38g/edit?usp=sharing
+ */
+
+const validHourMin = (newHour: number, newMin: number, allowAfterMidnight: boolean, hasDate: boolean) => {
+  console.log('newHour, new min', newHour, newMin);
+
+  if(newHour >= 24 &&  newMin !==-1 && allowAfterMidnight) { // Rule 8
+    return {newHour: 24 , newMin: 0};
+  }
+
+  if(newHour === 0 && newMin === 0 && allowAfterMidnight && !hasDate) { // Rule 7
+    return {newHour: 0, newMin: 1};
+  }
+
+
+  if(newHour === 23  && newMin === 60 && !allowAfterMidnight) { // Rule 6
+    return {newHour: 23, newMin: 59};
+  }
+
+  if(newHour === 24 && !allowAfterMidnight) {  // Rule 5
+    return {newHour: 23 , newMin};
+  }
+
+  if(newMin === 60) { // Rule 4
+    return {newHour: newHour + 1 , newMin: 0};
+  }
+
+  if( (newHour > 0) && (newMin === -1) ){ // Rule 3
+    return { newHour: newHour - 1, newMin: 59 };
+  }
+
+
+  if(newHour === 0 && newMin === -1) { // Rule 2
+    return {newHour: 0, newMin: 0 };
+  }
+
+  if(newHour === -1 ) { // Rule 1
+    return {newHour:0, newMin};
+  }
+
+  return {newHour, newMin};
+};
 
 const DateTimeBlock : React.FC<IProps> = ({
   allowAfterMidnight = false,
@@ -125,42 +172,62 @@ const DateTimeBlock : React.FC<IProps> = ({
   const [displayMinutes, setDisplayMinutes] = useState<string>(getFormattedTime(convertMinutes));
 
   const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])$/;
-    if (!hourRegex.test(value)) {
+
+    const hourRegex  = /^[0-1]{0,1}[0-9]{0,1}$|(^2[0-4])|^-1$/;
+
+    console.log(' hours value with ', value);
+    if (!hourRegex.test(value.replace(/^0+/, ""))) {
       return;
     }
-    setDisplayHours(value);
+
+    const {newHour, newMin} = validHourMin( Number(value), Number(displayMinutes), allowAfterMidnight, hasDate);
+
+    setDisplayHours(getFormattedTime(newHour.toString()));
     setDateCallback(
       min([
         endOfDay(date),
         set(date, {
-          hours: Number(value),
-          minutes: Number(displayMinutes),
+          hours: Number(newHour),
+          minutes: Number(newMin),
           seconds: 0,
           milliseconds: 0
         })
       ])
     );
-  }, [date, displayMinutes, setDateCallback]);
+  }, [allowAfterMidnight, date, displayMinutes, hasDate, setDateCallback]);
 
   const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    const minuteRegex = /^[0-5]{0,1}[0-9]{0,1}$/;
-    if (!minuteRegex.test(value)) {
+    console.log(' min value with ', value);
+    const minuteRegex = /^[0-5]{0,1}[0-9]{0,1}$|^60|^-1/;
+    if (!minuteRegex.test(value.replace(/^0+/, ""))) {
       return;
     }
-    setDisplayMinutes(value);
+
+    const {newHour, newMin} = validHourMin( Number(displayHours), Number(value), allowAfterMidnight, hasDate);
+
+    setDisplayMinutes(getFormattedTime(newMin.toString()));
+
+    if(newHour !== Number(displayHours)){
+      setDisplayHours(getFormattedTime(newHour.toString()));
+    }
+
+    if(allowAfterMidnight && newHour === 24){
+        setDateCallback(min([ endOfDay(date)]));
+        return;
+    }
+
     setDateCallback(
       min([
         endOfDay(date),
         set(date, {
-          hours: displayHours === '24' ? 23 : Number(displayHours),
-          minutes: Number(value) % 60,
+          hours:  Number(newHour),
+          minutes: Number(newMin) % 60,
           seconds: 0,
           milliseconds: 0
         })
       ])
     );
-  }, [date, displayHours, setDateCallback]);
+  }, [allowAfterMidnight, date, displayHours, hasDate, setDateCallback]);
 
   useEffect(()=>{
     if(allowAfterMidnight && isEqual(date, endOfDay(date))){

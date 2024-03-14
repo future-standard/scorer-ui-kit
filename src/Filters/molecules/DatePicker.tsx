@@ -5,6 +5,7 @@ import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
+import isEqual from 'lodash.isequal';
 
 /**
  * Convert a single days duration to an interval.
@@ -283,7 +284,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
-  const [allowManualTimeChange, setAllowManualTimeChange] = useState<boolean>();  
+  const [allowManualTimeChange, setAllowManualTimeChange] = useState<boolean>();
   const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
 
   useEffect(() => {
@@ -360,7 +361,12 @@ const DatePicker: React.FC<IDatePicker> = ({
   const updateStartDate = useCallback((start: Date) => {
     const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
     if((isAfter(add(start, { minutes: 1 }), end))){
-      setAllowManualTimeChange(true);
+      if (isEqual(end, endOfDay(start)) ){
+          setAllowManualTimeChange(false);
+        } else {
+          setAllowManualTimeChange(true);
+        }
+
     } else {
       setAllowManualTimeChange(false);
     }
@@ -370,7 +376,11 @@ const DatePicker: React.FC<IDatePicker> = ({
   const updateEndDate = useCallback((end: Date) => {
     const { start } = selectedRange ? selectedRange : TODAY_INTERVAL;
     if(isAfter(add(start, { minutes: 1 }), end)){
-      setAllowManualTimeChange(true);
+      if (isEqual(end, endOfDay(start)) ){
+        setAllowManualTimeChange(false);
+      } else {
+        setAllowManualTimeChange(true);
+      }
     } else {
       setAllowManualTimeChange(false);
     }
