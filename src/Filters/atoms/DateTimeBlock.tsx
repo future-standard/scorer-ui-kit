@@ -79,7 +79,7 @@ const Input = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean
 const TimeColon = styled.div`
   flex: 0 0 20px;
   text-align: center;
-`;  
+`;
 
 const InputWrap = styled.div`
   display: flex;
