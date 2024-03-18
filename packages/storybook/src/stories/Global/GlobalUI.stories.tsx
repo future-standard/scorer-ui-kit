@@ -371,7 +371,7 @@ const customDrawer: ICustomDrawer = {
   customComponent: MyCustomDrawer,
   icon: 'Add',
   status: 'danger',
-  // counter: 5,
+  counter: 1001,
   width: '280px;'
 }
 
@@ -404,6 +404,14 @@ export const _GlobalUI = () => {
   const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
   const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
+  const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
+  const copySuccessMessage= text("Tooltip Text", "Copied!");
+  const includeCopyTitle = boolean("Include Title Copy", true);
+  const hasUserDrawerFooter = boolean("Has User Drawer Footer", false);
+  const userDrawerFooter = object("User Drawer Footer", {
+    icon: 'Information',
+    title: 'V12.3.4',
+  });
 
   const menuConfig = object("Menu Config", {
     items: [
@@ -513,6 +521,30 @@ export const _GlobalUI = () => {
     console.log(isMenuOpen);
   };
 
+  const userDrawerMetaConfig = object("User Drawer Meta", [
+      {
+        icon: '',
+        title: 'Device ID:',
+        subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
+        notes: '',
+        hasCopyIcon:true
+      },
+      {
+        icon: 'Information',
+        title: 'GPU machine with 4 GPU',
+        subTitle: 'Building B',
+        notes: `This is a GPU machine having 30 camera support`,
+        hasCopyIcon:true
+      },
+      {
+        icon: 'Success',
+        title: 'Device is Live',
+        subTitle: 'Building C',
+        notes: `This is a GPU machine having 30 camera support`,
+      },
+    ]
+  );
+
   return (
     <Container>
       <GlobalUI
@@ -520,11 +552,13 @@ export const _GlobalUI = () => {
         home={menuHomeLink}
         defaultMenuOpen={defaultMenuOpen}
         onMenuToggle={getToggleValue}
-        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer, canAlwaysPin }}
-        {...{
-          loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasCurrentUser, currentUserText, accountOptionText,
-          hasLanguage, selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle
-        }}
+        canAlwaysPin={canAlwaysPin}
+        userDrawerMeta={userDrawerMetaConfig}
+        {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer}}
+        {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage,
+              hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, hasUserDrawerFooter,
+              selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle
+            }}
       >
         <ComponentLinks />
       </GlobalUI>

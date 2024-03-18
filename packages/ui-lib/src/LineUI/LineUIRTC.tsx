@@ -67,20 +67,27 @@ interface LineUIProps {
   ws: string;
   onSizeChange?: (size: {h: number; w: number}) => void;
   onLineMoveEnd?: ()=> void;
+  onLineClick?: (lineSetId: number) => void;
   onLoaded?: (metadata: {height: number; width: number; }) => void;
   options?: LineUIOptions;
   videoOptions?: LineUIVideoOptions;
+  lineClickSensingBorder?: string;
+  hasClickSensingBorder?: boolean;
 }
 const LineUI : React.FC<LineUIProps> = ({
   ws,
   onSizeChange = ()=>{},
   onLineMoveEnd = ()=>{},
+  onLineClick = ()=>{},
   onLoaded = ()=>{},
+  lineClickSensingBorder = '65',
+  hasClickSensingBorder = true,
   videoOptions,
   options: {
     showHandleFinder,
     showSetIndex,
     showPointLabel = false,
+    showLabelShadow = false,
     showPointHandle,
     showMoveHandle,
     showGrabHandle,
@@ -176,6 +183,7 @@ const LineUI : React.FC<LineUIProps> = ({
     handleFinderActive: handleFinder,
     revealSetIndex: showSetIndex !== false && (showSetIndex || state.length > 1),
     showPointLabel,
+    showLabelShadow,
     showPointHandle:  showPointHandle || (showPointHandle !== false && showGrabHandle !== false),
     showMoveHandle:  showMoveHandle || (showMoveHandle !== false && showGrabHandle !== false),
     setIndexOffset,
@@ -192,7 +200,7 @@ const LineUI : React.FC<LineUIProps> = ({
         loaded &&
           <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
             {state.map((lineSet, index) => (
-              <LineSet key={index} onLineMoveEnd={onLineMoveEnd} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
+              <LineSet key={index} hasClickSensingBorder={hasClickSensingBorder} lineClickSensingBorder={lineClickSensingBorder} onLineMoveEnd={onLineMoveEnd} onLineClick={onLineClick} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
               ))}
           </Frame>
       }

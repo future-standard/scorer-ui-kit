@@ -36,6 +36,14 @@ export interface IMenuTop {
     submenu?: IMenuItemSubmenu[]
   }
 
+  export interface IUserDrawerMeta {
+    title?: string,
+    icon?: string,
+    subTitle?: string,
+    notes?: string,
+    hasCopyIcon?: boolean
+  }
+
   export interface IMenuItemSubmenu {
     title: string
     href?: string
@@ -62,6 +70,20 @@ export interface IMenuTop {
     status?: IStatusDot
     counter?: number
     width?: string
+    maxCounter?: number
+  }
+
+  export interface IUserDrawerFooter {
+    icon?:string,
+    title:string,
+  }
+
+  export interface IUserDrawerMeta {
+    icon?: string,
+    title?: string,
+    subTitle?: string,
+    notes?: string,
+    hasCopyIcon?:boolean
   }
 
   export interface ITopBar {
@@ -87,7 +109,14 @@ export interface IMenuTop {
     selectedThemeText?: string;
     onLogout?: ()=>void;
     onLanguageToggle?: ()=>void;
+    onUserDrawerMetaClick?: ()=>void;
     onThemeToggle?: () => void;
+    userDrawerFooter? : IUserDrawerFooter ,
+    userDrawerMeta?: IUserDrawerMeta[];
+    hasUserDrawerMeta?: boolean,
+    copySuccessMessage?: string,
+    includeCopyTitle?: boolean
+    hasUserDrawerFooter?: boolean
   }
 
   export interface INotificationItem {

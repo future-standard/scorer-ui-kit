@@ -15,34 +15,31 @@ const Container = styled.div`
 
 const TopLine = styled.div`
   ${({ theme }) => theme.styles.filters.dropdownContainer.topBorder};
-  height: 4px;
-  border-radius: 3px 3px 0 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  height: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 `;
 
 const InnerBox = styled.div`
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-  padding-top: 5px;
-  ${({theme}) => theme.styles.filters.dropdownContainer.background};
+  box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
+  border-right: solid 1px hsl(207, 16%, 86%);
+  border-bottom: solid 1px hsl(207, 16%, 86%);
+  border-left: solid 1px hsl(207, 16%, 86%);
+  background-color: hsl(200, 23%, 97%);
 `;
 
 const StyledFilterOption = styled(FilterOption)`
   letter-spacing: 0.2px;
 `;
 
-const OptionList = styled.div`
-  max-height: 162px;
+const OptionList = styled.div<{moreItem?: boolean}>`
+  max-height: ${({moreItem}) => moreItem ? '168px' : '175px'};
   min-height: 40px;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {  /* Hide scrollbar for Chrome, Safari and Opera */
-    display: none;
-  }
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  position: relative;
+  overflow-y: auto;
+  margin-right: 2px;
 
   ${StyledFilterOption} {
     height: 35px;
@@ -51,7 +48,7 @@ const OptionList = styled.div`
 `;
 
 const ResultsContainer = styled.div`
-  border-top: ${({theme}) => theme.colors.divider} 1px solid;
+  border-top: 1px solid hsl(0, 0%, 91%);
   padding-bottom: 8px;
 `;
 
@@ -68,7 +65,7 @@ const ResultCounter = styled.div`
   padding-left: 9px;
   height: 30px;
   margin-bottom: 6px;
-  border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
+  border-bottom: 1px solid hsl(0, 0%, 91%);
 `;
 
 const SearchWrapper = styled.div`
@@ -87,6 +84,17 @@ const EmptyResultText = styled.div`
   display: flex;
   align-items: center;
   font-size: 12px;
+`;
+
+const Gradient = styled.div`
+  position: absolute;
+  bottom: 1px;
+  height: 15px;
+  background-image: linear-gradient(to bottom, transparent, #e5e5e5);
+  width: 99%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
 `;
 
 const isValueSelected = (item: IFilterItem, selected: IFilterValue) => {
@@ -329,7 +337,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
             : (
               <ResultsContainer>
                 {hasOptionsFilter && <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>}
-                <OptionList>
+                <OptionList moreItem={list.length > 5}>
                   {(visibleList.length > 0)
 
                     ? visibleList.map((item: IFilterItem, index) => {
@@ -348,6 +356,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
                     : <EmptyResultText>{emptyResultText}</EmptyResultText>}
                 </OptionList>
+                {list.length > 5 && <Gradient />}
               </ResultsContainer>)}
         </InnerBox>
       </FilterDropHandler>
