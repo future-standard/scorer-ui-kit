@@ -49,7 +49,7 @@ const LoginModalExample : React.FC = () => {
     }, [form]);
 
   const { setModalOpen } = useModal();
-  
+
   // Fake login for the example
   const onLogin = useCallback((params: { username: string; password: string })  => {
     if(params.username === 'user' && params.password === 'fakepass123') {
@@ -96,13 +96,13 @@ const LoginModalExample : React.FC = () => {
 
     return true;
   };
-  
+
   const handleModalSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
     e.preventDefault();
 
     // Validate inputs and show errors
     const areInputsValid = validateFields(form);
-  
+
     // if inputs are not valid return to allow user to correct before submiting
     if(!areInputsValid) { return; }
 
@@ -128,6 +128,7 @@ const LoginModalExample : React.FC = () => {
       onChange={onFieldChange('username')}
       value={form.username}
       name='username'
+      id='username'
     />
     <PasswordField
       fieldState='default'
@@ -136,6 +137,7 @@ const LoginModalExample : React.FC = () => {
       onChange={onFieldChange('password')}
       value={form.password}
       name='password'
+      id='password'
     />
     {alert && <AlertBar type={alert.type} message={alert.message} />}
     <Box flex='1'>

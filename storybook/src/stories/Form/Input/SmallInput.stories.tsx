@@ -24,6 +24,7 @@ export const _SmallInput = () => {
 
   return <Container>
     <SmallInput
+      id = {inputName}
       type={inputType}
       unit={inputUnit}
       name={inputName}
