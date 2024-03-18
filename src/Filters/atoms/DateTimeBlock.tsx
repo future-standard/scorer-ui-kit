@@ -37,7 +37,8 @@ const IconWrap = styled.div`
   padding-top: 2px;
 `;
 
-const InputValue = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean }>`
+
+const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isTimeInput?: boolean }>`
   ${({theme}) => css`
     font-family: ${theme.fontFamily.data};
   `}
@@ -45,34 +46,19 @@ const InputValue = styled.input<{ readOnly? : boolean, allowManualTimeChange?:bo
   ${({theme})=> theme.typography.filters.value};
 
   width: 100%;
-  border: none;
-  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0) 1px solid' : 'hsl(0deg 14% 90%) 1px solid'};
+  border: ${({ isTimeInput }) => isTimeInput ?
+    ({ isTimeRangeValid }) => isTimeRangeValid ? 'hsl(0 14% 90%) 1px solid' : 'rgb(255,0,0) 1px solid'
+    : 'transparent 1px solid'
+  };
   outline: none;
   flex: 1;
   justify-content: space-between;
   border-radius: 3px;
   &:focus, &:hover {
-    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0)' : 'blue'};
-  }
-`;
-
-
-const Input = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean }>`
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.data};
-  `}
-
-  ${({theme})=> theme.typography.filters.value};
-
-  width: 100%;
-  border: none;
-  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0) 1px solid' : 'transparent 1px solid'};
-  outline: none;
-  flex: 1;
-  justify-content: space-between;
-  border-radius: 3px;
-  &:focus, &:hover {
-    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0)' : 'blue'};
+    border-color: ${({ isTimeInput }) => isTimeInput ?
+      ({ isTimeRangeValid }) => isTimeRangeValid ? 'hsl(0 14% 90%) 1px solid' : 'rgb(255,0,0) 1px solid'
+      : 'transparent 1px solid'
+    };
   }
 `;
 
@@ -106,7 +92,7 @@ interface IProps {
   setDateCallback?: (date: Date) => void
   setTimeCallback?: (date: Date) => void
   allowAfterMidnight?: boolean,
-  allowManualTimeChange?: boolean,
+  isTimeRangeValid?: boolean,
 }
 
 const DateTimeBlock : React.FC<IProps> = ({
@@ -114,7 +100,7 @@ const DateTimeBlock : React.FC<IProps> = ({
   title,
   hasDate,
   hasTime,
-  allowManualTimeChange,
+  isTimeRangeValid = true,
   date = new Date(),
   setDateCallback = ()=>{},
 }) => {
@@ -188,7 +174,7 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Date' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <Input type='text' readOnly value={format(date, "yyyy/MM/dd")} />
+            <Input type='text' readOnly value={format(date, "yyyy/MM/dd")} {...{isTimeRangeValid}} />
           </InputWrap>
         </Item>
       )}
@@ -199,9 +185,9 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <InputValue onBlur={()=>onBlurInputs(displayHours, 'hours')} {...{allowManualTimeChange}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' />
+            <Input onBlur={()=>onBlurInputs(displayHours, 'hours')} {...{isTimeRangeValid}} name='hours' type='number' value={displayHours} onChange={setDateHours} autoComplete='off' isTimeInput />
             <TimeColon>:</TimeColon>
-            <InputValue onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{allowManualTimeChange}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' />
+            <Input onBlur={()=>onBlurInputs(displayMinutes, 'mins')} {...{isTimeRangeValid}} name='minutes' type='number' value={displayMinutes} onChange={setDateMinutes} autoComplete='off' isTimeInput />
           </InputWrap>
         </Item>
       )}
