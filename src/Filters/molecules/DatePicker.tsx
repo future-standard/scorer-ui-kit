@@ -356,7 +356,9 @@ const DatePicker: React.FC<IDatePicker> = ({
     }
   }, [dateMode, selectedRange, targetedDate]);
 
-  const updateTimeValidStatus = useCallback(( start : Date, end: Date) => {
+  useEffect(() => {
+    const { start, end } = selectedRange ? selectedRange : TODAY_INTERVAL;
+
     if((timeMode ==='interval' && isAfter(add(start, { minutes: 1 }), end))){
       if(isEqual(end, endOfDay(start)) && end.getSeconds() > 0) { // Midnight exception
         setIsTimeRangeValid(true);
@@ -368,19 +370,19 @@ const DatePicker: React.FC<IDatePicker> = ({
       setIsTimeRangeValid(true);
     }
 
-  },[timeMode]);
+  },[selectedRange, timeMode]);
 
   const updateStartDate = useCallback((start: Date) => {
     const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
-    updateTimeValidStatus(start, end);
+
     setSelectedRange({ start, end });
-  }, [selectedRange, updateTimeValidStatus]);
+  }, [selectedRange]);
 
   const updateEndDate = useCallback((end: Date) => {
     const { start } = selectedRange ? selectedRange : TODAY_INTERVAL;
-    updateTimeValidStatus(start, end);
+
     setSelectedRange({ start, end });
-  }, [selectedRange, updateTimeValidStatus]);
+  }, [selectedRange]);
 
   return (
     <Container>
