@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
 
 /**
@@ -356,26 +356,31 @@ const DatePicker: React.FC<IDatePicker> = ({
     }
   }, [dateMode, selectedRange, targetedDate]);
 
-  const validateTimeRange = useCallback(( start : Date, end: Date) => {
-    if((isAfter(add(start, { minutes: 1 }), end))){
-      setIsTimeRangeValid(false);
+  const updateTimeValidStatus = useCallback(( start : Date, end: Date) => {
+    if((timeMode ==='interval' && isAfter(add(start, { minutes: 1 }), end))){
+      if(isEqual(end, endOfDay(start)) && end.getSeconds() > 0) { // Midnight exception
+        setIsTimeRangeValid(true);
+      }else {
+        setIsTimeRangeValid(false);
+      }
+
     } else {
       setIsTimeRangeValid(true);
     }
 
-  },[]);
+  },[timeMode]);
 
   const updateStartDate = useCallback((start: Date) => {
     const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
-    validateTimeRange(start, end);
+    updateTimeValidStatus(start, end);
     setSelectedRange({ start, end });
-  }, [selectedRange, validateTimeRange]);
+  }, [selectedRange, updateTimeValidStatus]);
 
   const updateEndDate = useCallback((end: Date) => {
     const { start } = selectedRange ? selectedRange : TODAY_INTERVAL;
-    validateTimeRange(start, end);
+    updateTimeValidStatus(start, end);
     setSelectedRange({ start, end });
-  }, [selectedRange, validateTimeRange]);
+  }, [selectedRange, updateTimeValidStatus]);
 
   return (
     <Container>
