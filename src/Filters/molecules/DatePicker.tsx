@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
 
 /**
@@ -283,7 +283,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
   const isInitialMount = useRef(true);
-  const [allowManualTimeChange, setAllowManualTimeChange] = useState<boolean>();  
+  const [isTimeRangeValid, setIsTimeRangeValid] = useState<boolean>(true);
   const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
 
   useEffect(() => {
@@ -356,24 +356,31 @@ const DatePicker: React.FC<IDatePicker> = ({
     }
   }, [dateMode, selectedRange, targetedDate]);
 
+  useEffect(() => {
+    const { start, end } = selectedRange ? selectedRange : TODAY_INTERVAL;
+
+    if((timeMode ==='interval' && isAfter(add(start, { minutes: 1 }), end))){
+      if(isEqual(end, endOfDay(start)) && end.getSeconds() > 0) { // Midnight exception
+        setIsTimeRangeValid(true);
+      }else {
+        setIsTimeRangeValid(false);
+      }
+
+    } else {
+      setIsTimeRangeValid(true);
+    }
+
+  },[selectedRange, timeMode]);
 
   const updateStartDate = useCallback((start: Date) => {
     const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
-    if((isAfter(add(start, { minutes: 1 }), end))){
-      setAllowManualTimeChange(true);
-    } else {
-      setAllowManualTimeChange(false);
-    }
+
     setSelectedRange({ start, end });
   }, [selectedRange]);
 
   const updateEndDate = useCallback((end: Date) => {
     const { start } = selectedRange ? selectedRange : TODAY_INTERVAL;
-    if(isAfter(add(start, { minutes: 1 }), end)){
-      setAllowManualTimeChange(true);
-    } else {
-      setAllowManualTimeChange(false);
-    }
+
     setSelectedRange({ start, end });
   }, [selectedRange]);
 
@@ -381,8 +388,8 @@ const DatePicker: React.FC<IDatePicker> = ({
     <Container>
 
       <DateTimeArea>
-        <DateTimeBlock {...{allowManualTimeChange}} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
-        <DateTimeBlock {...{allowManualTimeChange}} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
+        <DateTimeBlock {...{isTimeRangeValid}} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
+        <DateTimeBlock {...{isTimeRangeValid}} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>
           <TimeZoneLabel>{timeZoneTitle}</TimeZoneLabel>
@@ -465,7 +472,6 @@ const cellState = (day: Date, interval: Interval | null, _hoverDate?: Date): Cel
     isInsideInterval = isWithinInterval(day, interval);
   } catch (error) {
     isInsideInterval = false;
-    console.log('wrong interval in datepicker', error);
   }
 
   if (isInsideInterval || isSameDay(interval.start, day)) {
