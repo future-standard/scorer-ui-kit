@@ -360,12 +360,14 @@ const DatePicker: React.FC<IDatePicker> = ({
   const updateStartDate = useCallback((start: Date) => {
     const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
     if((isAfter(add(start, { minutes: 1 }), end))){
-      setAllowManualTimeChange(true);
+      if(dateMode === 'interval' || timeMode === 'interval'){
+        setAllowManualTimeChange(true); 
+      }
     } else {
       setAllowManualTimeChange(false);
     }
     setSelectedRange({ start, end });
-  }, [selectedRange]);
+  }, [selectedRange, dateMode, timeMode]);
 
   const updateEndDate = useCallback((end: Date) => {
     const { start } = selectedRange ? selectedRange : TODAY_INTERVAL;
