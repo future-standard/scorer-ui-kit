@@ -12,7 +12,7 @@ Index.tsx
 ```js
 import React, { FC, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { scorerTheme ModalProvider, NotificationProvider } from 'scorer-ui-kit';
+import { scorerTheme, ModalProvider, NotificationProvider } from 'scorer-ui-kit';
 import { ThemeProvider } from 'styled-components';
 import App from './App';
 import FeaturesProvider from './context/FeaturesContext';
