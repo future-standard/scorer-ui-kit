@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDarkMode } from 'storybook-dark-mode';
 import { ThemeProvider } from 'styled-components';
-import {scorerTheme } from 'scorer-ui-kit';
+import {defaultTheme } from 'scorer-ui-kit';
 import Fonts from '../src/fonts';
 import { MemoryRouter as Router } from 'react-router-dom'
 import Style from '../src/style';
@@ -22,7 +22,7 @@ const RouterDecorator = story => (
 );
 
 const ThemeDecorator = story => (
-  <ThemeProvider theme={scorerTheme} >
+  <ThemeProvider theme={defaultTheme} >
     <Fonts />
     <Style/>
     {story()}

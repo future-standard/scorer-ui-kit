@@ -1,5 +1,5 @@
 // Themes
-import scorerTheme from './themes/light/light';
+import defaultTheme from './themes/light/light';
 
 
 //Components Alerts
@@ -190,7 +190,7 @@ import {
 
 export {
   // Theme
-  scorerTheme,
+  defaultTheme,
 
   // Alerts
   AlertBar,

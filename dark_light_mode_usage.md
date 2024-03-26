@@ -12,7 +12,7 @@ Index.tsx
 ```js
 import React, { FC, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { scorerTheme, ModalProvider, NotificationProvider } from 'scorer-ui-kit';
+import { defaultTheme, ModalProvider, NotificationProvider } from 'scorer-ui-kit';
 import { ThemeProvider } from 'styled-components';
 import App from './App';
 import FeaturesProvider from './context/FeaturesContext';
@@ -25,7 +25,7 @@ const Contents: FC = () => {
   const {onThemeToggle, isLightMode} = useThemeToggle();
 
   return (
-    <ThemeProvider theme={scorerTheme}>
+    <ThemeProvider theme={defaultTheme}>
       <FeaturesProvider>
         <ModalProvider>
           <NotificationProvider>
