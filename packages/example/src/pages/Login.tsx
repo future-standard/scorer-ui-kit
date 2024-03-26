@@ -45,23 +45,21 @@ const LoginForm = styled(Form)`
     padding: 44px 0;
     min-height: calc(100vh - 126px);
 
-  ${({theme}) => css`
-    animation: ${fadeInAnimation} ${theme.animation.speed.normal} ${theme.animation.easing.primary.in};
+    animation: ${fadeInAnimation} 0.35s cubic-bezier(0.7, 0, 0.84, 0);
 
     ${AlertWrapper} {
       margin-bottom: 20px;
     }
 
-    @media ${theme.deviceMediaQuery.medium} {
+    @media (min-width: 768px){
       min-height: auto;
     }
 
-    @media ${theme.deviceMediaQuery.large} {
+    @media (min-width: 1024px){
       max-width: ${widthDesk}px;
       padding: 70px;
       margin: initial;
     }
-  `};
 `;
 
 const Title = styled.div`
@@ -73,19 +71,28 @@ const Title = styled.div`
 `;
 
 const SubTitle = styled.div`
-  ${({theme}) => theme && css`
-    ${theme.typography.content.actionParagraph};
-  `};
+  text-align: left;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 25px;
+  text-decoration: none;
+  color: var(--grey-11);
   margin: 23px 0 40px 0;
 `;
 
 const ForgotLink = styled(Link)`
-  ${({theme}) => theme && css`
-    ${theme.typography.content.hyperlink.base};
-    &:hover {
-      ${theme.typography.content.hyperlink.hover};
-    }
-  `};
+
+  text-align: left;
+  font-style: italic;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  text-decoration: none;
+  color: var(--primary-9);
+
+  &:hover {
+    color: var(--primary-8);
+  }
 `;
 
 const ForgotLinkWrapper = styled.div`
@@ -134,20 +141,17 @@ const Container = styled.div`
     display:none;
   }
 
-  ${({theme}) => css`
+  @media (min-width: 768px) {
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    height: auto;
 
-    @media ${theme.deviceMediaQuery.medium} {
-      position: absolute;
-      transform: translate(-50%,-50%);
-      left: 50%;
-      top: 50%;
-      height: auto;
-
-      ${CopyRightGroup}{
-        display: flex;
-      }
+    ${CopyRightGroup}{
+      display: flex;
     }
-  `};
+  }
 `;
 
 const Logo = styled(LoginScreen)`
@@ -169,14 +173,12 @@ const LogoBackground = styled.img<{design: gradientDesign}>`
     width: 100%;
   }
 
-  ${({theme}) => css`
-    @media ${theme.deviceMediaQuery.large} {
-      height: 1080px;
-      width: auto;
-      bottom: 0;
-      left: -300px;
-    }
-  `};
+  @media (min-width: 1024px) {
+    height: 1080px;
+    width: auto;
+    bottom: 0;
+    left: -300px;
+  }
 `;
 
 export const LogoContainer = styled.div`
@@ -189,12 +191,11 @@ export const LogoContainer = styled.div`
   justify-content: center;
   overflow: hidden;
 
-  ${({theme}) => css`
-    @media ${theme.deviceMediaQuery.large} {
-      height: auto;
-      max-width: ${widthDesk}px;
-    }
-  `};
+  @media (min-width: 1024px) {
+    height: auto;
+    max-width: ${widthDesk}px;
+  }
+
 `;
 
 const LoginBox = styled.div`
@@ -203,26 +204,23 @@ const LoginBox = styled.div`
   margin: auto;
   height: 100%;
 
-  ${({theme}) => css`
+  @media (min-width: 768px) {
+    box-shadow: 0 20px 30px 0 hsla(205, 24%, 26%, 0.15);
+    border-radius: 5px;
+  }
 
-    @media ${theme.deviceMediaQuery.medium} {
-      box-shadow: 0 20px 30px 0 hsla(205, 24%, 26%, 0.15);
-      border-radius: 5px;
+  @media (min-width: 1024px) {
+    ${RowCss}
+    overflow: hidden;
+    position:relative;
+    max-width: none;
+    min-width: ${widthDesk * 2}px;
+    min-height: 560px;
+
+    input{
+      min-width: 296px;
     }
-
-    @media ${theme.deviceMediaQuery.large} {
-      ${RowCss}
-      overflow: hidden;
-      position:relative;
-      max-width: none;
-      min-width: ${widthDesk * 2}px;
-      min-height: 560px;
-
-      input{
-        min-width: 296px;
-      }
-    }
-  `};
+  }
 `;
 
 interface AuthProps {
