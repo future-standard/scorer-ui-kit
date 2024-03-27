@@ -170,6 +170,14 @@
   --white-a10: #FFFFFF71;
   --white-a11: #FFFFFF96;
   --white-a12: #FFFFFFEB;
+
+
+  --error: var(--error-8);
+  --info: var(--primary-7);
+  --neutral: var(--grey-9);
+  --success: var(--success-8);
+  --warning: var(--warning-8);
+
 }
 
 .dark-theme {
@@ -344,4 +352,10 @@
   --white-a10: #FFFFFF71;
   --white-a11: #FFFFFF96;
   --white-a12: #FFFFFFEB;
+
+  --error: var(--error-8);
+  --info: var(--primary-7);
+  --neutral: var(--grey-9);
+  --success: var(--success-8);
+  --warning: var(--warning-8);
 }
