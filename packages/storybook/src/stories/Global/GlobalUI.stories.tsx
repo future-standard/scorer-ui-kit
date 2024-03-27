@@ -38,8 +38,8 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  ${({ theme }) => theme.styles.global.background};
-
+  background-color: var(--grey-2);
+  background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
 `;
 
 const Welcome = () => (

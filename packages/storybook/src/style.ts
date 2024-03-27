@@ -20,12 +20,10 @@ const GlobalStyle = createGlobalStyle<MyThemeProps>`
     min-height: 100vh;
     height: 100%;
     margin: 0;
-    ${props => props.theme.styles.global.background};
+    background-color: var(--grey-2);
+    background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
   }
-  html {
-    /* background-image: radial-gradient(circle at 55% 1%, #303335, #212427 117%), url(./noise.png);
-    background-repeat: no-repeat, repeat; */
-  }
+
   body {
     font-family: Monorale, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
     color: lightgray;

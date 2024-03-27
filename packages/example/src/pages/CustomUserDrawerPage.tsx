@@ -9,7 +9,7 @@ const Container = styled.div`
 
 const CustomContentContainer = styled.div`
   padding: 10px 20px;
-  border-bottom: ${({theme: {colors}}) => colors.divider} 1px solid;
+  border-bottom: var(--grey-6) 1px solid;
 `
 
 const ExampleText = styled.div`

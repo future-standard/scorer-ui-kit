@@ -151,7 +151,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLanguageToggle = () => { },
   closeOnClick,
   onThemeToggle = () => { },
-  userDrawerFooter,
+  userDrawerFooter = {icon:'', title: ''},
   copySuccessMessage,
   includeCopyTitle,
   onUserDrawerMetaClick = () => { },
