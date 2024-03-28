@@ -59,14 +59,14 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>
     }
 `};
 
-  ${({ theme, isOpen, hasFlipArrow }) => isOpen && hasFlipArrow && css`
-    background-color: hsl(205, 100%, 72%);
-    border: solid 1px hsl(205, 100%, 72%);
-    color: ${theme.colors.icons.inverse};
+  ${({isOpen, hasFlipArrow }) => isOpen && hasFlipArrow && css`
+    background-color: var(--primary-7);
+    border: solid 1px var(--primary-7);
+    color: var(--white-1);
 
     ${IconWrapper} {
       [stroke]{
-        stroke: ${theme.colors.icons.inverse};
+        stroke: var(--white-1);
       }
     }
   `};

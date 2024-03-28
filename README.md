@@ -8,9 +8,9 @@ https://future-standard.github.io/scorer-ui-kit
 
 ## Current Versions
 ### Which version should I use?
-For production projects, at this time we recommend using v1 from the `main-v1.x` branch. 
+For production projects, at this time we recommend using v1 from the `main-v1.x` branch.
 
-If you require dark mode functionality for your UI then v2 has the initial version of this available. However, with version 2 you may find in the future that updating the UI Kit version may cause breaking changes that require additional attention from developers to ensure your UI is still functioning as expected. In this case you may want to manually set a specific version in your `package.json` to stop unexpected incrementation of your UI kit version.
+If you require dark mode functionality for your UI then v2 has the initial version of this available. However, with version 2 you may find in the future that updating the UI Kit version may cause breaking changes that require additional attention from developers to ensure your UI is still functioning as expected. In this case you may want to manually set a specific version in your `package.json` to stop unexpected version update of your UI kit.
 
 ### Version 1
   Legacy version, no mayor updates are made but will continue to do fixes.
@@ -21,7 +21,7 @@ If you require dark mode functionality for your UI then v2 has the initial versi
   Our default branch is Version 2 release but we keep a legacy branch available.
   This version provides dark mode, the newest components and tools as well as been up to date with npm dependencies.
   At this time, progress on Version 2 is delayed and may be expected to bring many breaking changes as it can accelerate.
-  
+
 
 ## How to use this repository.
 

@@ -47,7 +47,7 @@ const LeftTitle = styled.div<{ hasMarginBottom: boolean, hasRightData: boolean }
   }};
   ${({ hasMarginBottom }) => hasMarginBottom && `margin-bottom: 1px;`};
 
-  color: hsla(195, 10%, 52%, 0.72);
+  color: var(--grey-a10);
   font-size: 10px;
 `;
 
@@ -59,14 +59,14 @@ const LeftSubTitle = styled.div<{ hasRightData: boolean }>`
     : `max-width: 250px;`
   }
 
-  color: hsl(208, 8%, 38%);
+  color: var(--grey-11);
   font-size: 16px;
 `;
 
 const Title = styled.div<{ hasMarginBottom: boolean }>`
   ${EllipsisStyles};
   max-width: 80px;
-  color: hsla(195, 10%, 52%, 0.72);
+  color: var(--grey-a10);
   font-size: 10px;
   ${({ hasMarginBottom }) => hasMarginBottom && `margin-bottom: 6px;`};
 `;
@@ -74,7 +74,7 @@ const Title = styled.div<{ hasMarginBottom: boolean }>`
 const SubTitle = styled.div`
   ${EllipsisStyles};
   max-width: 80px;
-  color: hsl(195, 10%, 52%);
+  color: var(--grey-11);
   font-size: 12px;
 `;
 

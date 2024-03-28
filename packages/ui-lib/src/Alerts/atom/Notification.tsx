@@ -71,7 +71,7 @@ export const IconNames = {
 const IconButton = styled.div<{selected?: boolean}>`
   ${resetButtonStyles};
   ${({selected=false}) => selected && css`
-    border-bottom: 5px solid hsl(207, 80%, 64%);
+    border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
     outline: none;

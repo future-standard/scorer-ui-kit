@@ -1,8 +1,5 @@
 // Themes
-// import lightTheme from './themes/light';
-import lightTheme from './themes/light/light';
-import darkTheme from './themes/dark/dark';
-import themeFallbackHelper from './themes/themeFallbackHelper';
+import defaultTheme from './themes/light/light';
 
 
 //Components Alerts
@@ -146,6 +143,7 @@ import {
   useMediaModal,
   IModal,
   usePoll,
+  useThemeToggle
 } from './hooks';
 
 import {
@@ -192,9 +190,7 @@ import {
 
 export {
   // Theme
-  darkTheme,
-  lightTheme,
-  themeFallbackHelper,
+  defaultTheme,
 
   // Alerts
   AlertBar,
@@ -285,6 +281,7 @@ export {
   useClickOutside,
   usePoll,
   useMediaModal,
+  useThemeToggle,
   resetButtonStyles,
   Spinner,
   WebRTCClient,

@@ -17,7 +17,7 @@ import debounce from 'lodash.debounce';
 
 const Title = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-10);
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 17px;

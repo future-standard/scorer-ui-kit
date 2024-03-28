@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme,
+import { defaultTheme,
           NotificationProvider,
-          ModalProvider
+          ModalProvider,
+          useThemeToggle,
         } from 'scorer-ui-kit';
 
 import App from './App';
@@ -12,9 +13,10 @@ import * as serviceWorker from './serviceWorker';
 import './i18n';
 import Fonts from './fonts';
 import Style from './style';
+import './theme/theme-variables.css';
 
 //@ts-ignore
-lightTheme.custom.lines['weird'] = {
+defaultTheme.custom.lines['weird'] = {
   label: {
       fill: "#fff"
   },
@@ -60,9 +62,12 @@ lightTheme.custom.lines['weird'] = {
   }
 };
 
-ReactDOM.render(
-  <React.StrictMode>
-   <ThemeProvider theme={ lightTheme}>
+const Index : FC = () => {
+  //For the real reference of usage please look at the GlobalUI Page
+  const _initialize = useThemeToggle();
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
     <ModalProvider>
       <NotificationProvider>
         <App />
@@ -70,7 +75,13 @@ ReactDOM.render(
         <Style />
       </NotificationProvider>
     </ModalProvider>
-    </ThemeProvider>
+  </ThemeProvider>
+  );
+};
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Index />
   </React.StrictMode>,
   document.getElementById('root')
 );

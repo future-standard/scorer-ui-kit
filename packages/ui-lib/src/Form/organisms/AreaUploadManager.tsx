@@ -30,12 +30,12 @@ const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
-  background-color: hsl(204, 15%, 94%);
+  background-color: var(--grey-4);
   position: relative;
 `;
 
 const Title = styled.div`
-  color: hsl(208, 8%, 38%);
+  color: var(--grey-11);
   font-size: 20px;
 `;
 
@@ -43,7 +43,7 @@ const Description = styled.div`
   font-size: 14px;
   line-height: 2.14;
   text-align: center;
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-10);
   margin-top: 10px;
   max-width: 386px;
 `;
@@ -171,7 +171,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             buttonDesign={files !== null ? 'secondary' : 'primary'}
             accept={allowedFileTypes?.join(', ')}
           />
-          {files !== null && 
+          {files !== null &&
             <Fragment>
               <Button
                 size='small'

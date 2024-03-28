@@ -27,7 +27,7 @@ const TagListWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  color: hsl(195, 10%, 52%);
+  color: var(--grey-10);
   font-size: 14px;
   margin-bottom: 10px;
 `;

@@ -28,7 +28,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: hsla(202, 33%, 95%, 0.51);
+  background-color: var(--grey-3);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -73,8 +73,8 @@ const PreviewArea = styled.div<{ canvasHeight?: number, canvasWidth?: number }>`
   height: ${({ canvasHeight }) => canvasHeight ? `${canvasHeight}px` : `462px`};
   width: ${({ canvasWidth }) => canvasWidth ? `${canvasWidth}px` : `485px`};
   border-radius: 5px;
-  background-color: hsla(202, 33%, 95%, 0.8);
-  background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.8) 35px, rgba(255,255,255,.8) 70px);
+  background-color: var(--grey-3);
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, var(--white-a10) 35px, var(--white-a10) 70px);
 `;
 
 const HiddenImage = styled.img`
@@ -83,8 +83,8 @@ const HiddenImage = styled.img`
 
 const SelectedArea = styled.div<{ cropLeft: number, cropTop: number, cropWidth: number, cropHeight: number }>`
   position: absolute;
-  border: dashed 1px hsl(0, 0%, 24%);
-  box-shadow: 0 0 0 9999em hsla(0, 0%, 32%, 0.75);
+  border: dashed 1px var(--black-a12);
+  box-shadow: 0 0 0 9999em var(--black-a11);
   ${({ cropLeft, cropTop, cropWidth, cropHeight }) => css`
     top: ${cropTop}px;
     left: ${cropLeft}px;

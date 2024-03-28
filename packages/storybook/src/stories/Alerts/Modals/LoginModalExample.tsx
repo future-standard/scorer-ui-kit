@@ -15,7 +15,7 @@ const Title = styled.div`
   font-size: 20px;
   font-weight: 500;
   text-align: center;
-  color: hsl(208, 8%, 38%);
+  color: var(--grey-11);
   position:relative;
   margin-bottom: 45px;
 `;

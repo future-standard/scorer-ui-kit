@@ -33,7 +33,7 @@ const TextContainer = styled.div`
 
 const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean, position?: string }>`
   height: inherit;
-  flex: 0 0 35px;
+  flex: 0 0 36px;
   display: flex;
   justify-content: center;
   align-items: center;

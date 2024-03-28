@@ -6,11 +6,11 @@ import Icon from '../../Icons/Icon';
 
 const MetaConatiner = styled.div`
   margin: 10px 10px;
-  border: 1px solid #e2e2e380;
-  background-color: #eeeded80;
+  border: 1px solid var(--grey-3);
+  background-color: var(--grey-a2);
   border-radius: 5px;
   &:active {
-    box-shadow: 4px 4px #eeeded80;
+    box-shadow: 4px 4px var(--grey-a2);
   }
 `;
 
@@ -25,7 +25,7 @@ const LabelTitle = styled.div`
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.29px;
-  color: #575757;
+  color: var(--grey-11);
   font-family: ${({ theme }) => theme.fontFamily.ui};
   margin-top: 2px;
 `;
@@ -42,7 +42,7 @@ const LabelContent = styled.div`
   white-space: nowrap;
   font-weight: 500;
   letter-spacing: 0.29px;
-  color: rgba(87, 87, 87, 0.5);
+  color: var(--grey-8);
 `;
 
 const LabelNotes = styled.div`
@@ -56,7 +56,7 @@ const LabelNotes = styled.div`
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.29px;
-  color: rgba(87, 87, 87, 0.5);
+  color: var(--grey-8);
   ${({ theme }) => theme && css`
     font-family: ${theme.fontFamily.data};
   `}
@@ -95,12 +95,12 @@ const CopyTextBox = styled.pre`
   font-size: 10px;
   line-height: 1.2;
   box-shadow: 2px 2px 4px (195deg 16% 72% / 72%);
-  border: 1px solid hsl(195deg 5% 60% / 72%);
-  background-color: #f8f9fa;
+  border: 1px solid var(--grey-8);
+  background-color: var(--grey-2);
   border-radius: 5px;
   opacity: 0.76;
   font-weight: 500;
-  color: #575757;
+  color: var(--grey-11);
   position: absolute;
   max-width: 170px;
   white-space: pre-wrap;

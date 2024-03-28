@@ -101,7 +101,7 @@ const FooterMeta = styled.div <{ icon?: string }>`
   width: 100%;
   font-size: 10px;
   font-weight: 400;
-  color: rgba(87, 87, 87, 0.5);
+  color: var(--grey-a11);
   padding: 10px;
   padding-left:  ${({ icon }) => icon !== '' ? '31px;' : '21px;'};
 `;
@@ -123,7 +123,8 @@ const FooterText = styled.div <{ icon?: string }>`
   white-space: nowrap;
   max-width: 136px;
   max-width: ${({ icon }) => icon !== '' ? '136px;' : '164px;'};
-  color: #585858a5;
+  color: var(--grey-11);
+  opacity: 0.5;
 `;
 
 interface IUserMenu extends ITopBar {
@@ -150,7 +151,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   onLanguageToggle = () => { },
   closeOnClick,
   onThemeToggle = () => { },
-  userDrawerFooter,
+  userDrawerFooter = {icon:'', title: ''},
   copySuccessMessage,
   includeCopyTitle,
   onUserDrawerMetaClick = () => { },

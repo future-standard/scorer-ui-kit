@@ -39,9 +39,9 @@ import { emptyCallbackForStory } from '../../helpers';
 import { action } from '@storybook/addon-actions';
 
 const SelectRows = styled.pre`
-  color: #666;
+  color: var(--grey-11);
   margin-top: 75px;
-  background: #eee;
+  background: var(--grey-4);
   padding: 10px;
   white-space: normal;
 `;

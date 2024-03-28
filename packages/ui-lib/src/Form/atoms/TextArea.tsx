@@ -66,7 +66,11 @@ const Container =  styled.div<{ fieldState: string }>`
     ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal};
 
     &:focus {
-      box-shadow: 0px 3px 7px 0px hsla(207, 65.8%, 31%, 0.078);
+      box-shadow: 0px 3px 7px 0px var(--primary-a3);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
     }
 
     ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
@@ -88,15 +92,15 @@ const Container =  styled.div<{ fieldState: string }>`
     ${({ fieldState }) =>
 
     fieldState === 'required' ? `
-      box-shadow: 0px 3px 7px 0px hsla(207, 67.8%, 35.3%, 0.071);
+      box-shadow: 0px 3px 7px 0px var(--primary-a3);
     ` : null};
 
     ${({ fieldState }) => fieldState === 'valid' ? `
-      box-shadow: 0px 3px 5px 0px hsla(120, 76.6%, 15.1%, 0.071);
+      box-shadow: 0px 3px 5px 0px var(--success-a3);
     ` : null};
 
     ${({ fieldState }) => fieldState === 'invalid' ? `
-      box-shadow: 0px 3px 7px 0px hsla(0, 100%, 50%, 0.102);
+      box-shadow: 0px 3px 7px 0px var(--error-a3);
     ` : null};
   }
 
@@ -124,11 +128,11 @@ const TextArea : React.FC<Props> = ({
       case 'disabled':
         break;
       case 'required':
-        return <Icon icon='Required' size={20} color='inverse' />;
+        return <Icon icon='Required' size={20} color='white' />;
       case 'valid':
-        return <Icon icon='Success' size={20} color='inverse' />;
+        return <Icon icon='Success' size={20} color='white' />;
       case 'invalid':
-        return <Icon icon='Invalid' size={20} color='inverse' />;
+        return <Icon icon='Invalid' size={20} color='white' />;
       case 'processing':
         return <Spinner size='medium' styling='primary' />;
     }
@@ -137,7 +141,7 @@ const TextArea : React.FC<Props> = ({
   return (
     <Container fieldState={fieldState || 'default'}>
       <StyledTextArea
-        fieldState={fieldState || 'default'} 
+        fieldState={fieldState || 'default'}
         placeholder={placeholder}
         disabled={fieldState === 'disabled' || fieldState === 'processing'}
         {...props}

@@ -12,7 +12,7 @@ import {
 } from 'scorer-ui-kit';
 // These is the code related to the logo background but this asses are in the Example pages folder.
 // I left the code here in case this needs to be moved back or into the UI Library folder to be put it back.
-// 
+//
 // const LogoBackground = styled.img`
 //   position: absolute;
 //   top: -545px;
@@ -34,13 +34,13 @@ import {
 
 const StyledButton = styled.button`
   ${resetButtonStyles};
-  color: hsl(0, 0%, 65%);
+  color: var(--grey-9);
   font-size: 14px;
   font-weight: 500;
   font-stretch: normal;
   font-style: italic;
   line-height: 1.79;
-  color: hsl(0, 0%, 65%);
+  color: var(--grey-9);
   display: block;
 `;
 
@@ -68,7 +68,7 @@ font-stretch: normal;
 font-style: normal;
 line-height: normal;
 letter-spacing: normal;
-color: hsl(210, 6%, 47%);
+color: var(--grey-11);
 `;
 
 const CardContent = styled.div`
@@ -79,7 +79,7 @@ const CardContent = styled.div`
   font-style: normal;
   line-height: 1.79;
   letter-spacing: normal;
-  color: hsl(200, 1%, 49%);
+  color: var(--grey-10);
   p {
     margin: 1.4rem 0
   }

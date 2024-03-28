@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const ResultsTextWrapper = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-9);
 `;
 
 const FilterLabel = styled.div`
@@ -26,7 +26,7 @@ const FilterLabel = styled.div`
   align-items: center;
   padding: 0 11px 0 8px;
   margin-left: 3px;
-  color: hsl(207, 5%, 57%);
+  color: var(--grey-9);
 
   ${({ theme }) => theme && css`
     font-family: ${theme.fontFamily.data};
@@ -36,7 +36,7 @@ const FilterLabel = styled.div`
     display: flex;
     align-items: center;
   }
-  border-right: 1px solid hsla(0, 0%, 13%, 0.16);
+  border-right: 1px solid var(--grey-8);
 `;
 const FilterLabelText = styled.div<{ hasIcon?: boolean }>`
   padding: ${({ hasIcon }) => hasIcon ? '0 15px 0 9px' : '0 15px 0 0'};
@@ -49,7 +49,7 @@ const FilterLabelText = styled.div<{ hasIcon?: boolean }>`
 const ClearTextButton = styled.button`
   ${resetButtonStyles};
   font-family: ${({ theme }) => theme.fontFamily.data};
-  color: hsl(216, 4%, 77%);
+  color: var(--grey-10);
   margin-left: 11px;
   font-size: 12px;
 `;

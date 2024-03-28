@@ -9,9 +9,9 @@ const Container = styled.div`
 `
 
 const SelectRows = styled.pre`
-  color: #666;
+  color: var(--grey-11);
   margin-top: 75px;
-  background: #eee;
+  background: var(--grey-4);
   padding: 10px;
   white-space: normal;
 `

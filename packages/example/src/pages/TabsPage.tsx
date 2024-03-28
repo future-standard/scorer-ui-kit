@@ -9,7 +9,7 @@ const Container = styled.div`
 const Divider = styled.div`
   height: 1px;
   border-radius: 3px;
-  background-color: #efefef;
+  background-color: var(--grey-4);
   margin-left: 0px;
 `;
 
@@ -43,7 +43,7 @@ const TabsPage: React.FC = () => {
         <TabContent tabId='tab2'>
           <Tab2Container>
             <Label htmlFor='' labelText='Content of tab 2' />
-            <Label htmlFor='' labelText='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet erat et sapien pulvinar efficitur. Quisque tristique massa at auctor rhoncus. Ut venenatis sem id gravida volutpat. Phasellus faucibus accumsan sapien, id pellentesque dolor consectetur quis. Duis non rhoncus nunc. Suspendisse et rhoncus tortor.' /> 
+            <Label htmlFor='' labelText='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet erat et sapien pulvinar efficitur. Quisque tristique massa at auctor rhoncus. Ut venenatis sem id gravida volutpat. Phasellus faucibus accumsan sapien, id pellentesque dolor consectetur quis. Duis non rhoncus nunc. Suspendisse et rhoncus tortor.' />
             <Button design='primary' size='small'> OK </Button>
           </Tab2Container>
         </TabContent>

@@ -15,7 +15,7 @@ const mediaStyle = `
   max-width:  100%;
   max-height: 100%;
   border-radius: 3px;
-  background-color: hsla(0deg, 0%, 0%, 35%);
+  background-color: var(--grey-11);
 `;
 
 const LoadingOverlay = styled.div`

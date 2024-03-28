@@ -46,13 +46,13 @@ const InputValue = styled.input<{ readOnly? : boolean, allowManualTimeChange?:bo
 
   width: 100%;
   border: none;
-  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0) 1px solid' : 'hsl(0deg 14% 90%) 1px solid'};
+  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'var(--error-a9) 1px solid' : 'var(--grey-6) 1px solid'};
   outline: none;
   flex: 1;
   justify-content: space-between;
   border-radius: 3px;
   &:focus, &:hover {
-    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0)' : 'blue'};
+    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'var(--error-a9)' : 'blue'};
   }
 `;
 
@@ -66,20 +66,20 @@ const Input = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean
 
   width: 100%;
   border: none;
-  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0) 1px solid' : 'transparent 1px solid'};
+  border: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'var(--error-a9) 1px solid' : 'transparent 1px solid'};
   outline: none;
   flex: 1;
   justify-content: space-between;
   border-radius: 3px;
   &:focus, &:hover {
-    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'rgb(255,0,0)' : 'blue'};
+    border-color: ${({ allowManualTimeChange }) => allowManualTimeChange ? 'var(--error-a9)' : 'blue'};
   }
 `;
 
 const TimeColon = styled.div`
   flex: 0 0 20px;
   text-align: center;
-`;  
+`;
 
 const InputWrap = styled.div`
   display: flex;

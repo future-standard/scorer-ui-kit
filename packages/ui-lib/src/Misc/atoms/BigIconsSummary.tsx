@@ -19,7 +19,7 @@ const PlusIconWrapper = styled.div`
   ${IconWrapper}{
     transform: rotate(45deg);
     [stroke]{
-      stroke: hsl(205, 22%, 66%);
+      stroke: var(--primary-7);
     }
   }
 `;

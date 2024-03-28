@@ -16,7 +16,7 @@ const DragAndDrop = styled.div<{inDropZone: boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: ${({inDropZone}) => inDropZone ? `dashed #afa9a9 2px` : null};
+  border: ${({inDropZone}) => inDropZone ? `dashed var(--grey-8) 2px` : null};
 `;
 
 interface IDropArea {
