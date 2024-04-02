@@ -9,8 +9,8 @@ const Container = styled.div`
 `;
 
 const LeftData = styled.div<{ hasRightData: boolean }>`
-  ${({ theme, hasRightData }) => hasRightData && css`
-    border-right: ${theme.colors.divider} 1px solid;
+  ${({ hasRightData }) => hasRightData && css`
+    border-right: var(--grey-6) 1px solid;
     width: 195px;
   `};
 

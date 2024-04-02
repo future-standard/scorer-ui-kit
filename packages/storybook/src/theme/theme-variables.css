@@ -178,6 +178,13 @@
   --success: var(--success-8);
   --warning: var(--warning-8);
 
+  --inverse: var(--grey-1);
+  --mono: var(--grey-12);
+  --dimmed: var(--grey-11);
+  --subtle: var(--grey-10);
+  --primary: var(--primary-9);
+  --danger: var(--error-9);
+  --white: var(--white-1);
 }
 
 .dark-theme {
@@ -358,4 +365,12 @@
   --neutral: var(--grey-9);
   --success: var(--success-8);
   --warning: var(--warning-8);
+
+  --inverse: var(--white-1);
+  --mono: var(--grey-12);
+  --dimmed: var(--grey-11);
+  --subtle: var(--grey-10);
+  --primary: var(--primary-9);
+  --danger: var(--error-9);
+  --white: var(--white-1);
 }
