@@ -36,12 +36,11 @@ export const AlertWrapper = styled.div<{type: AlertType}>`
   padding: 0 14px;
 
   font-family: ${fontFamily.ui};
-  ${({type}) => `background-color: var(--${type})` };
+  background-color: ${({type}) => `var(--${type})` };
 
   text-align: left;
-  font-style: italic;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 20px;
   text-decoration: none;
   color: var(--white-1);
