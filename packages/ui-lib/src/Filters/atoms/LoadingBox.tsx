@@ -1,6 +1,7 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
+import { fontFamily } from '../../themes/common';
 
 const Container = styled.div`
   display: flex;
@@ -12,9 +13,7 @@ const Container = styled.div`
 `;
 
 const LoadingText = styled.div`
-  ${({ theme }) => theme && css`
-    font-family: ${theme.fontFamily.data};
-  `}
+  font-family: ${fontFamily.data};
   color: var(--grey-11);
   font-size: 12px;
   font-style: italic;

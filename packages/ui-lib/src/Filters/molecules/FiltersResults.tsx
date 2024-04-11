@@ -1,11 +1,12 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { IFilterItem, IFilterType } from '../FilterTypes';
 import { resetButtonStyles } from '../../common/index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { isFilterItem } from '../FilterTypes';
 import { DateInterval, isDateInterval } from './DatePicker';
 import { format } from 'date-fns';
+import { fontFamily } from '../../themes/common';
 
 const Container = styled.div`
   display: flex;
@@ -15,7 +16,7 @@ const Container = styled.div`
 `;
 
 const ResultsTextWrapper = styled.div`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: ${fontFamily.ui};
   color: var(--grey-9);
 `;
 
@@ -27,10 +28,7 @@ const FilterLabel = styled.div`
   padding: 0 11px 0 8px;
   margin-left: 3px;
   color: var(--grey-9);
-
-  ${({ theme }) => theme && css`
-    font-family: ${theme.fontFamily.data};
-  `};
+  font-family: ${fontFamily.data};
 
   ${IconWrapper} {
     display: flex;
@@ -48,7 +46,7 @@ const FilterLabelText = styled.div<{ hasIcon?: boolean }>`
 
 const ClearTextButton = styled.button`
   ${resetButtonStyles};
-  font-family: ${({ theme }) => theme.fontFamily.data};
+  font-family: ${fontFamily.data};
   color: var(--grey-10);
   margin-left: 11px;
   font-size: 12px;

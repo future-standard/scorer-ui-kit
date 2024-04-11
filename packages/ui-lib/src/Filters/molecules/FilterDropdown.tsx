@@ -7,6 +7,7 @@ import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
 import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
+import { fontFamily } from '../../themes/common';
 
 const Container = styled.div`
   display: inline-block;
@@ -14,7 +15,7 @@ const Container = styled.div`
 `;
 
 const TopLine = styled.div`
-  ${({ theme }) => theme.styles.filters.dropdownContainer.topBorder};
+  background-color: var(--primary-7);
   height: 3px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -54,7 +55,7 @@ const ResultsContainer = styled.div`
 
 const ResultCounter = styled.div`
   opacity: 0.75;
-  font-family: ${({ theme }) => theme.fontFamily.data};
+  font-family: ${fontFamily.data};
   color: var(--grey-10);
   font-size: 12px;
   font-style: italic;

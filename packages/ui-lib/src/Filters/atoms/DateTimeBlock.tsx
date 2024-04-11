@@ -4,6 +4,7 @@ import {endOfDay, format,isEqual,min,set } from 'date-fns';
 
 import Icon from '../../Icons/Icon';
 import { getFormattedTime } from '../../helpers';
+import { fontFamily } from '../../themes/common';
 
 const Container = styled.div<{hide:boolean}>`
   display: flex;
@@ -15,15 +16,14 @@ const Container = styled.div<{hide:boolean}>`
 `;
 
 const Label = styled.label`
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.ui};
-    ${({theme})=> theme.typography.filters.datepicker.metaHeader.default};
-  `}
+  font-family: ${fontFamily.ui};
+  text-align: left;
+  font-size: 14px;
+  font-weight: 300;
+  text-decoration: none;
+  color: var(--grey-11);
   padding: 12px;
-  border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
-
-  // ${({theme})=> theme.typography.filters.datepicker.metaHeader.active};
-
+  border-bottom: var(--grey-6) 1px solid;
 `;
 
 const Item = styled.div`
@@ -38,11 +38,14 @@ const IconWrap = styled.div`
 `;
 
 const InputValue = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean }>`
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.data};
-  `}
-
-  ${({theme})=> theme.typography.filters.value};
+  font-family: ${fontFamily.data};
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  color: var(--grey-11);
+  background-color: transparent;
 
   width: 100%;
   border: none;
@@ -58,11 +61,14 @@ const InputValue = styled.input<{ readOnly? : boolean, allowManualTimeChange?:bo
 
 
 const Input = styled.input<{ readOnly? : boolean, allowManualTimeChange?:boolean }>`
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.data};
-  `}
-
-  ${({theme})=> theme.typography.filters.value};
+  font-family: ${fontFamily.data};
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  color: var(--grey-11);
+  background-color: transparent;
 
   width: 100%;
   border: none;
@@ -88,11 +94,11 @@ const InputWrap = styled.div`
   border-radius: 3px;
 
   &:focus-within {
-    background: ${({theme}) => theme.colors.menu.passive};
-    box-shadow: 0px 0px 0px 5px ${({theme}) => theme.colors.menu.passive};
+    background: var(--primary-a7);
+    box-shadow: 0px 0px 0px 5px var(--primary-a7);
 
     ${TimeColon}{
-      color: ${({theme}) => theme.colors.pureTop};
+      color: var(--black-1);
       text-align: center;
     }
   }

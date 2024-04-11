@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import SelectField from '../../Form/atoms/SelectField';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import Icon from '../../Icons/Icon';
+import { fontFamily } from '../../themes/common';
 
 const Container = styled.div`
   display: inline-block;
@@ -25,7 +26,7 @@ const ContextActionBaseCSS = css`
 
 const ContextIcon = styled.div`
   ${({ theme }) => css`
-    ${theme.styles.global.mainMenu.iconBackground.default};
+    background-color: var(--gray-2);
     transition: background ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
   `};
   width: 30px;
@@ -50,14 +51,14 @@ const ContextActionButton = styled.button<{ isActive?: boolean, isInnerContextBu
     }
   }
   &:hover ${ContextIcon}{
-    ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
+    background-color: var(--primary-8);
     }
   }
   ${({ isActive }) => isActive && css`
     ${ContextIcon} {
-      ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
+      background-color: var(--primary-8);
       [stroke]{
-        stroke: ${({ theme }) => theme.colors.pureBase};
+        stroke: var(--white-1);
       }
     }
     &:hover ${ContextIcon}{
@@ -105,7 +106,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const TopLine = styled.div`
-  ${({ theme }) => theme.styles.filters.dropdownContainer.topBorder};
+  background-color: var(--primary-7);
   height: 3px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -129,7 +130,7 @@ const LayoutGroup = styled.div`
 
 const PaginationGroup = styled.div`
   display: flex;
-  border-top: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  border-top: var(--grey-6) 1px solid;
   padding: 4px 8px 4px 10px;
   align-items: center;
   justify-content: space-between;
@@ -141,13 +142,13 @@ const IconWrapper = styled.div`
 `;
 
 const LayoutText = styled.p`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: ${fontFamily.ui};
   font-size: 14px;
   color: var(--grey-9);
 `;
 
 const PaginationText = styled.p`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: ${fontFamily.ui};
   font-size: 14px;
   color: var(--grey-9);
 `;

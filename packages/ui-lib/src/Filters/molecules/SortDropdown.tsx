@@ -6,6 +6,7 @@ import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
 import { IFilterItem } from '../FilterTypes';
 import { resetButtonStyles } from '../../common';
+import { fontFamily } from '../../themes/common';
 
 const Container = styled.div`
   display: inline-block;
@@ -13,7 +14,7 @@ const Container = styled.div`
 `;
 
 const TopLine = styled.div`
-  ${({ theme }) => theme.styles.filters.dropdownContainer.topBorder};
+  background-color: var(--primary-7);
   height: 3px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -22,9 +23,11 @@ const TopLine = styled.div`
 const InnerBox = styled.div`
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-  border: solid 1px var(--grey-7);
   border-top: unset;
-  ${({theme}) => theme.styles.filters.dropdownContainer.background};
+  box-shadow: 0px 5px 25px 0px var(--primary-a1);
+  background-color: var(--grey-1);
+  border-color: var(--grey-6);
+  border: var(--grey-6) 1px solid;
 `;
 
 const StyledFilterOption = styled(FilterOption)`
@@ -40,10 +43,10 @@ const OptionList = styled.div`
 
 const OrderGroup = styled.div`
   display: flex;
-  border-top: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  border-top: var(--grey-6) 1px solid;
   margin-top: 5px;
   button:first-child {
-    border-right: ${({ theme: { colors } }) => colors.divider} 1px solid;
+    border-right: var(--grey-6) 1px solid;
   }
 `;
 
@@ -52,25 +55,25 @@ const OrderButton = styled.button<{ isSelected: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
-  font-family: ${({ theme }) => theme.fontFamily.data};
+  font-family: ${fontFamily.data};
   color: var(--grey-12);
   font-size: 14px;
   height: 35px;
-  ${({ theme, isSelected }) => theme && css`
+  ${({ isSelected }) => css`
 
   ${IconWrapper} {
     margin-left: 10px;
     display: flex;
     align-items: center;
     [stroke]{
-        stroke: ${theme.colors.icons.dimmed};
+        stroke: var(--dimmed);
       }
     }
 
   &:hover {
     ${IconWrapper} {
       [stroke]{
-        stroke: ${theme.styles.form.checkbox.checked.hover.backgroundColor};
+        stroke: var(--primary-8);
         }
       }
     }
@@ -78,7 +81,7 @@ const OrderButton = styled.button<{ isSelected: boolean }>`
   ${isSelected && css`
     ${IconWrapper} {
       [stroke]{
-        stroke: ${theme.styles.form.checkbox.checked.default.backgroundColor};
+        stroke: var(--primary-8);
         }
       }
     `}
