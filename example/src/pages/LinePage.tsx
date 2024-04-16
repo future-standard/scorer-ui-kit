@@ -213,35 +213,35 @@ const Line: React.FC<{}> = () => {
         </SidebarBox>
         <SidebarBox>
           <Label labelText='Show Point Handle' htmlFor='showPointHandle' >
-            <input type='checkbox' name='showPointHandle' checked={options.showPointHandle} onChange={toggleOptions('showPointHandle')}/>
+            <input id='showPointHandle' type='checkbox' name='showPointHandle' checked={options.showPointHandle} onChange={toggleOptions('showPointHandle')}/>
           </Label>
           <Label labelText='Show Move Handle' htmlFor='showMoveHandle' >
-            <input type='checkbox' name='showMoveHandle' checked={options.showMoveHandle} onChange={toggleOptions('showMoveHandle')}/>
+            <input id='showMoveHandle' type='checkbox' name='showMoveHandle' checked={options.showMoveHandle} onChange={toggleOptions('showMoveHandle')}/>
           </Label>
           <Label labelText='Show Point' htmlFor='showPoint' >
-            <input type='checkbox' name='showPoint' checked={options.showPoint} onChange={toggleOptions('showPoint')}/>
+            <input id='showPoint' type='checkbox' name='showPoint' checked={options.showPoint} onChange={toggleOptions('showPoint')}/>
           </Label>
           <Label labelText='Show Direction Mark' htmlFor='showDirectionMark' >
-            <input type='checkbox' name='showDirectionMark' checked={options.showDirectionMark} onChange={toggleOptions('showDirectionMark')}/>
+            <input id='showDirectionMark' type='checkbox' name='showDirectionMark' checked={options.showDirectionMark} onChange={toggleOptions('showDirectionMark')}/>
           </Label>
           <Label labelText='Show Label Shadow' htmlFor='showLabelShadow' >
-            <input type='checkbox' name='showLabelShadow' checked={options.showLabelShadow} onChange={toggleOptions('showLabelShadow')}/>
+            <input id='showLabelShadow' type='checkbox' name='showLabelShadow' checked={options.showLabelShadow} onChange={toggleOptions('showLabelShadow')}/>
           </Label>
         </SidebarBox>
         <SidebarBox>
           { options.showDirectionMark ?
             <>
-              <TextField label='Rename UP Line' fieldState='default' name='renameLine1' value={state[0]?.name ||''} onChange={(e) => renamePointLine(0, e)} />
-              <TextField label='Rename DOWN Line' fieldState='default' name='renameLine2' value={state[1]?.name ||''} onChange={(e) => renamePointLine(1, e)} />
+              <TextField id='renameLine1' label='Rename UP Line' fieldState='default' name='renameLine1' value={state[0]?.name ||''} onChange={(e) => renamePointLine(0, e)} />
+              <TextField id='renameLine2' label='Rename DOWN Line' fieldState='default' name='renameLine2' value={state[1]?.name ||''} onChange={(e) => renamePointLine(1, e)} />
             </>
             :
-            <TextField label='Rename Line' fieldState='default' name='rename' value={state[0]?.name ||''} onChange={renameLine}/>
+            <TextField id='rename' label='Rename Line' fieldState='default' name='rename' value={state[0]?.name ||''} onChange={renameLine}/>
           }
           <Label labelText='Boundary Offset' htmlFor='boundaryOffset' >
-            <Input type='number' name='boundaryOffset' min={0} value={options.boundaryOffset} onChange={updateBoudaryOffset}/>
+            <Input id='boundaryOffset' type='number' name='boundaryOffset' min={0} value={options.boundaryOffset} onChange={updateBoudaryOffset}/>
           </Label>
-          <TextField label='Area Fill Color' fieldState='default' name='fillColor' value={state[0]?.areaFillColor ||''} onChange={(e) => changeFillColor(0, e)}/>
-          <TextField label='Area Tranparency Level' fieldState='default' name='transparencyLevel' value={state[0]?.areaTransparencyLevel ||''} onChange={(e) => changeTranparencyLevel(0, e)}/>
+          <TextField id='fillColor' label='Area Fill Color' fieldState='default' name='fillColor' value={state[0]?.areaFillColor ||''} onChange={(e) => changeFillColor(0, e)}/>
+          <TextField id='transparencyLevel' label='Area Tranparency Level' fieldState='default' name='transparencyLevel' value={state[0]?.areaTransparencyLevel ||''} onChange={(e) => changeTranparencyLevel(0, e)}/>
         </SidebarBox>
         <SidebarBox>
           <Button design="secondary" onClick={toggleReadOnly()} >Toggle Read Only</Button>

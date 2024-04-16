@@ -90,7 +90,7 @@ const ForgotLink = styled(Link)`
 
 const ForgotLinkWrapper = styled.div`
     text-align: center;
-    margin: 10px auto; 
+    margin: 10px auto;
 `;
 
 const CopyRightStyle = css`
@@ -188,7 +188,7 @@ export const LogoContainer = styled.div`
   position: relative;
   justify-content: center;
   overflow: hidden;
-  
+
   ${({theme}) => css`
     @media ${theme.deviceMediaQuery.large} {
       height: auto;
@@ -289,6 +289,7 @@ const Login: React.FC<OwnProps> = ({
             onChange={onFieldChange('username')}
             value={form.username}
             name='username'
+            id='username'
           />
 
           <PasswordField
@@ -298,6 +299,7 @@ const Login: React.FC<OwnProps> = ({
             onChange={onFieldChange('password')}
             value={form.password}
             name='password'
+            id='password'
           />
           {alert && <AlertBar type={alert.type} message={alert.message} />}
 
