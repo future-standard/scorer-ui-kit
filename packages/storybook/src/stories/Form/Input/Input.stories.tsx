@@ -21,6 +21,6 @@ export const TextInput = () => {
   const inputPlaceholder = text("Placeholder", "Placeholder...");
   const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
 
-  return <Container><TextField name={inputName} label={inputLabel} placeholder={inputPlaceholder} fieldState={inputState} feedbackMessage={inputFeedback} /></Container>;
-
+  return <Container>
+    <TextField id={inputName} name={inputName} label={inputLabel} placeholder={inputPlaceholder} fieldState={inputState} feedbackMessage={inputFeedback} /></Container>;
 };

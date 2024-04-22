@@ -81,17 +81,14 @@ const uniqueID = () =>
       Math.random().toString(16)
   ).replace(/\./g, '');
 
-const getFormattedTime = (value:string) =>{
-  if(value ==='0' || value ===''){
-    return '00';
-  } else if (value?.length === 1){
-    return('0' + value);
-  } else if (value){
-    return value;
-  } else {
-    return '00';
-  }
-};
+
+  // https://stackoverflow.com/questions/30314447/how-do-you-test-for-nan-in-javascript
+  const isNotNumber = (value: string) => {
+    const intValue = parseInt(value);
+
+    // eslint-disable-next-line no-self-compare
+    return intValue !== intValue;
+  };
 
 export {
   clamp,
@@ -102,5 +99,5 @@ export {
   getShortTextTimeUnit,
   getTopLevelPath,
   uniqueID,
-  getFormattedTime
+  isNotNumber
 };
