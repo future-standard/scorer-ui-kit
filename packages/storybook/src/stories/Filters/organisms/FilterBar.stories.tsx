@@ -121,7 +121,7 @@ export const _FilterBar = () => {
   const singleFilter = boolean('Single Filter', false);
   const hasShowMore = boolean('Has Show More', true);
   // valid formats - https://date-fns.org/v2.25.0/docs/format
-  const resultsDateFormat = text('Results date format', 'yyyy-MM-dd');
+  const resultsDateFormat = text('Results date format', 'yyyy-MM-dd HH:mm');
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked: boolean, id?: string | number) => {
@@ -203,7 +203,6 @@ export const _FilterBar = () => {
     {
       id: 'datePickerForRuntime',
       dateMode: 'interval',
-      timeMode: 'off',
       buttonText: language === 'english' ? 'Date Range' : '日付範囲',
       buttonIcon: 'DateTime',
       dateTimeTextUpper: language === 'english' ? 'From' : 'から',

@@ -5,8 +5,9 @@ import { resetButtonStyles } from '../../common/index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { isFilterItem } from '../FilterTypes';
 import { DateInterval, isDateInterval } from './DatePicker';
-import { format } from 'date-fns';
 import { fontFamily } from '../../themes/common';
+import { format, add, startOfDay } from 'date-fns';
+
 
 const Container = styled.div`
   display: flex;
@@ -63,6 +64,20 @@ const FilterLabelsGroup = styled.div`
   margin-left: 10px;
 `;
 
+/**
+ * Date from Datepicker, since it does not support seconds input, we assumed that 23:59:59 value is showing 24:00 in display
+ * Here is not changing the value that the developer receives, just displaying 00:00 of the next Day
+ */
+
+const validWithMidnight = (endDate: Date, resultsDateFormat: string) =>  {
+
+  if (endDate.getHours() === 23 && endDate.getSeconds() > 0) {
+  return format( add(startOfDay(endDate), {days:1}), resultsDateFormat);
+  }
+
+  return format(endDate, resultsDateFormat);
+};
+
 const validateDateFormat = (resultsDateFormat: string): boolean => {
   let isFormatValid = false;
 
@@ -97,7 +112,7 @@ const renderLabel = (item: IFilterItem | DateInterval | Date, resultsDateFormat:
       : `${filterName}: ${item.toDateString()}`;
   } else if (filterName && isDateInterval(item)) {
     textLabel = isDateFormatValid
-      ? `${filterName}: ${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}`
+      ? `${filterName}: ${format(item.start, resultsDateFormat)} - ${validWithMidnight(item.end, resultsDateFormat)}`
       : `${filterName}: ${item.start.toDateString()} - ${item.end.toDateString()}`;
   } else if (!filterName && isFilterItem(item)) {
     textLabel = item.text;
@@ -107,7 +122,7 @@ const renderLabel = (item: IFilterItem | DateInterval | Date, resultsDateFormat:
       : item.toDateString();
   } else if (!filterName && isDateInterval(item)) {
     textLabel = isDateFormatValid
-      ? `${format(item.start, resultsDateFormat)} - ${format(item.end, resultsDateFormat)}`
+      ? `${format(item.start, resultsDateFormat)} - ${validWithMidnight(item.end, resultsDateFormat)}`
       : `${item.start.toDateString()} - ${item.end.toDateString()}`;
   }
 
