@@ -55,6 +55,7 @@ const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isT
   flex: 1;
   justify-content: space-between;
   border-radius: 3px;
+
   &:focus, &:hover {
 
     border-color: ${({ isTimeInput }) => isTimeInput ?

@@ -8,7 +8,6 @@ import { DateInterval, isDateInterval } from './DatePicker';
 import { fontFamily } from '../../themes/common';
 import { format, add, startOfDay } from 'date-fns';
 
-
 const Container = styled.div`
   display: flex;
   align-items: center;
