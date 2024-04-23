@@ -4,6 +4,7 @@ import styled, { css, keyframes } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
+import { fontFamily } from '../../themes/common';
 
 const initAnimation = keyframes`
   0% {
@@ -39,9 +40,15 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   transform: translateX(-50%);
   z-index: 999;
 
-  font-family: ${({ theme }) => theme.fontFamily.ui };
-  ${({type, theme}) => theme.styles.feedbackBar[type] };
-  ${({theme}) => theme.typography.feedbackBar.message };
+  font-family: ${fontFamily.ui };
+  background-color: ${({type}) => `var(--${type})`};
+  text-align: left;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  color: var(--white-1);
 
   ${({theme}) => css`
     animation: ${initAnimation} ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
@@ -55,7 +62,7 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
 
   ${IconWrapper} {
     [stroke]{
-      stroke: ${({theme}) => theme.colors.pureBase};
+      stroke: var(--white-1);
     }
   }
 `;
@@ -71,7 +78,7 @@ export const IconNames = {
 const IconButton = styled.div<{selected?: boolean}>`
   ${resetButtonStyles};
   ${({selected=false}) => selected && css`
-    border-bottom: 5px solid hsl(207, 80%, 64%);
+    border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
     outline: none;
@@ -90,8 +97,14 @@ const IconButton = styled.div<{selected?: boolean}>`
 
 const TextButton = styled.button`
   ${resetButtonStyles};
-  font-family: ${({ theme }) => theme.fontFamily.ui };
-  ${({theme}) => theme.typography.feedbackBar.message };
+  font-family: ${fontFamily.ui};
+  text-align: left;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  color: var(--white-1);
   font-weight: 700;
 
   &:focus {

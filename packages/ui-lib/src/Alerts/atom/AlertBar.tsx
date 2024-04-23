@@ -3,11 +3,12 @@ import styled, { css } from 'styled-components';
 import Icon, {IconWrapper} from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
+import { fontFamily } from '../../themes/common';
 
 const IconButton = styled.button<{selected?: boolean}>`
   ${resetButtonStyles};
   ${({selected=false}) => selected && css`
-    border-bottom: 5px solid hsl(207, 80%, 64%);
+    border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
     outline: none;
@@ -34,13 +35,19 @@ export const AlertWrapper = styled.div<{type: AlertType}>`
 
   padding: 0 14px;
 
-  font-family: ${({ theme }) => theme.fontFamily.ui };
-  ${({type, theme}) => theme.styles.feedbackBar[type] };
-  ${({theme}) => theme.typography.feedbackBar.message };
+  font-family: ${fontFamily.ui};
+  background-color: ${({type}) => `var(--${type})` };
+
+  text-align: left;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-decoration: none;
+  color: var(--white-1);
 
   ${IconWrapper} {
     [stroke]{
-      stroke: ${({theme}) => theme.colors.pureBase};
+      stroke: var(--white-1);
     }
   }
 `;

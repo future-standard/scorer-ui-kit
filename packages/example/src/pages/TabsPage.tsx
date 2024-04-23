@@ -9,7 +9,7 @@ const Container = styled.div`
 const Divider = styled.div`
   height: 1px;
   border-radius: 3px;
-  background-color: #efefef;
+  background-color: var(--grey-4);
   margin-left: 0px;
 `;
 

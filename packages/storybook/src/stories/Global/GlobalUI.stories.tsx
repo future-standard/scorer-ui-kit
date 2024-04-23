@@ -7,6 +7,7 @@ import {
   INotificationsHistory,
   ICustomDrawer,
   TypeTable,
+  useThemeToggle,
 } from 'scorer-ui-kit';
 import photo from '../assets/placeholder.jpg';
 
@@ -24,7 +25,6 @@ import logoTextSvg from '../assets/logo-text.svg';
 
 import { text, object, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import { useState } from 'react';
 
 export default {
   title: 'Global',
@@ -38,8 +38,8 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  ${({ theme }) => theme.styles.global.background};
-
+  background-color: var(--grey-2);
+  background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
 `;
 
 const Welcome = () => (
@@ -377,7 +377,8 @@ const customDrawer: ICustomDrawer = {
 
 export const _GlobalUI = () => {
 
-  const [isLightMode, setIsLightMode] = useState(true);
+  const {isLightMode ,  onThemeToggle} = useThemeToggle();
+
 
   const maxWidth = text("Max width", "1200px");
   const paddingOverride = text("Padding Override", "70px 90px");
@@ -402,7 +403,6 @@ export const _GlobalUI = () => {
   const hasSwitchTheme = boolean("Has Switch Theme", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
   const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
-  const themeToggle = action('onThemeToggle');
   const languageToggle = action('onLanguageToggle');
   const hasUserDrawerMeta = boolean("Has User Drawer Meta", false);
   const copySuccessMessage= text("Tooltip Text", "Copied!");
@@ -507,11 +507,6 @@ export const _GlobalUI = () => {
     }
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
-
-  const onThemeToggle = () => {
-    themeToggle();
-    setIsLightMode((prev) => !prev);
-  }
 
   const onLanguageToggle = () => {
     languageToggle();

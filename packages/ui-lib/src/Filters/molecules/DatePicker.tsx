@@ -5,6 +5,7 @@ import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
+import { fontFamily } from '../../themes/common';
 
 /**
  * Convert a single days duration to an interval.
@@ -42,14 +43,14 @@ const Container = styled.div`
 `;
 
 const DateTimeArea = styled.div`
-  border-right: ${({ theme }) => theme.colors.divider} 1px solid;
+  border-right: var(--grey-6) 1px solid;
   width: 170px;
   display: flex;
   flex-direction: column;
 `;
 
 const TimeZoneOption = styled.div`
-  border-top: ${({ theme }) => theme.colors.divider} 1px solid;
+  border-top: var(--grey-6) 1px solid;
   margin-top: auto;
   display: flex;
   justify-content: space-between;
@@ -59,17 +60,18 @@ const TimeZoneOption = styled.div`
 `;
 
 const TimeZoneLabel = styled.div`
-  ${({ theme }) => css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.filters.subOption.label};
-  `}
-
+  font-family: ${fontFamily.ui};
+  text-align: left;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--grey-11);
 `;
 const TimeZoneValue = styled.div`
-  ${({ theme }) => css`
-    font-family: ${theme.fontFamily.data};
-    ${theme.typography.filters.subOption.value};
-  `}
+  font-family: ${fontFamily.data};
+  text-align: left;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--grey-11);
 `;
 
 const CalendarArea = styled.div`
@@ -79,7 +81,7 @@ const CalendarArea = styled.div`
 const CalendarHeader = styled.div`
   display: flex;
   height: 70px;
-  border-bottom: ${({ theme }) => theme.colors.divider} 1px solid;
+  border-bottom: var(--grey-6) 1px solid;
   text-align: center;
 `;
 
@@ -90,11 +92,20 @@ const CurrentMonth = styled.div`
   align-items: center;
   justify-content: center;
 
-  ${({ theme }) => theme.typography.filters.datepicker.focusedMonth};
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  color: var(--grey-11);
+
   span {
     display: block;
     flex: 0;
-    ${({ theme }) => theme.typography.filters.datepicker.focusedYear};
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.33px;
   }
 `;
 
@@ -103,31 +114,29 @@ const IconWrap = styled.div``;
 const PaginateMonth = styled.button`
   cursor: pointer;
   flex: 0 0 90px;
-
   border: none;
   background: transparent;
   outline: none;
-
-  ${({ theme }) => theme.typography.filters.datepicker.monthLink.default};
-
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--grey-9);
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   &:hover {
-    background: transparent;
-    ${({ theme }) => css`
-      background: ${theme.colors.menu.active};
-      ${theme.typography.filters.datepicker.monthLink.hover}
-    `};
+    color: var(--white-1);
 
     ${IconWrap}{
       [stroke]{
-        stroke: ${({ theme }) => theme.colors.pureBase};
+        stroke: var(--white-1);
       }
     }
   }
-
 `;
 
 const CalBody = styled.div`
@@ -144,7 +153,7 @@ const CalRow = styled.div`
 `;
 
 const CalHRow = styled(CalRow)`
-  border-bottom: ${({ theme }) => theme.colors.divider} 1px solid;
+  border-bottom: var(--grey-6) 1px solid;
 `;
 
 const CalCell = styled.div`
@@ -153,35 +162,39 @@ const CalCell = styled.div`
   text-align: center;
   justify-content: center;
   align-items: center;
-
   border-radius: 5px;
-  ${({ theme }) => theme.typography.filters.datepicker.calendar.default};
-
-  ${({ theme }) => css`
-    font-family: ${theme.fontFamily.data};
-  `}
-
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  color: var(--grey-11);
+  font-family: ${fontFamily.data};
 `;
 
 const CalHCell = styled(CalCell)`
-  ${({ theme }) => theme.typography.filters.datepicker.calendar.header};
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--grey-a12);
 `;
 
 const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
   cursor: pointer;
   position: relative;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
 
   ${({ thisMonth }) => !thisMonth && css`
-    ${({ theme }) => theme.typography.filters.datepicker.calendar.otherMonth};
+    color: var(--grey-a8);
   `}
 
   ${({ isToday }) => isToday && css`
-    border: 2px solid ${({ theme }) => theme.colors.menu.passive};
+    border: 2px solid var(--primary-a7);
   `}
 
-  ${({ state, theme }) => (state === 'single' || state === 'start' || state === 'end') && css`
-    background: ${theme.colors.menu.active};
-    ${theme.typography.filters.datepicker.calendar.active};
+  ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
+    background: var(--primary-9);
+    color: var(--white-1);
   `}
 
   ${({ state }) => (state === 'start') && css`
@@ -195,17 +208,17 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
   `}
 
   ${({ state }) => (state === 'insideHover') && css`
-    background: ${({ theme }) => theme.colors.divider} !important;
+    background: var(--grey-6) !important;
   `}
 
   ${({ state }) => (state === 'inside') && css`
-    background: ${({ theme }) => theme.colors.menu.passive};
+    background: var(--primary-a7);
     border-radius: 0;
     opacity: 1;
 
     &:nth-child(7n+1), &:nth-child(7n){
       &::after {
-        background: ${({ theme }) => theme.colors.menu.passive};
+        background: var(--primary-a7);
         display: block;
         content: '';
         position: absolute;

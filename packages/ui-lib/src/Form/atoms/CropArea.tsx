@@ -46,8 +46,8 @@ const resizeSquaresCss = css`
   position: absolute;
   width: 10px;
   height: 10px;
-  border: solid 1px hsl(0, 1%, 28%);
-  background-color: hsl(0, 0%, 100%);
+  border: solid 1px var(--black-a12);
+  background-color: var(--white-1);
 `;
 
 const PointN = styled.div<{ isResizable: boolean }>`

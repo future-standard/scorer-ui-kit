@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { MediaBoxWrapper } from '../../Misc/atoms/MediaBox';
 import { IFeedbackColor } from '../..';
 import Icon, { IconWrapper } from '../../Icons/Icon';
@@ -46,10 +46,8 @@ const EmptyWithIcon = styled.div<{hasPadding: boolean}>`
   }
 `;
 const Notice = styled.div`
-  ${({ theme, color }) => color && css`
-    background-color: ${theme.colors.feedback[color]};
-    color: ${theme.colors.icons.inverse};
-  `};
+  background-color: ${({color }) => color && `var(--${color})`};
+  color: var(--inverse);
   opacity: 0.85;
   height: 46px;
   width: 300px;
@@ -93,7 +91,7 @@ const NoticeTextGroup = styled.div`
 `;
 
 const StatusLine = styled.div<{ color: IFeedbackColor }>`
-  background-color: ${({ theme, color }) => color && theme.colors.feedback[color]};
+  background-color: ${({color }) => color && `var(--${color})`};
   height: 3px;
   width: 100%;
 `;

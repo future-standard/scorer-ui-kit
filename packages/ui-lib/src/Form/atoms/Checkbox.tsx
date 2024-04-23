@@ -46,7 +46,7 @@ const IconWrapper = styled.div<{color: ISvgIcons['color']}>`
       stroke: transparent;
     }
     [fill] {
-      fill: ${({theme, color}) => theme.colors.icons[color]};
+      fill: ${({color}) => `var(--${color})`};
     }
   }
 `;
@@ -55,52 +55,61 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
   user-select: none;
 
 
-  ${({visualState, disabled, theme: { styles }}) => visualState === CheckboxState.Off && css`
+  ${({visualState, disabled}) => visualState === CheckboxState.Off && css`
     ${CheckboxOuter}{
-      ${styles.form.checkbox.unchecked.default};
+      border-color: var(--grey-9);
+      border: var(--grey-9) 2px solid;
     }
 
     ${!disabled && css`
       &:hover ${CheckboxOuter} {
-        ${styles.form.checkbox.unchecked.hover};
+        border-color: var(--primary-8);
+        border: var(--primary-8) 2px solid;
       }`
     };
 
     ${disabled && css`
       ${CheckboxOuter}{
-        ${styles.form.checkbox.unchecked.disabled};
+        background-color: var(--grey-1);
+        border-color: var(--grey-6);
+        border: var(--grey-6) 2px solid;
         cursor: not-allowed;
       }
     `}
   `}
 
-  ${({visualState, disabled, theme: { styles }}) => visualState === CheckboxState.On && css`
+  ${({visualState, disabled}) => visualState === CheckboxState.On && css`
     ${CheckboxOuter}{
-      ${styles.form.checkbox.checked.default};
+      box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
+      background-color: var(--primary-8);
       border: none;
     }
     ${!disabled && css`
       &:hover ${CheckboxOuter}{
-        ${styles.form.checkbox.checked.hover};
+        box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
+        background-color: var(--primary-8);
         border: none;
       }`
     };
 
     ${disabled && css`
       ${CheckboxOuter}{
-        ${styles.form.checkbox.checked.disabled};
+        box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
+        background-color: var(--grey-6);
         cursor: not-allowed;
       }
     `}
   `}
 
-  ${({visualState, disabled, theme: { styles }}) => visualState === CheckboxState.Indeterminate && css`
+  ${({visualState, disabled}) => visualState === CheckboxState.Indeterminate && css`
     ${CheckboxOuter}{
-      ${styles.form.checkbox.indeterminate.default};
+      box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
+      background-color: var(--primary-6);
     }
     ${!disabled && css`
       &:hover ${CheckboxOuter}{
-        ${styles.form.checkbox.indeterminate.hover};
+        box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
+        background-color: var(--primary-6);
       }
     `};
 

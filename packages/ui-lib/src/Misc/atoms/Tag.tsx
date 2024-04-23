@@ -15,9 +15,9 @@ export const TagWrapper = styled.div<{ hoverColor:ISvgIcons['color']; enableHove
   font-family: ${({theme}) => theme.fontFamily.ui };
   font-size: ${({size}) => size}px;
   font-weight: 500;
-  color: hsl(200, 3%, 39%);
+  color: var(--grey-11);
   padding: 4px 10px;
-  border: solid 1px hsl(120, 1%, 85%);
+  border: solid 1px var(--grey-8);
   display: inline-flex;
   align-items: center;
   border-radius: 3px;
@@ -60,7 +60,7 @@ const Tag : React.FC<ITag> = ({
   weight = 'regular',
   label='',
   linkTo,
-  ...props 
+  ...props
 }) => {
 
   const renderTag = () => (

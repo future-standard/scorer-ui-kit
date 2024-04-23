@@ -31,8 +31,7 @@ const Container = styled.div<{styling: string}>`
   display:flex;
   justify-content:center;
   align-items:center;
-
-  ${({theme, styling}) => theme.styles.feedbackBar[containerBackgroundKey(styling)]};
+  ${({styling}) => `background-color: var(--${containerBackgroundKey(styling)})` };
 `;
 
 export const LoadingSpinner = () => {

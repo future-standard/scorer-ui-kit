@@ -119,6 +119,16 @@ const Container = styled.label<{activeTheming: string, $loading: boolean, useInt
 
 type TypeSwitchState = 'default' | 'loading' | 'locked' | 'disabled' | 'failure';
 
+const isTypeSwitchState = (value: string): value is TypeSwitchState => {
+  return (
+    value === 'default' ||
+    value === 'loading' ||
+    value === 'locked' ||
+    value === 'disabled' ||
+    value === 'failure'
+  );
+};
+
 interface IProps {
   labelText?: string
   leftTheme?: string
@@ -176,7 +186,9 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
   }, [leftTheme, rightTheme, updateThemeChoice]);
 
   useEffect(() => {
-    setSwitchState( stateCheck(state) );
+    if(isTypeSwitchState(state))
+      setSwitchState( stateCheck(state) );
+
   }, [state, setSwitchState]);
 
   /** Watch for locking prop. */

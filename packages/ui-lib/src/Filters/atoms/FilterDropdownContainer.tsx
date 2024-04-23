@@ -2,9 +2,9 @@ import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div<{ height?: string }>`
-
-  ${({theme}) => theme.styles.filters.dropdownContainer.background};
-
+  box-shadow: 0px 5px 25px 0px var(--primary-a1);
+  background-color: var(--grey-1);
+  border: var(--grey-6) 1px solid;
   border-radius: 3px;
   position: relative;
   display: inline-flex;
@@ -12,7 +12,7 @@ const Container = styled.div<{ height?: string }>`
   padding-top: 5px;
 
   &::before {
-    ${({theme}) => theme.styles.filters.dropdownContainer.topBorder};
+    background-color: var(--primary-7);
     content: '';
 
     display: block;

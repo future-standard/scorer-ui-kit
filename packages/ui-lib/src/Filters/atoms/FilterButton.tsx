@@ -2,6 +2,7 @@ import React, { ButtonHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
+import { fontFamily } from '../../themes/common';
 
 const FlipWrapper = styled.div<{ isSortAscending: boolean }>`
   ${({ isSortAscending }) => isSortAscending && css`
@@ -14,41 +15,51 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>
   border-radius: 3px;
   height: 30px;
 
-  ${({ theme: {styles, typography, animation}, theme }) => theme && css`
+  ${({ theme: { animation } }) => css`
 
-    ${styles.filters.filterButton.default};
-    ${typography.filters.filterButton.default};
+    box-shadow: 0px 4px 9px 0px var(--primary-a1);
+    background-color: var(--grey-1);
+    border: var(--grey-7) 1px solid;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--grey-11);
 
-    font-family: ${theme.fontFamily.ui};
-    transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.inOut};
+    font-family: ${fontFamily.ui};
+    transition: opacity ${animation.speed.normal} ${animation.easing.primary.inOut};
 
     ${IconWrapper} {
       padding: 0 9px;
       display: flex;
       align-items: center;
       [stroke]{
-        stroke: ${theme.colors.icons.dimmed};
+        stroke: var(--dimmed);
       }
     }
 
     &:hover:enabled {
-      ${styles.filters.filterButton.hover};
-      ${typography.filters.filterButton.hover};
+      background-color: var(--primary-7);
+      border-color: var(--primary-7);
+      border: var(--primary-7) 1px solid;
+      color: var(--white-1);
       transition:
         background ${animation.speed.fast} ${animation.easing.primary.inOut},
         border ${animation.speed.fast} ${animation.easing.primary.inOut};
     }
 
     &:active:enabled {
-      ${styles.filters.filterButton.active};
-      ${typography.filters.filterButton.active};
+      background-color: var(--primary-7);
+      border-color: var(--primary-7);
+      border: var(--primary-7) 1px solid;
+      color: var(--white-1);
     }
 
     &:hover:enabled, &:active:enabled {
       ${IconWrapper} {
         [stroke]{
           transition: stroke ${animation.speed.faster} ${animation.easing.primary.inOut};
-          stroke: ${theme.colors.pureBase};
+          stroke: var(--white-1);
         }
       }
     }
@@ -59,14 +70,14 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>
     }
 `};
 
-  ${({ theme, isOpen, hasFlipArrow }) => isOpen && hasFlipArrow && css`
-    background-color: hsl(205, 100%, 72%);
-    border: solid 1px hsl(205, 100%, 72%);
-    color: ${theme.colors.icons.inverse};
+  ${({isOpen, hasFlipArrow }) => isOpen && hasFlipArrow && css`
+    background-color: var(--primary-7);
+    border: solid 1px var(--primary-7);
+    color: var(--white-1);
 
     ${IconWrapper} {
       [stroke]{
-        stroke: ${theme.colors.icons.inverse};
+        stroke: var(--white-1);
       }
     }
   `};

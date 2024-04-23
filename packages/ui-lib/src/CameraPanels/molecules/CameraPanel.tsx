@@ -7,8 +7,8 @@ export const CameraPanelWrapper = styled.div<{hasOnClick: boolean}>`
   width: 300px;
   height: 230px;
   border-radius: 3px;
-  box-shadow: 0 2px 10px 0 hsla(211, 42%, 86%, 0.41);
-  background-color: ${({theme}) => theme.styles.global.background.backgroundImage};
+  box-shadow: 0 2px 10px 0 var(--grey-a5);
+  background-color: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
   }
 
   ${({hasOnClick}) => hasOnClick &&`

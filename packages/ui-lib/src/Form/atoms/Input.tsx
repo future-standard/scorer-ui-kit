@@ -109,6 +109,10 @@ const Container = styled.div<{ fieldState: string }>`
 
     &:focus {}
 
+    &:disabled {
+      cursor: not-allowed;
+    }
+
     ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
       border-top-right-radius: 0px;
       border-bottom-right-radius: 0px;
@@ -127,7 +131,6 @@ const Container = styled.div<{ fieldState: string }>`
   &:focus-within ${StyledInput} {
     ${({theme, fieldState}) => theme.styles.form.input[fieldState].focused};
   }
-
 `;
 
 interface OwnProps {

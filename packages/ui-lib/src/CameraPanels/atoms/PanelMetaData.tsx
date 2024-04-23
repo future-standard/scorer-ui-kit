@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { EllipsisStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
+import { fontFamily } from '../../themes/common';
 
 const Container = styled.div`
   display: flex;
@@ -9,8 +10,8 @@ const Container = styled.div`
 `;
 
 const LeftData = styled.div<{ hasRightData: boolean }>`
-  ${({ theme, hasRightData }) => hasRightData && css`
-    border-right: ${theme.colors.divider} 1px solid;
+  ${({ hasRightData }) => hasRightData && css`
+    border-right: var(--grey-6) 1px solid;
     width: 195px;
   `};
 
@@ -47,26 +48,26 @@ const LeftTitle = styled.div<{ hasMarginBottom: boolean, hasRightData: boolean }
   }};
   ${({ hasMarginBottom }) => hasMarginBottom && `margin-bottom: 1px;`};
 
-  color: hsla(195, 10%, 52%, 0.72);
+  color: var(--grey-a10);
   font-size: 10px;
 `;
 
 const LeftSubTitle = styled.div<{ hasRightData: boolean }>`
-  font-family: ${({ theme }) => theme.fontFamily.data};
+  font-family: ${fontFamily.data};
   ${EllipsisStyles};
   ${({ hasRightData }) => hasRightData
     ? `max-width: 140px;`
     : `max-width: 250px;`
   }
 
-  color: hsl(208, 8%, 38%);
+  color: var(--grey-11);
   font-size: 16px;
 `;
 
 const Title = styled.div<{ hasMarginBottom: boolean }>`
   ${EllipsisStyles};
   max-width: 80px;
-  color: hsla(195, 10%, 52%, 0.72);
+  color: var(--grey-a10);
   font-size: 10px;
   ${({ hasMarginBottom }) => hasMarginBottom && `margin-bottom: 6px;`};
 `;
@@ -74,7 +75,7 @@ const Title = styled.div<{ hasMarginBottom: boolean }>`
 const SubTitle = styled.div`
   ${EllipsisStyles};
   max-width: 80px;
-  color: hsl(195, 10%, 52%);
+  color: var(--grey-11);
   font-size: 12px;
 `;
 

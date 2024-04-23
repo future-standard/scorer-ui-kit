@@ -14,10 +14,11 @@ import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersRes
 import { DateInterval, isDateInterval } from '../molecules/DatePicker';
 import isequal from 'lodash.isequal';
 import debounce from 'lodash.debounce';
+import { fontFamily } from '../../themes/common';
 
 const Title = styled.div`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
-  color: hsl(207, 5%, 57%);
+  font-family: ${fontFamily.ui};
+  color: var(--grey-10);
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 17px;

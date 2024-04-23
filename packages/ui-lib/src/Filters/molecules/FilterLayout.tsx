@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import SelectField from '../../Form/atoms/SelectField';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import Icon from '../../Icons/Icon';
+import { fontFamily } from '../../themes/common';
 
 const Container = styled.div`
   display: inline-block;
@@ -25,7 +26,7 @@ const ContextActionBaseCSS = css`
 
 const ContextIcon = styled.div`
   ${({ theme }) => css`
-    ${theme.styles.global.mainMenu.iconBackground.default};
+    background-color: var(--gray-2);
     transition: background ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
   `};
   width: 30px;
@@ -46,19 +47,22 @@ const ContextActionButton = styled.button<{ isActive?: boolean, isInnerContextBu
   }
   &:hover {
     div > svg > g {
-      stroke: hsl(0, 0%, 100%);
+      stroke: var(--white-1);
     }
   }
   &:hover ${ContextIcon}{
-    ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
+    background-color: var(--primary-8);
     }
   }
   ${({ isActive }) => isActive && css`
     ${ContextIcon} {
-      ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
+      background-color: var(--primary-8);
+      [stroke]{
+        stroke: var(--white-1);
+      }
     }
     &:hover ${ContextIcon}{
-      background-color: hsl(205, 100%, 72%);
+      background-color: var(--primary-7);
       cursor: pointer;
     }
   `}
@@ -102,7 +106,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const TopLine = styled.div`
-  ${({ theme }) => theme.styles.filters.dropdownContainer.topBorder};
+  background-color: var(--primary-7);
   height: 3px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -111,10 +115,10 @@ const TopLine = styled.div`
 const InnerBox = styled.div`
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-  box-shadow: 0 4px 9px 0 hsla(204, 22%, 67%, 0.07);
-  border: solid 1px hsl(207,16%,86%);
+  box-shadow: 0 4px 9px 0 var(--grey-a2);
+  border: solid 1px var(--grey-7);
   border-top: none;
-  background-color: hsl(200, 23%, 97%);
+  background-color: var(--grey-2);
 `;
 
 const LayoutGroup = styled.div`
@@ -126,7 +130,7 @@ const LayoutGroup = styled.div`
 
 const PaginationGroup = styled.div`
   display: flex;
-  border-top: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  border-top: var(--grey-6) 1px solid;
   padding: 4px 8px 4px 10px;
   align-items: center;
   justify-content: space-between;
@@ -138,15 +142,15 @@ const IconWrapper = styled.div`
 `;
 
 const LayoutText = styled.p`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: ${fontFamily.ui};
   font-size: 14px;
-  color: #8f8f8f;
+  color: var(--grey-9);
 `;
 
 const PaginationText = styled.p`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: ${fontFamily.ui};
   font-size: 14px;
-  color: #8f8f8f;
+  color: var(--grey-9);
 `;
 
 const PageSizeContainer = styled.div`
@@ -155,7 +159,7 @@ const PageSizeContainer = styled.div`
 
 const SelectFieldContainer  = styled.div`
   select{
-    background-color: #fff;
+    background-color: transparent;
   }
 `;
 
@@ -238,7 +242,7 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
     setOpenState((prev) => {
       const isOpen = !prev.isOpen;
       return { ...prev, isOpen, position };
-    }); 
+    });
   }, [onToggleOpenCallback, openState.isOpen]);
 
   const switchLayout = useCallback((layout: string) => {
@@ -260,11 +264,11 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
         <Icon icon='ViewSettings' color={openState.isOpen ? 'inverse' : 'dimmed'} size={16} />
       </ContextIcon>
     </React.Fragment>);
-    
+
   return(
     <Container ref={mainRef}>
       <ButtonWrapper ref={buttonWrapperRef}>
-        <ContextActionButton 
+        <ContextActionButton
           isActive={openState.isOpen}
           isInnerContextButton={false}
           onClick={() => handleToggleOpen(minWidth, minHeight)}
@@ -312,4 +316,4 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
   );
 };
 
-export default FilterLayout; 
+export default FilterLayout;
