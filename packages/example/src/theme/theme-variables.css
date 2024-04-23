@@ -170,6 +170,21 @@
   --white-a10: #FFFFFF71;
   --white-a11: #FFFFFF96;
   --white-a12: #FFFFFFEB;
+
+
+  --error: var(--error-8);
+  --info: var(--primary-7);
+  --neutral: var(--grey-9);
+  --success: var(--success-8);
+  --warning: var(--warning-8);
+
+  --inverse: var(--grey-1);
+  --mono: var(--grey-12);
+  --dimmed: var(--grey-11);
+  --subtle: var(--grey-10);
+  --primary: var(--primary-9);
+  --danger: var(--error-9);
+  --white: var(--white-1);
 }
 
 .dark-theme {
@@ -344,4 +359,18 @@
   --white-a10: #FFFFFF71;
   --white-a11: #FFFFFF96;
   --white-a12: #FFFFFFEB;
+
+  --error: var(--error-8);
+  --info: var(--primary-7);
+  --neutral: var(--grey-9);
+  --success: var(--success-8);
+  --warning: var(--warning-8);
+
+  --inverse: var(--white-1);
+  --mono: var(--grey-12);
+  --dimmed: var(--grey-11);
+  --subtle: var(--grey-10);
+  --primary: var(--primary-9);
+  --danger: var(--error-9);
+  --white: var(--white-1);
 }
