@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import BigIconsSummary from '../../Misc/atoms/BigIconsSummary';
 import DropArea from '../atoms/DropArea';
 import InputFileButton from '../atoms/InputFileButton';
+import Button from '../atoms/Button';
 
 const Container = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -19,6 +20,8 @@ const StyledDropArea = styled(DropArea)`
 const InputButtonWrapper = styled.div`
   z-index: 99;
   margin-top: 20px;
+  display: flex;
+  gap: 20px;
 `;
 
 const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
@@ -27,8 +30,8 @@ const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
+  background-color: hsl(204, 15%, 94%);
   position: relative;
-  ${({theme}) => theme.styles.filters.dropdownContainer.background};
 `;
 
 const Title = styled.div`
@@ -102,9 +105,13 @@ interface IAreaUploaderManager {
   fileIcons?: string[]
   selectFilesText?: string
   addMoreFilesText?: string
+  clearFilesText?: string
+  beginUploadText?: string
   allowedFileTypes?: string[]
   customComponent?: ReactElement
   onChangeCallback?: (goodFiles: FileList, rejectedFiles: FileList) => void
+  clearFilesCallback?: () => void
+  beginUploadCallback?: () => void
 }
 
 const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
@@ -113,16 +120,18 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   fileIcons,
   selectFilesText = 'Select Files',
   addMoreFilesText = 'Add More Files',
+  clearFilesText = 'Clear Files',
+  beginUploadText = 'Begin Upload',
   allowedFileTypes,
   customComponent,
   onChangeCallback = () => { },
+  clearFilesCallback = () => { },
+  beginUploadCallback = () => { }
 }) => {
 
   const [files, setFiles] = useState<FileList | null>(null);
 
   const handleFiles = useCallback((newFiles: FileList) => {
-    console.log('files received', newFiles);
-
     if (newFiles === null) {
       return;
     }
@@ -131,6 +140,11 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
     onChangeCallback(goodFiles, rejectedFiles);
 
   }, [files, allowedFileTypes, onChangeCallback]);
+
+  const clearFiles = useCallback(() => {
+    setFiles(null);
+    clearFilesCallback();
+  },[clearFilesCallback]);
 
   return (
     <Container>
@@ -155,7 +169,23 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             inputCallback={handleFiles}
             multiple
             buttonDesign={files !== null ? 'secondary' : 'primary'}
+            accept={allowedFileTypes?.join(', ')}
           />
+          {files !== null && 
+            <Fragment>
+              <Button
+                size='small'
+                onClick={beginUploadCallback}
+                design='primary'
+              >{beginUploadText}
+              </Button>
+              <Button
+                size='small'
+                onClick={clearFiles}
+                design='secondary'
+              >{clearFilesText}
+              </Button>
+            </Fragment>}
         </InputButtonWrapper>
       </FilesUploadGroup>
     </Container>

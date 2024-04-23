@@ -23,7 +23,9 @@ const Line: React.FC<{}> = () => {
   const [options, setOptions] = useState<LineUIOptions>({
     showSetIndex: true,
     pointIndexOffset: 1,
+    showPointHandle: true,
     showPointLabel: true,
+    showLabelShadow: true,
     setIndexOffset: 1,
     showMoveHandle: true,
     fixedImgDimensions: {
@@ -31,7 +33,9 @@ const Line: React.FC<{}> = () => {
       y: 1535
     },
     boundaryOffset: 0,
-    showDirectionMark: true
+    showDirectionMark: true,
+    areaFillColor: '',
+    areaTransparencyLevel: 0
   });
 
   const fetchLine = useCallback(async () => {
@@ -64,18 +68,29 @@ const Line: React.FC<{}> = () => {
     const state: IPointSet[] = [{
         name: 'UP',
         points: [
-            {
-              x: 343,
-              y: 281
-            },
-            {
-              x: 898,
-              y: 389
-            }
+          {
+            x: 1048,
+            y: 456
+          },
+          {
+            x: 1613,
+            y: 584
+          },
+          {
+            x: 1322,
+            y: 985
+          },
+          {
+            x: 922,
+            y: 785
+          }
         ],
+        showPointHandle: true,
         showSmallDirectionMark: true,
         readOnly: false,
-        styling: 'primary'
+        styling: 'primary',
+        areaFillColor: '#0B0B0B',
+        areaTransparencyLevel: 40
       },
       {
         name: 'DOWN',
@@ -122,12 +137,52 @@ const Line: React.FC<{}> = () => {
     });
   }, []);
 
+  const changeFillColor = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'UPDATE_FILL_COLOR',
+      index: lineIndex,
+      data: {
+        areaFillColor: value
+      }
+    });
+  }, []);
+
+  const changeTranparencyLevel = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'UPDATE_TRANSPARENCY_LEVEL',
+      index: lineIndex,
+      data: {
+        areaTransparencyLevel: parseInt(value)
+      }
+    });
+  }, []);
+
   const toggleReadOnly = useCallback((index=0) => () => {
     dispatch({
       type: 'UPDATE_SET_OPTIONS',
       index,
       data: {
         readOnly: !(state[0]?.readOnly)
+      }
+    });
+  }, [state]);
+
+  const selectLine = useCallback((lineId: number) => {
+    const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
+    dispatch({
+      type: 'UPDATE_SET_OPTIONS',
+      index: deselectLineIndex,
+      data: {
+        showPointHandle: false,
+        showMoveHandle: false
+      }
+    });
+    dispatch({
+      type: 'UPDATE_SET_OPTIONS',
+      index: lineId,
+      data: {
+        showPointHandle: true,
+        showMoveHandle: true
       }
     });
   }, [state]);
@@ -158,30 +213,35 @@ const Line: React.FC<{}> = () => {
         </SidebarBox>
         <SidebarBox>
           <Label labelText='Show Point Handle' htmlFor='showPointHandle' >
-            <input type='checkbox' name='showPointHandle' checked={options.showPointHandle} onChange={toggleOptions('showPointHandle')}/>
+            <input id='showPointHandle' type='checkbox' name='showPointHandle' checked={options.showPointHandle} onChange={toggleOptions('showPointHandle')}/>
           </Label>
           <Label labelText='Show Move Handle' htmlFor='showMoveHandle' >
-            <input type='checkbox' name='showMoveHandle' checked={options.showMoveHandle} onChange={toggleOptions('showMoveHandle')}/>
+            <input id='showMoveHandle' type='checkbox' name='showMoveHandle' checked={options.showMoveHandle} onChange={toggleOptions('showMoveHandle')}/>
           </Label>
           <Label labelText='Show Point' htmlFor='showPoint' >
-            <input type='checkbox' name='showPoint' checked={options.showPoint} onChange={toggleOptions('showPoint')}/>
+            <input id='showPoint' type='checkbox' name='showPoint' checked={options.showPoint} onChange={toggleOptions('showPoint')}/>
           </Label>
           <Label labelText='Show Direction Mark' htmlFor='showDirectionMark' >
-            <input type='checkbox' name='showDirectionMark' checked={options.showDirectionMark} onChange={toggleOptions('showDirectionMark')}/>
+            <input id='showDirectionMark' type='checkbox' name='showDirectionMark' checked={options.showDirectionMark} onChange={toggleOptions('showDirectionMark')}/>
+          </Label>
+          <Label labelText='Show Label Shadow' htmlFor='showLabelShadow' >
+            <input id='showLabelShadow' type='checkbox' name='showLabelShadow' checked={options.showLabelShadow} onChange={toggleOptions('showLabelShadow')}/>
           </Label>
         </SidebarBox>
         <SidebarBox>
           { options.showDirectionMark ?
             <>
-              <TextField label='Rename UP Line' fieldState='default' name='renameLine1' value={state[0]?.name ||''} onChange={(e) => renamePointLine(0, e)} />
-              <TextField label='Rename DOWN Line' fieldState='default' name='renameLine2' value={state[1]?.name ||''} onChange={(e) => renamePointLine(1, e)} />
+              <TextField id='renameLine1' label='Rename UP Line' fieldState='default' name='renameLine1' value={state[0]?.name ||''} onChange={(e) => renamePointLine(0, e)} />
+              <TextField id='renameLine2' label='Rename DOWN Line' fieldState='default' name='renameLine2' value={state[1]?.name ||''} onChange={(e) => renamePointLine(1, e)} />
             </>
             :
-            <TextField label='Rename Line' fieldState='default' name='rename' value={state[0]?.name ||''} onChange={renameLine}/>
+            <TextField id='rename' label='Rename Line' fieldState='default' name='rename' value={state[0]?.name ||''} onChange={renameLine}/>
           }
           <Label labelText='Boundary Offset' htmlFor='boundaryOffset' >
-            <Input type='number' name='boundaryOffset' min={0} value={options.boundaryOffset} onChange={updateBoudaryOffset}/>
+            <Input id='boundaryOffset' type='number' name='boundaryOffset' min={0} value={options.boundaryOffset} onChange={updateBoudaryOffset}/>
           </Label>
+          <TextField id='fillColor' label='Area Fill Color' fieldState='default' name='fillColor' value={state[0]?.areaFillColor ||''} onChange={(e) => changeFillColor(0, e)}/>
+          <TextField id='transparencyLevel' label='Area Tranparency Level' fieldState='default' name='transparencyLevel' value={state[0]?.areaTransparencyLevel ||''} onChange={(e) => changeTranparencyLevel(0, e)}/>
         </SidebarBox>
         <SidebarBox>
           <Button design="secondary" onClick={toggleReadOnly()} >Toggle Read Only</Button>
@@ -191,7 +251,7 @@ const Line: React.FC<{}> = () => {
       <Content padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUI options={options} src="https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
+          <LineUI options={options} onLineClick={selectLine} src="https://picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
         </LineSetContext.Provider>
       </Content>
     </Layout>

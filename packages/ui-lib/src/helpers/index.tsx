@@ -81,6 +81,15 @@ const uniqueID = () =>
       Math.random().toString(16)
   ).replace(/\./g, '');
 
+
+  // https://stackoverflow.com/questions/30314447/how-do-you-test-for-nan-in-javascript
+  const isNotNumber = (value: string) => {
+    const intValue = parseInt(value);
+
+    // eslint-disable-next-line no-self-compare
+    return intValue !== intValue;
+  };
+
 export {
   clamp,
   isValidImage,
@@ -89,5 +98,6 @@ export {
   isInsideRange,
   getShortTextTimeUnit,
   getTopLevelPath,
-  uniqueID
+  uniqueID,
+  isNotNumber
 };
