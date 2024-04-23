@@ -63,7 +63,8 @@ defaultTheme.custom.lines['weird'] = {
 };
 
 const Index : FC = () => {
-  //For the real reference of usage please look at the GlobalUI Page
+  // Hook used to load the theme variable, not normal use case in this example file for the real reference of usage please look at the GlobalUI Page
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _initialize = useThemeToggle();
 
   return (
