@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     height: 100%;
     margin: 0;
+    background-color: var(--grey-2);
   }
   html {
     /* background-image: radial-gradient(circle at 55% 1%, #303335, #212427 117%), url(./noise.png);
