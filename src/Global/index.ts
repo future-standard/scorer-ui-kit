@@ -61,6 +61,7 @@ export interface IMenuTop {
     autoHideText? :string
     defaultMenuOpen?: boolean
     canAlwaysPin?: boolean
+    onMenuToggle?: (isMenuOpen: boolean) => void
   }
 
   export interface ICustomDrawer {
