@@ -18,6 +18,7 @@ import TablePage from './pages/TablePage';
 import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import TabsPage from './pages/TabsPage';
 import GlobalUIPage from './pages/GlobalUIPage';
+import MultiButtonPage from './pages/MultiButtonPage';
 
 const App: React.FC<{}> = () => {
   return (
@@ -39,6 +40,7 @@ const App: React.FC<{}> = () => {
         </Route>
         <Route path={`/tabs`} exact={true} component={TabsPage} />
         <Route path='/globalUI' exact component={GlobalUIPage} />
+        <Route path='/multiButton' exact component={MultiButtonPage} />
       </Switch>
     </Router>
   )

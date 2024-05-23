@@ -1,3 +1,19 @@
+:root {
+  --font-ui: Monorale;
+  --font-size: 14px;
+
+  --button-font-size: 14px;
+  --button-height: 32px;
+  --button-h-padding: 8px;
+  --button-lift-default-x: 0px;
+  --button-lift-default-y: 2px;
+  --button-lift-default-blur: 4px;
+  --button-lift-default-spread: 2px;
+
+  --button-icon-h-padding: 4px;
+  --button-icon-size: 20px; /* This could be 14px in button switcher but because of the 4px padding needs to be 20px */
+}
+
 .light-theme {
   /* Light Mode */
   --primary-1: #FAFCFE;
