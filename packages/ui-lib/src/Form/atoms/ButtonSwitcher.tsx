@@ -44,7 +44,6 @@ const ButtonText = styled.div`
   justify-content: center;
   align-items: center;
   align-self: stretch;
-  gap: 8px;
 `;
 
 const LeftIconWrapper = styled.div<{ isAscendingIcon: boolean }>`
@@ -66,21 +65,29 @@ const LeftIconWrapper = styled.div<{ isAscendingIcon: boolean }>`
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 4px;
       height: var(--button-icon-size);
       width: var(--button-icon-size);
     }
   }
-  gap: 8px;
+
 `;
 
 const ToggleIcon = styled.div`
   display: flex;
-  padding: 3px 7px;
+  padding: 3px var(--button-icon-h-padding);
+  height: 100%;
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  gap: 8px;
+  border-left: 1px solid var(--primary-9);
+  ${IconWrapper} {
+    svg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
 `;
 
 const ButtonSwitcher: React.FC<IButtonSwitcher> = ({icon, isOpen, children, ...props}) => {

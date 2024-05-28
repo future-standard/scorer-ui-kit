@@ -10,8 +10,9 @@
   --button-lift-default-blur: 4px;
   --button-lift-default-spread: 2px;
 
-  --button-icon-h-padding: 4px;
-  --button-icon-size: 20px; /* This could be 14px in button switcher but because of the 4px padding needs to be 20px */
+  --button-icon-h-padding: 8px;
+  --button-icon-size: 14px;
+
 }
 
 .light-theme {
