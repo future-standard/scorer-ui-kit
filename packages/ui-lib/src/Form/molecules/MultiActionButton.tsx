@@ -1,32 +1,18 @@
-import React, { ButtonHTMLAttributes, useCallback, useState } from 'react';
+import React, { ButtonHTMLAttributes, Fragment, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import ButtonSwitcher from '../atoms/ButtonSwitcher';
+import MultiButtonOption from '../atoms/MultiButtonOption';
 const Container = styled.div`
   position: relative;
-`;
-
-
-const ButtonText = styled.div`
-  color: var(--white-a12, rgba(255, 255, 255, 0.92));
-  text-align: center;
-  font-size: var(--button-font-size, 14px);
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-`;
-
-const ButtonList = styled.div<{minWidth: number, isOpen: boolean}>`
-  min-width: ${({ minWidth }) => minWidth}px;
-  display: ${({isOpen}) => isOpen ? 'inline-flex' : 'none'};
-  border-radius: 3px;
-  border: 1px solid var(--primary-9);
-  background: linear-gradient(135deg, #72C3EE 0%, #5CACEE 100%);
-  // box-shadow: var(--button-lift-hover-x, 0px) var(--button-lift-hover-y, 4px) var(--button-lift-hover-blur, 8px) var(--button-lift-hover-spread, 0px) var(--shadows-primary-elevate, rgba(33, 129, 255, 0.36));
-  box-shadow: 0px 4px 8px rgba(33, 129, 255, 0.36);
-  min-height: 40px;
+  display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+
+  border-radius: 3px;
+  border: 1px solid var(--primary-9);
+  background: linear-gradient(135deg, #72C3EE 0%, #5CACEE 100%);
+  box-shadow: var(--button-lift-default-x, 0px) var(--button-lift-default-y, 2px) var(--button-lift-default-blur, 4px) var(--button-lift-default-spread, 2px) var(--button-lift-default-color, rgba(221, 234, 248, 0.08));
 `;
 
 const ActiveButton = styled(ButtonSwitcher)`
@@ -46,13 +32,9 @@ export interface IMultiButtonProps  {
   buttonList: IMultiButtonItem[]
   hasFlipArrow?: boolean
   isSortAscending?: boolean
-  minWidth?: number
-  minHeight?: number
 }
 
-const MultiActionButton: React.FC<IMultiButtonProps> = ({
-  minWidth = 177,
-}) => {
+const MultiActionButton: React.FC<IMultiButtonProps> = () => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -63,13 +45,15 @@ const MultiActionButton: React.FC<IMultiButtonProps> = ({
 
   return(
     <Container>
-      <ActiveButton icon={'Success'} isOpen={isOpen} onClick={toggleOpen}><ButtonText>Example Action</ButtonText></ActiveButton>
-      <ButtonList {...{isOpen, minWidth}}>
-        <div>
-          <div className='OptionButton'>Example Action 1</div>
-          <div className='OptionButton'>Example Action 2</div>
-        </div>
-      </ButtonList>
+      <ActiveButton icon={'Success'} isOpen={isOpen} onClick={toggleOpen} text='Example Action' />
+      { isOpen ?
+          <Fragment>
+              <MultiButtonOption text='Example Action 1' icon = 'Add' />
+              <MultiButtonOption text='Example Action 2' icon = 'Success'/>
+              <MultiButtonOption text='Example Action 3' icon = 'Success'/>
+          </Fragment>
+          : null
+      }
     </Container>
   );
 };
