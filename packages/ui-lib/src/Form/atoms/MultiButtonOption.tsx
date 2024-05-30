@@ -4,8 +4,8 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 import { TypeButtonDesigns } from '..';
 
-const Container = styled.div<{removeBorderTop?: boolean}>`
-  ${({removeBorderTop}) => removeBorderTop ?
+const Container = styled.div<{noBorderTop?: boolean}>`
+  ${({noBorderTop}) => noBorderTop ?
       `border-top: none`
       : css`
         border-top: 1px solid var(--primary-9)`
@@ -18,19 +18,27 @@ const Container = styled.div<{removeBorderTop?: boolean}>`
 `;
 
 const OptionText = styled.div`
-    height: var(--button-height);
+    padding: 0px var(--button-h-padding);
+    font-size: var(--button-font-size);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     color: var(--white-a12);
     text-align: center;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    display: flex;
-    padding: 0px var(--button-h-padding);
-    font-size: var(--button-font-size);
-    justify-content: center;
-    align-items: center;
-    align-self: stretch;
-    white-space: break-spaces;
+
+`;
+
+const TextWrapper = styled.div<{textMaxWidth?:string}>`
+  ${({textMaxWidth}) => textMaxWidth && css `max-width: ${textMaxWidth};`}
+  display: flex;
+  padding: 0px var(--button-h-padding);
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
 `;
 
 const LeftIconWrapper = styled.div<{ isAscendingIcon: boolean }>`
@@ -38,6 +46,7 @@ const LeftIconWrapper = styled.div<{ isAscendingIcon: boolean }>`
       transform: scaleY(-1);
   `};
 
+  height: var(--button-height);
   display: flex;
   padding: 3px var(--button-icon-h-padding);
   align-items: center;
@@ -58,21 +67,22 @@ const LeftIconWrapper = styled.div<{ isAscendingIcon: boolean }>`
   }
 `;
 
-interface IProps {
+export interface IMultiButtonOption {
   text: string
   icon?: string
   isLoading?: boolean
   design?: TypeButtonDesigns
-  removeBorderTop?: boolean
+  noBorderTop?: boolean
+  textMaxWidth?: string
 }
 
-const MultiButtonOption : FC<IProps> = ({text, icon = '', isLoading = false, design = 'primary', removeBorderTop = false}) => {
+const MultiButtonOption : FC<IMultiButtonOption> = ({text, icon = '', isLoading = false, design = 'primary', noBorderTop = false, textMaxWidth=''}) => {
   return(
-    <Container {...{removeBorderTop}}>
+    <Container {...{noBorderTop}}>
       <LeftIconWrapper isAscendingIcon={icon === 'FilterAscending'} >
         {isLoading ? <Spinner size='small' styling={design} /> : <Icon icon={icon} />}
       </LeftIconWrapper>
-      <OptionText>{text}</OptionText>
+      <TextWrapper {...{textMaxWidth}}><OptionText>{text}</OptionText></TextWrapper>
     </Container>
   );
 };
