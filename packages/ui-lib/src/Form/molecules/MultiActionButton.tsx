@@ -1,8 +1,9 @@
-import React, { ButtonHTMLAttributes, Fragment, useCallback, useState } from 'react';
+import React, { ButtonHTMLAttributes, Fragment, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import MultiButtonOption from '../atoms/MultiButtonOption';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { TypeButtonSizes } from '..';
+
 const Container = styled.div`
   position: relative;
   display: inline-flex;
@@ -30,9 +31,10 @@ export interface IMultiButtonProps  {
   isSortAscending?: boolean
   size?: TypeButtonSizes
   design?: string
+  textMaxWidth?: string
 }
 
-const ActiveButton = styled.div`
+const ActiveBtnWrapper = styled.div`
   font-family: var(--font-ui);
   display: flex;
   justify-content: center;
@@ -60,11 +62,22 @@ const ToggleIcon = styled.div`
   }
 `;
 
-const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, design='primary'}) => {
+const validateMaxWidth = (btnTextMaxWidth: number| null | undefined, textMaxWidth?: string) : string | undefined  => {
 
+  if(textMaxWidth)
+    return textMaxWidth;
+
+  if(btnTextMaxWidth)
+    return `${btnTextMaxWidth - 20}px`; // - Toggle Icon size
+
+  return undefined;
+};
+
+const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, design='primary',  textMaxWidth, ...props}) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeBtnId, setActiveBtnId] = useState(activeId);
+  const activeBtnRef = useRef<HTMLDivElement>(null);
 
   const toggleOpen = useCallback(() => {
       setIsOpen((prev) => !prev);
@@ -76,20 +89,20 @@ const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, d
   },[toggleOpen]);
 
   return(
-    <Container className={`multi-button-${design}`}>
-      <ActiveButton>
+    <Container className={`multi-button-${design}`} {...props}>
+      <ActiveBtnWrapper ref={activeBtnRef}>
         {buttonList.filter((button) => button.id === activeBtnId)
-            .map(({id, text, icon, ...props}) => <MultiButtonOption key={id} noBorderTop {...{text, icon}} {...props}/>
+            .map(({id, text, icon, ...props}) => <MultiButtonOption key={id} noBorderTop {...{text, icon}} {...props} />
           )
         }
         <ToggleIcon onClick={toggleOpen}>
           { <Icon icon={isOpen ? 'Close' : 'Down'} size={8} />}
         </ToggleIcon>
-      </ActiveButton>
+      </ActiveBtnWrapper>
       { isOpen ?
           <Fragment>
             {buttonList.filter((button) => button.id !== activeBtnId)
-                .map(({id, text, icon, ...props}) => <MultiButtonOption key={id} {...{text, icon}} {...props} onClick={() => updateActiveId(id)}/>
+                .map(({id, text, icon, ...props}) => <MultiButtonOption key={id} {...{text, icon}} textMaxWidth={validateMaxWidth(activeBtnRef.current?.clientWidth,textMaxWidth)} {...props} onClick={() => updateActiveId(id)}/>
               )
             }
           </Fragment>
@@ -100,4 +113,3 @@ const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, d
 };
 
 export default MultiActionButton;
-
