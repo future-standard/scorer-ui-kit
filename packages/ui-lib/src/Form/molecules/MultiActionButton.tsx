@@ -1,7 +1,6 @@
 import React, { ButtonHTMLAttributes, Fragment, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import MultiButtonOption from '../atoms/MultiButtonOption';
-import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { TypeButtonSizes } from '..';
 const Container = styled.div`
@@ -33,8 +32,7 @@ export interface IMultiButtonProps  {
   design?: string
 }
 
-const StyledButton = styled.button`
-  ${resetButtonStyles};
+const ActiveButton = styled.div`
   font-family: var(--font-ui);
   display: flex;
   justify-content: center;
@@ -51,6 +49,8 @@ const ToggleIcon = styled.div`
   align-items: center;
   flex-shrink: 0;
   border-left: 1px solid var(--border-color);
+  cursor: pointer;
+
   ${IconWrapper} {
     svg {
       display: flex;
@@ -64,27 +64,32 @@ const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, d
 
 
   const [isOpen, setIsOpen] = useState(false);
-  const [activeBtnId, _setActiveBtnId] = useState(activeId);
+  const [activeBtnId, setActiveBtnId] = useState(activeId);
 
   const toggleOpen = useCallback(() => {
       setIsOpen((prev) => !prev);
   },[]);
 
+  const updateActiveId = useCallback((newId: string)=>{
+    setActiveBtnId(newId);
+    toggleOpen();
+  },[toggleOpen]);
+
   return(
     <Container className={`multi-button-${design}`}>
-      <StyledButton type='button'>
+      <ActiveButton>
         {buttonList.filter((button) => button.id === activeBtnId)
-            .map(({id, text, icon}) => <MultiButtonOption key={id} noBorderTop text={text} icon={icon}/>
+            .map(({id, text, icon, ...props}) => <MultiButtonOption key={id} noBorderTop {...{text, icon}} {...props}/>
           )
         }
         <ToggleIcon onClick={toggleOpen}>
           { <Icon icon={isOpen ? 'Close' : 'Down'} size={8} />}
         </ToggleIcon>
-      </StyledButton>
+      </ActiveButton>
       { isOpen ?
           <Fragment>
             {buttonList.filter((button) => button.id !== activeBtnId)
-                .map(({id, text, icon}) => <MultiButtonOption key={id} text={text} icon={icon}/>
+                .map(({id, text, icon, ...props}) => <MultiButtonOption key={id} {...{text, icon}} {...props} onClick={() => updateActiveId(id)}/>
               )
             }
           </Fragment>

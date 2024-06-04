@@ -1,10 +1,12 @@
-import React, { FC } from 'react';
+import React, { ButtonHTMLAttributes, FC } from 'react';
 import styled, { css } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 import { TypeButtonDesigns } from '..';
+import { resetButtonStyles } from '../../common';
 
-const Container = styled.div<{noBorderTop?: boolean}>`
+const StyledButton = styled.button<{noBorderTop?: boolean}>`
+  ${resetButtonStyles}
   ${({noBorderTop}) => noBorderTop ?
       `border-top: none`
       : css`
@@ -67,7 +69,7 @@ const LeftIconWrapper = styled.div<{ isAscendingIcon: boolean }>`
   }
 `;
 
-export interface IMultiButtonOption {
+export interface IMOption {
   text: string
   icon?: string
   isLoading?: boolean
@@ -76,14 +78,24 @@ export interface IMultiButtonOption {
   textMaxWidth?: string
 }
 
-const MultiButtonOption : FC<IMultiButtonOption> = ({text, icon = '', isLoading = false, design = 'primary', noBorderTop = false, textMaxWidth=''}) => {
+export type IMultiButtonOption = IMOption &  ButtonHTMLAttributes<HTMLButtonElement>;
+
+const MultiButtonOption : FC<IMultiButtonOption> = ({
+  text, icon = '',
+  isLoading = false,
+  design = 'primary',
+  noBorderTop = false,
+  textMaxWidth='',
+  ...props
+}) => {
+
   return(
-    <Container {...{noBorderTop}}>
+    <StyledButton {...{noBorderTop}} {...props}>
       <LeftIconWrapper isAscendingIcon={icon === 'FilterAscending'} >
         {isLoading ? <Spinner size='small' styling={design} /> : <Icon icon={icon} />}
       </LeftIconWrapper>
       <TextWrapper {...{textMaxWidth}}><OptionText>{text}</OptionText></TextWrapper>
-    </Container>
+    </StyledButton>
   );
 };
 
