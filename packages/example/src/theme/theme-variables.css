@@ -15,6 +15,38 @@
 
 }
 
+.multi-button-primary {
+  --border-color: var(--primary-9);
+  --gradient-1: #72C3EE;
+  --gradient-2: #5CACEE;
+  --button-lift-default-color: rgba(221, 234, 248, 0.08);
+  --text-color: var(--white-a12);
+}
+
+.multi-button-secondary {
+  --border-color: var(--grey-6);
+  --gradient-1: #2E3135;
+  --gradient-2: #363A3F;
+  --button-lift-default-color: rgba(221, 234, 248, 0.08);
+  --text-color: var(--grey-12);
+}
+
+.multi-button-danger {
+  --border-color: var(--warning-10);
+  --gradient-1: #D16565;
+  --gradient-2: #E76F6F;
+  --button-lift-default-color: rgba(255, 113, 113, 0.47);
+  --text-color:  var(--white-a12);
+}
+
+.multi-button-custom {
+  --border-color: var(--info-10);
+  --gradient-1: var(--info-10);
+  --gradient-2: var(--info-9);
+  --button-lift-default-color:  var(--info-a3);
+  --text-color:  var(--white-a12);
+}
+
 .light-theme {
   /* Light Mode */
   --primary-1: #FAFCFE;

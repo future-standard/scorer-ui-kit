@@ -8,7 +8,7 @@ const Container = styled.div<{noBorderTop?: boolean}>`
   ${({noBorderTop}) => noBorderTop ?
       `border-top: none`
       : css`
-        border-top: 1px solid var(--primary-9)`
+        border-top: 1px solid var(--border-color)`
   };
   display: flex;
   flex: 1 0 0;
@@ -23,7 +23,7 @@ const OptionText = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: var(--white-a12);
+    color: var(--text-color);
     text-align: center;
     font-style: normal;
     font-weight: 600;

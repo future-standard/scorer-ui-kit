@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import MultiButtonOption from '../atoms/MultiButtonOption';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
+import { TypeButtonSizes } from '..';
 const Container = styled.div`
   position: relative;
   display: inline-flex;
@@ -11,8 +12,8 @@ const Container = styled.div`
   align-items: flex-start;
 
   border-radius: 3px;
-  border: 1px solid var(--primary-9);
-  background: linear-gradient(135deg, #72C3EE 0%, #5CACEE 100%);
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 100%);
   box-shadow: var(--button-lift-default-x, 0px) var(--button-lift-default-y, 2px) var(--button-lift-default-blur, 4px) var(--button-lift-default-spread, 2px) var(--button-lift-default-color, rgba(221, 234, 248, 0.08));
 `;
 
@@ -28,6 +29,8 @@ export interface IMultiButtonProps  {
   activeId: string
   buttonList: IMultiButtonItem[]
   isSortAscending?: boolean
+  size?: TypeButtonSizes
+  design?: string
 }
 
 const StyledButton = styled.button`
@@ -47,7 +50,7 @@ const ToggleIcon = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  border-left: 1px solid var(--primary-9);
+  border-left: 1px solid var(--border-color);
   ${IconWrapper} {
     svg {
       display: flex;
@@ -57,19 +60,18 @@ const ToggleIcon = styled.div`
   }
 `;
 
-const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList}) => {
+const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, design='primary'}) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeBtnId, _setActiveBtnId] = useState(activeId);
 
   const toggleOpen = useCallback(() => {
-      // const buttonWidth = activeBtnRef.current.innerWidth;
       setIsOpen((prev) => !prev);
   },[]);
 
   return(
-    <Container>
+    <Container className={`multi-button-${design}`}>
       <StyledButton type='button'>
         {buttonList.filter((button) => button.id === activeBtnId)
             .map(({id, text, icon}) => <MultiButtonOption key={id} noBorderTop text={text} icon={icon}/>
