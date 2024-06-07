@@ -5,8 +5,11 @@ import Spinner from '../../Indicators/Spinner';
 import { TypeButtonDesigns } from '..';
 import { resetButtonStyles } from '../../common';
 
-const StyledButton = styled.button<{noBorderTop?: boolean}>`
+const StyledButton = styled.button<{noBorderTop?: boolean, active?: boolean}>`
   ${resetButtonStyles}
+
+  color: var(--text-color);
+
   ${({noBorderTop}) => noBorderTop ?
       `border-top: none`
       : css`
@@ -17,20 +20,49 @@ const StyledButton = styled.button<{noBorderTop?: boolean}>`
   height: var(--button-height);
   align-items: center;
   align-self: stretch;
+
+  &:hover:enabled {
+    background: var(--button-hover-bg);
+
+    ${IconWrapper} {
+      svg g, svg path {
+        stroke: var(--white-a12);
+      }
+    }
+  }
+
+  &:active:enabled {
+    background: var(--button-active-bg);
+
+    ${({noBorderTop}) => noBorderTop ?
+        `border-top: none`
+        : css`
+          border-top: 1px solid var(--border-active-color)`
+    };
+
+    ${IconWrapper} {
+      svg g, svg path {
+        stroke: var(--white-a12);
+      }
+    }
+  }
+
+  &:disabled {
+    color: var(--text-disabled-color);
+    cursor: not-allowed;
+  }
 `;
 
 const OptionText = styled.div`
-    padding: 0px var(--button-h-padding);
+    font-family: var(--font-ui);
     font-size: var(--button-font-size);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: var(--text-color);
     text-align: center;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-
 `;
 
 const TextWrapper = styled.div<{textMaxWidth?:string}>`
@@ -65,6 +97,9 @@ const LeftIconWrapper = styled.div<{ isAscendingIcon: boolean }>`
       align-items: center;
       height: var(--button-icon-size);
       width: var(--button-icon-size);
+      g, path {
+        stroke: var(--white-a10);
+      }
     }
   }
 `;
@@ -76,6 +111,7 @@ export interface IMOption {
   design?: TypeButtonDesigns
   noBorderTop?: boolean
   textMaxWidth?: string
+  active?: boolean
 }
 
 export type IMultiButtonOption = IMOption &  ButtonHTMLAttributes<HTMLButtonElement>;
