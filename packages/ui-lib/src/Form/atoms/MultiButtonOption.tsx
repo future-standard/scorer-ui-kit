@@ -108,7 +108,7 @@ export interface IMOption {
   text: string
   icon?: string
   isLoading?: boolean
-  design?: TypeButtonDesigns
+  design?: TypeButtonDesigns | string
   noBorderTop?: boolean
   textMaxWidth?: string
   active?: boolean

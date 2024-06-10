@@ -62,6 +62,20 @@ export type TypeButtonSizes = 'xsmall' | 'small' | 'normal' | 'large';
 export type ISelectSizes = 'small' | 'normal';
 export type IInputOptionsType = "text" | "checkbox" | "radio";
 
+export const isTypeButtonDesigns = (value: any): value is TypeButtonDesigns => {
+
+  switch (value) {
+    case 'primary':
+    case 'secondary':
+    case 'danger':
+    return true;
+    break;
+
+    default:
+      return false;
+  }
+};
+
 interface ButtonProps {
   size?: TypeButtonSizes
   design?: TypeButtonDesigns

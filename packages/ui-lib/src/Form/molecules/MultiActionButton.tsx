@@ -33,7 +33,7 @@ export interface IMultiButtonProps  {
   buttonList: IMultiButtonItem[]
   isSortAscending?: boolean
   size?: TypeButtonSizes
-  design?: TypeButtonDesigns & string
+  design?: TypeButtonDesigns | string
   textMaxWidth?: string
   disabled?: boolean
 }
@@ -54,7 +54,7 @@ const ToggleIcon = styled.button`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  border-left: 1px solid var(--border-color);
+  border-left: 1px solid var(--toggle-icon-border);
   cursor: pointer;
 
   ${IconWrapper} {
