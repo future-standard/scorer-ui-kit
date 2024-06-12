@@ -46,7 +46,38 @@ const SVGObjectText = styled.object`
   max-width: 180px;
 `;
 
-const NavigationContainer = styled.div``;
+const GradientContainer = styled.div`
+  &::after {
+    content: '';
+    background: linear-gradient(to bottom, transparent, #e5e5e5); //Shodow bottom
+    height: 10px;
+    display: block;
+    position: absolute;
+    margin-top: -10px;
+    width: 100%;
+  }
+`;
+
+const NavigationContainer = styled.div`
+  min-height: 200px;
+  overflow-y: auto;
+  ::-webkit-scrollbar {  /* Hide scrollbar for Chrome, Safari and Opera */
+    display: none;
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  max-height: 550px;
+
+  &::after {
+    background: linear-gradient(rgba(246, 247, 249, 0) 1%, #F6F7F9 120%) center bottom;
+    content: '';
+    background: white;
+    display: block;
+    position: sticky;
+    height: 10px;
+    z-index: 1;
+  }
+`;
 
 const MenuFooter = styled.div`
   ${({ theme }) => theme && css`
@@ -59,7 +90,7 @@ const MenuFooter = styled.div`
 `;
 
 const FooterItemContainer = styled.div`
-  min-height: 70px;
+  min-height: 30px;
 `;
 
 const PushContainer = styled.div<{ isPinned: boolean; }>`
@@ -102,7 +133,6 @@ const ContainerInner = styled.div`
   flex-direction: column;
   height: 100%;
 `;
-
 
 const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, defaultMenuOpen = true, canAlwaysPin = false }) => {
 
@@ -163,23 +193,24 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
               <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
               <LogoType>{logoText ? <SVGObjectText type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
             </Logo>
-
-            <NavigationContainer>
-              {content.items.map((item, key) => {
-              return (
-                <NavigationItem
-                  topLevelPath={getTopLevelPath(location.pathname)}
-                  key={key}
-                  contextKey={key}
-                  menuOpen={menuState.isMenuOpen}
-                  submenuOpen={key === focusedContext && menuState.isMenuOpen}
-                  onClickCallback={setFocusedContextCb}
-                  {...{ item, loading, focusedContext, readyCallback }}
-                />
-              );
-              })}
-            </NavigationContainer>
-
+            <GradientContainer>
+              <NavigationContainer>
+                {content.items.map((item, key) => {
+                return (
+                  <NavigationItem
+                    topLevelPath={getTopLevelPath(location.pathname)}
+                    key={key}
+                    contextKey={key}
+                    menuOpen={menuState.isMenuOpen}
+                    submenuOpen={key === focusedContext && menuState.isMenuOpen}
+                    onClickCallback={setFocusedContextCb}
+                    {...{ item, loading, focusedContext, readyCallback }}
+                  />
+                );
+                })}
+              </NavigationContainer>
+            </GradientContainer>
+            
             <MenuFooter>
 
               {supportUrl && (
