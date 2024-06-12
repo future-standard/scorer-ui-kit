@@ -5,6 +5,7 @@ import BigIconsSummary from './atoms/BigIconsSummary';
 import MediaBox from './atoms/MediaBox';
 import DebouncedSearcher from './molecules/DebouncedSearcher';
 import ActionsBar, {IActionsBar, IActionsButton} from './atoms/ActionsBar';
+import SegmentedProgressBar from '../Misc/SegmentedProgressBar';
 
 export {
   Tag,
@@ -14,7 +15,8 @@ export {
   BasicSearchInput,
   BigIconsSummary,
   DebouncedSearcher,
-  ActionsBar
+  ActionsBar,
+  SegmentedProgressBar
 };
 
 export type { ITagList, ITag, IActionsBar, IActionsButton};
