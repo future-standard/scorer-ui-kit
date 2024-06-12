@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styled, { css } from 'styled-components';
 import { CheckMark } from '../../svg';
 import { IInputOptionsType } from '..';
@@ -12,7 +12,10 @@ const Title = styled.div`
   font-weight: 500;
   margin-left: 12px;
   user-select: none;
-  pointer-events: none;
+  white-space: nowrap;  
+  overflow: hidden;  
+  text-overflow: ellipsis;  
+  max-width: 210px;
 `;
 
 const FakeCheckbox = styled.div`
@@ -156,6 +159,15 @@ const FilterOption: React.FC<IFilterOption> = ({
 
   const iconWeight: number = dimensions.icons.weights['regular'];
 
+  const titleRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    const titleElement = titleRef.current as unknown as HTMLDivElement;
+    if (titleElement) {
+      titleElement.title = titleElement.scrollWidth > titleElement.clientWidth ? title : '';
+    }
+  };
+
   return (
 
     <Container
@@ -170,7 +182,7 @@ const FilterOption: React.FC<IFilterOption> = ({
         </FakeCheckbox>
       )}
       {(optionType === 'radio') && <FakeRadioButton><FakeInnerRadio /></FakeRadioButton>}
-      <Title>{title}</Title>
+      <Title ref={titleRef} onMouseEnter={handleMouseEnter}>{title}</Title>
     </Container>
   );
 };
