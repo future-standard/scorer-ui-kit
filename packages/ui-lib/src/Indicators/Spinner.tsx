@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from 'styled-components';
-import { isTypeButtonDesigns } from "../Form";
+import { TypeButtonDesigns, TypeButtonSizes} from "../Form";
 
 const circumference = (radius : number) => {
   return 2 * 3.1416 * radius;
@@ -47,7 +47,38 @@ const RotatingCircle = styled.circle<{ r: number }>`
   stroke-linecap: round;
 `;
 
-type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+export type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+
+
+export const buttonSpinnerSize = (buttonSize: TypeButtonSizes) : SpinnerSize  => {
+  switch (buttonSize) {
+    case 'xsmall':
+    case 'small':
+      return 'xsmall';
+      break;
+
+    case 'large':
+      return 'small';
+
+    default:
+      return 'small';
+      break;
+  }
+};
+
+export const isTypeButtonDesigns = (value: any): value is TypeButtonDesigns => {
+
+  switch (value) {
+    case 'primary':
+    case 'secondary':
+    case 'danger':
+    return true;
+    break;
+
+    default:
+      return false;
+  }
+};
 
 const sizeGuide = {
   xsmall: 12,
@@ -61,7 +92,6 @@ interface IProps {
   size: SpinnerSize
   styling: string
 }
-
 
 const Spinner : React.FC<IProps> = ({ size = 'medium', styling = 'primary' }) => {
   const sizeVal = sizeGuide[size];

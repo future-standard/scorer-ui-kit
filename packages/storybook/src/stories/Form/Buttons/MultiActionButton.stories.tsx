@@ -1,4 +1,4 @@
-import { boolean, select } from "@storybook/addon-knobs";
+import { boolean, object, select } from "@storybook/addon-knobs";
 import React from "react";
 import { MultiActionButton } from 'scorer-ui-kit';
 
@@ -20,8 +20,8 @@ export const _MultiActionButton = () => {
 
   const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger", Custom: "custom" }, "primary");
   const buttonDisabled = boolean("Disabled", false);
-  const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "normal");
+  const buttonSize = select("Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
+  const list = object("Button List", buttonList);
 
-
-  return <MultiActionButton activeId={"a1"} design={buttonDesign} size={buttonSize} disabled={buttonDisabled} buttonList={buttonList}>Button</MultiActionButton>
+  return <MultiActionButton activeId={"a1"} design={buttonDesign} size={buttonSize} disabled={buttonDisabled} buttonList={list}>Button</MultiActionButton>
 }

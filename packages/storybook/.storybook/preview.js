@@ -1,6 +1,7 @@
 import React from 'react';
-import { useDarkMode } from 'storybook-dark-mode';
+import { themes } from '@storybook/theming';
 import { ThemeProvider } from 'styled-components';
+import { useDarkMode } from 'storybook-dark-mode'
 import {defaultTheme } from 'scorer-ui-kit';
 import Fonts from '../src/fonts';
 import { MemoryRouter as Router } from 'react-router-dom'
@@ -21,20 +22,34 @@ const RouterDecorator = story => (
   </Router>
 );
 
-const ThemeDecorator = story => (
-  <ThemeProvider theme={defaultTheme} >
-    <Fonts />
-    <Style/>
-    {story()}
-  </ThemeProvider>
-);
+const ThemeDecorator = story => {
+
+  const isDarkEnabled = useDarkMode();
+  localStorage.isDarkThemeEnabled = isDarkEnabled;
+
+  if (isDarkEnabled) {
+    document.body.classList.add('dark-theme');
+    document.body.classList.remove('light-theme');
+  } else {
+    document.body.classList.add('light-theme');
+    document.body.classList.remove('dark-theme');
+  }
+
+  return (
+    <ThemeProvider theme={defaultTheme} >
+      <Fonts />
+      <Style/>
+      {story()}
+    </ThemeProvider>
+  )
+};
 
 export const decorators = [
   ThemeDecorator,
   RouterDecorator,
 ];
 
-import { themes } from '@storybook/theming';
+
 
 export const parameters = {
   darkMode: {

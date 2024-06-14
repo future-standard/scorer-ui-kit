@@ -104,7 +104,7 @@ const validateMaxWidth = (btnTextMaxWidth: number| null | undefined, textMaxWidt
   return undefined;
 };
 
-const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, design='primary',  textMaxWidth, disabled = false, ...rest}) => {
+const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, design='primary', size, textMaxWidth, disabled = false, ...rest}) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeBtnId, setActiveBtnId] = useState(activeId);
@@ -120,11 +120,19 @@ const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, d
   },[toggleOpen]);
 
   return(
-    <Container className={`multi-button-${design}`} {...rest}>
+    <Container className={`multi-button-${design} button-${size}`} {...rest}>
       <ActiveBtnWrapper ref={activeBtnRef}>
         {buttonList.filter((button) => button.id === activeBtnId)
-            .map(({id, text, icon, disabled: disabledItemProp, ...props}) => <MultiButtonOption key={id} noBorderTop active disabled={disabled || disabledItemProp} {...{text, icon, design}} {...props} />
-          )
+            .map(({id, text, icon, disabled: disabledItemProp, ...props}) => (
+            <MultiButtonOption
+              key={id}
+              noBorderTop
+              active
+              disabled={disabled || disabledItemProp}
+              {...{text, icon, design, size}}
+              {...props}
+              />
+            ))
         }
         <ToggleIcon onClick={toggleOpen} disabled={disabled}>
           { <Icon icon={isOpen ? 'Close' : 'Down'} size={8} />}
@@ -133,8 +141,16 @@ const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, d
       { isOpen ?
           <Fragment>
             {buttonList.filter((button) => button.id !== activeBtnId)
-                .map(({id, text, icon, disabled: disabledItemProp, ...props}) => <MultiButtonOption key={id} {...{text, icon, design}} disabled={disabledItemProp} textMaxWidth={validateMaxWidth(activeBtnRef.current?.clientWidth,textMaxWidth)} {...props} onClick={() => updateActiveId(id)}/>
-              )
+                .map(({id, text, icon, disabled: disabledItemProp, ...props}) => (
+                <MultiButtonOption
+                  key={id}
+                  {...{text, icon, design, size}}
+                  disabled={disabledItemProp}
+                  textMaxWidth={validateMaxWidth(activeBtnRef.current?.clientWidth,textMaxWidth)}
+                  {...props}
+                  onClick={() => updateActiveId(id)}
+                  />
+              ))
             }
           </Fragment>
           : null
