@@ -12,7 +12,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-
   border-radius: 3px;
   border: 1px solid var(--border);
   background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 100%);

@@ -12,7 +12,7 @@ const buttonList = [
   {id: 'a0', text: 'Example Action', icon: 'Success',  onClick: () => {console.log('Example Action pressed') } },
   {id: 'a1', text: 'SuperCalifragilisticoEspialidoso', icon: 'Add', onClick: () => {console.log('SuperCalifragilisticoEspialidoso pressed') } },
   {id: 'a2', text: 'Example Action 2', icon: 'Success', isLoading:true , onClick: () => {console.log('Action 2 pressed') } },
-  {id: 'a3', text: 'Example Action 3', icon: 'Success', onClick: () => {console.log('Action 3 pressed')}, disabled:true  },
+  {id: 'a3', text: 'Example Action 3', icon: 'FilterAscending', onClick: () => {console.log('Action 3 pressed')}, disabled:true  },
 ]
 
 

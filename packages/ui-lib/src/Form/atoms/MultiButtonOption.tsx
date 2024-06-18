@@ -7,17 +7,16 @@ import { TypeButtonDesigns, TypeButtonSizes } from '..';
 
 const StyledButton = styled.button<{noBorderTop?: boolean, active?: boolean}>`
   ${resetButtonStyles}
-
-  color: var(--text-color);
-
   ${({noBorderTop}) => noBorderTop ?
       `border-top: none`
       : css`
         border-top: 1px solid var(--border-color)`
   };
+
+  color: var(--text-color);
+  height: var(--button-height);
   display: flex;
   flex: 1 0 0;
-  height: var(--button-height);
   align-items: center;
   align-self: stretch;
 
@@ -119,7 +118,8 @@ export interface IMOption {
 export type IMultiButtonOption = IMOption &  ButtonHTMLAttributes<HTMLButtonElement>;
 
 const MultiButtonOption : FC<IMultiButtonOption> = ({
-  text, icon = '',
+  text,
+  icon = '',
   isLoading = false,
   design = 'primary',
   noBorderTop = false,

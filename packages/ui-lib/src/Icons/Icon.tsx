@@ -1,8 +1,9 @@
 import React from 'react';
-import styled, { css, useTheme } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { IconSVGs } from '@future-standard/icons';
 
 import { dimensions } from '../themes/common';
+
 
 const wrapperCss = css`
   svg {
@@ -34,7 +35,6 @@ export interface IconProps {
 
 const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color = 'mono', forSvgUsage = false }) => {
 
-  const theme : any = useTheme();
   const iconWeight: number = dimensions.icons.weights[weight];
   //@ts-ignore
   const IconSVG = IconSVGs[icon];
@@ -43,11 +43,11 @@ const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color 
     IconSVG != null ?
       forSvgUsage ?
         <IconWrapperForSVG>
-          {IconSVG({ size: size, weight: iconWeight, color: theme.colors.icons[color] })}
+          {IconSVG({ size: size, weight: iconWeight, color: `var(--${color})` })}
         </IconWrapperForSVG>
         :
         <IconWrapper>
-          {IconSVG({ size: size, weight: iconWeight, color: theme.colors.icons[color] })}
+          {IconSVG({ size: size, weight: iconWeight, color: `var(--${color})` })}
         </IconWrapper>
       :
       null
