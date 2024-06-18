@@ -100,7 +100,7 @@ const Container =  styled.div<{ fieldState: string }>`
     ` : null};
 
     ${({ fieldState }) => fieldState === 'invalid' ? `
-      box-shadow: 0px 3px 7px 0px var(--error-a3);
+      box-shadow: 0px 3px 7px 0px var(--warning-a3);
     ` : null};
   }
 

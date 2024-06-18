@@ -57,14 +57,14 @@ export const styles = {
             },
             "invalid": {
                 "focused": {
-                    "boxShadow": "0px 3px 7px 0px var(--error-a2)",
+                    "boxShadow": "0px 3px 7px 0px var(--warning-a2)",
                     "backgroundColor": "var(--grey-1)",
-                    "borderColor": "var(--error-8)",
-                    "border": "var(--error-8) 2px solid"
+                    "borderColor": "var(--warning-8)",
+                    "border": "var(--warning-8) 2px solid"
                 },
                 "normal": {
-                    "borderColor": "var(--error-8)",
-                    "border": "var(--error-8) 1px solid",
+                    "borderColor": "var(--warning-8)",
+                    "border": "var(--warning-8) 1px solid",
                     "backgroundColor": "var(--grey-1)",
                 }
             },
@@ -138,24 +138,24 @@ export const styles = {
             },
             "danger": {
                 "default": {
-                    "backgroundColor": "var(--error-9)",
-                    "backgroundImage": "linear-gradient(317.51deg, var(--error-9) 0%, var(--error-8) 100%)"
+                    "backgroundColor": "var(--warning-9)",
+                    "backgroundImage": "linear-gradient(317.51deg, var(--warning-9) 0%, var(--warning-8) 100%)"
                 },
                 "hover": {
-                    "backgroundColor": "var(--error-10)"
+                    "backgroundColor": "var(--warning-10)"
                 },
                 "active": {
-                    "backgroundColor": "var(--error-9)"
+                    "backgroundColor": "var(--warning-9)"
                 },
                 "disabled": {
-                    "backgroundColor": "var(--error-a10)"
+                    "backgroundColor": "var(--warning-a10)"
                 },
                 "divider": {
-                    "backgroundColor": "var(--error-8)"
+                    "backgroundColor": "var(--warning-8)"
                 },
                 "actionArea": {
-                    "backgroundColor": "var(--error-9)",
-                    "backgroundImage": "linear-gradient(317.51deg, var(--error-9) 0%, var(--error-8) 100%)"
+                    "backgroundColor": "var(--warning-9)",
+                    "backgroundImage": "linear-gradient(317.51deg, var(--warning-9) 0%, var(--warning-8) 100%)"
                 }
             }
         },
@@ -228,10 +228,10 @@ export const styles = {
             "failure": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "var(--error-9)",
-                        "backgroundImage": "linear-gradient(317.51deg, var(--error-9) 0%, var(--error-8) 100%)",
-                        "borderColor": "var(--error-9)",
-                        "border": "var(--error-9) 1px solid"
+                        "backgroundColor": "var(--warning-9)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--warning-g-9) 0%, var(--warning-8) 100%)",
+                        "borderColor": "var(--warning-9)",
+                        "border": "var(--warning-9) 1px solid"
                     },
                     "inner": {
                         "backgroundColor": "var(--white-1)"
@@ -239,10 +239,10 @@ export const styles = {
                 },
                 "loading": {
                     "outer": {
-                        "backgroundColor": "var(--error-8)",
-                        "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0.4%, var(--error-8) 100%)",
-                        "borderColor": "var(--error-8)",
-                        "border": "var(--error-8) 1px solid"
+                        "backgroundColor": "var(--warning-8)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--warning-8) 0.4%, var(--warning-8) 100%)",
+                        "borderColor": "var(--warning-8)",
+                        "border": "var(--warning-8) 1px solid"
                     },
                     "inner": {
                         "backgroundColor": "var(--white-1)"
@@ -252,10 +252,10 @@ export const styles = {
             "danger": {
                 "default": {
                     "outer": {
-                        "backgroundColor": "var(--error-11)",
-                        "backgroundImage": "linear-gradient(317.51deg, var(--error-11) 0%, var(--error-8) 100%)",
-                        "borderColor": "var(--error-8)",
-                        "border": "var(--error-8) 1px solid"
+                        "backgroundColor": "var(--warning-11)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--warning-11) 0%, var(--warning-8) 100%)",
+                        "borderColor": "var(--warning-8)",
+                        "border": "var(--warning-8) 1px solid"
                     },
                     "inner": {
                         "backgroundColor": "var(--white-1)"
@@ -263,18 +263,18 @@ export const styles = {
                 },
                 "loading": {
                     "outer": {
-                        "backgroundColor": "var(--error-8)",
-                        "backgroundImage": "linear-gradient(317.51deg, var(--error-8) 0%, var(--error-7) 100%)",
-                        "borderColor": "var(--error-8)",
-                        "border": "var(--error-8) 1px solid"
+                        "backgroundColor": "var(--warning-8)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--warning-8) 0%, var(--warning-7) 100%)",
+                        "borderColor": "var(--warning-8)",
+                        "border": "var(--warning-8) 1px solid"
                     }
                 },
                 "disabled": {
                     "outer": {
-                        "backgroundColor": "var(--error-7)",
-                        "backgroundImage": "linear-gradient(317.51deg, var(--error-7) 0%, var(--warning-6) 100%)",
-                        "borderColor": "var(--error-6)",
-                        "border": "var(--error-6) 1px solid"
+                        "backgroundColor": "var(--warning-7)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--warning-7) 0%, var(--caution-6) 100%)",
+                        "borderColor": "var(--warning-6)",
+                        "border": "var(--warning-6) 1px solid"
                     },
                     "inner": {
                         "backgroundColor": "var(--white-1)"
@@ -381,8 +381,8 @@ export const styles = {
         "spinner": {
             "danger": {
                 "base": {
-                    "borderColor": "var(--error-8)",
-                    "border": "var(--error-8) 3px solid"
+                    "borderColor": "var(--warning-8)",
+                    "border": "var(--warning-8) 3px solid"
                 },
                 "top": {
                     "borderColor": "var(--white-1)",

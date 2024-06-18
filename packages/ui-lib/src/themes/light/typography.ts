@@ -52,7 +52,7 @@ export const typography = {
               "fontSize": "16px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--error-8)"
+              "color": "var(--warning-8)"
           },
           "meta(Selected)": {
               "textAlign": "left",

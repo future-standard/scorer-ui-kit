@@ -196,7 +196,7 @@
 	--caution-a8: #fe660085;
 	--caution-a7: #ff640363;
 	--caution-a6: #ff650649;
-	--warning-a5: #fe620137;
+	--caution-a5: #fe620137;
 	--caution-a4: #fe61002a;
 	--caution-a3: #fd54001e;
 	--caution-a2: #fd37000e;
@@ -347,21 +347,23 @@
 	--white-a2: #ffffff03;
 	--white-a1: #fff0;
 
-  --error: var(--caution-8);
+    /* feedback */
+  --error: var(--warning-8);
   --info: var(--primary-7);
   --neutral: var(--grey-9);
   --success: var(--success-8);
-  --warning: var(--warning-8);
+  --warning: var(--caution-8);
 
+  /* icons */
   --inverse: var(--grey-1);
   --mono: var(--grey-12);
   --dimmed: var(--grey-11);
   --subtle: var(--grey-10);
   --primary: var(--primary-9);
-  --danger: var(--caution-9);
+  --danger: var(--warning-9);
   --white: var(--white-1);
 
-  --spinner-danger: var(--caution-8);
+  --spinner-danger: var(--warning-8);
   --spinner-secondary: var(--grey-8);
   --spinner-primary: var(--primary-6);
   --spinner-simple: var(--grey-a8);
@@ -463,7 +465,7 @@
 	--caution-a8: #fe660085;
 	--caution-a7: #ff640363;
 	--caution-a6: #ff650649;
-	--warning-a5: #fe620137;
+	--caution-a5: #fe620137;
 	--caution-a4: #fe61002a;
 	--caution-a3: #fd54001e;
 	--caution-a2: #fd37000e;
@@ -614,21 +616,23 @@
 	--white-a2: #ffffff03;
 	--white-a1: #fff0;
 
-  --error: var(--caution-8);
+    /* feedback */
+  --error: var(--warning-8);
   --info: var(--primary-7);
   --neutral: var(--grey-9);
   --success: var(--success-8);
-  --warning: var(--warning-8);
+  --warning: var(--caution-8);
 
+    /* icons */
   --inverse: var(--white-1);
   --mono: var(--grey-12);
   --dimmed: var(--grey-11);
   --subtle: var(--grey-10);
   --primary: var(--primary-9);
-  --danger: var(--caution-9);
+  --danger: var(--warning-9);
   --white: var(--white-1);
 
-  --spinner-danger: var(--caution-8);
+  --spinner-danger: var(--warning-8);
   --spinner-secondary: var(--grey-8);
   --spinner-primary: var(--primary-6);
   --spinner-simple: var(--grey-a8);

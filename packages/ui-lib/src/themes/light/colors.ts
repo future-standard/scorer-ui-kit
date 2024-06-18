@@ -8,7 +8,7 @@ export const colors = {
       "dimmed": "var(--grey-11)",
       "subtle": "var(--grey-10)",
       "primary": "var(--primary-9)",
-      "danger": "var(--error-9)",
+      "danger": "var(--warning-9)",
       "white": "var(--white-1)"
   },
   "menu": {
@@ -19,15 +19,15 @@ export const colors = {
       "passive": "var(--primary-a7)"
   },
   "feedback": {
-      "error": "var(--error-8)",
+      "error": "var(--warning-8)",
       "info": "var(--primary-7)",
       "neutral": "var(--grey-9)",
       "success": "var(--success-8)",
-      "warning": "var(--warning-8)"
+      "warning": "var(--caution-10)"
   },
   "status": {
-      "caution": "var(--warning-10)",
-      "danger": "var(--error-8)",
+      "caution": "var(--caution-10)",
+      "danger": "var(--warning-8)",
       "folder": "var(--primary-7)",
       "highlight": "var(--primary-7)",
       "good": "var(--success-7)",
