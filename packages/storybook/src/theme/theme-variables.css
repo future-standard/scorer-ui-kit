@@ -17,7 +17,7 @@
 .button-small {
   --button-font-size: 12px;
   --button-height: 24px;
-  --button-h-padding: 0px;
+  --button-h-padding: 4px;
   --button-icon-size: 12px;
   --button-icon-h-padding: 8px;
 }

@@ -53,15 +53,15 @@ const StyledButton = styled.button<{noBorderTop?: boolean, active?: boolean}>`
 `;
 
 const OptionText = styled.div`
-    font-family: var(--font-ui);
-    font-size: var(--button-font-size);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    text-align: center;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+  font-family: var(--font-ui);
+  font-size: var(--button-font-size);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 const TextWrapper = styled.div<{textMaxWidth?:string}>`

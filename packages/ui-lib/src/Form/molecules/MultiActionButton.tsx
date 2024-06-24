@@ -5,6 +5,9 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 import { TypeButtonSizes, TypeButtonDesigns } from '..';
 import { resetButtonStyles } from '../../common';
 
+
+const TOGGLE_ICON_WIDTH = 20;
+
 const Container = styled.div`
   font-family: var(--font-ui);
   position: relative;
@@ -98,7 +101,7 @@ const validateMaxWidth = (btnTextMaxWidth: number| null | undefined, textMaxWidt
     return textMaxWidth;
 
   if(btnTextMaxWidth)
-    return `${btnTextMaxWidth - 20}px`; // - Remove toggle con size
+    return `${btnTextMaxWidth - TOGGLE_ICON_WIDTH}px`;
 
   return undefined;
 };

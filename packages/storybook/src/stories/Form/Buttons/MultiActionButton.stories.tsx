@@ -1,3 +1,4 @@
+import { action } from "@storybook/addon-actions";
 import { boolean, object, select } from "@storybook/addon-knobs";
 import React from "react";
 import { MultiActionButton } from 'scorer-ui-kit';
@@ -8,15 +9,22 @@ export default {
   decorators: []
 };
 
-const buttonList = [
-  {id: 'a0', text: 'Example Action', icon: 'Success',  onClick: () => {console.log('Example Action pressed') } },
-  {id: 'a1', text: '日本語の場合はランダム', icon: 'Add', onClick: () => {console.log('日本語の場合はランダム') } },
-  {id: 'a2', text: 'Example Action 2', icon: 'Save', isLoading:true , onClick: () => {console.log('Action 2 pressed') } },
-  {id: 'a3', text: 'Example Action 3', icon: 'Download', onClick: () => {console.log('Action 3 pressed')}, disabled:true  },
-]
-
 
 export const _MultiActionButton = () => {
+
+
+const buttonClickA0 = action('Example Action pressed');
+const buttonClickA1 = action('日本語の場合はランダム pressed');
+const buttonClickA2 = action('Save Action pressed');
+const buttonClickA3 = action('Download pressed');
+
+
+  const buttonList = [
+    {id: 'a0', text: 'Example Action', icon: 'Success',  onClick: buttonClickA0 },
+    {id: 'a1', text: '日本語の場合はランダム', icon: 'Add', onClick:  buttonClickA1 },
+    {id: 'a2', text: 'Save Action', icon: 'Save', isLoading:true , onClick: buttonClickA2 },
+    {id: 'a3', text: 'Download Action', icon: 'Download', onClick: buttonClickA3, disabled:true  },
+  ]
 
   const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger", Custom: "custom" }, "primary");
   const buttonDisabled = boolean("Disabled", false);
