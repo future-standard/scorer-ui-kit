@@ -40,8 +40,8 @@ import {
   SelectWrapper,
   AreaUploadManager,
   RadioButton,
-  MultiActionButton,
-  IMultiButtonProps
+  SplitButton,
+  ISplitButtonProps
 } from './Form';
 
 // Components - Filter
@@ -233,7 +233,7 @@ export {
   SelectWrapper,
   AreaUploadManager,
   RadioButton,
-  MultiActionButton,
+  SplitButton,
 
   // Modals
   ConfirmationModal,
@@ -367,5 +367,5 @@ export type {
   IMediaStream,
   IPanelMetaData,
   IActionsButton,
-  IMultiButtonProps
+  ISplitButtonProps
 };

@@ -30,7 +30,7 @@ interface IButtonItem {
 
 type IMultiButtonItem = IButtonItem &  ButtonHTMLAttributes<HTMLButtonElement>;
 
-export interface IMultiButtonProps  {
+export interface ISplitButtonProps  {
   activeId: string
   buttonList: IMultiButtonItem[]
   isSortAscending?: boolean
@@ -106,7 +106,7 @@ const validateMaxWidth = (btnTextMaxWidth: number| null | undefined, textMaxWidt
   return undefined;
 };
 
-const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, design='primary', size, textMaxWidth, disabled = false, ...rest}) => {
+const SplitButton: React.FC<ISplitButtonProps> = ({activeId, buttonList, design='primary', size, textMaxWidth, disabled = false, ...rest}) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeBtnId, setActiveBtnId] = useState(activeId);
@@ -161,4 +161,4 @@ const MultiActionButton: React.FC<IMultiButtonProps> = ({activeId, buttonList, d
   );
 };
 
-export default MultiActionButton;
+export default SplitButton;

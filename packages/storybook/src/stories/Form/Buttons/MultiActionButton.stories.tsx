@@ -1,16 +1,16 @@
 import { action } from "@storybook/addon-actions";
 import { boolean, object, select } from "@storybook/addon-knobs";
 import React from "react";
-import { MultiActionButton } from 'scorer-ui-kit';
+import { SplitButton } from 'scorer-ui-kit';
 
 export default {
   title: 'Form/Buttons',
-  component: MultiActionButton,
+  component: SplitButton,
   decorators: []
 };
 
 
-export const _MultiActionButton = () => {
+export const _SplitButton = () => {
 
 
 const buttonClickA0 = action('Example Action pressed');
@@ -31,5 +31,5 @@ const buttonClickA3 = action('Download pressed');
   const buttonSize = select("Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
   const list = object("Button List", buttonList);
 
-  return <MultiActionButton activeId={"a0"} design={buttonDesign} size={buttonSize} disabled={buttonDisabled} buttonList={list}>Button</MultiActionButton>
+  return <SplitButton activeId={"a0"} design={buttonDesign} size={buttonSize} disabled={buttonDisabled} buttonList={list}>Button</SplitButton>
 }

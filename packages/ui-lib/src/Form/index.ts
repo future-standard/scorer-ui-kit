@@ -24,7 +24,7 @@ import AvatarUploader from './organisms/AvatarUploader';
 import AreaUploadManager from './organisms/AreaUploadManager';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
-import MultiActionButton, { IMultiButtonProps } from './molecules/MultiActionButton';
+import SplitButton, { ISplitButtonProps } from './molecules/SplitButton';
 
 export {
     Form,
@@ -53,7 +53,7 @@ export {
     SelectWrapper,
     AreaUploadManager,
     RadioButton,
-    MultiActionButton
+    SplitButton
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
@@ -69,4 +69,4 @@ interface ButtonProps {
 
 export type IButtonProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-export type { IconButtonData, ISliderMark, IMultiButtonProps};
+export type { IconButtonData, ISliderMark, ISplitButtonProps};
