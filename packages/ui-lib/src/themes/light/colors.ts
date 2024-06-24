@@ -14,7 +14,7 @@ export const colors = {
   "menu": {
       "active": "var(--primary-9)",
       "hover": "var(--primary-8)",
-      "default": "var(--gray-2)",
+      "default": "var(--grey-2)",
       "indicator": "var(--grey-a1)",
       "passive": "var(--primary-a7)"
   },

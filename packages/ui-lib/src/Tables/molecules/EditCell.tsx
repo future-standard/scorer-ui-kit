@@ -34,7 +34,7 @@ const StyledLink = styled(Link)`
 
 const EditContainer = styled.div`
   min-width: 320px;
-  background-color: var(--gray-2);
+  background-color: var(--grey-2);
   z-index: 99;
   position: absolute;
   bottom: -15px;

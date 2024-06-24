@@ -115,9 +115,9 @@ export interface IMOption {
 }
 
 
-export type IMultiButtonOption = IMOption &  ButtonHTMLAttributes<HTMLButtonElement>;
+export type ISplitButtonOption = IMOption &  ButtonHTMLAttributes<HTMLButtonElement>;
 
-const MultiButtonOption : FC<IMultiButtonOption> = ({
+const SplitButtonOption : FC<ISplitButtonOption> = ({
   text,
   icon = '',
   isLoading = false,
@@ -138,4 +138,4 @@ const MultiButtonOption : FC<IMultiButtonOption> = ({
   );
 };
 
-export default MultiButtonOption;
+export default SplitButtonOption;

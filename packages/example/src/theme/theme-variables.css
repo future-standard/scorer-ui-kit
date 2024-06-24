@@ -30,7 +30,7 @@
   --button-icon-h-padding: 8px;
 }
 
-.multi-button-primary {
+.split-button-primary {
   --border-color: var(--primary-9);
   --border-active-color: var(--primary-11);
   --toggle-icon-border: var(--primary-9);
@@ -48,7 +48,7 @@
   --toggle-icon-disabled: var(--white-a10);
 }
 
-.multi-button-secondary {
+.split-button-secondary {
   --border-color: var(--grey-7);
   --border-active-color: var(--grey-7);
   --toggle-icon-border: var(--grey-6);
@@ -66,7 +66,7 @@
   --toggle-icon-disabled: var(--grey-10);
 }
 
-.multi-button-danger {
+.split-button-danger {
   --border-color: var(--warning-10);
   --border-active-color: var(--warning-10);
   --toggle-icon-border: var(--warning-9);
@@ -84,7 +84,7 @@
   --toggle-icon-disabled: var(--white-a10);
 }
 
-.multi-button-custom {
+.split-button-custom {
   --border-color: var(--info-10);
   --border-active-color: var(--info-10);
   --toggle-icon-border: var(--info-9);

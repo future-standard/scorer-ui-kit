@@ -720,7 +720,7 @@ export const typography = {
           "fontSize": "13px",
           "fontWeight": 500,
           "textDecoration": "none",
-          "color": "var(--gray-12)"
+          "color": "var(--grey-12)"
       },
       "filterButton": {
           "default": {

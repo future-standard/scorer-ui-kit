@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, Fragment, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
-import MultiButtonOption from '../atoms/MultiButtonOption';
+import SplitButtonOption from '../atoms/SplitButtonOption';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { TypeButtonSizes, TypeButtonDesigns } from '..';
 import { resetButtonStyles } from '../../common';
@@ -28,11 +28,11 @@ interface IButtonItem {
   isLoading?: boolean
 }
 
-type IMultiButtonItem = IButtonItem &  ButtonHTMLAttributes<HTMLButtonElement>;
+type ISplitButtonItem = IButtonItem &  ButtonHTMLAttributes<HTMLButtonElement>;
 
 export interface ISplitButtonProps  {
   activeId: string
-  buttonList: IMultiButtonItem[]
+  buttonList: ISplitButtonItem[]
   isSortAscending?: boolean
   size?: TypeButtonSizes
   design?: TypeButtonDesigns | string
@@ -122,11 +122,11 @@ const SplitButton: React.FC<ISplitButtonProps> = ({activeId, buttonList, design=
   },[toggleOpen]);
 
   return(
-    <Container className={`multi-button-${design} button-${size}`} {...rest}>
+    <Container className={`split-button-${design} button-${size}`} {...rest}>
       <ActiveBtnWrapper ref={activeBtnRef}>
         {buttonList.filter((button) => button.id === activeBtnId)
             .map(({id, text, icon, disabled: disabledItemProp, ...props}) => (
-            <MultiButtonOption
+            <SplitButtonOption
               key={id}
               noBorderTop
               active
@@ -144,7 +144,7 @@ const SplitButton: React.FC<ISplitButtonProps> = ({activeId, buttonList, design=
           <Fragment>
             {buttonList.filter((button) => button.id !== activeBtnId)
                 .map(({id, text, icon, disabled: disabledItemProp, ...props}) => (
-                <MultiButtonOption
+                <SplitButtonOption
                   key={id}
                   {...{text, icon, design, size}}
                   disabled={disabledItemProp}
