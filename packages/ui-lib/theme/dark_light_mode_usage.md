@@ -4,7 +4,7 @@ In order to have dark and light mode change in your project we recommend using t
 
 This is an example of how Index.tsx and App.tsx can be changed to enable Dark and Light version of the theme.
 
-It is important to import from your Index.tsx the variables that will be used by the app. In this example were using [theme-variables.css](packages/example/src/theme/theme-variables.css)
+It is important to import from your Index.tsx the variables that will be used by the app. In this example were using [theme-variables.css](packages/ui-lib/theme/theme-variables.css)
 
 
 Index.tsx

@@ -22,6 +22,8 @@ If you require dark mode functionality for your UI then v2 has the initial versi
   This version provides dark mode, the newest components and tools as well as been up to date with npm dependencies.
   At this time, progress on Version 2 is delayed and may be expected to bring many breaking changes as it can accelerate.
 
+### Theming
+Detailed information about theme, dark and light mode can be read in [SETTINGS FOR DARK AND LIGHT MODE](packages/ui-lib/theme/dark_light_mode_usage.md) document.
 
 ## How to use this repository.
 
