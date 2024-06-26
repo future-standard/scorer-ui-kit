@@ -1,6 +1,6 @@
 {
   "name": "scorer-ui-kit",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "This project is a ui library with an example project of use cases and storybook to showcase the components",
   "main": "index.js",
   "scripts": {
