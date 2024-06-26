@@ -33,7 +33,7 @@ const SplitExampleWithModal = (props : ISplitButtonProps) => {
 
   const buttonList = [
     {id: 'a0', text: 'Main Action Open Modal', icon: 'Success',  onClickCallback: openImageModal },
-    {id: 'a1', text: '日本語の場合はランダム', icon: 'Add', onClickCallback:  buttonClickA1 },
+    {id: 'a1', text: '日本語の場合はランダム', onClickCallback:  buttonClickA1 },
     {id: 'a2', text: 'Save Action', icon: 'Analyse', hasOnSelectLoading:true , onClickCallback: buttonClickA2 },
     {id: 'a3', text: 'Download Action', icon: 'Download', onClickCallback: buttonClickA3, disabled:true  },
   ]

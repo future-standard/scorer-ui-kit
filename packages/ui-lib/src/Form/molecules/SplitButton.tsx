@@ -134,7 +134,8 @@ const SplitButton: React.FC<ISplitButtonProps> = ({mainButtonId, buttonList, des
               noBorderTop
               disabled={disabled || disabledItemProp}
               closeCallback={closeCallback}
-              {...{text, icon, design, size}}
+              icon={icon || 'NoIcon'}
+              {...{text, design, size}}
               {...props}
               />
             ))
@@ -149,7 +150,8 @@ const SplitButton: React.FC<ISplitButtonProps> = ({mainButtonId, buttonList, des
                 .map(({id, text, icon, disabled: disabledItemProp, ...props}) => (
                 <SplitButtonOption
                   key={id}
-                  {...{text, icon, design, size}}
+                  icon={icon || 'NoIcon'}
+                  {...{text, design, size}}
                   disabled={disabledItemProp}
                   textMaxWidth={validateMaxWidth(mainButtonRef.current?.clientWidth,textMaxWidth)}
                   {...props}
