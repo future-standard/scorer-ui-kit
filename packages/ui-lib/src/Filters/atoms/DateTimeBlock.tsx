@@ -48,7 +48,7 @@ const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isT
 
   width: 100%;
   border: ${({ isTimeInput }) => isTimeInput ?
-    ({ isTimeRangeValid }) => isTimeRangeValid ? 'transparent 1px solid' : 'var(--error-a9) 1px solid'
+    ({ isTimeRangeValid }) => isTimeRangeValid ? 'transparent 1px solid' : 'var(--warning-a9) 1px solid'
     : 'transparent 1px solid'
   };
   outline: none;
@@ -59,7 +59,7 @@ const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isT
   &:focus, &:hover {
 
     border-color: ${({ isTimeInput }) => isTimeInput ?
-      ({ isTimeRangeValid }) => isTimeRangeValid ? 'blue' : 'var(--error-a9)'
+      ({ isTimeRangeValid }) => isTimeRangeValid ? 'blue' : 'var(--warning-a9)'
       : 'transparent'
     };
   }

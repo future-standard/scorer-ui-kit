@@ -52,7 +52,7 @@ export const typography = {
               "fontSize": "16px",
               "fontWeight": 400,
               "textDecoration": "none",
-              "color": "var(--error-8)"
+              "color": "var(--warning-8)"
           },
           "meta(Selected)": {
               "textAlign": "left",
@@ -720,7 +720,7 @@ export const typography = {
           "fontSize": "13px",
           "fontWeight": 500,
           "textDecoration": "none",
-          "color": "var(--gray-12)"
+          "color": "var(--grey-12)"
       },
       "filterButton": {
           "default": {

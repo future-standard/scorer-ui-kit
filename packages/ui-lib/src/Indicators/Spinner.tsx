@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { keyframes } from 'styled-components';
+import { TypeButtonDesigns, TypeButtonSizes} from "../Form";
 
 const circumference = (radius : number) => {
   return 2 * 3.1416 * radius;
@@ -31,12 +32,12 @@ const rotate = keyframes`
 `;
 
 const BaseCircle = styled.circle<{ styling: string }>`
-  stroke: ${({theme, styling}) => theme.styles.indicators.spinner[styling].base.borderColor};
+  stroke: ${({styling}) => `var(--spinner-${styling}, --grey-a8)` };
   fill: none;
 `;
 
-const RotatingCircle = styled.circle<{ r: number, styling: string }>`
-  stroke: ${({theme, styling}) => theme.styles.indicators.spinner[styling].top.borderColor};
+const RotatingCircle = styled.circle<{ r: number }>`
+  stroke: var(--white-1);
   fill: none;
   stroke-dasharray: ${({r}) => circumference(r)};
   stroke-dashoffset: ${({r}) => 2 * 3.1416 * r / 2};
@@ -46,7 +47,38 @@ const RotatingCircle = styled.circle<{ r: number, styling: string }>`
   stroke-linecap: round;
 `;
 
-type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+export type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+
+
+export const buttonSpinnerSize = (buttonSize: TypeButtonSizes) : SpinnerSize  => {
+  switch (buttonSize) {
+    case 'xsmall':
+    case 'small':
+      return 'xsmall';
+      break;
+
+    case 'large':
+      return 'small';
+
+    default:
+      return 'small';
+      break;
+  }
+};
+
+export const isTypeButtonDesigns = (value: any): value is TypeButtonDesigns => {
+
+  switch (value) {
+    case 'primary':
+    case 'secondary':
+    case 'danger':
+    return true;
+    break;
+
+    default:
+      return false;
+  }
+};
 
 const sizeGuide = {
   xsmall: 12,
@@ -68,8 +100,8 @@ const Spinner : React.FC<IProps> = ({ size = 'medium', styling = 'primary' }) =>
 
   return (
     <svg viewBox={`-${sizeVal/2} -${sizeVal/2} ${sizeVal} ${sizeVal}`} width={sizeVal} height={sizeVal} xmlns='http://www.w3.org/2000/svg'>
-      <BaseCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={styling} />
-      <RotatingCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={styling} />
+      <BaseCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={isTypeButtonDesigns(styling) ? styling : 'simple'} />
+      <RotatingCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} />
     </svg>
   );
 

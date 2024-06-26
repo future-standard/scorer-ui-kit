@@ -40,6 +40,8 @@ import {
   SelectWrapper,
   AreaUploadManager,
   RadioButton,
+  SplitButton,
+  ISplitButtonProps
 } from './Form';
 
 // Components - Filter
@@ -231,6 +233,7 @@ export {
   SelectWrapper,
   AreaUploadManager,
   RadioButton,
+  SplitButton,
 
   // Modals
   ConfirmationModal,
@@ -363,5 +366,6 @@ export type {
   ICameraPanel,
   IMediaStream,
   IPanelMetaData,
-  IActionsButton
+  IActionsButton,
+  ISplitButtonProps
 };
