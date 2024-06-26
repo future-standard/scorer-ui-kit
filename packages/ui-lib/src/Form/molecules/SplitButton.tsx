@@ -26,12 +26,13 @@ interface IButtonItem {
   icon?: string
   text: string
   isLoading?: boolean
+  onClickCallback?: () => void
 }
 
 type ISplitButtonItem = IButtonItem &  ButtonHTMLAttributes<HTMLButtonElement>;
 
 export interface ISplitButtonProps  {
-  activeId: string
+  mainButtonId: string
   buttonList: ISplitButtonItem[]
   isSortAscending?: boolean
   size?: TypeButtonSizes
@@ -106,31 +107,30 @@ const validateMaxWidth = (btnTextMaxWidth: number| null | undefined, textMaxWidt
   return undefined;
 };
 
-const SplitButton: React.FC<ISplitButtonProps> = ({activeId, buttonList, design='primary', size, textMaxWidth, disabled = false, ...rest}) => {
+const SplitButton: React.FC<ISplitButtonProps> = ({mainButtonId, buttonList, design='primary', size, textMaxWidth, disabled = false, ...rest}) => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [activeBtnId, setActiveBtnId] = useState(activeId);
   const activeBtnRef = useRef<HTMLDivElement>(null);
 
   const toggleOpen = useCallback(() => {
       setIsOpen((prev) => !prev);
   },[]);
 
-  const updateActiveId = useCallback((newId: string)=>{
-    setActiveBtnId(newId);
-    toggleOpen();
-  },[toggleOpen]);
+  const closeCallback = useCallback(()=>{
+    setIsOpen(false);
+  },[]);
 
   return(
     <Container className={`split-button-${design} button-${size}`} {...rest}>
       <ActiveBtnWrapper ref={activeBtnRef}>
-        {buttonList.filter((button) => button.id === activeBtnId)
+        {buttonList.filter((button) => button.id === mainButtonId)
             .map(({id, text, icon, disabled: disabledItemProp, ...props}) => (
             <SplitButtonOption
               key={id}
               noBorderTop
               active
               disabled={disabled || disabledItemProp}
+              closeCallback={closeCallback}
               {...{text, icon, design, size}}
               {...props}
               />
@@ -142,7 +142,7 @@ const SplitButton: React.FC<ISplitButtonProps> = ({activeId, buttonList, design=
       </ActiveBtnWrapper>
       { isOpen ?
           <Fragment>
-            {buttonList.filter((button) => button.id !== activeBtnId)
+            {buttonList.filter((button) => button.id !== mainButtonId)
                 .map(({id, text, icon, disabled: disabledItemProp, ...props}) => (
                 <SplitButtonOption
                   key={id}
@@ -150,7 +150,7 @@ const SplitButton: React.FC<ISplitButtonProps> = ({activeId, buttonList, design=
                   disabled={disabledItemProp}
                   textMaxWidth={validateMaxWidth(activeBtnRef.current?.clientWidth,textMaxWidth)}
                   {...props}
-                  onClick={() => updateActiveId(id)}
+                  closeCallback={closeCallback}
                   />
               ))
             }

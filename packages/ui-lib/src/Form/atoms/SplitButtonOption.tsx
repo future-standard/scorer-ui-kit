@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, FC } from 'react';
+import React, { ButtonHTMLAttributes, FC, useCallback,useState } from 'react';
 import styled, { css } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Spinner, { buttonSpinnerSize } from '../../Indicators/Spinner';
@@ -106,12 +106,14 @@ const LeftIconWrapper = styled.div<{ isAscendingIcon: boolean }>`
 export interface IMOption {
   text: string
   icon?: string
-  isLoading?: boolean
+  hasOnSelectLoading?: boolean
   design?: TypeButtonDesigns | string
   noBorderTop?: boolean
   textMaxWidth?: string
   active?: boolean
   size?: TypeButtonSizes
+  onClickCallback?: () => void
+  closeCallback: () => void
 }
 
 
@@ -120,16 +122,41 @@ export type ISplitButtonOption = IMOption &  ButtonHTMLAttributes<HTMLButtonElem
 const SplitButtonOption : FC<ISplitButtonOption> = ({
   text,
   icon = '',
-  isLoading = false,
   design = 'primary',
   noBorderTop = false,
   textMaxWidth='',
   size='normal',
+  onClickCallback,
+  closeCallback,
+  hasOnSelectLoading,
   ...props
 }) => {
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = useCallback(() => {
+
+    onClickCallback && onClickCallback();
+
+    if(hasOnSelectLoading) {
+      setIsLoading(true);
+
+      setTimeout( () => {
+        setIsLoading(false);
+        closeCallback();
+      }, 2000);
+    }else {
+      setTimeout( () => {
+        closeCallback();
+      }, 200);
+    }
+
+  },[closeCallback, hasOnSelectLoading, onClickCallback]);
+
+
+
   return(
-    <StyledButton {...{noBorderTop}} {...props}>
+    <StyledButton {...{noBorderTop}} onClick={handleClick} {...props}>
       <LeftIconWrapper isAscendingIcon={icon === 'FilterAscending'} >
         {isLoading ? <Spinner size={buttonSpinnerSize(size)} styling={design} /> : <Icon icon={icon} />}
       </LeftIconWrapper>
