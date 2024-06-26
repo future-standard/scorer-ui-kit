@@ -11,7 +11,6 @@ export default {
 };
 
 const Container = styled.div`
-  margin: 100px;
 `;
 
 const customComponentExample : ReactElement = <h1>Main Action Modal</h1>;
@@ -65,7 +64,7 @@ export const _SplitButton = () => {
         design={buttonDesign}
         size={buttonSize}
         disabled={buttonDisabled}
-        buttonList={[]} // this is replace with data on top
+        buttonList={[]} // this is replaced with data in the SplitExample component
       />
     </ModalProvider>
   )

@@ -229,7 +229,7 @@ export const styles = {
                 "default": {
                     "outer": {
                         "backgroundColor": "var(--warning-9)",
-                        "backgroundImage": "linear-gradient(317.51deg, var(--warning-g-9) 0%, var(--warning-8) 100%)",
+                        "backgroundImage": "linear-gradient(317.51deg, var(--warning-9) 0%, var(--warning-8) 100%)",
                         "borderColor": "var(--warning-9)",
                         "border": "var(--warning-9) 1px solid"
                     },
