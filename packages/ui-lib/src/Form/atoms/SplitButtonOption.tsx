@@ -5,7 +5,7 @@ import Spinner, { buttonSpinnerSize } from '../../Indicators/Spinner';
 import { resetButtonStyles } from '../../common';
 import { TypeButtonDesigns, TypeButtonSizes } from '..';
 
-const StyledButton = styled.button<{noBorderTop?: boolean, active?: boolean}>`
+const StyledButton = styled.button<{noBorderTop?: boolean}>`
   ${resetButtonStyles}
   ${({noBorderTop}) => noBorderTop ?
       `border-top: none`
@@ -110,7 +110,6 @@ export interface IMOption {
   design?: TypeButtonDesigns | string
   noBorderTop?: boolean
   textMaxWidth?: string
-  active?: boolean
   size?: TypeButtonSizes
   onClickCallback?: () => void
   closeCallback: () => void

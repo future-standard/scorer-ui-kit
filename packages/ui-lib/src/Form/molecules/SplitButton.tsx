@@ -4,6 +4,7 @@ import SplitButtonOption from '../atoms/SplitButtonOption';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { TypeButtonSizes, TypeButtonDesigns } from '..';
 import { resetButtonStyles } from '../../common';
+import { useClickOutside } from '../../hooks';
 
 
 const TOGGLE_ICON_WIDTH = 20;
@@ -25,7 +26,7 @@ interface IButtonItem {
   id: string
   icon?: string
   text: string
-  isLoading?: boolean
+  hasOnSelectLoading?: boolean
   onClickCallback?: () => void
 }
 
@@ -41,7 +42,7 @@ export interface ISplitButtonProps  {
   disabled?: boolean
 }
 
-const ActiveBtnWrapper = styled.div`
+const MainButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,7 +111,8 @@ const validateMaxWidth = (btnTextMaxWidth: number| null | undefined, textMaxWidt
 const SplitButton: React.FC<ISplitButtonProps> = ({mainButtonId, buttonList, design='primary', size, textMaxWidth, disabled = false, ...rest}) => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const activeBtnRef = useRef<HTMLDivElement>(null);
+  const mainButtonRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const toggleOpen = useCallback(() => {
       setIsOpen((prev) => !prev);
@@ -120,15 +122,16 @@ const SplitButton: React.FC<ISplitButtonProps> = ({mainButtonId, buttonList, des
     setIsOpen(false);
   },[]);
 
+  useClickOutside(containerRef, closeCallback);
+
   return(
-    <Container className={`split-button-${design} button-${size}`} {...rest}>
-      <ActiveBtnWrapper ref={activeBtnRef}>
+    <Container ref={containerRef} className={`split-button-${design} button-${size}`} {...rest}>
+      <MainButtonWrapper ref={mainButtonRef}>
         {buttonList.filter((button) => button.id === mainButtonId)
             .map(({id, text, icon, disabled: disabledItemProp, ...props}) => (
             <SplitButtonOption
               key={id}
               noBorderTop
-              active
               disabled={disabled || disabledItemProp}
               closeCallback={closeCallback}
               {...{text, icon, design, size}}
@@ -139,8 +142,8 @@ const SplitButton: React.FC<ISplitButtonProps> = ({mainButtonId, buttonList, des
         <ToggleIcon onClick={toggleOpen} disabled={disabled}>
           { <Icon icon={isOpen ? 'Close' : 'Down'} size={8} />}
         </ToggleIcon>
-      </ActiveBtnWrapper>
-      { isOpen ?
+      </MainButtonWrapper>
+      { (isOpen && !disabled) ?
           <Fragment>
             {buttonList.filter((button) => button.id !== mainButtonId)
                 .map(({id, text, icon, disabled: disabledItemProp, ...props}) => (
@@ -148,7 +151,7 @@ const SplitButton: React.FC<ISplitButtonProps> = ({mainButtonId, buttonList, des
                   key={id}
                   {...{text, icon, design, size}}
                   disabled={disabledItemProp}
-                  textMaxWidth={validateMaxWidth(activeBtnRef.current?.clientWidth,textMaxWidth)}
+                  textMaxWidth={validateMaxWidth(mainButtonRef.current?.clientWidth,textMaxWidth)}
                   {...props}
                   closeCallback={closeCallback}
                   />
