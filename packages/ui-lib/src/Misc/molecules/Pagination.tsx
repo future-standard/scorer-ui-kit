@@ -1,10 +1,8 @@
 import React, { ChangeEvent, HTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../../Form/atoms/Button';
-// import Label from '../../Form/atoms/Label';
-// import Icon from '../../Icons/Icon';
-import { removeAutoFillStyle } from '../../common';
-// import { useClickOutside } from '../../hooks/useClickOutside';
+import Icon from '../../Icons/Icon';
+import { removeAutoFillStyle, resetButtonStyles } from '../../common';
 import { isNotNumber } from '../../helpers';
 
 const WIDTH_PER_NUMBER = 12;
@@ -93,26 +91,27 @@ const GoButton = styled(Button)`
   margin-left: 8px;
 `;
 
+const ArrowWrapper = styled.div`
+  display: flex;
+  gap: 0 8px;
+`;
 
-// const ArrowWrapper = styled.div`
-//   display: flex;
-//   gap: 0 8px;
-//   margin-top: 10px;
-//   margin-left: 16px;
-// `;
+const ArrowButton = styled.button<{active: boolean}>`
+  ${resetButtonStyles};
+  width: 40px;
+  height: 40px;
+  padding: 12px;
+  border-radius: 3px;
+  box-shadow: 0 4px 9px 0 rgba(152, 174, 189, 0.07);
+  border: solid 1px  rgb(71, 73, 76);
+  background-color: rgb(44, 46, 48);
+  pointer-events: ${({ active }) => active ? 'auto' : 'none'};
+  opacity: ${({ active }) => active ? '1' : '0.5'};
 
-// const ArrowContainer = styled.div<{active: boolean}>`
-//   width: 40px;
-//   height: 40px;
-//   padding: 12px;
-//   border-radius: 3px;
-//   box-shadow: 0 4px 9px 0 rgba(152, 174, 189, 0.07);
-//   border: solid 1px  rgb(71, 73, 76);
-//   background-color: rgb(44, 46, 48);
-//   pointer-events: ${({ active }) => active ? 'auto' : 'none'};
-//   opacity: ${({ active }) => active ? '1' : '0.5'};
-// `;
-
+  &:focus, &:hover {
+    outline: 2px solid #838383;
+  }
+`;
 
 
 interface OwnProps {
@@ -147,7 +146,6 @@ const Pagination: React.FC<IPagination> = (props) => {
 
 
   const isValidInput =  useCallback((currentValue: string) => {
-    console.log('validating input');
 
     if (isNotNumber(currentValue)) {
         return false;
@@ -233,16 +231,24 @@ const Pagination: React.FC<IPagination> = (props) => {
     //   setDisabledGo(false);
     //   setActivePage(parseInt(value));
     // }
-    console.log('on Blur Value', value);
 
-    if(value === '' || parseInt(value) !== activePage) {
+    if((value === '') ) {
       setPageValue(activePage.toString());
+
+    }else if(isValidInput(value) && parseInt(value) !== activePage) {
+      setDisabledGo(false);
+      setFieldState('processing');
+      return;
+
+    } else if(!isValidInput(value)) {
+      setFieldState('invalid');
+      setDisabledGo(true);
+      return;
     }
 
-    setDisabledGo(true);
     setFieldState('default');
 
-  }, [activePage]);
+  }, [activePage, isValidInput]);
 
   // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
   //   const key = event.key;
@@ -298,19 +304,18 @@ const Pagination: React.FC<IPagination> = (props) => {
         }
     },[]);
 
-
   const onClickGo = useCallback(()=>{
-    console.log('was updated onClick');
-
     setActivePage(parseInt(pageValue));
     onPageChange(parseInt(pageValue));
+    setDisabledGo(true);
+    setFieldState('default');
   },[onPageChange, pageValue]);
 
-  // const handlePageChange = (value: number) => {
-  //   onPageChange(value);
-  //   setActivePage(value);
-  //   setPageValue(value.toString());
-  // };
+  const handlePageChange = (value: number) => {
+    onPageChange(value);
+    setActivePage(value);
+    setPageValue(value.toString());
+  };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const clipboardData = e.clipboardData || (window as any).clipboardData; // Cross-browser support
@@ -321,29 +326,19 @@ const Pagination: React.FC<IPagination> = (props) => {
     }
   };
 
-  const arrowEvent = useCallback((e: any) => {
+  const enterEvent = useCallback((e: any) => {
     if ( (e.key === 'Enter') && isValidInput(pageValue) ) {
       document.getElementById('goButton')?.click();
       inputPageRef.current && inputPageRef.current.blur();
     }
   }, [isValidInput, pageValue]);
 
-
-  // const updateWithValid = useCallback(() => {
-  //       if(inputPageRef.current) {
-
-  //       }
-  //   },[]);
-
-
-  // useClickOutside(inputPageRef, updateWithValid);
-
   useEffect(() => {
-    window.addEventListener('keydown', arrowEvent);
+    window.addEventListener('keydown', enterEvent);
     return () => {
-      window.removeEventListener('keydown', arrowEvent);
+      window.removeEventListener('keydown', enterEvent);
     };
-  }, [arrowEvent]);
+  }, [enterEvent]);
 
   return (
     <PaginationContainer>
@@ -370,17 +365,16 @@ const Pagination: React.FC<IPagination> = (props) => {
           onFocus={(e) => onFocus(e)}
           onBlur={(e) => onBlur(e)}
           onPaste={(e) => handlePaste(e)}
-          // onKeyDown={handleKeyDown}
           maxWidth={getValidWidth()}
         />
         <StaticPageCount>{'/' + '\u00A0' + totalPages.toString()}</StaticPageCount>
         <GoButton id='goButton' size='small' design='primary' disabled={disableGO} onClick={onClickGo}>{buttonText}</GoButton>
       </InputContainer>
 
-      {/* <ArrowWrapper>
-        <ArrowContainer onClick={() => handlePageChange(activePage - 1)} active={fieldState === 'default' && activePage > 1}><Icon icon='Left' color='dimmed' size={15} /></ArrowContainer>
-        <ArrowContainer onClick={() => handlePageChange(activePage + 1)} active={fieldState === 'default' && activePage < totalPages}><Icon icon='Right' color='dimmed' size={15} /></ArrowContainer>
-      </ArrowWrapper> */}
+      <ArrowWrapper>
+        <ArrowButton onClick={() => handlePageChange(activePage - 1)} active={fieldState === 'default' && activePage > 1}><Icon icon='Left' color='dimmed' size={15} /></ArrowButton>
+        <ArrowButton onClick={() => handlePageChange(activePage + 1)} active={fieldState === 'default' && activePage < totalPages}><Icon icon='Right' color='dimmed' size={15} /></ArrowButton>
+      </ArrowWrapper>
     </PaginationContainer>
   );
 };

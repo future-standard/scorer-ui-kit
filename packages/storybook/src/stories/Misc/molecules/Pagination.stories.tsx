@@ -1,7 +1,7 @@
+import { action } from '@storybook/addon-actions';
 import { number } from '@storybook/addon-knobs';
 import React from 'react';
 import {Pagination}  from 'scorer-ui-kit';
-
 
 export default {
   title: 'Misc/Molecules',
@@ -9,14 +9,14 @@ export default {
   decorators: []
 };
 
-
-
 export const _Pagination = () => {
+  const buttonOnClick = action('Page changed');
 
   const totalPages = number('Total Pages', 20)
 
-  const onPageChange = () => {
-    console.log('[Storybook] - Page changed');
+  const onPageChange = (page: number) => {
+    buttonOnClick(page);
+    console.log('page', page);
   }
 
   return (
