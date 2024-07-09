@@ -1,3 +1,4 @@
+import { number } from '@storybook/addon-knobs';
 import React from 'react';
 import {Pagination}  from 'scorer-ui-kit';
 
@@ -12,20 +13,20 @@ export default {
 
 export const _Pagination = () => {
 
+  const totalPages = number('Total Pages', 20)
+
   const onPageChange = () => {
-    console.log('page changed');
+    console.log('[Storybook] - Page changed');
   }
 
   return (
     <Pagination
-    totalPages={10}
-    defaultPage={1}
-    pageText={'Page:'}
-    buttonText={'GO'}
-    language='ja'
-    onPageChange={onPageChange}
-    >
-    </Pagination>
+      totalPages={totalPages}
+      defaultPage={1}
+      pageText={'Page:'}
+      buttonText={'GO'}
+      onPageChange={onPageChange}
+    />
   )
 }
 

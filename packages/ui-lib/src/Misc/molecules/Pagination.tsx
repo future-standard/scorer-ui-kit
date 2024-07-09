@@ -1,40 +1,63 @@
-import React, { ChangeEvent, HTMLAttributes, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, HTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import TextField from '../../Form/molecules/TextField';
 import Button from '../../Form/atoms/Button';
-import Label from '../../Form/atoms/Label';
-import Icon from '../../Icons/Icon';
+// import Label from '../../Form/atoms/Label';
+// import Icon from '../../Icons/Icon';
+import { removeAutoFillStyle } from '../../common';
+// import { useClickOutside } from '../../hooks/useClickOutside';
+import { isNotNumber } from '../../helpers';
+
+const WIDTH_PER_NUMBER = 12;
 
 const PaginationContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding-top: 20px;
   padding-bottom: 20px;
   width: 100%;
   height: fit-content;
   margin-right: 10px;
   white-space: nowrap;
-  gap: 0 16px;
+  gap: 0 8px;
   vertical-align: baseline;
 `;
 
 const PageLabel = styled.label`
-  font-family: var( --font-ui);
-  font-size: 12px;
-  font-weight: 500;
-  color: #808080;
-  cursor: pointer;
-  text-align: center;
-  margin: 23px 0 10px 0;
+  font-family: var(--font-ui);
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--grey-10);
+  text-align: left;
 `;
 
-const TextFieldStyled = styled(TextField)<{ textColor: string; shouldShake: boolean }>`
-  max-width: 150px;
+const StaticPageCount = styled.div`
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: var(--grey-8);
+  height: 100%;
+  text-align: left;
+  padding-top: 1px;
+  padding-right: 1px;
+`;
+
+const StyledInput = styled.input<{ textColor: string, maxWidth?: string}>`
+  ${removeAutoFillStyle};
   color: ${({ textColor }) => textColor};
-  animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
-  -moz-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
-  -webkit-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
-  -o-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
+  max-width: ${({maxWidth}) => maxWidth ? maxWidth : '40px'};
+  font-family: var(--font-data);
+  height: 100%;
+  box-sizing: border-box;
+  outline: none;
+  background: transparent;
+  text-align: right;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  border: none;
+  padding-right: ${WIDTH_PER_NUMBER/2}px;
 `;
 
 const shakeAnimation = keyframes`
@@ -44,60 +67,58 @@ const shakeAnimation = keyframes`
   100% { transform: translateX(0); }
 `;
 
-const TextFieldWrapper = styled.div`
-  & label > div > div:nth-child(2){
-    display: none;
-  }
-`;
-
-const GoButtonContainer = styled.div<{count: number}>`
-  z-index: 0;
-  margin-top: 24px;
+const InputContainer = styled.div<{borderColor?: string,  shouldShake: boolean}>`
+  border: 1px solid blue;
+  height: var(--input-height, 40px);
+  animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
+  -moz-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
+  -webkit-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
+  -o-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
+  flex-grow: 0;
   display: flex;
-  margin-left: ${({ count }) => count <= 9 ? '-55px' : count <= 99 && count >= 10 ? '-63px' : '-72px'};
-`;
-
-const GoButton = styled(Button)<{language: string}>`
-  margin-left: ${({ language }) => language === 'ja' ? '9px' : '6px'};
-  margin-top: -2px;
-  width: 30px;
-  height: 20px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 8px;
   border-radius: 3px;
-  padding: ${({ language }) => language === 'ja' ? '1px' : '2px'};
-  &:focus {
-    outline: 2px solid #838383;
-  }
+  box-shadow: 0 2px 1px 0 rgba(0, 102, 255, 0.04);
+  ${({borderColor}) => borderColor && `border-color: ${borderColor}`}
+
 `;
 
-const StaticPageCount = styled(Label)<{language: string}>`
-  margin-left: -33px;
-  color: #808080;
+const GoButton = styled(Button)`
+  max-width: 50px;
+  height: 24px;
+  padding: 0 8px;
+  margin-left: 8px;
 `;
 
-const ArrowWrapper = styled.div`
-  display: flex;
-  gap: 0 8px;
-  margin-top: 10px;
-  margin-left: 16px;
-`;
 
-const ArrowContainer = styled.div<{active: boolean}>`
-  width: 40px;
-  height: 40px;
-  padding: 12px;
-  border-radius: 3px;
-  box-shadow: 0 4px 9px 0 rgba(152, 174, 189, 0.07);
-  border: solid 1px  rgb(71, 73, 76);
-  background-color: rgb(44, 46, 48);
-  pointer-events: ${({ active }) => active ? 'auto' : 'none'};
-  opacity: ${({ active }) => active ? '1' : '0.5'};
-`;
+// const ArrowWrapper = styled.div`
+//   display: flex;
+//   gap: 0 8px;
+//   margin-top: 10px;
+//   margin-left: 16px;
+// `;
+
+// const ArrowContainer = styled.div<{active: boolean}>`
+//   width: 40px;
+//   height: 40px;
+//   padding: 12px;
+//   border-radius: 3px;
+//   box-shadow: 0 4px 9px 0 rgba(152, 174, 189, 0.07);
+//   border: solid 1px  rgb(71, 73, 76);
+//   background-color: rgb(44, 46, 48);
+//   pointer-events: ${({ active }) => active ? 'auto' : 'none'};
+//   opacity: ${({ active }) => active ? '1' : '0.5'};
+// `;
+
+
 
 interface OwnProps {
   pageText?: string,
   totalPages: number,
   defaultPage?: number,
-  language?: 'en' | 'ja',
   buttonText?: string
   onPageChange: (page: number) => void
 }
@@ -109,7 +130,6 @@ const Pagination: React.FC<IPagination> = (props) => {
     pageText = 'Page:',
     totalPages = 199,
     defaultPage = 1,
-    language = 'ja',
     buttonText = 'GO',
     onPageChange
   } = props;
@@ -119,91 +139,178 @@ const Pagination: React.FC<IPagination> = (props) => {
   const [disableGO, setDisabledGo] = useState<boolean>(parseInt(pageValue) > totalPages && fieldState !== '' ? false : true);
   const [shouldShake, setShouldShake] = useState<boolean>(false);
   const [activePage, setActivePage] = useState(parseInt(pageValue));
+  const inputPageRef = useRef<HTMLInputElement>(null);
 
-  const handleInputClick = useCallback(({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setShouldShake(false);
-    if(value.length <= 4) {
-      const numericValue = parseInt(value, 10);
-      if (numericValue <= totalPages && numericValue > 0) {
-        setPageValue(value);
-        setFieldState('');
-        setDisabledGo(false);
-      } else {
-        setFieldState('#f66');
-        setDisabledGo(true);
-        setShouldShake(true);
-      }
-      if(numericValue !== 0) {
-        setPageValue(value === '' ? '' : value);
-      } else {
-        setPageValue('1');
-      }
-      setFieldState(numericValue > totalPages || value === '' ? '#f66' : '#4db5ff');
-      if(value === '') {
-        setDisabledGo(true);
-      } else {
-        setDisabledGo(numericValue > totalPages || value === '' ? true : false);
-      }
-    }
+  const getValidWidth = useCallback(() => {
+    return `${(totalPages.toString().length * WIDTH_PER_NUMBER) + WIDTH_PER_NUMBER/2 }px`;
   },[totalPages]);
 
-  const onBlur = useCallback(() => {
-    if (pageValue === '') {
-      setPageValue(activePage.toString());
-      setDisabledGo(false);
-      setFieldState('');
-    } else if (parseInt(pageValue) > totalPages) {
-      setFieldState('#f66');
-    } else {
-      setFieldState('');
-      setDisabledGo(false);
-      setActivePage(parseInt(pageValue));
-    }
-  }, [activePage, pageValue, totalPages]);
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const key = event.key;
-    const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Control', 'c', 'v', 'x', 'a'];
-    if (!/^\d$/.test(key) && !allowedKeys.includes(key)) {
-      event.preventDefault();
-    }
-  };
+  const isValidInput =  useCallback((currentValue: string) => {
+    console.log('validating input');
 
-  const onFocus = () => {
-    setFieldState(parseInt(pageValue) > totalPages ? '#f66' : '#4db5ff');
-    if(pageValue === '') {
-      setDisabledGo(true);
-      setFieldState('#f66');
-    } else {
-      setDisabledGo(parseInt(pageValue) > totalPages ? true : false);
-    }
-  };
-
-  const getTextFieldState = useCallback(() => {
-    if(fieldState === '') {
-      return 'default';
-    } else {
-      if(pageValue === '') {
-        return 'invalid';
-      } else {
-        if(parseInt(pageValue) > totalPages) {
-          return 'invalid';
-        } else {
-          return 'required';
-        }
+    if (isNotNumber(currentValue)) {
+        return false;
       }
+
+      // validate is inRange
+      if(parseInt(currentValue) > totalPages ) {
+        return false;
+      }
+
+      if(parseInt(currentValue) <= 0){
+        return false;
+      }
+
+      if(currentValue === '') {
+        return false;
+      }
+
+      return true;
+    },[totalPages]);
+
+
+
+  const onInputChange = useCallback(({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+
+    // setShouldShake(false);
+    // if(value.length <= 4) { /// why 4?
+    //   const numericValue = parseInt(value, 10);
+    //   if (numericValue <= totalPages && numericValue > 0) { // range of pages
+    //     setPageValue(value);
+    //     setFieldState('');
+    //     setDisabledGo(false);
+    //   } else {
+    //     setFieldState('invalid');
+    //     setDisabledGo(true);
+    //     setShouldShake(true);
+    //   }
+    //   if(numericValue !== 0) {
+    //     setPageValue(value === '' ? '' : value);
+    //   } else {
+    //     setPageValue('1');
+    //   }
+    //   setFieldState(numericValue > totalPages || value === '' ? 'invalid' : 'processing');
+    //   if(value === '') {
+    //     setDisabledGo(true);
+    //   } else {
+    //     setDisabledGo(numericValue > totalPages || value === '' ? true : false);
+    //   }
+    // }
+
+    setShouldShake(false);
+    if(isNotNumber(value)){
+      return;
     }
-  },[fieldState, pageValue, totalPages]);
+
+    const validDigitValue = value.slice(-totalPages.toString().length);
+
+    setPageValue(validDigitValue);
+    if(isValidInput(validDigitValue)) {
+      setFieldState('processing');
+      setDisabledGo(false);
+
+    } else {
+      setFieldState('invalid');
+      setDisabledGo(true);
+      setShouldShake(true);
+    }
+
+  },[isValidInput, totalPages]);
+
+
+/// I think this one is used to always check value after leaving
+  const onBlur = useCallback(({ target: { value } }: React.FocusEvent<HTMLInputElement>) => {
+    // console.log('current value of input on blur', value);
+    // if (value === '') {
+    //   setPageValue(activePage.toString());
+    //   setDisabledGo(false);
+    //   setFieldState('');
+    // } else if (parseInt(value) > totalPages) {
+    //   setFieldState('invalid');
+    // } else {
+    //   setFieldState('');
+    //   setDisabledGo(false);
+    //   setActivePage(parseInt(value));
+    // }
+    console.log('on Blur Value', value);
+
+    if(value === '' || parseInt(value) !== activePage) {
+      setPageValue(activePage.toString());
+    }
+
+    setDisabledGo(true);
+    setFieldState('default');
+
+  }, [activePage]);
+
+  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   const key = event.key;
+  //   const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Control', 'Escape', 'Esc', 'c', 'v', 'x', 'a'];
+  //   if (!/^\d$/.test(key) && !allowedKeys.includes(key)) {
+  //     event.preventDefault();
+  //   }
+  // };
+
+  /**
+   *
+   * Review if current edith is valid if not make disable
+   */
+  const onFocus = ({ target: { value } }: React.FocusEvent<HTMLInputElement>) => {
+
+    if(isValidInput(value)) {
+      setFieldState('processing');
+    }else {
+      setFieldState('invalid');
+      setDisabledGo(true);
+    }
+
+  };
+
+  // const getTextFieldState = useCallback(() => {
+  //   if(fieldState === '') {
+  //     return 'default';
+  //   } else {
+  //     if(pageValue === '') {
+  //       return 'invalid';
+  //     } else {
+  //       if(parseInt(pageValue) > totalPages) {
+  //         return 'invalid';
+  //       } else {
+  //         return 'required';
+  //       }
+  //     }
+  //   }
+  // },[fieldState, pageValue, totalPages]);
+
+  const getTextColor = useCallback((state: string): string => {
+        switch (state) {
+          case 'processing':
+              return '#4db5ff';
+            break;
+
+          case 'invalid':
+            return '#f66';
+
+          case 'default':
+          default:
+            return 'var(--grey-9)';
+        }
+    },[]);
+
 
   const onClickGo = useCallback(()=>{
+    console.log('was updated onClick');
+
+    setActivePage(parseInt(pageValue));
     onPageChange(parseInt(pageValue));
   },[onPageChange, pageValue]);
 
-  const handlePageChange = (value: number) => {
-    onPageChange(value);
-    setActivePage(value);
-    setPageValue(value.toString());
-  };
+  // const handlePageChange = (value: number) => {
+  //   onPageChange(value);
+  //   setActivePage(value);
+  //   setPageValue(value.toString());
+  // };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const clipboardData = e.clipboardData || (window as any).clipboardData; // Cross-browser support
@@ -215,10 +322,21 @@ const Pagination: React.FC<IPagination> = (props) => {
   };
 
   const arrowEvent = useCallback((e: any) => {
-    if (e.key === 'Enter') {
+    if ( (e.key === 'Enter') && isValidInput(pageValue) ) {
       document.getElementById('goButton')?.click();
+      inputPageRef.current && inputPageRef.current.blur();
     }
-  }, []);
+  }, [isValidInput, pageValue]);
+
+
+  // const updateWithValid = useCallback(() => {
+  //       if(inputPageRef.current) {
+
+  //       }
+  //   },[]);
+
+
+  // useClickOutside(inputPageRef, updateWithValid);
 
   useEffect(() => {
     window.addEventListener('keydown', arrowEvent);
@@ -229,13 +347,13 @@ const Pagination: React.FC<IPagination> = (props) => {
 
   return (
     <PaginationContainer>
-      <PageLabel>{pageText}</PageLabel>
-      <TextFieldWrapper>
-        <TextFieldStyled
+      <PageLabel htmlFor='goButton'>{pageText}</PageLabel>
+      <InputContainer borderColor={getTextColor(fieldState)} shouldShake={shouldShake}>
+        {/* <TextFieldStyled
           label=''
           name='page'
           value={pageValue}
-          onChange={(e) => handleInputClick(e)}
+          onChange={(e) => onInputChange(e)}
           fieldState={getTextFieldState()}
           textColor={fieldState}
           onFocus={() => onFocus()}
@@ -243,16 +361,26 @@ const Pagination: React.FC<IPagination> = (props) => {
           onPaste={(e) => handlePaste(e)}
           onKeyDown={handleKeyDown}
           shouldShake={shouldShake}
+        /> */}
+        <StyledInput
+          ref={inputPageRef}
+          value={pageValue}
+          onChange={(e) => onInputChange(e)}
+          textColor={getTextColor(fieldState)}
+          onFocus={(e) => onFocus(e)}
+          onBlur={(e) => onBlur(e)}
+          onPaste={(e) => handlePaste(e)}
+          // onKeyDown={handleKeyDown}
+          maxWidth={getValidWidth()}
         />
-      </TextFieldWrapper>
-      <GoButtonContainer count={totalPages}>
-        <StaticPageCount htmlFor='goButton' labelText={' / ' + totalPages.toString()} language={language} />
-        <GoButton id='goButton' size='xsmall' design='primary' language={language} disabled={disableGO} onClick={onClickGo}>{buttonText}</GoButton>
-      </GoButtonContainer>
-      <ArrowWrapper>
-        <ArrowContainer onClick={() => handlePageChange(activePage - 1)} active={fieldState === '' && activePage > 1}><Icon icon='Left' color='dimmed' size={15} /></ArrowContainer>
-        <ArrowContainer onClick={() => handlePageChange(activePage + 1)} active={fieldState === '' && activePage < totalPages}><Icon icon='Right' color='dimmed' size={15} /></ArrowContainer>
-      </ArrowWrapper>
+        <StaticPageCount>{'/' + '\u00A0' + totalPages.toString()}</StaticPageCount>
+        <GoButton id='goButton' size='small' design='primary' disabled={disableGO} onClick={onClickGo}>{buttonText}</GoButton>
+      </InputContainer>
+
+      {/* <ArrowWrapper>
+        <ArrowContainer onClick={() => handlePageChange(activePage - 1)} active={fieldState === 'default' && activePage > 1}><Icon icon='Left' color='dimmed' size={15} /></ArrowContainer>
+        <ArrowContainer onClick={() => handlePageChange(activePage + 1)} active={fieldState === 'default' && activePage < totalPages}><Icon icon='Right' color='dimmed' size={15} /></ArrowContainer>
+      </ArrowWrapper> */}
     </PaginationContainer>
   );
 };
