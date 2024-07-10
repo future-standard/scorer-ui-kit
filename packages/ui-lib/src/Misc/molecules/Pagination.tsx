@@ -1,4 +1,4 @@
-import React, { ChangeEvent, HTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, HTMLAttributes, useCallback, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../../Form/atoms/Button';
 import Icon from '../../Icons/Icon';
@@ -66,7 +66,6 @@ const shakeAnimation = keyframes`
 `;
 
 const InputContainer = styled.div<{borderColor?: string,  shouldShake: boolean}>`
-  border: 1px solid blue;
   height: var(--input-height, 40px);
   animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
   -moz-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
@@ -80,8 +79,7 @@ const InputContainer = styled.div<{borderColor?: string,  shouldShake: boolean}>
   padding: 0 8px;
   border-radius: 3px;
   box-shadow: 0 2px 1px 0 rgba(0, 102, 255, 0.04);
-  ${({borderColor}) => borderColor && `border-color: ${borderColor}`}
-
+  ${({borderColor}) => borderColor && `border: 1px solid ${borderColor}`};
 `;
 
 const GoButton = styled(Button)`
@@ -103,8 +101,8 @@ const ArrowButton = styled.button<{active: boolean}>`
   padding: 12px;
   border-radius: 3px;
   box-shadow: 0 4px 9px 0 rgba(152, 174, 189, 0.07);
-  border: solid 1px  rgb(71, 73, 76);
-  background-color: rgb(44, 46, 48);
+  border: solid 1px var(--input-border-default, --grey-9);
+  background-color: var(grey-2);
   pointer-events: ${({ active }) => active ? 'auto' : 'none'};
   opacity: ${({ active }) => active ? '1' : '0.5'};
 
@@ -133,12 +131,11 @@ const Pagination: React.FC<IPagination> = (props) => {
     onPageChange
   } = props;
 
-  const [fieldState, setFieldState] = useState<string>('');
+  const [fieldState, setFieldState] = useState<string>('default');
   const [pageValue, setPageValue] = useState<string>(defaultPage.toString());
   const [disableGO, setDisabledGo] = useState<boolean>(parseInt(pageValue) > totalPages && fieldState !== '' ? false : true);
   const [shouldShake, setShouldShake] = useState<boolean>(false);
   const [activePage, setActivePage] = useState(parseInt(pageValue));
-  const inputPageRef = useRef<HTMLInputElement>(null);
 
   const getValidWidth = useCallback(() => {
     return `${(totalPages.toString().length * WIDTH_PER_NUMBER) + WIDTH_PER_NUMBER/2 }px`;
@@ -250,16 +247,14 @@ const Pagination: React.FC<IPagination> = (props) => {
 
   }, [activePage, isValidInput]);
 
-  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   const key = event.key;
-  //   const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Control', 'Escape', 'Esc', 'c', 'v', 'x', 'a'];
-  //   if (!/^\d$/.test(key) && !allowedKeys.includes(key)) {
-  //     event.preventDefault();
-  //   }
-  // };
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+
+    if ( (event.key === 'Enter') && isValidInput(pageValue) ) {
+      document.getElementById('goButton')?.click();
+    }
+  };
 
   /**
-   *
    * Review if current edith is valid if not make disable
    */
   const onFocus = ({ target: { value } }: React.FocusEvent<HTMLInputElement>) => {
@@ -270,37 +265,20 @@ const Pagination: React.FC<IPagination> = (props) => {
       setFieldState('invalid');
       setDisabledGo(true);
     }
-
   };
-
-  // const getTextFieldState = useCallback(() => {
-  //   if(fieldState === '') {
-  //     return 'default';
-  //   } else {
-  //     if(pageValue === '') {
-  //       return 'invalid';
-  //     } else {
-  //       if(parseInt(pageValue) > totalPages) {
-  //         return 'invalid';
-  //       } else {
-  //         return 'required';
-  //       }
-  //     }
-  //   }
-  // },[fieldState, pageValue, totalPages]);
 
   const getTextColor = useCallback((state: string): string => {
         switch (state) {
           case 'processing':
-              return '#4db5ff';
+              return 'var(--input-border-processing, #4db5ff)';
             break;
 
           case 'invalid':
-            return '#f66';
+            return 'var(--input-border-invalid, #f66)';
 
           case 'default':
           default:
-            return 'var(--grey-9)';
+            return 'var(--input-border-default, --grey-9)';
         }
     },[]);
 
@@ -309,6 +287,7 @@ const Pagination: React.FC<IPagination> = (props) => {
     onPageChange(parseInt(pageValue));
     setDisabledGo(true);
     setFieldState('default');
+
   },[onPageChange, pageValue]);
 
   const handlePageChange = (value: number) => {
@@ -325,20 +304,6 @@ const Pagination: React.FC<IPagination> = (props) => {
       e.preventDefault();
     }
   };
-
-  const enterEvent = useCallback((e: any) => {
-    if ( (e.key === 'Enter') && isValidInput(pageValue) ) {
-      document.getElementById('goButton')?.click();
-      inputPageRef.current && inputPageRef.current.blur();
-    }
-  }, [isValidInput, pageValue]);
-
-  useEffect(() => {
-    window.addEventListener('keydown', enterEvent);
-    return () => {
-      window.removeEventListener('keydown', enterEvent);
-    };
-  }, [enterEvent]);
 
   return (
     <PaginationContainer>
@@ -358,13 +323,13 @@ const Pagination: React.FC<IPagination> = (props) => {
           shouldShake={shouldShake}
         /> */}
         <StyledInput
-          ref={inputPageRef}
           value={pageValue}
           onChange={(e) => onInputChange(e)}
           textColor={getTextColor(fieldState)}
           onFocus={(e) => onFocus(e)}
           onBlur={(e) => onBlur(e)}
           onPaste={(e) => handlePaste(e)}
+          onKeyDown={handleKeyDown}
           maxWidth={getValidWidth()}
         />
         <StaticPageCount>{'/' + '\u00A0' + totalPages.toString()}</StaticPageCount>
@@ -372,8 +337,18 @@ const Pagination: React.FC<IPagination> = (props) => {
       </InputContainer>
 
       <ArrowWrapper>
-        <ArrowButton onClick={() => handlePageChange(activePage - 1)} active={fieldState === 'default' && activePage > 1}><Icon icon='Left' color='dimmed' size={15} /></ArrowButton>
-        <ArrowButton onClick={() => handlePageChange(activePage + 1)} active={fieldState === 'default' && activePage < totalPages}><Icon icon='Right' color='dimmed' size={15} /></ArrowButton>
+        <ArrowButton
+          onClick={() => handlePageChange(activePage - 1)}
+          disabled={activePage <= 1}
+          active={fieldState === 'default' && activePage > 1}>
+            <Icon icon='Left' color='dimmed' size={8} />
+        </ArrowButton>
+        <ArrowButton
+          onClick={() => handlePageChange(activePage + 1)}
+          disabled={activePage >= totalPages}
+          active={fieldState === 'default' && activePage < totalPages}>
+            <Icon icon='Right' color='dimmed' size={8} />
+        </ArrowButton>
       </ArrowWrapper>
     </PaginationContainer>
   );
