@@ -127,7 +127,9 @@ import {
   DebouncedSearcher,
   ActionsBar,
   IActionsButton,
-  Pagination
+  Pagination,
+  IItemsOption,
+  IPagination
 } from './Misc';
 
 import {
@@ -369,5 +371,7 @@ export type {
   IMediaStream,
   IPanelMetaData,
   IActionsButton,
-  ISplitButtonProps
+  ISplitButtonProps,
+  IItemsOption,
+  IPagination,
 };

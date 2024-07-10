@@ -5,7 +5,7 @@ import BigIconsSummary from './atoms/BigIconsSummary';
 import MediaBox from './atoms/MediaBox';
 import DebouncedSearcher from './molecules/DebouncedSearcher';
 import ActionsBar, {IActionsBar, IActionsButton} from './atoms/ActionsBar';
-import Pagination from './molecules/Pagination';
+import Pagination, {IItemsOption, IPagination} from './molecules/Pagination';
 
 export {
   Tag,
@@ -19,4 +19,4 @@ export {
   Pagination
 };
 
-export type { ITagList, ITag, IActionsBar, IActionsButton};
+export type { ITagList, ITag, IActionsBar, IActionsButton, IItemsOption, IPagination};
