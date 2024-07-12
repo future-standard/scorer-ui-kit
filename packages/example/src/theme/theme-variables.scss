@@ -1,3 +1,8 @@
+:root {
+  --font-ui: Monorale, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
+  --font-data: Lato, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
+}
+
 .light-theme {
   /* Light Mode */
   --primary-1: #FAFCFE;
@@ -373,4 +378,63 @@
   --primary: var(--primary-9);
   --danger: var(--error-9);
   --white: var(--white-1);
+}
+
+// Breakpoint size management. This is mapped to CSS variables later.
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-xxl: 1536px;
+
+:root {
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-xxl: 1536px;
+
+  --max-content-width: 1840px;
+}
+
+
+
+.content-layout {
+  
+  &-default {
+    --content-layout-padding-top: 32px;
+    --content-layout-padding-right: 48px;
+    --content-layout-padding-bottom: 64px;
+    --content-layout-padding-left: 64px;
+    --utility-header-padding-top: 48px;
+
+    @media (min-width: $breakpoint-xl){
+      --content-layout-padding-top: 32px;
+      --content-layout-padding-right: 96px;
+      --content-layout-padding-bottom: 64px;
+      --content-layout-padding-left: 96px;
+      --utility-header-padding-top: 48px;
+    }
+
+    @media (min-width: $breakpoint-xxl){
+      --content-layout-padding-top: 30px;
+      --content-layout-padding-right: 120px;
+      --content-layout-padding-bottom: 64px;
+      --content-layout-padding-left: 120px;
+      --utility-header-padding-top: 48px;
+    }
+  }
+
+  &-fullscreen {
+    --content-layout-padding-top: 0px;
+    --content-layout-padding-right: 0px;
+    --content-layout-padding-bottom: 0px;
+    --content-layout-padding-left: 0px;
+    --utility-header-padding-top: 0px;
+  }
+
+  &-dashboard {
+    --content-layout-padding-top: 32px;
+    --content-layout-padding-right: 32px;
+    --content-layout-padding-bottom: 32px;
+    --content-layout-padding-left: 32px;
+    --utility-header-padding-top: 32px;
+  }
+
 }

@@ -13,7 +13,7 @@ import * as serviceWorker from './serviceWorker';
 import './i18n';
 import Fonts from './fonts';
 import Style from './style';
-import './theme/theme-variables.css';
+import './theme/theme-variables.scss';
 
 //@ts-ignore
 defaultTheme.custom.lines['weird'] = {

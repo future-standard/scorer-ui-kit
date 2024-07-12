@@ -157,6 +157,8 @@ import { resetButtonStyles } from './common';
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
 
+import { ContentLayout } from './Layouts';
+
 import {
   MainMenu,
   TopBar,
@@ -300,6 +302,9 @@ export {
   BackLink,
   Sidebar,
   GlobalUI,
+
+  // Content Layouts
+  ContentLayout,
 
   // Tabs
   Tabs,
