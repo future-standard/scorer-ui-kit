@@ -33,7 +33,7 @@ const TabsPage: React.FC = () => {
         </TabList>
         <Divider />
         <TabContent tabId='tab1'>
-          <Tab1Container>
+          <Tab1Container>A
             <Label htmlFor='fullname' labelText='Content of tab 1' />
             <TextField fieldState='default' required label='Full Name' name='fullname' id='fullname' />
             <TextField fieldState='default' required label='Department' name='department' id='department'/>
@@ -41,7 +41,7 @@ const TabsPage: React.FC = () => {
           </Tab1Container>
         </TabContent>
         <TabContent tabId='tab2'>
-          <Tab2Container>
+          <Tab2Container>B
             <Label htmlFor='content2' labelText='Content of tab 2'/>
             <Label htmlFor='lorem' labelText='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet erat et sapien pulvinar efficitur. Quisque tristique massa at auctor rhoncus. Ut venenatis sem id gravida volutpat. Phasellus faucibus accumsan sapien, id pellentesque dolor consectetur quis. Duis non rhoncus nunc. Suspendisse et rhoncus tortor.' />
             <Button design='primary' size='small'> OK </Button>

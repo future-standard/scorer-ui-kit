@@ -1,11 +1,41 @@
-import React from "react";
-import styled from "styled-components";
+import React, { Children } from "react";
+import styled, { css } from "styled-components";
 import UtilityHeader from "./UtilityHeader";
+import { IHeaderContent } from ".";
+import {Tabs} from '../Tabs/Tabs';
+
+
+
+const breakToFullWidth = css`
+  {/* Declared seperately as it breaks styled components otherwise. */}
+  margin-left: calc(var(--content-layout-padding-left) * -1);
+  margin-right: calc(var(--content-layout-padding-right) * -1);
+`
 
 const Container = styled.div``
-  
-const HeaderArea = styled.div``
-const TabArea = styled.div``
+
+const FullWidthSubcontainer = styled.div`
+  ${breakToFullWidth};
+` 
+const HeaderArea = styled.div`
+  padding: 
+    24px
+    var(--content-layout-padding-right)
+    32px
+    var(--content-layout-padding-left);
+`
+const TabArea = styled.div`
+  padding: 
+    0
+    var(--content-layout-padding-right)
+    0
+    var(--content-layout-padding-left);
+
+  border-bottom: 1px solid var(--grey-8);
+`
+const TabAreaInner = styled.div`
+
+`
   
 const Content = styled.div`
   padding: 
@@ -18,24 +48,39 @@ const Content = styled.div`
 
 interface IContentLayout {
   layout?: 'default' | 'fullscreen' | 'dashboard';
-  // Headder?: React.ReactNode;
+  HeaderContent?: IHeaderContent;
 }
 
-const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default' }) => {
-
+const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderContent = {}, children }) => {
+  const { PageHeader, TabContents } = HeaderContent;
   const containerClass = 'content-layout-' + layout;
 
   return <Container className={containerClass}>
-    <UtilityHeader breadcrumbs={[{text:'One', href:'#1'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}]} />
-    {/* {Headder ? <HeaderArea>
-      {Headder}
-    </HeaderArea> : null } */}
-    <TabArea>
-      Tabs - This should be a variation of a full width container. Just happens this is for tabs but it could be re-used elsewhere.
-    </TabArea>
+    
+    <UtilityHeader 
+      $iconInGutter={ layout === 'default' }
+      breadcrumbs={[{text:'One', href:'#1'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}]} />
+    
+    {PageHeader ? <HeaderArea>
+      {PageHeader}
+    </HeaderArea> : null }
+    
+    {TabContents ?
+    <Tabs>
+      <TabArea>
+        <TabAreaInner>
+          {TabContents}
+        </TabAreaInner>
+      </TabArea>
+  
+      <Content>  
+        {children}
+      </Content>
+    </Tabs> : 
     <Content>
-      Content hereas
-    </Content>
+      {children}
+    </Content> }
+
   </Container>
 }
 

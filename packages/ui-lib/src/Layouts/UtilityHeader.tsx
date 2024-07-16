@@ -8,6 +8,7 @@ const Container = styled.div`
   max-width: var(--max-content-width);
   margin-top: var(--utility-header-padding-top);
   padding: 0 var(--content-layout-padding-right) 0 var(--content-layout-padding-left);
+  height: 48px;
 `
 
 const LeftArea = styled.div`
@@ -16,13 +17,19 @@ const LeftArea = styled.div`
   gap: var(--columnPadding, 16px);
   flex: 1 0 0;
 `
-const BackLink = styled.button`
+const BackLinkIcon = styled.div`
+  display: flex;
+  width: 16px;
+  height: 16px;
+  justify-content: center;
+  align-items: center;
+`
+const BackLink = styled(Link)<{$iconInGutter: boolean}>`
   position: relative;
   display: flex;
-  padding-left: 1px;
+  padding: 0;
   align-items: center;
-  gap: 4px;
-
+  gap: 8px;
   color: var(--grey-10);
   text-align: center;
   font-family: var(--font-ui);
@@ -32,19 +39,35 @@ const BackLink = styled.button`
   line-height: normal;
   border: none;
   background: none;
+  text-decoration: none;
+  transition: color 0.25s ease;
+  margin-left: ${props => props.$iconInGutter ? '-24px' : '0' };
 
+  ${BackLinkIcon}{
+    svg * {
+      transition: stroke 0.25s ease;
+    }
+  }
   
+  &:hover {
+    color: var(--grey-12);
+    ${BackLinkIcon}{
+      svg * {
+        stroke: var(--grey-12);
+      }
+    }
+  }
+
+  &::after {
+    content: '';
+    display: inline-block;
+    height: 12px;
+    width: 1px;
+    padding-left: 8px;
+    border-right: 1px solid var(--grey-10);
+  }
 `
-const BackLinkIcon = styled.div`
-  display: flex;
-  width: 16px;
-  height: 16px;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 1px;
-  left: -22px;
-`
+
 const Breadcrumbs = styled.div`
   display: inline-flex;
   align-items: center;
@@ -94,20 +117,20 @@ interface IBreadcrumb {
 }
 
 interface IUtilityHeader {
+  $iconInGutter?: boolean;
   showBack?: boolean;
   backLink?: string;
   showBreadcrumbs?: boolean;
   breadcrumbs?: IBreadcrumb[];
 }
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [] }) => {
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], backLink, $iconInGutter = false }) => {
 
   return <Container>
    <LeftArea>
-    <BackLink>
+    <BackLink to={backLink} {...{$iconInGutter}}>
       <BackLinkIcon>
-        <Icon icon="Back" size={16} color="mono" />
-        {/* grey-10 */}
+        <Icon icon="Back" size={16} color="grey-10" />
       </BackLinkIcon>
       Back
     </BackLink>
@@ -119,8 +142,7 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
         return <React.Fragment key={index}>
           <Breadcrumb>
             <BreadcrumbLink to={href}>{text}</BreadcrumbLink>
-            {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={8} color='mono' /></BreadcrumbIcon> : null }
-            {/* grey-9 */}
+            {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={8} color='grey-8' /></BreadcrumbIcon> : null }
           </Breadcrumb>
         </React.Fragment>
       })}
