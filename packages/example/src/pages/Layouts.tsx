@@ -14,7 +14,7 @@ const Layouts: FC = () => {
     introductionText='Thanks for using our UI library.'
     icon="Home"
     />,
-    TabContents: 
+    TabsElement: 
       <TabList defaultTabId='tab1'>
         <Tab tabFor='tab1'>Home</Tab>
         <Tab tabFor='tab2'>Example One</Tab>
@@ -204,7 +204,7 @@ const Layouts: FC = () => {
           ]}
         >
           
-          <ContentLayout layout="dashboard" HeaderContent={ExampleContent}>
+          <ContentLayout layout="default" HeaderContent={ExampleContent}>
             <TabContent tabId='tab1'>
               <div>
                 <Label htmlFor='fullname' labelText='Content of tab 1' />

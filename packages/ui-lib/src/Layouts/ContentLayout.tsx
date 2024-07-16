@@ -52,7 +52,7 @@ interface IContentLayout {
 }
 
 const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderContent = {}, children }) => {
-  const { PageHeader, TabContents } = HeaderContent;
+  const { PageHeader, TabsElement } = HeaderContent;
   const containerClass = 'content-layout-' + layout;
 
   return <Container className={containerClass}>
@@ -65,21 +65,23 @@ const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderCo
       {PageHeader}
     </HeaderArea> : null }
     
-    {TabContents ?
-    <Tabs>
-      <TabArea>
-        <TabAreaInner>
-          {TabContents}
-        </TabAreaInner>
-      </TabArea>
+    {TabsElement ?
+      <Tabs>
+        <TabArea>
+          <TabAreaInner>
+            {TabsElement}
+          </TabAreaInner>
+        </TabArea>
   
-      <Content>  
+        <Content>  
+          {children}
+        </Content>
+      </Tabs> 
+    : 
+      <Content>
         {children}
-      </Content>
-    </Tabs> : 
-    <Content>
-      {children}
-    </Content> }
+      </Content> 
+    }
 
   </Container>
 }
