@@ -9,6 +9,7 @@ const Container = styled.div`
   margin-top: var(--utility-header-padding-top);
   padding: 0 var(--content-layout-padding-right) 0 var(--content-layout-padding-left);
   height: 48px;
+  display: flex;
 `
 
 const LeftArea = styled.div`
@@ -68,6 +69,48 @@ const BackLink = styled(Link)<{$iconInGutter: boolean}>`
   }
 `
 
+const ExtraActionIcon = styled.div`
+  display: flex;
+  width: 16px;
+  height: 16px;
+  justify-content: center;
+  align-items: center;
+`
+const ExtraAction = styled(Link)`
+  position: relative;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  gap: 8px;
+  color: var(--grey-10);
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  background: none;
+  text-decoration: none;
+  transition: color 0.25s ease;
+
+  ${ExtraActionIcon}{
+    svg * {
+      transition: stroke 0.25s ease;
+    }
+  }
+  
+  &:hover {
+    color: var(--grey-12);
+    ${ExtraActionIcon}{
+      svg * {
+        stroke: var(--grey-12);
+      }
+    }
+  }
+
+`
+
 const Breadcrumbs = styled.div`
   display: inline-flex;
   align-items: center;
@@ -108,7 +151,12 @@ const BreadcrumbLink = styled(Link)`
   }
 `
 
-const RightArea = styled.div``
+const RightArea = styled.div`
+  flex: 1;
+  align-items: center;
+  display: flex;
+  justify-content: right;
+`
   
 
 interface IBreadcrumb {
@@ -149,7 +197,12 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
     </Breadcrumbs>
    </LeftArea>
    <RightArea>
-    {/* For future use for things like share link buttons */}
+      <ExtraAction to={backLink}>
+        <ExtraActionIcon>
+          <Icon icon="Link" size={16} color="grey-10" />
+        </ExtraActionIcon>
+        Back
+      </ExtraAction>
    </RightArea>
   </Container>
 }
