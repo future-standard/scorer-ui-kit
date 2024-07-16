@@ -99,7 +99,7 @@ const ArrowButton = styled.button<{ active: boolean }>`
   padding: 12px;
   border-radius: 3px;
   box-shadow: 0 4px 9px 0 rgba(152, 174, 189, 0.07);
-  border: solid 1px var(--input-border-default, --grey-9);
+  border: solid 1px var(--grey-9);
   background-color: var(grey-2);
   pointer-events: ${({ active }) => active ? 'auto' : 'none'};
   opacity: ${({ active }) => active ? '1' : '0.5'};
@@ -257,15 +257,15 @@ const Pagination: React.FC<IPagination> = (props) => {
 
     switch (state) {
       case 'processing':
-        return 'var(--input-border-processing, #4db5ff)';
+        return 'var(--primary-7)';
         break;
 
       case 'invalid':
-        return 'var(--input-border-invalid, #f66)';
+        return 'var(--warning-8)';
 
       case 'default':
       default:
-        return 'var(--input-border-default, --grey-9)';
+        return 'var(--grey-9)';
     }
 
   }, []);
