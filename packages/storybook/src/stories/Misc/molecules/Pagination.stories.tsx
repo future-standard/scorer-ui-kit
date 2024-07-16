@@ -21,13 +21,12 @@ export const _Pagination = () => {
   const buttonOnClick = action('Page changed');
   const itemsChange = action('Items Per Page')
   const pageText = text('Page Text', 'Page:');
-  const buttonText= text('Button Text', 'Go');
+  const buttonText= text('Button Text', 'GO');
   const itemsText = text('Items Per Page', 'Items Per Page:' )
   const selectWidth = text('Select Width', '60px');
-
   const totalPages = number('Total Pages', 20);
+  const selectDisabled = boolean('Select Disabled', false)
   const itemOptionsObj = object('Items Options', ItemsOptions);
-  const selectDisabled = boolean('Select Width', false)
 
 
   const onPageChange = (page: number) => {

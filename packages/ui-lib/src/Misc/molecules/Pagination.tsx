@@ -5,6 +5,7 @@ import Icon from '../../Icons/Icon';
 import { removeAutoFillStyle, resetButtonStyles } from '../../common';
 import { isNotNumber } from '../../helpers';
 import SelectField, { SelectWrapper } from '../../Form/atoms/SelectField';
+import { StyledLabel } from  '../../Form/atoms/Label';
 
 const WIDTH_PER_NUMBER = 12;
 
@@ -69,9 +70,6 @@ const shakeAnimation = keyframes`
 const InputContainer = styled.div<{ borderColor?: string, shouldShake: boolean }>`
   height: var(--input-height, 40px);
   animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
-  -moz-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
-  -webkit-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
-  -o-animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
   flex-grow: 0;
   display: flex;
   flex-direction: row;
@@ -84,7 +82,6 @@ const InputContainer = styled.div<{ borderColor?: string, shouldShake: boolean }
 `;
 
 const GoButton = styled(Button)`
-  max-width: 50px;
   height: 24px;
   padding: 0 8px;
   margin-left: 8px;
@@ -117,6 +114,10 @@ const ItemsSelectWrapper = styled.div<{ width: string }>`
     width: ${({ width }) => width ? width : `60px`};
   }
     margin-right: 35px;
+
+  ${StyledLabel} {
+    margin-bottom: 0;
+  }
 `;
 
 export interface IItemsOption {
@@ -155,7 +156,7 @@ const Pagination: React.FC<IPagination> = (props) => {
 
   const [fieldState, setFieldState] = useState<string>('default');
   const [pageValue, setPageValue] = useState<string>(activePage.toString());
-  const [disableGO, setDisabledGo] = useState<boolean>(parseInt(pageValue) > totalPages && fieldState !== '' ? false : true);
+  const [disableGo, setDisabledGo] = useState<boolean>(parseInt(pageValue) > totalPages && fieldState !== '' ? false : true);
   const [shouldShake, setShouldShake] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -252,7 +253,7 @@ const Pagination: React.FC<IPagination> = (props) => {
 
   };
 
-  const getTextColor = useCallback((state: string): string => {
+  const getStateColor = useCallback((state: string): string => {
 
     switch (state) {
       case 'processing':
@@ -304,7 +305,6 @@ const Pagination: React.FC<IPagination> = (props) => {
           label={{ htmlFor: 'paginationPages', text: itemsText, isSameRow: true }}
           defaultValue={1}
           changeCallback={onItemsSelectChange}
-          marginBottom={false}
         >
           <Fragment>
             {itemsOptions.map(({ value, textValue }, index) =>
@@ -314,12 +314,12 @@ const Pagination: React.FC<IPagination> = (props) => {
         </SelectField>
       </ItemsSelectWrapper>
       <PageLabel htmlFor='goButton'>{pageText}</PageLabel>
-      <InputContainer borderColor={getTextColor(fieldState)} shouldShake={shouldShake}>
+      <InputContainer borderColor={getStateColor(fieldState)} shouldShake={shouldShake}>
         <StyledInput
           ref={inputRef}
           value={pageValue}
           onChange={(e) => onInputChange(e)}
-          textColor={getTextColor(fieldState)}
+          textColor={getStateColor(fieldState)}
           onFocus={(e) => onFocus(e)}
           onBlur={(e) => onBlur(e)}
           onPaste={(e) => handlePaste(e)}
@@ -327,7 +327,7 @@ const Pagination: React.FC<IPagination> = (props) => {
           maxWidth={getValidWidth()}
         />
         <StaticPageCount>{'/' + '\u00A0' + totalPages.toString()}</StaticPageCount>
-        <GoButton id='goButton' size='small' design='primary' disabled={disableGO} onClick={onClickGo}>{buttonText}</GoButton>
+        <GoButton id='goButton' size='small' design='primary' disabled={disableGo} onClick={onClickGo}>{buttonText}</GoButton>
       </InputContainer>
 
       <ArrowWrapper>
