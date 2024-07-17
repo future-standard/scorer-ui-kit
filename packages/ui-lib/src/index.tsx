@@ -1,6 +1,6 @@
 // Themes
 import defaultTheme from './themes/light/light';
-
+import ThemeVariables from './themes/light/ThemeVariables';
 
 //Components Alerts
 import {
@@ -196,6 +196,7 @@ import {
 export {
   // Theme
   defaultTheme,
+  ThemeVariables,
 
   // Alerts
   AlertBar,

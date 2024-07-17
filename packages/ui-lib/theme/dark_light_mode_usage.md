@@ -4,7 +4,8 @@ In order to have dark and light mode change in your project we recommend using t
 
 This is an example of how Index.tsx and App.tsx can be changed to enable Dark and Light version of the theme.
 
-It is important to import from your Index.tsx the variables that will be used by the app. In this example were using [theme-variables.css](theme-variables.css)
+It is important to import from the UI KIT the `<ThemeVariables>` GlobalStyle.
+If you would like to overwrite any variable it can be easily done by creating a new GlobalStyle bellow or if the modification is on a specific page and component the variables can be updated by wrapping a new value of the variable in a styled div.
 
 
 Index.tsx
@@ -12,13 +13,12 @@ Index.tsx
 ```js
 import React, { FC, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { defaultTheme, ModalProvider, NotificationProvider } from 'scorer-ui-kit';
+import { defaultTheme, ModalProvider, NotificationProvider, ThemeVariables } from 'scorer-ui-kit';
 import { ThemeProvider } from 'styled-components';
 import App from './App';
 import FeaturesProvider from './context/FeaturesContext';
 import Fonts from './Fonts';
 import Style from './Style';
-import './theme/theme-variables.css';
 
 
 const Contents: FC = () => {
@@ -31,6 +31,7 @@ const Contents: FC = () => {
           <NotificationProvider>
             <App {...{ isLightMode, onThemeToggle }} />
             <Fonts />
+            <ThemeVariables />
             <Style />
           </NotificationProvider>
         </ModalProvider>
