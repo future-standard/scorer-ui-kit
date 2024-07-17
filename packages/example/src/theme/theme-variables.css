@@ -371,14 +371,6 @@
   --spinner-secondary: var(--grey-8);
   --spinner-primary: var(--primary-6);
   --spinner-simple: var(--grey-a8);
-
-  --input-border-default: var(--grey-7);
-  --input-border-default-focused: var(--primary-7);
-  --input-border-disabled: var(--grey-7);
-  --input-border-valid: var(--success-7);
-  --input-border-invalid: var(--warning-8);
-  --input-border-processing: var(--primary-7);
-
 }
 
 .dark-theme {
@@ -647,11 +639,4 @@
   --spinner-secondary: var(--grey-8);
   --spinner-primary: var(--primary-6);
   --spinner-simple: var(--grey-a8);
-
-  --input-border-default: var(--grey-7);
-  --input-border-default-focused: var(--primary-7);
-  --input-border-disabled: var(--grey-7);
-  --input-border-valid: var(--success-7);
-  --input-border-invalid: var(--warning-8);
-  --input-border-processing: var(--primary-7);
 }
