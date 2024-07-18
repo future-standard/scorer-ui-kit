@@ -3,22 +3,22 @@ import styled from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconProps, IconWrapper } from '../../Icons/Icon';
 
-const StyledButton = styled.button<{color:ISvgIcons['color']; hoverColor:ISvgIcons['color']}>`
+const StyledButton = styled.button<{color:string; hoverColor:string}>`
   ${resetButtonStyles};
   [stroke]{
-    stroke: ${({theme, color}) => theme.colors.icons[color]};
+    stroke: ${({color}) => color};
   }
   &:hover {
     ${IconWrapper} {
       [stroke]{
-        stroke: ${({theme, hoverColor}) => theme.colors.icons[hoverColor]};
+        stroke: ${({hoverColor}) => hoverColor};
       }
     }
   }
 `;
 
 interface OwnProps {
-  hoverColor?: ISvgIcons['color']
+  hoverColor?: string
 }
 
 export type IconButtonData = OwnProps & IconProps & ButtonHTMLAttributes<HTMLButtonElement>

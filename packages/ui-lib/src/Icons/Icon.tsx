@@ -28,9 +28,9 @@ export { IconWrapper, IconWrapperForSVG, IconSVGs };
 export interface IconProps {
   icon: string;
   size?: number;
-  weight?: 'light' | 'regular' | 'heavy' | 'strong'
-  color?: ISvgIcons['color']
-  forSvgUsage?: boolean
+  weight?: 'light' | 'regular' | 'heavy' | 'strong';
+  color?: string;
+  forSvgUsage?: boolean;
 }
 
 const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color = 'mono', forSvgUsage = false }) => {
