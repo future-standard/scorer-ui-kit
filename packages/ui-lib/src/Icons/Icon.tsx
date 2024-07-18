@@ -37,7 +37,7 @@ export interface IconProps {
 const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color = 'grey-12', forSvgUsage = false }) => {
   const legacyColors = ['mono', 'dimmed', 'subtle', 'inverse', 'primary', 'danger'];
   if(legacyColors.indexOf(color) >= 0){
-    console.warn("Deprecation warning: The use of " + color + " is deprecated. Please replace it with theme color variable.")
+    console.warn("Deprecation warning: The use of " + color + " is deprecated. Please replace it with theme color variable.");
   }
 
   const iconWeight: number = dimensions.icons.weights[weight];
