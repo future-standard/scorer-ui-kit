@@ -25,19 +25,23 @@ const IconContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.pageHeader.mainTitle};
-  `}
+  font-family: var(--font-ui);
+  text-align: left;
+  font-size: 26px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--grey-12);
   margin: 0 0 20px;
 `;
 
 
 const AreaTitleCss = css`
-  ${({theme}) => css`
-  font-family: ${theme.fontFamily.ui};
-  ${theme.typography.pageHeader.areaTitle};
-  `}
+  font-family: var(--font-ui);
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--grey-11);
   margin: 0;
   position: absolute;
   top: -18px;
@@ -75,7 +79,7 @@ const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateD
         : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
       <Title>{title}</Title>
       {icon ?
-        <IconContainer><Icon size={24} color='dimmed' {...{icon}} /></IconContainer>
+        <IconContainer><Icon size={32} color='dimmed' {...{icon}} /></IconContainer>
       : null}
     </Container>
   );
