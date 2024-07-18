@@ -49,11 +49,11 @@ const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color 
     IconSVG != null ?
       forSvgUsage ?
         <IconWrapperForSVG>
-          {IconSVG({ size: size, weight: iconWeight, color: `var(--${color})` })}
+          {IconSVG({ size: size, weight: iconWeight, color: `var(--${color}, var(--grey-12))` })}
         </IconWrapperForSVG>
         :
         <IconWrapper>
-          {IconSVG({ size: size, weight: iconWeight, color: `var(--${color})` })}
+          {IconSVG({ size: size, weight: iconWeight, color: `var(--${color}, var(--grey-12))` })}
         </IconWrapper>
       :
       null
