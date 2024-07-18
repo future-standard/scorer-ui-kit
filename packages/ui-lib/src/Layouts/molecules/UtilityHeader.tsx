@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import Icon from "../Icons/Icon";
+import Icon from "../../Icons/Icon";
 import {Link} from 'react-router-dom';
-
+import { IUtilityHeader } from "..";
+import { useCopyToClipboard } from "../../hooks";
 
 const Container = styled.div`
   max-width: var(--max-content-width);
@@ -76,7 +77,7 @@ const ExtraActionIcon = styled.div`
   justify-content: center;
   align-items: center;
 `
-const ExtraAction = styled(Link)`
+const ExtraAction = styled.button`
   position: relative;
   display: flex;
   padding: 0;
@@ -93,6 +94,7 @@ const ExtraAction = styled(Link)`
   background: none;
   text-decoration: none;
   transition: color 0.25s ease;
+  cursor: pointer;
 
   ${ExtraActionIcon}{
     svg * {
@@ -157,52 +159,56 @@ const RightArea = styled.div`
   display: flex;
   justify-content: right;
 `
-  
 
-interface IBreadcrumb {
-  text: string;
-  href: string;
-}
 
-interface IUtilityHeader {
-  $iconInGutter?: boolean;
-  showBack?: boolean;
-  backLink?: string;
-  showBreadcrumbs?: boolean;
-  breadcrumbs?: IBreadcrumb[];
-}
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], backLink, $iconInGutter = false }) => {
+
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], backLink, $iconInGutter = false, showShareLink = true, shareLink }) => {
+
+  const [ copyActionText, setCopyActionText ] = useState<string>("Share");
+  const {copyToClipboard} = useCopyToClipboard();
+
+  const clickHandlerShareLink = useCallback(() => {
+    copyToClipboard( shareLink ? shareLink : window.location.href);
+    setCopyActionText("Copied");
+    setTimeout(() => setCopyActionText("Share"), 2000);
+  }, [shareLink]);
 
   return <Container>
    <LeftArea>
-    <BackLink to={backLink} {...{$iconInGutter}}>
-      <BackLinkIcon>
-        <Icon icon="Back" size={16} color="grey-10" />
-      </BackLinkIcon>
-      Back
-    </BackLink>
-    <Breadcrumbs>
-      { breadcrumbs.map((breadcrumb, index) => {
-        const {text, href} = breadcrumb;
-        const isLast = index === breadcrumbs.length - 1;
+    {backLink ?
+      <BackLink to={backLink} {...{$iconInGutter}}>
+        <BackLinkIcon>
+          <Icon icon="Back" size={16} color="grey-10" />
+        </BackLinkIcon>
+        Back
+      </BackLink>
+    : null }
+    {showBreadcrumbs && breadcrumbs.length > 0 ?
+      <Breadcrumbs>
+        { breadcrumbs.map((breadcrumb, index) => {
+          const {text, href} = breadcrumb;
+          const isLast = index === breadcrumbs.length - 1;
 
-        return <React.Fragment key={index}>
-          <Breadcrumb>
-            <BreadcrumbLink to={href}>{text}</BreadcrumbLink>
-            {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={8} color='grey-8' /></BreadcrumbIcon> : null }
-          </Breadcrumb>
-        </React.Fragment>
-      })}
-    </Breadcrumbs>
+          return <React.Fragment key={index}>
+            <Breadcrumb>
+              <BreadcrumbLink to={href}>{text}</BreadcrumbLink>
+              {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={8} color='grey-8' /></BreadcrumbIcon> : null }
+            </Breadcrumb>
+          </React.Fragment>
+        })}
+      </Breadcrumbs>
+    : null }
    </LeftArea>
    <RightArea>
-      <ExtraAction to={backLink}>
-        <ExtraActionIcon>
-          <Icon icon="Link" size={16} color="grey-10" />
-        </ExtraActionIcon>
-        Back
-      </ExtraAction>
+      {showShareLink ?
+        <ExtraAction onClick={ clickHandlerShareLink }>
+          <ExtraActionIcon>
+            <Icon icon="Link" size={16} color="grey-10" />
+          </ExtraActionIcon>
+          {copyActionText}
+        </ExtraAction> 
+      : null }
    </RightArea>
   </Container>
 }

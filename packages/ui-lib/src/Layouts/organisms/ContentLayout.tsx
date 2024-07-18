@@ -1,13 +1,13 @@
 import React, { Children } from "react";
 import styled, { css } from "styled-components";
-import UtilityHeader from "./UtilityHeader";
-import { IHeaderContent } from ".";
-import {Tabs} from '../Tabs/Tabs';
+import UtilityHeader from "../molecules/UtilityHeader";
+import { IHeaderContent } from "..";
+import {Tabs} from '../../Tabs/Tabs';
 
 
 
 const breakToFullWidth = css`
-  {/* Declared seperately as it breaks styled components otherwise. */}
+  // Declared seperately as it breaks styled components otherwise.
   margin-left: calc(var(--content-layout-padding-left) * -1);
   margin-right: calc(var(--content-layout-padding-right) * -1);
 `
@@ -59,7 +59,10 @@ const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderCo
     
     <UtilityHeader 
       $iconInGutter={ layout === 'default' }
-      breadcrumbs={[{text:'One', href:'#1'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}]} />
+      breadcrumbs={[{text:'One', href:'#1'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}]} 
+      backLink="/"
+      showShareLink={true}
+      shareLink="https://example.com/" />
     
     {PageHeader ? <HeaderArea>
       {PageHeader}
