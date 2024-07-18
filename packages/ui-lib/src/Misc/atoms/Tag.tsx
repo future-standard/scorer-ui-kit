@@ -25,7 +25,7 @@ export const TagWrapper = styled.div<{ hoverColor:ISvgIcons['color']; enableHove
 
   ${IconWrapper} {
     [stroke]{
-      ${({theme}) => theme.colors.icons['dimmed']};
+      stroke: var(--dimmed);
     }
     margin-right: 8px;
     display: flex;
@@ -36,11 +36,11 @@ export const TagWrapper = styled.div<{ hoverColor:ISvgIcons['color']; enableHove
   ${({theme, hoverColor, enableHover}) => enableHover && css`
     &:hover {
       cursor: pointer;
-      border-color: ${theme.colors.icons[hoverColor]};
-      color: ${theme.colors.icons[hoverColor]};
+      border-color: var(--${hoverColor});
+      color: var(--${hoverColor});
       ${IconWrapper} {
         [stroke]{
-          stroke: ${theme.colors.icons[hoverColor]};
+          stroke: var(--${hoverColor});
         }
       }
     }

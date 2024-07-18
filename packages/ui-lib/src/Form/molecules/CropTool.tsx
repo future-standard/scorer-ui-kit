@@ -52,7 +52,7 @@ const TextGroup = styled.div`
   align-items: center;
   font-size: 20px;
   font-weight: 500;
-  color: ${({theme}) => theme.colors.icons.mono};
+  color: var(--mono);
 
   ${IconWrapper} {
     display: flex;
