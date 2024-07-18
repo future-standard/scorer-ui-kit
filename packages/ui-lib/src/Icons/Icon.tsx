@@ -30,7 +30,7 @@ export interface IconProps {
   icon: string;
   size?: number;
   weight?: 'light' | 'regular' | 'heavy' | 'strong';
-  color?: string;
+  color?: ISvgIcons['color'];
   forSvgUsage?: boolean;
 }
 

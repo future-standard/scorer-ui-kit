@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconProps, IconWrapper } from '../../Icons/Icon';
 
-const StyledButton = styled.button<{color:string; hoverColor:string}>`
+const StyledButton = styled.button<{color:ISvgIcons['color']; hoverColor:ISvgIcons['color']}>`
   ${resetButtonStyles};
   [stroke]{
     stroke: ${({color}) => color};

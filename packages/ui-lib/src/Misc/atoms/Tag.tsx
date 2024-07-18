@@ -33,7 +33,7 @@ export const TagWrapper = styled.div<{ hoverColor:ISvgIcons['color']; enableHove
     align-items: center;
   }
 
-  ${({theme, hoverColor, enableHover}) => enableHover && css`
+  ${({hoverColor, enableHover}) => enableHover && css`
     &:hover {
       cursor: pointer;
       border-color: var(--${hoverColor});
