@@ -47,7 +47,7 @@ const CheckMarkWrapper = styled.div`
       stroke: transparent;
     }
     [fill] {
-      fill: ${({ theme }) => theme.colors.icons.inverse};
+      fill: var(--inverse);
     }
   }
 `;
