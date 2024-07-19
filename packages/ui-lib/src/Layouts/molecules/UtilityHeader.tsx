@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Icon from "../../Icons/Icon";
 import {Link} from 'react-router-dom';
 import { IUtilityHeader } from "..";
@@ -26,7 +26,7 @@ const BackLinkIcon = styled.div`
   justify-content: center;
   align-items: center;
 `
-const BackLink = styled(Link)<{$iconInGutter: boolean}>`
+const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
   position: relative;
   display: flex;
   padding: 0;
@@ -60,14 +60,16 @@ const BackLink = styled(Link)<{$iconInGutter: boolean}>`
     }
   }
 
-  &::after {
-    content: '';
-    display: inline-block;
-    height: 12px;
-    width: 1px;
-    padding-left: 8px;
-    border-right: 1px solid var(--grey-10);
-  }
+  ${({$showDivider}) => $showDivider && css`
+    &::after {
+      content: '';
+      display: inline-block;
+      height: 12px;
+      width: 1px;
+      padding-left: 8px;
+      border-right: 1px solid var(--grey-10);
+    }
+  `}
 `
 
 const ExtraActionIcon = styled.div`
@@ -163,10 +165,12 @@ const RightArea = styled.div`
 
 
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], backLink, $iconInGutter = false, showShareLink = true, shareLink }) => {
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], backLink, $iconInGutter = false, showShareLink = false, shareLink }) => {
 
   const [ copyActionText, setCopyActionText ] = useState<string>("Share");
   const {copyToClipboard} = useCopyToClipboard();
+
+  const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
 
   const clickHandlerShareLink = useCallback(() => {
     copyToClipboard( shareLink ? shareLink : window.location.href);
@@ -177,14 +181,14 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
   return <Container>
    <LeftArea>
     {backLink ?
-      <BackLink to={backLink} {...{$iconInGutter}}>
+      <BackLink to={backLink} $showDivider={hasBreadcrumbs} {...{$iconInGutter}}>
         <BackLinkIcon>
           <Icon icon="Back" size={16} color="grey-10" />
         </BackLinkIcon>
         Back
       </BackLink>
     : null }
-    {showBreadcrumbs && breadcrumbs.length > 0 ?
+    {hasBreadcrumbs ?
       <Breadcrumbs>
         { breadcrumbs.map((breadcrumb, index) => {
           const {text, href} = breadcrumb;

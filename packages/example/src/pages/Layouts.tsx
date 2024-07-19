@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { ThemeProvider } from 'styled-components';
 import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField } from "scorer-ui-kit";
+import { IHeaderContent } from "scorer-ui-kit/dist/Layouts";
 
 
 const Layouts: FC = () => {
@@ -8,13 +9,20 @@ const Layouts: FC = () => {
   const {onThemeToggle, isLightMode} = useThemeToggle();
   
 
-  const ExampleContent = {
-    PageHeader: <PageHeader
+  const ExampleContent : IHeaderContent = {
+    UtilityHeaderOptions: {
+      backLink: '/',
+      breadcrumbs: [{text:'Examples', href:'/'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}],
+      showBreadcrumbs: true,
+      showShareLink: true,
+      shareLink: 'http://www.example.com/'
+    },
+    PageHeaderArea: <PageHeader
     title='Welcome'
     introductionText='Thanks for using our UI library.'
     icon="Home"
     />,
-    TabsElement: 
+    TabsElementArea: 
       <TabList defaultTabId='tab1'>
         <Tab tabFor='tab1'>Home</Tab>
         <Tab tabFor='tab2'>Example One</Tab>

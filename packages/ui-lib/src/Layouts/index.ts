@@ -15,8 +15,9 @@ export interface IUtilityHeader {
 }
 
 export interface IHeaderContent {
-  PageHeader?: React.ReactNode | React.FC;
-  TabsElement?: React.ReactNode | React.FC;
+  UtilityHeaderOptions?: IUtilityHeader;
+  PageHeaderArea?: React.ReactNode | React.FC;
+  TabsElementArea?: React.ReactNode | React.FC;
 }
 
 export {

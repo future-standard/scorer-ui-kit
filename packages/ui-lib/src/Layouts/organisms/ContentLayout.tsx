@@ -33,9 +33,7 @@ const TabArea = styled.div`
 
   border-bottom: 1px solid var(--grey-8);
 `
-const TabAreaInner = styled.div`
-
-`
+const TabAreaInner = styled.div``
   
 const Content = styled.div`
   padding: 
@@ -43,7 +41,6 @@ const Content = styled.div`
     var(--content-layout-padding-right)
     var(--content-layout-padding-bottom)
     var(--content-layout-padding-left);
-  /* var(--utility-header-padding-top); */
 `
 
 interface IContentLayout {
@@ -52,27 +49,25 @@ interface IContentLayout {
 }
 
 const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderContent = {}, children }) => {
-  const { PageHeader, TabsElement } = HeaderContent;
+  const { PageHeaderArea, TabsElementArea, UtilityHeaderOptions } = HeaderContent;
+  
   const containerClass = 'content-layout-' + layout;
 
   return <Container className={containerClass}>
     
-    <UtilityHeader 
-      $iconInGutter={ layout === 'default' }
-      breadcrumbs={[{text:'One', href:'#1'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}]} 
-      backLink="/"
-      showShareLink={true}
-      shareLink="https://example.com/" />
+    {UtilityHeaderOptions ? 
+      <UtilityHeader {...UtilityHeaderOptions} />
+    : null }
     
-    {PageHeader ? <HeaderArea>
-      {PageHeader}
+    {PageHeaderArea ? <HeaderArea>
+      {PageHeaderArea}
     </HeaderArea> : null }
     
-    {TabsElement ?
+    {TabsElementArea ?
       <Tabs>
         <TabArea>
           <TabAreaInner>
-            {TabsElement}
+            {TabsElementArea}
           </TabAreaInner>
         </TabArea>
   
