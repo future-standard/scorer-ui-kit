@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import styled, { css } from "styled-components";
+import React from "react";
+import styled from "styled-components";
 import UtilityHeader from "../molecules/UtilityHeader";
 import { IHeaderContent } from "..";
 import { Tabs } from '../../Tabs/Tabs';
@@ -49,34 +49,7 @@ const Content = styled.div`
     var(--content-layout-padding-bottom)
     var(--content-layout-padding-left);
 `
-const FullWidthContainer = styled.div<{ $contentHeight: number }>`
-  min-height: ${({$contentHeight}) => $contentHeight + 'px'};
-`
-const FullWidthInner = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  input {width: 100%;}
-`
 
-const FullWidthContentBlock : React.FC = ({children}) => {
-
-  const innerElement = useRef<HTMLDivElement>(null);
-  const [ contentHeight, setContentHeight ] = useState<number>(0);
-
-  useEffect(() => {
-    console.log(innerElement)
-    if(innerElement && innerElement.current){
-      setContentHeight(innerElement.current.clientHeight)
-    }
-  }, [innerElement, children])
-
-  return <FullWidthContainer $contentHeight={contentHeight}>
-    <FullWidthInner ref={innerElement}>
-      {children}
-    </FullWidthInner>
-  </FullWidthContainer>
-}
 
 interface IContentLayout {
   layout?: 'default' | 'fullscreen' | 'dashboard';
@@ -107,7 +80,6 @@ const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderCo
         </TabArea>
   
         <Content>  
-          <FullWidthContentBlock><input /></FullWidthContentBlock>
           {children}
         </Content>
       </Tabs> 
