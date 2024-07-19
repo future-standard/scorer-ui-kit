@@ -12,6 +12,7 @@ const GlobalUIPage: FC = () => {
         <GlobalUI
           accountOptionText="Account Options"
           canAlwaysPin
+          legacyLayout={true}
           isLightMode={isLightMode}
           switchThemeText='SWITCH THEME'
           selectedThemeText={isLightMode ? 'LIGHT MODE' : 'DARK MODE' }
@@ -186,14 +187,10 @@ const GlobalUIPage: FC = () => {
             },
           ]}
         >
-          {/* <MainBG>
-              <StyledContent> */}
-              <PageHeader
-                title='Welcome'
-                introductionText='Thanks for using our UI library.'
-              />
-            {/* </StyledContent>
-          </MainBG> */}
+          <PageHeader
+            title='Welcome'
+            introductionText='Thanks for using our UI library.'
+          />
         </GlobalUI>
       </ThemeProvider>
   );

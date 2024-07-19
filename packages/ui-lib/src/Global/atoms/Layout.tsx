@@ -39,19 +39,22 @@ export const MainContainer = styled.div`
   flex-direction: column;
 `;
 
-export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: string}>`
+export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: string, legacyLayout?: boolean }>`
   flex: 1;
   width: 100%;
-  /* padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '40px 20px'}; */
   margin-left: auto;
   margin-right: auto;
 
-  @media ${deviceMediaQuery.medium} {
-    /* padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '40px'}; */
-  }
+  ${({legacyLayout, paddingOverride, maxWidth}) => legacyLayout && css`
+    padding: ${paddingOverride ? paddingOverride : '40px 20px'};
 
-  @media ${deviceMediaQuery.large} {
-    max-width: ${({maxWidth}) => maxWidth ? maxWidth : `1200px`};
-    /* padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '70px 90px'}; */
-  }
+    @media ${deviceMediaQuery.medium} {
+      padding: ${paddingOverride ? paddingOverride : '40px'};
+    }
+
+    @media ${deviceMediaQuery.large} {
+      max-width: ${maxWidth ? maxWidth : `1200px`};
+      padding: ${paddingOverride ? paddingOverride : '70px 90px'};
+    }
+  `}
 `;

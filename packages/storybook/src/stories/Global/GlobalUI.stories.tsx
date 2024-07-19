@@ -549,6 +549,7 @@ export const _GlobalUI = () => {
         onMenuToggle={getToggleValue}
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
+        legacyLayout={false}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer}}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage,
               hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, hasUserDrawerFooter,
