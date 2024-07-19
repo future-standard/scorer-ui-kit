@@ -50,7 +50,6 @@ const Title = styled.h1`
   margin: 0;
 `;
 
-
 const AreaTitleCss = css`
   font-family: var(--font-ui);
   text-align: left;
@@ -76,15 +75,17 @@ type IIconPos = 'top' | 'left'
 interface IProps {
   title: string
   icon?: string
+  iconColor?: ISvgIcons['color']
   areaTitle?: string
+  iconPosition?: IIconPos
   areaHref?: string
   updateDocTitle?: boolean
   hideAreaInDocTitle? : boolean
   areaTitleBottom?: boolean
-  iconPosition?: IIconPos
+
 }
 
-const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false, areaTitleBottom=false, iconPosition='left' }) => {
+const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false, areaTitleBottom=false, iconPosition='left', iconColor='dimmed' }) => {
   // Set <title> attribute automagically.
 
   useTitle(title, hideAreaInDocTitle ? undefined : areaTitle || '', undefined, updateDocTitle);
@@ -96,7 +97,7 @@ const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateD
         : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
       <Title>{title}</Title>
       {icon ?
-        <IconContainer iconPosition={iconPosition}><Icon size={32} color='dimmed' {...{icon}} /></IconContainer>
+        <IconContainer iconPosition={iconPosition}><Icon size={32} color={iconColor} {...{icon}} /></IconContainer>
       : null}
     </Container>
   );
