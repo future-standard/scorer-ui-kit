@@ -10,6 +10,7 @@ const Container = styled.div`
   margin-top: var(--utility-header-padding-top);
   padding: 0 var(--content-layout-padding-right) 0 var(--content-layout-padding-left);
   height: 48px;
+  width: 100%;
   display: flex;
 `
 
@@ -165,7 +166,7 @@ const RightArea = styled.div`
 
 
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], backLink, $iconInGutter = false, showShareLink = false, shareLink }) => {
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], backLink, $iconInGutter = true, showShareLink = false, shareLink }) => {
 
   const [ copyActionText, setCopyActionText ] = useState<string>("Share");
   const {copyToClipboard} = useCopyToClipboard();
