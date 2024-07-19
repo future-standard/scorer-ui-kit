@@ -1,5 +1,7 @@
 :root {
   --font-ui: Monorale, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
+  --font-data: Lato, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
+
   --font-size: 14px;
 
   --button-font-size: 14px;
@@ -12,6 +14,8 @@
 
   --button-icon-size: 14px;
   --button-icon-h-padding: 8px;
+
+  --input-height: 40px;
 }
 
 .button-small {
@@ -636,4 +640,5 @@
   --spinner-secondary: var(--grey-8);
   --spinner-primary: var(--primary-6);
   --spinner-simple: var(--grey-a8);
+
 }
