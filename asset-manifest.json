@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/scorer-ui-kit/static/css/main.3f0bf1c2.css",
-    "main.js": "/scorer-ui-kit/static/js/main.c67ed6b4.js",
+    "main.js": "/scorer-ui-kit/static/js/main.1e80cf94.js",
     "static/media/Monorale-BoldItalic.woff": "/scorer-ui-kit/static/media/Monorale-BoldItalic.21d7f69a690ad9dcb9c8.woff",
     "static/media/Monorale-BlackItalic.woff": "/scorer-ui-kit/static/media/Monorale-BlackItalic.f54c5d2a0c2842d23bde.woff",
     "static/media/Lato-Light.ttf": "/scorer-ui-kit/static/media/Lato-Light.345fe08c61d3f15bbc3e.ttf",
@@ -30,10 +30,10 @@
     "static/media/logo-mark.svg": "/scorer-ui-kit/static/media/logo-mark.c04f523a4fde2280e3442e4b1b26f3ed.svg",
     "static/media/logo-text.svg": "/scorer-ui-kit/static/media/logo-text.65bb2ccdb8a2092c11740c3b9bda7f39.svg",
     "main.3f0bf1c2.css.map": "/scorer-ui-kit/static/css/main.3f0bf1c2.css.map",
-    "main.c67ed6b4.js.map": "/scorer-ui-kit/static/js/main.c67ed6b4.js.map"
+    "main.1e80cf94.js.map": "/scorer-ui-kit/static/js/main.1e80cf94.js.map"
   },
   "entrypoints": [
     "static/css/main.3f0bf1c2.css",
-    "static/js/main.c67ed6b4.js"
+    "static/js/main.1e80cf94.js"
   ]
 }
