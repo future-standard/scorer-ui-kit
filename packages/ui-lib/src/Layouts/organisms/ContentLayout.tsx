@@ -2,7 +2,7 @@ import React, { Children } from "react";
 import styled, { css } from "styled-components";
 import UtilityHeader from "../molecules/UtilityHeader";
 import { IHeaderContent } from "..";
-import {Tabs} from '../../Tabs/Tabs';
+import { Tabs } from '../../Tabs/Tabs';
 
 
 
