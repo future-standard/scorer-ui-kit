@@ -196,12 +196,14 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
             const {text, href} = breadcrumb;
             const isLast = index === breadcrumbs.length - 1;
 
-            return <React.Fragment key={index}>
-              <Breadcrumb>
-                <BreadcrumbLink to={href}>{text}</BreadcrumbLink>
-                {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={8} color='grey-8' /></BreadcrumbIcon> : null }
-              </Breadcrumb>
-            </React.Fragment>
+            return (
+              <React.Fragment key={index}>
+                <Breadcrumb>
+                  <BreadcrumbLink to={href}>{text}</BreadcrumbLink>
+                  {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={8} color='grey-8' /></BreadcrumbIcon> : null }
+                </Breadcrumb>
+              </React.Fragment>
+            );
           })}
         </Breadcrumbs>
       : null }
