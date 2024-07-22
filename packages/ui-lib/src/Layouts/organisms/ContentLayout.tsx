@@ -9,7 +9,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   position: relative;
-`
+`;
 
 const HeaderArea = styled.div`
   width: 100%;
@@ -20,14 +20,14 @@ const HeaderArea = styled.div`
     32px
     var(--content-layout-padding-left);
   
-`
+`;
 const TabArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   border-bottom: 1px solid var(--grey-8);
-`
+`;
 
 const TabAreaInner = styled.div`
   max-width: var(--max-content-width);
@@ -38,7 +38,7 @@ const TabAreaInner = styled.div`
     var(--content-layout-padding-right)
     0
     var(--content-layout-padding-left);
-`
+`;
   
 const Content = styled.div`
   width: 100%;
@@ -48,7 +48,7 @@ const Content = styled.div`
     var(--content-layout-padding-right)
     var(--content-layout-padding-bottom)
     var(--content-layout-padding-left);
-`
+`;
 
 
 interface IContentLayout {
@@ -61,35 +61,37 @@ const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderCo
   
   const containerClass = 'content-layout-' + layout;
 
-  return <Container className={containerClass}>
+  return (
+    <Container className={containerClass}>
+      
+      {UtilityHeaderOptions ? 
+        <UtilityHeader {...UtilityHeaderOptions} />
+      : null }
+      
+      {PageHeaderArea ? <HeaderArea>
+        {PageHeaderArea}
+      </HeaderArea> : null }
+      
+      {TabsElementArea ?
+        <Tabs>
+          <TabArea>
+            <TabAreaInner>
+              {TabsElementArea}
+            </TabAreaInner>
+          </TabArea>
     
-    {UtilityHeaderOptions ? 
-      <UtilityHeader {...UtilityHeaderOptions} />
-    : null }
-    
-    {PageHeaderArea ? <HeaderArea>
-      {PageHeaderArea}
-    </HeaderArea> : null }
-    
-    {TabsElementArea ?
-      <Tabs>
-        <TabArea>
-          <TabAreaInner>
-            {TabsElementArea}
-          </TabAreaInner>
-        </TabArea>
-  
-        <Content>  
+          <Content>  
+            {children}
+          </Content>
+        </Tabs> 
+      : 
+        <Content>
           {children}
-        </Content>
-      </Tabs> 
-    : 
-      <Content>
-        {children}
-      </Content> 
-    }
+        </Content> 
+      }
 
-  </Container>
-}
+    </Container>
+  );
+};
 
 export default ContentLayout;

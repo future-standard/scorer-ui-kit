@@ -12,21 +12,21 @@ const Container = styled.div`
   height: 48px;
   width: 100%;
   display: flex;
-`
+`;
 
 const LeftArea = styled.div`
   display: flex;
   align-items: center;
   gap: var(--columnPadding, 16px);
   flex: 1 0 0;
-`
+`;
 const BackLinkIcon = styled.div`
   display: flex;
   width: 16px;
   height: 16px;
   justify-content: center;
   align-items: center;
-`
+`;
 const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
   position: relative;
   display: flex;
@@ -71,7 +71,7 @@ const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
       border-right: 1px solid var(--grey-10);
     }
   `}
-`
+`;
 
 const ExtraActionIcon = styled.div`
   display: flex;
@@ -79,7 +79,7 @@ const ExtraActionIcon = styled.div`
   height: 16px;
   justify-content: center;
   align-items: center;
-`
+`;
 const ExtraAction = styled.button`
   position: relative;
   display: flex;
@@ -114,13 +114,13 @@ const ExtraAction = styled.button`
     }
   }
 
-`
+`;
 
 const Breadcrumbs = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-`
+`;
 const Breadcrumb = styled.div`
   flex: 1;
   display: flex;
@@ -128,7 +128,7 @@ const Breadcrumb = styled.div`
   align-items: center;
   gap: 8px;
 
-`
+`;
 const BreadcrumbIcon = styled.div`
   flex: 0;
   display: flex;
@@ -140,7 +140,7 @@ const BreadcrumbIcon = styled.div`
     justify-content: center;
     align-items: center;
   }
-`
+`;
 const BreadcrumbLink = styled(Link)`
   flex: 1;
   color: var(--grey-10);
@@ -154,14 +154,14 @@ const BreadcrumbLink = styled(Link)`
   &:hover {
     color: var(--grey-12);
   }
-`
+`;
 
 const RightArea = styled.div`
   flex: 1;
   align-items: center;
   display: flex;
   justify-content: right;
-`
+`;
 
 
 
@@ -177,45 +177,47 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
     copyToClipboard( shareLink ? shareLink : window.location.href);
     setCopyActionText("Copied");
     setTimeout(() => setCopyActionText("Share"), 2000);
-  }, [shareLink]);
+  }, [shareLink, copyToClipboard]);
 
-  return <Container>
-   <LeftArea>
-    {backLink ?
-      <BackLink to={backLink} $showDivider={hasBreadcrumbs} {...{$iconInGutter}}>
-        <BackLinkIcon>
-          <Icon icon="Back" size={16} color="grey-10" />
-        </BackLinkIcon>
-        Back
-      </BackLink>
-    : null }
-    {hasBreadcrumbs ?
-      <Breadcrumbs>
-        { breadcrumbs.map((breadcrumb, index) => {
-          const {text, href} = breadcrumb;
-          const isLast = index === breadcrumbs.length - 1;
-
-          return <React.Fragment key={index}>
-            <Breadcrumb>
-              <BreadcrumbLink to={href}>{text}</BreadcrumbLink>
-              {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={8} color='grey-8' /></BreadcrumbIcon> : null }
-            </Breadcrumb>
-          </React.Fragment>
-        })}
-      </Breadcrumbs>
-    : null }
-   </LeftArea>
-   <RightArea>
-      {showShareLink ?
-        <ExtraAction onClick={ clickHandlerShareLink }>
-          <ExtraActionIcon>
-            <Icon icon="Link" size={16} color="grey-10" />
-          </ExtraActionIcon>
-          {copyActionText}
-        </ExtraAction> 
+  return (
+    <Container>
+    <LeftArea>
+      {backLink ?
+        <BackLink to={backLink} $showDivider={hasBreadcrumbs} {...{$iconInGutter}}>
+          <BackLinkIcon>
+            <Icon icon="Back" size={16} color="grey-10" />
+          </BackLinkIcon>
+          Back
+        </BackLink>
       : null }
-   </RightArea>
-  </Container>
-}
+      {hasBreadcrumbs ?
+        <Breadcrumbs>
+          { breadcrumbs.map((breadcrumb, index) => {
+            const {text, href} = breadcrumb;
+            const isLast = index === breadcrumbs.length - 1;
+
+            return <React.Fragment key={index}>
+              <Breadcrumb>
+                <BreadcrumbLink to={href}>{text}</BreadcrumbLink>
+                {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={8} color='grey-8' /></BreadcrumbIcon> : null }
+              </Breadcrumb>
+            </React.Fragment>
+          })}
+        </Breadcrumbs>
+      : null }
+    </LeftArea>
+    <RightArea>
+        {showShareLink ?
+          <ExtraAction onClick={ clickHandlerShareLink }>
+            <ExtraActionIcon>
+              <Icon icon="Link" size={16} color="grey-10" />
+            </ExtraActionIcon>
+            {copyActionText}
+          </ExtraAction> 
+        : null }
+    </RightArea>
+    </Container>
+  );
+};
 
 export default UtilityHeader;
