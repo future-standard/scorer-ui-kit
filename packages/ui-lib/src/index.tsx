@@ -1,6 +1,6 @@
 // Themes
-import defaultTheme from './themes/light/light';
-import ThemeVariables from './themes/light/ThemeVariables';
+import defaultTheme from './theme';
+import ThemeVariables from './theme';
 
 //Components Alerts
 import {

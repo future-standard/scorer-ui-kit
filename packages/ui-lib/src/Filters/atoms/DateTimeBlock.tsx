@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import {endOfDay, format,isEqual,min,set } from 'date-fns';
 import {isNotNumber} from '../../helpers/index';
 import Icon from '../../Icons/Icon';
-import { fontFamily } from '../../themes/common';
+import { fontFamily } from '../../theme/common';
 
 const Container = styled.div<{hide:boolean}>`
   display: flex;

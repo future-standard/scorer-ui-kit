@@ -1,5 +1,5 @@
 import useMediaQuery from "./useMediaQuery";
-import {deviceMediaQuery} from '../themes/common';
+import {deviceMediaQuery} from '../theme/common';
 
 /**
  * Get a set of boolean representing which breakpoint is activeScreen

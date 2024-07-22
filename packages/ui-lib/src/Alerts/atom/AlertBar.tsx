@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon, {IconWrapper} from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
-import { fontFamily } from '../../themes/common';
+import { fontFamily } from '../../theme/common';
 
 const IconButton = styled.button<{selected?: boolean}>`
   ${resetButtonStyles};

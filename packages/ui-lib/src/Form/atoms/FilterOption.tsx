@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { CheckMark } from '../../svg';
 import { IInputOptionsType } from '..';
-import { dimensions } from '../../themes/common';
+import { dimensions } from '../../theme/common';
 
 const Title = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.data};

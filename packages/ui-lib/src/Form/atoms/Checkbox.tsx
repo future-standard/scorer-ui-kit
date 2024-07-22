@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { CheckMark } from '../../svg';
-import { dimensions } from '../../themes/common';
+import { dimensions } from '../../theme/common';
 
 enum CheckboxState {
   Off = "off",

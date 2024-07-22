@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { IconSVGs } from '@future-standard/icons';
 
-import { dimensions } from '../themes/common';
+import { dimensions } from '../theme/common';
 
 
 const wrapperCss = css`

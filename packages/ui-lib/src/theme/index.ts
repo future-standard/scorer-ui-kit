@@ -1,4 +1,4 @@
-import { fontFamily, dimensions, animation, deviceSize, deviceMediaQuery } from '../common';
+import { fontFamily, dimensions, animation, deviceSize, deviceMediaQuery } from './common';
 import { typography } from './typography';
 import { colors } from './colors';
 import { styles } from './styles';
