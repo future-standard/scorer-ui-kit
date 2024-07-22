@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import SelectField from '../../Form/atoms/SelectField';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import Icon from '../../Icons/Icon';
-import { fontFamily } from '../../themes/common';
+import { fontFamily } from '../../theme/common';
 
 const Container = styled.div`
   display: inline-block;

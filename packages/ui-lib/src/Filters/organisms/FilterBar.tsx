@@ -14,7 +14,7 @@ import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersRes
 import { DateInterval, isDateInterval } from '../molecules/DatePicker';
 import isequal from 'lodash.isequal';
 import debounce from 'lodash.debounce';
-import { fontFamily } from '../../themes/common';
+import { fontFamily } from '../../theme/common';
 
 const Title = styled.div`
   font-family: ${fontFamily.ui};

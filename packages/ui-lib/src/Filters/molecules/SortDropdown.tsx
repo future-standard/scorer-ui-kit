@@ -6,7 +6,7 @@ import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
 import { IFilterItem } from '../FilterTypes';
 import { resetButtonStyles } from '../../common';
-import { fontFamily } from '../../themes/common';
+import { fontFamily } from '../../theme/common';
 
 const Container = styled.div`
   display: inline-block;

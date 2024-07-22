@@ -2,13 +2,12 @@ import React from 'react';
 import { themes } from '@storybook/theming';
 import { ThemeProvider } from 'styled-components';
 import { useDarkMode } from 'storybook-dark-mode'
-import {defaultTheme } from 'scorer-ui-kit';
+import {defaultTheme, ThemeVariables } from 'scorer-ui-kit';
 import Fonts from '../src/fonts';
 import { MemoryRouter as Router } from 'react-router-dom'
 import Style from '../src/style';
 const { addDecorator } = require('@storybook/react');
 const { jsxDecorator } = require('storybook-addon-jsx');
-import '../src/theme/theme-variables.css';
 
 // Add JSX to all components
 addDecorator(jsxDecorator);
@@ -38,6 +37,7 @@ const ThemeDecorator = story => {
   return (
     <ThemeProvider theme={defaultTheme} >
       <Fonts />
+      <ThemeVariables/>
       <Style/>
       {story()}
     </ThemeProvider>

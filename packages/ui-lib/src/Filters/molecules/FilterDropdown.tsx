@@ -7,7 +7,7 @@ import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
 import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
-import { fontFamily } from '../../themes/common';
+import { fontFamily } from '../../theme/common';
 
 const Container = styled.div`
   display: inline-block;
