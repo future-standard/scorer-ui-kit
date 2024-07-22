@@ -58,13 +58,13 @@ const CrossButton = styled.button`
 const StyledInput = styled.input<{ color: string }>`
   ${removeAutoFillStyle};
 
-  ${({ theme: {typography, colors}, theme, color }) => css`
+  ${({ theme: {typography}, theme, color }) => css`
     font-family: ${theme.fontFamily.ui};
     ${typography.filters.searchInput.value};
 
     &::placeholder {
       ${typography.filters.searchInput.placeholder};
-      color: ${colors.icons[color]};
+      color: var(--${color});
       font-size: 12px;
     }
   `};

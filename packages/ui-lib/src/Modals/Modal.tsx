@@ -35,7 +35,7 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   position: absolute;
   right: 0;
   top: -30px;
-  color: ${({theme}) => theme.colors.icons.mono};
+  color: var(--mono);
   font-size: 14px;
   font-weight: 500;
 
