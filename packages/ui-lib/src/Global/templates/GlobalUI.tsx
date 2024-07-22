@@ -10,6 +10,7 @@ import useBreakpoints from '../../hooks/useBreakpoints';
 interface OwnProps {
   maxWidth?: string,
   paddingOverride?: string,
+  legacyLayout?: boolean,
   onMenuToggle?: (isMenuOpen: boolean) =>  void
 }
 
@@ -26,6 +27,7 @@ const GlobalUI: React.FC<INavigation> = ({
   canAlwaysPin,
   paddingOverride,
   maxWidth,
+  legacyLayout,
   children,
   onMenuToggle,
   ...props
@@ -54,7 +56,7 @@ const GlobalUI: React.FC<INavigation> = ({
           <TopBar
             {...{...props}}
           />
-          <ContentArea {...{maxWidth, paddingOverride}}>
+          <ContentArea {...{maxWidth, paddingOverride, legacyLayout}}>
             {children}
           </ContentArea>
         </MainContainer>

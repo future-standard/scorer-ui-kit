@@ -7,7 +7,11 @@ import {
   INotificationsHistory,
   ICustomDrawer,
   TypeTable,
+  TabList,
+  Tab,
   useThemeToggle,
+  ContentLayout,
+  IHeaderContent
 } from 'scorer-ui-kit';
 import photo from '../assets/placeholder.jpg';
 
@@ -41,6 +45,28 @@ const Container = styled.div`
   background-color: var(--grey-2);
   background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
 `;
+
+const ExampleContent : IHeaderContent = {
+  UtilityHeaderOptions: {
+    backLink: '/',
+    breadcrumbs: [{text:'Examples', href:'/'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}],
+    showBreadcrumbs: true,
+    showShareLink: true,
+    shareLink: 'http://www.example.com/'
+  },
+  PageHeaderArea: <PageHeader
+  title='Welcome'
+  introductionText='Thanks for using our UI library.'
+  icon="Home"
+  />,
+  TabsElementArea: 
+    <TabList defaultTabId='tab1'>
+      <Tab tabFor='tab1'>Home</Tab>
+      <Tab tabFor='tab2'>Example One</Tab>
+      <Tab tabFor='tab3'>Example Two</Tab>
+    </TabList>
+  
+}
 
 const Welcome = () => (
   <>
@@ -549,13 +575,16 @@ export const _GlobalUI = () => {
         onMenuToggle={getToggleValue}
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
+        legacyLayout={false}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer}}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage,
               hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, hasUserDrawerFooter,
               selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle
             }}
       >
-        <ComponentLinks />
+        <ContentLayout layout="default" HeaderContent={ExampleContent}>
+          <ComponentLinks />
+        </ContentLayout>
       </GlobalUI>
     </Container>
   )

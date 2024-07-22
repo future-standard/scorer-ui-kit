@@ -19,6 +19,7 @@ import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import TabsPage from './pages/TabsPage';
 import GlobalUIPage from './pages/GlobalUIPage';
 import CustomAlertsPage from './pages/CustomAlertsPage';
+import Layouts from './pages/Layouts';
 
 const App: React.FC<{}> = () => {
   return (
@@ -41,6 +42,7 @@ const App: React.FC<{}> = () => {
         <Route path={`/tabs`} exact={true} component={TabsPage} />
         <Route path={`/customalert`} exact={true} component={CustomAlertsPage} />
         <Route path='/globalUI' exact component={GlobalUIPage} />
+        <Route path='/layouts' exact component={Layouts} />
       </Switch>
     </Router>
   )

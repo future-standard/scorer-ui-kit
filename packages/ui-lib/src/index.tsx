@@ -162,6 +162,12 @@ import { resetButtonStyles } from './common';
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
 
+import { 
+  ContentLayout, 
+  FullWidthContentBlock,
+  IHeaderContent
+} from './Layouts';
+
 import {
   MainMenu,
   TopBar,
@@ -308,6 +314,10 @@ export {
   Sidebar,
   GlobalUI,
 
+  // Content Layouts
+  ContentLayout,
+  FullWidthContentBlock,
+
   // Tabs
   Tabs,
   TabContext,
@@ -375,4 +385,5 @@ export type {
   ISplitButtonProps,
   IItemsOption,
   IPagination,
+  IHeaderContent
 };

@@ -1,5 +1,5 @@
 interface ISvgIcons extends React.SVGProps<SVGSVGElement> {
   size: number
-  color: string
+  color: string;
   weight: number
 }
