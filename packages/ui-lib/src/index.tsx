@@ -165,7 +165,9 @@ import WebRTCClient from './WebRTCClient';
 import { 
   ContentLayout, 
   FullWidthContentBlock,
-  IHeaderContent
+  UtilityHeader,
+  IHeaderContent,
+  IUtilityHeader
 } from './Layouts';
 
 import {
@@ -317,6 +319,7 @@ export {
   // Content Layouts
   ContentLayout,
   FullWidthContentBlock,
+  UtilityHeader,
 
   // Tabs
   Tabs,
@@ -385,5 +388,6 @@ export type {
   ISplitButtonProps,
   IItemsOption,
   IPagination,
-  IHeaderContent
+  IHeaderContent,
+  IUtilityHeader
 };

@@ -1,5 +1,6 @@
 import ContentLayout from './organisms/ContentLayout';
 import FullWidthContentBlock from './atoms/FullWidthContentBlock';
+import UtilityHeader from './molecules/UtilityHeader';
 
 interface IBreadcrumb {
   text: string;
@@ -24,4 +25,5 @@ export interface IHeaderContent {
 export {
   ContentLayout,
   FullWidthContentBlock,
+  UtilityHeader
 };
