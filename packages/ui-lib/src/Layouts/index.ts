@@ -23,5 +23,5 @@ export interface IHeaderContent {
 
 export {
   ContentLayout,
-  FullWidthContentBlock
+  FullWidthContentBlock,
 };

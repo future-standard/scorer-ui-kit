@@ -159,7 +159,8 @@ import WebRTCClient from './WebRTCClient';
 
 import { 
   ContentLayout, 
-  FullWidthContentBlock 
+  FullWidthContentBlock,
+  IHeaderContent
 } from './Layouts';
 
 import {
@@ -372,5 +373,6 @@ export type {
   ICameraPanel,
   IMediaStream,
   IPanelMetaData,
-  IActionsButton
+  IActionsButton,
+  IHeaderContent
 };
