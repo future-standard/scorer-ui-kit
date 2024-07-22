@@ -1,7 +1,11 @@
 
 import { createGlobalStyle } from 'styled-components';
+import { layoutVariables } from './variables/Layout';
+
 
 const GlobalStyle = createGlobalStyle`
+
+  ${layoutVariables};
 
   :root {
     --font-ui: Monorale, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
@@ -645,6 +649,7 @@ const GlobalStyle = createGlobalStyle`
     --spinner-primary: var(--primary-6);
     --spinner-simple: var(--grey-a8);
   }
+  
 `;
 
 export default GlobalStyle;
