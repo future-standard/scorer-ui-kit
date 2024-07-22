@@ -1,6 +1,6 @@
 // Themes
 import defaultTheme from './theme';
-import ThemeVariables from './theme';
+import ThemeVariables from './theme/ThemeVariables';
 
 //Components Alerts
 import {
