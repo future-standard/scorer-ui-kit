@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import styled, { css } from "styled-components";
-import Icon from "../../Icons/Icon";
+import Icon, { IconWrapper } from "../../Icons/Icon";
 import {Link} from 'react-router-dom';
 import { IUtilityHeader } from "..";
 import { useCopyToClipboard } from "../../hooks";
@@ -26,6 +26,12 @@ const BackLinkIcon = styled.div`
   height: 16px;
   justify-content: center;
   align-items: center;
+  flex: 1;  
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
   position: relative;
@@ -200,7 +206,7 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
               <React.Fragment key={index}>
                 <Breadcrumb>
                   <BreadcrumbLink to={href}>{text}</BreadcrumbLink>
-                  {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={8} color='grey-8' /></BreadcrumbIcon> : null }
+                  {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={6} color='grey-8' /></BreadcrumbIcon> : null }
                 </Breadcrumb>
               </React.Fragment>
             );

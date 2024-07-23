@@ -15,7 +15,6 @@ export const MobileLayout = styled.div``;
 
 
 export const Content = styled.div<{ maxWidth?: string, padBottom?: boolean }>`
-  /* padding: ${({padBottom = true}) => padBottom ? '70px 90px' : '70px 90px 0'}; */
   padding: 0;
   flex: 1;
   overflow: auto;

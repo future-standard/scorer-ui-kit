@@ -15,7 +15,6 @@ import './i18n';
 import Fonts from './fonts';
 import Style from './style';
 import ThemeOverwrites from './theme/ThemeOverwrites';
-import './theme/theme-variables.scss';
 
 //@ts-ignore
 defaultTheme.custom.lines['weird'] = {
