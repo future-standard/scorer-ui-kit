@@ -33,17 +33,15 @@ import { action } from '@storybook/addon-actions';
 export default {
   title: 'Global',
   component: GlobalUI,
+  parameters: {
+    layout: 'fullscreen',
+  },
   decorators: [
   ]
 };
 
 const Container = styled.div`
-  /* position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  /* background-color: var(--grey-2); */
-  /*  */
+  flex: 1;
 `;
 
 const ExampleContent : IHeaderContent = {
