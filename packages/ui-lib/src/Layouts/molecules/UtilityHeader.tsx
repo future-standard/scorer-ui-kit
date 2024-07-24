@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import styled, { css } from "styled-components";
-import Icon, { IconWrapper } from "../../Icons/Icon";
+import Icon from "../../Icons/Icon";
 import {Link} from 'react-router-dom';
 import { IUtilityHeader } from "..";
 import { useCopyToClipboard } from "../../hooks";
