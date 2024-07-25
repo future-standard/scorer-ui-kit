@@ -1,6 +1,6 @@
 // Themes
-import defaultTheme from './themes/light/light';
-
+import defaultTheme from './theme';
+import ThemeVariables from './theme/ThemeVariables';
 
 //Components Alerts
 import {
@@ -128,6 +128,9 @@ import {
   DebouncedSearcher,
   ActionsBar,
   IActionsButton,
+  Pagination,
+  IItemsOption,
+  IPagination
 } from './Misc';
 
 import {
@@ -194,6 +197,7 @@ import {
 export {
   // Theme
   defaultTheme,
+  ThemeVariables,
 
   // Alerts
   AlertBar,
@@ -326,6 +330,7 @@ export {
   BasicSearchInput,
   DebouncedSearcher,
   ActionsBar,
+  Pagination,
 
   //Context
   NotificationProvider,
@@ -369,5 +374,7 @@ export type {
   IPanelMetaData,
   IActionsButton,
   ISplitButtonProps,
-  IHeaderTag
+  IHeaderTag,
+  IItemsOption,
+  IPagination,
 };

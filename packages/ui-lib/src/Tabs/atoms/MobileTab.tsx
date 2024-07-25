@@ -24,7 +24,7 @@ const LinkTab = styled.div<{ isActive: boolean }>`
 
     ${IconWrapper} {
       [stroke]{
-        stroke: ${theme.colors.icons['dimmed']};
+        stroke: var(--dimmed);
       }
     }
 

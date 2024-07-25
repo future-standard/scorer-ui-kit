@@ -84,7 +84,7 @@ const uniqueID = () =>
 
   // https://stackoverflow.com/questions/30314447/how-do-you-test-for-nan-in-javascript
   const isNotNumber = (value: string) => {
-    const intValue = parseInt(value);
+    const intValue = Number(value);
 
     // eslint-disable-next-line no-self-compare
     return intValue !== intValue;

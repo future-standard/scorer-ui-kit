@@ -102,7 +102,7 @@ const ContextWrapper = styled.div<{$menuOpen?: boolean}>`
     ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
     ${IconWrapper}{
       [stroke]{
-        stroke: ${({ theme }) => theme.colors.icons['inverse']};
+        stroke: var(--inverse);
       }
     }
   }
@@ -126,7 +126,7 @@ const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }
     ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
     ${IconWrapper}{
       [stroke]{
-        stroke: ${({ theme }) => theme.colors.icons['inverse']};
+        stroke: var(--inverse);
       }
     }
   }
@@ -162,7 +162,7 @@ const ContextActionButton = styled.button<{ menuOpen?: boolean, isActive: boolea
     ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
     ${IconWrapper}{
       [stroke]{
-        stroke: ${({ theme }) => theme.colors.icons['inverse']};
+        stroke: var(--inverse);
       }
     }
   }

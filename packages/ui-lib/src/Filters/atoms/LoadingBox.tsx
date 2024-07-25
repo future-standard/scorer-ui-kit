@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
-import { fontFamily } from '../../themes/common';
+import { fontFamily } from '../../theme/common';
 
 const Container = styled.div`
   display: flex;

@@ -5,6 +5,7 @@ import { defaultTheme,
           NotificationProvider,
           ModalProvider,
           useThemeToggle,
+          ThemeVariables,
         } from 'scorer-ui-kit';
 
 import App from './App';
@@ -13,7 +14,7 @@ import * as serviceWorker from './serviceWorker';
 import './i18n';
 import Fonts from './fonts';
 import Style from './style';
-import './theme/theme-variables.css';
+import ThemeOverwrites from './theme/ThemeOverwrites';
 
 //@ts-ignore
 defaultTheme.custom.lines['weird'] = {
@@ -73,6 +74,8 @@ const Index : FC = () => {
       <NotificationProvider>
         <App />
         <Fonts />
+        <ThemeVariables />
+        <ThemeOverwrites />
         <Style />
       </NotificationProvider>
     </ModalProvider>

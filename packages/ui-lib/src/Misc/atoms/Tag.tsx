@@ -39,7 +39,7 @@ export const TagWrapper = styled.div<{ hoverColor:ISvgIcons['color']; enableHove
 
   ${IconWrapper} {
     [stroke]{
-      ${({theme}) => theme.colors.icons['dimmed']}; // update color and hover color ???
+      stroke: var(--dimmed);
     }
 
     display: flex;
@@ -47,14 +47,14 @@ export const TagWrapper = styled.div<{ hoverColor:ISvgIcons['color']; enableHove
     align-items: center;
   }
 
-  ${({theme, hoverColor, enableHover}) => enableHover && css`
+  ${({hoverColor, enableHover}) => enableHover && css`
     &:hover {
       cursor: pointer;
-      border-color: ${theme.colors.icons[hoverColor]};
-      color: ${theme.colors.icons[hoverColor]};
+      border-color: var(--${hoverColor});
+      color: var(--${hoverColor});
       ${IconWrapper} {
         [stroke]{
-          stroke: ${theme.colors.icons[hoverColor]};
+          stroke: var(--${hoverColor});
         }
       }
     }

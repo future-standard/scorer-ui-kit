@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Button from './Button';
 import Icon from '../../Icons/Icon';
 import { IButtonProps, TypeButtonSizes } from '..';
-import {dimensions} from '../../themes/common';
+import {dimensions} from '../../theme/common';
 
 const TextContainer = styled.div<{size: TypeButtonSizes, position?: string}>`
   height: inherit;

@@ -1,5 +1,5 @@
 import styled, {css} from 'styled-components';
-import {deviceMediaQuery} from '../../themes/common';
+import {deviceMediaQuery} from '../../theme/common';
 
 export const MOBILE_CLOSE_HEIGHT = 50;
 export const MOBILE_NAVBAR_HEIGHT = 68;

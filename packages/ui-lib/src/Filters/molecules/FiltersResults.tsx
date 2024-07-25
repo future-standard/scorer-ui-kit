@@ -5,7 +5,7 @@ import { resetButtonStyles } from '../../common/index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { isFilterItem } from '../FilterTypes';
 import { DateInterval, isDateInterval } from './DatePicker';
-import { fontFamily } from '../../themes/common';
+import { fontFamily } from '../../theme/common';
 import { format, add, startOfDay } from 'date-fns';
 
 const Container = styled.div`
