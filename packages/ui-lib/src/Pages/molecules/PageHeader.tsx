@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PageTitle from '../atoms/PageTitle';
+import PageTitle, { IIconPos } from '../atoms/PageTitle';
 import IntroductionText from '../atoms/IntroductionText';
 import Tag from '../../Misc/atoms/Tag';
 
@@ -11,8 +11,8 @@ const TagListWrapper = styled.div`
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 4px;
-  margin-bottom: 16px;
-  margin-top: 26px;
+  margin-bottom: 5px;
+  margin-top: 29px;
 `;
 
 export type IHeaderTag = {
@@ -26,17 +26,18 @@ interface IProps {
   areaHref?: string
   areaTitle?: string
   icon?: string
+  iconPosition?: IIconPos
   introductionText?: string
   updateDocTitle?: boolean
   hideAreaInDocTitle?: boolean
   tagList?: IHeaderTag[]
 }
 
-const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList }) => {
+const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, iconPosition }) => {
 
   return (
     <Container>
-      <PageTitle {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle }} />
+      <PageTitle iconColor='primary-9' {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, iconPosition }} />
       { !tagList ?
           null
           :

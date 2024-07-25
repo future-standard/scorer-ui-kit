@@ -70,7 +70,7 @@ const AreaLinkTitle = styled(Link)`
   }
 `;
 
-type IIconPos = 'top' | 'left'
+export type IIconPos = 'top' | 'left'
 
 interface IProps {
   title: string

@@ -63,6 +63,7 @@ export const _PageHeader = () => {
   const pageAreaText = text("Page Area", "Area Name");
   const pageAreaHref = text("Page Area Href", "#");
   const pageIcon = select("Icon", iconList, 'Link');
+  const iconPosition = select("Icon Position", {Left: 'left', Top: 'top'}, 'left');
   const updateDocTitle = boolean("Update Doc Title", true);
   const noTagsExample = boolean("No tags Example", false);
   const tagList = object('Tag List', defaultTags)
@@ -76,6 +77,7 @@ export const _PageHeader = () => {
   return <Container>
         <PageHeader
           icon={pageIcon || undefined}
+          iconPosition={iconPosition}
           introductionText={introductionText}
           title={pageTitle}
           areaTitle={pageAreaText}
