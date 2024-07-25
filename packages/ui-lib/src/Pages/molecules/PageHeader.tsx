@@ -1,19 +1,24 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
 import PageTitle from '../atoms/PageTitle';
 import IntroductionText from '../atoms/IntroductionText';
-import TagList from '../../Misc/molecules/TagList';
-import { ITag, TypeTagSize } from '../../Misc/atoms/Tag';
+import Tag from '../../Misc/atoms/Tag';
 
 const Container = styled.div``;
+
+const TagListWrapper = styled.div`
+  display: inline-flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 16px;
+  margin-top: 26px;
+`;
 
 export type IHeaderTag = {
   label: string
   linkTo?: string
   icon?: string
-  noBorder?: boolean
-  tagSize?: TypeTagSize
 }
 
 interface IProps {
@@ -23,33 +28,29 @@ interface IProps {
   icon?: string
   introductionText?: string
   updateDocTitle?: boolean
-  hideAreaInDocTitle? : boolean
+  hideAreaInDocTitle?: boolean
   tagList?: IHeaderTag[]
 }
 
-const PageHeader : React.FC<IProps> = ({title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList=[]}) => {
-
-  const headerTagsConfig : ITag[] = useMemo(() => tagList.map(({icon, label, tagSize, noBorder, linkTo}) => ({
-      icon: icon || '',
-      label: label,
-      linkTo: linkTo,
-      tagSize: tagSize,
-      noBorder: noBorder
-    })
-
-  ), [tagList]);
-
+const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList }) => {
 
   return (
     <Container>
-      <PageTitle {...{title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle}} />
-      {tagList.length > 0?
-        <TagList tagsConfig ={headerTagsConfig} />
-        : null
+      <PageTitle {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle }} />
+      { !tagList ?
+          null
+          :
+          <TagListWrapper>
+            {
+              tagList.map(({icon, label, linkTo}) =>  (
+                <Tag key={`tag-`} icon={icon || ''} noBorder={true}  tagSize='compact' {...{label, linkTo}} />
+              ))
+            }
+          </TagListWrapper>
       }
       {introductionText ?
         <IntroductionText>{introductionText}</IntroductionText>
-      : null}
+        : null}
     </Container>
   );
 };

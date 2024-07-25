@@ -9,10 +9,11 @@ const TextContainer = styled.div`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
+  display: flex;
 `;
 
 export const TagWrapper = styled.div<{ hoverColor:ISvgIcons['color']; enableHover:boolean; size: number, tagSize?: TypeTagSize , noBorder: boolean}>`
-  font-family: ${({theme}) => theme.fontFamily.ui };
+  font-family: var(--font-data);
   font-size: ${({size}) => size}px;
   font-weight: 500;
   color: var(--grey-11);
@@ -26,6 +27,7 @@ export const TagWrapper = styled.div<{ hoverColor:ISvgIcons['color']; enableHove
 
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
   gap: 8px;
 
   ${({tagSize}) => tagSize === 'compact' && css`
