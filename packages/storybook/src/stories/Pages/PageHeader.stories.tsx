@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {  text, select, boolean } from "@storybook/addon-knobs";
 
-import {PageHeader} from 'scorer-ui-kit';
+import {PageHeader, IHeaderTag} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
 
 const Container = styled.div`
@@ -14,6 +14,21 @@ export default {
   component: PageHeader,
   decorators: []
 };
+
+const defaultTags : IHeaderTag[] = [
+  {
+    label: 'Shop A',
+    icon: 'MetaCategories',
+  },
+  {
+    label: 'Example',
+    icon: 'MetaTags',
+  },
+  {
+    label: 'Smart',
+    icon: 'MetaTags',
+  },
+];
 
 export const _PageHeader = () => {
 
@@ -30,6 +45,16 @@ export const _PageHeader = () => {
     console.info("Note: Updating document.title in Storybook has no effect though it should work in projects.")
   }
 
-  return <Container><PageHeader icon={pageIcon || undefined} introductionText={introductionText} title={pageTitle} areaTitle={pageAreaText} areaHref={pageAreaHref} updateDocTitle={updateDocTitle} /></Container>;
+  return <Container>
+        <PageHeader
+          icon={pageIcon || undefined}
+          introductionText={introductionText}
+          title={pageTitle}
+          areaTitle={pageAreaText}
+          areaHref={pageAreaHref}
+          updateDocTitle={updateDocTitle}
+          tagList={defaultTags}
+        />
+      </Container>;
 
 };

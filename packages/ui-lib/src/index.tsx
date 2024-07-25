@@ -87,6 +87,7 @@ import {
   PageHeader,
   PageTitle,
   MultilineContent,
+  IHeaderTag,
 } from './Pages';
 
 // Tables
@@ -367,5 +368,6 @@ export type {
   IMediaStream,
   IPanelMetaData,
   IActionsButton,
-  ISplitButtonProps
+  ISplitButtonProps,
+  IHeaderTag
 };
