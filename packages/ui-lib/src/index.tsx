@@ -166,6 +166,7 @@ import {
   ContentLayout, 
   FullWidthContentBlock,
   UtilityHeader,
+  SplitLayout,
   IHeaderContent,
   IUtilityHeader
 } from './Layouts';
@@ -320,6 +321,7 @@ export {
   ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
+  SplitLayout,
 
   // Tabs
   Tabs,
