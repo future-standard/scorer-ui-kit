@@ -91,7 +91,7 @@ export const deviceSize = {
   medium: 768,
   large: 1024,
   xlarge: 1280,
-  xxlarge: 1400,
+  xxlarge: 1536,
 };
 
 

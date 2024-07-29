@@ -18,7 +18,10 @@ const LinksPage : React.FC = () => {
     <div><Link to={`/tabs`}>Tabs Example</Link></div>
     <div><Link to='/globalUI'>Global UI</Link></div>
     <div><Link to={`/customalert`}>Component Theme Override Example</Link></div>
+    <div><Link to='/layouts'>Layout</Link></div>
     <div><a href='/scorer-ui-kit/storybook'>Storybook</a></div>
+    <div>---</div>
+    <div><Link to='/globalUI'>Global UI (Deprecated)</Link></div>
   </Container>
 };
 
