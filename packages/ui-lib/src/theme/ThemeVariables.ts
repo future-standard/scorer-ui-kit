@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
 ${layoutVariables};
 ${colorVariables};
 
-:root {
+  :root {
 
     --font-ui: Monorale, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
     --font-data: Lato, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
@@ -27,6 +27,12 @@ ${colorVariables};
     --button-icon-h-padding: 8px;
 
     --input-height: 40px;
+    
+
+  }
+  
+  body {
+    background: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%) var(--grey-3); 
   }
 
   .button-small {
