@@ -1,6 +1,7 @@
 // Themes
 import defaultTheme from './theme';
 import ThemeVariables from './theme/ThemeVariables';
+import { BaseStyles } from './theme/ThemeHelpers';
 
 //Components Alerts
 import {
@@ -207,6 +208,7 @@ export {
   // Theme
   defaultTheme,
   ThemeVariables,
+  BaseStyles,
 
   // Alerts
   AlertBar,
