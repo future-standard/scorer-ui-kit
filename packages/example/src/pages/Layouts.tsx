@@ -10,6 +10,13 @@ const FullWidthExampleContent = styled.div`
   margin-bottom: 20px;
 `
 
+const FullWidthExampleContent = styled.div`
+  width: 100%;
+  padding: 20px 0;
+  border-bottom: var(--grey-8) 1px dotted;
+  margin-bottom: 20px;
+`
+
 const Layouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
@@ -226,7 +233,7 @@ const Layouts: FC = () => {
               <div>
                 <h1>Full Width Container</h1>
                 <p>The below line uses the FullWidthContentBlock component to break out of the layout and span the full width of the browser.</p>
-
+                
                 <FullWidthContentBlock>
                   <FullWidthExampleContent />
                 </FullWidthContentBlock>
