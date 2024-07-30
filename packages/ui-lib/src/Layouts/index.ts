@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import ContentLayout from './organisms/ContentLayout';
 import FullWidthContentBlock from './atoms/FullWidthContentBlock';
 import UtilityHeader from './molecules/UtilityHeader';
@@ -23,9 +24,39 @@ export interface IHeaderContent {
   TabsElementArea?: React.ReactNode | React.FC;
 }
 
+export interface IMainArea {
+  content: ReactElement;
+  minSize?: number;
+}
+
+export interface ISideArea {
+  content: ReactElement;
+  defaultSize?: number;
+  minSize?: number;
+  maxSize?: number;
+  collapsable?: boolean;
+}
+
+export interface ISplitLayoutProps {
+  layout: 'horizontal' | 'vertical';
+  reverse?: boolean;
+  dividerSize?: number;
+  mainArea: IMainArea;
+  sideArea: ISideArea;
+  persist?: boolean;
+  persistenceKey?: string;
+  showDebug?: boolean;
+}
+
+export interface ISplitLayoutHandles {
+  open: () => void;
+  close: () => void;
+  reset: () => void;
+}
+
 export {
   ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
-  SplitLayout
+  SplitLayout,
 };

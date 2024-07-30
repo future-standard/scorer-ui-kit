@@ -15,7 +15,7 @@ const Inner = styled.div`
 `;
 
 const Line  = styled.div`
-  background: var(--Grey-12, #ECEDEE);
+  background: var(--grey-10);
   flex: 1;
 `;
 
@@ -23,7 +23,7 @@ const IconContainer = styled.div`
   flex: 0 0 20px;
   svg {
     path {
-      stroke: var(--Grey-11, #9BA1A6);
+      stroke: var(--grey-11);
     }
   }
 `;
@@ -93,9 +93,9 @@ const ResizeLine : React.FC<IResizeLineProps> = ({state = 'default', layout = 'h
         <IconContainer>
           {state === 'default' ? 
             <IconDefault $layout={layout} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13 14.875V5.125" stroke="#9BA1A6" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M10 14.875V5.125" stroke="#9BA1A6" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M7 14.875L7 5.125" stroke="#9BA1A6" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M13 14.875V5.125" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M10 14.875V5.125" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M7 14.875L7 5.125" strokeLinecap="round" strokeLinejoin="round"/>
             </IconDefault>
           : 
             <IconArrow $direction={arrowDirection} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

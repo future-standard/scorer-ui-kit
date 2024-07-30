@@ -1,9 +1,9 @@
-import React, { PointerEvent, useState, useCallback, useEffect, useRef, useImperativeHandle, forwardRef, ReactElement } from 'react';
+import React, { PointerEvent, useState, useCallback, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import styled, { css } from "styled-components";
 import ResizeLine, { TResizeLineDirection, TResizeLineStates } from '../atoms/ResizeLine';
 // NOTE: In production projects, please change the below import to use the component from the UI Kit.
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-
+import { ISplitLayoutHandles, ISplitLayoutProps } from '..';
 
 interface IPosition {
   x: number;
@@ -11,35 +11,7 @@ interface IPosition {
 }
 type LayoutType = 'horizontal' | 'vertical';
 
-interface IMainArea {
-  content: ReactElement;
-  minSize?: number;
-}
 
-interface ISideArea {
-  content: ReactElement;
-  defaultSize?: number;
-  minSize?: number;
-  maxSize?: number;
-  collapsable?: boolean;
-}
-
-interface ISplitLayoutProps {
-  layout: 'horizontal' | 'vertical';
-  reverse?: boolean;
-  dividerSize?: number;
-  mainArea: IMainArea;
-  sideArea: ISideArea;
-  persist?: boolean;
-  persistenceKey?: string;
-  showDebug?: boolean;
-}
-
-export interface ISplitLayoutHandles {
-  open: () => void;
-  close: () => void;
-  reset: () => void;
-}
 
 // 1. open - the side area is open and in normal resize range.
 // 2. collapsing - has been in an open state but is now in an area that will close it on release.
@@ -175,10 +147,10 @@ const DragContainer = styled.div<{$size?: number, $fauxHover: 'true' | 'false'}>
 
 const Container = styled.section<{$initialised?: 'true' | 'false', $layout?: LayoutType, $reverse?: string}>`
   box-sizing: border-box;
-  width: 100vw;
-  height: 100vh;
+  /* width: 100vw; */
+  /* height: 100vh; */
   display: flex;
-  /* flex:0; */
+  flex:1;
   flex-direction: row;
   overflow: hidden;
 
