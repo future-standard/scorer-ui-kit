@@ -1,7 +1,6 @@
 import React, { PointerEvent, useState, useCallback, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import styled, { css } from "styled-components";
 import ResizeLine, { TResizeLineDirection, TResizeLineStates } from '../atoms/ResizeLine';
-// NOTE: In production projects, please change the below import to use the component from the UI Kit.
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { ISplitLayoutHandles, ISplitLayoutProps } from '..';
 
@@ -11,16 +10,12 @@ interface IPosition {
 }
 type LayoutType = 'horizontal' | 'vertical';
 
-
-
 // 1. open - the side area is open and in normal resize range.
 // 2. collapsing - has been in an open state but is now in an area that will close it on release.
 // 3. collapsed - it's hidden!
 // 4. peeking - Has been closed but now dragging might re-open it.
 // 5. opening - We have restored it to a width that appears open. On release, we will set to open.
 type ISideAreaState = 'open' | 'collapsing' | 'collapsed' | 'peeking' | 'opening';
-
-
 
 const DebugData = styled.div`
   position: absolute;
