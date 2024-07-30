@@ -538,8 +538,8 @@ export const colorVariables = css`
     --spinner-primary: var(--primary-6);
     --spinner-simple: var(--grey-a8);
 
-    --main-background-gradient: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
-    --main-background-color: var(--grey-3);
+    /* --main-background-gradient: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
+    --main-background-color: var(--grey-3); */
   }
 
 `;

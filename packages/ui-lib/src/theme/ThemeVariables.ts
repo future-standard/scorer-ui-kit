@@ -3,12 +3,12 @@ import { createGlobalStyle } from 'styled-components';
 import { layoutVariables } from './variables/Layout';
 import { colorVariables } from './variables/Colors';
 
-const ThemeVariables = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
 
 ${layoutVariables};
 ${colorVariables};
 
-  :root {
+:root {
 
     --font-ui: Monorale, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
     --font-data: Lato, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
