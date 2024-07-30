@@ -158,7 +158,10 @@ import {
   ModalProvider,
 } from './context';
 
-import { resetButtonStyles } from './common';
+import { 
+  resetButtonStyles, 
+  FlexContentPlaceholder 
+} from './common';
 
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
@@ -302,6 +305,7 @@ export {
   useMediaModal,
   useThemeToggle,
   resetButtonStyles,
+  FlexContentPlaceholder,
   Spinner,
   WebRTCClient,
 
