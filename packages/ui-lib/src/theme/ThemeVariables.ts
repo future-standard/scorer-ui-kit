@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import { layoutVariables } from './variables/Layout';
 import { colorVariables } from './variables/Colors';
 
-const GlobalStyle = createGlobalStyle`
+const ThemeVariables = createGlobalStyle`
 
 ${layoutVariables};
 ${colorVariables};
