@@ -19,6 +19,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: Monorale, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
     color: lightgray;
   }
+  
+  #root {
+    display: flex;
+  }
 
 `
 export default GlobalStyle;

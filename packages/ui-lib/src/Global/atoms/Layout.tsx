@@ -9,6 +9,7 @@ export const Layout = styled.div`
   flex-direction: row;
   height: 100%;
   ${({ theme }) => theme.styles.global.background};
+  flex: 1;
 `;
 
 export const MobileLayout = styled.div``;
