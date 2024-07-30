@@ -27,7 +27,6 @@ const Container = styled.div`
 
 export const _SplitLayoutNested = () => {
 
-  const layout = 'horizontal';
   const reverse = false;
 
   const nestedSplitChild = <SplitLayout 

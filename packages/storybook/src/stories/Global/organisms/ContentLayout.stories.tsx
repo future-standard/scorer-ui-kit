@@ -10,7 +10,7 @@ import {
 } from 'scorer-ui-kit';
 
 import styled from 'styled-components';
-import { select, boolean } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
 
 export default {
   title: 'Global/organisms',

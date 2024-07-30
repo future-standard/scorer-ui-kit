@@ -24,4 +24,4 @@ const BaseStyles = css`
 
 export {
   BaseStyles
-}
+};
