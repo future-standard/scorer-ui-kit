@@ -168,7 +168,8 @@ import {
   UtilityHeader,
   SplitLayout,
   IHeaderContent,
-  IUtilityHeader
+  IUtilityHeader,
+  ISplitLayoutHandles
 } from './Layouts';
 
 import {
@@ -391,5 +392,6 @@ export type {
   IItemsOption,
   IPagination,
   IHeaderContent,
-  IUtilityHeader
+  IUtilityHeader,
+  ISplitLayoutHandles
 };
