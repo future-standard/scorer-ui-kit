@@ -23,6 +23,7 @@ const TabLabel = styled.label<{ active: boolean }>`
   padding-top: 6px;
   padding-bottom: 14px;
   flex-shrink: 0;
+  user-select: none;
 `;
 
 interface OwnProps {

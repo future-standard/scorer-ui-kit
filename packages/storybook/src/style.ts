@@ -16,9 +16,9 @@ const GlobalStyle = createGlobalStyle<MyThemeProps>`
     box-sizing: border-box;
   }
   body, html , #root {
+    display: flex;
     min-width: 100%;
     min-height: 100vh;
-    height: 100%;
     margin: 0;
     background-color: var(--grey-2);
     background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);

@@ -15,7 +15,7 @@ export const MobileLayout = styled.div``;
 
 
 export const Content = styled.div<{ maxWidth?: string, padBottom?: boolean }>`
-  padding: ${({padBottom = true}) => padBottom ? '70px 90px' : '70px 90px 0'};
+  padding: 0;
   flex: 1;
   overflow: auto;
 
@@ -38,19 +38,22 @@ export const MainContainer = styled.div`
   flex-direction: column;
 `;
 
-export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: string}>`
+export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: string, legacyLayout?: boolean }>`
   flex: 1;
   width: 100%;
-  padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '40px 20px'};
   margin-left: auto;
   margin-right: auto;
 
-  @media ${deviceMediaQuery.medium} {
-    padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '40px'};
-  }
+  ${({legacyLayout, paddingOverride, maxWidth}) => legacyLayout && css`
+    padding: ${paddingOverride ? paddingOverride : '40px 20px'};
 
-  @media ${deviceMediaQuery.large} {
-    max-width: ${({maxWidth}) => maxWidth ? maxWidth : `1200px`};
-    padding: ${({paddingOverride}) => paddingOverride ? paddingOverride : '70px 90px'};
-  }
+    @media ${deviceMediaQuery.medium} {
+      padding: ${paddingOverride ? paddingOverride : '40px'};
+    }
+
+    @media ${deviceMediaQuery.large} {
+      max-width: ${maxWidth ? maxWidth : `1200px`};
+      padding: ${paddingOverride ? paddingOverride : '70px 90px'};
+    }
+  `}
 `;
