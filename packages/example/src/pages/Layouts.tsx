@@ -16,11 +16,9 @@ const Layouts: FC = () => {
     margin-bottom: 20px;
   `
 
-
 const defaultBtn : IBButton[] = [
   {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
 ]
-
 
   const ExampleContent : IHeaderContent = {
     UtilityHeaderOptions: {
