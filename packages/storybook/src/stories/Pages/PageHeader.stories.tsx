@@ -7,7 +7,6 @@ import { generateIconList } from '../helpers';
 
 const Container = styled.div`
   margin: 100px;
-  width: 100%
 `;
 
 export default {

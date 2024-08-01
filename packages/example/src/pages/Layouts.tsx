@@ -1,20 +1,26 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from 'styled-components';
-import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField, FullWidthContentBlock } from "scorer-ui-kit";
+import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField, FullWidthContentBlock, ButtonsBundle, IBButton } from "scorer-ui-kit";
 import { IHeaderContent } from "scorer-ui-kit/dist/Layouts";
 
 
 const Layouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
-  
+
   const FullWidthExampleContent = styled.div`
     width: 100%;
     padding: 20px 0;
     border-bottom: var(--grey-8) 1px dotted;
     margin-bottom: 20px;
   `
+
+
+const defaultBtn : IBButton[] = [
+  {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
+]
+
 
   const ExampleContent : IHeaderContent = {
     UtilityHeaderOptions: {
@@ -28,14 +34,15 @@ const Layouts: FC = () => {
     title='Welcome'
     introductionText='Thanks for using our UI library.'
     icon="Home"
+    customRight={<ButtonsBundle buttons={defaultBtn}/>}
     />,
-    TabsElementArea: 
+    TabsElementArea:
       <TabList defaultTabId='tab1'>
         <Tab tabFor='tab1'>Home</Tab>
         <Tab tabFor='tab2'>Example One</Tab>
         <Tab tabFor='tab3'>Example Two</Tab>
       </TabList>
-    
+
   }
 
 
@@ -218,7 +225,7 @@ const Layouts: FC = () => {
             },
           ]}
         >
-          
+
           <ContentLayout layout="default" HeaderContent={ExampleContent}>
             <TabContent tabId='tab1'>
               <div>
