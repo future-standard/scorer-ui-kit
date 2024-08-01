@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {  text, select, boolean, object } from "@storybook/addon-knobs";
 
-import {PageHeader, IHeaderTag} from 'scorer-ui-kit';
+import {PageHeader, IHeaderTag, ButtonsBundle, IBButton} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
 
 const Container = styled.div`
@@ -55,6 +55,12 @@ const defaultTags : IHeaderTag[] = [
   },
 ];
 
+const buttonList : IBButton[] = [
+  {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
+  {id:'secondaryBase1', buttonType: 'default', text:'Example Action 2', design: 'secondary'},
+  {id:'buttonWithIcon2', buttonType: 'icon-button', text:'Delete Instance', design: 'danger', icon: 'DevicesScorerEdge'},
+]
+
 export const _PageHeader = () => {
 
   const iconList = Object.assign({ None: null }, generateIconList());
@@ -84,6 +90,7 @@ export const _PageHeader = () => {
           areaHref={pageAreaHref}
           updateDocTitle={updateDocTitle}
           tagList={noTagsExample ? undefined : tagList}
+          customRight={<ButtonsBundle buttons={buttonList}/>}
         />
       </Container>;
 

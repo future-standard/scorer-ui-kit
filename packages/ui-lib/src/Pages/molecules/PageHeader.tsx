@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import PageTitle, { IIconPos } from '../atoms/PageTitle';
 import IntroductionText from '../atoms/IntroductionText';
 import Tag from '../../Misc/atoms/Tag';
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  gap: 32px;
+`;
+
+const LeftPanel = styled.div`
+`;
+
+const RightPanel = styled.div`
+`;
 
 const TagListWrapper = styled.div`
   display: inline-flex;
@@ -31,27 +40,38 @@ interface IProps {
   updateDocTitle?: boolean
   hideAreaInDocTitle?: boolean
   tagList?: IHeaderTag[]
+  // customRight?: React.ReactNode | React.FC | ReactElement;
+  customRight?: ReactElement;
 }
 
-const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, iconPosition }) => {
+const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, iconPosition, customRight }) => {
 
   return (
     <Container>
-      <PageTitle iconColor='primary-9' {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, iconPosition }} />
-      { !tagList ?
+      <LeftPanel>
+        <PageTitle iconColor='primary-9' {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, iconPosition }} />
+        {!tagList ?
           null
           :
           <TagListWrapper>
             {
-              tagList.map(({icon, label, linkTo}) =>  (
-                <Tag key={`tag-`} icon={icon || ''} noBorder={true}  tagSize='compact' {...{label, linkTo}} />
+              tagList.map(({ icon, label, linkTo }) => (
+                <Tag key={`tag-`} icon={icon || ''} noBorder={true} tagSize='compact' {...{ label, linkTo }} />
               ))
             }
           </TagListWrapper>
+        }
+        {introductionText ?
+          <IntroductionText>{introductionText}</IntroductionText>
+          : null
+        }
+      </LeftPanel>
+      {customRight ?
+        <RightPanel>
+          {customRight}
+        </RightPanel>
+        : null
       }
-      {introductionText ?
-        <IntroductionText>{introductionText}</IntroductionText>
-        : null}
     </Container>
   );
 };
