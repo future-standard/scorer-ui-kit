@@ -55,7 +55,7 @@ const defaultTags : IHeaderTag[] = [
   },
 ];
 
-const buttonList : IBButton[] = [
+const defaultBtn : IBButton[] = [
   {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
   {id:'secondaryBase1', buttonType: 'default', text:'Example Action 2', design: 'secondary'},
   {id:'buttonWithIcon2', buttonType: 'icon-button', text:'Delete Instance', design: 'danger', icon: 'DevicesScorerEdge'},
@@ -72,9 +72,11 @@ export const _PageHeader = () => {
   const iconPosition = select("Icon Position", {Left: 'left', Top: 'top'}, 'left');
   const updateDocTitle = boolean("Update Doc Title", true);
   const noTagsExample = boolean("No tags Example", false);
-  const tagList = object('Tag List', defaultTags)
+  const areaTitleBottom = boolean("Area Title Bottom", false);
+  const noButtonsExample = boolean("No Buttons Example", false)
   const introductionText = text("Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.");
-
+  const tagList = object('Tag List', defaultTags)
+  const buttonList = object('Buttons Bundle', defaultBtn)
 
   if(updateDocTitle){
     console.info("Note: Updating document.title in Storybook has no effect though it should work in projects.")
@@ -90,7 +92,8 @@ export const _PageHeader = () => {
           areaHref={pageAreaHref}
           updateDocTitle={updateDocTitle}
           tagList={noTagsExample ? undefined : tagList}
-          customRight={<ButtonsBundle buttons={buttonList}/>}
+          customRight={noButtonsExample ? undefined : <ButtonsBundle buttons={buttonList}/>}
+          areaTitleBottom={areaTitleBottom}
         />
       </Container>;
 

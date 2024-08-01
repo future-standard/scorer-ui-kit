@@ -6,6 +6,7 @@ import Tag from '../../Misc/atoms/Tag';
 
 const Container = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 32px;
 `;
 
@@ -40,16 +41,16 @@ interface IProps {
   updateDocTitle?: boolean
   hideAreaInDocTitle?: boolean
   tagList?: IHeaderTag[]
-  // customRight?: React.ReactNode | React.FC | ReactElement;
-  customRight?: ReactElement;
+  areaTitleBottom?: boolean
+  customRight?: React.ReactNode | React.FC | ReactElement;
 }
 
-const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, iconPosition, customRight }) => {
+const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, iconPosition, areaTitleBottom, customRight }) => {
 
   return (
     <Container>
       <LeftPanel>
-        <PageTitle iconColor='primary-9' {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, iconPosition }} />
+        <PageTitle iconColor='primary-9' {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, iconPosition, areaTitleBottom }} />
         {!tagList ?
           null
           :
