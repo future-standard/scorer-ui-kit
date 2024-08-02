@@ -142,8 +142,6 @@ const DragContainer = styled.div<{$size?: number, $fauxHover: 'true' | 'false'}>
 
 const Container = styled.section<{$initialised?: 'true' | 'false', $layout?: LayoutType, $reverse?: string}>`
   box-sizing: border-box;
-  /* width: 100vw; */
-  /* height: 100vh; */
   display: flex;
   flex:1;
   flex-direction: row;

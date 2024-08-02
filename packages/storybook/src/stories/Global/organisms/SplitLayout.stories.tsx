@@ -44,7 +44,7 @@ export const _SplitLayout = () => {
     persist 
     persistenceKey='my_nested_key'
     reverse={reverse} 
-    mainArea={{ content: <FlexContentPlaceholder title='Area sA' />, minSize: 120 }} 
+    mainArea={{ content: <FlexContentPlaceholder title='Area A' />, minSize: 120 }} 
     sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200 }} />;
     
   const nestedSplitLayout = <SplitLayout 

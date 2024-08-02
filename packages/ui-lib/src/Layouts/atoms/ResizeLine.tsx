@@ -7,7 +7,6 @@ export type TResizeLineDirection = 'up' | 'down' | 'left' | 'right' | undefined;
 
 const Inner = styled.div`
   display: flex;
-  /* flex-direction: column; */
   flex: 0 0 200px;
   justify-content: center;
   align-items: center;

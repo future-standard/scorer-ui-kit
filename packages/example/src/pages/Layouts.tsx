@@ -1,9 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from 'styled-components';
-import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField, FullWidthContentBlock } from "scorer-ui-kit";
-import { IHeaderContent } from "scorer-ui-kit/dist/Layouts";
-
+import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField, FullWidthContentBlock, IHeaderContent } from "scorer-ui-kit";
 
 const FullWidthExampleContent = styled.div`
   width: 100%;
