@@ -227,7 +227,7 @@ export const colorVariables = css`
     --grey-a6: #d6ebfd30;
     --grey-a7: #d9edff40;
     --grey-a8: #d9edff5d;
-    --grey-a9: #dfebfd;
+    --grey-a9: #dfebfd6d;
     --grey-a10: #e5edfd7b;
     --grey-a11: #f1f7feb5;
     --grey-a12: #fcfdffef;
