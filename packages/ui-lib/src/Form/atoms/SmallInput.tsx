@@ -8,33 +8,34 @@ import { removeAutoFillStyle } from '../../common';
 const StyledInput = styled.input<{ fieldState : TypeFieldState, padRight?: number }>`
   ${removeAutoFillStyle};
 
-  ${({theme, fieldState}) => css`
-    min-height: 30px;
-    font-family: ${theme.fontFamily.data};
-    border: 1px solid ${theme.styles.form.input[fieldState].normal.borderColor};
-  `};
-
-  height: 100%;
+  font-family: var(--font-data);
+  height: var(--common-height);
+  font-size: 14px;
+  color: var(--input-color-default);
   width: 100%;
   border-radius: 3px;
+  padding: 0 8px;
 
-  padding: 0 22px 0 10px;
   box-sizing: border-box;
   outline: none;
-
-  ${({theme: {typography}}) => css`
-    ${typography.form.input.value.compact};
-    &::placeholder {
-      ${typography.form.input.placeholder.compact};
-    }
+  
+  ${({fieldState}) => css`
+    border: 1px solid var(--input-border-${fieldState});
+    background: var(--input-background-${fieldState});
   `};
+  
+  &::placeholder {
+    color: var(--input-color-placeholder);
+    font-style: italic;
+  }
 
-  ${p => p.padRight  && css`
+  ${p => p.padRight && css`
     padding-right: ${p.padRight + 17}px;
   `}
 
   &:disabled {
     cursor: not-allowed;
+    color: var(--input-color-disabled);
   }
 `;
 
@@ -56,37 +57,19 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 
 const UnitKey = styled.div`
   position: absolute;
-  right: 10px;
-  bottom: 0;
-  top:0;
-  font-family: ${({ theme }) => theme.fontFamily.ui };
+  right: 8px;
+  bottom: 7px;
+  font-family: var(--font-ui);
   font-size: 12px;
-  color: var(--grey-10);
-  line-height:30px;
+  color: var(--input-color-unit);
 `;
 
 const Container = styled.div<{ fieldState: string }>`
-
-  display: flex;
   position: relative;
 
-  ${StyledInput}{
-    ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal};
-
-    &:focus {}
-
-    ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 0px;
-    `}
-  }
-
   &:focus-within ${InputContainer} {
-    ${({theme, fieldState}) => fieldState !== 'disabled' && css`
-      border-color:${theme.styles.form.input[fieldState].focused.borderColor};
-    `
+   
   }
-
 `;
 
 interface OwnProps {

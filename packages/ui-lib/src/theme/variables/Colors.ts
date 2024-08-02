@@ -499,6 +499,25 @@ export const colorVariables = css`
     --spinner-primary: var(--primary-6);
     --spinner-simple: var(--grey-a8);
 
+    /* Inputs */
+    --input-border-default: var(--grey-6);
+    --input-border-disabled: var(--grey-6);
+    --input-border-required: var(--primary-6);
+    --input-border-valid: var(--success-9);
+    --input-border-invalid: var(--warning-9);
+    --input-border-processing: var(--primary-10);
+    
+    --input-background-default: var(--grey-1);
+    --input-background-disabled: var(--grey-3);
+    --input-background-required: var(--primary-1);
+    --input-background-valid: var(--success-1);
+    --input-background-invalid: var(--warning-1);
+    --input-background-processing: var(--primary-2);
+
+    --input-color-default: var(--grey-12);
+    --input-color-disabled: var(--grey-10);
+    --input-color-placeholder: var(--grey-11);
+    --input-color-unit: var(--grey-10);
 
     --main-background-gradient: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
     --main-background-color: var(--grey-3);
