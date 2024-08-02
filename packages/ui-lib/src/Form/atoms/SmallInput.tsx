@@ -5,33 +5,25 @@ import Label from '../atoms/Label';
 import { TypeFieldState } from '..';
 import { removeAutoFillStyle } from '../../common';
 
-const StyledInput = styled.input<{ fieldState : TypeFieldState, padRight?: number }>`
+const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   ${removeAutoFillStyle};
 
   font-family: var(--font-data);
-  height: var(--common-height);
+  line-height: var(--common-height);
+
   font-size: 14px;
+  flex: 1;
   color: var(--input-color-default);
   width: 100%;
-  border-radius: 3px;
-  padding: 0 8px;
-
+  border: none;
+  background-color: transparent;
   box-sizing: border-box;
   outline: none;
-  
-  ${({fieldState}) => css`
-    border: 1px solid var(--input-border-${fieldState});
-    background: var(--input-background-${fieldState});
-  `};
-  
+    
   &::placeholder {
     color: var(--input-color-placeholder);
     font-style: italic;
   }
-
-  ${p => p.padRight && css`
-    padding-right: ${p.padRight + 17}px;
-  `}
 
   &:disabled {
     cursor: not-allowed;
@@ -39,10 +31,22 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState, padRight?: numbe
   }
 `;
 
-const InputContainer = styled.div<{hasAction?: boolean}>`
-
-  flex: 1;
+const InputContainer = styled.div<{fieldState : TypeFieldState, hasAction?: boolean}>`
+  display: flex;
+  height: var(--common-height);
+  padding: 0 8px;
+  align-items: center;
+  gap: 8px;
   position: relative;
+  border-radius: 3px;
+  
+  ${({fieldState}) => css`
+    border: 1px solid var(--input-border-${fieldState});
+    background: var(--input-background-${fieldState});
+    transition: 
+      border var(--speed-normal) var(--easing-primary-in),
+      background var(--speed-normal) var(--easing-primary-in);
+  `};
 
   ${({ hasAction }) => hasAction && css`
     ${StyledInput}{
@@ -56,11 +60,10 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 `;
 
 const UnitKey = styled.div`
-  position: absolute;
-  right: 8px;
-  bottom: 7px;
-  font-family: var(--font-ui);
+  flex: 0 1;
   font-size: 12px;
+  font-family: var(--font-ui);
+  line-height: var(--common-height);
   color: var(--input-color-unit);
 `;
 
@@ -68,7 +71,8 @@ const Container = styled.div<{ fieldState: string }>`
   position: relative;
 
   &:focus-within ${InputContainer} {
-   
+    transition: boxShadow var(--speed-fast) var(--easing-primary-in-out);
+    box-shadow: 0 3px 3px var(--input-focused-shadow-color);
   }
 `;
 
@@ -92,21 +96,14 @@ const SmallInput : React.FC<Props> = ({
   ...props
 }) => {
 
-  const unitElement = useRef<HTMLDivElement>(null);
-  const [unitElementWidth, setUnitElementWidth] = useState<number>(0);
-
-  useEffect(() => {
-    if(unitElement && unitElement.current){
-      setUnitElementWidth(unitElement.current.clientWidth || 0);
-    }
-  }, [unitElement, setUnitElementWidth, unit]);
+ 
 
   return (
     <Container className={className} fieldState={fieldState || 'default'}>
       <Label labelText={label} htmlFor={name || ''}>
-        <InputContainer>
-          <StyledInput padRight={unitElementWidth} fieldState={fieldState || 'default'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
-          {unit ? <UnitKey ref={unitElement}>{unit}</UnitKey> : null}
+        <InputContainer fieldState={fieldState || 'default'}>
+          <StyledInput fieldState={fieldState || 'default'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
+          {unit ? <UnitKey>{unit}</UnitKey> : null}
         </InputContainer>
       </Label>
 

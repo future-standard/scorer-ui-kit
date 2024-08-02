@@ -1,12 +1,14 @@
 
 import { createGlobalStyle } from 'styled-components';
 import { layoutVariables } from './variables/Layout';
+import { animationVariables } from './variables/Animation';
 import { colorVariables } from './variables/Colors';
 
 const ThemeVariables = createGlobalStyle`
 
-${layoutVariables};
-${colorVariables};
+  ${layoutVariables};
+  ${animationVariables};
+  ${colorVariables};
 
   :root {
 

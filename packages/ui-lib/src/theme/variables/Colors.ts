@@ -501,6 +501,7 @@ export const colorVariables = css`
 
     /* Inputs */
     --input-border-default: var(--grey-6);
+    --input-border-default-focused: var(--grey-8);
     --input-border-disabled: var(--grey-6);
     --input-border-required: var(--primary-6);
     --input-border-valid: var(--success-9);
@@ -516,8 +517,10 @@ export const colorVariables = css`
 
     --input-color-default: var(--grey-12);
     --input-color-disabled: var(--grey-10);
-    --input-color-placeholder: var(--grey-11);
+    --input-color-placeholder: var(--grey-10);
     --input-color-unit: var(--grey-10);
+
+    --input-focused-shadow-color: var(--black-a5);    
 
     --main-background-gradient: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
     --main-background-color: var(--grey-3);
