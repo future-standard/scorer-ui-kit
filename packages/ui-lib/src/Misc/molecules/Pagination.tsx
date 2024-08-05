@@ -131,8 +131,10 @@ interface OwnProps {
   activePage?: number
   buttonText?: string
   itemsText?: string
+  itemsDefaultValue?: number
   selectWidth?: string
   selectDisabled?: boolean
+  selectId?: string
   itemsOptions: IItemsOption[]
   onPageChange: (page: number) => void
   onItemsChange: (items: number) => void
@@ -147,6 +149,8 @@ const Pagination: React.FC<IPagination> = (props) => {
     activePage = 1,
     buttonText = 'GO',
     itemsText = 'Items Per Page',
+    itemsDefaultValue,
+    selectId = 'paginationPages',
     selectWidth = '60px',
     selectDisabled = false,
     itemsOptions = [],
@@ -302,8 +306,8 @@ const Pagination: React.FC<IPagination> = (props) => {
       <ItemsSelectWrapper width={selectWidth}>
         <SelectField
           disabled={selectDisabled}
-          label={{ htmlFor: 'paginationPages', text: itemsText, isSameRow: true }}
-          defaultValue={1}
+          label={{ htmlFor: selectId, text: itemsText, isSameRow: true }}
+          defaultValue={itemsDefaultValue ? itemsDefaultValue : itemsOptions[0].value || 1}
           changeCallback={onItemsSelectChange}
         >
           <Fragment>
