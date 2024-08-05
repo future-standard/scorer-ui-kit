@@ -29,26 +29,26 @@ export const _SplitLayoutNested = () => {
 
   const reverse = false;
 
-  const nestedSplitChild = <SplitLayout 
+  const nestedSplitChild = <SplitLayout
     layout='vertical'
-    persist 
+    persist
     persistenceKey='my_nested_key'
-    reverse={reverse} 
-    mainArea={{ content: <FlexContentPlaceholder title='Area A' />, minSize: 120 }} 
+    reverse={reverse}
+    mainArea={{ content: <FlexContentPlaceholder title='Area A' />, minSize: 120 }}
     sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200 }} />;
-    
-  const nestedSplitLayout = <SplitLayout 
+
+  const nestedSplitLayout = <SplitLayout
     layout='horizontal'
-    persist 
+    persist
     persistenceKey='my_unique_layout_key'
-    reverse={reverse} 
-    mainArea={{ content: nestedSplitChild, minSize: 120 }} 
+    reverse={reverse}
+    mainArea={{ content: nestedSplitChild, minSize: 120 }}
     sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200 }} />
 
   return (
     <Container>
       <ContentLayout layout='dashboard'>
-        {nestedSplitLayout};
+        {nestedSplitLayout}
       </ContentLayout>
     </Container>
   )
