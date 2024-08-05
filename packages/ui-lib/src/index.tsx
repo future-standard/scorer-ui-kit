@@ -8,6 +8,7 @@ import {
   Notification,
   INotificationProps,
   AlertWrapper,
+  Tooltip
 } from './Alerts';
 
 // Components - Form
@@ -162,8 +163,8 @@ import { resetButtonStyles } from './common';
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
 
-import { 
-  ContentLayout, 
+import {
+  ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
   IHeaderContent,
@@ -210,6 +211,7 @@ export {
   AlertBar,
   Notification,
   AlertWrapper,
+  Tooltip,
 
   // LineUI
   LineUI,
