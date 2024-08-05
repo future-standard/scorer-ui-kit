@@ -41,7 +41,10 @@ import {
   AreaUploadManager,
   RadioButton,
   SplitButton,
-  ISplitButtonProps
+  ISplitButtonProps,
+  ButtonsBundle,
+  IButtonsBundle,
+  IBButton
 } from './Form';
 
 // Components - Filter
@@ -87,6 +90,7 @@ import {
   PageHeader,
   PageTitle,
   MultilineContent,
+  IHeaderTag,
 } from './Pages';
 
 // Tables
@@ -162,8 +166,8 @@ import { resetButtonStyles } from './common';
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
 
-import { 
-  ContentLayout, 
+import {
+  ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
   IHeaderContent,
@@ -246,6 +250,7 @@ export {
   AreaUploadManager,
   RadioButton,
   SplitButton,
+  ButtonsBundle,
 
   // Modals
   ConfirmationModal,
@@ -386,8 +391,11 @@ export type {
   IPanelMetaData,
   IActionsButton,
   ISplitButtonProps,
+  IHeaderTag,
   IItemsOption,
   IPagination,
   IHeaderContent,
-  IUtilityHeader
+  IUtilityHeader,
+  IButtonsBundle,
+  IBButton
 };

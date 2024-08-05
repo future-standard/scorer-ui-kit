@@ -5,15 +5,31 @@ import Icon from '../../Icons/Icon';
 import { Link } from 'react-router-dom';
 import { useTitle } from '../../hooks/useTitle';
 
-
-const Container = styled.div`
+const Container = styled.div<{areaTitleBottom: boolean}>`
   position: relative;
+  display: flex;
+  flex-direction: ${({areaTitleBottom}) => areaTitleBottom ?
+    `column-reverse`
+    : `column`
+  };
+  gap: 4px;
 `;
 
-const IconContainer = styled.div`
-  position: absolute;
-  left: -45px;
-  bottom: 0;
+const IconContainer = styled.div<{iconPosition?: IIconPos}>`
+  ${({iconPosition}) => iconPosition === 'left' ?
+    ` position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -45px;
+      bottom: 0;
+    `:
+    ` position: absolute;
+      top: -8px;
+      transform: translateY(-100%);
+      left: 0px;
+      `
+  };
+
   height: 30px;
   display: flex;
   justify-content: center;
@@ -25,22 +41,22 @@ const IconContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.pageHeader.mainTitle};
-  `}
-  margin: 0 0 20px;
+  font-family: var(--font-ui);
+  text-align: left;
+  font-size: 26px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--grey-12);
+  margin: 0;
 `;
 
-
 const AreaTitleCss = css`
-  ${({theme}) => css`
-  font-family: ${theme.fontFamily.ui};
-  ${theme.typography.pageHeader.areaTitle};
-  `}
-  margin: 0;
-  position: absolute;
-  top: -18px;
+  font-family: var(--font-ui);
+  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--grey-11);
 `;
 
 const AreaTitle = styled.div`
@@ -54,28 +70,34 @@ const AreaLinkTitle = styled(Link)`
   }
 `;
 
+export type IIconPos = 'top' | 'left'
+
 interface IProps {
   title: string
   icon?: string
+  iconColor?: ISvgIcons['color']
   areaTitle?: string
+  iconPosition?: IIconPos
   areaHref?: string
   updateDocTitle?: boolean
   hideAreaInDocTitle? : boolean
+  areaTitleBottom?: boolean
+
 }
 
-const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false }) => {
+const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false, areaTitleBottom=false, iconPosition='left', iconColor='dimmed' }) => {
   // Set <title> attribute automagically.
 
   useTitle(title, hideAreaInDocTitle ? undefined : areaTitle || '', undefined, updateDocTitle);
 
   return (
-    <Container>
+    <Container areaTitleBottom={areaTitleBottom} >
       {areaTitle && areaHref
         ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
         : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
       <Title>{title}</Title>
       {icon ?
-        <IconContainer><Icon size={24} color='dimmed' {...{icon}} /></IconContainer>
+        <IconContainer iconPosition={iconPosition}><Icon size={32} color={iconColor} {...{icon}} /></IconContainer>
       : null}
     </Container>
   );
