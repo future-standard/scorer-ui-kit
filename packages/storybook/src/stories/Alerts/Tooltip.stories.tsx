@@ -12,7 +12,7 @@ export default {
 
 export const _Tooltip = () => {
 
-  const message = text("Message", 'Look Out!');
+  const message = text("Message", 'Lorem ipsum dolor sit amet consectur');
   const type = select("Type", { Error: 'error', Warning: 'warning', Info: 'info', Success:'success', Neutral:'neutral'}, 'neutral');
   const noIcon = boolean('No Icon', false);
   const iconList = {'': '', ...generateIconList()};
