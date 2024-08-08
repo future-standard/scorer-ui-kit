@@ -16,7 +16,7 @@ const Container = styled.div`
 export type IButtonType = 'default' | 'icon-button'
 
 export interface IButtonStack extends IButtonProps {
-  id: string
+  id?: string
   buttonType?: IButtonType
   icon?: string
   iconPosition?: 'left' | 'right'
@@ -30,12 +30,12 @@ export interface IButtonsStack {
 const ButtonsStack : React.FC<IButtonsStack>= ({buttons}) => {
   return(
     <Container>
-      {buttons.map(({buttonType, icon, text, iconPosition, ...buttonProps}) => {
+      {buttons.map(({id, buttonType, icon, text, iconPosition, size, ...buttonProps}) => {
 
         if(buttonType === 'icon-button')
-          return <ButtonWithIcon icon={icon || ''} position={iconPosition} {...buttonProps} >{text}</ButtonWithIcon>;
+          return <ButtonWithIcon key={id || `button-stack-${id}`}  size={size || 'small'} icon={icon || ''} position={iconPosition} {...buttonProps} >{text}</ButtonWithIcon>;
 
-        return <Button {...buttonProps} >{text}</Button>;
+        return <Button key={id || `button-stack-${id}`}  size={size || 'small'} {...buttonProps} >{text}</Button>;
 
       })}
     </Container>
