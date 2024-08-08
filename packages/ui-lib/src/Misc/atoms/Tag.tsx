@@ -63,7 +63,7 @@ export const TagWrapper = styled.div<{ hoverColor: ISvgIcons['color']; enableHov
   `};
 `;
 
-export type TypeTagSize = 'compact' | 'default'
+export type TypeTagSize = undefined | 'compact' | 'default'
 
 interface OwnProps {
   label?: string
@@ -103,12 +103,11 @@ const Tag: React.FC<ITag> = ({
   );
 
   return (
-    linkTo
-      ? (
+    linkTo ? (
         <StyledLink to={linkTo}>
           {renderTag()}
-        </StyledLink>)
-      : renderTag()
+        </StyledLink>
+    )   : renderTag()
   );
 };
 

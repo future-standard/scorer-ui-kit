@@ -8,10 +8,7 @@ import { useTitle } from '../../hooks/useTitle';
 const Container = styled.div<{areaTitleBottom: boolean}>`
   position: relative;
   display: flex;
-  flex-direction: ${({areaTitleBottom}) => areaTitleBottom ?
-    `column-reverse`
-    : `column`
-  };
+  flex-direction: ${({areaTitleBottom}) => areaTitleBottom ? `column-reverse`  : `column` };
   gap: 4px;
 `;
 
