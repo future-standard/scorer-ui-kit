@@ -73,6 +73,7 @@ export const _PageHeader = () => {
   const noTagsExample = boolean("No tags Example", false);
   const areaTitleBottom = boolean("Area Title Bottom", false);
   const noButtonsExample = boolean("No Buttons Example", false)
+  const noIconExample = boolean("No Icon", false);
   const introductionText = text("Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.");
   const tagList = object('Tag List', defaultTags)
   const buttonList = object('Buttons Stack', defaultBtn)
@@ -83,7 +84,7 @@ export const _PageHeader = () => {
 
   return <Container>
         <PageHeader
-          icon={pageIcon || undefined}
+          icon={noIconExample ? undefined : pageIcon || undefined}
           introductionText={introductionText}
           title={pageTitle}
           areaTitle={pageAreaText}

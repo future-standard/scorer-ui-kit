@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PageTitle from '../atoms/PageTitle';
 import IntroductionText from '../atoms/IntroductionText';
 import Tag from '../../Misc/atoms/Tag';
+import { deviceMediaQuery } from '../../theme/common';
 
 const Container = styled.div`
   display: flex;
@@ -13,7 +14,15 @@ const Container = styled.div`
 const LeftPanel = styled.div`
 `;
 
-const RightPanel = styled.div`
+const RightPanel = styled.div<{iconLeftPanel: boolean}>`
+    ${({iconLeftPanel}) => iconLeftPanel && css`
+        padding-top: 32px;
+    `};
+
+    @media ${deviceMediaQuery.large} {
+      padding-top: 0px;
+    }
+
 `;
 
 const TagListWrapper = styled.div`
@@ -67,7 +76,7 @@ const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref,
         }
       </LeftPanel>
       {rightContent ?
-        <RightPanel>
+        <RightPanel iconLeftPanel={!!icon}>
           {rightContent}
         </RightPanel>
         : null
