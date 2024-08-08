@@ -16,10 +16,6 @@ const BaseStyles = css`
     color: var(--grey-11);
   }
   
-  #root {
-    display: flex;
-  }
-
 `;
 
 export {

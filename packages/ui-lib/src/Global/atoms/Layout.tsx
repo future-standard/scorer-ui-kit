@@ -6,8 +6,6 @@ export const MOBILE_NAVBAR_HEIGHT = 68;
 
 export const Layout = styled.div`
   display: flex;
-  flex-direction: row;
-  flex: 1;
 `;
 
 export const MobileLayout = styled.div``;
