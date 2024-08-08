@@ -25,7 +25,7 @@ import AreaUploadManager from './organisms/AreaUploadManager';
 import Form from './Form';
 import { ButtonHTMLAttributes } from 'react';
 import SplitButton, { ISplitButtonProps } from './molecules/SplitButton';
-import ButtonsBundle, {IButtonsBundle, IBButton} from './molecules/ButtonsBundle';
+import ButtonsStack, {IButtonsStack, IButtonStack} from './molecules/ButtonsStack';
 
 export {
     Form,
@@ -55,7 +55,7 @@ export {
     AreaUploadManager,
     RadioButton,
     SplitButton,
-    ButtonsBundle,
+    ButtonsStack,
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
@@ -71,4 +71,4 @@ interface ButtonProps {
 
 export type IButtonProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-export type { IconButtonData, ISliderMark, ISplitButtonProps, IButtonsBundle, IBButton};
+export type { IconButtonData, ISliderMark, ISplitButtonProps, IButtonsStack, IButtonStack};

@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { ThemeProvider } from 'styled-components';
-import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ButtonsBundle, IBButton } from "scorer-ui-kit";
+import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ButtonsStack, IButtonStack } from "scorer-ui-kit";
 
 
-const defaultBtn : IBButton[] = [
+const defaultBtn : IButtonStack[] = [
   {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
   {id:'secondaryBase1', buttonType: 'default', text:'Example Action 2', design: 'secondary'},
   {id:'buttonWithIcon2', buttonType: 'icon-button', text:'Delete Instance', design: 'danger', icon: 'DevicesScorerEdge'},
@@ -196,7 +196,7 @@ const GlobalUIPage: FC = () => {
           <PageHeader
             title='Welcome'
             introductionText='Thanks for using our UI library.'
-            customRight={<ButtonsBundle buttons={defaultBtn}/>}
+            rightContent={<ButtonsStack buttons={defaultBtn}/>}
           />
         </GlobalUI>
       </ThemeProvider>

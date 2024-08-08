@@ -94,7 +94,7 @@ const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateD
         : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
       <Title>{title}</Title>
       {icon ?
-        <IconContainer iconPosition={iconPosition}><Icon size={32} color={iconColor} {...{icon}} /></IconContainer>
+        <IconContainer iconPosition={iconPosition}><Icon size={24} color={iconColor} {...{icon}} /></IconContainer>
       : null}
     </Container>
   );

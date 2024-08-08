@@ -12,8 +12,8 @@ import {
   useThemeToggle,
   ContentLayout,
   IHeaderContent,
-  ButtonsBundle,
-  IBButton
+  ButtonsStack,
+  IButtonStack
 } from 'scorer-ui-kit';
 import photo from '../assets/placeholder.jpg';
 
@@ -46,7 +46,7 @@ const Container = styled.div`
   flex: 1;
 `;
 
-const buttonList : IBButton[] = [
+const buttonList : IButtonStack[] = [
   {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
   {id:'secondaryBase1', buttonType: 'default', text:'Example Action 2', design: 'secondary'},
 ]
@@ -63,7 +63,7 @@ const ExampleContent : IHeaderContent = {
   title='Welcome'
   introductionText='Thanks for using our UI library.'
   icon="Home"
-  customRight={<ButtonsBundle buttons={buttonList}/>}
+  rightContent={<ButtonsStack buttons={buttonList}/>}
   />,
   TabsElementArea:
     <TabList defaultTabId='tab1'>

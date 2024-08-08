@@ -42,9 +42,9 @@ import {
   RadioButton,
   SplitButton,
   ISplitButtonProps,
-  ButtonsBundle,
-  IButtonsBundle,
-  IBButton
+  ButtonsStack,
+  IButtonsStack,
+  IButtonStack
 } from './Form';
 
 // Components - Filter
@@ -250,7 +250,7 @@ export {
   AreaUploadManager,
   RadioButton,
   SplitButton,
-  ButtonsBundle,
+  ButtonsStack,
 
   // Modals
   ConfirmationModal,
@@ -396,6 +396,6 @@ export type {
   IPagination,
   IHeaderContent,
   IUtilityHeader,
-  IButtonsBundle,
-  IBButton
+  IButtonsStack,
+  IButtonStack
 };

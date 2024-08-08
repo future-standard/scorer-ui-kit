@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from 'styled-components';
-import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField, FullWidthContentBlock, ButtonsBundle, IBButton } from "scorer-ui-kit";
+import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField, FullWidthContentBlock, ButtonsStack, IButtonStack } from "scorer-ui-kit";
 import { IHeaderContent } from "scorer-ui-kit/dist/Layouts";
 
 
@@ -16,7 +16,7 @@ const Layouts: FC = () => {
     margin-bottom: 20px;
   `
 
-const defaultBtn : IBButton[] = [
+const defaultBtn : IButtonStack[] = [
   {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
 ]
 
@@ -32,7 +32,7 @@ const defaultBtn : IBButton[] = [
     title='Welcome'
     introductionText='Thanks for using our UI library.'
     icon="Home"
-    customRight={<ButtonsBundle buttons={defaultBtn}/>}
+    rightContent={<ButtonsStack buttons={defaultBtn}/>}
     />,
     TabsElementArea:
       <TabList defaultTabId='tab1'>

@@ -42,10 +42,10 @@ interface IProps {
   hideAreaInDocTitle?: boolean
   tagList?: IHeaderTag[]
   areaTitleBottom?: boolean
-  customRight?: React.ReactNode | React.FC | ReactElement;
+  rightContent?: React.ReactNode | React.FC | ReactElement;
 }
 
-const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, iconPosition, areaTitleBottom, customRight }) => {
+const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, iconPosition, areaTitleBottom, rightContent }) => {
 
   return (
     <Container>
@@ -67,9 +67,9 @@ const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref,
           : null
         }
       </LeftPanel>
-      {customRight ?
+      {rightContent ?
         <RightPanel>
-          {customRight}
+          {rightContent}
         </RightPanel>
         : null
       }

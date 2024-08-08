@@ -15,7 +15,7 @@ const Container = styled.div`
 
 export type IButtonType = 'default' | 'icon-button'
 
-export interface IBButton extends IButtonProps {
+export interface IButtonStack extends IButtonProps {
   id: string
   buttonType?: IButtonType
   icon?: string
@@ -23,11 +23,11 @@ export interface IBButton extends IButtonProps {
   text: string
 }
 
-export interface IButtonsBundle {
-  buttons : IBButton[]
+export interface IButtonsStack {
+  buttons : IButtonStack[]
 }
 
-const ButtonsBundle : React.FC<IButtonsBundle>= ({buttons}) => {
+const ButtonsStack : React.FC<IButtonsStack>= ({buttons}) => {
   return(
     <Container>
       {buttons.map(({buttonType, icon, text, iconPosition, ...buttonProps}) => {
@@ -42,4 +42,4 @@ const ButtonsBundle : React.FC<IButtonsBundle>= ({buttons}) => {
   );
 };
 
-export default ButtonsBundle;
+export default ButtonsStack;
