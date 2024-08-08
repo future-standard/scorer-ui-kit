@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import PageTitle, { IIconPos } from '../atoms/PageTitle';
+import PageTitle from '../atoms/PageTitle';
 import IntroductionText from '../atoms/IntroductionText';
 import Tag from '../../Misc/atoms/Tag';
 
@@ -36,7 +36,6 @@ interface IProps {
   areaHref?: string
   areaTitle?: string
   icon?: string
-  iconPosition?: IIconPos
   introductionText?: string
   updateDocTitle?: boolean
   hideAreaInDocTitle?: boolean
@@ -45,12 +44,12 @@ interface IProps {
   rightContent?: React.ReactNode | React.FC | ReactElement;
 }
 
-const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, iconPosition, areaTitleBottom, rightContent }) => {
+const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, areaTitleBottom, rightContent }) => {
 
   return (
     <Container>
       <LeftPanel>
-        <PageTitle iconColor='primary-9' {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, iconPosition, areaTitleBottom }} />
+        <PageTitle iconColor='primary-9' {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom }} />
         {!tagList ?
           null
           :

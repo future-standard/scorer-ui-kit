@@ -22,11 +22,10 @@ export const _PageTitle = () => {
   const title = text("Title", "My Page Title");
   const icon = select("Icon", iconList, 'Link');
   const iconColor = select("Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary" , Danger: "danger"}, "mono");
-  const iconPosition = select("Icon Position", {Left: 'left', Top: 'top'}, 'left');
   const areaTitleBottom = boolean("Area Title Bottom", false);
   const areaTitle = text("Area Title", "Area Title");
   const areaHref = text("Area Href", "#");
 
-  return <Container><PageTitle {...{title, areaTitle, areaHref, areaTitleBottom, iconPosition, iconColor}} icon={icon || undefined} /></Container>;
+  return <Container><PageTitle {...{title, areaTitle, areaHref, areaTitleBottom, iconColor}} icon={icon || undefined} /></Container>;
 
 };

@@ -4,33 +4,41 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import { Link } from 'react-router-dom';
 import { useTitle } from '../../hooks/useTitle';
+import { deviceMediaQuery } from '../../theme/common';
 
-const Container = styled.div<{areaTitleBottom: boolean}>`
+const ICON_SIZE = 24;
+const GAP_LEFT = 20;
+const ICON_MARGIN_LEFT = -GAP_LEFT - ICON_SIZE ;
+
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media ${deviceMediaQuery.large} {
+    gap: ${GAP_LEFT}px;
+    flex-direction: row;
+  }
+`;
+
+const TitlesWrapper = styled.div<{areaTitleBottom: boolean}>`
   position: relative;
   display: flex;
   flex-direction: ${({areaTitleBottom}) => areaTitleBottom ? `column-reverse`  : `column` };
   gap: 4px;
 `;
 
-const IconContainer = styled.div<{iconPosition?: IIconPos}>`
-  ${({iconPosition}) => iconPosition === 'left' ?
-    ` position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: -45px;
-      bottom: 0;
-    `:
-    ` position: absolute;
-      top: -8px;
-      transform: translateY(-100%);
-      left: 0px;
-      `
-  };
-
-  height: 30px;
+const IconContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  margin-left: 0px;
+  justify-content: left;
+
+  @media ${deviceMediaQuery.large} {
+    margin-left: ${ICON_MARGIN_LEFT}px;
+    justify-content: center;
+  }
 
   svg {
     display: block;
@@ -67,14 +75,11 @@ const AreaLinkTitle = styled(Link)`
   }
 `;
 
-export type IIconPos = 'top' | 'left'
-
 interface IProps {
   title: string
   icon?: string
   iconColor?: ISvgIcons['color']
   areaTitle?: string
-  iconPosition?: IIconPos
   areaHref?: string
   updateDocTitle?: boolean
   hideAreaInDocTitle? : boolean
@@ -82,20 +87,25 @@ interface IProps {
 
 }
 
-const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false, areaTitleBottom=false, iconPosition='left', iconColor='dimmed' }) => {
+const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false, areaTitleBottom=false, iconColor='dimmed' }) => {
   // Set <title> attribute automagically.
 
   useTitle(title, hideAreaInDocTitle ? undefined : areaTitle || '', undefined, updateDocTitle);
 
   return (
-    <Container areaTitleBottom={areaTitleBottom} >
-      {areaTitle && areaHref
-        ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
-        : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
-      <Title>{title}</Title>
+    <Container >
       {icon ?
-        <IconContainer iconPosition={iconPosition}><Icon size={24} color={iconColor} {...{icon}} /></IconContainer>
+        <IconContainer ><Icon size={ICON_SIZE} color={iconColor} {...{icon}} /></IconContainer>
       : null}
+
+      <TitlesWrapper areaTitleBottom={areaTitleBottom}>
+        {areaTitle && areaHref
+          ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
+          : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
+        <Title>{title}</Title>
+      </TitlesWrapper>
+
+
     </Container>
   );
 };
