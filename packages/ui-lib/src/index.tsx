@@ -8,7 +8,8 @@ import {
   Notification,
   INotificationProps,
   AlertWrapper,
-  Tooltip
+  Tooltip,
+  ITooltipPosition
 } from './Alerts';
 
 // Components - Form
@@ -391,5 +392,6 @@ export type {
   IItemsOption,
   IPagination,
   IHeaderContent,
-  IUtilityHeader
+  IUtilityHeader,
+  ITooltipPosition
 };
