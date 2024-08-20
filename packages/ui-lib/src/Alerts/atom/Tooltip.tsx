@@ -14,7 +14,7 @@ const ARROW = styled.div<{ type: AlertType }>`
     height:0;
     border-left: ${ARROW_SIZE}px solid transparent;
     border-right: ${ARROW_SIZE}px solid transparent;
-    border-bottom: ${ARROW_SIZE}px solid ${({ type }) => `var(--${type})`};
+    border-bottom: ${ARROW_SIZE}px solid ${({ type }) => `var(--tooltip-${type}-arrow)`};
 `;
 
 const TooltipWrapper = styled.div<{ directionStyle: string }>`
@@ -24,9 +24,9 @@ const TooltipWrapper = styled.div<{ directionStyle: string }>`
 `;
 
 const MessageWrapper = styled.div<{ type: AlertType }>`
-  background-color: ${({ type }) => `var(--${type})`};
+  background-color: ${({ type }) => `var(--tooltip-${type})`};
   border-radius: 3px;
-  border: 1px solid var(--grey-a7);
+  border: 1px solid ${({ type }) => `var(--tooltip-${type}-border)`};
   box-shadow: 0px 2px var(--input-focused-blur, 3px) 0px rgba(0, 16, 64, 0.06);
   backdrop-filter: blur(2px);
 
@@ -54,8 +54,6 @@ const MessageWrapper = styled.div<{ type: AlertType }>`
 const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect ) => {
 
   const { left, top, width, height } = coords;
-
-  console.log('cords', coords);
   switch (state) {
     case 'bottom-start':
       return `

@@ -367,6 +367,23 @@ const GlobalStyle = createGlobalStyle`
     --success: var(--success-8);
     --warning: var(--caution-8);
 
+    /* tooltip */
+    --tooltip-warning: var(--warning-a9);
+    --tooltip-warning-arrow: var(--warning-a9);
+    --tooltip-warning-border: var(--warning-a7);
+
+    --tooltip-success: var(--success-9);
+    --tooltip-success-arrow: var(--success-a7);
+    --tooltip-success-border: var(--success-a7);
+
+    --tooltip-info: var(--primary-8);
+    --tooltip-info-arrow: var(--primary-a8);
+    --tooltip-info-border: var(--primary-8);
+
+    --tooltip-neutral: var(--grey-8);
+    --tooltip-neutral-arrow: var(--grey-a7);
+    --tooltip-neutral-border: var(--grey-7);
+
     /* icons */
     --inverse: var(--grey-1);
     --mono: var(--grey-12);
@@ -635,6 +652,23 @@ const GlobalStyle = createGlobalStyle`
     --success: var(--success-8);
     --warning: var(--caution-8);
 
+    /* tooltip */
+    --tooltip-warning: var(--warning-a9);
+    --tooltip-warning-arrow: var(--warning-a9);
+    --tooltip-warning-border: var(--warning-a7);
+
+    --tooltip-success: var(--success-9);
+    --tooltip-success-arrow: var(--success-a7);
+    --tooltip-success-border: var(--success-a7);
+
+    --tooltip-info: var(--primary-8);
+    --tooltip-info-arrow: var(--primary-a8);
+    --tooltip-info-border: var(--primary-8);
+
+    --tooltip-neutral: var(--grey-8);
+    --tooltip-neutral-arrow: var(--grey-a7);
+    --tooltip-neutral-border: var(--grey-7);
+
       /* icons */
     --inverse: var(--white-1);
     --mono: var(--grey-12);
@@ -649,7 +683,6 @@ const GlobalStyle = createGlobalStyle`
     --spinner-primary: var(--primary-6);
     --spinner-simple: var(--grey-a8);
   }
-  
 `;
 
 export default GlobalStyle;
