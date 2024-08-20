@@ -1,6 +1,6 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { TypeTable, PageHeader, Content } from 'scorer-ui-kit';
+import { TypeTable, PageHeader, Content, useModal } from 'scorer-ui-kit';
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 
 
@@ -16,7 +16,7 @@ const SelectRows = styled.pre`
   white-space: normal;
 `
 
-const columnConfig : ITableColumnConfig[] = [
+const columnConfig: ITableColumnConfig[] = [
   {
     header: 'Device Name',
     sortable: true,
@@ -45,87 +45,104 @@ const columnConfig : ITableColumnConfig[] = [
   }
 ];
 
-const initialRows : ITypeTableData = [
-  {
-    id: 'device-id-1',
-    header: {
-      image: "https://i.picsum.photos/id/348/3872/2592.jpg?hmac=I51bqSjuTk6zKHgtJDpMLY3kSSfAXdB8AHGmWf-Eq1Q",
-      mediaUrl: "/scorer-ui-kit/traffic.mp4",
-      mediaType: 'video',
-    },
-    columns:
-    [
-      { text: 'Device Name', href: '#' },
-      { text: 'Just Now' },
-      { text: '242', unit: 'mb' },
-      { text: '¥20,000'}
-    ]
-  },
-  {
-    _checked: true,
-    id: 'device-id-2',
-    header: {
-      image: "https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw",
-      mediaUrl: "https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw",
-      mediaType: 'img',
-    },
-    columns:
-    [
-      { text: 'Another Device', href: '#' },
-      { text: '1st October 2019' },
-      { text: '2.1', unit: 'gb' },
-      { text: '¥4,000' }
-    ],
-  },
-  {
-    id: 'device-id-3',
-    header: {
-      image: "http://placekitten.com/1934/3102",
-      mediaUrl:"http://placekitten.com/1934/3102",
-      mediaType: 'img'
-    },
-    columns:
-    [
-      { text: 'Old Device', href: '#' },
-      { text: '22nd March 2020' },
-      { text: '2.1', unit: 'tb' },
-      { text: '¥7,000'}
-    ],
-  },
-  {
-    id: 'device-id-4',
-    header: {
-      image: "http://placekitten.com/2934/3102",
-      mediaUrl:"http://wrong-url-placekitten.com/2934/3102",
-      mediaType: 'img'
-    },
-    columns:
-    [
-      { text: 'Magic Edge Cloud', href: '#' },
-      { text: '2nd April 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
-    ]
-  },
-  {
-    id: 'device-id-5',
-    columns:
-    [
-      { text: 'Special Camera', href: '#' },
-      { text: '16th June 2020' },
-      { text: '153', unit: 'mb' },
-      { text: '¥25,000' }
-    ]
-  }
-];
 
 
-const TablePage : React.FC = () => {
+const TablePage: React.FC = () => {
+
+  const { createModal } = useModal();
+
+  const openCustomModal = useCallback((id: string) => {
+    console.log(`opening custom modal for item ${id}`);
+    createModal({
+      closeText: 'Close',
+      isCloseEnable: true,
+      customComponent: <PageHeader
+        title='Example of custom component on Modal'
+        introductionText="Anything can be added inside de modal, I hope you find this modal useful" />
+    });
+  }, [createModal]);
+
+
+  const initialRows: ITypeTableData = useMemo(() => [
+    {
+      id: 'device-id-1',
+      header: {
+        image: "https://picsum.photos/id/43/367/267",
+        mediaUrl: "/scorer-ui-kit/traffic.mp4",
+        mediaType: 'video',
+      },
+      columns:
+        [
+          { text: 'Device Name', href: '#' },
+          { text: 'Just Now' },
+          { text: '242', unit: 'mb' },
+          { text: '¥20,000' }
+        ]
+    },
+    {
+      _checked: true,
+      id: 'device-id-2',
+      header: {
+        image: "https://picsum.photos/id/12/367/267",
+        mediaUrl: "https://picsum.photos/id/12/367/267",
+        mediaType: 'img',
+        onClickThumbnail: () => openCustomModal('device-id-2'),
+      },
+      columns:
+        [
+          { text: 'Another Device', href: '#' },
+          { text: '1st October 2019' },
+          { text: '2.1', unit: 'gb' },
+          { text: '¥4,000' }
+        ],
+    },
+    {
+      id: 'device-id-3',
+      header: {
+        image: "https://picsum.photos/id/12/367/267",
+        mediaUrl: "https://picsum.photos/id/12/367/267",
+        mediaType: 'img'
+      },
+      columns:
+        [
+          { text: 'Old Device', href: '#' },
+          { text: '22nd March 2020' },
+          { text: '2.1', unit: 'tb' },
+          { text: '¥7,000' }
+        ],
+    },
+    {
+      id: 'device-id-4',
+      header: {
+        image: "https://picsum.photos/id/12/367/267",
+        mediaUrl: "http://wrong-url-placekitten.com/2934/3102",
+        mediaType: 'img'
+      },
+      columns:
+        [
+          { text: 'Magic Edge Cloud', href: '#' },
+          { text: '2nd April 2020' },
+          { text: '153', unit: 'mb' },
+          { text: '¥25,000' }
+        ]
+    },
+    {
+      id: 'device-id-5',
+      columns:
+        [
+          { text: 'Special Camera', href: '#' },
+          { text: '16th June 2020' },
+          { text: '153', unit: 'mb' },
+          { text: '¥25,000' }
+        ]
+    }
+  ], [openCustomModal]);
+
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows)
 
   // Sent to checkbox in TableRow via Table component.
-  const selectCallback = useCallback((checked:boolean, id?: string | number) => {
+  const selectCallback = useCallback((checked: boolean, id?: string | number) => {
 
     const newRows = [...rows];
     const targetRowIndex = newRows.findIndex(row => row.id === id)
@@ -136,7 +153,7 @@ const TablePage : React.FC = () => {
   }, [rows, setRows]);
 
 
-  const toggleAllCallback = useCallback((checked:boolean) => {
+  const toggleAllCallback = useCallback((checked: boolean) => {
     const newRows = [...rows];
 
     newRows.forEach((row) => {
@@ -150,17 +167,17 @@ const TablePage : React.FC = () => {
   return <Container>
     <Content>
       <PageHeader title="Table Example" areaTitle="Examples" areaHref={'/'} />
-      <TypeTable selectable={true} {...{columnConfig, rows, selectCallback, toggleAllCallback, hasThumbnail:true}} />
+      <TypeTable selectable={true} {...{ columnConfig, rows, selectCallback, toggleAllCallback, hasThumbnail: true }} />
       <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
     </Content>
   </Container>
 };
 
-const checkedRowIDs = (rows : ITypeTableData) => {
-  const ids : number|string[] = [];
+const checkedRowIDs = (rows: ITypeTableData) => {
+  const ids: number | string[] = [];
 
   rows.forEach((row) => {
-    if(row._checked && row.id){
+    if (row._checked && row.id) {
       ids.push(row.id.toString());
     }
   });
