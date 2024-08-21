@@ -13,7 +13,8 @@ const ItemsOptions = [
   {value:5, textValue:'5'},
   {value: 10, textValue: '10'},
   {value: 20, textValue: '20'},
-  {value: 30, textValue: '30'}
+  {value: 30, textValue: '30'},
+  {value: 100, textValue: '100'}
 ]
 
 export const _Pagination = () => {
@@ -23,7 +24,9 @@ export const _Pagination = () => {
   const pageText = text('Page Text', 'Page:');
   const buttonText= text('Button Text', 'GO');
   const itemsText = text('Items Per Page', 'Items Per Page:' )
-  const selectWidth = text('Select Width', '60px');
+  const itemsDefaultValue = number('Items Default Value', 10 );
+  const selectWidth = text('Select Width', '70px');
+  const selectId = text('SelectId', 'UniqID23');
   const totalPages = number('Total Pages', 20);
   const selectDisabled = boolean('Select Disabled', false)
   const itemOptionsObj = object('Items Options', ItemsOptions);
@@ -47,6 +50,7 @@ export const _Pagination = () => {
       itemsText={itemsText}
       selectWidth={selectWidth}
       selectDisabled ={selectDisabled}
+      itemsDefaultValue={itemsDefaultValue}
       itemsOptions={itemOptionsObj}
       onPageChange={onPageChange}
       onItemsChange={onItemsChange}

@@ -20,6 +20,7 @@ import TabsPage from './pages/TabsPage';
 import GlobalUIPage from './pages/GlobalUIPage';
 import CustomAlertsPage from './pages/CustomAlertsPage';
 import Layouts from './pages/Layouts';
+import SplitLayouts from './pages/SplitLayout';
 
 const App: React.FC<{}> = () => {
   return (
@@ -43,6 +44,7 @@ const App: React.FC<{}> = () => {
         <Route path={`/customalert`} exact={true} component={CustomAlertsPage} />
         <Route path='/globalUI' exact component={GlobalUIPage} />
         <Route path='/layouts' exact component={Layouts} />
+        <Route path='/split-layouts' exact component={SplitLayouts} />
       </Switch>
     </Router>
   )

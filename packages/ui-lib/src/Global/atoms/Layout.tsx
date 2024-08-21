@@ -6,9 +6,6 @@ export const MOBILE_NAVBAR_HEIGHT = 68;
 
 export const Layout = styled.div`
   display: flex;
-  flex-direction: row;
-  height: 100%;
-  ${({ theme }) => theme.styles.global.background};
 `;
 
 export const MobileLayout = styled.div``;

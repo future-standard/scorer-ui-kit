@@ -1,6 +1,7 @@
 // Themes
 import defaultTheme from './theme';
 import ThemeVariables from './theme/ThemeVariables';
+import { BaseStyles } from './theme/ThemeHelpers';
 
 //Components Alerts
 import {
@@ -161,7 +162,10 @@ import {
   ModalProvider,
 } from './context';
 
-import { resetButtonStyles } from './common';
+import {
+  resetButtonStyles,
+  FlexContentPlaceholder
+} from './common';
 
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
@@ -170,8 +174,10 @@ import {
   ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
+  SplitLayout,
   IHeaderContent,
-  IUtilityHeader
+  IUtilityHeader,
+  ISplitLayoutHandles
 } from './Layouts';
 
 import {
@@ -209,6 +215,7 @@ export {
   // Theme
   defaultTheme,
   ThemeVariables,
+  BaseStyles,
 
   // Alerts
   AlertBar,
@@ -303,6 +310,7 @@ export {
   useMediaModal,
   useThemeToggle,
   resetButtonStyles,
+  FlexContentPlaceholder,
   Spinner,
   WebRTCClient,
 
@@ -325,6 +333,7 @@ export {
   ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
+  SplitLayout,
 
   // Tabs
   Tabs,
@@ -397,5 +406,6 @@ export type {
   IHeaderContent,
   IUtilityHeader,
   IButtonsStack,
-  IButtonStack
+  IButtonStack,
+  ISplitLayoutHandles
 };
