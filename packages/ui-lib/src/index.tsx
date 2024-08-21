@@ -42,7 +42,10 @@ import {
   AreaUploadManager,
   RadioButton,
   SplitButton,
-  ISplitButtonProps
+  ISplitButtonProps,
+  ButtonsStack,
+  IButtonsStack,
+  IButtonStack
 } from './Form';
 
 // Components - Filter
@@ -88,6 +91,7 @@ import {
   PageHeader,
   PageTitle,
   MultilineContent,
+  IHeaderTag,
 } from './Pages';
 
 // Tables
@@ -158,16 +162,16 @@ import {
   ModalProvider,
 } from './context';
 
-import { 
-  resetButtonStyles, 
-  FlexContentPlaceholder 
+import {
+  resetButtonStyles,
+  FlexContentPlaceholder
 } from './common';
 
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
 
-import { 
-  ContentLayout, 
+import {
+  ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
   SplitLayout,
@@ -253,6 +257,7 @@ export {
   AreaUploadManager,
   RadioButton,
   SplitButton,
+  ButtonsStack,
 
   // Modals
   ConfirmationModal,
@@ -395,9 +400,12 @@ export type {
   IPanelMetaData,
   IActionsButton,
   ISplitButtonProps,
+  IHeaderTag,
   IItemsOption,
   IPagination,
   IHeaderContent,
   IUtilityHeader,
+  IButtonsStack,
+  IButtonStack,
   ISplitLayoutHandles
 };
