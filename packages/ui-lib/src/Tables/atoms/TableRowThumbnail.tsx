@@ -91,7 +91,7 @@ const PlayableDrop = styled.div`
   };
 `;
 
-interface IProps {
+export interface ITableRowThumbnail {
   image?: string
   hoverZoom?: boolean,
   aspect?: VideoAspects
@@ -100,12 +100,13 @@ interface IProps {
   retryImageLoad?: boolean
   retryLimit?: number;
   closeText?: string;
+  onClickThumbnail?: () => void
 }
 
 // Image
 // No Image Placeholder
 
-const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', mediaUrl, mediaType, retryImageLoad= false, retryLimit=5, closeText}) => {
+const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({ hoverZoom = true, image='', mediaUrl, mediaType, retryImageLoad= false, retryLimit=5, closeText, onClickThumbnail}) => {
   const [showImage, setShowImage] = useState(true);
   const [imgSrc, setImgSrc] = useState(image);
   const { createMediaModal } = useMediaModal();
@@ -183,7 +184,7 @@ const TableRowThumbnail: React.FC<IProps> = ({ hoverZoom = true, image='', media
   },[image]);
 
   return (
-    <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={handleModal}>
+    <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={ onClickThumbnail || handleModal}>
       {showImage ?
         <ImageWrapper ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} /> :
         <NoImageWrapper><NoImage /></NoImageWrapper>}
