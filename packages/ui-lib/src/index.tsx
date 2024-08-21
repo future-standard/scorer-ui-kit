@@ -42,7 +42,10 @@ import {
   AreaUploadManager,
   RadioButton,
   SplitButton,
-  ISplitButtonProps
+  ISplitButtonProps,
+  ButtonsStack,
+  IButtonsStack,
+  IButtonStack
 } from './Form';
 
 // Components - Filter
@@ -88,6 +91,7 @@ import {
   PageHeader,
   PageTitle,
   MultilineContent,
+  IHeaderTag,
 } from './Pages';
 
 // Tables
@@ -253,6 +257,7 @@ export {
   AreaUploadManager,
   RadioButton,
   SplitButton,
+  ButtonsStack,
 
   // Modals
   ConfirmationModal,
@@ -395,9 +400,12 @@ export type {
   IPanelMetaData,
   IActionsButton,
   ISplitButtonProps,
+  IHeaderTag,
   IItemsOption,
   IPagination,
   IHeaderContent,
   IUtilityHeader,
+  IButtonsStack,
+  IButtonStack,
   ISplitLayoutHandles
 };
