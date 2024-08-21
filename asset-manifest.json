@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/scorer-ui-kit/static/js/main.4e7c730f.js",
+    "main.js": "/scorer-ui-kit/static/js/main.334deda5.js",
     "static/media/Monorale-BoldItalic.woff": "/scorer-ui-kit/static/media/Monorale-BoldItalic.21d7f69a690ad9dcb9c8.woff",
     "static/media/Monorale-BlackItalic.woff": "/scorer-ui-kit/static/media/Monorale-BlackItalic.f54c5d2a0c2842d23bde.woff",
     "static/media/Lato-Light.ttf": "/scorer-ui-kit/static/media/Lato-Light.345fe08c61d3f15bbc3e.ttf",
@@ -28,9 +28,9 @@
     "index.html": "/scorer-ui-kit/index.html",
     "static/media/logo-mark.svg": "/scorer-ui-kit/static/media/logo-mark.c04f523a4fde2280e3442e4b1b26f3ed.svg",
     "static/media/logo-text.svg": "/scorer-ui-kit/static/media/logo-text.65bb2ccdb8a2092c11740c3b9bda7f39.svg",
-    "main.4e7c730f.js.map": "/scorer-ui-kit/static/js/main.4e7c730f.js.map"
+    "main.334deda5.js.map": "/scorer-ui-kit/static/js/main.334deda5.js.map"
   },
   "entrypoints": [
-    "static/js/main.4e7c730f.js"
+    "static/js/main.334deda5.js"
   ]
 }
