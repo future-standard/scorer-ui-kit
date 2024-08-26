@@ -69,6 +69,7 @@ export const _PageHeader = () => {
   const pageAreaText = text("Page Area", "Area Name");
   const pageAreaHref = text("Page Area Href", "#");
   const pageIcon = select("Icon", iconList, 'Link');
+  const pageIconColor = select("Icon Color", { Mono: "mono", Dimmed: "dimmed", Subtle: "subtle", Inverse: "inverse", Primary: "primary" , Danger: "danger", Undefined: undefined}, undefined);
   const updateDocTitle = boolean("Update Doc Title", true);
   const noTagsExample = boolean("No tags Example", false);
   const areaTitleBottom = boolean("Area Title Bottom", false);
@@ -85,6 +86,7 @@ export const _PageHeader = () => {
   return <Container>
         <PageHeader
           icon={noIconExample ? undefined : pageIcon || undefined}
+          iconColor={pageIconColor}
           introductionText={introductionText}
           title={pageTitle}
           areaTitle={pageAreaText}
