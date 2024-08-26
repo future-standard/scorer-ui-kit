@@ -45,6 +45,7 @@ interface IProps {
   areaHref?: string
   areaTitle?: string
   icon?: string
+  iconColor?: string
   introductionText?: string
   updateDocTitle?: boolean
   hideAreaInDocTitle?: boolean
@@ -53,12 +54,24 @@ interface IProps {
   rightContent?: React.ReactNode | React.FC | ReactElement;
 }
 
-const PageHeader: React.FC<IProps> = ({ title, icon, introductionText, areaHref, areaTitle, updateDocTitle = true, hideAreaInDocTitle, tagList, areaTitleBottom, rightContent }) => {
+const PageHeader: React.FC<IProps> = ({
+  title,
+  icon,
+  iconColor='primary-9',
+  introductionText,
+  areaHref,
+  areaTitle,
+  updateDocTitle = true,
+  hideAreaInDocTitle,
+  tagList,
+  areaTitleBottom,
+  rightContent
+}) => {
 
   return (
     <Container>
       <LeftPanel>
-        <PageTitle iconColor='primary-9' {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom }} />
+        <PageTitle iconColor={iconColor} {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom }} />
         {!tagList ?
           null
           :
