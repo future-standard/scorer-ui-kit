@@ -2,6 +2,7 @@ import {useInterval} from './useInterval';
 import {useTo} from './useTo';
 import {useTitle} from './useTitle';
 import {useCopyToClipboard} from './useCopyToClipboard';
+import {useLocalStorage} from './useLocalStorage';
 import {useModal, IModal} from './useModal';
 import {useNotification} from './useNotification';
 import {useClickOutside} from './useClickOutside';
@@ -23,6 +24,8 @@ export {
   useMediaQuery,
   useBreakpoints,
   useMediaModal,
-  useThemeToggle
+  useThemeToggle,
+  useLocalStorage
 };
+
 export type { IModal };

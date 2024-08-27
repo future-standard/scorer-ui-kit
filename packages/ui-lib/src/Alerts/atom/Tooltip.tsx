@@ -37,7 +37,7 @@ const MessageWrapper = styled.div<{ type: AlertType }>`
   gap: 16px;
 
 
-  color: var(--white-12);
+  color: var(--white-a12);
   font-feature-settings: 'liga' off, 'clig' off;
   font-size: 13px;
   font-weight: 600;

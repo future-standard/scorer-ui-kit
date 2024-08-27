@@ -1,4 +1,5 @@
 import {css} from 'styled-components';
+import { FlexContentPlaceholder } from './ContentPlaceholder';
 
 export const RowCss = css`
   position:relative;
@@ -38,3 +39,7 @@ export const EllipsisStyles = css`
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
+
+export { 
+  FlexContentPlaceholder
+};

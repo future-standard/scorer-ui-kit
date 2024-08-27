@@ -9,6 +9,9 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   position: relative;
+
+  min-height: 100%;
+  display: flex;
 `;
 
 const HeaderArea = styled.div`
@@ -48,6 +51,10 @@ const Content = styled.div`
     var(--content-layout-padding-right)
     var(--content-layout-padding-bottom)
     var(--content-layout-padding-left);
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 `;
 
 

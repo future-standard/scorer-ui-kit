@@ -4,20 +4,41 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import { Link } from 'react-router-dom';
 import { useTitle } from '../../hooks/useTitle';
+import { deviceMediaQuery } from '../../theme/common';
 
+const ICON_SIZE = 24;
+const GAP_LEFT = 20;
+const ICON_MARGIN_LEFT = -GAP_LEFT - ICON_SIZE ;
 
 const Container = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media ${deviceMediaQuery.large} {
+    gap: ${GAP_LEFT}px;
+    flex-direction: row;
+  }
+`;
+
+const TitlesWrapper = styled.div<{areaTitleBottom: boolean}>`
+  position: relative;
+  display: flex;
+  flex-direction: ${({areaTitleBottom}) => areaTitleBottom ? `column-reverse`  : `column` };
+  gap: 4px;
 `;
 
 const IconContainer = styled.div`
-  position: absolute;
-  left: -45px;
-  bottom: 0;
-  height: 30px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  margin-left: 0px;
+  justify-content: left;
+
+  @media ${deviceMediaQuery.large} {
+    margin-left: ${ICON_MARGIN_LEFT}px;
+    justify-content: center;
+  }
 
   svg {
     display: block;
@@ -25,22 +46,22 @@ const IconContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.pageHeader.mainTitle};
-  `}
-  margin: 0 0 20px;
+  font-family: var(--font-ui);
+  text-align: left;
+  font-size: 26px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--grey-12);
+  margin: 0;
 `;
 
-
 const AreaTitleCss = css`
-  ${({theme}) => css`
-  font-family: ${theme.fontFamily.ui};
-  ${theme.typography.pageHeader.areaTitle};
-  `}
-  margin: 0;
-  position: absolute;
-  top: -18px;
+  font-family: var(--font-ui);
+  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--grey-11);
 `;
 
 const AreaTitle = styled.div`
@@ -57,26 +78,34 @@ const AreaLinkTitle = styled(Link)`
 interface IProps {
   title: string
   icon?: string
+  iconColor?: ISvgIcons['color']
   areaTitle?: string
   areaHref?: string
   updateDocTitle?: boolean
   hideAreaInDocTitle? : boolean
+  areaTitleBottom?: boolean
+
 }
 
-const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false }) => {
+const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false, areaTitleBottom=false, iconColor='dimmed' }) => {
   // Set <title> attribute automagically.
 
   useTitle(title, hideAreaInDocTitle ? undefined : areaTitle || '', undefined, updateDocTitle);
 
   return (
-    <Container>
-      {areaTitle && areaHref
-        ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
-        : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
-      <Title>{title}</Title>
+    <Container >
       {icon ?
-        <IconContainer><Icon size={24} color='dimmed' {...{icon}} /></IconContainer>
+        <IconContainer ><Icon size={ICON_SIZE} color={iconColor} {...{icon}} /></IconContainer>
       : null}
+
+      <TitlesWrapper areaTitleBottom={areaTitleBottom}>
+        {areaTitle && areaHref
+          ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
+          : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
+        <Title>{title}</Title>
+      </TitlesWrapper>
+
+
     </Container>
   );
 };

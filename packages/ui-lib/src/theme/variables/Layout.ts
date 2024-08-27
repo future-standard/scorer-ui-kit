@@ -39,6 +39,7 @@ export const layoutVariables = css`
       --content-layout-padding-bottom: 0px;
       --content-layout-padding-left: 0px;
       --utility-header-padding-top: 0px;
+      --max-content-width: none;
     }
 
     &-dashboard {
@@ -47,6 +48,7 @@ export const layoutVariables = css`
       --content-layout-padding-bottom: 32px;
       --content-layout-padding-left: 32px;
       --utility-header-padding-top: 32px;
+      --max-content-width: none;
     }
   }
 `;

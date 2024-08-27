@@ -1,6 +1,7 @@
 // Themes
 import defaultTheme from './theme';
 import ThemeVariables from './theme/ThemeVariables';
+import { BaseStyles } from './theme/ThemeHelpers';
 
 //Components Alerts
 import {
@@ -43,7 +44,10 @@ import {
   AreaUploadManager,
   RadioButton,
   SplitButton,
-  ISplitButtonProps
+  ISplitButtonProps,
+  ButtonsStack,
+  IButtonsStack,
+  IButtonStack
 } from './Form';
 
 // Components - Filter
@@ -89,6 +93,7 @@ import {
   PageHeader,
   PageTitle,
   MultilineContent,
+  IHeaderTag,
 } from './Pages';
 
 // Tables
@@ -159,7 +164,10 @@ import {
   ModalProvider,
 } from './context';
 
-import { resetButtonStyles } from './common';
+import {
+  resetButtonStyles,
+  FlexContentPlaceholder
+} from './common';
 
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
@@ -168,8 +176,10 @@ import {
   ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
+  SplitLayout,
   IHeaderContent,
-  IUtilityHeader
+  IUtilityHeader,
+  ISplitLayoutHandles
 } from './Layouts';
 
 import {
@@ -207,6 +217,7 @@ export {
   // Theme
   defaultTheme,
   ThemeVariables,
+  BaseStyles,
 
   // Alerts
   AlertBar,
@@ -249,6 +260,7 @@ export {
   AreaUploadManager,
   RadioButton,
   SplitButton,
+  ButtonsStack,
 
   // Modals
   ConfirmationModal,
@@ -301,6 +313,7 @@ export {
   useMediaModal,
   useThemeToggle,
   resetButtonStyles,
+  FlexContentPlaceholder,
   Spinner,
   WebRTCClient,
 
@@ -323,6 +336,7 @@ export {
   ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
+  SplitLayout,
 
   // Tabs
   Tabs,
@@ -389,9 +403,13 @@ export type {
   IPanelMetaData,
   IActionsButton,
   ISplitButtonProps,
+  IHeaderTag,
   IItemsOption,
   IPagination,
   IHeaderContent,
   IUtilityHeader,
-  ITooltipPosition
+  ITooltipPosition,
+  IButtonsStack,
+  IButtonStack,
+  ISplitLayoutHandles
 };
