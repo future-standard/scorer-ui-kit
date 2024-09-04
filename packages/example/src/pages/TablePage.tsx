@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { TypeTable, PageHeader, Content, useModal } from 'scorer-ui-kit';
+import { TypeTable, PageHeader, Content, useModal, SplitButton } from 'scorer-ui-kit';
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 
 
@@ -42,6 +42,12 @@ const columnConfig: ITableColumnConfig[] = [
     cellStyle: 'highImportance',
     alignment: 'right',
     hasCopyButton: true
+  },
+  {
+    header: 'Actions',
+    sortable: false,
+    cellStyle: 'highImportance',
+    alignment: 'right',
   }
 ];
 
@@ -62,6 +68,12 @@ const TablePage: React.FC = () => {
     });
   }, [createModal]);
 
+  const buttonList = useMemo(() => [
+    {id: 'a0', text: 'Main Action', icon: 'Success',  onClickCallback: () => {} },
+    {id: 'a1', text: '日本語の場合はランダム', onClickCallback:  () => {} },
+    {id: 'a2', text: 'Save Action', icon: 'Analyse', hasOnSelectLoading:true , onClickCallback: () => {} },
+    {id: 'a3', text: 'Download Action', icon: 'Download', onClickCallback: () => {}, disabled:true  },
+  ],[])
 
   const initialRows: ITypeTableData = useMemo(() => [
     {
@@ -76,7 +88,8 @@ const TablePage: React.FC = () => {
           { text: 'Device Name', href: '#' },
           { text: 'Just Now' },
           { text: '242', unit: 'mb' },
-          { text: '¥20,000' }
+          { text: '¥20,000' },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
         ]
     },
     {
@@ -93,7 +106,8 @@ const TablePage: React.FC = () => {
           { text: 'Another Device', href: '#' },
           { text: '1st October 2019' },
           { text: '2.1', unit: 'gb' },
-          { text: '¥4,000' }
+          { text: '¥4,000' },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
         ],
     },
     {
@@ -108,7 +122,8 @@ const TablePage: React.FC = () => {
           { text: 'Old Device', href: '#' },
           { text: '22nd March 2020' },
           { text: '2.1', unit: 'tb' },
-          { text: '¥7,000' }
+          { text: '¥7,000' },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
         ],
     },
     {
@@ -123,7 +138,8 @@ const TablePage: React.FC = () => {
           { text: 'Magic Edge Cloud', href: '#' },
           { text: '2nd April 2020' },
           { text: '153', unit: 'mb' },
-          { text: '¥25,000' }
+          { text: '¥25,000' },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
         ]
     },
     {
@@ -133,10 +149,11 @@ const TablePage: React.FC = () => {
           { text: 'Special Camera', href: '#' },
           { text: '16th June 2020' },
           { text: '153', unit: 'mb' },
-          { text: '¥25,000' }
+          { text: '¥25,000' },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
         ]
-    }
-  ], [openCustomModal]);
+    },
+  ], [buttonList, openCustomModal]);
 
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows)
