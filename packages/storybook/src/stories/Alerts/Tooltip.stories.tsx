@@ -61,8 +61,7 @@ export const _Tooltip = () => {
         <Tooltip tooltipFor='hoverSpanId2' icon={noIcon ? undefined : icon} {...{ type, message }} />
         <Tooltip tooltipFor='hoverSpanId3' icon={noIcon ? undefined : icon} {...{ type, message }} />
         <Tooltip tooltipFor='hoverSpanId4' icon={noIcon ? undefined : icon} {...{ type, message }} />
-        <Tooltip tooltipFor='spanId5' icon={noIcon ? undefined : icon} keepItVisible={true} {...{ type, message, tooltipPosition }} />
-
+        <Tooltip tooltipFor='spanId5' icon={noIcon ? undefined : icon} {...{ type, message, tooltipPosition }} />
 
     </Container>
   )

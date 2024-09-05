@@ -206,12 +206,11 @@ type ITooltip = {
   icon?: string
   type?: ITooltipType
   tooltipPosition?: ITooltipPosition
-  keepItVisible?: boolean
 }
 
 export type ITooltipPosition = 'top-start' | 'top-center' | 'top-end' | 'bottom-start' | 'bottom-center' | 'bottom-end' | 'left' | 'right';
 
-const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipPosition, keepItVisible = false }) => {
+const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipPosition }) => {
 
   const [coords, setCoords] = useState<DOMRect | null>(null);
   const [visible, setVisible] = useState(false);
@@ -227,7 +226,6 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
       setCoords(rect);
       setVisible(true);
       setDynamicPosition(getDynamicPosition(rect, tooltipRef.current?.offsetWidth, tooltipRef.current?.offsetHeight));
-      console.log('updating cords', tooltipFor, rect, window.scrollY);
     }
   }, [tooltipFor]);
 
@@ -256,8 +254,7 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
     };
   }, [handleMouseOut, handleMouseOver, tooltipFor, updateCoords]);
 
-
-  if ((!keepItVisible && !visible) || !coords) return null;
+  if ( !visible || !coords) return null;
 
   return ReactDOM.createPortal(
     <TooltipWrapper ref={tooltipRef} directionStyle={getDirectionStyle(tooltipPosition || dynamicPosition, coords)}>
