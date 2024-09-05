@@ -215,9 +215,7 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
   const [coords, setCoords] = useState<DOMRect | null>(null);
   const [visible, setVisible] = useState(false);
   const [dynamicPosition, setDynamicPosition] = useState<ITooltipPosition>('top-center');
-
   const tooltipRef = useRef<HTMLDivElement>(null);
-
 
   const handleMouseOver = useCallback(() => {
     const element = document.getElementById(tooltipFor);
@@ -254,7 +252,7 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
     };
   }, [handleMouseOut, handleMouseOver, tooltipFor, updateCoords]);
 
-  if ( !visible || !coords) return null;
+  if (!visible || !coords) return null;
 
   return ReactDOM.createPortal(
     <TooltipWrapper ref={tooltipRef} directionStyle={getDirectionStyle(tooltipPosition || dynamicPosition, coords)}>
