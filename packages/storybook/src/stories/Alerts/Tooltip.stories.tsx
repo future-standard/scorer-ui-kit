@@ -57,10 +57,10 @@ export const _Tooltip = () => {
         <Content>
           This tooltip <HoverSpan id='spanId5'>message</HoverSpan> position is fixed you can update it with the property tool position .
         </Content>
-        <Tooltip tooltipFor='hoverSpanId' icon={noIcon ? undefined : icon} {...{ type, message }} />
-        <Tooltip tooltipFor='hoverSpanId2' icon={noIcon ? undefined : icon} {...{ type, message }} />
-        <Tooltip tooltipFor='hoverSpanId3' icon={noIcon ? undefined : icon} {...{ type, message }} />
-        <Tooltip tooltipFor='hoverSpanId4' icon={noIcon ? undefined : icon} {...{ type, message }} />
+        <Tooltip tooltipFor='hoverSpanId' icon={noIcon ? undefined : icon} {...{ message }} />
+        <Tooltip tooltipFor='hoverSpanId2' icon={noIcon ? undefined : icon} {...{ message }} />
+        <Tooltip tooltipFor='hoverSpanId3' icon={noIcon ? undefined : icon} {...{ message }} />
+        <Tooltip tooltipFor='hoverSpanId4' icon={noIcon ? undefined : icon} {...{ message }} />
         <Tooltip tooltipFor='spanId5' icon={noIcon ? undefined : icon} {...{ type, message, tooltipPosition }} />
 
     </Container>
