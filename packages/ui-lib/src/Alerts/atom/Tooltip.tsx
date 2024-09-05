@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { AlertType } from '..';
+import { ITooltipType } from '..';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import ReactDOM from 'react-dom';
 
 const ARROW_SIZE = 8;
 const ARROW_MARGIN = 16;
 
-const ARROW = styled.div<{ type: AlertType }>`
+const ARROW = styled.div<{ type: ITooltipType }>`
   content:'';
   display:block;
   width:0;
@@ -23,7 +23,7 @@ const TooltipWrapper = styled.div<{ directionStyle: string }>`
   ${({ directionStyle }) => directionStyle && css`${directionStyle}`};
 `;
 
-const MessageWrapper = styled.div<{ type: AlertType }>`
+const MessageWrapper = styled.div<{ type: ITooltipType }>`
   background-color: ${({ type }) => `var(--tooltip-${type})`};
   border-radius: 3px;
   border: 1px solid ${({ type }) => `var(--tooltip-${type}-border)`};
@@ -204,7 +204,7 @@ type ITooltip = {
   message: string
   tooltipFor: string
   icon?: string
-  type?: AlertType
+  type?: ITooltipType
   tooltipPosition?: ITooltipPosition
   keepItVisible?: boolean
 }

@@ -10,7 +10,9 @@ import {
   INotificationProps,
   AlertWrapper,
   Tooltip,
-  ITooltipPosition
+  ITooltipPosition,
+  AlertType,
+  ITooltipType
 } from './Alerts';
 
 // Components - Form
@@ -411,5 +413,7 @@ export type {
   ITooltipPosition,
   IButtonsStack,
   IButtonStack,
-  ISplitLayoutHandles
+  ISplitLayoutHandles,
+  AlertType,
+  ITooltipType
 };

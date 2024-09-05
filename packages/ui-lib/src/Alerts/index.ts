@@ -11,4 +11,5 @@ export {
 };
 
 export type AlertType = 'error'|'warning'|'info'|'success'|'neutral';
+export type ITooltipType = 'warning'|'info'|'success'|'neutral';
 export type { INotificationProps, ITooltipPosition };

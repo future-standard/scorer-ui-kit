@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import styled from 'styled-components';
-import { TypeTable, PageHeader, Content, useModal, SplitButton } from 'scorer-ui-kit';
+import React, { Fragment, useCallback, useMemo, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { TypeTable, PageHeader, Content, useModal, SplitButton, ITooltipType, Tooltip, ITooltipPosition, AlertType } from 'scorer-ui-kit';
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 
 
@@ -15,6 +15,58 @@ const SelectRows = styled.pre`
   padding: 10px;
   white-space: normal;
 `
+
+interface StatusDot {
+  id: string
+  type?: AlertType
+  tooltipMessage?: string
+  tooltipIcon?: string
+  tooltipType?: ITooltipType
+  tooltipPosition?: ITooltipPosition
+}
+
+interface IStatusBundle {
+  statusList: StatusDot[]
+}
+
+const StatusComponent: React.FC<IStatusBundle> = ({ statusList }) => {
+
+  const StatusWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 4px;
+  `;
+
+  const StatusDot = styled.div<{ type?: AlertType, tooltipMessage?: string }>`
+    height: 12px;
+    width: 12px;
+    border-radius: 100%;
+    background-color: ${({ type }) => `var(--${type}, var(--primary-9))`};
+    ${({ tooltipMessage }) => tooltipMessage && css`
+      &:hover {
+        cursor: pointer;
+      };
+    `}
+  `;
+
+  return (
+    <StatusWrapper>
+      {
+        statusList.map(({ id, type, tooltipMessage, tooltipIcon, tooltipType, tooltipPosition }) => {
+          return (
+            <Fragment key={id} >
+              <StatusDot id={id} type={type} tooltipMessage={tooltipMessage} />
+              {tooltipMessage && (
+                <Tooltip tooltipFor={id} message={tooltipMessage} icon={tooltipIcon} type={tooltipType} tooltipPosition={tooltipPosition} />)
+              }
+            </Fragment>
+          )
+        })
+      }
+    </StatusWrapper>
+  )
+}
 
 const columnConfig: ITableColumnConfig[] = [
   {
@@ -44,14 +96,18 @@ const columnConfig: ITableColumnConfig[] = [
     hasCopyButton: true
   },
   {
+    header: 'Status',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'center',
+  },
+  {
     header: 'Actions',
     sortable: false,
     cellStyle: 'highImportance',
     alignment: 'right',
   }
 ];
-
-
 
 const TablePage: React.FC = () => {
 
@@ -69,11 +125,11 @@ const TablePage: React.FC = () => {
   }, [createModal]);
 
   const buttonList = useMemo(() => [
-    {id: 'a0', text: 'Main Action', icon: 'Success',  onClickCallback: () => {} },
-    {id: 'a1', text: '日本語の場合はランダム', onClickCallback:  () => {} },
-    {id: 'a2', text: 'Save Action', icon: 'Analyse', hasOnSelectLoading:true , onClickCallback: () => {} },
-    {id: 'a3', text: 'Download Action', icon: 'Download', onClickCallback: () => {}, disabled:true  },
-  ],[])
+    { id: 'a0', text: 'Main Action', icon: 'Success', onClickCallback: () => { } },
+    { id: 'a1', text: '日本語の場合はランダム', onClickCallback: () => { } },
+    { id: 'a2', text: 'Save Action', icon: 'Analyse', hasOnSelectLoading: true, onClickCallback: () => { } },
+    { id: 'a3', text: 'Download Action', icon: 'Download', onClickCallback: () => { }, disabled: true },
+  ], [])
 
   const initialRows: ITypeTableData = useMemo(() => [
     {
@@ -89,7 +145,8 @@ const TablePage: React.FC = () => {
           { text: 'Just Now' },
           { text: '242', unit: 'mb' },
           { text: '¥20,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          { customComponent: <StatusComponent statusList={[{ id: 'device1-a', type: 'success' }, { id: 'device1-b', type: 'success' }, { id: 'device1-c', type: 'success' }]} /> },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ]
     },
     {
@@ -107,7 +164,17 @@ const TablePage: React.FC = () => {
           { text: '1st October 2019' },
           { text: '2.1', unit: 'gb' },
           { text: '¥4,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          {
+            customComponent:
+              <StatusComponent
+                statusList={
+                  [
+                    { id: 'device2-a', type: 'error', tooltipIcon: 'BigWarning', tooltipType: 'warning', tooltipMessage: '4 Images have reported upload failures', tooltipPosition: 'left' },
+                    { id: 'device2-b', type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: '1 images file is corrupted', tooltipPosition: 'bottom-center' },
+                    { id: 'device2-c', type: 'info', tooltipIcon: 'Information', tooltipType: 'info', tooltipMessage: 'All Images have been updated in the server', tooltipPosition: 'right' },
+                  ]} />
+          },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ],
     },
     {
@@ -123,7 +190,8 @@ const TablePage: React.FC = () => {
           { text: '22nd March 2020' },
           { text: '2.1', unit: 'tb' },
           { text: '¥7,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          { customComponent: <StatusComponent statusList={[{ id: 'device3-a', type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: 'Upload took too long' }, { id: 'device3-b', type: 'neutral' }, { id: 'device3-c', type: 'neutral' }]} /> },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ],
     },
     {
@@ -139,7 +207,8 @@ const TablePage: React.FC = () => {
           { text: '2nd April 2020' },
           { text: '153', unit: 'mb' },
           { text: '¥25,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          { customComponent: <StatusComponent statusList={[{ id: 'device4-a', type: 'neutral' }, { id: 'device4-b', type: 'neutral' }, { id: 'device4-c', type: 'neutral' }]} /> },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ]
     },
     {
@@ -150,7 +219,8 @@ const TablePage: React.FC = () => {
           { text: '16th June 2020' },
           { text: '153', unit: 'mb' },
           { text: '¥25,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          { customComponent: <StatusComponent statusList={[{ id: 'device5-a', type: 'neutral' }, { id: 'device5-b', type: 'neutral' }, { id: 'device5-c', type: 'neutral' }]} /> },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ]
     },
   ], [buttonList, openCustomModal]);
