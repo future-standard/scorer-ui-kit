@@ -109,7 +109,11 @@ const CurrentMonth = styled.div`
   }
 `;
 
-const IconWrap = styled.div``;
+const IconWrap = styled.div`
+  [stroke]{
+    stroke: var(--grey-8);
+  }
+`;
 
 const PaginateMonth = styled.button`
   cursor: pointer;
@@ -123,17 +127,17 @@ const PaginateMonth = styled.button`
   line-height: 20px;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  color: var(--grey-9);
+  color: var(--grey-8);
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   &:hover {
-    color: var(--white-1);
+    color: var(--grey-12);
 
     ${IconWrap}{
       [stroke]{
-        stroke: var(--white-1);
+        stroke: var(--grey-12);
       }
     }
   }
