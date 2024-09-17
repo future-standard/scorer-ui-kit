@@ -1,8 +1,8 @@
-import React, { Fragment, useCallback, useMemo, useState } from 'react';
-import styled, { css } from 'styled-components';
-import { TypeTable, PageHeader, Content, useModal, SplitButton, ITooltipType, Tooltip, ITooltipPosition, AlertType } from 'scorer-ui-kit';
+import React, { useCallback, useMemo, useState } from 'react';
+import styled from 'styled-components';
+import { TypeTable, PageHeader, Content, useModal, SplitButton } from 'scorer-ui-kit';
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
-
+import { StatusComponent } from './StatusComponent';
 
 const Container = styled.div`
   margin: 100px 200px;
@@ -16,57 +16,6 @@ const SelectRows = styled.pre`
   white-space: normal;
 `
 
-interface StatusDot {
-  id: string
-  type?: AlertType
-  tooltipMessage?: string
-  tooltipIcon?: string
-  tooltipType?: ITooltipType
-  tooltipPosition?: ITooltipPosition
-}
-
-interface IStatusBundle {
-  statusList: StatusDot[]
-}
-
-const StatusComponent: React.FC<IStatusBundle> = ({ statusList }) => {
-
-  const StatusWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    gap: 4px;
-  `;
-
-  const StatusDot = styled.div<{ type?: AlertType, tooltipMessage?: string }>`
-    height: 12px;
-    width: 12px;
-    border-radius: 100%;
-    background-color: ${({ type }) => `var(--${type}, var(--primary-9))`};
-    ${({ tooltipMessage }) => tooltipMessage && css`
-      &:hover {
-        cursor: pointer;
-      };
-    `}
-  `;
-
-  return (
-    <StatusWrapper>
-      {
-        statusList.map(({ id, type, tooltipMessage, tooltipIcon, tooltipType, tooltipPosition }) => {
-          return (
-            <Fragment key={id} >
-              <StatusDot id={id} type={type} tooltipMessage={tooltipMessage} />
-              {tooltipMessage && (
-                <Tooltip tooltipFor={id} message={tooltipMessage} icon={tooltipIcon} type={tooltipType} tooltipPosition={tooltipPosition} />)
-              }
-            </Fragment>
-          )
-        })
-      }
-    </StatusWrapper>
-  )
-}
 
 const columnConfig: ITableColumnConfig[] = [
   {

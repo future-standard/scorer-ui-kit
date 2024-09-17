@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 const ARROW_SIZE = 8;
 const ARROW_MARGIN = 16;
 
-const ARROW = styled.div<{ type: ITooltipType }>`
+const Arrow = styled.div<{ type: ITooltipType }>`
   content:'';
   display:block;
   width:0;
@@ -60,7 +60,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               flex-direction: column;
               top: ${currentTop + height}px;
               left: ${currentLeft - ARROW_SIZE - ARROW_MARGIN + (width / 2)}px;
-              ${ARROW} {
+              ${Arrow} {
                 margin-left: ${ARROW_MARGIN}px;
               }
             `;
@@ -81,7 +81,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               top: ${currentTop + height}px;
               left: ${currentLeft + ARROW_SIZE + ARROW_MARGIN + (width / 2)}px;
               transform: translateX(-100%);
-              ${ARROW} {
+              ${Arrow} {
                 margin-right: 16px;
               }
             `;
@@ -93,7 +93,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               top: ${currentTop + (height / 2)}px;
               left: ${currentLeft + width}px;
               transform: translateY(-50%);
-              ${ARROW} {
+              ${Arrow} {
                 transform: rotate(-90deg);
                 margin-right: -4px;
               }
@@ -106,7 +106,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               top: ${currentTop + (height / 2)}px;
               left: ${currentLeft}px;
               transform: translate(-100%, -50%);
-              ${ARROW} {
+              ${Arrow} {
                 transform: rotate(90deg);
                 margin-left: -4px;
               }
@@ -118,7 +118,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               top: ${currentTop}px;
               left: ${currentLeft - ARROW_SIZE - ARROW_MARGIN + (width / 2)}px;
               transform: translateY(-100%);
-              ${ARROW} {
+              ${Arrow} {
                 transform: rotate(180deg);
                 margin-left: ${ARROW_MARGIN}px;
               }
@@ -131,15 +131,14 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               top: ${currentTop}px;
               left: ${currentLeft + ARROW_SIZE + ARROW_MARGIN + (width / 2)}px;
               transform: translate(-100%, -100%);
-              ${ARROW} {
+              ${Arrow} {
                 transform: rotate(180deg);
                 margin-right: 16px;
               }
             `;
 
-    case 'top-center':
+    // default case is 'top-center'
 
-    // eslint-disable-next-line no-fallthrough
     default:
       return `
               flex-direction: column-reverse;
@@ -147,7 +146,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               top: ${currentTop}px;
               left: ${currentLeft + (width / 2)}px;
               transform: translate(-50%, -100%);
-              ${ARROW} {
+              ${Arrow} {
                 transform: rotate(180deg);
               }
             `;
@@ -256,9 +255,9 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
 
   return ReactDOM.createPortal(
     <TooltipWrapper ref={tooltipRef} directionStyle={getDirectionStyle(tooltipPosition || dynamicPosition, coords)}>
-      <ARROW type={type || 'neutral'} />
+      <Arrow type={type || 'neutral'} />
       <MessageWrapper type={type || 'neutral'}>
-        <Icon icon={icon || ''} size={16} color='white-a12' />
+        {icon && <Icon icon={icon} size={16} color='white-a12' />}
         {message}
       </MessageWrapper>
     </TooltipWrapper>,
