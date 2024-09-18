@@ -17,9 +17,10 @@ const Arrow = styled.div<{ type: ITooltipType }>`
   border-bottom: ${ARROW_SIZE}px solid ${({ type }) => `var(--tooltip-${type}-arrow)`};
 `;
 
-const TooltipWrapper = styled.div<{ directionStyle: string }>`
+const TooltipWrapper = styled.div<{ directionStyle: string, maxWidth?: string }>`
   position: absolute;
   display: flex;
+  ${({ maxWidth }) => maxWidth && css` max-width: ${maxWidth}`};
   ${({ directionStyle }) => directionStyle && css`${directionStyle}`};
 `;
 
@@ -65,15 +66,6 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'bottom-center':
-      return `
-              flex-direction: column;
-              top: ${currentTop + height}px;
-              left: ${currentLeft + (width / 2)}px;
-              transform: translateX(-50%);
-              align-items: center;
-            `;
-
     case 'bottom-start':
       return `
               flex-direction: column;
@@ -82,11 +74,23 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               left: ${currentLeft + ARROW_SIZE + ARROW_MARGIN + (width / 2)}px;
               transform: translateX(-100%);
               ${Arrow} {
-                margin-right: 16px;
+                margin-right: ${ARROW_MARGIN}px;
               }
             `;
 
-    case 'right':
+    case 'right-end':
+      return `
+              flex-direction: row;
+              top: ${currentTop - (ARROW_SIZE / 2) - ARROW_MARGIN + (height / 2)}px;
+              left: ${currentLeft + width}px;
+              ${Arrow} {
+                transform: rotate(-90deg);
+                margin-right: -${(ARROW_SIZE / 2)}px;
+                margin-top: ${ARROW_MARGIN}px;
+              }
+            `;
+
+    case 'right-center':
       return `
               flex-direction: row;
               align-items: center;
@@ -95,11 +99,38 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               transform: translateY(-50%);
               ${Arrow} {
                 transform: rotate(-90deg);
-                margin-right: -4px;
+                margin-right: -${(ARROW_SIZE / 2)}px;
               }
             `;
 
-    case 'left':
+    case 'right-start':
+      return `
+              flex-direction: row;
+              align-items: end;
+              top: ${currentTop + (ARROW_SIZE / 2) + ARROW_MARGIN + (height / 2)}px;
+              left: ${currentLeft + width}px;
+              transform: translateY(-100%);
+              ${Arrow} {
+                transform: rotate(-90deg);
+                margin-right: -${(ARROW_SIZE / 2)}px;
+                margin-bottom: ${ARROW_MARGIN}px;
+              }
+            `;
+
+    case 'left-end':
+      return `
+              flex-direction: row-reverse;
+              top: ${currentTop - (ARROW_SIZE / 2) - ARROW_MARGIN + (height / 2)}px;
+              left: ${currentLeft}px;
+              transform: translateX(-100%);
+              ${Arrow} {
+                transform: rotate(90deg);
+                margin-left: -${(ARROW_SIZE / 2)}px;
+                margin-top: ${ARROW_MARGIN}px;
+              }
+            `;
+
+    case 'left-center':
       return `
               flex-direction: row-reverse;
               align-items: center;
@@ -108,10 +139,23 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               transform: translate(-100%, -50%);
               ${Arrow} {
                 transform: rotate(90deg);
-                margin-left: -4px;
+                margin-left: -${(ARROW_SIZE / 2)}px;
               }
             `;
 
+    case 'left-start':
+      return `
+              flex-direction: row-reverse;
+              align-items: end;
+              top: ${currentTop + (ARROW_SIZE / 2) + ARROW_MARGIN + (height / 2)}px;
+              left: ${currentLeft}px;
+              transform: translate(-100%, -100%);
+              ${Arrow} {
+                transform: rotate(90deg);
+                margin-left: -${(ARROW_SIZE / 2)}px;
+                margin-bottom: ${ARROW_MARGIN}px;
+              }
+            `;
     case 'top-end':
       return `
               flex-direction: column-reverse;
@@ -124,22 +168,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'top-start':
-      return `
-              flex-direction: column-reverse;
-              align-items: end;
-              top: ${currentTop}px;
-              left: ${currentLeft + ARROW_SIZE + ARROW_MARGIN + (width / 2)}px;
-              transform: translate(-100%, -100%);
-              ${Arrow} {
-                transform: rotate(180deg);
-                margin-right: 16px;
-              }
-            `;
-
-    // default case is 'top-center'
-
-    default:
+    case 'top-center':
       return `
               flex-direction: column-reverse;
               align-items: center;
@@ -150,6 +179,29 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
                 transform: rotate(180deg);
               }
             `;
+
+    case 'top-start':
+      return `
+              flex-direction: column-reverse;
+              align-items: end;
+              top: ${currentTop}px;
+              left: ${currentLeft + ARROW_SIZE + ARROW_MARGIN + (width / 2)}px;
+              transform: translate(-100%, -100%);
+              ${Arrow} {
+                transform: rotate(180deg);
+                margin-right: ${ARROW_MARGIN}px;
+              }
+            `;
+
+    // default case is 'bottom-center'
+    default:
+      return `
+            flex-direction: column;
+            top: ${currentTop + height}px;
+            left: ${currentLeft + (width / 2)}px;
+            transform: translateX(-50%);
+            align-items: center;
+          `;
   }
 };
 
@@ -161,11 +213,11 @@ const getDynamicPosition = (coords: DOMRect, width?: number, height?: number): I
   const isOverflowingTop = coords.top - (height || 0) < 0;
 
   if (isOverflowingTop && isOverflowingRight && isOverflowingBottom) {
-    return 'left';
+    return 'left-center';
   }
 
   if (isOverflowingTop && isOverflowingLeft && isOverflowingBottom) {
-    return 'right';
+    return 'right-center';
   }
 
   if (isOverflowingTop && isOverflowingLeft) {
@@ -185,11 +237,11 @@ const getDynamicPosition = (coords: DOMRect, width?: number, height?: number): I
   }
 
   if (isOverflowingLeft) {
-    return 'right';
+    return 'right-center';
   }
 
   if (isOverflowingRight) {
-    return 'left';
+    return 'left-center';
   }
 
   if (isOverflowingBottom) {
@@ -205,11 +257,12 @@ type ITooltip = {
   icon?: string
   type?: ITooltipType
   tooltipPosition?: ITooltipPosition
+  maxWidth?: string
 }
 
-export type ITooltipPosition = 'top-start' | 'top-center' | 'top-end' | 'bottom-start' | 'bottom-center' | 'bottom-end' | 'left' | 'right';
+export type ITooltipPosition = 'top-start' | 'top-center' | 'top-end' | 'bottom-start' | 'bottom-center' | 'bottom-end' | 'left-start' | 'left-center' | 'left-end' | 'right-start' | 'right-center' | 'right-end';
 
-const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipPosition }) => {
+const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipPosition, maxWidth }) => {
 
   const [coords, setCoords] = useState<DOMRect | null>(null);
   const [visible, setVisible] = useState(false);
@@ -254,7 +307,7 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
   if (!visible || !coords) return null;
 
   return ReactDOM.createPortal(
-    <TooltipWrapper ref={tooltipRef} directionStyle={getDirectionStyle(tooltipPosition || dynamicPosition, coords)}>
+    <TooltipWrapper ref={tooltipRef} maxWidth={maxWidth} directionStyle={getDirectionStyle(tooltipPosition || dynamicPosition, coords)}>
       <Arrow type={type || 'neutral'} />
       <MessageWrapper type={type || 'neutral'}>
         {icon && <Icon icon={icon} size={16} color='white-a12' />}

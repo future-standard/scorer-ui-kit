@@ -32,7 +32,7 @@ export const _Tooltip = () => {
   const noIcon = boolean('No Icon', false);
   const iconList = { '': '', ...generateIconList() };
   const icon = select("Icon", iconList, 'Information');
-  const tooltipPosition = select("Tooltip Position", { TopStart: 'top-start', TopCenter: 'top-center', TopEnd: 'top-end', BottomStart: 'bottom-start', BottomCenter: 'bottom-center', BottomEnd: 'bottom-end', Left: 'left', Right: 'right' }, 'top-end')
+  const tooltipPosition = select("Tooltip Position", { TopStart: 'top-start', TopCenter: 'top-center', TopEnd: 'top-end', BottomStart: 'bottom-start', BottomCenter: 'bottom-center', BottomEnd: 'bottom-end', LeftStart: 'left-start', LeftCenter: 'left-center', LeftEnd: 'left-end', RightStart: 'right-start', RightCenter: 'right-center', RightEnd: 'right-end' }, 'top-end')
 
   return (
     <Container>
@@ -59,7 +59,7 @@ export const _Tooltip = () => {
       <Tooltip tooltipFor='hoverSpanId2' icon={noIcon ? undefined : icon} {...{ message }} />
       <Tooltip tooltipFor='hoverSpanId3' icon={noIcon ? undefined : icon} {...{ message }} />
       <Tooltip tooltipFor='hoverSpanId4' icon={noIcon ? undefined : icon} {...{ message }} />
-      <Tooltip tooltipFor='spanId5' icon={noIcon ? undefined : icon} {...{ type, message, tooltipPosition }} />
+      <Tooltip tooltipFor='spanId5' maxWidth='200px' icon={noIcon ? undefined : icon} {...{ type, message, tooltipPosition }} />
     </Container>
   )
 }
