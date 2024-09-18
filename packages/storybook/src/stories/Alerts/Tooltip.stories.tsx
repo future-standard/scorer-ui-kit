@@ -10,8 +10,7 @@ export default {
   decorators: []
 };
 
-const Container = styled.div`
-`;
+const Container = styled.div``;
 
 const Content = styled.div`
   margin: 20px 0;
