@@ -8,6 +8,7 @@ import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
 import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
 import { fontFamily } from '../../theme/common';
+import { FilterButtonDesign } from '..';
 
 const Container = styled.div`
   display: inline-block;
@@ -241,6 +242,7 @@ export interface IFilterDropdown {
   maxDisplayedItems?: number
   searchResultText?: string
   emptyResultText?: string
+  design?: FilterButtonDesign
   onSelect: (newSelection: IFilterValue) => void;
 }
 
@@ -258,6 +260,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   maxDisplayedItems = 5,
   searchResultText = 'Showing [VISIBLE] of [TOTAL]',
   emptyResultText,
+  design = 'default',
   onSelect = () => { },
   ...props
 }) => {
@@ -312,7 +315,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   return (
     <Container {...props}>
       <FilterDropHandler
-        {...{ buttonIcon, buttonText, disabled }}
+        {...{ buttonIcon, buttonText, disabled, design }}
         onCloseCallback={handleClose}
         onToggleOpenCallback={handleToggleOpen}
       >

@@ -2,7 +2,8 @@ import React, { ButtonHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
-import { fontFamily } from '../../theme/common';
+import { animation } from '../../theme/common';
+import { FilterButtonDesign } from '..';
 
 const FlipWrapper = styled.div<{ isSortAscending: boolean }>`
   ${({ isSortAscending }) => isSortAscending && css`
@@ -10,67 +11,67 @@ const FlipWrapper = styled.div<{ isSortAscending: boolean }>`
   `};
 `;
 
-const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>`
+const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, design?: FilterButtonDesign }>`
   ${resetButtonStyles};
   border-radius: 3px;
   height: 30px;
 
-  ${({ theme: { animation } }) => css`
 
-    box-shadow: 0px 4px 9px 0px var(--primary-a1);
-    background-color: var(--grey-1);
-    border: var(--grey-7) 1px solid;
-    text-align: left;
-    font-size: 12px;
-    font-weight: 400;
-    text-decoration: none;
-    color: var(--grey-11);
+  ${({design }) => design === 'default'?
+      `
+        background-color: var(--grey-1);
+        border: var(--grey-7) 1px solid;
+      `
+    :
+      `
+        background-color: transparent;
+        border: 1px solid transparent;
+      `
+  };
 
-    font-family: ${fontFamily.ui};
-    transition: opacity ${animation.speed.normal} ${animation.easing.primary.inOut};
+  box-shadow: 0px 4px 9px 0px var(--primary-a1);
+  text-align: left;
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: none;
+  color: var(--grey-11);
+  font-family: var(--font-ui);
+  transition: opacity ${animation.speed.normal} ${animation.easing.primary.inOut};
 
+  ${IconWrapper} {
+    padding: 0 9px;
+    display: flex;
+    align-items: center;
+    [stroke]{
+      stroke: var(--dimmed);
+    }
+  }
+
+  &:hover:enabled, &:active:enabled {
+    background-color: var(--primary-7);
+    border-color: var(--primary-7);
+    border: var(--primary-7) 1px solid;
+    color: var(--white-1);
+    transition:
+      background ${animation.speed.fast} ${animation.easing.primary.inOut},
+      border ${animation.speed.fast} ${animation.easing.primary.inOut};
+  }
+
+  &:hover:enabled, &:active:enabled {
     ${IconWrapper} {
-      padding: 0 9px;
-      display: flex;
-      align-items: center;
       [stroke]{
-        stroke: var(--dimmed);
+        transition: stroke ${animation.speed.faster} ${animation.easing.primary.inOut};
+        stroke: var(--white-1);
       }
     }
+  }
 
-    &:hover:enabled {
-      background-color: var(--primary-7);
-      border-color: var(--primary-7);
-      border: var(--primary-7) 1px solid;
-      color: var(--white-1);
-      transition:
-        background ${animation.speed.fast} ${animation.easing.primary.inOut},
-        border ${animation.speed.fast} ${animation.easing.primary.inOut};
-    }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 50%;
+  }
 
-    &:active:enabled {
-      background-color: var(--primary-7);
-      border-color: var(--primary-7);
-      border: var(--primary-7) 1px solid;
-      color: var(--white-1);
-    }
-
-    &:hover:enabled, &:active:enabled {
-      ${IconWrapper} {
-        [stroke]{
-          transition: stroke ${animation.speed.faster} ${animation.easing.primary.inOut};
-          stroke: var(--white-1);
-        }
-      }
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 50%;
-    }
-`};
-
-  ${({isOpen, hasFlipArrow }) => isOpen && hasFlipArrow && css`
+  ${({ isOpen, hasFlipArrow }) => isOpen && hasFlipArrow && css`
     background-color: var(--primary-7);
     border: solid 1px var(--primary-7);
     color: var(--white-1);
@@ -97,6 +98,7 @@ interface OwnProps {
   hasFlipArrow?: boolean
   isSortAscending?: boolean
   isOpen?: boolean
+  design?: FilterButtonDesign
 }
 
 type IFilterButton = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>;
@@ -106,12 +108,13 @@ const FilterButton: React.FC<IFilterButton> = ({
   hasFlipArrow = false,
   isSortAscending = false,
   isOpen,
+  design = 'default',
   children,
   ...props
 }) => {
 
   return (
-    <StyledButton type='button' {...props} {...{ isOpen, hasFlipArrow }}>
+    <StyledButton type='button' {...props} {...{ isOpen, hasFlipArrow, design }}>
       <InnerContainer>
         <FlipWrapper {...{ isSortAscending }}>
           <Icon

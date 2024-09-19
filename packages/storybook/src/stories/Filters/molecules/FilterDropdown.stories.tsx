@@ -98,6 +98,7 @@ export const _FilterDropdown = () => {
   const buttonIcon = select("Button Icon", iconList, iconList['MetaCategories']);
   const disabled = boolean('disable', false);
   const isLoading = boolean('Is Loading', false);
+  const design = select('Design type', {Default: 'default', Plain: 'plain'}, 'default')
   const optionType = select("Option Type", { text: "text", checkbox: "checkbox", radio: "radio" }, "checkbox")
   const loadingText = text('Loading Text', 'Loading Tags...');
   const maxDisplayedItems = number('Max Displayed Items', 6);
@@ -151,6 +152,7 @@ export const _FilterDropdown = () => {
           buttonText,
           maxDisplayedItems,
           buttonIcon,
+          design,
         }}
         list={baseExample}
         onSelect={handleBaseExample}
@@ -167,6 +169,7 @@ export const _FilterDropdown = () => {
         buttonIcon,
         disabled,
         isLoading,
+        design,
         loadingText,
         maxDisplayedItems,
       }}
@@ -191,6 +194,7 @@ export const _FilterDropdown = () => {
           buttonIcon,
           disabled,
           isLoading,
+          design,
           loadingText,
           maxDisplayedItems
         }}
@@ -214,6 +218,7 @@ export const _FilterDropdown = () => {
           buttonIcon,
           disabled,
           isLoading,
+          design,
           loadingText,
           maxDisplayedItems
         }}
@@ -237,6 +242,7 @@ export const _FilterDropdown = () => {
           buttonIcon,
           disabled,
           isLoading,
+          design,
           loadingText,
           maxDisplayedItems,
         }}
@@ -260,6 +266,7 @@ export const _FilterDropdown = () => {
           buttonIcon,
           disabled,
           isLoading,
+          design,
           loadingText,
           maxDisplayedItems,
         }}

@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import FilterButton from '../atoms/FilterButton';
 import { useClickOutside } from '../../hooks/useClickOutside';
+import { FilterButtonDesign } from '..';
 
 const Container = styled.div`
   position: relative;
@@ -82,6 +83,7 @@ interface IFilterDropHandler {
   minWidth?: number
   minHeight?: number
   isSortAscending?: boolean
+  design?: FilterButtonDesign
   onToggleOpenCallback?: (isOpen: boolean) => void
   onCloseCallback?: () => void
 }
@@ -93,6 +95,7 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
   minWidth = 270,
   minHeight = 190,
   isSortAscending,
+  design = 'default',
   children,
   onToggleOpenCallback = () => { },
   onCloseCallback = () => { },
@@ -142,7 +145,7 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
           icon={buttonIcon}
           isOpen={openState.isOpen}
           onClick={() => handleToggleOpen(minWidth, minHeight)}
-          {...{ disabled, isSortAscending }}
+          {...{ disabled, isSortAscending, design }}
           hasFlipArrow
         >{buttonText}
         </FilterButton>

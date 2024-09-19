@@ -33,6 +33,8 @@ export {
   isDateInterval,
 };
 
+type FilterButtonDesign = 'default' | 'plain'
+
 export type {
   ISearchFilter,
   IFilterInputs,
@@ -44,5 +46,6 @@ export type {
   IFilterResult,
   IFilterValue,
   DateInterval,
-  IFilterDatePicker
+  IFilterDatePicker,
+  FilterButtonDesign
 };
