@@ -540,7 +540,6 @@ export const colorVariables = css`
 
     --main-background-gradient: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
     --main-background-color: var(--grey-3);
-    --global-background:  var(--grey-2);
   }
 
 `;

@@ -17,15 +17,15 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
   height: 30px;
 
 
-  ${({design }) => design === 'default'?
-      `
-        background-color: var(--grey-1);
-        border: var(--grey-7) 1px solid;
-      `
-    :
+  ${({design }) => design === 'plain'?
       `
         background-color: transparent;
         border: 1px solid transparent;
+      `
+    :
+      `
+        background-color: var(--grey-1);
+        border: var(--grey-7) 1px solid;
       `
   };
 
