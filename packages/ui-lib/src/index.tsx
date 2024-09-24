@@ -162,9 +162,9 @@ import {
   ModalProvider,
 } from './context';
 
-import { 
-  resetButtonStyles, 
-  FlexContentPlaceholder 
+import {
+  resetButtonStyles,
+  FlexContentPlaceholder
 } from './common';
 
 import Spinner from './Indicators/Spinner';

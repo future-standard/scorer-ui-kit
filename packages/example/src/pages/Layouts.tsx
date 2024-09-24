@@ -226,7 +226,7 @@ const Layouts: FC = () => {
               <div>
                 <h1>Full Width Container</h1>
                 <p>The below line uses the FullWidthContentBlock component to break out of the layout and span the full width of the browser.</p>
-                
+
                 <FullWidthContentBlock>
                   <FullWidthExampleContent />
                 </FullWidthContentBlock>

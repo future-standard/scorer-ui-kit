@@ -6,8 +6,6 @@ const SplitLayouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
   
-  // const layoutInstanceRef = useRef<ISplitLayoutHandles>(null);
-
   const [layout] = useState<'horizontal'|'vertical'>('horizontal');
   const [reverse] = useState<boolean>(false);
   
@@ -196,7 +194,6 @@ const SplitLayouts: FC = () => {
           
           <ContentLayout layout="dashboard">
             <SplitLayout 
-              // ref={layoutInstanceRef}
               layout={layout}
               persist 
               persistenceKey='my_unique_key'
