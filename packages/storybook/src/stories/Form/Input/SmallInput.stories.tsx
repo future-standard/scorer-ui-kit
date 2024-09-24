@@ -11,6 +11,7 @@ export default {
 
 const Container = styled.div`
     margin: 100px;
+    max-width: 200px;
 `;
 
 export const _SmallInput = () => {
