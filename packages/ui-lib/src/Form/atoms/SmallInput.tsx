@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useRef, useEffect, useState } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 
 import Label from '../atoms/Label';
