@@ -33,7 +33,7 @@ export {
   isDateInterval,
 };
 
-type FilterButtonDesign = 'default' | 'plain'
+type FilterButtonDesign = 'default' | 'basic'
 
 export type {
   ISearchFilter,

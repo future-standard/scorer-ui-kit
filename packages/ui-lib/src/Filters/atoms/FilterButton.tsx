@@ -17,7 +17,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
   height: 30px;
 
 
-  ${({design }) => design === 'plain'?
+  ${({design }) => design === 'basic'?
       `
         background-color: transparent;
         border: 1px solid transparent;

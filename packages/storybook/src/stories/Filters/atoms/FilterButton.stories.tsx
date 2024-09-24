@@ -20,7 +20,7 @@ export const _FilterButton = () => {
   const hasFlipArrow = boolean('Has Flip Arrow', false);
   const isOpen = boolean('is Open', false);
   const disabled = boolean('disable', false);
-  const design = select('Design type', {Default: 'default', Plain: 'plain'}, 'default')
+  const design = select('Design type', {Default: 'default', Basic: 'basic'}, 'default')
 
   return <Content>
     <FilterButton

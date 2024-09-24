@@ -27,7 +27,7 @@ export const _SortDropdown = () => {
   const [sortSelected, setSortSelected] = useState<IFilterItem>({ text: dropdownList[1].text, value: dropdownList[0].value });
   const [isAscending, setIsAScending] = useState<boolean>(true);
   const isLoading = boolean('Is Loading', false);
-  const design = select('Design type', {Default: 'default', Plain: 'plain'}, 'default')
+  const design = select('Design type', {Default: 'default', Basic: 'basic'}, 'basic')
   // const buttonText = text('Button Text', `Sorted by ${dropdownList[0].text}`);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const list = object('Dropdown list', dropdownList)

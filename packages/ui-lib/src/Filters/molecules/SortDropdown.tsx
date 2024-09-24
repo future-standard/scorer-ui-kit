@@ -114,7 +114,7 @@ const SortDropdown: React.FC<ISortDropdown> = ({
   selected,
   descendingText = 'Descending',
   ascendingText = 'Ascending',
-  design = 'default',
+  design = 'basic',
   onSelect,
   ...props }) => {
 

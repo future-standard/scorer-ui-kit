@@ -98,7 +98,7 @@ export const _FilterDropdown = () => {
   const buttonIcon = select("Button Icon", iconList, iconList['MetaCategories']);
   const disabled = boolean('disable', false);
   const isLoading = boolean('Is Loading', false);
-  const design = select('Design type', {Default: 'default', Plain: 'plain'}, 'default')
+  const design = select('Design type', {Default: 'default', Basic: 'basic'}, 'default')
   const optionType = select("Option Type", { text: "text", checkbox: "checkbox", radio: "radio" }, "checkbox")
   const loadingText = text('Loading Text', 'Loading Tags...');
   const maxDisplayedItems = number('Max Displayed Items', 6);
