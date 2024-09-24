@@ -10,13 +10,6 @@ const FullWidthExampleContent = styled.div`
   margin-bottom: 20px;
 `
 
-const FullWidthExampleContent = styled.div`
-  width: 100%;
-  padding: 20px 0;
-  border-bottom: var(--grey-8) 1px dotted;
-  margin-bottom: 20px;
-`
-
 const Layouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
