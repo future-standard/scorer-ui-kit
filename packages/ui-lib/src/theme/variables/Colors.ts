@@ -504,7 +504,6 @@ export const colorVariables = css`
     --tooltip-neutral-border: var(--grey-7);
 
       /* icons */
-    /* --inverse: var(--grey-1); */
     --inverse: var(--white-1);
     --mono: var(--grey-12);
     --dimmed: var(--grey-11);
