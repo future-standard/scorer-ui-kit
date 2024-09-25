@@ -7,13 +7,12 @@ import { MOBILE_CLOSE_HEIGHT } from './Layout';
 
 const StyledButton = styled.button`
   ${resetButtonStyles}
-
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.global.mainMenu.menuItem.default};
-    ${theme.styles.global.mainMenu.background};
-    border-top: 1px solid ${theme.colors.divider};
-  `};
+  
+  font-family: var(--font-ui);
+  background-color: var(--global-element-background);
+  border-top: 1px solid var(--dividing-line);
+  font-weight: 400;
+  color: var(--grey-10);
   
   height: ${MOBILE_CLOSE_HEIGHT}px;
   position: fixed;

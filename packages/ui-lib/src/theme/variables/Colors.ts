@@ -501,6 +501,7 @@ export const colorVariables = css`
 
     /* Global */
     --dividing-line: var(--grey-4);
+    --global-element-background: var(--grey-2);
 
     /* Inputs */
     --input-border-default: var(--grey-6);

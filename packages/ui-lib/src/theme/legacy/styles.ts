@@ -356,9 +356,6 @@ export const styles = {
             },
             "lines": {
                 "backgroundColor": "var(--grey-6)"
-            },
-            "footerBackground": {
-                "backgroundColor": "var(--grey-1)"
             }
         },
         "background": {

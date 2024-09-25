@@ -105,7 +105,7 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
   right: -10px;
   top: 56px;
   bottom: 0;
-  background: var(--grey-2);
+  background: var(--global-element-background);
   border-left: var(--dividing-line) 1px solid;
   
   width: ${({ baseWidth }) => baseWidth ? baseWidth : `200px`};

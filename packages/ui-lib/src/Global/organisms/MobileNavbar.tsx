@@ -18,7 +18,7 @@ const MENU_TAB = 'menu';
 const CUSTOM_TAB = 'custom';
 
 const Container = styled.nav`
-  background-color: ${({theme}) => theme.styles.global.mainMenu.background.backgroundColor};
+  background-color: var(--global-element-background);
   position: sticky;
   top: 0;
   left: 0;
@@ -30,7 +30,7 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   height: ${MOBILE_NAVBAR_HEIGHT}px;
-  border-bottom: ${({theme}) => theme.colors.divider} 1px solid;
+  border-bottom: var(--dividing-line) 1px solid;
 
   ${TabListWrapper} {
     flex-basis: 0;
