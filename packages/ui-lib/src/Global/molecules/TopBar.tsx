@@ -14,7 +14,8 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   align-self: flex-start;
-  height: 65px;
+  height: 56px;
+  padding: 0 16px 0 24px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -26,16 +27,15 @@ const Container = styled.div`
 `;
 
 const SearchBar = styled.div`
-  margin-left: 25px;
   flex: 0 1 500px;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 8px;
 `;
 
 const IconWrapper = styled.div`
-  flex: 0 40px;
-  width: 5px;
+  flex: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,51 +48,55 @@ const IconWrapper = styled.div`
 
 const SearchInput = styled.input`
   ${removeAutoFillStyle};
-  font-family: ${({ theme }) => theme.fontFamily.data};
+  font-family: var(--font-data);
   flex: 1;
   height: 35px;
   line-height: 35px;
   border: none;
   outline: none;
   background: transparent;
+  
+  color: var(--grey-10);
+  font-size: 14px;
 
-  ${({ theme: { typography } }) => typography.global.topBar.search.value};
 
   &::placeholder {
+    font-family: var(--font-data);
+    font-weight: 400;
     font-style: italic;
-    ${({ theme: { typography } }) => typography.global.topBar.search.placeholder};
+    font-size: 14px;
+    color: var(--grey-8);
   }
 `;
 
 const ButtonArea = styled.div`
   height: inherit;
-  padding-right: 10px;
   display: flex;
+  gap: 0;
 `;
 
 const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolean }>`
-  width: 60px;
-  margin: 0 5px;
+  flex: 0 56px;
+  width: 56px;
   height: inherit;
-  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
+  border-bottom: 5px solid transparent;
+  padding-top: 5px;
+  background: none;
   outline: none;
   cursor: pointer;
-
-  ${({ theme }) => css`
-    border-bottom: 5px solid transparent;
-    /*${theme.colors.menu.indicator};*/
-
-    &:hover {
-      border-bottom-color: ${theme.colors.menu.hover};
-    }
-
-    transition: border ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
-  `};
-
-  ${({ isActive, theme }) => isActive && css`
+  transition: border var(--speed-normal) var(--easing-primary-in);
+  
+  &:hover {
+    border-bottom-color: var(--primary-6);
+  }
+ 
+  ${({ isActive }) => isActive && css`
     &, &:hover {
-      border-bottom-color: ${theme.colors.menu.active};
+      border-bottom-color: var(--primary-9);
     }
   `}
 `;
@@ -100,11 +104,11 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
 const DrawerPortalWrapper = styled.div``;
 
 const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: var(--font-ui);
 
   position: fixed;
   right: -10px;
-  top: 65px;
+  top: 56px;
   bottom: 0;
   background: ${({ theme }) => theme.styles.global.mainMenu.background};
   border-left: ${({ theme }) => theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
@@ -116,11 +120,9 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
   flex-direction: column;
   justify-content: space-between;
 
-  ${({ theme }) => css`
-    transition:
-      opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut},
-      right ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
-  `};
+  transition:
+    opacity var(--speed-normal) var(--easing-primary-in-out),
+    right var(--speed-normal) var(--easing-primary-in-out);
 
   ${({ isOpen }) => isOpen && css`
     right: 0;
@@ -194,7 +196,7 @@ const TopBar: React.FC<ITopBar> = ({
       {hasSearch ?
         <SearchBar>
           <IconWrapper>
-            <Icon icon='Search' size={18} color='dimmed' />
+            <Icon icon='Search' size={16} color='grey-6' />
           </IconWrapper>
           <SearchInput placeholder={searchPlaceholder} />
         </SearchBar> : <div />}
@@ -207,11 +209,11 @@ const TopBar: React.FC<ITopBar> = ({
         )}
         {hasNotifications && (
           <DrawerToggle isActive={openDrawer === 'notifications'} onClick={() => toggleDrawers('notifications')}>
-            <Icon icon='Notifications' size={18} color='dimmed' />
+            <Icon icon='Notifications' size={20} color='dimmed' />
           </DrawerToggle>
         )}
         <DrawerToggle isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
-          <Icon icon='UserProfile' size={18} color='dimmed' />
+          <Icon icon='UserProfile' size={20} color='dimmed' />
         </DrawerToggle>
       </ButtonArea>
 

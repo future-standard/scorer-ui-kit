@@ -327,25 +327,6 @@ export const typography = {
               "textDecoration": "none",
               "color": "var(--grey-a11)"
           }
-      },
-      "topBar": {
-          "search": {
-              "value": {
-                  "textAlign": "left",
-                  "fontSize": "14px",
-                  "fontWeight": 300,
-                  "textDecoration": "none",
-                  "color": "var(--grey-12)"
-              },
-              "placeholder": {
-                  "textAlign": "left",
-                  "fontStyle": "italic",
-                  "fontSize": "14px",
-                  "fontWeight": 300,
-                  "textDecoration": "none",
-                  "color": "var(--grey-11)"
-              }
-          }
       }
   },
   "content": {
