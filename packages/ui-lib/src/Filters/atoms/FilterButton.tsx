@@ -38,7 +38,6 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>
       display: flex;
       align-items: center;
       [stroke]{
-        /* stroke: var(--dimmed); */
         transition: stroke ${animation.speed.fast} ${animation.easing.primary.inOut};
       }
     }
@@ -121,7 +120,7 @@ const FilterButton: React.FC<IFilterButton> = ({
             icon={icon}
             size={12}
             weight='light'
-            color='warning-12'
+            color='grey-10'
           />
         </FlipWrapper>
         <ButtonText {...{ hasFlipArrow }}>{children}</ButtonText>
