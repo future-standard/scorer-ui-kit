@@ -34,7 +34,7 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
     display: flex;
   }
 
-  height: 30px;
+  height: var(--common-height);
   padding: 0 0 0 8px;
   align-items: center;
   display: flex;

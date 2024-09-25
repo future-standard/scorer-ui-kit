@@ -13,7 +13,7 @@ const FlipWrapper = styled.div<{ isSortAscending: boolean }>`
 const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>`
   ${resetButtonStyles};
   border-radius: 3px;
-  height: 30px;
+  height: var(--common-height);
 
   ${({ theme: { animation } }) => css`
 
@@ -27,14 +27,18 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>
     color: var(--grey-11);
 
     font-family: ${fontFamily.ui};
-    transition: opacity ${animation.speed.normal} ${animation.easing.primary.inOut};
+    transition:
+      opacity ${animation.speed.normal} ${animation.easing.primary.inOut},
+      background ${animation.speed.fast} ${animation.easing.primary.inOut},
+      color ${animation.speed.fast} ${animation.easing.primary.inOut},
+      border ${animation.speed.fast} ${animation.easing.primary.inOut};
 
     ${IconWrapper} {
       padding: 0 9px;
       display: flex;
       align-items: center;
       [stroke]{
-        stroke: var(--dimmed);
+        transition: stroke ${animation.speed.fast} ${animation.easing.primary.inOut};
       }
     }
 
@@ -43,9 +47,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean }>
       border-color: var(--primary-7);
       border: var(--primary-7) 1px solid;
       color: var(--white-1);
-      transition:
-        background ${animation.speed.fast} ${animation.easing.primary.inOut},
-        border ${animation.speed.fast} ${animation.easing.primary.inOut};
+      
     }
 
     &:active:enabled {
@@ -118,6 +120,7 @@ const FilterButton: React.FC<IFilterButton> = ({
             icon={icon}
             size={12}
             weight='light'
+            color='grey-10'
           />
         </FlipWrapper>
         <ButtonText {...{ hasFlipArrow }}>{children}</ButtonText>

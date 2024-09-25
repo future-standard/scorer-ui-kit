@@ -1,17 +1,21 @@
 
 import { createGlobalStyle } from 'styled-components';
 import { layoutVariables } from './variables/Layout';
+import { animationVariables } from './variables/Animation';
 import { colorVariables } from './variables/Colors';
 
 const ThemeVariables = createGlobalStyle`
 
-${layoutVariables};
-${colorVariables};
+  ${layoutVariables};
+  ${animationVariables};
+  ${colorVariables};
 
   :root {
 
     --font-ui: Monorale, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
     --font-data: Lato, Hiragino Sans, "ヒラギノ角ゴシック", Hiragino Kaku Gothic ProN, "ヒラギノ角ゴ ProN W3", Roboto, YuGothic, "游ゴシック", Meiryo, "メイリオ", sans-serif;
+
+    --common-height: 32px;
 
     --font-size: 14px;
 
