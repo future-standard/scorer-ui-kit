@@ -502,6 +502,9 @@ export const colorVariables = css`
     /* Global */
     --dividing-line: var(--grey-4);
     --global-element-background: var(--grey-2);
+    --global-menu-icon-background-default: transparent;
+    --global-menu-icon-background-hover: var(--primary-8);
+    --global-menu-icon-background-active: var(--primary-9);
 
     /* Inputs */
     --input-border-default: var(--grey-6);

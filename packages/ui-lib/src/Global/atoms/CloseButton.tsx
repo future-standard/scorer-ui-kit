@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, useContext } from 'react';
 import { TabContext, ContextProps } from '../../Tabs/Tabs';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import { resetButtonStyles } from '../../common/index';
 import Icon from '../../Icons/Icon';
 import { MOBILE_CLOSE_HEIGHT } from './Layout';

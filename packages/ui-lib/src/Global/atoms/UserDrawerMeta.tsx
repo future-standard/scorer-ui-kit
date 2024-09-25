@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useState } from 'react';
-import styled, { css }  from 'styled-components';
+import styled from 'styled-components';
 import { IUserDrawerMeta } from '..';
 import { useCopyToClipboard } from '../../hooks';
 import Icon from '../../Icons/Icon';
@@ -26,7 +26,7 @@ const LabelTitle = styled.div`
   font-weight: 500;
   letter-spacing: 0.29px;
   color: var(--grey-11);
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: var(--font-ui);
   margin-top: 2px;
 `;
 
@@ -57,9 +57,7 @@ const LabelNotes = styled.div`
   font-weight: 500;
   letter-spacing: 0.29px;
   color: var(--grey-8);
-  ${({ theme }) => theme && css`
-    font-family: ${theme.fontFamily.data};
-  `}
+  font-family: var(--font-data);
 `;
 
 const TitleContainer = styled.div`
@@ -104,7 +102,7 @@ const CopyTextBox = styled.pre`
   position: absolute;
   max-width: 170px;
   white-space: pre-wrap;
-  font-family: ${({ theme }) => theme.fontFamily.data};
+  font-family: var(--font-data);
   right:10px;
   margin-top: -23px;
 `;
