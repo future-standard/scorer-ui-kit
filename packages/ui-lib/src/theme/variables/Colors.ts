@@ -499,6 +499,9 @@ export const colorVariables = css`
     --spinner-primary: var(--primary-6);
     --spinner-simple: var(--grey-a8);
 
+    /* Global */
+    --dividing-line: var(--grey-4);
+
     /* Inputs */
     --input-border-default: var(--grey-6);
     --input-border-default-focused: var(--grey-8);
