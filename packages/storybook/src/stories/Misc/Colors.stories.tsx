@@ -7,12 +7,6 @@ export default {
 };
 
 const Container = styled.div`
-  /* padding: 12px 24px;
-  width: 100%;
-  margin: 15% auto;
-  display: flex;
-  justify-content:center;
-  align-items:center; */
   width: 80%;
   margin: 0 auto;
 `;
