@@ -337,43 +337,6 @@ export const styles = {
             }
         }
     },
-    "global": {
-        "mainMenu": {
-            "iconBackground": {
-                "active": {
-                    "backgroundColor": colors.menu.active
-                },
-                "hover": {
-                    "backgroundColor": colors.menu.hover
-                },
-                "default": {
-                    "backgroundColor": colors.menu.default
-                }
-            },
-            "background": {
-                "boxShadow": "5px 0px 10px 0px var(--white-a2)",
-                "backgroundColor": "var(--grey-1)"
-            },
-            "lines": {
-                "backgroundColor": "var(--grey-6)"
-            }
-        },
-        "background": {
-            "backgroundColor": "var(--grey-2)",
-            "backgroundImage": "linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%)"
-        },
-        "drawer": {
-            "background": {
-                "boxShadow": "-5px 0px 10px 0px var(--white-a2)",
-                "backgroundColor": "var(--grey-1)"
-            }
-        },
-        "topBar": {
-            "lines": {
-                "backgroundColor": "var(--grey-6)"
-            }
-        }
-    },
     "indicators": {
         "spinner": {
             "danger": {
