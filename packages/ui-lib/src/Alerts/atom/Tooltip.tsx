@@ -56,7 +56,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
   const currentLeft = left + window.scrollX;
 
   switch (state) {
-    case 'bottom-end':
+    case 'bottom-right':
       return `
               flex-direction: column;
               top: ${currentTop + height}px;
@@ -66,7 +66,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'bottom-start':
+    case 'bottom-left':
       return `
               flex-direction: column;
               align-items: end;
@@ -78,7 +78,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'right-end':
+    case 'right-bottom':
       return `
               flex-direction: row;
               top: ${currentTop - (ARROW_SIZE / 2) - ARROW_MARGIN + (height / 2)}px;
@@ -90,7 +90,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'right-center':
+    case 'right':
       return `
               flex-direction: row;
               align-items: center;
@@ -103,7 +103,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'right-start':
+    case 'right-top':
       return `
               flex-direction: row;
               align-items: end;
@@ -117,7 +117,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'left-end':
+    case 'left-bottom':
       return `
               flex-direction: row-reverse;
               top: ${currentTop - (ARROW_SIZE / 2) - ARROW_MARGIN + (height / 2)}px;
@@ -130,7 +130,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'left-center':
+    case 'left':
       return `
               flex-direction: row-reverse;
               align-items: center;
@@ -143,7 +143,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'left-start':
+    case 'left-top':
       return `
               flex-direction: row-reverse;
               align-items: end;
@@ -156,7 +156,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
                 margin-bottom: ${ARROW_MARGIN}px;
               }
             `;
-    case 'top-end':
+    case 'top-right':
       return `
               flex-direction: column-reverse;
               top: ${currentTop}px;
@@ -168,7 +168,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'top-center':
+    case 'top':
       return `
               flex-direction: column-reverse;
               align-items: center;
@@ -180,7 +180,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    case 'top-start':
+    case 'top-left':
       return `
               flex-direction: column-reverse;
               align-items: end;
@@ -193,7 +193,7 @@ const getDirectionStyle = (state: ITooltipPosition, coords: DOMRect) => {
               }
             `;
 
-    // default case is 'bottom-center'
+    // default case is 'bottom'
     default:
       return `
             flex-direction: column;
@@ -213,42 +213,42 @@ const getDynamicPosition = (coords: DOMRect, width?: number, height?: number): I
   const isOverflowingTop = coords.top - (height || 0) < 0;
 
   if (isOverflowingTop && isOverflowingRight && isOverflowingBottom) {
-    return 'left-center';
+    return 'left';
   }
 
   if (isOverflowingTop && isOverflowingLeft && isOverflowingBottom) {
-    return 'right-center';
+    return 'right';
   }
 
   if (isOverflowingTop && isOverflowingLeft) {
-    return 'bottom-end';
+    return 'bottom-right';
   }
 
   if (isOverflowingTop && isOverflowingRight) {
-    return 'bottom-start';
+    return 'bottom-left';
   }
 
   if (isOverflowingBottom && isOverflowingLeft) {
-    return 'top-end';
+    return 'top-right';
   }
 
   if (isOverflowingBottom && isOverflowingRight) {
-    return 'top-start';
+    return 'top-left';
   }
 
   if (isOverflowingLeft) {
-    return 'right-center';
+    return 'right';
   }
 
   if (isOverflowingRight) {
-    return 'left-center';
+    return 'left';
   }
 
   if (isOverflowingBottom) {
-    return 'top-center';
+    return 'top';
   }
 
-  return 'bottom-center';
+  return 'bottom';
 };
 
 type ITooltip = {
@@ -260,13 +260,13 @@ type ITooltip = {
   maxWidth?: string
 }
 
-export type ITooltipPosition = 'top-start' | 'top-center' | 'top-end' | 'bottom-start' | 'bottom-center' | 'bottom-end' | 'left-start' | 'left-center' | 'left-end' | 'right-start' | 'right-center' | 'right-end';
+export type ITooltipPosition = 'top-left' | 'top' | 'top-right' | 'bottom-left' | 'bottom' | 'bottom-right' | 'left-top' | 'left' | 'left-bottom' | 'right-top' | 'right' | 'right-bottom';
 
 const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipPosition, maxWidth }) => {
 
   const [coords, setCoords] = useState<DOMRect | null>(null);
   const [visible, setVisible] = useState(false);
-  const [dynamicPosition, setDynamicPosition] = useState<ITooltipPosition>('top-center');
+  const [dynamicPosition, setDynamicPosition] = useState<ITooltipPosition>('top');
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const handleMouseOver = useCallback(() => {

@@ -117,9 +117,9 @@ const TablePage: React.FC = () => {
               <StatusComponent
                 statusList={
                   [
-                    { id: 'device2-a', type: 'error', tooltipIcon: 'BigWarning', tooltipType: 'warning', tooltipMessage: '4 Images have reported upload failures', tooltipPosition: 'left-center' },
-                    { id: 'device2-b', type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: '1 images file is corrupted', tooltipPosition: 'bottom-center' },
-                    { id: 'device2-c', type: 'info', tooltipIcon: 'Information', tooltipType: 'info', tooltipMessage: 'All Images have been updated in the server', tooltipPosition: 'right-center' },
+                    { id: 'device2-a', type: 'error', tooltipIcon: 'BigWarning', tooltipType: 'warning', tooltipMessage: '4 Images have reported upload failures', tooltipPosition: 'left' },
+                    { id: 'device2-b', type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: '1 images file is corrupted', tooltipPosition: 'bottom' },
+                    { id: 'device2-c', type: 'info', tooltipIcon: 'Information', tooltipType: 'info', tooltipMessage: 'All Images have been updated in the server', tooltipPosition: 'right' },
                   ]} />
           },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },

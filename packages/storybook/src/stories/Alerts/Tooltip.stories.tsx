@@ -31,12 +31,11 @@ export const _Tooltip = () => {
   const noIcon = boolean('No Icon', false);
   const iconList = { '': '', ...generateIconList() };
   const icon = select("Icon", iconList, 'Information');
-  const tooltipPosition = select("Tooltip Position", { TopStart: 'top-start', TopCenter: 'top-center', TopEnd: 'top-end', BottomStart: 'bottom-start', BottomCenter: 'bottom-center', BottomEnd: 'bottom-end', LeftStart: 'left-start', LeftCenter: 'left-center', LeftEnd: 'left-end', RightStart: 'right-start', RightCenter: 'right-center', RightEnd: 'right-end' }, 'top-end')
+  const tooltipPosition = select("Tooltip Position", { TopLeft: 'top-left', Top: 'top', TopRight: 'top-right', BottomLeft: 'bottom-left', Bottom: 'bottom', BottomRight: 'bottom-right', LeftTop: 'left-top', Left: 'left', LeftBottom: 'left-bottom', RightTop: 'right-top', Right: 'right', RightBottom: 'right-bottom' }, 'top-right')
 
   return (
     <Container>
       <PageTitle
-        icon={'Home'}
         title="Page with tooltips"
       />
       <Content>
