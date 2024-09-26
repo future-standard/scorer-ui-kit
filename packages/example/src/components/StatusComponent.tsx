@@ -3,22 +3,22 @@ import { AlertType, ITooltipPosition, ITooltipType, Tooltip } from 'scorer-ui-ki
 import styled, { css } from 'styled-components';
 
 const StatusWrapper = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-around;
-gap: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 4px;
 `;
 
 const StatusDot = styled.div<{ type?: AlertType, tooltipMessage?: string }>`
-height: 12px;
-width: 12px;
-border-radius: 100%;
-background-color: ${({ type }) => `var(--${type}, var(--primary-9))`};
-${({ tooltipMessage }) => tooltipMessage && css`
-  &:hover {
-    cursor: pointer;
-  };
-`}
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+  background-color: ${({ type }) => `var(--${type}, var(--primary-9))`};
+    ${({ tooltipMessage }) => tooltipMessage && css`
+      &:hover {
+        cursor: pointer;
+      };
+    `}
 `;
 
 interface IStatusDot {

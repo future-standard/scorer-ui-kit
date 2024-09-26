@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { TypeTable, PageHeader, Content, useModal, SplitButton } from 'scorer-ui-kit';
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
-import { StatusComponent } from './StatusComponent';
+import { StatusComponent } from '../components/StatusComponent';
 
 const Container = styled.div`
   margin: 100px 200px;
