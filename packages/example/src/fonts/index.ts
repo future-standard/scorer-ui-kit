@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import LatoThin from './Lato-Thin.ttf';
 import LatoLight from './Lato-Light.ttf';
 import LatoRegular from './Lato-Regular.ttf';
+import LatoItalic from './Lato-Italic.ttf';
 import LatoBold from './Lato-Bold.ttf';
 import MonoraleThin from './Monorale-Thin.woff'
 import MonoraleThinItalic from './Monorale-ThinItalic.woff';
@@ -46,6 +47,14 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     font-weight: 400;
     src: url(${LatoRegular}) format('truetype');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    font-style: italic;
+    font-weight: 400;
+    src: url(${LatoItalic}) format('truetype');
     font-display: fallback;
   }
 
