@@ -253,7 +253,7 @@ const getDynamicPosition = (coords: DOMRect, width?: number, height?: number): I
 
 type ITooltip = {
   message: string
-  tooltipFor: string
+  tooltipFor: React.RefObject<HTMLElement>
   icon?: string
   type?: ITooltipType
   tooltipPosition?: ITooltipPosition
@@ -270,12 +270,11 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const handleMouseOver = useCallback(() => {
-    const element = document.getElementById(tooltipFor);
-    if (element) {
-      const rect = element.getBoundingClientRect();
+    if (tooltipFor && tooltipFor.current) {
+      const rect = tooltipFor.current.getBoundingClientRect();
       setCoords(rect);
       setVisible(true);
-      setDynamicPosition(getDynamicPosition(rect, tooltipRef.current?.offsetWidth, tooltipRef.current?.offsetHeight));
+      setDynamicPosition(getDynamicPosition(rect, tooltipFor.current.offsetWidth, tooltipFor.current.offsetHeight));
     }
   }, [tooltipFor]);
 
@@ -284,24 +283,29 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
   }, []);
 
   const updateCoords = useCallback(() => {
-    const element = document.getElementById(tooltipFor);
-    if (element) {
-      const rect = element.getBoundingClientRect();
+    if (tooltipFor && tooltipFor.current) {
+      const rect = tooltipFor.current.getBoundingClientRect();
       setCoords(rect);
     }
   }, [tooltipFor]);
 
   useEffect(() => {
-    const element = document.getElementById(tooltipFor);
-    if (!element) { return; }
-    element.addEventListener('mouseover', handleMouseOver);
-    element.addEventListener('mouseout', handleMouseOut);
-    updateCoords();
-
+    let currentRef = null;
+    
+    if(tooltipFor && tooltipFor.current){
+      currentRef = tooltipFor.current;
+      tooltipFor.current.addEventListener('mouseover', handleMouseOver);
+      tooltipFor.current.addEventListener('mouseout', handleMouseOut);
+      updateCoords();
+    }
+    
     return () => {
-      element.removeEventListener('mouseover', handleMouseOver);
-      element.removeEventListener('mouseout', handleMouseOut);
+      if(currentRef){
+        currentRef.removeEventListener('mouseover', handleMouseOver);
+        currentRef.removeEventListener('mouseout', handleMouseOut);
+      }
     };
+
   }, [handleMouseOut, handleMouseOver, tooltipFor, updateCoords]);
 
   if (!visible || !coords) return null;
