@@ -486,21 +486,21 @@ export const colorVariables = css`
     --success: var(--success-8);
     --warning: var(--caution-8);
 
-        /* tooltip */
+    /* tooltip */
     --tooltip-warning: var(--warning-a9);
-    --tooltip-warning-arrow: var(--warning-a9);
+    --tooltip-warning-arrow: var(--warning-9);
     --tooltip-warning-border: var(--warning-a7);
 
     --tooltip-success: var(--success-9);
-    --tooltip-success-arrow: var(--success-a7);
+    --tooltip-success-arrow: var(--success-8);
     --tooltip-success-border: var(--success-a7);
 
     --tooltip-info: var(--primary-8);
-    --tooltip-info-arrow: var(--primary-a8);
-    --tooltip-info-border: var(--primary-8);
+    --tooltip-info-arrow: var(--primary-8);
+    --tooltip-info-border: var(--primary-a8);
 
     --tooltip-neutral: var(--grey-8);
-    --tooltip-neutral-arrow: var(--grey-a7);
+    --tooltip-neutral-arrow: var(--grey-7);
     --tooltip-neutral-border: var(--grey-7);
 
       /* icons */
