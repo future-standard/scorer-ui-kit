@@ -73,12 +73,12 @@ const ButtonArea = styled.div`
 
 const buttonClickAnimation = keyframes`
   0% {
-    opacity:0.8;
-    transform: scale(0.85) translateY(1px);
+    opacity:0.9;
+    transform: scale(0.85);
   }
   100% {
     opacity:1;
-    transform: scale(1) translateY(0);
+    transform: scale(1);
   }
 `;
 
@@ -104,11 +104,7 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
 
   &:hover {
     border-bottom-color: var(--primary-6);
-
-    svg {
-      transform: scale(0.92);
-    }
-
+    opacity: 0.9;
   }
  
   ${({ isActive }) => isActive && css`
@@ -119,7 +115,7 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
         transform: scale(1);
         animation: ${buttonClickAnimation} 0.35s cubic-bezier(0.7, 0, 0.84, 0);
       }
-      
+
     }
   `}
 `;
