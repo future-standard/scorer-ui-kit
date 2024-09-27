@@ -7,6 +7,7 @@ import LoadingBox from '../atoms/LoadingBox';
 import { IFilterItem } from '../FilterTypes';
 import { resetButtonStyles } from '../../common';
 import { fontFamily } from '../../theme/common';
+import { FilterButtonDesign } from '..';
 
 const Container = styled.div`
   display: inline-block;
@@ -88,6 +89,7 @@ const OrderButton = styled.button<{ isSelected: boolean }>`
   `}
 `;
 
+
 export interface ISortDropdown {
   buttonText: string
   list: IFilterItem[]
@@ -98,6 +100,7 @@ export interface ISortDropdown {
   descendingText?: string
   isSortAscending?: boolean
   selected: IFilterItem
+  design?: FilterButtonDesign
   onSelect: (newSort: IFilterItem, isSortAscending: boolean) => void
 }
 
@@ -111,6 +114,7 @@ const SortDropdown: React.FC<ISortDropdown> = ({
   selected,
   descendingText = 'Descending',
   ascendingText = 'Ascending',
+  design = 'basic',
   onSelect,
   ...props }) => {
 
@@ -136,7 +140,7 @@ const SortDropdown: React.FC<ISortDropdown> = ({
   return (
     <Container {...props}>
       <FilterDropHandler
-        {...{ buttonText, disabled, isSortAscending }}
+        {...{ buttonText, disabled, isSortAscending, design }}
         buttonIcon='FilterSorting'
       >
         <TopLine />

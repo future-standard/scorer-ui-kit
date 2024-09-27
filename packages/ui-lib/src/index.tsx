@@ -75,6 +75,7 @@ import {
   IFilterValue,
   IFilterResult,
   isFilterItem,
+  FilterButtonDesign
 } from './Filters';
 
 import Icon, { IconSVGs } from './Icons/Icon';
@@ -415,5 +416,6 @@ export type {
   IButtonStack,
   ISplitLayoutHandles,
   AlertType,
-  ITooltipType
+  ITooltipType,
+  FilterButtonDesign
 };
