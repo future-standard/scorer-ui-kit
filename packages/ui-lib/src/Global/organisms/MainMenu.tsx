@@ -75,7 +75,7 @@ const Container = styled.div<{ open: boolean; desktopSize: IBreakpoints }>`
   left: 0;
   ${({ open, desktopSize }) => css`
     background-color: var(--global-element-background);
-    box-shadow: 0px 0px 10px 0px var(--primary-a2);
+    box-shadow: 0px 0px 7px 0px var(--primary-a2);
     width: ${open ? `var(--global-menu-width-open)` : `var(--global-menu-width-closed)`};
     border-right: 1px solid var(--dividing-line);
 

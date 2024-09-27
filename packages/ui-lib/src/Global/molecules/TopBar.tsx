@@ -20,7 +20,8 @@ const Container = styled.div`
   justify-content: space-between;
   align-self: flex-start;
   border-bottom: 1px solid var(--dividing-line);
-  background: var(--grey-3);
+  background: var(--grey-2);
+  box-shadow: 5px 0px 10px 0px var(--primary-a2);
 `;
 
 const SearchBar = styled.div`
