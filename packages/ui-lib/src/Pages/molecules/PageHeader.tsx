@@ -16,7 +16,7 @@ const LeftPanel = styled.div`
 
 const IntroductionTextWrapper = styled.div`
   max-width: 648px;
-`
+`;
 
 const RightPanel = styled.div<{iconLeftPanel: boolean}>`
     ${({iconLeftPanel}) => iconLeftPanel && css`
