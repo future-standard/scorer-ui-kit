@@ -36,12 +36,7 @@ interface IStatusBundle {
 export const StatusComponent: React.FC<IStatusBundle> = ({ statusList }) => {
 
   const statusRefs = useRef<(React.RefObject<HTMLDivElement>)[]>([]);
-
-  React.useEffect(() => {
-    // Initialise each ref
-    statusRefs.current = statusList.map(() => React.createRef<HTMLDivElement>());
-  });
-  
+  statusRefs.current = statusList.map(() => React.createRef<HTMLDivElement>());
 
   return (
     <StatusWrapper>
