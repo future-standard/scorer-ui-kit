@@ -290,7 +290,7 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
   }, [tooltipFor]);
 
   useEffect(() => {
-    let currentRef = null;
+    let currentRef : HTMLElement | null = null;
     
     if(tooltipFor && tooltipFor.current){
       currentRef = tooltipFor.current;
