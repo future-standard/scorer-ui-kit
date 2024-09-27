@@ -2,10 +2,12 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 const Container = styled.p`
-  ${({theme}) => css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.pageHeader.introduction};
-  `}
+  font-family: var(--font-ui);
+  color: var(--grey-11);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
 `;
 
 interface IProps {}
