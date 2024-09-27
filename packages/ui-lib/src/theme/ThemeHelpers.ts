@@ -14,7 +14,8 @@ const BaseStyles = css`
   body {
     font-family: var(--font-ui);
     color: var(--grey-11);
-    background: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%) var(--grey-3); 
+    background: var(--main-background-gradient);
+    background-attachment: fixed;
   }
   
 `;

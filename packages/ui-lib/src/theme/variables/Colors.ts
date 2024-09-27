@@ -500,6 +500,9 @@ export const colorVariables = css`
     --spinner-simple: var(--grey-a8);
 
     /* Global */
+    --main-background-gradient: radial-gradient(200% 200% at 50% -10%, var(--grey-2) 0%, var(--grey-3) 100%);
+    --main-background-color: var(--grey-3);
+    
     --dividing-line: var(--grey-4);
     --global-element-background: var(--grey-2);
     --global-menu-icon-background-default: transparent;
@@ -528,9 +531,6 @@ export const colorVariables = css`
     --input-color-unit: var(--grey-10);
 
     --input-focused-shadow-color: var(--black-a5);    
-
-    --main-background-gradient: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
-    --main-background-color: var(--grey-3);
 
   }
 
