@@ -46,6 +46,23 @@ const Container = styled.div`
   flex: 1;
 `;
 
+const ExampleContentBlock = styled.div`
+  h2 {
+    font-family: var(--font-ui);
+    font-weight: 500;
+    color: var(--grey-11);
+    font-size: 24px;
+  }
+  p {
+    font-family: var(--font-ui);
+    color: var(--grey-11);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+  }
+`
+
 const buttonList : IButtonStack[] = [
   {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
   {id:'secondaryBase1', buttonType: 'default', text:'Example Action 2', design: 'secondary'},
@@ -60,10 +77,10 @@ const ExampleContent : IHeaderContent = {
     shareLink: 'http://www.example.com/'
   },
   PageHeaderArea: <PageHeader
-  title='Welcome'
-  introductionText='Thanks for using our UI library.'
-  icon="Home"
-  rightContent={<ButtonsStack buttons={buttonList}/>}
+    title='Welcome'
+    introductionText='Thanks for using the SCORER UI Kit. Dolor ex Lorem aliqua ad deserunt ullamco culpa sunt occaecat reprehenderit adipisicing. Amet incididunt do aliquip elit exercitation proident dolor excepteur do. Dolore veniam incididunt labore cupidatat Lorem. '
+    icon="Home"
+    rightContent={<ButtonsStack buttons={buttonList}/>}
   />,
   TabsElementArea:
     <TabList defaultTabId='tab1'>
@@ -76,126 +93,84 @@ const ExampleContent : IHeaderContent = {
 
 const Welcome = () => (
   <>
-    <PageHeader
-      title='Welcome'
-      introductionText='Thanks for using our UI library.'
-    />
-    <PageHeader
-      title='What is Lorem Ipsum?'
-      introductionText={`
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        It has survived not only five centuries, but also the leap into electronic typesetting,
-        remaining essentially unchanged. It was popularised in the 1960s with the release of
-        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-        software like Aldus PageMaker including versions of Lorem Ipsum.
-      `}
-    />
-    <PageHeader
-      title='Why do we use it?'
-      introductionText={`
-        It is a long established fact that a reader will be distracted by the readable content
-        of a page when looking at its layout. The point of using Lorem Ipsum is that it has
-        a more-or-less normal distribution of letters, as opposed to using 'Content here,
-        content here', making it look like readable English. Many desktop publishing packages
-        and web page editors now use Lorem Ipsum as their default model text, and a search for
-        'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
-        evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)
-      `}
-    />
-    <PageHeader
-      title='Where does it come from?'
-      introductionText={`
-          Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
-          of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
-          a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure
-          Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word
-          in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections
-          1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by
-          Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during
-          the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line
-          in section 1.10.32.
-      `}
-    />
-    <PageHeader
-      title='Where can I get some?'
-      introductionText={`
-        There are many variations of passages of Lorem Ipsum available, but the majority
-        have suffered alteration in some form, by injected humour, or randomised words which
-        don't look even slightly believable. If you are going to use a passage of Lorem Ipsum,
-        you need to be sure there isn't anything embarrassing hidden in the middle of text. All the
-        Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making
-        this the first true generator on the Internet. It uses a dictionary of over 200 Latin words,
-        combined with a handful of model sentence structures, to generate Lorem Ipsum which looks
-        reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected
-        humour, or non-characteristic words etc.
-      `}
-    />
-    <PageHeader
-      title='Example'
-      introductionText={`
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      `}
-    />
+    <ExampleContentBlock>
+      <h2>What is Lorem Ipsum?</h2>
+      <p>Cupidatat nisi laboris voluptate sint culpa sunt esse sint. Minim do commodo elit labore elit sunt do. Fugiat Lorem sunt anim voluptate do ex eu ea. Exercitation fugiat cillum aliquip consectetur enim aliquip cillum officia voluptate cupidatat do nisi ad pariatur. Enim magna sunt elit aliqua reprehenderit.</p>
+    </ExampleContentBlock>
+
+    <ExampleContentBlock>
+      <h2>Why do we use it?</h2>
+      <p>Sunt exercitation mollit tempor minim est ex et officia. Duis ea tempor labore qui qui irure est ex nisi eiusmod dolore. Anim laboris sit mollit nisi nostrud tempor sunt mollit. Reprehenderit est consequat mollit adipisicing occaecat dolore incididunt. Ut quis veniam proident fugiat adipisicing consequat duis ut tempor nostrud. Nulla sint voluptate do. Eiusmod nisi elit fugiat occaecat elit culpa est qui.</p>
+    </ExampleContentBlock>
+
+    <ExampleContentBlock>
+      <h2>Where does it come from?</h2>
+      <p>Est cupidatat dolor cupidatat ullamco et esse qui exercitation laborum Lorem labore. Nostrud irure anim magna ut est dolor laborum ipsum aliqua excepteur enim reprehenderit et id laboris. Veniam ut esse velit aliquip pariatur qui et in irure incididunt velit. Incididunt voluptate laborum esse minim.</p>
+    </ExampleContentBlock>
+
+    <ExampleContentBlock>
+      <h2>Where can I get some?</h2>
+      <p>Elit magna minim culpa cupidatat laborum aliquip ea. Incididunt exercitation irure voluptate sit aliquip et tempor. Magna cillum veniam velit id ad anim commodo. Laborum minim laboris voluptate cillum aliquip excepteur quis reprehenderit sint veniam. Sunt proident non ex laborum duis commodo. Ut ad amet dolor nulla nulla est aliquip nostrud deserunt. Sit laborum tempor incididunt irure duis mollit.</p>
+    </ExampleContentBlock>
+
+    <ExampleContentBlock>
+      <h2>Example</h2>
+      <p>Do aliqua non id anim ut ea sit aute exercitation laboris occaecat tempor. Aliqua quis ipsum id veniam aliquip do culpa enim ullamco enim aute veniam. Reprehenderit pariatur cupidatat enim laborum. Dolore pariatur sint eu excepteur do veniam consectetur deserunt ea incididunt qui ea cupidatat nulla consequat.</p>
+    </ExampleContentBlock>
   </>
 );
 
 const About = () => (
-  <PageHeader
-    title='About'
-    introductionText='We are a team dedicated to create components to make building UI easier.'
-  />
+  <ExampleContentBlock>
+    <h2>About</h2>
+    <p>Do aliqua non id anim ut ea sit aute exercitation laboris occaecat tempor. Aliqua quis ipsum id veniam aliquip do culpa enim ullamco enim aute veniam. Reprehenderit pariatur cupidatat enim laborum. Dolore pariatur sint eu excepteur do veniam consectetur deserunt ea incididunt qui ea cupidatat nulla consequat.</p>
+  </ExampleContentBlock>
 );
 
 const Team = () => (
-  <PageHeader
-    title='Team'
-    introductionText='We are a team dedicated to create components to make building UI easier.'
-  />
+  <ExampleContentBlock>
+    <h2>Team</h2>
+    <p>Do aliqua non id anim ut ea sit aute exercitation laboris occaecat tempor. Aliqua quis ipsum id veniam aliquip do culpa enim ullamco enim aute veniam. Reprehenderit pariatur cupidatat enim laborum. Dolore pariatur sint eu excepteur do veniam consectetur deserunt ea incididunt qui ea cupidatat nulla consequat.</p>
+  </ExampleContentBlock>
 );
 
 
 const Contact = () => (
   <div>
-    <PageHeader
-      title='Contact'
-      introductionText='Please leave us a message'
-    />
+    <ExampleContentBlock>
+      <h2>Contact</h2>
+      <p>Please leave us a message...</p>
+    </ExampleContentBlock>
     <TextAreaField name='message' label='message' fieldState='default' />
   </div>
 );
 
 const Company = () => (
-  <PageHeader
-    title='Company'
-    introductionText='We are a team dedicated to create components to make building UI easier.'
-  />
+  <ExampleContentBlock>
+    <h2>Example</h2>
+    <p>We are a team dedicated to create components to make building UI easier.</p>
+  </ExampleContentBlock>
 );
 
 const Accounts = () => (
-  <PageHeader
-    title='Accounts'
-    introductionText='Here is a list of accounts'
-  />
+  <ExampleContentBlock>
+    <h2>Example</h2>
+    <p>Here is a list of accounts</p>
+  </ExampleContentBlock>  
 );
 
 const Billing = () => (
-  <PageHeader
-    title='Billing'
-    introductionText='Information about your billing'
-  />
+  <ExampleContentBlock>
+    <h2>Example</h2>
+    <p>Information about your billing</p>
+  </ExampleContentBlock>
 );
 
 const Payments = () => (
-  <PageHeader
-    title='Payments'
-    introductionText='Information of Payments'
-  />
+  <ExampleContentBlock>
+    <h2>Example</h2>
+    <p>Information of Payments</p>
+  </ExampleContentBlock>
 );
 
 interface OwnProps {

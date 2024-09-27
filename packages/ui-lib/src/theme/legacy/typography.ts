@@ -1,5 +1,6 @@
 export const typography = {
-  "pageHeader": {
+    // DEPRECATED: pageHeader
+    "pageHeader": {
       "introduction": {
           "textAlign": "left",
           "fontStyle": "italic",

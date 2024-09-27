@@ -1,7 +1,24 @@
 import React, { FC } from "react";
 import { ThemeProvider } from 'styled-components';
 import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ButtonsStack, IButtonStack } from "scorer-ui-kit";
+import styled from "styled-components";
 
+const ExampleContentBlock = styled.div`
+  h2 {
+    font-family: var(--font-ui);
+    font-weight: 500;
+    color: var(--grey-11);
+    font-size: 24px;
+  }
+  p {
+    font-family: var(--font-ui);
+    color: var(--grey-11);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+  }
+`
 
 const defaultBtn : IButtonStack[] = [
   {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
@@ -195,23 +212,34 @@ const GlobalUIPage: FC = () => {
         >
           <PageHeader
             title='Welcome'
-            introductionText='Thanks for using our UI library.'
+            introductionText='Thanks for using the SCORER UI Kit. Dolor ex Lorem aliqua ad deserunt ullamco culpa sunt occaecat reprehenderit adipisicing. Amet incididunt do aliquip elit exercitation proident dolor excepteur do. Dolore veniam incididunt labore cupidatat Lorem. '
             rightContent={<ButtonsStack buttons={defaultBtn}/>}
           />
+  
+          <ExampleContentBlock>
+            <h2>What is Lorem Ipsum?</h2>
+            <p>Cupidatat nisi laboris voluptate sint culpa sunt esse sint. Minim do commodo elit labore elit sunt do. Fugiat Lorem sunt anim voluptate do ex eu ea. Exercitation fugiat cillum aliquip consectetur enim aliquip cillum officia voluptate cupidatat do nisi ad pariatur. Enim magna sunt elit aliqua reprehenderit.</p>
+          </ExampleContentBlock>
 
-          <p>Ea eu qui labore esse consectetur excepteur aliquip enim. Mollit in proident laboris culpa deserunt. Do occaecat velit consequat quis aliqua ad adipisicing do ad cillum esse ad Lorem. Et exercitation aute nisi mollit sit exercitation cillum nulla proident officia magna. Consequat ad veniam pariatur incididunt cillum ea id quis ad anim duis non occaecat. Sunt ad reprehenderit veniam labore ipsum laborum esse excepteur ex ex. Ea do dolore aliquip aliquip culpa qui elit aliquip aliqua est culpa nisi et esse.</p>
-          <p>Veniam deserunt tempor mollit laborum enim ullamco exercitation consectetur incididunt. Nulla ex voluptate qui nisi. Anim nostrud minim quis cillum sint Lorem fugiat ullamco quis. Nulla ad tempor eiusmod. Adipisicing duis ipsum aliquip fugiat veniam ipsum minim commodo eu aute do quis cillum anim sint. Ea consectetur officia culpa magna qui qui ex elit.</p>
-          <p>Dolor ex Lorem aliqua ad deserunt ullamco culpa sunt occaecat reprehenderit adipisicing. Amet incididunt do aliquip elit exercitation proident dolor excepteur do. Dolore veniam incididunt labore cupidatat Lorem. Ex deserunt enim reprehenderit dolore mollit sit ut reprehenderit ullamco anim eiusmod. Aliquip exercitation mollit minim in consequat occaecat ut.</p>
-          <p>Esse non magna exercitation nisi exercitation. Est elit quis laborum laborum deserunt. Officia excepteur proident eu elit laboris occaecat mollit. Exercitation elit mollit sint do laboris cupidatat deserunt incididunt enim in fugiat. Aliquip adipisicing ex Lorem proident aliquip nostrud deserunt nostrud mollit magna magna consectetur cupidatat amet sit. Do sint quis officia occaecat fugiat tempor dolor mollit ad dolore sit Lorem aute officia aute. Velit laboris Lorem Lorem elit in adipisicing qui veniam.</p>
-          <p>Duis magna laboris cillum nostrud occaecat velit laboris duis. Aliqua cupidatat et consectetur amet ad exercitation nostrud ipsum in culpa qui consequat. Deserunt anim laborum est incididunt magna aute consectetur. In voluptate consequat minim non aute mollit ut cupidatat ex do cupidatat non.</p>
-          <p>Ut labore sunt mollit fugiat exercitation ut ut cupidatat duis est do laboris laborum ad. Ut qui voluptate ipsum eiusmod eiusmod nisi quis quis dolore aliquip ut nulla labore. Occaecat quis proident ullamco commodo ut ad elit ea aliquip est Lorem ex aliquip fugiat proident. Pariatur occaecat laborum exercitation voluptate laboris consequat culpa dolore esse ad irure. Minim laboris sit quis officia culpa elit non amet sit nulla.</p>
-          <p>Esse duis sit consectetur est. Voluptate laborum deserunt duis amet ad do labore cupidatat laborum id tempor pariatur id sunt culpa. Sit sint tempor id. Esse ullamco exercitation dolore non amet sint officia officia qui occaecat labore voluptate fugiat veniam. Fugiat ea ad sunt laboris et dolor esse anim fugiat deserunt fugiat ullamco dolor eiusmod. Dolore qui quis pariatur ullamco exercitation culpa sunt non.</p>
-          <p>Non anim sint ex consequat nisi laborum dolor amet nostrud quis dolore proident occaecat esse. Voluptate nisi consectetur qui ut excepteur dolor Lorem reprehenderit. Esse sit culpa minim magna id adipisicing aliquip enim consectetur ea enim pariatur ut non nisi. Est proident nulla ut laboris deserunt tempor ut aliqua dolore est quis eu sunt. Amet minim deserunt pariatur enim Lorem velit voluptate deserunt laborum ipsum mollit amet. Mollit ea fugiat aliquip aute nostrud amet quis occaecat est aliqua eiusmod ea excepteur. Ullamco qui non irure culpa amet laboris culpa. Esse nostrud fugiat labore minim.</p>
-          <p>Esse non magna exercitation nisi exercitation. Est elit quis laborum laborum deserunt. Officia excepteur proident eu elit laboris occaecat mollit. Exercitation elit mollit sint do laboris cupidatat deserunt incididunt enim in fugiat. Aliquip adipisicing ex Lorem proident aliquip nostrud deserunt nostrud mollit magna magna consectetur cupidatat amet sit. Do sint quis officia occaecat fugiat tempor dolor mollit ad dolore sit Lorem aute officia aute. Velit laboris Lorem Lorem elit in adipisicing qui veniam.</p>
-          <p>Duis magna laboris cillum nostrud occaecat velit laboris duis. Aliqua cupidatat et consectetur amet ad exercitation nostrud ipsum in culpa qui consequat. Deserunt anim laborum est incididunt magna aute consectetur. In voluptate consequat minim non aute mollit ut cupidatat ex do cupidatat non.</p>
-          <p>Ut labore sunt mollit fugiat exercitation ut ut cupidatat duis est do laboris laborum ad. Ut qui voluptate ipsum eiusmod eiusmod nisi quis quis dolore aliquip ut nulla labore. Occaecat quis proident ullamco commodo ut ad elit ea aliquip est Lorem ex aliquip fugiat proident. Pariatur occaecat laborum exercitation voluptate laboris consequat culpa dolore esse ad irure. Minim laboris sit quis officia culpa elit non amet sit nulla.</p>
-          <p>Enim elit esse in exercitation enim eiusmod exercitation. Laboris labore nisi ullamco eiusmod. Fugiat dolor voluptate id cillum culpa duis eu cillum et. Fugiat mollit et excepteur fugiat officia tempor minim. Laboris officia velit anim in aute nisi sint.</p>
-          <p>Nulla ad qui ex sunt aute ex excepteur est sit dolor. Ullamco ex deserunt tempor consequat tempor adipisicing reprehenderit consectetur. Et sunt sint eiusmod ullamco exercitation commodo. Non culpa ea amet exercitation aute incididunt esse minim aliqua.</p>
+          <ExampleContentBlock>
+            <h2>Why do we use it?</h2>
+            <p>Sunt exercitation mollit tempor minim est ex et officia. Duis ea tempor labore qui qui irure est ex nisi eiusmod dolore. Anim laboris sit mollit nisi nostrud tempor sunt mollit. Reprehenderit est consequat mollit adipisicing occaecat dolore incididunt. Ut quis veniam proident fugiat adipisicing consequat duis ut tempor nostrud. Nulla sint voluptate do. Eiusmod nisi elit fugiat occaecat elit culpa est qui.</p>
+          </ExampleContentBlock>
+
+          <ExampleContentBlock>
+            <h2>Where does it come from?</h2>
+            <p>Est cupidatat dolor cupidatat ullamco et esse qui exercitation laborum Lorem labore. Nostrud irure anim magna ut est dolor laborum ipsum aliqua excepteur enim reprehenderit et id laboris. Veniam ut esse velit aliquip pariatur qui et in irure incididunt velit. Incididunt voluptate laborum esse minim.</p>
+          </ExampleContentBlock>
+
+          <ExampleContentBlock>
+            <h2>Where can I get some?</h2>
+            <p>Elit magna minim culpa cupidatat laborum aliquip ea. Incididunt exercitation irure voluptate sit aliquip et tempor. Magna cillum veniam velit id ad anim commodo. Laborum minim laboris voluptate cillum aliquip excepteur quis reprehenderit sint veniam. Sunt proident non ex laborum duis commodo. Ut ad amet dolor nulla nulla est aliquip nostrud deserunt. Sit laborum tempor incididunt irure duis mollit.</p>
+          </ExampleContentBlock>
+
+          <ExampleContentBlock>
+            <h2>Example</h2>
+            <p>Do aliqua non id anim ut ea sit aute exercitation laboris occaecat tempor. Aliqua quis ipsum id veniam aliquip do culpa enim ullamco enim aute veniam. Reprehenderit pariatur cupidatat enim laborum. Dolore pariatur sint eu excepteur do veniam consectetur deserunt ea incididunt qui ea cupidatat nulla consequat.</p>
+          </ExampleContentBlock>
         </GlobalUI>
       </ThemeProvider>
   );
