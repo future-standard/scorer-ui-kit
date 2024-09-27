@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDom from 'react-dom';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
 import StatusIcon from '../../Icons/StatusIcon';
@@ -71,6 +71,17 @@ const ButtonArea = styled.div`
   gap: 0;
 `;
 
+const buttonClickAnimation = keyframes`
+  0% {
+    opacity:0.8;
+    transform: scale(0.85) translateY(1px);
+  }
+  100% {
+    opacity:1;
+    transform: scale(1) translateY(0);
+  }
+`;
+
 const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolean }>`
   flex: 0 56px;
   width: 56px;
@@ -87,13 +98,28 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
   
   transition: border var(--speed-normal) var(--easing-primary-in);
   
+  svg {
+    transition: transform var(--speed-normal) var(--easing-primary-in);
+  }
+
   &:hover {
     border-bottom-color: var(--primary-6);
+
+    svg {
+      transform: scale(0.92);
+    }
+
   }
  
   ${({ isActive }) => isActive && css`
     &, &:hover {
       border-bottom-color: var(--primary-9);
+    
+      svg {
+        transform: scale(1);
+        animation: ${buttonClickAnimation} 0.35s cubic-bezier(0.7, 0, 0.84, 0);
+      }
+      
     }
   `}
 `;
