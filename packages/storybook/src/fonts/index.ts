@@ -1,10 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 
-import LatoThin from './Lato-Thin.ttf';
-import LatoLight from './Lato-Light.ttf';
-import LatoRegular from './Lato-Regular.ttf';
-import LatoItalic from './Lato-Italic.ttf';
-import LatoBold from './Lato-Bold.ttf';
+import LatoThin from './Lato-Thin.woff2';
+import LatoLight from './Lato-Light.woff2';
+import LatoRegular from './Lato-Regular.woff2';
+import LatoItalic from './Lato-Italic.woff2';
+import LatoBold from './Lato-Bold.woff2';
 import MonoraleThin from './Monorale-Thin.woff'
 import MonoraleThinItalic from './Monorale-ThinItalic.woff';
 import MonoraleExtraLight from './Monorale-ExtraLight.woff';
@@ -18,11 +18,8 @@ import MonoraleMediumItalic from './Monorale-MediumItalic.woff';
 import MonoraleSemiBold from './Monorale-SemiBold.woff';
 import MonoraleSemiBoldItalic from './Monorale-SemiBoldItalic.woff';
 import MonoraleBold from './Monorale-Bold.woff';
-import MonoraleBoldItalic from './Monorale-BoldItalic.woff';
 import MonoraleExtraBold from './Monorale-ExtraBold.woff';
-import MonoraleExtraBoldItalic from './Monorale-ExtraBoldItalic.woff';
 import MonoraleBlack from './Monorale-Black.woff';
-import MonoraleBlackItalic from './Monorale-BlackItalic.woff';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -30,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Lato';
     font-style: normal;
     font-weight: 100;
-    src: url(${LatoThin}) format('truetype');
+    src: url(${LatoThin}) format('woff2');
     font-display: fallback;
   }
 
@@ -38,7 +35,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Lato';
     font-style: light;
     font-weight: 300;
-    src: url(${LatoLight}) format('truetype');
+    src: url(${LatoLight}) format('woff2');
     font-display: fallback;
   }
 
@@ -46,7 +43,15 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
-    src: url(${LatoRegular}) format('truetype');
+    src: url(${LatoRegular}) format('woff2');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: normal;
+    src: url(${LatoRegular}) format('woff2');
     font-display: fallback;
   }
 
@@ -54,7 +59,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Lato';
     font-style: italic;
     font-weight: 400;
-    src: url(${LatoItalic}) format('truetype');
+    src: url(${LatoItalic}) format('woff2');
     font-display: fallback;
   }
 
@@ -62,7 +67,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Lato';
     font-style: bold;
     font-weight: 700;
-    src: url(${LatoBold}) format('truetype');
+    src: url(${LatoBold}) format('woff2');
     font-display: fallback;
   }
 
@@ -172,25 +177,9 @@ const GlobalStyle = createGlobalStyle`
 
   @font-face {
     font-family: Monorale;
-    font-weight: 700;
-    font-style: italic;
-    src: url(${MonoraleBoldItalic}) format('woff');
-    font-display: fallback;
-}
-
-  @font-face {
-    font-family: Monorale;
     font-weight: 800;
     font-style: normal;
     src: url(${MonoraleExtraBold}) format('woff');
-    font-display: fallback;
-  }
-
-  @font-face {
-    font-family: Monorale;
-    font-weight: 800;
-    font-style: italic;
-    src: url(${MonoraleExtraBoldItalic}) format('woff');
     font-display: fallback;
   }
 
@@ -202,12 +191,5 @@ const GlobalStyle = createGlobalStyle`
     font-display: fallback;
   }
 
-  @font-face {
-    font-family: Monorale;
-    font-weight: 900;
-    font-style: italic;
-    src: url(${MonoraleBlackItalic}) format('woff');
-    font-display: fallback;
-  }
 `
 export default GlobalStyle;
