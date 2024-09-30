@@ -16,9 +16,9 @@ const Container = styled.div`
   text-rendering: optimizeLegibility; 
 `;
 
-const Item = styled.div<{font: string, zeplinWeight: number | string, figmaWeight: number | string, italic?: boolean}>`
+const Item = styled.div<{font: string, weight: number | string, italic?: boolean}>`
   font-family: ${({font}) => font === 'Lato' ? `var(--font-data)` : `var(--font-ui)`};
-  font-weight: ${({zeplinWeight}) => zeplinWeight};
+  font-weight: ${({weight}) => weight};
   font-style: ${({italic}) => italic ? 'italic' : 'normal'};
   color: var(--grey-12);
 
@@ -27,151 +27,139 @@ const Item = styled.div<{font: string, zeplinWeight: number | string, figmaWeigh
   }
 `
 
-interface IFontMeta {
-  figmaWeight: number | string
-  zeplinWeight: number | string
-}
-const FontMeta : React.FC<IFontMeta> = ({figmaWeight, zeplinWeight}) => {
-  return (
-    <div>
-      Figma: {figmaWeight} - Zeplin: {zeplinWeight}
-    </div>
-  )
-} 
-
 export const _FontSheet = () => {
 
   return <Container>
-    <Item font={'Lato'} zeplinWeight={100} figmaWeight={100}>
+    <Item font={'Lato'} weight={100}>
       This is Lato Hairline
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={100} figmaWeight={100} italic>
+    <Item font={'Lato'} weight={100} italic>
       This is Lato Hairline Italic
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={200} figmaWeight={200}>
+    <Item font={'Lato'} weight={200}>
       This is Lato ExtraLight
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={200} figmaWeight={200} italic>
+    <Item font={'Lato'} weight={200} italic>
       This is Lato ExtraLight Italic
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={300} figmaWeight={300}>
+    <Item font={'Lato'} weight={300}>
       This is Lato Light
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={300} figmaWeight={300} italic>
+    <Item font={'Lato'} weight={300} italic>
       This is Lato Light Italic
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={'normal'} figmaWeight={'normal'}>
+    <Item font={'Lato'} weight={'normal'}>
       This is Lato Regular
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={'normal'} figmaWeight={'normal'} italic>
+    <Item font={'Lato'} weight={'normal'} italic>
       This is Lato Regular Italic
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={500} figmaWeight={500}>
+    <Item font={'Lato'} weight={500}>
       This is Lato Medium
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={500} figmaWeight={500} italic>
+    <Item font={'Lato'} weight={500} italic>
       This is Lato Medium Italic
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={600} figmaWeight={600}>
+    <Item font={'Lato'} weight={600}>
       This is Lato SemiBold
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={600} figmaWeight={600} italic>
+    <Item font={'Lato'} weight={600} italic>
       This is Lato SemiBold Italic
     </Item>
     
-    <Item font={'Lato'} zeplinWeight={'bold'} figmaWeight={'bold'}>
+    <Item font={'Lato'} weight={'bold'}>
       This is Lato Bold
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={'bold'} figmaWeight={'bold'} italic>
+    <Item font={'Lato'} weight={'bold'} italic>
       This is Lato Bold Italic
     </Item>
     
-    <Item font={'Lato'} zeplinWeight={800} figmaWeight={800}>
+    <Item font={'Lato'} weight={800}>
       This is Lato ExtraBold
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={800} figmaWeight={800} italic>
+    <Item font={'Lato'} weight={800} italic>
       This is Lato ExtraBold Italic
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={900} figmaWeight={900}>
+    <Item font={'Lato'} weight={900}>
       This is Lato Black
     </Item>
 
-    <Item font={'Lato'} zeplinWeight={900} figmaWeight={900} italic>
+    <Item font={'Lato'} weight={900} italic>
       This is Lato Black Italic
     </Item>
 
     
-    <Item font={'Monorale'} zeplinWeight={100} figmaWeight={100}>
+    <Item font={'Monorale'} weight={100}>
       This is Monorale Thin
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={100} figmaWeight={100} italic>
+    <Item font={'Monorale'} weight={100} italic>
       This is Monorale Thin Italic
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={200} figmaWeight={200}>
+    <Item font={'Monorale'} weight={200}>
       This is Monorale Extra Light
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={200} figmaWeight={200} italic>
+    <Item font={'Monorale'} weight={200} italic>
       This is Monorale Extra Light Italic
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={300} figmaWeight={300}>
+    <Item font={'Monorale'} weight={300}>
       This is Monorale Light
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={300} figmaWeight={300} italic>
+    <Item font={'Monorale'} weight={300} italic>
       This is Monorale Light Italic
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={400} figmaWeight={400}>
+    <Item font={'Monorale'} weight={400}>
       This is Monorale 
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={400} figmaWeight={400} italic>
+    <Item font={'Monorale'} weight={400} italic>
       This is Monorale Italic
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={500} figmaWeight={500}>
+    <Item font={'Monorale'} weight={500}>
       This is Monorale Medium
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={500} figmaWeight={500} italic>
+    <Item font={'Monorale'} weight={500} italic>
       This is Monorale Medium Italic
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={600} figmaWeight={600}>
+    <Item font={'Monorale'} weight={600}>
       This is Monorale Semibold
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={600} figmaWeight={600} italic>
+    <Item font={'Monorale'} weight={600} italic>
       This is Monorale Semibold Italic
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={'bold'} figmaWeight={'bold'}>
+    <Item font={'Monorale'} weight={'bold'}>
       This is Monorale Bold
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={800} figmaWeight={800}>
+    <Item font={'Monorale'} weight={800}>
       This is Monorale Extra Bold
     </Item>
 
-    <Item font={'Monorale'} zeplinWeight={900} figmaWeight={900}>
+    <Item font={'Monorale'} weight={900}>
       This is Monorale Black
     </Item> 
     
