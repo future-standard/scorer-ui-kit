@@ -1,10 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
-import LatoThin from './Lato-Thin.woff2';
-import LatoLight from './Lato-Light.woff2';
-import LatoRegular from './Lato-Regular.woff2';
-import LatoItalic from './Lato-Italic.woff2';
-import LatoBold from './Lato-Bold.woff2';
+import Lato from './Lato3Upr3M-VF.woff2';
+import LatoItalic from './Lato3Ita3M-VF.woff2';
 import MonoraleThin from './Monorale-Thin.woff'
 import MonoraleThinItalic from './Monorale-ThinItalic.woff';
 import MonoraleExtraLight from './Monorale-ExtraLight.woff';
@@ -23,53 +20,22 @@ import MonoraleBlack from './Monorale-Black.woff';
 
 
 const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 100;
-    src: url(${LatoThin}) format('woff2');
-    font-display: fallback;
+
+@font-face {
+    font-family: "Lato";
+    src: url(${Lato}) format("woff2 supports variations"),
+        url(${Lato}) format("woff2-variations");
+    font-weight: 100 900;
   }
 
   @font-face {
-    font-family: 'Lato';
-    font-style: light;
-    font-weight: 300;
-    src: url(${LatoLight}) format('woff2');
-    font-display: fallback;
-  }
-
-  @font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 400;
-    src: url(${LatoRegular}) format('woff2');
-    font-display: fallback;
-  }
-
-  @font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: normal;
-    src: url(${LatoRegular}) format('woff2');
-    font-display: fallback;
-  }
-
-  @font-face {
-    font-family: 'Lato';
+    font-family: "Lato";
     font-style: italic;
-    font-weight: 400;
-    src: url(${LatoItalic}) format('woff2');
-    font-display: fallback;
+    src: url(${LatoItalic}) format("woff2 supports variations"),
+        url(${LatoItalic}) format("woff2-variations");
+    font-weight: 100 900;
   }
 
-  @font-face {
-    font-family: 'Lato';
-    font-style: bold;
-    font-weight: 700;
-    src: url(${LatoBold}) format('woff2');
-    font-display: fallback;
-  }
 
   @font-face {
     font-family: Monorale;
