@@ -21,11 +21,12 @@ const SubmenuHeader = styled.div`
 
 const SubmenuItemTitle = styled.span`
   display: block;
-  ${({theme}) => theme && css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.global.mainMenu.subheader}
-  `};
-
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+  color: var(--grey-11);
 `;
 
 const SubmenuItemLink = styled(Link)`
@@ -57,41 +58,41 @@ const SubmenuItem = styled.li<{isActive?: boolean}>`
     position: absolute;
     left: 0;
     top: 10px;
-    background: ${({theme: {colors}}) => colors.divider};
+    background: var(--dividing-line);
   }
 
   ${SubmenuItemLink}, ${SubmenuItemAnchor}{
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 300;
+    text-decoration: none;
+    color: var(--grey-11);
 
-    ${({theme, isActive}) => theme && css`
-      font-family: ${theme.fontFamily.ui};
-      ${theme.typography.global.mainMenu.subItem.default};
-
+    ${({isActive}) => css`
+    
       &:hover {
-        ${theme.typography.global.mainMenu.subItem.hover};
+        color: var(--primary-9);
       }
 
       ${isActive && css`
         &, &:hover {
-          ${theme.typography.global.mainMenu.subItem.active};
+          color: var(--grey-11);
+          font-weight: 600;
         }
       `}
 
     `};
 
-
-
   }
 `;
 
 const SubmenuContainer = styled.div`
-  ${({theme}) => theme && css`
-    transition:
-      max-height ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut},
-      opacity ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeOut};
-  `};
-
   position: relative;
   overflow: hidden;
+
+  transition:
+    max-height var(--speed-normal) var(--easing-primary-out),
+    opacity var(--speed-fast) var(--easing-primary-out);
 
   &::after {
     display: block;
@@ -101,7 +102,7 @@ const SubmenuContainer = styled.div`
     left: 40px;
     top: 0;
     bottom: 35px;
-    background: ${({theme: {colors}}) => colors.divider};
+    background: var(--dividing-line);
   }
 
 `;
@@ -114,11 +115,11 @@ const ContextContainer = styled.div<{ open: boolean, maxHeight: number, minHeigh
     max-height: 0;
     opacity: 0;
   }
-  ${({open, maxHeight, theme}) => open && css`
+  ${({open, maxHeight}) => open && css`
     ${SubmenuContainer}{
       transition:
-        max-height ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut},
-        opacity ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeOut};
+        max-height var(--speed-normal) var(--easing-primary-out),
+        opacity var(--speed-fast) var(--easing-primary-out);
       max-height: ${maxHeight}px !important;
       opacity: 1;
     }

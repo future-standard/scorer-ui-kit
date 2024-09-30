@@ -49,9 +49,7 @@ const SVGObjectText = styled.object`
 const NavigationContainer = styled.div``;
 
 const MenuFooter = styled.div`
-  ${({ theme }) => theme && css`
-    ${theme.styles.global.mainMenu.footerBackground}
-  `};
+  background: var(--global-element-background);
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -65,8 +63,8 @@ const FooterItemContainer = styled.div`
 const PushContainer = styled.div<{ isPinned: boolean; }>`
   position: relative;
   height: 100%;
-  ${({ theme, isPinned }) => theme && css`
-    width: ${isPinned ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed};
+  ${({ isPinned }) => css`
+    width: ${isPinned ? `var(--global-menu-width-open)` : `var(--global-menu-width-closed)`};
   `};
 `;
 
@@ -75,17 +73,18 @@ const Container = styled.div<{ open: boolean; desktopSize: IBreakpoints }>`
   position: fixed;
   top: 0;
   left: 0;
-  ${({ theme, open, desktopSize }) => theme && css`
-    ${theme.styles.global.mainMenu.background}
+  ${({ open, desktopSize }) => css`
+    background-color: var(--global-element-background);
+    box-shadow: 0px 0px 7px 0px var(--primary-a2);
+    width: ${open ? `var(--global-menu-width-open)` : `var(--global-menu-width-closed)`};
+    border-right: 1px solid var(--dividing-line);
+
     ${desktopSize === 'xxlarge' ? `` : css`
-      transition: width ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut}
-      `
-    };
-    width: ${open ? theme.dimensions.global.mainMenu.width.open : theme.dimensions.global.mainMenu.width.closed};
-    border-right: 1px solid ${theme.styles.global.mainMenu.lines.backgroundColor};
+      transition: width var(--speed-normal) var(--easing-primary-out);
+    `};
 
     ${LogoType}{
-      transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
+      transition: opacity var(--speed-normal) var(--easing-primary-in-out);
       opacity: ${open ? 1 : 0};
     }
   `}
@@ -97,7 +96,7 @@ const Container = styled.div<{ open: boolean; desktopSize: IBreakpoints }>`
 `;
 
 const ContainerInner = styled.div`
-  width: ${({ theme }) => theme.dimensions.global.mainMenu.width.open};
+  width: var(--global-menu-width-open);
   display: flex;
   flex-direction: column;
   height: 100%;

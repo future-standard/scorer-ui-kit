@@ -7,10 +7,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 
 const ContextTitle = styled.div<{ compact?: boolean }>`
   opacity: 0;
-
-  ${({ theme }) => css`
-    transition: opacity ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
-  `}
+  transition: opacity var(--speed-fast) var(--easing-primary-in-out);
 
   ${({ compact }) => compact && css`
     font-size:14px;
@@ -18,11 +15,9 @@ const ContextTitle = styled.div<{ compact?: boolean }>`
 `;
 
 const ContextIcon = styled.div<{ compact?: boolean }>`
-  ${({ theme }) => css`
-    ${theme.styles.global.mainMenu.iconBackground.default};
-    transition: background ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
-  `};
-
+  background-color: var(--global-menu-icon-background-default);
+  transition: background-color var(--speed-fast) var(--easing-primary-in);
+    
   flex: 0 0 40px;
   width: 40px;
   height: 40px;
@@ -46,20 +41,17 @@ const ContextIndicator = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  opacity: 0;
+  transition: opacity 0 var(--easing-primary-in);
 
   svg {
     display: block;
     height: 12px;
     width: 12px;
   }
-
-  opacity: 0;
-
-  ${({ theme }) => css`
-    transition: opacity 0 ${theme.animation.easing.primary.easeInOut};
-  `}
-
 `;
+
 const ContextActionBaseCSS = css`
   -webkit-tap-highlight-color: transparent;
   border: none;
@@ -73,6 +65,10 @@ const ContextActionBaseCSS = css`
   outline: none;
   padding: 0;
   text-decoration: none;
+  font-family: var(--font-ui);
+  font-weight: 300;
+  font-size: 16px;
+  color: var(--grey-10);
 `;
 
 const StyledAnchor = styled.a`
@@ -86,10 +82,6 @@ const ExternalIconWrapper = styled.div`
 
 const ContextWrapper = styled.div<{$menuOpen?: boolean}>`
   ${ContextActionBaseCSS}
-  ${({ theme }) => theme && css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.global.mainMenu.menuItem.default};
-  `}
 
   ${({ $menuOpen }) => $menuOpen && css`
   ${ContextTitle}{
@@ -99,7 +91,8 @@ const ContextWrapper = styled.div<{$menuOpen?: boolean}>`
 
   &:hover ${ContextIcon}{
     opacity: 1;
-    ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
+    background-color: var(--global-menu-icon-background-hover);
+
     ${IconWrapper}{
       [stroke]{
         stroke: var(--inverse);
@@ -110,10 +103,6 @@ const ContextWrapper = styled.div<{$menuOpen?: boolean}>`
 
 const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }>`
   ${ContextActionBaseCSS}
-  ${({ theme }) => theme && css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.global.mainMenu.menuItem.default};
-  `}
 
   ${({ $menuOpen }) => $menuOpen && css`
     ${ContextTitle}{
@@ -123,7 +112,8 @@ const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }
 
   &:hover ${ContextIcon}{
     opacity: 1;
-    ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
+    background-color: var(--global-menu-icon-background-hover);
+
     ${IconWrapper}{
       [stroke]{
         stroke: var(--inverse);
@@ -134,32 +124,28 @@ const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }
   ${({ $isActive }) => $isActive && css`
     ${ContextIcon},
     &:hover ${ContextIcon}{
-      ${({ theme }) => theme.styles.global.mainMenu.iconBackground.active};
+      background-color: var(--global-menu-icon-background-active);
     }
   `}
 `;
 const ContextActionButton = styled.button<{ menuOpen?: boolean, isActive: boolean }>`
   ${ContextActionBaseCSS}
 
-  ${({ theme }) => theme && css`
-    font-family: ${theme.fontFamily.ui};
-    ${theme.typography.global.mainMenu.menuItem.default};
-  `}
-
-  ${({ menuOpen, theme }) => menuOpen && css`
+  ${({ menuOpen }) => menuOpen && css`
     ${ContextTitle}{
       opacity: 1;
     }
 
     ${ContextIndicator}{
       opacity: 1;
-      transition: opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut} ${theme.animation.speed.fast};
+      transition: opacity var(--speed-normal) var(--easing-primary-in-out) var(--speed-fast);
     }
   `}
 
   &:hover ${ContextIcon}{
     opacity: 1;
-    ${({ theme }) => theme.styles.global.mainMenu.iconBackground.hover};
+    background-color: var(--global-menu-icon-background-hover);
+
     ${IconWrapper}{
       [stroke]{
         stroke: var(--inverse);
@@ -170,7 +156,7 @@ const ContextActionButton = styled.button<{ menuOpen?: boolean, isActive: boolea
   ${({ isActive }) => isActive && css`
     ${ContextIcon},
     &:hover ${ContextIcon}{
-      ${({ theme }) => theme.styles.global.mainMenu.iconBackground.active};
+      background-color: var(--global-menu-icon-background-active);
     }
   `}
 `;

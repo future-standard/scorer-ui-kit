@@ -19,6 +19,9 @@ const ThemeVariables = createGlobalStyle`
 
     --font-size: 14px;
 
+    --global-menu-width-closed: 80px;
+    --global-menu-width-open: 280px;
+
     --button-font-size: 14px;
     --button-height: 32px;
     --button-h-padding: 8px;

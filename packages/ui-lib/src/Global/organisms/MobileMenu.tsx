@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useContext } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { TabContext, ContextProps } from '../../Tabs/Tabs';
 
@@ -12,9 +12,7 @@ const Container = styled.div``;
 
 const ItemWrapper = styled.div`
   padding: 14px 0;
-  ${({ theme }) => css`
-    border-bottom: 1px solid ${theme.colors.divider}
-  `};
+  border-bottom: 1px solid var(--dividing-line);
 `;
 
 interface IMobileMenu extends IMenu {

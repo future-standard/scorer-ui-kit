@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import Icon from './Icon';
 import { IStatusDot } from '..';
 
@@ -21,23 +21,18 @@ const StatusCounter = styled.div<{ color?: IStatusDot }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${({theme:{animation}}) => css`
-    transition: background-color ${animation.speed.slow} ${animation.easing.primary.easeInOut};
-  `}
+  transition: background-color var(--speed-slow) var(--easing-primary-in-out);
   background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'var(--grey-5)'};
 `;
 
 const StatusDot = styled.div<{ color?: IStatusDot }>`
-  width: 10px;
-  height: 10px;
-  border: solid 2px var(--grey-1);
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   position: absolute;
   top: -6px;
-  right: -9px;
-  ${({theme:{animation}}) => css`
-    transition: background-color ${animation.speed.slow} ${animation.easing.primary.easeInOut};
-  `}
+  right: -6px;
+  transition: background-color var(--speed-slow) var(--easing-primary-in-out);
   background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'var(--grey-5)'};
 `;
 

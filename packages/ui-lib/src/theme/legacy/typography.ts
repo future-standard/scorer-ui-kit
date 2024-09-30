@@ -1,5 +1,6 @@
 export const typography = {
-  "pageHeader": {
+    // DEPRECATED: pageHeader
+    "pageHeader": {
       "introduction": {
           "textAlign": "left",
           "fontStyle": "italic",
@@ -253,98 +254,6 @@ export const typography = {
               "lineHeight": "20px",
               "textDecoration": "none",
               "color": "var(--white-1)"
-          }
-      }
-  },
-  "global": {
-      "mainMenu": {
-          "menuItem": {
-              "default": {
-                  "textAlign": "left",
-                  "fontSize": "16px",
-                  "fontWeight": 300,
-                  "textDecoration": "none",
-                  "color": "var(--grey-a11)"
-              },
-              "active": {
-                  "textAlign": "left",
-                  "fontSize": "16px",
-                  "fontWeight": 300,
-                  "textDecoration": "none",
-                  "color": "var(--grey-a11)"
-              },
-              "hover": {
-                  "textAlign": "left",
-                  "fontSize": "16px",
-                  "fontWeight": 300,
-                  "textDecoration": "none",
-                  "color": "var(--grey-a11)"
-              }
-          },
-          "subheader": {
-              "textAlign": "left",
-              "fontSize": "14px",
-              "fontWeight": 600,
-              "textTransform": "uppercase",
-              "letterSpacing": "0.35px",
-              "textDecoration": "none",
-              "color": "var(--grey-a11)"
-          },
-          "hidePrompt": {
-              "textAlign": "left",
-              "fontSize": "14px",
-              "fontWeight": 300,
-              "textDecoration": "none",
-              "color": "var(--grey-11)"
-          },
-          "subItem": {
-              "default": {
-                  "textAlign": "left",
-                  "fontSize": "14px",
-                  "fontWeight": 300,
-                  "textDecoration": "none",
-                  "color": "var(--grey-a11)"
-              },
-              "active": {
-                  "textAlign": "left",
-                  "fontSize": "14px",
-                  "fontWeight": 600,
-                  "textDecoration": "none",
-                  "color": "var(--grey-8)"
-              },
-              "hover": {
-                  "textAlign": "left",
-                  "fontSize": "14px",
-                  "fontWeight": 300,
-                  "textDecoration": "none",
-                  "color": "var(--grey-8)"
-              }
-          },
-          "identity": {
-              "textAlign": "left",
-              "fontSize": "12px",
-              "fontWeight": 400,
-              "textDecoration": "none",
-              "color": "var(--grey-a11)"
-          }
-      },
-      "topBar": {
-          "search": {
-              "value": {
-                  "textAlign": "left",
-                  "fontSize": "14px",
-                  "fontWeight": 300,
-                  "textDecoration": "none",
-                  "color": "var(--grey-12)"
-              },
-              "placeholder": {
-                  "textAlign": "left",
-                  "fontStyle": "italic",
-                  "fontSize": "14px",
-                  "fontWeight": 300,
-                  "textDecoration": "none",
-                  "color": "var(--grey-11)"
-              }
           }
       }
   },

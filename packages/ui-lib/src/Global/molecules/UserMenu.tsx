@@ -7,41 +7,40 @@ import { ITopBar, IUserDrawerFooter, IUserDrawerMeta } from '../index';
 import { resetButtonStyles } from '../../common/index';
 import UserDetails from '../atoms/UserDrawerMeta';
 import DrawerBottomMenu from '../atoms/DrawerBottomMenu';
+import { deviceMediaQuery } from '../../theme/common';
 
 const DrawerTop = styled.div``;
 const DrawerBottom = styled.div`
-  ${({ theme }) => css`
-    width: 100%;
-    position: fixed;
-    bottom: 50px;
-
-    @media ${theme.deviceMediaQuery.medium} {
-      position: static;
-      bottom: 0;
-    }
-  `};
+  width: 100%;
+  position: fixed;
+  bottom: 50px;
+  @media ${deviceMediaQuery.medium} {
+    position: static;
+    bottom: 0;
+  }
 `;
 
 const DrawerHeader = styled.h2`
-  ${({ theme }) => theme.typography.global.mainMenu.subheader};
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+  color: var(--grey-11);
   padding: 0;
   margin: 0 0 5px;
 `;
+
 const CurrentUser = styled.div`
   padding: 20px 20px 15px;
-
-  ${({ theme }) => css`
-    border-bottom: ${theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
-    ${theme.typography.global.mainMenu.identity};
-  `};
+  border-bottom: var(--dividing-line) 1px solid;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--grey-11);
 `;
 
 const UserOptions = styled.div`
   padding: 20px 20px 10px 20px;
-  ${({ theme }) => css`
-    border-bottom: ${theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
-  `};
-
+  border-bottom: var(--dividing-line) 1px solid;
 `;
 
 const Logout = styled.div`
@@ -75,25 +74,25 @@ const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
   ${resetButtonStyles};
   display: block;
   width: 100%;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--grey-10);
+  text-decoration: none;
 
-  ${({ theme }) => css`
-    ${theme.typography.global.mainMenu.subItem.default};
+  &:hover {
+    color: var(--primary-9);
+  }
 
-    &:hover {
-      ${theme.typography.global.mainMenu.subItem.hover};
-    }
-  `};
-
-  ${({ theme, isActive }) => isActive && css`
+  ${({ isActive }) => isActive && css`
     &, &:hover {
-      ${theme.typography.global.mainMenu.subItem.active};
+      color: var(--primary-9);
     }
   `};
 `;
 
 const FooterMeta = styled.div <{ icon?: string }>`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
-  border-top: ${({ theme }) => theme.styles.global.mainMenu.lines.backgroundColor} 1px solid;
+  font-family: var(--font-ui);
+  border-top: var(--dividing-line) 1px solid;
   margin-top: auto;
   display: flex;
   flex-direction: row;
@@ -111,9 +110,7 @@ const NavigationContainer = styled.div`
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
-  ${({ theme }) => css`
-    border-bottom: ${theme.colors.divider} 1px solid;
-  `};
+  border-bottom: var(--dividing-line) 1px solid;
 `;
 
 const FooterText = styled.div <{ icon?: string }>`

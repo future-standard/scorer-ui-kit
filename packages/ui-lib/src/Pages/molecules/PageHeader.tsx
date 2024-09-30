@@ -14,6 +14,10 @@ const Container = styled.div`
 const LeftPanel = styled.div`
 `;
 
+const IntroductionTextWrapper = styled.div`
+  max-width: 648px;
+`;
+
 const RightPanel = styled.div<{iconLeftPanel: boolean}>`
     ${({iconLeftPanel}) => iconLeftPanel && css`
         padding-top: 32px;
@@ -84,7 +88,9 @@ const PageHeader: React.FC<IProps> = ({
           </TagListWrapper>
         }
         {introductionText ?
-          <IntroductionText>{introductionText}</IntroductionText>
+          <IntroductionTextWrapper>
+            <IntroductionText>{introductionText}</IntroductionText>
+          </IntroductionTextWrapper>
           : null
         }
       </LeftPanel>

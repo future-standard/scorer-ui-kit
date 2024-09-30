@@ -14,12 +14,12 @@ const StatusContainer = styled.h2`
     font-size: 14px;
     font-weight: 500;
     color: var(--grey-12);
-    border-bottom: ${({ theme }) => theme.colors.divider} 1px solid;
+    border-bottom: var(--dividing-line) 1px solid;
     margin: 0;
 `;
 
 const NotificationWrapper = styled.div`
-  border-bottom: ${({ theme: { colors } }) => colors.divider} 1px solid;
+  border-bottom: var(--dividing-line) 1px solid;
 `;
 
 const renderNotifications = (items: INotificationItem[], type: string) => (

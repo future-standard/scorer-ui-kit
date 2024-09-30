@@ -29,7 +29,7 @@ const TabArea = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid var(--grey-8);
+  border-bottom: 1px solid var(--grey-4);
 `;
 
 const TabAreaInner = styled.div`

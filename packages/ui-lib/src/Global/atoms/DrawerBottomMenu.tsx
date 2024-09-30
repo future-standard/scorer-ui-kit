@@ -6,7 +6,7 @@ const Container = styled.div`
   padding: 16px 10px 14px 23px;
   display: flex;
   flex-direction: row;
-  border-top: 1px solid ${({ theme }) => theme.colors.divider};
+  border-top: 1px solid var(--dividing-line);
   align-items: center;
   cursor: pointer;
   svg {
@@ -23,19 +23,19 @@ const ColumnContainer = styled.div`
 
 const Title = styled.div`
   opacity: 0.76;
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: var(--font-ui);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.34px;
-  color: ${({ theme }) => theme.typography.global.mainMenu.subheader.color};
+  color: var(--grey-11);
 `;
 
 const SubTitle = styled.div`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: var(--font-ui);
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.29px;
-  color: ${({ theme }) => theme.typography.global.mainMenu.subheader.color};
+  color: var(--grey-11);
   padding-top: 2px;
   opacity: 0.5;
 `;
