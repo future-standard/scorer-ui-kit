@@ -93,7 +93,7 @@ const TablePage: React.FC = () => {
           { text: 'Just Now' },
           { text: '242', unit: 'mb' },
           { text: '¥20,000' },
-          { customComponent: <StatusComponent statusList={[{ id: 'device1-a', type: 'success' }, { id: 'device1-b', type: 'success' }, { id: 'device1-c', type: 'success' }]} /> },
+          { customComponent: <StatusComponent statusList={[{ type: 'success' }, { type: 'success' }, { type: 'success' }]} /> },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ]
     },
@@ -117,9 +117,9 @@ const TablePage: React.FC = () => {
               <StatusComponent
                 statusList={
                   [
-                    { id: 'device2-a', type: 'error', tooltipIcon: 'BigWarning', tooltipType: 'warning', tooltipMessage: '4 Images have reported upload failures', tooltipPosition: 'left' },
-                    { id: 'device2-b', type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: '1 images file is corrupted', tooltipPosition: 'bottom' },
-                    { id: 'device2-c', type: 'info', tooltipIcon: 'Information', tooltipType: 'info', tooltipMessage: 'All Images have been updated in the server', tooltipPosition: 'right' },
+                    { type: 'error', tooltipIcon: 'BigWarning', tooltipType: 'warning', tooltipMessage: '4 Images have reported upload failures', tooltipPosition: 'left' },
+                    { type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: '1 images file is corrupted', tooltipPosition: 'bottom' },
+                    { type: 'info', tooltipIcon: 'Information', tooltipType: 'info', tooltipMessage: 'All Images have been updated in the server', tooltipPosition: 'right' },
                   ]} />
           },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
@@ -138,7 +138,7 @@ const TablePage: React.FC = () => {
           { text: '22nd March 2020' },
           { text: '2.1', unit: 'tb' },
           { text: '¥7,000' },
-          { customComponent: <StatusComponent statusList={[{ id: 'device3-a', type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: 'Upload took too long' }, { id: 'device3-b', type: 'neutral' }, { id: 'device3-c', type: 'neutral' }]} /> },
+          { customComponent: <StatusComponent statusList={[{ type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: 'Upload took too long' }, { type: 'neutral' }, { type: 'neutral' }]} /> },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ],
     },
@@ -155,7 +155,7 @@ const TablePage: React.FC = () => {
           { text: '2nd April 2020' },
           { text: '153', unit: 'mb' },
           { text: '¥25,000' },
-          { customComponent: <StatusComponent statusList={[{ id: 'device4-a', type: 'neutral' }, { id: 'device4-b', type: 'neutral' }, { id: 'device4-c', type: 'neutral' }]} /> },
+          { customComponent: <StatusComponent statusList={[{ type: 'neutral' }, { type: 'neutral' }, { type: 'neutral' }]} /> },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ]
     },
@@ -167,7 +167,7 @@ const TablePage: React.FC = () => {
           { text: '16th June 2020' },
           { text: '153', unit: 'mb' },
           { text: '¥25,000' },
-          { customComponent: <StatusComponent statusList={[{ id: 'device5-a', type: 'neutral' }, { id: 'device5-b', type: 'neutral' }, { id: 'device5-c', type: 'neutral' }]} /> },
+          { customComponent: <StatusComponent statusList={[{ type: 'neutral' }, { type: 'neutral' }, { type: 'neutral' }]} /> },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ]
     },

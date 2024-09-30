@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { AlertType, ITooltipPosition, ITooltipType, Tooltip } from 'scorer-ui-kit';
 import styled, { css } from 'styled-components';
 
@@ -22,7 +22,6 @@ const StatusDot = styled.div<{ type?: AlertType, tooltipMessage?: string }>`
 `;
 
 interface IStatusDot {
-  id: string
   type?: AlertType
   tooltipMessage?: string
   tooltipIcon?: string
@@ -36,15 +35,18 @@ interface IStatusBundle {
 
 export const StatusComponent: React.FC<IStatusBundle> = ({ statusList }) => {
 
+  const statusRefs = useRef<(React.RefObject<HTMLDivElement>)[]>([]);
+  statusRefs.current = statusList.map(() => React.createRef<HTMLDivElement>());
+
   return (
     <StatusWrapper>
       {
-        statusList.map(({ id, type, tooltipMessage, tooltipIcon, tooltipType, tooltipPosition }) => {
+        statusList.map(({ type, tooltipMessage, tooltipIcon, tooltipType, tooltipPosition }, index) => {
           return (
-            <Fragment key={id} >
-              <StatusDot id={id} type={type} tooltipMessage={tooltipMessage} />
+            <Fragment key={index}>
+              <StatusDot ref={statusRefs.current[index]} type={type} tooltipMessage={tooltipMessage} />
               {tooltipMessage && (
-                <Tooltip tooltipFor={id} message={tooltipMessage} icon={tooltipIcon} type={tooltipType} tooltipPosition={tooltipPosition} />)
+                <Tooltip tooltipFor={statusRefs.current[index]} message={tooltipMessage} icon={tooltipIcon} type={tooltipType} tooltipPosition={tooltipPosition} />)
               }
             </Fragment>
           )
