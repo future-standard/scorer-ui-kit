@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 import Lato from './Lato3Upr3M-VF.woff2';
 import LatoItalic from './Lato3Ita3M-VF.woff2';
-import MonoraleThin from './Monorale-Thin.woff'
+import MonoraleThin from './Monorale-Thin.woff';
 import MonoraleThinItalic from './Monorale-ThinItalic.woff';
 import MonoraleExtraLight from './Monorale-ExtraLight.woff';
 import MonoraleExtraLightItalic from './Monorale-ExtraLightItalic.woff';
@@ -157,5 +157,5 @@ const GlobalStyle = createGlobalStyle`
     font-display: fallback;
   }
 
-`
+`;
 export default GlobalStyle;
