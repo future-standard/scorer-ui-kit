@@ -66,9 +66,13 @@ const ContextActionBaseCSS = css`
   padding: 0;
   text-decoration: none;
   font-family: var(--font-ui);
-  font-weight: 300;
+  font-weight: 500;
   font-size: 16px;
-  color: var(--grey-10);
+  color: var(--grey-11);
+
+  &:hover{
+    color: var(--grey-12);
+  }
 `;
 
 const StyledAnchor = styled.a`
@@ -122,6 +126,8 @@ const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }
   }
 
   ${({ $isActive }) => $isActive && css`
+    color: var(--grey-12);
+
     ${ContextIcon},
     &:hover ${ContextIcon}{
       background-color: var(--global-menu-icon-background-active);

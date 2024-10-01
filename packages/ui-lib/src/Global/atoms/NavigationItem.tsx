@@ -64,14 +64,14 @@ const SubmenuItem = styled.li<{isActive?: boolean}>`
   ${SubmenuItemLink}, ${SubmenuItemAnchor}{
     font-family: var(--font-ui);
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
     text-decoration: none;
     color: var(--grey-11);
 
     ${({isActive}) => css`
     
       &:hover {
-        color: var(--primary-9);
+        color: var(--grey-12);
       }
 
       ${isActive && css`

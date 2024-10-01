@@ -75,7 +75,7 @@ const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
   display: block;
   width: 100%;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--grey-10);
   text-decoration: none;
 
