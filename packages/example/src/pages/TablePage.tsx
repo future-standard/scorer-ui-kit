@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { TypeTable, PageHeader, Content, useModal, SplitButton } from 'scorer-ui-kit';
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
-
+import { StatusComponent } from '../components/StatusComponent';
 
 const Container = styled.div`
   margin: 100px 200px;
@@ -44,14 +44,18 @@ const columnConfig: ITableColumnConfig[] = [
     hasCopyButton: true
   },
   {
+    header: 'Status',
+    sortable: false,
+    cellStyle: 'normalImportance',
+    alignment: 'center',
+  },
+  {
     header: 'Actions',
     sortable: false,
     cellStyle: 'highImportance',
     alignment: 'right',
   }
 ];
-
-
 
 const TablePage: React.FC = () => {
 
@@ -69,11 +73,11 @@ const TablePage: React.FC = () => {
   }, [createModal]);
 
   const buttonList = useMemo(() => [
-    {id: 'a0', text: 'Main Action', icon: 'Success',  onClickCallback: () => {} },
-    {id: 'a1', text: '日本語の場合はランダム', onClickCallback:  () => {} },
-    {id: 'a2', text: 'Save Action', icon: 'Analyse', hasOnSelectLoading:true , onClickCallback: () => {} },
-    {id: 'a3', text: 'Download Action', icon: 'Download', onClickCallback: () => {}, disabled:true  },
-  ],[])
+    { id: 'a0', text: 'Main Action', icon: 'Success', onClickCallback: () => { } },
+    { id: 'a1', text: '日本語の場合はランダム', onClickCallback: () => { } },
+    { id: 'a2', text: 'Save Action', icon: 'Analyse', hasOnSelectLoading: true, onClickCallback: () => { } },
+    { id: 'a3', text: 'Download Action', icon: 'Download', onClickCallback: () => { }, disabled: true },
+  ], [])
 
   const initialRows: ITypeTableData = useMemo(() => [
     {
@@ -89,7 +93,8 @@ const TablePage: React.FC = () => {
           { text: 'Just Now' },
           { text: '242', unit: 'mb' },
           { text: '¥20,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          { customComponent: <StatusComponent statusList={[{ type: 'success' }, { type: 'success' }, { type: 'success' }]} /> },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ]
     },
     {
@@ -107,7 +112,17 @@ const TablePage: React.FC = () => {
           { text: '1st October 2019' },
           { text: '2.1', unit: 'gb' },
           { text: '¥4,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          {
+            customComponent:
+              <StatusComponent
+                statusList={
+                  [
+                    { type: 'error', tooltipIcon: 'BigWarning', tooltipType: 'warning', tooltipMessage: '4 Images have reported upload failures', tooltipPosition: 'left' },
+                    { type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: '1 images file is corrupted', tooltipPosition: 'bottom' },
+                    { type: 'info', tooltipIcon: 'Information', tooltipType: 'info', tooltipMessage: 'All Images have been updated in the server', tooltipPosition: 'right' },
+                  ]} />
+          },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ],
     },
     {
@@ -123,7 +138,8 @@ const TablePage: React.FC = () => {
           { text: '22nd March 2020' },
           { text: '2.1', unit: 'tb' },
           { text: '¥7,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          { customComponent: <StatusComponent statusList={[{ type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: 'Upload took too long' }, { type: 'neutral' }, { type: 'neutral' }]} /> },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ],
     },
     {
@@ -139,7 +155,8 @@ const TablePage: React.FC = () => {
           { text: '2nd April 2020' },
           { text: '153', unit: 'mb' },
           { text: '¥25,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          { customComponent: <StatusComponent statusList={[{ type: 'neutral' }, { type: 'neutral' }, { type: 'neutral' }]} /> },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ]
     },
     {
@@ -150,11 +167,11 @@ const TablePage: React.FC = () => {
           { text: '16th June 2020' },
           { text: '153', unit: 'mb' },
           { text: '¥25,000' },
-          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} />}
+          { customComponent: <StatusComponent statusList={[{ type: 'neutral' }, { type: 'neutral' }, { type: 'neutral' }]} /> },
+          { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ]
     },
   ], [buttonList, openCustomModal]);
-
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows)
 
@@ -169,7 +186,6 @@ const TablePage: React.FC = () => {
 
   }, [rows, setRows]);
 
-
   const toggleAllCallback = useCallback((checked: boolean) => {
     const newRows = [...rows];
 
@@ -179,7 +195,6 @@ const TablePage: React.FC = () => {
 
     setRows(newRows);
   }, [rows, setRows]);
-
 
   return <Container>
     <Content>

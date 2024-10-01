@@ -339,7 +339,7 @@ export const colorVariables = css`
     --white-a10: #ffffff72;
     --white-a11: #ffffff97;
     --white-a12: #ffffffeb;
-    
+
     --black: #000;
     --black-1: var(--black);
     --black-2: var(--black);
@@ -366,7 +366,7 @@ export const colorVariables = css`
     --black-a10: #0000007a;
     --black-a11: #00000090;
     --black-a12: #000000e8;
-    
+
   }
 
 
@@ -473,7 +473,7 @@ export const colorVariables = css`
     --warning-a10: var(--red-a10);
     --warning-a11: var(--red-a11);
     --warning-a12: var(--red-a12);
-    
+
   }
 
   /* --- Component Aliases --- */
@@ -486,6 +486,23 @@ export const colorVariables = css`
     --success: var(--success-8);
     --warning: var(--caution-8);
 
+    /* tooltip */
+    --tooltip-warning: var(--warning-a9);
+    --tooltip-warning-arrow: var(--warning-9);
+    --tooltip-warning-border: var(--warning-a7);
+
+    --tooltip-success: var(--success-9);
+    --tooltip-success-arrow: var(--success-8);
+    --tooltip-success-border: var(--success-a7);
+
+    --tooltip-info: var(--primary-8);
+    --tooltip-info-arrow: var(--primary-8);
+    --tooltip-info-border: var(--primary-a8);
+
+    --tooltip-neutral: var(--grey-8);
+    --tooltip-neutral-arrow: var(--grey-7);
+    --tooltip-neutral-border: var(--grey-7);
+
       /* icons */
     --inverse: var(--white-1);
     --mono: var(--grey-12);
@@ -493,6 +510,7 @@ export const colorVariables = css`
     --subtle: var(--grey-10);
     --primary: var(--primary-9);
     --danger: var(--warning-9);
+
 
     --spinner-danger: var(--warning-8);
     --spinner-secondary: var(--grey-8);
@@ -517,7 +535,7 @@ export const colorVariables = css`
     --input-border-valid: var(--success-9);
     --input-border-invalid: var(--warning-9);
     --input-border-processing: var(--primary-10);
-    
+
     --input-background-default: var(--grey-1);
     --input-background-disabled: var(--grey-3);
     --input-background-required: var(--primary-1);
@@ -530,7 +548,7 @@ export const colorVariables = css`
     --input-color-placeholder: var(--grey-10);
     --input-color-unit: var(--grey-10);
 
-    --input-focused-shadow-color: var(--black-a5);    
+    --input-focused-shadow-color: var(--black-a5);
 
   }
 

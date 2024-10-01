@@ -34,7 +34,7 @@ const ThemeVariables = createGlobalStyle`
     --button-icon-h-padding: 8px;
 
     --input-height: 40px;
-    
+
   }
 
   .button-small {
@@ -124,7 +124,7 @@ const ThemeVariables = createGlobalStyle`
     --toggle-icon-active: var(--white-a11);
     --toggle-icon-disabled: var(--white-a10);
   }
-  
+
 `;
 
 export default ThemeVariables;

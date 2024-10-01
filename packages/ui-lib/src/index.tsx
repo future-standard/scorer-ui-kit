@@ -9,6 +9,10 @@ import {
   Notification,
   INotificationProps,
   AlertWrapper,
+  Tooltip,
+  ITooltipPosition,
+  AlertType,
+  ITooltipType
 } from './Alerts';
 
 // Components - Form
@@ -222,6 +226,7 @@ export {
   AlertBar,
   Notification,
   AlertWrapper,
+  Tooltip,
 
   // LineUI
   LineUI,
@@ -406,8 +411,11 @@ export type {
   IPagination,
   IHeaderContent,
   IUtilityHeader,
+  ITooltipPosition,
   IButtonsStack,
   IButtonStack,
   ISplitLayoutHandles,
+  AlertType,
+  ITooltipType,
   FilterButtonDesign
 };
