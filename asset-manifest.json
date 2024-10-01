@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/scorer-ui-kit/static/js/main.db3200a3.js",
+    "main.js": "/scorer-ui-kit/static/js/main.fe63a8c7.js",
     "static/media/Monorale-BoldItalic.woff": "/scorer-ui-kit/static/media/Monorale-BoldItalic.21d7f69a690ad9dcb9c8.woff",
     "static/media/Monorale-BlackItalic.woff": "/scorer-ui-kit/static/media/Monorale-BlackItalic.f54c5d2a0c2842d23bde.woff",
     "static/media/Lato-Italic.ttf": "/scorer-ui-kit/static/media/Lato-Italic.a9f3ee269217f44df65f.ttf",
@@ -29,9 +29,9 @@
     "index.html": "/scorer-ui-kit/index.html",
     "static/media/logo-mark.svg": "/scorer-ui-kit/static/media/logo-mark.c04f523a4fde2280e3442e4b1b26f3ed.svg",
     "static/media/logo-text.svg": "/scorer-ui-kit/static/media/logo-text.65bb2ccdb8a2092c11740c3b9bda7f39.svg",
-    "main.db3200a3.js.map": "/scorer-ui-kit/static/js/main.db3200a3.js.map"
+    "main.fe63a8c7.js.map": "/scorer-ui-kit/static/js/main.fe63a8c7.js.map"
   },
   "entrypoints": [
-    "static/js/main.db3200a3.js"
+    "static/js/main.fe63a8c7.js"
   ]
 }
