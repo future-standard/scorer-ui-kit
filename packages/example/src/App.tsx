@@ -11,7 +11,7 @@ import FormPage from './pages/FormPage';
 import LinePage from './pages/LinePage';
 import LineRTCPage from './pages/LineRTCPage';
 import LineVideoPage from './pages/LineVideoPage';
-import LinksPage from './pages/LinksPage';
+import LinksPage from './pages/Index';
 import PTZPage from './pages/PTZPage';
 import LoginPage from './pages/Login';
 import TablePage from './pages/TablePage';
