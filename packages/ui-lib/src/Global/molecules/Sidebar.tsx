@@ -35,7 +35,7 @@ const LogoBottomText = styled.div`
   height: 19px;
   font-family: Monorale;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: normal;
   letter-spacing: 14.11px;
   text-align: center;

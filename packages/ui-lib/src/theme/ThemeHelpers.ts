@@ -4,6 +4,7 @@ const BaseStyles = css`
 
   * , body{
     box-sizing: border-box;
+    text-rendering: geometricPrecision; 
   }
   body, html , #root {
     min-width: 100%;
