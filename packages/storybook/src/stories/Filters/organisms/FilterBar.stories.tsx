@@ -56,6 +56,7 @@ export default {
 
 const Container = styled.div`
   margin: 20px;
+  background-color: var(--grey-1);
 `;
 
 const TypeTableWrapper = styled.div`
