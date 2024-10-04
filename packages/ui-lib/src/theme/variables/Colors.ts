@@ -549,6 +549,11 @@ export const colorVariables = css`
     --input-color-unit: var(--grey-10);
 
     --input-focused-shadow-color: var(--black-a5);
+    
+    --input-selection-control-default: var(--grey-8);
+    --input-selection-control-default-disabled: var(--grey-6);
+    --input-selection-control-selected: var(--primary-9);
+    --input-selection-control-selected-disabled: var(--primary-8);
 
   }
 
