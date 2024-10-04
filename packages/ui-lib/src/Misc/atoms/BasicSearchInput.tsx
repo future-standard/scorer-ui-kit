@@ -4,12 +4,23 @@ import { removeAutoFillStyle, resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { animation } from '../../theme/common';
 
+const IconContainer = styled.div`
+  padding: 0 2px;
+`;
+
 const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
   ${({ theme: { styles }, theme, hasBorder, disabled, noBackground, width }) => css`
   
     transition: all ${animation.speed.normal} ${animation.easing.primary.out};
+    gap: 6px;
+    height: var(--common-height);
+    padding: 0;
+    align-items: center;
+    display: flex;
+    border-radius: 3px;
 
-  ${hasBorder && css`
+    ${hasBorder && css`
+      padding: 0 8px;
       border: ${styles.filters.searchInput.default.border};
       border-color: var(--filter-button-stroke-color);
       box-shadow: ${styles.filters.searchInput.default.boxShadow};
@@ -18,6 +29,9 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
         border: var(--primary-7) 1px solid;
         box-shadow: 0px 4px 9px 0px var(--primary-a2);
 
+      }
+      ${IconContainer}{
+        padding: 0;
       }
     `};
 
@@ -48,11 +62,7 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
     display: flex;
   }
 
-  height: var(--common-height);
-  padding: 0 0 0 8px;
-  align-items: center;
-  display: flex;
-  border-radius: 3px;
+  
 `;
 
 const CrossButton = styled.button`
@@ -69,19 +79,21 @@ const CrossButton = styled.button`
   }
 `;
 
+
+
 const StyledInput = styled.input<{ color: string }>`
   ${removeAutoFillStyle};
 
-  ${({ theme: {typography}, theme, color }) => css`
-    font-family: ${theme.fontFamily.ui};
-    ${typography.filters.searchInput.value};
-
-    &::placeholder {
-      ${typography.filters.searchInput.placeholder};
-      color: var(--${color});
-      font-size: 12px;
-    }
-  `};
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey-12);
+  
+  &::placeholder {
+    ${({color}) => color && `color: var(--${color})`};
+    color: var(--grey-11);
+    font-style: italic;
+  }
 
   &:disabled {
     cursor: not-allowed;
@@ -95,7 +107,6 @@ const StyledInput = styled.input<{ color: string }>`
   box-sizing: border-box;
   border-radius: 3px;
   outline: none;
-  margin-left: 7px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -127,7 +138,9 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
 }) => {
   return (
     <Container {...{ hasBorder, disabled, noBackground, width }}>
-      <Icon {...{ color }} icon='Search' weight='regular' size={iconSize} />
+      <IconContainer>
+        <Icon {...{ color }} icon='Search' weight='regular' size={iconSize} />
+      </IconContainer>
       <StyledInput
         {...{ color, disabled }}
         {...props}

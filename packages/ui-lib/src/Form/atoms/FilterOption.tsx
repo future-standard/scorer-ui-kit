@@ -97,7 +97,7 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
     ${selected && css`
       ${FakeCheckbox}, ${FakeRadioButton} {
         border-color: var(--input-selection-control-selected);
-        ${FakeInnerRadio} {
+        ${FakeInnerRadio}, ${FakeCheckboxInner} {
           background-color: var(--input-selection-control-selected);
         }
       }

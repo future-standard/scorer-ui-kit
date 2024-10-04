@@ -27,7 +27,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
   border-radius: 3px;
   height: var(--common-height);
 
-  ${({design }) => design === 'basic'?
+  ${({design}) => design === 'basic'?
       `
         background-color: transparent;
         border: 1px solid transparent;
@@ -36,10 +36,10 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
       `
         background-color: var(--filter-button-background-color);
         border: var(--filter-button-stroke-color) 1px solid;
+        box-shadow: 0px 4px 9px 0px var(--filter-button-shadow-color);
       `
   };
 
-  box-shadow: 0px 4px 9px 0px var(--filter-button-shadow-color);
   text-align: left;
   font-size: 12px;
   font-weight: 500;
@@ -70,11 +70,12 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
   };
 
   &:hover:enabled, &:active:enabled {
-    /* background-color: var(--primary-9); */
-    border-color: var(--primary-9);
-    border: var(--primary-7) 1px solid;
     color: var(--grey-12);
-    box-shadow: 0px 4px 9px 0px var(--primary-a2);
+    
+    ${({design}) => design === 'basic'? '' : css`
+      box-shadow: 0px 4px 9px 0px var(--primary-a2);
+      border-color: var(--primary-7);
+    `};
     
     ${IconWrapper} {
       [stroke]{

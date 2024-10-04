@@ -21,27 +21,25 @@ const StyledFilterOption = styled(FilterOption)`
 `;
 
 const OptionList = styled.div<{moreItem?: boolean}>`
-  max-height: ${({moreItem}) => moreItem ? '168px' : '175px'};
+  max-height: ${({moreItem}) => moreItem ? '228px' : '196px'};
   min-height: 40px;
   position: relative;
   overflow-y: auto;
-  margin-right: 2px;
+  padding: 8px 0;
 
   ${StyledFilterOption} {
-    height: 35px;
-    padding-left: 10px;
+    height: 40px;
+    padding-left: 14px;
   }
 `;
 
 const ResultsContainer = styled.div`
-  /* border-top: 1px solid var(--grey-5); */
   min-width: 216px;
-  padding-bottom: 8px;
+  /* padding-bottom: 8px; */
 `;
 
 const ResultCounter = styled.div`
-  opacity: 0.75;
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
   color: var(--grey-10);
   font-size: 12px;
   font-style: italic;
@@ -49,26 +47,29 @@ const ResultCounter = styled.div`
   display: flex;
   align-items: center;
   justify-content: left;
-  padding-left: 9px;
-  height: 30px;
-  margin-bottom: 6px;
+  height: 32px;
+  /* margin-bottom: 6px; */
+  padding: 0 12px;
   border-top: 1px solid var(--grey-5);
   border-bottom: 1px solid var(--grey-5);
 `;
 
 const SearchWrapper = styled.div`
-  height: 41px;
+  height: 40px;
   display: flex;
   align-items: center;
+  padding: 0 8px;
 `;
 
 const EmptyResultText = styled.div`
   display: block;
-  color: var(--grey-10);
+  height: 24px;
+  color: var(--grey-11);
+  font-weight: 700;
   margin-left: 12px;
   user-select: none;
   pointer-events: none;
-  height: 35px;
+  height: inherit;
   display: flex;
   align-items: center;
   font-size: 12px;
@@ -76,7 +77,7 @@ const EmptyResultText = styled.div`
 
 const Gradient = styled.div`
   position: absolute;
-  bottom: 1px;
+  bottom: 0px;
   height: 15px;
   background-image: linear-gradient(to bottom, transparent, var(--grey-3));
   width: 99%;
@@ -305,10 +306,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
         onCloseCallback={handleClose}
         onToggleOpenCallback={handleToggleOpen}
       >
-        <FilterDropdownContainer>
-          
-        {/* <TopLine /> */}
-        {/* <InnerBox> */}
+        <FilterDropdownContainer>          
           {hasOptionsFilter && (
             <SearchWrapper>
               <BasicSearchInput
@@ -350,7 +348,6 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                 </OptionList>
                 {list.length > 5 && <Gradient />}
               </ResultsContainer>)}
-        {/* </InnerBox> */}
         </FilterDropdownContainer>
 
       </FilterDropHandler>
