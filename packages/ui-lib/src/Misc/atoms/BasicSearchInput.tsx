@@ -8,12 +8,17 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
   ${({ theme: { styles }, theme, hasBorder, disabled, noBackground, width }) => css`
   
     transition: all ${animation.speed.normal} ${animation.easing.primary.out};
+
   ${hasBorder && css`
       border: ${styles.filters.searchInput.default.border};
       border-color: var(--filter-button-stroke-color);
       box-shadow: ${styles.filters.searchInput.default.boxShadow};
-  box-shadow: 0px 4px 9px 0px var(--filter-button-shadow-color);
+      box-shadow: 0px 4px 9px 0px var(--filter-button-shadow-color);
+      &:hover {
+        border: var(--primary-7) 1px solid;
+        box-shadow: 0px 4px 9px 0px var(--primary-a2);
 
+      }
     `};
 
     ${disabled && css`
@@ -28,17 +33,12 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
 
     background-color: ${noBackground ? 'transparent' : theme.styles.filters.searchInput.default.backgroundColor};
     
-    &:hover {
-      border: var(--primary-7) 1px solid;
-      box-shadow: 0px 4px 9px 0px var(--primary-a2);
-
-    }
+    
     &:focus-within {
       background-color: ${noBackground ? 'transparent' : styles.filters.searchInput.focused.backgroundColor};
       border: ${noBackground ? 'transparent' : styles.filters.searchInput.focused.border};
       border-color: var(--primary-9);
-      box-shadow: 0px 4px 9px 0px var(--primary-a2);
-
+      box-shadow: 0px 4px 9px 0px ${noBackground ? 'transparent' : 'var(--primary-a2)'};
     }
 
   `};
