@@ -552,4 +552,18 @@ export const colorVariables = css`
 
   }
 
+  /* Filters */
+  .light-theme, .dark-theme {
+    --filter-button-text-color: var(--grey-11);
+    --filter-button-icon-color: var(--grey-10);
+    --filter-button-background-color: var(--grey-2);
+    --filter-button-stroke-color: var(--grey-a5);
+    --filter-button-shadow-color: var(--primary-a3);
+  }
+
+  .dark-theme {
+    --filter-button-shadow-color: var(--black-a8);
+  }
+  
+
 `;
