@@ -37,9 +37,7 @@ const StyledDropdownDatePicker = styled(DropdownDatePicker)``;
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  ${SearchInputWrapper}, ${StyledDropdown}, ${StyledFilterButton}, ${StyledDropdownDatePicker} {
-    margin: 0 3px 10px 3px;
-  }
+  gap: 8px 6px;
 `;
 
 const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdowns: boolean, hasShowMore: boolean) => {

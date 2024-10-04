@@ -73,7 +73,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
     /* background-color: var(--primary-9); */
     border-color: var(--primary-9);
     border: var(--primary-7) 1px solid;
-    color: var(--white-1);
+    color: var(--grey-12);
     box-shadow: 0px 4px 9px 0px var(--primary-a2);
     
     ${IconWrapper} {
@@ -100,6 +100,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
     color: var(--white-1);
 
     &, &:hover:enabled, &:active:enabled {
+      color: var(--white-1);
       ${IconWrapper} {
         [stroke]{
           stroke: var(--white-1);

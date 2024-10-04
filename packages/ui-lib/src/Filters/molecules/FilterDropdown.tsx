@@ -6,6 +6,7 @@ import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 
 import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
 import FilterDropHandler from '../atoms/FilterDropHandler';
+import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 import LoadingBox from '../atoms/LoadingBox';
 import { fontFamily } from '../../theme/common';
 import { FilterButtonDesign } from '..';
@@ -50,7 +51,8 @@ const OptionList = styled.div<{moreItem?: boolean}>`
 `;
 
 const ResultsContainer = styled.div`
-  border-top: 1px solid var(--grey-5);
+  /* border-top: 1px solid var(--grey-5); */
+  min-width: 216px;
   padding-bottom: 8px;
 `;
 
@@ -319,8 +321,10 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
         onCloseCallback={handleClose}
         onToggleOpenCallback={handleToggleOpen}
       >
-        <TopLine />
-        <InnerBox>
+        <FilterDropdownContainer>
+          
+        {/* <TopLine /> */}
+        {/* <InnerBox> */}
           {hasOptionsFilter && (
             <SearchWrapper>
               <BasicSearchInput
@@ -362,7 +366,9 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                 </OptionList>
                 {list.length > 5 && <Gradient />}
               </ResultsContainer>)}
-        </InnerBox>
+        {/* </InnerBox> */}
+        </FilterDropdownContainer>
+
       </FilterDropHandler>
     </Container>
   );
