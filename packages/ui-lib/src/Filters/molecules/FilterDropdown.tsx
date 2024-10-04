@@ -16,23 +16,6 @@ const Container = styled.div`
   position: relative;
 `;
 
-const TopLine = styled.div`
-  background-color: var(--primary-7);
-  height: 3px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-`;
-
-const InnerBox = styled.div`
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  box-shadow: 0 4px 9px 0 var(--grey-a2);
-  border-right: solid 1px var(--grey-7);
-  border-bottom: solid 1px var(--grey-7);
-  border-left: solid 1px var(--grey-7);
-  background-color: var(--grey-2);
-`;
-
 const StyledFilterOption = styled(FilterOption)`
   letter-spacing: 0.2px;
 `;
@@ -69,6 +52,7 @@ const ResultCounter = styled.div`
   padding-left: 9px;
   height: 30px;
   margin-bottom: 6px;
+  border-top: 1px solid var(--grey-5);
   border-bottom: 1px solid var(--grey-5);
 `;
 
