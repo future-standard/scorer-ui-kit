@@ -22,6 +22,10 @@ const CheckboxOuter = styled.div`
   border-radius: 5px;
   border-width: 2px;
   border-style: solid;
+
+  ${({theme}) => theme && css`
+    transition: border-color ${theme.animation.speed.faster} ${theme.animation.easing.primary.easeInOut};
+  `};
 `;
 
 const CheckboxInner = styled.div<{}>`
@@ -52,8 +56,8 @@ const IconWrapper = styled.div<{color: ISvgIcons['color']}>`
 `;
 
 const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}>`
+  display: inline-block;
   user-select: none;
-
 
   ${({visualState, disabled}) => visualState === CheckboxState.Off && css`
     ${CheckboxOuter}{
@@ -63,8 +67,8 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
 
     ${!disabled && css`
       &:hover ${CheckboxOuter} {
-        border-color: var(--primary-8);
-        border: var(--primary-8) 2px solid;
+        border-color: var(--primary-9);
+        border: var(--primary-9) 2px solid;
       }`
     };
 
@@ -81,13 +85,13 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
   ${({visualState, disabled}) => visualState === CheckboxState.On && css`
     ${CheckboxOuter}{
       box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
-      background-color: var(--primary-8);
+      background-color: var(--primary-9);
       border: none;
     }
     ${!disabled && css`
       &:hover ${CheckboxOuter}{
         box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
-        background-color: var(--primary-8);
+        background-color: var(--primary-9);
         border: none;
       }`
     };
@@ -97,6 +101,9 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
         box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
         background-color: var(--grey-6);
         cursor: not-allowed;
+      }
+      ${IconWrapper}{
+        opacity: 0.65;
       }
     `}
   `}
