@@ -6,7 +6,6 @@ import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
 import { IFilterItem } from '../FilterTypes';
 import { resetButtonStyles } from '../../common';
-import { fontFamily } from '../../theme/common';
 import { FilterButtonDesign, FilterDropdownContainer } from '..';
 
 const Container = styled.div`
@@ -42,7 +41,7 @@ const OrderButton = styled.button<{ isSelected: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
   color: var(--grey-12);
   font-size: 14px;
   height: 40px;

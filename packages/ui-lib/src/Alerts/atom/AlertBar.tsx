@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import Icon, {IconWrapper} from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
-import { fontFamily } from '../../theme/common';
 
 const IconButton = styled.button<{selected?: boolean}>`
   ${resetButtonStyles};
@@ -35,7 +34,7 @@ export const AlertWrapper = styled.div<{type: AlertType}>`
 
   padding: 0 14px;
 
-  font-family: ${fontFamily.ui};
+  font-family: var(--font-ui);
   background-color: ${({type}) => `var(--${type})` };
 
   text-align: left;

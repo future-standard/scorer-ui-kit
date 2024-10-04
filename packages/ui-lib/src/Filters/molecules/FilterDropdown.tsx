@@ -8,7 +8,6 @@ import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
 import FilterDropHandler from '../atoms/FilterDropHandler';
 import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 import LoadingBox from '../atoms/LoadingBox';
-import { fontFamily } from '../../theme/common';
 import { FilterButtonDesign } from '..';
 
 const Container = styled.div`

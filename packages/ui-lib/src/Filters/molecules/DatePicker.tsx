@@ -5,7 +5,6 @@ import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
-import { fontFamily } from '../../theme/common';
 
 /**
  * Convert a single days duration to an interval.
@@ -60,14 +59,14 @@ const TimeZoneOption = styled.div`
 `;
 
 const TimeZoneLabel = styled.div`
-  font-family: ${fontFamily.ui};
+  font-family: var(--font-ui);
   text-align: left;
   font-size: 12px;
   font-weight: 300;
   color: var(--grey-11);
 `;
 const TimeZoneValue = styled.div`
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
   text-align: left;
   font-size: 12px;
   font-weight: 300;
@@ -171,7 +170,7 @@ const CalCell = styled.div`
   font-weight: 400;
   text-decoration: none;
   color: var(--grey-11);
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
 `;
 
 const CalHCell = styled(CalCell)`

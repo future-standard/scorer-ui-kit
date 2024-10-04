@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import {endOfDay, format,isEqual,min,set } from 'date-fns';
 import {isNotNumber} from '../../helpers/index';
 import Icon from '../../Icons/Icon';
-import { fontFamily } from '../../theme/common';
 
 const Container = styled.div<{hide:boolean}>`
   display: flex;
@@ -15,7 +14,7 @@ const Container = styled.div<{hide:boolean}>`
 `;
 
 const Label = styled.label`
-  font-family: ${fontFamily.ui};
+  font-family: var(--font-ui);
   text-align: left;
   font-size: 14px;
   font-weight: 300;
@@ -37,7 +36,7 @@ const IconWrap = styled.div`
 `;
 
 const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isTimeInput?: boolean }>`
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
   text-align: left;
   font-size: 14px;
   font-weight: 500;

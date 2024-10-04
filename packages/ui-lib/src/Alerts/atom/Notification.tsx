@@ -4,7 +4,6 @@ import styled, { css, keyframes } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
-import { fontFamily } from '../../theme/common';
 
 const initAnimation = keyframes`
   0% {
@@ -40,7 +39,7 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   transform: translateX(-50%);
   z-index: 999;
 
-  font-family: ${fontFamily.ui };
+  font-family: var(--font-ui);
   background-color: ${({type}) => `var(--${type})`};
   text-align: left;
   font-size: 14px;
@@ -97,7 +96,7 @@ const IconButton = styled.div<{selected?: boolean}>`
 
 const TextButton = styled.button`
   ${resetButtonStyles};
-  font-family: ${fontFamily.ui};
+  font-family: var(--font-ui);
   text-align: left;
   font-size: 14px;
   font-weight: 400;
