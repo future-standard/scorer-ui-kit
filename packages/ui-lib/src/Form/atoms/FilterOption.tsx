@@ -107,18 +107,6 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
         font-weight: 600;
       }
 
-      &:hover {
-        ${FakeCheckbox}{
-          ${styles.form.checkbox.checked.hover};
-        }
-
-        ${FakeRadioButton} {
-          border-color: ${styles.form.checkbox.checked.hover.backgroundColor};
-          ${FakeInnerRadio} {
-            background-color: ${styles.form.checkbox.checked.hover.backgroundColor};
-          }
-        }
-      }
     `};
 
     ${disabled && css`
