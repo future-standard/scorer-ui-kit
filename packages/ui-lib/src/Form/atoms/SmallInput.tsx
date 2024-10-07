@@ -44,8 +44,8 @@ const InputContainer = styled.div<{fieldState : TypeFieldState, hasAction?: bool
     border: 1px solid var(--input-border-${fieldState});
     background: var(--input-background-${fieldState});
     transition: 
-      border var(--speed-normal) var(--easing-primary-in),
-      background var(--speed-normal) var(--easing-primary-in);
+      border var(--speed-normal) var(--easing-primary-out),
+      background-color var(--speed-normal) var(--easing-primary-out);
   `};
 
   ${({ hasAction }) => hasAction && css`

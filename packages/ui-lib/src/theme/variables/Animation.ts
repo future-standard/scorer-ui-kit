@@ -3,9 +3,9 @@ import { css } from 'styled-components';
 export const animationVariables = css`
   :root {
 
-    --easing-primary-in-out: cubic-bezier(0.87, 0, 0.13, 1);
-    --easing-primary-in: cubic-bezier(0.16, 1, 0.3, 1);
-    --easing-primary-out: cubic-bezier(0.7, 0, 0.84, 0);
+    --easing-primary-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+    --easing-primary-in: cubic-bezier(0.5, 0, 0.75, 0);
+    --easing-primary-out: cubic-bezier(0.25, 1, 0.5, 1);
     
     --speed-faster: 0.085s;
     --speed-fast: 0.175s;
