@@ -2,16 +2,15 @@ import React, { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { removeAutoFillStyle, resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
-import { animation } from '../../theme/common';
 
 const IconContainer = styled.div`
   padding: 0 2px;
 `;
 
 const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
-  ${({ theme: { styles }, theme, hasBorder, disabled, noBackground, width }) => css`
+  ${({ hasBorder, disabled, noBackground, width }) => css`
   
-    transition: all ${animation.speed.normal} ${animation.easing.primary.out};
+    transition: all var(--speed-normal) var(--easing-primary-out);
     gap: 6px;
     height: var(--common-height);
     padding: 0;
@@ -21,10 +20,9 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
 
     ${hasBorder && css`
       padding: 0 8px;
-      border: ${styles.filters.searchInput.default.border};
-      border-color: var(--filter-button-stroke-color);
-      box-shadow: ${styles.filters.searchInput.default.boxShadow};
+      border: 1px solid var(--filter-button-stroke-color);
       box-shadow: 0px 4px 9px 0px var(--filter-button-shadow-color);
+
       &:hover {
         border: var(--primary-7) 1px solid;
         box-shadow: 0px 4px 9px 0px var(--primary-a2);
@@ -45,13 +43,11 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
       width: ${width};
     `};
 
-    background-color: ${noBackground ? 'transparent' : theme.styles.filters.searchInput.default.backgroundColor};
-    
+    background-color: ${noBackground ? 'transparent' : 'var(--grey-1)'};
     
     &:focus-within {
-      background-color: ${noBackground ? 'transparent' : styles.filters.searchInput.focused.backgroundColor};
-      border: ${noBackground ? 'transparent' : styles.filters.searchInput.focused.border};
-      border-color: var(--primary-9);
+      background-color: ${noBackground ? 'transparent' : 'var(--grey-1)'};
+      border: ${hasBorder ? '1px solid var(--primary-9)' : 'none'};
       box-shadow: 0px 4px 9px 0px ${noBackground ? 'transparent' : 'var(--primary-a2)'};
     }
 

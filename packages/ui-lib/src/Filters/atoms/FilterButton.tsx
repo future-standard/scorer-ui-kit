@@ -63,11 +63,6 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
       transition: stroke ${animation.speed.fast} ${animation.easing.primary.out};
     }
   }
-  ${FlipArrowContainer} ${IconWrapper} {
-    [stroke]{
-      /* stroke: var(--grey-11); */
-    }
-  };
 
   &:hover:enabled, &:active:enabled {
     color: var(--grey-12);

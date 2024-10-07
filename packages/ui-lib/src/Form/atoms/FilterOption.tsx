@@ -79,7 +79,7 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
   width: 100%;
   gap: 12px;
 
-  ${({ theme: { styles, animation }, selected, disabled }) => styles && css`
+  ${({ selected, disabled }) => css`
     
   border-color: var(--input-selection-control-default);
 
@@ -114,15 +114,15 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
     `};
 
     ${FakeCheckbox}, ${FakeRadioButton} {
-      transition: border-color ${animation.speed.faster} ${animation.easing.primary.easeInOut};
+      transition: border-color var(--speed-faster) var(--easing-primary-in-out);
     }
 
     ${FakeInnerRadio} {
-      transition: background-color ${animation.speed.faster} ${animation.easing.primary.easeInOut};
+      transition: background-color var(--speed-faster) var(--easing-primary-in-out);
     }
 
     ${Title}{
-      transition: color ${animation.speed.faster} ${animation.easing.primary.easeInOut};
+      transition: color var(--speed-faster) var(--easing-primary-in-out);
     }
     
   `};

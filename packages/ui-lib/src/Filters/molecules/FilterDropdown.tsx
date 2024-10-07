@@ -34,7 +34,6 @@ const OptionList = styled.div<{moreItem?: boolean}>`
 
 const ResultsContainer = styled.div`
   min-width: 216px;
-  /* padding-bottom: 8px; */
 `;
 
 const ResultCounter = styled.div`
@@ -47,7 +46,6 @@ const ResultCounter = styled.div`
   align-items: center;
   justify-content: left;
   height: 32px;
-  /* margin-bottom: 6px; */
   padding: 0 12px;
   border-top: 1px solid var(--grey-5);
   border-bottom: 1px solid var(--grey-5);

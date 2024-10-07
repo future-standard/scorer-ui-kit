@@ -131,12 +131,13 @@ const PaginateMonth = styled.button`
   justify-content: space-around;
   align-items: center;
 
-  ${({theme}) => theme && css`
-    transition: color ${theme.animation.speed.fast} ${theme.animation.easing.primary.inOut}
-    ${IconWrap}{
-      transition: stroke ${theme.animation.speed.fast} ${theme.animation.easing.primary.inOut}
+  transition: color var(--speed-fast) var(--easing-primary-in-out);
+  
+  ${IconWrap}{
+    svg * {
+      transition: stroke var(--speed-fast) var(--easing-primary-in-out);
     }
-  `};
+  }
 
   &:hover {
     color: var(--grey-12);
