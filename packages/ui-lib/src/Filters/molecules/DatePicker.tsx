@@ -5,7 +5,6 @@ import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
-import { fontFamily } from '../../theme/common';
 
 /**
  * Convert a single days duration to an interval.
@@ -60,17 +59,17 @@ const TimeZoneOption = styled.div`
 `;
 
 const TimeZoneLabel = styled.div`
-  font-family: ${fontFamily.ui};
+  font-family: var(--font-ui);
   text-align: left;
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--grey-11);
 `;
 const TimeZoneValue = styled.div`
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
   text-align: left;
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--grey-11);
 `;
 
@@ -97,7 +96,7 @@ const CurrentMonth = styled.div`
   font-weight: 400;
   line-height: 20px;
   letter-spacing: 0.5px;
-  color: var(--grey-11);
+  color: var(--primary-10);
 
   span {
     display: block;
@@ -117,7 +116,7 @@ const IconWrap = styled.div`
 
 const PaginateMonth = styled.button`
   cursor: pointer;
-  flex: 0 0 90px;
+  flex: 0 0 72px;
   border: none;
   background: transparent;
   outline: none;
@@ -127,10 +126,18 @@ const PaginateMonth = styled.button`
   line-height: 20px;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  color: var(--grey-8);
+  color: var(--grey-10);
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  transition: color var(--speed-fast) var(--easing-primary-in-out);
+  
+  ${IconWrap}{
+    svg * {
+      transition: stroke var(--speed-fast) var(--easing-primary-in-out);
+    }
+  }
 
   &:hover {
     color: var(--grey-12);
@@ -161,7 +168,6 @@ const CalHRow = styled(CalRow)`
 `;
 
 const CalCell = styled.div`
-
   display: flex;
   text-align: center;
   justify-content: center;
@@ -170,15 +176,15 @@ const CalCell = styled.div`
   font-size: 14px;
   font-weight: 400;
   text-decoration: none;
-  color: var(--grey-11);
-  font-family: ${fontFamily.data};
+  color: var(--grey-12);
+  font-family: var(--font-data);
 `;
 
 const CalHCell = styled(CalCell)`
   text-align: center;
   font-size: 12px;
   font-weight: 700;
-  color: var(--grey-a12);
+  color: var(--grey-a11);
 `;
 
 const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
@@ -196,6 +202,13 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
     border: 2px solid var(--primary-a7);
   `}
 
+  ${({ state }) => (state !== 'single' && state !== 'start' && state !== 'end') && css`
+    &:hover {
+      background: var(--primary-a6);
+      color: var(--white-1);
+    }
+  `};
+
   ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
     background: var(--primary-9);
     color: var(--white-1);
@@ -212,17 +225,18 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
   `}
 
   ${({ state }) => (state === 'insideHover') && css`
-    background: var(--grey-6) !important;
+    background: var(--primary-a9) !important;
+    color: var(--white-1);
   `}
 
   ${({ state }) => (state === 'inside') && css`
-    background: var(--primary-a7);
+    background: var(--primary-a5);
     border-radius: 0;
     opacity: 1;
 
     &:nth-child(7n+1), &:nth-child(7n){
       &::after {
-        background: var(--primary-a7);
+        background: var(--primary-a5);
         display: block;
         content: '';
         position: absolute;

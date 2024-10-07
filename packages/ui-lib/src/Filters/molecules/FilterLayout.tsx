@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import SelectField from '../../Form/atoms/SelectField';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import Icon from '../../Icons/Icon';
-import { fontFamily } from '../../theme/common';
+import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 
 const Container = styled.div`
   display: inline-block;
@@ -27,7 +27,7 @@ const ContextActionBaseCSS = css`
 const ContextIcon = styled.div`
   ${({ theme }) => css`
     background-color: var(--grey-2);
-    transition: background ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
+    transition: background-color ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
   `};
   width: 30px;
   height: 30px;
@@ -51,18 +51,17 @@ const ContextActionButton = styled.button<{ isActive?: boolean, isInnerContextBu
     }
   }
   &:hover ${ContextIcon}{
-    background-color: var(--primary-8);
+    background-color: var(--primary-9);
     }
   }
   ${({ isActive }) => isActive && css`
     ${ContextIcon} {
-      background-color: var(--primary-8);
+      background-color: var(--primary-9);
       [stroke]{
         stroke: var(--white-1);
       }
     }
     &:hover ${ContextIcon}{
-      background-color: var(--primary-7);
       cursor: pointer;
     }
   `}
@@ -105,52 +104,34 @@ const ButtonWrapper = styled.div`
   display: inline-block;
 `;
 
-const TopLine = styled.div`
-  background-color: var(--primary-7);
-  height: 3px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-`;
-
-const InnerBox = styled.div`
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  box-shadow: 0 4px 9px 0 var(--grey-a2);
-  border: solid 1px var(--grey-7);
-  border-top: none;
-  background-color: var(--grey-2);
+const GroupStyles = css`
+  display: flex;
+  justify-content: space-between;
+  width: auto;
+  align-items: center;
+  gap: 16px;
 `;
 
 const LayoutGroup = styled.div`
-  display: flex;
-  justify-content: space-between;
+  ${GroupStyles};
   padding: 4px 8px 4px 10px;
-  width: auto;
 `;
 
 const PaginationGroup = styled.div`
-  display: flex;
+  ${GroupStyles};
   border-top: var(--grey-6) 1px solid;
   padding: 4px 8px 4px 10px;
-  align-items: center;
-  justify-content: space-between;
-  width: auto;
 `;
 
 const IconWrapper = styled.div`
   display: flex;
 `;
 
-const LayoutText = styled.p`
-  font-family: ${fontFamily.ui};
+const RowLabel = styled.p`
+  font-family: var(--font-ui);
   font-size: 14px;
-  color: var(--grey-9);
-`;
-
-const PaginationText = styled.p`
-  font-family: ${fontFamily.ui};
-  font-size: 14px;
-  color: var(--grey-9);
+  color: var(--grey-11);
+  font-weight: 500;
 `;
 
 const PageSizeContainer = styled.div`
@@ -277,10 +258,9 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
         </ContextActionButton>
       </ButtonWrapper>
       <ContentBox {...{ openState, disabled, minWidth }}>
-        <TopLine />
-        <InnerBox>
+        <FilterDropdownContainer>
           <LayoutGroup>
-            <LayoutText>{layoutText}</LayoutText>
+            <RowLabel>{layoutText}</RowLabel>
             <IconWrapper>
               {contentArray.map((item, index) => {
                 return (
@@ -295,7 +275,7 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
           </LayoutGroup>
           {hasPageSettings &&
             <PaginationGroup>
-              <PaginationText>{pageSizeText}</PaginationText>
+              <RowLabel>{pageSizeText}</RowLabel>
               {pageSizeOptions &&
                 <PageSizeContainer>
                   <SelectFieldContainer>
@@ -310,7 +290,8 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
                   </SelectFieldContainer>
                 </PageSizeContainer>}
             </PaginationGroup>}
-        </InnerBox>
+        </FilterDropdownContainer>
+
       </ContentBox>
     </Container>
   );

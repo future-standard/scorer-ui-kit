@@ -5,12 +5,11 @@ import { IInputOptionsType } from '..';
 import { dimensions } from '../../theme/common';
 
 const Title = styled.div`
-  font-family: ${({ theme }) => theme.fontFamily.data};
+  font-family: var(--font-ui);
   display: block;
-  color: var(--grey-9);
+  color: var(--grey-12);
   font-size: 14px;
   font-weight: 500;
-  margin-left: 12px;
   user-select: none;
   pointer-events: none;
 `;
@@ -78,60 +77,54 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
   align-items: center;
   height: 100%;
   width: 100%;
+  gap: 12px;
 
-  ${({ theme: { styles }, selected, disabled }) => styles && css`
-    ${FakeCheckbox}, ${FakeRadioButton} {
-      ${styles.form.checkbox.unchecked.default};
-    }
+  ${({ selected, disabled }) => css`
+    
+  border-color: var(--input-selection-control-default);
 
     &:hover {
       cursor: pointer;
       ${Title} {
-        color: ${styles.form.checkbox.unchecked.hover.borderColor};
+        color: var(--input-selection-control-selected);
       }
 
-      ${FakeCheckbox} {
-        ${styles.form.checkbox.unchecked.hover};
-      }
-
-      ${FakeRadioButton} {
-        border-color: ${styles.form.checkbox.unchecked.hover.borderColor};
+      ${FakeCheckbox}, ${FakeRadioButton} {
+        border-color: var(--input-selection-control-selected);
       }
     }
 
     ${selected && css`
+      ${FakeCheckbox}, ${FakeRadioButton} {
+        border-color: var(--input-selection-control-selected);
+        ${FakeInnerRadio}, ${FakeCheckboxInner} {
+          background-color: var(--input-selection-control-selected);
+        }
+      }
+      
       ${Title} {
-        color: ${styles.form.checkbox.checked.default.backgroundColor};
-      }
-      ${FakeCheckbox} {
-        ${styles.form.checkbox.checked.default};
-        border: none;
+        color: var(--input-selection-control-selected);
+        font-weight: 600;
       }
 
-      ${FakeRadioButton} {
-        border-color: ${styles.form.checkbox.checked.default.backgroundColor};
-        ${FakeInnerRadio} {
-          background-color: ${styles.form.checkbox.checked.default.backgroundColor};
-        }
-      }
-
-      &:hover {
-        ${FakeCheckbox}{
-          ${styles.form.checkbox.checked.hover};
-        }
-
-        ${FakeRadioButton} {
-          border-color: ${styles.form.checkbox.checked.hover.backgroundColor};
-          ${FakeInnerRadio} {
-            background-color: ${styles.form.checkbox.checked.hover.backgroundColor};
-          }
-        }
-      }
     `};
 
     ${disabled && css`
       cursor: not-allowed;
     `};
+
+    ${FakeCheckbox}, ${FakeRadioButton} {
+      transition: border-color var(--speed-faster) var(--easing-primary-in-out);
+    }
+
+    ${FakeInnerRadio} {
+      transition: background-color var(--speed-faster) var(--easing-primary-in-out);
+    }
+
+    ${Title}{
+      transition: color var(--speed-faster) var(--easing-primary-in-out);
+    }
+    
   `};
 `;
 

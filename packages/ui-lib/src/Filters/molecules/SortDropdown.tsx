@@ -6,29 +6,11 @@ import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
 import { IFilterItem } from '../FilterTypes';
 import { resetButtonStyles } from '../../common';
-import { fontFamily } from '../../theme/common';
-import { FilterButtonDesign } from '..';
+import { FilterButtonDesign, FilterDropdownContainer } from '..';
 
 const Container = styled.div`
   display: inline-block;
   position: relative;
-`;
-
-const TopLine = styled.div`
-  background-color: var(--primary-7);
-  height: 3px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-`;
-
-const InnerBox = styled.div`
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  border-top: unset;
-  box-shadow: 0px 5px 25px 0px var(--primary-a1);
-  background-color: var(--grey-1);
-  border-color: var(--grey-6);
-  border: var(--grey-6) 1px solid;
 `;
 
 const StyledFilterOption = styled(FilterOption)`
@@ -36,16 +18,19 @@ const StyledFilterOption = styled(FilterOption)`
 `;
 
 const OptionList = styled.div`
+  padding: 8px 0;
   ${StyledFilterOption} {
-    height: 35px;
-    padding-left: 10px;
+    height: 40px;
+    padding: 16px;
   }
 `;
 
 const OrderGroup = styled.div`
+  font-family: var(--font-ui);
   display: flex;
   border-top: var(--grey-6) 1px solid;
   margin-top: 5px;
+
   button:first-child {
     border-right: var(--grey-6) 1px solid;
   }
@@ -56,36 +41,39 @@ const OrderButton = styled.button<{ isSelected: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
   color: var(--grey-12);
   font-size: 14px;
-  height: 35px;
+  height: 40px;
+  padding: 0 16px;
+  gap: 12px;
+
   ${({ isSelected }) => css`
 
-  ${IconWrapper} {
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    [stroke]{
-        stroke: var(--dimmed);
+    ${IconWrapper} {
+      display: flex;
+      align-items: center;
+      [stroke]{
+        stroke: var(--grey-11);
       }
     }
 
-  &:hover {
-    ${IconWrapper} {
-      [stroke]{
-        stroke: var(--primary-8);
+    &:hover {
+      ${IconWrapper} {
+        [stroke]{
+          stroke: var(--primary-9);
         }
       }
     }
 
-  ${isSelected && css`
-    ${IconWrapper} {
-      [stroke]{
-        stroke: var(--primary-8);
+    ${isSelected && css`
+      ${IconWrapper} {
+        [stroke]{
+          stroke: var(--primary-9);
         }
       }
     `}
+
   `}
 `;
 
@@ -143,8 +131,7 @@ const SortDropdown: React.FC<ISortDropdown> = ({
         {...{ buttonText, disabled, isSortAscending, design }}
         buttonIcon='FilterSorting'
       >
-        <TopLine />
-        <InnerBox>
+        <FilterDropdownContainer>
           {(isLoading || list.length === 0)
             ? (
               <LoadingBox {...{ loadingText }} />
@@ -182,7 +169,7 @@ const SortDropdown: React.FC<ISortDropdown> = ({
               <FilterOption selected={!isSortAscending} title={descendingText} />
             </OrderButton>
           </OrderGroup>
-        </InnerBox>
+        </FilterDropdownContainer>
       </FilterDropHandler>
 
     </Container>

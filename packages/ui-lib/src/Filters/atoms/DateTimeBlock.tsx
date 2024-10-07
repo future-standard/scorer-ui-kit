@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import {endOfDay, format,isEqual,min,set } from 'date-fns';
 import {isNotNumber} from '../../helpers/index';
 import Icon from '../../Icons/Icon';
-import { fontFamily } from '../../theme/common';
 
 const Container = styled.div<{hide:boolean}>`
   display: flex;
@@ -15,12 +14,12 @@ const Container = styled.div<{hide:boolean}>`
 `;
 
 const Label = styled.label`
-  font-family: ${fontFamily.ui};
+  font-family: var(--font-ui);
   text-align: left;
-  font-size: 14px;
-  font-weight: 300;
+  font-size: 12px;
+  font-weight: 500;
   text-decoration: none;
-  color: var(--grey-11);
+  color: var(--primary-10);
   padding: 12px;
   border-bottom: var(--grey-6) 1px solid;
 `;
@@ -32,18 +31,20 @@ const Item = styled.div`
 `;
 
 const IconWrap = styled.div`
-  flex: 0 0 40px;
-  padding-top: 2px;
+  flex: 0 0 32px;
+  align-items: center;
+  display: flex;
+  padding-top: 1px;
 `;
 
 const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isTimeInput?: boolean }>`
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
   text-align: left;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.2px;
   text-decoration: none;
-  color: var(--grey-11);
+  color: var(--grey-12);
   background-color: transparent;
 
   width: 100%;
@@ -59,7 +60,7 @@ const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isT
   &:focus, &:hover {
 
     border-color: ${({ isTimeInput }) => isTimeInput ?
-      ({ isTimeRangeValid }) => isTimeRangeValid ? 'blue' : 'var(--warning-a9)'
+      ({ isTimeRangeValid }) => isTimeRangeValid ? 'transparent' : 'var(--warning-a9)'
       : 'transparent'
     };
   }
@@ -77,11 +78,15 @@ const InputWrap = styled.div`
   border-radius: 3px;
 
   &:focus-within {
-    background: var(--primary-a7);
-    box-shadow: 0px 0px 0px 5px var(--primary-a7);
+    background: var(--primary-9);
+    box-shadow: 0px 0px 0px 5px var(--primary-9);    
+    ${Input}{
+      color: var(--white-1);
+      border-color: transparent;
+    }
 
     ${TimeColon}{
-      color: var(--black-1);
+      color: var(--white-1);
       text-align: center;
     }
   }

@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { animation } from '../../theme/common';
@@ -11,56 +11,78 @@ const FlipWrapper = styled.div<{ isSortAscending: boolean }>`
   `};
 `;
 
+const fadeInAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const FlipArrowContainer = styled.div``;
+
 const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, design?: FilterButtonDesign }>`
   ${resetButtonStyles};
   border-radius: 3px;
   height: var(--common-height);
 
-  ${({design }) => design === 'basic'?
+  ${({design}) => design === 'basic'?
       `
         background-color: transparent;
         border: 1px solid transparent;
       `
     :
       `
-        background-color: var(--grey-1);
-        border: var(--grey-7) 1px solid;
+        background-color: var(--filter-button-background-color);
+        border: var(--filter-button-stroke-color) 1px solid;
+        box-shadow: 0px 4px 9px 0px var(--filter-button-shadow-color);
       `
   };
 
-  box-shadow: 0px 4px 9px 0px var(--primary-a1);
   text-align: left;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 500;
   text-decoration: none;
-  color: var(--grey-11);
+  color: var(--filter-button-text-color);
   font-family: var(--font-ui);
   transition:
-    opacity ${animation.speed.normal} ${animation.easing.primary.inOut},
-    background ${animation.speed.fast} ${animation.easing.primary.inOut},
-    color ${animation.speed.fast} ${animation.easing.primary.inOut},
-    border ${animation.speed.fast} ${animation.easing.primary.inOut};
+    opacity ${animation.speed.fast} ${animation.easing.primary.out},
+    background-color ${animation.speed.fast} ${animation.easing.primary.out},
+    box-shadow ${animation.speed.fast} ${animation.easing.primary.out},
+    color ${animation.speed.fast} ${animation.easing.primary.out},
+    border ${animation.speed.fast} ${animation.easing.primary.out};
+
+  animation: ${fadeInAnimation} ${animation.speed.slower} ${animation.easing.primary.out};
 
   ${IconWrapper} {
     padding: 0 9px;
     display: flex;
     align-items: center;
+    [stroke]{
+      transition: stroke ${animation.speed.fast} ${animation.easing.primary.out};
+    }
   }
 
   &:hover:enabled, &:active:enabled {
-    background-color: var(--primary-7);
-    border-color: var(--primary-7);
-    border: var(--primary-7) 1px solid;
-    color: var(--white-1);
-  }
-
-  &:hover:enabled, &:active:enabled {
+    color: var(--grey-12);
+    
+    ${({design}) => design === 'basic'? '' : css`
+      box-shadow: 0px 4px 9px 0px var(--primary-a2);
+      border-color: var(--primary-7);
+    `};
+    
     ${IconWrapper} {
       [stroke]{
-        stroke: var(--white-1);
-        transition: stroke ${animation.speed.fast} ${animation.easing.primary.inOut};
+        stroke: var(--primary-9);
       }
     }
+    
+    ${FlipArrowContainer} ${IconWrapper} {
+      [stroke]{
+        stroke: var(--grey-12);
+      }
+    };
   }
 
   &:disabled {
@@ -69,17 +91,29 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
   }
 
   ${({ isOpen, hasFlipArrow }) => isOpen && hasFlipArrow && css`
-    background-color: var(--primary-7);
-    border: solid 1px var(--primary-7);
+    background-color: var(--primary-9);
+    border: solid 1px var(--primary-9);
     color: var(--white-1);
 
-    ${IconWrapper} {
+    &, &:hover:enabled, &:active:enabled {
+      color: var(--white-1);
+      ${IconWrapper} {
+        [stroke]{
+          stroke: var(--white-1);
+        }
+      }
+    }
+    
+    ${FlipArrowContainer} ${IconWrapper} {
       [stroke]{
         stroke: var(--white-1);
       }
-    }
+    };
   `};
+
 `;
+
+
 
 const InnerContainer = styled.div`
     display: flex;
@@ -118,11 +152,13 @@ const FilterButton: React.FC<IFilterButton> = ({
             icon={icon}
             size={12}
             weight='light'
-            color='grey-10'
+            color='filter-button-icon-color'
           />
         </FlipWrapper>
         <ButtonText {...{ hasFlipArrow }}>{children}</ButtonText>
-        {hasFlipArrow && <Icon icon={isOpen ? 'Up' : 'Down'} size={8} />}
+        
+          {hasFlipArrow && <FlipArrowContainer><Icon icon={isOpen ? 'Up' : 'Down'} size={6} color='grey-11' /></FlipArrowContainer>}
+        
       </InnerContainer>
     </StyledButton>
   );

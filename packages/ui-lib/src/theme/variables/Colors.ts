@@ -549,7 +549,26 @@ export const colorVariables = css`
     --input-color-unit: var(--grey-10);
 
     --input-focused-shadow-color: var(--black-a5);
+    
+    --input-selection-control-default: var(--grey-8);
+    --input-selection-control-default-disabled: var(--grey-6);
+    --input-selection-control-selected: var(--primary-9);
+    --input-selection-control-selected-disabled: var(--primary-8);
 
   }
+
+  /* Filters */
+  .light-theme, .dark-theme {
+    --filter-button-text-color: var(--grey-11);
+    --filter-button-icon-color: var(--grey-10);
+    --filter-button-background-color: var(--grey-2);
+    --filter-button-stroke-color: var(--grey-a5);
+    --filter-button-shadow-color: var(--primary-a3);
+  }
+
+  .dark-theme {
+    --filter-button-shadow-color: var(--black-a8);
+  }
+  
 
 `;

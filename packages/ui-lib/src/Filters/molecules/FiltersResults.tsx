@@ -5,7 +5,6 @@ import { resetButtonStyles } from '../../common/index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { isFilterItem } from '../FilterTypes';
 import { DateInterval, isDateInterval } from './DatePicker';
-import { fontFamily } from '../../theme/common';
 import { format, add, startOfDay } from 'date-fns';
 
 const Container = styled.div`
@@ -16,7 +15,7 @@ const Container = styled.div`
 `;
 
 const ResultsTextWrapper = styled.div`
-  font-family: ${fontFamily.ui};
+  font-family: var(--font-ui);
   color: var(--grey-9);
 `;
 
@@ -28,7 +27,7 @@ const FilterLabel = styled.div`
   padding: 0 11px 0 8px;
   margin-left: 3px;
   color: var(--grey-9);
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
 
   ${IconWrapper} {
     display: flex;
@@ -46,7 +45,7 @@ const FilterLabelText = styled.div<{ hasIcon?: boolean }>`
 
 const ClearTextButton = styled.button`
   ${resetButtonStyles};
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
   color: var(--grey-10);
   margin-left: 11px;
   font-size: 12px;

@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { EllipsisStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
-import { fontFamily } from '../../theme/common';
 
 const Container = styled.div`
   display: flex;
@@ -53,7 +52,7 @@ const LeftTitle = styled.div<{ hasMarginBottom: boolean, hasRightData: boolean }
 `;
 
 const LeftSubTitle = styled.div<{ hasRightData: boolean }>`
-  font-family: ${fontFamily.data};
+  font-family: var(--font-data);
   ${EllipsisStyles};
   ${({ hasRightData }) => hasRightData
     ? `max-width: 140px;`
