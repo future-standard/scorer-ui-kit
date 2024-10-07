@@ -520,6 +520,18 @@ export const colorVariables = css`
     /* Global */
     --main-background-gradient: radial-gradient(200% 200% at 50% -10%, var(--grey-2) 0%, var(--grey-3) 100%);
     --main-background-color: var(--grey-3);
+
+    --primary-gradient-start: var(--primary-9);
+    --primary-gradient-end: var(--primary-10);
+    --primary-gradient: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+
+    --secondary-gradient-start: var(--grey-9);
+    --secondary-gradient-end: var(--grey-10);
+    --secondary-gradient: linear-gradient(135deg, var(--secondary-gradient-start), var(--secondary-gradient-end));
+
+    --warning-gradient-start: var(--warning-9);
+    --warning-gradient-end: var(--warning-10);
+    --warning-gradient: linear-gradient(135deg, var(--warning-gradient-start), var(--warning-gradient-end));
     
     --dividing-line: var(--grey-4);
     --global-element-background: var(--grey-2);

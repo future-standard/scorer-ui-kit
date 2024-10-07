@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { TypeButtonSizes, TypeButtonDesigns } from '..';
 
 
@@ -9,42 +9,56 @@ interface IStyledComponentProps {
 }
 
 
-
 const StyledButton = styled.button<IStyledComponentProps>`
-  ${({theme, design, size}) => css`
 
-    ${theme.styles.form.button[design].default};
-    height: ${theme.dimensions.form.button[ size ].height};
-    padding: ${theme.dimensions.form.button[ size ].padding};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    ${theme.typography.form.button[ design ][ size ]};
-    font-family: ${theme.fontFamily.ui};
-
-    transition:
-      background ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeOut},
-      opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeOut};
-
-    &:hover:enabled {
-      background: ${theme.styles.form.button[design].hover.backgroundColor};
-    }
-
-    &:active:enabled {
-      background: ${theme.styles.form.button[design].active.backgroundColor};
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 50%;
-      background: ${theme.styles.form.button[design].disabled.backgroundColor};
-    }
-
-  `};
+  font-family: var(--font-ui);
+  height: var(--button-height);
+  padding: var(--button-h-padding);
+  font-size: var(--button-font-size);
+  color: var(--white-12);
+  font-weight: 600;
 
   overflow: hidden;
-  border: none;
   cursor: pointer;
   border-radius: 3px;
   outline: none;
+  box-sizing: border-box;
+
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, transparent, transparent, var(--button-gradient-start), var(--button-gradient-end));
+  background-color: var(--primary-9);
+  background-size: 400%;
+  background-position: 99%;
+  box-shadow: 0 0 0 transparent;
+  
+  transition:
+    background-color var(--speed-normal) var(--easing-primary-out),
+    background-position var(--speed-normal) var(--easing-primary-out),
+    background-size var(--speed-normal) var(--easing-primary-out),
+    box-shadow var(--speed-normal) var(--easing-primary-out),
+    opacity var(--speed-normal) var(--easing-primary-out);
+
+  &:hover:enabled {
+    background-position: 1%;
+    background-color: var(--primary-8);
+    border-color: var(--primary-a6);
+  }
+
+  &:active:enabled {
+    background-color: var(--primary-7);
+    border-color: var(--primary-a10);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 50%;
+  }
+
 
   button + button {
     margin-left: 20px;
@@ -61,7 +75,8 @@ interface OwnProps {
 type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button : React.FC<Props> = ({ design='primary', size='normal', children, ...props }) => {
-  return <StyledButton type='button' {...{design, size}} {...props}>{children}</StyledButton>;
+  design === 'danger' ? console.warn('Button.tsx - Warning, the design prop value danger is being deprecated. Use warning instead.') : null;
+  return <StyledButton type='button' className={`button-design-${design} button-size-${size}`} {...{design, size}} {...props}>{children}</StyledButton>;
 };
 
 export default Button;

@@ -22,6 +22,8 @@ const ThemeVariables = createGlobalStyle`
     --global-menu-width-closed: 80px;
     --global-menu-width-open: 280px;
 
+    --input-height: 40px;
+
     --button-font-size: 14px;
     --button-height: 32px;
     --button-h-padding: 8px;
@@ -33,11 +35,25 @@ const ThemeVariables = createGlobalStyle`
     --button-icon-size: 14px;
     --button-icon-h-padding: 8px;
 
-    --input-height: 40px;
+    .light-theme, .dark-theme {
+      --button-gradient-start: var(--primary-gradient-start);
+      --button-gradient-end: var(--primary-gradient-end);
+
+      .button-design-secondary {
+        --button-gradient-start: var(--secondary-gradient-start);
+        --button-gradient-end: var(--secondary-gradient-end);
+      }
+
+      .button-design-danger {
+        --button-gradient-start: var(--warning-gradient-start);
+        --button-gradient-end: var(--warning-gradient-end);
+      }
+
+    }
 
   }
 
-  .button-small {
+  .button-size-small {
     --button-font-size: 12px;
     --button-height: 24px;
     --button-h-padding: 4px;
@@ -45,13 +61,15 @@ const ThemeVariables = createGlobalStyle`
     --button-icon-h-padding: 8px;
   }
 
-  .button-large {
+  .button-size-large {
     --button-font-size: 16px;
     --button-height: 40px;
     --button-h-padding: 8px;
     --button-icon-size: 16px;
     --button-icon-h-padding: 8px;
   }
+
+  
 
   .split-button-primary {
     --border-color: var(--primary-9);
