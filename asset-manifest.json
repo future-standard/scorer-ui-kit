@@ -1,12 +1,16 @@
 {
   "files": {
-    "main.js": "/scorer-ui-kit/static/js/main.9125c5f6.js",
-    "static/media/Lato3Ita3M-VF.woff2": "/scorer-ui-kit/static/media/Lato3Ita3M-VF.a1c6bc1c1b13c9ece9d5.woff2",
-    "static/media/Lato3Upr3M-VF.woff2": "/scorer-ui-kit/static/media/Lato3Upr3M-VF.b4654cead6b828b82278.woff2",
+    "main.js": "/scorer-ui-kit/static/js/main.852505b2.js",
+    "static/media/Monorale-BoldItalic.woff": "/scorer-ui-kit/static/media/Monorale-BoldItalic.21d7f69a690ad9dcb9c8.woff",
+    "static/media/Monorale-BlackItalic.woff": "/scorer-ui-kit/static/media/Monorale-BlackItalic.f54c5d2a0c2842d23bde.woff",
+    "static/media/Lato-Light.ttf": "/scorer-ui-kit/static/media/Lato-Light.345fe08c61d3f15bbc3e.ttf",
     "static/media/Monorale-Bold.woff": "/scorer-ui-kit/static/media/Monorale-Bold.e1e45fa17edeead87d01.woff",
+    "static/media/Monorale-ExtraBoldItalic.woff": "/scorer-ui-kit/static/media/Monorale-ExtraBoldItalic.e83560606105c32910dc.woff",
     "static/media/Monorale-ExtraBold.woff": "/scorer-ui-kit/static/media/Monorale-ExtraBold.896bb5173fe5cc8c207f.woff",
     "static/media/Monorale-SemiBold.woff": "/scorer-ui-kit/static/media/Monorale-SemiBold.21de12c94175071e14b1.woff",
     "static/media/Monorale-SemiBoldItalic.woff": "/scorer-ui-kit/static/media/Monorale-SemiBoldItalic.69319cf3cdbc70f38ee5.woff",
+    "static/media/Lato-Regular.ttf": "/scorer-ui-kit/static/media/Lato-Regular.cf929b5168a4fa06ce27.ttf",
+    "static/media/Lato-Bold.ttf": "/scorer-ui-kit/static/media/Lato-Bold.dffabc64c6dbc0ad6e71.ttf",
     "static/media/Monorale-Italic.woff": "/scorer-ui-kit/static/media/Monorale-Italic.e36e1456fe17f1468ff8.woff",
     "static/media/Monorale-LightItalic.woff": "/scorer-ui-kit/static/media/Monorale-LightItalic.497895911cd9ae5b9bf1.woff",
     "static/media/Monorale-Black.woff": "/scorer-ui-kit/static/media/Monorale-Black.ba50c972393caf48e491.woff",
@@ -14,6 +18,7 @@
     "static/media/Monorale-Regular.woff": "/scorer-ui-kit/static/media/Monorale-Regular.15d5858eff9fa8aa25f4.woff",
     "static/media/Monorale-Light.woff": "/scorer-ui-kit/static/media/Monorale-Light.1273fc499bfc664dba6a.woff",
     "static/media/Monorale-MediumItalic.woff": "/scorer-ui-kit/static/media/Monorale-MediumItalic.7de6bca911cf31bf81b5.woff",
+    "static/media/Lato-Thin.ttf": "/scorer-ui-kit/static/media/Lato-Thin.cb938b10e06cdc593ce6.ttf",
     "static/media/Monorale-ExtraLight.woff": "/scorer-ui-kit/static/media/Monorale-ExtraLight.e8f463e30b459ce850be.woff",
     "static/media/Monorale-Medium.woff": "/scorer-ui-kit/static/media/Monorale-Medium.b266b8ee03a74159c7f7.woff",
     "static/media/Monorale-ThinItalic.woff": "/scorer-ui-kit/static/media/Monorale-ThinItalic.fd1891190ecedabfffb2.woff",
@@ -23,9 +28,9 @@
     "index.html": "/scorer-ui-kit/index.html",
     "static/media/logo-mark.svg": "/scorer-ui-kit/static/media/logo-mark.c04f523a4fde2280e3442e4b1b26f3ed.svg",
     "static/media/logo-text.svg": "/scorer-ui-kit/static/media/logo-text.65bb2ccdb8a2092c11740c3b9bda7f39.svg",
-    "main.9125c5f6.js.map": "/scorer-ui-kit/static/js/main.9125c5f6.js.map"
+    "main.852505b2.js.map": "/scorer-ui-kit/static/js/main.852505b2.js.map"
   },
   "entrypoints": [
-    "static/js/main.9125c5f6.js"
+    "static/js/main.852505b2.js"
   ]
 }
