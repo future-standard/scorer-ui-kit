@@ -525,8 +525,8 @@ export const colorVariables = css`
     --primary-gradient-end: var(--primary-10);
     --primary-gradient: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
 
-    --secondary-gradient-start: var(--grey-9);
-    --secondary-gradient-end: var(--grey-10);
+    --secondary-gradient-start: var(--grey-5);
+    --secondary-gradient-end: var(--grey-6);
     --secondary-gradient: linear-gradient(135deg, var(--secondary-gradient-start), var(--secondary-gradient-end));
 
     --warning-gradient-start: var(--warning-9);
@@ -580,6 +580,68 @@ export const colorVariables = css`
 
   .dark-theme {
     --filter-button-shadow-color: var(--black-a8);
+  }
+
+  /* Buttons */
+  .light-theme, .dark-theme {
+    --button-background-color: var(--primary-9);
+    --button-border-color: var(--primary-9);
+    --button-inner-shadow-color: transparent;
+    --button-text-color: var(--white-1);
+
+    --button-hover-background-color: var(--primary-8);
+    --button-hover-border-color: var(--primary-a6);
+    --button-hover-inner-shadow-color: transparent;
+    --button-hover-text-color: var(--white-1);
+
+    --button-active-background-color: var(--primary-7);
+    --button-active-border-color: var(--primary-a9);
+    --button-active-inner-shadow-color: var(--white-a10);
+    --button-active-text-color: var(--white-1);
+
+    --button-gradient-start: var(--primary-gradient-start);
+    --button-gradient-end: var(--primary-gradient-end);
+
+    .button-design-secondary {
+      --button-background-color: var(--grey-9);
+      --button-border-color: var(--grey-9);
+      --button-inner-shadow-color: transparent;
+      --button-text-color: var(--white-1);
+
+      --button-hover-background-color: var(--grey-8);
+      --button-hover-border-color: var(--grey-a6);
+      --button-hover-inner-shadow-color: var(--white-a8);
+      --button-hover-text-color: var(--white-1);
+
+      --button-active-background-color: var(--grey-7);
+      --button-active-border-color: var(--grey-a9);
+      --button-active-inner-shadow-color: var(--white-a10);
+      --button-active-text-color: var(--white-1);
+      
+      --button-gradient-start: var(--secondary-gradient-start);
+      --button-gradient-end: var(--secondary-gradient-end);
+    }
+
+    .button-design-danger, .button-design-warning {
+      --button-background-color: var(--warning-9);
+      --button-border-color: var(--warning-9);
+      --button-inner-shadow-color: transparent;
+      --button-text-color: var(--white-1);
+
+      --button-hover-background-color: var(--warning-8);
+      --button-hover-border-color: var(--warning-a6);
+      --button-hover-inner-shadow-color: var(--white-a8);
+      --button-hover-text-color: var(--white-1);
+
+      --button-active-background-color: var(--warning-7);
+      --button-active-border-color: var(--warning-a9);
+      --button-active-inner-shadow-color: var(--white-a10);
+      --button-active-text-color: var(--white-1);
+      
+      --button-gradient-start: var(--warning-gradient-start);
+      --button-gradient-end: var(--warning-gradient-end);
+    }
+
   }
   
 

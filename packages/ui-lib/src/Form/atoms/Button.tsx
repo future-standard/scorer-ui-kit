@@ -63,7 +63,7 @@ const StyledButton = styled.button<IStyledComponentProps>`
     background-position: 1%;
     background-color: var(--button-hover-background-color);
     border-color: var(--button-hover-border-color);
-    /* box-shadow: 0 0 5px var(--button-hover-inner-shadow-color) inset; */
+    box-shadow: 0 0 5px var(--button-hover-inner-shadow-color) inset;
     color: var(--button-hover-text-color);
   }
 
@@ -79,7 +79,6 @@ const StyledButton = styled.button<IStyledComponentProps>`
     cursor: not-allowed;
     opacity: 50%;
   }
-
 
   button + button {
     margin-left: 20px;
