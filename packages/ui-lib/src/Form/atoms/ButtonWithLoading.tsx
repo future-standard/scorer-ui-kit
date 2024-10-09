@@ -69,10 +69,6 @@ const InnerContainer = styled.div<{position?: string, $loading: boolean, design:
 
     transition: margin var(--speed-slow) var(--easing-primary-in-out);
 
-    ${TextContainer}{
-
-    }
-
     ${LoadingContainer}{
       opacity: 1;
       transition: flex var(--speed-slow) var(--easing-primary-in-out), opacity var(--speed-slow) var(--easing-primary-in-out) var(--speed-slow);

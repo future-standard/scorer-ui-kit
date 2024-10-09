@@ -11,17 +11,15 @@ interface IStyledComponentProps {
 
 const activeAnimation = keyframes`
   0% {
-    box-shadow: 0 0px 0px var(--white-a8) inset;
-    /* border-color: 1px solid var(--button-hover-border-color); */
+    box-shadow: 0 0px 0px var(--button-hover-inner-shadow-color) inset;
   }
 
   75% {
-    box-shadow: 0 0 24px var(--white-a9) inset;
+    box-shadow: 0 0 24px var(--button-active-inner-shadow-color) inset;
   }
 
   100% {
-    box-shadow: 0 0 16px var(--white-a8) inset;
-    /* border-color: 1px solid var(--button-active-border-color); */
+    box-shadow: 0 0 16px var(--button-active-inner-shadow-color) inset;
   }
 `;
 
@@ -70,9 +68,8 @@ const StyledButton = styled.button<IStyledComponentProps>`
   }
 
   &:active:enabled {
-    /* background-color: var(--button-active-background-color); */
-    /* border-color: var(--button-active-border-color); */
-    /* box-shadow: 0 0 10px var(--white-a10) inset; */
+    background-color: var(--button-active-background-color);
+    border-color: var(--button-active-border-color);
     color: var(--button-active-text-color);
     animation: var(--speed-normal) var(--easing-primary-in-out) ${activeAnimation} forwards;
   }

@@ -108,8 +108,6 @@ export interface IButtonWithIcon extends IButtonProps {
 }
 
 const ButtonWithIcon : React.FC<IButtonWithIcon> = ({design = 'primary', size='normal', loading = false, onClick, disabled, position, icon, children, ...props}) => {
-  const iconColor = design === 'secondary' ? 'dimmed' : 'inverse';
-
   return (
     <Container $loading={loading}>
       <Button noPadding {...{ design, size, onClick, disabled }} {...props}>

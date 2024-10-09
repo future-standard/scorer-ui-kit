@@ -599,9 +599,9 @@ export const colorVariables = css`
     --button-hover-divider-color: var(--primary-a3);
     --button-hover-icon-area-background-color: var(--primary-a3);
 
-    --button-active-background-color: var(--primary-7);
-    --button-active-border-color: var(--primary-a9);
-    --button-active-inner-shadow-color: var(--white-a10);
+    --button-active-background-color: var(--button-hover-background-color);
+    --button-active-border-color: var(--button-hover-border-color);
+    --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
     --button-active-text-color: var(--white-1);
     --button-active-divider-color: var(--primary-a3);
     --button-active-icon-area-background-color: var(--primary-a3);
@@ -624,9 +624,9 @@ export const colorVariables = css`
       --button-hover-inner-shadow-color: var(--white-a8);
       --button-hover-text-color: var(--white-1);
 
-      --button-active-background-color: var(--grey-7);
-      --button-active-border-color: var(--grey-a9);
-      --button-active-inner-shadow-color: var(--white-a10);
+      --button-active-background-color: var(--button-hover-background-color);
+      --button-active-border-color: var(--button-hover-border-color);
+      --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
       --button-active-text-color: var(--white-1);
       
       --button-gradient-start: var(--secondary-gradient-start);
@@ -648,9 +648,9 @@ export const colorVariables = css`
       --button-hover-inner-shadow-color: var(--white-a8);
       --button-hover-text-color: var(--white-1);
 
-      --button-active-background-color: var(--warning-7);
-      --button-active-border-color: var(--warning-a9);
-      --button-active-inner-shadow-color: var(--white-a10);
+      --button-active-background-color: var(--button-hover-background-color);
+      --button-active-border-color: var(--button-hover-border-color);
+      --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
       --button-active-text-color: var(--white-1);
       
       --button-gradient-start: var(--warning-gradient-start);
