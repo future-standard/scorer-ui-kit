@@ -2,7 +2,20 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Button from './Button';
 import Icon from '../../Icons/Icon';
+import Spinner from '../../Indicators/Spinner';
 import { IButtonProps, TypeButtonSizes } from '..';
+
+const Container = styled.div<{ $loading: boolean }>`
+  display: inline;
+  ${({$loading}) => $loading && css`
+    button {
+      cursor: wait;
+      &:disabled {
+        opacity: 1;
+      }
+    }
+  `};
+`;
 
 const TextContainer = styled.div<{size: TypeButtonSizes, position?: string}>`
   height: inherit;
@@ -17,13 +30,33 @@ const TextContainer = styled.div<{size: TypeButtonSizes, position?: string}>`
   transition: padding var(--speed-slow) var(--easing-primary-in-out);
 `;
 
-const IconContainer = styled.div<{ position?: string }>`
+const IconContainer = styled.div`
+  opacity: 1;
+`;
+const SpinnerContainer = styled.div`
+  background-color: var(--button-loading-area-background-color);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  opacity: 0;
+`;
+
+const IconArea = styled.div<{ position?: string, $loading: boolean }>`
+  position: relative;
   height: inherit;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  flex-shrink: 0;
+  flex: 0 0 calc((var(--button-h-padding)* 2) + var(--button-icon-size));
   border: 0px solid var(--button-divider-color);
   padding: 0 var(--button-h-padding);
 
@@ -34,15 +67,33 @@ const IconContainer = styled.div<{ position?: string }>`
       : `border-left-width: 1px;` 
     };
   `}
-
-  svg {
-    display:block;
-    width: var(--button-icon-size);
-    height: var(--button-icon-size);
-    path, rect, circle, d {
-      stroke: var(--white-1);
+    
+  ${IconContainer}{
+    svg {
+      display:block;
+      width: var(--button-icon-size);
+      height: var(--button-icon-size);
+      path, rect, circle, d {
+        stroke: var(--white-1);
+      }
     }
   }
+
+  ${IconContainer}, ${SpinnerContainer}{
+    transition: opacity var(--speed-fast) var(--easing-primary-out);
+  }
+
+  ${({$loading}) => $loading && css`
+    border-color: var(--button-loading-area-divider-color);
+
+    ${SpinnerContainer}{
+      opacity: 1;
+    }  
+  ${IconContainer}{
+      opacity: 0;
+    };
+  `};
+  
 `;
 
 const InnerContainer = styled.div`
@@ -53,20 +104,28 @@ const InnerContainer = styled.div`
 export interface IButtonWithIcon extends IButtonProps {
   icon: string
   position?: 'left' | 'right'
+  loading?: boolean
 }
 
-const ButtonWithIcon : React.FC<IButtonWithIcon> = ({design, size='normal', onClick, disabled, position, icon, children, ...props}) => {
+const ButtonWithIcon : React.FC<IButtonWithIcon> = ({design = 'primary', size='normal', loading = false, onClick, disabled, position, icon, children, ...props}) => {
   const iconColor = design === 'secondary' ? 'dimmed' : 'inverse';
 
   return (
-    <Button noPadding {...{ design, size, onClick, disabled }} {...props}>
-      <InnerContainer>
-        <TextContainer {...{size, position}}>{children}</TextContainer>
-        <IconContainer {...{ position }}>
-          <Icon icon={icon} color={iconColor} weight='regular' />
-        </IconContainer>
-      </InnerContainer>
-    </Button>
+    <Container $loading={loading}>
+      <Button noPadding {...{ design, size, onClick, disabled }} {...props}>
+        <InnerContainer>
+          <TextContainer {...{size, position}}>{children}</TextContainer>
+          <IconArea $loading={loading} {...{ position }}>
+            <IconContainer>
+              <Icon icon={icon} color={iconColor} weight='regular' />
+            </IconContainer>
+            <SpinnerContainer>
+              <Spinner size={size ==='xsmall' || size ==='small' ? 'xsmall' : 'small'} styling={design} />
+            </SpinnerContainer>
+          </IconArea>
+        </InnerContainer>
+      </Button>
+    </Container>
   );};
 
 export default ButtonWithIcon;

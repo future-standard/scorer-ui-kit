@@ -40,7 +40,8 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   align-items: center;
   overflow: hidden;
   opacity: 0;
-  border: 0px solid var(--button-divider-color);
+  border: 0px solid var(--button-loading-area-divider-color);
+  background-color: var(--button-loading-area-background-color);
 
   transition:
     flex var(--speed-slow) var(--easing-primary-in-out) var(--speed-slow),
@@ -95,7 +96,7 @@ const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', 
         <InnerContainer $loading={loading} {...{ design, size}}>
           <TextContainer>{children}</TextContainer>
           <LoadingContainer {...{ design, position }}>
-            <Spinner size={size ==='xsmall' ? 'xsmall' : 'small'} styling={design} />
+            <Spinner size={size ==='xsmall' || size ==='small' ? 'xsmall' : 'small'} styling={design} />
           </LoadingContainer>
         </InnerContainer>
       </Button>

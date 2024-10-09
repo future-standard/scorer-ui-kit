@@ -586,21 +586,25 @@ export const colorVariables = css`
   .light-theme, .dark-theme {
     --button-background-color: var(--primary-9);
     --button-border-color: var(--primary-9);
-    --button-divider-color: var(--primary-a3);
     --button-inner-shadow-color: transparent;
     --button-text-color: var(--white-1);
+    --button-divider-color: var(--primary-a3);
+    --button-loading-area-background-color: var(--primary-a7);
+    --button-loading-area-divider-color: var(--primary-a7);
 
     --button-hover-background-color: var(--primary-8);
     --button-hover-border-color: var(--primary-a6);
-    /* --button-hover-divider-color: var(--primary-a3); */
     --button-hover-inner-shadow-color: transparent;
     --button-hover-text-color: var(--white-1);
+    --button-hover-divider-color: var(--primary-a3);
+    --button-hover-icon-area-background-color: var(--primary-a3);
 
     --button-active-background-color: var(--primary-7);
     --button-active-border-color: var(--primary-a9);
-    /* --button-active-divider-color: var(--primary-a3); */
     --button-active-inner-shadow-color: var(--white-a10);
     --button-active-text-color: var(--white-1);
+    --button-active-divider-color: var(--primary-a3);
+    --button-active-icon-area-background-color: var(--primary-a3);
 
     --button-gradient-start: var(--primary-gradient-start);
     --button-gradient-end: var(--primary-gradient-end);
@@ -608,9 +612,12 @@ export const colorVariables = css`
     .button-design-secondary {
       --button-background-color: var(--grey-9);
       --button-border-color: var(--grey-9);
-      --button-divider-color: var(--grey-a3);
       --button-inner-shadow-color: transparent;
       --button-text-color: var(--white-1);
+      --button-divider-color: var(--grey-a3);
+      
+      --button-loading-area-background-color: var(--grey-a4);
+      --button-loading-area-divider-color: var(--grey-a4);
 
       --button-hover-background-color: var(--grey-8);
       --button-hover-border-color: var(--grey-a6);
@@ -629,9 +636,11 @@ export const colorVariables = css`
     .button-design-danger, .button-design-warning {
       --button-background-color: var(--warning-9);
       --button-border-color: var(--warning-9);
-      --button-divider-color: var(--warning-a3);
       --button-inner-shadow-color: transparent;
       --button-text-color: var(--white-1);
+      --button-divider-color: var(--warning-a9);
+      --button-loading-area-background-color: var(--warning-a7);
+      --button-loading-area-divider-color: var(--warning-a7);
 
       --button-hover-background-color: var(--warning-8);
       --button-hover-border-color: var(--warning-a6);
