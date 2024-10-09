@@ -6,6 +6,7 @@ import { TypeButtonSizes, TypeButtonDesigns } from '..';
 interface IStyledComponentProps {
   size: TypeButtonSizes
   design: TypeButtonDesigns
+  $noPadding?: boolean
 }
 
 const activeAnimation = keyframes`
@@ -32,10 +33,11 @@ const StyledButton = styled.button<IStyledComponentProps>`
 
   font-family: var(--font-ui);
   height: var(--button-height);
-  padding: var(--button-h-padding);
   font-size: var(--button-font-size);
   color: var(--button-text-color);
   font-weight: 600;
+  
+  padding: ${({ $noPadding }) => $noPadding ? 0 : `var(--button-h-padding)`};
 
   overflow: hidden;
   cursor: pointer;
@@ -90,13 +92,14 @@ const StyledButton = styled.button<IStyledComponentProps>`
 interface OwnProps {
   size?: TypeButtonSizes
   design?: TypeButtonDesigns
+  noPadding?: boolean
 }
 
 type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button : React.FC<Props> = ({ design='primary', size='normal', children, ...props }) => {
+const Button : React.FC<Props> = ({ design='primary', size='normal', noPadding = false, children, ...props }) => {
   design === 'danger' ? console.warn('Button.tsx - Warning, the design prop value danger is being deprecated. Use warning instead.') : null;
-  return <StyledButton type='button' className={`button-design-${design} button-size-${size}`} {...{design, size}} {...props}>{children}</StyledButton>;
+  return <StyledButton type='button' className={`button-design-${design} button-size-${size}`} {...{design, size}} $noPadding={noPadding} {...props}>{children}</StyledButton>;
 };
 
 export default Button;

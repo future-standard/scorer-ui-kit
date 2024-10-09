@@ -586,16 +586,19 @@ export const colorVariables = css`
   .light-theme, .dark-theme {
     --button-background-color: var(--primary-9);
     --button-border-color: var(--primary-9);
+    --button-divider-color: var(--primary-a3);
     --button-inner-shadow-color: transparent;
     --button-text-color: var(--white-1);
 
     --button-hover-background-color: var(--primary-8);
     --button-hover-border-color: var(--primary-a6);
+    /* --button-hover-divider-color: var(--primary-a3); */
     --button-hover-inner-shadow-color: transparent;
     --button-hover-text-color: var(--white-1);
 
     --button-active-background-color: var(--primary-7);
     --button-active-border-color: var(--primary-a9);
+    /* --button-active-divider-color: var(--primary-a3); */
     --button-active-inner-shadow-color: var(--white-a10);
     --button-active-text-color: var(--white-1);
 
@@ -605,6 +608,7 @@ export const colorVariables = css`
     .button-design-secondary {
       --button-background-color: var(--grey-9);
       --button-border-color: var(--grey-9);
+      --button-divider-color: var(--grey-a3);
       --button-inner-shadow-color: transparent;
       --button-text-color: var(--white-1);
 
@@ -625,6 +629,7 @@ export const colorVariables = css`
     .button-design-danger, .button-design-warning {
       --button-background-color: var(--warning-9);
       --button-border-color: var(--warning-9);
+      --button-divider-color: var(--warning-a3);
       --button-inner-shadow-color: transparent;
       --button-text-color: var(--white-1);
 
