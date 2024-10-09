@@ -476,6 +476,28 @@ export const colorVariables = css`
 
   }
 
+  .light-theme {
+    --shadow-primary-default: var(--grey-a4);
+    --shadow-primary-elevate: var(--primary-a5);
+
+    --shadow-secondary-default: var(--grey-3);
+    --shadow-secondary-elevate: var(--grey-a4);
+
+    --shadow-warning-default: var(--grey-a4);
+    --shadow-warning-elevate: var(--warning-a5);
+  }
+
+  .dark-theme {
+    --shadow-primary-default: var(--primary-a2);
+    --shadow-primary-elevate: var(--primary-a2);
+
+    --shadow-secondary-default: var(--black-a8);
+    --shadow-secondary-elevate: var(--primary-a4);
+
+    --shadow-warning-default: var(--grey-a3);
+    --shadow-warning-elevate: var(--warning-a7);
+  }
+
   /* --- Component Aliases --- */
   // For specific component uses within the UI Kit.
   .light-theme, .dark-theme {
@@ -587,6 +609,7 @@ export const colorVariables = css`
     --button-background-color: var(--primary-9);
     --button-border-color: var(--primary-9);
     --button-inner-shadow-color: transparent;
+    --button-drop-shadow-color: var(--shadow-primary-default);
     --button-text-color: var(--white-1);
     --button-divider-color: var(--primary-a3);
     --button-loading-area-background-color: var(--primary-a7);
@@ -595,6 +618,7 @@ export const colorVariables = css`
     --button-hover-background-color: var(--primary-8);
     --button-hover-border-color: var(--primary-a6);
     --button-hover-inner-shadow-color: transparent;
+    --button-hover-drop-shadow-color: var(--shadow-primary-elevate);
     --button-hover-text-color: var(--white-1);
     --button-hover-divider-color: var(--primary-a3);
     --button-hover-icon-area-background-color: var(--primary-a3);
@@ -602,6 +626,7 @@ export const colorVariables = css`
     --button-active-background-color: var(--button-hover-background-color);
     --button-active-border-color: var(--button-hover-border-color);
     --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
+    --button-active-drop-shadow-color: var(--button-hover-drop-shadow-color);
     --button-active-text-color: var(--white-1);
     --button-active-divider-color: var(--primary-a3);
     --button-active-icon-area-background-color: var(--primary-a3);
@@ -613,6 +638,7 @@ export const colorVariables = css`
       --button-background-color: var(--grey-9);
       --button-border-color: var(--grey-9);
       --button-inner-shadow-color: transparent;
+      --button-drop-shadow-color: var(--shadow-secondary-default);
       --button-text-color: var(--grey-12);
       --button-divider-color: var(--grey-a3);
       
@@ -622,11 +648,13 @@ export const colorVariables = css`
       --button-hover-background-color: var(--grey-8);
       --button-hover-border-color: var(--grey-a6);
       --button-hover-inner-shadow-color: var(--white-a8);
+      --button-hover-drop-shadow-color: var(--shadow-secondary-elevate);
       --button-hover-text-color: var(--white-1);
 
       --button-active-background-color: var(--button-hover-background-color);
       --button-active-border-color: var(--button-hover-border-color);
       --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
+      --button-active-drop-shadow-color: var(--button-hover-drop-shadow-color);
       --button-active-text-color: var(--white-1);
       
       --button-gradient-start: var(--secondary-gradient-start);
@@ -637,6 +665,7 @@ export const colorVariables = css`
       --button-background-color: var(--warning-9);
       --button-border-color: var(--warning-9);
       --button-inner-shadow-color: transparent;
+      --button-drop-shadow-color: var(--shadow-warning-default);
       --button-text-color: var(--white-1);
       --button-divider-color: var(--warning-9);
 
@@ -646,11 +675,13 @@ export const colorVariables = css`
       --button-hover-background-color: var(--warning-8);
       --button-hover-border-color: var(--warning-a6);
       --button-hover-inner-shadow-color: var(--white-a8);
+      --button-hover-drop-shadow-color: var(--shadow-warning-elevate);
       --button-hover-text-color: var(--white-1);
 
       --button-active-background-color: var(--button-hover-background-color);
       --button-active-border-color: var(--button-hover-border-color);
       --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
+      --button-active-drop-shadow-color: var(--button-hover-drop-shadow-color);
       --button-active-text-color: var(--white-1);
       
       --button-gradient-start: var(--warning-gradient-start);
