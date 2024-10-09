@@ -74,7 +74,7 @@ const IconArea = styled.div<{ position?: string, $loading: boolean }>`
       width: var(--button-icon-size);
       height: var(--button-icon-size);
       path, rect, circle, d {
-        stroke: var(--white-1);
+        stroke: var(--button-text-color);
       }
     }
   }
@@ -117,7 +117,7 @@ const ButtonWithIcon : React.FC<IButtonWithIcon> = ({design = 'primary', size='n
           <TextContainer {...{size, position}}>{children}</TextContainer>
           <IconArea $loading={loading} {...{ position }}>
             <IconContainer>
-              <Icon icon={icon} color={iconColor} weight='regular' />
+              <Icon icon={icon} weight='regular' />
             </IconContainer>
             <SpinnerContainer>
               <Spinner size={size ==='xsmall' || size ==='small' ? 'xsmall' : 'small'} styling={design} />

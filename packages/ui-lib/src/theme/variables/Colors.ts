@@ -590,7 +590,7 @@ export const colorVariables = css`
     --button-text-color: var(--white-1);
     --button-divider-color: var(--primary-a3);
     --button-loading-area-background-color: var(--primary-a7);
-    --button-loading-area-divider-color: var(--primary-a7);
+    --button-loading-area-divider-color: var(--primary-a8);
 
     --button-hover-background-color: var(--primary-8);
     --button-hover-border-color: var(--primary-a6);
@@ -613,11 +613,11 @@ export const colorVariables = css`
       --button-background-color: var(--grey-9);
       --button-border-color: var(--grey-9);
       --button-inner-shadow-color: transparent;
-      --button-text-color: var(--white-1);
+      --button-text-color: var(--grey-12);
       --button-divider-color: var(--grey-a3);
       
       --button-loading-area-background-color: var(--grey-a4);
-      --button-loading-area-divider-color: var(--grey-a4);
+      --button-loading-area-divider-color: var(--grey-a3);
 
       --button-hover-background-color: var(--grey-8);
       --button-hover-border-color: var(--grey-a6);
@@ -638,9 +638,10 @@ export const colorVariables = css`
       --button-border-color: var(--warning-9);
       --button-inner-shadow-color: transparent;
       --button-text-color: var(--white-1);
-      --button-divider-color: var(--warning-a9);
+      --button-divider-color: var(--warning-9);
+
       --button-loading-area-background-color: var(--warning-a7);
-      --button-loading-area-divider-color: var(--warning-a7);
+      --button-loading-area-divider-color: var(--warning-a9);
 
       --button-hover-background-color: var(--warning-8);
       --button-hover-border-color: var(--warning-a6);
@@ -656,6 +657,10 @@ export const colorVariables = css`
       --button-gradient-end: var(--warning-gradient-end);
     }
 
+  }
+
+  .light-theme {
+    
   }
   
 
