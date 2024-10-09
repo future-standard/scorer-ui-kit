@@ -83,12 +83,13 @@ const InnerContainer = styled.div<{position?: string, $loading: boolean, design:
 interface IProps extends IButtonProps {
   position?: 'left' | 'right'
   loading: boolean
+  shadow?: boolean
 }
 
-const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', onClick, disabled, position, loading, children,...rest}) => {
+const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', shadow = false, onClick, disabled, position, loading, children,...rest}) => {
   return (
     <Container $loading={loading}>
-      <Button noPadding disabled={disabled || loading} {...{ design, size, onClick}} {...rest}>
+      <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick}} {...rest}>
         <InnerContainer $loading={loading} {...{ design, size}}>
           <TextContainer>{children}</TextContainer>
           <LoadingContainer {...{ design, position }}>

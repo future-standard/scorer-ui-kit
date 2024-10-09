@@ -89,7 +89,8 @@ const IconArea = styled.div<{ position?: string, $loading: boolean }>`
     ${SpinnerContainer}{
       opacity: 1;
     }  
-  ${IconContainer}{
+    
+    ${IconContainer}{
       opacity: 0;
     };
   `};
@@ -105,12 +106,13 @@ export interface IButtonWithIcon extends IButtonProps {
   icon: string
   position?: 'left' | 'right'
   loading?: boolean
+  shadow?: boolean
 }
 
-const ButtonWithIcon : React.FC<IButtonWithIcon> = ({design = 'primary', size='normal', loading = false, onClick, disabled, position, icon, children, ...props}) => {
+const ButtonWithIcon : React.FC<IButtonWithIcon> = ({design = 'primary', size='normal', loading = false, shadow = false, onClick, disabled, position, icon, children, ...props}) => {
   return (
     <Container $loading={loading}>
-      <Button noPadding {...{ design, size, onClick, disabled }} {...props}>
+      <Button noPadding {...{ design, size, shadow, onClick, disabled }} {...props}>
         <InnerContainer>
           <TextContainer {...{size, position}}>{children}</TextContainer>
           <IconArea $loading={loading} {...{ position }}>
