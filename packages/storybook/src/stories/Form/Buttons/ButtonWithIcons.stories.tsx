@@ -19,7 +19,9 @@ export const _WithIcon = () => {
   const buttonDisabled = boolean("Disabled", false);
   const buttonIcon = select("Icon", iconList, Object.keys(iconList)[0]);
   const buttonIconPosition = select("Icon Position", { Left: "left", Right: "right"}, "right");
+  const buttonLoading = boolean("Loading", false);
+  const buttonShadow = boolean("Shadow", false);
   const buttonOnClick = action('button-click');
 
-  return <ButtonWithIcon design={buttonDesign} size={buttonSize} onClick={buttonOnClick} icon={buttonIcon} position={buttonIconPosition} disabled={buttonDisabled}>{buttonText}</ButtonWithIcon>;
+  return <ButtonWithIcon design={buttonDesign} size={buttonSize} shadow={buttonShadow} onClick={buttonOnClick} icon={buttonIcon} position={buttonIconPosition} disabled={buttonDisabled} loading={buttonLoading}>{buttonText}</ButtonWithIcon>;
 };

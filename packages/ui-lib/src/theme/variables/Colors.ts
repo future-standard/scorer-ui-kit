@@ -476,6 +476,28 @@ export const colorVariables = css`
 
   }
 
+  .light-theme {
+    --shadow-primary-default: var(--grey-a4);
+    --shadow-primary-elevate: var(--primary-a5);
+
+    --shadow-secondary-default: var(--grey-3);
+    --shadow-secondary-elevate: var(--grey-a4);
+
+    --shadow-warning-default: var(--grey-a4);
+    --shadow-warning-elevate: var(--warning-a5);
+  }
+
+  .dark-theme {
+    --shadow-primary-default: var(--primary-a2);
+    --shadow-primary-elevate: var(--primary-a2);
+
+    --shadow-secondary-default: var(--black-a8);
+    --shadow-secondary-elevate: var(--primary-a4);
+
+    --shadow-warning-default: var(--grey-a3);
+    --shadow-warning-elevate: var(--warning-a7);
+  }
+
   /* --- Component Aliases --- */
   // For specific component uses within the UI Kit.
   .light-theme, .dark-theme {
@@ -520,6 +542,18 @@ export const colorVariables = css`
     /* Global */
     --main-background-gradient: radial-gradient(200% 200% at 50% -10%, var(--grey-2) 0%, var(--grey-3) 100%);
     --main-background-color: var(--grey-3);
+
+    --primary-gradient-start: var(--primary-9);
+    --primary-gradient-end: var(--primary-10);
+    --primary-gradient: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+
+    --secondary-gradient-start: var(--grey-5);
+    --secondary-gradient-end: var(--grey-6);
+    --secondary-gradient: linear-gradient(135deg, var(--secondary-gradient-start), var(--secondary-gradient-end));
+
+    --warning-gradient-start: var(--warning-9);
+    --warning-gradient-end: var(--warning-10);
+    --warning-gradient: linear-gradient(135deg, var(--warning-gradient-start), var(--warning-gradient-end));
     
     --dividing-line: var(--grey-4);
     --global-element-background: var(--grey-2);
@@ -569,6 +603,91 @@ export const colorVariables = css`
   .dark-theme {
     --filter-button-shadow-color: var(--black-a8);
   }
-  
+
+  /* Buttons */
+  .light-theme, .dark-theme {
+    --button-background-color: var(--primary-9);
+    --button-border-color: var(--primary-9);
+    --button-inner-shadow-color: transparent;
+    --button-drop-shadow-color: var(--shadow-primary-default);
+    --button-text-color: var(--white-1);
+    --button-divider-color: var(--primary-a3);
+    --button-loading-area-background-color: var(--primary-a7);
+    --button-loading-area-divider-color: var(--primary-a8);
+
+    --button-hover-background-color: var(--primary-8);
+    --button-hover-border-color: var(--primary-a6);
+    --button-hover-inner-shadow-color: transparent;
+    --button-hover-drop-shadow-color: var(--shadow-primary-elevate);
+    --button-hover-text-color: var(--white-1);
+    --button-hover-divider-color: var(--primary-a3);
+    --button-hover-icon-area-background-color: var(--primary-a3);
+
+    --button-active-background-color: var(--button-hover-background-color);
+    --button-active-border-color: var(--button-hover-border-color);
+    --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
+    --button-active-drop-shadow-color: var(--button-hover-drop-shadow-color);
+    --button-active-text-color: var(--white-1);
+    --button-active-divider-color: var(--primary-a3);
+    --button-active-icon-area-background-color: var(--primary-a3);
+
+    --button-gradient-start: var(--primary-gradient-start);
+    --button-gradient-end: var(--primary-gradient-end);
+
+    .button-design-secondary {
+      --button-background-color: var(--grey-9);
+      --button-border-color: var(--grey-9);
+      --button-inner-shadow-color: transparent;
+      --button-drop-shadow-color: var(--shadow-secondary-default);
+      --button-text-color: var(--grey-12);
+      --button-divider-color: var(--grey-a3);
+      
+      --button-loading-area-background-color: var(--grey-a4);
+      --button-loading-area-divider-color: var(--grey-a3);
+
+      --button-hover-background-color: var(--grey-8);
+      --button-hover-border-color: var(--grey-a6);
+      --button-hover-inner-shadow-color: var(--white-a8);
+      --button-hover-drop-shadow-color: var(--shadow-secondary-elevate);
+      --button-hover-text-color: var(--white-1);
+
+      --button-active-background-color: var(--button-hover-background-color);
+      --button-active-border-color: var(--button-hover-border-color);
+      --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
+      --button-active-drop-shadow-color: var(--button-hover-drop-shadow-color);
+      --button-active-text-color: var(--white-1);
+      
+      --button-gradient-start: var(--secondary-gradient-start);
+      --button-gradient-end: var(--secondary-gradient-end);
+    }
+
+    .button-design-danger, .button-design-warning {
+      --button-background-color: var(--warning-9);
+      --button-border-color: var(--warning-9);
+      --button-inner-shadow-color: transparent;
+      --button-drop-shadow-color: var(--shadow-warning-default);
+      --button-text-color: var(--white-1);
+      --button-divider-color: var(--warning-9);
+
+      --button-loading-area-background-color: var(--warning-a7);
+      --button-loading-area-divider-color: var(--warning-a9);
+
+      --button-hover-background-color: var(--warning-8);
+      --button-hover-border-color: var(--warning-a6);
+      --button-hover-inner-shadow-color: var(--white-a8);
+      --button-hover-drop-shadow-color: var(--shadow-warning-elevate);
+      --button-hover-text-color: var(--white-1);
+
+      --button-active-background-color: var(--button-hover-background-color);
+      --button-active-border-color: var(--button-hover-border-color);
+      --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
+      --button-active-drop-shadow-color: var(--button-hover-drop-shadow-color);
+      --button-active-text-color: var(--white-1);
+      
+      --button-gradient-start: var(--warning-gradient-start);
+      --button-gradient-end: var(--warning-gradient-end);
+    }
+
+  }
 
 `;

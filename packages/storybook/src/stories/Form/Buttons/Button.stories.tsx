@@ -15,7 +15,8 @@ export const StandardButton = () => {
   const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
   const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "normal");
   const buttonDisabled = boolean("Disabled", false);
+  const buttonShadow = boolean("Shadow", false);
   const buttonOnClick = action('button-click');
 
-  return <Button design={buttonDesign} size={buttonSize} onClick={buttonOnClick} disabled={buttonDisabled}>{buttonText}</Button>;
+  return <Button design={buttonDesign} size={buttonSize} shadow={buttonShadow} onClick={buttonOnClick} disabled={buttonDisabled}>{buttonText}</Button>;
 };

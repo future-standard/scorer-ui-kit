@@ -10,7 +10,7 @@ const IconContainer = styled.div`
 const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
   ${({ hasBorder, disabled, noBackground, width }) => css`
   
-    transition: all var(--speed-normal) var(--easing-primary-out);
+    transition: all var(--speed-normal) var(--easing-primary-in);
     gap: 6px;
     height: var(--common-height);
     padding: 0;

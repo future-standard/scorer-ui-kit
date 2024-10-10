@@ -6,13 +6,14 @@ import Spinner from '../../Indicators/Spinner';
 import { TypeButtonDesigns, IButtonProps, TypeButtonSizes } from '..';
 
 
-const LoadingButton = styled(Button)<{ $loading: boolean }>`
-  ${({$loading, theme}) => $loading && css`
-    cursor: wait;
-    background: ${ theme.styles.form.button['primary'].active };
-    padding: 0 20px;
-    &:disabled {
-      opacity: 1;
+const Container = styled.div<{ $loading: boolean }>`
+  display: inline;
+  ${({$loading}) => $loading && css`
+    button {
+      cursor: wait;
+      &:disabled {
+        opacity: 1;
+      }
     }
   `};
 `;
@@ -25,27 +26,33 @@ const TextContainer = styled.div`
   justify-content: center;
   align-items: center;
   white-space: nowrap;
-  ${({theme}) => theme && css`
-    transition: padding ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
-  `}
+  padding: 0 var(--button-h-padding);
 
+  transition: padding var(--speed-slow) var(--easing-primary-in-out);
 `;
 
 const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean, position?: string }>`
   height: inherit;
-  flex: 0 0 36px;
+  flex: 0 0 calc((var(--button-h-padding) * 2) + var(--button-icon-size));
+  width: calc((var(--button-h-padding) * 2) + var(--button-icon-size));
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   opacity: 0;
+  border: 0px solid var(--button-loading-area-divider-color);
+  background-color: var(--button-loading-area-background-color);
 
-  ${({ theme, position }) => css`
-    transition:
-      flex ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut} ${theme.animation.speed.slow},
-      opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
+  transition:
+    flex var(--speed-slow) var(--easing-primary-in-out) var(--speed-slow),
+    opacity var(--speed-slow) var(--easing-primary-in-out);
 
+  ${({ position }) => css`
     order: ${ position && position === 'left' ? 0 : 2 };
+    ${ position === 'left' 
+      ? `border-right-width: 1px;` 
+      : `border-left-width: 1px;` 
+    };
   `}
 
   svg {
@@ -55,29 +62,16 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
 
 const InnerContainer = styled.div<{position?: string, $loading: boolean, design: TypeButtonDesigns, size: TypeButtonSizes}>`
   display: flex;
+  flex:1;
   height: inherit;
 
+  ${({ $loading }) => $loading ? css`
 
-  ${({ position, $loading }) => position && position === 'left' ? css`
-    margin-right: ${ $loading ? '-20px' : '0' };
-  ` : css`
-    margin-left: ${ $loading ? '-20px' : '0' };
-  `}
+    transition: margin var(--speed-slow) var(--easing-primary-in-out);
 
-  ${({ $loading, theme, design, size }) => $loading ? css`
-
-    // TODO: Fix transition animation so the below line doesn't look awful when transitioning - L
-    // ${ theme.styles.form.button[design].active };
-
-    transition: margin ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
-
-    ${TextContainer}{
-      padding: ${theme.dimensions.form.button[ size ].padding};
-    }
     ${LoadingContainer}{
       opacity: 1;
-      transition: flex ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut}, opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut} ${theme.animation.speed.slow};
-      ${ theme.styles.form.button[design].actionArea };
+      transition: flex var(--speed-slow) var(--easing-primary-in-out), opacity var(--speed-slow) var(--easing-primary-in-out) var(--speed-slow);
     }
   ` : css`
     ${LoadingContainer}{
@@ -89,18 +83,21 @@ const InnerContainer = styled.div<{position?: string, $loading: boolean, design:
 interface IProps extends IButtonProps {
   position?: 'left' | 'right'
   loading: boolean
+  shadow?: boolean
 }
 
-const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', onClick, disabled, position, loading, children,...rest}) => {
+const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', shadow = false, onClick, disabled, position, loading, children,...rest}) => {
   return (
-    <LoadingButton disabled={disabled || loading} $loading={loading} {...{ design, size, onClick}} {...rest}>
-      <InnerContainer $loading={loading} {...{ design, size}}>
-        <TextContainer>{children}</TextContainer>
-        <LoadingContainer {...{ design, position }}>
-          <Spinner size={size ==='xsmall' ? 'xsmall' : 'small'} styling={design} />
-        </LoadingContainer>
-      </InnerContainer>
-    </LoadingButton>
+    <Container $loading={loading}>
+      <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick}} {...rest}>
+        <InnerContainer $loading={loading} {...{ design, size}}>
+          <TextContainer>{children}</TextContainer>
+          <LoadingContainer {...{ design, position }}>
+            <Spinner size={size ==='xsmall' || size ==='small' ? 'xsmall' : 'small'} styling={design} />
+          </LoadingContainer>
+        </InnerContainer>
+      </Button>
+    </Container>
   );
 };
 

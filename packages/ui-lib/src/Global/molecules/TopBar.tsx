@@ -96,10 +96,10 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
   outline: none;
   cursor: pointer;
   
-  transition: border var(--speed-normal) var(--easing-primary-in);
+  transition: border var(--speed-normal) var(--easing-primary-out);
   
   svg {
-    transition: transform var(--speed-normal) var(--easing-primary-in);
+    transition: transform var(--speed-normal) var(--easing-primary-out);
   }
 
   &:hover {

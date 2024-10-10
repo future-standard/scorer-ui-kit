@@ -17,7 +17,8 @@ export const _WithLoading = () => {
   const buttonDisabled = boolean("Disabled", false);
   const buttonLoading = boolean("Loading", true);
   const buttonLoadingPosition = select("Loading Position", { Left: "left", Right: "right"}, "right");
+  const buttonShadow = boolean("Shadow", false);
   const buttonOnClick = action('button-click');
 
-  return <ButtonWithLoading design={buttonDesign} size={buttonSize} onClick={buttonOnClick} loading={buttonLoading} position={buttonLoadingPosition} disabled={buttonDisabled}>{buttonText}</ButtonWithLoading>;
+  return <ButtonWithLoading design={buttonDesign} size={buttonSize} shadow={buttonShadow} onClick={buttonOnClick} loading={buttonLoading} position={buttonLoadingPosition} disabled={buttonDisabled}>{buttonText}</ButtonWithLoading>;
 };
