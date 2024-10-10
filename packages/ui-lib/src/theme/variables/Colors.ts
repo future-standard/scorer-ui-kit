@@ -690,9 +690,4 @@ export const colorVariables = css`
 
   }
 
-  .light-theme {
-    
-  }
-  
-
 `;
