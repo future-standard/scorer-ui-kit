@@ -91,8 +91,8 @@ const SubmenuContainer = styled.div`
   overflow: hidden;
 
   transition:
-    max-height var(--speed-normal) var(--easing-primary-out),
-    opacity var(--speed-fast) var(--easing-primary-out);
+    max-height var(--speed-normal) var(--easing-primary-in),
+    opacity var(--speed-fast) var(--easing-primary-in);
 
   &::after {
     display: block;
@@ -118,8 +118,8 @@ const ContextContainer = styled.div<{ open: boolean, maxHeight: number, minHeigh
   ${({open, maxHeight}) => open && css`
     ${SubmenuContainer}{
       transition:
-        max-height var(--speed-normal) var(--easing-primary-out),
-        opacity var(--speed-fast) var(--easing-primary-out);
+        max-height var(--speed-normal) var(--easing-primary-in),
+        opacity var(--speed-fast) var(--easing-primary-in);
       max-height: ${maxHeight}px !important;
       opacity: 1;
     }

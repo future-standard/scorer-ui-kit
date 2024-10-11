@@ -80,7 +80,7 @@ const Container = styled.div<{ open: boolean; desktopSize: IBreakpoints }>`
     border-right: 1px solid var(--dividing-line);
 
     ${desktopSize === 'xxlarge' ? `` : css`
-      transition: width var(--speed-normal) var(--easing-primary-out);
+      transition: width var(--speed-normal) var(--easing-primary-in);
     `};
 
     ${LogoType}{

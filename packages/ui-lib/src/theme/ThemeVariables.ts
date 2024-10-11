@@ -22,6 +22,8 @@ const ThemeVariables = createGlobalStyle`
     --global-menu-width-closed: 80px;
     --global-menu-width-open: 280px;
 
+    --input-height: 40px;
+
     --button-font-size: 14px;
     --button-height: 32px;
     --button-h-padding: 8px;
@@ -33,11 +35,17 @@ const ThemeVariables = createGlobalStyle`
     --button-icon-size: 14px;
     --button-icon-h-padding: 8px;
 
-    --input-height: 40px;
-
   }
 
-  .button-small {
+  .button-size-xsmall {
+    --button-font-size: 12px;
+    --button-height: 20px;
+    --button-h-padding: 4px;
+    --button-icon-size: 10px;
+    --button-icon-h-padding: 8px;
+  }
+
+  .button-size-small {
     --button-font-size: 12px;
     --button-height: 24px;
     --button-h-padding: 4px;
@@ -45,13 +53,15 @@ const ThemeVariables = createGlobalStyle`
     --button-icon-h-padding: 8px;
   }
 
-  .button-large {
+  .button-size-large {
     --button-font-size: 16px;
     --button-height: 40px;
     --button-h-padding: 8px;
     --button-icon-size: 16px;
     --button-icon-h-padding: 8px;
   }
+
+  
 
   .split-button-primary {
     --border-color: var(--primary-9);
@@ -123,6 +133,22 @@ const ThemeVariables = createGlobalStyle`
     --toggle-icon: var(--white-a12);
     --toggle-icon-active: var(--white-a11);
     --toggle-icon-disabled: var(--white-a10);
+  }
+
+  .split-button-size-small {
+    --button-font-size: 12px;
+    --button-height: 24px;
+    --button-h-padding: 4px;
+    --button-icon-size: 12px;
+    --button-icon-h-padding: 8px;
+  }
+
+  .split-button-size-large {
+    --button-font-size: 16px;
+    --button-height: 40px;
+    --button-h-padding: 8px;
+    --button-icon-size: 16px;
+    --button-icon-h-padding: 8px;
   }
 
 `;

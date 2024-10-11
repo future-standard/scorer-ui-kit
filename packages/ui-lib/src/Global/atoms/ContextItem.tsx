@@ -16,7 +16,7 @@ const ContextTitle = styled.div<{ compact?: boolean }>`
 
 const ContextIcon = styled.div<{ compact?: boolean }>`
   background-color: var(--global-menu-icon-background-default);
-  transition: background-color var(--speed-fast) var(--easing-primary-in);
+  transition: background-color var(--speed-fast) var(--easing-primary-out);
     
   flex: 0 0 40px;
   width: 40px;
@@ -43,7 +43,7 @@ const ContextIndicator = styled.div`
   align-items: center;
   
   opacity: 0;
-  transition: opacity 0 var(--easing-primary-in);
+  transition: opacity 0 var(--easing-primary-out);
 
   svg {
     display: block;

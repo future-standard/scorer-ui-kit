@@ -131,7 +131,7 @@ const SplitButton: React.FC<ISplitButtonProps> = ({ mainButtonId, buttonList, de
 
   return (
     <Container>
-      <ButtonsWrapper ref={buttonsWrapperRef} className={`split-button-${design} button-${size}`} isOpen={isOpen} {...rest}>
+      <ButtonsWrapper ref={buttonsWrapperRef} className={`split-button-${design} split-button-size-${size}`} isOpen={isOpen} {...rest}>
         <MainButtonWrapper ref={mainButtonRef}>
           {buttonList.filter((button) => button.id === mainButtonId)
             .map(({ id, text, icon, disabled: disabledItemProp, ...props }) => (
