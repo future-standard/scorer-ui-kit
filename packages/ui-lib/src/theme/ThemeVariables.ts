@@ -135,6 +135,22 @@ const ThemeVariables = createGlobalStyle`
     --toggle-icon-disabled: var(--white-a10);
   }
 
+  .split-button-size-small {
+    --button-font-size: 12px;
+    --button-height: 24px;
+    --button-h-padding: 4px;
+    --button-icon-size: 12px;
+    --button-icon-h-padding: 8px;
+  }
+
+  .split-button-size-large {
+    --button-font-size: 16px;
+    --button-height: 40px;
+    --button-h-padding: 8px;
+    --button-icon-size: 16px;
+    --button-icon-h-padding: 8px;
+  }
+
 `;
 
 export default ThemeVariables;
