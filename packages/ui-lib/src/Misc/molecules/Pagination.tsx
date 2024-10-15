@@ -1,4 +1,4 @@
-import React, { ChangeEvent, HTMLAttributes, useCallback, useState, useRef, Fragment } from 'react';
+import React, { ChangeEvent, HTMLAttributes, useCallback, useState, useRef, Fragment, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../../Form/atoms/Button';
 import Icon from '../../Icons/Icon';
@@ -145,7 +145,7 @@ export type IPagination = OwnProps & HTMLAttributes<HTMLDivElement>
 const Pagination: React.FC<IPagination> = (props) => {
   const {
     pageText = 'Page:',
-    totalPages = 199,
+    totalPages = 1,
     activePage = 1,
     buttonText = 'GO',
     itemsText = 'Items Per Page',
@@ -300,6 +300,10 @@ const Pagination: React.FC<IPagination> = (props) => {
       e.preventDefault();
     }
   };
+
+  useEffect(() => {
+    setPageValue(activePage.toString());
+  }, [activePage]);
 
   return (
     <PaginationContainer>

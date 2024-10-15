@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, number, object, text } from '@storybook/addon-knobs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Pagination}  from 'scorer-ui-kit';
 
 export default {
@@ -18,7 +18,8 @@ const ItemsOptions = [
 ]
 
 export const _Pagination = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const controlledActivePage = number('Active Page', 21)
+  const [currentPage, setCurrentPage] = useState(controlledActivePage);
   const buttonOnClick = action('Page changed');
   const itemsChange = action('Items Per Page')
   const pageText = text('Page Text', 'Page:');
@@ -31,7 +32,6 @@ export const _Pagination = () => {
   const selectDisabled = boolean('Select Disabled', false)
   const itemOptionsObj = object('Items Options', ItemsOptions);
 
-
   const onPageChange = (page: number) => {
     buttonOnClick(page);
     setCurrentPage(page)
@@ -41,8 +41,13 @@ export const _Pagination = () => {
     itemsChange(items)
   }
 
+  useEffect(() => {
+    setCurrentPage(controlledActivePage);
+  },[controlledActivePage])
+
   return (
     <Pagination
+      selectId={selectId}
       pageText={pageText}
       totalPages={totalPages}
       activePage={currentPage}
