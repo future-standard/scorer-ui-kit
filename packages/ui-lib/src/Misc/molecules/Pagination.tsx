@@ -159,7 +159,7 @@ const Pagination: React.FC<IPagination> = (props) => {
   } = props;
 
   const [fieldState, setFieldState] = useState<string>('default');
-  const [pageValue, setPageValue] = useState<string>(activePage.toString());
+  const [pageValue, setPageValue] = useState<string>(activePage ? activePage.toString() : '1');
   const [disableGo, setDisabledGo] = useState<boolean>(parseInt(pageValue) > totalPages && fieldState !== '' ? false : true);
   const [shouldShake, setShouldShake] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -302,8 +302,13 @@ const Pagination: React.FC<IPagination> = (props) => {
   };
 
   useEffect(() => {
+    if(!activePage || !isValidInput(activePage ? activePage.toString() : '')) {
+      console.warn('Pagination: invalid activePage prop value was sent');
+      return;
+    }
+
     setPageValue(activePage.toString());
-  }, [activePage]);
+  }, [activePage, isValidInput]);
 
   return (
     <PaginationContainer>
