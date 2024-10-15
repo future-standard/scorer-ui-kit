@@ -1,5 +1,5 @@
 import React, { LabelHTMLAttributes } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const StyledLabel = styled.label<{ rightAlign: boolean }>`
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -21,8 +21,12 @@ export const StyledLabel = styled.label<{ rightAlign: boolean }>`
   };
 `;
 
-const LabelText = styled.span<{ rightAlign: boolean }>`
-  display: block;
+const LabelText = styled.span<{ rightAlign: boolean, required?: boolean }>`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+
   ${({ rightAlign }) => rightAlign
       ? `
         margin-left: 12px;
@@ -31,12 +35,25 @@ const LabelText = styled.span<{ rightAlign: boolean }>`
         margin-bottom: 10px;
       `
   }
+
+  ${({required}) => required && css`
+    &::after {
+      content: '';
+      display: var(--input-required-dot-display);
+      height: 8px;
+      width: 8px;
+      background-color: var(--primary-9);
+      border-radius: 4px;
+      /* margin-left: 8px; */
+    }
+  `}
 `;
 
 interface OwnProps {
   htmlFor: string
   labelText: string
   rightAlign?: boolean
+  required?: boolean
 }
 type Props = OwnProps & LabelHTMLAttributes<HTMLLabelElement>
 
@@ -44,12 +61,13 @@ const Label: React.FC<Props> = ({
   htmlFor,
   labelText,
   rightAlign = false,
+  required = false,
   children,
   ...props }) => {
 
   return (
     <StyledLabel {...{ htmlFor, rightAlign }} {...props}>
-      <LabelText {...{ rightAlign }}>{labelText}</LabelText>
+      <LabelText {...{ rightAlign, required }}>{labelText}</LabelText>
       {children}
     </StyledLabel>
   );

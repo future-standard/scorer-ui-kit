@@ -23,6 +23,7 @@ const ThemeVariables = createGlobalStyle`
     --global-menu-width-open: 280px;
 
     --input-height: 40px;
+    --input-required-dot-display: inline-block;
 
     --button-font-size: 14px;
     --button-height: 32px;
