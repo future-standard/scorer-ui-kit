@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select } from "@storybook/addon-knobs";
+import {  text, select, boolean } from "@storybook/addon-knobs";
 import {TextField} from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -20,7 +20,8 @@ export const TextInput = () => {
   const inputFeedback = text("Input Feedback", "This is a feedback message.");
   const inputPlaceholder = text("Placeholder", "Placeholder...");
   const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
+  const fieldRequired = boolean("Required", false);
 
   return <Container>
-    <TextField id={inputName} name={inputName} label={inputLabel} placeholder={inputPlaceholder} fieldState={inputState} feedbackMessage={inputFeedback} /></Container>;
+    <TextField id={inputName} name={inputName} label={inputLabel} placeholder={inputPlaceholder} fieldState={inputState} feedbackMessage={inputFeedback} required={fieldRequired} /></Container>;
 };

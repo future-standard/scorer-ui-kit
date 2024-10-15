@@ -17,12 +17,13 @@ const TextAreaField : React.FC<Props> = ({
   label,
   fieldState='default',
   feedbackMessage,
+  required = false,
   children,
   ...props
 }) => {
   return(
-    <Label htmlFor={name} labelText={label}>
-      <TextArea {...{ fieldState, feedbackMessage, name, ...props }} />
+    <Label htmlFor={name} labelText={label} {...{required}}>
+      <TextArea {...{ fieldState, feedbackMessage, name, required, ...props }} />
     </Label>
   );
 };

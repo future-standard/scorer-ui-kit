@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select } from "@storybook/addon-knobs";
+import {  text, select, boolean } from "@storybook/addon-knobs";
 import {PasswordField} from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -19,8 +19,9 @@ export const PasswordInput = () => {
   const inputLabel = text("Label", "My Input");
   const inputValue = text("Value", "Test");
   const inputPlaceholder = text("Placeholder", "Placeholder...");
+  const fieldRequired = boolean("Required", false);
   const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
 
-  return <Container><PasswordField name={inputName} label={inputLabel} defaultValue={inputValue} placeholder={inputPlaceholder} fieldState={inputState} /></Container>;
+  return <Container><PasswordField name={inputName} label={inputLabel} defaultValue={inputValue} placeholder={inputPlaceholder} fieldState={inputState} required={fieldRequired} /></Container>;
 
 };
