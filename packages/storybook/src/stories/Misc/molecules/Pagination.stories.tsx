@@ -18,7 +18,7 @@ const ItemsOptions = [
 ]
 
 export const _Pagination = () => {
-  const controlledActivePage = number('Active Page', 21)
+  const controlledActivePage = number('Active Page', 1)
   const [currentPage, setCurrentPage] = useState(controlledActivePage);
   const buttonOnClick = action('Page changed');
   const itemsChange = action('Items Per Page')
