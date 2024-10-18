@@ -1,4 +1,4 @@
-import React, { ChangeEvent, HTMLAttributes, useCallback, useState, useRef, Fragment } from 'react';
+import React, { ChangeEvent, HTMLAttributes, useCallback, useState, useRef, Fragment, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../../Form/atoms/Button';
 import Icon from '../../Icons/Icon';
@@ -145,7 +145,7 @@ export type IPagination = OwnProps & HTMLAttributes<HTMLDivElement>
 const Pagination: React.FC<IPagination> = (props) => {
   const {
     pageText = 'Page:',
-    totalPages = 199,
+    totalPages = 1,
     activePage = 1,
     buttonText = 'GO',
     itemsText = 'Items Per Page',
@@ -159,7 +159,7 @@ const Pagination: React.FC<IPagination> = (props) => {
   } = props;
 
   const [fieldState, setFieldState] = useState<string>('default');
-  const [pageValue, setPageValue] = useState<string>(activePage.toString());
+  const [pageValue, setPageValue] = useState<string>(activePage ? activePage.toString() : '1');
   const [disableGo, setDisabledGo] = useState<boolean>(parseInt(pageValue) > totalPages && fieldState !== '' ? false : true);
   const [shouldShake, setShouldShake] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -300,6 +300,15 @@ const Pagination: React.FC<IPagination> = (props) => {
       e.preventDefault();
     }
   };
+
+  useEffect(() => {
+    if(!activePage || !isValidInput(activePage ? activePage.toString() : '')) {
+      console.warn('Pagination: invalid activePage prop value was sent');
+      return;
+    }
+
+    setPageValue(activePage.toString());
+  }, [activePage, isValidInput]);
 
   return (
     <PaginationContainer>
