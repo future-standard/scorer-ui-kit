@@ -25,9 +25,7 @@ const FeedbackContainer = styled.div`
   flex-shrink: 0;
 
   background-color: transparent;
-  ${({theme}) => css`
-    border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
-  `};
+  border: 1px solid transparent;
 
   border-left: none;
   border-radius: 0 3px 3px 0;
@@ -42,7 +40,8 @@ const FeedbackMessage = styled.div`
   flex: 0 1 400px;
   padding: 0 10px 0 0;
 
-  ${({theme}) => theme.typography.form.feedback.message};
+  font-weight: 500;
+  color: var(--white-1);
 `;
 
 const FeedbackIcon = styled.div`
@@ -54,7 +53,7 @@ const FeedbackIcon = styled.div`
 
   ${IconWrapper} {
     [stroke]{
-      stroke: ${({theme}) => theme.colors.pureBase};
+      stroke: var(--white-1);
     }
   }
 `;
@@ -62,13 +61,14 @@ const FeedbackIcon = styled.div`
 const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   ${removeAutoFillStyle};
 
-  ${({theme, fieldState}) => css`
-    min-height: ${theme.dimensions.form.input.height};
-    font-family: ${theme.fontFamily.data};
-    border: 1px solid ${theme.styles.form.input[fieldState].normal.borderColor};
+  ${({fieldState}) => css`
+    border: 1px solid var(--input-${fieldState}-border-color);
+    background: var(--input-${fieldState}-background-color);
   `};
 
-  height: 100%;
+  font-family: var(--font-data);
+
+  height: var(--input-height);
   width: 100%;
   border-radius: 3px;
 
@@ -76,12 +76,17 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   box-sizing: border-box;
   outline: none;
 
-  ${({theme: {typography}}) => css`
-    ${typography.form.input.value.normal};
-    &::placeholder {
-      ${typography.form.input.placeholder.normal};
-    }
-  `};
+  color: var(--grey-12);
+  font-family: Lato;
+  font-size: 14px;
+
+  &::placeholder {
+    font-family: var(--font-data);
+    color: var(--grey-10);
+    font-style: italic;
+    font-weight: 400;
+  }
+
 `;
 
 const InputContainer = styled.div<{hasAction?: boolean}>`
@@ -100,36 +105,42 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 
 `;
 
-const Container = styled.div<{ fieldState: string }>`
+const Container = styled.div<{ fieldState: TypeFieldState }>`
   display: flex;
   position: relative;
 
   ${StyledInput}{
-    ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal};
-
-    &:focus {}
 
     &:disabled {
       cursor: not-allowed;
     }
 
-    ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 0px;
-    `}
+    ${({fieldState}) => css`
+      ${['default', 'disabled'].indexOf(fieldState) !== -1 && css`
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      `};
+
+      &:focus {
+        box-shadow: 0 3px 3px 0 var(--input-${fieldState}-shadow-color);
+      }
+    `};
   }
 
   ${FeedbackContainer} {
-    background: ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal.borderColor};
-    border-color: ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal.borderColor};
-
-    ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) !== -1 && css`
-      display:none;
+    ${({fieldState}) => css`
+      ${['default', 'disabled'].indexOf(fieldState) !== -1 && css`
+        display: none;
+      `};
+      border-color: var(--input-${fieldState}-border-color);
+      background: var(--input-${fieldState}-border-color);
     `}
   }
 
   &:focus-within ${StyledInput} {
-    ${({theme, fieldState}) => theme.styles.form.input[fieldState].focused};
+    ${({fieldState}) => css`
+      border-color: var(--input-${fieldState}-focused-border-color, var(--input-${fieldState}-border-color));
+    `}
   }
 `;
 
@@ -164,11 +175,11 @@ const Input : React.FC<InputProps> = ({
       case 'disabled':
         break;
       case 'required':
-        return <Icon icon='Required' size={20} />;
+        return <Icon icon='Required' size={16} />;
       case 'valid':
-        return <Icon icon='Success' size={20} />;
+        return <Icon icon='Success' size={16} />;
       case 'invalid':
-        return <Icon icon='Invalid' size={20} />;
+        return <Icon icon='Invalid' size={16} />;
       case 'processing':
         return <Spinner size='medium' styling='primary' />;
     }

@@ -588,6 +588,52 @@ export const colorVariables = css`
     --input-selection-control-default-disabled: var(--grey-6);
     --input-selection-control-selected: var(--primary-9);
     --input-selection-control-selected-disabled: var(--primary-8);
+    
+    
+    // New ones
+    --input-default-background-color: var(--grey-1);
+    --input-default-border-color: var(--grey-6);
+    /* --input-default-shadow-color: var(--grey-3); */
+
+    --input-default-focused-background-color: var(--grey-1);
+    --input-default-focused-border-color: var(--grey-6);
+    --input-default-focused-shadow-color: var(--grey-3);
+
+    --input-disabled-background-color: var(--grey-3);
+    --input-disabled-border-color: var(--grey-6);
+    /* --input-disabled-shadow-color: var(--grey-3); */
+
+    --input-required-background-color: var(--grey-1);
+    --input-required-border-color: var(--primary-6);
+    /* --input-required-shadow-color: var(--grey-3); */
+
+    --input-required-focused-background-color: var(--grey-1);
+    --input-required-focused-border-color: var(--primary-6);
+    --input-required-focused-shadow-color: var(--grey-3);
+
+    --input-valid-background-color: var(--grey-1);
+    --input-valid-border-color: var(--success-9);
+    /* --input-valid-shadow-color: var(--grey-3); */
+
+    --input-valid-focused-background-color: var(--grey-1);
+    --input-valid-focused-border-color: var(--success-9);
+    --input-valid-focused-shadow-color: var(--grey-3);
+
+    --input-invalid-background-color: var(--grey-1);
+    --input-invalid-border-color: var(--warning-9);
+    /* --input-invalid-shadow-color: var(--grey-3); */
+
+    --input-invalid-focused-background-color: var(--grey-1);
+    --input-invalid-focused-border-color: var(--warning-9);
+    --input-invalid-focused-shadow-color: var(--grey-3);
+
+    --input-processing-background-color: var(--grey-3)2;
+    --input-processing-border-color: var(--primary-10);
+    /* --input-processing-shadow-color: var(--grey-3); */
+
+    --input-processing-focused-background-color: var(--grey-2);
+    --input-processing-focused-border-color: var(--primary-10);
+    --input-processing-focused-shadow-color: var(--grey-3);
 
   }
 
