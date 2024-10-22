@@ -27,8 +27,7 @@
     "predeploy": "cd ../example && npm run build && cd ../storybook && npm run build-storybook",
     "deploy": "gh-pages -d ../example/build",
     "actions-deploy": "gh-pages -d ../example/build",
-    "link": "npm link && npm link react && npm link react-dom && npm link react-router-dom && npm link styled-components",
-    "zeplin-connect": "zeplin connect"
+    "link": "npm link && npm link react && npm link react-dom && npm link react-router-dom && npm link styled-components"
   },
   "peerDependencies": {
     "react": "^17.0.2 || ^18.0.0",
@@ -50,9 +49,6 @@
     "@types/styled-components": "^5.1.25",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.56.0",
-    "@zeplin/cli": "^2.0.2",
-    "@zeplin/cli-connect-react-plugin": "^1.1.2",
-    "@zeplin/cli-connect-storybook-plugin": "^2.0.0",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.3",
     "eslint": "^7.12.1",
