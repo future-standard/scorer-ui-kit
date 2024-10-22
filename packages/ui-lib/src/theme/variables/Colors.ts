@@ -562,35 +562,16 @@ export const colorVariables = css`
     --global-menu-icon-background-active: var(--primary-9);
 
     /* Inputs */
-    --input-border-default: var(--grey-6);
-    --input-border-default-focused: var(--grey-8);
-    --input-border-disabled: var(--grey-6);
-    --input-border-required: var(--primary-6);
-    --input-border-valid: var(--success-9);
-    --input-border-invalid: var(--warning-9);
-    --input-border-processing: var(--primary-10);
-
-    --input-background-default: var(--grey-1);
-    --input-background-disabled: var(--grey-3);
-    --input-background-required: var(--primary-1);
-    --input-background-valid: var(--success-1);
-    --input-background-invalid: var(--warning-1);
-    --input-background-processing: var(--primary-2);
-
     --input-color-default: var(--grey-12);
     --input-color-disabled: var(--grey-10);
     --input-color-placeholder: var(--grey-10);
     --input-color-unit: var(--grey-10);
-
-    --input-focused-shadow-color: var(--black-a5);
     
     --input-selection-control-default: var(--grey-8);
     --input-selection-control-default-disabled: var(--grey-6);
     --input-selection-control-selected: var(--primary-9);
     --input-selection-control-selected-disabled: var(--primary-8);
     
-    
-    // New ones
     --input-default-background-color: var(--grey-1);
     --input-default-border-color: var(--grey-6);
     /* --input-default-shadow-color: var(--grey-3); */

@@ -76,13 +76,12 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   box-sizing: border-box;
   outline: none;
 
-  color: var(--grey-12);
-  font-family: Lato;
+  color: var(--input-color-default);
   font-size: 14px;
 
   &::placeholder {
     font-family: var(--font-data);
-    color: var(--grey-10);
+    color: var(--input-color-placeholder);
     font-style: italic;
     font-weight: 400;
   }
