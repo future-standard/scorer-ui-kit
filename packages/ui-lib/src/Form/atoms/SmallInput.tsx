@@ -41,8 +41,8 @@ const InputContainer = styled.div<{fieldState : TypeFieldState, hasAction?: bool
   border-radius: 3px;
   
   ${({fieldState}) => css`
-    border: 1px solid var(--input-border-${fieldState});
-    background: var(--input-background-${fieldState});
+    border: 1px solid var(--input-${fieldState}-border-color);
+    background: var(--input-${fieldState}-background-color);
     transition: 
       border var(--speed-normal) var(--easing-primary-out),
       background-color var(--speed-normal) var(--easing-primary-out);
@@ -63,17 +63,19 @@ const UnitKey = styled.div`
   flex: 0 1;
   font-size: 12px;
   font-family: var(--font-ui);
-  line-height: var(--common-height);
   color: var(--input-color-unit);
+  margin-top: 1px;
 `;
 
 const Container = styled.div<{ fieldState: string }>`
   position: relative;
-
-  &:focus-within ${InputContainer} {
-    transition: boxShadow var(--speed-fast) var(--easing-primary-in-out);
-    box-shadow: 0 3px 3px var(--input-focused-shadow-color);
-  }
+  
+  ${({fieldState}) => fieldState && css`
+    &:focus-within ${InputContainer} {
+      transition: boxShadow var(--speed-fast) var(--easing-primary-in-out);
+      box-shadow: 0 3px 3px var(--input-${fieldState}-focused-shadow-color, var(--input-${fieldState}-shadow-color));
+    }
+  `};
 `;
 
 interface OwnProps {
