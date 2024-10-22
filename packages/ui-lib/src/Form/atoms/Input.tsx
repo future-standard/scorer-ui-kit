@@ -107,6 +107,7 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 const Container = styled.div<{ fieldState: TypeFieldState }>`
   display: flex;
   position: relative;
+  flex-direction: column;
 
   ${StyledInput}{
 
@@ -115,7 +116,7 @@ const Container = styled.div<{ fieldState: TypeFieldState }>`
     }
 
     ${({fieldState}) => css`
-      ${['default', 'disabled'].indexOf(fieldState) !== -1 && css`
+      ${['default', 'disabled'].indexOf(fieldState) === -1 && css`
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
       `};
