@@ -574,7 +574,7 @@ export const colorVariables = css`
     
     --input-default-background-color: var(--grey-1);
     --input-default-border-color: var(--grey-6);
-    /* --input-default-shadow-color: var(--grey-3); */
+    --input-default-shadow-color: transparent;
 
     --input-default-focused-background-color: var(--grey-1);
     --input-default-focused-border-color: var(--grey-6);
@@ -582,11 +582,11 @@ export const colorVariables = css`
 
     --input-disabled-background-color: var(--grey-3);
     --input-disabled-border-color: var(--grey-6);
-    /* --input-disabled-shadow-color: var(--grey-3); */
+    --input-disabled-shadow-color: transparent;
 
     --input-required-background-color: var(--grey-1);
     --input-required-border-color: var(--primary-6);
-    /* --input-required-shadow-color: var(--grey-3); */
+    --input-required-shadow-color: transparent;
 
     --input-required-focused-background-color: var(--grey-1);
     --input-required-focused-border-color: var(--primary-6);
@@ -594,7 +594,7 @@ export const colorVariables = css`
 
     --input-valid-background-color: var(--grey-1);
     --input-valid-border-color: var(--success-9);
-    /* --input-valid-shadow-color: var(--grey-3); */
+    --input-valid-shadow-color: transparent;
 
     --input-valid-focused-background-color: var(--grey-1);
     --input-valid-focused-border-color: var(--success-9);
@@ -602,7 +602,7 @@ export const colorVariables = css`
 
     --input-invalid-background-color: var(--grey-1);
     --input-invalid-border-color: var(--warning-9);
-    /* --input-invalid-shadow-color: var(--grey-3); */
+    --input-invalid-shadow-color: transparent;
 
     --input-invalid-focused-background-color: var(--grey-1);
     --input-invalid-focused-border-color: var(--warning-9);
@@ -610,7 +610,7 @@ export const colorVariables = css`
 
     --input-processing-background-color: var(--grey-3)2;
     --input-processing-border-color: var(--primary-10);
-    /* --input-processing-shadow-color: var(--grey-3); */
+    --input-processing-shadow-color: transparent;
 
     --input-processing-focused-background-color: var(--grey-2);
     --input-processing-focused-border-color: var(--primary-10);
