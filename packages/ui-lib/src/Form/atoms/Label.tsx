@@ -44,7 +44,6 @@ const LabelText = styled.span<{ rightAlign: boolean, required?: boolean }>`
       width: 8px;
       background-color: var(--primary-9);
       border-radius: 4px;
-      /* margin-left: 8px; */
     }
   `}
 `;
