@@ -107,7 +107,7 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 const Container = styled.div<{ fieldState: TypeFieldState }>`
   display: flex;
   position: relative;
-  flex-direction: column;
+  flex-direction: row;
 
   ${StyledInput}{
 
