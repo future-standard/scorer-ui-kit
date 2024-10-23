@@ -17,6 +17,7 @@ export default {
 export const _TextAreaField = () => {
   const fieldName = text("Textarea Name", "example_texarea");
   const fieldLabel = text("Label", "Textarea Example");
+  const showFeedback = boolean("Show Feedback", false);
   const fieldFeedback = text("Feedback", "This is a feedback message.");
   const fieldPlaceholder = text("Placeholder", "Placeholder...");
   const fieldRequired = boolean("Required", false);
@@ -34,8 +35,9 @@ export const _TextAreaField = () => {
         id={fieldName}
         name={fieldName}
         label={fieldLabel}
-        placeholder = {fieldPlaceholder}
-        feedbackMessage = {fieldFeedback}
+        placeholder={fieldPlaceholder}
+        showFeedback={showFeedback}
+        feedbackMessage={fieldFeedback}
         fieldState={currentState}
         required={fieldRequired}
       ></TextAreaField>

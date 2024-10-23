@@ -20,8 +20,20 @@ export const PasswordInput = () => {
   const inputValue = text("Value", "Test");
   const inputPlaceholder = text("Placeholder", "Placeholder...");
   const fieldRequired = boolean("Required", false);
+  const showFeedback = boolean("Show Feedback", false);
+  const inputFeedback = text("Feedback", "This is a feedback message.");
   const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
 
-  return <Container><PasswordField name={inputName} label={inputLabel} defaultValue={inputValue} placeholder={inputPlaceholder} fieldState={inputState} required={fieldRequired} /></Container>;
+  return <Container>
+    <PasswordField 
+      name={inputName} 
+      label={inputLabel} 
+      defaultValue={inputValue} 
+      placeholder={inputPlaceholder} 
+      fieldState={inputState} 
+      showFeedback={showFeedback}
+      feedbackMessage={inputFeedback}
+      required={fieldRequired} />
+  </Container>;
 
 };

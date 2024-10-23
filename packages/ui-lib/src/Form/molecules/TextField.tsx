@@ -7,6 +7,7 @@ interface OwnProps {
   name: string
   label: string
   fieldState: TypeFieldState
+  showFeedback?: boolean
   feedbackMessage?: string
 }
 

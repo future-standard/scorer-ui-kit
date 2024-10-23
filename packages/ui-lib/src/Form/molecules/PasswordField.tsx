@@ -4,9 +4,10 @@ import Label from '../atoms/Label';
 import { TypeFieldState } from '..';
 
 interface OwnProps {
-  name: string;
+  name: string
   label: string
   fieldState: TypeFieldState
+  showFeedback?: boolean
   feedbackMessage?: string
 }
 type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
