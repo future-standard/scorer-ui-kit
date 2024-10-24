@@ -10,13 +10,13 @@ const FormPage : React.FC = () => {
   return <Container>
     <PageHeader title={"Input State Examples"} areaTitle={'Forms'} areaHref={'/'} />
     <Form>
-      <TextField name={'my_field'} label={'Basic'} placeholder={'Placeholder...'} fieldState={ 'default' } />
-      <TextField name={'my_field'} label={'Required'} placeholder={''} fieldState={ 'required' } />
-      <TextField name={'my_field'} label={'Loading'} placeholder={''} fieldState={ 'processing' } />
-      <TextField name={'my_field'} label={'Valid'} placeholder={''} fieldState={ 'valid' } />
-      <TextField name={'my_field'} label={'Error'} placeholder={''} fieldState={ 'invalid' } />
-      <TextField name={'my_field'} label={'Error'} placeholder={''} fieldState={ 'invalid' } feedbackMessage={'Error: Oh noes!!!'}/>
-      <PasswordField name={'my_field'} label={'My Field'} placeholder={''} fieldState={ 'default' } />
+      <TextField name={'my_field'} label={'Basic'} placeholder={'Placeholder...'} fieldState={ 'default' } showFeedback={true} />
+      <TextField name={'my_field'} label={'Required'} placeholder={''} fieldState={ 'required' } showFeedback={true} />
+      <TextField name={'my_field'} label={'Loading'} placeholder={''} fieldState={ 'processing' } showFeedback={true} />
+      <TextField name={'my_field'} label={'Valid'} placeholder={''} fieldState={ 'valid' } showFeedback={true} />
+      <TextField name={'my_field'} label={'Error'} placeholder={''} fieldState={ 'invalid' } showFeedback={true} />
+      <TextField name={'my_field'} label={'Error'} placeholder={''} fieldState={ 'invalid' } showFeedback={true} feedbackMessage={'Error: Oh noes!!!'}/>
+      <PasswordField name={'my_field'} label={'My Field'} placeholder={''} fieldState={ 'default' } showFeedback={true} />
     </Form>
   </Container>
 };
