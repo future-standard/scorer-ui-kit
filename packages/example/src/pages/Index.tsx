@@ -17,8 +17,8 @@ const Section = styled.section`
 
 const Header = styled.h1`
   font-family: var(--font-ui);
-  font-weight: 100;
-  color: var(--grey-8);
+  font-weight: 200;
+  color: var(--grey-10);
   padding: 0;
   margin: 0 0 36px;
 `;
@@ -26,7 +26,7 @@ const Header = styled.h1`
 const Subheader = styled.h2`
   font-family: var(--font-ui);
   font-weight: 300;
-  color: var(--grey-11);
+  color: var(--grey-12);
 `;
 
 const List = styled.div`
@@ -39,7 +39,6 @@ const List = styled.div`
 `;
 
 const Item = styled.div`
-  /* max-width: 480px; */
   height: 100%;
   
   a {
@@ -51,7 +50,7 @@ const Item = styled.div`
     text-decoration: none;
     border-radius: 3px;
     box-shadow: 0 4px 8px var(--black-a6);
-    border: 1px solid transparent;
+    border: 1px solid var(--grey-4);
 
     &:hover {
       background: var(--grey2);
@@ -65,7 +64,7 @@ const Title = styled.div`
   font-family: var(--font-ui);
   letter-spacing: 0.4px;
   font-size: 14px;
-  color: var(--grey-11);
+  color: var(--grey-12);
   font-weight: 500;
 `;
 
