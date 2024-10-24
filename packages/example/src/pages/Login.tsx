@@ -4,6 +4,7 @@ import { ButtonWithLoading, TextField, PasswordField, Form, AlertBar, AlertWrapp
 import GhostLogo from '../svg/ghost-logo.svg';
 import {LoginScreen} from '../svg';
 import {Link} from 'react-router-dom';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const widthDesk = 480;
 
@@ -26,6 +27,7 @@ const fadeInAnimation = keyframes`
   }
 `;
 
+const Wrap = styled.div``
 const Box = styled.div<{ margin?: string; flex?: string;}>`
   button{
     width: 100%;
@@ -276,54 +278,58 @@ const Login: React.FC<OwnProps> = ({
   },[form, onLogin]);
 
   return (
-    <Container>
-      <LoginBox>
-        <LogoContainer>
-          <Logo />
-          <LogoBackground src={GhostLogo} {...{design}} />
-        </LogoContainer>
-        <LoginForm onSubmit={onSubmit} spacing='25px'>
-          <Title>Sign In To Your Account</Title>
-          <SubTitle>This service requires an account to login. If you do not have one, please make one first.</SubTitle>
-          <TextField
-            fieldState='default'
-            required
-            label='Username'
-            onChange={onFieldChange('username')}
-            value={form.username}
-            name='username'
-            id='username'
-          />
+    <Wrap>
+      {/* Only use `<Container>` contents if copying this example for a project. */}
+      <ExamplesFilename>Login.tsx</ExamplesFilename>
+      <Container>
+        <LoginBox>
+          <LogoContainer>
+            <Logo />
+            <LogoBackground src={GhostLogo} {...{design}} />
+          </LogoContainer>
+          <LoginForm onSubmit={onSubmit} spacing='25px'>
+            <Title>Sign In To Your Account</Title>
+            <SubTitle>This service requires an account to login. If you do not have one, please make one first.</SubTitle>
+            <TextField
+              fieldState='default'
+              required
+              label='Username'
+              onChange={onFieldChange('username')}
+              value={form.username}
+              name='username'
+              id='username'
+            />
 
-          <PasswordField
-            fieldState='default'
-            required
-            label='Password'
-            onChange={onFieldChange('password')}
-            value={form.password}
-            name='password'
-            id='password'
-          />
-          {alert && <AlertBar type={alert.type} message={alert.message} />}
+            <PasswordField
+              fieldState='default'
+              required
+              label='Password'
+              onChange={onFieldChange('password')}
+              value={form.password}
+              name='password'
+              id='password'
+            />
+            {alert && <AlertBar type={alert.type} message={alert.message} />}
 
-          <Box flex='1'>
-            <ButtonWithLoading loading={loading} type='submit' onClick={onSubmit}>Login</ButtonWithLoading>
-          </Box>
-          <ForgotLinkWrapper>
-            <ForgotLink to='#'>Forgotten Password</ForgotLink>
-          </ForgotLinkWrapper>
+            <Box flex='1'>
+              <ButtonWithLoading loading={loading} type='submit' onClick={onSubmit}>Login</ButtonWithLoading>
+            </Box>
+            <ForgotLinkWrapper>
+              <ForgotLink to='#'>Forgotten Password</ForgotLink>
+            </ForgotLinkWrapper>
 
-        </LoginForm>
-      </LoginBox>
-      <CopyRightGroup>
-        <CopyRight>Copyright {new Date().getFullYear()} - Future Standard Co. Ltd. All Rights Reserved. </CopyRight>
-        <CopyRightLink to='#'>Terms</CopyRightLink>
-        <CopyRightDot>&middot;</CopyRightDot>
-        <CopyRightLink to='#'>Privacy</CopyRightLink>
-      </CopyRightGroup>
+          </LoginForm>
+        </LoginBox>
+        <CopyRightGroup>
+          <CopyRight>Copyright {new Date().getFullYear()} - Future Standard Co. Ltd. All Rights Reserved. </CopyRight>
+          <CopyRightLink to='#'>Terms</CopyRightLink>
+          <CopyRightDot>&middot;</CopyRightDot>
+          <CopyRightLink to='#'>Privacy</CopyRightLink>
+        </CopyRightGroup>
 
 
-    </Container>
+      </Container>
+    </Wrap>
   );
 };
 

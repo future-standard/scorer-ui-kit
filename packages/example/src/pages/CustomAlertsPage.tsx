@@ -1,6 +1,7 @@
 import React from 'react';
 import { AlertBar } from 'scorer-ui-kit';
 import styled from 'styled-components';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const Container = styled.div`
   margin: 10px;
@@ -21,7 +22,9 @@ const CustomAlertWrapper = styled.div`
 const CustomAlertsPage = () => {
   return(
     <Container>
-      <h3> Default Based Colors</h3>
+      <ExamplesFilename>CustomAlertsPage.tsx</ExamplesFilename>
+
+      <h3>Default Based Colors</h3>
       <AlertBar message='Base color error message' type='error' hideCloseButton></AlertBar>
       <AlertBar message='Base color info message' type='info' hideCloseButton></AlertBar>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PageHeader, Content, Button, Label, TextField, Tabs, Tab, TabList, TabContent } from 'scorer-ui-kit';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const Container = styled.div`
   margin: 100px 200px;
@@ -24,6 +25,7 @@ const Tab2Container = styled.div`
 const TabsPage: React.FC = () => {
 
   return <Container>
+    <ExamplesFilename>TabsPage.tsx</ExamplesFilename>
     <Content>
       <PageHeader title="Tabs Example" areaTitle="Examples" areaHref={'/'} />
       <Tabs>
