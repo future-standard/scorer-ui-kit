@@ -20,43 +20,46 @@ const OuterRadio = styled.div<{ isChecked: boolean, disabled: boolean }>`
   border-style: solid;
   user-select: none;
 
-  ${({ theme: { styles }, isChecked, disabled }) => styles && css`
-    border-color: var(--input-selection-control-default);
+  ${({ isChecked, disabled }) => css`
+    border-color: var(--input-toggle-unchecked-border-color);
 
     ${!disabled && css`
       &:hover {
         cursor: pointer;
-        border-color: var(--input-selection-control-selected);
+        border-color: var(--input-toggle-unchecked-hover-border-color);
       }
     `};
 
     ${isChecked && !disabled && css`
-      border-color: var(--input-selection-control-selected);
+      border-color: var(--input-toggle-checked-border-color);
       ${InnerRadio} {
-        background-color: var(--input-selection-control-selected);
+        background-color: var(--input-toggle-checked-background-color);
       }
     `};
 
     ${isChecked && !disabled && css`
       &:hover {
-        border-color: var(--input-selection-control-selected);
+        border-color: var(--input-toggle-checked-hover-border-color);
         ${InnerRadio} {
-          background-color: var(--input-selection-control-selected);
+          background-color: var(--input-toggle-checked-hover-background-color);
         }
       }
     `};
 
     ${isChecked && disabled && css`
       cursor: not-allowed;
-      border-color: var(--input-selection-control-selected-disabled);
+      border-color: var(--input-toggle-checked-disabled-border-color);
       ${InnerRadio} {
-        background-color: var(--input-selection-control-selected-disabled);
+        background-color: var(--input-toggle-checked-disabled-background-color);
       }
     `};
 
     ${!isChecked && disabled && css`
       cursor: not-allowed;
-      border-color: var(--grey-6);
+      border-color: var(--input-toggle-unchecked-disabled-border-color);
+      ${InnerRadio} {
+        background-color: var(--input-toggle-unchecked-disabled-background-color);
+      }
     `}
   `};
 `;

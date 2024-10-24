@@ -81,31 +81,51 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
 
   ${({ selected, disabled }) => css`
     
-  border-color: var(--input-selection-control-default);
+    ${FakeCheckbox}, ${FakeRadioButton} {
+      border-color: var(--input-toggle-unchecked-border-color);
+    }
 
     &:hover {
       cursor: pointer;
       ${Title} {
-        color: var(--input-selection-control-selected);
+        color: var(--input-label-hover);
       }
 
       ${FakeCheckbox}, ${FakeRadioButton} {
-        border-color: var(--input-selection-control-selected);
+        border-color: var(--input-toggle-unchecked-hover-border-color);
+        ${FakeInnerRadio}, ${FakeCheckboxInner} {
+          background-color: var(--input-toggle-unchecked-background-color);
+        }
       }
     }
 
     ${selected && css`
+      ${Title} {
+        color: var(--input-label-active);
+        font-weight: 600;
+      }
+
       ${FakeCheckbox}, ${FakeRadioButton} {
-        border-color: var(--input-selection-control-selected);
+        border-color: var(--input-toggle-checked-border-color);
         ${FakeInnerRadio}, ${FakeCheckboxInner} {
-          background-color: var(--input-selection-control-selected);
+          background-color: var(--input-toggle-checked-background-color);
         }
       }
       
-      ${Title} {
-        color: var(--input-selection-control-selected);
-        font-weight: 600;
+      &:hover {
+        cursor: pointer;
+        ${Title} {
+          color: var(--input-label-hover);
+        }
+
+        ${FakeCheckbox}, ${FakeRadioButton} {
+          border-color: var(--input-toggle-checked-hover-border-color);
+          ${FakeInnerRadio}, ${FakeCheckboxInner} {
+            background-color: var(--input-toggle-checked-hover-background-color);
+          }
+        }
       }
+     
 
     `};
 
@@ -114,15 +134,15 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
     `};
 
     ${FakeCheckbox}, ${FakeRadioButton} {
-      transition: border-color var(--speed-faster) var(--easing-primary-in-out);
+      transition: border-color var(--speed-faster) var(--easing-primary-out);
     }
 
     ${FakeInnerRadio} {
-      transition: background-color var(--speed-faster) var(--easing-primary-in-out);
+      transition: background-color var(--speed-faster) var(--easing-primary-out);
     }
 
     ${Title}{
-      transition: color var(--speed-faster) var(--easing-primary-in-out);
+      transition: color var(--speed-faster) var(--easing-primary-out);
     }
     
   `};

@@ -3,7 +3,11 @@ import styled from 'styled-components';
 
 const Container = styled.div<{ height?: string }>`
   box-shadow: 0px 5px 25px 0px var(--filter-button-shadow-color);
-  background-color: var(--grey-a2);
+  background-color: var(--filter-dropdown-background-color-fallback);
+  @supports( background-color: var(--filter-dropdown-background-color) ){
+    background-color: var(--filter-dropdown-background-color);
+  };
+
   backdrop-filter: blur(20px);
   border: var(--grey-6) 1px solid;
   border-radius: 3px;
@@ -14,7 +18,7 @@ const Container = styled.div<{ height?: string }>`
 
   &::before {
     content: '';
-    background-color: var(--primary-a9);
+    background-color: var(--filter-dropdown-accent);
     border-radius: 3px 3px 0 0;
     box-shadow: 0px 5px 25px 0px var(--primary-a5);
 

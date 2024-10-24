@@ -566,12 +566,7 @@ export const colorVariables = css`
     --input-color-disabled: var(--grey-10);
     --input-color-placeholder: var(--grey-10);
     --input-color-unit: var(--grey-10);
-    
-    --input-selection-control-default: var(--grey-8);
-    --input-selection-control-default-disabled: var(--grey-6);
-    --input-selection-control-selected: var(--primary-9);
-    --input-selection-control-selected-disabled: var(--primary-8);
-    
+        
     --input-default-background-color: var(--grey-1);
     --input-default-border-color: var(--grey-6);
     --input-default-shadow-color: transparent;
@@ -616,6 +611,44 @@ export const colorVariables = css`
     --input-processing-focused-border-color: var(--primary-10);
     --input-processing-focused-shadow-color: var(--grey-3);
 
+    /* Checkboxes and Radio Buttons */
+    --input-toggle-icon-color: var(--white-12);
+    
+    --input-toggle-unchecked-border-color: var(--grey-8);
+    --input-toggle-unchecked-background-color: transparent;
+    
+    --input-toggle-checked-border-color: var(--primary-9);
+    --input-toggle-checked-background-color: var(--primary-9);
+    
+    
+    --input-toggle-unchecked-hover-border-color: var(--primary-9);
+    --input-toggle-unchecked-hover-background-color: transparent;
+    
+    --input-toggle-checked-hover-border-color: var(--primary-7);
+    --input-toggle-checked-hover-background-color: var(--primary-7);
+    
+    
+    --input-toggle-unchecked-disabled-border-color: var(--grey-7);
+    --input-toggle-unchecked-disabled-background-color: transparent;
+
+    --input-toggle-checked-disabled-border-color: var(--grey-7);
+    --input-toggle-checked-disabled-background-color: var(--grey-7);
+
+    
+    --input-toggle-intermediate-border-color: var(--primary-11);
+    --input-toggle-intermediate-background-color: var(--primary-11);
+
+    --input-toggle-intermediate-hover-border-color: var(--primary-11);
+    --input-toggle-intermediate-hover-background-color: var(--primary-11);
+
+    --input-toggle-intermediate-disabled-border-color: var(--grey-7);
+    --input-toggle-intermediate-disabled-background-color: var(--grey-7);
+
+    /* Labels */
+    --input-label: var(--grey-11);
+    --input-label-hover: var(--primary-8);
+    --input-label-active: var(--grey-12);
+
   }
 
   /* Filters */
@@ -625,6 +658,11 @@ export const colorVariables = css`
     --filter-button-background-color: var(--grey-2);
     --filter-button-stroke-color: var(--grey-a5);
     --filter-button-shadow-color: var(--primary-a3);
+
+    --filter-dropdown-background-color: color-mix(in srgb, var(--grey-1) 82%, transparent);
+    --filter-dropdown-background-color-fallback: var(--grey-3);
+    --filter-dropdown-accent: var(--primary-a9); 
+
   }
 
   .dark-theme {

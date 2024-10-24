@@ -23,9 +23,9 @@ const CheckboxOuter = styled.div`
   border-width: 2px;
   border-style: solid;
 
-  ${({theme}) => theme && css`
-    transition: border-color ${theme.animation.speed.faster} ${theme.animation.easing.primary.easeInOut};
-  `};
+  transition: 
+    background-color var(--speed-faster) var(--easing-primary-out),
+    border-color var(--speed-faster) var(--easing-primary-out);
 `;
 
 const CheckboxInner = styled.div<{}>`
@@ -58,24 +58,30 @@ const IconWrapper = styled.div<{color: ISvgIcons['color']}>`
 const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}>`
   display: inline-block;
   user-select: none;
-
+  ${CheckboxOuter}{
+    border: var(--input-toggle-unchecked-border-color) 2px solid;
+  }
+  
   ${({visualState, disabled}) => visualState === CheckboxState.Off && css`
+    /* Unchecked */
     ${CheckboxOuter}{
-      border-color: var(--grey-9);
-      border: var(--grey-9) 2px solid;
+      background-color: var(--input-toggle-unchecked-background-color);
+      border-color: var(--input-toggle-unchecked-border-color);
     }
 
+    /* Unchecked - Hover */
     ${!disabled && css`
       &:hover ${CheckboxOuter} {
-        border-color: var(--primary-9);
-        border: var(--primary-9) 2px solid;
+        background-color: var(--input-toggle-unchecked-hover-background-color);
+        border-color: var(--input-toggle-unchecked-hover-border-color);
       }`
     };
 
+    /* Unchecked - Disabled */
     ${disabled && css`
       ${CheckboxOuter}{
-        background-color: var(--grey-1);
-        border-color: var(--grey-6);
+        background-color: var(--input-toggle-unchecked-disabled-background-color);
+        border-color: var(--input-toggle-unchecked-disabled-border-color);
         border: var(--grey-6) 2px solid;
         cursor: not-allowed;
       }
@@ -83,23 +89,24 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
   `}
 
   ${({visualState, disabled}) => visualState === CheckboxState.On && css`
+    /* Checked */  
     ${CheckboxOuter}{
-      box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
-      background-color: var(--primary-9);
-      border: none;
+      background-color: var(--input-toggle-checked-background-color);
+      border-color: var(--input-toggle-checked-border-color);
     }
+    /* Checked - Hover */
     ${!disabled && css`
       &:hover ${CheckboxOuter}{
-        box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
-        background-color: var(--primary-9);
-        border: none;
+        background-color: var(--input-toggle-checked-hover-background-color);
+        border-color: var(--input-toggle-checked-hover-border-color);
       }`
     };
 
+    /* Checked - Disabled */    
     ${disabled && css`
       ${CheckboxOuter}{
-        box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
-        background-color: var(--grey-6);
+        background-color: var(--input-toggle-checked-disabled-background-color);
+        border-color: var(--input-toggle-checked-disabled-border-color);
         cursor: not-allowed;
       }
       ${IconWrapper}{
@@ -110,15 +117,25 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
 
   ${({visualState, disabled}) => visualState === CheckboxState.Indeterminate && css`
     ${CheckboxOuter}{
-      box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
-      background-color: var(--primary-6);
+      background-color: var(--input-toggle-intermediate-background-color);
+      border-color: var(--input-toggle-intermediate-border-color);
     }
     ${!disabled && css`
       &:hover ${CheckboxOuter}{
-        box-shadow: inset 0px 1px 5px 0px var(--grey-a1);
-        background-color: var(--primary-6);
+        background-color: var(--input-toggle-intermediate-hover-background-color);
+        border-color: var(--input-toggle-intermediate-hover-border-color);
       }
     `};
+    ${disabled && css`
+      ${CheckboxOuter}{
+        background-color: var(--input-toggle-intermediate-disabled-background-color);
+        border-color: var(--input-toggle-intermediate-disabled-border-color);
+        cursor: not-allowed;
+      }
+      ${IconWrapper}{
+        opacity: 0.65;
+      }
+    `}
 
   `}
 
@@ -162,7 +179,7 @@ const Checkbox : React.FC<IProps> = ({ indeterminate = false, disabled, checked 
     <Container onChange={customOnChange} {...{indeterminate, disabled, visualState}}>
       <CheckboxOuter>
         <CheckboxInner>
-          {visualState === CheckboxState.On ? <IconWrapper color='inverse'><CheckMark color='inverse' stroke='inverse' size={12} weight={iconWeight} /></IconWrapper> : null}
+          {visualState === CheckboxState.On ? <IconWrapper color='input-toggle-icon-color'><CheckMark color='input-toggle-icon-color' stroke='inverse' size={12} weight={iconWeight} /></IconWrapper> : null}
         </CheckboxInner>
       </CheckboxOuter>
       <RealInput type='checkbox' checked={isChecked} readOnly {...{disabled}} /> {/* disabled={state !== 'default' && state !== 'failure'} */}
