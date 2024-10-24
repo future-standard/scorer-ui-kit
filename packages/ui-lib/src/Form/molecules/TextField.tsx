@@ -7,16 +7,17 @@ interface OwnProps {
   name: string
   label: string
   fieldState: TypeFieldState
+  showFeedback?: boolean
   feedbackMessage?: string
 }
 
 type Props = OwnProps & InputProps
 
 
-const TextField : React.FC<Props> = ({ name, label, fieldState='default', feedbackMessage, type:_type , ...props }) => {
+const TextField : React.FC<Props> = ({ name, label, fieldState='default', feedbackMessage, required, type:_type , ...props }) => {
   return (
-    <Label htmlFor={name} labelText={label}>
-      <Input type='text' {...{fieldState, feedbackMessage, name, ...props }} />
+    <Label htmlFor={name} labelText={label} {...{required}}>
+      <Input type='text' {...{fieldState, feedbackMessage, required, name, ...props }} />
     </Label>
   );
 };

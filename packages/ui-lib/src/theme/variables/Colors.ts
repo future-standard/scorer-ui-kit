@@ -562,32 +562,59 @@ export const colorVariables = css`
     --global-menu-icon-background-active: var(--primary-9);
 
     /* Inputs */
-    --input-border-default: var(--grey-6);
-    --input-border-default-focused: var(--grey-8);
-    --input-border-disabled: var(--grey-6);
-    --input-border-required: var(--primary-6);
-    --input-border-valid: var(--success-9);
-    --input-border-invalid: var(--warning-9);
-    --input-border-processing: var(--primary-10);
-
-    --input-background-default: var(--grey-1);
-    --input-background-disabled: var(--grey-3);
-    --input-background-required: var(--primary-1);
-    --input-background-valid: var(--success-1);
-    --input-background-invalid: var(--warning-1);
-    --input-background-processing: var(--primary-2);
-
     --input-color-default: var(--grey-12);
     --input-color-disabled: var(--grey-10);
     --input-color-placeholder: var(--grey-10);
     --input-color-unit: var(--grey-10);
-
-    --input-focused-shadow-color: var(--black-a5);
     
     --input-selection-control-default: var(--grey-8);
     --input-selection-control-default-disabled: var(--grey-6);
     --input-selection-control-selected: var(--primary-9);
     --input-selection-control-selected-disabled: var(--primary-8);
+    
+    --input-default-background-color: var(--grey-1);
+    --input-default-border-color: var(--grey-6);
+    --input-default-shadow-color: transparent;
+
+    --input-default-focused-background-color: var(--grey-1);
+    --input-default-focused-border-color: var(--grey-6);
+    --input-default-focused-shadow-color: var(--grey-3);
+
+    --input-disabled-background-color: var(--grey-3);
+    --input-disabled-border-color: var(--grey-6);
+    --input-disabled-shadow-color: transparent;
+
+    --input-required-background-color: var(--grey-1);
+    --input-required-border-color: var(--primary-6);
+    --input-required-shadow-color: transparent;
+
+    --input-required-focused-background-color: var(--grey-1);
+    --input-required-focused-border-color: var(--primary-6);
+    --input-required-focused-shadow-color: var(--grey-3);
+
+    --input-valid-background-color: var(--grey-1);
+    --input-valid-border-color: var(--success-9);
+    --input-valid-shadow-color: transparent;
+
+    --input-valid-focused-background-color: var(--grey-1);
+    --input-valid-focused-border-color: var(--success-9);
+    --input-valid-focused-shadow-color: var(--grey-3);
+
+    --input-invalid-background-color: var(--grey-1);
+    --input-invalid-border-color: var(--warning-9);
+    --input-invalid-shadow-color: transparent;
+
+    --input-invalid-focused-background-color: var(--grey-1);
+    --input-invalid-focused-border-color: var(--warning-9);
+    --input-invalid-focused-shadow-color: var(--grey-3);
+
+    --input-processing-background-color: var(--grey-3)2;
+    --input-processing-border-color: var(--primary-10);
+    --input-processing-shadow-color: transparent;
+
+    --input-processing-focused-background-color: var(--grey-2);
+    --input-processing-focused-border-color: var(--primary-10);
+    --input-processing-focused-shadow-color: var(--grey-3);
 
   }
 

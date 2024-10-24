@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select } from "@storybook/addon-knobs";
+import {  text, select, boolean } from "@storybook/addon-knobs";
 import { TextAreaField } from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -17,8 +17,10 @@ export default {
 export const _TextAreaField = () => {
   const fieldName = text("Textarea Name", "example_texarea");
   const fieldLabel = text("Label", "Textarea Example");
+  const showFeedback = boolean("Show Feedback", false);
   const fieldFeedback = text("Feedback", "This is a feedback message.");
   const fieldPlaceholder = text("Placeholder", "Placeholder...");
+  const fieldRequired = boolean("Required", false);
   const currentState = select("State",
     { Default: "default",
       Disabled: 'disabled',
@@ -33,9 +35,11 @@ export const _TextAreaField = () => {
         id={fieldName}
         name={fieldName}
         label={fieldLabel}
-        placeholder = {fieldPlaceholder}
-        feedbackMessage = {fieldFeedback}
+        placeholder={fieldPlaceholder}
+        showFeedback={showFeedback}
+        feedbackMessage={fieldFeedback}
         fieldState={currentState}
+        required={fieldRequired}
       ></TextAreaField>
     </Container>
 };

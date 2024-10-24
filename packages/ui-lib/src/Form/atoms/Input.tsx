@@ -25,9 +25,7 @@ const FeedbackContainer = styled.div`
   flex-shrink: 0;
 
   background-color: transparent;
-  ${({theme}) => css`
-    border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
-  `};
+  border: 1px solid transparent;
 
   border-left: none;
   border-radius: 0 3px 3px 0;
@@ -42,7 +40,8 @@ const FeedbackMessage = styled.div`
   flex: 0 1 400px;
   padding: 0 10px 0 0;
 
-  ${({theme}) => theme.typography.form.feedback.message};
+  font-weight: 500;
+  color: var(--white-1);
 `;
 
 const FeedbackIcon = styled.div`
@@ -54,7 +53,7 @@ const FeedbackIcon = styled.div`
 
   ${IconWrapper} {
     [stroke]{
-      stroke: ${({theme}) => theme.colors.pureBase};
+      stroke: var(--white-1);
     }
   }
 `;
@@ -62,13 +61,15 @@ const FeedbackIcon = styled.div`
 const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   ${removeAutoFillStyle};
 
-  ${({theme, fieldState}) => css`
-    min-height: ${theme.dimensions.form.input.height};
-    font-family: ${theme.fontFamily.data};
-    border: 1px solid ${theme.styles.form.input[fieldState].normal.borderColor};
+  ${({fieldState}) => css`
+    border: 1px solid var(--input-${fieldState}-border-color);
+    background: var(--input-${fieldState}-background-color);
+    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${fieldState}-shadow-color, transparent);
   `};
 
-  height: 100%;
+  font-family: var(--font-data);
+
+  height: var(--input-height);
   width: 100%;
   border-radius: 3px;
 
@@ -76,12 +77,21 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   box-sizing: border-box;
   outline: none;
 
-  ${({theme: {typography}}) => css`
-    ${typography.form.input.value.normal};
-    &::placeholder {
-      ${typography.form.input.placeholder.normal};
-    }
-  `};
+  color: var(--input-color-default);
+  font-size: 14px;
+
+  transition: 
+    border var(--speed-fast) var(--easing-primary-out),
+    background-color var(--speed-fast) var(--easing-primary-out),
+    box-shadow var(--speed-fast) var(--easing-primary-out);
+
+  &::placeholder {
+    font-family: var(--font-data);
+    color: var(--input-color-placeholder);
+    font-style: italic;
+    font-weight: 400;
+  }
+
 `;
 
 const InputContainer = styled.div<{hasAction?: boolean}>`
@@ -100,41 +110,45 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 
 `;
 
-const Container = styled.div<{ fieldState: string }>`
-  display: flex;
-  position: relative;
+const Container = styled.div<{ fieldState: TypeFieldState, showFeedback?: boolean }>`
+  ${({fieldState, showFeedback}) => css`
+  
+    display: flex;
+    position: relative;
+    flex-direction: row;
 
-  ${StyledInput}{
-    ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal};
+    ${StyledInput}{
 
-    &:focus {}
+      &:disabled {
+        cursor: not-allowed;
+      }
+      
+      ${['default', 'disabled'].indexOf(fieldState) === -1 && showFeedback && css`
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      `};
 
-    &:disabled {
-      cursor: not-allowed;
     }
 
-    ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 0px;
-    `}
-  }
+    ${FeedbackContainer} {
+      ${['default', 'disabled'].indexOf(fieldState) !== -1 && css`
+        display: none;
+      `};
+      border-color: var(--input-${fieldState}-border-color);
+      background: var(--input-${fieldState}-border-color);
+    }
 
-  ${FeedbackContainer} {
-    background: ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal.borderColor};
-    border-color: ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal.borderColor};
+    &:focus-within ${StyledInput} {
+      border-color: var(--input-${fieldState}-focused-border-color, var(--input-${fieldState}-border-color));
+      box-shadow: var(--input-focused-box-shadow-x) var(--input-focused-box-shadow-y) var(--input-focused-box-shadow-blur) var(--input-focused-box-shadow-spread) var(--input-${fieldState}-focused-shadow-color);
+    }
+  `}
 
-    ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) !== -1 && css`
-      display:none;
-    `}
-  }
-
-  &:focus-within ${StyledInput} {
-    ${({theme, fieldState}) => theme.styles.form.input[fieldState].focused};
-  }
 `;
 
 interface OwnProps {
   fieldState?: TypeFieldState;
+  showFeedback?: boolean;
   feedbackMessage?: string;
   actionCallback?: ()=>void;
   actionIcon?: string
@@ -148,6 +162,7 @@ const Input : React.FC<InputProps> = ({
   placeholder = '',
   defaultValue,
   fieldState = 'default',
+  showFeedback = false,
   feedbackMessage,
   actionCallback,
   actionIcon,
@@ -164,18 +179,18 @@ const Input : React.FC<InputProps> = ({
       case 'disabled':
         break;
       case 'required':
-        return <Icon icon='Required' size={20} />;
+        return <Icon icon='Required' size={16} />;
       case 'valid':
-        return <Icon icon='Success' size={20} />;
+        return <Icon icon='Success' size={16} />;
       case 'invalid':
-        return <Icon icon='Invalid' size={20} />;
+        return <Icon icon='Invalid' size={16} />;
       case 'processing':
         return <Spinner size='medium' styling='primary' />;
     }
   };
 
   return (
-    <Container fieldState={fieldState || 'default'}>
+    <Container fieldState={fieldState || 'default'} {...{showFeedback}}>
 
       <InputContainer hasAction={isActionButton}>
         <StyledInput fieldState={fieldState || 'default'} disabled={fieldState === 'disabled' || fieldState === 'processing'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
@@ -188,7 +203,7 @@ const Input : React.FC<InputProps> = ({
         ) : null}
       </InputContainer>
 
-      {fieldState ? (
+      {fieldState && showFeedback ? (
         <FeedbackContainer>
           <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
           {feedbackMessage ? (

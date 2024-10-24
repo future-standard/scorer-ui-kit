@@ -4,15 +4,16 @@ import Label from '../atoms/Label';
 import { TypeFieldState } from '..';
 
 interface OwnProps {
-  name: string;
+  name: string
   label: string
   fieldState: TypeFieldState
+  showFeedback?: boolean
   feedbackMessage?: string
 }
 type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
 
 
-const PasswordField : React.FC<Props> = ({ name, label, fieldState, feedbackMessage, ...props}) => {
+const PasswordField : React.FC<Props> = ({ name, label, fieldState, feedbackMessage, required, ...props}) => {
 
   const [ showValue, setShowValue ] = useState<boolean>(false);
   const [ actionIcon, setActionIcon ] = useState<string>('PasswordHide');
@@ -26,8 +27,8 @@ const PasswordField : React.FC<Props> = ({ name, label, fieldState, feedbackMess
   };
 
   return (
-    <Label htmlFor={name} labelText={label}>
-      <Input type={showValue ? 'text' : 'password'} actionCallback={actionCallback} actionIcon={actionIcon} {...{ name, fieldState, feedbackMessage, ...props}} />
+    <Label htmlFor={name} labelText={label} {...{required}}>
+      <Input type={showValue ? 'text' : 'password'} actionCallback={actionCallback} actionIcon={actionIcon} {...{ name, fieldState, feedbackMessage, required, ...props}} />
     </Label>)
   ;
 

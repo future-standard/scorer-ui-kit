@@ -15,10 +15,12 @@ const FeedbackIcon = styled.div`
 
 const StyledTextArea = styled.textarea<{ fieldState : TypeFieldState}>`
 
-${({theme, fieldState}) => css`
-  font-family: ${theme.fontFamily.data};
-  border: 1px solid ${theme.styles.form.input[fieldState].normal.borderColor};
-`};
+  ${({fieldState}) => css`
+    font-family: var(--font-data);
+    border: 1px solid var(--input-${fieldState}-border-color);
+    background: var(--input-${fieldState}-background-color);
+    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${fieldState}-shadow-color, transparent);
+  `};
 
   padding: 8px 15px;
   box-sizing: border-box;
@@ -27,21 +29,29 @@ ${({theme, fieldState}) => css`
   width: 100%;
   border-radius: 3px;
 
-  ${({theme: {typography}}) => css`
-  ${typography.form.input.value.normal};
+
+  color: var(--input-color-default);
+  font-size: 14px;
+  
+  transition: 
+    border var(--speed-fast) var(--easing-primary-out),
+    background-color var(--speed-fast) var(--easing-primary-out),
+    box-shadow var(--speed-fast) var(--easing-primary-out);
+
   &::placeholder {
-    ${typography.form.input.placeholder.normal};
+    font-family: var(--font-data);
+    color: var(--input-color-placeholder);
+    font-style: italic;
+    font-weight: 400;
   }
-`};
+
 `;
 
 const FeedbackContainer = styled.div`
   flex-shrink: 0;
   padding: 8px 0;
   background-color: transparent;
-  ${({theme}) => css`
-    border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
-  `};
+  border: 1px solid transparent;
 
   border-left: none;
   border-radius: 0 0 3px 3px;
@@ -55,59 +65,50 @@ const FeedbackContainer = styled.div`
 const FeedbackMessage = styled.div`
   flex: 0 1 400px;
   padding: 0 10px 0 0;
-  ${({theme}) => theme.typography.form.feedback.message};
+  font-weight: 500;
+  color: var(--white-1);
 `;
 
-const Container =  styled.div<{ fieldState: string }>`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  ${StyledTextArea}{
-    ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal};
+const Container =  styled.div<{ fieldState: string, showFeedback?: boolean }>`
+  ${({fieldState, showFeedback}) => css`      
+    display: flex;
+    position: relative;
+    flex-direction: column;
 
-    &:focus {
-      box-shadow: 0px 3px 7px 0px var(--primary-a3);
+    ${StyledTextArea}{
+      ${['default', 'disabled'].indexOf(fieldState) === -1 && showFeedback && css`
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      `};
+      
+      &:disabled {
+        cursor: not-allowed;
+      }
+      
+      &:focus {
+        box-shadow: var(--input-focused-box-shadow-x) var(--input-focused-box-shadow-y) var(--input-focused-box-shadow-blur) var(--input-focused-box-shadow-spread) var(--input-${fieldState}-focused-shadow-color);
+      }
     }
 
-    &:disabled {
-      cursor: not-allowed;
+    ${FeedbackContainer} {
+      border-color: var(--input-${fieldState}-border-color);
+      background: var(--input-${fieldState}-border-color);
+
+      ${['default', 'disabled'].indexOf(fieldState) !== -1 && css`
+        display:none;
+      `}
     }
 
-    ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) === -1 && css`
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
-    `}
-  }
+    &:focus-within ${FeedbackContainer} {
+      border-color: var(--input-${fieldState}-focused-border-color, var(--input-${fieldState}-border-color));
+    }
 
-  ${FeedbackContainer} {
-    background: ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal.borderColor};
-    border-color: ${({theme, fieldState}) => theme.styles.form.input[fieldState].normal.borderColor};
-
-    ${({ fieldState }) => ['default', 'disabled'].indexOf(fieldState) !== -1 && css`
-      display:none;
-    `}
-  }
-
-  &:focus-within ${FeedbackContainer} {
-    ${({ fieldState }) =>
-
-    fieldState === 'required' ? `
-      box-shadow: 0px 3px 7px 0px var(--primary-a3);
-    ` : null};
-
-    ${({ fieldState }) => fieldState === 'valid' ? `
-      box-shadow: 0px 3px 5px 0px var(--success-a3);
-    ` : null};
-
-    ${({ fieldState }) => fieldState === 'invalid' ? `
-      box-shadow: 0px 3px 7px 0px var(--warning-a3);
-    ` : null};
-  }
-
+  `};
 `;
 
 interface OwnProps {
   fieldState: TypeFieldState
+  showFeedback?: boolean
   feedbackMessage?: string
 }
 
@@ -116,6 +117,7 @@ type Props = OwnProps & TextareaHTMLAttributes<HTMLTextAreaElement>
 const TextArea : React.FC<Props> = ({
   placeholder = '',
   fieldState = 'default',
+  showFeedback = false,
   feedbackMessage,
   children,
   ...props
@@ -139,7 +141,7 @@ const TextArea : React.FC<Props> = ({
   };
 
   return (
-    <Container fieldState={fieldState || 'default'}>
+    <Container fieldState={fieldState || 'default'} {...{showFeedback}}>
       <StyledTextArea
         fieldState={fieldState || 'default'}
         placeholder={placeholder}
@@ -147,7 +149,7 @@ const TextArea : React.FC<Props> = ({
         {...props}
       >{children}
       </StyledTextArea>
-      {fieldState && (
+      {showFeedback && fieldState && (
         <FeedbackContainer>
           <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
           <FeedbackMessage>{feedbackMessage}</FeedbackMessage>

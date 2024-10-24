@@ -23,9 +23,7 @@ export default {
   decorators: []
 };
 
-const Content = styled.div`
-  background-color: var(--grey-1);
-`;
+const Content = styled.div``;
 const Divider = styled.div``;
 
 const Wrapper = styled.div`

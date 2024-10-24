@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select } from "@storybook/addon-knobs";
+import {  text, select, boolean } from "@storybook/addon-knobs";
 import {SmallInput} from 'scorer-ui-kit';
 
 export default {
@@ -21,6 +21,7 @@ export const _SmallInput = () => {
   const inputLabel = text("Label", "My Input");
   const inputUnit = text("Unit", "º");
   const inputPlaceholder = text("Placeholder", "Placeholder...");
+  const fieldRequired = boolean("Required", false);
   const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
 
   return <Container>
@@ -32,6 +33,7 @@ export const _SmallInput = () => {
       label={inputLabel}
       placeholder={inputPlaceholder}
       fieldState={inputState}
+      required={fieldRequired}
       disabled={inputState === 'disabled'}
     />
   </Container>;
