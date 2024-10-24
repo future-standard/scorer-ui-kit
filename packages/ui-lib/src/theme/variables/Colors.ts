@@ -658,6 +658,11 @@ export const colorVariables = css`
     --filter-button-background-color: var(--grey-2);
     --filter-button-stroke-color: var(--grey-a5);
     --filter-button-shadow-color: var(--primary-a3);
+
+    --filter-dropdown-background-color: color-mix(in srgb, var(--grey-1) 82%, transparent);
+    --filter-dropdown-background-color-fallback: var(--grey-3);
+    --filter-dropdown-accent: var(--primary-a9); 
+
   }
 
   .dark-theme {
