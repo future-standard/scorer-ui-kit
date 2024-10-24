@@ -78,6 +78,14 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
       }
     }
     
+    ${({isOpen}) => !isOpen && css`
+      ${FlipArrowContainer} ${IconWrapper} {
+        [stroke]{
+          stroke: var(--grey-12);
+        }
+      };
+    `};
+      
   }
 
   &:disabled {
