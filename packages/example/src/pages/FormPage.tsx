@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Form, TextField, PasswordField, PageHeader } from 'scorer-ui-kit';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const Container = styled.div`
     margin: 100px 200px;
@@ -8,6 +9,7 @@ const Container = styled.div`
 
 const FormPage : React.FC = () => {
   return <Container>
+    <ExamplesFilename>FormPage.tsx</ExamplesFilename>
     <PageHeader title={"Input State Examples"} areaTitle={'Forms'} areaHref={'/'} />
     <Form>
       <TextField name={'my_field'} label={'Basic'} placeholder={'Placeholder...'} fieldState={ 'default' } showFeedback={true} />

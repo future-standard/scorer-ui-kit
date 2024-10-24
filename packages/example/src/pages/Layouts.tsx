@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from 'styled-components';
 import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField, FullWidthContentBlock, IHeaderContent, ButtonsStack, IButtonStack } from "scorer-ui-kit";
+import ExamplesFilename from "../components/ExamplesFilename";
 
 const FullWidthExampleContent = styled.div`
   width: 100%;
@@ -43,6 +44,7 @@ const Layouts: FC = () => {
 
   return (
       <ThemeProvider theme={defaultTheme}>
+        <ExamplesFilename>Layouts.tsx</ExamplesFilename>
         <GlobalUI
           accountOptionText="Account Options"
           canAlwaysPin

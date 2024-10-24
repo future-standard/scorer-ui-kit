@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { ThemeProvider } from 'styled-components';
 import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ButtonsStack, IButtonStack } from "scorer-ui-kit";
 import styled from "styled-components";
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const ExampleContentBlock = styled.div`
   h2 {
@@ -32,6 +33,8 @@ const GlobalUIPage: FC = () => {
 
   return (
       <ThemeProvider theme={defaultTheme}>
+        <ExamplesFilename>GlobalUIPage.tsx</ExamplesFilename>
+        
         <GlobalUI
           accountOptionText="Account Options"
           canAlwaysPin

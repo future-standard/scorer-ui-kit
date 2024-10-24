@@ -17,6 +17,7 @@ import {
   useMediaModal
 } from 'scorer-ui-kit';
 import { LineUIOptions, LineUIVideoOptions } from 'scorer-ui-kit/dist/LineUI';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const SwitchBox = styled.div`
   margin-bottom: 15px;
@@ -194,6 +195,7 @@ const Line: React.FC<{}> = () => {
 
   return (
     <Layout >
+      <ExamplesFilename>LineRTCPage.tsx</ExamplesFilename>
       <Sidebar>
         <Logo logoTextTop={'SCORER'} logoTextBottom={'UI Kit'} />
         <SidebarBox style={{ flex: '1' }} >

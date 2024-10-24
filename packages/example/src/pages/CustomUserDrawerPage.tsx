@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TopBar } from 'scorer-ui-kit';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 
 const Container = styled.div`
@@ -55,7 +56,10 @@ const CustomUserDrawerPage : React.FC = () => {
 
   // userDrawerBespoke: See examples for implementation of this prop.
 
-  return <Container><TopBar {...{userDrawerBespoke, loggedInUser, userSubmenu, hasSearch, useNotifications, logoutLink, searchPlaceholder, hasLanguage}}/></Container>;
+  return <Container>
+    <ExamplesFilename>CustomUserDrawerPage.tsx</ExamplesFilename>
+    <TopBar {...{userDrawerBespoke, loggedInUser, userSubmenu, hasSearch, useNotifications, logoutLink, searchPlaceholder, hasLanguage}}/>
+  </Container>;
 };
 
 export default CustomUserDrawerPage;

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useCallback } from 'react';
 import { Controls, PTZContext, Sidebar, SidebarHeading, AlertBar, Form, ButtonWithLoading, TextField, PasswordField, BackLink, Layout, Logo, SidebarBox } from 'scorer-ui-kit';
 import styled from 'styled-components';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 
 interface DeviceConnectionInfo {
@@ -44,6 +45,7 @@ const PTZ: React.FC<Props> = () => {
 
   return (
     <Layout>
+      <ExamplesFilename>PTZPage.tsx</ExamplesFilename>
       <Sidebar>
         <Logo logoTextTop={'SCORER'} logoTextBottom={'UI Kit'} />
         <SidebarBox>

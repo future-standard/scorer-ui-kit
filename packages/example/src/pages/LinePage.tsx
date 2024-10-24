@@ -15,6 +15,7 @@ import {
   Input
 } from 'scorer-ui-kit';
 import { IPointSet, LineUIOptions } from 'scorer-ui-kit/dist/LineUI';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
@@ -204,6 +205,8 @@ const Line: React.FC<{}> = () => {
 
   return (
     <Layout >
+      <ExamplesFilename>LinePage.tsx</ExamplesFilename>
+
       <Sidebar>
         <Logo logoTextTop={'SCORER'} logoTextBottom={'UI Kit'} />
         <SidebarBox style={{ flex: '1' }} >

@@ -18,6 +18,7 @@ import {
 import styled from 'styled-components';
 import {LineUIOptions} from 'scorer-ui-kit/dist/LineUI';
 import {LineUIVideoOptions} from 'scorer-ui-kit/dist/LineUI';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const StyledButton = styled(ButtonWithIcon)`
   width: 100%;
@@ -217,6 +218,8 @@ const Line: React.FC<{}> = () => {
 
   return (
     <Layout >
+      <ExamplesFilename>LineVideoPage.tsx</ExamplesFilename>
+
       <Sidebar>
         <Logo logoTextTop={'SCORER'} logoTextBottom={'UI Kit'} />
 

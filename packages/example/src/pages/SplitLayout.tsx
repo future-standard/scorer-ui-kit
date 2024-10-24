@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { ThemeProvider } from 'styled-components';
 import { GlobalUI, defaultTheme, useThemeToggle, ContentLayout, SplitLayout, FlexContentPlaceholder } from "scorer-ui-kit";
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const SplitLayouts: FC = () => {
 
@@ -14,6 +15,7 @@ const SplitLayouts: FC = () => {
 
   return (
       <ThemeProvider theme={defaultTheme}>
+        <ExamplesFilename>SplitLayout.tsx</ExamplesFilename>
         <GlobalUI
           accountOptionText="Account Options"
           canAlwaysPin

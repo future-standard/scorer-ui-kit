@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { TypeTable, PageHeader, Content, useModal, SplitButton } from 'scorer-ui-kit';
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 import { StatusComponent } from '../components/StatusComponent';
+import ExamplesFilename from '../components/ExamplesFilename';
 
 const Container = styled.div`
   margin: 100px 200px;
@@ -197,6 +198,7 @@ const TablePage: React.FC = () => {
   }, [rows, setRows]);
 
   return <Container>
+    <ExamplesFilename>TablePage.tsx</ExamplesFilename>
     <Content>
       <PageHeader title="Table Example" areaTitle="Examples" areaHref={'/'} />
       <TypeTable selectable={true} {...{ columnConfig, rows, selectCallback, toggleAllCallback, hasThumbnail: true }} />
