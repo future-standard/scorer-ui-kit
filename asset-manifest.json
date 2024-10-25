@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/scorer-ui-kit/static/js/main.024117b2.js",
+    "main.js": "/scorer-ui-kit/static/js/main.b5cb512a.js",
     "static/media/Lato3Ita3M-VF.woff2": "/scorer-ui-kit/static/media/Lato3Ita3M-VF.a1c6bc1c1b13c9ece9d5.woff2",
     "static/media/Lato3Upr3M-VF.woff2": "/scorer-ui-kit/static/media/Lato3Upr3M-VF.b4654cead6b828b82278.woff2",
     "static/media/Monorale-Bold.woff": "/scorer-ui-kit/static/media/Monorale-Bold.e1e45fa17edeead87d01.woff",
@@ -23,9 +23,9 @@
     "index.html": "/scorer-ui-kit/index.html",
     "static/media/logo-mark.svg": "/scorer-ui-kit/static/media/logo-mark.c04f523a4fde2280e3442e4b1b26f3ed.svg",
     "static/media/logo-text.svg": "/scorer-ui-kit/static/media/logo-text.65bb2ccdb8a2092c11740c3b9bda7f39.svg",
-    "main.024117b2.js.map": "/scorer-ui-kit/static/js/main.024117b2.js.map"
+    "main.b5cb512a.js.map": "/scorer-ui-kit/static/js/main.b5cb512a.js.map"
   },
   "entrypoints": [
-    "static/js/main.024117b2.js"
+    "static/js/main.b5cb512a.js"
   ]
 }
