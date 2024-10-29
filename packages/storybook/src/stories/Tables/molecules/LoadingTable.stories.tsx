@@ -107,6 +107,7 @@ const dataRows : ITypeTableData = [
 export const _LoadingTable = () => {
   const isLoading = boolean("IsLoading", true);
   const emptyTable = boolean("Show Empty Table", true);
+  const disableOneCheckbox = boolean('Disable 1st Checkbox', false);
   const emptyTableTitle = text("emptyTableTitle","No Data Available");
   const emptyTableText = text("emptyTableText", 'There is currently no data');
   const loadingText = text("loadingText", 'Loading Data..')
@@ -117,25 +118,27 @@ export const _LoadingTable = () => {
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
-  const toggleAllCallback = useCallback((checked:boolean) => {
-    const newRows = [...rows];
-
-    newRows.forEach((row) => {
-      row._checked = checked;
-  });
-
-    setRows(newRows);
-  }, [rows, setRows]);
+  const toggleAllCallback = useCallback((checked: boolean) => {
+    setRows((prevRows) => {
+      const newRows = [...prevRows];
+      newRows.forEach((row) => {
+        row._checked = checked;
+      });
+      return newRows;
+    });
+  }, [setRows]);
 
     // Sent to checkbox in TableRow via Table component.
-    const selectCallback = useCallback((checked:boolean, id?: string | number) => {
-      const newRows = [...rows];
-      const targetRowIndex = newRows.findIndex(row => row.id === id)
-      newRows[targetRowIndex]._checked = checked;
-
-      setRows(newRows);
-
-    }, [rows, setRows]);
+    const selectCallback = useCallback((checked: boolean, id?: string | number) => {
+      setRows((prevRows) => {
+        const newRows = [...prevRows];
+        const targetRowIndex = newRows.findIndex((row) => row.id === id);
+        if (targetRowIndex > -1) {
+          newRows[targetRowIndex]._checked = checked;
+        }
+        return newRows;
+      });
+    }, [setRows]);
 
   useEffect(() => {
     if(emptyTable) {
@@ -147,6 +150,14 @@ export const _LoadingTable = () => {
       setRows(initialRows);
     }
   }, [emptyTable])
+
+  useEffect(() => {
+    setRows((prevRows) => {
+      const newRows = [...prevRows];
+      newRows[0].checkboxDisabled = disableOneCheckbox;
+      return newRows;
+    });
+  }, [disableOneCheckbox])
 
   return (
     <Container>

@@ -56,6 +56,10 @@ const isChecked = ({ _checked = false }: IRowData) => {
   return _checked === true;
 };
 
+const isCheckBoxDisabled = ({checkboxDisabled = false}: IRowData) => {
+  return checkboxDisabled === true;
+};
+
 interface IProps {
   columnConfig: ITableColumnConfig[]
   rows: ITypeTableData
@@ -103,15 +107,25 @@ const TypeTable: React.FC<IProps> = ({
 */
 
   const [allChecked, setAllChecked] = useState(false);
+  const [disableAllChecked, setDisableAllChecked] = useState(false);
   const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
 
   useEffect(() => {
     let areAllChecked = false;
+    let disableCheckAll = false;
+
     if (rows.every(isChecked) && (rows.length > 0) && !isEmptyTable) {
       areAllChecked = true;
     }
+
+    if (rows.some(isCheckBoxDisabled) || isEmptyTable || isLoading) {
+      disableCheckAll = true;
+    }
+
     setAllChecked(areAllChecked);
-  }, [isEmptyTable, rows]);
+    setDisableAllChecked(disableCheckAll);
+
+  }, [isEmptyTable, isLoading, rows]);
 
   return (
     <Container>
@@ -124,8 +138,7 @@ const TypeTable: React.FC<IProps> = ({
             hasTypeIcon,
             defaultAscending,
             allChecked,
-            isEmptyTable,
-            isLoading,
+            disableAllChecked,
             hasHeaderGroups,
             columnConfig,
             toggleAllCallback,
