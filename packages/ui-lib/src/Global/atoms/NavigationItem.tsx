@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import {Link} from 'react-router-dom';
 import ContextItem from './ContextItem';
@@ -111,8 +111,8 @@ const SubmenuContainer = styled.div`
 
 `;
 
-const ContextContainer = styled.div<{ open: boolean, loading: 'true'|'false' }>`
-  min-height: 70px;
+const ContextContainer = styled.div<{ open: boolean, mobileMenu?: boolean }>`
+  min-height: ${({mobileMenu}) => mobileMenu ? '30px' : '70px'};
   width: inherit;
 
   ${SubmenuContainer}{
@@ -131,29 +131,19 @@ const ContextContainer = styled.div<{ open: boolean, loading: 'true'|'false' }>`
       opacity: 1;
     }
   `};
-
-  ${({loading}) => loading === 'true' && css`
-    ${SubmenuContainer}{
-      max-height: none !important;
-      opacity: 1;
-    }
-  `};
-
 `;
 
 interface IProps {
   item: IMenuItemTop
   contextKey: number
   submenuOpen: boolean
-  loading: boolean
   menuOpen?: boolean
   topLevelPath: string
-  minHeight?: number
+  mobileMenu?: boolean
   onClickCallback?: (...args: any[]) => void
-  readyCallback?: (...args: any[]) => void
 }
 
-const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, loading, topLevelPath, onClickCallback, readyCallback}) => {
+const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, topLevelPath, mobileMenu = false, onClickCallback }) => {
   const { icon, title, href, submenu, isExternalLink } = item;
   const isActive = topLevelPath === href;
 
@@ -162,13 +152,8 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
   const submenus : any[] = generateSubmenus(submenu, onClickCallback ) || [];
   const hasSubmenu : boolean = submenus.length > 0;
 
-  useEffect(() => {
-    // Is this still needed? Left in due to hotfixing.
-    if(readyCallback){ readyCallback(contextKey); }
-  }, [refSubmenu, readyCallback, contextKey]);
-
   return (
-    <ContextContainer open={submenuOpen} loading={loading ? 'true': 'false'}>
+    <ContextContainer open={submenuOpen} {...{mobileMenu}}>
       <ContextItem {...{title, href, isActive, icon, hasSubmenu, isExternalLink, submenuOpen, menuOpen, onClickCallback, contextKey}} />
       {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>
         <SubmenuContainerInner>{submenus}</SubmenuContainerInner>

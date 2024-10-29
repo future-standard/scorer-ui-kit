@@ -108,9 +108,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
   const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen, canAlwaysPin);
 
   const [focusedContext, setFocusedContext] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
   const location = useLocation();
-  let checkedInItems: number = 0;
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback((e: any) => {
@@ -143,15 +141,6 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
     setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
   }, [setFocusedContext, focusedContext]);
 
-  /** Manage the loading cycle. */
-  const readyCallback = useCallback(() => {
-    // Basic count of menu items (that need to measure height) that have checked in.
-    checkedInItems++;
-    if (checkedInItems === content.items.length) {
-      setLoading(false);
-    }
-  }, [checkedInItems, content]);
-
   return (
     <PushContainer isPinned={menuState.isMenuPinned}>
       {ReactDom.createPortal(
@@ -178,7 +167,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
                   menuOpen={menuState.isMenuOpen}
                   submenuOpen={key === focusedContext && menuState.isMenuOpen}
                   onClickCallback={setFocusedContextCb}
-                  {...{ item, loading, focusedContext, readyCallback }}
+                  {...{ item, focusedContext }}
                 />
               );
               })}

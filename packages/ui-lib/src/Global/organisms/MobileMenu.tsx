@@ -25,10 +25,8 @@ const MobileMenu: React.FC<IMobileMenu> = ({
   closeId
 }) => {
 
-  const [loading, setLoading] = useState<boolean>(true);
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const location = useLocation();
-  let checkedInItems: number = 0;
   const { setSelected }: ContextProps = useContext(TabContext);
 
 
@@ -48,15 +46,6 @@ const MobileMenu: React.FC<IMobileMenu> = ({
 
   }, [closeId, content.items, focusedContext, setSelected]);
 
-  /** Manage the loading cycle. */
-  const readyCallback = useCallback(() => {
-    // Basic count of menu items (that need to measure height) that have checked in.
-    checkedInItems++;
-    if (checkedInItems === content.items.length) {
-      setLoading(false);
-    }
-  }, [checkedInItems, content.items.length]);
-
   const handleCloseMenu = useCallback(() => {
     setSelected(closeId);
   },[closeId, setSelected]);
@@ -67,13 +56,13 @@ const MobileMenu: React.FC<IMobileMenu> = ({
         return (
           <ItemWrapper key={key} data-key={key}>
             <NavigationItem
-              minHeight={30}
+              mobileMenu
               topLevelPath={getTopLevelPath(location.pathname)}
               contextKey={key}
               menuOpen
               submenuOpen={key === focusedContext}
               onClickCallback={setFocusedContextCb}
-              {...{ item, loading, focusedContext, readyCallback }}
+              {...{ item, focusedContext }}
             />
           </ItemWrapper>
 
