@@ -139,8 +139,7 @@ interface ITableHeader {
   hasThumbnail: boolean
   hasTypeIcon: boolean
   allChecked: boolean
-  isEmptyTable: boolean
-  isLoading: boolean
+  disableAllChecked: boolean
   hasHeaderGroups: boolean
   columnConfig: ITableColumnConfig[]
   defaultAscending: boolean
@@ -154,8 +153,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
   hasThumbnail,
   hasTypeIcon,
   allChecked,
-  isEmptyTable,
-  isLoading,
+  disableAllChecked,
   hasHeaderGroups,
   columnConfig,
   defaultAscending,
@@ -207,7 +205,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
     <HeaderRow>
       {selectable ? (
         <HeaderItem headerStyle='header' fixedWidth={30}>
-          <Checkbox checked={allChecked} disabled={isEmptyTable || isLoading} onChangeCallback={toggleAllCallbackWrapper} />
+          <Checkbox checked={allChecked} disabled={disableAllChecked} onChangeCallback={toggleAllCallbackWrapper} />
         </HeaderItem>)
         : null}
       {hasStatus ? <HeaderItem headerStyle='header' fixedWidth={10} /> : null}

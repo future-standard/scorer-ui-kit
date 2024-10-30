@@ -59,6 +59,7 @@ export interface IRowHeader {
 
 export interface IRowData {
   _checked?: boolean
+  checkboxDisabled?: boolean
   id?: number | string
   header?: IRowHeader
   columns: ICellData[]
