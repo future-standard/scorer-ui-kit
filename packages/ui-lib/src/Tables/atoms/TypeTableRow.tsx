@@ -38,7 +38,7 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, ha
 
   return (
     <RowContainer isEmpty={isEmpty}>
-      {selectable ? <TypeTableCell hideDivider><Checkbox checked={rowData._checked} onChangeCallback={wrappedSelectCallback} /></TypeTableCell> : null}
+      {selectable ? <TypeTableCell hideDivider><Checkbox checked={rowData._checked} disabled={rowData.checkboxDisabled} onChangeCallback={wrappedSelectCallback} /></TypeTableCell> : null}
       {hasStatus ?  <TypeTableCell hideDivider><TypeTableDeviceStatus status={rowData.header?.status} /></TypeTableCell> : null}
       {hasThumbnail ? <TypeTableCell hideDivider><TableRowThumbnail image={rowData.header?.image} mediaUrl={rowData.header?.mediaUrl} mediaType={rowData.header?.mediaType} closeText={closeText} onClickThumbnail={rowData.header?.onClickThumbnail}/></TypeTableCell> : null}
       {hasTypeIcon ? <TypeTableCell hideDivider><Icon icon={rowData.header?.icon || ''} color='dimmed' weight='regular' size={16} /></TypeTableCell> : null}
