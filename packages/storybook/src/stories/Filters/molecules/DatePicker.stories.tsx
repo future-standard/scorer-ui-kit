@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { select, text } from '@storybook/addon-knobs';
+import { object, select, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
 
@@ -24,6 +24,20 @@ const exampleCallback = <T extends Function>(fn: T): T => {
   return fn;
 };
 
+const start: Date = new Date();
+start.setDate(0);
+start.setDate(start.getDate() - 20);
+const end: Date = new Date();
+end.setDate(1);
+end.setDate(end.getDate() + 20);
+
+const datesRange = {
+  start: start,
+  end: end
+}
+
+
+
 export const _DatePicker = () => {
   const language = select('Language', { English: 'en', Japanese: 'ja' }, 'ja');
   const dateMode = select('Date Mode', { single: 'single', interval: 'interval' }, 'interval');
@@ -33,6 +47,7 @@ export const _DatePicker = () => {
   const timeZoneTitle = text('Time Zone Title', 'Timezone');
   const timeZoneValueTitle = text('Time Zone Value', 'JST');
   const updateCallback = action('Date / Time Updated');
+  const availableRangeDates = object('Available Range', datesRange)
 
   return (
     <Container>
@@ -40,7 +55,8 @@ export const _DatePicker = () => {
         <DatePicker {...{
           timeMode,
           dateMode,
-          timeZoneValueTitle
+          timeZoneValueTitle,
+          availableRange: availableRangeDates
         }}
           updateCallback={exampleCallback(updateCallback)}
           dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}

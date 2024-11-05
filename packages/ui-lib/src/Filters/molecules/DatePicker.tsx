@@ -132,14 +132,14 @@ const PaginateMonth = styled.button`
   align-items: center;
 
   transition: color var(--speed-fast) var(--easing-primary-in-out);
-  
+
   ${IconWrap}{
     svg * {
       transition: stroke var(--speed-fast) var(--easing-primary-in-out);
     }
   }
 
-  &:hover {
+  &:hover:enabled  {
     color: var(--grey-12);
 
     ${IconWrap}{
@@ -148,6 +148,12 @@ const PaginateMonth = styled.button`
       }
     }
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
 `;
 
 const CalBody = styled.div`
@@ -281,6 +287,12 @@ export interface DateInterval {
   start: Date;
   end: Date;
 }
+
+export interface DateRange {
+  start: Date | null;
+  end: Date | null;
+}
+
 export interface IDatePicker {
   initialValue?: Date | DateInterval
   dateMode?: DateMode
@@ -290,6 +302,7 @@ export interface IDatePicker {
   dateTimeTextLower?: string
   timeZoneTitle?: string
   timeZoneValueTitle?: string
+  availableRange?: DateRange
   updateCallback?: (data: DateInterval | Date) => void
   lang?: 'en' | 'ja'
 }
@@ -304,6 +317,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
+  availableRange,
   lang = 'en'
 }) => {
 
@@ -316,6 +330,9 @@ const DatePicker: React.FC<IDatePicker> = ({
   const isInitialMount = useRef(true);
   const [isTimeRangeValid, setIsTimeRangeValid] = useState<boolean>(true);
   const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
+
+  console.log('availableRange', availableRange);
+
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -432,7 +449,7 @@ const DatePicker: React.FC<IDatePicker> = ({
       <CalendarArea>
         <CalendarHeader>
 
-          <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
+          <PaginateMonth type='button' disabled={isPrevMonthOutOfRange(focusedMonth, availableRange?.start)} onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
             {format(addMonths(focusedMonth, -1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
           </PaginateMonth>
@@ -442,7 +459,7 @@ const DatePicker: React.FC<IDatePicker> = ({
             {format(focusedMonth, "MMMM", { locale: lang === 'ja' ? ja : enUS })}
           </CurrentMonth>
 
-          <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
+          <PaginateMonth type='button' disabled={isNextMonthOutOfRange(focusedMonth, availableRange?.end)} onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
             {format(addMonths(focusedMonth, 1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
@@ -541,4 +558,30 @@ const getInitialValue = (hasEmptyValue: boolean, initialValue?: Date | DateInter
   const validInitial = initialValue ? initialValue : initializeInterval(startOfDay(new Date()));
 
   return (validInitial instanceof Date) ? initializeInterval(validInitial) : validInitial;
+};
+
+const isPrevMonthOutOfRange = (focusedMonth: Date, startRange: Date | null | undefined) => {
+
+    if(startRange === null || startRange === undefined) {
+      return false;
+    }
+
+    if(focusedMonth.getMonth() <= startRange.getMonth() ) {
+      return true;
+    }
+
+    return false;
+};
+
+const isNextMonthOutOfRange = (focusedMonth: Date, endRange: Date | null | undefined) => {
+
+  if(endRange === null || endRange === undefined) {
+    return false;
+  }
+
+  if(focusedMonth.getMonth() >= endRange.getMonth() ) {
+    return true;
+  }
+
+  return false;
 };
