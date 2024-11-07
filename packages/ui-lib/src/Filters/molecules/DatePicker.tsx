@@ -3,8 +3,9 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isSameYear, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
+import { resetButtonStyles } from '../../common';
 
 /**
  * Convert a single days duration to an interval.
@@ -173,7 +174,8 @@ const CalHRow = styled(CalRow)`
   border-bottom: var(--grey-6) 1px solid;
 `;
 
-const CalCell = styled.div`
+const CalCell = styled.button`
+  ${resetButtonStyles};
   display: flex;
   text-align: center;
   justify-content: center;
@@ -209,7 +211,7 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
   `}
 
   ${({ state }) => (state !== 'single' && state !== 'start' && state !== 'end') && css`
-    &:hover {
+    &:hover:enabled {
       background: var(--primary-a6);
       color: var(--white-1);
     }
@@ -258,6 +260,11 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
       right: -10px;
     }
   `}
+
+  &:disabled {
+    color: var(--grey-6) !important;
+    cursor: not-allowed;
+  }
 
 `;
 
@@ -330,9 +337,6 @@ const DatePicker: React.FC<IDatePicker> = ({
   const isInitialMount = useRef(true);
   const [isTimeRangeValid, setIsTimeRangeValid] = useState<boolean>(true);
   const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
-
-  console.log('availableRange', availableRange);
-
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -407,10 +411,10 @@ const DatePicker: React.FC<IDatePicker> = ({
   useEffect(() => {
     const { start, end } = selectedRange ? selectedRange : TODAY_INTERVAL;
 
-    if((timeMode ==='interval' && isAfter(add(start, { minutes: 1 }), end))){
-      if(isEqual(end, endOfDay(start)) && end.getSeconds() > 0) { // Midnight exception
+    if ((timeMode === 'interval' && isAfter(add(start, { minutes: 1 }), end))) {
+      if (isEqual(end, endOfDay(start)) && end.getSeconds() > 0) { // Midnight exception
         setIsTimeRangeValid(true);
-      }else {
+      } else {
         setIsTimeRangeValid(false);
       }
 
@@ -418,7 +422,7 @@ const DatePicker: React.FC<IDatePicker> = ({
       setIsTimeRangeValid(true);
     }
 
-  },[selectedRange, timeMode]);
+  }, [selectedRange, timeMode]);
 
   const updateStartDate = useCallback((start: Date) => {
     const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
@@ -436,8 +440,8 @@ const DatePicker: React.FC<IDatePicker> = ({
     <Container>
 
       <DateTimeArea>
-        <DateTimeBlock {...{isTimeRangeValid}} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
-        <DateTimeBlock {...{isTimeRangeValid}} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
+        <DateTimeBlock {...{ isTimeRangeValid }} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
+        <DateTimeBlock {...{ isTimeRangeValid }} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>
           <TimeZoneLabel>{timeZoneTitle}</TimeZoneLabel>
@@ -449,7 +453,7 @@ const DatePicker: React.FC<IDatePicker> = ({
       <CalendarArea>
         <CalendarHeader>
 
-          <PaginateMonth type='button' disabled={isPrevMonthOutOfRange(focusedMonth, availableRange?.start)} onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
+          <PaginateMonth type='button' disabled={isPrevMonthOutOfRange(focusedMonth, availableRange)} onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
             {format(addMonths(focusedMonth, -1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
           </PaginateMonth>
@@ -459,7 +463,7 @@ const DatePicker: React.FC<IDatePicker> = ({
             {format(focusedMonth, "MMMM", { locale: lang === 'ja' ? ja : enUS })}
           </CurrentMonth>
 
-          <PaginateMonth type='button' disabled={isNextMonthOutOfRange(focusedMonth, availableRange?.end)} onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
+          <PaginateMonth type='button' disabled={isNextMonthOutOfRange(focusedMonth, availableRange)} onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
             {format(addMonths(focusedMonth, 1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
@@ -482,7 +486,7 @@ const DatePicker: React.FC<IDatePicker> = ({
             return (
               <CalRow key={index}>
                 {days.map((day, index) => {
-                  return <CalCellB key={index} onClick={() => onCellClick(day)} state={cellState(day, selectedRange)} thisMonth={isSameMonth(day, focusedMonth)} isToday={isToday(day)}>{format(day, "d")}</CalCellB>;
+                  return <CalCellB key={index} disabled={isDayOutOfRange(day, availableRange)} onClick={() => onCellClick(day)} state={cellState(day, selectedRange)} thisMonth={isSameMonth(day, focusedMonth)} isToday={isToday(day)}>{format(day, "d")}</CalCellB>;
                 })}
               </CalRow>
             );
@@ -560,26 +564,44 @@ const getInitialValue = (hasEmptyValue: boolean, initialValue?: Date | DateInter
   return (validInitial instanceof Date) ? initializeInterval(validInitial) : validInitial;
 };
 
-const isPrevMonthOutOfRange = (focusedMonth: Date, startRange: Date | null | undefined) => {
+const isPrevMonthOutOfRange = (focusedMonth: Date, availableRange: DateRange | undefined) => {
+  if (!availableRange || !availableRange.start) return false;
 
-    if(startRange === null || startRange === undefined) {
-      return false;
-    }
-
-    if(focusedMonth.getMonth() <= startRange.getMonth() ) {
-      return true;
-    }
-
-    return false;
-};
-
-const isNextMonthOutOfRange = (focusedMonth: Date, endRange: Date | null | undefined) => {
-
-  if(endRange === null || endRange === undefined) {
-    return false;
+  if(focusedMonth.getFullYear() < availableRange.start.getFullYear()) {
+    return true;
   }
 
-  if(focusedMonth.getMonth() >= endRange.getMonth() ) {
+  if (isSameYear(focusedMonth, availableRange.start) && focusedMonth.getMonth() <= availableRange.start.getMonth()) {
+    return true;
+  }
+
+  return false;
+};
+
+const isNextMonthOutOfRange = (focusedMonth: Date, availableRange: DateRange | undefined) => {
+  if (!availableRange ||!availableRange.end) return false;
+
+  if(focusedMonth.getFullYear() > availableRange.end.getFullYear()) {
+    return true;
+  }
+
+  if (isSameYear(focusedMonth, availableRange.end) && focusedMonth.getMonth() >= availableRange.end.getMonth()) {
+    return true;
+  }
+
+  return false;
+};
+
+const isDayOutOfRange = (currentDay: Date, availableRange?: DateRange): boolean => {
+  if (!availableRange) return false;
+
+  const { start, end } = availableRange;
+
+  if (start && currentDay < start && !isSameDay(currentDay, start)) {
+    return true;
+  }
+
+  if (end && currentDay > end && !isSameDay(currentDay, end)) {
     return true;
   }
 

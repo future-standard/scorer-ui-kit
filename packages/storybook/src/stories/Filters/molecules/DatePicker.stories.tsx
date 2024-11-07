@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object, select, text } from '@storybook/addon-knobs';
+import { boolean, object, select, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
 
@@ -29,14 +29,12 @@ start.setDate(0);
 start.setDate(start.getDate() - 20);
 const end: Date = new Date();
 end.setDate(1);
-end.setDate(end.getDate() + 20);
+end.setDate(end.getDate() + 70);
 
 const datesRange = {
   start: start,
   end: end
 }
-
-
 
 export const _DatePicker = () => {
   const language = select('Language', { English: 'en', Japanese: 'ja' }, 'ja');
@@ -47,7 +45,8 @@ export const _DatePicker = () => {
   const timeZoneTitle = text('Time Zone Title', 'Timezone');
   const timeZoneValueTitle = text('Time Zone Value', 'JST');
   const updateCallback = action('Date / Time Updated');
-  const availableRangeDates = object('Available Range', datesRange)
+  const sendRange = boolean('Send Available Range', false);
+  const availableRangeDates = object('Available Range', datesRange);
 
   return (
     <Container>
@@ -56,13 +55,13 @@ export const _DatePicker = () => {
           timeMode,
           dateMode,
           timeZoneValueTitle,
-          availableRange: availableRangeDates
         }}
           updateCallback={exampleCallback(updateCallback)}
           dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}
           dateTimeTextLower={language === 'ja' ? 'まで' : dateTimeTextLower}
           timeZoneTitle={language === 'ja' ? '時間帯' : timeZoneTitle}
           lang={language}
+          availableRange={sendRange ? availableRangeDates : undefined}
         />
       </FilterDropdownContainer>
     </Container>);
