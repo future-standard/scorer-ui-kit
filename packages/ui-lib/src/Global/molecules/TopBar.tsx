@@ -24,6 +24,13 @@ const Container = styled.div`
   box-shadow: 5px 0px 10px 0px var(--primary-a2);
 `;
 
+const RightArea = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 100%;
+`;
+
 const SearchBar = styled.div`
   flex: 0 1 500px;
   display: flex;
@@ -83,6 +90,7 @@ const buttonClickAnimation = keyframes`
 `;
 
 const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolean }>`
+  position: relative;
   flex: 0 56px;
   width: 56px;
   height: inherit;
@@ -90,27 +98,40 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
   justify-content: center;
   align-items: center;
   border: none;
-  border-bottom: 5px solid transparent;
-  padding-top: 5px;
   background: none;
   outline: none;
   cursor: pointer;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 5px;
+    background-color: transparent;
+    border-radius: 2px 2px 0 0;
+  }
   
-  transition: border var(--speed-normal) var(--easing-primary-out);
+  transition: background-color var(--speed-normal) var(--easing-primary-out);
   
   svg {
     transition: transform var(--speed-normal) var(--easing-primary-out);
   }
 
   &:hover {
-    border-bottom-color: var(--primary-6);
     opacity: 0.9;
+    &::after {
+      background-color: var(--primary-6);
+    }
   }
  
   ${({ isActive }) => isActive && css`
     &, &:hover {
       border-bottom-color: var(--primary-9);
-    
+      &::after {
+        background-color: var(--primary-9);
+      }
       svg {
         transform: scale(1);
         animation: ${buttonClickAnimation} 0.35s cubic-bezier(0.7, 0, 0.84, 0);
@@ -149,6 +170,29 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
     opacity: 1;
     visibility: visible;
   `}
+`;
+
+const UserTypeBadge = styled.div<{$userTypeBadgeColor?: string}>`
+  display: flex;
+  height: 32px;
+  padding: 8px;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: 3px;
+  
+  ${({$userTypeBadgeColor}) => $userTypeBadgeColor ? css`
+    border: 2px solid var(--${$userTypeBadgeColor}-9);
+    color: var(--${$userTypeBadgeColor}-11);
+  ` : css`
+    border: 2px solid var(--info-9);
+    color: var(--info-11);
+  `};
+
+  font-family: Lato;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px; /* 85.714% */
 `;
 
 /**
@@ -193,7 +237,9 @@ const TopBar: React.FC<ITopBar> = ({
   hasUserDrawerMeta,
   copySuccessMessage,
   includeCopyTitle,
-  hasUserDrawerFooter
+  hasUserDrawerFooter,
+  userTypeBadge,
+  userTypeBadgeColor
 }) => {
 
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
@@ -220,22 +266,24 @@ const TopBar: React.FC<ITopBar> = ({
           </IconWrapper>
           <SearchInput placeholder={searchPlaceholder} />
         </SearchBar> : <div />}
-
-      <ButtonArea>
-        {customDrawer && (
-          <DrawerToggle isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
-            <StatusIcon {...customDrawer} />
+      <RightArea>
+        {userTypeBadge ? <UserTypeBadge $userTypeBadgeColor={userTypeBadgeColor}>{userTypeBadge}</UserTypeBadge> : null}
+        <ButtonArea>
+          {customDrawer && (
+            <DrawerToggle isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
+              <StatusIcon {...customDrawer} />
+            </DrawerToggle>
+          )}
+          {hasNotifications && (
+            <DrawerToggle isActive={openDrawer === 'notifications'} onClick={() => toggleDrawers('notifications')}>
+              <Icon icon='Notifications' size={20} color='dimmed' />
+            </DrawerToggle>
+          )}
+          <DrawerToggle isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
+            <Icon icon='UserProfile' size={20} color='dimmed' />
           </DrawerToggle>
-        )}
-        {hasNotifications && (
-          <DrawerToggle isActive={openDrawer === 'notifications'} onClick={() => toggleDrawers('notifications')}>
-            <Icon icon='Notifications' size={20} color='dimmed' />
-          </DrawerToggle>
-        )}
-        <DrawerToggle isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
-          <Icon icon='UserProfile' size={20} color='dimmed' />
-        </DrawerToggle>
-      </ButtonArea>
+        </ButtonArea>
+      </RightArea>
 
       {ReactDom.createPortal(
         <DrawerPortalWrapper>

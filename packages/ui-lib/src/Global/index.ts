@@ -117,6 +117,8 @@ export interface IMenuTop {
     copySuccessMessage?: string,
     includeCopyTitle?: boolean
     hasUserDrawerFooter?: boolean
+    userTypeBadge?: string;
+    userTypeBadgeColor?: string;
   }
 
   export interface INotificationItem {

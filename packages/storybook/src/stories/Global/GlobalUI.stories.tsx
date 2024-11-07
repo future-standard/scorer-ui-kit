@@ -29,7 +29,7 @@ import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
 
-import { text, object, boolean } from '@storybook/addon-knobs';
+import { text, object, boolean, select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 export default {
@@ -419,6 +419,8 @@ export const _GlobalUI = () => {
     icon: 'Information',
     title: 'V12.3.4',
   });
+  const userTypeBadge = text("User Type Badge", "Guest");
+  const userTypeBadgeColor = select("Color", ['primary', 'grey', 'info', 'success', 'caution', 'warning'], 'info');
 
   const menuConfig = object("Menu Config", {
     items: [
@@ -557,6 +559,8 @@ export const _GlobalUI = () => {
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
         legacyLayout={false}
+        userTypeBadge={userTypeBadge}
+        userTypeBadgeColor={userTypeBadgeColor}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer}}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage,
               hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, hasUserDrawerFooter,

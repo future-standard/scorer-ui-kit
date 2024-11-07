@@ -167,7 +167,10 @@ export const _TopBar = () => {
 
   return (
     <Container>
-      <TopBar {...{
+      <TopBar 
+        userTypeBadge='Example'
+        userTypeBadgeColor='primary'
+      {...{
         loggedInUser,
         userSubmenu,
         hasSearch,
@@ -191,7 +194,7 @@ export const _TopBar = () => {
         logoutText,
         userDrawerFooter,
         copySuccessMessage,
-        includeCopyTitle
+        includeCopyTitle,
       }}
         userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}
