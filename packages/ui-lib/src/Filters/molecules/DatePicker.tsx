@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import DateTimeBlock from '../atoms/DateTimeBlock';
 
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isSameYear, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
 import { resetButtonStyles } from '../../common';
 
@@ -582,7 +582,6 @@ const isPrevMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): 
   return false;
 };
 
-
 const isNextMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): boolean => {
   if (!availableRange?.end) return false;
 
@@ -590,16 +589,17 @@ const isNextMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): 
     const endYear = availableRange.end.getFullYear();
     const endMonth = availableRange.end.getMonth();
 
-    if (focusedMonth.getFullYear() > endYear || isSameYear(focusedMonth, endYear) && focusedMonth.getMonth() >= endMonth) {
+    if (focusedMonth.getFullYear() > endYear ||
+      (focusedMonth.getFullYear() === endYear && focusedMonth.getMonth() >= endMonth)) {
       return true;
     }
-
   } catch (error) {
     console.warn('Invalid available range:', availableRange, error);
   }
 
   return false;
 };
+
 
 const isDayOutOfRange = (currentDay: Date, availableRange?: DateRange): boolean => {
   if (!availableRange) return false;
