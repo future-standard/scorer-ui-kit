@@ -24,20 +24,33 @@ const exampleCallback = <T extends Function>(fn: T): T => {
   return fn;
 };
 
-const start: Date = new Date();
-start.setDate(0);
-start.setDate(start.getDate() - 20);
-const end: Date = new Date();
-end.setDate(1);
-end.setDate(end.getDate() + 70);
+const START_RANGE: Date = new Date();
+START_RANGE.setDate(0);
+START_RANGE.setDate(START_RANGE.getDate() - 20);
+const END_RANGE: Date = new Date();
+END_RANGE.setDate(1);
+END_RANGE.setDate(END_RANGE.getDate() + 70);
 
+
+const TODAY: Date = new Date();
+const START: Date = new Date();
+const END: Date = new Date();
+START.setDate(TODAY.getDate() - 4);
+END.setDate(TODAY.getDate() + 4);
+
+
+const initialValue = {
+  start: START,
+  end: END
+}
 const datesRange = {
-  start: start,
-  end: end
+  start: START_RANGE,
+  end: END_RANGE
 }
 
 export const _DatePicker = () => {
   const language = select('Language', { English: 'en', Japanese: 'ja' }, 'ja');
+  const initialValueObj = object('Initial Value', initialValue);
   const dateMode = select('Date Mode', { single: 'single', interval: 'interval' }, 'interval');
   const timeMode = select('Time Mode', { off: 'off', single: 'single', interval: 'interval' }, 'interval');
   const dateTimeTextUpper = text('Date Time Text Upper', 'From');
@@ -61,6 +74,7 @@ export const _DatePicker = () => {
           dateTimeTextLower={language === 'ja' ? 'まで' : dateTimeTextLower}
           timeZoneTitle={language === 'ja' ? '時間帯' : timeZoneTitle}
           lang={language}
+          initialValue={initialValueObj}
           availableRange={sendRange ? availableRangeDates : undefined}
         />
       </FilterDropdownContainer>

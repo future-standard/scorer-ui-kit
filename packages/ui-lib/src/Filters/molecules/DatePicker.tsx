@@ -564,29 +564,38 @@ const getInitialValue = (hasEmptyValue: boolean, initialValue?: Date | DateInter
   return (validInitial instanceof Date) ? initializeInterval(validInitial) : validInitial;
 };
 
-const isPrevMonthOutOfRange = (focusedMonth: Date, availableRange: DateRange | undefined) => {
-  if (!availableRange || !availableRange.start) return false;
+const isPrevMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): boolean => {
+  if (!availableRange?.start) return false;
 
-  if(focusedMonth.getFullYear() < availableRange.start.getFullYear()) {
-    return true;
-  }
+  try {
+    const startYear = availableRange.start.getFullYear();
+    const startMonth = availableRange.start.getMonth();
 
-  if (isSameYear(focusedMonth, availableRange.start) && focusedMonth.getMonth() <= availableRange.start.getMonth()) {
-    return true;
+    if (focusedMonth.getFullYear() < startYear ||
+      (focusedMonth.getFullYear() === startYear && focusedMonth.getMonth() <= startMonth)) {
+      return true;
+    }
+  } catch (error) {
+    console.warn('Invalid available range:', availableRange, error);
   }
 
   return false;
 };
 
-const isNextMonthOutOfRange = (focusedMonth: Date, availableRange: DateRange | undefined) => {
-  if (!availableRange ||!availableRange.end) return false;
 
-  if(focusedMonth.getFullYear() > availableRange.end.getFullYear()) {
-    return true;
-  }
+const isNextMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): boolean => {
+  if (!availableRange?.end) return false;
 
-  if (isSameYear(focusedMonth, availableRange.end) && focusedMonth.getMonth() >= availableRange.end.getMonth()) {
-    return true;
+  try {
+    const endYear = availableRange.end.getFullYear();
+    const endMonth = availableRange.end.getMonth();
+
+    if (focusedMonth.getFullYear() > endYear || isSameYear(focusedMonth, endYear) && focusedMonth.getMonth() >= endMonth) {
+      return true;
+    }
+
+  } catch (error) {
+    console.warn('Invalid available range:', availableRange, error);
   }
 
   return false;
@@ -597,12 +606,16 @@ const isDayOutOfRange = (currentDay: Date, availableRange?: DateRange): boolean 
 
   const { start, end } = availableRange;
 
-  if (start && currentDay < start && !isSameDay(currentDay, start)) {
-    return true;
-  }
+  try {
+    if (start && currentDay < start && !isSameDay(currentDay, start)) {
+      return true;
+    }
 
-  if (end && currentDay > end && !isSameDay(currentDay, end)) {
-    return true;
+    if (end && currentDay > end && !isSameDay(currentDay, end)) {
+      return true;
+    }
+  } catch (error) {
+    console.warn('Invalid available range:', availableRange, error);
   }
 
   return false;
