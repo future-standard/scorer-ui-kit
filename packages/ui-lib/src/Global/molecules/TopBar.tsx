@@ -8,6 +8,7 @@ import UserMenu from '../molecules/UserMenu';
 import { ITopBar } from '../index';
 import NotificationsHistory from './NotificationsHistory';
 import { removeAutoFillStyle } from '../../common';
+import TopBarBadge from '../atoms/TopBarBadge';
 
 const Container = styled.div`
   z-index: 9;
@@ -172,28 +173,6 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
   `}
 `;
 
-const UserTypeBadge = styled.div<{$userTypeBadgeColor?: string}>`
-  display: flex;
-  height: 32px;
-  padding: 8px;
-  align-items: flex-start;
-  gap: 8px;
-  border-radius: 3px;
-  
-  ${({$userTypeBadgeColor}) => $userTypeBadgeColor ? css`
-    border: 2px solid var(--${$userTypeBadgeColor}-9);
-    color: var(--${$userTypeBadgeColor}-11);
-  ` : css`
-    border: 2px solid var(--info-9);
-    color: var(--info-11);
-  `};
-
-  font-family: Lato;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 12px; /* 85.714% */
-`;
 
 /**
  * Negative margin hides the scroll;
@@ -238,8 +217,7 @@ const TopBar: React.FC<ITopBar> = ({
   copySuccessMessage,
   includeCopyTitle,
   hasUserDrawerFooter,
-  userTypeBadge,
-  userTypeBadgeColor
+  badge
 }) => {
 
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
@@ -267,7 +245,7 @@ const TopBar: React.FC<ITopBar> = ({
           <SearchInput placeholder={searchPlaceholder} />
         </SearchBar> : <div />}
       <RightArea>
-        {userTypeBadge ? <UserTypeBadge $userTypeBadgeColor={userTypeBadgeColor}>{userTypeBadge}</UserTypeBadge> : null}
+        {badge ? <TopBarBadge {...badge} /> : null}
         <ButtonArea>
           {customDrawer && (
             <DrawerToggle isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>

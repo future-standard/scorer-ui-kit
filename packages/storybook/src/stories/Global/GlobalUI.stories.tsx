@@ -419,8 +419,10 @@ export const _GlobalUI = () => {
     icon: 'Information',
     title: 'V12.3.4',
   });
-  const userTypeBadge = text("User Type Badge", "Guest");
-  const userTypeBadgeColor = select("Color", ['primary', 'grey', 'info', 'success', 'caution', 'warning'], 'info');
+  const badgeText = text("Badge Text", "Guest");
+  const badgeColor = select("Color", ['primary', 'grey', 'info', 'success', 'caution', 'warning'], 'info');
+  const badgeLinkTo = text("Badge To", "/login");
+  const badgeLinkText = text("Badge Link Text", "Login");
 
   const menuConfig = object("Menu Config", {
     items: [
@@ -559,8 +561,12 @@ export const _GlobalUI = () => {
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
         legacyLayout={false}
-        userTypeBadge={userTypeBadge}
-        userTypeBadgeColor={userTypeBadgeColor}
+        badge={{ 
+          text: badgeText,
+          color: badgeColor,
+          linkTo: badgeLinkTo,
+          linkText: badgeLinkText
+        }}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer}}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage,
               hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, hasUserDrawerFooter,

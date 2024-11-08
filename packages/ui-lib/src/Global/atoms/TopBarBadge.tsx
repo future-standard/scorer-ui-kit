@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { ITopBarBadge } from '..';
 
 const CoreStyle = css`
   display: flex;
@@ -89,15 +90,7 @@ const Container = styled.div<{ready: boolean, minWidth: number}>`
   `};
 `;
 
-interface IUserTypeBadge {
-  text: string;
-  color?: string;
-  linkHref?: string;
-  linkTo?: string;
-  linkText?: string;
-}
-
-const UserTypeBadge: React.FC<IUserTypeBadge> = ({text, color, linkHref, linkTo = '/', linkText = 'Login'}) => {
+const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, linkText}) => {
   
   const defaultTextRef = useRef() as React.MutableRefObject<HTMLSpanElement>;
   const linkTextRef = useRef() as React.MutableRefObject<HTMLSpanElement>;
@@ -106,15 +99,16 @@ const UserTypeBadge: React.FC<IUserTypeBadge> = ({text, color, linkHref, linkTo 
   const [minWidth, setMinWidth] = useState<number>(0);
 
   useEffect(() => {
-    const defaultWidth = defaultTextRef.current.clientWidth;
-    const linkWidth = linkTextRef.current.clientWidth;
-    const largestWidth = defaultWidth > linkWidth ? defaultWidth : linkWidth;
-    setMinWidth(largestWidth);
+    const defaultWidth = defaultTextRef.current.getBoundingClientRect().width;
+    const linkWidth = linkTextRef.current?.getBoundingClientRect().width || 0;
+    const largestWidth = defaultWidth >= linkWidth ? defaultWidth : linkWidth;
+    console.log(defaultWidth, linkWidth, largestWidth);
+    setMinWidth(Math.ceil(largestWidth));
     setReady(true);
   }, []);
 
   const defaultTextElement = <DefaultText ref={defaultTextRef}>{text}</DefaultText>;
-  const linkTextElement = <LinkText ref={linkTextRef}>{linkText}</LinkText>;
+  const linkTextElement = linkTo || linkHref ? <LinkText ref={linkTextRef}>{linkText || text}</LinkText> : null;
   
   let badgeComponent;
 
@@ -133,4 +127,4 @@ const UserTypeBadge: React.FC<IUserTypeBadge> = ({text, color, linkHref, linkTo 
   );
 };
 
-export default UserTypeBadge;
+export default TopBarBadge;

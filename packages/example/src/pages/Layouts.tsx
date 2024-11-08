@@ -52,7 +52,12 @@ const Layouts: FC = () => {
           switchThemeText='SWITCH THEME'
           selectedThemeText={isLightMode ? 'LIGHT MODE' : 'DARK MODE' }
           onThemeToggle={onThemeToggle}
-          userTypeBadge="Guest"
+          badge={{ 
+            text: 'Guest',
+            color: 'primary',
+            linkTo: '#',
+            linkText: 'Login Here'
+          }}
           hasSwitchTheme
           content={{
             items: [
