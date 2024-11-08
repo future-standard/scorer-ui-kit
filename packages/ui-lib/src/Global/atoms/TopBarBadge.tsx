@@ -80,12 +80,14 @@ const Container = styled.div<{ready: boolean, minWidth: number}>`
   ${({ready, minWidth}) => css`
     
     visibility: ${ready ? 'visible' : 'hidden'};
-    
+
     ${LinkText}{
       display: ${ready ? 'none' : 'inline-block'};;
     }
+
     ${DefaultText}, ${LinkText}{
-      min-width: ${minWidth}px;
+      /* Required to accurately measure container sizes and ensure hover doesn't resize. */
+      ${ready ? `min-width: ${minWidth}px;` : 'position: absolute;'};
     }
   `};
 `;
@@ -99,12 +101,13 @@ const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, lin
   const [minWidth, setMinWidth] = useState<number>(0);
 
   useEffect(() => {
-    const defaultWidth = defaultTextRef.current.getBoundingClientRect().width;
-    const linkWidth = linkTextRef.current?.getBoundingClientRect().width || 0;
-    const largestWidth = defaultWidth >= linkWidth ? defaultWidth : linkWidth;
-    console.log(defaultWidth, linkWidth, largestWidth);
-    setMinWidth(Math.ceil(largestWidth));
-    setReady(true);
+    setTimeout(() => {
+      const defaultWidth = defaultTextRef.current.getBoundingClientRect().width;
+      const linkWidth = linkTextRef.current?.getBoundingClientRect().width || 0;
+      const largestWidth = defaultWidth >= linkWidth ? defaultWidth : linkWidth;
+      setMinWidth(Math.ceil(largestWidth));
+      setReady(true);
+    }, 0);
   }, []);
 
   const defaultTextElement = <DefaultText ref={defaultTextRef}>{text}</DefaultText>;
