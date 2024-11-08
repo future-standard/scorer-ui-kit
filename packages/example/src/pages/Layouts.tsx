@@ -56,7 +56,7 @@ const Layouts: FC = () => {
             text: 'Guest',
             color: 'primary',
             linkTo: '#',
-            linkText: 'Login Here'
+            linkText: 'Login'
           }}
           hasSwitchTheme
           content={{

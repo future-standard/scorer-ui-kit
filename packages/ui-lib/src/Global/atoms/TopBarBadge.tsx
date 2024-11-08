@@ -19,6 +19,9 @@ const CoreStyle = css`
   font-weight: 500;
   line-height: 12px; /* 85.714% */
   white-space: nowrap;
+
+  transition: opacity var(--speed-fast) var(--easing-primary-out);
+
 `;
 
 const ContainerStatic = styled.div<{themeColor?: string}>`
@@ -80,6 +83,9 @@ const Container = styled.div<{ready: boolean, minWidth: number}>`
   ${({ready, minWidth}) => css`
     
     visibility: ${ready ? 'visible' : 'hidden'};
+    opacity: ${ready ? '1' : '0'};
+
+    transition: opacity var(--speed-fast) var(--easing-primary-in-out);
 
     ${LinkText}{
       display: ${ready ? 'none' : 'inline-block'};;
@@ -101,14 +107,16 @@ const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, lin
   const [minWidth, setMinWidth] = useState<number>(0);
 
   useEffect(() => {
+    setReady(false);
     setTimeout(() => {
       const defaultWidth = defaultTextRef.current.getBoundingClientRect().width;
       const linkWidth = linkTextRef.current?.getBoundingClientRect().width || 0;
       const largestWidth = defaultWidth >= linkWidth ? defaultWidth : linkWidth;
+      console.log(defaultWidth, linkWidth, largestWidth);
       setMinWidth(Math.ceil(largestWidth));
       setReady(true);
-    }, 0);
-  }, []);
+    }, 100);
+  }, [defaultTextRef, linkTextRef, text, linkText, setMinWidth, setReady]);
 
   const defaultTextElement = <DefaultText ref={defaultTextRef}>{text}</DefaultText>;
   const linkTextElement = linkTo || linkHref ? <LinkText ref={linkTextRef}>{linkText || text}</LinkText> : null;
