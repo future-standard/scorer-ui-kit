@@ -420,7 +420,7 @@ export const _GlobalUI = () => {
     title: 'V12.3.4',
   });
   const badgeText = text("Badge Text", "Guest");
-  const badgeColor = select("Color", ['primary', 'grey', 'info', 'success', 'caution', 'warning'], 'info');
+  const badgeColor = select("Badge Color", ['primary', 'grey', 'info', 'success', 'caution', 'warning'], 'info');
   const badgeLinkTo = text("Badge To", "/login");
   const badgeLinkText = text("Badge Link Text", "Login");
 
