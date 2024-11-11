@@ -25,7 +25,7 @@ const DataGroup = styled.ol<{ layout: string }>`
   ${({ layout }) => layout === 'grid' &&
     `
       list-style-type: none;
-      grid-template-columns: repeat(4, 300px);
+      grid-template-columns: repeat(3, 300px);
       gap: 16px;
         ${Camera} {
           padding: 100px 20px;
@@ -112,6 +112,11 @@ export const _ToggleButton = () => {
         <Camera>
           <CameraData>
             Camera08 - <StatusSpan isOnline>Online</StatusSpan>
+          </CameraData>
+        </Camera>
+        <Camera>
+          <CameraData>
+            Camera09 - <StatusSpan>Online</StatusSpan>
           </CameraData>
         </Camera>
       </DataGroup>
