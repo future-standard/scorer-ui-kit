@@ -66,18 +66,18 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
 
   &:hover:enabled, &:active:enabled {
     color: var(--grey-12);
-    
+
     ${({design}) => design === 'basic'? '' : css`
       box-shadow: 0px 4px 9px 0px var(--primary-a2);
       border-color: var(--primary-7);
     `};
-    
+
     ${IconWrapper} {
       [stroke]{
         stroke: var(--primary-9);
       }
     }
-    
+
     ${({isOpen}) => !isOpen && css`
       ${FlipArrowContainer} ${IconWrapper} {
         [stroke]{
@@ -85,7 +85,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
         }
       };
     `};
-      
+
   }
 
   &:disabled {
@@ -106,7 +106,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
         }
       }
     }
-    
+
     ${FlipArrowContainer} ${IconWrapper} {
       [stroke]{
         stroke: var(--white-1);
@@ -159,9 +159,9 @@ const FilterButton: React.FC<IFilterButton> = ({
           />
         </FlipWrapper>
         <ButtonText {...{ hasFlipArrow }}>{children}</ButtonText>
-        
+
           {hasFlipArrow && <FlipArrowContainer><Icon icon={isOpen ? 'Up' : 'Down'} size={6} color='grey-11' /></FlipArrowContainer>}
-        
+
       </InnerContainer>
     </StyledButton>
   );
