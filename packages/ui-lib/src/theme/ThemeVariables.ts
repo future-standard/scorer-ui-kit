@@ -46,6 +46,12 @@ const ThemeVariables = createGlobalStyle`
     --input-focused-box-shadow-blur: 3px;
     --input-focused-box-shadow-spread: 0;
 
+    --switch-height: 24px;
+    --switch-width: 40px;
+    --switch-border-width: 2px;
+    --switch-inner-size: 16px;
+    --switch-intent-offset: 3px;
+
   }
 
   .button-size-xsmall {

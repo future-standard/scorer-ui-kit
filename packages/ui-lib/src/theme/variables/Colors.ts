@@ -755,4 +755,39 @@ export const colorVariables = css`
 
   }
 
+  /* Switches */
+  .light-theme, .dark-theme {
+    // Background
+    --switch-default-off-background: var(--grey-4);
+    --switch-default-on-background: var(--primary-9);
+    --switch-default-danger-background: var(--warning-9);
+
+    --switch-disabled-off-background: var(--grey-3);
+    --switch-disabled-on-background: var(--primary-8);
+    --switch-disabled-danger-background: var(--warning-8);
+    
+    // Border
+    --switch-default-off-border: var(--grey-7);
+    --switch-default-on-border: var(--primary-9);
+    --switch-default-danger-border: var(--warning-9);
+    
+    --switch-disabled-off-border: var(--grey-6);
+    --switch-disabled-on-border: var(--primary-a6);
+    --switch-disabled-danger-border: var(--warning-a6);
+    
+    // Inner
+    --switch-default-off-inner: var(--primary-9);
+    --switch-default-on-inner: var(--white-12);
+    --switch-default-danger-inner: var(--white-12);
+    
+    --switch-disabled-off-inner: var(--grey-7);
+    --switch-disabled-on-inner: var(--primary-a9);
+    --switch-disabled-danger-inner: var(--warning-a9);
+    
+    // Special States
+    --switch-special-locked-background: var(--grey-3);
+    --switch-special-locked-border: var(--grey-11);
+    --switch-special-locked-inner: var(--grey-11);
+  }
+
 `;
