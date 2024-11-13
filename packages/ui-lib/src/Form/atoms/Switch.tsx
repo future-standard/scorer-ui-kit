@@ -49,7 +49,7 @@ const SwitchInner = styled.div`
 `;
 
 const LabelText = styled.span`
-  font-family: ${({theme}) => theme.fontFamily.ui };
+  font-family: var(--font-ui);
 
   flex: 1;
   margin-left: 10px;
@@ -85,9 +85,9 @@ const Container = styled.label<{activeTheming: string, $loading: boolean, useInt
       left: ${theme.dimensions.form.switch.positions[getPositionKey(position)]};
       top: ${theme.dimensions.form.switch.positions.top};
       transition:
-        left ${theme.animation.speed.normal} ${theme.animation.easing.primary.out},
-        border ${theme.animation.speed.normal} ${theme.animation.easing.primary.out},
-        width ${theme.animation.speed.normal} ${theme.animation.easing.primary.out};
+        left var(--speed-normal) var(--easing-primary-in-out),
+        border var(--speed-normal) var(--easing-primary-in-out),
+        width var(--speed-normal) var(--easing-primary-in-out);
 
       ${theme.styles.form.switch[activeTheming][themeState].inner}
     `}
