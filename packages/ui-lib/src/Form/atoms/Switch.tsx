@@ -116,6 +116,17 @@ const Container = styled.label<{activeTheming: string, $loading: boolean, useInt
       border-color: var(--switch-${themeState}-${activeTheming}-border);
       background-color: var(--switch-${themeState}-${activeTheming}-background);
     `};
+  
+    ${({ activeTheming }) => activeTheming === 'locked' && css`
+      background-color: var(--switch-special-locked-background);
+      border-color: var(--switch-special-locked-border);
+    `};
+
+    ${({activeTheming, $loading}) => $loading && css`
+      background-color: var(--switch-default-${activeTheming}-background);
+      border-color: var(--switch-default-${activeTheming}-border);
+    `};
+
   }
 
   ${SwitchInner}{
@@ -128,15 +139,21 @@ const Container = styled.label<{activeTheming: string, $loading: boolean, useInt
       border var(--speed-fast) var(--easing-primary-in-out),
       width var(--speed-fast) var(--easing-primary-in-out);
 
-    /* 
-    ${p => p.activeTheming === 'locked' && css`
-      width: calc(100% - ${parseInt(p.theme.dimensions.form.switch.positions.locked) * 2}px);
+    ${({ activeTheming }) => activeTheming === 'locked' && css`
+      width: calc(100% - var(--switch-border-width));
+      background-color: var(--switch-special-locked-inner);
+      box-shadow: none;
+
+      ${IconWrapper} svg {
+        transform: translateX(-1px);
+      }
     `}
 
-    ${p => p.$loading && css`
-      background: transparent;
-      top: 1px;
-    `} */
+    ${({activeTheming, $loading}) => $loading && css`
+      border-color: var(--switch-default-${activeTheming}-inner);
+      box-shadow: none;
+    `};
+    
   }
 
   &:hover {
@@ -181,9 +198,6 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
   const [ switchState, setSwitchState ] = useState<TypeSwitchState>('default');
   const [ justUpdated, setJustUpdated ] = useState<boolean>(false);
   const [ innerSize, setInnerSize ] = useState<number>(0);
-
-  // innerRef.current && parseInt( getComputedStyle(innerRef.current).getPropertyValue('--switch-inner-size') );
-
 
   useEffect(() => {
     setPosition(checked ? SwitchPosition.On : SwitchPosition.Off);
@@ -252,13 +266,12 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
   }, [innerRef]);
 
   
-
   return (
     <Container onChange={customOnChange} onMouseLeave={ () => setJustUpdated(false) } activeTheming={activeTheming} $loading={state === 'loading'} useIntent={ !justUpdated && (state === 'default' || state === 'failure')} themeState={switchState} position={position} checked={inputRef.current?.checked}>
       <SwitchOuter>
         <SwitchInner position={getPositionKey(position)} ref={innerRef}>
           {state === 'failure' ? <IconWrapper><Icon icon='Exclamation' color='danger' size={18} weight='regular' /></IconWrapper> : null}
-          {state === 'locked' ? <IconWrapper><Icon icon='Locked' color='dimmed' size={10} weight='light' /></IconWrapper> : null}
+          {state === 'locked' ? <IconWrapper><Icon icon='Locked' color='switch-special-locked-icon' size={12} weight='regular' /></IconWrapper> : null}
           {state === 'loading' && innerSize > 0 ? <SpinnerWrapper><Spinner styling='simple' custom={{ size: innerSize }} /></SpinnerWrapper> : null}
         </SwitchInner>
       </SwitchOuter>
