@@ -1,11 +1,11 @@
 import React, { LabelHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 
-export const StyledLabel = styled.label<{ rightAlign: boolean }>`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
-  color: var(--grey-11);
-  font-size: 14px;
-  font-weight: 500;
+export const StyledLabel = styled.label<{ rightAlign?: boolean }>`
+  font-family: var(--label-font);
+  color: var(--label-color);
+  font-size: var(--label-font-size);
+  font-weight: var(--label-weight);
   ${({ rightAlign }) => rightAlign
     ? `
         display: flex;

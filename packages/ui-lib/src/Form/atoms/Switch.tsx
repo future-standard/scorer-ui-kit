@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
+import { StyledLabel } from './Label';
+
 
 enum SwitchPosition {
   Off = 0,
@@ -82,17 +84,7 @@ const SwitchInner = styled.div<{ position: 'off' | 'on' | 'neutral'| 'locked'}>`
     0px -1px 1px 0px var(--black-a5) inset;
 `;
 
-const LabelText = styled.span`
-  font-family: var(--font-ui);
-
-  flex: 1;
-  margin-left: 10px;
-  display: block;
-
-  line-height: ${ p => p.theme.dimensions.form.switch.outer.height };
-
-  ${ p => p.theme.typography.form.input.label };
-`;
+const LabelText = styled.span``;
 
 const IconWrapper = styled.div`
   position: absolute;
@@ -107,9 +99,11 @@ const IconWrapper = styled.div`
 `;
 const SpinnerWrapper = styled.div``;
 
-const Container = styled.label<{activeTheming: string, $loading: boolean, useIntent: boolean, themeState: string, position: SwitchPosition, checked?: boolean}>`
+const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean, useIntent: boolean, themeState: string, position: SwitchPosition, checked?: boolean}>`
   user-select: none;
-  display: flex;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
   
   ${SwitchOuter}{
     ${({activeTheming, themeState}) => css`

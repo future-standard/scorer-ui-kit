@@ -669,6 +669,11 @@ export const colorVariables = css`
     --filter-button-shadow-color: var(--black-a8);
   }
 
+  /* Typography */
+  .light-theme, .dark-theme {
+    --label-color: var(--grey-11);
+  }
+
   /* Buttons */
   .light-theme, .dark-theme {
     --button-background-color: var(--primary-9);
