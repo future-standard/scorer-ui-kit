@@ -533,12 +533,19 @@ export const colorVariables = css`
     --primary: var(--primary-9);
     --danger: var(--warning-9);
 
-
-    --spinner-danger: var(--warning-8);
-    --spinner-secondary: var(--grey-8);
-    --spinner-primary: var(--primary-6);
-    --spinner-simple: var(--grey-a8);
-
+    /* Spinner */
+    --spinner-primary-base: var(--primary-6);
+    --spinner-primary-top: var(--white-1);
+    
+    --spinner-secondary-base: var(--grey-8);
+    --spinner-secondary-top: var(--white-1);
+    
+    --spinner-simple-base: var(--grey-a8);
+    --spinner-simple-top: var(--white-1);
+    
+    --spinner-warning-base: var(--warning-8);
+    --spinner-warning-top: var(--white-1);
+    
     /* Global */
     --main-background-gradient: radial-gradient(200% 200% at 50% -10%, var(--grey-2) 0%, var(--grey-3) 100%);
     --main-background-color: var(--grey-3);

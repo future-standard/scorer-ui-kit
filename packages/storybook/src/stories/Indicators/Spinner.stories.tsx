@@ -1,5 +1,5 @@
 import React from 'react';
-import {  select } from "@storybook/addon-knobs";
+import { select, text, number } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {Spinner} from 'scorer-ui-kit';
 
@@ -9,36 +9,26 @@ export default {
   decorators: []
 };
 
-const containerBackgroundKey = (styling: string)  => {
-  switch(styling){
-    case 'primary':
-      return 'info';
-    case 'secondary':
-      return 'neutral';
-    case 'danger':
-      return 'error';
-    default:
-      return 'neutral';
-  }
-};
-
 const Container = styled.div<{styling: string}>`
-  padding: 12px 24px;
-  width: 100px;
   border-radius: 3px;
-
-  margin: 15% auto;
-  display:flex;
+  height: calc(100vh - 2rem);
+  display: flex;
   justify-content:center;
   align-items:center;
-  ${({styling}) => `background-color: var(--${containerBackgroundKey(styling)})` };
+  ${({styling}) => `background-color: var(--${styling}-9)` };
 `;
 
 export const LoadingSpinner = () => {
   const spinnerSize = select("Size", { Small: "small", Medium: "medium", Large: "large", XLarge: "xlarge" }, "medium");
-  const spinnerType = select("Style", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
+  const spinnerType = select("Style", { Primary: "primary", Secondary: "grey", Warning: "warning" }, "primary");
+  const customSize = number("Custom Size", 0);
+  const customBaseColor = text("Custom Base Color", "");
+  const customTopColor = text("Custom Top Color", "");
+
+  const baseColor = customBaseColor !== '' ? customBaseColor : undefined;
+  const topColor = customTopColor !== '' ? customTopColor : undefined;
 
   return <Container styling={spinnerType}>
-    <Spinner size={spinnerSize} styling={spinnerType} />
+    <Spinner size={spinnerSize} styling={spinnerType} custom={{ size: customSize, ...{ baseColor, topColor } }} />
   </Container>;
 };
