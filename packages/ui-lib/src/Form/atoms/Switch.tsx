@@ -105,9 +105,7 @@ const IconWrapper = styled.div`
     display: block;
   }
 `;
-const SpinnerWrapper = styled.div`
-  margin-top: 1px;
-`;
+const SpinnerWrapper = styled.div``;
 
 const Container = styled.label<{activeTheming: string, $loading: boolean, useIntent: boolean, themeState: string, position: SwitchPosition, checked?: boolean}>`
   user-select: none;
@@ -177,9 +175,15 @@ interface IProps {
 const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', rightTheme = 'on', labelText, onChangeCallback, checked = false}) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   const [ position, setPosition ] = useState<SwitchPosition>(checked ? SwitchPosition.On : SwitchPosition.Off);
   const [ activeTheming, setActiveTheming ] = useState<string>( leftTheme );
   const [ switchState, setSwitchState ] = useState<TypeSwitchState>('default');
+  const [ justUpdated, setJustUpdated ] = useState<boolean>(false);
+  const [ innerSize, setInnerSize ] = useState<number>(0);
+
+  // innerRef.current && parseInt( getComputedStyle(innerRef.current).getPropertyValue('--switch-inner-size') );
+
 
   useEffect(() => {
     setPosition(checked ? SwitchPosition.On : SwitchPosition.Off);
@@ -200,6 +204,7 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
 
   const customOnChange = () => {
     positionSwitch();
+    setJustUpdated(true);
     if(onChangeCallback){ onChangeCallback(inputRef.current?.checked || false); }
   };
 
@@ -240,13 +245,21 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
     }
   }, [state, setPosition, positionSwitch]);
 
+  useEffect(() => {
+    if(innerRef.current){
+      setInnerSize( parseInt( getComputedStyle(innerRef.current).getPropertyValue('--switch-inner-size') ));
+    }
+  }, [innerRef]);
+
+  
+
   return (
-    <Container onChange={customOnChange} activeTheming={activeTheming} $loading={state === 'loading'} useIntent={state === 'default' || state === 'failure'} themeState={switchState} position={position} checked={inputRef.current?.checked}>
+    <Container onChange={customOnChange} onMouseLeave={ () => setJustUpdated(false) } activeTheming={activeTheming} $loading={state === 'loading'} useIntent={ !justUpdated && (state === 'default' || state === 'failure')} themeState={switchState} position={position} checked={inputRef.current?.checked}>
       <SwitchOuter>
-        <SwitchInner position={getPositionKey(position)}>
+        <SwitchInner position={getPositionKey(position)} ref={innerRef}>
           {state === 'failure' ? <IconWrapper><Icon icon='Exclamation' color='danger' size={18} weight='regular' /></IconWrapper> : null}
           {state === 'locked' ? <IconWrapper><Icon icon='Locked' color='dimmed' size={10} weight='light' /></IconWrapper> : null}
-          {state === 'loading' ? <SpinnerWrapper><Spinner size='small' styling='simple' /></SpinnerWrapper> : null}
+          {state === 'loading' && innerSize > 0 ? <SpinnerWrapper><Spinner styling='simple' custom={{ size: innerSize }} /></SpinnerWrapper> : null}
         </SwitchInner>
       </SwitchOuter>
       {labelText ? <LabelText>{labelText}</LabelText> : null}
@@ -266,7 +279,6 @@ const stateCheck = (state: TypeSwitchState) : TypeSwitchState => {
       return state;
   }
 };
-
 
 export default Switch;
 export { SwitchPosition };

@@ -88,13 +88,21 @@ const sizeGuide = {
   xlarge: 48
 };
 
-interface IProps {
-  size: SpinnerSize
-  styling: string
+interface ICustomSpinner {
+  size?: number;
+  baseColor?: string;
+  topColor?: string;
 }
 
-const Spinner : React.FC<IProps> = ({ size = 'medium', styling = 'primary' }) => {
-  const sizeVal = sizeGuide[size];
+interface IProps {
+  size?: SpinnerSize
+  customSize?: number
+  styling: string
+  custom?: ICustomSpinner
+}
+
+const Spinner : React.FC<IProps> = ({ size = 'medium', styling = 'primary', custom }) => {
+  const sizeVal = custom?.size ? custom.size : sizeGuide[size];
   const strokeWidth = sizeVal / 5.333;
   const circleRadius = (sizeVal / 2) - (strokeWidth / 2);
 
