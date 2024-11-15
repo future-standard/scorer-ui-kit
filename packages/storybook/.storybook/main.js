@@ -1,6 +1,11 @@
+/**Updated version with migration guide https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-framework-api */
+
 module.exports = {
-  core: {
-    builder: 'webpack5',
+  framework: {
+    name: "@storybook/react-webpack5",
+    options: {
+      builder: { lazyCompilation: true },
+    },
   },
   stories: [
     '../src/stories/Global/*.stories.tsx',
@@ -19,5 +24,11 @@ module.exports = {
   // https://github.com/styleguidist/react-docgen-typescript/issues/356#issuecomment-857887751
   typescript: {
     reactDocgen: 'react-docgen',
-  }
+  },
+
+  // Up until version 7.0, it was possible to generate the default export of a CSF story by calling a function, or mixing in variables defined in other ES Modules. For instance:  //
+  // To opt-out of the old behavior you can set the storyStoreV7 feature flag to false in main.js.
+  features: {
+    storyStoreV7: false,
+  },
 };
