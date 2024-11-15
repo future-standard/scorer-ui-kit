@@ -150,7 +150,6 @@ const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean,
 
     ${({ activeTheming }) => activeTheming === 'failure' && css`
       background-color: var(--switch-special-failure-inner);
-      box-shadow: none;
     `}
 
     ${({activeTheming, $loading}) => $loading && css`
