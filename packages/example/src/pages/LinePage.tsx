@@ -254,7 +254,7 @@ const Line: React.FC<{}> = () => {
       <Content padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUI options={options} onLineClick={selectLine} src="https://picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw" />
+          <LineUI options={options} onLineClick={selectLine} src="/scorer-ui-kit/images/line-ui-railyard.jpg" />
         </LineSetContext.Provider>
       </Content>
     </Layout>
