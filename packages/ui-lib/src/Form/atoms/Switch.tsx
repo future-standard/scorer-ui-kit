@@ -116,6 +116,11 @@ const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean,
       border-color: var(--switch-special-locked-border);
     `};
 
+    ${({ activeTheming }) => activeTheming === 'failure' && css`
+      background-color: var(--switch-special-failure-background);
+      border-color: var(--switch-special-failure-border);
+    `};
+
     ${({activeTheming, $loading}) => $loading && css`
       background-color: var(--switch-default-${activeTheming}-background);
       border-color: var(--switch-default-${activeTheming}-border);
@@ -141,6 +146,11 @@ const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean,
       ${IconWrapper} svg {
         transform: translateX(-1px);
       }
+    `}
+
+    ${({ activeTheming }) => activeTheming === 'failure' && css`
+      background-color: var(--switch-special-failure-inner);
+      box-shadow: none;
     `}
 
     ${({activeTheming, $loading}) => $loading && css`

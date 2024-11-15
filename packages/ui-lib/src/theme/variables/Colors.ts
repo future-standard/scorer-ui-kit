@@ -801,6 +801,12 @@ export const colorVariables = css`
     --switch-special-locked-border: var(--grey-11);
     --switch-special-locked-inner: transparent;
     --switch-special-locked-icon: var(--grey-11);
+
+    --switch-special-failure-background: var(--warning-8);
+    --switch-special-failure-border: var(--warning-9);
+    --switch-special-failure-inner: var(--white-12);
+    --switch-special-failure-icon: var(--warning-8);
+
   }
 
   .light-theme {
