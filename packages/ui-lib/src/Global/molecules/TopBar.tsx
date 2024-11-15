@@ -245,7 +245,7 @@ const TopBar: React.FC<ITopBar> = ({
           <SearchInput placeholder={searchPlaceholder} />
         </SearchBar> : <div />}
       <RightArea>
-        {badge ? <TopBarBadge {...badge} /> : null}
+        {badge && <TopBarBadge {...badge} />}
         <ButtonArea>
           {customDrawer && (
             <DrawerToggle isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
