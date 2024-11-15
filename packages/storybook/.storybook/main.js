@@ -19,5 +19,6 @@ module.exports = {
   // https://github.com/styleguidist/react-docgen-typescript/issues/356#issuecomment-857887751
   typescript: {
     reactDocgen: 'react-docgen',
-  }
+  },
+  staticDirs: ['../static']
 };
