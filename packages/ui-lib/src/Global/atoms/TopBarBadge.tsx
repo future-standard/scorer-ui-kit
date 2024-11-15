@@ -112,7 +112,6 @@ const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, lin
       const defaultWidth = defaultTextRef.current.getBoundingClientRect().width;
       const linkWidth = linkTextRef.current?.getBoundingClientRect().width || 0;
       const largestWidth = defaultWidth >= linkWidth ? defaultWidth : linkWidth;
-      console.log(defaultWidth, linkWidth, largestWidth);
       setMinWidth(Math.ceil(largestWidth));
       setReady(true);
     }, 100);
