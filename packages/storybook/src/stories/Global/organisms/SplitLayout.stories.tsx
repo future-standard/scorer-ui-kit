@@ -7,13 +7,12 @@ import {
 } from 'scorer-ui-kit';
 
 import styled from 'styled-components';
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
 
 export default {
   title: 'Global/organisms',
   component: GlobalUI,
-  decorators: [
-  ]
+  decorators: [withKnobs],
 };
 
 const Container = styled.div`

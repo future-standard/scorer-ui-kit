@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select, boolean } from "@storybook/addon-knobs";
+import {  text, select, boolean, withKnobs } from "@storybook/addon-knobs";
 import { TextAreaField } from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -10,7 +10,7 @@ const Container = styled.div`
 export default {
   title: 'Form/Input',
   component: TextAreaField,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 

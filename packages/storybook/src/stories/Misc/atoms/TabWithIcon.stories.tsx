@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Tabs, TabList, TabWithIcon } from 'scorer-ui-kit';
-import { text, boolean } from "@storybook/addon-knobs";
+import { text, boolean, withKnobs } from "@storybook/addon-knobs";
 
 export default {
   title: 'Misc/atoms',
   component: TabWithIcon,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 const Container = styled.div``;

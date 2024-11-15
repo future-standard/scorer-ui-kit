@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import {  select } from "@storybook/addon-knobs";
+import {  select, withKnobs } from "@storybook/addon-knobs";
 
 export default {
   title: 'Misc',
-  decorators: []
+  decorators: [withKnobs],
 };
 
 const Container = styled.div`
@@ -14,7 +14,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: var(--columnPadding, 16px);
-  text-rendering: optimizeLegibility; 
+  text-rendering: optimizeLegibility;
 `;
 
 const Item = styled.div<{font: string, weight: number | string, italic?: boolean}>`
@@ -33,7 +33,7 @@ export const _FontSheet = () => {
   const font = select("Font", ['Lato', 'Monorale', 'Noto Sans (JP)'], 'Lato');
 
   return <Container>
-    {font === 'Lato' ? 
+    {font === 'Lato' ?
       <Fragment>
         <Item font={'Lato'} weight={100}>
           This is Lato Hairline
@@ -82,7 +82,7 @@ export const _FontSheet = () => {
         <Item font={'Lato'} weight={600} italic>
           This is Lato SemiBold Italic
         </Item>
-        
+
         <Item font={'Lato'} weight={'bold'}>
           This is Lato Bold
         </Item>
@@ -90,7 +90,7 @@ export const _FontSheet = () => {
         <Item font={'Lato'} weight={'bold'} italic>
           This is Lato Bold Italic
         </Item>
-        
+
         <Item font={'Lato'} weight={800}>
           This is Lato ExtraBold
         </Item>
@@ -106,10 +106,10 @@ export const _FontSheet = () => {
         <Item font={'Lato'} weight={900} italic>
           This is Lato Black Italic
         </Item>
-      </Fragment> 
+      </Fragment>
     : null }
 
-    {font === 'Monorale' ? 
+    {font === 'Monorale' ?
       <Fragment>
         <Item font={'Monorale'} weight={100}>
           This is Monorale Thin
@@ -136,7 +136,7 @@ export const _FontSheet = () => {
         </Item>
 
         <Item font={'Monorale'} weight={400}>
-          This is Monorale 
+          This is Monorale
         </Item>
 
         <Item font={'Monorale'} weight={400} italic>
@@ -169,15 +169,15 @@ export const _FontSheet = () => {
 
         <Item font={'Monorale'} weight={900}>
           This is Monorale Black
-        </Item> 
-      </Fragment> 
+        </Item>
+      </Fragment>
     : null }
 
-    {font === 'Noto Sans (JP)' ? 
+    {font === 'Noto Sans (JP)' ?
       <Fragment>
         Pending.
-      </Fragment> 
+      </Fragment>
     : null }
-    
+
   </Container>;
 };

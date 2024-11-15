@@ -4,13 +4,12 @@ import {
 } from 'scorer-ui-kit';
 
 import styled from 'styled-components';
-import { text, object, boolean } from '@storybook/addon-knobs';
+import { text, object, boolean, withKnobs } from '@storybook/addon-knobs';
 
 export default {
   title: 'Global/molecules',
   component: UtilityHeader,
-  decorators: [
-  ]
+  decorators: [withKnobs],
 };
 
 const Container = styled.div`
@@ -25,37 +24,37 @@ const Container = styled.div`
 `;
 
 export const _UtilityHeader = () => {
-  
+
   const backLink = text("Back Link", "/");
   const showBreadcrumbs = boolean("Show Breadcrumbs", true);
   const breadcrumbs = object("breadcrumbs", [
     {
-      text: 'Examples', 
+      text: 'Examples',
       href:'/'
     },
     {
-      text:'Two', 
+      text:'Two',
       href:'#2'
     },
     {
-      text:'Three', 
+      text:'Three',
       href:'#3'
     },
     {
-      text:'Four', 
+      text:'Four',
       href:'#4'
     },
     {
-      text:'Five', 
+      text:'Five',
       href:'#5'
     }
   ]);
   const showShareLink = boolean("Show Share Link", true);
   const shareLink = text("Share Link", "http://www.example.com/");
-  
+
   return (
     <Container>
-      <UtilityHeader 
+      <UtilityHeader
         backLink={backLink}
         showBreadcrumbs={showBreadcrumbs}
         breadcrumbs={breadcrumbs}

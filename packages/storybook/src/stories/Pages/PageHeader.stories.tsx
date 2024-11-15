@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select, boolean, object } from "@storybook/addon-knobs";
+import {  text, select, boolean, object, withKnobs } from "@storybook/addon-knobs";
 
 import {PageHeader, IHeaderTag, ButtonsStack, IButtonStack} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
@@ -12,7 +12,7 @@ const Container = styled.div`
 export default {
   title: 'Pages/molecules',
   component: PageHeader,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 const defaultTags : IHeaderTag[] = [

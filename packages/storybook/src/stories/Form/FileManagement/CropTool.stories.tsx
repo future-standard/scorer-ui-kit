@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CropTool } from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
-import { text, boolean, number } from "@storybook/addon-knobs";
+import { text, boolean, number, withKnobs } from "@storybook/addon-knobs";
 import photo from '../../assets/placeholder.jpg';
 
 const Container = styled.div`
@@ -17,7 +17,7 @@ const NewImageArea = styled.div``;
 export default {
   title: 'Form/File Management',
   component: CropTool,
-  decorators: [],
+  decorators: [withKnobs],
   escapeHTML: false,
 };
 

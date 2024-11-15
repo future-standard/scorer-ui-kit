@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { text, select } from "@storybook/addon-knobs";
+import { text, select, withKnobs } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import {
   ModalProvider,
@@ -15,7 +15,7 @@ const Container = styled.div``;
 export default {
   title: 'Alerts/Modals',
   components: ConfirmationModal,
-  decorator: []
+  decorators: [withKnobs],
 }
 
 interface IExampleModal {

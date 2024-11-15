@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { text, object, boolean } from "@storybook/addon-knobs";
+import { text, object, boolean, withKnobs } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import { SelectField, PageHeader, SelectWrapper} from 'scorer-ui-kit';
 
 export default {
   title: 'Form/atoms',
   component: SelectField,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 const Container = styled.div`

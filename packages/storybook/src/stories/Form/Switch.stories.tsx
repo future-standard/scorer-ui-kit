@@ -1,12 +1,12 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { text, select, boolean } from "@storybook/addon-knobs";
+import { text, select, boolean, withKnobs } from "@storybook/addon-knobs";
 import {Switch} from 'scorer-ui-kit';
 
 export default {
   title: 'Form/atoms',
   component: Switch,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 export const _Switch = () => {

@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { AvatarUploader } from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
-import { text, boolean } from "@storybook/addon-knobs";
+import { text, boolean, withKnobs } from "@storybook/addon-knobs";
 
 const Container = styled.div``;
 
 export default {
   title: 'Form/File Management',
   component: AvatarUploader,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 export const _AvatarUploader = () => {

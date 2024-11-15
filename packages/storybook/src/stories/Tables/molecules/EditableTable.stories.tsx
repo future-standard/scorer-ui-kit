@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import { object } from "@storybook/addon-knobs";
+import { object, withKnobs } from "@storybook/addon-knobs";
 
 
 import {TypeTable as EditableTable,
@@ -20,7 +20,7 @@ import {
 export default {
   title: 'Tables/molecules',
   component: EditableTable,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 const Container = styled.div`

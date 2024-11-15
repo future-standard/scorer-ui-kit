@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { text, boolean, select } from "@storybook/addon-knobs";
+import { text, boolean, select, withKnobs } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -21,7 +21,7 @@ const Container = styled.div`
 export default {
   title: 'Alerts/atoms',
   components: useNotification,
-  decorator: []
+  decorators: [withKnobs],
 }
 
 const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {

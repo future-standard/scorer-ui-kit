@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { object, boolean, text } from "@storybook/addon-knobs";
+import { object, boolean, text, withKnobs } from "@storybook/addon-knobs";
 import { TypeTable, ModalProvider } from 'scorer-ui-kit';
 
 import {
@@ -17,7 +17,7 @@ const Container = styled.div`
 export default {
   title: 'Tables/molecules',
   component: TypeTable,
-  decorators: [],
+  decorators: [withKnobs],
   parameters: {
     jsx: { skip: 2 }
   }

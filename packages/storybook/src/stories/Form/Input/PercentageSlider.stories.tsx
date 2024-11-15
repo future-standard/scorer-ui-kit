@@ -1,6 +1,6 @@
 import React from 'react';
 // import { action } from '@storybook/addon-actions';
-import { boolean, number, object, text} from "@storybook/addon-knobs";
+import { boolean, number, object, text, withKnobs} from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import {PercentageSlider, ISliderMark, IFeedbackColor} from 'scorer-ui-kit';
@@ -9,7 +9,7 @@ import {PercentageSlider, ISliderMark, IFeedbackColor} from 'scorer-ui-kit';
 export default {
   title: 'Form/Input',
   component: PercentageSlider,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 const Container = styled.div`

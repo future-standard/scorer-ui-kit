@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {InputFileButton} from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
-import { boolean, select, text} from "@storybook/addon-knobs";
+import { boolean, select, text, withKnobs} from "@storybook/addon-knobs";
 
 const Container = styled.div`
     margin: 20px;
@@ -11,7 +11,7 @@ const Container = styled.div`
 export default {
   title: 'Form/File Management',
   component: InputFileButton,
-  decorators:[]
+  decorators: [withKnobs],
 };
 
 export const _InputFileButton = () => {

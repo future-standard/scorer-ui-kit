@@ -1,12 +1,12 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import {  boolean, text } from "@storybook/addon-knobs";
+import {  boolean, text, withKnobs } from "@storybook/addon-knobs";
 import {TableHeaderTitle} from 'scorer-ui-kit';
 
 export default {
   title: 'Tables/atoms',
   component: TableHeaderTitle,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 const Container = styled.div`

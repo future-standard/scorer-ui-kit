@@ -1,12 +1,12 @@
 import { action } from '@storybook/addon-actions';
-import { boolean, number, object, text } from '@storybook/addon-knobs';
+import { boolean, number, object, text, withKnobs } from '@storybook/addon-knobs';
 import React, { useEffect, useState } from 'react';
 import {Pagination}  from 'scorer-ui-kit';
 
 export default {
   title: 'Misc/Molecules',
   component: Pagination,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 const ItemsOptions = [

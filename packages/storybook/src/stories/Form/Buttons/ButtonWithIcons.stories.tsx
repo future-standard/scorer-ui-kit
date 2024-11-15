@@ -1,13 +1,13 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import {  text, select, boolean } from "@storybook/addon-knobs";
+import {  text, select, boolean, withKnobs } from "@storybook/addon-knobs";
 import {ButtonWithIcon} from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';
 
 export default {
   title: 'Form/Buttons',
   component: ButtonWithIcon,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 export const _WithIcon = () => {

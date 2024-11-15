@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { text, select, boolean } from "@storybook/addon-knobs";
+import { text, select, boolean, withKnobs } from "@storybook/addon-knobs";
 
 import {PageTitle} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
@@ -12,7 +12,7 @@ const Container = styled.div`
 export default {
   title: 'Pages/atoms',
   component: PageTitle,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 export const _PageTitle = () => {

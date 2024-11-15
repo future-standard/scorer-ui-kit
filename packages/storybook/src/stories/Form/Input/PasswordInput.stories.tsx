@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select, boolean } from "@storybook/addon-knobs";
+import {  text, select, boolean, withKnobs } from "@storybook/addon-knobs";
 import {PasswordField} from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -10,7 +10,7 @@ const Container = styled.div`
 export default {
   title: 'Form/Input',
   component: PasswordField,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 export const PasswordInput = () => {
@@ -25,12 +25,12 @@ export const PasswordInput = () => {
   const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
 
   return <Container>
-    <PasswordField 
-      name={inputName} 
-      label={inputLabel} 
-      defaultValue={inputValue} 
-      placeholder={inputPlaceholder} 
-      fieldState={inputState} 
+    <PasswordField
+      name={inputName}
+      label={inputLabel}
+      defaultValue={inputValue}
+      placeholder={inputPlaceholder}
+      fieldState={inputState}
       showFeedback={showFeedback}
       feedbackMessage={inputFeedback}
       required={fieldRequired} />

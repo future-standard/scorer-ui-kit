@@ -29,7 +29,7 @@ import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
 
-import { text, object, boolean } from '@storybook/addon-knobs';
+import { text, object, boolean, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 export default {
@@ -38,8 +38,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [
-  ]
+  decorators: [withKnobs],
 };
 
 const Container = styled.div`
@@ -156,7 +155,7 @@ const Accounts = () => (
   <ExampleContentBlock>
     <h2>Example</h2>
     <p>Here is a list of accounts</p>
-  </ExampleContentBlock>  
+  </ExampleContentBlock>
 );
 
 const Billing = () => (

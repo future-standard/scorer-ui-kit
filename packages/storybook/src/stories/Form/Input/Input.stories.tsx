@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  text, select, boolean } from "@storybook/addon-knobs";
+import {  text, select, boolean, withKnobs } from "@storybook/addon-knobs";
 import {TextField} from 'scorer-ui-kit';
 
 const Container = styled.div`
@@ -10,7 +10,7 @@ const Container = styled.div`
 export default {
   title: 'Form/Input',
   component: TextField,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 export const TextInput = () => {
@@ -24,14 +24,14 @@ export const TextInput = () => {
   const fieldRequired = boolean("Required", false);
 
   return <Container>
-    <TextField 
-      id={inputName} 
-      name={inputName} 
-      label={inputLabel} 
-      placeholder={inputPlaceholder} 
-      fieldState={inputState} 
+    <TextField
+      id={inputName}
+      name={inputName}
+      label={inputLabel}
+      placeholder={inputPlaceholder}
+      fieldState={inputState}
       showFeedback={showFeedback}
-      feedbackMessage={inputFeedback} 
+      feedbackMessage={inputFeedback}
       required={fieldRequired} />
     </Container>;
 };

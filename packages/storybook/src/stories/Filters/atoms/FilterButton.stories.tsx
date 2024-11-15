@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, select, boolean } from '@storybook/addon-knobs';
+import { text, select, boolean, withKnobs } from '@storybook/addon-knobs';
 import { FilterButton } from 'scorer-ui-kit';
 import styled from 'styled-components';
 import { generateIconList } from '../../helpers';
@@ -7,7 +7,7 @@ import { generateIconList } from '../../helpers';
 export default {
   title: 'Filters/atoms',
   component: FilterButton,
-  decorators: []
+  decorators: [withKnobs],
 };
 
 const Content = styled.div``;

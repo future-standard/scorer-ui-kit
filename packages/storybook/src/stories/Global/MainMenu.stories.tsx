@@ -3,14 +3,12 @@ import React from 'react';
 import { MainMenu, Layout } from 'scorer-ui-kit';
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
-import { text, object, boolean } from '@storybook/addon-knobs';
+import { text, object, boolean, withKnobs } from '@storybook/addon-knobs';
 
 export default {
   title: 'Global',
   component: MainMenu,
-  decorators: [
-    // RouterDecorator
-  ]
+  decorators: [withKnobs],
 };
 
 export const _MainMenu = () => {
