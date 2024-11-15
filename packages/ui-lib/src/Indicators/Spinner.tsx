@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { keyframes } from 'styled-components';
-import { TypeButtonDesigns, TypeButtonSizes} from "../Form";
 
 const circumference = (radius : number) => {
   return 2 * 3.1416 * radius;
@@ -48,23 +47,6 @@ const RotatingCircle = styled.circle<{ r: number, styling: string, customColor?:
 `;
 
 export type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-
-
-export const buttonSpinnerSize = (buttonSize: TypeButtonSizes) : SpinnerSize  => {
-  switch (buttonSize) {
-    case 'xsmall':
-    case 'small':
-      return 'xsmall';
-      break;
-
-    case 'large':
-      return 'small';
-
-    default:
-      return 'small';
-      break;
-  }
-};
 
 export const getButtonDesign = (value: string) => {
 
