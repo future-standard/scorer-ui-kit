@@ -16,6 +16,9 @@
 
 ## Development
 
+The version 2 is preferred to be run node version 18 and above due [Storybook 8 support requirement](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#dropping-support-for-nodejs-16).
+
+
 If you want to run the project follow the next steps
 
 - Clone repository
@@ -23,7 +26,7 @@ If you want to run the project follow the next steps
   git clone git@github.com:future-standard/scorer-ui-kit.git
 ```
 
-- Install with npm version 8 node 16 or above from the root folder
+- Install with npm version 10 node 18 or above from the root folder
 ```
   npm install
 ```
@@ -90,12 +93,12 @@ Please note however that the icon set included in this software is included unde
 3. Push the tag to Github (this should cause the release)
 
 ```
-// Updating to v1.5.2
+// Updating to v2.5.2
 
-  git commit -m "Bump 1.5.2"
+  git commit -m "Bump 2.5.2"
   grep version package.json
-  ~  "version": "1.5.2",
-  git tag v1.5.2
-  git push origin v1.5.2
+  ~  "version": "2.5.2",
+  git tag v2.5.2
+  git push origin v2.5.2
 ```
 
