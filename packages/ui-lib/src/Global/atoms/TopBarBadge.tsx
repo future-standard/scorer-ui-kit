@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ITopBarBadge } from '..';
@@ -58,14 +58,6 @@ const ContainerLinked = styled.div<{themeColor?: string}>`
     `};
 
     &:hover {
-      ${DefaultText}{
-        display: none;
-      }
-
-      ${LinkText}{
-        display: inline-block;
-      }
-
       ${({themeColor}) => themeColor ? css`
         background-color: var(--${themeColor}-9);
         border: 2px solid var(--${themeColor}-9);
@@ -87,13 +79,9 @@ const Container = styled.div<{ready: boolean, minWidth: number}>`
 
     transition: opacity var(--speed-fast) var(--easing-primary-in-out);
 
-    ${LinkText}{
-      display: ${ready ? 'none' : 'inline-block'};;
-    }
-
     ${DefaultText}, ${LinkText}{
       /* Required to accurately measure container sizes and ensure hover doesn't resize. */
-      ${ready ? `min-width: ${minWidth}px;` : 'position: absolute;'};
+      ${ready && `min-width: ${minWidth}px;`};
     }
   `};
 `;
@@ -104,6 +92,7 @@ const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, lin
   const linkTextRef = useRef() as React.MutableRefObject<HTMLSpanElement>;
 
   const [ready, setReady] = useState<boolean>(false);
+  const [hover, setHover] = useState<boolean>(false);
   const [minWidth, setMinWidth] = useState<number>(0);
 
   useEffect(() => {
@@ -123,15 +112,35 @@ const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, lin
   let badgeComponent;
 
   if(linkTo){
-    badgeComponent = <ContainerLinked themeColor={color}><Link to={linkTo}>{defaultTextElement}{linkTextElement}</Link></ContainerLinked>;
+    badgeComponent = <ContainerLinked themeColor={color}>
+      <Link to={linkTo}>
+        { !ready ? <Fragment>
+          {defaultTextElement}
+          {linkTextElement}
+        </Fragment>
+        : <Fragment>
+          {!hover ? defaultTextElement : linkTextElement }
+        </Fragment>}
+      </Link>
+    </ContainerLinked>;
   } else if(linkHref){
-    badgeComponent = <ContainerLinked themeColor={color}><a href={linkHref}>{defaultTextElement}{linkTextElement}</a></ContainerLinked>;
+    badgeComponent = <ContainerLinked themeColor={color}>
+      <a href={linkHref}>
+      { !ready ? <Fragment>
+          {defaultTextElement}
+          {linkTextElement}
+        </Fragment>
+        : <Fragment>
+          {!hover ? defaultTextElement : linkTextElement }
+        </Fragment>}
+      </a>
+    </ContainerLinked>;
   } else {
     badgeComponent = <ContainerStatic themeColor={color}>{defaultTextElement}</ContainerStatic>;
   }
   
   return (
-    <Container {...{ready, minWidth}}>
+    <Container {...{ready, minWidth}} onPointerEnter={ () => ready && setHover(true) } onPointerLeave={ () => ready && setHover(false) }>
       { badgeComponent }
     </Container>
   );
