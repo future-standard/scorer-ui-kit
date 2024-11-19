@@ -10,12 +10,13 @@ import {
 } from 'scorer-ui-kit';
 
 import styled from 'styled-components';
-import { select, withKnobs } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
 
 export default {
   title: 'Global/organisms',
   component: GlobalUI,
-  decorators: [withKnobs],
+  decorators: [
+  ]
 };
 
 const Container = styled.div`
@@ -41,7 +42,7 @@ const ExampleContent : IHeaderContent = {
     introductionText='Thanks for using our UI library.'
     icon="Home"
   />,
-  TabsElementArea:
+  TabsElementArea: 
     <TabList defaultTabId='tab1'>
       <Tab tabFor='tab1'>Home</Tab>
       <Tab tabFor='tab2'>Example One</Tab>
@@ -55,20 +56,20 @@ export const _ContentLayout = () => {
 
   return (
     <Container>
-
+      
         {layoutType === 'default' ?
           <ContentLayout layout="default" HeaderContent={ExampleContent}>
             <FlexContentPlaceholder title='Content Area' />
           </ContentLayout>
         : null }
 
-        {layoutType === 'dashboard' ?
+        {layoutType === 'dashboard' ? 
           <ContentLayout layout="dashboard">
             <FlexContentPlaceholder title='Content Area' />
           </ContentLayout>
         : null }
 
-        {layoutType === 'fullscreen' ?
+        {layoutType === 'fullscreen' ? 
           <ContentLayout layout="fullscreen">
             <FlexContentPlaceholder title='Content Area' />
           </ContentLayout>

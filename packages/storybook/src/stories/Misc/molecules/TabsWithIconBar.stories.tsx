@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TabsWithIconBar, ITabIcon, PageHeader } from 'scorer-ui-kit';
-import { text, object, withKnobs } from "@storybook/addon-knobs";
+import { text, object } from "@storybook/addon-knobs";
 
 export default {
   title: 'Misc/molecules',
   component: TabsWithIconBar,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const PADDING_LEFT = '87px';

@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import styled, {css} from 'styled-components';
 import { CameraPanels, ICameraPanel, CameraPanelWrapper, TagList } from 'scorer-ui-kit';
-import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
+import { boolean, select, text } from '@storybook/addon-knobs';
 import { generateIconList } from '../../helpers';
 import Photo from '../../assets/placeholder.jpg';
 import { action } from '@storybook/addon-actions';
@@ -9,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 export default {
   title: 'CameraPanels/organisms',
   component: CameraPanels,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div<{ showCustomComponent?: boolean }>`

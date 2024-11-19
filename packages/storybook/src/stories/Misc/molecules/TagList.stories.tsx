@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import {TagList, ITag} from 'scorer-ui-kit';
-import {object, withKnobs} from "@storybook/addon-knobs";
+import {object} from "@storybook/addon-knobs";
 
 
 export default {
   title: 'Misc/Molecules',
   component: TagList,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {DropArea} from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
-import { text, withKnobs} from "@storybook/addon-knobs";
+import { text} from "@storybook/addon-knobs";
 
 const Container = styled.div`
   max-width: 500px;
@@ -11,7 +11,7 @@ const Container = styled.div`
 export default {
   title: 'Form/File Management',
   component: DropArea,
-  decorators: [withKnobs],
+  decorators:[]
 };
 
 export const _DropArea = () => {
@@ -19,7 +19,7 @@ export const _DropArea = () => {
   const textVal = text('Text','Drop a file');
   const heightVal = text('Height', '300px');
   const showValue = action('Input Callback');
-
+  
 
   const myCallback = (newFiles: FileList) => {
     console.log('file', newFiles);
@@ -28,7 +28,7 @@ export const _DropArea = () => {
     } else {
       showValue(newFiles);
     }
-
+    
   };
 
   return(

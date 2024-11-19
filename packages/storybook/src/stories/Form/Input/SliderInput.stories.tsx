@@ -1,6 +1,6 @@
 import React from 'react';
 // import { action } from '@storybook/addon-actions';
-import { boolean, number, object, withKnobs } from "@storybook/addon-knobs";
+import { boolean, number, object } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import {SliderInput, ISliderMark} from 'scorer-ui-kit';
@@ -9,7 +9,7 @@ import {SliderInput, ISliderMark} from 'scorer-ui-kit';
 export default {
   title: 'Form/Input',
   component: SliderInput,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div`

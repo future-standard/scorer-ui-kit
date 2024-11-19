@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { IFilterItem, SortDropdown } from 'scorer-ui-kit';
-import { boolean, object, select, withKnobs } from '@storybook/addon-knobs';
+import { boolean, object, select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'Filters/molecules',
   component: SortDropdown,
-  decorators: [withKnobs],
+  decorators: [],
   parameters: {
     jsx: { skip: 1 }
   }

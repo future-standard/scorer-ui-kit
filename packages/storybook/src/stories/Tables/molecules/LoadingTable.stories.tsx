@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
-import {boolean, text, object, withKnobs} from "@storybook/addon-knobs";
+import {boolean, text, object} from "@storybook/addon-knobs";
 
 import {TypeTable as LoadingTable } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
@@ -12,8 +12,7 @@ import {
 
 export default {
   title: 'Tables/molecules',
-  component: LoadingTable,
-  decorators: [withKnobs],
+  component: LoadingTable
 };
 
 const Container = styled.div`

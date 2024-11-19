@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { select, object, boolean, text, withKnobs } from "@storybook/addon-knobs";
+import { select, object, boolean, text } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -51,7 +51,7 @@ import { ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 export default {
   title: 'Filters/Organism',
   component: 'FilterBar',
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div`

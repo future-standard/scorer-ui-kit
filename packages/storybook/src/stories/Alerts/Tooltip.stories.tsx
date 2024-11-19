@@ -1,4 +1,4 @@
-import { boolean, select, text, withKnobs } from "@storybook/addon-knobs";
+import { boolean, select, text } from "@storybook/addon-knobs";
 import React, { useRef } from "react";
 import { PageTitle, Tooltip } from "scorer-ui-kit";
 import { generateIconList } from "../helpers";
@@ -7,7 +7,7 @@ import styled from "styled-components";
 export default {
   title: 'Alerts/atoms',
   component: Tooltip,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div``;

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { object, text, boolean, withKnobs } from "@storybook/addon-knobs";
+import { object, text, boolean } from "@storybook/addon-knobs";
 import { TopBar, ICustomDrawer, INotificationItem, INotificationsHistory, useThemeToggle } from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
 
@@ -14,7 +14,7 @@ const Container = styled.div`
 export default {
   title: 'Global',
   component: TopBar,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const MyCustomDrawer: ReactElement = <h1>Hello Drawer</h1>;

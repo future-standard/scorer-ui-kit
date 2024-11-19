@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { boolean, text, select, number, withKnobs } from "@storybook/addon-knobs";
+import { boolean, text, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import {
   FilterDropdown,
@@ -20,7 +20,7 @@ import { generateIconList } from '../../helpers';
 export default {
   title: 'Filters/molecules',
   component: FilterDropdown,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Content = styled.div``;

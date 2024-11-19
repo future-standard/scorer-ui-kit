@@ -8,12 +8,11 @@ import {
   Button,
   IModal,
 } from 'scorer-ui-kit';
-import { withKnobs } from '@storybook/addon-knobs';
 
 export default {
   title: 'Alerts/Modals',
   components: LoginModalExample,
-  decorators: [withKnobs],
+  decorator: []
 }
 
 const Container = styled.div``;

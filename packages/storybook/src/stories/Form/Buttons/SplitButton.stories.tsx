@@ -1,5 +1,5 @@
 import { action } from "@storybook/addon-actions";
-import { boolean, select, withKnobs } from "@storybook/addon-knobs";
+import { boolean, select } from "@storybook/addon-knobs";
 import React, { ReactElement, useEffect, useState } from "react";
 import { ISplitButtonProps, ModalProvider, SplitButton, useModal } from 'scorer-ui-kit';
 import styled from "styled-components";
@@ -7,7 +7,7 @@ import styled from "styled-components";
 export default {
   title: 'Form/Buttons',
   component: SplitButton,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div`

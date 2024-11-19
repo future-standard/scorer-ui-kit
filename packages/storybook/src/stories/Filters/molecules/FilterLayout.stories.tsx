@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { FilterLayout } from 'scorer-ui-kit';
-import { select, boolean, withKnobs } from '@storybook/addon-knobs';
+import { select, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'Filters/molecules',
   component: FilterLayout,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div``;

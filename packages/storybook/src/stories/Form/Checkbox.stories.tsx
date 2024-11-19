@@ -1,12 +1,12 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean, withKnobs } from "@storybook/addon-knobs";
+import { boolean } from "@storybook/addon-knobs";
 import {Checkbox} from 'scorer-ui-kit';
 
 export default {
   title: 'Form/atoms',
   component: Checkbox,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 export const _Checkbox = () => {

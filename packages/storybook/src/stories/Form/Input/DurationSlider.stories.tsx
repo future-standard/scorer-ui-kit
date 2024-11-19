@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import { action } from '@storybook/addon-actions';
-import { boolean, number, object, text, select, withKnobs } from "@storybook/addon-knobs";
+import { boolean, number, object, text, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import { DurationSlider, ISliderMark, PageHeader, ITimeUnit } from 'scorer-ui-kit';
@@ -9,7 +9,7 @@ import { DurationSlider, ISliderMark, PageHeader, ITimeUnit } from 'scorer-ui-ki
 export default {
   title: 'Form/Input',
   component: DurationSlider,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div`

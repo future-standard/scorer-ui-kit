@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { text, select, withKnobs } from "@storybook/addon-knobs";
+import { text, select } from "@storybook/addon-knobs";
 import {EditCell} from 'scorer-ui-kit';
 import {sleep} from '../../helpers';
 
 export default {
   title: 'Tables/atoms',
   component: EditCell,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div`

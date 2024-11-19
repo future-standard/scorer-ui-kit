@@ -1,6 +1,6 @@
 import React, {useState, useCallback, ReactElement} from 'react';
 import styled from 'styled-components';
-import { object, boolean, withKnobs } from "@storybook/addon-knobs";
+import { object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 
@@ -31,7 +31,7 @@ const TimeText = styled.div`
 export default {
   title: 'Tables/molecules',
   component: TypeTableCustom,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const columnConfigSample : ITableColumnConfig[] = [

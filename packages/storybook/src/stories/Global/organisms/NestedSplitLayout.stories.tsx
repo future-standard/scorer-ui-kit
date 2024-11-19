@@ -1,4 +1,3 @@
-import { withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 import {
   GlobalUI,
@@ -12,7 +11,8 @@ import styled from 'styled-components';
 export default {
   title: 'Global/organisms',
   component: GlobalUI,
-  decorators: [withKnobs],
+  decorators: [
+  ]
 };
 
 const Container = styled.div`

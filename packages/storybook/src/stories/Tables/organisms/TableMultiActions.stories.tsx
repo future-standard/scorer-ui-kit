@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import MultiActionsExample from "./MultiActionsExample";
-import { select, withKnobs } from "@storybook/addon-knobs";
+import { select } from "@storybook/addon-knobs";
 import {
   ModalProvider,
   TypeTable,
@@ -16,7 +16,7 @@ const Container = styled.div`
 export default {
   title: 'Tables/molecules',
   component: TypeTable,
-  decorators: [withKnobs],
+  decorators: [],
   parameters: {
     jsx: { skip: 2 }
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {withKnobs,  text, select, boolean } from "@storybook/addon-knobs";
+import {text, select, boolean } from "@storybook/addon-knobs";
 
 import {AlertBar} from 'scorer-ui-kit';
 
@@ -10,8 +10,7 @@ const Container = styled.div`
 
 export default {
   title: 'Alerts/atoms',
-  component: AlertBar,
-  decorators: [withKnobs],
+  component: AlertBar
 };
 
 export const _AlertBar = () => {

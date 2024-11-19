@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { select, text, withKnobs } from '@storybook/addon-knobs';
+import { select, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
 
@@ -11,7 +11,7 @@ const Container = styled.div`
 export default {
   title: 'Filters/molecules',
   component: DatePicker,
-  decorators: [withKnobs],
+  decorators: [],
   parameters: {
     jsx: { skip: 1 }
   }

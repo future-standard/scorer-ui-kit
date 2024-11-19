@@ -6,12 +6,12 @@ import {
   MediaBox,
   Button
 } from 'scorer-ui-kit';
-import { boolean, text, withKnobs } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 
 export default {
   title: 'Alerts/Modals',
   components: MediaBox,
-  decorators: [withKnobs],
+  decorator: []
 }
 
 const Container = styled.div``;

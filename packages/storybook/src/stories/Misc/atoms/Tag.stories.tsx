@@ -1,5 +1,5 @@
 import React from 'react';
-import {select, text, number, boolean, withKnobs} from "@storybook/addon-knobs";
+import {select, text, number, boolean} from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {Tag} from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';
@@ -7,7 +7,7 @@ import { generateIconList } from '../../helpers';
 export default {
   title: 'Misc/atoms',
   component: Tag,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 

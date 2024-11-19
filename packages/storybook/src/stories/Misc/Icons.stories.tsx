@@ -1,5 +1,5 @@
 import React from 'react';
-import {  select, boolean, number, withKnobs } from "@storybook/addon-knobs";
+import {  select, boolean, number } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {IconSVGs} from '@future-standard/icons';
 import {Icon} from 'scorer-ui-kit';
@@ -10,7 +10,7 @@ import { generateIconList } from '../helpers';
 export default {
   title: 'Misc',
   component: Icon,
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div`

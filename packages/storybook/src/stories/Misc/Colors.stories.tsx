@@ -1,10 +1,9 @@
-import { withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 import styled from 'styled-components';
 
 export default {
   title: 'Misc',
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div`
@@ -56,7 +55,7 @@ export const _Colors = () => {
 
   const palette : string[] = ['primary', 'secondary', 'grey', 'info', 'success', 'caution', 'warning', 'orange', 'red', 'green', 'black', 'white'];
   const references : string[] = ['1','2','3','4','5','6','7','8','9','10','11','12'];
-
+ 
   const generatePalette = (name: string, alpha?: boolean) => {
     return references.map((iteration) => {
       const $color = `--${name}-${alpha ? 'a' : ''}${iteration}`;

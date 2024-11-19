@@ -1,6 +1,6 @@
 import React, {useState, useEffect, ReactElement} from 'react';
 import styled from 'styled-components';
-import { text, boolean, withKnobs } from "@storybook/addon-knobs";
+import { text, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -13,7 +13,7 @@ import {
 export default {
   title: 'Alerts/Modals',
   components: ModalProvider,
-  decorators: [withKnobs],
+  decorator: []
 }
 
 const Container = styled.div``;

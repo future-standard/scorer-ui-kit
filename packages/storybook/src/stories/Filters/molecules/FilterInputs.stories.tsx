@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
-import { select, boolean, number, withKnobs } from "@storybook/addon-knobs";
+import { select, boolean, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import {
   FilterInputs,
@@ -35,7 +35,7 @@ import {
 export default {
   title: 'Filters/molecules',
   component: 'FilterInputs',
-  decorators: [withKnobs],
+  decorators: []
 };
 
 const Container = styled.div``;
