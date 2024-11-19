@@ -1,17 +1,19 @@
 import React from 'react';
+import { Preview } from '@storybook/react';
 import { themes } from '@storybook/theming';
 import { ThemeProvider } from 'styled-components';
-import { useDarkMode } from 'storybook-dark-mode'
-import {defaultTheme, ThemeVariables } from 'scorer-ui-kit';
+import { useDarkMode } from 'storybook-dark-mode';
+import {withKnobs} from "@storybook/addon-knobs";
+import { MemoryRouter as Router } from 'react-router-dom';
+import { defaultTheme, ThemeVariables } from 'scorer-ui-kit';
 import Fonts from '../src/fonts';
-import { MemoryRouter as Router } from 'react-router-dom'
 import Style from '../src/style';
-// const { addDecorator } = require('@storybook/react');
-// const { jsxDecorator } = require('storybook-addon-jsx');
 
-// // Add JSX to all components
+// const { addDecorator } = require('@storybook/react'); // Has been deprecated, need alternative
+// import { jsxDecorator } from 'storybook-addon-jsx';
 // addDecorator(jsxDecorator); // review this still works on Storybook 8
 
+// Router Decorator
 const RouterDecorator = story => (
   <Router
     initialEntries={["/welcome"]}
@@ -21,8 +23,8 @@ const RouterDecorator = story => (
   </Router>
 );
 
+// Theme Decorator
 const ThemeDecorator = story => {
-
   const isDarkEnabled = useDarkMode();
   localStorage.isDarkThemeEnabled = isDarkEnabled;
 
@@ -44,18 +46,15 @@ const ThemeDecorator = story => {
   )
 };
 
-export const decorators = [
-  ThemeDecorator,
-  RouterDecorator,
-];
-
-
-
-export const parameters = {
-  darkMode: {
-    // Override the default dark theme
-    dark: { ...themes.dark, appBg: '#252626' },
-    // Override the default light theme
-    light: { ...themes.normal, appBg: '#efeff3' }
-  }
+// Preview configuration
+const preview: Preview = {
+  parameters: {
+    darkMode: {
+      dark: { ...themes.dark, appBg: '#252626' },
+      light: { ...themes.normal, appBg: '#efeff3' },
+    },
+  },
+  decorators: [withKnobs, ThemeDecorator, RouterDecorator],
 };
+
+export default preview;
