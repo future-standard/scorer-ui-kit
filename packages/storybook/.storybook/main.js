@@ -13,7 +13,7 @@ module.exports = {
     '@storybook/addon-actions',
     '@storybook/addon-links',
     '@storybook/addon-knobs',
-    'storybook-dark-mode/register',
+    'storybook-dark-mode',
     'storybook-addon-jsx/register',
   ]
 }
