@@ -8,6 +8,7 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import { defaultTheme, ThemeVariables } from 'scorer-ui-kit';
 import Fonts from '../src/fonts';
 import Style from '../src/style';
+const { withJsx } = require('@mihkeleidast/storybook-addon-source')
 
 // const { addDecorator } = require('@storybook/react'); // Has been deprecated, need alternative
 // import { jsxDecorator } from 'storybook-addon-jsx';
@@ -53,8 +54,9 @@ const preview: Preview = {
       dark: { ...themes.dark, appBg: '#252626' },
       light: { ...themes.normal, appBg: '#efeff3' },
     },
+    jsx: { skip: 1 }
   },
-  decorators: [withKnobs, ThemeDecorator, RouterDecorator],
+  decorators: [withJsx, withKnobs, ThemeDecorator, RouterDecorator],
 };
 
 export default preview;
