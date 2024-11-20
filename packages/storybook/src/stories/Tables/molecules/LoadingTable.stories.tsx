@@ -12,7 +12,8 @@ import {
 
 export default {
   title: 'Tables/molecules',
-  component: LoadingTable
+  component: LoadingTable,
+  decorators: []
 };
 
 const Container = styled.div`

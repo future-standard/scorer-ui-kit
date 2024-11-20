@@ -9,9 +9,9 @@ import { defaultTheme, ThemeVariables } from 'scorer-ui-kit';
 import Fonts from '../src/fonts';
 import Style from '../src/style';
 
-// const { addDecorator } = require('@storybook/react'); // Has been deprecated, need alternative
+// const { addDecorator } = require('@storybook/react'); // Has been deprecated, need alternative or wait for update
 // import { jsxDecorator } from 'storybook-addon-jsx';
-// addDecorator(jsxDecorator); // review this still works on Storybook 8
+// addDecorator(jsxDecorator);
 
 // Router Decorator
 const RouterDecorator = story => (
