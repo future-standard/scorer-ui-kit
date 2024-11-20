@@ -1,5 +1,3 @@
-/**Updated version with migration guide https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-framework-api */
-
 module.exports = {
   framework: {
     name: "@storybook/react-webpack5",
@@ -14,6 +12,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-knobs',
     'storybook-dark-mode',
-    'storybook-addon-jsx/register',
+    // '@mihkeleidast/storybook-addon-source' is a temporary replacement for 'storybook-addon-jsx',
+    '@mihkeleidast/storybook-addon-source' /// https://github.com/dhis2/ui/pull/1607
   ]
 }
