@@ -29,19 +29,17 @@ START_RANGE.setDate(0);
 START_RANGE.setDate(START_RANGE.getDate() - 20);
 const END_RANGE: Date = new Date();
 END_RANGE.setDate(1);
-END_RANGE.setDate(END_RANGE.getDate() + 70);
+END_RANGE.setDate(END_RANGE.getDate() + 60);
 
 
 const TODAY: Date = new Date();
-const START: Date = new Date();
-const END: Date = new Date();
-START.setDate(TODAY.getDate() - 4);
-END.setDate(TODAY.getDate() + 4);
+const TWO_WEEKS_BEFORE: Date = new Date();
+TWO_WEEKS_BEFORE.setDate(TODAY.getDate() - 15);
 
 
 const initialValue = {
-  start: START,
-  end: END
+  start: TWO_WEEKS_BEFORE,
+  end: TODAY
 }
 const datesRange = {
   start: START_RANGE,
@@ -58,7 +56,7 @@ export const _DatePicker = () => {
   const timeZoneTitle = text('Time Zone Title', 'Timezone');
   const timeZoneValueTitle = text('Time Zone Value', 'JST');
   const updateCallback = action('Date / Time Updated');
-  const sendRange = boolean('Send Available Range', false);
+  const sendRange = boolean('Send Available Range', true);
   const availableRangeDates = object('Available Range', datesRange);
 
   return (
