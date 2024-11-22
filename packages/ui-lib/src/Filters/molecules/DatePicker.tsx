@@ -262,8 +262,23 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
   `}
 
   &:disabled {
-    color: var(--grey-6) !important;
+    color: var(--grey-6);
     cursor: not-allowed;
+
+    ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
+      color: var(--white-1);
+      background: var(--red-a9);
+    `}
+
+    ${({ state }) => (state === 'inside') && css`
+      color: var(--white-1);
+      background: var(--red-a7);
+      &:nth-child(7n+1), &:nth-child(7n){
+        &::after {
+          background: var(--red-a7);
+        }
+      }
+    `};
   }
 
 `;
@@ -486,7 +501,16 @@ const DatePicker: React.FC<IDatePicker> = ({
             return (
               <CalRow key={index}>
                 {days.map((day, index) => {
-                  return <CalCellB key={index} disabled={isDayOutOfRange(day, availableRange)} onClick={() => onCellClick(day)} state={cellState(day, selectedRange)} thisMonth={isSameMonth(day, focusedMonth)} isToday={isToday(day)}>{format(day, "d")}</CalCellB>;
+                  return (
+                    <CalCellB
+                      key={index}
+                      disabled={isDayOutOfRange(day, availableRange)}
+                      onClick={() => onCellClick(day)}
+                      state={cellState(day, selectedRange)}
+                      thisMonth={isSameMonth(day, focusedMonth)}
+                      isToday={isToday(day)}>{format(day, "d")}
+                    </CalCellB>
+                  );
                 })}
               </CalRow>
             );
