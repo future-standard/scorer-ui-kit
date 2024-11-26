@@ -117,6 +117,7 @@ export interface IMenuTop {
     copySuccessMessage?: string,
     includeCopyTitle?: boolean
     hasUserDrawerFooter?: boolean
+    badge?: ITopBarBadge;
   }
 
   export interface INotificationItem {
@@ -132,4 +133,12 @@ export interface IMenuTop {
     noNotificationsText?: string
     readNotificationsText?: string
     unreadNotificationsText?: string
+  }
+
+  export interface ITopBarBadge {
+    text: string;
+    color?: string;
+    linkHref?: string;
+    linkTo?: string;
+    linkText?: string;
   }

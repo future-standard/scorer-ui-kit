@@ -57,6 +57,7 @@ import {
   DatePicker,
   DateInterval,
   isDateInterval,
+  DateRange,
   IFilterDatePicker,
   FilterDropdownContainer,
   FilterButton,
@@ -421,5 +422,6 @@ export type {
   AlertType,
   ITooltipType,
   FilterButtonDesign,
-  IToggleOption
+  IToggleOption,
+  DateRange
 };

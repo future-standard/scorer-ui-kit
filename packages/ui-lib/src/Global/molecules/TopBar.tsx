@@ -8,6 +8,7 @@ import UserMenu from '../molecules/UserMenu';
 import { ITopBar } from '../index';
 import NotificationsHistory from './NotificationsHistory';
 import { removeAutoFillStyle } from '../../common';
+import TopBarBadge from '../atoms/TopBarBadge';
 
 const Container = styled.div`
   z-index: 9;
@@ -22,6 +23,13 @@ const Container = styled.div`
   border-bottom: 1px solid var(--dividing-line);
   background: var(--grey-2);
   box-shadow: 5px 0px 10px 0px var(--primary-a2);
+`;
+
+const RightArea = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 100%;
 `;
 
 const SearchBar = styled.div`
@@ -83,6 +91,7 @@ const buttonClickAnimation = keyframes`
 `;
 
 const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolean }>`
+  position: relative;
   flex: 0 56px;
   width: 56px;
   height: inherit;
@@ -90,27 +99,40 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
   justify-content: center;
   align-items: center;
   border: none;
-  border-bottom: 5px solid transparent;
-  padding-top: 5px;
   background: none;
   outline: none;
   cursor: pointer;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 5px;
+    background-color: transparent;
+    border-radius: 2px 2px 0 0;
+  }
   
-  transition: border var(--speed-normal) var(--easing-primary-out);
+  transition: background-color var(--speed-normal) var(--easing-primary-out);
   
   svg {
     transition: transform var(--speed-normal) var(--easing-primary-out);
   }
 
   &:hover {
-    border-bottom-color: var(--primary-6);
     opacity: 0.9;
+    &::after {
+      background-color: var(--primary-6);
+    }
   }
  
   ${({ isActive }) => isActive && css`
     &, &:hover {
       border-bottom-color: var(--primary-9);
-    
+      &::after {
+        background-color: var(--primary-9);
+      }
       svg {
         transform: scale(1);
         animation: ${buttonClickAnimation} 0.35s cubic-bezier(0.7, 0, 0.84, 0);
@@ -150,6 +172,7 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
     visibility: visible;
   `}
 `;
+
 
 /**
  * Negative margin hides the scroll;
@@ -193,7 +216,8 @@ const TopBar: React.FC<ITopBar> = ({
   hasUserDrawerMeta,
   copySuccessMessage,
   includeCopyTitle,
-  hasUserDrawerFooter
+  hasUserDrawerFooter,
+  badge
 }) => {
 
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
@@ -220,22 +244,24 @@ const TopBar: React.FC<ITopBar> = ({
           </IconWrapper>
           <SearchInput placeholder={searchPlaceholder} />
         </SearchBar> : <div />}
-
-      <ButtonArea>
-        {customDrawer && (
-          <DrawerToggle isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
-            <StatusIcon {...customDrawer} />
+      <RightArea>
+        {badge && <TopBarBadge {...badge} />}
+        <ButtonArea>
+          {customDrawer && (
+            <DrawerToggle isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
+              <StatusIcon {...customDrawer} />
+            </DrawerToggle>
+          )}
+          {hasNotifications && (
+            <DrawerToggle isActive={openDrawer === 'notifications'} onClick={() => toggleDrawers('notifications')}>
+              <Icon icon='Notifications' size={20} color='dimmed' />
+            </DrawerToggle>
+          )}
+          <DrawerToggle isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
+            <Icon icon='UserProfile' size={20} color='dimmed' />
           </DrawerToggle>
-        )}
-        {hasNotifications && (
-          <DrawerToggle isActive={openDrawer === 'notifications'} onClick={() => toggleDrawers('notifications')}>
-            <Icon icon='Notifications' size={20} color='dimmed' />
-          </DrawerToggle>
-        )}
-        <DrawerToggle isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
-          <Icon icon='UserProfile' size={20} color='dimmed' />
-        </DrawerToggle>
-      </ButtonArea>
+        </ButtonArea>
+      </RightArea>
 
       {ReactDom.createPortal(
         <DrawerPortalWrapper>
