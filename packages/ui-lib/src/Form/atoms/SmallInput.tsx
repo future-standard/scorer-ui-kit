@@ -65,6 +65,7 @@ const UnitKey = styled.div`
   font-family: var(--font-ui);
   color: var(--input-color-unit);
   margin-top: 1px;
+  white-space: nowrap;
 `;
 
 const Container = styled.div<{ fieldState: string }>`
