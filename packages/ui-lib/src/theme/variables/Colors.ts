@@ -611,6 +611,10 @@ export const colorVariables = css`
     --input-processing-focused-border-color: var(--primary-10);
     --input-processing-focused-shadow-color: var(--grey-3);
 
+    /* Input Icons */
+    --input-lead-icon: var(--grey-12);
+    --input-disabled-lead-icon: var(--grey-10);
+
     /* Checkboxes and Radio Buttons */
     --input-toggle-icon-color: var(--white-12);
     

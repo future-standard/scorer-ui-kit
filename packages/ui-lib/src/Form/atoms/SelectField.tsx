@@ -41,7 +41,12 @@ const StyledSelect = styled.select<{ fieldState: TypeFieldState, withIcon?: bool
   border-radius: 3px;
   color: var(--input-color-default);
   font-size: 14px;
+  cursor: pointer;
 
+  transition: 
+    border var(--speed-fast) var(--easing-primary-out),
+    background-color var(--speed-fast) var(--easing-primary-out),
+    box-shadow var(--speed-fast) var(--easing-primary-out);
 
   ${({fieldState}) => css`
     border: 1px solid var(--input-${fieldState}-border-color);
@@ -61,13 +66,6 @@ const StyledSelect = styled.select<{ fieldState: TypeFieldState, withIcon?: bool
     height: var(--input-height);
     padding: 0 16px 1px ${withIcon ? '36px' : '12px'};
   `};
-
-  transition: 
-    border var(--speed-fast) var(--easing-primary-out),
-    background-color var(--speed-fast) var(--easing-primary-out),
-    box-shadow var(--speed-fast) var(--easing-primary-out);
-
-  cursor: pointer;
 
   &:disabled {
     opacity: 1;
@@ -142,9 +140,17 @@ const SelectField: React.FC<ISelect> = ({
     changeCallback(value);
   }, [changeCallback]);
 
+  const iconColor = () => {
+    if(props.disabled || fieldState === 'disabled'){
+      return 'input-disabled-lead-icon';
+    } else {
+      return 'input-lead-icon';
+    }
+  };
+
   const renderSelect = useCallback((htmlFor?: string) => (
     <SelectWrapper>
-      {icon && <SubjectIcon {...{isCompact}}><Icon icon={icon} size={isCompact ? 12 : 12 } weight='regular' color={ activePlaceholder ? 'grey-10' : 'grey-12' } /></SubjectIcon>}
+      {icon && <SubjectIcon {...{isCompact}}><Icon icon={icon} color={iconColor()} size={isCompact ? 12 : 12 } weight='regular' /></SubjectIcon>}
       <StyledSelect
         withIcon={ icon ? true : false }
         id={htmlFor}
@@ -156,7 +162,7 @@ const SelectField: React.FC<ISelect> = ({
         {!defaultValue && <option value='' disabled hidden>{placeholder}</option>}
         {children}
       </StyledSelect>
-      <OpenIcon {...{isCompact}}><Icon icon='Down' color='grey-12' weight='regular' size={isCompact ? 8 : 10 } /></OpenIcon>
+      <OpenIcon {...{isCompact}}><Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10 } /></OpenIcon>
     </SelectWrapper>
   ), [children, defaultValue, handleOnChange, placeholder, props]);
 
