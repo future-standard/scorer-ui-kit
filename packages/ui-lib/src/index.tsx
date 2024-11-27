@@ -76,7 +76,9 @@ import {
   IFilterValue,
   IFilterResult,
   isFilterItem,
-  FilterButtonDesign
+  FilterButtonDesign,
+  ToggleButton,
+  IToggleOption
 } from './Filters';
 
 import Icon, { IconSVGs } from './Icons/Icon';
@@ -279,6 +281,7 @@ export {
   FilterInputs,
   FiltersResults,
   FilterBar,
+  ToggleButton,
   isFilterItem,
   isDateInterval,
 
@@ -419,5 +422,6 @@ export type {
   AlertType,
   ITooltipType,
   FilterButtonDesign,
+  IToggleOption,
   DateRange
 };
