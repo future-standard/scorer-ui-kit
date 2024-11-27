@@ -133,8 +133,9 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
 
 
 const InnerContainer = styled.div`
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `;
 
 const ButtonText = styled.div<{ hasFlipArrow: boolean }>``;
