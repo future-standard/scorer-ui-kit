@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { text, object, boolean } from "@storybook/addon-knobs";
+import { text, select, object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
-import { SelectField, PageHeader, SelectWrapper} from 'scorer-ui-kit';
+import { SelectField, SelectWrapper} from 'scorer-ui-kit';
+import { generateIconList } from '../helpers';
 
 export default {
   title: 'Form/atoms',
@@ -12,6 +13,9 @@ export default {
 
 const Container = styled.div`
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 `;
 
 const FixedSelect = styled.div<{ width?: string }>`
@@ -20,20 +24,35 @@ const FixedSelect = styled.div<{ width?: string }>`
   }
 `;
 
-export const _SelectField = () => {
+const Subsection = styled.div`
+  flex: 1;
+`;
 
+const Title = styled.h1`
+  font-family: var(--font-title);
+  font-size: 24px;
+  color: var(--grey-12);
+  font-weight: 500;
+`;
+
+export const _SelectField = () => {
+  const iconList = generateIconList();
+  
   const isCompact = boolean('isCompact', false);
-  const placeholder = text('Placeholder free width', 'Choose an option...');
-  const defaultValue = text('Default Value free width','option3');
   const disabled = boolean('Disabled', false);
+  const fieldState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
+  const placeholder = text('Placeholder (Free Width)', 'Choose an option...');
+  const defaultValue = text('Default Value (Free Width)', '');
   const freeSelectValue = action('Free select value');
   const fixedSelectValue = action('Free select value');
+  const icon = select("Icon", iconList, Object.keys(iconList)[0]);
 
-  const selectWidth = text('Fix width', '60px');
+  const selectWidth = text('Fix width', '80px');
   const label = object('Free Select Label', {
     htmlFor: 'free_select',
     text: 'Field Label'
   })
+
   const fixLabel = object('Fix Select Label', {
     htmlFor: 'fix_select',
     text: 'Page',
@@ -47,44 +66,69 @@ export const _SelectField = () => {
   const fixSelectOnChange = (value: string) => {
     fixedSelectValue(value);
   }
+  
   return (
     <Container>
-      <PageHeader
-        title='Select free width'
-      />
-      <SelectField
-        {...{
-          isCompact,
-          placeholder,
-          label,
-          selectWidth,
-          disabled,
-          defaultValue
-        }}
-        changeCallback={freeOnChange}
-      >
-        <option value="option1">Example Option 1</option>
-        <option value="option2">Example Option 2</option>
-        <option value="option3">Example Option 3</option>
-        <option value="option4">Example Option 4</option>
-      </SelectField>
-      <PageHeader
-        title='Select fixed width'
-      />
-      <FixedSelect width={selectWidth}>
+      <Subsection>
+        <Title>Select (Free Width)</Title>
         <SelectField
-          {...{ isCompact, disabled }}
-          label={fixLabel}
-          defaultValue={1}
-          changeCallback={fixSelectOnChange}
+          {...{
+            isCompact,
+            placeholder,
+            label,
+            selectWidth,
+            disabled,
+            defaultValue,
+            fieldState
+          }}
+          changeCallback={freeOnChange}
         >
-          <option value={1}>1</option>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={15}>15</option>
-          <option value={20}>20</option>
+          <option value="option1">Example Option 1</option>
+          <option value="option2">Example Option 2</option>
+          <option value="option3">Example Option 3</option>
+          <option value="option4">Example Option 4</option>
         </SelectField>
-      </FixedSelect>
+      </Subsection>
+          
+      <Subsection>
+        <Title>Select (Fixed Width)</Title>
+        <FixedSelect width={selectWidth}>
+          <SelectField
+            {...{ isCompact, disabled, fieldState }}
+            label={fixLabel}
+            defaultValue={1}
+            changeCallback={fixSelectOnChange}
+            >
+            <option value={1}>1</option>
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+            <option value={20}>20</option>
+          </SelectField>
+        </FixedSelect>
+      </Subsection>
+        
+      <Subsection>
+        <Title>Select (With Icon)</Title>
+        <SelectField
+          {...{
+            isCompact,
+            placeholder,
+            label,
+            selectWidth,
+            disabled,
+            defaultValue,
+            fieldState,
+            icon
+          }}
+          changeCallback={freeOnChange}
+          >
+          <option value="option1">Example Option 1</option>
+          <option value="option2">Example Option 2</option>
+          <option value="option3">Example Option 3</option>
+          <option value="option4">Example Option 4</option>
+        </SelectField>
+      </Subsection>
     </Container>
   );
 }

@@ -9,7 +9,7 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   ${removeAutoFillStyle};
 
   font-family: var(--font-data);
-  line-height: var(--common-height);
+  line-height: var(--input-compact-height);
 
   font-size: 14px;
   flex: 1;
@@ -33,7 +33,7 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
 
 const InputContainer = styled.div<{fieldState : TypeFieldState, hasAction?: boolean}>`
   display: flex;
-  height: var(--common-height);
+  height: var(--input-compact-height);
   padding: 0 8px;
   align-items: center;
   gap: 8px;
