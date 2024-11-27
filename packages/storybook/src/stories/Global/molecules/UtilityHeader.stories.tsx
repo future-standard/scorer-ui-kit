@@ -28,6 +28,7 @@ export const _UtilityHeader = () => {
   
   const backLink = text("Back Link", "/");
   const showBreadcrumbs = boolean("Show Breadcrumbs", true);
+  const showHomeIcon = boolean("Show Home Icon", true);
   const breadcrumbs = object("breadcrumbs", [
     {
       text: 'Examples', 
@@ -59,6 +60,7 @@ export const _UtilityHeader = () => {
         backLink={backLink}
         showBreadcrumbs={showBreadcrumbs}
         breadcrumbs={breadcrumbs}
+        showHomeIcon={showHomeIcon}
         showShareLink={showShareLink}
         shareLink={shareLink}
       />

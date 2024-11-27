@@ -147,7 +147,16 @@ const BreadcrumbIcon = styled.div`
     align-items: center;
   }
 `;
+const HomeIcon = styled(BreadcrumbIcon)`
+  padding-bottom: 1px;
+  svg path {
+    transition: stroke var(--speed-normal) var(--easing-primary-out);
+  }
+`;
 const BreadcrumbLink = styled(Link)`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
   flex: 1;
   color: var(--grey-10);
   font-family: var(--font-ui);
@@ -156,9 +165,15 @@ const BreadcrumbLink = styled(Link)`
   font-style: normal;
   font-weight: 500;
   line-height: 12px; /* 100% */
-  transition: color 0.25s ease;
+  transition: color var(--speed-normal) var(--easing-primary-out);
+
   &:hover {
     color: var(--grey-12);
+    ${HomeIcon} svg {
+      path {
+        stroke: var(--grey-12);
+      }
+    }
   }
 `;
 
@@ -172,7 +187,7 @@ const RightArea = styled.div`
 
 
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], backLink, $iconInGutter = true, showShareLink = false, shareLink }) => {
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, backLink, $iconInGutter = true, showShareLink = false, shareLink }) => {
 
   const [ copyActionText, setCopyActionText ] = useState<string>("Share");
   const {copyToClipboard} = useCopyToClipboard();
@@ -200,12 +215,16 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
         <Breadcrumbs>
           { breadcrumbs.map((breadcrumb, index) => {
             const {text, href} = breadcrumb;
+            const isFirst = index === 0;
             const isLast = index === breadcrumbs.length - 1;
 
             return (
               <React.Fragment key={index}>
                 <Breadcrumb>
-                  <BreadcrumbLink to={href}>{text}</BreadcrumbLink>
+                  <BreadcrumbLink to={href}>
+                    {isFirst && showHomeIcon ? <HomeIcon><Icon icon="Home" size={11} color='grey-10' /></HomeIcon> : null }
+                    {text}
+                  </BreadcrumbLink>
                   {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={6} color='grey-8' /></BreadcrumbIcon> : null }
                 </Breadcrumb>
               </React.Fragment>

@@ -14,6 +14,7 @@ export interface IUtilityHeader {
   backLink?: string;
   showBreadcrumbs?: boolean;
   breadcrumbs?: IBreadcrumb[];
+  showHomeIcon?: boolean;
   showShareLink?: boolean;
   shareLink?: string;
 }
