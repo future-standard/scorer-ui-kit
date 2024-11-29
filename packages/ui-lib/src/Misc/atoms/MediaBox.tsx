@@ -50,6 +50,7 @@ const StyledImage = styled.img<{ isLoaded?: boolean, hasModalLimits?: boolean }>
 
   ${({ theme, isLoaded, hasModalLimits }) => css`
     transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
+    display: ${isLoaded ? `block` : `none`};
     opacity: ${isLoaded ? `1` : `0`};
 
     ${hasModalLimits && css`

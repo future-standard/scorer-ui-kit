@@ -102,8 +102,8 @@ const TablePage: React.FC = () => {
       _checked: true,
       id: 'device-id-2',
       header: {
-        image: "https://picsum.photos/id/12/367/267",
-        mediaUrl: "https://picsum.photos/id/12/367/267",
+        image: "/scorer-ui-kit/images/cityscape.jpg",
+        mediaUrl: "/scorer-ui-kit/images/cityscape.jpg",
         mediaType: 'img',
         onClickThumbnail: () => openCustomModal('device-id-2'),
       },
@@ -129,8 +129,8 @@ const TablePage: React.FC = () => {
     {
       id: 'device-id-3',
       header: {
-        image: "https://picsum.photos/id/12/367/267",
-        mediaUrl: "https://picsum.photos/id/12/367/267",
+        image: "/scorer-ui-kit/images/cityscape.jpg",
+        mediaUrl: "/scorer-ui-kit/images/cityscape.jpg",
         mediaType: 'img'
       },
       columns:
@@ -146,8 +146,8 @@ const TablePage: React.FC = () => {
     {
       id: 'device-id-4',
       header: {
-        image: "https://picsum.photos/id/12/367/267",
-        mediaUrl: "http://wrong-url-placekitten.com/2934/3102",
+        image: "/scorer-ui-kit/images/cityscape.jpg",
+        mediaUrl: "/scorer-ui-kit/images/cityscape.jpg",
         mediaType: 'img'
       },
       columns:

@@ -78,6 +78,9 @@ Some stock photos were used as placeholders in this UI Kit. These were sourced t
 Photo by [Van Thanh](https://unsplash.com/@vanthanh2608?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/cafe?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
 
 
+Photo by <a href="https://unsplash.com/@thomashabr?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Thomas Habr</a> on <a href="https://unsplash.com/photos/aerial-photography-of-empire-state-building-6NmnrAJPq7M?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+      
+
 ## License
 
 The Scorer UI Kit is released under the [MIT license](../../LICENSE.md).
