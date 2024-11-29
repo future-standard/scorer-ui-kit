@@ -46,10 +46,10 @@ const SwitchOuter = styled.div`
     content: '';
     display: block;
     position: absolute;
-    top: -var(--switch-border-width);
-    left: -var(--switch-border-width);
-    bottom: -var(--switch-border-width);
-    right: -var(--switch-border-width);
+    top: calc(var(--switch-border-width) * -1);
+    left: calc(var(--switch-border-width) * -1);
+    bottom: calc(var(--switch-border-width) * -1);
+    right: calc(var(--switch-border-width) * -1);
     pointer-events: none;
     border-radius: 12px;
     box-shadow: 
