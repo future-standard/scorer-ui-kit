@@ -140,13 +140,13 @@ const SelectField: React.FC<ISelect> = ({
     changeCallback(value);
   }, [changeCallback]);
 
-  const iconColor = () => {
+  const iconColor = useCallback(() => {
     if(props.disabled || fieldState === 'disabled'){
       return 'input-disabled-lead-icon';
     } else {
       return 'input-lead-icon';
     }
-  };
+  }, [fieldState, props.disabled]);
 
   const renderSelect = useCallback((htmlFor?: string) => (
     <SelectWrapper>
@@ -164,7 +164,7 @@ const SelectField: React.FC<ISelect> = ({
       </StyledSelect>
       <OpenIcon {...{isCompact}}><Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10 } /></OpenIcon>
     </SelectWrapper>
-  ), [children, defaultValue, handleOnChange, placeholder, props]);
+  ), [children, defaultValue, handleOnChange, placeholder, props, fieldState, icon, iconColor, isCompact]);
 
   return (
     <Container {...{ isCompact, activePlaceholder }} isLabelSameRow={label?.isSameRow}>
