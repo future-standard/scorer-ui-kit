@@ -11,7 +11,7 @@ import {
   IFilterResult,
   IFilterDatePicker,
   isFilterItem,
-  // DateInterval,
+  DateInterval,
 } from 'scorer-ui-kit'
 
 import {
@@ -194,11 +194,31 @@ export const _FilterBar = () => {
     }
   ]
 
+
+  const TODAY: Date = new Date();
+  const TWO_WEEKS_BEFORE: Date = new Date();
+  TWO_WEEKS_BEFORE.setDate(TODAY.getDate() - 15);
+
+
   // Selected example
-  // const myDate: DateInterval = {
-  //   start: before,
-  //   end: today,
-  // }
+  const myDate: DateInterval = {
+  start: TWO_WEEKS_BEFORE,
+  end: TODAY
+  }
+
+  const START_RANGE: Date = new Date();
+  START_RANGE.setDate(0);
+  START_RANGE.setDate(START_RANGE.getDate() - 20);
+  const END_RANGE: Date = new Date();
+  END_RANGE.setDate(1);
+  END_RANGE.setDate(END_RANGE.getDate() + 60);
+
+  const datesRange = {
+  start: START_RANGE,
+  end: END_RANGE
+}
+
+
   const datePickers: IFilterDatePicker[] = [
     {
       id: 'datePickerForRuntime',
@@ -208,8 +228,9 @@ export const _FilterBar = () => {
       dateTimeTextUpper: language === 'english' ? 'From' : 'から',
       dateTimeTextLower: language === 'english' ? 'To' : 'まで',
       timeZoneTitle: language === 'english' ? 'Timezone' : '時間帯',
-      lang: language === 'english' ? 'en' : 'ja'
-      // selected: myDate,
+      lang: language === 'english' ? 'en' : 'ja',
+      selected: myDate,
+      availableRange: datesRange,
     }
   ]
 
