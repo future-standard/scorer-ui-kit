@@ -6,12 +6,16 @@ import { dimensions } from '../theme/common';
 
 
 const wrapperCss = css`
+  
+  line-height: 0;
+
   svg {
     overflow: visible;
     vector-effect: non-scaling-stroke;
 
     line, path, circle, ellipse, foreignObject, polygon, polyline, rect, text, textPath, tspan {
       vector-effect: non-scaling-stroke;
+      transition: stroke var(--speed-normal) var(--easing-primary-out);
     }
   }
 `;

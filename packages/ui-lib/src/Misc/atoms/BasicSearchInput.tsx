@@ -12,7 +12,7 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
   
     transition: all var(--speed-normal) var(--easing-primary-in);
     gap: 6px;
-    height: var(--common-height);
+    height: var(--input-compact-height);
     padding: 0;
     align-items: center;
     display: flex;
