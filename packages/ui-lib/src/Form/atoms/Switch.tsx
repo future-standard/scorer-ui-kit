@@ -13,7 +13,9 @@ enum SwitchPosition {
   Locked = 3
 }
 
-const getPositionKey = (switchPos : SwitchPosition) => {
+type PositionKey = 'off' | 'on' | 'neutral' | 'locked';
+
+const getPositionKey = (switchPos : SwitchPosition) : PositionKey => {
   switch (switchPos) {
     case SwitchPosition.Off:
       return 'off';
@@ -60,7 +62,7 @@ const SwitchOuter = styled.div`
   }
 `;
 
-const SwitchInner = styled.div<{ position: 'off' | 'on' | 'neutral'| 'locked'}>`
+const SwitchInner = styled.div<{ position: PositionKey}>`
   --offset: calc(((var(--switch-height) - var(--switch-inner-size)) / 2) - var(--switch-border-width));
   --position-off: var(--offset);
   --position-on: calc(var(--switch-width) - var(--switch-inner-size) - (var(--switch-border-width)*2) - var(--offset));
