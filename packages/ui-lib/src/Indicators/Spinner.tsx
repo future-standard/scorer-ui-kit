@@ -31,12 +31,12 @@ const rotate = keyframes`
 `;
 
 const BaseCircle = styled.circle<{ styling: string, customColor?: string }>`
-  stroke: ${({styling, customColor}) => customColor ? customColor : `var(--spinner-${styling}-base, --grey-a8)` };
+  stroke: ${({styling, customColor}) => customColor ? customColor : `var(--spinner-${styling}-base, var(--grey-a8))` };
   fill: none;
 `;
 
 const RotatingCircle = styled.circle<{ r: number, styling: string, customColor?: string }>`
-  stroke: ${({styling, customColor}) => customColor ? customColor : `var(--spinner-${styling}-top, --white-1)` };
+  stroke: ${({styling, customColor}) => customColor ? customColor : `var(--spinner-${styling}-top, var(--white-1))` };
   fill: none;
   stroke-dasharray: ${({r}) => circumference(r)};
   stroke-dashoffset: ${({r}) => 2 * 3.1416 * r / 2};
@@ -77,7 +77,6 @@ interface ICustomSpinner {
 
 interface IProps {
   size?: SpinnerSize
-  customSize?: number
   styling: string
   custom?: ICustomSpinner
 }
