@@ -195,6 +195,24 @@ const CalHCell = styled(CalCell)`
   color: var(--grey-a11);
 `;
 
+const ContentDot = styled.div<{ hasContent: boolean }>`
+  ${({ hasContent }) => hasContent ?
+    `
+      position: absolute;
+      left: 18px;
+      bottom: 5px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--info-10);
+    `
+    :
+    `
+      display: none;
+    `
+  }
+`;
+
 const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
   cursor: pointer;
   position: relative;
@@ -325,6 +343,7 @@ export interface IDatePicker {
   timeZoneTitle?: string
   timeZoneValueTitle?: string
   availableRange?: DateRange
+  contentDays?: Date[]
   updateCallback?: (data: DateInterval | Date) => void
   lang?: 'en' | 'ja'
 }
@@ -340,6 +359,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   updateCallback = () => { },
   initialValue,
   availableRange,
+  contentDays,
   lang = 'en'
 }) => {
 
@@ -508,7 +528,9 @@ const DatePicker: React.FC<IDatePicker> = ({
                       onClick={() => onCellClick(day)}
                       state={cellState(day, selectedRange)}
                       thisMonth={isSameMonth(day, focusedMonth)}
-                      isToday={isToday(day)}>{format(day, "d")}
+                      isToday={isToday(day)}>
+                      {format(day, "d")}
+                      <ContentDot hasContent={dayHasContent(day, contentDays)} />
                     </CalCellB>
                   );
                 })}
@@ -643,4 +665,10 @@ const isDayOutOfRange = (currentDay: Date, availableRange?: DateRange): boolean 
   }
 
   return false;
+};
+
+const dayHasContent = (currentDay: Date, contentDays?: Date[]): boolean => {
+  if (!contentDays) return false;
+
+  return contentDays.some(day => isSameDay(currentDay,day));
 };
