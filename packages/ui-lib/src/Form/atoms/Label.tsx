@@ -27,6 +27,8 @@ export const StyledLabel = styled.label<{ direction: TypeLabelDirection }>`
   ${({direction}) => direction && css`
     flex-direction: ${direction};
     ${['row', 'row-reverse'].includes(direction) && css`
+      display: inline-flex;
+      
       ${LabelText}{
         align-self: center;
       }
