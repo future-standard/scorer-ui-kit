@@ -21,7 +21,7 @@ export const StyledLabel = styled.label<{ direction: TypeLabelDirection }>`
   font-size: 14px;
   font-weight: 500;
 
-  display: inline-flex;
+  display: flex;
   gap: 8px;
 
   ${({direction}) => direction && css`
