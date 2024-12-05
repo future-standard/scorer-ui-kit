@@ -2,7 +2,7 @@ import React, { useCallback, useState, SelectHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Label from './Label';
 import Icon from '../../Icons/Icon';
-import { TypeFieldState } from '..';
+import { TypeFieldState, TypeLabelDirection } from '..';
 
 
 export const SelectWrapper = styled.div`
@@ -83,10 +83,6 @@ const StyledSelect = styled.select<{ fieldState: TypeFieldState, withIcon?: bool
 
 const Container = styled.div<{ isCompact?: boolean, activePlaceholder: boolean, isLabelSameRow?: boolean }>`
 
-  span {
-    margin-bottom: 8px;
-  }
-
   ${({activePlaceholder}) => activePlaceholder && css`
     ${StyledSelect} {
       font-family: var(--font-data);
@@ -102,6 +98,7 @@ interface ILabel {
   htmlFor: string
   text: string
   isSameRow?: boolean
+  direction?: TypeLabelDirection
 }
 
 interface OwnProps {
@@ -170,7 +167,7 @@ const SelectField: React.FC<ISelect> = ({
     <Container {...{ isCompact, activePlaceholder }} isLabelSameRow={label?.isSameRow}>
       {label
         ? (
-          <Label htmlFor={label.htmlFor} labelText={label.text}>
+          <Label htmlFor={label.htmlFor} labelText={label.text} direction={ label.isSameRow ? 'row' : label.direction }>
             {renderSelect(label.htmlFor)}
           </Label>
         )

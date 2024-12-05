@@ -1,16 +1,6 @@
 import React, { LabelHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
-
-export const StyledLabel = styled.label<{  }>`
-  font-family: var(--font-ui);
-  color: var(--grey-11);
-  font-size: 14px;
-  font-weight: 500;
-
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
+import { TypeLabelDirection } from '..';
 
 const LabelText = styled.span<{ required?: boolean }>`
   ${({required}) => required && css`
@@ -25,9 +15,29 @@ const LabelText = styled.span<{ required?: boolean }>`
   `}
 `;
 
+export const StyledLabel = styled.label<{ direction: TypeLabelDirection }>`
+  font-family: var(--font-ui);
+  color: var(--grey-11);
+  font-size: 14px;
+  font-weight: 500;
+
+  display: inline-flex;
+  gap: 8px;
+
+  ${({direction}) => direction && css`
+    flex-direction: ${direction};
+    ${['row', 'row-reverse'].includes(direction) && css`
+      ${LabelText}{
+        align-self: center;
+      }
+    `}
+  `}
+`;
+
 interface OwnProps {
   htmlFor: string
   labelText: string
+  direction?: TypeLabelDirection
   rightAlign?: boolean
   required?: boolean
 }
@@ -36,6 +46,7 @@ type Props = OwnProps & LabelHTMLAttributes<HTMLLabelElement>
 const Label: React.FC<Props> = ({
   htmlFor,
   labelText,
+  direction = 'column',
   rightAlign = false,
   required = false,
   children,
@@ -43,10 +54,10 @@ const Label: React.FC<Props> = ({
 
     if(rightAlign){
       console.warn('Deprecation warning: `Label` is deprecating `rightAlign`, please update this to use `direction=\'column\'` instead.');
-    };
+    }
 
   return (
-    <StyledLabel {...{ htmlFor }} {...props}>
+    <StyledLabel {...{ htmlFor, direction }} {...props}>
       <LabelText {...{ required }}>{labelText}</LabelText>
       {children}
     </StyledLabel>
