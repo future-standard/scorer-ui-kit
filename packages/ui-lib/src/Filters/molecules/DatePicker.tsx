@@ -195,22 +195,27 @@ const CalHCell = styled(CalCell)`
   color: var(--grey-a11);
 `;
 
-const ContentDot = styled.div<{ hasContent: boolean }>`
-  ${({ hasContent }) => hasContent ?
-    `
-      position: absolute;
-      left: 18px;
-      bottom: 5px;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background-color: var(--info-10);
-    `
-    :
-    `
-      display: none;
-    `
+const ContentDot = styled.div<{ hasContent: boolean, state?: CellStates, isToday?: boolean, }>`
+  position: absolute;
+  left: 18px;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--info-10);
+
+  ${({ state }) => (state === 'single' || state === 'start' || state === 'end' || state === 'inside') && css`
+    background-color: var(--white-12);`
   }
+
+  ${({ isToday }) => isToday && css`
+    left: 16px;
+    bottom: 3px;
+  `}
+
+  ${({ hasContent }) => !hasContent && css`
+    display: none;
+  `}
 `;
 
 const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
@@ -530,7 +535,7 @@ const DatePicker: React.FC<IDatePicker> = ({
                       thisMonth={isSameMonth(day, focusedMonth)}
                       isToday={isToday(day)}>
                       {format(day, "d")}
-                      <ContentDot hasContent={dayHasContent(day, contentDays)} />
+                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={cellState(day, selectedRange)} isToday={isToday(day)}/>
                     </CalCellB>
                   );
                 })}
