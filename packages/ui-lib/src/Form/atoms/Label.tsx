@@ -1,41 +1,18 @@
 import React, { LabelHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 
-export const StyledLabel = styled.label<{ rightAlign: boolean }>`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+export const StyledLabel = styled.label<{  }>`
+  font-family: var(--font-ui);
   color: var(--grey-11);
   font-size: 14px;
   font-weight: 500;
-  ${({ rightAlign }) => rightAlign
-    ? `
-        display: flex;
-        align-items: center;
-        flex-direction: row-reverse;
-        justify-content: left;
-      `
-    :
-    `
-        display: block;
-        margin-bottom: 20px;
-      `
-  };
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
-const LabelText = styled.span<{ rightAlign: boolean, required?: boolean }>`
-  display: flex;
-  gap: 8px;
-  align-items: center;
-
-
-  ${({ rightAlign }) => rightAlign
-      ? `
-        margin-left: 12px;
-        `
-      : `
-        margin-bottom: 10px;
-      `
-  }
-
+const LabelText = styled.span<{ required?: boolean }>`
   ${({required}) => required && css`
     &::after {
       content: '';
@@ -64,9 +41,13 @@ const Label: React.FC<Props> = ({
   children,
   ...props }) => {
 
+    if(rightAlign){
+      console.warn('Deprecation warning: `Label` is deprecating `rightAlign`, please update this to use `direction=\'column\'` instead.');
+    };
+
   return (
-    <StyledLabel {...{ htmlFor, rightAlign }} {...props}>
-      <LabelText {...{ rightAlign, required }}>{labelText}</LabelText>
+    <StyledLabel {...{ htmlFor }} {...props}>
+      <LabelText {...{ required }}>{labelText}</LabelText>
       {children}
     </StyledLabel>
   );
