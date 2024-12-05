@@ -5,7 +5,7 @@ import Icon from '../../Icons/Icon';
 import { removeAutoFillStyle, resetButtonStyles } from '../../common';
 import { isNotNumber } from '../../helpers';
 import SelectField, { SelectWrapper } from '../../Form/atoms/SelectField';
-import { StyledLabel } from  '../../Form/atoms/Label';
+import Label from  '../../Form/atoms/Label';
 
 const WIDTH_PER_NUMBER = 12;
 
@@ -19,16 +19,8 @@ const PaginationContainer = styled.div`
   height: fit-content;
   margin-right: 10px;
   white-space: nowrap;
-  gap: 0 8px;
+  gap: 40px;
   vertical-align: baseline;
-`;
-
-const PageLabel = styled.label`
-  font-family: var(--font-ui);
-  font-weight: 500px;
-  font-size: 14px;
-  color: var(--grey-10);
-  text-align: left;
 `;
 
 const StaticPageCount = styled.div`
@@ -43,9 +35,9 @@ const StaticPageCount = styled.div`
   padding-right: 1px;
 `;
 
-const StyledInput = styled.input<{ textColor: string, maxWidth?: string }>`
+const StyledInput = styled.input<{ maxWidth?: string }>`
   ${removeAutoFillStyle};
-  color: ${({ textColor }) => textColor};
+  color: var(--input-color-default);
   max-width: ${({ maxWidth }) => maxWidth ? maxWidth : '40px'};
   font-family: var(--font-data);
   height: 100%;
@@ -67,7 +59,7 @@ const shakeAnimation = keyframes`
   100% { transform: translateX(0); }
 `;
 
-const InputContainer = styled.div<{ borderColor?: string, shouldShake: boolean }>`
+const InputContainer = styled.div<{ borderColorState?: string, shouldShake: boolean }>`
   height: var(--input-height, 40px);
   animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
   flex-grow: 0;
@@ -78,7 +70,7 @@ const InputContainer = styled.div<{ borderColor?: string, shouldShake: boolean }
   padding: 0 8px;
   border-radius: 3px;
   box-shadow: 0 2px 1px 0 rgba(0, 102, 255, 0.04);
-  ${({ borderColor }) => borderColor && `border: 1px solid ${borderColor}`};
+  ${({ borderColorState }) => borderColorState && `border: 1px solid var(--input-${borderColorState}-border-color)`};
 `;
 
 const GoButton = styled(Button)`
@@ -99,7 +91,7 @@ const ArrowButton = styled.button<{ active: boolean }>`
   padding: 12px;
   border-radius: 3px;
   box-shadow: 0 4px 9px 0 rgba(152, 174, 189, 0.07);
-  border: solid 1px var(--grey-9);
+  border: solid 1px var(--input-default-border-color);
   background-color: var(grey-2);
   pointer-events: ${({ active }) => active ? 'auto' : 'none'};
   opacity: ${({ active }) => active ? '1' : '0.5'};
@@ -112,11 +104,6 @@ const ArrowButton = styled.button<{ active: boolean }>`
 const ItemsSelectWrapper = styled.div<{ width: string }>`
   ${SelectWrapper} {
     width: ${({ width }) => width ? width : `60px`};
-  }
-    margin-right: 35px;
-
-  ${StyledLabel} {
-    margin-bottom: 0;
   }
 `;
 
@@ -257,23 +244,6 @@ const Pagination: React.FC<IPagination> = (props) => {
 
   };
 
-  const getStateColor = useCallback((state: string): string => {
-
-    switch (state) {
-      case 'processing':
-        return 'var(--primary-7)';
-        break;
-
-      case 'invalid':
-        return 'var(--warning-8)';
-
-      case 'default':
-      default:
-        return 'var(--grey-9)';
-    }
-
-  }, []);
-
   const onClickGo = useCallback(() => {
 
     onPageChange(parseInt(pageValue));
@@ -326,37 +296,38 @@ const Pagination: React.FC<IPagination> = (props) => {
           </Fragment>
         </SelectField>
       </ItemsSelectWrapper>
-      <PageLabel htmlFor='goButton'>{pageText}</PageLabel>
-      <InputContainer borderColor={getStateColor(fieldState)} shouldShake={shouldShake}>
-        <StyledInput
-          ref={inputRef}
-          value={pageValue}
-          onChange={(e) => onInputChange(e)}
-          textColor={getStateColor(fieldState)}
-          onFocus={(e) => onFocus(e)}
-          onBlur={(e) => onBlur(e)}
-          onPaste={(e) => handlePaste(e)}
-          onKeyDown={handleKeyDown}
-          maxWidth={getValidWidth()}
-        />
-        <StaticPageCount>{'/' + '\u00A0' + totalPages.toString()}</StaticPageCount>
-        <GoButton id='goButton' size='small' design='primary' disabled={disableGo} onClick={onClickGo}>{buttonText}</GoButton>
-      </InputContainer>
+      <Label labelText={pageText} htmlFor='goButton' direction='row'>
+        <InputContainer borderColorState={fieldState} shouldShake={shouldShake}>
+          <StyledInput
+            ref={inputRef}
+            value={pageValue}
+            onChange={(e) => onInputChange(e)}
+            onFocus={(e) => onFocus(e)}
+            onBlur={(e) => onBlur(e)}
+            onPaste={(e) => handlePaste(e)}
+            onKeyDown={handleKeyDown}
+            maxWidth={getValidWidth()}
+          />
+          <StaticPageCount>{'/' + '\u00A0' + totalPages.toString()}</StaticPageCount>
+          <GoButton id='goButton' size='small' design='primary' disabled={disableGo} onClick={onClickGo}>{buttonText}</GoButton>
+        </InputContainer>
 
-      <ArrowWrapper>
-        <ArrowButton
-          onClick={() => handlePageChange(activePage - 1)}
-          disabled={activePage <= 1}
-          active={fieldState === 'default' && activePage > 1}>
-          <Icon icon='Left' color='dimmed' size={8} />
-        </ArrowButton>
-        <ArrowButton
-          onClick={() => handlePageChange(activePage + 1)}
-          disabled={activePage >= totalPages}
-          active={fieldState === 'default' && activePage < totalPages}>
-          <Icon icon='Right' color='dimmed' size={8} />
-        </ArrowButton>
-      </ArrowWrapper>
+        <ArrowWrapper>
+          <ArrowButton
+            onClick={() => handlePageChange(activePage - 1)}
+            disabled={activePage <= 1}
+            active={fieldState === 'default' && activePage > 1}>
+            <Icon icon='Left' color='input-lead-icon' size={8} />
+          </ArrowButton>
+          <ArrowButton
+            onClick={() => handlePageChange(activePage + 1)}
+            disabled={activePage >= totalPages}
+            active={fieldState === 'default' && activePage < totalPages}>
+            <Icon icon='Right' color='input-lead-icon' size={8} />
+          </ArrowButton>
+        </ArrowWrapper>
+      </Label>
+
     </PaginationContainer>
   );
 };
