@@ -31,17 +31,17 @@ export const _RadioButton = () => {
   return (
     <Container>
       <OptionsWrapper>
-        <Label htmlFor={'option1'} labelText={'Option 1'} rightAlign>
+        <Label htmlFor={'option1'} labelText={'Option 1'} direction='row-reverse'>
           <RadioButton {...{ name, disabled, currentChecked }} id={'option1'} value='option1' onChangeCallback={handleChange} />
         </Label>
       </OptionsWrapper>
       <OptionsWrapper>
-        <Label htmlFor={'option2'} labelText={'Option 2'} rightAlign>
+        <Label htmlFor={'option2'} labelText={'Option 2'} direction='row-reverse'>
           <RadioButton {...{ name, disabled, currentChecked }} id={'option2'} value='option2' onChangeCallback={handleChange} />
         </Label>
       </OptionsWrapper>
       <OptionsWrapper>
-        <Label htmlFor={'option3'} labelText={'Option 3'} rightAlign>
+        <Label htmlFor={'option3'} labelText={'Option 3'} direction='row-reverse'>
           <RadioButton {...{ name, disabled, currentChecked }} id={'option3'} value='option3' onChangeCallback={handleChange} />
         </Label>
       </OptionsWrapper>
