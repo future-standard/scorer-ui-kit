@@ -25,10 +25,14 @@ export const LoadingSpinner = () => {
   const customBaseColor = text("Custom Base Color", "");
   const customTopColor = text("Custom Top Color", "");
 
-  const baseColor = customBaseColor !== '' ? customBaseColor : undefined;
-  const topColor = customTopColor !== '' ? customTopColor : undefined;
+  let baseColor = customBaseColor !== '' ? customBaseColor : undefined;
+  let topColor = customTopColor !== '' ? customTopColor : undefined;
 
-  return <Container styling={spinnerType}>
+  // Fixes issue if story breaks when typing an open bracket for var()
+  baseColor = customBaseColor.indexOf('(') !== -1 && customBaseColor.indexOf(')') === -1 ? customBaseColor + ')' : customBaseColor;
+  topColor = customTopColor.indexOf('(') !== -1 && customTopColor.indexOf(')') === -1 ? customTopColor + ')' : customTopColor;
+
+  return <Container styling={spinnerType}>{baseColor}
     <Spinner size={spinnerSize} styling={spinnerType} custom={{ size: customSize, ...{ baseColor, topColor } }} />
   </Container>;
 };
