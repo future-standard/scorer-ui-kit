@@ -202,10 +202,14 @@ const ContentDot = styled.div<{ hasContent: boolean, state?: CellStates, isToday
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: var(--info-10);
+  background-color: var(--primary-11);
 
-  ${({ state }) => (state === 'single' || state === 'start' || state === 'end' || state === 'inside') && css`
+  ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
     background-color: var(--white-12);`
+  }
+
+  ${({ state }) => (state === 'inside') && css`
+    background-color: var(--primary-12);`
   }
 
   ${({ isToday }) => isToday && css`
