@@ -32,7 +32,7 @@ export const LoadingSpinner = () => {
   baseColor = customBaseColor.indexOf('(') !== -1 && customBaseColor.indexOf(')') === -1 ? customBaseColor + ')' : customBaseColor;
   topColor = customTopColor.indexOf('(') !== -1 && customTopColor.indexOf(')') === -1 ? customTopColor + ')' : customTopColor;
 
-  return <Container styling={spinnerType}>{baseColor}
+  return <Container styling={spinnerType}>
     <Spinner size={spinnerSize} styling={spinnerType} custom={{ size: customSize, ...{ baseColor, topColor } }} />
   </Container>;
 };
