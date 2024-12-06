@@ -530,16 +530,19 @@ const DatePicker: React.FC<IDatePicker> = ({
             return (
               <CalRow key={index}>
                 {days.map((day, index) => {
+                  const dayState = cellState(day, selectedRange);
+                  const isTodayValue = isToday(day);
+
                   return (
                     <CalCellB
                       key={index}
                       disabled={isDayOutOfRange(day, availableRange)}
                       onClick={() => onCellClick(day)}
-                      state={cellState(day, selectedRange)}
+                      state={dayState}
                       thisMonth={isSameMonth(day, focusedMonth)}
-                      isToday={isToday(day)}>
+                      isToday={isTodayValue}>
                       {format(day, "d")}
-                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={cellState(day, selectedRange)} isToday={isToday(day)}/>
+                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={dayState} isToday={isTodayValue}/>
                     </CalCellB>
                   );
                 })}
