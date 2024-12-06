@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 
 import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
+import { StyledLabel } from './Label';
+
 
 enum SwitchPosition {
   Off = 0,
@@ -11,23 +13,9 @@ enum SwitchPosition {
   Locked = 3
 }
 
-const intentPosition = (left: string, checked?: boolean) : string => {
-  const offset = checked ? -2 : 2;
-  const intentLeft = (parseInt(left) + offset).toString();
+type PositionKey = 'off' | 'on' | 'neutral' | 'locked';
 
-  return `${intentLeft}px`;
-};
-
-const RealInput = styled.input`
-  display: none;
-`;
-const SwitchOuter = styled.div`
-  border: 1px solid transparent;
-  box-sizing: border-box;
-  cursor: pointer;
-  position: relative;
-`;
-const getPositionKey = (switchPos : SwitchPosition) => {
+const getPositionKey = (switchPos : SwitchPosition) : PositionKey => {
   switch (switchPos) {
     case SwitchPosition.Off:
       return 'off';
@@ -43,22 +31,62 @@ const getPositionKey = (switchPos : SwitchPosition) => {
 
 };
 
-const SwitchInner = styled.div`
-  position: absolute;
+const RealInput = styled.input`
+  display: none;
+`;
+const SwitchOuter = styled.div`
+  border: var(--switch-border-width) solid transparent;
   box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+
+  width: var(--switch-width);
+  height: var(--switch-height);
+  border-radius: calc(var(--switch-height) / 2);
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: calc(var(--switch-border-width) * -1);
+    left: calc(var(--switch-border-width) * -1);
+    bottom: calc(var(--switch-border-width) * -1);
+    right: calc(var(--switch-border-width) * -1);
+    pointer-events: none;
+    border-radius: 12px;
+    box-shadow: 
+      0px 2px 2px 0px var(--grey-a4) inset, 
+      0px -8px 8px 0px var(--grey-a2) inset,
+      0px 2px 4px var(--black-a4),
+      0px -2px 4px var(--white-a4);
+  }
 `;
 
-const LabelText = styled.span`
-  font-family: ${({theme}) => theme.fontFamily.ui };
+const SwitchInner = styled.div<{ position: PositionKey}>`
+  --offset: calc(((var(--switch-height) - var(--switch-inner-size)) / 2) - var(--switch-border-width));
+  --position-off: var(--offset);
+  --position-on: calc(var(--switch-width) - var(--switch-inner-size) - (var(--switch-border-width)*2) - var(--offset));
+  --position-neutral: calc((var(--switch-width) / 2) - (var(--switch-inner-size) / 2) - var(--offset));
+  --position-locked: var(--offset);
 
-  flex: 1;
-  margin-left: 10px;
-  display: block;
+  position: absolute;
+  top: var(--offset);
+  left: ${({position}) => position && `var(--position-${position})`};
+  
+  box-sizing: border-box;
+  height: var(--switch-inner-size);
+  width: var(--switch-inner-size);
+  border-radius: calc(var(--switch-inner-size) / 2);
+  
+  background-color: var(--switch-default-off-background);
 
-  line-height: ${ p => p.theme.dimensions.form.switch.outer.height };
-
-  ${ p => p.theme.typography.form.input.label };
+  box-shadow: 
+    0px 2px 4px 0px var(--black-a8),
+    0px 1px 2px 0px var(--white-a5) inset, 
+    0px -1px 1px 0px var(--black-a5) inset;
 `;
+
+const LabelText = styled.span``;
 
 const IconWrapper = styled.div`
   position: absolute;
@@ -71,48 +99,74 @@ const IconWrapper = styled.div`
     display: block;
   }
 `;
-const SpinnerWrapper = styled.div`
-  margin-top: 1px;
-`;
+const SpinnerWrapper = styled.div``;
 
-const Container = styled.label<{activeTheming: string, $loading: boolean, useIntent: boolean, themeState: string, position: SwitchPosition, checked?: boolean}>`
+const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean, useIntent: boolean, themeState: string, position: SwitchPosition, checked?: boolean}>`
   user-select: none;
-  display: flex;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  
+  ${SwitchOuter}{
+    ${({activeTheming, themeState}) => css`
+      border-color: var(--switch-${themeState}-${activeTheming}-border);
+      background-color: var(--switch-${themeState}-${activeTheming}-background);
+    `};
+  
+    ${({ activeTheming }) => activeTheming === 'locked' && css`
+      background-color: var(--switch-special-locked-background);
+      border-color: var(--switch-special-locked-border);
+    `};
 
-  ${SwitchInner}{
-    ${({theme, position, themeState, activeTheming}) => theme && css`
-      ${theme.dimensions.form.switch.inner};
-      left: ${theme.dimensions.form.switch.positions[getPositionKey(position)]};
-      top: ${theme.dimensions.form.switch.positions.top};
-      transition:
-        left ${theme.animation.speed.normal} ${theme.animation.easing.primary.out},
-        border ${theme.animation.speed.normal} ${theme.animation.easing.primary.out},
-        width ${theme.animation.speed.normal} ${theme.animation.easing.primary.out};
+    ${({ activeTheming }) => activeTheming === 'failure' && css`
+      background-color: var(--switch-special-failure-background);
+      border-color: var(--switch-special-failure-border);
+    `};
 
-      ${theme.styles.form.switch[activeTheming][themeState].inner}
-    `}
+    ${({activeTheming, $loading}) => $loading && css`
+      background-color: var(--switch-default-${activeTheming}-background);
+      border-color: var(--switch-default-${activeTheming}-border);
+    `};
 
-    ${p => p.activeTheming === 'locked' && css`
-      width: calc(100% - ${parseInt(p.theme.dimensions.form.switch.positions.locked) * 2}px);
-    `}
-
-    ${p => p.$loading && css`
-      background: transparent;
-      top: 1px;
-    `}
   }
 
-  ${SwitchOuter}{
-    ${({theme, activeTheming, themeState}) => theme && css`
-      ${theme.styles.form.switch[activeTheming][themeState].outer};
-      ${theme.dimensions.form.switch.outer}};
-      flex: 0 0 ${theme.dimensions.form.switch.outer.width}};
+  ${SwitchInner}{
+    ${({activeTheming, themeState}) => css`
+      background-color: var(--switch-${themeState}-${activeTheming}-inner);
+    `};
+
+    transition:
+      left var(--speed-fast) var(--easing-primary-in-out),
+      border var(--speed-fast) var(--easing-primary-in-out),
+      width var(--speed-fast) var(--easing-primary-in-out);
+
+    ${({ activeTheming }) => activeTheming === 'locked' && css`
+      width: calc(100% - var(--switch-border-width));
+      background-color: var(--switch-special-locked-inner);
+      box-shadow: none;
+
+      ${IconWrapper} svg {
+        transform: translateX(-1px);
+      }
     `}
+
+    ${({ activeTheming }) => activeTheming === 'failure' && css`
+      background-color: var(--switch-special-failure-inner);
+    `}
+
+    ${({activeTheming, $loading}) => $loading && css`
+      border-color: var(--switch-default-${activeTheming}-inner);
+      box-shadow: none;
+    `};
+    
   }
 
   &:hover {
     ${SwitchInner}{
-      left: ${p => p.useIntent && intentPosition(p.theme.dimensions.form.switch.positions[getPositionKey(p.position)], p.checked)};
+      left: ${({useIntent, position}) => 
+        useIntent && position === SwitchPosition.Off && 'calc(var(--position-off) + var(--switch-intent-offset))' ||
+        useIntent && position === SwitchPosition.On && 'calc(var(--position-on) - var(--switch-intent-offset))'
+      };
     }
   }
 `;
@@ -129,10 +183,12 @@ const isTypeSwitchState = (value: string): value is TypeSwitchState => {
   );
 };
 
+type SwitchThemes = 'on' | 'off' | 'danger';
+
 interface IProps {
   labelText?: string
-  leftTheme?: string
-  rightTheme?: string
+  leftTheme?: SwitchThemes
+  rightTheme?: SwitchThemes
   state?: TypeSwitchState
   checked?: boolean
   onChangeCallback?: (checked: boolean, indeterminate?: boolean) => void;
@@ -141,9 +197,12 @@ interface IProps {
 const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', rightTheme = 'on', labelText, onChangeCallback, checked = false}) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   const [ position, setPosition ] = useState<SwitchPosition>(checked ? SwitchPosition.On : SwitchPosition.Off);
   const [ activeTheming, setActiveTheming ] = useState<string>( leftTheme );
   const [ switchState, setSwitchState ] = useState<TypeSwitchState>('default');
+  const [ justUpdated, setJustUpdated ] = useState<boolean>(false);
+  const [ innerSize, setInnerSize ] = useState<number>(0);
 
   useEffect(() => {
     setPosition(checked ? SwitchPosition.On : SwitchPosition.Off);
@@ -164,6 +223,7 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
 
   const customOnChange = () => {
     positionSwitch();
+    setJustUpdated(true);
     if(onChangeCallback){ onChangeCallback(inputRef.current?.checked || false); }
   };
 
@@ -204,13 +264,20 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
     }
   }, [state, setPosition, positionSwitch]);
 
+  useEffect(() => {
+    if(innerRef.current){
+      setInnerSize( parseInt( getComputedStyle(innerRef.current).getPropertyValue('--switch-inner-size') ));
+    }
+  }, [innerRef]);
+
+  
   return (
-    <Container onChange={customOnChange} activeTheming={activeTheming} $loading={state === 'loading'} useIntent={state === 'default' || state === 'failure'} themeState={switchState} position={position} checked={inputRef.current?.checked}>
+    <Container onChange={customOnChange} onMouseLeave={ () => setJustUpdated(false) } activeTheming={activeTheming} $loading={state === 'loading'} useIntent={ !justUpdated && (state === 'default' || state === 'failure')} themeState={switchState} position={position} checked={inputRef.current?.checked}>
       <SwitchOuter>
-        <SwitchInner>
+        <SwitchInner position={getPositionKey(position)} ref={innerRef}>
           {state === 'failure' ? <IconWrapper><Icon icon='Exclamation' color='danger' size={18} weight='regular' /></IconWrapper> : null}
-          {state === 'locked' ? <IconWrapper><Icon icon='Locked' color='dimmed' size={10} weight='light' /></IconWrapper> : null}
-          {state === 'loading' ? <SpinnerWrapper><Spinner size='small' styling='simple' /></SpinnerWrapper> : null}
+          {state === 'locked' ? <IconWrapper><Icon icon='Locked' color='switch-special-locked-icon' size={12} weight='regular' /></IconWrapper> : null}
+          {state === 'loading' && innerSize > 0 ? <SpinnerWrapper><Spinner styling='simple' custom={{ size: innerSize }} /></SpinnerWrapper> : null}
         </SwitchInner>
       </SwitchOuter>
       {labelText ? <LabelText>{labelText}</LabelText> : null}
@@ -230,7 +297,6 @@ const stateCheck = (state: TypeSwitchState) : TypeSwitchState => {
       return state;
   }
 };
-
 
 export default Switch;
 export { SwitchPosition };
