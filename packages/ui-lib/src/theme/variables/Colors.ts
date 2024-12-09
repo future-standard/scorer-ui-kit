@@ -533,12 +533,19 @@ export const colorVariables = css`
     --primary: var(--primary-9);
     --danger: var(--warning-9);
 
-
-    --spinner-danger: var(--warning-8);
-    --spinner-secondary: var(--grey-8);
-    --spinner-primary: var(--primary-6);
-    --spinner-simple: var(--grey-a8);
-
+    /* Spinner */
+    --spinner-primary-base: var(--primary-6);
+    --spinner-primary-top: var(--white-1);
+    
+    --spinner-secondary-base: var(--grey-8);
+    --spinner-secondary-top: var(--white-1);
+    
+    --spinner-simple-base: var(--grey-a8);
+    --spinner-simple-top: var(--white-1);
+    
+    --spinner-warning-base: var(--warning-8);
+    --spinner-warning-top: var(--white-1);
+    
     /* Global */
     --main-background-gradient: radial-gradient(200% 200% at 50% -10%, var(--grey-2) 0%, var(--grey-3) 100%);
     --main-background-color: var(--grey-3);
@@ -673,6 +680,11 @@ export const colorVariables = css`
     --filter-button-shadow-color: var(--black-a8);
   }
 
+  /* Typography */
+  .light-theme, .dark-theme {
+    --label-color: var(--grey-11);
+  }
+
   /* Buttons */
   .light-theme, .dark-theme {
     --button-background-color: var(--primary-9);
@@ -757,6 +769,83 @@ export const colorVariables = css`
       --button-gradient-end: var(--warning-gradient-end);
     }
 
+  }
+
+  /* Switches */
+  .light-theme, .dark-theme {
+    // Background
+    --switch-default-off-background: var(--grey-4);
+    --switch-default-on-background: var(--primary-9);
+    --switch-default-danger-background: var(--warning-9);
+
+    --switch-disabled-off-background: var(--grey-3);
+    --switch-disabled-on-background: var(--primary-8);
+    --switch-disabled-danger-background: var(--warning-8);
+    
+    // Border
+    --switch-default-off-border: var(--grey-7);
+    --switch-default-on-border: var(--primary-9);
+    --switch-default-danger-border: var(--warning-9);
+    
+    --switch-disabled-off-border: var(--grey-6);
+    --switch-disabled-on-border: var(--primary-a6);
+    --switch-disabled-danger-border: var(--warning-a6);
+    
+    // Inner
+    --switch-default-off-inner: var(--primary-9);
+    --switch-default-on-inner: var(--white-12);
+    --switch-default-danger-inner: var(--white-12);
+    
+    --switch-disabled-off-inner: var(--grey-7);
+    --switch-disabled-on-inner: var(--primary-a9);
+    --switch-disabled-danger-inner: var(--warning-a9);
+    
+    // Special States
+    --switch-special-locked-background: var(--grey-3);
+    --switch-special-locked-border: var(--grey-11);
+    --switch-special-locked-inner: transparent;
+    --switch-special-locked-icon: var(--grey-11);
+
+    --switch-special-failure-background: var(--warning-8);
+    --switch-special-failure-border: var(--warning-9);
+    --switch-special-failure-inner: var(--white-12);
+    --switch-special-failure-icon: var(--warning-8);
+
+  }
+
+  .light-theme {
+    // Background
+    --switch-default-off-background: var(--grey-2);
+    --switch-default-on-background: var(--primary-7);
+    --switch-default-danger-background: var(--warning-9);
+    
+    --switch-disabled-off-background: var(--grey-3);
+    --switch-disabled-on-background: var(--primary-6);
+    --switch-disabled-danger-background: var(--warning-8);
+
+    // Border
+    --switch-default-off-border: var(--grey-6);
+    --switch-default-on-border: var(--primary-7);
+    --switch-default-danger-border: var(--warning-9);
+    
+    --switch-disabled-off-border: var(--grey-6);
+    --switch-disabled-on-border: var(--primary-7);
+    --switch-disabled-danger-border: var(--warning-a5);
+    
+    // Inner
+    --switch-default-off-inner: var(--primary-9);
+    --switch-default-on-inner: var(--white-12);
+    --switch-default-danger-inner: var(--white-12);
+
+    --switch-disabled-off-inner: var(--grey-7);
+    --switch-disabled-on-inner: var(--primary-9);
+    --switch-disabled-danger-inner: var(--warning-a8);
+    
+    // Special States
+    --switch-special-locked-background: var(--grey-3);
+    --switch-special-locked-border: var(--grey-8);
+    --switch-special-locked-inner: transparent;
+    --switch-special-locked-icon: var(--grey-11);
   }
 
 `;

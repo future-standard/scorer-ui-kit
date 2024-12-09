@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { keyframes } from 'styled-components';
-import { TypeButtonDesigns, TypeButtonSizes} from "../Form";
 
 const circumference = (radius : number) => {
   return 2 * 3.1416 * radius;
@@ -31,13 +30,13 @@ const rotate = keyframes`
   }
 `;
 
-const BaseCircle = styled.circle<{ styling: string }>`
-  stroke: ${({styling}) => `var(--spinner-${styling}, --grey-a8)` };
+const BaseCircle = styled.circle<{ styling: string, customColor?: string }>`
+  stroke: ${({styling, customColor}) => customColor ? customColor : `var(--spinner-${styling}-base, var(--grey-a8))` };
   fill: none;
 `;
 
-const RotatingCircle = styled.circle<{ r: number }>`
-  stroke: var(--white-1);
+const RotatingCircle = styled.circle<{ r: number, styling: string, customColor?: string }>`
+  stroke: ${({styling, customColor}) => customColor ? customColor : `var(--spinner-${styling}-top, var(--white-1))` };
   fill: none;
   stroke-dasharray: ${({r}) => circumference(r)};
   stroke-dashoffset: ${({r}) => 2 * 3.1416 * r / 2};
@@ -49,35 +48,17 @@ const RotatingCircle = styled.circle<{ r: number }>`
 
 export type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
+export const getButtonDesign = (value: string) => {
 
-export const buttonSpinnerSize = (buttonSize: TypeButtonSizes) : SpinnerSize  => {
-  switch (buttonSize) {
-    case 'xsmall':
-    case 'small':
-      return 'xsmall';
-      break;
-
-    case 'large':
-      return 'small';
-
-    default:
-      return 'small';
-      break;
+  if(value === 'primary' || value === 'secondary' || value === 'warning'){
+    return value;
+  } else if(value === 'danger'){
+    console.warn('Button.tsx - Warning, the design prop value `danger` is being deprecated. Use `warning` instead.');
+    return 'danger';
   }
-};
 
-export const isTypeButtonDesigns = (value: any): value is TypeButtonDesigns => {
+  return 'simple';
 
-  switch (value) {
-    case 'primary':
-    case 'secondary':
-    case 'danger':
-    return true;
-    break;
-
-    default:
-      return false;
-  }
 };
 
 const sizeGuide = {
@@ -88,20 +69,28 @@ const sizeGuide = {
   xlarge: 48
 };
 
-interface IProps {
-  size: SpinnerSize
-  styling: string
+interface ICustomSpinner {
+  size?: number;
+  baseColor?: string;
+  topColor?: string;
 }
 
-const Spinner : React.FC<IProps> = ({ size = 'medium', styling = 'primary' }) => {
-  const sizeVal = sizeGuide[size];
+interface IProps {
+  size?: SpinnerSize
+  styling: string
+  custom?: ICustomSpinner
+}
+
+const Spinner : React.FC<IProps> = ({ size = 'medium', styling = 'primary', custom = {} }) => {
+  const { baseColor, topColor } = custom;
+  const sizeVal = custom?.size ? custom.size : sizeGuide[size];
   const strokeWidth = sizeVal / 5.333;
   const circleRadius = (sizeVal / 2) - (strokeWidth / 2);
 
   return (
     <svg viewBox={`-${sizeVal/2} -${sizeVal/2} ${sizeVal} ${sizeVal}`} width={sizeVal} height={sizeVal} xmlns='http://www.w3.org/2000/svg'>
-      <BaseCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={isTypeButtonDesigns(styling) ? styling : 'simple'} />
-      <RotatingCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} />
+      <BaseCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={ getButtonDesign(styling) } customColor={ baseColor } />
+      <RotatingCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={ getButtonDesign(styling) } customColor={ topColor } />
     </svg>
   );
 
