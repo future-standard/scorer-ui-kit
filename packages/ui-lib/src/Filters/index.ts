@@ -20,6 +20,7 @@ import {
   IFilterDatePicker,
   isFilterItem,
   IToggleOption,
+  FilterButtonDesign
 } from './FilterTypes';
 
 export {
@@ -36,8 +37,6 @@ export {
   isDateInterval,
   ToggleButton
 };
-
-type FilterButtonDesign = 'default' | 'basic'
 
 export type {
   ISearchFilter,

@@ -67,6 +67,8 @@ interface IFilterDropdownConfig {
   name?: string
 }
 
+type FilterButtonDesign = 'default' | 'basic'
+
 export {
   isFilterItem
 };
@@ -81,4 +83,5 @@ export type {
   IFilterDatePicker,
   IFilterDropdownConfig,
   IToggleOption,
+  FilterButtonDesign,
 };

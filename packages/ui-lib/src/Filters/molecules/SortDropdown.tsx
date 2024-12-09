@@ -4,9 +4,9 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 import FilterOption from '../../Form/atoms/FilterOption';
 import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
-import { IFilterItem } from '../FilterTypes';
+import { IFilterItem, FilterButtonDesign } from '../FilterTypes';
 import { resetButtonStyles } from '../../common';
-import { FilterButtonDesign, FilterDropdownContainer } from '..';
+import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 
 const Container = styled.div`
   display: inline-block;
