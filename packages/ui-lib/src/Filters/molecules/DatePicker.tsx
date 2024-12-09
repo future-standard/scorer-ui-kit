@@ -222,6 +222,10 @@ const ContentDot = styled.div<{ hasContent: boolean, state?: CellStates, isToday
   `}
 `;
 
+const DayText = styled.span`
+  transform: translateY(-1px);
+`;
+
 const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
   cursor: pointer;
   position: relative;
@@ -541,7 +545,9 @@ const DatePicker: React.FC<IDatePicker> = ({
                       state={dayState}
                       thisMonth={isSameMonth(day, focusedMonth)}
                       isToday={isTodayValue}>
-                      {format(day, "d")}
+                      <DayText>
+                        {format(day, "d")}
+                      </DayText>
                       <ContentDot hasContent={dayHasContent(day, contentDays)} state={dayState} isToday={isTodayValue}/>
                     </CalCellB>
                   );
