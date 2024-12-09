@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import FilterButton from '../atoms/FilterButton';
 import { useClickOutside } from '../../hooks/useClickOutside';
-import { FilterButtonDesign } from '..';
+import { FilterButtonDesign } from '../FilterTypes';
 
 const Container = styled.div`
   position: relative;

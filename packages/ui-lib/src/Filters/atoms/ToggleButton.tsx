@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { IToggleOption } from '../FilterTypes';
 import FilterButton from './FilterButton';
-import { FilterButtonDesign } from '..';
+import { FilterButtonDesign } from '../FilterTypes';
 
 type IToggleButton = {
   options: IToggleOption[]

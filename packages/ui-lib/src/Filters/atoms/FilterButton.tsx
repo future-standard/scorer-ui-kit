@@ -3,7 +3,7 @@ import styled, { css, keyframes } from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { animation } from '../../theme/common';
-import { FilterButtonDesign } from '..';
+import { FilterButtonDesign } from '../FilterTypes';
 
 const LeftIconWrapper = styled.div<{ isSortAscending: boolean }>`
   ${({ isSortAscending }) => isSortAscending && css`
