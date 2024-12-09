@@ -15,7 +15,7 @@ const LabelText = styled.span<{ required?: boolean }>`
   `}
 `;
 
-export const StyledLabel = styled.label<{ direction: TypeLabelDirection }>`
+export const StyledLabel = styled.label<{ direction?: TypeLabelDirection }>`
   font-family: var(--font-ui);
   color: var(--grey-11);
   font-size: 14px;

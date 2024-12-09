@@ -285,7 +285,7 @@ const Pagination: React.FC<IPagination> = (props) => {
       <ItemsSelectWrapper width={selectWidth}>
         <SelectField
           disabled={selectDisabled}
-          label={{ htmlFor: selectId, text: itemsText, isSameRow: true }}
+          label={{ htmlFor: selectId, text: itemsText, direction: 'row' }}
           defaultValue={itemsDefaultValue ? itemsDefaultValue : itemsOptions[0].value || 1}
           changeCallback={onItemsSelectChange}
         >
