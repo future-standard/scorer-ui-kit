@@ -1,41 +1,8 @@
 import React, { LabelHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
+import { TypeLabelDirection } from '..';
 
-export const StyledLabel = styled.label<{ rightAlign?: boolean }>`
-  font-family: var(--label-font);
-  color: var(--label-color);
-  font-size: var(--label-font-size);
-  font-weight: var(--label-weight);
-  ${({ rightAlign }) => rightAlign
-    ? `
-        display: flex;
-        align-items: center;
-        flex-direction: row-reverse;
-        justify-content: left;
-      `
-    :
-    `
-        display: block;
-        margin-bottom: 20px;
-      `
-  };
-`;
-
-const LabelText = styled.span<{ rightAlign: boolean, required?: boolean }>`
-  display: flex;
-  gap: 8px;
-  align-items: center;
-
-
-  ${({ rightAlign }) => rightAlign
-      ? `
-        margin-left: 12px;
-        `
-      : `
-        margin-bottom: 10px;
-      `
-  }
-
+const LabelText = styled.span<{ required?: boolean }>`
   ${({required}) => required && css`
     &::after {
       content: '';
@@ -48,9 +15,31 @@ const LabelText = styled.span<{ rightAlign: boolean, required?: boolean }>`
   `}
 `;
 
+export const StyledLabel = styled.label<{ direction: TypeLabelDirection }>`
+  font-family: var(--font-ui);
+  color: var(--grey-11);
+  font-size: 14px;
+  font-weight: 500;
+
+  display: flex;
+  gap: 8px;
+
+  ${({direction}) => direction && css`
+    flex-direction: ${direction};
+    ${['row', 'row-reverse'].includes(direction) && css`
+      display: inline-flex;
+      
+      ${LabelText}{
+        align-self: center;
+      }
+    `}
+  `}
+`;
+
 interface OwnProps {
   htmlFor: string
   labelText: string
+  direction?: TypeLabelDirection
   rightAlign?: boolean
   required?: boolean
 }
@@ -59,14 +48,20 @@ type Props = OwnProps & LabelHTMLAttributes<HTMLLabelElement>
 const Label: React.FC<Props> = ({
   htmlFor,
   labelText,
+  direction = 'column',
   rightAlign = false,
   required = false,
   children,
   ...props }) => {
 
+    if(rightAlign){
+      console.warn('Deprecation warning: `Label` is deprecating `rightAlign`, please update this to use `direction=\'row-reverse\'` instead.');
+      direction = 'row-reverse';
+    }
+
   return (
-    <StyledLabel {...{ htmlFor, rightAlign }} {...props}>
-      <LabelText {...{ rightAlign, required }}>{labelText}</LabelText>
+    <StyledLabel {...{ htmlFor, direction }} {...props}>
+      <LabelText {...{ required }}>{labelText}</LabelText>
       {children}
     </StyledLabel>
   );
