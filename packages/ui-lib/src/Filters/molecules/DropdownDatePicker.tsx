@@ -39,6 +39,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
   lang,
   hasEmptyValue,
   availableRange,
+  contentDays,
   onCloseCallback = () => { },
   onUpdateCallback = () => { },
   onToggleCallback = () => { },
@@ -109,7 +110,8 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
                 timeZoneTitle,
                 timeZoneValueTitle,
                 lang,
-                availableRange
+                availableRange,
+                contentDays,
               }}
               updateCallback={handleUpdateCallback}
               hasEmptyValue

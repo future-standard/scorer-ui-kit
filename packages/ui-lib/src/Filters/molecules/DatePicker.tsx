@@ -195,6 +195,37 @@ const CalHCell = styled(CalCell)`
   color: var(--grey-a11);
 `;
 
+const ContentDot = styled.div<{ hasContent: boolean, state?: CellStates, isToday?: boolean, }>`
+  position: absolute;
+  left: 18px;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--primary-11);
+
+  ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
+    background-color: var(--white-12);`
+  }
+
+  ${({ state }) => (state === 'inside') && css`
+    background-color: var(--primary-12);`
+  }
+
+  ${({ isToday }) => isToday && css`
+    left: 16px;
+    bottom: 3px;
+  `}
+
+  ${({ hasContent }) => !hasContent && css`
+    display: none;
+  `}
+`;
+
+const DayText = styled.span`
+  transform: translateY(-1px);
+`;
+
 const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
   cursor: pointer;
   position: relative;
@@ -325,6 +356,7 @@ export interface IDatePicker {
   timeZoneTitle?: string
   timeZoneValueTitle?: string
   availableRange?: DateRange
+  contentDays?: Date[]
   updateCallback?: (data: DateInterval | Date) => void
   lang?: 'en' | 'ja'
 }
@@ -340,6 +372,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   updateCallback = () => { },
   initialValue,
   availableRange,
+  contentDays,
   lang = 'en'
 }) => {
 
@@ -501,14 +534,21 @@ const DatePicker: React.FC<IDatePicker> = ({
             return (
               <CalRow key={index}>
                 {days.map((day, index) => {
+                  const dayState = cellState(day, selectedRange);
+                  const isTodayValue = isToday(day);
+
                   return (
                     <CalCellB
                       key={index}
                       disabled={isDayOutOfRange(day, availableRange)}
                       onClick={() => onCellClick(day)}
-                      state={cellState(day, selectedRange)}
+                      state={dayState}
                       thisMonth={isSameMonth(day, focusedMonth)}
-                      isToday={isToday(day)}>{format(day, "d")}
+                      isToday={isTodayValue}>
+                      <DayText>
+                        {format(day, "d")}
+                      </DayText>
+                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={dayState} isToday={isTodayValue}/>
                     </CalCellB>
                   );
                 })}
@@ -643,4 +683,10 @@ const isDayOutOfRange = (currentDay: Date, availableRange?: DateRange): boolean 
   }
 
   return false;
+};
+
+const dayHasContent = (currentDay: Date, contentDays?: Date[]): boolean => {
+  if (!contentDays) return false;
+
+  return contentDays.some(day => isSameDay(currentDay,day));
 };
