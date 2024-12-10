@@ -9,13 +9,16 @@ interface IBreadcrumb {
   href: string;
 }
 
-export interface IUtilityHeaderLink {
+export interface IUtilityHeaderLinkBack {
   show?: boolean;
-  link?: string;
+  link: string;
   label?: string;
 }
 
-export interface IUtilityHeaderLinkShare extends IUtilityHeaderLink {
+export interface IUtilityHeaderLinkShare {
+  show?: boolean;
+  link?: string;
+  label?: string;
   copiedLabel?: string;
 }
 
@@ -24,7 +27,7 @@ export interface IUtilityHeader {
   showBreadcrumbs?: boolean;
   showHomeIcon?: boolean;
   breadcrumbs?: IBreadcrumb[];
-  back?: IUtilityHeaderLink;
+  back?: IUtilityHeaderLinkBack;
   share?: IUtilityHeaderLinkShare;
 }
 
