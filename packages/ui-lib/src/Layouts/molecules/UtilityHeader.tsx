@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from "react";
 import styled, { css } from "styled-components";
-import Icon from "../../Icons/Icon";
 import {Link} from 'react-router-dom';
-import { IUtilityHeader } from "..";
+
+import Icon from "../../Icons/Icon";
+import { IUtilityHeader, IUtilityHeaderLink, IUtilityHeaderLinkShare } from "..";
 import { useCopyToClipboard } from "../../hooks";
 
 const Container = styled.div`
@@ -184,31 +185,42 @@ const RightArea = styled.div`
   justify-content: right;
 `;
 
+const shareDefaults : IUtilityHeaderLinkShare = {
+  show: true,
+  label: "Share",
+  copiedLabel: "Copied"
+};
+const backDefaults : IUtilityHeaderLink = {
+  show: true
+};
 
 
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share,  $iconInGutter = true }) => {
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, backLink, $iconInGutter = true, showShareLink = false, shareLink }) => {
+  // Set defaults and override from props.
+  back = Object.assign(backDefaults, back);
+  share = Object.assign(shareDefaults, share);
 
-  const [ copyActionText, setCopyActionText ] = useState<string>("Share");
+  const [ copyActionText, setCopyActionText ] = useState<string|undefined>(share.label);
   const {copyToClipboard} = useCopyToClipboard();
 
   const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
 
   const clickHandlerShareLink = useCallback(() => {
-    copyToClipboard( shareLink ? shareLink : window.location.href);
-    setCopyActionText("Copied");
+    copyToClipboard( share.link ? share.link : window.location.href);
+    setCopyActionText(share.copiedLabel || '');
     setTimeout(() => setCopyActionText("Share"), 2000);
-  }, [shareLink, copyToClipboard]);
+  }, [share.link, share.copiedLabel, copyToClipboard]);
 
   return (
     <Container>
     <LeftArea>
-      {backLink ?
-        <BackLink to={backLink} $showDivider={hasBreadcrumbs} {...{$iconInGutter}}>
+      {back.link ?
+        <BackLink to={back.link} $showDivider={hasBreadcrumbs} {...{$iconInGutter}}>
           <BackLinkIcon>
             <Icon icon="Back" size={16} color="grey-10" />
           </BackLinkIcon>
-          Back
+          {back.label}
         </BackLink>
       : null }
       {hasBreadcrumbs ?
@@ -234,7 +246,7 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
       : null }
     </LeftArea>
     <RightArea>
-        {showShareLink ?
+        {share.show ?
           <ExtraAction onClick={ clickHandlerShareLink }>
             <ExtraActionIcon>
               <Icon icon="Link" size={16} color="grey-10" />
