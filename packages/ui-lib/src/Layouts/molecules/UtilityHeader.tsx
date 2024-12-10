@@ -195,7 +195,7 @@ const backDefaults : IUtilityHeaderLink = {
 };
 
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share,  $iconInGutter = true }) => {
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back = {}, share = {},  $iconInGutter = true }) => {
 
   // Set defaults and override from props.
   back = Object.assign(backDefaults, back);
@@ -208,14 +208,14 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
 
   const clickHandlerShareLink = useCallback(() => {
     copyToClipboard( share.link ? share.link : window.location.href);
-    setCopyActionText(share.copiedLabel || '');
+    setCopyActionText(share.copiedLabel);
     setTimeout(() => setCopyActionText("Share"), 2000);
   }, [share.link, share.copiedLabel, copyToClipboard]);
 
   return (
     <Container>
     <LeftArea>
-      {back.link ?
+      {back.show && back.link ?
         <BackLink to={back.link} $showDivider={hasBreadcrumbs} {...{$iconInGutter}}>
           <BackLinkIcon>
             <Icon icon="Back" size={16} color="grey-10" />
