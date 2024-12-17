@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled, { css } from "styled-components";
 import {Link} from 'react-router-dom';
 
 import Icon from "../../Icons/Icon";
-import { IUtilityHeader, IUtilityHeaderLink, IUtilityHeaderLinkShare } from "..";
+import { IUtilityHeader, IUtilityHeaderLinkBack, IUtilityHeaderLinkShare } from "..";
 import { useCopyToClipboard } from "../../hooks";
 
 const Container = styled.div`
@@ -190,27 +190,45 @@ const shareDefaults : IUtilityHeaderLinkShare = {
   label: "Share",
   copiedLabel: "Copied"
 };
-const backDefaults : IUtilityHeaderLink = {
-  show: true
+const backDefaults : IUtilityHeaderLinkBack = {
+  show: true,
+  link: '/'
 };
 
+const UtilityHeaderShare : React.FC<IUtilityHeaderLinkShare> = ({show, link, label = 'Share', copiedLabel = 'Copied'}) => {
+  
+  const [ copyActionText, setCopyActionText ] = useState<string>(label);
+  const {copyToClipboard} = useCopyToClipboard();
+  
+  const clickHandlerShareLink = useCallback(() => {
+    copyToClipboard( link ? link : window.location.href);
+    setCopyActionText(copiedLabel);
+    setTimeout(() => setCopyActionText(copyActionText), 2000);
+  }, [link, copiedLabel, copyActionText, copyToClipboard]);
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back = {}, share = {},  $iconInGutter = true }) => {
+  useEffect(() => {
+    setCopyActionText(label);
+  }, [label]);
+  
+  if(!show){ return null; }
+  
+  return(
+    <ExtraAction onClick={ clickHandlerShareLink }>
+      <ExtraActionIcon>
+        <Icon icon="Link" size={16} color="grey-10" />
+      </ExtraActionIcon>
+      {copyActionText}
+    </ExtraAction>
+  );
+  
+};
+
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back = {}, share,  $iconInGutter = true }) => {
 
   // Set defaults and override from props.
   back = Object.assign(backDefaults, back);
-  share = Object.assign(shareDefaults, share);
-
-  const [ copyActionText, setCopyActionText ] = useState<string|undefined>(share.label);
-  const {copyToClipboard} = useCopyToClipboard();
 
   const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
-
-  const clickHandlerShareLink = useCallback(() => {
-    copyToClipboard( share.link ? share.link : window.location.href);
-    setCopyActionText(share.copiedLabel);
-    setTimeout(() => setCopyActionText("Share"), 2000);
-  }, [share.link, share.copiedLabel, copyToClipboard]);
 
   return (
     <Container>
@@ -246,14 +264,7 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
       : null }
     </LeftArea>
     <RightArea>
-        {share.show ?
-          <ExtraAction onClick={ clickHandlerShareLink }>
-            <ExtraActionIcon>
-              <Icon icon="Link" size={16} color="grey-10" />
-            </ExtraActionIcon>
-            {copyActionText}
-          </ExtraAction> 
-        : null }
+       <UtilityHeaderShare {...share} />
     </RightArea>
     </Container>
   );
