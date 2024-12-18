@@ -34,7 +34,7 @@ const BackLinkIcon = styled.div`
     align-items: center;
   }
 `;
-const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
+const BackLink = styled(Link)<{iconInGutter: boolean, showDivider: boolean}>`
   position: relative;
   display: flex;
   padding: 0;
@@ -51,7 +51,7 @@ const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
   background: none;
   text-decoration: none;
   transition: color 0.25s ease;
-  margin-left: ${props => props.$iconInGutter ? '-24px' : '0' };
+  margin-left: ${props => props.iconInGutter ? '-24px' : '0' };
 
   ${BackLinkIcon}{
     svg * {
@@ -68,7 +68,7 @@ const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
     }
   }
 
-  ${({$showDivider}) => $showDivider && css`
+  ${({showDivider}) => showDivider && css`
     &::after {
       content: '';
       display: inline-block;
@@ -185,16 +185,6 @@ const RightArea = styled.div`
   justify-content: right;
 `;
 
-const shareDefaults : IUtilityHeaderLinkShare = {
-  show: true,
-  label: "Share",
-  copiedLabel: "Copied"
-};
-const backDefaults : IUtilityHeaderLinkBack = {
-  show: true,
-  link: '/'
-};
-
 const UtilityHeaderShare : React.FC<IUtilityHeaderLinkShare> = ({show, link, label = 'Share', copiedLabel = 'Copied'}) => {
   
   const [ copyActionText, setCopyActionText ] = useState<string>(label);
@@ -223,24 +213,32 @@ const UtilityHeaderShare : React.FC<IUtilityHeaderLinkShare> = ({show, link, lab
   
 };
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back = {}, share,  $iconInGutter = true }) => {
+interface IUtilityHeaderLinkBackInstance extends IUtilityHeaderLinkBack {
+  iconInGutter: boolean;
+  showDivider: boolean;
+}
 
-  // Set defaults and override from props.
-  back = Object.assign(backDefaults, back);
+const UtilityHeaderBack : React.FC<IUtilityHeaderLinkBackInstance> = ({show, link, label = 'Back', showDivider, iconInGutter}) => {
+  if(!show){ return null; }
+
+  return (
+    <BackLink to={link} {...{showDivider, iconInGutter}}>
+      <BackLinkIcon>
+        <Icon icon="Back" size={16} color="grey-10" />
+      </BackLinkIcon>
+      {label}
+    </BackLink>
+  );
+};
+
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share, iconInGutter = true }) => {
 
   const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
 
   return (
     <Container>
     <LeftArea>
-      {back.show && back.link ?
-        <BackLink to={back.link} $showDivider={hasBreadcrumbs} {...{$iconInGutter}}>
-          <BackLinkIcon>
-            <Icon icon="Back" size={16} color="grey-10" />
-          </BackLinkIcon>
-          {back.label}
-        </BackLink>
-      : null }
+      {back && <UtilityHeaderBack showDivider={hasBreadcrumbs} {...{iconInGutter}} {...back} />}
       {hasBreadcrumbs ?
         <Breadcrumbs>
           { breadcrumbs.map((breadcrumb, index) => {
@@ -264,7 +262,7 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
       : null }
     </LeftArea>
     <RightArea>
-       <UtilityHeaderShare {...share} />
+      <UtilityHeaderShare {...share} />
     </RightArea>
     </Container>
   );

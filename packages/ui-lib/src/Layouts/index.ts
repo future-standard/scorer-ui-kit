@@ -23,7 +23,7 @@ export interface IUtilityHeaderLinkShare {
 }
 
 export interface IUtilityHeader {
-  $iconInGutter?: boolean;
+  iconInGutter?: boolean;
   showBreadcrumbs?: boolean;
   showHomeIcon?: boolean;
   breadcrumbs?: IBreadcrumb[];
