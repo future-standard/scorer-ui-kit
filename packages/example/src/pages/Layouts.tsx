@@ -1,7 +1,24 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from 'styled-components';
-import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField, FullWidthContentBlock, IHeaderContent, ButtonsStack, IButtonStack } from "scorer-ui-kit";
+import {
+  GlobalUI,
+  defaultTheme,
+  PageHeader,
+  useThemeToggle,
+  ContentLayout,
+  Tab,
+  TabList,
+  TabContent,
+  Label,
+  Button,
+  TextField,
+  FullWidthContentBlock,
+  IHeaderContent,
+  ButtonsStack,
+  IButtonStack,
+  useLanguageAttribute
+} from "scorer-ui-kit";
 import ExamplesFilename from "../components/ExamplesFilename";
 
 const FullWidthExampleContent = styled.div`
@@ -14,6 +31,11 @@ const FullWidthExampleContent = styled.div`
 const Layouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
+  const {onLanguageAttributeToggle} = useLanguageAttribute([]);
+
+  const onLanguageToggle = () => {
+    onLanguageAttributeToggle();
+  };
 
   const defaultBtn : IButtonStack[] = [
     {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
@@ -52,7 +74,8 @@ const Layouts: FC = () => {
           switchThemeText='SWITCH THEME'
           selectedThemeText={isLightMode ? 'LIGHT MODE' : 'DARK MODE' }
           onThemeToggle={onThemeToggle}
-          badge={{ 
+          onLanguageToggle={onLanguageToggle}
+          badge={{
             text: 'Guest',
             color: 'primary',
             linkTo: '#',

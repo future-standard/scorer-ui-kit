@@ -11,6 +11,7 @@ import useBreakpoints from './useBreakpoints';
 import useMediaQuery from './useMediaQuery';
 import { useMediaModal } from './useMediaModal';
 import useThemeToggle from './useThemeToggle';
+import useLanguageAttribute from './useLanguageAttribute';
 
 export {
   useInterval,
@@ -25,7 +26,8 @@ export {
   useBreakpoints,
   useMediaModal,
   useThemeToggle,
-  useLocalStorage
+  useLocalStorage,
+  useLanguageAttribute
 };
 
 export type { IModal };
