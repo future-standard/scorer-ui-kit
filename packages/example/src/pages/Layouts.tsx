@@ -31,7 +31,7 @@ const FullWidthExampleContent = styled.div`
 const Layouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
-  const {onLanguageAttributeToggle} = useLanguageAttribute([]);
+  const {onLanguageAttributeToggle} = useLanguageAttribute(['en','ja']);
 
   const onLanguageToggle = () => {
     onLanguageAttributeToggle();
