@@ -1,8 +1,13 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-const setInitialLanguage = (defaultLanguages: string[]) => {
+const setInitialLanguage = (defaultLanguages: string[], initLanguage?: string) => {
   if (defaultLanguages.length === 0) {
     console.warn("defaultLanguages array is empty. Unable to set a language.");
+    return;
+  }
+
+  if (initLanguage && defaultLanguages.includes(initLanguage)) {
+    document.documentElement.setAttribute("lang", initLanguage);
     return;
   }
 
@@ -23,8 +28,10 @@ const setInitialLanguage = (defaultLanguages: string[]) => {
   }
 };
 
-const useLanguageAttribute = (languageList: string[]) => {
-  // Toggles between the first two languages in the list
+const useLanguageAttribute = (languageList: string[], initLanguage?: string) => {
+
+  const isInitialMount = useRef(true);
+
   const onLanguageAttributeToggle = useCallback(() => {
     if (languageList.length < 2) {
       console.warn("Insufficient languages in the list for toggling.");
@@ -42,8 +49,13 @@ const useLanguageAttribute = (languageList: string[]) => {
       console.warn("languageList is empty. Unable to initialize language attribute.");
       return;
     }
-    setInitialLanguage(languageList);
-  }, [languageList]);
+
+    if (isInitialMount.current) {
+      setInitialLanguage(languageList, initLanguage);
+      isInitialMount.current = false;
+    }
+
+  }, [initLanguage, languageList]);
 
   return {
     onLanguageAttributeToggle,
