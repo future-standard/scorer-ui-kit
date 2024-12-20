@@ -18,7 +18,7 @@ const BackLinkIcon = styled.div`
   }
 `;
 
-const BackLink = styled(Link)<{iconInGutter: boolean, showDivider: boolean}>`
+const BackLink = styled(Link)<{$iconInGutter: boolean, showDivider: boolean}>`
   position: relative;
   display: flex;
   padding: 0;
@@ -35,7 +35,7 @@ const BackLink = styled(Link)<{iconInGutter: boolean, showDivider: boolean}>`
   background: none;
   text-decoration: none;
   transition: color 0.25s ease;
-  margin-left: ${props => props.iconInGutter ? '-24px' : '0' };
+  margin-left: ${props => props.$iconInGutter ? '-24px' : '0' };
 
   ${BackLinkIcon}{
     svg * {
@@ -65,15 +65,15 @@ const BackLink = styled(Link)<{iconInGutter: boolean, showDivider: boolean}>`
 `;
 
 interface IUtilityHeaderLinkBackInstance extends IUtilityHeaderLinkBack {
-  iconInGutter: boolean;
+  $iconInGutter: boolean;
   showDivider: boolean;
 }
 
-const UtilityHeaderBack : React.FC<IUtilityHeaderLinkBackInstance> = ({show = true, link, label = 'Back', showDivider, iconInGutter}) => {
+const UtilityHeaderBack : React.FC<IUtilityHeaderLinkBackInstance> = ({show = true, link, label = 'Back', showDivider, $iconInGutter}) => {
   if(!show){ return null; }
 
   return (
-    <BackLink to={link} {...{showDivider, iconInGutter}}>
+    <BackLink to={link} {...{showDivider, $iconInGutter}}>
       <BackLinkIcon>
         <Icon icon="Back" size={16} color="grey-10" />
       </BackLinkIcon>

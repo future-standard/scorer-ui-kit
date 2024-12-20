@@ -86,14 +86,14 @@ const RightArea = styled.div`
 `;
 
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share, iconInGutter = true }) => {
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share, $iconInGutter = true }) => {
 
   const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
 
   return (
     <Container>
     <LeftArea>
-      {back && <UtilityHeaderBack showDivider={hasBreadcrumbs} {...{iconInGutter}} {...back} />}
+      {back && <UtilityHeaderBack showDivider={hasBreadcrumbs} {...{$iconInGutter}} {...back} />}
       {hasBreadcrumbs ?
         <Breadcrumbs>
           { breadcrumbs.map((breadcrumb, index) => {
