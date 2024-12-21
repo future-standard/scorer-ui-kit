@@ -10,7 +10,7 @@ const BackLinkIcon = styled.div`
   height: 16px;
   justify-content: center;
   align-items: center;
-  flex: 1;  
+  flex: 1;
   > div {
     display: flex;
     justify-content: center;
@@ -18,7 +18,7 @@ const BackLinkIcon = styled.div`
   }
 `;
 
-const BackLink = styled(Link)<{$iconInGutter: boolean, showDivider: boolean}>`
+const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
   position: relative;
   display: flex;
   padding: 0;
@@ -42,7 +42,7 @@ const BackLink = styled(Link)<{$iconInGutter: boolean, showDivider: boolean}>`
       transition: stroke 0.25s ease;
     }
   }
-  
+
   &:hover {
     color: var(--grey-12);
     ${BackLinkIcon}{
@@ -52,7 +52,7 @@ const BackLink = styled(Link)<{$iconInGutter: boolean, showDivider: boolean}>`
     }
   }
 
-  ${({showDivider}) => showDivider && css`
+  ${({$showDivider}) => $showDivider && css`
     &::after {
       content: '';
       display: inline-block;
@@ -66,14 +66,14 @@ const BackLink = styled(Link)<{$iconInGutter: boolean, showDivider: boolean}>`
 
 interface IUtilityHeaderLinkBackInstance extends IUtilityHeaderLinkBack {
   $iconInGutter: boolean;
-  showDivider: boolean;
+  $showDivider: boolean;
 }
 
-const UtilityHeaderBack : React.FC<IUtilityHeaderLinkBackInstance> = ({show = true, link, label = 'Back', showDivider, $iconInGutter}) => {
+const UtilityHeaderBack : React.FC<IUtilityHeaderLinkBackInstance> = ({show = true, link, label = 'Back', $showDivider, $iconInGutter}) => {
   if(!show){ return null; }
 
   return (
-    <BackLink to={link} {...{showDivider, $iconInGutter}}>
+    <BackLink to={link} {...{$showDivider, $iconInGutter}}>
       <BackLinkIcon>
         <Icon icon="Back" size={16} color="grey-10" />
       </BackLinkIcon>

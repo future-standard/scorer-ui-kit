@@ -93,7 +93,7 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
   return (
     <Container>
     <LeftArea>
-      {back && <UtilityHeaderBack showDivider={hasBreadcrumbs} {...{$iconInGutter}} {...back} />}
+      {back && <UtilityHeaderBack $showDivider={hasBreadcrumbs} {...{$iconInGutter}} {...back} />}
       {hasBreadcrumbs ?
         <Breadcrumbs>
           { breadcrumbs.map((breadcrumb, index) => {
