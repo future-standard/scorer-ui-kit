@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from "react";
-import styled, { css } from "styled-components";
-import Icon from "../../Icons/Icon";
+import React from "react";
+import styled from "styled-components";
 import {Link} from 'react-router-dom';
+
 import { IUtilityHeader } from "..";
-import { useCopyToClipboard } from "../../hooks";
+import Icon from "../../Icons/Icon";
+import UtilityHeaderShare from "../atoms/UtilityHeaderShare";
+import UtilityHeaderBack from "../atoms/UtilityHeaderBack";
 
 const Container = styled.div`
   max-width: var(--max-content-width);
@@ -19,107 +21,6 @@ const LeftArea = styled.div`
   align-items: center;
   gap: var(--columnPadding, 16px);
   flex: 1 0 0;
-`;
-const BackLinkIcon = styled.div`
-  display: flex;
-  width: 16px;
-  height: 16px;
-  justify-content: center;
-  align-items: center;
-  flex: 1;  
-  > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
-  position: relative;
-  display: flex;
-  padding: 0;
-  align-items: center;
-  gap: 8px;
-  color: var(--grey-10);
-  text-align: center;
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  border: none;
-  background: none;
-  text-decoration: none;
-  transition: color 0.25s ease;
-  margin-left: ${props => props.$iconInGutter ? '-24px' : '0' };
-
-  ${BackLinkIcon}{
-    svg * {
-      transition: stroke 0.25s ease;
-    }
-  }
-  
-  &:hover {
-    color: var(--grey-12);
-    ${BackLinkIcon}{
-      svg * {
-        stroke: var(--grey-12);
-      }
-    }
-  }
-
-  ${({$showDivider}) => $showDivider && css`
-    &::after {
-      content: '';
-      display: inline-block;
-      height: 12px;
-      width: 1px;
-      padding-left: 8px;
-      border-right: 1px solid var(--grey-10);
-    }
-  `}
-`;
-
-const ExtraActionIcon = styled.div`
-  display: flex;
-  width: 16px;
-  height: 16px;
-  justify-content: center;
-  align-items: center;
-`;
-const ExtraAction = styled.button`
-  position: relative;
-  display: flex;
-  padding: 0;
-  align-items: center;
-  gap: 8px;
-  color: var(--grey-10);
-  text-align: center;
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  border: none;
-  background: none;
-  text-decoration: none;
-  transition: color 0.25s ease;
-  cursor: pointer;
-
-  ${ExtraActionIcon}{
-    svg * {
-      transition: stroke 0.25s ease;
-    }
-  }
-  
-  &:hover {
-    color: var(--grey-12);
-    ${ExtraActionIcon}{
-      svg * {
-        stroke: var(--grey-12);
-      }
-    }
-  }
-
 `;
 
 const Breadcrumbs = styled.div`
@@ -185,32 +86,14 @@ const RightArea = styled.div`
 `;
 
 
-
-
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, backLink, $iconInGutter = true, showShareLink = false, shareLink }) => {
-
-  const [ copyActionText, setCopyActionText ] = useState<string>("Share");
-  const {copyToClipboard} = useCopyToClipboard();
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share, $iconInGutter = true }) => {
 
   const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
-
-  const clickHandlerShareLink = useCallback(() => {
-    copyToClipboard( shareLink ? shareLink : window.location.href);
-    setCopyActionText("Copied");
-    setTimeout(() => setCopyActionText("Share"), 2000);
-  }, [shareLink, copyToClipboard]);
 
   return (
     <Container>
     <LeftArea>
-      {backLink ?
-        <BackLink to={backLink} $showDivider={hasBreadcrumbs} {...{$iconInGutter}}>
-          <BackLinkIcon>
-            <Icon icon="Back" size={16} color="grey-10" />
-          </BackLinkIcon>
-          Back
-        </BackLink>
-      : null }
+      {back && <UtilityHeaderBack $showDivider={hasBreadcrumbs} {...{$iconInGutter}} {...back} />}
       {hasBreadcrumbs ?
         <Breadcrumbs>
           { breadcrumbs.map((breadcrumb, index) => {
@@ -234,14 +117,7 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
       : null }
     </LeftArea>
     <RightArea>
-        {showShareLink ?
-          <ExtraAction onClick={ clickHandlerShareLink }>
-            <ExtraActionIcon>
-              <Icon icon="Link" size={16} color="grey-10" />
-            </ExtraActionIcon>
-            {copyActionText}
-          </ExtraAction> 
-        : null }
+      <UtilityHeaderShare {...share} />
     </RightArea>
     </Container>
   );

@@ -9,14 +9,26 @@ interface IBreadcrumb {
   href: string;
 }
 
+export interface IUtilityHeaderLinkBack {
+  show?: boolean;
+  link: string;
+  label?: string;
+}
+
+export interface IUtilityHeaderLinkShare {
+  show?: boolean;
+  link?: string;
+  label?: string;
+  copiedLabel?: string;
+}
+
 export interface IUtilityHeader {
   $iconInGutter?: boolean;
-  backLink?: string;
   showBreadcrumbs?: boolean;
-  breadcrumbs?: IBreadcrumb[];
   showHomeIcon?: boolean;
-  showShareLink?: boolean;
-  shareLink?: string;
+  breadcrumbs?: IBreadcrumb[];
+  back?: IUtilityHeaderLinkBack;
+  share?: IUtilityHeaderLinkShare;
 }
 
 export interface IHeaderContent {
