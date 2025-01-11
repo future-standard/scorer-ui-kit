@@ -39,6 +39,9 @@ export const _DatePicker = () => {
   const availableRangeDates = object('Available Range', datesRange);
   const contentDaysObj = object('Content Days', dataContentDays);
   const showContentDays = boolean('Show Content Days', true)
+  const cancelText = text('Cancel Text', 'Cancel');
+  const applyText = text('Apply Text', 'Apply');
+  const resetText = text('Reset Text', 'Reset');
 
   return (
     <Container>
@@ -47,6 +50,9 @@ export const _DatePicker = () => {
           timeMode,
           dateMode,
           timeZoneValueTitle,
+          cancelText,
+          applyText,
+          resetText
         }}
           updateCallback={exampleCallback(updateCallback)}
           dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}
