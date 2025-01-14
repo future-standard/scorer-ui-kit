@@ -3,6 +3,11 @@ import styled, { css } from 'styled-components';
 import { TypeLabelDirection } from '..';
 
 const LabelText = styled.span<{ required?: boolean }>`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  
   ${({required}) => required && css`
     &::after {
       content: '';
