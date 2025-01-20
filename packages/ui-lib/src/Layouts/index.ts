@@ -42,12 +42,21 @@ export interface IMainArea {
   minSize?: number;
 }
 
+// 1. open - the side area is open and in normal resize range.
+// 2. collapsing - has been in an open state but is now in an area that will close it on release.
+// 3. collapsed - it's hidden!
+// 4. peeking - Has been closed but now dragging might re-open it.
+// 5. opening - We have restored it to a width that appears open. On release, we will set to open.
+export type ISideAreaState = 'open' | 'collapsing' | 'collapsed' | 'peeking' | 'opening';
+
 export interface ISideArea {
   content: ReactElement;
   defaultSize?: number;
   minSize?: number;
   maxSize?: number;
   collapsable?: boolean;
+  initialSideAreaState?: ISideAreaState
+  onSideAreaStateChange?: (sideAreaState: ISideAreaState) => void
 }
 
 export interface ISplitLayoutProps {

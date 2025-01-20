@@ -2,20 +2,13 @@ import React, { PointerEvent, useState, useCallback, useEffect, useRef, useImper
 import styled, { css } from "styled-components";
 import ResizeLine, { TResizeLineDirection, TResizeLineStates } from '../atoms/ResizeLine';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { ISplitLayoutHandles, ISplitLayoutProps } from '..';
+import { ISideAreaState, ISplitLayoutHandles, ISplitLayoutProps } from '..';
 
 interface IPosition {
   x: number;
   y: number;
 }
 type LayoutType = 'horizontal' | 'vertical';
-
-// 1. open - the side area is open and in normal resize range.
-// 2. collapsing - has been in an open state but is now in an area that will close it on release.
-// 3. collapsed - it's hidden!
-// 4. peeking - Has been closed but now dragging might re-open it.
-// 5. opening - We have restored it to a width that appears open. On release, we will set to open.
-type ISideAreaState = 'open' | 'collapsing' | 'collapsed' | 'peeking' | 'opening';
 
 const DebugData = styled.div`
   position: absolute;
@@ -61,10 +54,10 @@ const SideArea = styled.div<{$defaultSize: number, $maxDimension?: number, $minD
   position: relative;
   flex: 0 0 ${({$defaultSize}) => $defaultSize}px;
   display: ${({$collapseState}) => $collapseState === 'collapsed' ? 'none' : 'block'};
-  transition: 
+  transition:
     min-width 0.65s cubic-bezier(0, 0.55, 0.45, 1),
     min-height 0.65s cubic-bezier(0, 0.55, 0.45, 1);
-  
+
   ${({$layout, $maxDimension, $minDimension}) => $layout === 'vertical' ? css`
     ${$minDimension ? `min-height: ${$minDimension}px;` : '0'};
     ${$maxDimension ? `max-height: ${$maxDimension}px;` : 'none'};
@@ -118,7 +111,7 @@ const DragContainer = styled.div<{$size?: number, $fauxHover: 'true' | 'false'}>
   justify-content: center;
   align-items: center;
   cursor: col-resize;
-  
+
   > div {
     transition: opacity 0.15s cubic-bezier(0.45, 0, 0.55, 1);
   }
@@ -157,7 +150,7 @@ const Container = styled.section<{$initialised?: 'true' | 'false', $layout?: Lay
   ${({$layout}) => $layout === 'vertical' ? css`
     flex-direction: column;
     ${MainArea}{}
-    ${DragContainer}{  
+    ${DragContainer}{
       cursor: row-resize;
     }
   ` : null}
@@ -172,7 +165,7 @@ const Container = styled.section<{$initialised?: 'true' | 'false', $layout?: Lay
 // The main area has a minimum size - it flexes to the available space.
 // The secondary side area has more restraints and is the part that is actively resized.
 const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainArea, sideArea, layout = 'horizontal', reverse, dividerSize = 16, persist = false, persistenceKey = 'resizable_ui', showDebug }, controlRef) => {
-  
+
   const componentKey : string = 'resizable_layout_';
   const referenceKey : string = componentKey + persistenceKey;
 
@@ -187,12 +180,12 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
   const [initialMousePos, setInitialMousePos] = useState<IPosition>();
   const [mousePosDiff, setMousePosDiff] = useState<IPosition>();
   const [resizing, setResizing] = useState<boolean>();
-  
-  const [sideAreaState, setSideAreaState] = useState<ISideAreaState>('open');
+
+  const [sideAreaState, setSideAreaState] = useState<ISideAreaState>( sideArea.initialSideAreaState|| 'open');
   const [sideAreaBasis, setSideAreaBasis] = useState<number>(sideDefaultSize);
   const [sideAreaStartBasis, setSideAreaStartBasis] = useState<number>(sideDefaultSize);
   const [lastOpenSize, setLastOpenSize] = useState<number>(sideDefaultSize);
-  
+
   const ContainerRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const AreaB = useRef() as React.MutableRefObject<HTMLInputElement>;
 
@@ -218,6 +211,14 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
     }
   },[initialised, persist, savedCollapsedState, savedSize, savedLastOpenSize]);
 
+  useEffect(() => {
+
+    if(!initialised || !sideArea.onSideAreaStateChange) {return;}
+
+    sideArea.onSideAreaStateChange(sideAreaState);
+
+  },[initialised, sideArea, sideAreaState]);
+
 
   /*
   ---  Expose Controls To Parent (via Ref) ---
@@ -225,7 +226,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
 
   useImperativeHandle(controlRef, () => ({
     open: () => {
-      open();      
+      open();
     },
     close: () => {
       collapse();
@@ -234,7 +235,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
       restoreDefault();
     }
   }));
-  
+
 
   /*
   ---  Controls For Layout ---
@@ -318,7 +319,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
     } else {
       setSideAreaStartBasis( clampInt(sideAreaBasis, sideMinSize, sideMaxSize) );
     }
-    
+
     setInitialMousePos({x: clientX, y: clientY});
     setMousePosDiff({x: 0, y: 0});
     setResizing(true);
@@ -337,7 +338,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
 
     if(resizing && initialMousePos && sideAreaStartBasis){
       setMousePosDiff({x: initialMousePos.x - clientX, y: initialMousePos.y - clientY});
-      
+
       // Behaviour - Resizing
       if(layout === 'horizontal'){
         // Handle Horizontal Resizing
@@ -446,7 +447,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
   /*
   ---  Useful Debug Overlay ---
   */
- 
+
   const debugData = <DebugData>
     <div><span>State:</span> {sideAreaState}</div>
     <div><span>Position:</span> {initialMousePos?.x}, {initialMousePos?.y}</div>
@@ -478,7 +479,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
         </SideAreaInner>
       </SideArea>
 
-      {showDebug ? debugData : null}    
+      {showDebug ? debugData : null}
     </Container>
   );
 });
@@ -487,7 +488,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
 /**
  * Returns the number input but binding it within the range provided
  * @param value The value to clamp.
- * @param upper The maximum value of the range. 
+ * @param upper The maximum value of the range.
  * @param lower The minimum value of the range.
  * @returns The clamped number value.
  */
