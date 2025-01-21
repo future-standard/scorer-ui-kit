@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { ThemeProvider } from 'styled-components';
 import { GlobalUI, defaultTheme, useThemeToggle, ContentLayout, SplitLayout, FlexContentPlaceholder } from "scorer-ui-kit";
 import ExamplesFilename from '../components/ExamplesFilename';
@@ -6,10 +6,15 @@ import ExamplesFilename from '../components/ExamplesFilename';
 const SplitLayouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
-  
+
   const [layout] = useState<'horizontal'|'vertical'>('horizontal');
   const [reverse] = useState<boolean>(false);
-  
+
+
+  const sideStateCallback = useCallback((currentState) => {
+    console.log(`Side Area Current State ${currentState}`);
+  },[]);
+
   const areaAContent = <FlexContentPlaceholder title='Area A' />;
   const areaBContent = <FlexContentPlaceholder title='Area B' />;
 
@@ -193,15 +198,15 @@ const SplitLayouts: FC = () => {
             },
           ]}
         >
-          
+
           <ContentLayout layout="dashboard">
-            <SplitLayout 
+            <SplitLayout
               layout={layout}
-              persist 
+              persist
               persistenceKey='my_unique_key'
-              reverse={reverse} 
-              mainArea={{ content: areaAContent, minSize: 120 }} 
-              sideArea={{ content: areaBContent, collapsable: true, minSize: 200 }} />
+              reverse={reverse}
+              mainArea={{ content: areaAContent, minSize: 120 }}
+              sideArea={{ content: areaBContent, collapsable: true, minSize: 200, initialSideAreaState: 'collapsed' , onSideAreaStateChange: sideStateCallback,  }} />
           </ContentLayout>
 
         </GlobalUI>
