@@ -52,7 +52,7 @@ export const _ToggleButton = () => {
 
   const disabled = boolean('Disabled', false);
   const design = select('Design type', { Default: 'default', Basic: 'basic' }, 'basic');
-  const categoryLabel = text('Category Label', 'Layout:');
+  const categoryLabel = text('Category Label', 'Layout');
   const options = object('Options', layoutOptions);
   const showToggleValue = action('Button Value: ');
 

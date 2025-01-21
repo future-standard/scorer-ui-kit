@@ -23,7 +23,8 @@ const ToggleButton: React.FC<IToggleButton> = ({ options, categoryLabel, selecte
 
   return (
     <FilterButton icon={options[selectedIndex].icon} onClick={() => onToggleCallback(selectedIndex)} {...{design}} {...props}>
-      {`${categoryLabel} : ${options[selectedIndex].text}`}
+      { categoryLabel && `${categoryLabel}: `}
+      {`${options[selectedIndex].text}`}
     </FilterButton>
   );
 };
