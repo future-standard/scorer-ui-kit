@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions';
-import { select } from '@storybook/addon-knobs';
+import { boolean } from '@storybook/addon-knobs';
 import React from 'react';
 import {
   GlobalUI,
@@ -30,10 +30,10 @@ const Container = styled.div`
 export const _SplitLayoutNested = () => {
 
   const reverse = false;
-  const initialVerticalState = select("Vertical Side - Initial State", {Open: "open", Collapsing: 'collapsing', Collapsed: 'collapsed', Peeking: 'peeking', Opening: 'opening' }, 'collapsed');
+  const defaultVerticalState = boolean("Vertical Side - defaultCollapsed", false)
   const onVerticalNestedChange = action('Vertical State');
-  const initialHorizontalState = select("Horizontal Side - Initial State", {Open: "open", Collapsing: 'collapsing', Collapsed: 'collapsed', Peeking: 'peeking', Opening: 'opening' }, 'collapsed');
-  const onHorizontalNestedChange = action('Horizontal State');
+  const defaultHorizontalState = boolean("Horizontal Side - defaultCollapsed", false)
+    const onHorizontalNestedChange = action('Horizontal State');
 
   const nestedSplitChild = <SplitLayout
     layout='vertical'
@@ -41,7 +41,7 @@ export const _SplitLayoutNested = () => {
     persistenceKey='my_nested_key'
     reverse={reverse}
     mainArea={{ content: <FlexContentPlaceholder title='Area A' />, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200, onSideAreaStateChange: onVerticalNestedChange, initialSideAreaState: initialVerticalState }} />;
+    sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200, onSideAreaStateChange: onVerticalNestedChange, defaultCollapsed: defaultVerticalState }} />;
 
   const nestedSplitLayout = <SplitLayout
     layout='horizontal'
@@ -49,7 +49,7 @@ export const _SplitLayoutNested = () => {
     persistenceKey='my_unique_layout_key'
     reverse={reverse}
     mainArea={{ content: nestedSplitChild, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200, onSideAreaStateChange: onHorizontalNestedChange, initialSideAreaState: initialHorizontalState }} />
+    sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200, onSideAreaStateChange: onHorizontalNestedChange, defaultCollapsed: defaultHorizontalState }} />
 
   return (
     <Container>

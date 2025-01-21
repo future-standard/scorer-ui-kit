@@ -206,7 +206,7 @@ const SplitLayouts: FC = () => {
               persistenceKey='my_unique_key'
               reverse={reverse}
               mainArea={{ content: areaAContent, minSize: 120 }}
-              sideArea={{ content: areaBContent, collapsable: true, minSize: 200, initialSideAreaState: 'collapsed' , onSideAreaStateChange: sideStateCallback,  }} />
+              sideArea={{ content: areaBContent, collapsable: true, minSize: 200, defaultCollapsed: true , onSideAreaStateChange: sideStateCallback,  }} />
           </ContentLayout>
 
         </GlobalUI>

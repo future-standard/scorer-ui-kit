@@ -55,7 +55,7 @@ export interface ISideArea {
   minSize?: number;
   maxSize?: number;
   collapsable?: boolean;
-  initialSideAreaState?: ISideAreaState
+  defaultCollapsed?: boolean;
   onSideAreaStateChange?: (sideAreaState: ISideAreaState) => void
 }
 

@@ -181,7 +181,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
   const [mousePosDiff, setMousePosDiff] = useState<IPosition>();
   const [resizing, setResizing] = useState<boolean>();
 
-  const [sideAreaState, setSideAreaState] = useState<ISideAreaState>( sideArea.initialSideAreaState|| 'open');
+  const [sideAreaState, setSideAreaState] = useState<ISideAreaState>( sideArea.defaultCollapsed ? 'collapsed' : 'open');
   const [sideAreaBasis, setSideAreaBasis] = useState<number>(sideDefaultSize);
   const [sideAreaStartBasis, setSideAreaStartBasis] = useState<number>(sideDefaultSize);
   const [lastOpenSize, setLastOpenSize] = useState<number>(sideDefaultSize);
