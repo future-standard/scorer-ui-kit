@@ -36,16 +36,16 @@ export const _SplitLayout = () => {
     persist
     persistenceKey='my_unique_layout_key'
     reverse={reverse}
-    mainArea={{ content: <FlexContentPlaceholder title='Area A' />, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200 }} />
+    mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
+    sideArea={{ content: <FlexContentPlaceholder title='Side Area A' />, collapsable: true, minSize: 200 }} />
 
   const nestedSplitChild = <SplitLayout
     layout='vertical'
     persist
     persistenceKey='my_nested_key'
     reverse={reverse}
-    mainArea={{ content: <FlexContentPlaceholder title='Area A' />, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200 }} />;
+    mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
+    sideArea={{ content: <FlexContentPlaceholder title='Side Area A' />, collapsable: true, minSize: 200 }} />;
 
   const nestedSplitLayout = <SplitLayout
     layout='horizontal'
@@ -53,7 +53,7 @@ export const _SplitLayout = () => {
     persistenceKey='my_unique_layout_key'
     reverse={reverse}
     mainArea={{ content: nestedSplitChild, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200 }} />
+    sideArea={{ content: <FlexContentPlaceholder title='Side Area B' />, collapsable: true, minSize: 200 }} />
 
   return (
     <Container>
