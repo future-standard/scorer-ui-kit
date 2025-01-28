@@ -12,11 +12,11 @@ const SplitLayouts: FC = () => {
 
 
   const sideStateCallback = useCallback((currentState) => {
-    console.log(`Side Area Current State ${currentState}`);
+    console.log(`Side Area Current State: ${currentState}`);
   },[]);
 
-  const areaAContent = <FlexContentPlaceholder title='Area A' />;
-  const areaBContent = <FlexContentPlaceholder title='Area B' />;
+  const areaAContent = <FlexContentPlaceholder title='Main Area' />;
+  const areaBContent = <FlexContentPlaceholder title='Side Area' />;
 
   return (
       <ThemeProvider theme={defaultTheme}>

@@ -30,18 +30,18 @@ const Container = styled.div`
 export const _SplitLayoutNested = () => {
 
   const reverse = false;
-  const defaultVerticalState = boolean("Vertical Side - defaultCollapsed", false)
-  const onVerticalNestedChange = action('Vertical State');
-  const defaultHorizontalState = boolean("Horizontal Side - defaultCollapsed", false)
-    const onHorizontalNestedChange = action('Horizontal State');
+  const defaultSideAState = boolean("Side Area A - Default Collapsed", false);
+  const onSideAreaAChange = action('Side Area A State');
+  const defaultSideBState = boolean("Side Area B - Default Collapsed", false);
+    const onSideAreaBChange = action('Side Area B State');
 
   const nestedSplitChild = <SplitLayout
     layout='vertical'
     persist
     persistenceKey='my_nested_key'
     reverse={reverse}
-    mainArea={{ content: <FlexContentPlaceholder title='Area A' />, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200, onSideAreaStateChange: onVerticalNestedChange, defaultCollapsed: defaultVerticalState }} />;
+    mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
+    sideArea={{ content: <FlexContentPlaceholder title='Side Area A' />, collapsable: true, minSize: 200, onSideAreaStateChange: onSideAreaAChange, defaultCollapsed: defaultSideAState }} />;
 
   const nestedSplitLayout = <SplitLayout
     layout='horizontal'
@@ -49,7 +49,7 @@ export const _SplitLayoutNested = () => {
     persistenceKey='my_unique_layout_key'
     reverse={reverse}
     mainArea={{ content: nestedSplitChild, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Area B' />, collapsable: true, minSize: 200, onSideAreaStateChange: onHorizontalNestedChange, defaultCollapsed: defaultHorizontalState }} />
+    sideArea={{ content: <FlexContentPlaceholder title='Side Area B' />, collapsable: true, minSize: 200, onSideAreaStateChange: onSideAreaBChange, defaultCollapsed: defaultSideBState }} />
 
   return (
     <Container>
