@@ -121,7 +121,7 @@ const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
     const buttonWrapperRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
 
-    const handleClose = useCallback(() => {
+    const clickOutsideClose = useCallback(() => {
       if(noCloseOnClickOutside) {
         return;
       }
@@ -137,7 +137,7 @@ const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
 
     }, [noCloseOnClickOutside, onCloseCallback, openState.isOpen]);
 
-    useClickOutside(mainRef, handleClose);
+    useClickOutside(mainRef, clickOutsideClose);
 
     const handleToggleOpen = useCallback((minWidth: number, minHeight: number) => {
       if (!buttonWrapperRef.current) { return; }
