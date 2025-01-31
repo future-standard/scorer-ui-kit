@@ -382,11 +382,16 @@ export interface IDatePicker {
   timeZoneValueTitle?: string
   availableRange?: DateRange
   contentDays?: Date[]
+  lang?: 'en' | 'ja'
   cancelText?: string
   applyText?: string
   resetText?: string
+  hasApply?: boolean
+  hasReset?: boolean
   updateCallback?: (data: DateInterval | Date) => void
-  lang?: 'en' | 'ja'
+  onApplyCallback?: () => void
+  onResetCallback?: () => void
+  onCancelCallback?: () => void
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
@@ -404,7 +409,12 @@ const DatePicker: React.FC<IDatePicker> = ({
   lang = 'en',
   cancelText = 'Cancel',
   applyText = 'Apply',
-  resetText = 'Reset'
+  resetText = 'Reset',
+  hasApply = false,
+  hasReset = false,
+  onApplyCallback = () => {},
+  onResetCallback = () => {},
+  onCancelCallback = () => {}
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -588,19 +598,22 @@ const DatePicker: React.FC<IDatePicker> = ({
           })}
         </CalBody>
 
-        <CalButtons>
-          <CalLeftButton>
-            <Button design='secondary'>{resetText}</Button>
-          </CalLeftButton>
-          <CalRightButtons>
-            <Button design='secondary'>{cancelText}</Button>
-            <Button>{applyText}</Button>
-          </CalRightButtons>
-        </CalButtons>
+        {(hasReset || hasApply) && (<CalButtons>
+          {hasReset && (
+            <CalLeftButton>
+            <Button design='secondary' onClick={onResetCallback}>{resetText}</Button>
+          </CalLeftButton>)
+          }
+          {hasApply && (
+            <CalRightButtons>
+              <Button design='secondary' onClick={onCancelCallback}>{cancelText}</Button>
+              <Button onClick={onApplyCallback}>{applyText}</Button>
+            </CalRightButtons>)
+          }
+        </CalButtons>)
+        }
 
       </CalendarArea>
-
-
     </Container>
   );
 
