@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 
 import { IUtilityHeader } from "..";
 import Icon from "../../Icons/Icon";
+import { useBreakpoints } from "../../hooks";
 import UtilityHeaderShare from "../atoms/UtilityHeaderShare";
 import UtilityHeaderBack from "../atoms/UtilityHeaderBack";
 
@@ -87,13 +88,14 @@ const RightArea = styled.div`
 
 
 const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share, $iconInGutter = true }) => {
-
+  
+  const { isLarge } = useBreakpoints();
   const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
 
   return (
     <Container>
     <LeftArea>
-      {back && <UtilityHeaderBack $showDivider={hasBreadcrumbs} {...{$iconInGutter}} {...back} />}
+      {back && <UtilityHeaderBack $showDivider={hasBreadcrumbs} $iconInGutter={isLarge} {...back} />}
       {hasBreadcrumbs ?
         <Breadcrumbs>
           { breadcrumbs.map((breadcrumb, index) => {
