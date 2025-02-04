@@ -87,15 +87,16 @@ const RightArea = styled.div`
 `;
 
 
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share, $iconInGutter = true }) => {
+const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share, $iconInGutter }) => {
   
   const { isLarge } = useBreakpoints();
+  const iconInGutter = $iconInGutter !== undefined ? $iconInGutter : isLarge;
   const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
 
   return (
     <Container>
     <LeftArea>
-      {back && <UtilityHeaderBack $showDivider={hasBreadcrumbs} $iconInGutter={isLarge} {...back} />}
+      {back && <UtilityHeaderBack $showDivider={hasBreadcrumbs} $iconInGutter={iconInGutter} {...back} />}
       {hasBreadcrumbs ?
         <Breadcrumbs>
           { breadcrumbs.map((breadcrumb, index) => {
