@@ -12,6 +12,7 @@ const Title = styled.div`
   font-weight: 500;
   user-select: none;
   pointer-events: none;
+  white-space: nowrap;
 `;
 
 const FakeCheckbox = styled.div`
