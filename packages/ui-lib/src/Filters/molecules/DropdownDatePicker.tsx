@@ -22,6 +22,8 @@ export interface IDropdownDatePicker extends IDatePicker {
   onCloseCallback?: (value: DateInterval | Date | null) => void
   onUpdateCallback?: (value: DateInterval | Date | null) => void
   onToggleCallback?: (value: DateInterval | Date | null, isOpen: boolean) => void
+  onCancelCallback?: () => void
+  onApplyCallback?:  (data: DateInterval | Date) => void
 }
 
 const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
@@ -49,6 +51,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
   onUpdateCallback = () => { },
   onToggleCallback = () => { },
   onCancelCallback = () => { },
+  onApplyCallback = () => { },
   ...props }) => {
 
   /**
@@ -76,17 +79,31 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
       onToggleCallback(pickerValue.current, isOpen);
     }
 
-    /** mounting again and clearing the last value sent from picker */
-    if (!isOpen && (pickerValue.current !== null) && (!mountedPicker.isMount)) {
-      pickerValue.current = null;
-      setMountedPicker({ initialValue: undefined, isMount: true });
+    /** mounting again to force initialValue set in Datepicker Component */
+    if (isOpen && (!mountedPicker.isMount)) {
+      console.log('Toggle mount functionality was triggered');
+      setMountedPicker((prev) => {
+        return { ...prev, isMount: true };
+      });
     }
   }, [mountedPicker, onToggleCallback, selected]);
 
   const handleOnCancel = useCallback(() => {
+    if (selected && pickerValue.current && (pickerValue.current !== selected)) {
+      pickerValue.current = selected;
+      setMountedPicker({ initialValue: selected, isMount: false });
+      console.log('Returning value to selected before modification', selected);
+    }
     onCancelCallback();
     DropdownHandlerRef.current?.cancelClose();
-  }, [onCancelCallback]);
+  }, [onCancelCallback, selected]);
+
+
+  const handleOnApply = useCallback(() => {
+    if (pickerValue.current && (pickerValue.current !== selected)) {
+      onApplyCallback(pickerValue.current);
+    }
+  },[onApplyCallback, selected]);
 
   /**
    * Caching the selected null /clear flag for this picker from parent component
@@ -95,6 +112,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
     let canReset = true;
 
     if (canReset && selected === null && pickerValue.current !== null) {
+      pickerValue.current = selected;
       setMountedPicker({ initialValue: undefined, isMount: false });
     }
     return () => {
@@ -110,7 +128,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
         minHeight={MIN_HEIGHT}
         onCloseCallback={handleOnClose}
         onToggleOpenCallback={handleOnToggle}
-        noCloseOnClickOutside={hasApply || hasReset}
+        noCloseOnClickOutside={hasApply}
         {...{ buttonIcon, buttonText, disabled }}
       >
         <FilterDropdownContainer>
@@ -133,7 +151,8 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
                 hasReset
               }}
               updateCallback={handleUpdateCallback}
-              onCancelCallback={handleOnCancel}
+              cancelCallback={handleOnCancel}
+              applyCallback={handleOnApply}
               hasEmptyValue
               initialValue={mountedPicker.initialValue}
             />)}

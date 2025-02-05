@@ -146,7 +146,7 @@ const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
       if (!buttonRect) { return; }
       const position: IOpenPos = getDropPosition(buttonRect, minWidth, minHeight);
 
-      onToggleOpenCallback(openState.isOpen);
+      onToggleOpenCallback(!openState.isOpen);
       setOpenState((prev) => {
         const isOpen = !prev.isOpen;
         return { ...prev, isOpen, position };

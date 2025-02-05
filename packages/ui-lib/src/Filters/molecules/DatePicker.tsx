@@ -389,9 +389,9 @@ export interface IDatePicker {
   hasApply?: boolean
   hasReset?: boolean
   updateCallback?: (data: DateInterval | Date) => void
-  onApplyCallback?: () => void
-  onResetCallback?: () => void
-  onCancelCallback?: () => void
+  applyCallback?: () => void
+  resetCallback?: () => void
+  cancelCallback?: () => void
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
@@ -412,9 +412,9 @@ const DatePicker: React.FC<IDatePicker> = ({
   resetText = 'Reset',
   hasApply = false,
   hasReset = false,
-  onApplyCallback = () => {},
-  onResetCallback = () => {},
-  onCancelCallback = () => {}
+  applyCallback = () => {},
+  resetCallback = () => {},
+  cancelCallback = () => {}
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -601,13 +601,13 @@ const DatePicker: React.FC<IDatePicker> = ({
         {(hasReset || hasApply) && (<CalButtons>
           {hasReset && (
             <CalLeftButton>
-            <Button design='secondary' onClick={onResetCallback}>{resetText}</Button>
+            <Button design='secondary' onClick={resetCallback}>{resetText}</Button>
           </CalLeftButton>)
           }
           {hasApply && (
             <CalRightButtons>
-              <Button design='secondary' onClick={onCancelCallback}>{cancelText}</Button>
-              <Button onClick={onApplyCallback}>{applyText}</Button>
+              <Button design='secondary' onClick={cancelCallback}>{cancelText}</Button>
+              <Button onClick={applyCallback}>{applyText}</Button>
             </CalRightButtons>)
           }
         </CalButtons>)
