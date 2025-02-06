@@ -75,18 +75,18 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
 
   const handleOnToggle = useCallback((isOpen: boolean) => {
 
-    if (pickerValue.current && (pickerValue.current !== selected)) {
+    if (!hasApply && pickerValue.current && (pickerValue.current !== selected)) {
       onToggleCallback(pickerValue.current, isOpen);
     }
 
-    /** mounting again to force initialValue set in Datepicker Component */
+    /** Verify if the picker needs to be mounted again to force initialValue set in Datepicker Component */
     if (isOpen && (!mountedPicker.isMount)) {
       console.log('Toggle mount functionality was triggered');
       setMountedPicker((prev) => {
         return { ...prev, isMount: true };
       });
     }
-  }, [mountedPicker, onToggleCallback, selected]);
+  }, [hasApply, mountedPicker.isMount, onToggleCallback, selected]);
 
   const handleOnCancel = useCallback(() => {
     if (pickerValue.current && (pickerValue.current !== selected)) {
