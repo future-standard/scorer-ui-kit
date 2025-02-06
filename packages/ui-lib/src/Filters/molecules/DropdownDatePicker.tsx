@@ -44,9 +44,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
   contentDays,
   cancelText = 'Cancel',
   applyText = 'Apply',
-  resetText = 'Reset',
   hasApply = true,
-  hasReset = true,
   onCloseCallback = () => { },
   onUpdateCallback = () => { },
   onToggleCallback = () => { },
@@ -111,14 +109,14 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
    * Caching the selected null /clear flag for this picker from parent component
    */
   useEffect(() => {
-    let canReset = true;
+    let canUnmount = true;
 
-    if (canReset && selected === null && pickerValue.current !== null) {
+    if (canUnmount && selected === null && pickerValue.current !== null) {
       pickerValue.current = selected;
       setMountedPicker({ initialValue: undefined, isMount: false });
     }
     return () => {
-      canReset = false;
+      canUnmount = false;
     };
   }, [selected]);
 
@@ -148,9 +146,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
                 contentDays,
                 cancelText,
                 applyText,
-                resetText,
                 hasApply,
-                hasReset
               }}
               updateCallback={handleUpdateCallback}
               cancelCallback={handleOnCancel}

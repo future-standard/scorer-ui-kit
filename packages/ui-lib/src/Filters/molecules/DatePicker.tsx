@@ -385,12 +385,9 @@ export interface IDatePicker {
   lang?: 'en' | 'ja'
   cancelText?: string
   applyText?: string
-  resetText?: string
   hasApply?: boolean
-  hasReset?: boolean
   updateCallback?: (data: DateInterval | Date) => void
   applyCallback?: () => void
-  resetCallback?: () => void
   cancelCallback?: () => void
 }
 
@@ -409,12 +406,9 @@ const DatePicker: React.FC<IDatePicker> = ({
   lang = 'en',
   cancelText = 'Cancel',
   applyText = 'Apply',
-  resetText = 'Reset',
   hasApply = false,
-  hasReset = false,
-  applyCallback = () => {},
-  resetCallback = () => {},
-  cancelCallback = () => {}
+  applyCallback = () => { },
+  cancelCallback = () => { }
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -589,7 +583,7 @@ const DatePicker: React.FC<IDatePicker> = ({
                       <DayText>
                         {format(day, "d")}
                       </DayText>
-                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={dayState} isToday={isTodayValue}/>
+                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={dayState} isToday={isTodayValue} />
                     </CalCellB>
                   );
                 })}
@@ -598,19 +592,15 @@ const DatePicker: React.FC<IDatePicker> = ({
           })}
         </CalBody>
 
-        {(hasReset || hasApply) && (<CalButtons>
-          {hasReset && (
-            <CalLeftButton>
-            <Button design='secondary' onClick={resetCallback}>{resetText}</Button>
-          </CalLeftButton>)
-          }
-          {hasApply && (
-            <CalRightButtons>
-              <Button design='secondary' onClick={cancelCallback}>{cancelText}</Button>
-              <Button onClick={applyCallback} disabled={!isTimeRangeValid || selectedRange === null}>{applyText}</Button>
-            </CalRightButtons>)
-          }
-        </CalButtons>)
+        {hasApply && (
+          <CalButtons>
+            {hasApply && (
+              <CalRightButtons>
+                <Button design='secondary' onClick={cancelCallback}>{cancelText}</Button>
+                <Button onClick={applyCallback} disabled={!isTimeRangeValid || selectedRange === null}>{applyText}</Button>
+              </CalRightButtons>)
+            }
+          </CalButtons>)
         }
 
       </CalendarArea>
@@ -742,5 +732,5 @@ const isDayOutOfRange = (currentDay: Date, availableRange?: DateRange): boolean 
 const dayHasContent = (currentDay: Date, contentDays?: Date[]): boolean => {
   if (!contentDays) return false;
 
-  return contentDays.some(day => isSameDay(currentDay,day));
+  return contentDays.some(day => isSameDay(currentDay, day));
 };
