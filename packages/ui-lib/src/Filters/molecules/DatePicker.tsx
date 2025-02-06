@@ -172,14 +172,6 @@ const CalButtons = styled.div`
   border-top: 1px solid var(--grey-6);
 `;
 
-const CalLeftButton = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  flex: 1 0 0;
-`;
-
 const CalRightButtons = styled.div`
   display: flex;
   align-items: center;
