@@ -117,7 +117,6 @@ const createDatePickers = (
     const onToggleCallback = (value: DateInterval | Date | null, isOpen: boolean) => {
       // if it was open before toggle means the user closed it and value should be updated.
       if (!isOpen) {
-        console.log(`datepicker: ${datePicker.id} toggled open: ${isOpen} value: ${value}`);
         handleDatePickers(value, datePicker.id);
       }
     };

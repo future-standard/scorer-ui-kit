@@ -79,7 +79,6 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
 
     /** Verify if the picker needs to be mounted again to force initialValue set in Datepicker Component */
     if (isOpen && (!mountedPicker.isMount)) {
-      console.log('Toggle mount functionality was triggered');
       setMountedPicker((prev) => {
         return { ...prev, isMount: true };
       });
@@ -98,7 +97,6 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
 
 
   const handleOnApply = useCallback(() => {
-
     if (pickerValue.current && (pickerValue.current !== selected)) {
       onApplyCallback(pickerValue.current);
     }
