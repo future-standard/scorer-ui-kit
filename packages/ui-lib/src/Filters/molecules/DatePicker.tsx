@@ -607,7 +607,7 @@ const DatePicker: React.FC<IDatePicker> = ({
           {hasApply && (
             <CalRightButtons>
               <Button design='secondary' onClick={cancelCallback}>{cancelText}</Button>
-              <Button onClick={applyCallback}>{applyText}</Button>
+              <Button onClick={applyCallback} disabled={!isTimeRangeValid || selectedRange === null}>{applyText}</Button>
             </CalRightButtons>)
           }
         </CalButtons>)

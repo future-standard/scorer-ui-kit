@@ -89,10 +89,10 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
   }, [mountedPicker, onToggleCallback, selected]);
 
   const handleOnCancel = useCallback(() => {
-    if (selected && pickerValue.current && (pickerValue.current !== selected)) {
-      pickerValue.current = selected;
-      setMountedPicker({ initialValue: selected, isMount: false });
-      console.log('Returning value to selected before modification', selected);
+    if (pickerValue.current && (pickerValue.current !== selected)) {
+      pickerValue.current = selected === undefined ? null : selected;
+      const validInitialValue = selected === null ? undefined : selected;
+      setMountedPicker({ initialValue: validInitialValue, isMount: false });
     }
     onCancelCallback();
     DropdownHandlerRef.current?.cancelClose();
@@ -100,9 +100,11 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
 
 
   const handleOnApply = useCallback(() => {
+
     if (pickerValue.current && (pickerValue.current !== selected)) {
       onApplyCallback(pickerValue.current);
     }
+    DropdownHandlerRef.current?.cancelClose();
   },[onApplyCallback, selected]);
 
   /**
