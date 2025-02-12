@@ -131,6 +131,63 @@ const secToMinAndHours = (seconds: number): ITimeValue => {
   }
 }
 
+const templateExampleData = {
+  hours: {
+    min: 1,
+    max: 10,
+    marks: [
+      {
+        value: 1,
+        label: '1M',
+      },
+      {
+        value: 5,
+        label: '5H',
+      },
+      {
+        value: 10,
+        label: '10H',
+      },
+    ],
+  },
+  minutes: {
+    min: 1,
+    max: 60,
+    marks: [
+      {
+        value: 1,
+        label: '1M',
+      },
+      {
+        value: 30,
+        label: '30M',
+      },
+      {
+        value: 60,
+        label: '1H',
+      },
+    ],
+  },
+  seconds: {
+    min: 1,
+    max: 3600,
+    marks: [
+      {
+        value: 1,
+        label: '1S',
+      },
+      {
+        value: 1800,
+        label: '30M',
+      },
+      {
+        value: 3600,
+        label: '1H',
+      },
+    ],
+  },
+}
+
 export const _DurationSlider = () => {
 
   const title = text('Title', 'Duration');
@@ -156,6 +213,8 @@ export const _DurationSlider = () => {
   const minValue2 = number('Min 2', 3);
   const defaultValue2 = number('Default value 2', defaultMixValue)
   const onlyMarkSelect = boolean('Only Mark Select', true);
+  const templateUnit = select('Template Example Unit', { Hours: 'hours', Minutes: 'minutes', Seconds: 'seconds' }, 'hours');
+  const valueTitleTemplate = text('Value Title Template', '[HR]Hr [MIN]Min [SEC]Sec');
 
   const showValue2 = action('Input Callback');
   const marks2 = object('Marks 2', exampleMarks2);
@@ -203,6 +262,20 @@ export const _DurationSlider = () => {
           title={title2}
           timeUnit={value2.unit}
           onlyMarkSelect={onlyMarkSelect}
+        />
+      </Wrapper>
+      <Wrapper>
+        <PageHeader
+          title='Template example'
+          introductionText='Title template is used'
+        />
+        <DurationSlider
+          title={'Custom Titles'}
+          timeUnit={templateUnit}
+          max={templateExampleData[templateUnit].max}
+          min={templateExampleData[templateUnit].min}
+          valueTitleTemplate={valueTitleTemplate}
+          marks={templateExampleData[templateUnit].marks}
         />
       </Wrapper>
     </Container>
