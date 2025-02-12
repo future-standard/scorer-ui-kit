@@ -131,7 +131,7 @@ const secToMinAndHours = (seconds: number): ITimeValue => {
   }
 }
 
-const templateExampleData = {
+const timeFormatData = {
   hours: {
     min: 1,
     max: 10,
@@ -213,8 +213,8 @@ export const _DurationSlider = () => {
   const minValue2 = number('Min 2', 3);
   const defaultValue2 = number('Default value 2', defaultMixValue)
   const onlyMarkSelect = boolean('Only Mark Select', true);
-  const templateUnit = select('Template Example Unit', { Hours: 'hours', Minutes: 'minutes', Seconds: 'seconds' }, 'hours');
-  const valueTitleTemplate = text('Value Title Template', '[HR]Hr [MIN]Min [SEC]Sec');
+  const timeFormatUnit = select('Template Example Unit', { Hours: 'hours', Minutes: 'minutes', Seconds: 'seconds' }, 'seconds');
+  const timeFormat = text('Time Format', '[H]Hr [M]Min [S]Sec');
 
   const showValue2 = action('Input Callback');
   const marks2 = object('Marks 2', exampleMarks2);
@@ -230,7 +230,7 @@ export const _DurationSlider = () => {
     <Container>
       <Wrapper>
         <PageHeader
-          title='Simple example'
+          title='Simple Example'
           introductionText='Values are controlled by component'
         />
         <DurationSlider
@@ -247,7 +247,7 @@ export const _DurationSlider = () => {
       </Wrapper>
       <Wrapper>
         <PageHeader
-          title='Mixed values example'
+          title='Mixed Values Example'
           introductionText='Values are controlled from outside'
         />
         <DurationSlider
@@ -266,16 +266,17 @@ export const _DurationSlider = () => {
       </Wrapper>
       <Wrapper>
         <PageHeader
-          title='Template example'
-          introductionText='Title template is used'
+          title='Date Format Example'
+          introductionText='Date Format is used'
         />
         <DurationSlider
           title={'Custom Titles'}
-          timeUnit={templateUnit}
-          max={templateExampleData[templateUnit].max}
-          min={templateExampleData[templateUnit].min}
-          valueTitleTemplate={valueTitleTemplate}
-          marks={templateExampleData[templateUnit].marks}
+          timeUnit={timeFormatUnit}
+          max={timeFormatData[timeFormatUnit].max}
+          min={timeFormatData[timeFormatUnit].min}
+          timeFormat={timeFormat}
+          defaultValue={timeFormatData[timeFormatUnit].min}
+          marks={timeFormatData[timeFormatUnit].marks}
         />
       </Wrapper>
     </Container>

@@ -76,9 +76,9 @@ const getTimeValues = (value: number, unit: ITimeUnit) => {
   }
 };
 
-const getValueTitle = (value: number, timeUnit: ITimeUnit | string, valueTitleTemplate?: string) => {
+const getValueTitle = (value: number, timeUnit: ITimeUnit | string, timeFormat?: string) => {
   // Handle default case
-  if (!valueTitleTemplate || !isTimeUnit(timeUnit)) {
+  if (!timeFormat || !isTimeUnit(timeUnit)) {
     const unit = isTimeUnit(timeUnit) ? getShortTextTimeUnit(value, timeUnit) : timeUnit;
     return (
       <ValueTitle>
@@ -90,20 +90,25 @@ const getValueTitle = (value: number, timeUnit: ITimeUnit | string, valueTitleTe
 
   const timeValues = getTimeValues(value, timeUnit as ITimeUnit);
 
-  const updatedTitle = valueTitleTemplate
-    .split(/(\[HR\]|\[MIN\]|\[SEC\])/)
+  const updatedTitle = timeFormat
+    .split(/(\[H+\]|\[M+\]|\[S+\])/)
     .map((part, index) => {
       switch (part) {
-        case '[HR]':
+        case '[HH]':
+          return <span key={index}>{timeValues.hours.toString().padStart(2, '0')}</span>;
+        case '[H]':
           return <span key={index}>{timeValues.hours}</span>;
-        case '[MIN]':
+        case '[MM]':
+          return <span key={index}>{timeValues.minutes.toString().padStart(2, '0')}</span>;
+        case '[M]':
           return <span key={index}>{timeValues.minutes}</span>;
-        case '[SEC]':
+        case '[SS]':
+          return <span key={index}>{timeValues.seconds.toString().padStart(2, '0')}</span>;
+        case '[S]':
           return <span key={index}>{timeValues.seconds}</span>;
         default: {
-          // Preserve whitespace by using a non-breaking space for empty strings
-          const keepSpaceInPart = part.replace(' ', '\u00A0');
-          return keepSpaceInPart;
+          const preserveSpacesInPart = part.replace(/\s+/g, '\u00A0');
+          return preserveSpacesInPart;
         }
       }
     });
@@ -119,7 +124,7 @@ interface IDurationSliderProps {
   title: string
   timeUnit: ITimeUnit | string
   controlledValue?: number
-  valueTitleTemplate?: string // [HR] [MIN] [SEC] -> [12]Hours [30]Minutes [15]Seconds OR 12:30:15
+  timeFormat?: string // [H]Hours [M]Minutes [S]Seconds -> 4Hours 10Minutes 30Seconds // [HH]時 [MM]分 [SS]秒 -> 4時 10分 30秒
 }
 
 type IDurationSlider = IDurationSliderProps & ISlider;
@@ -133,7 +138,7 @@ const DurationSlider: React.FC<IDurationSlider> = (
     timeUnit,
     controlledValue,
     inputCallback,
-    valueTitleTemplate,
+    timeFormat,
     ...props
   }
 ) => {
@@ -153,7 +158,7 @@ const DurationSlider: React.FC<IDurationSlider> = (
     <Container>
       <Headers>
         <Label htmlFor='duration-slider' labelText={title} />
-        {getValueTitle(labelValue, timeUnit, valueTitleTemplate)}
+        {getValueTitle(labelValue, timeUnit, timeFormat)}
       </Headers>
       <SliderInput
         {
