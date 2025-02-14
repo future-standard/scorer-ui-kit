@@ -116,10 +116,15 @@ const createDatePickers = (
 
     const onToggleCallback = (value: DateInterval | Date | null, isOpen: boolean) => {
       // if it was open before toggle means the user closed it and value should be updated.
-      if (isOpen) {
+      if (!isOpen) {
         handleDatePickers(value, datePicker.id);
       }
     };
+
+    const onApplyCallback = (value: DateInterval | Date) => {
+      handleDatePickers(value, datePicker.id);
+    };
+
     const disabled = getDisableValue(filtersValues, singleFilter, datePicker);
     const foundPicker = filtersValues.find(filter => filter.id === datePicker.id);
     let validInitialValue: Date | DateInterval | undefined = undefined;
@@ -134,6 +139,7 @@ const createDatePickers = (
       ...datePicker,
       onCloseCallback,
       onToggleCallback,
+      onApplyCallback,
       disabled,
       selected: foundPicker && (foundPicker.selected instanceof Date || isDateInterval(foundPicker.selected)) ? foundPicker.selected : null,
       initialValue: validInitialValue,
