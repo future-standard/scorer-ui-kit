@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 import DatePicker, { DateInterval, IDatePicker } from './DatePicker';
 import FilterDropHandler, { FilterDropHandlerRef } from '../atoms/FilterDropHandler';
+import { areDatesEqual } from '../../helpers';
 
 const MIN_WIDTH = 470;
 const MIN_HEIGHT = 360;
@@ -58,12 +59,14 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
    */
   const pickerValue = useRef<DateInterval | Date | null>(null);
   const [mountedPicker, setMountedPicker] = useState<IMountPicker>({ initialValue: initialValue, isMount: true });
+  const [disableApply, setDisableApply] = useState(false);
 
   const DropdownHandlerRef = useRef<FilterDropHandlerRef>(null);
   const handleUpdateCallback = useCallback((data: DateInterval | Date) => {
     pickerValue.current = data;
     onUpdateCallback(data);
-  }, [onUpdateCallback]);
+    setDisableApply(areDatesEqual(selected, data));
+  }, [onUpdateCallback, selected]);
 
   const handleOnClose = useCallback(() => {
     if (pickerValue.current && (pickerValue.current !== selected)) {
@@ -151,6 +154,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
               applyCallback={handleOnApply}
               hasEmptyValue
               initialValue={mountedPicker.initialValue}
+              disableApply={disableApply}
             />)}
         </FilterDropdownContainer>
       </FilterDropHandler>

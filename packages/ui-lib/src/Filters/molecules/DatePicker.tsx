@@ -378,6 +378,7 @@ export interface IDatePicker {
   cancelText?: string
   applyText?: string
   hasApply?: boolean
+  disableApply?: boolean
   updateCallback?: (data: DateInterval | Date) => void
   applyCallback?: () => void
   cancelCallback?: () => void
@@ -399,6 +400,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   cancelText = 'Cancel',
   applyText = 'Apply',
   hasApply = false,
+  disableApply = false,
   applyCallback = () => { },
   cancelCallback = () => { }
 }) => {
@@ -589,7 +591,7 @@ const DatePicker: React.FC<IDatePicker> = ({
             {hasApply && (
               <CalRightButtons>
                 <Button design='secondary' onClick={cancelCallback}>{cancelText}</Button>
-                <Button onClick={applyCallback} disabled={!isTimeRangeValid || selectedRange === null}>{applyText}</Button>
+                <Button onClick={applyCallback} disabled={!isTimeRangeValid || selectedRange === null || disableApply }>{applyText}</Button>
               </CalRightButtons>)
             }
           </CalButtons>)
