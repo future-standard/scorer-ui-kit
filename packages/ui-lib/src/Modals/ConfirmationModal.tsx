@@ -7,11 +7,21 @@ import { useModal } from '../hooks';
 const Container = styled.div``;
 
 const Title = styled.div`
-  ${({theme: { typography }}) => typography.modal.title};
+  font-size: 20px;
+  font-weight: 400;
+  text-align: left;
+  text-shadow: 0px 0px 10px var(--white-a5);
+  text-decoration: none;
+  color: var(--grey-11);
 `;
 
 const MessageBox = styled.div`
-  ${({theme: { typography }}) => typography.modal.basicContent};
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 25px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--grey-11);
   margin: 28px 0;
 `;
 

@@ -681,23 +681,5 @@ export const typography = {
           "textDecoration": "none",
           "color": "var(--grey-a11)"
       }
-  },
-  "modal": {
-      "title": {
-          "textAlign": "left",
-          "fontSize": "20px",
-          "fontWeight": 400,
-          "textShadow": "0px 0px 10px var(--white-a5)",
-          "textDecoration": "none",
-          "color": "var(--grey-11)"
-      },
-      "basicContent": {
-          "textAlign": "left",
-          "fontSize": "14px",
-          "fontWeight": 400,
-          "lineHeight": "25px",
-          "textDecoration": "none",
-          "color": "var(--grey-11)"
-      }
   }
 };
