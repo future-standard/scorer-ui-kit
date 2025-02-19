@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import {Link} from 'react-router-dom';
 import ContextItem from './ContextItem';
@@ -17,6 +17,10 @@ const SubmenuHeader = styled.div`
   display: block;
   height: 40px;
   margin-left: 40px;
+`;
+
+const SubmenuContainerInner = styled.div`
+  overflow: hidden;
 `;
 
 const SubmenuItemTitle = styled.span`
@@ -91,8 +95,8 @@ const SubmenuContainer = styled.div`
   overflow: hidden;
 
   transition:
-    max-height var(--speed-normal) var(--easing-primary-in),
-    opacity var(--speed-fast) var(--easing-primary-in);
+    grid-template-rows var(--speed-normal) var(--easing-primary-in-out),
+    opacity var(--speed-fast) var(--easing-primary-in-out);
 
   &::after {
     display: block;
@@ -107,68 +111,53 @@ const SubmenuContainer = styled.div`
 
 `;
 
-const ContextContainer = styled.div<{ open: boolean, maxHeight: number, minHeight?: number, loading: 'true'|'false' }>`
-  min-height: ${({minHeight}) => minHeight ? `${minHeight}px` : `70px`};
+const ContextContainer = styled.div<{ open: boolean, mobileMenu?: boolean }>`
+  min-height: ${({mobileMenu}) => mobileMenu ? '30px' : '70px'};
   width: inherit;
 
   ${SubmenuContainer}{
-    max-height: 0;
-    opacity: 0;
-  }
-  ${({open, maxHeight}) => open && css`
+    display: grid;
+    grid-template-rows: 0fr;
+  };
+
+  ${({open}) => open && css`
     ${SubmenuContainer}{
+      grid-template-rows: 1fr;
+      
       transition:
-        max-height var(--speed-normal) var(--easing-primary-in),
-        opacity var(--speed-fast) var(--easing-primary-in);
-      max-height: ${maxHeight}px !important;
+        grid-template-rows var(--speed-normal) var(--easing-primary-in-out),
+        opacity var(--speed-fast) var(--easing-primary-in-out);
+      
       opacity: 1;
     }
   `};
-
-  ${({loading}) => loading === 'true' && css`
-    ${SubmenuContainer}{
-      max-height: none !important;
-      opacity: 1;
-    }
-  `};
-
 `;
 
 interface IProps {
   item: IMenuItemTop
   contextKey: number
   submenuOpen: boolean
-  loading: boolean
   menuOpen?: boolean
   topLevelPath: string
-  minHeight?: number
+  mobileMenu?: boolean
   onClickCallback?: (...args: any[]) => void
-  readyCallback?: (...args: any[]) => void
 }
 
-const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, loading, topLevelPath, minHeight, onClickCallback, readyCallback}) => {
+const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, topLevelPath, mobileMenu = false, onClickCallback }) => {
   const { icon, title, href, submenu, isExternalLink } = item;
   const isActive = topLevelPath === href;
 
   const refSubmenu = useRef<any>(null);
-  const [submenuHeight, setSubmenuHeight] = useState<number>(0);
 
   const submenus : any[] = generateSubmenus(submenu, onClickCallback ) || [];
   const hasSubmenu : boolean = submenus.length > 0;
 
-  useEffect(() => {
-    if(refSubmenu && refSubmenu.current && refSubmenu.current.clientHeight !== 0){
-      setSubmenuHeight(refSubmenu.current.clientHeight);
-    }
-
-    if(readyCallback){ readyCallback(contextKey); }
-
-  }, [refSubmenu, setSubmenuHeight, readyCallback, contextKey]);
-
   return (
-    <ContextContainer open={submenuOpen} loading={loading ? 'true': 'false'} maxHeight={submenuHeight} minHeight={minHeight}>
+    <ContextContainer open={submenuOpen} {...{mobileMenu}}>
       <ContextItem {...{title, href, isActive, icon, hasSubmenu, isExternalLink, submenuOpen, menuOpen, onClickCallback, contextKey}} />
-      {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>{submenus}</SubmenuContainer> : null}
+      {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>
+        <SubmenuContainerInner>{submenus}</SubmenuContainerInner>
+      </SubmenuContainer> : null}
     </ContextContainer>
   );
 
@@ -224,4 +213,3 @@ const generateSubmenus = (
 };
 
 export default NavigationItem;
-

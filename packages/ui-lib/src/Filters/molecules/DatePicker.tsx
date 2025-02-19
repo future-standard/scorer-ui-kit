@@ -5,6 +5,7 @@ import DateTimeBlock from '../atoms/DateTimeBlock';
 
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
+import { resetButtonStyles } from '../../common';
 
 /**
  * Convert a single days duration to an interval.
@@ -132,14 +133,14 @@ const PaginateMonth = styled.button`
   align-items: center;
 
   transition: color var(--speed-fast) var(--easing-primary-in-out);
-  
+
   ${IconWrap}{
     svg * {
       transition: stroke var(--speed-fast) var(--easing-primary-in-out);
     }
   }
 
-  &:hover {
+  &:hover:enabled  {
     color: var(--grey-12);
 
     ${IconWrap}{
@@ -148,6 +149,12 @@ const PaginateMonth = styled.button`
       }
     }
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
 `;
 
 const CalBody = styled.div`
@@ -167,7 +174,8 @@ const CalHRow = styled(CalRow)`
   border-bottom: var(--grey-6) 1px solid;
 `;
 
-const CalCell = styled.div`
+const CalCell = styled.button`
+  ${resetButtonStyles};
   display: flex;
   text-align: center;
   justify-content: center;
@@ -187,6 +195,37 @@ const CalHCell = styled(CalCell)`
   color: var(--grey-a11);
 `;
 
+const ContentDot = styled.div<{ hasContent: boolean, state?: CellStates, isToday?: boolean, }>`
+  position: absolute;
+  left: 18px;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--primary-11);
+
+  ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
+    background-color: var(--white-12);`
+  }
+
+  ${({ state }) => (state === 'inside') && css`
+    background-color: var(--primary-12);`
+  }
+
+  ${({ isToday }) => isToday && css`
+    left: 16px;
+    bottom: 3px;
+  `}
+
+  ${({ hasContent }) => !hasContent && css`
+    display: none;
+  `}
+`;
+
+const DayText = styled.span`
+  transform: translateY(-1px);
+`;
+
 const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
   cursor: pointer;
   position: relative;
@@ -203,7 +242,7 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
   `}
 
   ${({ state }) => (state !== 'single' && state !== 'start' && state !== 'end') && css`
-    &:hover {
+    &:hover:enabled {
       background: var(--primary-a6);
       color: var(--white-1);
     }
@@ -253,6 +292,26 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
     }
   `}
 
+  &:disabled {
+    color: var(--grey-6);
+    cursor: not-allowed;
+
+    ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
+      color: var(--white-1);
+      background: var(--red-a9);
+    `}
+
+    ${({ state }) => (state === 'inside') && css`
+      color: var(--white-1);
+      background: var(--red-a7);
+      &:nth-child(7n+1), &:nth-child(7n){
+        &::after {
+          background: var(--red-a7);
+        }
+      }
+    `};
+  }
+
 `;
 
 const enDayGuide: string[] = [
@@ -281,6 +340,12 @@ export interface DateInterval {
   start: Date;
   end: Date;
 }
+
+export interface DateRange {
+  start: Date | null;
+  end: Date | null;
+}
+
 export interface IDatePicker {
   initialValue?: Date | DateInterval
   dateMode?: DateMode
@@ -290,6 +355,8 @@ export interface IDatePicker {
   dateTimeTextLower?: string
   timeZoneTitle?: string
   timeZoneValueTitle?: string
+  availableRange?: DateRange
+  contentDays?: Date[]
   updateCallback?: (data: DateInterval | Date) => void
   lang?: 'en' | 'ja'
 }
@@ -304,6 +371,8 @@ const DatePicker: React.FC<IDatePicker> = ({
   hasEmptyValue = false,
   updateCallback = () => { },
   initialValue,
+  availableRange,
+  contentDays,
   lang = 'en'
 }) => {
 
@@ -390,10 +459,10 @@ const DatePicker: React.FC<IDatePicker> = ({
   useEffect(() => {
     const { start, end } = selectedRange ? selectedRange : TODAY_INTERVAL;
 
-    if((timeMode ==='interval' && isAfter(add(start, { minutes: 1 }), end))){
-      if(isEqual(end, endOfDay(start)) && end.getSeconds() > 0) { // Midnight exception
+    if ((timeMode === 'interval' && isAfter(add(start, { minutes: 1 }), end))) {
+      if (isEqual(end, endOfDay(start)) && end.getSeconds() > 0) { // Midnight exception
         setIsTimeRangeValid(true);
-      }else {
+      } else {
         setIsTimeRangeValid(false);
       }
 
@@ -401,7 +470,7 @@ const DatePicker: React.FC<IDatePicker> = ({
       setIsTimeRangeValid(true);
     }
 
-  },[selectedRange, timeMode]);
+  }, [selectedRange, timeMode]);
 
   const updateStartDate = useCallback((start: Date) => {
     const { end } = selectedRange ? selectedRange : TODAY_INTERVAL;
@@ -419,8 +488,8 @@ const DatePicker: React.FC<IDatePicker> = ({
     <Container>
 
       <DateTimeArea>
-        <DateTimeBlock {...{isTimeRangeValid}} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
-        <DateTimeBlock {...{isTimeRangeValid}} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
+        <DateTimeBlock {...{ isTimeRangeValid }} title={dateTimeTextUpper} hasDate hasTime={timeMode !== 'off'} date={selectedRange ? selectedRange.start : TODAY_INTERVAL.start} setDateCallback={updateStartDate} />
+        <DateTimeBlock {...{ isTimeRangeValid }} title={dateTimeTextLower} hasDate={dateMode === 'interval'} hasTime={timeMode === 'interval'} date={selectedRange ? selectedRange.end : TODAY_INTERVAL.end} allowAfterMidnight setDateCallback={updateEndDate} />
 
         <TimeZoneOption>
           <TimeZoneLabel>{timeZoneTitle}</TimeZoneLabel>
@@ -432,7 +501,7 @@ const DatePicker: React.FC<IDatePicker> = ({
       <CalendarArea>
         <CalendarHeader>
 
-          <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
+          <PaginateMonth type='button' disabled={isPrevMonthOutOfRange(focusedMonth, availableRange)} onClick={() => setFocusedMonth(addMonths(focusedMonth, -1))}>
             <IconWrap><Icon icon='Left' color='dimmed' size={10} /></IconWrap>
             {format(addMonths(focusedMonth, -1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
           </PaginateMonth>
@@ -442,7 +511,7 @@ const DatePicker: React.FC<IDatePicker> = ({
             {format(focusedMonth, "MMMM", { locale: lang === 'ja' ? ja : enUS })}
           </CurrentMonth>
 
-          <PaginateMonth type='button' onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
+          <PaginateMonth type='button' disabled={isNextMonthOutOfRange(focusedMonth, availableRange)} onClick={() => setFocusedMonth(addMonths(focusedMonth, 1))}>
             {format(addMonths(focusedMonth, 1), "MMM", { locale: lang === 'ja' ? ja : enUS })}
             <IconWrap><Icon icon='Right' color='dimmed' size={10} /></IconWrap>
           </PaginateMonth>
@@ -465,7 +534,23 @@ const DatePicker: React.FC<IDatePicker> = ({
             return (
               <CalRow key={index}>
                 {days.map((day, index) => {
-                  return <CalCellB key={index} onClick={() => onCellClick(day)} state={cellState(day, selectedRange)} thisMonth={isSameMonth(day, focusedMonth)} isToday={isToday(day)}>{format(day, "d")}</CalCellB>;
+                  const dayState = cellState(day, selectedRange);
+                  const isTodayValue = isToday(day);
+
+                  return (
+                    <CalCellB
+                      key={index}
+                      disabled={isDayOutOfRange(day, availableRange)}
+                      onClick={() => onCellClick(day)}
+                      state={dayState}
+                      thisMonth={isSameMonth(day, focusedMonth)}
+                      isToday={isTodayValue}>
+                      <DayText>
+                        {format(day, "d")}
+                      </DayText>
+                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={dayState} isToday={isTodayValue}/>
+                    </CalCellB>
+                  );
                 })}
               </CalRow>
             );
@@ -541,4 +626,67 @@ const getInitialValue = (hasEmptyValue: boolean, initialValue?: Date | DateInter
   const validInitial = initialValue ? initialValue : initializeInterval(startOfDay(new Date()));
 
   return (validInitial instanceof Date) ? initializeInterval(validInitial) : validInitial;
+};
+
+const isPrevMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): boolean => {
+  if (!availableRange?.start) return false;
+
+  try {
+    const startYear = availableRange.start.getFullYear();
+    const startMonth = availableRange.start.getMonth();
+
+    if (focusedMonth.getFullYear() < startYear ||
+      (focusedMonth.getFullYear() === startYear && focusedMonth.getMonth() <= startMonth)) {
+      return true;
+    }
+  } catch (error) {
+    console.warn('Invalid available range:', availableRange, error);
+  }
+
+  return false;
+};
+
+const isNextMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): boolean => {
+  if (!availableRange?.end) return false;
+
+  try {
+    const endYear = availableRange.end.getFullYear();
+    const endMonth = availableRange.end.getMonth();
+
+    if (focusedMonth.getFullYear() > endYear ||
+      (focusedMonth.getFullYear() === endYear && focusedMonth.getMonth() >= endMonth)) {
+      return true;
+    }
+  } catch (error) {
+    console.warn('Invalid available range:', availableRange, error);
+  }
+
+  return false;
+};
+
+
+const isDayOutOfRange = (currentDay: Date, availableRange?: DateRange): boolean => {
+  if (!availableRange) return false;
+
+  const { start, end } = availableRange;
+
+  try {
+    if (start && currentDay < start && !isSameDay(currentDay, start)) {
+      return true;
+    }
+
+    if (end && currentDay > end && !isSameDay(currentDay, end)) {
+      return true;
+    }
+  } catch (error) {
+    console.warn('Invalid available range:', availableRange, error);
+  }
+
+  return false;
+};
+
+const dayHasContent = (currentDay: Date, contentDays?: Date[]): boolean => {
+  if (!contentDays) return false;
+
+  return contentDays.some(day => isSameDay(currentDay,day));
 };

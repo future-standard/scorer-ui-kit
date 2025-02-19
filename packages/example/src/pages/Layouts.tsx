@@ -21,11 +21,10 @@ const Layouts: FC = () => {
 
   const ExampleContent : IHeaderContent = {
     UtilityHeaderOptions: {
-      backLink: '/',
+      back: { label: "Back", link: "/" },
       breadcrumbs: [{text:'Examples', href:'/'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}],
       showBreadcrumbs: true,
-      showShareLink: true,
-      shareLink: 'http://www.example.com/'
+      share: { show: true, label: "Share", link: "https://www.example.com", copiedLabel: "Copied" }
     },
     PageHeaderArea: <PageHeader
     title='Welcome'
@@ -52,6 +51,12 @@ const Layouts: FC = () => {
           switchThemeText='SWITCH THEME'
           selectedThemeText={isLightMode ? 'LIGHT MODE' : 'DARK MODE' }
           onThemeToggle={onThemeToggle}
+          badge={{ 
+            text: 'Guest',
+            color: 'primary',
+            linkTo: '#',
+            linkText: 'Login'
+          }}
           hasSwitchTheme
           content={{
             items: [

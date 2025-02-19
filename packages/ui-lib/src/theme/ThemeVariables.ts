@@ -23,6 +23,7 @@ const ThemeVariables = createGlobalStyle`
     --global-menu-width-open: 280px;
 
     --input-height: 40px;
+    --input-compact-height: 32px;
     --input-required-dot-display: inline-block;
 
     --button-font-size: 14px;
@@ -35,7 +36,8 @@ const ThemeVariables = createGlobalStyle`
 
     --button-icon-size: 14px;
     --button-icon-h-padding: 8px;
-
+    
+    // Inputs
     --input-box-shadow-x: 0;
     --input-box-shadow-y: 0;
     --input-box-shadow-blur: 0;
@@ -45,6 +47,18 @@ const ThemeVariables = createGlobalStyle`
     --input-focused-box-shadow-y: 3px;
     --input-focused-box-shadow-blur: 3px;
     --input-focused-box-shadow-spread: 0;
+
+    // Switches
+    --switch-height: 24px;
+    --switch-width: 40px;
+    --switch-border-width: 2px;
+    --switch-inner-size: 16px;
+    --switch-intent-offset: 3px;
+
+    // Labels
+    --label-font: var(--font-ui);
+    --label-font-size: 14px;
+    --label-weight: 500;
 
   }
 

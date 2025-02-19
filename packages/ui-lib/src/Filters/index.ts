@@ -1,4 +1,4 @@
-import DatePicker, { DateInterval, isDateInterval } from './molecules/DatePicker';
+import DatePicker, { DateInterval, isDateInterval, DateRange } from './molecules/DatePicker';
 import FilterDropdownContainer from './atoms/FilterDropdownContainer';
 import FilterButton from './atoms/FilterButton';
 import FilterDropdown from './molecules/FilterDropdown';
@@ -7,6 +7,8 @@ import FilterLayout from './molecules/FilterLayout';
 import FilterInputs, { IFilterInputs } from './molecules/FilterInputs';
 import FiltersResults, { IFilterLabel } from './molecules/FiltersResults';
 import FilterBar from './organisms/FilterBar';
+import ToggleButton from './atoms/ToggleButton';
+
 import {
   IFilterType,
   IFilterItem,
@@ -17,6 +19,8 @@ import {
   IFilterDropdownConfig,
   IFilterDatePicker,
   isFilterItem,
+  IToggleOption,
+  FilterButtonDesign
 } from './FilterTypes';
 
 export {
@@ -31,9 +35,8 @@ export {
   FilterBar,
   isFilterItem,
   isDateInterval,
+  ToggleButton
 };
-
-type FilterButtonDesign = 'default' | 'basic'
 
 export type {
   ISearchFilter,
@@ -47,5 +50,7 @@ export type {
   IFilterValue,
   DateInterval,
   IFilterDatePicker,
-  FilterButtonDesign
+  FilterButtonDesign,
+  IToggleOption,
+  DateRange
 };

@@ -29,7 +29,7 @@ import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
 
-import { text, object, boolean } from '@storybook/addon-knobs';
+import { text, object, boolean, select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 export default {
@@ -70,11 +70,10 @@ const buttonList : IButtonStack[] = [
 
 const ExampleContent : IHeaderContent = {
   UtilityHeaderOptions: {
-    backLink: '/',
+    back: { label: "Back", link: "/" },
     breadcrumbs: [{text:'Examples', href:'/'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}],
     showBreadcrumbs: true,
-    showShareLink: true,
-    shareLink: 'http://www.example.com/'
+    share: { show: true, label: "Share", link: "https://www.example.com", copiedLabel: "Copied" }
   },
   PageHeaderArea: <PageHeader
     title='Welcome'
@@ -419,6 +418,10 @@ export const _GlobalUI = () => {
     icon: 'Information',
     title: 'V12.3.4',
   });
+  const badgeText = text("Badge Text", "Guest");
+  const badgeColor = select("Badge Color", ['primary', 'grey', 'info', 'success', 'caution', 'warning'], 'info');
+  const badgeLinkTo = text("Badge To", "/login");
+  const badgeLinkText = text("Badge Link Text", "Login");
 
   const menuConfig = object("Menu Config", {
     items: [
@@ -557,6 +560,12 @@ export const _GlobalUI = () => {
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
         legacyLayout={false}
+        badge={{ 
+          text: badgeText,
+          color: badgeColor,
+          linkTo: badgeLinkTo,
+          linkText: badgeLinkText
+        }}
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer}}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage,
               hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, hasUserDrawerFooter,

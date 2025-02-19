@@ -1,7 +1,7 @@
-import React, { ButtonHTMLAttributes, FC, useCallback,useState } from 'react';
+import React, { ButtonHTMLAttributes, FC, useCallback, useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
-import Spinner, { buttonSpinnerSize } from '../../Indicators/Spinner';
+import Spinner from '../../Indicators/Spinner';
 import { resetButtonStyles } from '../../common';
 import { TypeButtonDesigns, TypeButtonSizes } from '..';
 
@@ -131,7 +131,9 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
   ...props
 }) => {
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [ iconSize, setIconSize ] = useState<number>(0);
 
   const handleClick = useCallback(() => {
 
@@ -152,12 +154,16 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
 
   },[closeCallback, hasOnSelectLoading, onClickCallback]);
 
-
+  useEffect(() => {
+    if(buttonRef.current){
+      setIconSize( parseInt( getComputedStyle(buttonRef.current).getPropertyValue('--button-icon-size') ));
+    }
+  }, [buttonRef]);
 
   return(
-    <StyledButton {...{noBorderTop}} onClick={handleClick} {...props}>
+    <StyledButton ref={buttonRef} {...{noBorderTop, size}} onClick={handleClick} {...props}>
       <LeftIconWrapper isAscendingIcon={icon === 'FilterAscending'} >
-        {isLoading ? <Spinner size={buttonSpinnerSize(size)} styling={design} /> : <Icon icon={icon} />}
+        {isLoading ? <Spinner custom={{size: iconSize}} styling={design} /> : <Icon icon={icon} />}
       </LeftIconWrapper>
       <TextWrapper {...{textMaxWidth}}><OptionText>{text}</OptionText></TextWrapper>
     </StyledButton>

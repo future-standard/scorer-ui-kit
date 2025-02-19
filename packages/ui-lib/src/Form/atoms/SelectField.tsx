@@ -1,41 +1,79 @@
 import React, { useCallback, useState, SelectHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
-import Label, { StyledLabel } from './Label';
-import Icon, { IconWrapper } from '../../Icons/Icon';
+import Label from './Label';
+import Icon from '../../Icons/Icon';
+import { TypeFieldState, TypeLabelDirection } from '..';
 
 
 export const SelectWrapper = styled.div`
   position: relative;
   display: flex;
   width: 100%;
-
-  ${IconWrapper} {
-    position: absolute;
-    top: calc(50% - 7px);
-    right: 10px;
-    pointer-events: none;
-  }
 `;
 
-const StyledSelect = styled.select`
+const OpenIcon =  styled.div<{ isCompact?: boolean }>`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  right: ${({isCompact}) => isCompact ? '14px' : '16px'};
+  pointer-events: none;
+`;
+
+const SubjectIcon = styled.div<{ isCompact?: boolean }>`
+  position: absolute;
+  left: ${({isCompact}) => isCompact ? '10px' : '12px'};
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+`;
+
+const StyledSelect = styled.select<{ fieldState: TypeFieldState, withIcon?: boolean, isCompact?: boolean }>`
   box-sizing: border-box;
   outline: none;
   border-radius: 3px;
-  height: 40px;
-  padding: 0 25px 0 15px;
   appearance: none;
-  line-height: 1.56;
+  font-family: var(--font-data);
+  height: var(--input-height);
   width: 100%;
+  border-radius: 3px;
+  color: var(--input-color-default);
+  font-size: 14px;
   cursor: pointer;
-  ${({theme: {styles}}) => css`
-    ${styles.form.input.default.normal};
-  `}
+
+  transition: 
+    border var(--speed-fast) var(--easing-primary-out),
+    background-color var(--speed-fast) var(--easing-primary-out),
+    box-shadow var(--speed-fast) var(--easing-primary-out);
+
+  ${({fieldState}) => css`
+    border: 1px solid var(--input-${fieldState}-border-color);
+    background: var(--input-${fieldState}-background-color);
+    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${fieldState}-shadow-color, transparent);
+  `};
+
+
+  ${({ isCompact, withIcon }) => isCompact ? css`
+    height: var(--input-compact-height);
+    padding: 0 16px 1px ${withIcon ? '30px' : '8px'};
+
+    ${OpenIcon}{
+      right: 14px;
+    }
+  ` : css`
+    height: var(--input-height);
+    padding: 0 16px 1px ${withIcon ? '36px' : '12px'};
+  `};
 
   &:disabled {
-    ${({theme: {styles}}) => css`
-      ${styles.form.input.disabled.normal};
-    `}
+    opacity: 1;
     cursor: not-allowed;
+    color: var(--input-disabled-color-default);
+    border: 1px solid var(--input-disabled-border-color);
+    background: var(--input-disabled-background-color);
+    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-disabled-shadow-color, transparent);
   }
 
   &::-ms-expand {
@@ -43,85 +81,52 @@ const StyledSelect = styled.select`
   }
 `;
 
-const Container = styled.div<{ isCompact?: boolean, activePlaceholder: boolean, isLabelSameRow?: boolean }>`
+const Container = styled.div<{ isCompact?: boolean, activePlaceholder: boolean }>`
 
-${({ isCompact }) => isCompact && css`
-  ${StyledLabel} {
-      span {
-        margin-bottom: 6px;
-      }
+  ${({activePlaceholder}) => activePlaceholder && css`
+    ${StyledSelect} {
+      font-family: var(--font-data);
+      color: var(--input-color-placeholder);
+      font-style: italic;
+      font-weight: 400;
     }
-  `}
+  `};
 
-${({ isLabelSameRow }) => isLabelSameRow && css`
-  ${StyledLabel} {
-    display: flex;
-    align-items: center;
-    span {
-      margin: 0 10px 0 0;
-    }
-  }
-`};
-
-  ${StyledSelect} {
-    ${({ theme }) => css`
-      border: 1px solid ${theme.styles.form.input.default.normal.borderColor};
-      font-family: ${theme.fontFamily.data};
-      ${theme.typography.form.input.value.normal};
-    `};
-
-    ${({ theme: { typography }, isCompact }) => isCompact && css`
-      height: 30px;
-      padding: 0 25px 0 10px;
-      ${typography.form.input.value.compact};
-    `};
-
-    ${({ theme, activePlaceholder }) => activePlaceholder && css`
-      ${theme.typography.form.input.placeholder.normal};
-    `};
-
-    ${({ theme, isCompact, activePlaceholder }) => isCompact && activePlaceholder && css`
-      ${theme.typography.form.input.placeholder.compact};
-    `};
-
-    option {
-      font-style: normal;
-      ${({ theme }) => css`
-        ${theme.typography.form.input.value.normal};
-      `};
-
-      ${({ theme: { typography }, isCompact }) => isCompact && css`
-        ${typography.form.input.value.compact};
-      `};
-    }
-    font-weight: 400;
-  }
 `;
 
 interface ILabel {
   htmlFor: string
   text: string
   isSameRow?: boolean
+  direction?: TypeLabelDirection
 }
 
 interface OwnProps {
+  fieldState?: TypeFieldState
   label?: ILabel
   isCompact?: boolean
   placeholder?: string
+  icon?: string
   changeCallback?: (value: string) => void
 }
 
 type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>
 
 const SelectField: React.FC<ISelect> = ({
+  fieldState = 'default',
   placeholder,
   label,
+  icon,
   isCompact,
   defaultValue,
   changeCallback = () => { },
   children,
   ...props
 }) => {
+
+  if(label?.isSameRow){
+    console.warn('Deprecation warning: `SelectField` is deprecating `label.isSameRow`, please update this to use `label.direction` set to `row`.');
+  }
 
   const [activePlaceholder, setPlaceholderStatus] = useState<boolean>(!defaultValue ? true : false);
 
@@ -136,10 +141,21 @@ const SelectField: React.FC<ISelect> = ({
     changeCallback(value);
   }, [changeCallback]);
 
+  const iconColor = useCallback(() => {
+    if(props.disabled || fieldState === 'disabled'){
+      return 'input-disabled-lead-icon';
+    } else {
+      return 'input-lead-icon';
+    }
+  }, [fieldState, props.disabled]);
+
   const renderSelect = useCallback((htmlFor?: string) => (
     <SelectWrapper>
+      {icon && <SubjectIcon {...{isCompact}}><Icon icon={icon} color={iconColor()} size={isCompact ? 12 : 12 } weight='regular' /></SubjectIcon>}
       <StyledSelect
+        withIcon={ icon ? true : false }
         id={htmlFor}
+        {...{fieldState, isCompact}}
         {...props}
         defaultValue={defaultValue ? defaultValue : ''}
         onChange={handleOnChange}
@@ -147,15 +163,15 @@ const SelectField: React.FC<ISelect> = ({
         {!defaultValue && <option value='' disabled hidden>{placeholder}</option>}
         {children}
       </StyledSelect>
-      <Icon icon='Down' color='dimmed' size={11} />
+      <OpenIcon {...{isCompact}}><Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10 } /></OpenIcon>
     </SelectWrapper>
-  ), [children, defaultValue, handleOnChange, placeholder, props]);
+  ), [children, defaultValue, handleOnChange, placeholder, props, fieldState, icon, iconColor, isCompact]);
 
   return (
-    <Container {...{ isCompact, activePlaceholder }} isLabelSameRow={label?.isSameRow}>
+    <Container {...{ isCompact, activePlaceholder }}>
       {label
         ? (
-          <Label htmlFor={label.htmlFor} labelText={label.text}>
+          <Label htmlFor={label.htmlFor} labelText={label.text} direction={ label.isSameRow ? 'row' : label.direction }>
             {renderSelect(label.htmlFor)}
           </Label>
         )

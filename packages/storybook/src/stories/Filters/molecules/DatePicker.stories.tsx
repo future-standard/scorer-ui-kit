@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { select, text } from '@storybook/addon-knobs';
+import { boolean, object, select, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
+import { dataContentDays, datesRange, InitialSelectedDate } from '../../helpers/datePicker_sample';
 
 const Container = styled.div`
   margin: 20px;
@@ -26,6 +27,7 @@ const exampleCallback = <T extends Function>(fn: T): T => {
 
 export const _DatePicker = () => {
   const language = select('Language', { English: 'en', Japanese: 'ja' }, 'ja');
+  const initialValueObj = object('Initial Value', InitialSelectedDate);
   const dateMode = select('Date Mode', { single: 'single', interval: 'interval' }, 'interval');
   const timeMode = select('Time Mode', { off: 'off', single: 'single', interval: 'interval' }, 'interval');
   const dateTimeTextUpper = text('Date Time Text Upper', 'From');
@@ -33,6 +35,10 @@ export const _DatePicker = () => {
   const timeZoneTitle = text('Time Zone Title', 'Timezone');
   const timeZoneValueTitle = text('Time Zone Value', 'JST');
   const updateCallback = action('Date / Time Updated');
+  const sendRange = boolean('Send Available Range', true);
+  const availableRangeDates = object('Available Range', datesRange);
+  const contentDaysObj = object('Content Days', dataContentDays);
+  const showContentDays = boolean('Show Content Days', true)
 
   return (
     <Container>
@@ -40,13 +46,16 @@ export const _DatePicker = () => {
         <DatePicker {...{
           timeMode,
           dateMode,
-          timeZoneValueTitle
+          timeZoneValueTitle,
         }}
           updateCallback={exampleCallback(updateCallback)}
           dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}
           dateTimeTextLower={language === 'ja' ? 'まで' : dateTimeTextLower}
           timeZoneTitle={language === 'ja' ? '時間帯' : timeZoneTitle}
           lang={language}
+          initialValue={initialValueObj}
+          availableRange={sendRange ? availableRangeDates : undefined}
+          contentDays={showContentDays ? contentDaysObj : undefined}
         />
       </FilterDropdownContainer>
     </Container>);

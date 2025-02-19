@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { object, text, boolean } from "@storybook/addon-knobs";
+import { object, text, boolean, select } from "@storybook/addon-knobs";
 import { TopBar, ICustomDrawer, INotificationItem, INotificationsHistory, useThemeToggle } from 'scorer-ui-kit';
 import { action } from '@storybook/addon-actions';
 
@@ -159,6 +159,11 @@ export const _TopBar = () => {
   ]
 );
 
+  const badgeText = text("Badge Text", "Guest");
+  const badgeColor = select("Badge Color", ['primary', 'grey', 'info', 'success', 'caution', 'warning'], 'info');
+  const badgeLinkTo = text("Badge To", "/login");
+  const badgeLinkText = text("Badge Link Text", "Login");
+
   // userDrawerBespoke: See examples for implementation of this prop.
 
   const onLanguageToggle = () => {
@@ -167,7 +172,14 @@ export const _TopBar = () => {
 
   return (
     <Container>
-      <TopBar {...{
+      <TopBar 
+        badge={{ 
+          text: badgeText,
+          color: badgeColor,
+          linkTo: badgeLinkTo,
+          linkText: badgeLinkText
+        }}
+      {...{
         loggedInUser,
         userSubmenu,
         hasSearch,
@@ -191,7 +203,7 @@ export const _TopBar = () => {
         logoutText,
         userDrawerFooter,
         copySuccessMessage,
-        includeCopyTitle
+        includeCopyTitle,
       }}
         userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}

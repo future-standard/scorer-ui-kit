@@ -11,7 +11,6 @@ import {
   IFilterResult,
   IFilterDatePicker,
   isFilterItem,
-  // DateInterval,
 } from 'scorer-ui-kit'
 
 import {
@@ -47,6 +46,7 @@ import {
   filterByCreationDatePicker
 } from '../../helpers/sample_table_helpers';
 import { ITypeTableData } from 'scorer-ui-kit/dist/Tables';
+import { dataContentDays, datesRange, InitialSelectedDate } from '../../helpers/datePicker_sample';
 
 export default {
   title: 'Filters/Organism',
@@ -194,11 +194,6 @@ export const _FilterBar = () => {
     }
   ]
 
-  // Selected example
-  // const myDate: DateInterval = {
-  //   start: before,
-  //   end: today,
-  // }
   const datePickers: IFilterDatePicker[] = [
     {
       id: 'datePickerForRuntime',
@@ -208,8 +203,10 @@ export const _FilterBar = () => {
       dateTimeTextUpper: language === 'english' ? 'From' : 'から',
       dateTimeTextLower: language === 'english' ? 'To' : 'まで',
       timeZoneTitle: language === 'english' ? 'Timezone' : '時間帯',
-      lang: language === 'english' ? 'en' : 'ja'
-      // selected: myDate,
+      lang: language === 'english' ? 'en' : 'ja',
+      selected: InitialSelectedDate,
+      availableRange: datesRange,
+      contentDays: dataContentDays
     }
   ]
 

@@ -8,7 +8,7 @@ import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
 import FilterDropHandler from '../atoms/FilterDropHandler';
 import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 import LoadingBox from '../atoms/LoadingBox';
-import { FilterButtonDesign } from '..';
+import { FilterButtonDesign } from '../FilterTypes';
 
 const Container = styled.div`
   display: inline-block;
@@ -303,7 +303,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
         onCloseCallback={handleClose}
         onToggleOpenCallback={handleToggleOpen}
       >
-        <FilterDropdownContainer>          
+        <FilterDropdownContainer>
           {hasOptionsFilter && (
             <SearchWrapper>
               <BasicSearchInput

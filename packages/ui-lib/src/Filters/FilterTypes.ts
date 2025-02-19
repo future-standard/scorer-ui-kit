@@ -7,6 +7,7 @@ import { IFilterDropdown } from './molecules/FilterDropdown';
 type IFilterItem = { text: string; value: string | number; }
 type IFilterValue = IFilterItem | IFilterItem[] | null;
 type IFilterType = 'search' | 'dropdown' | 'datepicker';
+type IToggleOption = { text: string; value: string | number; icon: string }
 
 // Type checking for IFilterItem
 // https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
@@ -66,6 +67,8 @@ interface IFilterDropdownConfig {
   name?: string
 }
 
+type FilterButtonDesign = 'default' | 'basic'
+
 export {
   isFilterItem
 };
@@ -78,5 +81,7 @@ export type {
   ISearchFilter,
   IFilterDropdownExt,
   IFilterDatePicker,
-  IFilterDropdownConfig
+  IFilterDropdownConfig,
+  IToggleOption,
+  FilterButtonDesign,
 };

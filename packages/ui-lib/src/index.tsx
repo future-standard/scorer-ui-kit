@@ -57,6 +57,7 @@ import {
   DatePicker,
   DateInterval,
   isDateInterval,
+  DateRange,
   IFilterDatePicker,
   FilterDropdownContainer,
   FilterButton,
@@ -75,7 +76,9 @@ import {
   IFilterValue,
   IFilterResult,
   isFilterItem,
-  FilterButtonDesign
+  FilterButtonDesign,
+  ToggleButton,
+  IToggleOption
 } from './Filters';
 
 import Icon, { IconSVGs } from './Icons/Icon';
@@ -278,6 +281,7 @@ export {
   FilterInputs,
   FiltersResults,
   FilterBar,
+  ToggleButton,
   isFilterItem,
   isDateInterval,
 
@@ -417,5 +421,7 @@ export type {
   ISplitLayoutHandles,
   AlertType,
   ITooltipType,
-  FilterButtonDesign
+  FilterButtonDesign,
+  IToggleOption,
+  DateRange
 };

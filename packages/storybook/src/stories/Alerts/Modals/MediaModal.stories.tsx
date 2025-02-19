@@ -47,7 +47,7 @@ const MediaImageModal : React.FC<IExampleModal> = ({hasModalLimitsValue, imageSr
 export const _MediaModal = () => {
 
   const hasModalLimits = boolean('Has Modal Limits', true);
-  const imageSrc = text('Image Src', 'https://i.picsum.photos/id/1026/4621/3070.jpg?hmac=OJ880cIneqAKIwHbYgkRZxQcuMgFZ4IZKJasZ5c5Wcw');
+  const imageSrc = text('Image Src', '/images/placeholders/640x480.png');
   const retryLoading = boolean('Retry Loading', false);
 
   return (
