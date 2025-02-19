@@ -65,9 +65,9 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
-const LightBox = styled.div<{ padding?: boolean, width?: string}>`
+const LightBox = styled.div<{ padding?: boolean, width?: string, isCloseEnable?: boolean}>`
   position: relative;
-  margin: 27px 0 0;
+  margin: ${({ isCloseEnable }) => isCloseEnable ? `27px 0 0` : `0`};
   z-index: 9999;
   width: ${({ width }) => width ? width : `580px`};
   padding: ${({ padding }) => padding ? `30px 40px` : `0`};
@@ -119,7 +119,7 @@ const Modal: React.FC<IModalProps> = ({
   return (isOpen
     ? ReactDom.createPortal(
       <Container>
-        <LightBox ref={lightBoxRef} width={width} padding={padding}>
+        <LightBox ref={lightBoxRef} width={width} padding={padding} isCloseEnable={isCloseEnable}>
           {isCloseEnable
             ?
               <CloseButton onClick={() => dismiss()}>
