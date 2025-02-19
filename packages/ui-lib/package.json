@@ -73,7 +73,7 @@
     "dist"
   ],
   "dependencies": {
-    "@future-standard/icons": "^2.0.0",
+    "@future-standard/icons": "^2.0.1",
     "@types/react-dom": "^17.0.0",
     "date-fns": "^2.29.1",
     "immutability-helper": "^3.1.1",
