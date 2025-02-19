@@ -31,6 +31,8 @@ const StyledButton = styled(Button)`
 
 const ButtonsGroup = styled.div`
   text-align: right;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 
