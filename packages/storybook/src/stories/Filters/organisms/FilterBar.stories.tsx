@@ -114,7 +114,6 @@ export const _FilterBar = () => {
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
   const [rows, setRows] = useState<ITypeTableData>(rowMaker(dataInitialState));
   const [filters, setFilters] = useState<IFilterResult[]>([]);
-
   /**
  * Story interaction section
  */
@@ -122,6 +121,7 @@ export const _FilterBar = () => {
   const hasShowMore = boolean('Has Show More', true);
   // valid formats - https://date-fns.org/v2.25.0/docs/format
   const resultsDateFormat = text('Results date format', 'yyyy-MM-dd HH:mm');
+  const datePickerHasApply = boolean('Datepicker has Apply', true);
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked: boolean, id?: string | number) => {
@@ -203,10 +203,13 @@ export const _FilterBar = () => {
       dateTimeTextUpper: language === 'english' ? 'From' : 'から',
       dateTimeTextLower: language === 'english' ? 'To' : 'まで',
       timeZoneTitle: language === 'english' ? 'Timezone' : '時間帯',
+      cancelText: language === 'english' ? 'Cancel' : 'キャンセル',
+      applyText: language === 'english' ? 'Apply' : '完了',
       lang: language === 'english' ? 'en' : 'ja',
       selected: InitialSelectedDate,
       availableRange: datesRange,
-      contentDays: dataContentDays
+      contentDays: dataContentDays,
+      hasApply: datePickerHasApply
     }
   ]
 
