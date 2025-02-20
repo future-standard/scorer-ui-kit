@@ -487,16 +487,5 @@ export const styles = {
             "borderColor": "var(--primary-7)",
             "border": "var(--primary-7) 1px solid"
         }
-    },
-    "modal": {
-        "overlay": {
-            "backgroundColor": "var(--grey-a3)"
-        },
-        "container": {
-            "boxShadow": "0px 10px 15px 0px var(--primary-a1)",
-            "backgroundColor": "var(--grey-1)",
-            "borderColor": "var(--grey-6)",
-            "border": "var(--grey-6) 1px solid"
-        }
     }
 };

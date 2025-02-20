@@ -19,10 +19,8 @@ const Container = styled.div`
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   z-index: 999;
-  ${({theme}) => theme && css``}
-
-  font-family: ${({ theme }) => theme.fontFamily.ui};
-  ${({ theme }) => theme.styles.modal.overlay};
+  font-family: var(--font-ui);
+  background-color: var(--grey-a3);
 `;
 
 const CloseIcon = styled(Icon)``;
@@ -51,10 +49,8 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   }
 
   &:hover:enabled {
-    ${({ theme }) => theme && css`
-      opacity: .8;
-      transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.inOut};
-    `}
+    opacity: .8;
+    transition: transform var(--speed-normal) var(--easing-primary-in-out);
   }
 
   &:active:enabled {
@@ -65,14 +61,16 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
-const LightBox = styled.div<{ padding?: boolean, width?: string}>`
+const LightBox = styled.div<{ padding?: boolean, width?: string, isCloseEnable?: boolean}>`
   position: relative;
-  margin: 27px 0 0;
+  margin: ${({ isCloseEnable }) => isCloseEnable ? `27px 0 0` : `0`};
   z-index: 9999;
   width: ${({ width }) => width ? width : `580px`};
   padding: ${({ padding }) => padding ? `30px 40px` : `0`};
   border-radius: 5px;
-  ${({ theme }) => theme.styles.modal.container};
+  box-shadow: 0px 10px 15px 0px var(--primary-a1);
+  background-color: var(--grey-1);
+  border: var(--grey-6) 1px solid;
 `;
 
 export interface IModalProps {
@@ -119,12 +117,12 @@ const Modal: React.FC<IModalProps> = ({
   return (isOpen
     ? ReactDom.createPortal(
       <Container>
-        <LightBox ref={lightBoxRef} width={width} padding={padding}>
+        <LightBox ref={lightBoxRef} width={width} padding={padding} isCloseEnable={isCloseEnable}>
           {isCloseEnable
             ?
               <CloseButton onClick={() => dismiss()}>
                 {closeText ? closeText : 'CLOSE'}
-                <CloseIcon icon='CloseCompact' size={15} color='mono' weight='regular' />
+                <CloseIcon icon='CloseCompact' size={15} color='grey-12' weight='regular' />
               </CloseButton>
             : null}
           {customComponent}
