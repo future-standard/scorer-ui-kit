@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { boolean, object, select, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -39,6 +39,12 @@ export const _DatePicker = () => {
   const availableRangeDates = object('Available Range', datesRange);
   const contentDaysObj = object('Content Days', dataContentDays);
   const showContentDays = boolean('Show Content Days', true)
+  const hasApply = boolean('Has Apply Button', false);
+  const disableApply = boolean('Disable Apply button', false);
+  const cancelText = text('Cancel Text', 'Cancel');
+  const applyText = text('Apply Text', 'Apply');
+  const applyCallback = action('Apply Button Pressed');
+  const cancelCallback = action('Cancel Button Pressed');
 
   return (
     <Container>
@@ -47,6 +53,12 @@ export const _DatePicker = () => {
           timeMode,
           dateMode,
           timeZoneValueTitle,
+          hasApply,
+          disableApply,
+          cancelText,
+          applyText,
+          applyCallback,
+          cancelCallback,
         }}
           updateCallback={exampleCallback(updateCallback)}
           dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}

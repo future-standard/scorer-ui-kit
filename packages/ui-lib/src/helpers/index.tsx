@@ -1,4 +1,5 @@
-import {ITimeUnit} from '../index';
+import { isEqual } from 'date-fns';
+import {DateInterval, isDateInterval, ITimeUnit} from '../index';
 
 const isInsideRange = (value: number, min: number, max: number) : boolean => {
   if( value < min) {return false;}
@@ -90,6 +91,26 @@ const uniqueID = () =>
     return intValue !== intValue;
   };
 
+  const areDatesEqual = (storedValue: DateInterval | Date | null | undefined, currentDisplay: DateInterval | Date | null): boolean => {
+    if (storedValue === null && currentDisplay === null) {
+      return true;
+    }
+
+    if (storedValue === undefined && currentDisplay === null) {
+      return true;
+    }
+
+    if (isDateInterval(storedValue) && isDateInterval(currentDisplay)) {
+      return isEqual(storedValue?.start, currentDisplay?.start) && isEqual(storedValue?.end, currentDisplay?.end);
+    }
+
+    if(storedValue instanceof Date && currentDisplay instanceof Date) {
+      return isEqual(storedValue, currentDisplay);
+    }
+
+    return false;
+  };
+
 export {
   clamp,
   isValidImage,
@@ -99,5 +120,6 @@ export {
   getShortTextTimeUnit,
   getTopLevelPath,
   uniqueID,
-  isNotNumber
+  isNotNumber,
+  areDatesEqual
 };

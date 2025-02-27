@@ -6,6 +6,7 @@ import DateTimeBlock from '../atoms/DateTimeBlock';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekOfInterval, addMonths, endOfWeek, intervalToDuration, isSameMonth, isSameDay, isToday, startOfDay, endOfDay, isWithinInterval, set, add, isEqual } from 'date-fns';
 import { ja, enUS } from 'date-fns/locale';
 import { resetButtonStyles } from '../../common';
+import Button from '../../Form/atoms/Button';
 
 /**
  * Convert a single days duration to an interval.
@@ -55,7 +56,7 @@ const TimeZoneOption = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 11px;
   box-sizing: border-box;
 `;
 
@@ -159,6 +160,22 @@ const PaginateMonth = styled.button`
 
 const CalBody = styled.div`
   padding: 5px 0;
+`;
+
+const CalButtons = styled.div`
+  display: flex;
+  padding: 4px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 4px;
+  align-self: stretch;
+  border-top: 1px solid var(--grey-6);
+`;
+
+const CalRightButtons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `;
 
 const CalRow = styled.div`
@@ -357,8 +374,14 @@ export interface IDatePicker {
   timeZoneValueTitle?: string
   availableRange?: DateRange
   contentDays?: Date[]
-  updateCallback?: (data: DateInterval | Date) => void
   lang?: 'en' | 'ja'
+  cancelText?: string
+  applyText?: string
+  hasApply?: boolean
+  disableApply?: boolean
+  updateCallback?: (data: DateInterval | Date) => void
+  applyCallback?: () => void
+  cancelCallback?: () => void
 }
 
 const DatePicker: React.FC<IDatePicker> = ({
@@ -373,7 +396,13 @@ const DatePicker: React.FC<IDatePicker> = ({
   initialValue,
   availableRange,
   contentDays,
-  lang = 'en'
+  lang = 'en',
+  cancelText = 'Cancel',
+  applyText = 'Apply',
+  hasApply = false,
+  disableApply = false,
+  applyCallback = () => { },
+  cancelCallback = () => { }
 }) => {
 
   // TODO: Have a function to output tidied up data for the configuration.
@@ -548,7 +577,7 @@ const DatePicker: React.FC<IDatePicker> = ({
                       <DayText>
                         {format(day, "d")}
                       </DayText>
-                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={dayState} isToday={isTodayValue}/>
+                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={dayState} isToday={isTodayValue} />
                     </CalCellB>
                   );
                 })}
@@ -557,9 +586,18 @@ const DatePicker: React.FC<IDatePicker> = ({
           })}
         </CalBody>
 
+        {hasApply && (
+          <CalButtons>
+            {hasApply && (
+              <CalRightButtons>
+                <Button design='secondary' onClick={cancelCallback}>{cancelText}</Button>
+                <Button onClick={applyCallback} disabled={!isTimeRangeValid || selectedRange === null || disableApply }>{applyText}</Button>
+              </CalRightButtons>)
+            }
+          </CalButtons>)
+        }
+
       </CalendarArea>
-
-
     </Container>
   );
 
@@ -688,5 +726,5 @@ const isDayOutOfRange = (currentDay: Date, availableRange?: DateRange): boolean 
 const dayHasContent = (currentDay: Date, contentDays?: Date[]): boolean => {
   if (!contentDays) return false;
 
-  return contentDays.some(day => isSameDay(currentDay,day));
+  return contentDays.some(day => isSameDay(currentDay, day));
 };
