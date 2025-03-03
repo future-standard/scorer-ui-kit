@@ -143,6 +143,8 @@ export type INotificationProps = {
   closeCallback?: () => void
 }
 
+export let handleDismiss = () => { };
+
 const Notification : React.FC<INotificationProps> = ({id, type ='info', message, icon = '', isPinned = false, actionTextButton, closeNow = false, closeCallback, onTextButtonClick}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
@@ -154,13 +156,14 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
     setTextClicked(false);
   },[id]);
 
-  const handleDismiss = useCallback(() => {
+  handleDismiss = useCallback(() => {
     setSlideUp(true);
   },[]);
 
   const handleTextClick = useCallback(async () => {
     setTextClicked(true);
     handleDismiss();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[handleDismiss]);
 
   const animationEnded = useCallback(() => {
@@ -191,12 +194,14 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
     return () => {
       mounted = false;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[isPinned, message, handleDismiss, id]);
 
   useEffect(() => {
     if(closeNow) {
       handleDismiss();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[closeNow, handleDismiss]);
 
   return( (message && !dismiss)
