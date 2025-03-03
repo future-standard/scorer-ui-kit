@@ -217,11 +217,11 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
       {hasTypeIcon ? <HeaderItem headerStyle='header' fixedWidth={35} /> : null}
 
       {columnConfig.map((column, key, allColls) => {
-        const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth }: ITableColumnConfig = column;
+        const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth, width }: ITableColumnConfig = column;
         return (
           <HeaderItem
             key={key}
-            {...{ alignment, hasCopyButton, minWidth }}
+            {...{ alignment, hasCopyButton, minWidth, width }}
             headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
             isSortActive={sortActive}
           >
