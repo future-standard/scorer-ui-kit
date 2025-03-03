@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 // import { action } from '@storybook/addon-actions';
 import { boolean, number, object, text, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
@@ -131,6 +131,29 @@ const secToMinAndHours = (seconds: number): ITimeValue => {
   }
 }
 
+const getTimeValues = (value: number, unit: ITimeUnit) => {
+  switch (unit) {
+    case 'seconds':
+      return {
+        hours: Math.floor(value / 3600),
+        minutes: Math.floor((value % 3600) / 60),
+        seconds: value % 60
+      };
+    case 'minutes':
+      return {
+        hours: Math.floor(value / 60),
+        minutes: value % 60,
+        seconds: 0
+      };
+    default:
+      return {
+        hours: value,
+        minutes: 0,
+        seconds: 0
+      };
+  }
+};
+
 const timeFormatData = {
   hours: {
     min: 1,
@@ -188,6 +211,8 @@ const timeFormatData = {
   },
 }
 
+const getPluralSuffix = (value: number) => value !== 1 ? 's' : '';
+
 export const _DurationSlider = () => {
 
   const title = text('Title', 'Duration');
@@ -214,7 +239,10 @@ export const _DurationSlider = () => {
   const defaultValue2 = number('Default value 2', defaultMixValue)
   const onlyMarkSelect = boolean('Only Mark Select', true);
   const timeFormatUnit = select('Template Example Unit', { Hours: 'hours', Minutes: 'minutes', Seconds: 'seconds' }, 'seconds');
-  const timeFormat = text('Time Format', '[H]Hr [M]Min [S]Sec');
+  const timeFormat = text('Time Format', '[H]hrs [M]mins [S]secs');
+  const useDynamicFormat = boolean('Use example [H]hr/s [M]min/s [S]sec/s', false);
+
+  const [dynamicFormat, setDynamicFormat] = useState(timeFormat);
 
   const showValue2 = action('Input Callback');
   const marks2 = object('Marks 2', exampleMarks2);
@@ -225,6 +253,22 @@ export const _DurationSlider = () => {
     const newValue = secToMinAndHours(value)
     setValue2(newValue);
   };
+
+  const handleUpdateWithFormat = useCallback((value: number) => {
+    if(!useDynamicFormat) { return }
+    const {hours, minutes, seconds} = getTimeValues(value, timeFormatUnit);
+
+    const newFormat = [
+      `[H]hr${getPluralSuffix(hours)}`,
+      `[M]min${getPluralSuffix(minutes)}`,
+      `[S]sec${getPluralSuffix(seconds)}`
+    ].join(' ');
+
+    if (dynamicFormat !== newFormat) {
+      setDynamicFormat(newFormat);
+    }
+
+  },[dynamicFormat, timeFormatUnit, useDynamicFormat])
 
   return (
     <Container>
@@ -274,9 +318,10 @@ export const _DurationSlider = () => {
           timeUnit={timeFormatUnit}
           max={timeFormatData[timeFormatUnit].max}
           min={timeFormatData[timeFormatUnit].min}
-          timeFormat={timeFormat}
+          timeFormat={useDynamicFormat? dynamicFormat : timeFormat}
           defaultValue={timeFormatData[timeFormatUnit].min}
           marks={timeFormatData[timeFormatUnit].marks}
+          inputCallback={handleUpdateWithFormat}
         />
       </Wrapper>
     </Container>
