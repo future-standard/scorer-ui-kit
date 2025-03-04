@@ -1,8 +1,8 @@
-import React, {useState, useCallback} from 'react';
-import styled from 'styled-components';
-import {ITimeUnit} from '../../index';
-import SliderInput, {ISlider} from '../atoms/SliderInput';
-import {getShortTextTimeUnit, isTimeUnit} from '../../helpers';
+import React, { useState, useCallback } from 'react';
+import styled, { css } from 'styled-components';
+import { ITimeUnit } from '../../index';
+import SliderInput, { ISlider } from '../atoms/SliderInput';
+import { getShortTextTimeUnit, isTimeUnit } from '../../helpers';
 import Label from '../atoms/Label';
 
 
@@ -24,26 +24,107 @@ const Headers = styled.div`
 `;
 
 const ValueLabel = styled(Label)`
-  font-family: ${({ theme }) => theme.fontFamily.ui};
+  font-family: var(--font-ui);
   margin-bottom: 0;
 `;
 
-const Unit = styled.div`
-  font-family: ${({ theme }) => theme.fontFamily.data};
+const unitStyle = css`
+  font-family: var(--font-data);
   color: var(--grey-a11);
   font-style: italic;
   font-size: 12px;
   line-height: 1.5;
 `;
 
+const Unit = styled.div`
+  ${unitStyle};
+`;
+
 const ValueTitle = styled.div`
   display: flex;
 `;
+
+const TitleTemplate = styled.div`
+  display: flex;
+  align-items: center;
+  ${unitStyle};
+  span {
+    font-style: normal;
+  }
+`;
+
+const getTimeValues = (value: number, unit: ITimeUnit) => {
+  switch (unit) {
+    case 'seconds':
+      return {
+        hours: Math.floor(value / 3600),
+        minutes: Math.floor((value % 3600) / 60),
+        seconds: value % 60
+      };
+    case 'minutes':
+      return {
+        hours: Math.floor(value / 60),
+        minutes: value % 60,
+        seconds: 0
+      };
+    default:
+      return {
+        hours: value,
+        minutes: 0,
+        seconds: 0
+      };
+  }
+};
+
+const getValueTitle = (value: number, timeUnit: ITimeUnit | string, timeFormat?: string) => {
+  // Handle default case
+  if (!timeFormat || !isTimeUnit(timeUnit)) {
+    const unit = isTimeUnit(timeUnit) ? getShortTextTimeUnit(value, timeUnit) : timeUnit;
+    return (
+      <ValueTitle>
+        <ValueLabel htmlFor='duration-slider' labelText={`${value}`} />
+        <Unit>{unit}</Unit>
+      </ValueTitle>
+    );
+  }
+
+  const timeValues = getTimeValues(value, timeUnit as ITimeUnit);
+
+  const updatedTitle = timeFormat
+    .split(/(\[H+\]|\[M+\]|\[S+\])/)
+    .map((part, index) => {
+      switch (part) {
+        case '[HH]':
+          return <span key={index}>{timeValues.hours.toString().padStart(2, '0')}</span>;
+        case '[H]':
+          return <span key={index}>{timeValues.hours}</span>;
+        case '[MM]':
+          return <span key={index}>{timeValues.minutes.toString().padStart(2, '0')}</span>;
+        case '[M]':
+          return <span key={index}>{timeValues.minutes}</span>;
+        case '[SS]':
+          return <span key={index}>{timeValues.seconds.toString().padStart(2, '0')}</span>;
+        case '[S]':
+          return <span key={index}>{timeValues.seconds}</span>;
+        default: {
+          const preserveSpacesInPart = part.replace(/\s+/g, '\u00A0');
+          return preserveSpacesInPart;
+        }
+      }
+    });
+
+  return (
+    <ValueTitle>
+      <TitleTemplate>{updatedTitle}</TitleTemplate>
+    </ValueTitle>
+  );
+};
 
 interface IDurationSliderProps {
   title: string
   timeUnit: ITimeUnit | string
   controlledValue?: number
+  timeFormat?: string // [H]Hours [M]Minutes [S]Seconds -> 4Hours 10Minutes 30Seconds // [HH]時 [MM]分 [SS]秒 -> 4時 10分 30秒
 }
 
 type IDurationSlider = IDurationSliderProps & ISlider;
@@ -52,39 +133,36 @@ const DurationSlider: React.FC<IDurationSlider> = (
   {
     max,
     min,
-    defaultValue=0,
-    title='',
+    defaultValue = 0,
+    title = '',
     timeUnit,
     controlledValue,
     inputCallback,
+    timeFormat,
     ...props
   }
-  ) => {
+) => {
 
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
   const handleSelectedValue = useCallback((value: number) => {
-    if(inputCallback) {
+    if (inputCallback) {
       inputCallback(value);
     }
     setSelectedValue(value);
-  },[inputCallback]);
+  }, [inputCallback]);
 
   const labelValue = controlledValue ? controlledValue : selectedValue;
-  const unit = isTimeUnit(timeUnit) ? getShortTextTimeUnit(labelValue, timeUnit) : timeUnit;
 
-  return(
+  return (
     <Container>
       <Headers>
         <Label htmlFor='duration-slider' labelText={title} />
-        <ValueTitle>
-          <ValueLabel htmlFor='duration-slider' labelText={`${labelValue}`} />
-          <Unit>{unit}</Unit>
-        </ValueTitle>
+        {getValueTitle(labelValue, timeUnit, timeFormat)}
       </Headers>
       <SliderInput
         {
-          ...props}
+        ...props}
         id='duration-slider'
         max={max}
         min={min}
