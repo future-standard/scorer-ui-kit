@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import Notification, { INotificationProps } from '../Alerts/atom/Notification';
+import Notification, { handleDismiss, INotificationProps } from '../Alerts/atom/Notification';
 import { uniqueID } from '../helpers';
 
 type NotificationContextType = {
@@ -19,7 +19,8 @@ const notificationList: INotificationProps[] = [];
 const NotificationProvider: React.FC = ({ children }) => {
   const [activeNotification, setActiveNotification] = useState<INotificationProps | null>(null);
 
-  const showNotification = useCallback(() => {
+  const showNotification = useCallback(async() => {
+    await new Promise((resolve) => setTimeout(resolve, 0)); 
     const nextNotification = notificationList.shift();
 
     if (!nextNotification) { return; }
@@ -66,11 +67,17 @@ const NotificationProvider: React.FC = ({ children }) => {
     }
 
     notificationList.push(validNotification);
-
-    if (notificationList.length === 1 && activeNotification === null) {
-      showNotification();
-    }
-  },[activeNotification, showNotification]);
+    handleDismiss();
+    setActiveNotification((prev)=>{
+        if (notificationList.length === 1 && prev === null) {
+          showNotification();
+        }
+        return prev;
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [showNotification, activeNotification]
+  );
 
   const clearNotifications = useCallback(() => {
     notificationList.length = 0;
