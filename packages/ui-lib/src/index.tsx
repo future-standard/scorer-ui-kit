@@ -161,7 +161,8 @@ import {
   useMediaModal,
   IModal,
   usePoll,
-  useThemeToggle
+  useThemeToggle,
+  useLanguageAttribute,
 } from './hooks';
 
 import {
@@ -319,6 +320,7 @@ export {
   usePoll,
   useMediaModal,
   useThemeToggle,
+  useLanguageAttribute,
   resetButtonStyles,
   FlexContentPlaceholder,
   Spinner,
