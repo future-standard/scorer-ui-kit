@@ -54,8 +54,8 @@ const SwitchOuter = styled.div`
     right: calc(var(--switch-border-width) * -1);
     pointer-events: none;
     border-radius: 12px;
-    box-shadow: 
-      0px 2px 2px 0px var(--grey-a4) inset, 
+    box-shadow:
+      0px 2px 2px 0px var(--grey-a4) inset,
       0px -8px 8px 0px var(--grey-a2) inset,
       0px 2px 4px var(--black-a4),
       0px -2px 4px var(--white-a4);
@@ -72,17 +72,17 @@ const SwitchInner = styled.div<{ position: PositionKey}>`
   position: absolute;
   top: var(--offset);
   left: ${({position}) => position && `var(--position-${position})`};
-  
+
   box-sizing: border-box;
   height: var(--switch-inner-size);
   width: var(--switch-inner-size);
   border-radius: calc(var(--switch-inner-size) / 2);
-  
+
   background-color: var(--switch-default-off-background);
 
-  box-shadow: 
+  box-shadow:
     0px 2px 4px 0px var(--black-a8),
-    0px 1px 2px 0px var(--white-a5) inset, 
+    0px 1px 2px 0px var(--white-a5) inset,
     0px -1px 1px 0px var(--black-a5) inset;
 `;
 
@@ -106,13 +106,13 @@ const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean,
   display: inline-flex;
   gap: 8px;
   align-items: center;
-  
+
   ${SwitchOuter}{
     ${({activeTheming, themeState}) => css`
       border-color: var(--switch-${themeState}-${activeTheming}-border);
       background-color: var(--switch-${themeState}-${activeTheming}-background);
     `};
-  
+
     ${({ activeTheming }) => activeTheming === 'locked' && css`
       background-color: var(--switch-special-locked-background);
       border-color: var(--switch-special-locked-border);
@@ -158,12 +158,12 @@ const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean,
       border-color: var(--switch-default-${activeTheming}-inner);
       box-shadow: none;
     `};
-    
+
   }
 
   &:hover {
     ${SwitchInner}{
-      left: ${({useIntent, position}) => 
+      left: ${({useIntent, position}) =>
         useIntent && position === SwitchPosition.Off && 'calc(var(--position-off) + var(--switch-intent-offset))' ||
         useIntent && position === SwitchPosition.On && 'calc(var(--position-on) - var(--switch-intent-offset))'
       };
@@ -171,7 +171,7 @@ const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean,
   }
 `;
 
-type TypeSwitchState = 'default' | 'loading' | 'locked' | 'disabled' | 'failure';
+export type TypeSwitchState = 'default' | 'loading' | 'locked' | 'disabled' | 'failure';
 
 const isTypeSwitchState = (value: string): value is TypeSwitchState => {
   return (
@@ -270,7 +270,7 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
     }
   }, [innerRef]);
 
-  
+
   return (
     <Container onChange={customOnChange} onMouseLeave={ () => setJustUpdated(false) } activeTheming={activeTheming} $loading={state === 'loading'} useIntent={ !justUpdated && (state === 'default' || state === 'failure')} themeState={switchState} position={position} checked={inputRef.current?.checked}>
       <SwitchOuter>
