@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import {
   GlobalUI,
   PageHeader,
@@ -518,13 +518,13 @@ export const _GlobalUI = () => {
   ])
   const notificationsHistory = object("Notifications History", allNotifications);
 
-  const onLanguageToggle = () => {
+  const onLanguageToggle = useCallback(() => {
     setAttributeLanguage((prev:  string) => {
       const newLang = prev === 'us'? 'ja' : 'us'
       languageToggle(newLang);
       return newLang;
     })
-  }
+  },[languageToggle])
 
   const getToggleValue = (isMenuOpen: boolean) => {
     console.log(isMenuOpen);
@@ -565,7 +565,7 @@ export const _GlobalUI = () => {
         userDrawerMeta={userDrawerMetaConfig}
         legacyLayout={false}
         selectedLangAttribute={attributeLanguage}
-        selectedLanguageText={attributeLanguage === 'us'? 'ENGLISH' : '日本'}
+        selectedLanguageText={attributeLanguage === 'us'? 'ENGLISH' : '日本語'}
         badge={{
           text: badgeText,
           color: badgeColor,
