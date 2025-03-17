@@ -1,4 +1,4 @@
-import React, { useCallback, Fragment } from 'react';
+import React, { useCallback, Fragment, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -124,6 +124,24 @@ const FooterText = styled.div <{ icon?: string }>`
   opacity: 0.5;
 `;
 
+const updateLanguageAttribute = (initLanguage?: string) => {
+
+  if (initLanguage) {
+    document.documentElement.setAttribute("lang", initLanguage);
+    return initLanguage;
+  }
+
+  const browserLang = navigator.language.split("-")[0];
+  const htmlLang = document.documentElement.lang;
+
+  if(!htmlLang) {
+    document.documentElement.setAttribute("lang", browserLang);
+    return browserLang;
+  }
+
+  return htmlLang;
+};
+
 interface IUserMenu extends ITopBar {
   closeOnClick?: () => void
 }
@@ -131,6 +149,8 @@ interface IUserMenu extends ITopBar {
 const UserMenu: React.FC<IUserMenu> = ({
   hasLanguage = false,
   selectedLanguageText = '',
+  languageOptionsText = 'LANGUAGE / 言語',
+  selectedLangAttribute,
   hasLogout = true,
   logoutLink = '/logout',
   logoutText = 'Logout',
@@ -158,7 +178,6 @@ const UserMenu: React.FC<IUserMenu> = ({
 }) => {
 
   const {icon, title} = userDrawerFooter as IUserDrawerFooter;
-
   const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     await onLogout();
@@ -173,6 +192,10 @@ const UserMenu: React.FC<IUserMenu> = ({
       closeOnClick();
     }
   }, [closeOnClick]);
+
+  useEffect(() => {
+    updateLanguageAttribute(selectedLangAttribute);
+  },[selectedLangAttribute]);
 
   return (
     <Fragment>
@@ -226,7 +249,7 @@ const UserMenu: React.FC<IUserMenu> = ({
 
       <DrawerBottom>
         {hasSwitchTheme && <DrawerBottomMenu icon={isLightMode ? 'LightMode' : 'DarkMode'} title={switchThemeText} subTitle={selectedThemeText} onClickCallback={onThemeToggle} />}
-        {hasLanguage && <DrawerBottomMenu icon='Language' title='LANGUAGE / 言語' subTitle={selectedLanguageText} onClickCallback={onLanguageToggle} />}
+        {hasLanguage && <DrawerBottomMenu icon='Language' title={languageOptionsText} subTitle={selectedLanguageText} onClickCallback={onLanguageToggle} />}
         {(hasUserDrawerFooter) ?
           <FooterMeta title={title} icon={icon}>
             {icon ?

@@ -60,7 +60,7 @@ const SearchInput = styled.input`
   line-height: 35px;
   border: none;
   outline: none;
-  background: transparent;  
+  background: transparent;
   color: var(--grey-10);
   font-size: 14px;
 
@@ -113,9 +113,9 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
     background-color: transparent;
     border-radius: 2px 2px 0 0;
   }
-  
+
   transition: background-color var(--speed-normal) var(--easing-primary-out);
-  
+
   svg {
     transition: transform var(--speed-normal) var(--easing-primary-out);
   }
@@ -126,7 +126,7 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
       background-color: var(--primary-6);
     }
   }
- 
+
   ${({ isActive }) => isActive && css`
     &, &:hover {
       border-bottom-color: var(--primary-9);
@@ -153,7 +153,7 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
   bottom: 0;
   background: var(--global-element-background);
   border-left: var(--dividing-line) 1px solid;
-  
+
   width: ${({ baseWidth }) => baseWidth ? baseWidth : `200px`};
   opacity: 0;
   visibility: hidden;
@@ -190,6 +190,8 @@ const TopBar: React.FC<ITopBar> = ({
   hasNotifications = false,
   hasLanguage = false,
   selectedLanguageText = '',
+  languageOptionsText,
+  selectedLangAttribute,
   hasLogout = true,
   logoutLink = '/logout',
   logoutText = 'Logout',
@@ -281,6 +283,8 @@ const TopBar: React.FC<ITopBar> = ({
               onLogout,
               onLanguageToggle,
               selectedLanguageText,
+              languageOptionsText,
+              selectedLangAttribute,
               hasSwitchTheme,
               isLightMode,
               switchThemeText,

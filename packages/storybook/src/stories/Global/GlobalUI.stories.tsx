@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import {
   GlobalUI,
   PageHeader,
@@ -155,7 +155,7 @@ const Accounts = () => (
   <ExampleContentBlock>
     <h2>Example</h2>
     <p>Here is a list of accounts</p>
-  </ExampleContentBlock>  
+  </ExampleContentBlock>
 );
 
 const Billing = () => (
@@ -384,6 +384,7 @@ const customDrawer: ICustomDrawer = {
 export const _GlobalUI = () => {
 
   const {isLightMode ,  onThemeToggle} = useThemeToggle();
+  const  [attributeLanguage, setAttributeLanguage] = useState('us');
 
 
   const maxWidth = text("Max width", "1200px");
@@ -405,7 +406,6 @@ export const _GlobalUI = () => {
   const canAlwaysPin = boolean("Can Always Pin", true);
   const defaultMenuOpen = boolean("Default menu open", false);
   const hasLanguage = boolean("Has Language", true);
-  const selectedLanguageText = text("Selected Language Text", "English");
   const hasSwitchTheme = boolean("Has Switch Theme", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
   const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
@@ -519,7 +519,11 @@ export const _GlobalUI = () => {
   const notificationsHistory = object("Notifications History", allNotifications);
 
   const onLanguageToggle = () => {
-    languageToggle();
+    setAttributeLanguage((prev:  string) => {
+      const newLang = prev === 'us'? 'ja' : 'us'
+      languageToggle(newLang);
+      return newLang;
+    })
   }
 
   const getToggleValue = (isMenuOpen: boolean) => {
@@ -560,7 +564,9 @@ export const _GlobalUI = () => {
         canAlwaysPin={canAlwaysPin}
         userDrawerMeta={userDrawerMetaConfig}
         legacyLayout={false}
-        badge={{ 
+        selectedLangAttribute={attributeLanguage}
+        selectedLanguageText={attributeLanguage === 'us'? 'ENGLISH' : '日本'}
+        badge={{
           text: badgeText,
           color: badgeColor,
           linkTo: badgeLinkTo,
@@ -569,7 +575,7 @@ export const _GlobalUI = () => {
         {...{ logoMark, logoText, supportUrl, maxWidth, paddingOverride, notificationsHistory, customDrawer}}
         {...{ loggedInUser, userSubmenu, hasSearch, hasLogout, hasNotifications, logoutLink, logoutText, searchPlaceholder, hasLanguage,
               hasCurrentUser, currentUserText, accountOptionText, userDrawerFooter, hasUserDrawerMeta, copySuccessMessage, includeCopyTitle, hasUserDrawerFooter,
-              selectedLanguageText, hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle
+              hasSwitchTheme, isLightMode, switchThemeText, selectedThemeText, onThemeToggle, onLanguageToggle
             }}
       >
         <ContentLayout layout="default" HeaderContent={ExampleContent}>
