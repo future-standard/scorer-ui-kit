@@ -39,6 +39,9 @@ const StyledButton = styled.button`
   font-weight: 500;
   font-stretch: normal;
   font-style: italic;
+  &:lang(ja) {
+      font-style: normal;
+  }
   line-height: 1.79;
   color: var(--grey-9);
   display: block;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import {  text, select, boolean } from "@storybook/addon-knobs";
 import {TextField} from 'scorer-ui-kit';
@@ -14,7 +14,7 @@ export default {
 };
 
 export const TextInput = () => {
-
+  const language = select("Language", { English: 'us', Japanese: "ja" },"us" );
   const inputName = text("Input Name", "my_input");
   const inputLabel = text("Label", "My Input");
   const showFeedback = boolean("Show Feedback", false);
@@ -23,15 +23,19 @@ export const TextInput = () => {
   const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
   const fieldRequired = boolean("Required", false);
 
+  useEffect(() => {
+    document.documentElement.setAttribute("lang", language);
+  }, [language])
+
   return <Container>
-    <TextField 
-      id={inputName} 
-      name={inputName} 
-      label={inputLabel} 
-      placeholder={inputPlaceholder} 
-      fieldState={inputState} 
+    <TextField
+      id={inputName}
+      name={inputName}
+      label={inputLabel}
+      placeholder={inputPlaceholder}
+      fieldState={inputState}
       showFeedback={showFeedback}
-      feedbackMessage={inputFeedback} 
+      feedbackMessage={inputFeedback}
       required={fieldRequired} />
     </Container>;
 };

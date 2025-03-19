@@ -68,6 +68,9 @@ const MarkLabel = styled.span<{leftValue: number, alignment?: IMarkAlignment}>`
 
   font-size: 10px;
   font-style: italic;
+  &:lang(ja) {
+    font-style: normal;
+  }
   line-height: normal;
   text-align: center;
   color: var(--grey-a11);

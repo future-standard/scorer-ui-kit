@@ -80,7 +80,7 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   color: var(--input-color-default);
   font-size: 14px;
 
-  transition: 
+  transition:
     border var(--speed-fast) var(--easing-primary-out),
     background-color var(--speed-fast) var(--easing-primary-out),
     box-shadow var(--speed-fast) var(--easing-primary-out);
@@ -92,6 +92,9 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
     font-weight: 400;
   }
 
+  &:lang(ja)::placeholder {
+    font-style: normal;
+  };
 `;
 
 const InputContainer = styled.div<{hasAction?: boolean}>`
@@ -112,7 +115,7 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 
 const Container = styled.div<{ fieldState: TypeFieldState, showFeedback?: boolean }>`
   ${({fieldState, showFeedback}) => css`
-  
+
     display: flex;
     position: relative;
     flex-direction: row;
@@ -122,7 +125,7 @@ const Container = styled.div<{ fieldState: TypeFieldState, showFeedback?: boolea
       &:disabled {
         cursor: not-allowed;
       }
-      
+
       ${['default', 'disabled'].indexOf(fieldState) === -1 && showFeedback && css`
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;

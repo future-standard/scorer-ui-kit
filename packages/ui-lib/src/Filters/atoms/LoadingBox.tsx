@@ -16,6 +16,9 @@ const LoadingText = styled.div`
   color: var(--grey-11);
   font-size: 12px;
   font-style: italic;
+  &:lang(ja) {
+      font-style: normal;
+  }
   padding: 15px 0;
 `;
 

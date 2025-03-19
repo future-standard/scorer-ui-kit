@@ -32,8 +32,8 @@ const StyledTextArea = styled.textarea<{ fieldState : TypeFieldState}>`
 
   color: var(--input-color-default);
   font-size: 14px;
-  
-  transition: 
+
+  transition:
     border var(--speed-fast) var(--easing-primary-out),
     background-color var(--speed-fast) var(--easing-primary-out),
     box-shadow var(--speed-fast) var(--easing-primary-out);
@@ -45,6 +45,9 @@ const StyledTextArea = styled.textarea<{ fieldState : TypeFieldState}>`
     font-weight: 400;
   }
 
+  &:lang(ja)::placeholder {
+    font-style: normal;
+  };
 `;
 
 const FeedbackContainer = styled.div`
@@ -70,7 +73,7 @@ const FeedbackMessage = styled.div`
 `;
 
 const Container =  styled.div<{ fieldState: string, showFeedback?: boolean }>`
-  ${({fieldState, showFeedback}) => css`      
+  ${({fieldState, showFeedback}) => css`
     display: flex;
     position: relative;
     flex-direction: column;
@@ -80,11 +83,11 @@ const Container =  styled.div<{ fieldState: string, showFeedback?: boolean }>`
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
       `};
-      
+
       &:disabled {
         cursor: not-allowed;
       }
-      
+
       &:focus {
         box-shadow: var(--input-focused-box-shadow-x) var(--input-focused-box-shadow-y) var(--input-focused-box-shadow-blur) var(--input-focused-box-shadow-spread) var(--input-${fieldState}-focused-shadow-color);
       }

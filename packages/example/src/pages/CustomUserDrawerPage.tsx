@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { TopBar } from 'scorer-ui-kit';
 import ExamplesFilename from '../components/ExamplesFilename';
@@ -16,6 +16,9 @@ const CustomContentContainer = styled.div`
 const ExampleText = styled.div`
   font-size: 14px;
   font-style: italic;
+  &:lang(ja) {
+    font-style: normal;
+  }
   line-height: 20px;
   color: var(--grey-9);
 `
@@ -45,12 +48,29 @@ const searchPlaceholder = "Search area names, etc.";
 
 
 const CustomUserDrawerPage : React.FC = () => {
+  const  [attributeLanguage, setAttributeLanguage] = useState('us');
+
+  const onLanguageToggle = useCallback(() => {
+    setAttributeLanguage((prev:  string) => {
+      const newLang = prev === 'us'? 'ja' : 'us'
+      return newLang;
+    })
+  },[])
 
 
   const userDrawerBespoke = <CustomContentContainer>
     <ExampleText>
-      <p>Custom content can be injected under the user menu like this.</p>
-      <p>The styling for this is left to you to include, keeping it flexible.</p>
+      {attributeLanguage === 'us' ?
+        (<>
+          <p>Custom content can be injected under the user menu like this.</p>
+          <p>The styling for this is left to you to include, keeping it flexible.</p>
+        </>)
+        :
+        (<>
+          <p>カスタムコンテンツは、このようにユーザーメニューの下に挿入することができます。</p>
+          <p>スタイリングは自由に設定できます。</p>
+        </>)
+      }
     </ExampleText>
   </CustomContentContainer>
 
@@ -58,7 +78,18 @@ const CustomUserDrawerPage : React.FC = () => {
 
   return <Container>
     <ExamplesFilename>CustomUserDrawerPage.tsx</ExamplesFilename>
-    <TopBar {...{userDrawerBespoke, loggedInUser, userSubmenu, hasSearch, useNotifications, logoutLink, searchPlaceholder, hasLanguage}}/>
+    <TopBar {...{
+      userDrawerBespoke,
+      loggedInUser,
+      userSubmenu,
+      hasSearch,
+      useNotifications,
+      logoutLink,
+      searchPlaceholder,
+      hasLanguage,
+      onLanguageToggle,
+      selectedLangAttribute: attributeLanguage
+    }} />
   </Container>;
 };
 

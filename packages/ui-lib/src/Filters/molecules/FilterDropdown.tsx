@@ -41,6 +41,9 @@ const ResultCounter = styled.div`
   color: var(--grey-10);
   font-size: 12px;
   font-style: italic;
+  &:lang(ja) {
+      font-style: normal;
+  }
   font-weight: 300;
   display: flex;
   align-items: center;

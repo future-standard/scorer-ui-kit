@@ -9,7 +9,7 @@ const IconContainer = styled.div`
 
 const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
   ${({ hasBorder, disabled, noBackground, width }) => css`
-  
+
     transition: all var(--speed-normal) var(--easing-primary-in);
     gap: 6px;
     height: var(--input-compact-height);
@@ -44,7 +44,7 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
     `};
 
     background-color: ${noBackground ? 'transparent' : 'var(--grey-1)'};
-    
+
     &:focus-within {
       background-color: ${noBackground ? 'transparent' : 'var(--grey-1)'};
       border: ${hasBorder ? '1px solid var(--primary-9)' : 'none'};
@@ -58,7 +58,7 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
     display: flex;
   }
 
-  
+
 `;
 
 const CrossButton = styled.button`
@@ -84,12 +84,16 @@ const StyledInput = styled.input<{ color: string }>`
   font-size: 12px;
   font-weight: 500;
   color: var(--grey-12);
-  
+
   &::placeholder {
     ${({color}) => color && `color: var(--${color})`};
     color: var(--grey-11);
     font-style: italic;
   }
+
+  &:lang(ja)::placeholder {
+    font-style: normal;
+  };
 
   &:disabled {
     cursor: not-allowed;
