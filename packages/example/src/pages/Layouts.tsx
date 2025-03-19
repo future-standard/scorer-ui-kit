@@ -18,7 +18,7 @@ const Layouts: FC = () => {
 
   const onLanguageToggle = useCallback(() => {
     setAttributeLanguage((prev:  string) => {
-      const newLang = prev === 'us'? 'ja' : 'us'
+      const newLang = prev === 'en'? 'ja' : 'en'
       return newLang;
     })
   },[])
@@ -61,7 +61,7 @@ const Layouts: FC = () => {
           onThemeToggle={onThemeToggle}
           onLanguageToggle={onLanguageToggle}
           selectedLangAttribute={attributeLanguage}
-          selectedLanguageText={attributeLanguage === 'us'? 'ENGLISH' : '日本語'}
+          selectedLanguageText={attributeLanguage === 'en'? 'ENGLISH' : '日本語'}
           badge={{
             text: 'Guest',
             color: 'primary',

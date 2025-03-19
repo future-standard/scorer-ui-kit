@@ -520,7 +520,7 @@ export const _GlobalUI = () => {
 
   const onLanguageToggle = useCallback(() => {
     setAttributeLanguage((prev:  string) => {
-      const newLang = prev === 'us'? 'ja' : 'us'
+      const newLang = prev === 'en'? 'ja' : 'en'
       languageToggle(newLang);
       return newLang;
     })
@@ -565,7 +565,7 @@ export const _GlobalUI = () => {
         userDrawerMeta={userDrawerMetaConfig}
         legacyLayout={false}
         selectedLangAttribute={attributeLanguage}
-        selectedLanguageText={attributeLanguage === 'us'? 'ENGLISH' : '日本語'}
+        selectedLanguageText={attributeLanguage === 'en'? 'ENGLISH' : '日本語'}
         badge={{
           text: badgeText,
           color: badgeColor,

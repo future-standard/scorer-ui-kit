@@ -14,7 +14,7 @@ export default {
 };
 
 export const TextInput = () => {
-  const language = select("Language", { English: 'us', Japanese: "ja" },"us" );
+  const language = select("Language", { English: 'en', Japanese: "ja" },"en" );
   const inputName = text("Input Name", "my_input");
   const inputLabel = text("Label", "My Input");
   const showFeedback = boolean("Show Feedback", false);

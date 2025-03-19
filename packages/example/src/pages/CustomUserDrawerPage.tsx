@@ -52,7 +52,7 @@ const CustomUserDrawerPage : React.FC = () => {
 
   const onLanguageToggle = useCallback(() => {
     setAttributeLanguage((prev:  string) => {
-      const newLang = prev === 'us'? 'ja' : 'us'
+      const newLang = prev === 'en'? 'ja' : 'en'
       return newLang;
     })
   },[])
@@ -60,7 +60,7 @@ const CustomUserDrawerPage : React.FC = () => {
 
   const userDrawerBespoke = <CustomContentContainer>
     <ExampleText>
-      {attributeLanguage === 'us' ?
+      {attributeLanguage === 'en' ?
         (<>
           <p>Custom content can be injected under the user menu like this.</p>
           <p>The styling for this is left to you to include, keeping it flexible.</p>
