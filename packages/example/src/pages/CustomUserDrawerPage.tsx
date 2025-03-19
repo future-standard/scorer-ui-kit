@@ -88,7 +88,8 @@ const CustomUserDrawerPage : React.FC = () => {
       searchPlaceholder,
       hasLanguage,
       onLanguageToggle,
-      selectedLangAttribute: attributeLanguage
+      selectedLangAttribute: attributeLanguage,
+      selectedLanguageText: attributeLanguage === 'en'? 'ENGLISH' : '日本語'
     }} />
   </Container>;
 };
