@@ -168,7 +168,7 @@ export const _TopBar = () => {
 
   const onLanguageToggle = useCallback(() => {
     setAttributeLanguage((prev:  string) => {
-      const newLang = prev === 'us'? 'ja' : 'us'
+      const newLang = prev === 'en'? 'ja' : 'en'
       languageToggle(newLang);
       return newLang;
     })
@@ -211,7 +211,7 @@ export const _TopBar = () => {
         userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}
         selectedLangAttribute={attributeLanguage}
-        selectedLanguageText={attributeLanguage === 'us'? 'ENGLISH' : '日本語'}
+        selectedLanguageText={attributeLanguage === 'en'? 'ENGLISH' : '日本語'}
       />
     </Container>
   );
