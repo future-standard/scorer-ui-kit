@@ -5,6 +5,9 @@
   font-weight: 500;
   font-stretch: normal;
   font-style: italic;
+  &:lang(ja) {
+      font-style: normal;
+  }
   line-height: 1.79;
   color: var(--grey-9);
   display: block;
@@ -50,4 +53,4 @@ color: var(--grey-11);
   grid-template-columns: 200px;
   row-gap: 15px;
 `,MixAlerts_stories={title:"Alerts/Mix",components:index_modern.hN,decorator:[]},custom=(0,jsx_runtime.jsx)(MixAlerts_CardModalExample,{}),ModalAndNotification=()=>{const{createModal}=(0,index_modern.hS)();return(0,jsx_runtime.jsx)(index_modern.$n,{design:"secondary",size:"small",onClick:()=>{createModal({isCloseEnable:!1,width:"480px",padding:!1,customComponent:custom})},children:"Open Welcome Modal"})},_MixAlertsExample=()=>(0,jsx_runtime.jsx)(Container,{children:(0,jsx_runtime.jsx)(index_modern.ph,{children:(0,jsx_runtime.jsx)(index_modern.Zn,{children:(0,jsx_runtime.jsx)(ModalAndNotification,{})})})}),__namedExportsOrder=["_MixAlertsExample"]}}]);
-//# sourceMappingURL=Alerts-MixAlerts-MixAlerts-stories.8f06e76e.iframe.bundle.js.map
+//# sourceMappingURL=Alerts-MixAlerts-MixAlerts-stories.1e181b90.iframe.bundle.js.map
