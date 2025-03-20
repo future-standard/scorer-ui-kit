@@ -93,7 +93,7 @@ const allNotifications: INotificationsHistory = {
 
 export const _TopBar = () => {
   const {onThemeToggle, isLightMode} = useThemeToggle();
-  const  [attributeLanguage, setAttributeLanguage] = useState('us');
+  const  [attributeLanguage, setAttributeLanguage] = useState('ja');
 
   const loggedInUser = text("Logged In User", "full.name@example.com");
 
@@ -211,7 +211,7 @@ export const _TopBar = () => {
         userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}
         selectedLangAttribute={attributeLanguage}
-        selectedLanguageText={attributeLanguage === 'en'? 'ENGLISH' : '日本語'}
+        selectedLanguageText={attributeLanguage === 'ja'? '日本語' : 'ENGLISH' }
       />
     </Container>
   );

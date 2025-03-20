@@ -71,6 +71,10 @@ const SearchInput = styled.input`
     font-size: 14px;
     color: var(--grey-8);
   }
+
+  &:lang(ja)::placeholder {
+    font-style: normal;
+  };
 `;
 
 const ButtonArea = styled.div`

@@ -19,11 +19,15 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   background-color: transparent;
   box-sizing: border-box;
   outline: none;
-    
+
   &::placeholder {
     color: var(--input-color-placeholder);
     font-style: italic;
   }
+
+  &:lang(ja)::placeholder {
+    font-style: normal;
+  };
 
   &:disabled {
     cursor: not-allowed;
@@ -39,11 +43,11 @@ const InputContainer = styled.div<{fieldState : TypeFieldState, hasAction?: bool
   gap: 8px;
   position: relative;
   border-radius: 3px;
-  
+
   ${({fieldState}) => css`
     border: 1px solid var(--input-${fieldState}-border-color);
     background: var(--input-${fieldState}-background-color);
-    transition: 
+    transition:
       border var(--speed-normal) var(--easing-primary-out),
       background-color var(--speed-normal) var(--easing-primary-out);
   `};
@@ -70,7 +74,7 @@ const UnitKey = styled.div`
 
 const Container = styled.div<{ fieldState: string }>`
   position: relative;
-  
+
   ${({fieldState}) => fieldState && css`
     &:focus-within ${InputContainer} {
       transition: boxShadow var(--speed-fast) var(--easing-primary-in-out);
@@ -100,7 +104,7 @@ const SmallInput : React.FC<Props> = ({
   ...props
 }) => {
 
- 
+
 
   return (
     <Container className={className} fieldState={fieldState || 'default'}>

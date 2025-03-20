@@ -32,6 +32,9 @@ const unitStyle = css`
   font-family: var(--font-data);
   color: var(--grey-a11);
   font-style: italic;
+  &:lang(ja) {
+    font-style: normal;
+  }
   font-size: 12px;
   line-height: 1.5;
 `;
