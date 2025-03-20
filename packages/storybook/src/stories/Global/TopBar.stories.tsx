@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { object, text, boolean, select } from "@storybook/addon-knobs";
 import { TopBar, ICustomDrawer, INotificationItem, INotificationsHistory, useThemeToggle } from 'scorer-ui-kit';
@@ -93,6 +93,7 @@ const allNotifications: INotificationsHistory = {
 
 export const _TopBar = () => {
   const {onThemeToggle, isLightMode} = useThemeToggle();
+  const  [attributeLanguage, setAttributeLanguage] = useState('us');
 
   const loggedInUser = text("Logged In User", "full.name@example.com");
 
@@ -103,7 +104,6 @@ export const _TopBar = () => {
   const logoutLink = text("Logout Url", "#")
   const searchPlaceholder = text("Search Placeholder", "Search area names, etc.")
   const hasLanguage = boolean("Has Language", true);
-  const selectedLanguageText = text("Selected Language Text", "English");
   const hasSwitchTheme = boolean("Has Switch Theme", true);
   const switchThemeText = text("Switch Theme Text", "SWITCH THEME");
   const selectedThemeText = text("Selected Theme Text", "Light/Dark Mode");
@@ -166,14 +166,18 @@ export const _TopBar = () => {
 
   // userDrawerBespoke: See examples for implementation of this prop.
 
-  const onLanguageToggle = () => {
-    languageToggle();
-  }
+  const onLanguageToggle = useCallback(() => {
+    setAttributeLanguage((prev:  string) => {
+      const newLang = prev === 'en'? 'ja' : 'en'
+      languageToggle(newLang);
+      return newLang;
+    })
+  },[languageToggle])
 
   return (
     <Container>
-      <TopBar 
-        badge={{ 
+      <TopBar
+        badge={{
           text: badgeText,
           color: badgeColor,
           linkTo: badgeLinkTo,
@@ -194,7 +198,6 @@ export const _TopBar = () => {
         notificationsHistory,
         hasSwitchTheme,
         isLightMode,
-        selectedLanguageText,
         switchThemeText,
         selectedThemeText,
         onThemeToggle,
@@ -207,6 +210,8 @@ export const _TopBar = () => {
       }}
         userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}
+        selectedLangAttribute={attributeLanguage}
+        selectedLanguageText={attributeLanguage === 'en'? 'ENGLISH' : '日本語'}
       />
     </Container>
   );
