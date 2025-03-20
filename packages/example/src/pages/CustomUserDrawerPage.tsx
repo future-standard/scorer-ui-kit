@@ -48,7 +48,7 @@ const searchPlaceholder = "Search area names, etc.";
 
 
 const CustomUserDrawerPage : React.FC = () => {
-  const  [attributeLanguage, setAttributeLanguage] = useState('us');
+  const  [attributeLanguage, setAttributeLanguage] = useState('ja');
 
   const onLanguageToggle = useCallback(() => {
     setAttributeLanguage((prev:  string) => {
@@ -89,7 +89,7 @@ const CustomUserDrawerPage : React.FC = () => {
       hasLanguage,
       onLanguageToggle,
       selectedLangAttribute: attributeLanguage,
-      selectedLanguageText: attributeLanguage === 'en'? 'ENGLISH' : '日本語'
+      selectedLanguageText: attributeLanguage === 'ja'? '日本語' : 'ENGLISH'
     }} />
   </Container>;
 };

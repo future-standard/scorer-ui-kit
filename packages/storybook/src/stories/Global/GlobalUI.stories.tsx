@@ -384,7 +384,7 @@ const customDrawer: ICustomDrawer = {
 export const _GlobalUI = () => {
 
   const {isLightMode ,  onThemeToggle} = useThemeToggle();
-  const  [attributeLanguage, setAttributeLanguage] = useState('us');
+  const  [attributeLanguage, setAttributeLanguage] = useState('ja');
 
 
   const maxWidth = text("Max width", "1200px");
@@ -565,7 +565,7 @@ export const _GlobalUI = () => {
         userDrawerMeta={userDrawerMetaConfig}
         legacyLayout={false}
         selectedLangAttribute={attributeLanguage}
-        selectedLanguageText={attributeLanguage === 'en'? 'ENGLISH' : '日本語'}
+        selectedLanguageText={attributeLanguage === 'ja'? '日本語' : 'ENGLISH'}
         badge={{
           text: badgeText,
           color: badgeColor,

@@ -14,7 +14,7 @@ const FullWidthExampleContent = styled.div`
 const Layouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
-  const  [attributeLanguage, setAttributeLanguage] = useState('us');
+  const  [attributeLanguage, setAttributeLanguage] = useState('en');
 
   const onLanguageToggle = useCallback(() => {
     setAttributeLanguage((prev:  string) => {
@@ -61,7 +61,7 @@ const Layouts: FC = () => {
           onThemeToggle={onThemeToggle}
           onLanguageToggle={onLanguageToggle}
           selectedLangAttribute={attributeLanguage}
-          selectedLanguageText={attributeLanguage === 'en'? 'ENGLISH' : '日本語'}
+          selectedLanguageText={attributeLanguage === 'ja'? '日本語' :'ENGLISH'}
           badge={{
             text: 'Guest',
             color: 'primary',
