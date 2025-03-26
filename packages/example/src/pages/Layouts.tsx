@@ -1,8 +1,10 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from 'styled-components';
 import { GlobalUI, defaultTheme, PageHeader, useThemeToggle, ContentLayout, Tab, TabList, TabContent, Label, Button, TextField, FullWidthContentBlock, IHeaderContent, ButtonsStack, IButtonStack } from "scorer-ui-kit";
 import ExamplesFilename from "../components/ExamplesFilename";
+import i18n from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const FullWidthExampleContent = styled.div`
   width: 100%;
@@ -14,13 +16,12 @@ const FullWidthExampleContent = styled.div`
 const Layouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
-  const  [attributeLanguage, setAttributeLanguage] = useState('en');
+  const { t } = useTranslation(['GlobalUI','Common']);
 
   const onLanguageToggle = useCallback(() => {
-    setAttributeLanguage((prev:  string) => {
-      const newLang = prev === 'en'? 'ja' : 'en'
-      return newLang;
-    })
+      const language = i18n.language === 'ja' ? 'en' : 'ja';
+      i18n.changeLanguage(language);
+      localStorage.setItem('language', language);
   },[])
 
   const defaultBtn : IButtonStack[] = [
@@ -29,14 +30,14 @@ const Layouts: FC = () => {
 
   const ExampleContent : IHeaderContent = {
     UtilityHeaderOptions: {
-      back: { label: "Back", link: "/" },
+      back: { label: t('Common:breadcrumbs.back'), link: "/" },
       breadcrumbs: [{text:'Examples', href:'/'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}],
       showBreadcrumbs: true,
       share: { show: true, label: "Share", link: "https://www.example.com", copiedLabel: "Copied" }
     },
     PageHeaderArea: <PageHeader
-    title='Welcome'
-    introductionText='Thanks for using our UI library.'
+    title={t('Common:pageTitle')}
+    introductionText={t('Common:pageIntroduction')}
     icon="Home"
     rightContent={<ButtonsStack buttons={defaultBtn}/>}
     />,
@@ -60,8 +61,8 @@ const Layouts: FC = () => {
           selectedThemeText={isLightMode ? 'LIGHT MODE' : 'DARK MODE' }
           onThemeToggle={onThemeToggle}
           onLanguageToggle={onLanguageToggle}
-          selectedLangAttribute={attributeLanguage}
-          selectedLanguageText={attributeLanguage === 'ja'? '日本語' :'ENGLISH'}
+          selectedLangAttribute={i18n.language}
+          selectedLanguageText={t(`theme.${i18n.language}`)}
           badge={{
             text: 'Guest',
             color: 'primary',

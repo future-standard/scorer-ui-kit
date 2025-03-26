@@ -1,3 +1,8 @@
 {
-  "madeby": "Powered By:"
+  "madeby": "Powered By:",
+  "pageTitle": "Welcome",
+  "pageIntroduction":"Thanks for using our UI library.",
+  "breadcrumbs": {
+    "back": "Back"
+  }
 }

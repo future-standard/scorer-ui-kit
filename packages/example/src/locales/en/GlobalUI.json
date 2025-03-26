@@ -1,0 +1,9 @@
+{
+  "theme": {
+    "darkMode": "ダークモード",
+    "lightMode": "ライトモード",
+    "switchTheme": "テーマの変更",
+    "en": "英語",
+    "ja": "日本語"
+  }
+}
