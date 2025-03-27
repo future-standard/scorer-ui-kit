@@ -1,7 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { TopBar } from 'scorer-ui-kit';
+import { TopBar, useThemeToggle } from 'scorer-ui-kit';
 import ExamplesFilename from '../components/ExamplesFilename';
+import i18n from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 
 const Container = styled.div`
@@ -24,53 +26,29 @@ const ExampleText = styled.div`
 `
 
 const loggedInUser = "full.name@example.com";
-const userSubmenu = [
-  {
-    text: 'Accounts',
-    href: '#'
-  },
-  {
-    text: 'Billing',
-    href: '#'
-  },
-  {
-    text: 'Payments',
-    href: '#'
-  }
-]
-
 const hasSearch = true;
 const useNotifications = true;
 const hasLanguage = true;
 const logoutLink = "#"
-const searchPlaceholder = "Search area names, etc.";
 
 
 
 const CustomUserDrawerPage : React.FC = () => {
-  const  [attributeLanguage, setAttributeLanguage] = useState('ja');
+
+  const {onThemeToggle, isLightMode} = useThemeToggle();
+  const { t } = useTranslation(['GlobalUI','Common']);
 
   const onLanguageToggle = useCallback(() => {
-    setAttributeLanguage((prev:  string) => {
-      const newLang = prev === 'en'? 'ja' : 'en'
-      return newLang;
-    })
-  },[])
+    const language = i18n.language === 'ja' ? 'en' : 'ja';
+    i18n.changeLanguage(language);
+    localStorage.setItem('language', language);
+},[])
 
 
   const userDrawerBespoke = <CustomContentContainer>
     <ExampleText>
-      {attributeLanguage === 'en' ?
-        (<>
-          <p>Custom content can be injected under the user menu like this.</p>
-          <p>The styling for this is left to you to include, keeping it flexible.</p>
-        </>)
-        :
-        (<>
-          <p>カスタムコンテンツは、このようにユーザーメニューの下に挿入することができます。</p>
-          <p>スタイリングは自由に設定できます。</p>
-        </>)
-      }
+      <p>{t("Common:userDrawerTextP1")}</p>
+      <p>{t("Common:userDrawerTextP2")}</p>
     </ExampleText>
   </CustomContentContainer>
 
@@ -81,15 +59,34 @@ const CustomUserDrawerPage : React.FC = () => {
     <TopBar {...{
       userDrawerBespoke,
       loggedInUser,
-      userSubmenu,
       hasSearch,
       useNotifications,
       logoutLink,
-      searchPlaceholder,
+      searchPlaceholder: t('Common:searchPlaceholder'),
+      isLightMode,
+      switchThemeText:t('GlobalUI:theme.switchTheme'),
+      selectedThemeText: isLightMode ? t('GlobalUI:theme.lightMode') : t('GlobalUI:theme.darkMode'),
+      onThemeToggle,
       hasLanguage,
       onLanguageToggle,
-      selectedLangAttribute: attributeLanguage,
-      selectedLanguageText: attributeLanguage === 'ja'? '日本語' : 'ENGLISH'
+      selectedLangAttribute: i18n.language,
+      selectedLanguageText: t(`GlobalUI:theme.${i18n.language}`),
+      accountOptionText:t('Common:accountOptions'),
+      currentUserText:t('GlobalUI:currentUser'),
+      userSubmenu:[
+        {
+          href: "/user/accounts",
+          text: t('Common:accounts'),
+        },
+        {
+          href: "/user/billing",
+          text: t('Common:billing'),
+        },
+        {
+          href: "/user/payments",
+          text: t('Common:payments'),
+        },
+      ]
     }} />
   </Container>;
 };

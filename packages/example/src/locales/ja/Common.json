@@ -34,6 +34,8 @@
   "titleTab3":"タブ3の内容",
   "formName": "名",
   "formDepartment": "部門",
+  "userDrawerTextP1":"カスタムコンテンツは、このようにユーザーメニューの下に挿入することができます",
+  "userDrawerTextP2":"スタイリングは自由に設定できます",
   "breadcrumbs": {
     "back": "戻る",
     "firstText":"実例",
