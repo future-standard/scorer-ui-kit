@@ -1,9 +1,18 @@
 {
+  "login": "Login",
+  "logout": "Logout",
+  "currentUser":"Current User",
+  "keepOpenText":"Keep Open",
+  "autoHideText":"Auto-Hide",
+  "supportText": "Help & Support",
+  "noNotificationsText":"No new notifications",
+  "readNotificationsText":"Read",
+  "unreadNotificationsText":"UnRead",
   "theme": {
-    "darkMode": "ダークモード",
-    "lightMode": "ライトモード",
-    "switchTheme": "テーマの変更",
-    "en": "英語",
-    "ja": "日本語"
+    "darkMode": "DARK MODE",
+    "lightMode": "LIGHT MODE",
+    "switchTheme": "SWITCH THEME",
+    "en": "English",
+    "ja": "Japanese"
   }
 }

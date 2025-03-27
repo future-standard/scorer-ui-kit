@@ -25,15 +25,15 @@ const Layouts: FC = () => {
   },[])
 
   const defaultBtn : IButtonStack[] = [
-    {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
+    {id:'primaryBase0', buttonType: 'default', text:t('Common:exampleAction')},
   ]
 
   const ExampleContent : IHeaderContent = {
     UtilityHeaderOptions: {
       back: { label: t('Common:breadcrumbs.back'), link: "/" },
-      breadcrumbs: [{text:'Examples', href:'/'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}],
+      breadcrumbs: [{text:t('Common:breadcrumbs.firstText'), href:'/'},{text:t('Common:breadcrumbs.secondText'), href:'#2'},{text:t('Common:breadcrumbs.thirdText'), href:'#3'},{text:t('Common:breadcrumbs.fourText'), href:'#4'},{text:t('Common:breadcrumbs.fiveText'), href:'#5'}],
       showBreadcrumbs: true,
-      share: { show: true, label: "Share", link: "https://www.example.com", copiedLabel: "Copied" }
+      share: { show: true, label: t('Common:share'), link: "https://www.example.com", copiedLabel: "Copied" }
     },
     PageHeaderArea: <PageHeader
     title={t('Common:pageTitle')}
@@ -43,9 +43,9 @@ const Layouts: FC = () => {
     />,
     TabsElementArea:
       <TabList defaultTabId='tab1'>
-        <Tab tabFor='tab1'>Home</Tab>
-        <Tab tabFor='tab2'>Example One</Tab>
-        <Tab tabFor='tab3'>Example Two</Tab>
+        <Tab tabFor='tab1'>{t('Common:home')}</Tab>
+        <Tab tabFor='tab2'>{t('Common:example1')}</Tab>
+        <Tab tabFor='tab3'>{t('Common:example2')}</Tab>
       </TabList>
   }
 
@@ -54,28 +54,31 @@ const Layouts: FC = () => {
       <ThemeProvider theme={defaultTheme}>
         <ExamplesFilename>Layouts.tsx</ExamplesFilename>
         <GlobalUI
-          accountOptionText="Account Options"
+          accountOptionText={t('Common:accountOptions')}
           canAlwaysPin
           isLightMode={isLightMode}
-          switchThemeText='SWITCH THEME'
-          selectedThemeText={isLightMode ? 'LIGHT MODE' : 'DARK MODE' }
+          switchThemeText={t('GlobalUI:theme.switchTheme')}
+          selectedThemeText={isLightMode ? t('GlobalUI:theme.lightMode') : t('GlobalUI:theme.darkMode') }
           onThemeToggle={onThemeToggle}
           onLanguageToggle={onLanguageToggle}
           selectedLangAttribute={i18n.language}
-          selectedLanguageText={t(`theme.${i18n.language}`)}
+          selectedLanguageText={t(`GlobalUI:theme.${i18n.language}`)}
           badge={{
-            text: 'Guest',
+            text: t('Common:badgeTitle'),
             color: 'primary',
             linkTo: '#',
-            linkText: 'Login'
+            linkText: t('GlobalUI:login')
           }}
           hasSwitchTheme
+          keepOpenText={t('GlobalUI:keepOpenText')}
+          autoHideText={t('GlobalUI:autoHideText')}
+          supportText={t('GlobalUI:supportText')}
           content={{
             items: [
               {
                 href: "/welcome",
                 icon: "Home",
-                title: "Welcome",
+                title: t('Common:pageTitle'),
               },
               {
                 href: "/company",
@@ -83,72 +86,72 @@ const Layouts: FC = () => {
                 submenu: [
                   {
                     href: "/company/about",
-                    title: "About us",
+                    title: t('Common:aboutUs'),
                   },
                   {
                     href: "/company/team",
-                    title: "Team",
+                    title: t('Common:team'),
                   },
                   {
                     href: "/company/contact",
-                    title: "Contact",
+                    title: t('Common:contact'),
                   },
                   {
                     href: "/company/table-example",
-                    title: "Table Example",
+                    title: t('Common:tableExample'),
                   },
                   {
                     href: "https://www.google.com/",
                     isExternalLink: true,
-                    title: "External link",
+                    title: t('Common:externalLink'),
                   },
                 ],
-                title: "Company",
+                title: t('Common:company'),
               },
               {
                 href: "/services",
                 icon: "Usage",
                 submenu: [
                   {
-                    title: "Online Services",
+                    title: t("Common:onlineServices"),
                   },
                   {
                     href: "/services/custom",
-                    title: "Service custom",
+                    title: t('Common:serviceCustom'),
                   },
                   {
                     href: "/services/special",
-                    title: "Service special",
+                    title: t('Common:serviceSpecial'),
                   },
                   {
                     href: "/services/extra-special",
-                    title: "Service extra special",
+                    title: t('Common:serviceExtraSpecial'),
                   },
                   {
-                    title: "On site Services",
+                    title: t('Common:onSiteServices'),
                   },
                   {
                     href: "/services/special",
-                    title: "Service special",
+                    title: t('Common:serviceSpecial'),
                   },
                   {
                     href: "/services/extra-special",
-                    title: "Service extra special",
+                    title: t('Common:serviceExtraSpecial'),
                   },
                 ],
-                title: "Services",
+                title: t('Common:services'),
               },
               {
                 href: "https://www.google.com/maps",
                 icon: "Zone",
                 isExternalLink: true,
-                title: "External link",
+                title: t('Common:externalLink'),
               },
             ],
           }}
-          currentUserText="Current User"
+          currentUserText={t('GlobalUI:currentUser')}
           customDrawer={{
-            customComponent: <h1>Hello Drawer</h1>,
+            customComponent: <h1 style={{ textAlign: "center" }}>{t('Common:helloDrawer')}</h1>,
             icon: "Add",
             status: "danger",
             width: "280px;",
@@ -161,10 +164,10 @@ const Layouts: FC = () => {
           home="#"
           loggedInUser="full.name@example.com"
           logoutLink="#"
-          logoutText="Logout"
+          logoutText={t('GlobalUI:logout')}
           maxWidth="none"
           notificationsHistory={{
-            noNotificationsText: "No new notifications",
+            noNotificationsText: t('Common:noNotificationsText'),
             read: [
               {
                 imgUrl: "",
@@ -185,7 +188,7 @@ const Layouts: FC = () => {
                 title: "A new device was added",
               },
             ],
-            readNotificationsText: "New",
+            readNotificationsText: t('Common:readNotificationsText'),
             unread: [
               {
                 imgUrl: "",
@@ -220,22 +223,22 @@ const Layouts: FC = () => {
                 title: "Device is off",
               },
             ],
-            unreadNotificationsText: "Read",
+            unreadNotificationsText: t('Common:unreadNotificationsText'),
           }}
-          searchPlaceholder="Search area names, etc."
+          searchPlaceholder={t('Common:searchPlaceholder')}
           supportUrl="/support"
           userSubmenu={[
             {
               href: "/user/accounts",
-              text: "Accounts",
+              text: t('Common:accounts'),
             },
             {
               href: "/user/billing",
-              text: "Billing",
+              text: t('Common:billing'),
             },
             {
               href: "/user/payments",
-              text: "Payments",
+              text: t('Common:payments'),
             },
           ]}
         >
@@ -244,7 +247,7 @@ const Layouts: FC = () => {
             <TabContent tabId='tab1'>
               <div>
                 <h1>Full Width Container</h1>
-                <p>The below line uses the FullWidthContentBlock component to break out of the layout and span the full width of the browser.</p>
+                <p>{t('Common:descriptionTab1')}</p>
 
                 <FullWidthContentBlock>
                   <FullWidthExampleContent />
@@ -273,15 +276,15 @@ const Layouts: FC = () => {
             </TabContent>
             <TabContent tabId='tab2'>
               <div>
-                <Label htmlFor='fullname' labelText='Content of tab 1' />
-                <TextField fieldState='default' required label='Full Name' name='fullname' id='fullname' />
-                <TextField fieldState='default' required label='Department' name='department' id='department'/>
+                <Label htmlFor='fullname' labelText={t('Common:titleTab2')} />
+                <TextField fieldState='default' required label={t('Common:formName')} name='fullname' id='fullname' />
+                <TextField fieldState='default' required label={t('Common:formDepartment')} name='department' id='department'/>
                 <Button design='primary' size='small'> Save </Button>
               </div>
             </TabContent>
             <TabContent tabId='tab3'>
               <div>
-                <Label htmlFor='content2' labelText='Content of tab 2'/>
+                <Label htmlFor='content2' labelText={t('Common:titleTab3')}/>
                 <Label htmlFor='lorem' labelText='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet erat et sapien pulvinar efficitur. Quisque tristique massa at auctor rhoncus. Ut venenatis sem id gravida volutpat. Phasellus faucibus accumsan sapien, id pellentesque dolor consectetur quis. Duis non rhoncus nunc. Suspendisse et rhoncus tortor.' />
                 <Button design='primary' size='small'> OK </Button>
               </div>

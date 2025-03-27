@@ -29,6 +29,9 @@ const GlobalUI: React.FC<INavigation> = ({
   maxWidth,
   legacyLayout,
   children,
+  keepOpenText,
+  autoHideText,
+  supportText,
   onMenuToggle,
   ...props
 }) => {
@@ -49,6 +52,9 @@ const GlobalUI: React.FC<INavigation> = ({
             defaultMenuOpen,
             canAlwaysPin,
             onMenuToggle,
+            keepOpenText,
+            autoHideText,
+            supportText,
           }
           }
         />
@@ -71,6 +77,7 @@ const GlobalUI: React.FC<INavigation> = ({
             logoMark,
             supportUrl,
             defaultMenuOpen,
+            supportText,
             ...props
             }
           }

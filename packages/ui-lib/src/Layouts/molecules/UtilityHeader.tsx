@@ -35,6 +35,7 @@ const Breadcrumb = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
 
 `;
 const BreadcrumbIcon = styled.div`
@@ -88,7 +89,7 @@ const RightArea = styled.div`
 
 
 const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share, $iconInGutter }) => {
-  
+
   const { isLarge } = useBreakpoints();
   const iconInGutter = $iconInGutter !== undefined ? $iconInGutter : isLarge;
   const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
