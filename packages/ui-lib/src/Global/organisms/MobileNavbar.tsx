@@ -62,6 +62,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   loggedInUser,
   notificationsHistory,
   customDrawer,
+  supportText,
   onLogout,
   onLanguageToggle,
   ...props
@@ -105,7 +106,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
 
           </TabContent>
           <TabContent tabId={MENU_TAB}>
-            <MobileMenu {...{ content, supportUrl, defaultMenuOpen }} closeId={CLOSE_ID} />
+            <MobileMenu {...{ content, supportUrl, supportText, defaultMenuOpen }} closeId={CLOSE_ID} />
           </TabContent>
           <CloseButton {...{ closeText }} closeId={CLOSE_ID} />
         </MobileNavbarContainer>

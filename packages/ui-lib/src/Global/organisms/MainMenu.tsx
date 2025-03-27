@@ -103,7 +103,7 @@ const ContainerInner = styled.div`
 `;
 
 
-const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, supportText, defaultMenuOpen = true, canAlwaysPin = false, onMenuToggle= ()=>{}}) => {
+const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, supportText="Help & Support", defaultMenuOpen = true, canAlwaysPin = false, onMenuToggle= ()=>{}}) => {
 
   const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen, canAlwaysPin);
 
@@ -177,7 +177,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
 
               {supportUrl && (
                 <FooterItemContainer>
-                  <ContextItem compact isActive={false} icon='Question' title={supportText ? supportText : 'Help &amp; Support'} href={supportUrl} menuOpen={menuState.isMenuOpen} />
+                  <ContextItem compact isActive={false} icon='Question' title={supportText} href={supportUrl} menuOpen={menuState.isMenuOpen} />
                 </FooterItemContainer>
               )}
 

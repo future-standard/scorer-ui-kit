@@ -22,7 +22,7 @@ interface IMobileMenu extends IMenu {
 const MobileMenu: React.FC<IMobileMenu> = ({
   content,
   supportUrl,
-  supportText,
+  supportText="Help & Support",
   closeId
 }) => {
 
@@ -75,7 +75,7 @@ const MobileMenu: React.FC<IMobileMenu> = ({
             compact
             isActive={false}
             icon='Question'
-            title={supportText ? supportText : 'Help &amp; Support'}
+            title={supportText}
             href={supportUrl}
             menuOpen
             onClickCallback={handleCloseMenu}
