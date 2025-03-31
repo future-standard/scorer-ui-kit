@@ -1,0 +1,18 @@
+{
+  "login":"ログイン",
+  "logout": "ログアウト",
+  "currentUser":"現在のユーザー",
+  "keepOpenText":"開いた状態を維持",
+  "autoHideText":"自動で隠す",
+  "supportText":"ヘルプとサポート",
+  "noNotificationsText":"新着通知なし",
+  "readNotificationsText":"既読通知",
+  "unreadNotificationsText":"未読通知",
+  "theme": {
+    "darkMode": "ダークモード",
+    "lightMode": "ライトモード",
+    "switchTheme": "テーマの変更",
+    "en": "英語",
+    "ja": "日本語"
+  }
+}

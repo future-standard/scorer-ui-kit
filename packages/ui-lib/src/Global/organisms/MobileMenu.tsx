@@ -22,6 +22,7 @@ interface IMobileMenu extends IMenu {
 const MobileMenu: React.FC<IMobileMenu> = ({
   content,
   supportUrl,
+  supportText="Help & Support",
   closeId
 }) => {
 
@@ -30,7 +31,7 @@ const MobileMenu: React.FC<IMobileMenu> = ({
   const { setSelected }: ContextProps = useContext(TabContext);
 
 
-  /** Manage which context is open. 
+  /** Manage which context is open.
    * -1 is the value of a sub menu
    * In this mobile version of the menu will close after selecting an option
    * It will not close if the menu has a submenu to allow it to display the options
@@ -74,7 +75,7 @@ const MobileMenu: React.FC<IMobileMenu> = ({
             compact
             isActive={false}
             icon='Question'
-            title='Help &amp; Support'
+            title={supportText}
             href={supportUrl}
             menuOpen
             onClickCallback={handleCloseMenu}

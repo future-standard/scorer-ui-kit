@@ -2,13 +2,21 @@ import React, { FC, useCallback, useState } from "react";
 import { ThemeProvider } from 'styled-components';
 import { GlobalUI, defaultTheme, useThemeToggle, ContentLayout, SplitLayout, FlexContentPlaceholder } from "scorer-ui-kit";
 import ExamplesFilename from '../components/ExamplesFilename';
+import i18n from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const SplitLayouts: FC = () => {
 
   const {onThemeToggle, isLightMode} = useThemeToggle();
-
+  const { t } = useTranslation(['GlobalUI','Common']);
   const [layout] = useState<'horizontal'|'vertical'>('horizontal');
   const [reverse] = useState<boolean>(false);
+
+  const onLanguageToggle = useCallback(() => {
+    const language = i18n.language === 'ja' ? 'en' : 'ja';
+    i18n.changeLanguage(language);
+    localStorage.setItem('language', language);
+},[])
 
 
   const sideStateCallback = useCallback((currentState) => {
@@ -22,19 +30,25 @@ const SplitLayouts: FC = () => {
       <ThemeProvider theme={defaultTheme}>
         <ExamplesFilename>SplitLayout.tsx</ExamplesFilename>
         <GlobalUI
-          accountOptionText="Account Options"
+          accountOptionText={t('Common:accountOptions')}
           canAlwaysPin
           isLightMode={isLightMode}
-          switchThemeText='SWITCH THEME'
-          selectedThemeText={isLightMode ? 'LIGHT MODE' : 'DARK MODE' }
+          switchThemeText={t('GlobalUI:theme.switchTheme')}
+          selectedThemeText={isLightMode ? t('GlobalUI:theme.lightMode') : t('GlobalUI:theme.darkMode') }
           onThemeToggle={onThemeToggle}
+          onLanguageToggle={onLanguageToggle}
+          selectedLangAttribute={i18n.language}
+          selectedLanguageText={t(`GlobalUI:theme.${i18n.language}`)}
           hasSwitchTheme
+          keepOpenText={t('GlobalUI:keepOpenText')}
+          autoHideText={t('GlobalUI:autoHideText')}
+          supportText={t('GlobalUI:supportText')}
           content={{
             items: [
               {
                 href: "/welcome",
                 icon: "Home",
-                title: "Welcome",
+                title: t('Common:pageTitle'),
               },
               {
                 href: "/company",
@@ -42,72 +56,72 @@ const SplitLayouts: FC = () => {
                 submenu: [
                   {
                     href: "/company/about",
-                    title: "About us",
+                    title: t('Common:aboutUs'),
                   },
                   {
                     href: "/company/team",
-                    title: "Team",
+                    title: t('Common:team'),
                   },
                   {
                     href: "/company/contact",
-                    title: "Contact",
+                    title: t('Common:contact'),
                   },
                   {
                     href: "/company/table-example",
-                    title: "Table Example",
+                    title: t('Common:tableExample'),
                   },
                   {
                     href: "https://www.google.com/",
                     isExternalLink: true,
-                    title: "External link",
+                    title: t('Common:externalLink'),
                   },
                 ],
-                title: "Company",
+                title: t('Common:company'),
               },
               {
                 href: "/services",
                 icon: "Usage",
                 submenu: [
                   {
-                    title: "Online Services",
+                    title: t("Common:onlineServices"),
                   },
                   {
                     href: "/services/custom",
-                    title: "Service custom",
+                    title: t('Common:serviceCustom'),
                   },
                   {
                     href: "/services/special",
-                    title: "Service special",
+                    title: t('Common:serviceSpecial'),
                   },
                   {
                     href: "/services/extra-special",
-                    title: "Service extra special",
+                    title: t('Common:serviceExtraSpecial'),
                   },
                   {
-                    title: "On site Services",
+                    title: t('Common:onSiteServices'),
                   },
                   {
                     href: "/services/special",
-                    title: "Service special",
+                    title: t('Common:serviceSpecial'),
                   },
                   {
                     href: "/services/extra-special",
-                    title: "Service extra special",
+                    title: t('Common:serviceExtraSpecial'),
                   },
                 ],
-                title: "Services",
+                title: t('Common:services'),
               },
               {
                 href: "https://www.google.com/maps",
                 icon: "Zone",
                 isExternalLink: true,
-                title: "External link",
+                title: t('Common:externalLink'),
               },
             ],
           }}
-          currentUserText="Current User"
+          currentUserText={t('GlobalUI:currentUser')}
           customDrawer={{
-            customComponent: <h1>Hello Drawer</h1>,
+            customComponent: <h1 style={{ textAlign: "center" }}>{t('Common:helloDrawer')}</h1>,
             icon: "Add",
             status: "danger",
             width: "280px;",
@@ -123,7 +137,7 @@ const SplitLayouts: FC = () => {
           logoutText="Logout"
           maxWidth="none"
           notificationsHistory={{
-            noNotificationsText: "No new notifications",
+            noNotificationsText: t('Common:noNotificationsText'),
             read: [
               {
                 imgUrl: "",
@@ -144,7 +158,7 @@ const SplitLayouts: FC = () => {
                 title: "A new device was added",
               },
             ],
-            readNotificationsText: "New",
+            readNotificationsText: t('Common:readNotificationsText'),
             unread: [
               {
                 imgUrl: "",
@@ -179,22 +193,22 @@ const SplitLayouts: FC = () => {
                 title: "Device is off",
               },
             ],
-            unreadNotificationsText: "Read",
+            unreadNotificationsText: t('Common:unreadNotificationsText'),
           }}
-          searchPlaceholder="Search area names, etc."
+          searchPlaceholder={t('Common:searchPlaceholder')}
           supportUrl="/support"
           userSubmenu={[
             {
               href: "/user/accounts",
-              text: "Accounts",
+              text: t('Common:accounts'),
             },
             {
               href: "/user/billing",
-              text: "Billing",
+              text: t('Common:billing'),
             },
             {
               href: "/user/payments",
-              text: "Payments",
+              text: t('Common:payments'),
             },
           ]}
         >
