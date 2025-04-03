@@ -9,6 +9,7 @@ import FilterDropHandler from '../atoms/FilterDropHandler';
 import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 import LoadingBox from '../atoms/LoadingBox';
 import { FilterButtonDesign } from '../FilterTypes';
+import { IConfirmationButtons } from '../atoms/ConfirmationButtons';
 
 const Container = styled.div`
   display: inline-block;
@@ -233,7 +234,7 @@ export interface IFilterDropdown {
   onSelect: (newSelection: IFilterValue) => void;
 }
 
-const FilterDropdown: React.FC<IFilterDropdown> = ({
+const FilterDropdown: React.FC<IFilterDropdown & IConfirmationButtons> = ({
   buttonIcon,
   buttonText,
   list,
@@ -249,6 +250,14 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   emptyResultText,
   design = 'default',
   onSelect = () => { },
+  hasApply,
+  hasReset,
+  cancelText,
+  applyText,
+  resetText,
+  onCancelCallback = () => {},
+  onApplyCallback = () => {},
+  onResetCallback = () => {},
   ...props
 }) => {
 
@@ -306,7 +315,16 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
         onCloseCallback={handleClose}
         onToggleOpenCallback={handleToggleOpen}
       >
-        <FilterDropdownContainer>
+        <FilterDropdownContainer {...{
+            hasApply,
+            hasReset,
+            cancelText,
+            applyText,
+            resetText,
+            onCancelCallback,
+            onApplyCallback,
+            onResetCallback,
+          }}>
           {hasOptionsFilter && (
             <SearchWrapper>
               <BasicSearchInput
@@ -349,7 +367,6 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                 {list.length > 5 && <Gradient />}
               </ResultsContainer>)}
         </FilterDropdownContainer>
-
       </FilterDropHandler>
     </Container>
   );

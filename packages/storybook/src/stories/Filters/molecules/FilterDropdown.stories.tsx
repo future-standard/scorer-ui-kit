@@ -282,5 +282,30 @@ export const _FilterDropdown = () => {
         hasOptionsFilter
       />
     </Wrapper>
+    <Wrapper key='eje-6'>
+      <PageHeader title='Apply, Cancel, Reset'
+        introductionText="Dropdown with confirmation buttons"
+      />
+      <FilterDropdown {...{
+        buttonIcon,
+        disabled,
+        isLoading,
+        design,
+        loadingText,
+        maxDisplayedItems,
+      }}
+        list={language === 'english' ? englishDataList : japaneseDataList}
+        buttonText={language === 'english' ? 'Menu' : 'メニュー'}
+        selected={selectedObj}
+        optionType={optionType}
+        onSelect={() => {}}
+        searchResultText={language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+        searchPlaceholder={language === 'english' ? 'Menu options...' : 'メニュー...'}
+        loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
+        hasOptionsFilter
+        hasApply
+        hasReset
+      />
+    </Wrapper>
   </Content>
 };

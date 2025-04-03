@@ -1,5 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
+import ConfirmationButtons, { IConfirmationButtons } from './ConfirmationButtons';
 
 const Container = styled.div<{ height?: string }>`
   box-shadow: 0px 5px 25px 0px var(--filter-button-shadow-color);
@@ -42,13 +43,34 @@ interface IProps {
   height?: string
 }
 
-type Props = IProps & HTMLAttributes<HTMLDivElement>
+type Props = IProps & HTMLAttributes<HTMLDivElement> & IConfirmationButtons
 
-const FilterDropdownContainer : React.FC<Props> = ({children,...props}) => {
+const FilterDropdownContainer: React.FC<Props> = ({
+  hasApply,
+  hasReset,
+  cancelText,
+  applyText,
+  resetText,
+  onCancelCallback = () => { },
+  onApplyCallback = () => { },
+  onResetCallback = () => { },
+  children,
+  ...props
+}) => {
   return (
     <Container {...props}>
       <Inner>
         {children}
+        {(hasApply || hasReset) && <ConfirmationButtons {...{
+          hasApply,
+          hasReset,
+          cancelText,
+          applyText,
+          resetText,
+          onCancelCallback,
+          onApplyCallback,
+          onResetCallback,
+        }} />}
       </Inner>
     </Container>
   );
