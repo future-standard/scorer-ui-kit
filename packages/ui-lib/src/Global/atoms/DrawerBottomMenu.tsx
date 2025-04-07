@@ -9,9 +9,6 @@ const Container = styled.div`
   border-top: 1px solid var(--dividing-line);
   align-items: center;
   cursor: pointer;
-  svg {
-    margin-top: 7px;
-  }
 `;
 
 const ColumnContainer = styled.div`

@@ -9,7 +9,7 @@ const HeaderRow = styled.div`
   height: 50px;
 `;
 
-const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, headerStyle: string, isSortActive?: boolean }>`
+const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, width?: number, headerStyle: string, isSortActive?: boolean }>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
@@ -33,6 +33,10 @@ const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignme
 
   ${({ minWidth }) => minWidth && css`
     min-width:${minWidth}px;
+  `};
+
+    ${({ width }) => width && css`
+    width:${width}px;
   `};
 
   ${({ theme: {styles}, headerStyle, isSortActive }) => headerStyle === 'subHeader' && css`
@@ -213,11 +217,11 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
       {hasTypeIcon ? <HeaderItem headerStyle='header' fixedWidth={35} /> : null}
 
       {columnConfig.map((column, key, allColls) => {
-        const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth }: ITableColumnConfig = column;
+        const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth, width }: ITableColumnConfig = column;
         return (
           <HeaderItem
             key={key}
-            {...{ alignment, hasCopyButton, minWidth }}
+            {...{ alignment, hasCopyButton, minWidth, width }}
             headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
             isSortActive={sortActive}
           >
