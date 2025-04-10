@@ -13,26 +13,27 @@ interface IStyledComponentProps {
 const activeAnimation = (shadow?: boolean) => {
   const animation = keyframes`
     0% {
-      box-shadow: 
+      box-shadow:
         0 0px 0px var(--button-hover-inner-shadow-color) inset
         ${shadow ? ', 0 4px 8px var(--button-hover-drop-shadow-color)' : ''};
     }
 
     75% {
-      box-shadow: 
+      box-shadow:
         0 0 24px var(--button-active-inner-shadow-color) inset
-        ${shadow ? ', 0 4px 6px var(--button-active-drop-shadow-color)' : ''};
+        ${shadow ? ', 0px -1px 0px 1px var(--button-active-drop-shadow-color)' : ''};
     }
 
     100% {
-      box-shadow: 
+      box-shadow:
         0 0 16px var(--button-active-inner-shadow-color) inset
-        ${shadow ? ', 0 4px 6px var(--button-active-drop-shadow-color)' : ''};
+        ${shadow ? ', 0px -1px 0px 1px var(--button-active-drop-shadow-color)' : ''};
     }
   `;
 
   return animation;
 };
+
 
 const StyledButton = styled.button<IStyledComponentProps>`
 
@@ -45,7 +46,7 @@ const StyledButton = styled.button<IStyledComponentProps>`
   font-size: var(--button-font-size);
   color: var(--button-text-color);
   font-weight: 600;
-  
+
   padding: ${({ $noPadding }) => $noPadding ? 0 : `var(--button-h-padding)`};
 
   overflow: hidden;
@@ -53,22 +54,20 @@ const StyledButton = styled.button<IStyledComponentProps>`
   border-radius: 3px;
   outline: none;
   box-sizing: border-box;
-
-  border-radius: 3px;
-  border: 1px solid transparent;
-  background: linear-gradient(135deg, transparent, transparent, var(--button-gradient-start), var(--button-gradient-end));
+  border: 1px solid var(--button-border-color);
+  background: linear-gradient(var(--button-gradient-deg, 135deg), transparent, transparent, var(--button-gradient-start), var(--button-gradient-end) 100%);
   background-color: var(--button-background-color);
   background-size: 400%;
   background-position: 99%;
 
   ${({$shadow}) => $shadow ? css`
-    box-shadow: 
+    box-shadow:
       0 2px 4px 2px var(--button-drop-shadow-color),
       0 0 0 var(--button-inner-shadow-color) inset;
   ` : css`
     box-shadow: 0 0 0 var(--button-inner-shadow-color) inset;
   `}
-  
+
   transition:
     border-color var(--speed-slow) var(--easing-primary-in-out),
     background-color var(--speed-normal) var(--easing-primary-in-out),
@@ -79,31 +78,40 @@ const StyledButton = styled.button<IStyledComponentProps>`
 
   &:hover:enabled {
     background-position: 1%;
-    background-color: var(--button-hover-background-color);
+    background: var(--button-hover-background-color);
     border-color: var(--button-hover-border-color);
     color: var(--button-hover-text-color);
-    
+
     ${({$shadow}) => $shadow ? css`
-      box-shadow: 
+      box-shadow:
         0 4px 8px var(--button-hover-drop-shadow-color),
         0 0 5px var(--button-hover-inner-shadow-color) inset;
     ` : css`
-      box-shadow: 0 0 5px var(--button-hover-inner-shadow-color) inset;
+      box-shadow: 0 0 5px 0px var(--button-hover-inner-shadow-color) inset;
     `}
   }
 
   &:active:enabled {
-    background-color: var(--button-active-background-color);
+    background: var(--button-active-background-color);
     border-color: var(--button-active-border-color);
     color: var(--button-active-text-color);
     ${({$shadow}) => css`
       animation: var(--speed-normal) var(--easing-primary-in-out) ${() => activeAnimation($shadow)} forwards;
     `};
+
+    ${({$shadow}) => $shadow ? css`
+      box-shadow: 0 4px 8px var(--button-active-drop-shadow-color),
+      0px -1px 0px 1px var(--button-active-drop-shadow-color);
+    ` : css`
+      box-shadow: 0 0 0px var(--button-active-inner-shadow-color) inset;
+    `}
   }
 
   &:disabled {
     cursor: not-allowed;
     opacity: 50%;
+    color: var(--button-disabled-text-color);
+    box-shadow: 0 0 0 var(--grey-a1);
   }
 
   button + button {

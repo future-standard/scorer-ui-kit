@@ -10,9 +10,13 @@ const Container = styled.div<{ $loading: boolean }>`
   display: inline;
   ${({$loading}) => $loading && css`
     button {
+      box-shadow: 0 2px 4px 2px var(--grey-a3);
       cursor: wait;
       &:disabled {
         opacity: 1;
+        cursor: wait;
+        color: var(--button-loading-text-color);
+        box-shadow: 0 2px 4px 2px var(--grey-a3);
       }
     }
   `};
@@ -49,9 +53,9 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
 
   ${({ position }) => css`
     order: ${ position && position === 'left' ? 0 : 2 };
-    ${ position === 'left' 
-      ? `border-right-width: 1px;` 
-      : `border-left-width: 1px;` 
+    ${ position === 'left'
+      ? `border-right-width: 1px;`
+      : `border-left-width: 1px;`
     };
   `}
 
