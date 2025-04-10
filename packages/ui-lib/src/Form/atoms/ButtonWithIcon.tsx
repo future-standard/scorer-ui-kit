@@ -9,9 +9,13 @@ const Container = styled.div<{ $loading: boolean }>`
   display: inline;
   ${({$loading}) => $loading && css`
     button {
+      box-shadow: 0 2px 4px 2px var(--grey-a3);
       cursor: wait;
       &:disabled {
         opacity: 1;
+        cursor: wait;
+        color: var(--button-loading-text-color);
+        box-shadow: 0 2px 4px 2px var(--grey-a3);
       }
     }
   `};
@@ -26,7 +30,7 @@ const TextContainer = styled.div<{size: TypeButtonSizes, position?: string}>`
   align-items: center;
   white-space: nowrap;
   padding: 0 var(--button-h-padding);
-  
+
   transition: padding var(--speed-slow) var(--easing-primary-in-out);
 `;
 
@@ -45,7 +49,7 @@ const SpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   opacity: 0;
 `;
 
@@ -62,12 +66,12 @@ const IconArea = styled.div<{ position?: string, $loading: boolean }>`
 
   ${({ position }) => css`
     order: ${ position && position === 'left' ? 0 : 2 };
-    ${ position === 'left' 
-      ? `border-right-width: 1px;` 
-      : `border-left-width: 1px;` 
+    ${ position === 'left'
+      ? `border-right-width: 1px;`
+      : `border-left-width: 1px;`
     };
   `}
-    
+
   ${IconContainer}{
     svg {
       display:block;
@@ -88,13 +92,13 @@ const IconArea = styled.div<{ position?: string, $loading: boolean }>`
 
     ${SpinnerContainer}{
       opacity: 1;
-    }  
-    
+    }
+
     ${IconContainer}{
       opacity: 0;
     };
   `};
-  
+
 `;
 
 const InnerContainer = styled.div`
