@@ -36,7 +36,7 @@ const ThemeVariables = createGlobalStyle`
 
     --button-icon-size: 14px;
     --button-icon-h-padding: 8px;
-    
+
     // Inputs
     --input-box-shadow-x: 0;
     --input-box-shadow-y: 0;
@@ -86,7 +86,7 @@ const ThemeVariables = createGlobalStyle`
     --button-icon-h-padding: 8px;
   }
 
-  
+
 
   .split-button-primary {
     --border-color: var(--primary-9);

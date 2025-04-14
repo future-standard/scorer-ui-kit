@@ -12,7 +12,7 @@ export default {
 
 export const _WithLoading = () => {
   const buttonText = text("Button Text", "Example Title");
-  const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
+  const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger", TextOnly: "text-only" }, "primary");
   const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "normal");
   const buttonDisabled = boolean("Disabled", false);
   const buttonLoading = boolean("Loading", true);
