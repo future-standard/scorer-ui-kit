@@ -106,13 +106,15 @@ const InnerContainer = styled.div<{disabled?: boolean}>`
   }
 
   &:active{
-    ${IconContainer}{
-      svg {
-        path, rect, circle, d {
-          stroke: var(--button-active-text-color);
+    ${({disabled}) => !disabled && css`
+      ${IconContainer}{
+        svg {
+          path, rect, circle, d {
+            stroke: var(--button-active-text-color);
+          }
         }
       }
-    }
+    `};
   }
 
   ${({disabled}) => disabled && css`

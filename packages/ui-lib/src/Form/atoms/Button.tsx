@@ -56,7 +56,7 @@ const StyledButton = styled.button<IStyledComponentProps>`
   box-sizing: border-box;
 
   border-radius: 3px;
-  border: 1px solid transparent;
+  border: 1px solid var(--button-border-color);
   background: linear-gradient(135deg, transparent, transparent, var(--button-gradient-start), var(--button-gradient-end));
   background-color: var(--button-background-color);
   background-size: 400%;
@@ -71,7 +71,7 @@ const StyledButton = styled.button<IStyledComponentProps>`
   `}
 
   transition:
-    border-color var(--speed-slow) var(--easing-primary-in-out),
+    border-color var(--speed-normal) var(--easing-primary-in-out),
     background-color var(--speed-normal) var(--easing-primary-in-out),
     background-position var(--speed-normal) var(--easing-primary-out),
     background-size var(--speed-normal) var(--easing-primary-out),
@@ -106,14 +106,15 @@ const StyledButton = styled.button<IStyledComponentProps>`
     cursor: not-allowed;
     opacity: 50%;
     color: var(--button-disabled-text-color);
+    border-color: var(--button-disabled-border-color, transparent);
   }
 
   ${({$loading}) => $loading && css`
-      &:disabled {
-        opacity: 1;
-        cursor: wait;
-        color: var(--button-loading-text-color);
-      }
+    &:disabled {
+      opacity: 1;
+      cursor: wait;
+      color: var(--button-loading-text-color);
+    }
   `};
 
   button + button {

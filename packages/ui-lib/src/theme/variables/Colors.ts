@@ -693,8 +693,12 @@ export const colorVariables = css`
     --button-drop-shadow-color: var(--shadow-primary-default);
     --button-text-color: var(--white-1);
     --button-divider-color: var(--primary-a3);
+
     --button-loading-area-background-color: var(--primary-a7);
     --button-loading-area-divider-color: var(--primary-a8);
+    --button-loading-text-color: var(--white-1);
+    --button-disabled-border-color: var(--button-border-color);
+    --button-disabled-text-color: var(--white-1);
 
     --button-hover-background-color: var(--primary-8);
     --button-hover-border-color: var(--primary-a6);
@@ -712,9 +716,6 @@ export const colorVariables = css`
     --button-active-divider-color: var(--primary-a3);
     --button-active-icon-area-background-color: var(--primary-a3);
 
-    --button-loading-text-color: var(--white-1);
-    --button-disabled-text-color: var(--white-1);
-
     --button-gradient-start: var(--primary-gradient-start);
     --button-gradient-end: var(--primary-gradient-end);
 
@@ -728,6 +729,7 @@ export const colorVariables = css`
 
       --button-loading-area-background-color: var(--grey-a4);
       --button-loading-area-divider-color: var(--grey-a3);
+      --button-disabled-border-color: var(--button-border-color);
 
       --button-hover-background-color: var(--grey-8);
       --button-hover-border-color: var(--grey-a6);
@@ -755,6 +757,7 @@ export const colorVariables = css`
 
       --button-loading-area-background-color: var(--warning-a7);
       --button-loading-area-divider-color: var(--warning-a9);
+      --button-disabled-border-color: var(--button-border-color);
 
       --button-hover-background-color: var(--warning-8);
       --button-hover-border-color: var(--warning-a6);
@@ -779,25 +782,55 @@ export const colorVariables = css`
       --button-gradient-start: transparent;
       --button-gradient-end: transparent;
       --button-drop-shadow-color: transparent;
-
+      --button-text-color: var(--grey-12);
       --button-divider-color: transparent;
 
       --button-loading-area-background-color: transparent;
       --button-loading-area-divider-color: transparent;
+      --button-loading-text-color: var(--grey-8);
+      --button-disabled-border-color: transparent;
+      --button-disabled-text-color: var(--grey-8);
 
       --button-hover-background-color: transparent;
       --button-hover-border-color: transparent;
       --button-hover-text-color: var(--primary-9);
       --button-hover-drop-shadow-color: transparent;
       --button-hover-inner-shadow-color: transparent;
+
       --button-active-inner-shadow-color: transparent;
       --button-active-drop-shadow-color: transparent;
       --button-active-background-color: transparent;
       --button-active-border-color: transparent;
       --button-active-text-color: var(--primary-10);
+    }
 
-      --button-loading-text-color: var(--grey-8);
-      --button-disabled-text-color: var(--grey-8);
+    .button-design-outline {
+      --button-background-color: transparent;
+      --button-border-color: var(--grey-11);
+      --button-inner-shadow-color: transparent;
+      --button-gradient-start: transparent;
+      --button-gradient-end: transparent;
+      --button-drop-shadow-color: var(--grey-a3);
+      --button-divider-color: var(--grey-a3);
+      --button-text-color: var(--grey-12);
+
+      --button-loading-area-background-color: transparent;
+      --button-loading-area-divider-color: var(--grey-a3);
+      --button-loading-text-color: var(--grey-10);
+      --button-disabled-border-color: var(--grey-a6);
+      --button-disabled-text-color: var(--grey-12);
+
+      --button-hover-background-color: transparent;
+      --button-hover-border-color: var(--primary-9);
+      --button-hover-text-color: var(--primary-9);
+      --button-hover-drop-shadow-color: var(--grey-a4);
+      --button-hover-inner-shadow-color: transparent;
+
+      --button-active-inner-shadow-color: transparent;
+      --button-active-drop-shadow-color: transparent;
+      --button-active-background-color: transparent;
+      --button-active-border-color: var(--primary-11);
+      --button-active-text-color: var(--primary-11);
     }
 
   }
