@@ -5,7 +5,7 @@ import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 import { IButtonProps, TypeButtonSizes } from '..';
 
-const Container = styled.div<{ $loading: boolean}>`
+const Container = styled.div`
   display: inline;
 `;
 
@@ -136,7 +136,7 @@ export interface IButtonWithIcon extends IButtonProps {
 
 const ButtonWithIcon : React.FC<IButtonWithIcon> = ({design = 'primary', size='normal', loading = false, shadow = false, onClick, disabled, position, icon, children, ...props}) => {
   return (
-    <Container $loading={loading}>
+    <Container>
       <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading }} {...props}>
         <InnerContainer {...{disabled, loading}}>
           <TextContainer {...{size, position}}>{children}</TextContainer>

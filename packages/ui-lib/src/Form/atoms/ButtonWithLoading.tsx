@@ -6,7 +6,7 @@ import Spinner from '../../Indicators/Spinner';
 import { TypeButtonDesigns, IButtonProps, TypeButtonSizes} from '..';
 
 
-const Container = styled.div<{ $loading: boolean }>`
+const Container = styled.div`
   display: inline;
 `;
 
@@ -79,7 +79,7 @@ interface IProps extends IButtonProps {
 
 const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', shadow = false, onClick, disabled, position, loading=false, children,...rest}) => {
   return (
-    <Container $loading={loading} {...{disabled}}>
+    <Container>
       <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading}} {...rest}>
         <InnerContainer $loading={loading} {...{ design, size}}>
           <TextContainer>{children}</TextContainer>
