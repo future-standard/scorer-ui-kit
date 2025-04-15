@@ -689,6 +689,7 @@ export const colorVariables = css`
   .light-theme, .dark-theme {
     --button-background-color: var(--primary-9);
     --button-border-color: var(--primary-9);
+    --button-border-width: 1px;
     --button-inner-shadow-color: transparent;
     --button-drop-shadow-color: var(--shadow-primary-default);
     --button-text-color: var(--white-1);
@@ -807,6 +808,7 @@ export const colorVariables = css`
     .button-design-outline {
       --button-background-color: transparent;
       --button-border-color: var(--grey-11);
+      --button-border-width: 2px;
       --button-inner-shadow-color: transparent;
       --button-gradient-start: transparent;
       --button-gradient-end: transparent;

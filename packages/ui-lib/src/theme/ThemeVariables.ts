@@ -66,8 +66,8 @@ const ThemeVariables = createGlobalStyle`
     --button-font-size: 12px;
     --button-height: 20px;
     --button-h-padding: 4px;
-    --button-icon-size: 10px;
-    --button-icon-h-padding: 8px;
+    --button-icon-size: 12px;
+    --button-icon-h-padding: 4px;
   }
 
   .button-size-small {

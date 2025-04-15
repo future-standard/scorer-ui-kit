@@ -51,12 +51,11 @@ const StyledButton = styled.button<IStyledComponentProps>`
 
   overflow: hidden;
   cursor: pointer;
-  border-radius: 3px;
   outline: none;
   box-sizing: border-box;
 
   border-radius: 3px;
-  border: 1px solid var(--button-border-color);
+  border: var(--button-border-width) solid var(--button-border-color);
   background: linear-gradient(135deg, transparent, transparent, var(--button-gradient-start), var(--button-gradient-end));
   background-color: var(--button-background-color);
   background-size: 400%;
