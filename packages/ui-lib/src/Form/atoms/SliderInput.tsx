@@ -9,9 +9,7 @@ import React, {
 } from 'react';
 import styled, {css} from 'styled-components';
 import {IFeedbackColor} from '../../index';
-import {
-  isInsideRange,
-} from '../../helpers';
+
 
 /**
  * TODO to support all input range features
@@ -209,6 +207,12 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
     </Fragment>
   );
 
+};
+
+const isInsideRange = (value: number, min: number, max: number): boolean => {
+  if (value < min) { return false; }
+  if (value > max) { return false; }
+  return true;
 };
 
 export type IMarkAlignment = 'left' | 'center' | 'right';

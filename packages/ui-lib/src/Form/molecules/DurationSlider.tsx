@@ -2,9 +2,7 @@ import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { ITimeUnit } from '../../index';
 import SliderInput, { ISlider } from '../atoms/SliderInput';
-import { getShortTextTimeUnit, isTimeUnit } from '../../helpers';
 import Label from '../atoms/Label';
-
 
 /**
  * This component relies in the slider for validations
@@ -76,6 +74,32 @@ const getTimeValues = (value: number, unit: ITimeUnit) => {
         minutes: 0,
         seconds: 0
       };
+  }
+};
+
+/**
+ * Helper for adding appropriate text to a time number
+ * Default is hours
+ */
+const isTimeUnit = (value: any): boolean => {
+  switch(value) {
+    case 'seconds':
+    case 'minutes':
+    case 'hours':
+      return true;
+    default:
+      return false;
+  }
+};
+
+const getShortTextTimeUnit = (value: number, unit: string): string => {
+  switch (unit) {
+    case 'seconds':
+      return value < 2 ? `sec` : `secs`;
+    case 'minutes':
+      return value < 2 ? `min` : `mins`;
+    default:
+      return value < 2 ? `hr` : `hrs`;
   }
 };
 

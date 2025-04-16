@@ -1,14 +1,34 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
-import DatePicker, { DateInterval, IDatePicker } from './DatePicker';
+import DatePicker, { DateInterval, IDatePicker, isDateInterval } from './DatePicker';
 import FilterDropHandler, { FilterDropHandlerRef } from '../atoms/FilterDropHandler';
-import { areDatesEqual } from '../../helpers';
+import { isEqual } from 'date-fns';
 
 const MIN_WIDTH = 470;
 const MIN_HEIGHT = 360;
 
 const Container = styled.div``;
+
+const areDatesEqual = (storedValue: DateInterval | Date | null | undefined, currentDisplay: DateInterval | Date | null): boolean => {
+  if (storedValue === null && currentDisplay === null) {
+    return true;
+  }
+
+  if (storedValue === undefined && currentDisplay === null) {
+    return true;
+  }
+
+  if (isDateInterval(storedValue) && isDateInterval(currentDisplay)) {
+    return isEqual(storedValue?.start, currentDisplay?.start) && isEqual(storedValue?.end, currentDisplay?.end);
+  }
+
+  if(storedValue instanceof Date && currentDisplay instanceof Date) {
+    return isEqual(storedValue, currentDisplay);
+  }
+
+  return false;
+};
 
 interface IMountPicker {
   initialValue: DateInterval | Date | undefined

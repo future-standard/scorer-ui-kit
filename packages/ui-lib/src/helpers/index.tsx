@@ -1,11 +1,4 @@
-import { isEqual } from 'date-fns';
-import {DateInterval, isDateInterval, ITimeUnit} from '../index';
-
-const isInsideRange = (value: number, min: number, max: number) : boolean => {
-  if( value < min) {return false;}
-  if(value > max) { return false;}
-  return true;
-};
+import { ITimeUnit } from '../index';
 
 // verifies if a number is inside a boundary if not updates it's value to the max or min boundary value.
 const clamp = (value: number, minValue: number, maxValue: number) => {
@@ -27,34 +20,6 @@ const getTextTimeUnit = (value: number, unit : ITimeUnit) => {
       default:
         return value < 2 ? `Hour` : `Hours`;
     }
-};
-
-/**
- * Helper for adding appropriate text to a time number
- * Default is hours
- */
-const getShortTextTimeUnit = (value: number, unit : string) => {
-  switch (unit) {
-    case 'seconds':
-      return value < 2 ? `sec` : `secs`;
-
-    case 'minutes':
-      return value < 2 ? `min` : `mins`;
-
-    default:
-      return value < 2 ? `hr` : `hrs`;
-  }
-};
-
-export const isTimeUnit = (value: any) => {
-  switch(value) {
-    case 'seconds':
-    case 'minutes':
-    case 'hours':
-      return true;
-    default:
-      return false;
-  }
 };
 
 const getTopLevelPath = (pathname: string) => {
@@ -91,35 +56,12 @@ const uniqueID = () =>
     return intValue !== intValue;
   };
 
-  const areDatesEqual = (storedValue: DateInterval | Date | null | undefined, currentDisplay: DateInterval | Date | null): boolean => {
-    if (storedValue === null && currentDisplay === null) {
-      return true;
-    }
-
-    if (storedValue === undefined && currentDisplay === null) {
-      return true;
-    }
-
-    if (isDateInterval(storedValue) && isDateInterval(currentDisplay)) {
-      return isEqual(storedValue?.start, currentDisplay?.start) && isEqual(storedValue?.end, currentDisplay?.end);
-    }
-
-    if(storedValue instanceof Date && currentDisplay instanceof Date) {
-      return isEqual(storedValue, currentDisplay);
-    }
-
-    return false;
-  };
-
 export {
   clamp,
   isValidImage,
   getImageType,
   getTextTimeUnit,
-  isInsideRange,
-  getShortTextTimeUnit,
   getTopLevelPath,
   uniqueID,
-  isNotNumber,
-  areDatesEqual
+  isNotNumber
 };
