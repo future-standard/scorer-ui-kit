@@ -191,27 +191,38 @@ interface IProps {
   rightTheme?: SwitchThemes
   state?: TypeSwitchState
   checked?: boolean
+  defaultChecked?: boolean 
   onChangeCallback?: (checked: boolean, indeterminate?: boolean) => void;
 }
 
-const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', rightTheme = 'on', labelText, onChangeCallback, checked = false}) => {
+const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', rightTheme = 'on', labelText, onChangeCallback, checked = false, defaultChecked }) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const [ position, setPosition ] = useState<SwitchPosition>(checked ? SwitchPosition.On : SwitchPosition.Off);
+
+  const isDefaultPropPassed = defaultChecked !== undefined;
+  const initialChecked = isDefaultPropPassed ? defaultChecked : checked ?? false;
+
+  const [ position, setPosition ] = useState<SwitchPosition>(initialChecked ? SwitchPosition.On : SwitchPosition.Off); 
   const [ activeTheming, setActiveTheming ] = useState<string>( leftTheme );
   const [ switchState, setSwitchState ] = useState<TypeSwitchState>('default');
   const [ justUpdated, setJustUpdated ] = useState<boolean>(false);
   const [ innerSize, setInnerSize ] = useState<number>(0);
 
-  useEffect(() => {
-    setPosition(checked ? SwitchPosition.On : SwitchPosition.Off);
-    if (inputRef.current) {
-      inputRef.current.checked = checked;
-    }
-  }, [checked]);
 
-  const positionSwitch = useCallback(() => {
+  useEffect(() => {
+    if (isDefaultPropPassed) {
+            setPosition(defaultChecked ? SwitchPosition.On : SwitchPosition.Off);
+          } else {
+            setPosition(inputRef.current?.checked ? SwitchPosition.On : SwitchPosition.Off);
+          }
+  }, [checked, defaultChecked, isDefaultPropPassed]); 
+
+    const positionSwitch = useCallback(() => {
+    if (!isDefaultPropPassed) {
+      setPosition(inputRef.current?.checked ? SwitchPosition.On : SwitchPosition.Off);
+      setActiveTheming(inputRef.current?.checked ? rightTheme : leftTheme);
+    } else {
     if(inputRef.current?.defaultChecked){
      setPosition(SwitchPosition.On);
      setActiveTheming(rightTheme);
@@ -219,7 +230,9 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
      setPosition(SwitchPosition.Off);
      setActiveTheming(leftTheme);
    }
-  }, [setPosition, setActiveTheming, leftTheme, rightTheme, inputRef]);
+  }
+  }, [setPosition, setActiveTheming, leftTheme, rightTheme, isDefaultPropPassed]); 
+
 
   const customOnChange = () => {
     positionSwitch();
@@ -281,7 +294,7 @@ const Switch : React.FC<IProps> = ({ state = 'default', leftTheme = 'off', right
         </SwitchInner>
       </SwitchOuter>
       {labelText ? <LabelText>{labelText}</LabelText> : null}
-      <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} defaultChecked={checked} />
+      <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} {...(isDefaultPropPassed ? { defaultChecked } : { defaultChecked: checked })} /> 
     </Container>
     );
 
