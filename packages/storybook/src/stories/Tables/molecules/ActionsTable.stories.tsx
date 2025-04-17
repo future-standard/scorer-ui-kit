@@ -25,6 +25,9 @@ const TimeText = styled.div`
   font-size: 12px;
   span {
     font-style: italic;
+    &:lang(ja) {
+      font-style: normal;
+    }
   }
 `;
 

@@ -57,6 +57,7 @@ export interface IMenuTop {
     logoMark?: string
     logoText?: string
     supportUrl?: string
+    supportText?: string
     keepOpenText?: string
     autoHideText? :string
     defaultMenuOpen?: boolean
@@ -92,6 +93,8 @@ export interface IMenuTop {
     loggedInUser: string;
     hasLanguage?: boolean;
     selectedLanguageText?: string;
+    languageOptionsText?:string;
+    selectedLangAttribute?:string;
     hasLogout?: boolean;
     logoutText?: string;
     logoutLink?: string;

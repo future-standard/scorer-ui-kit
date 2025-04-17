@@ -40,6 +40,9 @@ const SubTitle = styled.div`
   font-size: 12px;
   font-family: ${({ theme }) => theme.fontFamily.data};
   font-style: italic;
+  &:lang(ja) {
+    font-style: normal;
+  }
   color: var(--grey-a10);
   flex-shrink: 0;
   white-space: nowrap;

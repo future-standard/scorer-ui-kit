@@ -86,6 +86,10 @@ const ForgotLink = styled(Link)`
 
   text-align: left;
   font-style: italic;
+  &:lang(ja) {
+      font-style: normal;
+  }
+
   font-size: 14px;
   font-weight: 500;
   line-height: 25px;
@@ -106,6 +110,9 @@ const CopyRightStyle = css`
   opacity: 0.65;
   font-size: 14px;
   font-style: italic;
+  &:lang(ja) {
+      font-style: normal;
+  }
   line-height: 1.79;
   text-align: center;
   color: hsl(207, 5%, 57%);

@@ -33,6 +33,7 @@ const Title = styled.div`
 const SubTitle = styled.div`
   font-family: var(--font-ui);
   font-size: 10px;
+  line-height: 12px;
   font-weight: 500;
   letter-spacing: 0.29px;
   color: var(--grey-11);

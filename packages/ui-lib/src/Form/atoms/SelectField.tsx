@@ -43,7 +43,7 @@ const StyledSelect = styled.select<{ fieldState: TypeFieldState, withIcon?: bool
   font-size: 14px;
   cursor: pointer;
 
-  transition: 
+  transition:
     border var(--speed-fast) var(--easing-primary-out),
     background-color var(--speed-fast) var(--easing-primary-out),
     box-shadow var(--speed-fast) var(--easing-primary-out);
@@ -88,6 +88,9 @@ const Container = styled.div<{ isCompact?: boolean, activePlaceholder: boolean }
       font-family: var(--font-data);
       color: var(--input-color-placeholder);
       font-style: italic;
+      &:lang(ja) {
+        font-style: normal;
+      }
       font-weight: 400;
     }
   `};

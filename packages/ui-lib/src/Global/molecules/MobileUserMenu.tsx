@@ -6,7 +6,7 @@ import { TabContext, ContextProps } from '../../Tabs/Tabs';
 
 const Container = styled.div`
   background: var(--global-element-background);
-  
+
   z-index: 100;
   display: flex;
   flex-direction: column;
