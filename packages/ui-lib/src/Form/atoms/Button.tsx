@@ -9,6 +9,7 @@ interface IStyledComponentProps {
   $shadow: boolean
   $noPadding?: boolean
   $loading?: boolean
+  isOutline?: boolean
 }
 
 const activeAnimation = (shadow?: boolean) => {
@@ -47,7 +48,12 @@ const StyledButton = styled.button<IStyledComponentProps>`
   color: var(--button-text-color);
   font-weight: 600;
 
-  padding: ${({ $noPadding }) => $noPadding ? 0 : `var(--button-h-padding)`};
+  ${({ $noPadding, isOutline }) => $noPadding ? css`
+      padding: 0px;
+    ` : css`
+      padding: ${isOutline ? `var(--button-h-padding-outline)` : `var(--button-h-padding)`};
+    `
+  }
 
   overflow: hidden;
   cursor: pointer;
@@ -75,7 +81,8 @@ const StyledButton = styled.button<IStyledComponentProps>`
     background-position var(--speed-normal) var(--easing-primary-out),
     background-size var(--speed-normal) var(--easing-primary-out),
     box-shadow var(--speed-normal) var(--easing-primary-out),
-    opacity var(--speed-normal) var(--easing-primary-out);
+    opacity var(--speed-normal) var(--easing-primary-out),
+    color var(--speed-normal) var(--easing-primary-in-out);
 
   &:hover:enabled {
     background-position: 1%;
@@ -135,7 +142,7 @@ type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button : React.FC<Props> = ({ design='primary', size='normal', shadow = false, noPadding = false, loading=false, children, ...props }) => {
   design === 'danger' ? console.warn('Button.tsx - Warning, the design prop value danger is being deprecated. Use warning instead.') : null;
-  return <StyledButton type='button' className={`button-design-${design} button-size-${size}`} {...{design, size}} $noPadding={noPadding} $shadow={shadow} $loading={loading} {...props}>{children}</StyledButton>;
+  return <StyledButton type='button' isOutline={design === 'outline'} className={`button-design-${design} button-size-${size}`} {...{design, size}} $noPadding={noPadding} $shadow={shadow} $loading={loading} {...props}>{children}</StyledButton>;
 };
 
 export default Button;

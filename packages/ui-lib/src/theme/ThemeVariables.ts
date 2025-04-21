@@ -29,6 +29,7 @@ const ThemeVariables = createGlobalStyle`
     --button-font-size: 14px;
     --button-height: 32px;
     --button-h-padding: 8px;
+    --button-h-padding-outline: 7px;
     --button-lift-default-x: 0px;
     --button-lift-default-y: 2px;
     --button-lift-default-blur: 4px;
@@ -66,6 +67,7 @@ const ThemeVariables = createGlobalStyle`
     --button-font-size: 12px;
     --button-height: 20px;
     --button-h-padding: 4px;
+    --button-h-padding-outline: 3px;
     --button-icon-size: 12px;
     --button-icon-h-padding: 4px;
   }
@@ -74,6 +76,7 @@ const ThemeVariables = createGlobalStyle`
     --button-font-size: 12px;
     --button-height: 24px;
     --button-h-padding: 4px;
+    --button-h-padding-outline: 3px;
     --button-icon-size: 12px;
     --button-icon-h-padding: 8px;
   }
@@ -82,6 +85,7 @@ const ThemeVariables = createGlobalStyle`
     --button-font-size: 16px;
     --button-height: 40px;
     --button-h-padding: 8px;
+    --button-h-padding-outline: 7px;
     --button-icon-size: 16px;
     --button-icon-h-padding: 8px;
   }
