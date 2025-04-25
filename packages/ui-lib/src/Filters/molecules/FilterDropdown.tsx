@@ -1,14 +1,15 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { IInputOptionsType } from '../../Form';
 import FilterOption from '../../Form/atoms/FilterOption';
 import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
 
 import { IFilterItem, IFilterValue, isFilterItem } from '../FilterTypes';
-import FilterDropHandler from '../atoms/FilterDropHandler';
+import FilterDropHandler, { FilterDropHandlerRef } from '../atoms/FilterDropHandler';
 import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 import LoadingBox from '../atoms/LoadingBox';
 import { FilterButtonDesign } from '../FilterTypes';
+import FooterControls, { IFooterControls } from '../atoms/FooterControls';
 
 const Container = styled.div`
   display: inline-block;
@@ -215,7 +216,7 @@ const getResultText = (template: string, visible: number, total: number) => {
   return newMessage.replace('[VISIBLE]', `${visible}`);
 };
 
-export interface IFilterDropdown {
+export type IFilterDropdownOwn = {
   buttonIcon: string
   buttonText: string
   list: IFilterItem[];
@@ -233,6 +234,8 @@ export interface IFilterDropdown {
   onSelect: (newSelection: IFilterValue) => void;
 }
 
+export type IFilterDropdown = IFilterDropdownOwn & IFooterControls
+
 const FilterDropdown: React.FC<IFilterDropdown> = ({
   buttonIcon,
   buttonText,
@@ -248,12 +251,16 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   searchResultText = 'Showing [VISIBLE] of [TOTAL]',
   emptyResultText,
   design = 'default',
+  hasApply,
+  hasReset,
   onSelect = () => { },
   ...props
 }) => {
 
   const [visibleList, setVisibleList] = useState(selectedOrderList(list, maxDisplayedItems, selected));
   const [searchText, setSearchText] = useState<string>('');
+
+  const DropdownHandlerRef = useRef<FilterDropHandlerRef>(null);
 
   const handleClose = useCallback(() => {
     setSearchText('');
@@ -286,6 +293,10 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
     setVisibleList(selectedOrderList(newList, maxDisplayedItems, null));
   }, [list, maxDisplayedItems, selected]);
 
+  const handleCancel =useCallback(() => {
+    DropdownHandlerRef.current?.cancelClose();
+  },[]);
+
   useEffect(() => {
     let isActive = true;
     if (isActive) {
@@ -302,9 +313,11 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   return (
     <Container {...props}>
       <FilterDropHandler
+        ref={DropdownHandlerRef}
         {...{ buttonIcon, buttonText, disabled, design }}
         onCloseCallback={handleClose}
         onToggleOpenCallback={handleToggleOpen}
+        noCloseOnClickOutside={hasApply}
       >
         <FilterDropdownContainer>
           {hasOptionsFilter && (
@@ -348,6 +361,13 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                 </OptionList>
                 {list.length > 5 && <Gradient />}
               </ResultsContainer>)}
+
+          {(hasApply || hasReset) && (
+            <FooterControls
+              {...{ hasApply, hasReset }}
+              onCancel={handleCancel}
+            />)
+          }
         </FilterDropdownContainer>
 
       </FilterDropHandler>

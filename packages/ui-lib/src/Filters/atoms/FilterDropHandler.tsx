@@ -12,7 +12,7 @@ const ButtonWrapper = styled.div`
   display: inline-block;
 `;
 
-const ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean, minWidth: number }>`
+const  ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean, minWidth: number }>`
   z-index: 100;
   min-width: ${({ minWidth }) => minWidth}px;
   position: absolute;
