@@ -232,6 +232,7 @@ export type IFilterDropdownOwn = {
   emptyResultText?: string
   design?: FilterButtonDesign
   onSelect: (newSelection: IFilterValue) => void;
+  onApplyCallback?: (newSelection: IFilterValue) => void;
 }
 
 export type IFilterDropdown = IFilterDropdownOwn & IFooterControls
@@ -254,11 +255,13 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   hasApply,
   hasReset,
   onSelect = () => { },
+  onApplyCallback,
   ...props
 }) => {
 
   const [visibleList, setVisibleList] = useState(selectedOrderList(list, maxDisplayedItems, selected));
   const [searchText, setSearchText] = useState<string>('');
+  const [tempSelected, setTempSelected] = useState(selected);
 
   const DropdownHandlerRef = useRef<FilterDropHandlerRef>(null);
 
@@ -275,6 +278,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   const handleSelection = useCallback((item: IFilterItem) => {
     const newSelected = getNewSelected(item, selected, optionType);
     onSelect(newSelected);
+    setTempSelected(newSelected);
   }, [selected, optionType, onSelect]);
 
   const handleInputFilter = useCallback((e) => {
@@ -296,6 +300,13 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   const handleCancel =useCallback(() => {
     DropdownHandlerRef.current?.cancelClose();
   },[]);
+
+  const handleApply = useCallback(()=>{
+    if(onApplyCallback) {
+      onApplyCallback(tempSelected);
+    }
+
+},[onApplyCallback, tempSelected]);
 
   useEffect(() => {
     let isActive = true;
@@ -366,6 +377,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
             <FooterControls
               {...{ hasApply, hasReset }}
               onCancel={handleCancel}
+              onApply={handleApply}
             />)
           }
         </FilterDropdownContainer>

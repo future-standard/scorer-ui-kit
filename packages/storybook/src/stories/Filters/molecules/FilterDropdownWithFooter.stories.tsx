@@ -73,9 +73,9 @@ export const DropdownWithApplyAndReset = () => {
     cancelAction();
   }, [cancelAction]);
 
-  const handleApply = useCallback(() => {
-    applyAction(selected);
-  }, [applyAction, selected]);
+  const handleApply = useCallback((newSelection: IFilterValue) => {
+    applyAction(newSelection);
+  }, [applyAction]);
 
   return (
     <Container>
@@ -98,7 +98,7 @@ export const DropdownWithApplyAndReset = () => {
           onSelect={handleSelect}
           onReset={handleReset}
           onCancel={handleCancel}
-          onApply={handleApply}
+          onApplyCallback={handleApply}
           hasReset={hasReset}
           hasApply={hasApply}
         />
