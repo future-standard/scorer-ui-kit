@@ -238,7 +238,8 @@ const Switch : React.FC<IProps> = ({
     }
   }, [checked, isControlled, leftTheme, rightTheme, internalChecked]);
 
-  const customOnChange = () => {
+
+  const customOnChange =  useCallback(() => {
     if (state === 'locked' || state === 'disabled') return;
     
     if (isControlled) {
@@ -249,7 +250,7 @@ const Switch : React.FC<IProps> = ({
       onChangeCallback?.(newChecked);
     }
     positionSwitch();
-  };
+  }, [isControlled, checked, internalChecked, onChangeCallback, state, positionSwitch]);
 
   /**
    * updateThemeChoice()
@@ -305,7 +306,7 @@ const Switch : React.FC<IProps> = ({
         </SwitchInner>
       </SwitchOuter>
       {labelText ? <LabelText>{labelText}</LabelText> : null}
-      <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} defaultChecked={checked} />
+      <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} defaultChecked={!isControlled? defaultChecked : checked} />
     </Container>
     );
 
