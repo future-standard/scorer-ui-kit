@@ -216,6 +216,39 @@ const getResultText = (template: string, visible: number, total: number) => {
   return newMessage.replace('[VISIBLE]', `${visible}`);
 };
 
+const areSelectionsEqual = (tempSelected: IFilterValue, selected: IFilterValue) : boolean => {
+  // If both are null, they are equal
+  if (tempSelected === null && selected === null) {
+    return true;
+  }
+
+  // If only one is null, they are not equal
+  if (tempSelected === null || selected === null) {
+    return false;
+  }
+
+  // If both are arrays
+  if (Array.isArray(tempSelected) && Array.isArray(selected)) {
+    // If arrays have different lengths, they are not equal
+    if (tempSelected.length !== selected.length) {
+      return false;
+    }
+
+    // Check if every item in tempSelected exists in selected with the same value
+    return tempSelected.every(tempItem =>
+      selected.some(selectedItem => selectedItem.value === tempItem.value)
+    );
+  }
+
+  // If one is array and the other is not, they are not equal
+  if (Array.isArray(tempSelected) || Array.isArray(selected)) {
+    return false;
+  }
+
+  // Both are single IFilterItem objects, compare their values
+  return tempSelected.value === selected.value;
+};
+
 export type IFilterDropdownOwn = {
   buttonIcon: string
   buttonText: string
@@ -378,6 +411,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
               {...{ hasApply, hasReset }}
               onCancel={handleCancel}
               onApply={handleApply}
+              disableApply={areSelectionsEqual(tempSelected, selected)}
             />)
           }
         </FilterDropdownContainer>
