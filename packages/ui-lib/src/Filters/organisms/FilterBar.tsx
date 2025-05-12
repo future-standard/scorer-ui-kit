@@ -11,7 +11,8 @@ import {
 import FilterInputs from '../molecules/FilterInputs';
 import { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../FilterTypes';
 import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
-import { DateInterval, isDateInterval } from '../molecules/DatePicker';
+import { isDateInterval } from '../../helpers';
+import { DateInterval } from '..';
 import isequal from 'lodash.isequal';
 import debounce from 'lodash.debounce';
 

@@ -7,6 +7,7 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekO
 import { ja, enUS } from 'date-fns/locale';
 import { resetButtonStyles } from '../../common';
 import Button from '../../Form/atoms/Button';
+import { DateInterval, DateRange } from '..';
 
 /**
  * Convert a single days duration to an interval.
@@ -337,31 +338,8 @@ const enDayGuide: string[] = [
 
 const jpDayGuide: string[] = ['日', '月', '火', '水', '木', '金', '土'];
 
-export const isDateInterval = (value: any): value is DateInterval => {
-  if (value === null || value === undefined) {
-    return false;
-  }
 
-  if (value.start === null || value.start === undefined) {
-    return false;
-  }
 
-  if (value.end === null || value.end === undefined) {
-    return false;
-  }
-
-  return (value.start instanceof Date) && (value.end instanceof Date);
-};
-
-export interface DateInterval {
-  start: Date;
-  end: Date;
-}
-
-export interface DateRange {
-  start: Date | null;
-  end: Date | null;
-}
 
 export interface IDatePicker {
   initialValue?: Date | DateInterval

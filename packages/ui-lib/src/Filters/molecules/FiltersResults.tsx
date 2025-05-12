@@ -4,8 +4,9 @@ import { IFilterItem, IFilterType } from '../FilterTypes';
 import { resetButtonStyles } from '../../common/index';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { isFilterItem } from '../FilterTypes';
-import { DateInterval, isDateInterval } from './DatePicker';
 import { format, add, startOfDay } from 'date-fns';
+import { isDateInterval } from '../../helpers';
+import { DateInterval } from '..';
 
 const Container = styled.div`
   display: flex;
