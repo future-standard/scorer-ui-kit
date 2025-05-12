@@ -1,6 +1,6 @@
 import { isEqual } from 'date-fns';
 import { ITimeUnit } from '..';
-import { DateInterval } from '../Filters';
+import { IDateInterval } from '../Filters';
 
 const isInsideRange = (value: number, min: number, max: number) : boolean => {
   if( value < min) {return false;}
@@ -92,7 +92,7 @@ const uniqueID = () =>
     return intValue !== intValue;
   };
 
-  const areDatesEqual = (storedValue: DateInterval | Date | null | undefined, currentDisplay: DateInterval | Date | null): boolean => {
+  const areDatesEqual = (storedValue: IDateInterval | Date | null | undefined, currentDisplay: IDateInterval | Date | null): boolean => {
     if (storedValue === null && currentDisplay === null) {
       return true;
     }
@@ -113,7 +113,7 @@ const uniqueID = () =>
   };
 
 
-  const isDateInterval = (value: any): value is DateInterval => {
+  const isDateInterval = (value: any): value is IDateInterval => {
     if (value === null || value === undefined) {
       return false;
     }

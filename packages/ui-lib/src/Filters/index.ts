@@ -10,12 +10,12 @@ import FiltersResults, { IFilterLabel } from './molecules/FiltersResults';
 import FilterBar from './organisms/FilterBar';
 import ToggleButton from './atoms/ToggleButton';
 
-export interface DateInterval {
+export interface IDateInterval {
   start: Date;
   end: Date;
 }
 
-export interface DateRange {
+export interface IDateRange {
   start: Date | null;
   end: Date | null;
 }

@@ -12,7 +12,7 @@ import FilterInputs from '../molecules/FilterInputs';
 import { IFilterDropdownExt, ISearchFilter, IFilterDatePicker } from '../FilterTypes';
 import FiltersResults, { IFilterLabel } from '../../Filters/molecules/FiltersResults';
 import { isDateInterval } from '../../helpers';
-import { DateInterval } from '..';
+import { IDateInterval } from '..';
 import isequal from 'lodash.isequal';
 import debounce from 'lodash.debounce';
 
@@ -106,29 +106,29 @@ const createDatePickers = (
   datePickersConfig: IFilterDatePicker[],
   filtersValues: IFilterResult[],
   singleFilter: boolean,
-  handleDatePickers: (selection: DateInterval | Date | null, filterId: string) => void,
+  handleDatePickers: (selection: IDateInterval | Date | null, filterId: string) => void,
 ): IFilterDatePicker[] => {
   const datePickersFilters: IFilterDatePicker[] = [];
 
   datePickersConfig.forEach((datePicker) => {
-    const onCloseCallback = (value: DateInterval | Date | null) => {
+    const onCloseCallback = (value: IDateInterval | Date | null) => {
       handleDatePickers(value, datePicker.id);
     };
 
-    const onToggleCallback = (value: DateInterval | Date | null, isOpen: boolean) => {
+    const onToggleCallback = (value: IDateInterval | Date | null, isOpen: boolean) => {
       // if it was open before toggle means the user closed it and value should be updated.
       if (!isOpen) {
         handleDatePickers(value, datePicker.id);
       }
     };
 
-    const onApplyCallback = (value: DateInterval | Date) => {
+    const onApplyCallback = (value: IDateInterval | Date) => {
       handleDatePickers(value, datePicker.id);
     };
 
     const disabled = getDisableValue(filtersValues, singleFilter, datePicker);
     const foundPicker = filtersValues.find(filter => filter.id === datePicker.id);
-    let validInitialValue: Date | DateInterval | undefined = undefined;
+    let validInitialValue: Date | IDateInterval | undefined = undefined;
 
     if (datePicker.selected) {
       validInitialValue = datePicker.selected;
@@ -262,7 +262,7 @@ const initFilters = (
 
   datePickersConfig.forEach(({ id, initialValue, selected }) => {
 
-    let validSelected: Date | DateInterval | null = null;
+    let validSelected: Date | IDateInterval | null = null;
 
     if (initialValue) {
       validSelected = initialValue;
@@ -368,7 +368,7 @@ const FilterBar: React.FC<IFilterBar> = ({
     setFiltersValues(updatedFilters);
   }, [filtersValues, handleChange]);
 
-  const handleOnRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => {
+  const handleOnRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | IDateInterval) => {
 
     setFiltersValues((prev) => {
       const updatedFilters = [...prev];
@@ -397,7 +397,7 @@ const FilterBar: React.FC<IFilterBar> = ({
 
   }, [handleChange]);
 
-  const handleDatePickers = useCallback((selection: DateInterval | Date | null, filterId: string) => {
+  const handleDatePickers = useCallback((selection: IDateInterval | Date | null, filterId: string) => {
 
     const updatedDatePickers = [...filtersValues];
     const foundFilter = updatedDatePickers.find((datePicker) => datePicker.id === filterId);

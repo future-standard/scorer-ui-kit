@@ -6,7 +6,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 import { isFilterItem } from '../FilterTypes';
 import { format, add, startOfDay } from 'date-fns';
 import { isDateInterval } from '../../helpers';
-import { DateInterval } from '..';
+import { IDateInterval } from '..';
 
 const Container = styled.div`
   display: flex;
@@ -98,7 +98,7 @@ const renderResults = (template: string, total: number) => {
 };
 
 
-const renderLabel = (item: IFilterItem | DateInterval | Date, resultsDateFormat: string, icon?: string, filterName?: string) => {
+const renderLabel = (item: IFilterItem | IDateInterval | Date, resultsDateFormat: string, icon?: string, filterName?: string) => {
 
   let textLabel: string = "";
   const isDateFormatValid = validateDateFormat(resultsDateFormat);
@@ -130,7 +130,7 @@ const renderLabel = (item: IFilterItem | DateInterval | Date, resultsDateFormat:
 
 export interface IFilterLabel {
   filterId: string
-  item: IFilterItem | Date | DateInterval
+  item: IFilterItem | Date | IDateInterval
   type: IFilterType
   icon?: string
   filterName?: string
@@ -142,7 +142,7 @@ interface IFilterResults {
   resultTextTemplate?: string
   clearText?: string
   resultsDateFormat?: string
-  onRemoveFilter?: (filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => void
+  onRemoveFilter?: (filterId: string, type: IFilterType, item: IFilterItem | Date | IDateInterval) => void
   onClearAll?: () => void
 }
 

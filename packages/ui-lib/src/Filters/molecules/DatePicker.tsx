@@ -7,14 +7,14 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, isAfter, eachWeekO
 import { ja, enUS } from 'date-fns/locale';
 import { resetButtonStyles } from '../../common';
 import Button from '../../Form/atoms/Button';
-import { DateInterval, DateRange } from '..';
+import { IDateInterval, IDateRange } from '..';
 
 /**
  * Convert a single days duration to an interval.
  * @param day The day to convert to an interval
  */
 
-const initializeInterval = (day: Date): DateInterval => {
+const initializeInterval = (day: Date): IDateInterval => {
   return {
     start: set(day, { seconds: 0, milliseconds: 0 }),
     end: endOfDay(day)
@@ -22,7 +22,7 @@ const initializeInterval = (day: Date): DateInterval => {
 };
 
 const TODAY = new Date();
-const TODAY_INTERVAL: DateInterval = initializeInterval(startOfDay(new Date()));
+const TODAY_INTERVAL: IDateInterval = initializeInterval(startOfDay(new Date()));
 
 type CellStates = "off" | "single" | "start" | "end" | "inside" | "hover" | "insideHover";
 type DateMode = "single" | "interval";
@@ -342,7 +342,7 @@ const jpDayGuide: string[] = ['日', '月', '火', '水', '木', '金', '土'];
 
 
 export interface IDatePicker {
-  initialValue?: Date | DateInterval
+  initialValue?: Date | IDateInterval
   dateMode?: DateMode
   timeMode?: TimeMode
   hasEmptyValue?: boolean
@@ -350,14 +350,14 @@ export interface IDatePicker {
   dateTimeTextLower?: string
   timeZoneTitle?: string
   timeZoneValueTitle?: string
-  availableRange?: DateRange
+  availableRange?: IDateRange
   contentDays?: Date[]
   lang?: 'en' | 'ja'
   cancelText?: string
   applyText?: string
   hasApply?: boolean
   disableApply?: boolean
-  updateCallback?: (data: DateInterval | Date) => void
+  updateCallback?: (data: IDateInterval | Date) => void
   applyCallback?: () => void
   cancelCallback?: () => void
 }
@@ -385,7 +385,7 @@ const DatePicker: React.FC<IDatePicker> = ({
 
   // TODO: Have a function to output tidied up data for the configuration.
 
-  const [selectedRange, setSelectedRange] = useState<DateInterval | null>(getInitialValue(hasEmptyValue, initialValue));
+  const [selectedRange, setSelectedRange] = useState<IDateInterval | null>(getInitialValue(hasEmptyValue, initialValue));
   const [focusedMonth, setFocusedMonth] = useState(selectedRange === null ? TODAY : selectedRange.start);
   const [targetedDate, setTargetedDate] = useState<'start' | 'end' | 'done'>('start');
   const [weeksOfMonth, setWeeksOfMonth] = useState<Date[]>([]);
@@ -634,7 +634,7 @@ const updateDay = (date: Date, target: Date) => {
   return newDate;
 };
 
-const getInitialValue = (hasEmptyValue: boolean, initialValue?: Date | DateInterval): DateInterval | null => {
+const getInitialValue = (hasEmptyValue: boolean, initialValue?: Date | IDateInterval): IDateInterval | null => {
   if (hasEmptyValue && initialValue === undefined) {
     return null;
   }
@@ -644,7 +644,7 @@ const getInitialValue = (hasEmptyValue: boolean, initialValue?: Date | DateInter
   return (validInitial instanceof Date) ? initializeInterval(validInitial) : validInitial;
 };
 
-const isPrevMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): boolean => {
+const isPrevMonthOutOfRange = (focusedMonth: Date, availableRange?: IDateRange): boolean => {
   if (!availableRange?.start) return false;
 
   try {
@@ -662,7 +662,7 @@ const isPrevMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): 
   return false;
 };
 
-const isNextMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): boolean => {
+const isNextMonthOutOfRange = (focusedMonth: Date, availableRange?: IDateRange): boolean => {
   if (!availableRange?.end) return false;
 
   try {
@@ -681,7 +681,7 @@ const isNextMonthOutOfRange = (focusedMonth: Date, availableRange?: DateRange): 
 };
 
 
-const isDayOutOfRange = (currentDay: Date, availableRange?: DateRange): boolean => {
+const isDayOutOfRange = (currentDay: Date, availableRange?: IDateRange): boolean => {
   if (!availableRange) return false;
 
   const { start, end } = availableRange;
