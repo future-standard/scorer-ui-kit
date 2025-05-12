@@ -1,4 +1,4 @@
-import DatePicker from './molecules/DatePicker';
+import DatePicker, { IDatePicker } from './molecules/DatePicker';
 import { isDateInterval } from '../helpers';
 import FilterDropdownContainer from './atoms/FilterDropdownContainer';
 import FilterButton from './atoms/FilterButton';
@@ -62,4 +62,5 @@ export type {
   IFilterDatePicker,
   FilterButtonDesign,
   IToggleOption,
+  IDatePicker
 };
