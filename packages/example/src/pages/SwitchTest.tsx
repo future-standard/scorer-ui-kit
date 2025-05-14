@@ -16,8 +16,8 @@ const ExampleWrapper = styled.div`
 `;
 
 const ResponseTitle = styled.div`
-    font-size: 18px;
-    font-weight: 600;
+  font-size: 18px;
+  font-weight: 600;
 `;
 
 const ResponseContent = styled.div`
@@ -28,12 +28,24 @@ interface ApiItem {
   id: number;
   title?: string;
   username?: string;
-  [key: string]: any; // For any other properties that might exist
 }
 
-const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay));
+const mockFetchData = (shouldFail: boolean): Promise<ApiItem[]> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (shouldFail) {
+        reject(new Error('Simulated fetch failure'));
+      } else {
+        resolve([
+          { id: 1, title: 'Mock Product 1' },
+          { id: 2, title: 'Mock Product 2' },
+          { id: 3, title: 'Mock Product 3' },
+        ]);
+      }
+    }, 1500);
+  });
+};
 
-// Then update the state declaration:
 const SwitchWithAPI: React.FC = () => {
   const [controlledChecked, setControlledCheck] = useState<boolean>(false);
   const [data, setData] = useState<ApiItem[] | null>(null);
@@ -42,42 +54,34 @@ const SwitchWithAPI: React.FC = () => {
   const [switchState, setSwitchState] = useState<TypeSwitchState>('default');
   const [showFailScenario, setShowFailScenario] = useState(false);
 
-  const fetchData = useCallback(async (apiUrl: string) => {
-    setLoading(true);
-    setSwitchState('loading');
-    setError(null);
-    await sleep(1500);
-    try {
-      const response = await fetch(apiUrl);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      setSwitchState('default');
-      const responseData = await response.json();
-      setData(responseData);
-      setControlledCheck(!controlledChecked);
-    } catch (err) {
-      setSwitchState('failure');
-      setError('Failed to fetch data');
-      setData(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [controlledChecked, setControlledCheck, setData, setError, setLoading, setSwitchState]);
-
-  const handleSwitchChange = useCallback(async (apiUrl: string) => {
+  const handleSwitchChange = useCallback(async () => {
     setSwitchState('default');
 
-    if (controlledChecked || error !== null) { // turn off switch scenario
+    // Turn off scenario
+    if (controlledChecked || error !== null) {
       setControlledCheck(false);
       setData(null);
       setError(null);
       return;
     }
 
-    await fetchData(apiUrl);
-  }, [controlledChecked, error, fetchData, setControlledCheck, setData, setError, setSwitchState]);
+    setLoading(true);
+    setSwitchState('loading');
+    setError(null);
+
+    try {
+      const responseData = await mockFetchData(showFailScenario);
+      setData(responseData);
+      setControlledCheck(true);
+      setSwitchState('default');
+    } catch (err) {
+      setData(null);
+      setError('Failed to fetch data');
+      setSwitchState('failure');
+    } finally {
+      setLoading(false);
+    }
+  }, [controlledChecked, showFailScenario, error]);
 
   const handleFailScenarioCheck = useCallback((checked: boolean) => {
     setShowFailScenario(checked);
@@ -89,17 +93,13 @@ const SwitchWithAPI: React.FC = () => {
 
   return (
     <Container>
-      <PageHeader
-        title="Switch Component Examples"
-        icon="Settings"
-      />
+      <PageHeader title="Switch Component Examples" icon="Settings" />
 
       <ExampleWrapper>
         <PageHeader
           title="Uncontrolled Component"
           introductionText="This switch uses defaultChecked prop and manages its own state internally"
         />
-
         <SwitchWrapper>
           <Switch
             labelText="Toggle Switch (Uncontrolled)"
@@ -115,13 +115,13 @@ const SwitchWithAPI: React.FC = () => {
           introductionText="This switch uses checked and onChangeCallback props to control its state"
         />
         <Label labelText='Show Fail Scenario' htmlFor='example1' direction='row'>
-          <Checkbox key='example1' checked={showFailScenario} onChangeCallback={handleFailScenarioCheck}></Checkbox>
+          <Checkbox key='example1' checked={showFailScenario} onChangeCallback={handleFailScenarioCheck} />
         </Label>
         <SwitchWrapper>
           <Switch
             labelText="Fetch Data (Controlled)"
             checked={controlledChecked}
-            onChangeCallback={() => handleSwitchChange(showFailScenario ? 'badURL' : 'https://fakestoreapi.com/products')}
+            onChangeCallback={handleSwitchChange}
             state={switchState}
           />
           {loading && <p>Loading...</p>}
