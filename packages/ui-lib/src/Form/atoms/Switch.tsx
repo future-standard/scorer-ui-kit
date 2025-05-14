@@ -205,28 +205,35 @@ const Switch : React.FC<IProps> = ({
   defaultChecked = false
 }) => {
   const isControlled = checked !== undefined;
+  const initialChecked = isControlled ? checked : defaultChecked;
+  const initialPosition = initialChecked ? SwitchPosition.On : SwitchPosition.Off;
+  const initialTheme = initialChecked ? rightTheme : leftTheme;
+
   const [internalChecked, setInternalChecked] = useState(defaultChecked);
   const inputRef = useRef<HTMLInputElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState<SwitchPosition>(isControlled ? (checked ? SwitchPosition.On : SwitchPosition.Off) : (defaultChecked ? SwitchPosition.On : SwitchPosition.Off));
-  const [activeTheming, setActiveTheming] = useState<string>(isControlled ? (checked ? rightTheme : leftTheme) : (defaultChecked ? rightTheme : leftTheme));
+  const [position, setPosition] = useState<SwitchPosition>(initialPosition);
+  const [activeTheming, setActiveTheming] = useState<string>(initialTheme);
   const [switchState, setSwitchState] = useState<TypeSwitchState>('default');
   const [justUpdated, setJustUpdated] = useState<boolean>(false);
   const [innerSize, setInnerSize] = useState<number>(0);
+  
 
-  useEffect(() => {
+  const updateSwitchPositionAndTheme = useCallback(() => {
     if (isControlled) {
       setPosition(checked ? SwitchPosition.On : SwitchPosition.Off);
       setActiveTheming(checked ? rightTheme : leftTheme);
+    } else if (inputRef.current) {
+      inputRef.current.checked = internalChecked;
+      setPosition(internalChecked ? SwitchPosition.On : SwitchPosition.Off);
+      setActiveTheming(internalChecked ? rightTheme : leftTheme);
     }
-    else{
-      if (!isControlled && inputRef.current) {
-        inputRef.current.checked = internalChecked;
-        setPosition(internalChecked ? SwitchPosition.On : SwitchPosition.Off);
-        setActiveTheming(internalChecked ? rightTheme : leftTheme);
-      }
-    }
-  }, [checked, isControlled, leftTheme, rightTheme, internalChecked]);
+  }, [checked, isControlled, internalChecked, leftTheme, rightTheme]);
+
+  useEffect(() => {
+    updateSwitchPositionAndTheme();
+  }, [updateSwitchPositionAndTheme]);
+  
 
   const positionSwitch = useCallback(() => {
     if (isControlled) {
@@ -306,7 +313,7 @@ const Switch : React.FC<IProps> = ({
         </SwitchInner>
       </SwitchOuter>
       {labelText ? <LabelText>{labelText}</LabelText> : null}
-      <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} defaultChecked={!isControlled? defaultChecked : checked} />
+      <RealInput ref={inputRef} type='checkbox' disabled={state !== 'default' && state !== 'failure'} defaultChecked={!isControlled ? defaultChecked : checked} />
     </Container>
     );
 
