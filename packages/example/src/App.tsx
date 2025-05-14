@@ -21,6 +21,7 @@ import GlobalUIPage from './pages/GlobalUIPage';
 import CustomAlertsPage from './pages/CustomAlertsPage';
 import Layouts from './pages/Layouts';
 import SplitLayouts from './pages/SplitLayout';
+import SwitchWithAPI from './pages/SwitchTest';
 
 const App: React.FC<{}> = () => {
   return (
@@ -45,6 +46,7 @@ const App: React.FC<{}> = () => {
         <Route path='/globalUI' exact component={GlobalUIPage} />
         <Route path='/layouts' exact component={Layouts} />
         <Route path='/split-layouts' exact component={SplitLayouts} />
+        <Route path='/switch-test' exact component={SwitchWithAPI} />
       </Switch>
     </Router>
   )
