@@ -91,7 +91,7 @@ interface IFilterDropHandler {
 }
 
 export interface FilterDropHandlerRef {
-  cancelClose: () => void;
+  imperativeClose: () => void;
 }
 
 const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
@@ -153,16 +153,16 @@ const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
       });
     }, [onToggleOpenCallback, openState.isOpen]);
 
-    const handleCancel = useCallback(() => {
+    const handleImperativeClose = useCallback(() => {
       setOpenState((prev) => {
         const isOpen = false;
         return { ...prev, isOpen };
       });
     }, []);
 
-    // Expose cancelClose method via ref
+    // Expose imperativeClose method via ref
     useImperativeHandle(imperativeRef, () => ({
-      cancelClose: handleCancel,
+      imperativeClose: handleImperativeClose,
     }));
 
     return (

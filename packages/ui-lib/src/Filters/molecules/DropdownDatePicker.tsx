@@ -95,7 +95,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
       setMountedPicker({ initialValue: validInitialValue, isMount: false });
     }
     onCancelCallback();
-    DropdownHandlerRef.current?.cancelClose();
+    DropdownHandlerRef.current?.imperativeClose();
   }, [onCancelCallback, selected]);
 
 
@@ -103,7 +103,7 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
     if (pickerValue.current && (pickerValue.current !== selected)) {
       onApplyCallback(pickerValue.current);
     }
-    DropdownHandlerRef.current?.cancelClose();
+    DropdownHandlerRef.current?.imperativeClose();
   },[onApplyCallback, selected]);
 
   /**

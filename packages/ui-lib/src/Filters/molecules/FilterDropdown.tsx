@@ -349,18 +349,17 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
     setTempSelected(selected);
     setDisableReset(true);
     onCancelCallback();
-    DropdownHandlerRef.current?.cancelClose();
+    DropdownHandlerRef.current?.imperativeClose();
   },[onCancelCallback, selected]);
 
   const handleApply = useCallback(()=>{
     setDisableReset(true);
     onApplyCallback(tempSelected);
-    DropdownHandlerRef.current?.cancelClose();
+    DropdownHandlerRef.current?.imperativeClose();
 },[onApplyCallback, tempSelected]);
 
 
 const handleReset = useCallback(() => {
-  console.log('selected', selected);
   if(!hasApply){
     onSelect(selected);
   }
