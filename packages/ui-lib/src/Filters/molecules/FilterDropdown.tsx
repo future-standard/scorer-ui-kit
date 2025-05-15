@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import { IInputOptionsType } from '../../Form';
 import FilterOption from '../../Form/atoms/FilterOption';
@@ -9,7 +9,7 @@ import FilterDropHandler, { FilterDropHandlerRef } from '../atoms/FilterDropHand
 import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 import LoadingBox from '../atoms/LoadingBox';
 import { FilterButtonDesign } from '../FilterTypes';
-import FooterControls, { IFooterControls } from '../atoms/FooterControls';
+import FooterControls, { IFilterFooterControls } from '../atoms/FooterControls';
 
 const Container = styled.div`
   display: inline-block;
@@ -217,7 +217,7 @@ const getResultText = (template: string, visible: number, total: number) => {
 };
 
 const areSelectionsEqual = (tempSelected: IFilterValue, selected: IFilterValue) : boolean => {
-  // If both are null, they are equal
+
   if (tempSelected === null && selected === null) {
     return true;
   }
@@ -245,7 +245,6 @@ const areSelectionsEqual = (tempSelected: IFilterValue, selected: IFilterValue) 
     return false;
   }
 
-  // Both are single IFilterItem objects, compare their values
   return tempSelected.value === selected.value;
 };
 
@@ -266,9 +265,11 @@ export type IFilterDropdownOwn = {
   design?: FilterButtonDesign
   onSelect: (newSelection: IFilterValue) => void;
   onApplyCallback?: (newSelection: IFilterValue) => void;
+  onResetCallback?: () => void
+  onCancelCallback?: () => void
 }
 
-export type IFilterDropdown = IFilterDropdownOwn & IFooterControls
+export type IFilterDropdown = IFilterDropdownOwn & IFilterFooterControls
 
 const FilterDropdown: React.FC<IFilterDropdown> = ({
   buttonIcon,
@@ -285,41 +286,54 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   searchResultText = 'Showing [VISIBLE] of [TOTAL]',
   emptyResultText,
   design = 'default',
-  hasApply,
+  resetText,
+  cancelText,
+  closeText,
+  applyText,
   hasReset,
+  hasApply,
   onSelect = () => { },
-  onApplyCallback,
+  onApplyCallback = () => { },
+  onResetCallback = () => { },
+  onCancelCallback = () => {},
   ...props
 }) => {
 
   const [visibleList, setVisibleList] = useState(selectedOrderList(list, maxDisplayedItems, selected));
   const [searchText, setSearchText] = useState<string>('');
   const [tempSelected, setTempSelected] = useState(selected);
+  const [disableReset, setDisableReset] = useState(true);
 
   const DropdownHandlerRef = useRef<FilterDropHandlerRef>(null);
 
   const handleClose = useCallback(() => {
     setSearchText('');
-    setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
-  }, [list, maxDisplayedItems, selected]);
+    setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected));
+  }, [list, maxDisplayedItems, tempSelected]);
 
   const handleToggleOpen = useCallback(() => {
     setSearchText('');
-    setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
-  }, [list, maxDisplayedItems, selected]);
+    setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected));
+  }, [list, maxDisplayedItems, tempSelected]);
 
   const handleSelection = useCallback((item: IFilterItem) => {
-    const newSelected = getNewSelected(item, selected, optionType);
-    onSelect(newSelected);
+    const newSelected = getNewSelected(item, tempSelected, optionType);
+
+    // onSelect is unavailable if hasApply feature is enabled to prevent misusage
+    if(!hasApply) {
+      onSelect(newSelected);
+    }
     setTempSelected(newSelected);
-  }, [selected, optionType, onSelect]);
+    setVisibleList(selectedOrderList(list, maxDisplayedItems, newSelected));
+    setDisableReset(false);
+  }, [tempSelected, optionType, hasApply, list, maxDisplayedItems, onSelect]);
 
   const handleInputFilter = useCallback((e) => {
     const { value } = e.target;
     setSearchText(value);
 
     if (value === '') {
-      setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
+      setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected));
       return;
     }
 
@@ -328,31 +342,56 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
     // sending null so the filtered list doesn't force the selected values to appear.
     setVisibleList(selectedOrderList(newList, maxDisplayedItems, null));
-  }, [list, maxDisplayedItems, selected]);
+    setDisableReset(false);
+  }, [list, maxDisplayedItems, tempSelected]);
 
-  const handleCancel =useCallback(() => {
+  const handleCancel = useCallback(() => {
+    setTempSelected(selected);
+    setDisableReset(true);
+    onCancelCallback();
     DropdownHandlerRef.current?.cancelClose();
-  },[]);
+  },[onCancelCallback, selected]);
 
   const handleApply = useCallback(()=>{
-    if(onApplyCallback) {
-      onApplyCallback(tempSelected);
-    }
-
+    setDisableReset(true);
+    onApplyCallback(tempSelected);
+    DropdownHandlerRef.current?.cancelClose();
 },[onApplyCallback, tempSelected]);
+
+
+const handleReset = useCallback(() => {
+  console.log('selected', selected);
+  if(!hasApply){
+    onSelect(selected);
+  }
+  setSearchText('');
+  setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
+  setTempSelected(selected);
+  setDisableReset(true);
+  onResetCallback();
+}, [hasApply, list, maxDisplayedItems, onResetCallback, onSelect, selected]);
+
 
   useEffect(() => {
     let isActive = true;
-    if (isActive) {
+    if (isActive && !hasApply) {
       setSearchText(''); // clears searchText if something was selected and the dropdown is still open
-      setVisibleList(selectedOrderList(list, maxDisplayedItems, selected));
+      setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected));
     }
 
     return () => {
       isActive = false;
     };
 
-  }, [list, maxDisplayedItems, selected]);
+  }, [hasApply, list, maxDisplayedItems, tempSelected]);
+
+useEffect(() => {
+  setTempSelected(selected);
+}, [selected]);
+
+const noChangeInSelection = useMemo(() => {
+  return areSelectionsEqual(tempSelected, selected);
+}, [selected, tempSelected]);
 
   return (
     <Container {...props}>
@@ -395,7 +434,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
                           key={index}
                           title={text}
                           onClick={() => handleSelection(item)}
-                          selected={isValueSelected(item, selected)}
+                          selected={isValueSelected(item, tempSelected)}
                           {...{ optionType, value }}
                         />
                       );
@@ -408,10 +447,12 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
           {(hasApply || hasReset) && (
             <FooterControls
-              {...{ hasApply, hasReset }}
+              {...{ hasApply, hasReset, resetText, cancelText, closeText,applyText }}
               onCancel={handleCancel}
               onApply={handleApply}
-              disableApply={areSelectionsEqual(tempSelected, selected)}
+              disableApply={noChangeInSelection}
+              onReset={handleReset}
+              disableReset={disableReset}
             />)
           }
         </FilterDropdownContainer>

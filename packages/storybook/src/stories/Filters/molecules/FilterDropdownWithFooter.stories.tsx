@@ -74,6 +74,7 @@ export const DropdownWithApplyAndReset = () => {
   }, [cancelAction]);
 
   const handleApply = useCallback((newSelection: IFilterValue) => {
+    setSelected(newSelection);
     applyAction(newSelection);
   }, [applyAction]);
 
@@ -96,8 +97,8 @@ export const DropdownWithApplyAndReset = () => {
           searchResultText="Showing [VISIBLE] of [TOTAL]"
           optionType="checkbox"
           onSelect={handleSelect}
-          onReset={handleReset}
-          onCancel={handleCancel}
+          onResetCallback={handleReset}
+          onCancelCallback={handleCancel}
           onApplyCallback={handleApply}
           hasReset={hasReset}
           hasApply={hasApply}

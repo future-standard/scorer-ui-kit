@@ -23,7 +23,13 @@ const FooterRightSection = styled.div`
   gap: 8px;
 `;
 
-export interface IFooterControls {
+interface OwnProps {
+  onReset?: () => void
+  onCancel?: () => void
+  onApply?: () => void
+}
+
+export interface IFilterFooterControls {
   resetText?: string
   cancelText?: string
   closeText?: string
@@ -31,11 +37,10 @@ export interface IFooterControls {
   hasReset?: boolean
   hasApply?: boolean
   disableApply?: boolean
-  isCancellable?: boolean
-  onReset?: () => void
-  onCancel?: () => void
-  onApply?: () => void
+  disableReset?: boolean
 }
+
+type IFooterControls = OwnProps & IFilterFooterControls
 
 const FooterControls: React.FC<IFooterControls> = ({
   resetText = 'Reset',
@@ -45,7 +50,7 @@ const FooterControls: React.FC<IFooterControls> = ({
   hasReset = false,
   hasApply = false,
   disableApply = false,
-  isCancellable = false,
+  disableReset = true,
   onReset = () => { },
   onCancel = () => { },
   onApply = () => { },
@@ -53,14 +58,12 @@ const FooterControls: React.FC<IFooterControls> = ({
   return (
     <FooterContainer>
       <FooterLeftSection>
-        {hasReset && <Button size='small' onClick={onReset}>{resetText}</Button>}
+        {hasReset && <Button size='small' disabled={disableReset} onClick={onReset}>{resetText}</Button>}
       </FooterLeftSection>
       {hasApply && (
         <FooterRightSection>
-          <Button size='small' design='secondary' onClick={onCancel}>{isCancellable ? cancelText: closeText}</Button>
-          <Button size='small' onClick={onApply} disabled={disableApply}>
-            {applyText}
-          </Button>
+          <Button size='small' design='secondary' onClick={onCancel}>{disableApply ? closeText : cancelText }</Button>
+          <Button size='small' onClick={onApply} disabled={disableApply}>{applyText}</Button>
         </FooterRightSection>
       )}
     </FooterContainer>
