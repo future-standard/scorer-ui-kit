@@ -4,7 +4,7 @@ import { PageTitle, Tooltip } from "scorer-ui-kit";
 import { generateIconList } from "../helpers";
 import styled from "styled-components";
 
-export default {
+const TooltipStory = {
   title: 'Alerts/atoms',
   component: Tooltip,
   decorators: []
@@ -68,3 +68,5 @@ export const _Tooltip = () => {
     </Container>
   )
 }
+
+export default TooltipStory;

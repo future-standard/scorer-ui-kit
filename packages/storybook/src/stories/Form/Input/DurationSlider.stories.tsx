@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { DurationSlider, ISliderMark, PageHeader, ITimeUnit } from 'scorer-ui-kit';
 
 
-export default {
+const DurationSliderStory = {
   title: 'Form/Input',
   component: DurationSlider,
   decorators: []
@@ -327,3 +327,5 @@ export const _DurationSlider = () => {
     </Container>
   )
 }
+
+export default DurationSliderStory;

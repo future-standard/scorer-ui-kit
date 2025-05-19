@@ -4,7 +4,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { ISplitButtonProps, ModalProvider, SplitButton, useModal } from 'scorer-ui-kit';
 import styled from "styled-components";
 
-export default {
+const SplitButtonStory = {
   title: 'Form/Buttons',
   component: SplitButton,
   decorators: []
@@ -69,3 +69,5 @@ export const _SplitButton = () => {
     </ModalProvider>
   )
 }
+
+export default SplitButtonStory;

@@ -8,7 +8,7 @@ const Container = styled.div`
   margin: 100px;
 `;
 
-export default {
+const IntroductionTextStory = {
   title: 'Pages/atoms',
   component: IntroductionText,
   decorators: []
@@ -21,3 +21,5 @@ export const _IntroductionText = () => {
   return <Container><IntroductionText>{introductionText}</IntroductionText></Container>;
 
 };
+
+export default IntroductionTextStory;

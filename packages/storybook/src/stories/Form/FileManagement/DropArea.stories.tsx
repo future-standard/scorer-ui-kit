@@ -8,7 +8,7 @@ const Container = styled.div`
   max-width: 500px;
 `;
 
-export default {
+const DropAreaStory = {
   title: 'Form/File Management',
   component: DropArea,
   decorators:[]
@@ -41,3 +41,5 @@ export const _DropArea = () => {
     </Container>
   )
 };
+
+export default DropAreaStory;

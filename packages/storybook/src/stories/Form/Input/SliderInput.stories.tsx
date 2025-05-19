@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {SliderInput, ISliderMark} from 'scorer-ui-kit';
 
 
-export default {
+const SliderInputStory = {
   title: 'Form/Input',
   component: SliderInput,
   decorators: []
@@ -83,3 +83,5 @@ export const _SliderInput = () => {
     </Container>
   )
 }
+
+export default SliderInputStory;

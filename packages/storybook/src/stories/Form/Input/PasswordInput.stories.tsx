@@ -7,7 +7,7 @@ const Container = styled.div`
     margin: 20px;
 `;
 
-export default {
+const PasswordInputStory = {
   title: 'Form/Input',
   component: PasswordField,
   decorators: []
@@ -37,3 +37,5 @@ export const PasswordInput = () => {
   </Container>;
 
 };
+
+export default PasswordInputStory;

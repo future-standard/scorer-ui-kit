@@ -4,7 +4,7 @@ import {  text, select, boolean } from "@storybook/addon-knobs";
 import {Button} from 'scorer-ui-kit';
 
 
-export default {
+const ButtonStory = {
   title: 'Form/Buttons',
   component: Button,
   decorators: []
@@ -20,3 +20,5 @@ export const StandardButton = () => {
 
   return <Button design={buttonDesign} size={buttonSize} shadow={buttonShadow} onClick={buttonOnClick} disabled={buttonDisabled}>{buttonText}</Button>;
 };
+
+export default ButtonStory;
