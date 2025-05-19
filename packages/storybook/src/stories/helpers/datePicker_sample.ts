@@ -1,4 +1,4 @@
-import { DateInterval } from "scorer-ui-kit";
+import { IDateInterval } from "scorer-ui-kit";
 
 const TODAY: Date = new Date();
 const TOMORROW: Date = new Date();
@@ -7,7 +7,7 @@ const TWO_WEEKS_BEFORE: Date = new Date();
 TWO_WEEKS_BEFORE.setDate(TODAY.getDate() - 15);
 
 // Selected example
-const InitialSelectedDate: DateInterval = {
+const InitialSelectedDate: IDateInterval = {
   start: TWO_WEEKS_BEFORE,
   end: TOMORROW
 }

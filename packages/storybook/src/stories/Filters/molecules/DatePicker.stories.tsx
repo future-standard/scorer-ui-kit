@@ -21,7 +21,7 @@ export default {
 const exampleCallback = <T extends Function>(fn: T): T => {
   /** A toString to render the function in storybook */
   // eslint-disable-next-line no-param-reassign
-  fn.toString = () => '   updateCallback: (data: DateInterval | Date) => {}';
+  fn.toString = () => '   updateCallback: (data: IDateInterval | Date) => {}';
   return fn;
 };
 
