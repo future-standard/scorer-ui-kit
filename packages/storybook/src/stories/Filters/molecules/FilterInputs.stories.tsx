@@ -12,7 +12,7 @@ import {
   IFilterLabel,
   IFilterItem,
   IFilterType,
-  DateInterval,
+  IDateInterval,
 } from 'scorer-ui-kit';
 
 import {
@@ -128,7 +128,7 @@ const generateResultsLabelData = (dropdownFilters: IFilterDropdownExt[], searchF
   return labelLists;
 }
 
-const isDifferentValue = (item: IFilterItem | Date | DateInterval, compareItem: IFilterItem | Date | DateInterval) : boolean => {
+const isDifferentValue = (item: IFilterItem | Date | IDateInterval, compareItem: IFilterItem | Date | IDateInterval) : boolean => {
   if(isFilterItem(item) && isFilterItem(compareItem)) {
     return compareItem.value !== item.value;
   }
@@ -240,7 +240,7 @@ export const _FilterInputs = () => {
   }, []);
 
 
-  const onRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | DateInterval) => {
+  const onRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | IDateInterval) => {
     if (type === 'dropdown' ) {
       const foundFilter = dropdownFilters.find((dropdown) => dropdown.id === filterId);
       if (foundFilter && foundFilter.onSelect) {
