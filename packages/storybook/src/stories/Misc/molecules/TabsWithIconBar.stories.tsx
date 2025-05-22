@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { TabsWithIconBar, ITabIcon, PageHeader } from 'scorer-ui-kit';
 import { text, object } from "@storybook/addon-knobs";
 
-export default {
+const TabsWithIconBarStory = {
   title: 'Misc/molecules',
   component: TabsWithIconBar,
   decorators: []
@@ -66,3 +66,5 @@ export const _TabWithIconBar = () => {
     </Container>
   )
 }
+
+export default TabsWithIconBarStory;

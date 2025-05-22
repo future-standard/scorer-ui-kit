@@ -4,7 +4,7 @@ import {  text, select, boolean } from "@storybook/addon-knobs";
 import {ButtonWithIcon} from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';
 
-export default {
+const ButtonWithIconsStory = {
   title: 'Form/Buttons',
   component: ButtonWithIcon,
   decorators: []
@@ -25,3 +25,5 @@ export const _WithIcon = () => {
 
   return <ButtonWithIcon design={buttonDesign} size={buttonSize} shadow={buttonShadow} onClick={buttonOnClick} icon={buttonIcon} position={buttonIconPosition} disabled={buttonDisabled} loading={buttonLoading}>{buttonText}</ButtonWithIcon>;
 };
+
+export default ButtonWithIconsStory;

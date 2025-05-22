@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components';
 import { boolean } from '@storybook/addon-knobs';
 
-export default {
+const SplitLayoutStory = {
   title: 'Global/organisms',
   component: GlobalUI,
   decorators: [
@@ -63,3 +63,5 @@ export const _SplitLayout = () => {
     </Container>
   )
 };
+
+export default SplitLayoutStory;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default {
+const ColorsStory = {
   title: 'Misc',
   decorators: []
 };
@@ -79,3 +79,5 @@ export const _Colors = () => {
     })}
   </Container>;
 };
+
+export default ColorsStory;

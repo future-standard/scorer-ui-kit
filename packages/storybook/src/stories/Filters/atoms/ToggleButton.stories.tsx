@@ -4,7 +4,7 @@ import { boolean, object, select, text } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import styled from "styled-components";
 
-export default {
+const ToggleButtonStory = {
   title: 'Filters/atoms',
   component: ToggleButton,
   decorators: []
@@ -123,3 +123,5 @@ export const _ToggleButton = () => {
     </Container>
   )
 }
+
+export default ToggleButtonStory;

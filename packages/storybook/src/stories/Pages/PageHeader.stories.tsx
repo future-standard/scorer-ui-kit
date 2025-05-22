@@ -9,7 +9,7 @@ const Container = styled.div`
   margin: 100px;
 `;
 
-export default {
+const PageHeaderStory = {
   title: 'Pages/molecules',
   component: PageHeader,
   decorators: []
@@ -99,3 +99,5 @@ export const _PageHeader = () => {
       </Container>;
 
 };
+
+export default PageHeaderStory;

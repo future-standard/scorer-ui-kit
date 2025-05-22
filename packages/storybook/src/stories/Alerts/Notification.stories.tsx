@@ -18,7 +18,7 @@ const Container = styled.div`
   row-gap: 15px;
 `;
 
-export default {
+const NotificationStory = {
   title: 'Alerts/atoms',
   components: useNotification,
   decorator: []
@@ -83,3 +83,5 @@ export const _Notification = () => {
     </Container>
   );
 }
+
+export default NotificationStory;

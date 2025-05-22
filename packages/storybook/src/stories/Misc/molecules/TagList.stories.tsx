@@ -4,7 +4,7 @@ import {TagList, ITag} from 'scorer-ui-kit';
 import {object} from "@storybook/addon-knobs";
 
 
-export default {
+const TagListStory = {
   title: 'Misc/Molecules',
   component: TagList,
   decorators: []
@@ -50,3 +50,5 @@ export const _TagList = () => {
     </Container>
   );
 };
+
+export default TagListStory;

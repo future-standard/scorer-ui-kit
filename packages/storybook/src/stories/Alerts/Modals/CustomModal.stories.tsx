@@ -9,7 +9,7 @@ import {
   IModal,
 } from 'scorer-ui-kit';
 
-export default {
+const CustomModalStory = {
   title: 'Alerts/Modals',
   components: LoginModalExample,
   decorator: []
@@ -57,3 +57,5 @@ export const _CustomExampleModal = () => {
     </Container>
   )
 }
+
+export default CustomModalStory;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {Tag} from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';
 
-export default {
+const TagStory = {
   title: 'Misc/atoms',
   component: Tag,
   decorators: []
@@ -38,3 +38,5 @@ export const _Tag = () => {
     </Container>
   )
 }
+
+export default TagStory;

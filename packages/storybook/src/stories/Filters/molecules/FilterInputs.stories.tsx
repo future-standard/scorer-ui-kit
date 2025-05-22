@@ -32,7 +32,7 @@ import {
   clearJp,
 } from '../../helpers/data_samples';
 
-export default {
+const FilterInputsStory = {
   title: 'Filters/molecules',
   component: 'FilterInputs',
   decorators: []
@@ -274,3 +274,5 @@ export const _FilterInputs = () => {
       />
     </Container>)
 }
+
+export default FilterInputsStory;

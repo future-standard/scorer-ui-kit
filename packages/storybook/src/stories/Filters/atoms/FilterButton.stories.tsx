@@ -4,7 +4,7 @@ import { FilterButton } from 'scorer-ui-kit';
 import styled from 'styled-components';
 import { generateIconList } from '../../helpers';
 
-export default {
+const FilterButtonStory = {
   title: 'Filters/atoms',
   component: FilterButton,
   decorators: []
@@ -31,3 +31,5 @@ export const _FilterButton = () => {
     </FilterButton>
   </Content>
 }
+
+export default FilterButtonStory;

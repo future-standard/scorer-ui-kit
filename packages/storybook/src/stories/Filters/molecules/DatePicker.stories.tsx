@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { boolean, object, select, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -9,7 +9,7 @@ const Container = styled.div`
   margin: 20px;
 `;
 
-export default {
+const DatePickerStory = {
   title: 'Filters/molecules',
   component: DatePicker,
   decorators: [],
@@ -72,3 +72,5 @@ export const _DatePicker = () => {
       </FilterDropdownContainer>
     </Container>);
 };
+
+export default DatePickerStory;

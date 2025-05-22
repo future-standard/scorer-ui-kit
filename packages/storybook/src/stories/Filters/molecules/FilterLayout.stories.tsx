@@ -4,7 +4,7 @@ import { FilterLayout } from 'scorer-ui-kit';
 import { select, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
-export default {
+const FilterLayoutStory = {
   title: 'Filters/molecules',
   component: FilterLayout,
   decorators: []
@@ -54,3 +54,5 @@ export const _FilterLayout = () => {
     </Container>
   )
 }
+
+export default FilterLayoutStory;

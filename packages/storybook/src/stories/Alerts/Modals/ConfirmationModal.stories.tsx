@@ -12,7 +12,7 @@ import { TypeButtonDesigns } from 'scorer-ui-kit/dist/Form';
 
 const Container = styled.div``;
 
-export default {
+const ConfirmationModalStory = {
   title: 'Alerts/Modals',
   components: ConfirmationModal,
   decorator: []
@@ -91,3 +91,5 @@ export const _ConfirmationTemplate = () => {
     </ModalProvider>
   </Container>
 }
+
+export default ConfirmationModalStory;

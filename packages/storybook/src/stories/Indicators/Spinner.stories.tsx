@@ -3,7 +3,7 @@ import { select, text, number } from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {Spinner} from 'scorer-ui-kit';
 
-export default {
+const SpinnerStory = {
   title: 'Misc',
   component: Spinner,
   decorators: []
@@ -36,3 +36,5 @@ export const LoadingSpinner = () => {
     <Spinner size={spinnerSize} styling={spinnerType} custom={{ size: customSize, ...{ baseColor, topColor } }} />
   </Container>;
 };
+
+export default SpinnerStory;

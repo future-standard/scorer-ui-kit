@@ -17,7 +17,7 @@ import {
   ITypeTableData
 } from 'scorer-ui-kit/dist/Tables';
 
-export default {
+const EditableTableStory = {
   title: 'Tables/molecules',
   component: EditableTable,
   decorators: []
@@ -174,3 +174,5 @@ export const _EditableTable = () => {
     </Container>
   )
 };
+
+export default EditableTableStory;

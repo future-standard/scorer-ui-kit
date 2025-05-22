@@ -5,7 +5,7 @@ import {StatusIcon} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
 
 
-export default {
+const StatusIconStory = {
   title: 'Misc',
   component: StatusIcon,
   decorators: []
@@ -30,3 +30,5 @@ export const _Status_Icon = () => {
     </Container>
   );
 }
+
+export default StatusIconStory;

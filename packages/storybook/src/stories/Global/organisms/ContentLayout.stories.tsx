@@ -12,7 +12,7 @@ import {
 import styled from 'styled-components';
 import { select } from '@storybook/addon-knobs';
 
-export default {
+const ContentLayoutStory = {
   title: 'Global/organisms',
   component: GlobalUI,
   decorators: [
@@ -77,3 +77,5 @@ export const _ContentLayout = () => {
     </Container>
   )
 }
+
+export default ContentLayoutStory;
