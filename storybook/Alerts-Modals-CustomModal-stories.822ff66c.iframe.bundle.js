@@ -1,0 +1,21 @@
+"use strict";(self.webpackChunkscorer_ui_kit_storybook=self.webpackChunkscorer_ui_kit_storybook||[]).push([[4406],{"./src/stories/Alerts/Modals/CustomModal.stories.tsx":(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{__webpack_require__.r(__webpack_exports__),__webpack_require__.d(__webpack_exports__,{_CustomExampleModal:()=>_CustomExampleModal,__namedExportsOrder:()=>__namedExportsOrder,default:()=>CustomModal_stories});var react=__webpack_require__("../../node_modules/react/index.js"),styled_components_browser_esm=__webpack_require__("../../node_modules/styled-components/dist/styled-components.browser.esm.js"),index_modern=__webpack_require__("../ui-lib/dist/index.modern.js"),jsx_runtime=__webpack_require__("../../node_modules/react/jsx-runtime.js");const Container=styled_components_browser_esm.Ay.div``,Title=styled_components_browser_esm.Ay.div`
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: var(--grey-11);
+  position:relative;
+  margin-bottom: 45px;
+`,Box=styled_components_browser_esm.Ay.div`
+  margin-top:30px;
+  button{
+    width: 100%;
+  }
+  ${_ref=>{let{margin}=_ref;return margin&&styled_components_browser_esm.AH`margin:${margin};`}}
+  ${_ref2=>{let{flex}=_ref2;return flex&&styled_components_browser_esm.AH`
+    flex:${flex};
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+  `}}
+`,Modals_LoginModalExample=()=>{const[loading,setLoading]=(0,react.useState)(!1),[alert,setAlert]=(0,react.useState)(null),[form,setForm]=(0,react.useState)({username:"",password:""}),onFieldChange=(0,react.useCallback)((key=>_ref3=>{let{target:{value}}=_ref3;setForm({...form,[key]:value})}),[form]),{setModalOpen}=(0,index_modern.hS)(),onLogin=(0,react.useCallback)((params=>{if("user"===params.username&&"fakepass123"===params.password)return!0;throw Error(`The username: ${params.username}  and password provided does not match`)}),[]),onSubmit=(0,react.useCallback)((async params=>{let isSuccess=!1;setLoading(!0),setAlert(null);try{const response=await onLogin(params);console.log(response,"login"),isSuccess=!0}catch(error){error instanceof Error?(console.log(`got error: ${error.message}`),setAlert({message:error.message,type:"error"})):console.warn(error)}return setLoading(!1),isSuccess}),[onLogin]),handleModalSubmit=(0,react.useCallback)((async e=>{e.preventDefault();var params;if(!(""===(params=form).username?(setAlert({message:"User should not be empty",type:"error"}),!1):""!==params.password||(setAlert({message:"Password should not be empty",type:"error"}),!1)))return;await onSubmit(form)&&setModalOpen(!1)}),[onSubmit,setModalOpen,form]);return(0,jsx_runtime.jsx)(Container,{children:(0,jsx_runtime.jsxs)(index_modern.lV,{onSubmit:handleModalSubmit,children:[(0,jsx_runtime.jsx)(Title,{children:"Sign In To Your Account"}),(0,jsx_runtime.jsx)(index_modern.A_,{fieldState:"default",required:!0,label:"Username",onChange:onFieldChange("username"),value:form.username,name:"username",id:"username"}),(0,jsx_runtime.jsx)(index_modern.s3,{fieldState:"default",required:!0,label:"Password",onChange:onFieldChange("password"),value:form.password,name:"password",id:"password"}),alert&&(0,jsx_runtime.jsx)(index_modern.A0,{type:alert.type,message:alert.message}),(0,jsx_runtime.jsx)(Box,{flex:"1",children:(0,jsx_runtime.jsx)(index_modern.lx,{loading,type:"submit",onClick:handleModalSubmit,children:"Login"})})]})})},CustomModalStory={title:"Alerts/Modals",components:Modals_LoginModalExample,decorator:[]},CustomModal_stories_Container=styled_components_browser_esm.Ay.div``,LoginModal=modal=>{const{createModal}=(0,index_modern.hS)(),FormModal=(0,jsx_runtime.jsx)(Modals_LoginModalExample,{});return(0,jsx_runtime.jsx)(index_modern.$n,{design:"secondary",onClick:()=>{createModal({customComponent:FormModal})},children:"Form Modal"})},_CustomExampleModal=()=>(0,jsx_runtime.jsx)(CustomModal_stories_Container,{children:(0,jsx_runtime.jsx)(index_modern.Zn,{children:(0,jsx_runtime.jsx)(LoginModal,{})})}),CustomModal_stories=CustomModalStory,__namedExportsOrder=["_CustomExampleModal"]}}]);
+//# sourceMappingURL=Alerts-Modals-CustomModal-stories.822ff66c.iframe.bundle.js.map
