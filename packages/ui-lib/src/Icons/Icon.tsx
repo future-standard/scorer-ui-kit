@@ -6,7 +6,7 @@ import { dimensions } from '../theme/common';
 
 
 const wrapperCss = css`
-  
+
   line-height: 0;
 
   svg {

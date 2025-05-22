@@ -12,7 +12,7 @@ const ButtonStory = {
 
 export const StandardButton = () => {
   const buttonText = text("Button Text", "Example Title");
-  const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
+  const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger", TextOnly: "text-only", Outline: 'outline' }, "primary");
   const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "normal");
   const buttonDisabled = boolean("Disabled", false);
   const buttonShadow = boolean("Shadow", false);

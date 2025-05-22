@@ -3,19 +3,11 @@ import styled, { css } from 'styled-components';
 
 import Button from './Button';
 import Spinner from '../../Indicators/Spinner';
-import { TypeButtonDesigns, IButtonProps, TypeButtonSizes } from '..';
+import { TypeButtonDesigns, IButtonProps, TypeButtonSizes} from '..';
 
 
-const Container = styled.div<{ $loading: boolean }>`
+const Container = styled.div`
   display: inline;
-  ${({$loading}) => $loading && css`
-    button {
-      cursor: wait;
-      &:disabled {
-        opacity: 1;
-      }
-    }
-  `};
 `;
 
 const TextContainer = styled.div`
@@ -49,9 +41,9 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
 
   ${({ position }) => css`
     order: ${ position && position === 'left' ? 0 : 2 };
-    ${ position === 'left' 
-      ? `border-right-width: 1px;` 
-      : `border-left-width: 1px;` 
+    ${ position === 'left'
+      ? `border-right-width: 1px;`
+      : `border-left-width: 1px;`
     };
   `}
 
@@ -82,14 +74,13 @@ const InnerContainer = styled.div<{position?: string, $loading: boolean, design:
 
 interface IProps extends IButtonProps {
   position?: 'left' | 'right'
-  loading: boolean
   shadow?: boolean
 }
 
-const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', shadow = false, onClick, disabled, position, loading, children,...rest}) => {
+const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', shadow = false, onClick, disabled, position, loading=false, children,...rest}) => {
   return (
-    <Container $loading={loading}>
-      <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick}} {...rest}>
+    <Container>
+      <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading}} {...rest}>
         <InnerContainer $loading={loading} {...{ design, size}}>
           <TextContainer>{children}</TextContainer>
           <LoadingContainer {...{ design, position }}>

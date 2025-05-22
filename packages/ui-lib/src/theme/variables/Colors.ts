@@ -536,16 +536,16 @@ export const colorVariables = css`
     /* Spinner */
     --spinner-primary-base: var(--primary-6);
     --spinner-primary-top: var(--white-1);
-    
+
     --spinner-secondary-base: var(--grey-8);
     --spinner-secondary-top: var(--white-1);
-    
+
     --spinner-simple-base: var(--grey-a8);
     --spinner-simple-top: var(--white-1);
-    
+
     --spinner-warning-base: var(--warning-8);
     --spinner-warning-top: var(--white-1);
-    
+
     /* Global */
     --main-background-gradient: radial-gradient(200% 200% at 50% -10%, var(--grey-2) 0%, var(--grey-3) 100%);
     --main-background-color: var(--grey-3);
@@ -561,7 +561,7 @@ export const colorVariables = css`
     --warning-gradient-start: var(--warning-9);
     --warning-gradient-end: var(--warning-10);
     --warning-gradient: linear-gradient(135deg, var(--warning-gradient-start), var(--warning-gradient-end));
-    
+
     --dividing-line: var(--grey-4);
     --global-element-background: var(--grey-2);
     --global-menu-icon-background-default: transparent;
@@ -573,7 +573,7 @@ export const colorVariables = css`
     --input-color-disabled: var(--grey-10);
     --input-color-placeholder: var(--grey-10);
     --input-color-unit: var(--grey-10);
-        
+
     --input-default-background-color: var(--grey-1);
     --input-default-border-color: var(--grey-6);
     --input-default-shadow-color: transparent;
@@ -624,28 +624,28 @@ export const colorVariables = css`
 
     /* Checkboxes and Radio Buttons */
     --input-toggle-icon-color: var(--white-12);
-    
+
     --input-toggle-unchecked-border-color: var(--grey-8);
     --input-toggle-unchecked-background-color: transparent;
-    
+
     --input-toggle-checked-border-color: var(--primary-9);
     --input-toggle-checked-background-color: var(--primary-9);
-    
-    
+
+
     --input-toggle-unchecked-hover-border-color: var(--primary-9);
     --input-toggle-unchecked-hover-background-color: transparent;
-    
+
     --input-toggle-checked-hover-border-color: var(--primary-7);
     --input-toggle-checked-hover-background-color: var(--primary-7);
-    
-    
+
+
     --input-toggle-unchecked-disabled-border-color: var(--grey-7);
     --input-toggle-unchecked-disabled-background-color: transparent;
 
     --input-toggle-checked-disabled-border-color: var(--grey-7);
     --input-toggle-checked-disabled-background-color: var(--grey-7);
 
-    
+
     --input-toggle-intermediate-border-color: var(--primary-11);
     --input-toggle-intermediate-background-color: var(--primary-11);
 
@@ -672,7 +672,7 @@ export const colorVariables = css`
 
     --filter-dropdown-background-color: color-mix(in srgb, var(--grey-1) 82%, transparent);
     --filter-dropdown-background-color-fallback: var(--grey-3);
-    --filter-dropdown-accent: var(--primary-a9); 
+    --filter-dropdown-accent: var(--primary-a9);
 
   }
 
@@ -689,12 +689,17 @@ export const colorVariables = css`
   .light-theme, .dark-theme {
     --button-background-color: var(--primary-9);
     --button-border-color: var(--primary-9);
+    --button-border-width: 1px;
     --button-inner-shadow-color: transparent;
     --button-drop-shadow-color: var(--shadow-primary-default);
     --button-text-color: var(--white-1);
     --button-divider-color: var(--primary-a3);
+
     --button-loading-area-background-color: var(--primary-a7);
     --button-loading-area-divider-color: var(--primary-a8);
+    --button-loading-text-color: var(--white-1);
+    --button-disabled-border-color: var(--button-border-color);
+    --button-disabled-text-color: var(--white-1);
 
     --button-hover-background-color: var(--primary-8);
     --button-hover-border-color: var(--primary-a6);
@@ -722,9 +727,10 @@ export const colorVariables = css`
       --button-drop-shadow-color: var(--shadow-secondary-default);
       --button-text-color: var(--grey-12);
       --button-divider-color: var(--grey-a3);
-      
+
       --button-loading-area-background-color: var(--grey-a4);
       --button-loading-area-divider-color: var(--grey-a3);
+      --button-disabled-border-color: var(--button-border-color);
 
       --button-hover-background-color: var(--grey-8);
       --button-hover-border-color: var(--grey-a6);
@@ -737,7 +743,7 @@ export const colorVariables = css`
       --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
       --button-active-drop-shadow-color: var(--button-hover-drop-shadow-color);
       --button-active-text-color: var(--white-1);
-      
+
       --button-gradient-start: var(--secondary-gradient-start);
       --button-gradient-end: var(--secondary-gradient-end);
     }
@@ -752,6 +758,7 @@ export const colorVariables = css`
 
       --button-loading-area-background-color: var(--warning-a7);
       --button-loading-area-divider-color: var(--warning-a9);
+      --button-disabled-border-color: var(--button-border-color);
 
       --button-hover-background-color: var(--warning-8);
       --button-hover-border-color: var(--warning-a6);
@@ -764,9 +771,68 @@ export const colorVariables = css`
       --button-active-inner-shadow-color: var(--button-hover-inner-shadow-color);
       --button-active-drop-shadow-color: var(--button-hover-drop-shadow-color);
       --button-active-text-color: var(--white-1);
-      
+
       --button-gradient-start: var(--warning-gradient-start);
       --button-gradient-end: var(--warning-gradient-end);
+    }
+
+    .button-design-text-only {
+      --button-background-color: transparent;
+      --button-border-color: transparent;
+      --button-inner-shadow-color: transparent;
+      --button-gradient-start: transparent;
+      --button-gradient-end: transparent;
+      --button-drop-shadow-color: transparent;
+      --button-text-color: var(--grey-12);
+      --button-divider-color: transparent;
+
+      --button-loading-area-background-color: transparent;
+      --button-loading-area-divider-color: transparent;
+      --button-loading-text-color: var(--grey-8);
+      --button-disabled-border-color: transparent;
+      --button-disabled-text-color: var(--grey-8);
+
+      --button-hover-background-color: transparent;
+      --button-hover-border-color: transparent;
+      --button-hover-text-color: var(--primary-9);
+      --button-hover-drop-shadow-color: transparent;
+      --button-hover-inner-shadow-color: transparent;
+
+      --button-active-inner-shadow-color: transparent;
+      --button-active-drop-shadow-color: transparent;
+      --button-active-background-color: transparent;
+      --button-active-border-color: transparent;
+      --button-active-text-color: var(--primary-10);
+    }
+
+    .button-design-outline {
+      --button-background-color: transparent;
+      --button-border-color: var(--grey-11);
+      --button-border-width: 2px;
+      --button-inner-shadow-color: transparent;
+      --button-gradient-start: transparent;
+      --button-gradient-end: transparent;
+      --button-drop-shadow-color: var(--grey-a3);
+      --button-divider-color: var(--grey-a3);
+      --button-text-color: var(--grey-12);
+
+      --button-loading-area-background-color: transparent;
+      --button-loading-area-divider-color: var(--grey-a3);
+      --button-loading-text-color: var(--grey-10);
+      --button-disabled-border-color: var(--grey-a6);
+      --button-disabled-text-color: var(--grey-12);
+
+      --button-hover-background-color: transparent;
+      --button-hover-border-color: var(--primary-9);
+      --button-hover-text-color: var(--primary-9);
+      --button-hover-drop-shadow-color: var(--grey-a4);
+      --button-hover-inner-shadow-color: transparent;
+
+      --button-active-inner-shadow-color: transparent;
+      --button-active-drop-shadow-color: transparent;
+      --button-active-background-color: transparent;
+      --button-active-border-color: var(--primary-11);
+      --button-active-text-color: var(--primary-11);
     }
 
   }
@@ -781,25 +847,25 @@ export const colorVariables = css`
     --switch-disabled-off-background: var(--grey-3);
     --switch-disabled-on-background: var(--primary-8);
     --switch-disabled-danger-background: var(--warning-8);
-    
+
     // Border
     --switch-default-off-border: var(--grey-7);
     --switch-default-on-border: var(--primary-9);
     --switch-default-danger-border: var(--warning-9);
-    
+
     --switch-disabled-off-border: var(--grey-6);
     --switch-disabled-on-border: var(--primary-a6);
     --switch-disabled-danger-border: var(--warning-a6);
-    
+
     // Inner
     --switch-default-off-inner: var(--primary-9);
     --switch-default-on-inner: var(--white-12);
     --switch-default-danger-inner: var(--white-12);
-    
+
     --switch-disabled-off-inner: var(--grey-7);
     --switch-disabled-on-inner: var(--primary-a9);
     --switch-disabled-danger-inner: var(--warning-a9);
-    
+
     // Special States
     --switch-special-locked-background: var(--grey-3);
     --switch-special-locked-border: var(--grey-11);
@@ -818,7 +884,7 @@ export const colorVariables = css`
     --switch-default-off-background: var(--grey-2);
     --switch-default-on-background: var(--primary-7);
     --switch-default-danger-background: var(--warning-9);
-    
+
     --switch-disabled-off-background: var(--grey-3);
     --switch-disabled-on-background: var(--primary-6);
     --switch-disabled-danger-background: var(--warning-8);
@@ -827,11 +893,11 @@ export const colorVariables = css`
     --switch-default-off-border: var(--grey-6);
     --switch-default-on-border: var(--primary-7);
     --switch-default-danger-border: var(--warning-9);
-    
+
     --switch-disabled-off-border: var(--grey-6);
     --switch-disabled-on-border: var(--primary-7);
     --switch-disabled-danger-border: var(--warning-a5);
-    
+
     // Inner
     --switch-default-off-inner: var(--primary-9);
     --switch-default-on-inner: var(--white-12);
@@ -840,7 +906,7 @@ export const colorVariables = css`
     --switch-disabled-off-inner: var(--grey-7);
     --switch-disabled-on-inner: var(--primary-9);
     --switch-disabled-danger-inner: var(--warning-a8);
-    
+
     // Special States
     --switch-special-locked-background: var(--grey-3);
     --switch-special-locked-border: var(--grey-8);

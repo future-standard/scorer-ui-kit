@@ -4,7 +4,7 @@ const BaseStyles = css`
 
   * , body{
     box-sizing: border-box;
-    text-rendering: geometricPrecision; 
+    text-rendering: geometricPrecision;
   }
   body, html , #root {
     min-width: 100%;
@@ -18,7 +18,7 @@ const BaseStyles = css`
     background: var(--main-background-gradient);
     background-attachment: fixed;
   }
-  
+
 `;
 
 export {
