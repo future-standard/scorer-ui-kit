@@ -3,7 +3,7 @@ import { boolean, number, object, text } from '@storybook/addon-knobs';
 import React, { useEffect, useState } from 'react';
 import {Pagination}  from 'scorer-ui-kit';
 
-export default {
+const PaginationStory = {
   title: 'Misc/Molecules',
   component: Pagination,
   decorators: []
@@ -62,3 +62,5 @@ export const _Pagination = () => {
     />
   )
 }
+
+export default PaginationStory;

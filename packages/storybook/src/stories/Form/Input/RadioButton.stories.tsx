@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { boolean, text } from "@storybook/addon-knobs";
 import { RadioButton, Label } from 'scorer-ui-kit';
 
-export default {
+const RadioButtonStory = {
   title: 'Form/Input',
   component: RadioButton,
   decorators: []
@@ -48,3 +48,5 @@ export const _RadioButton = () => {
     </Container>)
 
 }
+
+export default RadioButtonStory;

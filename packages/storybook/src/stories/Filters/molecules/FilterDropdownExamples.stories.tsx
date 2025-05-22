@@ -17,7 +17,7 @@ import {
 } from '../../helpers/data_samples';
 import { generateIconList } from '../../helpers';
 
-export default {
+const FilterDropdownStory = {
   title: 'Filters/molecules/FilterDropdown',
   component: FilterDropdown,
   decorators: []
@@ -284,3 +284,5 @@ export const MultipleDropdownExamples = () => {
     </Wrapper>
   </Content>
 };
+
+export default FilterDropdownStory;

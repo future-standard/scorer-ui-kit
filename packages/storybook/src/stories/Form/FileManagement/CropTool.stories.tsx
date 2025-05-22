@@ -14,7 +14,7 @@ const CropResult = styled.img`
 
 const NewImageArea = styled.div``;
 
-export default {
+const CropToolStory = {
   title: 'Form/File Management',
   component: CropTool,
   decorators: [],
@@ -76,3 +76,5 @@ export const _CropTool = () => {
     </Container>
   )
 };
+
+export default CropToolStory;

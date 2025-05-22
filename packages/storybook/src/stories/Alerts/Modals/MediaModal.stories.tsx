@@ -8,7 +8,7 @@ import {
 } from 'scorer-ui-kit';
 import { boolean, text } from '@storybook/addon-knobs';
 
-export default {
+const MediaModalStory = {
   title: 'Alerts/Modals',
   components: MediaBox,
   decorator: []
@@ -58,3 +58,5 @@ export const _MediaModal = () => {
     </Container>
   )
 }
+
+export default MediaModalStory;

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { boolean, object, select, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -9,7 +9,7 @@ const Container = styled.div`
   margin: 20px;
 `;
 
-export default {
+const DatePickerStory = {
   title: 'Filters/molecules',
   component: DatePicker,
   decorators: [],
@@ -21,7 +21,7 @@ export default {
 const exampleCallback = <T extends Function>(fn: T): T => {
   /** A toString to render the function in storybook */
   // eslint-disable-next-line no-param-reassign
-  fn.toString = () => '   updateCallback: (data: DateInterval | Date) => {}';
+  fn.toString = () => '   updateCallback: (data: IDateInterval | Date) => {}';
   return fn;
 };
 
@@ -72,3 +72,5 @@ export const _DatePicker = () => {
       </FilterDropdownContainer>
     </Container>);
 };
+
+export default DatePickerStory;

@@ -5,7 +5,7 @@ import { text, boolean, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import { emptyCallbackForStory } from '../../helpers';
 
-export default {
+const DebouncedSearcherStory = {
   title: 'Misc/molecules',
   component: DebouncedSearcher,
   decorators: [],
@@ -42,3 +42,5 @@ export const _DebouncedSearcher = () => {
     </Container>
   )
 }
+
+export default DebouncedSearcherStory;

@@ -9,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 const video = 'https://future-standard.github.io/scorer-ui-kit/traffic.mp4'
 
 
-export default {
+const TableRowThumbnailStory = {
   title: 'Tables/atoms',
   component: TableRowThumbnail,
   decorators: []
@@ -48,3 +48,5 @@ export const _RowThumbnail = () => {
     </Container>
   )
 };
+
+export default TableRowThumbnailStory;

@@ -5,7 +5,7 @@ import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
 import { text, object, boolean } from '@storybook/addon-knobs';
 
-export default {
+const MainMenuStory = {
   title: 'Global',
   component: MainMenu,
   decorators: [
@@ -103,3 +103,5 @@ export const _MainMenu = () => {
     </Layout>
   );
 };
+
+export default MainMenuStory;

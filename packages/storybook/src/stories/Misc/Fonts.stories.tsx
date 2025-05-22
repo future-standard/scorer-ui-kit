@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import {  select } from "@storybook/addon-knobs";
 
-export default {
+const FontsStory = {
   title: 'Misc',
   decorators: []
 };
@@ -181,3 +181,5 @@ export const _FontSheet = () => {
     
   </Container>;
 };
+
+export default FontsStory;

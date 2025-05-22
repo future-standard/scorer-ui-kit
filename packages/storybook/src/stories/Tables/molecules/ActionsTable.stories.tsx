@@ -31,7 +31,7 @@ const TimeText = styled.div`
   }
 `;
 
-export default {
+const ActionsTableStory = {
   title: 'Tables/molecules',
   component: TypeTableCustom,
   decorators: []
@@ -226,3 +226,5 @@ export const ActionsTable = () => {
     </Container>
   )
 };
+
+export default ActionsTableStory;

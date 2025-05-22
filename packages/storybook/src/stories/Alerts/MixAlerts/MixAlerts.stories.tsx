@@ -17,7 +17,7 @@ const Container = styled.div`
   row-gap: 15px;
 `;
 
-export default {
+const MixAlertsStory = {
   title: 'Alerts/Mix',
   components: useNotification,
   decorator: []
@@ -60,3 +60,5 @@ export const _MixAlertsExample = () => {
     </Container>
   );
 }
+
+export default MixAlertsStory;

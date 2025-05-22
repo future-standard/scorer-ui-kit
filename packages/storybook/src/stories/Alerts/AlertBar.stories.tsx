@@ -8,11 +8,11 @@ const Container = styled.div`
   margin: 100px;
 `;
 
-export default {
+const AlertBarStory = {
   title: 'Alerts/atoms',
   component: AlertBar,
   decorators: []
-};
+}
 
 export const _AlertBar = () => {
   const message = text("Message", 'Look Out!');
@@ -22,3 +22,5 @@ export const _AlertBar = () => {
   return <Container><AlertBar {...{message, type, hideCloseButton}} ></AlertBar></Container>;
 
 };
+
+export default AlertBarStory;

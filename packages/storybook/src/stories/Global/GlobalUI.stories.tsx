@@ -32,7 +32,7 @@ import logoTextSvg from '../assets/logo-text.svg';
 import { text, object, boolean, select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
-export default {
+const GlobalUIStory = {
   title: 'Global',
   component: GlobalUI,
   parameters: {
@@ -585,3 +585,5 @@ export const _GlobalUI = () => {
     </Container>
   )
 }
+
+export default GlobalUIStory;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {  boolean, text } from "@storybook/addon-knobs";
 import {TableHeaderTitle} from 'scorer-ui-kit';
 
-export default {
+const TableHeaderTitleStory = {
   title: 'Tables/atoms',
   component: TableHeaderTitle,
   decorators: []
@@ -48,3 +48,5 @@ export const _TableHeaderTitle = () => {
   </Container>
 
 };
+
+export default TableHeaderTitleStory;

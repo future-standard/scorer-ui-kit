@@ -4,7 +4,7 @@ import { text, select } from "@storybook/addon-knobs";
 import {EditCell} from 'scorer-ui-kit';
 import {sleep} from '../../helpers';
 
-export default {
+const EditableCellStory = {
   title: 'Tables/atoms',
   component: EditCell,
   decorators: []
@@ -53,3 +53,5 @@ export const _EditCell = () => {
       />
   </Container>
 };
+
+export default EditableCellStory;

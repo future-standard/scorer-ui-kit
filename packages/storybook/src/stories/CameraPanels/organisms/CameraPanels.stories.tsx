@@ -6,7 +6,7 @@ import { generateIconList } from '../../helpers';
 import Photo from '../../assets/placeholder.jpg';
 import { action } from '@storybook/addon-actions';
 
-export default {
+const CameraPanelsStory = {
   title: 'CameraPanels/organisms',
   component: CameraPanels,
   decorators: []
@@ -143,3 +143,5 @@ export const _CameraPanels = () => {
     </Container>
   )
 }
+
+export default CameraPanelsStory;

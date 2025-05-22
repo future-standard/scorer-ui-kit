@@ -4,7 +4,7 @@ import {  text, select, boolean } from "@storybook/addon-knobs";
 import {ButtonWithLoading} from 'scorer-ui-kit';
 
 
-export default {
+const ButtonWithLoadingStory = {
   title: 'Form/Buttons',
   component: ButtonWithLoading,
   decorators: []
@@ -22,3 +22,5 @@ export const _WithLoading = () => {
 
   return <ButtonWithLoading design={buttonDesign} size={buttonSize} shadow={buttonShadow} onClick={buttonOnClick} loading={buttonLoading} position={buttonLoadingPosition} disabled={buttonDisabled}>{buttonText}</ButtonWithLoading>;
 };
+
+export default ButtonWithLoadingStory;

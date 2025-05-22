@@ -10,7 +10,7 @@ import {
 
 import styled from 'styled-components';
 
-export default {
+const NestedSplitLayoutStory = {
   title: 'Global/organisms',
   component: GlobalUI,
   decorators: [
@@ -59,3 +59,5 @@ export const _SplitLayoutNested = () => {
     </Container>
   )
 };
+
+export default NestedSplitLayoutStory;

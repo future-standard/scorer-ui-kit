@@ -4,7 +4,7 @@ import { IFilterItem, SortDropdown } from 'scorer-ui-kit';
 import { boolean, object, select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
-export default {
+const SortDropdownStory = {
   title: 'Filters/molecules',
   component: SortDropdown,
   decorators: [],
@@ -68,3 +68,5 @@ export const _SortDropdown = () => {
     </Container>
   )
 }
+
+export default SortDropdownStory;

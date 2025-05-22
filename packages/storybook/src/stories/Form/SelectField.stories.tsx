@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { SelectField, SelectWrapper} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
 
-export default {
+const SelectFieldStory = {
   title: 'Form/atoms',
   component: SelectField,
   decorators: []
@@ -132,3 +132,5 @@ export const _SelectField = () => {
     </Container>
   );
 }
+
+export default SelectFieldStory;
