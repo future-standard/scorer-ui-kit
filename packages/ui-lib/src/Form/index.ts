@@ -59,7 +59,7 @@ export {
 };
 
 export type TypeFieldState = 'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing';
-export type TypeButtonDesigns = 'primary' | 'secondary' | 'warning' | 'danger';
+export type TypeButtonDesigns = 'primary' | 'secondary' | 'warning' | 'danger' | 'text-only' | 'outline';
 export type TypeButtonSizes = 'xsmall' | 'small' | 'normal' | 'large';
 export type ISelectSizes = 'small' | 'normal';
 export type IInputOptionsType = "text" | "checkbox" | "radio";
@@ -70,6 +70,7 @@ export type TypeLabelDirection = 'column' | 'row' | 'row-reverse';
 interface ButtonProps {
   size?: TypeButtonSizes
   design?: TypeButtonDesigns
+  loading?: boolean
 }
 
 export type IButtonProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
