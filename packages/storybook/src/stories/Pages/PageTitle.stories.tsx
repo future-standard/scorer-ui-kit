@@ -9,7 +9,7 @@ const Container = styled.div`
   margin: 100px;
 `;
 
-export default {
+const PageTitleStory = {
   title: 'Pages/atoms',
   component: PageTitle,
   decorators: []
@@ -29,3 +29,5 @@ export const _PageTitle = () => {
   return <Container><PageTitle {...{title, areaTitle, areaHref, areaTitleBottom, iconColor}} icon={icon || undefined} /></Container>;
 
 };
+
+export default PageTitleStory;

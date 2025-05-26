@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {PercentageSlider, ISliderMark, IFeedbackColor} from 'scorer-ui-kit';
 
 
-export default {
+const PercentageSliderStory = {
   title: 'Form/Input',
   component: PercentageSlider,
   decorators: []
@@ -98,3 +98,5 @@ export const _PercentageSlider = () => {
     </Container>
   )
 }
+
+export default PercentageSliderStory;

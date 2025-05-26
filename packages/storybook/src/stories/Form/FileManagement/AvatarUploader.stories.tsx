@@ -6,7 +6,7 @@ import { text, boolean } from "@storybook/addon-knobs";
 
 const Container = styled.div``;
 
-export default {
+const AvatarUploaderStory = {
   title: 'Form/File Management',
   component: AvatarUploader,
   decorators: []
@@ -66,3 +66,5 @@ export const _AvatarUploader = () => {
     </Container>
   )
 };
+
+export default AvatarUploaderStory;

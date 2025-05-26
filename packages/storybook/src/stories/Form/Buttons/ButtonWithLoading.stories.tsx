@@ -4,7 +4,7 @@ import {  text, select, boolean } from "@storybook/addon-knobs";
 import {ButtonWithLoading} from 'scorer-ui-kit';
 
 
-export default {
+const ButtonWithLoadingStory = {
   title: 'Form/Buttons',
   component: ButtonWithLoading,
   decorators: []
@@ -12,7 +12,7 @@ export default {
 
 export const _WithLoading = () => {
   const buttonText = text("Button Text", "Example Title");
-  const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
+  const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger", TextOnly: "text-only", Outline: 'outline' }, "primary");
   const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "normal");
   const buttonDisabled = boolean("Disabled", false);
   const buttonLoading = boolean("Loading", true);
@@ -22,3 +22,5 @@ export const _WithLoading = () => {
 
   return <ButtonWithLoading design={buttonDesign} size={buttonSize} shadow={buttonShadow} onClick={buttonOnClick} loading={buttonLoading} position={buttonLoadingPosition} disabled={buttonDisabled}>{buttonText}</ButtonWithLoading>;
 };
+
+export default ButtonWithLoadingStory;

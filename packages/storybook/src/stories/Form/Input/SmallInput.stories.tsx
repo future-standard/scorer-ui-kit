@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {  text, select, boolean } from "@storybook/addon-knobs";
 import {SmallInput} from 'scorer-ui-kit';
 
-export default {
+const SmallInputStory = {
   title: 'Form/Input',
   component: SmallInput,
   decorators: []
@@ -39,3 +39,5 @@ export const _SmallInput = () => {
   </Container>;
 
 };
+
+export default SmallInputStory;

@@ -7,7 +7,7 @@ const Container = styled.div`
   margin: 20px;
 `;
 
-export default {
+const TextAreaFieldStory = {
   title: 'Form/Input',
   component: TextAreaField,
   decorators: []
@@ -43,3 +43,5 @@ export const _TextAreaField = () => {
       ></TextAreaField>
     </Container>
 };
+
+export default TextAreaFieldStory;

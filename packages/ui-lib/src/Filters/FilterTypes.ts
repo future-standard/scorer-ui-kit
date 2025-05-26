@@ -1,8 +1,8 @@
 import { IInputOptionsType } from '../Form';
 import { IBasicSearchInput } from '../Misc/atoms/BasicSearchInput';
-import { DateInterval } from './molecules/DatePicker';
 import { IDropdownDatePicker } from './molecules/DropdownDatePicker';
 import { IFilterDropdown } from './molecules/FilterDropdown';
+import { IDateInterval } from '.';
 
 type IFilterItem = { text: string; value: string | number; }
 type IFilterValue = IFilterItem | IFilterItem[] | null;
@@ -28,7 +28,7 @@ const isFilterItem = (item: any): item is IFilterItem => {
 interface IFilterResult {
   id: string
   type: IFilterType
-  selected: IFilterItem | IFilterItem[] | DateInterval | Date | null;
+  selected: IFilterItem | IFilterItem[] | IDateInterval | Date | null;
 }
 
 interface ISearchFilter extends IBasicSearchInput {

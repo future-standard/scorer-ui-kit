@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { text, select, boolean } from "@storybook/addon-knobs";
 import {Switch} from 'scorer-ui-kit';
 
-export default {
+const SwitchStory = {
   title: 'Form/atoms',
   component: Switch,
   decorators: []
@@ -20,3 +20,5 @@ export const _Switch = () => {
 
   return <Switch {...{state, leftTheme, rightTheme, labelText, checked, onChangeCallback}} />;
 };
+
+export default SwitchStory;

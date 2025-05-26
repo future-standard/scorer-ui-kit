@@ -6,7 +6,7 @@ import {
 import styled from 'styled-components';
 import { object, boolean } from '@storybook/addon-knobs';
 
-export default {
+const UtilityHeaderStory = {
   title: 'Global/molecules',
   component: UtilityHeader,
   decorators: [
@@ -64,3 +64,5 @@ export const _UtilityHeader = () => {
     </Container>
   )
 }
+
+export default UtilityHeaderStory;

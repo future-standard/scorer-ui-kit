@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { boolean } from "@storybook/addon-knobs";
 import {Checkbox} from 'scorer-ui-kit';
 
-export default {
+const CheckboxStory = {
   title: 'Form/atoms',
   component: Checkbox,
   decorators: []
@@ -18,3 +18,5 @@ export const _Checkbox = () => {
 
   return <Checkbox {...{checked, disabled, onChange}} />;
 };
+
+export default CheckboxStory;

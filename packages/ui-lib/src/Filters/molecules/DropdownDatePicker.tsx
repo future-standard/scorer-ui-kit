@@ -1,9 +1,10 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
-import DatePicker, { DateInterval, IDatePicker } from './DatePicker';
+import DatePicker from './DatePicker';
 import FilterDropHandler, { FilterDropHandlerRef } from '../atoms/FilterDropHandler';
 import { areDatesEqual } from '../../helpers';
+import { IDateInterval, IDatePicker } from '..';
 
 const MIN_WIDTH = 470;
 const MIN_HEIGHT = 360;
@@ -11,7 +12,7 @@ const MIN_HEIGHT = 360;
 const Container = styled.div``;
 
 interface IMountPicker {
-  initialValue: DateInterval | Date | undefined
+  initialValue: IDateInterval | Date | undefined
   isMount: boolean
 }
 
@@ -19,12 +20,12 @@ export interface IDropdownDatePicker extends IDatePicker {
   buttonIcon: string
   buttonText: string
   disabled?: boolean
-  selected?: DateInterval | Date | null;
-  onCloseCallback?: (value: DateInterval | Date | null) => void
-  onUpdateCallback?: (value: DateInterval | Date | null) => void
-  onToggleCallback?: (value: DateInterval | Date | null, isOpen: boolean) => void
+  selected?: IDateInterval | Date | null;
+  onCloseCallback?: (value: IDateInterval | Date | null) => void
+  onUpdateCallback?: (value: IDateInterval | Date | null) => void
+  onToggleCallback?: (value: IDateInterval | Date | null, isOpen: boolean) => void
   onCancelCallback?: () => void
-  onApplyCallback?:  (data: DateInterval | Date) => void
+  onApplyCallback?:  (data: IDateInterval | Date) => void
 }
 
 const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
@@ -57,12 +58,12 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
    * This will keep the value of the picker when it updates so on close will send the most fresh value
    * without re-renders.
    */
-  const pickerValue = useRef<DateInterval | Date | null>(null);
+  const pickerValue = useRef<IDateInterval | Date | null>(null);
   const [mountedPicker, setMountedPicker] = useState<IMountPicker>({ initialValue: initialValue, isMount: true });
   const [disableApply, setDisableApply] = useState(false);
 
   const DropdownHandlerRef = useRef<FilterDropHandlerRef>(null);
-  const handleUpdateCallback = useCallback((data: DateInterval | Date) => {
+  const handleUpdateCallback = useCallback((data: IDateInterval | Date) => {
     pickerValue.current = data;
     onUpdateCallback(data);
     setDisableApply(areDatesEqual(selected, data));

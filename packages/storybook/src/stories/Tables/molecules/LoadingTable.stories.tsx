@@ -10,7 +10,7 @@ import {
   ITypeTableData
 } from 'scorer-ui-kit/dist/Tables';
 
-export default {
+const LoadingTableStory = {
   title: 'Tables/molecules',
   component: LoadingTable,
   decorators: []
@@ -181,3 +181,5 @@ export const _LoadingTable = () => {
 
 
 };
+
+export default LoadingTableStory;

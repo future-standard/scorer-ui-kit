@@ -14,7 +14,7 @@ const Container = styled.div`
   padding: 100px;
 `;
 
-export default {
+const TypeTableStory = {
   title: 'Tables/molecules',
   component: TypeTable,
   decorators: [],
@@ -101,3 +101,5 @@ export const _TypeTable = () => {
     </Container>
   );
 };
+
+export default TypeTableStory;

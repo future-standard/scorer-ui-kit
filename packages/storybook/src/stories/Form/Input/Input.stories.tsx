@@ -7,7 +7,7 @@ const Container = styled.div`
     margin: 20px;
 `;
 
-export default {
+const InputStory = {
   title: 'Form/Input',
   component: TextField,
   decorators: []
@@ -39,3 +39,5 @@ export const TextInput = () => {
       required={fieldRequired} />
     </Container>;
 };
+
+export default InputStory;

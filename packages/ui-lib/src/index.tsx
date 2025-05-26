@@ -56,9 +56,7 @@ import {
 // Components - Filter
 import {
   DatePicker,
-  DateInterval,
   isDateInterval,
-  DateRange,
   IFilterDatePicker,
   FilterDropdownContainer,
   FilterButton,
@@ -79,7 +77,9 @@ import {
   isFilterItem,
   FilterButtonDesign,
   ToggleButton,
-  IToggleOption
+  IToggleOption,
+  IDateInterval,
+  IDateRange
 } from './Filters';
 
 import Icon, { IconSVGs } from './Icons/Icon';
@@ -404,7 +404,6 @@ export type {
   IFilterItem,
   IFilterValue,
   IFilterResult,
-  DateInterval,
   IFilterDatePicker,
   ICameraPanel,
   IMediaStream,
@@ -424,6 +423,6 @@ export type {
   ITooltipType,
   FilterButtonDesign,
   IToggleOption,
-  DateRange,
-  TypeSwitchState
+  IDateInterval,
+  IDateRange
 };

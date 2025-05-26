@@ -4,7 +4,7 @@ import { AreaUploadManager, PageHeader } from 'scorer-ui-kit';
 import { text, object, boolean } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 
-export default {
+const AreaUploadManagerStory = {
   title: 'Form/File Management',
   component: AreaUploadManager,
   decorators: []
@@ -58,3 +58,5 @@ export const _AreaUploadManager = () => {
     </Container>
   )
 }
+
+export default AreaUploadManagerStory;

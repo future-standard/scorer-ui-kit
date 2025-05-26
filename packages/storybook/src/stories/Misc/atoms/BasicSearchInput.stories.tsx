@@ -5,7 +5,7 @@ import { text, boolean, select, number } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import { emptyCallbackForStory } from '../../helpers';
 
-export default {
+const BasicSearchInputStory = {
   title: 'Misc/atoms',
   component: BasicSearchInput,
   decorators: [],
@@ -44,3 +44,5 @@ export const _BasicSearchInput = () => {
     </Container>
   )
 }
+
+export default BasicSearchInputStory;

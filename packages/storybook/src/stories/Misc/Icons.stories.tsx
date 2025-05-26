@@ -7,7 +7,7 @@ import { generateIconList } from '../helpers';
 
 
 
-export default {
+const IconsStory = {
   title: 'Misc',
   component: Icon,
   decorators: []
@@ -64,3 +64,5 @@ export const _Icons = () => {
 
   </Container>;
 };
+
+export default IconsStory;

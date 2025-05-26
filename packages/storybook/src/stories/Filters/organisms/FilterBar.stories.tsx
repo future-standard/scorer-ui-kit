@@ -48,7 +48,7 @@ import {
 import { ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 import { dataContentDays, datesRange, InitialSelectedDate } from '../../helpers/datePicker_sample';
 
-export default {
+const FilterBarStory = {
   title: 'Filters/Organism',
   component: 'FilterBar',
   decorators: []
@@ -280,3 +280,5 @@ export const _FilterBar = () => {
       </TypeTableWrapper>
     </Container>)
 }
+
+export default FilterBarStory;

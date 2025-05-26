@@ -8,7 +8,7 @@ const Container = styled.div`
     margin: 20px;
 `;
 
-export default {
+const InputFileButtonStory = {
   title: 'Form/File Management',
   component: InputFileButton,
   decorators:[]
@@ -43,3 +43,5 @@ export const _InputFileButton = () => {
     </Container>
   )
 };
+
+export default InputFileButtonStory;

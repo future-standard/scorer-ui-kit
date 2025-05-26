@@ -11,7 +11,7 @@ const Container = styled.div`
   right: 0;
 `;
 
-export default {
+const TopBarStory = {
   title: 'Global',
   component: TopBar,
   decorators: []
@@ -216,3 +216,5 @@ export const _TopBar = () => {
     </Container>
   );
 };
+
+export default TopBarStory;

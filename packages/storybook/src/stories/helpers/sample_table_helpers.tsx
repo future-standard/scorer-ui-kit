@@ -1,5 +1,5 @@
 import { ITableSampleData } from "./data_samples";
-import { DateInterval, IFilterItem, isFilterItem } from 'scorer-ui-kit';
+import { IDateInterval, IFilterItem, isFilterItem } from 'scorer-ui-kit';
 import photo from '../assets/placeholder.jpg';
 import { IRowData, ITypeTableData } from "scorer-ui-kit/dist/Tables";
 
@@ -120,7 +120,7 @@ const filterByCreationDate = (data: ITableSampleData[], filterVal: IFilterItem):
   return data;
 };
 
-const filterByCreationDatePicker = (data: ITableSampleData[], filterVal: Date | DateInterval): ITableSampleData[] => {
+const filterByCreationDatePicker = (data: ITableSampleData[], filterVal: Date | IDateInterval): ITableSampleData[] => {
 
   if (filterVal instanceof Date) {
     const newData: ITableSampleData[] = data.filter((sample) => {

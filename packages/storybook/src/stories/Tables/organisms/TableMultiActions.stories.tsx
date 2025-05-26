@@ -13,7 +13,7 @@ import {
 const Container = styled.div`
   padding: 100px;
 `;
-export default {
+const TableMultiActionsStory = {
   title: 'Tables/molecules',
   component: TypeTable,
   decorators: [],
@@ -35,3 +35,5 @@ export const _TableMultiActions = () => {
     </Container>
   );
 };
+
+export default TableMultiActionsStory;
