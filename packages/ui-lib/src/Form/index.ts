@@ -6,7 +6,7 @@ import ActionButtons from './molecules/ActionButtons';
 import Input from './atoms/Input';
 import SmallInput from './atoms/SmallInput';
 import Label from './atoms/Label';
-import Switch from './atoms/Switch';
+import Switch, {TypeSwitchState} from './atoms/Switch';
 import Checkbox from './atoms/Checkbox';
 import RadioButton from './atoms/RadioButton';
 import TextArea from './atoms/TextArea';
@@ -75,4 +75,4 @@ interface ButtonProps {
 
 export type IButtonProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-export type { IconButtonData, ISliderMark, ISplitButtonProps, IButtonsStack, IButtonStack};
+export type { IconButtonData, ISliderMark, ISplitButtonProps, IButtonsStack, IButtonStack, TypeSwitchState};

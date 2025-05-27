@@ -40,7 +40,7 @@ const List = styled.div`
 
 const Item = styled.div`
   height: 100%;
-  
+
   a {
     height: 100%;
     line-height: 20px;
@@ -180,6 +180,13 @@ const LinksPage : React.FC = () => {
             <Title>Component Theme Override Example</Title>
             <Description>Override CSS based theme for components.</Description>
             <FilenameTag>CustomAlertsPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/switch-test`}>
+            <Title>Switch Example</Title>
+            <Description>A demonstration of the Switch component with API integration.</Description>
+            <FilenameTag>SwitchTest.tsx</FilenameTag>
           </Link>
         </Item>
       </List>
