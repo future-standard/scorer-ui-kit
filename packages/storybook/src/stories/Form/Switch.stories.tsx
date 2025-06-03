@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { text, select, boolean } from '@storybook/addon-knobs';
@@ -22,17 +23,14 @@ export const _Switch = () => {
   const leftTheme = select("Left Theme", { Off: "off", On: "on", Danger: "danger" }, "off");
   const rightTheme = select("Right Theme", { Off: "off", On: "on", Danger: "danger" }, "on");
 
-  const checkedOption = select("Checked", {
-    Undefined: "undefined",
-    True: "true",
-    False: "false"
-  }, "undefined");
+  const checked = select('Checked', {
+    Undefined: undefined,
+    True: true,
+    False: false,
+  }, undefined);
 
-  const defaultChecked = boolean("defaultChecked", false);
+  const defaultChecked = boolean('defaultChecked', true);
   const onChangeCallback = action('value-changed');
-
-  // Interpret the selected checked value
-  const checked = checkedOption === "undefined" ? undefined : checkedOption === "true";
 
   return (
     <Switch
