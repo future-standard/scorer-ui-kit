@@ -137,68 +137,48 @@ const getNewSelected = (item: IFilterItem, selected: IFilterValue, optionType: I
 };
 
 const selectedOrderList = (list: IFilterItem[], maxItems: number, selected: IFilterValue): IFilterItem[] => {
-
-  if (list.length <= maxItems) {
+  // Early returns for simple cases
+  if (list.length <= maxItems || selected === null) {
     return list;
   }
 
-  if(selected === null) {
-    return list;
-  }
-
+  // Handle single selection case
   if (isFilterItem(selected)) {
     const index = list.findIndex(item => item.value === selected.value);
 
-    // if it doesn't exists return the list based in maxItems
-    if ((index === -1)) {
+    // Return original list if item doesn't exist or is already in visible range
+    if (index === -1 || index < maxItems) {
       return list;
     }
 
-    // if exists and is inside the visibleRange just return slice
-    if ((index !== -1) && (index < maxItems)) {
-      return list;
-    }
+    // Create new list with selected item at the top
 
     const newList = list.filter(item => item.value !== selected.value);
     newList.unshift(list[index]);
 
     return newList;
-
   }
 
+  // Handle multiple selection case
   if (Array.isArray(selected)) {
-    const selectedIndexList: number[] = [];
-    const newList: IFilterItem[] = [];
+    // Create a Set of selected values for O(1) lookups
+    const selectedValues = new Set(selected.map(item => item.value));
 
-    selected.forEach((element: IFilterItem) => {
-      const index = list.findIndex(item => item.value === element.value);
-      const foundItem = list.find(item => item.value === element.value);
+    // Create a map to preserve original items
+    const selectedItems: IFilterItem[] = [];
+    const unselectedItems: IFilterItem[] = [];
 
-
-      if (index !== -1) {
-        selectedIndexList.push(index);
+    // Single pass through the list to separate selected and unselected items
+    for (const item of list) {
+      if (selectedValues.has(item.value)) {
+        selectedItems.push(item);
+      } else {
+        unselectedItems.push(item);
       }
-      if(foundItem) {
-        newList.push(foundItem);
-      }
+    }
 
-    });
-
-    selectedIndexList.sort(function (a, b) {
-      return a - b;
-    });
-
-    let selectedIndex = 0;
-
-    list.forEach((item, index) => {
-      if(index === selectedIndexList[selectedIndex]){
-        selectedIndex++;
-        return;
-      }
-      newList.push(item);
-    });
-
-    return newList;
+    // Return combined list with selected items first
+    return [...selectedItems, ...unselectedItems];
   }
 
   return list;
