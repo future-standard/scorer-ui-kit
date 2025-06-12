@@ -58,7 +58,7 @@ const FooterControls: React.FC<IFooterControls> = ({
   return (
     <FooterContainer>
       <FooterLeftSection>
-        {hasReset && <Button size='small' disabled={disableReset} onClick={onReset}>{resetText}</Button>}
+        {hasReset && <Button size='small' design="text-only" disabled={disableReset} onClick={onReset}>{resetText}</Button>}
       </FooterLeftSection>
       {hasApply && (
         <FooterRightSection>
