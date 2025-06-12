@@ -9,7 +9,9 @@ const Container = styled.div<{ height?: string }>`
   };
 
   backdrop-filter: blur(20px);
-  border: var(--grey-6) 1px solid;
+  border-right: 1px solid var(--grey-6);
+  border-bottom: 1px solid var(--grey-6);
+  border-left: 1px solid var(--grey-6);
   border-radius: 3px;
   position: relative;
   display: inline-flex;
