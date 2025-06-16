@@ -323,19 +323,19 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   const [visibleList, setVisibleList] = useState(selectedOrderList(list, maxDisplayedItems, selected, isSortAscending));
   const [searchText, setSearchText] = useState<string>('');
   const [tempSelected, setTempSelected] = useState(selected);
-  const [disableReset, setDisableReset] = useState(true);
 
   const DropdownHandlerRef = useRef<FilterDropHandlerRef>(null);
 
   const handleClose = useCallback(() => {
-    setSearchText('');
     setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected,isSortAscending));
   }, [isSortAscending, list, maxDisplayedItems, tempSelected]);
 
   const handleToggleOpen = useCallback(() => {
     setSearchText('');
-    setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, isSortAscending));
-  }, [isSortAscending, list, maxDisplayedItems, tempSelected]);
+    setTempSelected(selected);
+    setIsSortAscending(isListAscending);
+    setVisibleList(selectedOrderList(list, maxDisplayedItems, selected, isListAscending));
+  }, [isListAscending, list, maxDisplayedItems, selected]);
 
   const handleSelection = useCallback((item: IFilterItem) => {
     const newSelected = getNewSelected(item, tempSelected, optionType);
@@ -346,7 +346,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
     }
     setTempSelected(newSelected);
     setVisibleList(selectedOrderList(list, maxDisplayedItems, newSelected, isSortAscending));
-    setDisableReset(false);
+    setSearchText('');
   }, [tempSelected, optionType, hasApply, list, maxDisplayedItems, isSortAscending, onSelect]);
 
   const handleInputFilter = useCallback((e) => {
@@ -363,18 +363,15 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
     // sending null so the filtered list doesn't force the selected values to appear.
     setVisibleList(selectedOrderList(newList, maxDisplayedItems, null, isSortAscending));
-    setDisableReset(false);
   }, [isSortAscending, list, maxDisplayedItems, tempSelected]);
 
   const handleCancel = useCallback(() => {
     setTempSelected(selected);
-    setDisableReset(true);
     onCancelCallback();
     DropdownHandlerRef.current?.imperativeClose();
   },[onCancelCallback, selected]);
 
   const handleApply = useCallback(()=>{
-    setDisableReset(true);
     onApplyCallback(tempSelected);
     DropdownHandlerRef.current?.imperativeClose();
 },[onApplyCallback, tempSelected]);
@@ -387,7 +384,6 @@ const handleReset = useCallback(() => {
   setSearchText('');
   setVisibleList(selectedOrderList(list, maxDisplayedItems, null, isListAscending));
   setTempSelected(null);
-  setDisableReset(true);
   setIsSortAscending(isListAscending);
   onResetCallback();
 }, [hasApply, list, maxDisplayedItems, isListAscending, onResetCallback, onSelect]);
@@ -399,20 +395,6 @@ const handleSort = useCallback(() => {
   });
 
 },[list, maxDisplayedItems, tempSelected]);
-
-
-  useEffect(() => {
-    let isActive = true;
-    if (isActive && !hasApply) {
-      setSearchText(''); // clears searchText if something was selected and the dropdown is still open
-      setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, isSortAscending));
-    }
-
-    return () => {
-      isActive = false;
-    };
-
-  }, [hasApply, list, maxDisplayedItems, tempSelected, isSortAscending]);
 
 useEffect(() => {
   setTempSelected(selected);
@@ -488,7 +470,7 @@ const noChangeInSelection = useMemo(() => {
               onApply={handleApply}
               disableApply={noChangeInSelection}
               onReset={handleReset}
-              disableReset={disableReset && (isSortAscending === isListAscending)}
+              disableReset={(tempSelected === null) && (isSortAscending === isListAscending) && (searchText === '')}
             />)
           }
         </FilterDropdownContainer>
