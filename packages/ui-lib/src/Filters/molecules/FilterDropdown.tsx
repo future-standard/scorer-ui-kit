@@ -20,8 +20,8 @@ const StyledFilterOption = styled(FilterOption)`
   letter-spacing: 0.2px;
 `;
 
-const OptionList = styled.div<{moreItem?: boolean}>`
-  max-height: ${({moreItem}) => moreItem ? '228px' : '196px'};
+const OptionList = styled.div<{ moreItem?: boolean }>`
+  max-height: ${({ moreItem }) => moreItem ? '228px' : '196px'};
   min-height: 40px;
   position: relative;
   overflow-y: auto;
@@ -42,6 +42,7 @@ const OrderButtonWrapper = styled.div`
   height: 24px;
   padding: 0px 8px;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   border-left: 1px solid var(--grey-6);
   min-width: 120px;
@@ -62,10 +63,10 @@ const ResultCounter = styled.div`
   font-family: var(--font-ui);
   color: var(--grey-11);
   font-size: 12px;
+  text-align: center;
   &:lang(ja) {
       font-style: normal;
   }
-  font-weight: 500;
   line-height: 12px;
 `;
 
@@ -150,16 +151,16 @@ const getNewSelected = (item: IFilterItem, selected: IFilterValue, optionType: I
   return item;
 };
 
-const sortList = (unSortedList: IFilterItem[], isSortAscending: boolean ): IFilterItem[] => {
+const sortList = (unSortedList: IFilterItem[], isSortAscending: boolean): IFilterItem[] => {
 
-  if(unSortedList.length <= 1){
+  if (unSortedList.length <= 1) {
     return unSortedList;
   }
 
   const sorted = [...unSortedList];
 
-  sorted.sort((a,b) => {
-    const diff =  a.text.localeCompare(b.text);
+  sorted.sort((a, b) => {
+    const diff = a.text.localeCompare(b.text);
 
     return isSortAscending ? diff : -diff;
   });
@@ -231,7 +232,7 @@ const getResultText = (template: string, visible: number, total: number) => {
   return newMessage.replace('[VISIBLE]', `${visible}`);
 };
 
-const areSelectionsEqual = (tempSelected: IFilterValue, selected: IFilterValue) : boolean => {
+const areSelectionsEqual = (tempSelected: IFilterValue, selected: IFilterValue): boolean => {
 
   if (tempSelected === null && selected === null) {
     return true;
@@ -316,7 +317,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   onSelect = () => { },
   onApplyCallback = () => { },
   onResetCallback = () => { },
-  onCancelCallback = () => {},
+  onCancelCallback = () => { },
   ...props
 }) => {
   const [isSortAscending, setIsSortAscending] = useState(isListAscending);
@@ -327,7 +328,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   const DropdownHandlerRef = useRef<FilterDropHandlerRef>(null);
 
   const handleClose = useCallback(() => {
-    setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected,isSortAscending));
+    setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, isSortAscending));
   }, [isSortAscending, list, maxDisplayedItems, tempSelected]);
 
   const handleToggleOpen = useCallback(() => {
@@ -341,7 +342,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
     const newSelected = getNewSelected(item, tempSelected, optionType);
 
     // onSelect is unavailable if hasApply feature is enabled to prevent misusage
-    if(!hasApply) {
+    if (!hasApply) {
       onSelect(newSelected);
     }
     setTempSelected(newSelected);
@@ -369,40 +370,53 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
     setTempSelected(selected);
     onCancelCallback();
     DropdownHandlerRef.current?.imperativeClose();
-  },[onCancelCallback, selected]);
+  }, [onCancelCallback, selected]);
 
-  const handleApply = useCallback(()=>{
+  const handleApply = useCallback(() => {
     onApplyCallback(tempSelected);
     DropdownHandlerRef.current?.imperativeClose();
-},[onApplyCallback, tempSelected]);
+  }, [onApplyCallback, tempSelected]);
 
 
-const handleReset = useCallback(() => {
-  if(!hasApply){
-    onSelect(null);
-  }
-  setSearchText('');
-  setVisibleList(selectedOrderList(list, maxDisplayedItems, null, isListAscending));
-  setTempSelected(null);
-  setIsSortAscending(isListAscending);
-  onResetCallback();
-}, [hasApply, list, maxDisplayedItems, isListAscending, onResetCallback, onSelect]);
+  const handleReset = useCallback(() => {
+    if (!hasApply) {
+      onSelect(null);
+    }
+    setSearchText('');
+    setVisibleList(selectedOrderList(list, maxDisplayedItems, null, isListAscending));
+    setTempSelected(null);
+    setIsSortAscending(isListAscending);
+    onResetCallback();
+  }, [hasApply, list, maxDisplayedItems, isListAscending, onResetCallback, onSelect]);
 
-const handleSort = useCallback(() => {
-  setIsSortAscending((prev) =>  {
-    setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, !prev));
-    return !prev;
-  });
+  const handleSort = useCallback(() => {
+    setIsSortAscending((prev) => {
+      setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, !prev));
+      return !prev;
+    });
 
-},[list, maxDisplayedItems, tempSelected]);
+  }, [list, maxDisplayedItems, tempSelected]);
 
-useEffect(() => {
-  setTempSelected(selected);
-}, [selected]);
+  useEffect(() => {
+    let isActive = true;
+    if (isActive) {
+      setSearchText(''); // clears searchText if something was selected and the dropdown is still open
+      setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, isSortAscending));
+    }
 
-const noChangeInSelection = useMemo(() => {
-  return areSelectionsEqual(tempSelected, selected);
-}, [selected, tempSelected]);
+    return () => {
+      isActive = false;
+    };
+
+  }, [isSortAscending, list, maxDisplayedItems, tempSelected]);
+
+  useEffect(() => {
+    setTempSelected(selected);
+  }, [selected]);
+
+  const noChangeInSelection = useMemo(() => {
+    return areSelectionsEqual(tempSelected, selected);
+  }, [selected, tempSelected]);
 
   return (
     <Container {...props}>
@@ -437,10 +451,10 @@ const noChangeInSelection = useMemo(() => {
                   <ResultsMiddleGroup>
                     <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>
                     <OrderButtonWrapper>
-                      <ButtonWithIcon design='text-only' position='left' size='xsmall' onClick={handleSort} icon={isSortAscending? 'FilterAscending' : 'FilterDescending'}>{isSortAscending? ascendingText : descendingText}</ButtonWithIcon>
+                      <ButtonWithIcon design='text-only' position='left' size='xsmall' weight='light' onClick={handleSort} icon={isSortAscending ? 'FilterAscending' : 'FilterDescending'}>{isSortAscending ? ascendingText : descendingText}</ButtonWithIcon>
                     </OrderButtonWrapper>
                   </ResultsMiddleGroup>
-                  )}
+                )}
                 <OptionList moreItem={list.length > 5}>
                   {(visibleList.length > 0)
 
@@ -465,7 +479,7 @@ const noChangeInSelection = useMemo(() => {
 
           {(hasApply || hasReset) && (
             <FooterControls
-              {...{ hasApply, hasReset, resetText, cancelText, closeText,applyText }}
+              {...{ hasApply, hasReset, resetText, cancelText, closeText, applyText }}
               onCancel={handleCancel}
               onApply={handleApply}
               disableApply={noChangeInSelection}

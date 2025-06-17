@@ -8,8 +8,9 @@ import {
   PageHeader,
 } from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';
+import { searchTemplateResultEnglish, searchTemplateResultJapanese } from '../../helpers/data_samples';
 
-export default {
+const FilterDropdownWithFooterStory = {
   title: 'Filters/molecules/FilterDropdown',
   component: FilterDropdown,
   parameters: {
@@ -29,7 +30,7 @@ const Container = styled.div`
 `;
 
 // Sample data for the dropdown
-const foodItems = [
+const foodItemsEng = [
   { text: 'Ramen', value: 0 },
   { text: 'Takoyaki', value: 1 },
   { text: 'Gyoza', value: 2 },
@@ -39,14 +40,22 @@ const foodItems = [
   { text: 'Sashimi', value: 6 },
 ];
 
-export const DropdownWithApplyAndReset = () => {
+const foodItemsJap = [
+  { text: 'ラーメン', value: 0 },
+  { text: '蛸焼き', value: 1 },
+  { text: '餃子', value: 2 },
+  { text: '天婦羅', value: 3 },
+  { text: 'すし', value: 4 },
+  { text: '納豆', value: 5 },
+  { text: 'お造り', value: 6 },
+];
 
+export const DropdownWithApplyAndReset = () => {
+  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
   const iconList = generateIconList();
-  const buttonText = text('Button Text', 'Food Menu');
   const buttonIcon = select("Icon", iconList, Object.keys(iconList)[0]);
   const disabled = boolean('Disabled', false);
   const hasOptionsFilter = boolean('Has Options Filter', true);
-  const searchPlaceholder = text('Search Placeholder', 'Filter by name...');
 
   // State for selected items
   const [selected, setSelected] = useState<IFilterValue>(null);
@@ -78,6 +87,7 @@ export const DropdownWithApplyAndReset = () => {
     applyAction(newSelection);
   }, [applyAction]);
 
+
   return (
     <Container>
       <Wrapper>
@@ -88,13 +98,13 @@ export const DropdownWithApplyAndReset = () => {
 
         <FilterDropdown
           buttonIcon={buttonIcon}
-          buttonText={buttonText}
-          list={foodItems}
+          buttonText={language === 'japanese' ? 'メニュー' : 'Menu' }
+          list={language === 'japanese' ? foodItemsJap : foodItemsEng}
           selected={selected}
           disabled={disabled}
           hasOptionsFilter={hasOptionsFilter}
-          searchPlaceholder={searchPlaceholder}
-          searchResultText="Showing [VISIBLE] of [TOTAL]"
+          searchPlaceholder={language === 'japanese' ?  'メニュー...' : 'Menu options...' }
+          searchResultText={language === 'japanese' ? searchTemplateResultJapanese : searchTemplateResultEnglish}
           optionType="checkbox"
           onSelect={handleSelect}
           onResetCallback={handleReset}
@@ -102,8 +112,16 @@ export const DropdownWithApplyAndReset = () => {
           onApplyCallback={handleApply}
           hasReset={hasReset}
           hasApply={hasApply}
+          resetText={ language === 'japanese' ? 'リセット' : 'Reset'}
+          cancelText={ language === 'japanese' ? 'キャンセル' : 'Cancel'}
+          closeText={ language === 'japanese' ? '閉じる' : 'Close' }
+          applyText={ language === 'japanese' ? '適用' : 'Apply' }
+          descendingText = { language === 'japanese' ? '降順' : 'Descending'}
+          ascendingText={ language === 'japanese' ? '昇順' : 'Ascending'}
         />
       </Wrapper>
     </Container>
   );
 };
+
+export default FilterDropdownWithFooterStory;
