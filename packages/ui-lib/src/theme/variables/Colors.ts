@@ -722,7 +722,7 @@ export const colorVariables = css`
 
     .button-design-secondary {
       --button-background-color: var(--grey-9);
-      --button-border-color: var(--grey-9);
+      --button-border-color: var(--grey-6);
       --button-inner-shadow-color: transparent;
       --button-drop-shadow-color: var(--shadow-secondary-default);
       --button-text-color: var(--grey-12);
