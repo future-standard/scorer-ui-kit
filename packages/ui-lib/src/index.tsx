@@ -383,7 +383,7 @@ export type IFeedbackColor = 'error' | 'warning' | 'info' | 'success' | 'neutral
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
 export type IMediaType = 'img' | 'video'
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
-export type IWeight= 'light' | 'regular' | 'heavy' | 'strong';  // Is this the right place?
+export type IWeight = 'light' | 'regular' | 'heavy' | 'strong';  // Is this the right place?
 
 export type {
   IModal,
