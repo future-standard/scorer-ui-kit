@@ -37,7 +37,7 @@ const ResultsContainer = styled.div`
   min-width: 252px;
 `;
 
-const OrderButtonWrapper = styled.div`
+const SortingButtonWrapper = styled.div`
   display: flex;
   height: 24px;
   padding: 0px 8px;
@@ -451,9 +451,9 @@ const handleApply = useCallback(() => {
                 {hasOptionsFilter && (
                   <FilterResultsToolbar>
                     <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>
-                    <OrderButtonWrapper>
+                    <SortingButtonWrapper>
                       <ButtonWithIcon design='text-only' position='left' size='xsmall' weight='light' onClick={handleSort} icon={isSortAscending ? 'FilterAscending' : 'FilterDescending'}>{isSortAscending ? ascendingText : descendingText}</ButtonWithIcon>
-                    </OrderButtonWrapper>
+                    </SortingButtonWrapper>
                   </FilterResultsToolbar>
                 )}
                 <OptionList moreItem={list.length > 5}>
