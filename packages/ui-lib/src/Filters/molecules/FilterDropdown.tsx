@@ -159,9 +159,10 @@ const sortList = (unSortedList: IFilterItem[], isSortAscending: boolean): IFilte
   }
 
   const sorted = [...unSortedList];
+  const lang = document.documentElement.lang || 'en';
 
   sorted.sort((a, b) => {
-    const diff = a.text.localeCompare(b.text); // need to add comparison Ja and En
+    const diff = a.text.localeCompare(b.text, lang);
 
     return isSortAscending ? diff : -diff;
   });
