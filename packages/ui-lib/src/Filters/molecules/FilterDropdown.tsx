@@ -64,6 +64,7 @@ const ResultCounter = styled.div`
   color: var(--grey-11);
   font-size: 12px;
   text-align: center;
+  white-space: nowrap;
   &:lang(ja) {
       font-style: normal;
   }
@@ -160,7 +161,7 @@ const sortList = (unSortedList: IFilterItem[], isSortAscending: boolean): IFilte
   const sorted = [...unSortedList];
 
   sorted.sort((a, b) => {
-    const diff = a.text.localeCompare(b.text);
+    const diff = a.text.localeCompare(b.text); // need to add comparison Ja and En
 
     return isSortAscending ? diff : -diff;
   });
@@ -283,7 +284,6 @@ export type IFilterDropdownOwn = {
   descendingText?: string
   isListAscending?: boolean
   onSelect: (newSelection: IFilterValue) => void;
-  onApplyCallback?: (newSelection: IFilterValue) => void;
   onResetCallback?: () => void
   onCancelCallback?: () => void
 }
@@ -315,7 +315,6 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   ascendingText = 'Ascending',
   isListAscending = true,
   onSelect = () => { },
-  onApplyCallback = () => { },
   onResetCallback = () => { },
   onCancelCallback = () => { },
   ...props
@@ -371,11 +370,11 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
     onCancelCallback();
     DropdownHandlerRef.current?.imperativeClose();
   }, [onCancelCallback, selected]);
+const handleApply = useCallback(() => {
+  onSelect(tempSelected);
+  DropdownHandlerRef.current?.imperativeClose();
+}, [onSelect, tempSelected]);
 
-  const handleApply = useCallback(() => {
-    onApplyCallback(tempSelected);
-    DropdownHandlerRef.current?.imperativeClose();
-  }, [onApplyCallback, tempSelected]);
 
 
   const handleReset = useCallback(() => {

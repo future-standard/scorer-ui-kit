@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { boolean, text, select } from "@storybook/addon-knobs";
+import { boolean, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
 import {
   FilterDropdown,
@@ -63,7 +63,6 @@ export const DropdownWithApplyAndReset = () => {
   // Action trackers
   const resetAction = action('Reset clicked');
   const cancelAction = action('Cancel/Close clicked');
-  const applyAction = action('Apply clicked');
   const selectAction = action('Item selected');
   const hasApply = boolean('Has Apply', true);
   const hasReset = boolean('Has Reset', true);
@@ -81,12 +80,6 @@ export const DropdownWithApplyAndReset = () => {
   const handleCancel = useCallback(() => {
     cancelAction();
   }, [cancelAction]);
-
-  const handleApply = useCallback((newSelection: IFilterValue) => {
-    setSelected(newSelection);
-    applyAction(newSelection);
-  }, [applyAction]);
-
 
   return (
     <Container>
@@ -109,7 +102,6 @@ export const DropdownWithApplyAndReset = () => {
           onSelect={handleSelect}
           onResetCallback={handleReset}
           onCancelCallback={handleCancel}
-          onApplyCallback={handleApply}
           hasReset={hasReset}
           hasApply={hasApply}
           resetText={ language === 'japanese' ? 'リセット' : 'Reset'}
