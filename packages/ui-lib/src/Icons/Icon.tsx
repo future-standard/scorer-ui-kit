@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { IconSVGs } from '@future-standard/icons';
 
 import { dimensions } from '../theme/common';
+import { IWeight } from '..';
 
 
 const wrapperCss = css`
@@ -33,7 +34,7 @@ export { IconWrapper, IconWrapperForSVG, IconSVGs };
 export interface IconProps {
   icon: string;
   size?: number;
-  weight?: 'light' | 'regular' | 'heavy' | 'strong';
+  weight?: IWeight;
   color?: ISvgIcons['color'];
   forSvgUsage?: boolean;
 }

@@ -63,7 +63,6 @@ export type TypeButtonDesigns = 'primary' | 'secondary' | 'warning' | 'danger' |
 export type TypeButtonSizes = 'xsmall' | 'small' | 'normal' | 'large';
 export type ISelectSizes = 'small' | 'normal';
 export type IInputOptionsType = "text" | "checkbox" | "radio";
-
 export type TypeLabelDirection = 'column' | 'row' | 'row-reverse';
 
 
