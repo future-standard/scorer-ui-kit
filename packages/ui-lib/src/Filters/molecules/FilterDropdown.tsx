@@ -92,7 +92,7 @@ const EmptyResultText = styled.div`
   font-size: 12px;
 `;
 
-const Gradient = styled.div`
+const OptionListGradient = styled.div`
   position: absolute;
   bottom: 0px;
   height: 15px;
@@ -325,7 +325,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   const [searchText, setSearchText] = useState<string>('');
   const [tempSelected, setTempSelected] = useState(selected);
 
-  const DropdownHandlerRef = useRef<FilterDropHandlerRef>(null);
+  const dropdownHandlerRef = useRef<FilterDropHandlerRef>(null);
 
   const handleClose = useCallback(() => {
     setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, isSortAscending));
@@ -369,11 +369,11 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
   const handleCancel = useCallback(() => {
     setTempSelected(selected);
     onCancelCallback();
-    DropdownHandlerRef.current?.imperativeClose();
+    dropdownHandlerRef.current?.imperativeClose();
   }, [onCancelCallback, selected]);
 const handleApply = useCallback(() => {
   onSelect(tempSelected);
-  DropdownHandlerRef.current?.imperativeClose();
+  dropdownHandlerRef.current?.imperativeClose();
 }, [onSelect, tempSelected]);
 
 
@@ -422,7 +422,7 @@ const handleApply = useCallback(() => {
   return (
     <Container {...props}>
       <FilterDropHandler
-        ref={DropdownHandlerRef}
+        ref={dropdownHandlerRef}
         {...{ buttonIcon, buttonText, disabled, design }}
         onCloseCallback={handleClose}
         onToggleOpenCallback={handleToggleOpen}
@@ -475,7 +475,7 @@ const handleApply = useCallback(() => {
 
                     : <EmptyResultText>{emptyResultText}</EmptyResultText>}
                 </OptionList>
-                {list.length > 5 && <Gradient />}
+                {list.length > 5 && <OptionListGradient />}
               </ResultsContainer>)}
 
           {(hasApply || hasReset) && (
