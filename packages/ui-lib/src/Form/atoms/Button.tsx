@@ -46,6 +46,7 @@ const StyledButton = styled.button<IStyledComponentProps>`
   height: var(--button-height);
   font-size: var(--button-font-size);
   color: var(--button-text-color);
+  font-weight: 600;
 
   ${({ $noPadding, isOutline }) => $noPadding ? css`
       padding: 0px;

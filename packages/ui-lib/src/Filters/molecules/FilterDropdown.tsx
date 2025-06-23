@@ -48,7 +48,7 @@ const OrderButtonWrapper = styled.div`
   min-width: 120px;
 `;
 
-const ResultsMiddleGroup = styled.div`
+const FilterResultsToolbar = styled.div`
   display: flex;
   height: 24px;
   padding-left: 16px;
@@ -397,6 +397,7 @@ const handleApply = useCallback(() => {
 
   }, [list, maxDisplayedItems, tempSelected]);
 
+  // This UseEffect ensures visible list is updated when toggling language
   useEffect(() => {
     let isActive = true;
     if (isActive) {
@@ -448,12 +449,12 @@ const handleApply = useCallback(() => {
             : (
               <ResultsContainer>
                 {hasOptionsFilter && (
-                  <ResultsMiddleGroup>
+                  <FilterResultsToolbar>
                     <ResultCounter>{getResultText(searchResultText, visibleList.length, list.length)}</ResultCounter>
                     <OrderButtonWrapper>
                       <ButtonWithIcon design='text-only' position='left' size='xsmall' weight='light' onClick={handleSort} icon={isSortAscending ? 'FilterAscending' : 'FilterDescending'}>{isSortAscending ? ascendingText : descendingText}</ButtonWithIcon>
                     </OrderButtonWrapper>
-                  </ResultsMiddleGroup>
+                  </FilterResultsToolbar>
                 )}
                 <OptionList moreItem={list.length > 5}>
                   {(visibleList.length > 0)
