@@ -42,10 +42,10 @@ const SortingButtonWrapper = styled.div`
   height: 24px;
   padding: 0px 8px;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   gap: 8px;
   border-left: 1px solid var(--grey-6);
-  min-width: 120px;
+  width: auto;
 `;
 
 const FilterResultsToolbar = styled.div`
