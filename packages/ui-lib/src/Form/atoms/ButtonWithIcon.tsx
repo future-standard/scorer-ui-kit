@@ -4,12 +4,13 @@ import Button from './Button';
 import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 import { IButtonProps, TypeButtonSizes } from '..';
+import { IWeight } from '../..';
 
 const Container = styled.div`
   display: inline;
 `;
 
-const TextContainer = styled.div<{size: TypeButtonSizes, position?: string}>`
+const TextContainer = styled.div<{ size: TypeButtonSizes, position?: string, weight?: IWeight }>`
   height: inherit;
   flex: 1;
   order: 1;
@@ -18,8 +19,8 @@ const TextContainer = styled.div<{size: TypeButtonSizes, position?: string}>`
   align-items: center;
   white-space: nowrap;
   padding: 0 var(--button-h-padding);
-
   transition: padding var(--speed-slow) var(--easing-primary-in-out);
+  font-weight: ${({weight}) => weight === 'light' ? '500' : '600'};
 `;
 
 const IconContainer = styled.div`
@@ -53,8 +54,8 @@ const IconArea = styled.div<{ position?: string, $loading: boolean }>`
   padding: 0 var(--button-h-padding);
 
   ${({ position }) => css`
-    order: ${ position && position === 'left' ? 0 : 2 };
-    ${ position === 'left'
+    order: ${position && position === 'left' ? 0 : 2};
+    ${position === 'left'
       ? `border-right-width: 1px;`
       : `border-left-width: 1px;`
     };
@@ -75,7 +76,7 @@ const IconArea = styled.div<{ position?: string, $loading: boolean }>`
     transition: opacity var(--speed-fast) var(--easing-primary-out);
   }
 
-  ${({$loading}) => $loading && css`
+  ${({ $loading }) => $loading && css`
     border-color: var(--button-loading-area-divider-color);
 
     ${SpinnerContainer}{
@@ -89,12 +90,12 @@ const IconArea = styled.div<{ position?: string, $loading: boolean }>`
 
 `;
 
-const InnerContainer = styled.div<{disabled?: boolean}>`
+const InnerContainer = styled.div<{ disabled?: boolean }>`
   display: flex;
   height: inherit;
 
   &:hover {
-    ${({disabled}) => !disabled && css`
+    ${({ disabled }) => !disabled && css`
       ${IconContainer}{
         svg {
           path, rect, circle, d {
@@ -106,7 +107,7 @@ const InnerContainer = styled.div<{disabled?: boolean}>`
   }
 
   &:active{
-    ${({disabled}) => !disabled && css`
+    ${({ disabled }) => !disabled && css`
       ${IconContainer}{
         svg {
           path, rect, circle, d {
@@ -117,7 +118,7 @@ const InnerContainer = styled.div<{disabled?: boolean}>`
     `};
   }
 
-  ${({disabled}) => disabled && css`
+  ${({ disabled }) => disabled && css`
     ${IconContainer}{
         svg {
           path, rect, circle, d {
@@ -132,25 +133,27 @@ export interface IButtonWithIcon extends IButtonProps {
   icon: string
   position?: 'left' | 'right'
   shadow?: boolean
+  weight?: IWeight
 }
 
-const ButtonWithIcon : React.FC<IButtonWithIcon> = ({design = 'primary', size='normal', loading = false, shadow = false, onClick, disabled, position, icon, children, ...props}) => {
+const ButtonWithIcon: React.FC<IButtonWithIcon> = ({ design = 'primary', size = 'normal', loading = false, shadow = false, onClick, disabled, position, icon, weight = 'regular', children, ...props }) => {
   return (
     <Container>
       <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading }} {...props}>
-        <InnerContainer {...{disabled, loading}}>
-          <TextContainer {...{size, position}}>{children}</TextContainer>
+        <InnerContainer {...{ disabled, loading }}>
+          <TextContainer {...{ size, position, weight }}>{children}</TextContainer>
           <IconArea $loading={loading} {...{ position }}>
             <IconContainer>
-              <Icon icon={icon} weight='regular' />
+              <Icon icon={icon} weight={weight} />
             </IconContainer>
             <SpinnerContainer>
-              <Spinner size={size ==='xsmall' || size ==='small' ? 'xsmall' : 'small'} styling={design} />
+              <Spinner size={size === 'xsmall' || size === 'small' ? 'xsmall' : 'small'} styling={design} />
             </SpinnerContainer>
           </IconArea>
         </InnerContainer>
       </Button>
     </Container>
-  );};
+  );
+};
 
 export default ButtonWithIcon;

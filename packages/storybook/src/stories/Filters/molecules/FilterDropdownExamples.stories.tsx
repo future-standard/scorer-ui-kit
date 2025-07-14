@@ -18,7 +18,7 @@ import {
 import { generateIconList } from '../../helpers';
 
 const FilterDropdownStory = {
-  title: 'Filters/molecules',
+  title: 'Filters/molecules/FilterDropdown',
   component: FilterDropdown,
   decorators: []
 };
@@ -90,7 +90,7 @@ const baseExample = [
   { text: "Fugiat Nulla", value: 8 },
 ];
 
-export const _FilterDropdown = () => {
+export const MultipleDropdownExamples = () => {
   const iconList = generateIconList();
 
   const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
