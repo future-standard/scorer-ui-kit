@@ -11,7 +11,7 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
   ${({ hasBorder, disabled, noBackground, width }) => css`
 
     transition: all var(--speed-normal) var(--easing-primary-in);
-    gap: 6px;
+    gap: var(--search-input-container-gap, 6px);
     height: var(--input-compact-height);
     padding: 0;
     align-items: center;
@@ -80,8 +80,8 @@ const CrossButton = styled.button`
 const StyledInput = styled.input<{ color: string }>`
   ${removeAutoFillStyle};
 
-  font-family: var(--font-ui);
-  font-size: 12px;
+  font-family: var(--search-input-font-family,var(--font-ui));
+  font-size: var(--search-input-font-size, 12px);
   font-weight: 500;
   color: var(--grey-12);
 
@@ -99,7 +99,6 @@ const StyledInput = styled.input<{ color: string }>`
     cursor: not-allowed;
   }
 
-  font-size: 12px;
   border: none;
   height: 100%;
   width: 100%;

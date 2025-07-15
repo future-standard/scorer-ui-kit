@@ -29,7 +29,7 @@ const OptionList = styled.div<{ moreItem?: boolean }>`
 
   ${StyledFilterOption} {
     height: 40px;
-    padding-left: 14px;
+    padding-left: 16px;
   }
 `;
 
@@ -72,10 +72,13 @@ const ResultCounter = styled.div`
 `;
 
 const SearchWrapper = styled.div`
+  --search-input-font-size: 14px;
+  --search-input-font-family: var(--font-data);
+  --search-input-container-gap: 10px;
   height: 40px;
   display: flex;
   align-items: center;
-  padding: 0 8px;
+  padding: 4px 4px 4px 14px;
 `;
 
 const EmptyResultText = styled.div`
