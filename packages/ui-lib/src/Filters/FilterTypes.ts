@@ -3,6 +3,7 @@ import { IBasicSearchInput } from '../Misc/atoms/BasicSearchInput';
 import { IDropdownDatePicker } from './molecules/DropdownDatePicker';
 import { IFilterDropdown } from './molecules/FilterDropdown';
 import { IDateInterval } from '.';
+import { IFilterFooterControls } from './atoms/FooterControls';
 
 type IFilterItem = { text: string; value: string | number; }
 type IFilterValue = IFilterItem | IFilterItem[] | null;
@@ -49,7 +50,7 @@ interface IFilterDatePicker extends IDropdownDatePicker {
   name?: string
 }
 
-interface IFilterDropdownConfig {
+interface IFilterDropdownConfig extends IFilterFooterControls {
   id: string
   canHide?: boolean
   buttonIcon: string
@@ -63,8 +64,15 @@ interface IFilterDropdownConfig {
   hasOptionsFilter?: boolean
   searchPlaceholder?: string
   maxDisplayedItems?: number
+  emptyResultText?: string
   searchResultText?: string
   name?: string
+  design?: FilterButtonDesign
+  ascendingText?: string
+  descendingText?: string
+  isListAscending?: boolean
+  onResetCallback?: () => void
+  onCancelCallback?: () => void
 }
 
 type FilterButtonDesign = 'default' | 'basic'

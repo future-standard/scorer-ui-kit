@@ -8,7 +8,7 @@ import {
   PageHeader,
 } from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';
-import { searchTemplateResultEnglish, searchTemplateResultJapanese } from '../../helpers/data_samples';
+import { emptyResultsEnglish, emptyResultsJapanese, searchTemplateResultEnglish, searchTemplateResultJapanese } from '../../helpers/data_samples';
 
 const FilterDropdownWithFooterStory = {
   title: 'Filters/molecules/FilterDropdown',
@@ -110,6 +110,8 @@ export const DropdownWithApplyAndReset = () => {
           applyText={ language === 'japanese' ? '適用' : 'Apply' }
           descendingText = { language === 'japanese' ? '降順' : 'Descending'}
           ascendingText={ language === 'japanese' ? '昇順' : 'Ascending'}
+          emptyResultText= { language === 'english' ? emptyResultsEnglish : emptyResultsJapanese}
+          isListAscending={true}
         />
       </Wrapper>
     </Container>
