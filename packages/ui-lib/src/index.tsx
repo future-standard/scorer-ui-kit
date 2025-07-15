@@ -49,7 +49,8 @@ import {
   ISplitButtonProps,
   ButtonsStack,
   IButtonsStack,
-  IButtonStack
+  IButtonStack,
+  TypeSwitchState
 } from './Form';
 
 // Components - Filter
@@ -424,5 +425,6 @@ export type {
   FilterButtonDesign,
   IToggleOption,
   IDateInterval,
-  IDateRange
+  IDateRange,
+  TypeSwitchState
 };
