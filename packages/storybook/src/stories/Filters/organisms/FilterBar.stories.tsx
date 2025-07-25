@@ -125,6 +125,8 @@ export const _FilterBar = () => {
   const datePickerHasApply = boolean('Datepicker has Apply', true);
   const handleStatusReset = action("Status Reset was pressed");
   const handleStatusCancel = action("Status Cancel was pressed");
+  const handlePriceReset = action("Price Reset was pressed");
+  const handlePriceCancel = action("Price Cancel pressed");
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked: boolean, id?: string | number) => {
@@ -187,9 +189,9 @@ export const _FilterBar = () => {
       onCancelCallback: handleStatusCancel,
       hasReset: true,
       hasApply: true,
-      resetText: language === 'english' ? 'Reset': 'リセット' ,
-      cancelText: language === 'english' ? 'Cancel': 'キャンセル',
-      closeText: language === 'english' ? 'Close' : '閉じる' ,
+      resetText: language === 'english' ? 'Reset' : 'リセット',
+      cancelText: language === 'english' ? 'Cancel' : 'キャンセル',
+      closeText: language === 'english' ? 'Close' : '閉じる',
       applyText: language === 'english' ? 'Apply' : '適用',
       descendingText: language === 'english' ? 'Descending' : '降順',
       ascendingText: language === 'english' ? 'Ascending' : '昇順',
@@ -206,6 +208,19 @@ export const _FilterBar = () => {
       loadingText: language === 'english' ? 'Loading Cost...' : genericLoadingJp,
       searchPlaceholder: language === 'english' ? 'Cost...' : '価格...',
       searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+      emptyResultText: language === 'english' ? emptyResultsEnglish : emptyResultsJapanese,
+      onResetCallback: handlePriceReset,
+      onCancelCallback: handlePriceCancel,
+      hasReset: true,
+      hasApply: true,
+      resetText: language === 'english' ? 'Reset' : 'リセット',
+      cancelText: language === 'english' ? 'Cancel' : 'キャンセル',
+      closeText: language === 'english' ? 'Close' : '閉じる',
+      applyText: language === 'english' ? 'Apply' : '適用',
+      descendingText: language === 'english' ? 'Descending' : '降順',
+      ascendingText: language === 'english' ? 'Ascending' : '昇順',
+      isListAscending: true,
+      hasOptionsFilter: true,
     }
   ]
 
