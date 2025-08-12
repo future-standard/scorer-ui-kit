@@ -52,7 +52,9 @@ export interface IRowHeader {
   image?: string
   mediaUrl?: string
   mediaType?: IMediaType
+  retryImageLoad?: boolean;
   icon?: string
+  onClickThumbnail?: () => void
 }
 
 export interface IRowData {
