@@ -184,7 +184,7 @@ const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({ hoverZoom = true, ima
   },[image]);
 
   return (
-    <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={ onClickThumbnail || handleModal}>
+    <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={onClickThumbnail || handleModal}>
       {showImage ?
         <ImageWrapper ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} /> :
         <NoImageWrapper><NoImage /></NoImageWrapper>}
