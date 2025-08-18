@@ -34,6 +34,8 @@ import {
   showMoreJp,
   resultTextTemplateEng,
   resultTextTemplateJp,
+  emptyResultsEnglish,
+  emptyResultsJapanese,
 } from '../../helpers/data_samples';
 
 import {
@@ -69,7 +71,6 @@ before.setDate(before.getDate() - 5);
 const dataInitialState = sortDataBy(tableData, 'deviceName', true);
 
 const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleData[]): ITableSampleData[] => {
-
 
   if (Array.isArray(currentSelected) && (currentSelected.length > 0)) {
     const filteredData: ITableSampleData[] = currentSelected.reduce((accumulator, currentFilter) => {
@@ -122,6 +123,10 @@ export const _FilterBar = () => {
   // valid formats - https://date-fns.org/v2.25.0/docs/format
   const resultsDateFormat = text('Results date format', 'yyyy-MM-dd HH:mm');
   const datePickerHasApply = boolean('Datepicker has Apply', true);
+  const handleStatusReset = action("Status Reset was pressed");
+  const handleStatusCancel = action("Status Cancel was pressed");
+  const handlePriceReset = action("Price Reset was pressed");
+  const handlePriceCancel = action("Price Cancel pressed");
 
   // Sent to checkbox in TableRow via Table component.
   const selectCallback = useCallback((checked: boolean, id?: string | number) => {
@@ -179,7 +184,19 @@ export const _FilterBar = () => {
       loadingText: language === 'english' ? 'Loading Status ...' : genericLoadingJp,
       searchPlaceholder: language === 'english' ? 'Status...' : 'ステータス...',
       searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
-      // selected: {text: language === 'english'? 'OK' : 'OKです。', value: 'ok' }
+      emptyResultText: language === 'english' ? emptyResultsEnglish : emptyResultsJapanese,
+      onResetCallback: handleStatusReset,
+      onCancelCallback: handleStatusCancel,
+      hasReset: true,
+      hasApply: true,
+      resetText: language === 'english' ? 'Reset' : 'リセット',
+      cancelText: language === 'english' ? 'Cancel' : 'キャンセル',
+      closeText: language === 'english' ? 'Close' : '閉じる',
+      applyText: language === 'english' ? 'Apply' : '適用',
+      descendingText: language === 'english' ? 'Descending' : '降順',
+      ascendingText: language === 'english' ? 'Ascending' : '昇順',
+      isListAscending: true,
+      hasOptionsFilter: true,
     },
     {
       id: 'priceFilter',
@@ -191,6 +208,19 @@ export const _FilterBar = () => {
       loadingText: language === 'english' ? 'Loading Cost...' : genericLoadingJp,
       searchPlaceholder: language === 'english' ? 'Cost...' : '価格...',
       searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+      emptyResultText: language === 'english' ? emptyResultsEnglish : emptyResultsJapanese,
+      onResetCallback: handlePriceReset,
+      onCancelCallback: handlePriceCancel,
+      hasReset: true,
+      hasApply: true,
+      resetText: language === 'english' ? 'Reset' : 'リセット',
+      cancelText: language === 'english' ? 'Cancel' : 'キャンセル',
+      closeText: language === 'english' ? 'Close' : '閉じる',
+      applyText: language === 'english' ? 'Apply' : '適用',
+      descendingText: language === 'english' ? 'Descending' : '降順',
+      ascendingText: language === 'english' ? 'Ascending' : '昇順',
+      isListAscending: true,
+      hasOptionsFilter: true,
     }
   ]
 
