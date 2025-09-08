@@ -1,0 +1,13 @@
+{
+  "window.titleBarStyle": "Magenta Style",
+  "window.title": "UI KIT V2 — ${rootName}${separator}${activeEditorShort}",
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#880e4f",
+    "titleBar.activeForeground": "#ffffff",
+    "titleBar.inactiveBackground": "#880e4fcc",
+    "activityBar.background": "#880e4f",
+    "statusBar.background": "#880e4f",
+    "statusBar.foreground": "#ffffff"
+  }
+}
+

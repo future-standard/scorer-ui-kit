@@ -12,7 +12,7 @@
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
@@ -30,22 +30,30 @@
     "link": "npm link && npm link react && npm link react-dom && npm link react-router-dom && npm link styled-components"
   },
   "peerDependencies": {
-    "react": "^17.0.2 || ^18.0.0",
-    "react-dom": "^17.0.2 || ^18.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-router": "^5.3.1",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^5.3.1",
     "react-use-websocket": "^2.9.1",
     "styled-components": "^5.3.5"
+  },
+  "externals": {
+    "react": "react",
+    "react-dom": "react-dom",
+    "react-router": "react-router",
+    "react-router-dom": "react-router-dom",
+    "react-use-websocket": "react-use-websocket",
+    "styled-components": "styled-components"
   },
   "devDependencies": {
     "@svgr/cli": "^6.3.1",
     "@types/jest": "^28.1.6",
     "@types/lodash.debounce": "^4.0.7",
-    "@types/lodash.defaultsdeep": "^4.6.7",
     "@types/lodash.isequal": "^4.5.6",
     "@types/node": "^16.11.7",
     "@types/react": "^17.0.34",
-    "@types/react-router-dom": "^5.1.5",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.3.1",
     "@types/styled-components": "^5.1.25",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.56.0",
@@ -64,7 +72,7 @@
     "npm-run-all": "^4.1.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^5.3.1",
     "react-scripts": "^5.0.1",
     "react-use-websocket": "^2.9.1",
     "styled-components": "^5.3.5"
@@ -73,12 +81,10 @@
     "dist"
   ],
   "dependencies": {
-    "@future-standard/icons": "^2.0.1",
-    "@types/react-dom": "^17.0.0",
+    "@future-standard/icons": "^2.0.3",
     "date-fns": "^2.29.1",
     "immutability-helper": "^3.1.1",
     "lodash.debounce": "^4.0.7",
-    "lodash.defaultsdeep": "^4.6.1",
     "lodash.isequal": "^4.5.0"
   },
   "directories": {
