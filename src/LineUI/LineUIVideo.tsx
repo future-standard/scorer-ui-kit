@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
+import Hls from 'hls.js';
 
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
@@ -106,6 +107,7 @@ const LineUIVideo : React.FC<LineUIProps> = ({
 
   const frame =  useRef<SVGSVGElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const hlsRef = useRef<Hls | null>(null);
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
   const {state} = useContext(LineSetContext);
@@ -175,6 +177,72 @@ const LineUIVideo : React.FC<LineUIProps> = ({
     }
   },[initScaleAndBounds, onLoaded]);
 
+  // HLS setup effect
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    const video = videoRef.current;
+    const isHLS = src.includes('.m3u8') || src.includes('m3u8');
+
+    if (isHLS) {
+      if (Hls.isSupported()) {
+        // HLS.js is supported
+        const hls = new Hls({
+          enableWorker: true,
+          lowLatencyMode: true,
+        });
+        
+        hlsRef.current = hls;
+        hls.loadSource(src);
+        hls.attachMedia(video);
+        
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          if (autoPlay) {
+            video.play().catch(err => console.error('Auto-play failed:', err));
+          }
+        });
+
+        hls.on(Hls.Events.ERROR, (event, data) => {
+          console.error('HLS error:', data);
+          if (data.fatal) {
+            switch (data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                console.error('Fatal network error, trying to recover');
+                hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                console.error('Fatal media error, trying to recover');
+                hls.recoverMediaError();
+                break;
+              default:
+                console.error('Fatal error, cannot recover');
+                hls.destroy();
+                break;
+            }
+          }
+        });
+
+        return () => {
+          if (hlsRef.current) {
+            hlsRef.current.destroy();
+            hlsRef.current = null;
+          }
+        };
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        // Native HLS support (Safari)
+        video.src = src;
+        if (autoPlay) {
+          video.play().catch(err => console.error('Auto-play failed:', err));
+        }
+      } else {
+        console.error('HLS is not supported in this browser');
+      }
+    } else {
+      // Regular video file
+      video.src = src;
+    }
+  }, [src, autoPlay]);
+
   useEffect(() => {
     // Make sure we always keep scale up to date on resize.
     window.addEventListener('resize', initScaleAndBounds);
@@ -198,7 +266,7 @@ const LineUIVideo : React.FC<LineUIProps> = ({
 
   return (
     <Container>
-      <Video ref={videoRef} controls={controls} muted={muted} autoPlay={autoPlay} loop={loop} {...videoOptions} onLoadedMetadata={onLoadedMetadata} src={src} id='1'> </Video>
+      <Video ref={videoRef} controls={controls} muted={muted} autoPlay={autoPlay} loop={loop} {...videoOptions} onLoadedMetadata={onLoadedMetadata} id='1'> </Video>
       {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {
         loaded &&

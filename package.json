@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@svgr/cli": "^5.4.0",
+    "@types/hls.js": "^1.0.0",
     "@types/jest": "^25.1.4",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.defaultsdeep": "^4.6.6",
@@ -81,6 +82,7 @@
     "@future-standard/icons": "^2.0.0",
     "@types/react-dom": "^17.0.0",
     "date-fns": "^2.16.1",
+    "hls.js": "^1.4.0",
     "immutability-helper": "^3.1.1",
     "lodash.debounce": "^4.0.6",
     "lodash.defaultsdeep": "^4.6.1",
