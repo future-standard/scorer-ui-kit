@@ -108,8 +108,8 @@ const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, line
     if(!screenCTM){ return; }
 
     const pointer = enforceBoundaries({
-      x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a),
-      y: ((pointerPosition.y - screenCTM.f ) / screenCTM.d)
+      x: (((pointerPosition.x - window.scrollX) - screenCTM.e ) / screenCTM.a),
+      y: (((pointerPosition.y - window.scrollY) - screenCTM.f ) / screenCTM.d)
     });
     const point ={
       x: Math.round(pointer.x),
@@ -126,8 +126,8 @@ const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, line
     if(!screenCTM){ return; }
 
     const pointer = {
-      x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a) - handleRadius,
-      y: ((pointerPosition.y - screenCTM.f ) / screenCTM.d) - handleRadius
+      x: (((pointerPosition.x - window.scrollX) - screenCTM.e) / screenCTM.a) - handleRadius,
+      y: (((pointerPosition.y - window.scrollY) - screenCTM.f) / screenCTM.d) - handleRadius
     };
 
     handleRelation.current = lineSetData.points.map((handle) => {
@@ -148,8 +148,8 @@ const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, line
     const { points } = lineSetData;
 
     const pointer = {
-      x: ((pointerPosition.x - screenCTM.e ) / screenCTM.a) - handleRadius,
-      y: ((pointerPosition.y - screenCTM.f ) / screenCTM.d) - handleRadius
+      x: (((pointerPosition.x - window.scrollX) - screenCTM.e) / screenCTM.a) - handleRadius,
+      y: (((pointerPosition.y - window.scrollY) - screenCTM.f) / screenCTM.d) - handleRadius
     };
 
     const newPoints = points.map((_handle, index) => {
