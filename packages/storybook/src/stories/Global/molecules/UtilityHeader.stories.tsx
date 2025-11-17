@@ -51,8 +51,7 @@ export const _UtilityHeader = () => {
       onClick: clickAction
     },
     {
-      text:'Five', 
-      href:'#5'
+      text:'Five', //Last breadcrumb is current page so it will not be a link
     }
   ]);
   const shareLink = object("Share Link", { show: true, label: "Share", link: "https://www.example.com", copiedLabel: "Copied" });

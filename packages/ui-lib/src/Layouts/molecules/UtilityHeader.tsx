@@ -58,7 +58,7 @@ const HomeIcon = styled(BreadcrumbIcon)`
   }
 `;
 
-const BreadCrumbStyle = css`
+const BreadcrumbTextStyle = css`
   display: flex;
   flex-direction: row;
   gap: 8px;
@@ -70,6 +70,10 @@ const BreadCrumbStyle = css`
   font-style: normal;
   font-weight: 500;
   line-height: 12px; /* 100% */
+`;
+
+const BreadCrumbStyle = css`
+  ${BreadcrumbTextStyle};
   transition: color var(--speed-normal) var(--easing-primary-out);
 
   &:hover {
@@ -89,6 +93,11 @@ const BreadcrumbLink = styled(Link)`
 const BreadcrumbButton = styled.button`
   ${resetButtonStyles};
   ${BreadCrumbStyle};
+`;
+
+const BreadcrumbText = styled.span`
+  ${BreadcrumbTextStyle};
+  pointer-events: none;
 `;
 
 const RightArea = styled.div`
@@ -130,10 +139,14 @@ const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, brea
                     <BreadcrumbButton onClick={onClick} type="button">
                       {innerContent}
                     </BreadcrumbButton>
-                  ) : (
-                    <BreadcrumbLink to={href || '#'}>
+                  ) : href ? (
+                    <BreadcrumbLink to={href}>
                       {innerContent}
                     </BreadcrumbLink>
+                  ) : (
+                    <BreadcrumbText>
+                      {innerContent}
+                    </BreadcrumbText>
                   )}
                   {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={6} color='grey-8' /></BreadcrumbIcon> : null }
                 </Breadcrumb>
