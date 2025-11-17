@@ -6,13 +6,15 @@ import SplitLayout from './molecules/SplitLayout';
 
 interface IBreadcrumb {
   text: string;
-  href: string;
+  href?: string;
+  onClick?: () => void;
 }
 
 export interface IUtilityHeaderLinkBack {
   show?: boolean;
-  link: string;
+  link?: string;
   label?: string;
+  onClick?: () => void;
 }
 
 export interface IUtilityHeaderLinkShare {
