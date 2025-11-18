@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useRef, Fragment } from 'react';
+import React, { useEffect, useState, useRef, Fragment, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ITopBarBadge } from '..';
+import { resetButtonStyles } from '../../common';
 
 const CoreStyle = css`
   display: flex;
@@ -41,33 +42,43 @@ const DefaultText = styled.span`
 `;
 const LinkText = styled.span``;
 
+const InteractiveStyle = css<{themeColor?: string}>`
+  ${CoreStyle};
+  text-decoration: none;
+
+  ${({themeColor}) => themeColor ? css`
+    background-color: transparent;
+    border: 2px solid var(--${themeColor}-9);
+    color: var(--${themeColor}-11);
+  ` : css`
+    background-color: transparent;
+    border: 2px solid var(--info-9);
+    color: var(--info-11);
+  `};
+
+  &:hover {
+    ${({themeColor}) => themeColor ? css`
+      background-color: var(--${themeColor}-9);
+      border: 2px solid var(--${themeColor}-9);
+      color: var(--white-12);
+    ` : css`
+      background-color: var(--info-9);
+      border: 2px solid var(--info-9);
+      color: var(--white-12);
+    `};
+  }
+`;
+
 const ContainerLinked = styled.div<{themeColor?: string}>`
   a {
-    ${CoreStyle};
+    ${InteractiveStyle};
+  }
+`;
 
-    text-decoration: none;
-
-    ${({themeColor}) => themeColor ? css`
-      background-color: transparent;
-      border: 2px solid var(--${themeColor}-9);
-      color: var(--${themeColor}-11);
-    ` : css`
-      background-color: transparent;
-      border: 2px solid var(--info-9);
-      color: var(--info-11);
-    `};
-
-    &:hover {
-      ${({themeColor}) => themeColor ? css`
-        background-color: var(--${themeColor}-9);
-        border: 2px solid var(--${themeColor}-9);
-        color: var(--white-12);
-      ` : css`
-        background-color: var(--info-9);
-        border: 2px solid var(--info-9);
-        color: var(--white-12);
-      `};
-    }
+const ContainerButton = styled.div<{themeColor?: string}>`
+  button {
+    ${resetButtonStyles};
+    ${InteractiveStyle};
   }
 `;
 
@@ -86,7 +97,7 @@ const Container = styled.div<{ready: boolean, minWidth: number}>`
   `};
 `;
 
-const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, linkText}) => {
+const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, linkText, onClick}) => {
   
   const defaultTextRef = useRef() as React.MutableRefObject<HTMLSpanElement>;
   const linkTextRef = useRef() as React.MutableRefObject<HTMLSpanElement>;
@@ -106,38 +117,52 @@ const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, lin
     }, 100);
   }, [defaultTextRef, linkTextRef, text, linkText, setMinWidth, setReady]);
 
-  const defaultTextElement = <DefaultText ref={defaultTextRef}>{text}</DefaultText>;
-  const linkTextElement = linkTo || linkHref ? <LinkText ref={linkTextRef}>{linkText || text}</LinkText> : null;
-  
-  let badgeComponent;
+  const defaultTextElement = useMemo(() => <DefaultText ref={defaultTextRef}>{text}</DefaultText>,[text]);
 
-  if(linkTo){
-    badgeComponent = <ContainerLinked themeColor={color}>
-      <Link to={linkTo}>
-        { !ready ? <Fragment>
+  const linkTextElement = useMemo(
+    () => onClick || linkTo || linkHref ? <LinkText ref={linkTextRef}>{linkText || text}</LinkText> : null,
+    [onClick, linkTo, linkHref, linkText, text]
+  );
+  
+  const renderContent = useMemo(
+    () => (
+      !ready ? (
+        <Fragment>
           {defaultTextElement}
           {linkTextElement}
         </Fragment>
-        : <Fragment>
-          {!hover ? defaultTextElement : linkTextElement }
-        </Fragment>}
-      </Link>
-    </ContainerLinked>;
-  } else if(linkHref){
-    badgeComponent = <ContainerLinked themeColor={color}>
-      <a href={linkHref}>
-      { !ready ? <Fragment>
-          {defaultTextElement}
-          {linkTextElement}
+      ) : (
+        <Fragment>
+          {!hover ? defaultTextElement : linkTextElement}
         </Fragment>
-        : <Fragment>
-          {!hover ? defaultTextElement : linkTextElement }
-        </Fragment>}
-      </a>
-    </ContainerLinked>;
-  } else {
-    badgeComponent = <ContainerStatic themeColor={color}>{defaultTextElement}</ContainerStatic>;
-  }
+      )
+    ),
+    [ready, hover, defaultTextElement, linkTextElement]
+  );
+
+  const badgeComponent = useMemo(() => {
+    if(onClick){
+      return <ContainerButton themeColor={color}>
+        <button onClick={onClick} type="button">
+          {renderContent}
+        </button>
+      </ContainerButton>;
+    } else if(linkTo){
+      return <ContainerLinked themeColor={color}>
+        <Link to={linkTo}>
+          {renderContent}
+        </Link>
+      </ContainerLinked>;
+    } else if(linkHref){
+      return <ContainerLinked themeColor={color}>
+        <a href={linkHref}>
+          {renderContent}
+        </a>
+      </ContainerLinked>;
+    } else {
+      return <ContainerStatic themeColor={color}>{defaultTextElement}</ContainerStatic>;
+    }
+  }, [onClick, linkTo, linkHref, color, renderContent, defaultTextElement]);
   
   return (
     <Container {...{ready, minWidth}} onPointerEnter={ () => ready && setHover(true) } onPointerLeave={ () => ready && setHover(false) }>

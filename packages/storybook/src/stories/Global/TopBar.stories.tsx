@@ -163,6 +163,8 @@ export const _TopBar = () => {
   const badgeColor = select("Badge Color", ['primary', 'grey', 'info', 'success', 'caution', 'warning'], 'info');
   const badgeLinkTo = text("Badge To", "/login");
   const badgeLinkText = text("Badge Link Text", "Login");
+  const useBadgeOnClick = boolean("Use Badge onClick", false);
+  const badgeClickAction = action('Badge onClick was triggered');
 
   // userDrawerBespoke: See examples for implementation of this prop.
 
@@ -181,7 +183,8 @@ export const _TopBar = () => {
           text: badgeText,
           color: badgeColor,
           linkTo: badgeLinkTo,
-          linkText: badgeLinkText
+          linkText: badgeLinkText,
+          onClick: useBadgeOnClick ? badgeClickAction : undefined
         }}
       {...{
         loggedInUser,

@@ -144,4 +144,5 @@ export interface IMenuTop {
     linkHref?: string;
     linkTo?: string;
     linkText?: string;
+    onClick?: () => void;
   }
