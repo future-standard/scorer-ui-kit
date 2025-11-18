@@ -42,6 +42,7 @@ export type IHeaderTag = {
   label: string
   linkTo?: string
   icon?: string
+  onTagClick?: () => void
 }
 
 interface IProps {
@@ -83,8 +84,8 @@ const PageHeader: React.FC<IProps> = ({
           :
           <TagListWrapper>
             {
-              tagList.map(({ icon, label, linkTo }) => (
-                <Tag key={`tag-`} icon={icon || ''} noBorder={true} tagSize='compact' {...{ label, linkTo }} />
+              tagList.map(({ icon, label, linkTo, onTagClick }) => (
+                <Tag key={`tag-`} icon={icon || ''} noBorder={true} tagSize='compact' {...{ label, linkTo, onTagClick }} />
               ))
             }
           </TagListWrapper>

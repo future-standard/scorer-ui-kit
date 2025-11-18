@@ -42,7 +42,7 @@ const defaultTags : IHeaderTag[] = [
     label: 'Smart',
     icon: 'MetaTags',
   },
-    {
+  {
     label: 'Shop C',
     icon: 'MetaCategories',
   },
@@ -54,7 +54,13 @@ const defaultTags : IHeaderTag[] = [
     label: 'Smart',
     icon: 'MetaTags',
   },
+  {
+    label: 'Edit',
+    icon: 'Edit',
+    onTagClick: action('Edit tag clicked')
+  },
 ];
+
 
 const defaultBtn : IButtonStack[] = [
   {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
@@ -77,7 +83,7 @@ export const _PageHeader = () => {
   const noButtonsExample = boolean("No Buttons Example", false)
   const noIconExample = boolean("No Icon", false);
   const introductionText = text("Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.");
-  const tagList = object('Tag List', defaultTags)
+  const tagList = object('Tag List',  defaultTags)
   const buttonList = object('Buttons Stack', defaultBtn)
   const optionalAreaOnclick = boolean('Example with area on Click', false);
   const customClick = action('Custom onAreaClick was used');

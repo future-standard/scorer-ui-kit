@@ -2,12 +2,19 @@ import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import Icon, { IconProps, IconWrapper } from '../../Icons/Icon';
 import { Link } from 'react-router-dom';
+import { resetButtonStyles } from '../../common';
 
 const TextContainer = styled.div`
   user-select: none;
 `;
 
 const StyledLink = styled(Link)`
+  text-decoration: none;
+  display: flex;
+`;
+
+const StyledButton = styled.button`
+  ${resetButtonStyles};
   text-decoration: none;
   display: flex;
 `;
@@ -70,6 +77,7 @@ interface OwnProps {
   linkTo?: string
   noBorder?: boolean
   tagSize?: TypeTagSize
+  onTagClick?: () => void
 }
 
 export type ITag = OwnProps & IconProps;
@@ -82,6 +90,7 @@ const Tag: React.FC<ITag> = ({
   linkTo,
   noBorder = false,
   tagSize,
+  onTagClick,
   ...props
 }) => {
 
@@ -89,7 +98,7 @@ const Tag: React.FC<ITag> = ({
   const textTagSize = useMemo(() => tagSize === 'compact' ? 12 : 14, [tagSize]);
 
   const renderTag = () => (
-    <TagWrapper hoverColor='primary' enableHover={linkTo ? true : false} size={tagSize ? textTagSize : size} tagSize={tagSize} noBorder={noBorder}>
+    <TagWrapper hoverColor='primary' enableHover={onTagClick || linkTo ? true : false} size={tagSize ? textTagSize : size} tagSize={tagSize} noBorder={noBorder}>
       {icon && (
         <Icon
           icon={icon}
@@ -103,11 +112,15 @@ const Tag: React.FC<ITag> = ({
   );
 
   return (
-    linkTo ? (
-        <StyledLink to={linkTo}>
-          {renderTag()}
-        </StyledLink>
-    )   : renderTag()
+    onTagClick ? (
+      <StyledButton onClick={onTagClick} type="button">
+        {renderTag()}
+      </StyledButton>
+    ) : linkTo ? (
+      <StyledLink to={linkTo}>
+        {renderTag()}
+      </StyledLink>
+    ) : renderTag()
   );
 };
 
