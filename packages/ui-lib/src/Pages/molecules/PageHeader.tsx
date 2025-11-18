@@ -56,6 +56,7 @@ interface IProps {
   tagList?: IHeaderTag[]
   areaTitleBottom?: boolean
   rightContent?: React.ReactNode | React.FC | ReactElement;
+  onAreaClick?: () => void
 }
 
 const PageHeader: React.FC<IProps> = ({
@@ -69,13 +70,14 @@ const PageHeader: React.FC<IProps> = ({
   hideAreaInDocTitle,
   tagList,
   areaTitleBottom,
-  rightContent
+  rightContent,
+  onAreaClick,
 }) => {
 
   return (
     <Container>
       <LeftPanel>
-        <PageTitle iconColor={iconColor} {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom }} />
+        <PageTitle iconColor={iconColor} {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom, onAreaClick }} />
         {!tagList ?
           null
           :

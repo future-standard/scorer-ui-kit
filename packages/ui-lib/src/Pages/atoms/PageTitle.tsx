@@ -5,6 +5,7 @@ import Icon from '../../Icons/Icon';
 import { Link } from 'react-router-dom';
 import { useTitle } from '../../hooks/useTitle';
 import { deviceMediaQuery } from '../../theme/common';
+import { resetButtonStyles } from '../../common';
 
 const ICON_SIZE = 24;
 const GAP_LEFT = 20;
@@ -75,6 +76,14 @@ const AreaLinkTitle = styled(Link)`
   }
 `;
 
+const AreaButton = styled.button`
+  ${resetButtonStyles};
+  ${AreaTitleCss};
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 interface IProps {
   title: string
   icon?: string
@@ -84,10 +93,10 @@ interface IProps {
   updateDocTitle?: boolean
   hideAreaInDocTitle? : boolean
   areaTitleBottom?: boolean
-
+  onAreaClick?: () => void
 }
 
-const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false, areaTitleBottom=false, iconColor='dimmed' }) => {
+const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false, areaTitleBottom=false, iconColor='dimmed', onAreaClick }) => {
   // Set <title> attribute automagically.
 
   useTitle(title, hideAreaInDocTitle ? undefined : areaTitle || '', undefined, updateDocTitle);
@@ -99,9 +108,13 @@ const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateD
       : null}
 
       <TitlesWrapper areaTitleBottom={areaTitleBottom}>
-        {areaTitle && areaHref
-          ? <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
-          : areaTitle && <AreaTitle>{areaTitle}</AreaTitle>}
+        {areaTitle && onAreaClick ? (
+          <AreaButton onClick={onAreaClick} type="button">{areaTitle}</AreaButton>
+        ) : areaTitle && areaHref ? (
+          <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
+        ) : areaTitle ? (
+          <AreaTitle>{areaTitle}</AreaTitle>
+        ) : null}
         <Title>{title}</Title>
       </TitlesWrapper>
 

@@ -4,6 +4,7 @@ import {  text, select, boolean, object } from "@storybook/addon-knobs";
 
 import {PageHeader, IHeaderTag, ButtonsStack, IButtonStack} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
+import { action } from '@storybook/addon-actions';
 
 const Container = styled.div`
   margin: 100px;
@@ -78,6 +79,8 @@ export const _PageHeader = () => {
   const introductionText = text("Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.");
   const tagList = object('Tag List', defaultTags)
   const buttonList = object('Buttons Stack', defaultBtn)
+  const optionalAreaOnclick = boolean('Example with area on Click', false);
+  const customClick = action('Custom onAreaClick was used');
 
   if(updateDocTitle){
     console.info("Note: Updating document.title in Storybook has no effect though it should work in projects.")
@@ -91,6 +94,7 @@ export const _PageHeader = () => {
           title={pageTitle}
           areaTitle={pageAreaText}
           areaHref={pageAreaHref}
+          onAreaClick={optionalAreaOnclick ? customClick : undefined}
           updateDocTitle={updateDocTitle}
           tagList={noTagsExample ? undefined : tagList}
           rightContent={noButtonsExample ? undefined : <ButtonsStack buttons={buttonList}/>}
