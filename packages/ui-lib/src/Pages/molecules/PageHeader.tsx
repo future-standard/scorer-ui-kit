@@ -38,6 +38,8 @@ const TagListWrapper = styled.div`
   margin-top: 29px;
 `;
 
+const BottomLeft = styled.div``;
+
 export type IHeaderTag = {
   label: string
   linkTo?: string
@@ -57,6 +59,7 @@ interface IProps {
   tagList?: IHeaderTag[]
   areaTitleBottom?: boolean
   rightContent?: React.ReactNode | React.FC | ReactElement;
+  bottomLeftContent?: React.ReactNode | React.FC | ReactElement;
   onAreaClick?: () => void
 }
 
@@ -72,13 +75,14 @@ const PageHeader: React.FC<IProps> = ({
   tagList,
   areaTitleBottom,
   rightContent,
+  bottomLeftContent,
   onAreaClick,
 }) => {
 
   return (
     <Container>
       <LeftPanel>
-        <PageTitle iconColor={iconColor} {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom, onAreaClick }} />
+        <PageTitle iconColor={iconColor} {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom, onAreaClick, bottomLeftContent }} />
         {!tagList ?
           null
           :
@@ -95,6 +99,11 @@ const PageHeader: React.FC<IProps> = ({
             <IntroductionText>{introductionText}</IntroductionText>
           </IntroductionTextWrapper>
           : null
+        }
+        {
+          <BottomLeft>
+            {bottomLeftContent}
+          </BottomLeft>
         }
       </LeftPanel>
       {rightContent ?
