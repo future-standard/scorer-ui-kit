@@ -38,10 +38,13 @@ const TagListWrapper = styled.div`
   margin-top: 29px;
 `;
 
+const BottomLeft = styled.div``;
+
 export type IHeaderTag = {
   label: string
   linkTo?: string
   icon?: string
+  onTagClick?: () => void
 }
 
 interface IProps {
@@ -56,6 +59,8 @@ interface IProps {
   tagList?: IHeaderTag[]
   areaTitleBottom?: boolean
   rightContent?: React.ReactNode | React.FC | ReactElement;
+  bottomLeftContent?: React.ReactNode | React.FC | ReactElement;
+  onAreaClick?: () => void
 }
 
 const PageHeader: React.FC<IProps> = ({
@@ -69,20 +74,22 @@ const PageHeader: React.FC<IProps> = ({
   hideAreaInDocTitle,
   tagList,
   areaTitleBottom,
-  rightContent
+  rightContent,
+  bottomLeftContent,
+  onAreaClick,
 }) => {
 
   return (
     <Container>
       <LeftPanel>
-        <PageTitle iconColor={iconColor} {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom }} />
+        <PageTitle iconColor={iconColor} {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom, onAreaClick, bottomLeftContent }} />
         {!tagList ?
           null
           :
           <TagListWrapper>
             {
-              tagList.map(({ icon, label, linkTo }) => (
-                <Tag key={`tag-`} icon={icon || ''} noBorder={true} tagSize='compact' {...{ label, linkTo }} />
+              tagList.map(({ icon, label, linkTo, onTagClick }) => (
+                <Tag key={`tag-`} icon={icon || ''} noBorder={true} tagSize='compact' {...{ label, linkTo, onTagClick }} />
               ))
             }
           </TagListWrapper>
@@ -92,6 +99,11 @@ const PageHeader: React.FC<IProps> = ({
             <IntroductionText>{introductionText}</IntroductionText>
           </IntroductionTextWrapper>
           : null
+        }
+        {
+          <BottomLeft>
+            {bottomLeftContent}
+          </BottomLeft>
         }
       </LeftPanel>
       {rightContent ?

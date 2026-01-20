@@ -5,6 +5,7 @@ import {
 
 import styled from 'styled-components';
 import { object, boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 const UtilityHeaderStory = {
   title: 'Global/molecules',
@@ -25,9 +26,13 @@ const Container = styled.div`
 `;
 
 export const _UtilityHeader = () => {
-  const backLink = object("Back Link", { label: "Back", link: "/" });
+
+  const returnAction = action('Return action');
+  const backLink = object("Back Link", { label: "Back", onClick:returnAction });
   const showBreadcrumbs = boolean("Show Breadcrumbs", true);
   const showHomeIcon = boolean("Show Home Icon", true);
+  const clickAction = action('The Breadcrumb is using a callback');
+  
   const breadcrumbs = object("breadcrumbs", [
     {
       text: 'Examples', 
@@ -43,11 +48,10 @@ export const _UtilityHeader = () => {
     },
     {
       text:'Four', 
-      href:'#4'
+      onClick: clickAction
     },
     {
-      text:'Five', 
-      href:'#5'
+      text:'Five', //Last breadcrumb is current page so it will not be a link
     }
   ]);
   const shareLink = object("Share Link", { show: true, label: "Share", link: "https://www.example.com", copiedLabel: "Copied" });

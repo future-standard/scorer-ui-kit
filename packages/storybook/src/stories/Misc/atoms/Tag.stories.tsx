@@ -3,6 +3,7 @@ import {select, text, number, boolean} from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {Tag} from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';
+import { action } from '@storybook/addon-actions';
 
 const TagStory = {
   title: 'Misc/atoms',
@@ -22,7 +23,8 @@ export const _Tag = () => {
   const tagSize = select('Tag Size', {Compact: "compact", Default: "default", Undefined: undefined}, 'default');
   const tagWeight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy" }, "regular");
   const toValue = text('To Link', '/');
-
+  const useOnClick = boolean('Use onTagClick', false);
+  const customClick = action('onTagClick was triggered');
 
   return (
     <Container>
@@ -34,6 +36,7 @@ export const _Tag = () => {
         linkTo={toValue}
         noBorder={noBorder}
         tagSize={tagSize}
+        onTagClick={useOnClick ? customClick : undefined}
       />
     </Container>
   )
