@@ -149,6 +149,23 @@ const LineSet : React.FC<ILineSetProps> = ({ screenCTM, boundaries, unit, size, 
     }
   }, [lineSetData, updateHandleAngles, handleUsesAngles]);
 
+  useEffect(() => {
+    if (boundaries.x.max <= boundaries.x.min || boundaries.y.max <= boundaries.y.min) return;
+
+    let needsUpdate = false;
+    const newPoints = lineSetData.points.map(point => {
+      const clamped = enforceBoundaries({ ...point });
+      if (clamped.x !== point.x || clamped.y !== point.y) {
+        needsUpdate = true;
+      }
+      return clamped;
+    });
+
+    if (needsUpdate) {
+      dispatch({type: "UPDATE", index: lineSetId, data: { ...lineSetData, points: newPoints } });
+    }
+  }, [boundaries, lineSetData, dispatch, enforceBoundaries, lineSetId]);
+
   const handles = lineSetData.points.map(({x,y}, index) =>
     <HandleUnit
       key={index+lineSetId}
