@@ -139,10 +139,12 @@ const LineUI : React.FC<LineUIProps> = ({
 
   useEffect(() => {
     // Redefine boundaries and screen matrix when the loaded image changes our svg viewbox.
-    let ctm = frame.current.getScreenCTM();
-    setScreenCTM(ctm);
-    setBoundaries(getCanvasBounds());
-  }, [imgSize]);
+    if(loaded && frame.current){
+      let ctm = frame.current.getScreenCTM();
+      setScreenCTM(ctm);
+      setBoundaries(getCanvasBounds());
+    }
+  }, [imgSize, loaded]);
 
   useEffect(() => {
 
