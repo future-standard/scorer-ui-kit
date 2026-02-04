@@ -122,7 +122,7 @@ const LineUI : React.FC<LineUIProps> = ({
       setImgSize({ h: naturalHeight, w: naturalWidth });
       onSizeChange({ h: naturalHeight, w: naturalWidth });
     }
-    if(naturalHeight / clientHeight !== unit) {
+    if(clientHeight > 0 && naturalHeight / clientHeight !== unit) {
       setUnit(naturalHeight / clientHeight);
     }
   }, [imgSize, unit]);

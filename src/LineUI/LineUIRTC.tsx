@@ -130,7 +130,7 @@ const LineUI : React.FC<LineUIProps> = ({
       setVideoSize({ h: videoHeight, w: videoWidth });
       onSizeChange({ h: videoHeight, w: videoWidth });
     }
-    if(videoHeight / clientHeight !== unit) {
+    if(clientHeight > 0 && videoHeight / clientHeight !== unit) {
       setUnit(videoHeight / clientHeight);
     }
 
@@ -157,7 +157,7 @@ const LineUI : React.FC<LineUIProps> = ({
   }, [videoSize, loaded]);
 
   const onLoadedMetadata = useCallback(({target}) =>{
-    if(target && target.videoWidth > 0 && target.videoHeight > 0){
+    if(target && target.videoWidth > 50 && target.videoHeight > 50){
       setLoaded(true);
       initScaleAndBounds(target);
       const {videoHeight=1, videoWidth=1} = target;
