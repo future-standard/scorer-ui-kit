@@ -157,7 +157,7 @@ const LineUI : React.FC<LineUIProps> = ({
   }, [videoSize, loaded]);
 
   const onLoadedMetadata = useCallback(({target}) =>{
-    if(target){
+    if(target && target.videoWidth > 0 && target.videoHeight > 0){
       setLoaded(true);
       initScaleAndBounds(target);
       const {videoHeight=1, videoWidth=1} = target;
@@ -184,7 +184,7 @@ const LineUI : React.FC<LineUIProps> = ({
 
   return (
     <Container>
-      <Video onLoadedMetadata={onLoadedMetadata} peerAddress={ws} id='1' enabled> </Video>
+      <Video onResize={onLoadedMetadata} onLoadedMetadata={onLoadedMetadata} peerAddress={ws} id='1' enabled> </Video>
       {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {
         loaded &&

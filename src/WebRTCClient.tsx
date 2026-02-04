@@ -16,6 +16,7 @@ interface OwnProps {
   id?: string;
   setStatus?: (status: string) => void;
   setError?: (error: string | null) => void;
+  onResize?: (event: Event) => void;
 }
 type Props = OwnProps & VideoHTMLAttributes<HTMLVideoElement>
 
@@ -30,6 +31,7 @@ const WebRTCPlayer: React.FC<Props> = ({
   // Video element defaults
   autoPlay = true,
   muted = true,
+  onResize,
   ...props
   }) => {
 
@@ -270,6 +272,14 @@ const WebRTCPlayer: React.FC<Props> = ({
       closeWebSocket();
     };
   }, [enabled]);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if(el && onResize){
+      el.addEventListener('resize', onResize);
+      return () => el.removeEventListener('resize', onResize);
+    }
+  }, [onResize]);
 
   return (
     <Video {...props} autoPlay={autoPlay} muted={muted} ref={videoRef} />
