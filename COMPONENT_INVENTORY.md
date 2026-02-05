@@ -406,17 +406,41 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Filters/molecules/DatePicker.stories.tsx`
 - **Exported From:** `Filters`
 - **Props:**
-  - `selectedDate`: `IDateInterval` - Selected date range
-  - `onDateChange`: `(date: IDateInterval) => void` - Change handler
-  - `dateRange`: `IDateRange` - Available date range
-  - `language`: `'en' | 'ja'` - Language
-  - `closeText`: `string` - Close button text
+  - `initialValue?`: `Date | IDateInterval` - Initial date or date range value
+  - `dateMode?`: `'single' | 'interval'` - Date selection mode (default: 'interval')
+  - `timeMode?`: `'off' | 'single' | 'interval'` - Time selection mode (default: 'interval')
+  - `hasEmptyValue?`: `boolean` - Allow empty/null initial value (default: false)
+  - `dateTimeTextUpper?`: `string` - Label for start date/time (default: 'From')
+  - `dateTimeTextLower?`: `string` - Label for end date/time (default: 'To')
+  - `timeZoneTitle?`: `string` - Timezone label (default: 'Timezone')
+  - `timeZoneValueTitle?`: `string` - Timezone value display (default: 'JST')
+  - `availableRange?`: `IDateRange` - Available date range constraints
+    - `start`: `Date | null` - Earliest selectable date
+    - `end`: `Date | null` - Latest selectable date
+  - `contentDays?`: `Date[]` - Days to mark with content indicator dot
+  - `lang?`: `'en' | 'ja'` - Language for calendar (default: 'en')
+  - `cancelText?`: `string` - Cancel button text (default: 'Cancel')
+  - `applyText?`: `string` - Apply button text (default: 'Apply')
+  - `hasApply?`: `boolean` - Show apply/cancel buttons (default: false)
+  - `disableApply?`: `boolean` - Disable apply button (default: false)
+  - `updateCallback?`: `(data: IDateInterval | Date) => void` - Callback on date selection change
+    - Returns `IDateInterval` (start: Date, end: Date) in interval mode
+    - Returns `Date` in single mode
+  - `applyCallback?`: `() => void` - Callback when apply button clicked
+  - `cancelCallback?`: `() => void` - Callback when cancel button clicked
 - **Notable Features:**
-  - Date range picker
-  - Calendar interface
-  - Month/year navigation
-  - Date range selection
+  - Date range or single date picker
+  - Calendar interface with month/year navigation
+  - Time selection support (off/single/interval modes)
   - Localization support (EN/JA)
+  - Content indicator dots for specific days
+  - Optional apply/cancel buttons
+  - Date range constraints
+  - Time range validation (prevents invalid time ranges)
+  - Timezone display
+  - Visual states for selected, start, end, inside range, and today
+  - Drag selection for date ranges
+  - DateTimeBlock components for precise time input
 
 ---
 
