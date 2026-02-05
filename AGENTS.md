@@ -57,45 +57,223 @@ In another, run npm start -w packages/example or npm start -w packages/storybook
 ## Using the library on your project
 
 ### Required Wrappers
-- Applications consuming this library MUST include the following providers and styles, best added in `index.tsx file`. Missing any of these may result in broken styles, modals, or notifications. Further documentation in `packages/ui-lib/theme/dark_light_mode_usage.md`
+- Applications consuming this library MUST include the following providers and styles, best added in `index.tsx`. Missing any of these may result in broken styles, modals, or notifications. Further documentation in `packages/ui-lib/theme/dark_light_mode_usage.md`
 
 ```ts
+// index.ts
 import React, { FC, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { defaultTheme, ModalProvider, NotificationProvider, ThemeVariables } from 'scorer-ui-kit';
+import { defaultTheme, ModalProvider, NotificationProvider, ThemeVariables, BaseStyles } from 'scorer-ui-kit';
 import { ThemeProvider } from 'styled-components';
 import App from './App';
 import FeaturesProvider from './context/FeaturesContext';
-import Fonts from './Fonts';
-import Style from './Style';
-
-
-const Contents: FC = () => {
-  const {onThemeToggle, isLightMode} = useThemeToggle();
-
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <FeaturesProvider>
-        <ModalProvider>
-          <NotificationProvider>
-            <App {...{ isLightMode, onThemeToggle }} />
-            <Fonts />
-            <ThemeVariables />
-            <Style />
-          </NotificationProvider>
-        </ModalProvider>
-      </FeaturesProvider>
-    </ThemeProvider>
-  )
-}
+// Lato and Monorale fonts must be present in the public /fonts directory.
+// See packages/example/src/fonts for reference.
+import Fonts from './Fonts'; // File code below
+import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Contents />
+    <ThemeProvider theme={defaultTheme}>
+      <NotificationProvider>
+        <ModalProvider>
+          <Router>
+            <App />
+            <Fonts />
+            <ThemeVariables />
+            <BaseStyles />
+          </Router>
+        </ModalProvider>
+      </NotificationProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
+```
+
+```ts
+// Fonts.ts
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 100;
+    src: url('/fonts/Lato-Thin.ttf') format('truetype');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    font-style: light;
+    font-weight: 300;
+    src: url('/fonts/Lato-Light.ttf') format('truetype');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    font-style: bold;
+    font-weight: 700;
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 100;
+    font-style: normal;
+    src: url('/fonts/Monorale-Thin.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 100;
+    font-style: italic;
+    src: url('/fonts/Monorale-ThinItalic.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 200;
+    font-style: normal;
+    src: url('/fonts/Monorale-ExtraLight.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 200;
+    font-style: italic;
+    src: url('/fonts/Monorale-ExtraLightItalic.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 300;
+    font-style: normal;
+    src: url('/fonts/Monorale-Light.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 300;
+    font-style: italic;
+    src: url('/fonts/Monorale-LightItalic.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 400;
+    font-style: normal;
+    src: url('/fonts/Monorale-Regular.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 400;
+    font-style: italic;
+    src: url('/fonts/Monorale-Italic.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 500;
+    font-style: normal;
+    src: url('/fonts/Monorale-Medium.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 500;
+    font-style: italic;
+    src: url('/fonts/Monorale-MediumItalic.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 600;
+    font-style: normal;
+    src: url('/fonts/Monorale-SemiBold.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 600;
+    font-style: italic;
+    src: url('/fonts/Monorale-SemiBoldItalic.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 700;
+    font-style: normal;
+    src: url('/fonts/Monorale-Bold.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 700;
+    font-style: italic;
+    src: url('/fonts/Monorale-BoldItalic.woff') format('woff');
+    font-display: fallback;
+}
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 800;
+    font-style: normal;
+    src: url('/fonts/Monorale-ExtraBold.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 800;
+    font-style: italic;
+    src: url('/fonts/Monorale-ExtraBoldItalic.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 900;
+    font-style: normal;
+    src: url('/fonts/Monorale-Black.woff') format('woff');
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: Monorale;
+    font-weight: 900;
+    font-style: italic;
+    src: url('/fonts/Monorale-BlackItalic.woff') format('woff');
+    font-display: fallback;
+  }
+`;
+export default GlobalStyle;
 ```
 
 ### Components Available
@@ -103,7 +281,7 @@ ReactDOM.render(
 #### Golden Path for AI Agents
 1. Always check COMPONENT_INVENTORY.md before creating new UI.
 2. Prefer existing components over custom implementations.
-3. Do not assume props — verify against COMPONENT_INVENTORY.md
+3. Do not assume props, verify against COMPONENT_INVENTORY.md
 4. Use provided layout and form components for consistency.
 5. If a required component does not exist or is insufficient, state that explicitly.
 6. When unsure, ask for clarification rather than guessing.
@@ -228,20 +406,20 @@ import { ComponentName } from 'scorer-ui-kit';
 
 ## Key Hooks
 
-The library also exports 13 custom hooks
+The library also exports 14 custom hooks
 Note: Hooks must be used within the appropriate providers (ModalProvider, NotificationProvider, ThemeProvider).
 
 - **useModal** - Modal management
 - **useNotification** - Notification system
 - **useMediaModal** - Media modal for images/videos
-- **useThemeToggle** - Theme switching (use at App.tsx level)
-- **usePTZ** - PTZ control state
+- **useThemeToggle** - Theme switching for dark/light mode (use at App.tsx level)
+- **usePTZ** - PTZ control state for PTZ camera controls
 - **useTitle** - Document title management
 - **useCopyToClipboard** - Clipboard operations
 - **useClickOutside** - Click outside detection
 - **useInterval** - Interval management
 - **usePoll** - Polling functionality
 - **useTo** - Navigation helper
-- **useMediaQuery** - Custom hook that tells you whether a given media query is active.
-- **useBreakpoints** - Get a set of boolean representing which breakpoint is active screen.
-- **useLocalStorage** - Given a key and a value it writes it in local storage
+- **useMediaQuery** - Custom hook that tells you whether a given media query is active
+- **useBreakpoints** - Get a set of boolean representing which breakpoint is active screen
+- **useLocalStorage** - Persists a value in local storage by key
