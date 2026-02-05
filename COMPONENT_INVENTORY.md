@@ -39,12 +39,21 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Tables/molecules/ActionsTable.stories.tsx`
 - **Exported From:** `Form`
 - **Props:**
-  - `buttons`: Array of button configurations
-  - `onAction`: Callback for button actions
+  - `buttonsConfig`: `IconButtonData[]` - Array of icon button configurations (required)
+    - Each `IconButtonData` includes:
+      - `icon`: `string` - Icon name (required)
+      - `size?`: `number` - Icon size (default: 20)
+      - `weight?`: `IWeight` - Icon weight (default: 'regular')
+      - `color?`: `ISvgIcons['color']` - Icon color (default: 'dimmed')
+      - `hoverColor?`: `string` - Hover color (default: 'mono')
+      - Plus all `ButtonHTMLAttributes<HTMLButtonElement>` (onClick, disabled, etc.)
+  - `alignment?`: `'left' | 'center' | 'right'` - Button alignment (default: 'right')
 - **Notable Features:**
   - Provides action buttons for table rows
   - Supports multiple button types (edit, delete, etc.)
+  - Configurable alignment
   - Integrated with TypeTable component
+  - Uses IconButton components
 
 ---
 
