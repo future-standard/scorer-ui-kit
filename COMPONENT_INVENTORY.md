@@ -330,15 +330,26 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Global/organisms/ContentLayout.stories.tsx`
 - **Exported From:** `Layouts`
 - **Props:**
-  - `children`: `ReactNode` - Content
-  - `layoutType`: `'default' | 'wide' | 'narrow'` - Layout width
-  - `header`: `ReactNode` - Optional header
-  - `sidebar`: `ReactNode` - Optional sidebar
+  - `layout?`: `'default' | 'fullscreen' | 'dashboard'` - Layout type (default: 'default')
+  - `HeaderContent?`: `IHeaderContent` - Header configuration object (default: {})
+    - `UtilityHeaderOptions?`: `IUtilityHeader` - Utility header configuration
+      - `$iconInGutter?`: `boolean` - Position icon in gutter
+      - `showBreadcrumbs?`: `boolean` - Show breadcrumb navigation
+      - `showHomeIcon?`: `boolean` - Show home icon
+      - `breadcrumbs?`: `IBreadcrumb[]` - Breadcrumb items (text, href?, onClick?)
+      - `back?`: `IUtilityHeaderLinkBack` - Back link configuration (show?, link?, label?, onClick?)
+      - `share?`: `IUtilityHeaderLinkShare` - Share link configuration (show?, link?, label?, copiedLabel?)
+    - `PageHeaderArea?`: `ReactNode | React.FC` - Page header content
+    - `TabsElementArea?`: `ReactNode | React.FC` - Tabs navigation content
+  - `children`: `ReactNode` - Main content
 - **Notable Features:**
-  - Main content layout wrapper
-  - Multiple width options
-  - Optional header and sidebar
-  - Responsive design
+  - Main content layout wrapper with max-width constraint
+  - Three layout types (default, fullscreen, dashboard)
+  - Optional utility header with breadcrumbs and back/share links
+  - Optional page header area
+  - Optional tabs area with automatic Tabs wrapper
+  - CSS variable-based padding (--content-layout-padding-*)
+  - Responsive design with flexible content area
 
 ---
 
@@ -349,12 +360,14 @@ This document provides a comprehensive inventory of all React components in the 
 - **Example Page Path:** `/Users/isa/Dev/FS/scorer-ui-kit-before-npm/scorer-ui-kit/packages/example/src/pages/PTZPage.tsx`
 - **Exported From:** `PTZControl`
 - **Props:**
-  - PTZ control configuration
+  - `debug?`: `boolean` - Show debug state output (default: false)
 - **Notable Features:**
   - Pan-Tilt-Zoom camera controls
-  - Directional controls (up, down, left, right)
-  - Zoom in/out controls
-  - Used with PTZProvider context
+  - Directional controls (Up, Down, Left, Right components)
+  - Zoom controls (ZoomIn, ZoomOut components)
+  - Uses PTZContext from PTZProvider for state management
+  - Optional debug mode displays current PTZ state as JSON
+  - Composed of Base and ZoomBase molecules with atomic control components
 
 ---
 
@@ -364,22 +377,27 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Form/FileManagement/CropTool.stories.tsx`
 - **Exported From:** `Form`
 - **Props:**
-  - `image`: `string` - Image URL to crop
-  - `title`: `string` - Modal title
-  - `cancelText`: `string` - Cancel button text
-  - `confirmText`: `string` - Confirm button text
-  - `onCancel`: `() => void` - Cancel callback
-  - `onConfirm`: `(croppedImage: Blob) => void` - Confirm callback
-  - `aspectRatio`: `number` - Crop aspect ratio
-  - `circular`: `boolean` - Circular crop
+  - `imgUrl`: `string` (required) - Image URL to crop
+  - `canvasHeight`: `number` (required) - Height of the canvas
+  - `canvasWidth`: `number` (required) - Width of the canvas
+  - `title?`: `string` - Modal title
+  - `cancelBtnTxt?`: `string` - Cancel button text
+  - `cropBtnTxt?`: `string` - Crop button text
+  - `isResizable?`: `boolean` - Whether crop area is resizable
+  - `cropHeight?`: `number` - Initial crop area height
+  - `cropWidth?`: `number` - Initial crop area width
+  - `aspectRatio?`: `number` - Aspect ratio for crop area
+  - `onCrop?`: `(newFileUrl: string, fileType: string) => void` - Callback when crop is confirmed
+  - `onClose?`: `() => void` - Callback when modal is closed
+  - `onError?`: `(msg: string) => void` - Callback for error handling
 - **Notable Features:**
-  - Image cropping interface
-  - Drag to reposition
-  - Zoom controls
-  - Aspect ratio lock
-  - Circular crop option
-  - Preview display
-
+  - Image cropping interface rendered as React portal
+  - Drag to reposition crop area
+  - Resizable crop area (when isResizable is true)
+  - Aspect ratio lock support
+  - Canvas-based image manipulation
+  - Returns cropped image as data URL with file type
+  - Error handling callback
 ---
 
 ### DatePicker
