@@ -3,7 +3,7 @@
 **Generated:** 2026-02-04  
 **Source:** ui-lib/src & storybook/src/stories
 
-This document provides a comprehensive inventory of all React components in the Scorer UI Kit, organized alphabetically with their corresponding Storybook documentation status, file paths, props, and notable features.
+This document provides a comprehensive inventory of all React components in the Scorer UI Kit to be used by human and AI, organized alphabetically with their corresponding Storybook documentation status, file paths, props, and notable features.
 
 ## Legend
 - ✅ **Has Storybook Documentation**
@@ -287,6 +287,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ❌ No Storybook
 - **Component Path:** `ui-lib/src/PTZControl/organisms/Controls.tsx`
 - **Story Path:** N/A
+- **Example Page Path:** `/Users/isa/Dev/FS/scorer-ui-kit-before-npm/scorer-ui-kit/packages/example/src/pages/PTZPage.tsx`
 - **Exported From:** `PTZControl`
 - **Props:**
   - PTZ control configuration
@@ -493,9 +494,9 @@ This document provides a comprehensive inventory of all React components in the 
 ---
 
 ### FilterDropdownContainer
-- **Status:** ❌ No Storybook (used internally)
+- **Status:** ✅ Has Storybook (via Datepicker story)
 - **Component Path:** `ui-lib/src/Filters/atoms/FilterDropdownContainer.tsx`
-- **Story Path:** N/A
+- **Story Path:** `storybook/src/stories/Filters/molecules/DatePicker.stories.tsx`
 - **Exported From:** `Filters`
 - **Notable Features:**
   - Container for filter dropdown content
@@ -571,25 +572,14 @@ This document provides a comprehensive inventory of all React components in the 
 ---
 
 ### Form
-- **Status:** ❌ No Storybook
+- **Status:** ✅ Has Storybook (via LoginModalExample)
 - **Component Path:** `ui-lib/src/Form/Form.tsx`
-- **Story Path:** N/A
+- **Story Path:** `storybook/src/stories/Alerts/Modals/LoginModalExample.tsx`
 - **Exported From:** `Form`
 - **Notable Features:**
   - Form wrapper component
   - Handles form submission
   - Form validation support
-
----
-
-### FullWidthContentBlock
-- **Status:** ❌ No Storybook
-- **Component Path:** `ui-lib/src/Layouts/atoms/FullWidthContentBlock.tsx`
-- **Story Path:** N/A
-- **Exported From:** `Layouts`
-- **Notable Features:**
-  - Full-width content container
-  - Used in layout compositions
 
 ---
 
@@ -708,9 +698,9 @@ This document provides a comprehensive inventory of all React components in the 
 ---
 
 ### Label
-- **Status:** ❌ No Storybook (used with inputs)
+- **Status:** ✅ Has Storybook (via Radio Button)
 - **Component Path:** `ui-lib/src/Form/atoms/Label.tsx`
-- **Story Path:** N/A
+- **Story Path:** `storybook/src/stories/Form/Input/RadioButton.stories.tsx`
 - **Exported From:** `Form`
 - **Props:**
   - `htmlFor`: `string` - Associated input ID
@@ -727,6 +717,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ❌ No Storybook (used in GlobalUI)
 - **Component Path:** `ui-lib/src/Global/atoms/Layout.tsx`
 - **Story Path:** N/A
+- **Example Page Path:** `example/src/pages/PTZPage.tsx`
 - **Exported From:** `Global`
 - **Notable Features:**
   - Base layout wrapper
@@ -738,6 +729,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ❌ No Storybook
 - **Component Path:** `ui-lib/src/LineUI/LineUI.tsx`
 - **Story Path:** N/A
+- **Example Page Path:** `scorer-ui-kit/packages/example/src/pages/LinePage.tsx`
 - **Exported From:** `LineUI`
 - **Notable Features:**
   - Line drawing UI component
@@ -750,6 +742,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ❌ No Storybook
 - **Component Path:** `ui-lib/src/LineUI/LineUIRTC.tsx`
 - **Story Path:** N/A
+- **Example Page Path:** `example/src/pages/LinePage.tsx`
 - **Exported From:** `LineUI`
 - **Notable Features:**
   - LineUI with WebRTC support
@@ -761,6 +754,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ❌ No Storybook
 - **Component Path:** `ui-lib/src/LineUI/LineUIVideo.tsx`
 - **Story Path:** N/A
+- **Example Page Path:** `example/src/pages/LineRTCPage.tsx`
 - **Exported From:** `LineUI`
 - **Notable Features:**
   - LineUI for video overlays
@@ -981,6 +975,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ❌ No Storybook
 - **Component Path:** `ui-lib/src/PTZControl/state/PTZProvider.tsx`
 - **Story Path:** N/A
+- **Example Page Path:** `scorer-ui-kit/packages/example/src/App.tsx`
 - **Exported From:** `PTZControl`
 - **Notable Features:**
   - Context provider for PTZ controls
@@ -1036,9 +1031,9 @@ This document provides a comprehensive inventory of all React components in the 
 ---
 
 ### SelectWrapper
-- **Status:** ❌ No Storybook (used with SelectField)
-- **Component Path:** `ui-lib/src/Form/`
-- **Story Path:** N/A
+- **Status:** ✅ Has Storybook (used in SelectField story)
+- **Component Path:** `ui-lib/src/Form/atoms/SelectField.tsx`
+- **Story Path:** `storybook/src/stories/Form/SelectField.stories.tsx`
 - **Exported From:** `Form`
 - **Notable Features:**
   - Wrapper for select field styling
@@ -1048,6 +1043,7 @@ This document provides a comprehensive inventory of all React components in the 
 ### Sidebar
 - **Status:** ❌ No Storybook (used in GlobalUI)
 - **Component Path:** `ui-lib/src/Global/molecules/Sidebar.tsx`
+- **Example Page Path:** `example/src/pages/LinePage.tsx`
 - **Story Path:** N/A
 - **Exported From:** `Global`
 - **Notable Features:**
@@ -1224,6 +1220,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ❌ No Storybook (used with Tabs)
 - **Component Path:** `ui-lib/src/Tabs/atoms/Tab.tsx`
 - **Story Path:** N/A
+- **Example Page Path:** `example/src/pages/TabsPage.tsx`
 - **Exported From:** `Tabs`
 - **Props:**
   - `id`: `string` - Tab ID
@@ -1241,6 +1238,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ❌ No Storybook (used with Tabs)
 - **Component Path:** `ui-lib/src/Tabs/TabContent.tsx`
 - **Story Path:** N/A
+- **Example Page Path:** `example/src/pages/TabsPage.tsx`
 - **Exported From:** `Tabs`
 - **Props:**
   - `children`: `ReactNode` - Tab content
@@ -1252,33 +1250,15 @@ This document provides a comprehensive inventory of all React components in the 
 ---
 
 ### TabList
-- **Status:** ❌ No Storybook (used with Tabs)
+- **Status:** ✅ Has Storybook (via TabWithIcon story)
 - **Component Path:** `ui-lib/src/Tabs/TabList.tsx`
-- **Story Path:** N/A
+- **Story Path:** `storybook/src/stories/Misc/atoms/TabWithIcon.stories.tsx`
 - **Exported From:** `Tabs`
 - **Props:**
   - `children`: Tab components
 - **Notable Features:**
   - Container for Tab components
   - Horizontal tab bar
-
----
-
-### TableHeaderTitle
-- **Status:** ✅ Has Storybook
-- **Component Path:** `ui-lib/src/Tables/atoms/TableHeaderTitle.tsx`
-- **Story Path:** `storybook/src/stories/Tables/atoms/TableHeaderTitle.stories.tsx`
-- **Exported From:** `Tables`
-- **Props:**
-  - `title`: `string` - Column title
-  - `sortable`: `boolean` - Enable sorting
-  - `sorted`: `'asc' | 'desc' | null` - Current sort direction
-  - `onSort`: `() => void` - Sort callback
-- **Notable Features:**
-  - Table column header with sorting
-  - Sort indicators (arrows)
-  - Click to sort
-  - Used in TypeTable
 
 ---
 
@@ -1302,9 +1282,9 @@ This document provides a comprehensive inventory of all React components in the 
 ---
 
 ### Tabs
-- **Status:** ❌ No Storybook (base component)
+- **Status:** ✅ Has Storybook (via TabWithIcon story)
 - **Component Path:** `ui-lib/src/Tabs/Tabs.tsx`
-- **Story Path:** N/A
+- **Story Path:** `storybook/src/stories/Misc/atoms/TabWithIcon.stories.tsx`
 - **Exported From:** `Tabs`
 - **Props:**
   - `defaultTab`: `string` - Default active tab ID
@@ -1393,9 +1373,9 @@ This document provides a comprehensive inventory of all React components in the 
 ---
 
 ### TextArea
-- **Status:** ❌ No Storybook (used via TextAreaField)
+- **Status:** ✅ Has Storybook (via TextAreaField story)
 - **Component Path:** `ui-lib/src/Form/atoms/TextArea.tsx`
-- **Story Path:** N/A
+- **Story Path:** `storybook/src/stories/Form/Input/TextAreaField.stories.tsx`
 - **Exported From:** `Form`
 - **Props:**
   - `value`: `string` - Textarea value
@@ -1598,6 +1578,7 @@ izable
 - **Status:** ❌ No Storybook
 - **Component Path:** `ui-lib/src/WebRTCClient.tsx`
 - **Story Path:** N/A
+- **Example Page Path:** `example/src/pages/LineRTCPage.tsx`
 - **Exported From:** Root
 - **Notable Features:**
   - WebRTC client component
@@ -1605,232 +1586,3 @@ izable
   - Video/audio streaming
 
 ---
-
-## Summary Statistics
-
-### Total Components: 80+
-
-### Storybook Coverage:
-- ✅ **Components with Storybook:** ~55 (69%)
-- ❌ **Components without Storybook:** ~25 (31%)
-
-### Components by Category:
-
-#### Alerts & Notifications (5 components)
-- ✅ AlertBar
-- ✅ Notification
-- ✅ Tooltip
-- ✅ ConfirmationModal
-
-#### Form Components (28 components)
-- ✅ Button
-- ✅ ButtonWithIcon
-- ✅ ButtonWithLoading
-- ✅ SplitButton
-- ✅ IconButton (partial)
-- ✅ ActionButtons
-- ✅ ButtonsStack
-- ✅ TextField
-- ✅ PasswordField
-- ✅ TextAreaField
-- ✅ SmallInput
-- ✅ SelectField
-- ✅ Checkbox
-- ✅ RadioButton
-- ✅ Switch
-- ✅ SliderInput
-- ✅ DurationSlider
-- ✅ PercentageSlider
-- ✅ InputFileButton
-- ✅ DropArea
-- ✅ CropTool
-- ✅ AvatarUploader
-- ✅ AreaUploadManager
-- ❌ Input (base)
-- ❌ TextArea (base)
-- ❌ Label
-- ❌ SelectWrapper
-- ❌ Form
-
-#### Filter Components (12 components)
-- ✅ FilterBar
-- ✅ FilterButton
-- ✅ FilterDropdown
-- ✅ FilterInputs
-- ✅ FilterLayout
-- ✅ DatePicker
-- ✅ SortDropdown
-- ✅ ToggleButton
-- ✅ FiltersResults
-- ❌ FilterDropdownContainer
-
-#### Table Components (6 components)
-- ✅ TypeTable
-- ✅ TableHeaderTitle
-- ✅ TableRowThumbnail
-- ✅ EditCell
-- ❌ TypeTableHeader (internal)
-- ❌ TypeTableRow (internal)
-
-#### Global/Layout Components (12 components)
-- ✅ GlobalUI
-- ✅ MainMenu
-- ✅ TopBar
-- ✅ ContentLayout
-- ✅ SplitLayout
-- ✅ UtilityHeader
-- ❌ Layout
-- ❌ Sidebar
-- ❌ FullWidthContentBlock
-- ❌ Content
-- ❌ MainContainer
-- ❌ Various sidebar atoms
-
-#### Page Components (4 components)
-- ✅ PageHeader
-- ✅ PageTitle
-- ✅ IntroductionText
-- ✅ MultilineContent
-
-#### Tab Components (6 components)
-- ✅ TabsWithIconBar
-- ✅ TabWithIcon
-- ❌ Tabs
-- ❌ Tab
-- ❌ TabList
-- ❌ TabContent
-
-#### Camera Components (2 components)
-- ✅ CameraPanels
-- ❌ CameraPanelWrapper
-
-#### Misc Components (10 components)
-- ✅ Tag
-- ✅ TagList
-- ✅ Icon
-- ✅ StatusIcon
-- ✅ Spinner
-- ✅ BasicSearchInput
-- ✅ DebouncedSearcher
-- ✅ Pagination
-- ✅ MediaBox
-- ❌ ActionsBar
-
-#### PTZ/LineUI Components (5 components)
-- ❌ Controls (PTZ)
-- ❌ PTZProvider
-- ❌ LineUI
-- ❌ LineUIVideo
-- ❌ LineUIRTC
-
-#### Context/Providers (2 components)
-- ✅ ModalProvider
-- ✅ NotificationProvider
-
-#### Other (1 component)
-- ❌ WebRTCClient
-
----
-
-## Components Needing Storybook Documentation
-
-The following components would benefit from dedicated Storybook stories:
-
-### High Priority (Commonly Used)
-1. **ActionsBar** - Used for bulk actions in tables
-2. **IconButton** - Frequently used in toolbars and tables
-3. **Label** - Core form component
-4. **Form** - Form wrapper component
-5. **Tabs/Tab/TabList/TabContent** - Tab system components
-6. **WebRTCClient** - Real-time communication component
-
-### Medium Priority (Internal/Wrapper Components)
-7. **AlertWrapper** - Alert positioning wrapper
-8. **SelectWrapper** - Select field wrapper
-9. **FilterDropdownContainer** - Filter dropdown wrapper
-10. **Layout/Sidebar/Content** - Layout system components
-11. **CameraPanelWrapper** - Camera panel wrapper
-
-### Low Priority (Specialized/Advanced)
-12. **PTZ Controls** - Camera control components
-13. **LineUI Components** - Annotation/drawing components
-14. **TypeTable Internal Components** - Already documented via TypeTable
-
----
-
-## Usage Patterns
-
-### Common Component Combinations
-
-1. **Form Fields:**
-   - `TextField` = `Label` + `Input` + validation
-   - `PasswordField` = `TextField` + show/hide toggle
-   - `TextAreaField` = `Label` + `TextArea` + validation
-
-2. **Page Structure:**
-   - `GlobalUI` → `MainMenu` + `TopBar` + content
-   - `PageHeader` → `PageTitle` + `TagList` + `ButtonsStack`
-   - `ContentLayout` → structured content area
-
-3. **Tables:**
-   - `TypeTable` → `TableHeaderTitle` + `TableRowThumbnail` + `EditCell` + `ActionButtons`
-
-4. **Filters:**
-   - `FilterBar` → `FilterButton` + `FilterDropdown` + `SortDropdown` + `FilterLayout`
-
-5. **Modals:**
-   - `ModalProvider` + `useModal` hook + custom modal content
-   - `ConfirmationModal` for confirmations
-   - `MediaBox` for media display
-
-6. **Notifications:**
-   - `NotificationProvider` + `useNotification` hook
-   - `Notification` component for toasts
-   - `AlertBar` for inline alerts
-
----
-
-## Key Hooks
-
-The library also exports several custom hooks:
-
-- **useModal** - Modal management
-- **useNotification** - Notification system
-- **useMediaModal** - Media modal for images/videos
-- **useThemeToggle** - Theme switching
-- **usePTZ** - PTZ control state
-- **useTitle** - Document title management
-- **useCopyToClipboard** - Clipboard operations
-- **useClickOutside** - Click outside detection
-- **useInterval** - Interval management
-- **usePoll** - Polling functionality
-- **useTo** - Navigation helper
-
----
-
-## Type Exports
-
-The library exports comprehensive TypeScript types for all components, including:
-
-- `INotificationProps`, `IModal`, `ITag`, `ITagList`
-- `IFilterItem`, `IFilterValue`, `IFilterResult`, `IFilterDropdownConfig`
-- `ICameraPanel`, `IMediaStream`, `IPanelMetaData`
-- `IButtonsStack`, `IButtonStack`, `ISplitButtonProps`
-- `IHeaderTag`, `IPagination`, `IItemsOption`
-- `ITooltipPosition`, `ITooltipType`, `AlertType`
-- And many more...
-
----
-
-## Notes
-
-1. **Component Organization:** Components follow atomic design principles (atoms, molecules, organisms, templates)
-2. **Localization:** Many components support English and Japanese (`language` prop)
-3. **Theming:** All components use the theme system via styled-components
-4. **Accessibility:** Components include ARIA attributes and keyboard navigation
-5. **Responsive:** Most components are responsive and mobile-friendly
-6. **TypeScript:** Full TypeScript support with exported types
-
----
-
-**Document End**
