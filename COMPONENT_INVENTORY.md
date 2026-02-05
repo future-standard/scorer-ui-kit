@@ -19,10 +19,17 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Tables/organisms/TableMultiActions.stories.tsx`
 - **Exported From:** `Misc`
 - **Props:**
-  - `buttons`: `IActionsButton[]` - Array of action button configurations
+  - `title?`: `string` - Actions bar title (default: 'Actions:')
+  - `finishTextButton?`: `string` - Finish button text (default: 'Finish')
+  - `actionButtons?`: `IActionsButton[]` - Array of action button configurations (extends `IButtonWithIcon` with `text: string`)
+  - `selectedTemplate?`: `string` - Template string for selected count (default: 'Selected [SELECTED] of [TOTAL] Results')
+  - `totalSelected?`: `number` - Number of selected items (default: 0)
+  - `totalAvailable?`: `number` - Total number of available items (default: 0)
+  - `finishCallback?`: `() => void` - Callback when finish button is clicked
 - **Notable Features:**
-  - Renders a bar with multiple action buttons
-  - Used for bulk actions in tables and lists
+  - Renders a bar with multiple action buttons in the left side plus a `Finish` button in the right side of the screen.
+  - Used for bulk actions in tables and lists when selecting checkboxes in rows
+  - Displays selected item count with customizable template
 
 ---
 
@@ -47,15 +54,15 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Alerts/AlertBar.stories.tsx`
 - **Exported From:** `Alerts`
 - **Props:**
-  - `message`: `string` - Alert message text
-  - `type`: `'error' | 'warning' | 'info' | 'success' | 'neutral'` - Alert type
-  - `hideCloseButton`: `boolean` - Whether to hide close button
-  - `onClose`: `() => void` - Close callback
+  - `type?`: `AlertType` (`'error' | 'warning' | 'info' | 'success' | 'neutral'`) - Alert type (default: 'info')
+  - `message?`: `string` - Alert message text
+  - `hideCloseButton?`: `boolean` - Whether to hide close button (default: false)
 - **Notable Features:**
   - Displays inline alert messages
   - Color-coded by type
   - Optional close button
-  - Auto-dismissible option
+  - Auto-dismisses when message changes
+  - Returns null when no message or dismissed
 
 ---
 
@@ -114,18 +121,20 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Misc/atoms/BasicSearchInput.tsx`
 - **Story Path:** `storybook/src/stories/Misc/atoms/BasicSearchInput.stories.tsx`
 - **Exported From:** `Misc`
-- **Props:**
-  - `placeholder`: `string` - Input placeholder
-  - `value`: `string` - Current value
-  - `onChange`: `(e: ChangeEvent) => void` - Change handler
-  - `hasBorder`: `boolean` - Show border
-  - `noBackground`: `boolean` - Remove background
-  - `color`: `'mono' | 'subtle'` - Color scheme
-  - `iconSize`: `number` - Search icon size
-  - `disabled`: `boolean` - Disabled state
+- **Props:** (extends `InputHTMLAttributes<HTMLInputElement>`)
+  - `color?`: `'mono' | 'dimmed' | 'subtle'` - Color scheme (default: 'subtle')
+  - `hasBorder?`: `boolean` - Show border (default: true)
+  - `iconSize?`: `number` - Search icon size (default: 12)
+  - `disabled?`: `boolean` - Disabled state (default: false)
+  - `noBackground?`: `boolean` - Remove background (default: false)
+  - `width?`: `string` - Custom width
+  - `hasCrossButton?`: `boolean` - Show clear button (default: false)
+  - `onCrossClick?`: `() => void` - Clear button click handler
+  - Plus all standard HTML input attributes (`placeholder`, `value`, `onChange`, etc.)
 - **Notable Features:**
   - Simple search input with icon
   - Customizable styling
+  - Optional clear button
   - Lightweight and performant
 
 ---
@@ -135,18 +144,18 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/atoms/Button.tsx`
 - **Story Path:** `storybook/src/stories/Form/Buttons/Button.stories.tsx`
 - **Exported From:** `Form`
-- **Props:**
-  - `children`: `ReactNode` - Button text/content
-  - `design`: `'primary' | 'secondary' | 'danger' | 'text'` - Button style
-  - `size`: `'xsmall' | 'small' | 'normal' | 'large'` - Button size
-  - `disabled`: `boolean` - Disabled state
-  - `shadow`: `boolean` - Add shadow effect
-  - `onClick`: `() => void` - Click handler
-  - `type`: `'button' | 'submit' | 'reset'` - Button type
+- **Props:** (extends `ButtonHTMLAttributes<HTMLButtonElement>`)
+  - `size?`: `TypeButtonSizes` (`'xsmall' | 'small' | 'normal' | 'large'`) - Button size (default: 'normal')
+  - `design?`: `TypeButtonDesigns` (`'primary' | 'secondary' | 'warning' | 'danger' | 'text-only' | 'outline'`) - Button style (default: 'primary')
+  - `shadow?`: `boolean` - Add shadow effect (default: false)
+  - `noPadding?`: `boolean` - Remove padding (default: false)
+  - `loading?`: `boolean` - Loading state (default: false)
+  - Plus all standard HTML button attributes (`children`, `onClick`, `disabled`, `type`, etc.)
 - **Notable Features:**
   - Multiple design variants
   - Size options
   - Shadow effect option
+  - Loading state support
   - Full accessibility support
 
 ---
@@ -171,15 +180,20 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/atoms/ButtonWithIcon.tsx`
 - **Story Path:** `storybook/src/stories/Form/Buttons/ButtonWithIcons.stories.tsx`
 - **Exported From:** `Form`
-- **Props:**
-  - All Button props plus:
-  - `icon`: `IconSVGs` - Icon name
-  - `iconPosition`: `'left' | 'right'` - Icon position
-  - `loading`: `boolean` - Loading state
+- **Props:** (extends `IButtonProps` which extends `ButtonHTMLAttributes<HTMLButtonElement>`)
+  - `icon`: `string` - Icon name (required)
+  - `position?`: `'left' | 'right'` - Icon position (default: 'left')
+  - `shadow?`: `boolean` - Add shadow effect (default: false)
+  - `weight?`: `IWeight` (`'light' | 'regular' | 'heavy' | 'strong'`) - Icon weight (default: 'regular')
+  - `size?`: `TypeButtonSizes` - Button size (default: 'normal')
+  - `design?`: `TypeButtonDesigns` - Button design (default: 'primary')
+  - `loading?`: `boolean` - Loading state (default: false)
+  - Plus all standard HTML button attributes
 - **Notable Features:**
   - Button with icon support
   - Icon positioning (left/right)
   - Loading state with spinner
+  - Configurable icon weight
   - Inherits all Button features
 
 ---
@@ -229,16 +243,16 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Form/Checkbox.stories.tsx`
 - **Exported From:** `Form`
 - **Props:**
-  - `checked`: `boolean` - Checked state
-  - `onChange`: `(checked: boolean) => void` - Change handler
-  - `disabled`: `boolean` - Disabled state
-  - `label`: `string` - Label text
-  - `name`: `string` - Input name
+  - `checked?`: `boolean` - Checked state (default: false)
+  - `disabled?`: `boolean` - Disabled state
+  - `indeterminate?`: `boolean` - Indeterminate state (default: false)
+  - `onChangeCallback?`: `(checked: boolean, indeterminate?: boolean) => void` - Change handler
 - **Notable Features:**
   - Custom styled checkbox
-  - Label support
+  - Supports indeterminate state
   - Controlled/uncontrolled modes
   - Accessibility compliant
+  - Visual state management (on/off/indeterminate)
 
 ---
 
@@ -248,20 +262,19 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Alerts/Modals/ConfirmationModal.stories.tsx`
 - **Exported From:** `Modals`
 - **Props:**
-  - `title`: `string` - Modal title
-  - `message`: `string` - Confirmation message
-  - `leftButtonText`: `string` - Left button text
-  - `rightButtonText`: `string` - Right button text
-  - `leftButtonDesign`: Button design type
-  - `rightButtonDesign`: Button design type
-  - `onLeftButton`: `() => void` - Left button callback
-  - `onRightButton`: `() => void` - Right button callback
-  - `isOpen`: `boolean` - Modal open state
+  - `title?`: `string` - Modal title (default: '')
+  - `message`: `string` - Confirmation message (required, default: '')
+  - `leftButtonText?`: `string` - Left button text (default: 'submit')
+  - `leftButtonDesign?`: `TypeButtonDesigns` - Left button design (default: 'primary')
+  - `leftButtonCallback?`: `() => void` - Left button callback
+  - `rightButtonText?`: `string` - Right button text (default: 'cancel')
+  - `rightButtonDesign?`: `TypeButtonDesigns` - Right button design (default: 'secondary')
+  - `rightButtonCallback?`: `() => void` - Right button callback
 - **Notable Features:**
   - Two-button confirmation dialog
   - Customizable button styles
-  - Modal overlay
-  - Keyboard support (ESC to close)
+  - Auto-closes modal on button click
+  - Uses useModal hook for state management
 
 ---
 
@@ -611,17 +624,18 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Misc/Icons.stories.tsx`
 - **Exported From:** `Icons`
 - **Props:**
-  - `icon`: `IconSVGs` - Icon name from icon library
-  - `size`: `number` - Icon size in pixels
-  - `color`: `string` - Icon color
-  - `weight`: `'light' | 'regular' | 'heavy' | 'strong'` - Icon weight
-  - `disabled`: `boolean` - Disabled state
+  - `icon`: `string` - Icon name from icon library (required)
+  - `size?`: `number` - Icon size in pixels (default: 24)
+  - `weight?`: `IWeight` (`'light' | 'regular' | 'heavy' | 'strong'`) - Icon weight (default: 'regular')
+  - `color?`: `ISvgIcons['color']` - Icon color (default: 'grey-12')
+  - `forSvgUsage?`: `boolean` - Use wrapper for SVG context (default: false)
 - **Notable Features:**
   - SVG icon component
   - Large icon library (@future-standard/icons)
   - Customizable size and color
   - Multiple weights
   - Consistent sizing system
+  - Can be used within SVG elements
 
 ---
 
@@ -837,18 +851,22 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Alerts/Notification.stories.tsx`
 - **Exported From:** `Alerts`
 - **Props:**
-  - `message`: `string` - Notification message
-  - `type`: `'error' | 'warning' | 'info' | 'success'` - Notification type
-  - `icon`: `IconSVGs` - Custom icon
-  - `duration`: `number` - Auto-dismiss duration (ms)
-  - `onClose`: `() => void` - Close callback
-  - `position`: `'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'` - Position
+  - `id?`: `string` - Unique notification ID
+  - `type`: `AlertType` (`'error' | 'warning' | 'info' | 'success' | 'neutral'`) - Notification type (required, default: 'info')
+  - `message`: `string` - Notification message (required)
+  - `actionTextButton?`: `string` - Action button text
+  - `isPinned?`: `boolean` - Prevent auto-dismiss (default: false)
+  - `closeNow?`: `boolean` - Force close notification (default: false)
+  - `icon?`: `string` - Custom icon name (default: '')
+  - `onTextButtonClick?`: `() => void` - Action button callback
+  - `closeCallback?`: `() => void` - Close callback
 - **Notable Features:**
   - Toast-style notifications
-  - Auto-dismiss with timer
-  - Multiple positions
-  - Icon support
-  - Stacking notifications
+  - Auto-dismiss after 7 seconds (unless pinned)
+  - Fixed top-center position
+  - Icon support with defaults per type
+  - Optional action button
+  - Slide animations
   - Used with NotificationProvider and useNotification hook
 
 ---
@@ -917,22 +935,27 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Misc/molecules/Pagination.tsx`
 - **Story Path:** `storybook/src/stories/Misc/molecules/Pagination.stories.tsx`
 - **Exported From:** `Misc`
-- **Props:**
-  - `currentPage`: `number` - Current page number
-  - `totalPages`: `number` - Total number of pages
-  - `onPageChange`: `(page: number) => void` - Page change handler
-  - `itemsPerPage`: `number` - Items per page
-  - `totalItems`: `number` - Total items count
-  - `itemsOptions`: `IItemsOption[]` - Items per page options
-  - `onItemsPerPageChange`: `(items: number) => void` - Items per page change handler
-  - `language`: `'en' | 'ja'` - Language
+- **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
+  - `pageText?`: `string` - Page label text (default: 'Page:')
+  - `totalPages`: `number` - Total number of pages (required)
+  - `activePage?`: `number` - Current active page (default: 1)
+  - `buttonText?`: `string` - GO button text (default: 'GO')
+  - `itemsText?`: `string` - Items per page label (default: 'Items Per Page')
+  - `itemsDefaultValue?`: `number` - Default items per page value
+  - `selectWidth?`: `string` - Select field width (default: '60px')
+  - `selectDisabled?`: `boolean` - Disable select field (default: false)
+  - `selectId?`: `string` - Select field ID (default: 'paginationPages')
+  - `itemsOptions`: `IItemsOption[]` - Items per page options (required, format: `{value: number, textValue: string}`)
+  - `onPageChange`: `(page: number) => void` - Page change handler (required)
+  - `onItemsChange`: `(items: number) => void` - Items per page change handler (required)
 - **Notable Features:**
   - Complete pagination controls
-  - Page number buttons
-  - Previous/Next navigation
+  - Direct page input with GO button
+  - Previous/Next arrow navigation
   - Items per page selector
-  - Total items display
-  - Localization support
+  - Input validation with shake animation
+  - Keyboard support (Enter to submit)
+  - Paste validation
 
 ---
 

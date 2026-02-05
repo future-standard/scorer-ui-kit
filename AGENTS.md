@@ -48,7 +48,7 @@ Tip: In one terminal run `npm start -w packages/ui-lib`
 In another, `npm start -w packages/example` or `npm start -w packages/storybook` for live reload while editing components.
 
 ## Code style guidelines for developing new components
-- Always check COMPONENT_INVENTORY.md before creating new UI.
+- Always check [COMPONENT_INVENTORY.md](COMPONENT_INVENTORY.md) before creating new UI.
 - Prefer existing components over custom implementations.
 - Use single quotes for strings. Use backticks only for template literals.
 - TypeScript strict mode is enabled; do not use `any`.
@@ -57,7 +57,7 @@ In another, `npm start -w packages/example` or `npm start -w packages/storybook`
 ## Using the library on your project
 
 ### Required Wrappers
-- Applications consuming this library MUST include the following providers and styles, best added in `index.tsx`. Missing any of these may result in broken styles, modals, or notifications. Further documentation in `packages/ui-lib/theme/dark_light_mode_usage.md`
+- Applications consuming this library MUST include the following providers and styles, best added in `index.tsx`. Missing any of these may result in broken styles, modals, or notifications. Further documentation in [SETTINGS FOR DARK AND LIGHT MODE](packages/ui-lib/theme/dark_light_mode_usage.md)
 
 ```ts
 // index.ts
@@ -108,9 +108,9 @@ export default GlobalStyle;
 ### Components Available
 
 #### Golden Path for AI Agents
-1. Always check COMPONENT_INVENTORY.md before creating new UI.
+1. Always check [COMPONENT_INVENTORY.md](COMPONENT_INVENTORY.md) before creating new UI.
 2. Prefer existing components over custom implementations.
-3. Do not assume props, verify against COMPONENT_INVENTORY.md
+3. Do not assume props, verify against [COMPONENT_INVENTORY.md](COMPONENT_INVENTORY.md)
 4. Use provided layout and form components for consistency.
 5. If a required component does not exist or is insufficient, state that explicitly.
 6. When unsure, ask for clarification rather than guessing.
