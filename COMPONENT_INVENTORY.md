@@ -109,26 +109,28 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Form/FileManagement/AvatarUploader.stories.tsx`
 - **Exported From:** `Form`
 - **Props:**
-  - `title`: `string` - Uploader title
-  - `photoText`: `string` - Drop zone text
-  - `buttonText`: `string` - Button text
-  - `buttonTextReplace`: `string` - Replace button text
-  - `uploaderCropText`: `string` - Crop button text
-  - `cropToolTitle`: `string` - Crop modal title
-  - `cropToolCancelTxt`: `string` - Cancel button text
-  - `cropToolConfirmTxt`: `string` - Confirm button text
-  - `deletePhotoText`: `string` - Delete button text
-  - `baseImg`: `string` - Current image URL
-  - `hasCrop`: `boolean` - Enable crop functionality
-  - `onUpdate`: `(file: File) => void` - Update callback
-  - `onError`: `(error: Error) => void` - Error callback
-  - `onRemove`: `() => void` - Remove callback
+  - `title?`: `string` - Uploader title (default: 'Photograph')
+  - `photoText?`: `string` - Drop zone placeholder text (default: 'Drop Photo')
+  - `buttonText?`: `string` - Initial select button text (default: 'Select File')
+  - `buttonTextReplace?`: `string` - Replace button text (default: 'Replace Photo')
+  - `cropToolTitle?`: `string` - Crop modal title
+  - `cropToolCancelTxt?`: `string` - Crop modal cancel button text
+  - `cropToolConfirmTxt?`: `string` - Crop modal confirm button text
+  - `uploaderCropText?`: `string` - Crop button text (default: 'Crop Image')
+  - `deletePhotoText?`: `string` - Delete button text (default: 'Remove')
+  - `currentImg?`: `string` - Current image URL
+  - `hasCrop?`: `boolean` - Enable crop functionality (default: true)
+  - `onAvatarUpdate?`: `(imgFile: File) => void` - Callback when avatar is updated
+  - `onError?`: `(msg: string) => void` - Error callback with message
+  - `onRemove?`: `() => void` - Callback when avatar is removed
 - **Notable Features:**
   - Avatar/profile photo upload
-  - Integrated crop tool
+  - Integrated crop tool with configurable aspect ratio
   - Drag-and-drop support
-  - Image preview
+  - Image preview with placeholder
   - Remove/replace functionality
+  - Single file validation
+  - Image type validation (JPEG/PNG)
 
 ---
 
