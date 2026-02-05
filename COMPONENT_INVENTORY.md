@@ -49,11 +49,10 @@ This document provides a comprehensive inventory of all React components in the 
       - Plus all `ButtonHTMLAttributes<HTMLButtonElement>` (onClick, disabled, etc.)
   - `alignment?`: `'left' | 'center' | 'right'` - Button alignment (default: 'right')
 - **Notable Features:**
+  - Uses IconButton component
   - Provides action buttons for table rows
-  - Supports multiple button types (edit, delete, etc.)
   - Configurable alignment
   - Integrated with TypeTable component
-  - Uses IconButton components
 
 ---
 
@@ -81,18 +80,26 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Form/FileManagement/AreaUploadManager.stories.tsx`
 - **Exported From:** `Form`
 - **Props:**
-  - `title`: `string` - Upload area title
-  - `onUpload`: `(files: File[]) => void` - Upload callback
-  - `acceptedFormats`: `string[]` - Accepted file formats
-  - `maxFiles`: `number` - Maximum number of files
-  - `currentFiles`: Array of current files
-  - `onRemove`: Remove file callback
+  - `title?`: `string` - Upload area title (default: 'Select Files')
+  - `description?`: `string` - Description text shown below title
+  - `fileIcons?`: `string[]` - Array of icon names to display
+  - `selectFilesText?`: `string` - Select files button text (default: 'Select Files')
+  - `addMoreFilesText?`: `string` - Add more files button text (default: 'Add More Files')
+  - `clearFilesText?`: `string` - Clear files button text (default: 'Clear Files')
+  - `beginUploadText?`: `string` - Begin upload button text (default: 'Begin Upload')
+  - `allowedFileTypes?`: `string[]` - Array of allowed MIME types (e.g., ['image/png', 'image/jpeg'])
+  - `customComponent?`: `ReactElement` - Custom component to replace default content
+  - `onChangeCallback?`: `(goodFiles: FileList, rejectedFiles: FileList) => void` - Callback when files are added/changed
+  - `clearFilesCallback?`: `() => void` - Callback when clear files button is clicked
+  - `beginUploadCallback?`: `() => void` - Callback when begin upload button is clicked
 - **Notable Features:**
   - Drag-and-drop file upload
   - Multiple file support
-  - File preview thumbnails
-  - File format validation
-  - Remove uploaded files
+  - File type validation with rejected files tracking
+  - Duplicate file prevention
+  - Customizable text labels
+  - Optional custom component replacement
+  - Three-button interface (add/upload/clear)
 
 ---
 
