@@ -184,11 +184,19 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Pages/PageHeader.stories.tsx`
 - **Exported From:** `Form`
 - **Props:**
-  - `buttons`: `IButtonStack[]` - Array of button configurations
-  - `align`: `'left' | 'right' | 'center'` - Alignment
+  - `buttons`: `IButtonStack[]` - Array of button configurations (required)
+    - Each `IButtonStack` extends extends `IButtonProps` which extends `ButtonHTMLAttributes<HTMLButtonElement>` and includes:
+      - `id?`: `string` - Button identifier
+      - `buttonType?`: `IButtonType` (`'default' | 'icon-button'`) - Button type
+      - `icon?`: `string` - Icon name (for icon-button type)
+      - `iconPosition?`: `'left' | 'right'` - Icon position (for icon-button type)
+      - `text`: `string` - Button text (required)
+      - Plus all `IButtonProps` properties (`size`, `design`, `onClick`, `disabled`, etc.)
 - **Notable Features:**
-  - Stacks multiple buttons horizontally
-  - Responsive spacing
+  - Stacks multiple buttons vertically with 8px gap
+  - Supports both regular buttons and icon buttons
+  - Default size is 'small' for all buttons
+  - Text wrapping disabled (nowrap)
   - Used in page headers and forms
 
 ---
@@ -221,15 +229,19 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/atoms/ButtonWithLoading.tsx`
 - **Story Path:** `storybook/src/stories/Form/Buttons/ButtonWithLoading.stories.tsx`
 - **Exported From:** `Form`
-- **Props:**
-  - All Button props plus:
-  - `loading`: `boolean` - Loading state
-  - `loadingPosition`: `'left' | 'right'` - Spinner position
+- **Props:** (extends `IButtonProps` which extends `ButtonHTMLAttributes<HTMLButtonElement>`)
+  - `position?`: `'left' | 'right'` - Spinner position (default: right)
+  - `shadow?`: `boolean` - Add shadow effect (default: false)
+  - `design?`: `TypeButtonDesigns` - Button design (default: 'primary')
+  - `size?`: `TypeButtonSizes` - Button size (default: 'normal')
+  - `loading?`: `boolean` - Loading state (default: false)
+  - Plus all standard HTML button attributes (`onClick`, `disabled`, `children`, etc.)
 - **Notable Features:**
   - Button with loading spinner
-  - Configurable spinner position
-  - Disabled during loading
-  - Smooth transitions
+  - Configurable spinner position (left/right)
+  - Automatically disabled during loading
+  - Smooth transitions with easing
+  - Spinner size adapts to button size
 
 ---
 
@@ -239,19 +251,35 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/CameraPanels/organisms/CameraPanels.stories.tsx`
 - **Exported From:** `CameraPanels`
 - **Props:**
-  - `panels`: `ICameraPanel[]` - Array of camera panel configurations
-  - `onPanelClick`: `(id: string) => void` - Panel click handler
-  - `hasNotice`: `boolean` - Show notice message
-  - `noticeTitle`: `string` - Notice title
-  - `noticeMessage`: `string` - Notice message
-  - `noticeIcon`: `IconSVGs` - Notice icon
-  - `status`: `'error' | 'warning' | 'info' | 'success' | 'neutral'` - Notice status
+  - `panels`: `ICameraPanel[]` - Array of camera panel configurations (required)
+    - Each `ICameraPanel` includes:
+      - `streamProps`: `IMediaStream` - Media stream configuration (required)
+        - Extends `IMediaModal` (media source, type, alt, controls, etc.)
+        - `isEmptyWithIcon?`: `boolean` - Show empty state with icon (default: false)
+        - `emptyIcon?`: `string` - Icon for empty state (default: 'PasswordHide')
+        - `status?`: `IFeedbackColor` - Status line color (default: 'neutral')
+        - `noticeMessage?`: `string` - Notice message text
+        - `noticeTitle?`: `string` - Notice title text
+        - `noticeIcon?`: `string` - Notice icon name
+        - `hasNotice?`: `boolean` - Show notice overlay (default: false)
+      - `panelMetaData?`: `IPanelMetaData` - Panel metadata
+        - `deviceIcon?`: `string` - Device icon (default: 'Camera')
+        - `leftSubTitle?`: `string` - Left subtitle text
+        - `leftTitle?`: `string` - Left title text
+        - `rightTitle?`: `string` - Right title text
+        - `rightSubTitle?`: `string` - Right subtitle text
+        - `hideIcon?`: `boolean` - Hide device icon (default: false)
+      - `customBottom?`: `ReactElement` - Custom bottom component (replaces metadata)
+      - `panelOnClick?`: `() => void` - Panel click handler
 - **Notable Features:**
   - Grid layout for camera feeds
-  - Responsive grid (1-4 columns)
-  - Custom panel components support
-  - Notice/status messages
-  - Thumbnail and metadata display
+  - Auto-fill grid with 300px panels (300x230px each)
+  - 20px gap between panels
+  - Status line indicator per panel
+  - Notice overlay support with icon and message
+  - Custom bottom component support
+  - Click handler support per panel
+  - Metadata display with device icon and titles
 
 ---
 
