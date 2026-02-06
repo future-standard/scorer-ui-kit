@@ -1,6 +1,7 @@
 # Scorer UI Kit - Component Inventory
 
-**Generated:** 2026-02-04  
+**Generated:** 2026-02-04
+**Last Updated:** 2026-02-06
 **Source:** ui-lib/src & storybook/src/stories
 
 This document provides a comprehensive inventory of all React components in the Scorer UI Kit to be used by human and AI, organized alphabetically with their corresponding Storybook documentation status, file paths, props, and notable features.
