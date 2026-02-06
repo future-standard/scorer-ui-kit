@@ -449,18 +449,26 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Misc/molecules/DebouncedSearcher.tsx`
 - **Story Path:** `storybook/src/stories/Misc/molecules/DebouncedSearcher.stories.tsx`
 - **Exported From:** `Misc`
-- **Props:**
-  - `placeholder`: `string` - Input placeholder
-  - `onSearch`: `(value: string) => void` - Search callback
-  - `debounceMs`: `number` - Debounce delay (default: 300ms)
-  - `minChars`: `number` - Minimum characters to trigger search
-  - `disabled`: `boolean` - Disabled state
+- **Props:** (extends `IBasicSearchInput` & `InputHTMLAttributes<HTMLInputElement>`)
+  - `defaultValue?`: `string` - Initial value for the search input
+  - `onDebouncedChange?`: `(newValue: string) => void` - Callback triggered after debounce delay (600ms)
+  - `color?`: `'mono' | 'dimmed' | 'subtle'` - Icon and text color theme (default: 'subtle')
+  - `hasBorder?`: `boolean` - Show border around input (default: true)
+  - `iconSize?`: `number` - Size of search icon (default: 12)
+  - `noBackground?`: `boolean` - Remove background color (default: false)
+  - `width?`: `string` - Custom width CSS value
+  - `hasCrossButton?`: `boolean` - Show clear/cross button (default: false)
+  - `onCrossClick?`: `() => void` - Callback when cross button clicked
+  - `disabled?`: `boolean` - Disabled state (default: false)
+  - Plus all standard HTML input attributes (`placeholder`, `value`, `onChange`, `onFocus`, `onBlur`, etc.)
 - **Notable Features:**
-  - Debounced search input
-  - Configurable delay
-  - Minimum character threshold
-  - Clear button
-  - Loading indicator option
+  - Debounced search input with 600ms delay
+  - Wraps BasicSearchInput component
+  - Optional clear button
+  - Supports default/initial value
+  - Inherits all standard HTML input attributes
+  - Customizable appearance (color, border, background, width)
+  - Search icon with configurable size
 
 ---
 
@@ -470,17 +478,16 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Form/FileManagement/DropArea.stories.tsx`
 - **Exported From:** `Form`
 - **Props:**
-  - `onDrop`: `(files: File[]) => void` - Drop callback
-  - `accept`: `string` - Accepted file types
-  - `multiple`: `boolean` - Allow multiple files
-  - `text`: `string` - Drop zone text
-  - `disabled`: `boolean` - Disabled state
+  - `height?`: `string` - Custom height CSS value for the drop area
+  - `text?`: `string` - Text to display in the drop zone
+  - `dropCallback?`: `(newFiles: FileList) => void` - Callback when files are dropped
 - **Notable Features:**
-  - Drag-and-drop file upload
-  - Visual feedback on drag over
-  - File type validation
-  - Multiple file support
-  - Click to browse alternative
+  - Drag-and-drop file upload area
+  - Visual feedback on drag over (dashed border)
+  - Accepts FileList from drop events
+  - Prevents default browser drag/drop behavior on window
+  - Customizable height and display text
+  - Absolute positioned overlay for drop zone
 
 ---
 
@@ -489,19 +496,33 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/molecules/DurationSlider.tsx`
 - **Story Path:** `storybook/src/stories/Form/Input/DurationSlider.stories.tsx`
 - **Exported From:** `Form`
-- **Props:**
-  - `value`: `number` - Current value
-  - `onChange`: `(value: number) => void` - Change handler
-  - `min`: `number` - Minimum value
-  - `max`: `number` - Maximum value
-  - `unit`: `'seconds' | 'minutes' | 'hours'` - Time unit
-  - `disabled`: `boolean` - Disabled state
-  - `label`: `string` - Label text
+- **Props:** (extends `ISlider` & `InputHTMLAttributes<HTMLInputElement>`)
+  - `title`: `string` (required) - Label text for the slider
+  - `timeUnit`: `ITimeUnit | string` (required) - Time unit ('seconds' | 'minutes' | 'hours') or custom string
+  - `controlledValue?`: `number` - Externally controlled value (overrides internal state)
+  - `timeFormat?`: `string` - Custom time format template (e.g., '[HH]時 [MM]分 [SS]秒' or '[H]Hours [M]Minutes [S]Seconds')
+  - `max`: `number` (required) - Maximum slider value
+  - `min?`: `number` - Minimum slider value
+  - `defaultValue?`: `number` - Initial value (default: 0)
+  - `step?`: `number` - Step increment for slider
+  - `marks?`: `ISliderMark[]` - Array of marks to display on slider (value, label?)
+  - `thumbColor?`: `IFeedbackColor` - Color of slider thumb (default: 'info')
+  - `onlyMarkSelect?`: `boolean` - Restrict selection to marks only (default: false)
+  - `showValue?`: `boolean` - Show value indicator
+  - `inputCallback?`: `(value: number) => void` - Callback on value input
+  - `onChangeCallback?`: `(value: number) => void` - Callback on value change
+  - `allMarkCentered?`: `boolean` - Center all mark labels (default: false)
+  - `disabled?`: `boolean` - Disabled state (default: false)
+  - Plus all standard HTML input attributes
 - **Notable Features:**
-  - Time duration slider
-  - Multiple time units
-  - Value display with unit
-  - Custom min/max ranges
+  - Time duration slider with customizable time units
+  - Automatic time conversion and display (hours, minutes, seconds)
+  - Custom time format templates with placeholders ([H], [HH], [M], [MM], [S], [SS])
+  - Supports both controlled and uncontrolled modes
+  - Built on SliderInput component with marks support
+  - Localization-friendly (handles Japanese and other languages)
+  - Dynamic value display with unit abbreviation
+  - Custom min/max ranges with validation
 
 ---
 
@@ -530,20 +551,35 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Filters/organisms/FilterBar.stories.tsx`
 - **Exported From:** `Filters`
 - **Props:**
-  - `filters`: `IFilterDropdownConfig[]` - Filter configurations
-  - `onFilterChange`: `(filters: IFilterResult[]) => void` - Change handler
-  - `language`: `'en' | 'ja'` - Language
-  - `searchConfig`: `ISearchFilter` - Search configuration
-  - `sortConfig`: Sort configuration
-  - `layoutConfig`: Layout configuration
+  - `filtersTitle?`: `string` - Title text for filters section (default: 'Filters:')
+  - `searchersConfig?`: `ISearchFilter[]` - Array of search filter configurations (default: [])
+    - Each ISearchFilter extends IBasicSearchInput with: id, canHide?, showFieldText?, selected?
+  - `dropdownsConfig?`: `IFilterDropdownConfig[]` - Array of dropdown filter configurations (default: [])
+    - Each IFilterDropdownConfig includes: id, canHide?, buttonIcon, buttonText, list (IFilterItem[]), selected?, disabled?, optionType?, isLoading?, loadingText?, hasOptionsFilter?, searchPlaceholder?, maxDisplayedItems?, emptyResultText?, searchResultText?, name?, design?, ascendingText?, descendingText?, isListAscending?, onResetCallback?, onCancelCallback?
+  - `datePickersConfig?`: `IFilterDatePicker[]` - Array of date picker filter configurations (default: [])
+    - Each IFilterDatePicker extends IDropdownDatePicker with: id, canHide?, name?
+  - `hasShowMore?`: `boolean` - Enable show more/less functionality for filters
+  - `showMoreText?`: `string` - Text for show more button
+  - `showLessText?`: `string` - Text for show less button
+  - `resultTextTemplate?`: `string` - Template for results count display
+  - `totalResults`: `number` (required) - Total number of results
+  - `clearText?`: `string` - Text for clear all button
+  - `isLoading?`: `boolean` - Loading state
+  - `singleFilter?`: `boolean` - Allow only one filter active at a time (default: false)
+  - `resultsDateFormat?`: `string` - Date format for displaying date filter results
+  - `onChangeCallback?`: `(currentSelected: IFilterResult[]) => void` - Callback when filters change
+    - Returns array of IFilterResult: { id: string, type: IFilterType, selected: IFilterItem | IFilterItem[] | IDateInterval | Date | null }
 - **Notable Features:**
-  - Complete filter bar with multiple filter types
-  - Search integration
-  - Sort dropdown
-  - Layout toggle
-  - Filter results display
-  - Clear all filters
-  - Responsive design
+  - Complete filter bar with three filter types (search, dropdown, datepicker)
+  - Automatic filter state management with debounced search (600ms)
+  - Single filter mode (only one active at a time)
+  - Filter results display with removable tags
+  - Clear all filters functionality
+  - Show more/less collapsible filters
+  - Language-aware dropdown text updates
+  - Disabled state management based on single filter mode
+  - Integrated FilterInputs and FiltersResults components
+  - Supports multiple search inputs, dropdowns, and date pickers simultaneously
 
 ---
 
@@ -552,20 +588,25 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Filters/atoms/FilterButton.tsx`
 - **Story Path:** `storybook/src/stories/Filters/atoms/FilterButton.stories.tsx`
 - **Exported From:** `Filters`
-- **Props:**
-  - `text`: `string` - Button text
-  - `icon`: `IconSVGs` - Icon name
-  - `isOpen`: `boolean` - Open state
-  - `disabled`: `boolean` - Disabled state
-  - `design`: `'default' | 'active'` - Design type
-  - `hasFlipArrow`: `boolean` - Show dropdown arrow
-  - `onClick`: `() => void` - Click handler
+- **Props:** (extends `ButtonHTMLAttributes<HTMLButtonElement>`)
+  - `icon`: `string` (required) - Icon name to display
+  - `hasFlipArrow?`: `boolean` - Show dropdown arrow that flips based on isOpen state (default: false)
+  - `isSortAscending?`: `boolean` - Flip the left icon vertically for sort direction (default: false)
+  - `isOpen?`: `boolean` - Open state for dropdown (changes styling and arrow direction)
+  - `design?`: `FilterButtonDesign` - Design variant: 'default' | 'basic' (default: 'default')
+  - `children`: `ReactNode` - Button text content
+  - Plus all standard HTML button attributes (`onClick`, `disabled`, `type`, etc.)
 - **Notable Features:**
-  - Filter dropdown trigger button
-  - Icon support
-  - Active state styling
-  - Dropdown arrow indicator
-  - Badge support for active filters
+  - Filter dropdown trigger button with two design variants
+  - Icon support with customizable color
+  - Active/open state styling (primary background when open)
+  - Animated dropdown arrow indicator (up/down based on isOpen)
+  - Sort direction indicator (flips icon for ascending/descending)
+  - Hover and active state transitions
+  - Disabled state with reduced opacity
+  - Fade-in animation on mount
+  - Shadow and border effects
+  - Basic design variant (transparent background, no border/shadow)
 
 ---
 
@@ -574,23 +615,52 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Filters/molecules/FilterDropdown.tsx`
 - **Story Path:** `storybook/src/stories/Filters/molecules/FilterDropdownExamples.stories.tsx`
 - **Exported From:** `Filters`
-- **Props:**
-  - `options`: Array of filter options
-  - `selectedValues`: Array of selected values
-  - `onChange`: `(values: IFilterValue[]) => void` - Change handler
-  - `optionType`: `'checkbox' | 'radio' | 'text'` - Option type
-  - `isLoading`: `boolean` - Loading state
-  - `loadingText`: `string` - Loading message
-  - `maxDisplayedItems`: `number` - Max visible items
-  - `language`: `'en' | 'ja'` - Language
+- **Props:** (extends `IFilterFooterControls`)
+  - `buttonIcon`: `string` (required) - Icon name for the filter button
+  - `buttonText`: `string` (required) - Text for the filter button
+  - `list`: `IFilterItem[]` (required) - Array of filter options
+    - Each IFilterItem: { text: string, value: string | number }
+  - `selected`: `IFilterValue` (required) - Currently selected value(s) (IFilterItem | IFilterItem[] | null)
+  - `onSelect`: `(newSelection: IFilterValue) => void` (required) - Selection change callback
+  - `disabled?`: `boolean` - Disabled state (default: false)
+  - `optionType?`: `IInputOptionsType` - Option type: 'checkbox' | 'radio' | 'text' (default: 'text')
+  - `isLoading?`: `boolean` - Loading state (default: false)
+  - `loadingText?`: `string` - Loading message text
+  - `hasOptionsFilter?`: `boolean` - Enable search within options
+  - `searchPlaceholder?`: `string` - Placeholder for search input
+  - `maxDisplayedItems?`: `number` - Maximum visible items before scrolling (default: 5)
+  - `searchResultText?`: `string` - Results count template (default: 'Showing [VISIBLE] of [TOTAL]')
+  - `emptyResultText?`: `string` - Text when no results found
+  - `design?`: `FilterButtonDesign` - Button design: 'default' | 'basic' (default: 'default')
+  - `ascendingText?`: `string` - Ascending sort button text (default: 'Ascending')
+  - `descendingText?`: `string` - Descending sort button text (default: 'Descending')
+  - `isListAscending?`: `boolean` - Initial sort direction (default: true)
+  - `onResetCallback?`: `() => void` - Reset button callback
+  - `onCancelCallback?`: `() => void` - Cancel button callback
+  - **IFilterFooterControls interface:**
+    - `resetText?`: `string` - Reset button text (default: 'Reset')
+    - `cancelText?`: `string` - Cancel button text (default: 'Cancel')
+    - `closeText?`: `string` - Close button text (default: 'Close')
+    - `applyText?`: `string` - Apply button text (default: 'Apply')
+    - `hasReset?`: `boolean` - Show reset button (default: false)
+    - `hasApply?`: `boolean` - Show apply/cancel buttons (default: false)
+    - `disableApply?`: `boolean` - Disable apply button
+    - `disableReset?`: `boolean` - Disable reset button
 - **Notable Features:**
-  - Dropdown filter with multiple option types
-  - Checkbox/radio/text options
-  - Search within options
-  - Loading state
-  - Scrollable list
-  - Footer with apply/clear buttons
-  - Multi-select support
+  - Dropdown filter with three option types (checkbox, radio, text)
+  - Multi-select support with checkbox type
+  - Single-select with radio or text types
+  - Search/filter within options
+  - Sortable list (ascending/descending)
+  - Selected items automatically moved to top
+  - Loading state with custom message
+  - Scrollable list with gradient indicator
+  - Optional footer with reset/apply/cancel buttons
+  - Apply mode (changes only applied on button click)
+  - Empty results message
+  - Results counter with template support
+  - Locale-aware sorting
+  - FilterButton integration with open/close states
 
 ---
 
@@ -599,9 +669,19 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Filters/atoms/FilterDropdownContainer.tsx`
 - **Story Path:** `storybook/src/stories/Filters/molecules/DatePicker.stories.tsx`
 - **Exported From:** `Filters`
+- **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
+  - `height?`: `string` - Custom height CSS value
+  - `children`: `ReactNode` - Content to display inside the container
+  - Plus all standard HTML div attributes (`className`, `style`, `onClick`, etc.)
 - **Notable Features:**
-  - Container for filter dropdown content
-  - Positioning and styling wrapper
+  - Styled container for filter dropdown content
+  - Box shadow and backdrop blur effects
+  - Accent bar at top (5px primary color with shadow)
+  - Border styling (right, bottom, left)
+  - Rounded corners (3px border-radius)
+  - CSS variable-based theming (background, shadow, accent colors)
+  - Fallback background color support
+  - Inline-flex layout with column direction
 
 ---
 
@@ -611,14 +691,27 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Filters/molecules/FilterInputs.stories.tsx`
 - **Exported From:** `Filters`
 - **Props:**
-  - `filters`: `IFilterItem[]` - Active filters
-  - `onFilterChange`: `(filters: IFilterItem[]) => void` - Change handler
-  - `language`: `'en' | 'ja'` - Language
+  - `searchFilters?`: `ISearchFilter[]` - Array of search input filter configurations (default: [])
+    - Each ISearchFilter extends IBasicSearchInput with: id, canHide?, showFieldText?, selected?
+  - `dropdownFilters?`: `IFilterDropdownExt[]` - Array of dropdown filter configurations (default: [])
+    - Each IFilterDropdownExt extends IFilterDropdown with: id, canHide?
+  - `datePickerFilters?`: `IFilterDatePicker[]` - Array of date picker filter configurations (default: [])
+    - Each IFilterDatePicker extends IDropdownDatePicker with: id, canHide?, name?
+  - `hasShowMore?`: `boolean` - Enable show more/less toggle for filters (default: false)
+  - `showMoreText?`: `string` - Text for show more button (default: 'Show More')
+  - `showLessText?`: `string` - Text for show less button (default: 'Show Less')
 - **Notable Features:**
-  - Input-based filters
-  - Text/number input filters
-  - Range filters
-  - Dynamic filter addition/removal
+  - Composite filter inputs container with three filter types
+  - Search inputs with show/hide functionality (canHide property)
+  - Dropdown filters with collapsible show more/less
+  - Date picker filters
+  - Dynamic search input addition/removal with "Add" buttons
+  - Animated search input appearance (fade-in with width transition)
+  - Flexible layout with flex-wrap and gap spacing
+  - Initially shows only non-hideable search inputs
+  - Show more/less toggle for dropdown filters
+  - Cross button to hide optional search inputs
+  - Integrates BasicSearchInput, FilterDropdown, and DropdownDatePicker components
 
 ---
 
@@ -628,17 +721,33 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Filters/molecules/FilterLayout.stories.tsx`
 - **Exported From:** `Filters`
 - **Props:**
-  - `currentLayout`: `'grid' | 'list'` - Current layout
-  - `onLayoutChange`: `(layout: string) => void` - Change handler
-  - `hasPageSettings`: `boolean` - Show page size selector
-  - `pageSize`: `number` - Current page size
-  - `pageSizeOptions`: `number[]` - Available page sizes
-  - `onPageSizeChange`: `(size: number) => void` - Page size change handler
-  - `language`: `'en' | 'ja'` - Language
+  - `contentArray`: `IOptionsItem[]` (required) - Array of layout option configurations
+    - Each IOptionsItem: { id: string, icon: string, tooltipText: string }
+  - `getLayout`: `(layout: string) => void` (required) - Callback when layout changes
+  - `onPageSizeChange`: `(size: number) => void` (required) - Callback when page size changes
+  - `disabled?`: `boolean` - Disabled state (default: false)
+  - `onToggleOpenCallback?`: `(isOpen: boolean) => void` - Callback when dropdown toggles
+  - `onCloseCallback?`: `() => void` - Callback when dropdown closes
+  - `pageSizeOptions?`: `number[]` - Available page size options (default: [10, 20, 30, 50, 100])
+  - `defaultPage?`: `number` - Default page number
+  - `defaultPageSize?`: `number` - Default page size (default: 10)
+  - `layoutText?`: `string` - Label for layout section (default: 'Layout')
+  - `pageSizeText?`: `string` - Label for page size section (default: 'Items Per Page')
+  - `minWidth?`: `number` - Minimum dropdown width in pixels (default: 250)
+  - `minHeight?`: `number` - Minimum dropdown height in pixels (default: 90)
+  - `hasPageSettings?`: `boolean` - Show page size selector section (default: true)
 - **Notable Features:**
-  - Layout toggle (grid/list)
-  - Page size selector
-  - Localized labels
+  - Layout toggle with customizable options (grid/list or custom layouts)
+  - Page size selector with dropdown
+  - Smart dropdown positioning (top/bottom, left/right based on viewport space)
+  - Click outside to close functionality
+  - Active state styling for selected layout
+  - ViewSettings icon button trigger
+  - FilterDropdownContainer integration
+  - Hover effects on layout buttons
+  - Compact SelectField for page size
+  - Separated layout and pagination sections
+  - Tooltip support on layout icons
 
 ---
 
@@ -648,27 +757,40 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Filters/organisms/FilterBar.stories.tsx`
 - **Exported From:** `Filters`
 - **Props:**
-  - `filters`: `IFilterResult[]` - Active filters
-  - `onRemove`: `(filterId: string) => void` - Remove filter callback
-  - `onClearAll`: `() => void` - Clear all callback
-  - `language`: `'en' | 'ja'` - Language
+  - `labelLists`: `IFilterLabel[]` (required) - Array of active filter labels to display
+    - **IFilterLabel interface:**
+      - `filterId`: `string` - Unique filter identifier
+      - `item`: `IFilterItem | Date | IDateInterval` - Filter value
+      - `type`: `IFilterType` - Filter type ('search' | 'dropdown' | 'datepicker')
+      - `icon?`: `string` - Optional icon name
+      - `filterName?`: `string` - Optional filter name prefix
+    - **IFilterItem interface:**
+      - `text`: `string` - Display text
+      - `value`: `string | number` - Filter value
+    - **IDateInterval interface:**
+      - `start`: `Date` - Start date
+      - `end`: `Date` - End date
+    - **IFilterType:** `'search' | 'dropdown' | 'datepicker'`
+  - `totalResults`: `number` (required) - Total number of results
+  - `resultTextTemplate?`: `string` - Template for results text (default: 'Showing Results ([TOTAL_RESULTS]):')
+  - `clearText?`: `string` - Clear all button text (default: 'CLEAR ALL')
+  - `resultsDateFormat?`: `string` - Date format string for date-fns (default: '')
+  - `onRemoveFilter?`: `(filterId: string, type: IFilterType, item: IFilterItem | Date | IDateInterval) => void` - Remove individual filter callback
+  - `onClearAll?`: `() => void` - Clear all filters callback
 - **Notable Features:**
-  - Displays active filters as tags
-  - Remove individual filters
-  - Clear all filters button
-  - Localized text
-
----
-
-### FlexContentPlaceholder
-- **Status:** ✅ Has Storybook (via GlobalUI)
-- **Component Path:** `ui-lib/src/common/ContentPlaceholder.tsx`
-- **Story Path:** `storybook/src/stories/Global/GlobalUI.stories.tsx`
-- **Exported From:** `common`
-- **Notable Features:**
-  - Placeholder for content areas
-  - Flexbox-based layout
-  - Used in layout examples
+  - Displays active filters as removable tags/labels
+  - Supports three filter types (search, dropdown, datepicker)
+  - Icon support for filter labels
+  - Filter name prefix support (e.g., "Status: Active")
+  - Date formatting with date-fns
+  - Special midnight handling for date ranges (displays 23:59:59 as 00:00 next day)
+  - Date format validation
+  - Results count with template support ([TOTAL_RESULTS] placeholder)
+  - Individual filter removal with close icon
+  - Clear all filters button (only shown when filters exist)
+  - Flexible layout with flex-wrap
+  - Text ellipsis for long filter names (max-width: 300px)
+  - Supports IFilterItem, Date, and IDateInterval types
 
 ---
 
@@ -677,10 +799,16 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/Form.tsx`
 - **Story Path:** `storybook/src/stories/Alerts/Modals/LoginModalExample.tsx`
 - **Exported From:** `Form`
+- **Props:** (extends `FormHTMLAttributes<HTMLFormElement>`)
+  - `spacing?`: `string` - CSS value for margin-bottom spacing between Label elements (default: '45px;')
+  - `children`: `ReactNode` - Form content
+  - Plus all standard HTML form attributes (`onSubmit`, `action`, `method`, `noValidate`, etc.)
 - **Notable Features:**
-  - Form wrapper component
-  - Handles form submission
-  - Form validation support
+  - Form wrapper component with styled-components
+  - Automatic spacing between Label components
+  - Inherits all standard HTML form attributes
+  - Handles form submission via onSubmit prop
+  - No built-in validation (use HTML5 validation)
 
 ---
 
@@ -689,20 +817,76 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Global/templates/GlobalUI.tsx`
 - **Story Path:** `storybook/src/stories/Global/GlobalUI.stories.tsx`
 - **Exported From:** `Global`
-- **Props:**
-  - `mainMenu`: Main menu configuration
-  - `topBar`: Top bar configuration
+- **Props:** (combines `OwnProps` & `IMenu` & `ITopBar`)
+  - **From OwnProps:**
+    - `maxWidth?`: `string` - Maximum width for content area
+    - `paddingOverride?`: `string` - Override default content padding
+    - `legacyLayout?`: `boolean` - Use legacy layout mode (default: false)
+    - `onMenuToggle?`: `(isMenuOpen: boolean) => void` - Callback when menu toggles
+  - **From IMenu (MainMenu props):**
+    - `content`: `IMenuTop` (required) - Menu structure with items array
+      - **IMenuTop:** `{ items: IMenuItemTop[] }`
+      - **IMenuItemTop:** `{ title: string, icon?: any, href?: string, isExternalLink?: boolean, submenu?: IMenuItemSubmenu[] }`
+      - **IMenuItemSubmenu:** `{ title: string, href?: string, isExternalLink?: boolean }`
+    - `home?`: `string` - Home URL
+    - `openWidth?`: `number` - Width when menu is open
+    - `logoMark?`: `string` - Logo mark image URL
+    - `logoText?`: `string` - Logo text
+    - `supportUrl?`: `string` - Support link URL
+    - `supportText?`: `string` - Support link text
+    - `keepOpenText?`: `string` - Keep open toggle text
+    - `autoHideText?`: `string` - Auto hide toggle text
+    - `defaultMenuOpen?`: `boolean` - Initial menu open state
+    - `canAlwaysPin?`: `boolean` - Allow menu to be pinned
+  - **From ITopBar (TopBar props):**
+    - `loggedInUser`: `string` (required) - Logged in user name
+    - `hasNotifications?`: `boolean` - Show notifications
+    - `userSubmenu?`: `IUserSubmenuItem[]` - User submenu items
+      - **IUserSubmenuItem:** `{text: string, href: string}`
+    - `hasLanguage?`: `boolean` - Show language selector
+    - `selectedLanguageText?`: `string` - Selected language text
+    - `languageOptionsText?`: `string` - Language options text
+    - `selectedLangAttribute?`: `string` - Selected language attribute
+    - `hasLogout?`: `boolean` - Show logout option
+    - `logoutText?`: `string` - Logout button text
+    - `logoutLink?`: `string` - Logout link URL
+    - `hasSearch?`: `boolean` - Show search
+    - `hasCurrentUser?`: `boolean` - Show current user
+    - `currentUserText?`: `string` - Current user text
+    - `accountOptionText?`: `string` - Account option text
+    - `searchPlaceholder?`: `string` - Search placeholder
+    - `userDrawerBespoke?`: `ReactElement` - Custom user drawer content
+    - `notificationsHistory?`: `INotificationsHistory` - Notifications data
+      - **INotificationsHistory:** `{ read: INotificationItem[], unread: INotificationItem[], noNotificationsText?: string, readNotificationsText?: string, unreadNotificationsText?: string }`
+      - **INotificationItem:** `{ imgUrl?: string, title: string, message: string, time: string }`
+    - `customDrawer?`: `ICustomDrawer` - Custom drawer configuration
+      - **ICustomDrawer:** `{ customComponent: ReactElement, icon: string, status?: IStatusDot, counter?: number, width?: string, maxCounter?: number }`
+    - `hasSwitchTheme?`: `boolean` - Show theme switcher
+    - `isLightMode?`: `boolean` - Current theme mode
+    - `switchThemeText?`: `string` - Switch theme text
+    - `selectedThemeText?`: `string` - Selected theme text
+    - `onLogout?`: `() => void` - Logout callback
+    - `onLanguageToggle?`: `() => void` - Language toggle callback
+    - `onUserDrawerMetaClick?`: `() => void` - User drawer meta click callback
+    - `onThemeToggle?`: `() => void` - Theme toggle callback
+    - `userDrawerFooter?`: `IUserDrawerFooter` - User drawer footer config
+      - **IUserDrawerFooter:** `{ icon?: string, title: string }`
+    - `userDrawerMeta?`: `IUserDrawerMeta[]` - User drawer metadata
+      - **IUserDrawerMeta:** `{ icon?: string, title?: string, subTitle?: string, notes?: string, hasCopyIcon?: boolean }`
+    - `hasUserDrawerMeta?`: `boolean` - Show user drawer meta
+    - `copySuccessMessage?`: `string` - Copy success message
+    - `includeCopyTitle?`: `boolean` - Include copy title
+    - `hasUserDrawerFooter?`: `boolean` - Show user drawer footer
+    - `badge?`: `ITopBarBadge` - Top bar badge configuration
+      - **ITopBarBadge:** `{ text: string, color?: string, linkHref?: string, linkTo?: string, linkText?: string, onClick?: () => void }`
   - `children`: `ReactNode` - Page content
-  - `theme`: Theme configuration
-  - `notifications`: Notifications configuration
 - **Notable Features:**
-  - Complete application shell
-  - Integrates MainMenu, TopBar, and content area
-  - Theme provider
-  - Notification system
-  - Modal system
-  - Responsive layout
-  - Mobile menu support
+  - Complete application shell template
+  - Responsive layout (desktop: MainMenu + TopBar, mobile: MobileNavbar)
+  - Integrates MainMenu, TopBar, MobileNavbar, and content area
+  - Breakpoint-based layout switching (useBreakpoints hook)
+  - Configurable content area (maxWidth, padding, legacy mode)
+  - Menu toggle callback support
 
 ---
 
@@ -724,6 +908,7 @@ This document provides a comprehensive inventory of all React components in the 
   - Multiple weights
   - Consistent sizing system
   - Can be used within SVG elements
+  - Further color values can be reviewed ad `ui-lib/src/theme/variables/Colors.ts`
 
 ---
 
@@ -732,15 +917,26 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/atoms/IconButton.tsx`
 - **Story Path:** N/A
 - **Exported From:** `Form`
-- **Props:**
-  - `icon`: `IconSVGs` - Icon name
-  - `onClick`: `() => void` - Click handler
-  - `disabled`: `boolean` - Disabled state
-  - `size`: Size option
+- **Props:** (extends `IButtonProps`)
+  - `icon`: `string` (required) - Icon name
+  - `iconSize?`: `number` - Icon size in pixels (default: 12)
+  - `iconWeight?`: `IconWeight` - Icon weight: 'thin' | 'light' | 'regular' | 'bold' | 'fill' (default: 'regular')
+  - `iconColor?`: `string` - Icon color
+  - **From IButtonProps (extends ButtonHTMLAttributes):**
+    - `design?`: `TypeButtonDesign` - Button design variant (default: 'primary')
+    - `size?`: `TypeButtonSize` - Button size (default: 'normal')
+    - `shadow?`: `boolean` - Show shadow (default: false)
+    - `noPadding?`: `boolean` - Remove padding (default: false)
+    - `loading?`: `boolean` - Loading state (default: false)
+    - Plus all standard HTML button attributes (`onClick`, `disabled`, `type`, etc.)
 - **Notable Features:**
-  - Button with only icon (no text)
-  - Circular or square variants
-  - Used in tables and toolbars
+  - Button with only icon (no text content)
+  - Inherits all Button component styling and behavior
+  - Configurable icon size, weight, and color
+  - Supports all button design variants (primary, secondary, tertiary, text-only, danger)
+  - Supports all button sizes (small, normal, large)
+  - Shadow and loading state support
+  - Used in tables, toolbars, and action areas
 
 ---
 
@@ -749,19 +945,23 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/atoms/Input.tsx`
 - **Story Path:** `storybook/src/stories/Form/Input/Input.stories.tsx`
 - **Exported From:** `Form`
-- **Props:**
-  - `value`: `string` - Input value
-  - `onChange`: `(e: ChangeEvent) => void` - Change handler
-  - `type`: `'text' | 'number' | 'email' | 'password'` - Input type
-  - `placeholder`: `string` - Placeholder text
-  - `disabled`: `boolean` - Disabled state
-  - `state`: `'default' | 'error' | 'warning' | 'success'` - Visual state
-  - `name`: `string` - Input name
+- **Props:** (extends `InputHTMLAttributes<HTMLInputElement>`)
+  - `fieldState?`: `TypeFieldState` - Visual state: 'default' | 'error' | 'warning' | 'success' | 'info'
+  - `showFeedback?`: `boolean` - Show feedback icon for field state (default: false)
+  - `isActionButton?`: `boolean` - Has action button inside input
+  - `actionButtonCallback?`: `() => void` - Action button click callback
+  - `actionButtonIcon?`: `string` - Action button icon name
+  - `actionButtonText?`: `string` - Action button text
+  - Plus all standard HTML input attributes (`value`, `onChange`, `type`, `placeholder`, `disabled`, `name`, `required`, etc.)
 - **Notable Features:**
-  - Base input component
-  - Multiple types
-  - State-based styling
-  - Validation states
+  - Base input component with styled-components
+  - Five field states with color-coded styling
+  - Optional feedback icons (checkmark for success, alert for error/warning, info for info)
+  - Optional action button inside input (right side)
+  - State-based border colors and feedback
+  - Supports all HTML input types
+  - Validation state visual feedback
+  - Action button for inline actions (e.g., clear, search, show password)
 
 ---
 
@@ -770,18 +970,20 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/atoms/InputFileButton.tsx`
 - **Story Path:** `storybook/src/stories/Form/FileManagement/InputFileButton.stories.tsx`
 - **Exported From:** `Form`
-- **Props:**
-  - `text`: `string` - Button text
-  - `onChange`: `(files: FileList) => void` - Change handler
-  - `accept`: `string` - Accepted file types
-  - `multiple`: `boolean` - Allow multiple files
-  - `buttonDesign`: Button design type
-  - `buttonSize`: Button size
+- **Props:** (extends `InputHTMLAttributes<HTMLInputElement>`)
+  - `text`: `string` (required) - Button text to display
+  - `inputCallback`: `(newFiles: FileList) => void` (required) - Callback when files are selected
+  - `buttonSize?`: `TypeButtonSizes` - Button size: 'small' | 'normal' | 'large'
+  - `buttonDesign?`: `TypeButtonDesigns` - Button design: 'primary' | 'secondary' | 'tertiary' | 'text-only' | 'danger'
+  - Plus all standard HTML input attributes (`accept`, `multiple`, `disabled`, `name`, etc.)
 - **Notable Features:**
-  - File input styled as button
-  - Multiple file support
-  - File type filtering
-  - Custom button styling
+  - File input styled as button (hidden input with visible button trigger)
+  - Multiple file support via HTML input `multiple` attribute
+  - File type filtering via HTML input `accept` attribute
+  - Custom button styling (design and size variants)
+  - Automatic input value reset after file selection
+  - Click forwarding from button to hidden file input
+  - Inherits all standard HTML file input attributes
 
 ---
 
@@ -791,11 +993,18 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Pages/IntroductionText.stories.tsx`
 - **Exported From:** `Pages`
 - **Props:**
-  - `children`: `ReactNode` - Text content
+  - `children`: `ReactNode` - Text content to display
 - **Notable Features:**
-  - Styled introduction/description text
-  - Used in page headers
-  - Consistent typography
+  - Styled introduction/description text component
+  - Rendered as `<p>` element
+  - Used in page headers and introductions
+  - Consistent typography with CSS variables
+  - Font: var(--font-ui)
+  - Color: var(--grey-11)
+  - Font size: 14px
+  - Font weight: 500
+  - Line height: 20px (142.857%)
+  - No custom props (empty IProps interface)
 
 ---
 
@@ -804,14 +1013,24 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/atoms/Label.tsx`
 - **Story Path:** `storybook/src/stories/Form/Input/RadioButton.stories.tsx`
 - **Exported From:** `Form`
-- **Props:**
-  - `htmlFor`: `string` - Associated input ID
-  - `text`: `string` - Label text
-  - `required`: `boolean` - Show required indicator
+- **Props:** (extends `LabelHTMLAttributes<HTMLLabelElement>`)
+  - `htmlFor`: `string` (required) - Associated input ID for accessibility
+  - `labelText`: `string` (required) - Label text to display
+  - `direction?`: `TypeLabelDirection` - Flex direction: 'column' | 'row' | 'column-reverse' | 'row-reverse' (default: 'column')
+  - `rightAlign?`: `boolean` - **DEPRECATED** - Use `direction='row-reverse'` instead (default: false)
+  - `required?`: `boolean` - Show required indicator dot (default: false)
+  - `children?`: `ReactNode` - Child elements (typically form inputs)
+  - Plus all standard HTML label attributes (`className`, `style`, `onClick`, etc.)
 - **Notable Features:**
-  - Form label component
-  - Required field indicator
-  - Accessibility support
+  - Form label component with flexible layout
+  - Required field indicator (primary blue dot via ::after pseudo-element)
+  - Accessibility support via htmlFor attribute
+  - Four layout directions (column, row, column-reverse, row-reverse)
+  - Deprecated rightAlign prop (shows console warning)
+  - CSS variable-based styling (font, color, required dot)
+  - Supports children for wrapping form inputs
+  - Inline-flex for row layouts, flex for column layouts
+  - 8px gap between label text and children
 
 ---
 
@@ -821,9 +1040,30 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** N/A
 - **Example Page Path:** `example/src/pages/PTZPage.tsx`
 - **Exported From:** `Global`
+- **Description:** Collection of styled layout container components for structuring the application UI. These are styled-components, not React functional components.
+- **Exported Components:**
+  - **Layout**: Simple flex container (no props)
+  - **MobileLayout**: Simple container for mobile layouts (no props)
+  - **Content**: Scrollable content container with optional max-width and padding
+    - `maxWidth?`: `string` - Custom max-width for child divs (default: 1400px)
+    - `padBottom?`: `boolean` - Add bottom padding
+  - **MainContainer**: Flex container for main content area (no props)
+  - **ContentArea**: Flexible content area with responsive padding and max-width
+    - `maxWidth?`: `string` - Custom max-width (default: 1200px in legacy mode)
+    - `paddingOverride?`: `string` - Override default responsive padding
+    - `legacyLayout?`: `boolean` - Enable legacy layout with responsive padding
+- **Exported Constants:**
+  - `MOBILE_CLOSE_HEIGHT = 50`
+  - `MOBILE_NAVBAR_HEIGHT = 68`
 - **Notable Features:**
-  - Base layout wrapper
-  - Used by GlobalUI
+  - Multiple styled-component exports for different layout needs
+  - Content component has default max-width of 1400px for child divs
+  - ContentArea supports legacy layout mode with responsive padding:
+    - Small screens: `40px 20px` (or custom paddingOverride)
+    - Medium screens: `40px` (or custom paddingOverride)
+    - Large screens: `70px 90px` with 1200px max-width (or custom values)
+  - ContentArea uses media queries from `deviceMediaQuery` theme helper
+  - Used by GlobalUI for main application layout structure
 
 ---
 
@@ -833,10 +1073,65 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** N/A
 - **Example Page Path:** `scorer-ui-kit/packages/example/src/pages/LinePage.tsx`
 - **Exported From:** `LineUI`
+- **Props:**
+  - `src`: `string` (required) - Image source URL to display and annotate
+  - `onSizeChange?`: `(size: { h: number; w: number }) => void` - Callback when image size changes (default: no-op)
+  - `onLineMoveEnd?`: `() => void` - Callback when line movement ends (default: no-op)
+  - `onLineClick?`: `(lineSetId: number) => void` - Callback when a line is clicked (default: no-op)
+  - `options?`: `LineUIOptions` - Configuration options for line UI behavior and display
+  - `showDirectionMark?`: `boolean` - Show direction markers on lines
+  - `lineClickSensingBorder?`: `string` - Border size for line click detection (default: '65')
+  - `hasClickSensingBorder?`: `boolean` - Enable click sensing border (default: true)
+- **LineUIOptions Interface:**
+  ```typescript
+  interface LineUIOptions {
+    showHandleFinder?: boolean              // Show handle finder overlay
+    showSetIndex?: boolean                  // Show line set index numbers
+    showPointLabel?: boolean                // Show point labels (default: false)
+    showLabelShadow?: boolean               // Show shadow on labels (default: false)
+    showPointHandle?: boolean               // Show point handles for manipulation
+    showMoveHandle?: boolean                // Show move handles
+    showGrabHandle?: boolean                // Show all grab handles (true by default)
+    setIndexOffset?: number                 // Display offset for set indices (default: 0)
+    pointIndexOffset?: number               // Display offset for point indices (default: 0)
+    showPoint?: boolean                     // Show point markers (default: false)
+    fixedImgDimensions?: {                  // Fixed image dimensions override
+      x: number
+      y: number
+    }
+    boundaryOffset?: number                 // Offset from boundaries (default: 0)
+    showDirectionMark?: boolean             // Show direction markers (default: false)
+    areaFillColor?: string                  // Fill color for areas
+    areaTransparencyLevel?: number          // Transparency level for area fills
+  }
+  ```
+- **IBoundary Interface:**
+  ```typescript
+  interface IBoundary {
+    x: IMinMax    // X-axis boundaries
+    y: IMinMax    // Y-axis boundaries
+  }
+  
+  interface IMinMax {
+    min: number   // Minimum value
+    max: number   // Maximum value
+  }
+  ```
 - **Notable Features:**
-  - Line drawing UI component
-  - Interactive line creation
-  - Used for annotations
+  - Interactive line drawing and annotation on images
+  - SVG-based rendering with viewBox scaling
+  - Automatic image scaling and boundary calculation
+  - Context-based state management via LineSetContext
+  - Responsive to window resize events
+  - Loading overlay with spinner during image load
+  - Handle finder mode for easier line manipulation
+  - Support for multiple line sets with individual click handlers
+  - Configurable click sensing borders for better UX
+  - Direction markers for line orientation
+  - Point and move handles for line manipulation
+  - Customizable display offsets for indices
+  - Fixed dimension support for consistent scaling
+  - Boundary offset configuration for edge constraints
 
 ---
 
@@ -846,9 +1141,39 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** N/A
 - **Example Page Path:** `example/src/pages/LinePage.tsx`
 - **Exported From:** `LineUI`
+- **Props:**
+  - `ws`: `string` (required) - WebSocket URL for WebRTC connection
+  - `onSizeChange?`: `(size: { h: number; w: number }) => void` - Callback when video size changes (default: no-op)
+  - `onLineMoveEnd?`: `() => void` - Callback when line movement ends (default: no-op)
+  - `onLineClick?`: `(lineSetId: number) => void` - Callback when a line is clicked (default: no-op)
+  - `onLoaded?`: `(metadata: { height: number; width: number }) => void` - Callback when video metadata is loaded (default: no-op)
+  - `options?`: `LineUIOptions` - Configuration options for line UI behavior and display (see LineUI for full interface)
+  - `videoOptions?`: `LineUIVideoOptions` - HTML video element attributes (extends VideoHTMLAttributes<HTMLVideoElement>)
+  - `lineClickSensingBorder?`: `string` - Border size for line click detection (default: '65')
+  - `hasClickSensingBorder?`: `boolean` - Enable click sensing border (default: true)
+- **LineUIOptions Interface:**
+  Same as LineUI component - includes showHandleFinder, showSetIndex, showPointLabel, showLabelShadow, showPointHandle, showMoveHandle, showGrabHandle, setIndexOffset, pointIndexOffset, showPoint, boundaryOffset, showDirectionMark, areaFillColor, areaTransparencyLevel
+- **LineUIVideoOptions Type:**
+  ```typescript
+  type LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>
+  ```
+  Includes all standard HTML video attributes: autoPlay, controls, loop, muted, playsInline, poster, preload, etc.
 - **Notable Features:**
-  - LineUI with WebRTC support
-  - Real-time collaboration
+  - LineUI component with WebRTC video streaming support
+  - Real-time video annotation over WebRTC streams
+  - Uses WebRTCClient component for video rendering
+  - SVG-based line drawing overlay on video stream
+  - Automatic video scaling and boundary calculation
+  - Context-based state management via LineSetContext
+  - Responsive to window resize events
+  - Loading overlay with spinner during video load
+  - Handle finder mode for easier line manipulation
+  - Support for multiple line sets with individual click handlers
+  - Video metadata callback (onLoaded) provides dimensions
+  - Configurable click sensing borders for better UX
+  - All LineUI options available (handles, labels, indices, etc.)
+  - Full HTML5 video element control via videoOptions
+  - Default video size: 1024x768 (updated on metadata load)
 
 ---
 
@@ -858,9 +1183,45 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** N/A
 - **Example Page Path:** `example/src/pages/LineRTCPage.tsx`
 - **Exported From:** `LineUI`
+- **Props:**
+  - `src`: `string` (required) - Video source URL
+  - `onSizeChange?`: `(size: { h: number; w: number }) => void` - Callback when video size changes (default: no-op)
+  - `onLineMoveEnd?`: `() => void` - Callback when line movement ends (default: no-op)
+  - `onLineClick?`: `(lineSetId: number) => void` - Callback when a line is clicked (default: no-op)
+  - `onLoaded?`: `(metadata: { height: number; width: number }) => void` - Callback when video metadata is loaded (default: no-op)
+  - `options?`: `LineUIOptions` - Configuration options for line UI behavior and display (see LineUI for full interface)
+  - `videoOptions`: `LineUIVideoOptions` (required) - HTML video element attributes with defaults
+  - `lineClickSensingBorder?`: `string` - Border size for line click detection (default: '65')
+  - `hasClickSensingBorder?`: `boolean` - Enable click sensing border (default: true)
+- **LineUIOptions Interface:**
+  Same as LineUI component - includes showHandleFinder, showSetIndex, showPointLabel, showLabelShadow, showPointHandle, showMoveHandle, showGrabHandle, setIndexOffset, pointIndexOffset, showPoint, boundaryOffset, showDirectionMark
+- **LineUIVideoOptions Type:**
+  ```typescript
+  type LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>
+  ```
+  Includes all standard HTML video attributes with component defaults:
+  - `loop`: boolean (default: false)
+  - `autoPlay`: boolean (default: false)
+  - `controls`: boolean (default: false)
+  - `muted`: boolean (default: true)
+  - Plus all other VideoHTMLAttributes: playsInline, poster, preload, crossOrigin, etc.
 - **Notable Features:**
-  - LineUI for video overlays
-  - Video annotation support
+  - LineUI component for standard HTML5 video file annotation
+  - SVG-based line drawing overlay on video element
+  - Uses native HTML5 `<video>` element (not WebRTC)
+  - Automatic video scaling and boundary calculation
+  - Context-based state management via LineSetContext
+  - Responsive to window resize events
+  - Loading overlay with spinner during video load
+  - Handle finder mode for easier line manipulation
+  - Support for multiple line sets with individual click handlers
+  - Video metadata callback (onLoaded) provides dimensions
+  - Configurable click sensing borders for better UX
+  - All LineUI options available (handles, labels, indices, etc.)
+  - Full HTML5 video element control via videoOptions
+  - Default video size: 1024x768 (updated on metadata load)
+  - Default video settings: muted, no autoplay, no controls, no loop
+  - Suitable for local video files or video URLs (not live streams)
 
 ---
 
@@ -869,21 +1230,54 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Global/organisms/MainMenu.tsx`
 - **Story Path:** `storybook/src/stories/Global/MainMenu.stories.tsx`
 - **Exported From:** `Global`
-- **Props:**
-  - `logoMark`: `string` - Logo mark image URL
-  - `logoText`: `string` - Logo text image URL
-  - `menuItems`: Array of menu item configurations
-  - `currentPath`: `string` - Current active path
-  - `onNavigate`: Navigation callback
-  - `userInfo`: User information object
-  - `isCollapsed`: `boolean` - Collapsed state
+- **Props:** (IMenu interface)
+  - `content`: `IMenuTop` (required) - Menu content structure with items array
+  - `home?`: `string` - Home page URL for logo link (default: '/')
+  - `openWidth?`: `number` - Width when menu is open
+  - `logoMark?`: `string` - Logo mark SVG URL (uses default SvgLogoMark if not provided)
+  - `logoText?`: `string` - Logo text SVG URL (uses default SvgLogoText if not provided)
+  - `supportUrl?`: `string` - URL for help & support link
+  - `supportText?`: `string` - Text for support link (default: 'Help & Support')
+  - `keepOpenText?`: `string` - Text for keep open toggle (default: 'Keep Open')
+  - `autoHideText?`: `string` - Text for auto-hide toggle (default: 'Auto-Hide')
+  - `defaultMenuOpen?`: `boolean` - Initial menu open state (default: true)
+  - `canAlwaysPin?`: `boolean` - Allow menu to be pinned (default: false)
+  - `onMenuToggle?`: `(isMenuOpen: boolean) => void` - Callback when menu open state changes (default: no-op)
+- **IMenuTop Interface:**
+  ```typescript
+  interface IMenuTop {
+    items: IMenuItemTop[]    // Array of top-level menu items
+  }
+  
+  interface IMenuItemTop {
+    icon: string             // Icon name for menu item
+    title: string            // Display title
+    to?: string              // Navigation path
+    submenu?: IMenuItemSubmenu[]  // Optional submenu items
+  }
+  
+  interface IMenuItemSubmenu {
+    title: string            // Submenu item title
+    to: string               // Navigation path
+  }
+  ```
 - **Notable Features:**
-  - Sidebar navigation menu
-  - Logo display
-  - Collapsible menu
-  - Active state highlighting
-  - User info display
-  - Nested menu support
+  - Fixed position sidebar navigation menu with React Portal rendering
+  - Auto-hide/pin functionality with hover behavior
+  - Collapsible menu with smooth transitions (except xxlarge breakpoint)
+  - Logo display with separate mark and text components
+  - Active state highlighting based on current route
+  - Nested submenu support with context management
+  - Support link in footer (optional)
+  - Pin/auto-hide toggle in footer (when canAlwaysPin is true)
+  - Uses useMenu hook for state management
+  - Uses useLocation from react-router-dom for active path detection
+  - Touch-friendly (disables auto-open on touch devices)
+  - CSS variable-based theming (menu widths, colors, transitions)
+  - PushContainer reserves space for menu in layout
+  - Menu width: var(--global-menu-width-open) when open, var(--global-menu-width-closed) when closed
+  - Z-index: 99 for proper layering
+  - Box shadow and border styling
 
 ---
 
@@ -892,16 +1286,43 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Misc/atoms/MediaBox.tsx`
 - **Story Path:** `storybook/src/stories/Alerts/Modals/MediaModal.stories.tsx`
 - **Exported From:** `Misc`
-- **Props:**
-  - `src`: `string` - Media source URL
-  - `type`: `'img' | 'video'` - Media type
-  - `alt`: `string` - Alt text for images
-  - `controls`: `boolean` - Show video controls
+- **Props:** (IMediaModal interface)
+  - `src`: `string` (required) - Media source URL (image or video)
+  - `mediaType`: `IMediaType` (required) - Media type: 'img' | 'video'
+  - `alt?`: `string` - Alt text for images
+  - `videoOptions?`: `VideoHTMLAttributes<HTMLVideoElement>` - HTML video element attributes (default: {})
+  - `hasModalLimits?`: `boolean` - Apply modal size limits (max-height: calc(100vh - 100px), max-width: calc(100vw - 100px))
+  - `retryLoading?`: `boolean` - Enable automatic retry on load failure (default: false)
+  - `retryLimit?`: `number` - Maximum retry attempts with exponential backoff (default: 5)
+  - `minWidth?`: `string` - Minimum width for wrapper
+  - `minHeight?`: `string` - Minimum height for wrapper
+  - `onError?`: `(e: Event) => void` - Callback when media fails to load (default: no-op)
+  - `onMediaLoad?`: `() => void` - Callback when media successfully loads (default: no-op)
+- **IMediaType:**
+  ```typescript
+  type IMediaType = 'img' | 'video'
+  ```
+- **VideoOptions Defaults:**
+  - `loop`: false
+  - `autoPlay`: true
+  - `controls`: false
+  - `muted`: true
+  - Plus all other VideoHTMLAttributes: playsInline, poster, preload, etc.
 - **Notable Features:**
-  - Displays images or videos in modal
-  - Responsive sizing
-  - Video playback controls
-  - Used with useMediaModal hook
+  - Displays images or videos with loading states
+  - Automatic retry mechanism with exponential backoff for failed loads
+  - Loading overlay with spinner during media load
+  - NoImage SVG fallback on load failure
+  - Smooth fade-in transition on load (theme-based animation)
+  - Responsive sizing with optional modal limits
+  - Video preload set to 'metadata'
+  - Video uses onCanPlayThrough event for load detection
+  - Image uses onLoad event for load detection
+  - Retry adds timestamp query parameter to bypass cache
+  - CSS variable-based styling (grey-11 background)
+  - Border radius: 3px
+  - Used with useMediaModal hook for modal display
+  - Exports MediaBoxWrapper styled component for custom usage
 
 ---
 

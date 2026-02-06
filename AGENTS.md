@@ -56,6 +56,12 @@ In another, `npm start -w packages/example` or `npm start -w packages/storybook`
 
 ## Using the library on your project
 
+### Install library
+
+```bash
+  npm i scorer-ui-kit
+```
+
 ### Required Wrappers
 - Applications consuming this library MUST include the following providers and styles, best added in `index.tsx`. Missing any of these may result in broken styles, modals, or notifications. Further documentation in [SETTINGS FOR DARK AND LIGHT MODE](packages/ui-lib/theme/dark_light_mode_usage.md)
 
