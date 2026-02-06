@@ -917,26 +917,22 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/atoms/IconButton.tsx`
 - **Story Path:** N/A
 - **Exported From:** `Form`
-- **Props:** (extends `IButtonProps`)
-  - `icon`: `string` (required) - Icon name
-  - `iconSize?`: `number` - Icon size in pixels (default: 12)
-  - `iconWeight?`: `IconWeight` - Icon weight: 'thin' | 'light' | 'regular' | 'bold' | 'fill' (default: 'regular')
-  - `iconColor?`: `string` - Icon color
-  - **From IButtonProps (extends ButtonHTMLAttributes):**
-    - `design?`: `TypeButtonDesign` - Button design variant (default: 'primary')
-    - `size?`: `TypeButtonSize` - Button size (default: 'normal')
-    - `shadow?`: `boolean` - Show shadow (default: false)
-    - `noPadding?`: `boolean` - Remove padding (default: false)
-    - `loading?`: `boolean` - Loading state (default: false)
-    - Plus all standard HTML button attributes (`onClick`, `disabled`, `type`, etc.)
+- **Props:** (extends `IconProps & ButtonHTMLAttributes<HTMLButtonElement>`)
+  - `icon`: `string` (required) - Icon name (from IconProps)
+  - `size`: `number` - Icon size in pixels (from IconProps, default: `20`)
+  - `weight`: IWeight - Icon weight (from IconProps, default: `'regular'`)
+  - `color`: ISvgIcons['color'] - Icon color (from IconProps, default: `'dimmed'`)
+  - `forSvgUsage`: `boolean` - Icon SVG usage flag (from IconProps, default: `false`)
+  - `hoverColor`: `string` - Icon color on hover (default: `'mono'`)
 - **Notable Features:**
-  - Button with only icon (no text content)
-  - Inherits all Button component styling and behavior
-  - Configurable icon size, weight, and color
-  - Supports all button design variants (primary, secondary, tertiary, text-only, danger)
-  - Supports all button sizes (small, normal, large)
-  - Shadow and loading state support
-  - Used in tables, toolbars, and action areas
+  - **Simple Icon Button**: Button with only icon, no text content
+  - **Hover Effect**: Changes icon stroke color on hover via hoverColor prop
+  - **Reset Styles**: Uses resetButtonStyles for clean button appearance
+  - **Type Safety**: Always renders as `type='button'` to prevent form submission
+  - **Icon Integration**: Directly uses Icon component with configurable size and weight
+  - **HTML Button Attributes**: Supports all standard button attributes (onClick, disabled, className, etc.)
+  - **Used In**: Tables, toolbars, action areas, and ActionButtons component
+  - **Note**: Does NOT extend IButtonProps - this is a simpler icon-only button without Button component's design variants
 
 ---
 
@@ -946,22 +942,25 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Form/Input/Input.stories.tsx`
 - **Exported From:** `Form`
 - **Props:** (extends `InputHTMLAttributes<HTMLInputElement>`)
-  - `fieldState?`: `TypeFieldState` - Visual state: 'default' | 'error' | 'warning' | 'success' | 'info'
-  - `showFeedback?`: `boolean` - Show feedback icon for field state (default: false)
-  - `isActionButton?`: `boolean` - Has action button inside input
-  - `actionButtonCallback?`: `() => void` - Action button click callback
-  - `actionButtonIcon?`: `string` - Action button icon name
-  - `actionButtonText?`: `string` - Action button text
-  - Plus all standard HTML input attributes (`value`, `onChange`, `type`, `placeholder`, `disabled`, `name`, `required`, etc.)
+  - `fieldState`: TypeFieldState (`'default' | 'disabled' | 'required' | 'valid' | 'invalid' | 'processing'`) - Visual state of the input
+  - `showFeedback`: `boolean` - Shows feedback bar below input with icon and message
+  - `feedbackMessage`: `string` - Message text displayed in feedback bar
+  - `actionCallback`: `() => void` - Callback for action icon click
+  - `actionIcon`: `string` - Icon name for action button displayed inside input (right side)
+  - `postfix`: `string` - Text displayed after input value (e.g., units like "px", "%")
 - **Notable Features:**
-  - Base input component with styled-components
-  - Five field states with color-coded styling
-  - Optional feedback icons (checkmark for success, alert for error/warning, info for info)
-  - Optional action button inside input (right side)
-  - State-based border colors and feedback
-  - Supports all HTML input types
-  - Validation state visual feedback
-  - Action button for inline actions (e.g., clear, search, show password)
+  - **Base Input Component**: Foundation input with state-based styling
+  - **Field States**: Six states with color-coded borders and shadows (default, disabled, required, valid, invalid, processing)
+  - **Feedback System**: Optional feedback bar with state-specific icons (Required, Success, Invalid, Spinner)
+  - **Action Icon**: Optional icon button inside input for actions (e.g., clear, show password, search)
+  - **Postfix Support**: Display text after input value for units or context
+  - **State-Based Styling**: Border colors, shadows, and backgrounds change based on fieldState
+  - **Auto-Disable**: Automatically disables input when fieldState is 'disabled' or 'processing'
+  - **Focus Effects**: Enhanced box shadow on focus with state-specific colors
+  - **Feedback Visibility**: Feedback bar hidden for 'default' and 'disabled' states
+  - **Smooth Transitions**: Border, background, and shadow transitions with fast easing
+  - **Placeholder Styling**: Italic placeholder text (normal for Japanese language)
+  - **Used By**: TextField component wraps this with Label
 
 ---
 
@@ -2096,14 +2095,25 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Misc/molecules/TagList.stories.tsx`
 - **Exported From:** `Misc`
 - **Props:**
-  - `tags`: `ITag[]` - Array of tag configurations
-  - `onTagClick`: `(tagId: string) => void` - Tag click handler
-  - `onTagRemove`: `(tagId: string) => void` - Tag remove handler
+  - `tagsConfig`: `ITag[]` (required) - Array of tag configuration objects
+    - Each `ITag` object (extends `IconProps`):
+      - `label?`: `string` - Tag text label
+      - `linkTo?`: `string` - URL for tag link (makes tag clickable as link)
+      - `noBorder?`: `boolean` - Remove tag border (default: false)
+      - `tagSize?`: `TypeTagSize` - Tag size variant: 'compact' | 'normal'
+      - `onTagClick?`: `() => void` - Click handler for individual tag
+      - `icon?`: `string` - Icon name from Phosphor icon set
+      - `size?`: `number` - Icon size in pixels (default: 12, or 8/10 based on tagSize)
+      - `weight?`: `TypeIconWeight` - Icon weight: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone' (default: 'regular')
+      - `color?`: `string` - Icon color from theme (default: tag inherits from parent)
+      - `forSvgUsage?`: `boolean` - Optimize icon for SVG context
 - **Notable Features:**
-  - List of tags with wrapping
-  - Remove functionality
-  - Click handlers
-  - Responsive layout
+  - Renders array of Tag components with flex-wrap layout
+  - Each tag configured independently via ITag props
+  - Automatic spacing: 10px right margin, 6px bottom margin per tag
+  - Tags wrap to multiple lines when container width exceeded
+  - Supports both clickable tags (onTagClick) and link tags (linkTo)
+  - Individual tag styling and behavior per array item
 
 ---
 
