@@ -87,9 +87,14 @@ export interface IMenuTop {
     hasCopyIcon?:boolean
   }
 
+  export interface IUserSubmenuItem {
+    text: string;
+    href: string;
+  }
+
   export interface ITopBar {
     hasNotifications?: boolean;
-    userSubmenu?: any[];
+    userSubmenu?: IUserSubmenuItem[];
     loggedInUser: string;
     hasLanguage?: boolean;
     selectedLanguageText?: string;
