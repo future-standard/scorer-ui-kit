@@ -2,7 +2,7 @@ import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import { IMediaType } from '../../index';
-import { ReactComponent as NoImage } from '../../svg/NoImageBig.svg';
+import NoImage from '../../svg/NoImageBig';
 
 export const MediaBoxWrapper = styled.div<{minWidth?: string, minHeight?: string}>`
   position: relative;

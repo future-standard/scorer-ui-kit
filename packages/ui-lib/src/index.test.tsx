@@ -1,7 +1,11 @@
-import { ExampleComponent } from '.';
+import { Button, defaultTheme } from '.';
 
-describe('ExampleComponent', () => {
-  it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy();
+describe('scorer-ui-kit', () => {
+  it('exports Button', () => {
+    expect(Button).toBeTruthy();
+  });
+
+  it('exports defaultTheme', () => {
+    expect(defaultTheme).toBeTruthy();
   });
 });
