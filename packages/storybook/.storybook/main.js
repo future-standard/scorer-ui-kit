@@ -14,6 +14,5 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-knobs',
     'storybook-dark-mode',
-    'storybook-addon-jsx/register',
   ]
 }

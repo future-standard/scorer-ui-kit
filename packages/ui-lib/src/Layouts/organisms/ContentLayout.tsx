@@ -61,6 +61,7 @@ const Content = styled.div`
 interface IContentLayout {
   layout?: 'default' | 'fullscreen' | 'dashboard';
   HeaderContent?: IHeaderContent;
+  children?: React.ReactNode;
 }
 
 const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderContent = {}, children }) => {

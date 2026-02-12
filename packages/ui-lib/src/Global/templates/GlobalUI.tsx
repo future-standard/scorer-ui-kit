@@ -11,7 +11,8 @@ interface OwnProps {
   maxWidth?: string,
   paddingOverride?: string,
   legacyLayout?: boolean,
-  onMenuToggle?: (isMenuOpen: boolean) =>  void
+  onMenuToggle?: (isMenuOpen: boolean) =>  void,
+  children?: React.ReactNode
 }
 
 type INavigation = OwnProps & IMenu & ITopBar;

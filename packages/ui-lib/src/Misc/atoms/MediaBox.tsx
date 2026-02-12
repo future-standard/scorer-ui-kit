@@ -100,9 +100,9 @@ const MediaBox: React.FC<IMediaModal> = ({
     ...videoValues
   } = videoOptions;
 
-  const onError = useCallback((e)=>{
+  const onError = useCallback((e: React.SyntheticEvent<HTMLVideoElement | HTMLImageElement, Event>) => {
     if(!retryLoading || retryCount >= retryLimit) {
-      onErrorCallback(e);
+      onErrorCallback(e.nativeEvent);
       setLoaded(true);
       setLoadFailed(true);
     } else {

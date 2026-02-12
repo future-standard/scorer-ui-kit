@@ -103,6 +103,7 @@ interface IProps {
   unit?: string
   status?: string
   hasCopyButton?: boolean
+  children?: React.ReactNode
 }
 
 const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false, status, unit = '', cellStyle = 'normalImportance', alignment = 'left', hideDivider, isLastRow, hasCopyButton, href, children }) => {
@@ -124,3 +125,4 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false
 };
 
 export default TypeTableCell;
+

@@ -24,7 +24,8 @@ const ContentWrapper = styled.div`
 `;
 
 interface OwnProps {
-  closeId: string
+  closeId: string;
+  children?: React.ReactNode;
 }
 
 const MobileNavbarContent: React.FC<OwnProps> = ({ closeId, children }) => {

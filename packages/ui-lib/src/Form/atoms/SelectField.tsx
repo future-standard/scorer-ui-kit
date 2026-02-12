@@ -133,7 +133,7 @@ const SelectField: React.FC<ISelect> = ({
 
   const [activePlaceholder, setPlaceholderStatus] = useState<boolean>(!defaultValue ? true : false);
 
-  const handleOnChange = useCallback((e) => {
+  const handleOnChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
 
     const { value } = e.target;
 
