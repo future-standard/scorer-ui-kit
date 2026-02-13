@@ -94,7 +94,7 @@ const buttonClickAnimation = keyframes`
   }
 `;
 
-const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolean }>`
+const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ $isActive: boolean }>`
   position: relative;
   flex: 0 56px;
   width: 56px;
@@ -131,7 +131,7 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ isActive: boolea
     }
   }
 
-  ${({ isActive }) => isActive && css`
+  ${({ $isActive }) => $isActive && css`
     &, &:hover {
       border-bottom-color: var(--primary-9);
       &::after {
@@ -254,16 +254,16 @@ const TopBar: React.FC<ITopBar> = ({
         {badge && <TopBarBadge {...badge} />}
         <ButtonArea>
           {customDrawer && (
-            <DrawerToggle isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
+            <DrawerToggle $isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
               <StatusIcon {...customDrawer} />
             </DrawerToggle>
           )}
           {hasNotifications && (
-            <DrawerToggle isActive={openDrawer === 'notifications'} onClick={() => toggleDrawers('notifications')}>
+            <DrawerToggle $isActive={openDrawer === 'notifications'} onClick={() => toggleDrawers('notifications')}>
               <Icon icon='Notifications' size={20} color='dimmed' />
             </DrawerToggle>
           )}
-          <DrawerToggle isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
+          <DrawerToggle $isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
             <Icon icon='UserProfile' size={20} color='dimmed' />
           </DrawerToggle>
         </ButtonArea>
