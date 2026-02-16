@@ -26,6 +26,7 @@ import Icon, {IconSVGs} from  './Icons/Icon';
 import {
   LineUI,
   LineUIRTC,
+  LineUIRTCWithFallback,
   LineSetContext,
   LineReducer
 } from './LineUI';
@@ -75,6 +76,7 @@ export {
   // LineUI
   LineUI,
   LineUIRTC,
+  LineUIRTCWithFallback,
   LineSetContext,
   LineReducer,
 
