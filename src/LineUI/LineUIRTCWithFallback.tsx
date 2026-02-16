@@ -265,12 +265,14 @@ const LineUIRTCWithFallback : React.FC<LineUIProps> = ({
       {/* Show snapshot while WebRTC connects */}
       {useFallback && (
         <React.Fragment>
-          <SnapshotImage
-            ref={imageRef}
-            src={snapshotSrc}
-            onLoad={onImageLoad}
-            alt="Camera snapshot"
-          />
+          {snapshotSrc && (
+            <SnapshotImage
+              ref={imageRef}
+              src={snapshotSrc}
+              onLoad={onImageLoad}
+              alt="Camera snapshot"
+            />
+          )}
           {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
         </React.Fragment>
       )}
