@@ -221,7 +221,7 @@ const LineUIRTCWithFallback : React.FC<LineUIProps> = ({
     if (useFallback && snapshotUrl) {
       const updateSnapshot = () => {
         const timestamp = Date.now();
-        const url = `${snapshotUrl}${streamName}/snapshot?width=auto&height=270&timestamp=${timestamp}`;
+        const url = `${snapshotUrl}${streamName}/snapshot?timestamp=${timestamp}`;
         const img = new Image();
         img.onload = () => setSnapshotSrc(url);
         img.src = url;
