@@ -216,13 +216,15 @@ const LineUIRTCWithFallback : React.FC<LineUIProps> = ({
     }
   }, [rtcConnected, onFallbackActivated]);
 
-  // Snapshot polling logic
+  // Snapshot polling logic - preload to avoid showing broken images on 404
   useEffect(() => {
     if (useFallback && snapshotUrl) {
       const updateSnapshot = () => {
         const timestamp = Date.now();
         const url = `${snapshotUrl}${streamName}/snapshot?width=auto&height=270&timestamp=${timestamp}`;
-        setSnapshotSrc(url);
+        const img = new Image();
+        img.onload = () => setSnapshotSrc(url);
+        img.src = url;
       };
 
       // Initial load
