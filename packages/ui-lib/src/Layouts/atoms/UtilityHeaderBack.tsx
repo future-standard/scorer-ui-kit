@@ -103,10 +103,10 @@ const UtilityHeaderBack : React.FC<IUtilityHeaderLinkBackInstance> = ({show = tr
 
   return <React.Fragment>
 
-    {onClick ? 
+    {onClick ?
       <BackButton {...{$showDivider, $iconInGutter, onClick}}>{innerContent}</BackButton>
       :
-      <BackLink to={link} {...{$showDivider, $iconInGutter}}>{innerContent}</BackLink>
+      link && <BackLink to={link} {...{$showDivider, $iconInGutter}}>{innerContent}</BackLink>
     }
   </React.Fragment>;
 

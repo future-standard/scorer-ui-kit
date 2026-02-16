@@ -24,7 +24,7 @@ import {
 
 
 import styled from 'styled-components';
-import { Route, Switch, RouteComponentProps } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 
 import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
@@ -172,22 +172,15 @@ const Payments = () => (
   </ExampleContentBlock>
 );
 
-interface OwnProps {
-  match: {
-    params: {
-      name: string
-    }
-  }
-}
-
-type RouteProps = OwnProps & RouteComponentProps;
-
-const Service = (route: RouteProps) => (
-  <PageHeader
-    title={`Service ${route.match.params.name}`}
-    introductionText='Excelling at this service.'
-  />
-)
+const Service = () => {
+  const { name } = useParams<{ name: string }>();
+  return (
+    <PageHeader
+      title={`Service ${name}`}
+      introductionText='Excelling at this service.'
+    />
+  );
+};
 
 const Support = () => (
   <PageHeader
@@ -291,19 +284,19 @@ const TablePage = () => (
 )
 
 const ComponentLinks = () => (
-  <Switch>
-    <Route exact path="/welcome" component={Welcome} />
-    <Route exact path="/company" component={Company} />
-    <Route exact path="/company/about" component={About} />
-    <Route exact path="/company/team" component={Team} />
-    <Route exact path="/company/contact" component={Contact} />
-    <Route exact path="/company/table-example" component={TablePage} />
-    <Route exact path="/support" component={Support} />
-    <Route exact path="/user/accounts" component={Accounts} />
-    <Route exact path="/user/billing" component={Billing} />
-    <Route exact path="/user/payments" component={Payments} />
-    <Route path="/services/:name" component={Service} />
-  </Switch>
+  <Routes>
+    <Route path='/welcome' element={<Welcome />} />
+    <Route path='/company' element={<Company />} />
+    <Route path='/company/about' element={<About />} />
+    <Route path='/company/team' element={<Team />} />
+    <Route path='/company/contact' element={<Contact />} />
+    <Route path='/company/table-example' element={<TablePage />} />
+    <Route path='/support' element={<Support />} />
+    <Route path='/user/accounts' element={<Accounts />} />
+    <Route path='/user/billing' element={<Billing />} />
+    <Route path='/user/payments' element={<Payments />} />
+    <Route path='/services/:name' element={<Service />} />
+  </Routes>
 );
 
 
