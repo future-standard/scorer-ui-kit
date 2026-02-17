@@ -100,7 +100,7 @@ const LineUI : React.FC<LineUIProps> = ({
 }) => {
 
   const frame =  useRef<SVGSVGElement>(null);
-  const videoRef = useRef<HTMLVideoElement>();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
   const {state} = useContext(LineSetContext);
