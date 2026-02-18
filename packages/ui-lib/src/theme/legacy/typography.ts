@@ -1,4 +1,4 @@
-import type { TypeCellStyle, TypeCellAlignment } from '../../Tables';
+import type {TypeCellAlignment } from '../../Tables';
 
 type TypographyStyle = {
   textAlign?: string;
@@ -14,18 +14,23 @@ type TypographyStyle = {
 
 type AlignmentStyles = {
   [K in TypeCellAlignment]?: TypographyStyle;
+} & {
+  [key: string]: TypographyStyle | undefined;
 };
 
-type CellStyleGroup = AlignmentStyles | TypographyStyle;
-
 type ColumnDataStyles = {
-  [K in TypeCellStyle]?: CellStyleGroup;
-} & {
+  firstColumn?: TypographyStyle;
+  lowImportance?: AlignmentStyles;
+  normalImportance?: AlignmentStyles;
+  highImportance?: AlignmentStyles;
   unit?: TypographyStyle;
+  [key: string]: AlignmentStyles | TypographyStyle | undefined;
 };
 
 type HeaderStyles = {
   [K in TypeCellAlignment]?: TypographyStyle;
+} & {
+  [key: string]: TypographyStyle | undefined;
 }
 
 type InputStyles = {
@@ -77,6 +82,7 @@ type TableTypography = {
   columnData?: ColumnDataStyles;
   header?: HeaderStyles;
   subHeader?: HeaderStyles;
+  [key: string]: ColumnDataStyles | HeaderStyles | undefined;
 };
 
 type MetaTypography = {
