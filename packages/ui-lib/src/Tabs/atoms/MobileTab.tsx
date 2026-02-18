@@ -19,7 +19,7 @@ const LinkTab = styled.div<{ isActive: boolean }>`
     height: 100%;
 
   ${({ theme }) => css`
-    transition: border ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
+    transition: border ${theme.animation.speed.normal} ${theme.animation.easing.primary.inOut};
     border-bottom: 5px solid ${theme.colors.menu.indicator};
 
     ${IconWrapper} {

@@ -35,7 +35,7 @@ const Video = styled.video<{ isLoaded?: boolean, hasModalLimits?: boolean }>`
   outline: none;
 
   ${({ theme, isLoaded, hasModalLimits }) => css`
-    transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
+    transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.out};
     opacity: ${isLoaded ? `1` : `0`};
 
     ${hasModalLimits && css`
@@ -49,7 +49,7 @@ const StyledImage = styled.img<{ isLoaded?: boolean, hasModalLimits?: boolean }>
   ${mediaStyle};
 
   ${({ theme, isLoaded, hasModalLimits }) => css`
-    transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
+    transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.out};
     display: ${isLoaded ? `block` : `none`};
     opacity: ${isLoaded ? `1` : `0`};
 
