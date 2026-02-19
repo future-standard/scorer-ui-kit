@@ -1,37 +1,34 @@
 import type {TypeCellAlignment } from '../../Tables';
+import type { Properties as CSSProperties } from 'csstype';
 
-type TypographyStyle = {
-  textAlign?: string;
-  fontStyle?: string;
-  fontSize?: string;
-  fontWeight?: number;
-  lineHeight?: string;
-  letterSpacing?: string;
-  textDecoration?: string;
-  textTransform?: string;
-  color?: string;
-};
+type TypographyStyle = Pick<
+  CSSProperties,
+  | 'textAlign'
+  | 'fontStyle'
+  | 'fontSize'
+  | 'fontWeight'
+  | 'lineHeight'
+  | 'letterSpacing'
+  | 'textDecoration'
+  | 'textTransform'
+  | 'color'
+>;
 
 type AlignmentStyles = {
-  [K in TypeCellAlignment]?: TypographyStyle;
-} & {
-  [key: string]: TypographyStyle | undefined;
+  [K in TypeCellAlignment]: TypographyStyle;
 };
 
 type ColumnDataStyles = {
-  firstColumn?: TypographyStyle;
-  lowImportance?: AlignmentStyles;
-  normalImportance?: AlignmentStyles;
-  highImportance?: AlignmentStyles;
-  unit?: TypographyStyle;
-  [key: string]: AlignmentStyles | TypographyStyle | undefined;
+  firstColumn: TypographyStyle;
+  lowImportance: AlignmentStyles;
+  normalImportance: AlignmentStyles;
+  highImportance: AlignmentStyles;
+  unit: TypographyStyle;
 };
 
 type HeaderStyles = {
-  [K in TypeCellAlignment]?: TypographyStyle;
-} & {
-  [key: string]: TypographyStyle | undefined;
-}
+  [K in TypeCellAlignment]: TypographyStyle;
+};
 
 type InputStyles = {
   label?: TypographyStyle;
@@ -79,10 +76,9 @@ type FilterTypography = {
 };
 
 type TableTypography = {
-  columnData?: ColumnDataStyles;
-  header?: HeaderStyles;
-  subHeader?: HeaderStyles;
-  [key: string]: ColumnDataStyles | HeaderStyles | undefined;
+  columnData: ColumnDataStyles;
+  header: HeaderStyles;
+  subHeader: HeaderStyles;
 };
 
 type MetaTypography = {
@@ -99,9 +95,9 @@ export const typography: {
   feedbackBar?: { message?: TypographyStyle };
   searchBar?: { [key: string]: TypographyStyle };
   meta?: MetaTypography;
-  table?: TableTypography;
+  table: TableTypography;
   filters?: FilterTypography;
-  tables?: { [key: string]: TypographyStyle };
+  tables: { [key: string]: TypographyStyle };
 } = {
     // DEPRECATED: pageHeader
     "pageHeader": {

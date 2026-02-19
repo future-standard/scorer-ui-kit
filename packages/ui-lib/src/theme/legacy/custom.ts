@@ -1,19 +1,19 @@
 type LineStyle = {
-  label?: { fill?: string; stroke?: string };
-  contrastLine?: { stroke?: string; fill?: string };
-  highlightLine?: { stroke?: string; fill?: string };
-  highlightLineBorder?: { stroke?: string; fill?: string };
-  grabHandle?: { fill?: string; stroke?: string };
-  point?: { fill?: string; stroke?: string };
-  grabHandleContrast?: { stroke?: string; fill?: string };
-  grabHandleText?: { fill?: string; stroke?: string };
-  handleBase?: { fill?: string; stroke?: string };
-  handleRingLayer?: { stroke?: string; fill?: string };
-  handleReactiveFill?: { fill?: string; stroke?: string };
-  handleReactiveRing?: { stroke?: string; fill?: string };
-  handleContrastLayer?: { stroke?: string; fill?: string };
-  stopStart?: { stopColor?: string };
-  stopEnd?: { stopColor?: string };
+  label: { fill: string };
+  contrastLine: { stroke: string };
+  highlightLine: { stroke: string };
+  highlightLineBorder: { stroke: string };
+  grabHandle: { fill: string; stroke: string };
+  point: { fill: string };
+  grabHandleContrast: { stroke: string };
+  grabHandleText: { fill: string; stroke?: string };
+  handleBase: { fill: string };
+  handleRingLayer: { stroke: string };
+  handleReactiveFill: { fill: string };
+  handleReactiveRing: { stroke: string };
+  handleContrastLayer: { stroke: string };
+  stopStart: { stopColor: string };
+  stopEnd: { stopColor: string };
 };
 
 type LinesTheme = {
