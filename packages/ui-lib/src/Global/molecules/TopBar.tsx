@@ -243,15 +243,16 @@ const TopBar: React.FC<ITopBar> = ({
 
   return (
     <Container>
-      {hasSearch ?
-        <SearchBar>
-          <IconWrapper>
-            <Icon icon='Search' size={16} color='grey-6' />
-          </IconWrapper>
-          <SearchInput placeholder={searchPlaceholder} />
-        </SearchBar> : <div />}
-      <RightArea>
-        {badge && <TopBarBadge {...badge} />}
+      <>
+        {hasSearch ?
+          <SearchBar>
+            <IconWrapper>
+              <Icon icon='Search' size={16} color='grey-6' />
+            </IconWrapper>
+            <SearchInput placeholder={searchPlaceholder} />
+          </SearchBar> : <div />}
+        <RightArea>
+          {badge && <TopBarBadge {...badge} />}
         <ButtonArea>
           {customDrawer && (
             <DrawerToggle $isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
@@ -315,10 +316,11 @@ const TopBar: React.FC<ITopBar> = ({
 
           {customDrawer && (
             <Drawer isOpen={openDrawer === 'custom'} baseWidth={customDrawer.width ? customDrawer.width : "200px"}>
-              {customDrawer.customComponent}
+              <>{customDrawer.customComponent}</>
             </Drawer>
           )}
         </DrawerPortalWrapper>, document.body)}
+      </>
     </Container>
   );
 

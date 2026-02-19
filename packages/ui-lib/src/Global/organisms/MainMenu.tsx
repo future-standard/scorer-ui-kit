@@ -143,7 +143,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
 
   return (
     <PushContainer isPinned={menuState.isMenuPinned}>
-      {ReactDom.createPortal(
+      <>{ReactDom.createPortal(
         <Container
           open={menuState.isMenuOpen}
           desktopSize={menuState.desktopSize}
@@ -198,7 +198,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
             </MenuFooter>
           </ContainerInner>
         </Container>,
-      document.body)}
+      document.body)}</>
     </PushContainer>
   );
 };

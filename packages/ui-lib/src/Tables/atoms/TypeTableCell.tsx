@@ -78,7 +78,7 @@ const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCell
 
 const UnitText = styled.span`
   ${({theme}) => css`
-    ${theme.typography.table.columnData['unit']};
+    ${theme.typography.table.columnData.unit};
   `}
 `;
 
@@ -116,10 +116,12 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false
 
   return (
     <CellContainer {...{cellStyle, alignment, hideDivider, hasCopyButton}}>
-      {showStatus ? <StatusBlip {...{status}} /> : null}
-      {href ? <a href={href}>{children}</a> : children}
-      {showUnit ? <UnitText>{unit}</UnitText> : null}
-      {hasCopyButton ? <CopyToClipboard onClick={() => typeof children === 'string' && copyToClipboard(children)}><Icon icon='Copy' size={16} /></CopyToClipboard> : null}
+      <>
+        {showStatus ? <StatusBlip {...{status}} /> : null}
+        {href ? <a href={href}>{children}</a> : children}
+        {showUnit ? <UnitText>{unit}</UnitText> : null}
+        {hasCopyButton ? <CopyToClipboard onClick={() => typeof children === 'string' && copyToClipboard(children)}><Icon icon='Copy' size={16} /></CopyToClipboard> : null}
+      </>
     </CellContainer>
   );
 };

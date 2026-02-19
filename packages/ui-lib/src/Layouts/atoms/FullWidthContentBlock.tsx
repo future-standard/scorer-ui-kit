@@ -24,7 +24,7 @@ const FullWidthContentBlock : React.FC<React.PropsWithChildren> = ({children}) =
 
   return <FullWidthContainer $contentHeight={contentHeight}>
     <FullWidthInner ref={innerElement}>
-      {children}
+      <>{children}</>
     </FullWidthInner>
   </FullWidthContainer>;
 };

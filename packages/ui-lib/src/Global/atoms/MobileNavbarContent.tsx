@@ -37,7 +37,7 @@ const MobileNavbarContent: React.FC<OwnProps> = ({ closeId, children }) => {
       : (
         <Container>
           <ContentWrapper>
-            {children}
+            <>{children}</>
           </ContentWrapper>
         </Container>
         )

@@ -57,12 +57,15 @@ type IClose = ICloseProps & ButtonHTMLAttributes<HTMLButtonElement>
 const CloseButton: React.FC<IClose> = ({
   closeId,
   closeText = 'CLOSE MENU',
+  children,
+  formAction,
   ...props }) => {
   const { setSelected }: ContextProps = useContext(TabContext);
 
   return (
     <StyledButton
       onClick={() => setSelected(closeId)}
+      formAction={typeof formAction === 'string' ? formAction : undefined}
       {...props}
     >
       <IconContainer>

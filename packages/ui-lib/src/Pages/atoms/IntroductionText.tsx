@@ -17,7 +17,7 @@ interface IProps {
 const IntroductionText : React.FC<IProps> = ({children}) => {
   return (
     <Container>
-      {children}
+      <>{children}</>
     </Container>
   );
 };

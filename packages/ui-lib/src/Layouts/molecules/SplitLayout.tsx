@@ -466,7 +466,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
     <Container ref={ContainerRef} onPointerMove={handleDragPointerMove} onPointerUp={handleDragPointerUp} $initialised={initialised ? 'true' : 'false'} $layout={layout} $reverse={reverse ? 'true' : 'false'}>
 
       <MainArea $layout={layout} $minDimension={mainMinSize}>
-        {mainArea.content}
+        <>{mainArea.content}</>
       </MainArea>
 
       <DragContainer onPointerDown={handleDragPointerDown} onDoubleClick={restoreDefault} $size={dividerSize} $fauxHover={resizing ? 'true' : 'false'}>
@@ -475,7 +475,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
 
       <SideArea ref={AreaB} style={{ flexBasis: `${sideAreaBasis}px` }} $defaultSize={ sideDefaultSize } $minDimension={sideMinSize} $maxDimension={sideMaxSize} $layout={layout} $collapseState={sideAreaState}>
         <SideAreaInner>
-          {sideArea.content}
+          <>{sideArea.content}</>
         </SideAreaInner>
       </SideArea>
 

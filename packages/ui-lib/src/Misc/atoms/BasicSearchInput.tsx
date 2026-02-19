@@ -133,6 +133,8 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   hasCrossButton = false,
   onCrossClick = () => {},
   width,
+  children,
+  formAction,
   ...props
 }) => {
   return (
@@ -142,6 +144,7 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
       </IconContainer>
       <StyledInput
         {...{ color, disabled }}
+        formAction={typeof formAction === 'string' ? formAction : undefined}
         {...props}
       />
       {hasCrossButton && <CrossButton onClick={onCrossClick}> <Icon icon='CloseCompact' color='dimmed' size={12} /></CrossButton>}

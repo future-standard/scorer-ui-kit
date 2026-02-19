@@ -64,7 +64,7 @@ const GlobalUI: React.FC<INavigation> = ({
             {...{...props}}
           />
           <ContentArea {...{maxWidth, paddingOverride, legacyLayout}}>
-            {children}
+            <>{children}</>
           </ContentArea>
         </MainContainer>
       </Layout>
@@ -84,7 +84,7 @@ const GlobalUI: React.FC<INavigation> = ({
           }
         />
         <ContentArea>
-          {children}
+          <>{children}</>
         </ContentArea>
       </MobileLayout>
     )

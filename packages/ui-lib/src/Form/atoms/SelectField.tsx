@@ -163,8 +163,10 @@ const SelectField: React.FC<ISelect> = ({
         defaultValue={defaultValue ? defaultValue : ''}
         onChange={handleOnChange}
       >
-        {!defaultValue && <option value='' disabled hidden>{placeholder}</option>}
-        {children}
+        <>
+          {!defaultValue && <option value='' disabled hidden>{placeholder}</option>}
+          {children}
+        </>
       </StyledSelect>
       <OpenIcon {...{isCompact}}><Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10 } /></OpenIcon>
     </SelectWrapper>

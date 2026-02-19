@@ -102,13 +102,13 @@ const PageHeader: React.FC<IProps> = ({
         }
         {
           <BottomLeft>
-            {bottomLeftContent}
+            <>{bottomLeftContent}</>
           </BottomLeft>
         }
       </LeftPanel>
       {rightContent ?
         <RightPanel iconLeftPanel={!!icon}>
-          {rightContent}
+          <>{rightContent}</>
         </RightPanel>
         : null
       }
