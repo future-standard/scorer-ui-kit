@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 export const useTitle = (title : string, area? : string, delimiter?: string, update= true) => {
 
@@ -6,7 +6,10 @@ export const useTitle = (title : string, area? : string, delimiter?: string, upd
 const baseTitle = document.title.split('|').slice(-1)[0].trim();
 
 // on unmount will return the baseTitle to Index Title for pages not using this hook.
-useEffect(() => {
+// useLayoutEffect ensures the cleanup (title restore) runs synchronously on unmount,
+// before the browser paints and before the next page's effects set their own title.
+// With plain useEffect the async cleanup could overwrite the incoming page's title.
+useLayoutEffect(() => {
   return () => {
     document.title = baseTitle;
   };

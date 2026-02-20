@@ -27,7 +27,10 @@ export const usePoll = (callback = ()=>{}, interval = 1000) => {
   },[callback]);
 
   useEffect(()=>{
-
+    // Reset canceled flag so polling resumes correctly after remount (e.g. React
+    // StrictMode double-invoke) — without this, cleanup sets canceled=true and the
+    // subsequent remount never restarts the timeout chain.
+    canceled.current = false;
     pollOnce();
 
     return () => {
