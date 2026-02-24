@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { IDragLineUISharedOptions } from '.';
 
@@ -136,7 +136,7 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
   // console.log(props.lineSetId, typeof props.lineSetId)
   const { index, useAngles, angle, unit, size, lineSetId, x, y, moveCallback, moveEndCB=()=>{}, Icon, rotate=0, options, readOnlyHandle = false, styling='primary'} = props;
   // console.log("Handle "+ index +" from set "+ lineSetId + " :: " + x, ", " + y)
-  const handleInstance = React.createRef<SVGSVGElement>();
+  const handleInstance = useRef<SVGSVGElement>(null);
 
   const [ touchDragging, setTouchDragging ] = useState(false);
   const [ mouseDragging, setMouseDragging ] = useState(false);
@@ -150,12 +150,12 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
     // Remember what touch event index is for this handle.
     for (let i = 0; i < e.touches.length; i++) {
       const touch = e.touches[i];
-      if(touch.target.parentNode.parentElement === handleInstance || touch.target.parentNode.parentElement.parentElement){
+      if(touch.target.parentNode.parentElement === handleInstance.current || touch.target.parentNode.parentElement.parentElement){
         setTouchDragging(true);
         setTouchIndex(i);
       }
     }
-  },[handleInstance, readOnlyHandle]);
+  },[readOnlyHandle]);
 
 
   const handleTouchEnd = useCallback(() => {
@@ -176,6 +176,20 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
   /** --- Mouse Events Section --- */
 
+  const handleMouseMoveRef = useRef<((e: MouseEvent) => void) | null>(null);
+  const handleMouseUpRef = useRef<((e: MouseEvent) => void) | null>(null);
+
+  const cleanupMouseListeners = useCallback(() => {
+    if(handleMouseMoveRef.current){
+      window.removeEventListener('mousemove', handleMouseMoveRef.current);
+      handleMouseMoveRef.current = null;
+    }
+    if(handleMouseUpRef.current){
+      window.removeEventListener('mouseup', handleMouseUpRef.current);
+      handleMouseUpRef.current = null;
+    }
+  }, []);
+
   const handleMouseMove = useCallback((e: MouseEvent) => {
     e.preventDefault();
     if (readOnlyHandle) { return; }
@@ -186,20 +200,25 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
     e.preventDefault();
     if (readOnlyHandle) { return; }
     setMouseDragging(false);
-    window.removeEventListener('mousemove', handleMouseMove);
-    window.removeEventListener('mouseup', handleMouseUp);
+    cleanupMouseListeners();
     moveCallback({ x: e.pageX, y: e.pageY}, index);
     setTimeout(moveEndCB);
-  },[handleMouseMove, index, moveCallback, moveEndCB, readOnlyHandle]);
+  },[cleanupMouseListeners, index, moveCallback, moveEndCB, readOnlyHandle]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.preventDefault();
     if (readOnlyHandle) { return; }
+    cleanupMouseListeners();
     setMouseDragging(true);
+    handleMouseMoveRef.current = handleMouseMove;
+    handleMouseUpRef.current = handleMouseUp;
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
+  },[cleanupMouseListeners, handleMouseMove, handleMouseUp, readOnlyHandle]);
 
-  },[handleMouseMove, handleMouseUp, readOnlyHandle]);
+  useEffect(() => {
+    return cleanupMouseListeners;
+  }, [cleanupMouseListeners]);
 
   const maskID = useAngles ? "mask-" + lineSetId + '-' + index : '';
   const shadowGradientID = "shadowGradient-" + lineSetId + '-' + index;
