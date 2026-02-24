@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, VideoHTMLAttributes } from 'react';
+import React, { useEffect, useRef, VideoHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const Video = styled.video`
@@ -34,10 +34,13 @@ const WebRTCPlayer: React.FC<Props> = ({
   ...props
   }) => {
 
-  const [connectionAttempts, setConnectionAttempts] = useState(0);
+  const connectionAttemptsRef = useRef(0);
   const videoRef = useRef<HTMLVideoElement>(null);
   const webSocket = useRef<WebSocket|null>(null);
   const peerConnection = useRef<RTCPeerConnection|null>(null);
+  const mountedRef = useRef(false);
+  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const helloIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
 
   function handleIncomingError(error: string) {
@@ -99,7 +102,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     setStatus('Sending Local Description');
     // console.debug('Local Description:' + JSON.stringify(message));
     try {
-      await webSocket.current.send(JSON.stringify(message));
+      webSocket.current.send(JSON.stringify(message));
       setStatus('Connected');
     } catch (error) {
       console.error(error);
@@ -156,27 +159,32 @@ const WebRTCPlayer: React.FC<Props> = ({
     }
   };
 
-  function onServerClose(event: any) {
+  function onServerClose(event: CloseEvent) {
     console.debug('serverClose');
-    if(webSocket.current){
-      setStatus('Disconnected from server');
-      closePeerConnection();
-      //TODO: todo Fix this to clear on close
-      if (event !== null && event.code !== 1000 && enabled) {
-        window.setTimeout(connectToPeer, 3000);
-      }
+    // Ignore close events from stale WebSocket connections (e.g. StrictMode cleanup)
+    if(!webSocket.current || event.target !== webSocket.current){
+      return;
+    }
+    setStatus('Disconnected from server');
+    closePeerConnection();
+    if (event.code !== 1000 && enabled && mountedRef.current) {
+      reconnectTimeoutRef.current = setTimeout(connectToPeer, 3000);
     }
   }
 
-  function onServerError(event: any) {
+  function onServerError(event: Event) {
+    // Ignore errors from stale WebSocket connections
+    if(event.target !== webSocket.current){ return; }
     console.debug(event);
     setError('Unable to connect to server');
     closeWebSocket();
   }
 
   function connectToPeer() {
-    console.debug('connectToPeer', connectionAttempts);
-    if (connectionAttempts >= maxConnectionAttempts) {
+    if(!mountedRef.current) { return; }
+
+    console.debug('connectToPeer', connectionAttemptsRef.current);
+    if (connectionAttemptsRef.current >= maxConnectionAttempts) {
       setError('Too many connection attempts, aborting. Refresh page to try again');
       return;
     }
@@ -188,10 +196,16 @@ const WebRTCPlayer: React.FC<Props> = ({
     webSocket.current = ws;
     /* When connected, immediately register with the server */
     ws.addEventListener('open', () => {
-      const interval = setInterval(() => {
+      if(helloIntervalRef.current !== null){
+        clearInterval(helloIntervalRef.current);
+      }
+      helloIntervalRef.current = setInterval(() => {
         try {
           ws.send('HELLO ' + peerId);
-          clearInterval(interval);
+          if(helloIntervalRef.current !== null){
+            clearInterval(helloIntervalRef.current);
+            helloIntervalRef.current = null;
+          }
           setStatus('Registering with server (sent HELLO) for peer id: ' + peerId);
         } catch (error) {
           console.debug(error);
@@ -201,7 +215,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     ws.addEventListener('error', onServerError);
     ws.addEventListener('message', onServerMessage);
     ws.addEventListener('close', onServerClose);
-    setConnectionAttempts(connectionAttempts + 1);
+    connectionAttemptsRef.current += 1;
   }
 
   function onRemoteTrack(event: RTCTrackEvent) {
@@ -214,7 +228,7 @@ const WebRTCPlayer: React.FC<Props> = ({
 
   function createCall(msg: WebRTCMessage) {
     // Reset connection attempts because we connected successfully
-    setConnectionAttempts(0);
+    connectionAttemptsRef.current = 0;
     console.debug('Creating RTCPeerConnection');
 
     if (!msg.sdp) {
@@ -245,24 +259,26 @@ const WebRTCPlayer: React.FC<Props> = ({
     setStatus('RTCPeerConnection created, waiting for SDP');
   }
 
-  const closeWebSocket = async () => {
+  const closeWebSocket = () => {
     console.debug('closeWebSocket');
-    await closePeerConnection();
+    closePeerConnection();
     if(webSocket.current){
-      await webSocket.current.close();
+      webSocket.current.close();
       webSocket.current = null;
     }
   };
 
-  const closePeerConnection = async() => {
+  const closePeerConnection = () => {
     console.debug('closePeerConnection');
     if (peerConnection.current) {
-      await peerConnection.current.close();
+      peerConnection.current.close();
       peerConnection.current = null;
     }
   };
 
   useEffect(() => {
+    mountedRef.current = true;
+
     if (enabled === true) {
       connectToPeer();
     } else {
@@ -272,6 +288,17 @@ const WebRTCPlayer: React.FC<Props> = ({
     }
     return ()=>{
       console.debug('cleanup');
+      mountedRef.current = false;
+
+      if(reconnectTimeoutRef.current !== null){
+        clearTimeout(reconnectTimeoutRef.current);
+        reconnectTimeoutRef.current = null;
+      }
+      if(helloIntervalRef.current !== null){
+        clearInterval(helloIntervalRef.current);
+        helloIntervalRef.current = null;
+      }
+
       closeWebSocket();
     };
   }, [enabled]);// eslint-disable-line react-hooks/exhaustive-deps

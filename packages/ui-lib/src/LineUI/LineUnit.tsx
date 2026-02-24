@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { IDragLineUISharedOptions } from '.';
 import Icon from '../Icons/Icon';
@@ -151,25 +151,45 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
 
 
   /** --- Mouse Events Section --- */
-  const handleMouseDown = (e: any) => {
-    lineMoveStartCallback({ x: e.pageX, y: e.pageY });
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-    e.preventDefault();
-  };
+  const mouseMoveRef = useRef<((e: any) => void) | null>(null);
+  const mouseUpRef = useRef<((e: any) => void) | null>(null);
 
-  const handleMouseUp = (e: any) => {
-    window.removeEventListener("mousemove", handleMouseMove);
-    window.removeEventListener("mouseup", handleMouseUp);
-    lineMoveCallback({ x: e.pageX, y: e.pageY });
-    moveEndCB();
-    e.preventDefault();
-  };
+  const cleanupMouseListeners = useCallback(() => {
+    if(mouseMoveRef.current){
+      window.removeEventListener("mousemove", mouseMoveRef.current);
+      mouseMoveRef.current = null;
+    }
+    if(mouseUpRef.current){
+      window.removeEventListener("mouseup", mouseUpRef.current);
+      mouseUpRef.current = null;
+    }
+  }, []);
 
   const handleMouseMove = (e: any) => {
     lineMoveCallback({ x: e.pageX, y: e.pageY });
     e.preventDefault();
   };
+
+  const handleMouseUp = (e: any) => {
+    cleanupMouseListeners();
+    lineMoveCallback({ x: e.pageX, y: e.pageY });
+    moveEndCB();
+    e.preventDefault();
+  };
+
+  const handleMouseDown = (e: any) => {
+    cleanupMouseListeners();
+    lineMoveStartCallback({ x: e.pageX, y: e.pageY });
+    mouseMoveRef.current = handleMouseMove;
+    mouseUpRef.current = handleMouseUp;
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    return cleanupMouseListeners;
+  }, [cleanupMouseListeners]);
   const midpoint = {
     x: (x2 + x1) / 2,
     y: (y2 + y1) / 2
