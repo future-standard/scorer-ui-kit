@@ -159,18 +159,22 @@ const WebRTCPlayer: React.FC<Props> = ({
     }
   };
 
-  function onServerClose(event: any) {
+  function onServerClose(event: CloseEvent) {
     console.debug('serverClose');
-    if(webSocket.current){
-      setStatus('Disconnected from server');
-      closePeerConnection();
-      if (event !== null && event.code !== 1000 && enabled && mountedRef.current) {
-        reconnectTimeoutRef.current = setTimeout(connectToPeer, 3000);
-      }
+    // Ignore close events from stale WebSocket connections (e.g. StrictMode cleanup)
+    if(!webSocket.current || event.target !== webSocket.current){
+      return;
+    }
+    setStatus('Disconnected from server');
+    closePeerConnection();
+    if (event.code !== 1000 && enabled && mountedRef.current) {
+      reconnectTimeoutRef.current = setTimeout(connectToPeer, 3000);
     }
   }
 
-  function onServerError(event: any) {
+  function onServerError(event: Event) {
+    // Ignore errors from stale WebSocket connections
+    if(event.target !== webSocket.current){ return; }
     console.debug(event);
     setError('Unable to connect to server');
     closeWebSocket();
