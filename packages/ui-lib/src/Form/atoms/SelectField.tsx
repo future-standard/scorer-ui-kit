@@ -133,7 +133,7 @@ const SelectField: React.FC<ISelect> = ({
 
   const [activePlaceholder, setPlaceholderStatus] = useState<boolean>(!defaultValue ? true : false);
 
-  const handleOnChange = useCallback((e) => {
+  const handleOnChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
 
     const { value } = e.target;
 
@@ -163,8 +163,10 @@ const SelectField: React.FC<ISelect> = ({
         defaultValue={defaultValue ? defaultValue : ''}
         onChange={handleOnChange}
       >
-        {!defaultValue && <option value='' disabled hidden>{placeholder}</option>}
-        {children}
+        <>
+          {!defaultValue && <option value='' disabled hidden>{placeholder}</option>}
+          {children}
+        </>
       </StyledSelect>
       <OpenIcon {...{isCompact}}><Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10 } /></OpenIcon>
     </SelectWrapper>

@@ -170,6 +170,8 @@ const Input : React.FC<InputProps> = ({
   actionCallback,
   actionIcon,
   postfix,
+  children,
+  formAction,
   ...props
 }) => {
 
@@ -196,7 +198,14 @@ const Input : React.FC<InputProps> = ({
     <Container fieldState={fieldState || 'default'} {...{showFeedback}}>
 
       <InputContainer hasAction={isActionButton}>
-        <StyledInput fieldState={fieldState || 'default'} disabled={fieldState === 'disabled' || fieldState === 'processing'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
+        <StyledInput
+        fieldState={fieldState || 'default'}
+        disabled={fieldState === 'disabled' || fieldState === 'processing'}
+        type={type}
+        placeholder={placeholder}
+        defaultValue={defaultValue}
+        formAction={typeof formAction === 'string' ? formAction : undefined}
+        {...props} />
         {(isActionButton) ? (
           <ActionContainer>
             <InputActionButton onClick={actionCallback}>

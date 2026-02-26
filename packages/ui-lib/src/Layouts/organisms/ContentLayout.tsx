@@ -61,6 +61,7 @@ const Content = styled.div`
 interface IContentLayout {
   layout?: 'default' | 'fullscreen' | 'dashboard';
   HeaderContent?: IHeaderContent;
+  children?: React.ReactNode;
 }
 
 const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderContent = {}, children }) => {
@@ -76,25 +77,25 @@ const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderCo
       : null }
       
       {PageHeaderArea ? <HeaderArea>
-        {PageHeaderArea}
+        <>{PageHeaderArea}</>
       </HeaderArea> : null }
       
       {TabsElementArea ?
         <Tabs>
           <TabArea>
             <TabAreaInner>
-              {TabsElementArea}
+              <>{TabsElementArea}</>
             </TabAreaInner>
           </TabArea>
     
-          <Content>  
-            {children}
+          <Content>
+            <>{children}</>
           </Content>
-        </Tabs> 
-      : 
+        </Tabs>
+      :
         <Content>
-          {children}
-        </Content> 
+          <>{children}</>
+        </Content>
       }
 
     </Container>

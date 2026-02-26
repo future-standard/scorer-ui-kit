@@ -128,6 +128,8 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
   onClickCallback,
   closeCallback,
   hasOnSelectLoading,
+  children,
+  formAction,
   ...props
 }) => {
 
@@ -161,7 +163,12 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
   }, [buttonRef]);
 
   return(
-    <StyledButton ref={buttonRef} {...{noBorderTop, size}} onClick={handleClick} {...props}>
+    <StyledButton
+      ref={buttonRef}
+      {...{ noBorderTop, size }}
+      onClick={handleClick}
+      formAction={typeof formAction === 'string' ? formAction : undefined}
+      {...props}>
       <LeftIconWrapper isAscendingIcon={icon === 'FilterAscending'} >
         {isLoading ? <Spinner custom={{size: iconSize}} styling={design} /> : <Icon icon={icon} />}
       </LeftIconWrapper>

@@ -50,7 +50,7 @@ const FilterDropdownContainer : React.FC<Props> = ({children,...props}) => {
   return (
     <Container {...props}>
       <Inner>
-        {children}
+        <>{children}</>
       </Inner>
     </Container>
   );

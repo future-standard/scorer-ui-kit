@@ -7,9 +7,6 @@ const Container = styled.div``;
 const HiddenInput = styled.input`
   display: none;
 `;
-const StyledButton = styled(Button)`
-  text-align: center;
-`;
 
 interface OwnProps {
   text: string
@@ -19,7 +16,7 @@ interface OwnProps {
 }
 
 type IFileInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
-const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize, inputCallback, ...props}) => {
+const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize, inputCallback, children, formAction, ...props}) => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -46,12 +43,14 @@ const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize,
         type='file'
         onChange={handleFile}
       />
-      <StyledButton
+      <Button
+        style={{textAlign: 'center'}}
         onClick={forwardClick}
         design={buttonDesign}
         size={buttonSize}
+        formAction={typeof formAction === 'string' ? formAction : undefined}
       >{text}
-      </StyledButton>
+      </Button>
     </Container>
   );
 };

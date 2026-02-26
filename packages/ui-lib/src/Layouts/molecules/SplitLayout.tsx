@@ -186,8 +186,8 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
   const [sideAreaStartBasis, setSideAreaStartBasis] = useState<number>(sideDefaultSize);
   const [lastOpenSize, setLastOpenSize] = useState<number>(sideDefaultSize);
 
-  const ContainerRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const AreaB = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const ContainerRef = useRef<HTMLDivElement>(null);
+  const AreaB = useRef<HTMLDivElement>(null);
 
   // For persisting across refreshes and view changes.
   const [savedSize, setSavedSize] = useLocalStorage<number|null>(`${referenceKey}_size`, null);
@@ -276,7 +276,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
     setSideAreaState('open');
     let openBasis : number;
 
-    if(sideAreaBasis > closedBasis){
+    if(sideAreaBasis > closedBasis && AreaB.current){
       openBasis = layout === 'horizontal' ? AreaB.current.clientWidth : AreaB.current.clientHeight;
     } else {
       openBasis = lastOpenSize;
@@ -342,7 +342,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
       // Behaviour - Resizing
       if(layout === 'horizontal'){
         // Handle Horizontal Resizing
-        const maxClamp = ContainerRef.current.clientWidth - dividerSize - (mainMinSize || 0);
+        const maxClamp = (ContainerRef.current?.clientWidth ?? 0) - dividerSize - (mainMinSize || 0);
         if(!reverse){
           newBasis = clampInt(sideAreaStartBasis + (initialMousePos.x - clientX), null, maxClamp);
         } else {
@@ -350,7 +350,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
         }
       } else {
         // Handle Vertical Resizing
-        const maxClamp = ContainerRef.current.clientHeight - dividerSize - (mainMinSize || 0);
+        const maxClamp = (ContainerRef.current?.clientHeight ?? 0) - dividerSize - (mainMinSize || 0);
         if(!reverse){
           newBasis = clampInt(sideAreaStartBasis + (initialMousePos.y - clientY), null, maxClamp);
         } else {
@@ -466,7 +466,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
     <Container ref={ContainerRef} onPointerMove={handleDragPointerMove} onPointerUp={handleDragPointerUp} $initialised={initialised ? 'true' : 'false'} $layout={layout} $reverse={reverse ? 'true' : 'false'}>
 
       <MainArea $layout={layout} $minDimension={mainMinSize}>
-        {mainArea.content}
+        <>{mainArea.content}</>
       </MainArea>
 
       <DragContainer onPointerDown={handleDragPointerDown} onDoubleClick={restoreDefault} $size={dividerSize} $fauxHover={resizing ? 'true' : 'false'}>
@@ -475,7 +475,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
 
       <SideArea ref={AreaB} style={{ flexBasis: `${sideAreaBasis}px` }} $defaultSize={ sideDefaultSize } $minDimension={sideMinSize} $maxDimension={sideMaxSize} $layout={layout} $collapseState={sideAreaState}>
         <SideAreaInner>
-          {sideArea.content}
+          <>{sideArea.content}</>
         </SideAreaInner>
       </SideArea>
 

@@ -30,7 +30,7 @@ interface IProps {
 
 const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, hasStatus, hasThumbnail, hasTypeIcon, rowData, isLastRow, columnConfig, closeText }) => {
 
-  const wrappedSelectCallback = useCallback((checked) => {
+  const wrappedSelectCallback = useCallback((checked: boolean) => {
     if(selectCallback){ selectCallback(checked, rowData.id); }
   }, [rowData.id, selectCallback]);
 

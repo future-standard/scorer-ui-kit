@@ -20,7 +20,7 @@ const CopyToClipboard = styled.button`
   outline: none;
 
   ${({theme}) => theme && css`
-    transition: ${theme.animation.speed.normal} ${theme.animation.easing.easeOut};
+    transition: ${theme.animation.speed.normal} ${theme.animation.easing.primary.out};
   `}
 
   svg {
@@ -78,7 +78,7 @@ const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCell
 
 const UnitText = styled.span`
   ${({theme}) => css`
-    ${theme.typography.table.columnData['unit']};
+    ${theme.typography.table.columnData.unit};
   `}
 `;
 
@@ -103,6 +103,7 @@ interface IProps {
   unit?: string
   status?: string
   hasCopyButton?: boolean
+  children?: React.ReactNode
 }
 
 const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false, status, unit = '', cellStyle = 'normalImportance', alignment = 'left', hideDivider, isLastRow, hasCopyButton, href, children }) => {
@@ -115,12 +116,15 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false
 
   return (
     <CellContainer {...{cellStyle, alignment, hideDivider, hasCopyButton}}>
-      {showStatus ? <StatusBlip {...{status}} /> : null}
-      {href ? <a href={href}>{children}</a> : children}
-      {showUnit ? <UnitText>{unit}</UnitText> : null}
-      {hasCopyButton ? <CopyToClipboard onClick={() => typeof children === 'string' && copyToClipboard(children)}><Icon icon='Copy' size={16} /></CopyToClipboard> : null}
+      <>
+        {showStatus ? <StatusBlip {...{status}} /> : null}
+        {href ? <a href={href}>{children}</a> : children}
+        {showUnit ? <UnitText>{unit}</UnitText> : null}
+        {hasCopyButton ? <CopyToClipboard onClick={() => typeof children === 'string' && copyToClipboard(children)}><Icon icon='Copy' size={16} /></CopyToClipboard> : null}
+      </>
     </CellContainer>
   );
 };
 
 export default TypeTableCell;
+

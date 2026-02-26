@@ -101,6 +101,8 @@ const SmallInput : React.FC<Props> = ({
   fieldState = 'default',
   required = false,
   className,
+  children,
+  formAction,
   ...props
 }) => {
 
@@ -110,7 +112,13 @@ const SmallInput : React.FC<Props> = ({
     <Container className={className} fieldState={fieldState || 'default'}>
       <Label labelText={label} htmlFor={name || ''} {...{required}}>
         <InputContainer fieldState={fieldState || 'default'}>
-          <StyledInput fieldState={fieldState || 'default'} type={type} placeholder={placeholder} defaultValue={defaultValue} {...props} />
+          <StyledInput
+            fieldState={fieldState || 'default'}
+            type={type}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            formAction={typeof formAction === 'string' ? formAction : undefined}
+            {...props} />
           {unit ? <UnitKey>{unit}</UnitKey> : null}
         </InputContainer>
       </Label>

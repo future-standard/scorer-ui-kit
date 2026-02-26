@@ -43,7 +43,7 @@ const Tab: React.FC<Props> = ({ children, tabFor, onClick, ...props }) => {
   return (
     <TabComponent {...props} onClick={onChangeTab}>
       <TabLabel active={selected === tabFor}>
-        {children}
+        <>{children}</>
       </TabLabel>
     </TabComponent>
   );

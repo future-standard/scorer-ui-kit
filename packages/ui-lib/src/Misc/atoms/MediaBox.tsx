@@ -2,7 +2,7 @@ import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 import { IMediaType } from '../../index';
-import { ReactComponent as NoImage } from '../../svg/NoImageBig.svg';
+import NoImage from '../../svg/NoImageBig';
 
 export const MediaBoxWrapper = styled.div<{minWidth?: string, minHeight?: string}>`
   position: relative;
@@ -35,7 +35,7 @@ const Video = styled.video<{ isLoaded?: boolean, hasModalLimits?: boolean }>`
   outline: none;
 
   ${({ theme, isLoaded, hasModalLimits }) => css`
-    transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
+    transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.out};
     opacity: ${isLoaded ? `1` : `0`};
 
     ${hasModalLimits && css`
@@ -49,7 +49,7 @@ const StyledImage = styled.img<{ isLoaded?: boolean, hasModalLimits?: boolean }>
   ${mediaStyle};
 
   ${({ theme, isLoaded, hasModalLimits }) => css`
-    transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeOut};
+    transition: opacity ${theme.animation.speed.slow} ${theme.animation.easing.primary.out};
     display: ${isLoaded ? `block` : `none`};
     opacity: ${isLoaded ? `1` : `0`};
 
@@ -97,12 +97,13 @@ const MediaBox: React.FC<IMediaModal> = ({
     autoPlay = true,
     controls = false,
     muted = true,
+    children,
     ...videoValues
   } = videoOptions;
 
-  const onError = useCallback((e)=>{
+  const onError = useCallback((e: React.SyntheticEvent<HTMLVideoElement | HTMLImageElement, Event>) => {
     if(!retryLoading || retryCount >= retryLimit) {
-      onErrorCallback(e);
+      onErrorCallback(e.nativeEvent);
       setLoaded(true);
       setLoadFailed(true);
     } else {
@@ -130,7 +131,9 @@ const MediaBox: React.FC<IMediaModal> = ({
             isLoaded={loaded && !loadFailed}
             preload='metadata'
             onCanPlayThrough={handleLoad}
-          />
+          >
+            <>{children}</>
+          </Video>
         : <StyledImage
             {...{ alt, onError, hasModalLimits }}
             src={loadFailed ? '' : src}

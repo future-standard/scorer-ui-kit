@@ -178,7 +178,7 @@ const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
           </FilterButton>
         </ButtonWrapper>
         <ContentBox {...{ openState, disabled, minWidth }}>
-          {children}
+          <>{children}</>
         </ContentBox>
       </Container>
     );

@@ -11,7 +11,8 @@ interface OwnProps {
   maxWidth?: string,
   paddingOverride?: string,
   legacyLayout?: boolean,
-  onMenuToggle?: (isMenuOpen: boolean) =>  void
+  onMenuToggle?: (isMenuOpen: boolean) =>  void,
+  children?: React.ReactNode
 }
 
 type INavigation = OwnProps & IMenu & ITopBar;
@@ -63,7 +64,7 @@ const GlobalUI: React.FC<INavigation> = ({
             {...{...props}}
           />
           <ContentArea {...{maxWidth, paddingOverride, legacyLayout}}>
-            {children}
+            <>{children}</>
           </ContentArea>
         </MainContainer>
       </Layout>
@@ -83,7 +84,7 @@ const GlobalUI: React.FC<INavigation> = ({
           }
         />
         <ContentArea>
-          {children}
+          <>{children}</>
         </ContentArea>
       </MobileLayout>
     )

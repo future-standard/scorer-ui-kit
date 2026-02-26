@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import PageTitle from '../atoms/PageTitle';
 import IntroductionText from '../atoms/IntroductionText';
@@ -58,8 +58,8 @@ interface IProps {
   hideAreaInDocTitle?: boolean
   tagList?: IHeaderTag[]
   areaTitleBottom?: boolean
-  rightContent?: React.ReactNode | React.FC | ReactElement;
-  bottomLeftContent?: React.ReactNode | React.FC | ReactElement;
+  rightContent?: React.ReactNode;
+  bottomLeftContent?: React.ReactNode;
   onAreaClick?: () => void
 }
 
@@ -102,13 +102,13 @@ const PageHeader: React.FC<IProps> = ({
         }
         {
           <BottomLeft>
-            {bottomLeftContent}
+            <>{bottomLeftContent}</>
           </BottomLeft>
         }
       </LeftPanel>
       {rightContent ?
         <RightPanel iconLeftPanel={!!icon}>
-          {rightContent}
+          <>{rightContent}</>
         </RightPanel>
         : null
       }

@@ -27,7 +27,7 @@ const ContextActionBaseCSS = css`
 const ContextIcon = styled.div`
   ${({ theme }) => css`
     background-color: var(--grey-2);
-    transition: background-color ${theme.animation.speed.fast} ${theme.animation.easing.primary.easeInOut};
+    transition: background-color ${theme.animation.speed.fast} ${theme.animation.easing.primary.inOut};
   `};
   width: 30px;
   height: 30px;

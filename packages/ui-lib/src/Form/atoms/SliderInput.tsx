@@ -178,7 +178,7 @@ const getMarkAlignment = (value: number, min: number, max: number) : IMarkAlignm
 
 const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string, allMarkCentered?: boolean) => {
 
-  const listOptions : JSX.Element[] = [];
+  const listOptions : React.JSX.Element[] = [];
   const marksElements = markList.map(({value, label}, index) => {
     // * first and last should be 0% and 100%
     const left = index === (markList.length - 1) ? 100 : valueToPercent(value, min, max);
@@ -248,6 +248,8 @@ const SliderInput : React.FC<ISlider> = ({
   inputCallback = () => {},
   onChangeCallback = () => {},
   allMarkCentered = false,
+  children,
+  formAction,
   ...props
 }) => {
 

@@ -1,5 +1,30 @@
-export const custom = {
-  "lines":{
+type LineStyle = {
+  label: { fill: string };
+  contrastLine: { stroke: string };
+  highlightLine: { stroke: string };
+  highlightLineBorder: { stroke: string };
+  grabHandle: { fill: string; stroke: string };
+  point: { fill: string };
+  grabHandleContrast: { stroke: string };
+  grabHandleText: { fill: string; stroke?: string };
+  handleBase: { fill: string };
+  handleRingLayer: { stroke: string };
+  handleReactiveFill: { fill: string };
+  handleReactiveRing: { stroke: string };
+  handleContrastLayer: { stroke: string };
+  stopStart: { stopColor: string };
+  stopEnd: { stopColor: string };
+};
+
+type LinesTheme = {
+  primary: LineStyle;
+  secondary: LineStyle;
+  danger: LineStyle;
+  [key: string]: LineStyle; // Allow dynamic extension
+};
+
+export const custom: { lines: LinesTheme } = {
+  "lines": {
     "primary": {
       label: {
           fill: "#fff"//"hsla(205deg, 80%, 25%, 100%)"

@@ -35,8 +35,8 @@ export interface IUtilityHeader {
 
 export interface IHeaderContent {
   UtilityHeaderOptions?: IUtilityHeader;
-  PageHeaderArea?: React.ReactNode | React.FC;
-  TabsElementArea?: React.ReactNode | React.FC;
+  PageHeaderArea?: React.ReactNode;
+  TabsElementArea?: React.ReactNode;
 }
 
 export interface IMainArea {

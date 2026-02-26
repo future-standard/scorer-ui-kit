@@ -66,8 +66,10 @@ const Label: React.FC<Props> = ({
 
   return (
     <StyledLabel {...{ htmlFor, direction }} {...props}>
-      <LabelText {...{ required }}>{labelText}</LabelText>
-      {children}
+      <>
+        <LabelText {...{ required }}>{labelText}</LabelText>
+        {children}
+      </>
     </StyledLabel>
   );
 };

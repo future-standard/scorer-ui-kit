@@ -16,10 +16,10 @@ interface OwnProps {
 
 type Props = OwnProps & FormHTMLAttributes<HTMLFormElement>
 
-const Form : React.FC<Props> = ({ children, spacing = '45px;' ,...props }) => {
+const Form : React.FC<Props> = ({ children, spacing = '45px;', action, ...props }) => {
   return (
-    <FormContainer spacing={spacing} {...props}>
-      {children}
+    <FormContainer spacing={spacing} action={typeof action === 'string' ? action : undefined} {...props}>
+      <>{children}</>
     </FormContainer>
   );
 };

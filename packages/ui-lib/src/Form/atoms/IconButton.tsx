@@ -29,12 +29,15 @@ const IconButton : React.FC<IconButtonData> = ({
   weight = 'regular',
   color = 'dimmed',
   hoverColor = 'mono',
+  children,
+  formAction,
   ...props }) => {
   return(
     <StyledButton
       type='button'
       color={color}
       hoverColor={hoverColor}
+      formAction={typeof formAction === 'string' ? formAction : undefined}
       {...props}
     >
       <Icon icon={icon} size={size} weight={weight} />

@@ -166,11 +166,11 @@ const LineUIVideo : React.FC<LineUIProps> = ({
     setBoundaries(bounds);
   }, [videoSize, loaded, boundaryOffset]);
 
-  const onLoadedMetadata = useCallback(({target}) =>{
+  const onLoadedMetadata = useCallback(({target}: React.SyntheticEvent<HTMLVideoElement>) =>{
     if(target){
       setLoaded(true);
       initScaleAndBounds();
-      const {videoHeight=1, videoWidth=1} = target;
+      const {videoHeight=1, videoWidth=1} = target as HTMLVideoElement;
       onLoaded({height: videoHeight, width: videoWidth});
     }
   },[initScaleAndBounds, onLoaded]);

@@ -353,17 +353,15 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
     setSearchText('');
   }, [tempSelected, optionType, hasApply, list, maxDisplayedItems, isSortAscending, onSelect]);
 
-  const handleInputFilter = useCallback((e) => {
-    const { value } = e.target;
+  const handleInputFilter = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value: string = e.target.value.replace(/<[^>]*>/g, '').trim();
     setSearchText(value);
 
     if (value === '') {
       setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, isSortAscending));
       return;
     }
-
-    const newValue = typeof value === 'number' ? value.toString(10) : value;
-    const newList = getFilteredList(list, newValue);
+    const newList = getFilteredList(list, value);
 
     // sending null so the filtered list doesn't force the selected values to appear.
     setVisibleList(selectedOrderList(newList, maxDisplayedItems, null, isSortAscending));

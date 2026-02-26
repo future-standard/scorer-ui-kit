@@ -30,6 +30,7 @@ const WebRTCPlayer: React.FC<Props> = ({
   // Video element defaults
   autoPlay = true,
   muted = true,
+  children,
   ...props
   }) => {
 
@@ -276,7 +277,7 @@ const WebRTCPlayer: React.FC<Props> = ({
   }, [enabled]);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Video {...props} autoPlay={autoPlay} muted={muted} ref={videoRef} />
+    <Video {...props} autoPlay={autoPlay} muted={muted} ref={videoRef}><>{children}</></Video>
   );
 };
 

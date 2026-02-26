@@ -2,18 +2,23 @@
 
 module.exports = {
   framework: {
-    name: "@storybook/react-webpack5",
+    name: "@storybook/react-vite",
+    options: {},
   },
   stories: [
     '../src/stories/Global/*.stories.tsx',
     '../src/stories/**/*.stories.tsx'
   ],
   addons: [
-    '@storybook/preset-create-react-app',
     '@storybook/addon-actions',
     '@storybook/addon-links',
     '@storybook/addon-knobs',
     'storybook-dark-mode',
-    'storybook-addon-jsx/register',
-  ]
+  ],
+  viteFinal: async (config) => {
+    // Ensure single React instance
+    config.resolve = config.resolve || {};
+    config.resolve.dedupe = ['react', 'react-dom'];
+    return config;
+  },
 }
