@@ -19,9 +19,7 @@ const CopyToClipboard = styled.button`
   border: none;
   outline: none;
 
-  ${({theme}) => theme && css`
-    transition: ${theme.animation.speed.normal} ${theme.animation.easing.primary.out};
-  `}
+  transition: var(--speed-normal) var(--easing-primary-out);
 
   svg {
     display: block;

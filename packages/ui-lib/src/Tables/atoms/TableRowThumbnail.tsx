@@ -27,19 +27,17 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
     `}
   }
 
-  ${({ theme }) => theme && css`
-    transition:
-      opacity ${theme.animation.speed.normal} ${theme.animation.easing.primary.out},
-      transform ${theme.animation.speed.fast} ${theme.animation.easing.primary.out};
-  `}
+  transition:
+    opacity var(--speed-normal) var(--easing-primary-out),
+    transform var(--speed-fast) var(--easing-primary-out);
 
   &:hover {
       cursor: pointer;
 
-    ${({ theme, hoverZoom }) => theme && hoverZoom && css`
+    ${({ hoverZoom }) => hoverZoom && css`
       transform: scale(1.5);
       opacity: 1;
-      transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.out};
+      transition: transform var(--speed-normal) var(--easing-primary-out);
     `}
   }
 
