@@ -37,7 +37,6 @@ const IconButton : React.FC<IconButtonData> = ({
       type='button'
       color={color}
       hoverColor={hoverColor}
-      formAction={typeof formAction === 'string' ? formAction : undefined}
       {...props}
     >
       <Icon icon={icon} size={size} weight={weight} />

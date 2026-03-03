@@ -32,7 +32,6 @@ const PasswordField : React.FC<Props> = ({ name, label, fieldState, feedbackMess
         type={showValue ? 'text' : 'password'}
         actionCallback={actionCallback}
         actionIcon={actionIcon}
-        formAction={typeof formAction === 'string' ? formAction : undefined}
         {...{ name, fieldState, feedbackMessage, required, ...props }}
       />
     </Label>)

@@ -48,7 +48,6 @@ const InputFileButton : React.FC<IFileInput> = ({text, buttonDesign, buttonSize,
         onClick={forwardClick}
         design={buttonDesign}
         size={buttonSize}
-        formAction={typeof formAction === 'string' ? formAction : undefined}
       >{text}
       </Button>
     </Container>

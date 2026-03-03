@@ -117,7 +117,6 @@ const SmallInput : React.FC<Props> = ({
             type={type}
             placeholder={placeholder}
             defaultValue={defaultValue}
-            formAction={typeof formAction === 'string' ? formAction : undefined}
             {...props} />
           {unit ? <UnitKey>{unit}</UnitKey> : null}
         </InputContainer>

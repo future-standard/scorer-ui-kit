@@ -204,7 +204,6 @@ const Input : React.FC<InputProps> = ({
         type={type}
         placeholder={placeholder}
         defaultValue={defaultValue}
-        formAction={typeof formAction === 'string' ? formAction : undefined}
         {...props} />
         {(isActionButton) ? (
           <ActionContainer>

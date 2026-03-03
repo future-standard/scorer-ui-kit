@@ -167,7 +167,6 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
       ref={buttonRef}
       {...{ noBorderTop, size }}
       onClick={handleClick}
-      formAction={typeof formAction === 'string' ? formAction : undefined}
       {...props}>
       <LeftIconWrapper isAscendingIcon={icon === 'FilterAscending'} >
         {isLoading ? <Spinner custom={{size: iconSize}} styling={design} /> : <Icon icon={icon} />}

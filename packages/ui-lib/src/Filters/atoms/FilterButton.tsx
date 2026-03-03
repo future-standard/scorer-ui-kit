@@ -162,7 +162,7 @@ const FilterButton: React.FC<IFilterButton> = ({
 }) => {
 
   return (
-    <StyledButton type='button' formAction={typeof formAction === 'string' ? formAction : undefined} {...props} {...{ isOpen, hasFlipArrow, design }}>
+    <StyledButton type='button' {...props} {...{ isOpen, hasFlipArrow, design }}>
       <InnerContainer>
         <LeftIconWrapper {...{ isSortAscending }}>
           <Icon

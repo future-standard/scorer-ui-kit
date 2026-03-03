@@ -65,7 +65,6 @@ const CloseButton: React.FC<IClose> = ({
   return (
     <StyledButton
       onClick={() => setSelected(closeId)}
-      formAction={typeof formAction === 'string' ? formAction : undefined}
       {...props}
     >
       <IconContainer>
