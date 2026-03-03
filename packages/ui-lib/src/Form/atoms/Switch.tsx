@@ -101,38 +101,38 @@ const IconWrapper = styled.div`
 `;
 const SpinnerWrapper = styled.div``;
 
-const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean, useIntent: boolean, themeState: string, position: SwitchPosition, checked?: boolean}>`
+const Container = styled(StyledLabel)<{$activeTheming: string, $loading: boolean, $useIntent: boolean, $themeState: string, $position: SwitchPosition, $checked?: boolean}>`
   user-select: none;
   display: inline-flex;
   gap: 8px;
   align-items: center;
 
   ${SwitchOuter}{
-    ${({activeTheming, themeState}) => css`
-      border-color: var(--switch-${themeState}-${activeTheming}-border);
-      background-color: var(--switch-${themeState}-${activeTheming}-background);
+    ${({$activeTheming, $themeState}) => css`
+      border-color: var(--switch-${$themeState}-${$activeTheming}-border);
+      background-color: var(--switch-${$themeState}-${$activeTheming}-background);
     `};
 
-    ${({ activeTheming }) => activeTheming === 'locked' && css`
+    ${({ $activeTheming }) => $activeTheming === 'locked' && css`
       background-color: var(--switch-special-locked-background);
       border-color: var(--switch-special-locked-border);
     `};
 
-    ${({ activeTheming }) => activeTheming === 'failure' && css`
+    ${({ $activeTheming }) => $activeTheming === 'failure' && css`
       background-color: var(--switch-special-failure-background);
       border-color: var(--switch-special-failure-border);
     `};
 
-    ${({activeTheming, $loading}) => $loading && css`
-      background-color: var(--switch-default-${activeTheming}-background);
-      border-color: var(--switch-default-${activeTheming}-border);
+    ${({$activeTheming, $loading}) => $loading && css`
+      background-color: var(--switch-default-${$activeTheming}-background);
+      border-color: var(--switch-default-${$activeTheming}-border);
     `};
 
   }
 
   ${SwitchInner}{
-    ${({activeTheming, themeState}) => css`
-      background-color: var(--switch-${themeState}-${activeTheming}-inner);
+    ${({$activeTheming, $themeState}) => css`
+      background-color: var(--switch-${$themeState}-${$activeTheming}-inner);
     `};
 
     transition:
@@ -140,7 +140,7 @@ const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean,
       border var(--speed-fast) var(--easing-primary-in-out),
       width var(--speed-fast) var(--easing-primary-in-out);
 
-    ${({ activeTheming }) => activeTheming === 'locked' && css`
+    ${({ $activeTheming }) => $activeTheming === 'locked' && css`
       width: calc(100% - var(--switch-border-width));
       background-color: var(--switch-special-locked-inner);
       box-shadow: none;
@@ -150,12 +150,12 @@ const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean,
       }
     `}
 
-    ${({ activeTheming }) => activeTheming === 'failure' && css`
+    ${({ $activeTheming }) => $activeTheming === 'failure' && css`
       background-color: var(--switch-special-failure-inner);
     `}
 
-    ${({activeTheming, $loading}) => $loading && css`
-      border-color: var(--switch-default-${activeTheming}-inner);
+    ${({$activeTheming, $loading}) => $loading && css`
+      border-color: var(--switch-default-${$activeTheming}-inner);
       box-shadow: none;
     `};
 
@@ -163,9 +163,9 @@ const Container = styled(StyledLabel)<{activeTheming: string, $loading: boolean,
 
   &:hover {
     ${SwitchInner}{
-      left: ${({useIntent, position}) =>
-        useIntent && position === SwitchPosition.Off && 'calc(var(--position-off) + var(--switch-intent-offset))' ||
-        useIntent && position === SwitchPosition.On && 'calc(var(--position-on) - var(--switch-intent-offset))'
+      left: ${({$useIntent, $position}) =>
+        $useIntent && $position === SwitchPosition.Off && 'calc(var(--position-off) + var(--switch-intent-offset))' ||
+        $useIntent && $position === SwitchPosition.On && 'calc(var(--position-on) - var(--switch-intent-offset))'
       };
     }
   }
@@ -304,7 +304,7 @@ const Switch : React.FC<IProps> = ({
 
 
   return (
-    <Container onChange={customOnChange} onMouseLeave={ () => setJustUpdated(false) } activeTheming={activeTheming} $loading={state === 'loading'} useIntent={ !justUpdated && (state === 'default' || state === 'failure')} themeState={switchState} position={position} checked={inputRef.current?.checked}>
+    <Container onChange={customOnChange} onMouseLeave={ () => setJustUpdated(false) } $activeTheming={activeTheming} $loading={state === 'loading'} $useIntent={ !justUpdated && (state === 'default' || state === 'failure')} $themeState={switchState} $position={position} $checked={inputRef.current?.checked}>
       <SwitchOuter>
         <SwitchInner position={getPositionKey(position)} ref={innerRef}>
           {state === 'failure' ? <IconWrapper><Icon icon='Exclamation' color='danger' size={18} weight='regular' /></IconWrapper> : null}

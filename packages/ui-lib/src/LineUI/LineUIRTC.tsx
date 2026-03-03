@@ -100,7 +100,7 @@ const LineUI : React.FC<LineUIProps> = ({
 }) => {
 
   const frame =  useRef<SVGSVGElement>(null);
-  const videoRef = useRef<HTMLVideoElement>();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
   const {state} = useContext(LineSetContext);
@@ -161,12 +161,13 @@ const LineUI : React.FC<LineUIProps> = ({
     setBoundaries(bounds);
   }, [videoSize, loaded, boundaryOffset]);
 
-  const onLoadedMetadata = useCallback(({target}) =>{
+  const onLoadedMetadata = useCallback(({target}: React.SyntheticEvent<HTMLVideoElement>) =>{
     if(target){
       setLoaded(true);
-      videoRef.current = target;
+      const videoTarget = target as HTMLVideoElement;
+      videoRef.current = videoTarget;
       initScaleAndBounds();
-      const {videoHeight=1, videoWidth=1} = target;
+      const {videoHeight=1, videoWidth=1} = videoTarget;
       onLoaded({height: videoHeight, width: videoWidth});
     }
   },[initScaleAndBounds, onLoaded]);

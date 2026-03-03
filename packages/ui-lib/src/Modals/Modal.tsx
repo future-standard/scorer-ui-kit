@@ -23,8 +23,6 @@ const Container = styled.div`
   background-color: var(--grey-a3);
 `;
 
-const CloseIcon = styled(Icon)``;
-
 const CloseButton = styled.button<{ selected?: boolean }>`
   ${resetButtonStyles};
   display: flex;
@@ -118,14 +116,16 @@ const Modal: React.FC<IModalProps> = ({
     ? ReactDom.createPortal(
       <Container>
         <LightBox ref={lightBoxRef} width={width} padding={padding} isCloseEnable={isCloseEnable}>
-          {isCloseEnable
-            ?
-              <CloseButton onClick={() => dismiss()}>
-                {closeText ? closeText : 'CLOSE'}
-                <CloseIcon icon='CloseCompact' size={15} color='grey-12' weight='regular' />
-              </CloseButton>
-            : null}
-          {customComponent}
+          <>
+            {isCloseEnable
+              ?
+                <CloseButton onClick={() => dismiss()}>
+                  {closeText ? closeText : 'CLOSE'}
+                  <Icon icon='CloseCompact' size={15} color='grey-12' weight='regular' />
+                </CloseButton>
+              : null}
+            {customComponent}
+          </>
         </LightBox>
       </Container>, document.body)
     : null

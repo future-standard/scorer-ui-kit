@@ -150,7 +150,7 @@ const TextArea : React.FC<Props> = ({
         placeholder={placeholder}
         disabled={fieldState === 'disabled' || fieldState === 'processing'}
         {...props}
-      >{children}
+      ><>{children}</>
       </StyledTextArea>
       {showFeedback && fieldState && (
         <FeedbackContainer>

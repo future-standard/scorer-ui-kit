@@ -22,7 +22,7 @@ const TabList: React.FC<Props> = ({ children, defaultTabId}) => {
 
   return (
     <TabListWrapper>
-      {children}
+      <>{children}</>
     </TabListWrapper>
   );
 };

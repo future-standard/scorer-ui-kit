@@ -20,7 +20,8 @@ export const PTZContext = createContext<IPTZContext>({state: {} as PTZState, dis
 
 interface Props {
   socketUrl?: string;
-  imageRefresh?: number
+  imageRefresh?: number;
+  children?: React.ReactNode;
 }
 
 const PTZProvider: React.FC<Props> = ({socketUrl ='ws://localhost/wsapp/', imageRefresh = 1000, children}) => {

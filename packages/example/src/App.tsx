@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   HashRouter as Router,
-  Switch,
+  Routes,
   Route
 } from 'react-router-dom';
 import { PTZProvider } from 'scorer-ui-kit';
@@ -27,27 +27,27 @@ const App: React.FC<{}> = () => {
   return (
 
     <Router>
-      <Switch>
-        <Route path={`/`} exact={true} component={LinksPage} />
-        <Route path={`/line`} exact={true} component={LinePage} />
-        <Route path={`/linevideo`} exact={true} component={LineVideoPage} />
-        <Route path={`/linertc`} exact={true} component={LineRTCPage} />
-        <Route path={`/login`} exact={true} component={LoginPage} />
-        <Route path={`/forms`} exact={true} component={FormPage} />
-        <Route path={`/table`} exact={true} component={TablePage} />
-        <Route path={`/customdrawer`} exact={true} component={CustomUserDrawerPage} />
-        <Route path={`/ptz`} exact={true}>
+      <Routes>
+        <Route path='/' element={<LinksPage />} />
+        <Route path='/line' element={<LinePage />} />
+        <Route path='/linevideo' element={<LineVideoPage />} />
+        <Route path='/linertc' element={<LineRTCPage />} />
+        <Route path='/login' element={<LoginPage onLogin={() =>{}} />} />
+        <Route path='/forms' element={<FormPage />} />
+        <Route path='/table' element={<TablePage />} />
+        <Route path='/customdrawer' element={<CustomUserDrawerPage />} />
+        <Route path='/ptz' element={
           <PTZProvider socketUrl='ws://localhost/wsapp/' imageRefresh={2000}>
             <PTZPage />
           </PTZProvider>
-        </Route>
-        <Route path={`/tabs`} exact={true} component={TabsPage} />
-        <Route path={`/customalert`} exact={true} component={CustomAlertsPage} />
-        <Route path='/globalUI' exact component={GlobalUIPage} />
-        <Route path='/layouts' exact component={Layouts} />
-        <Route path='/split-layouts' exact component={SplitLayouts} />
-        <Route path='/switch-test' exact component={SwitchWithAPI} />
-      </Switch>
+        } />
+        <Route path='/tabs' element={<TabsPage />} />
+        <Route path='/customalert' element={<CustomAlertsPage />} />
+        <Route path='/globalUI' element={<GlobalUIPage />} />
+        <Route path='/layouts' element={<Layouts />} />
+        <Route path='/split-layouts' element={<SplitLayouts />} />
+        <Route path='/switch-test' element={<SwitchWithAPI />} />
+      </Routes>
     </Router>
   )
 }

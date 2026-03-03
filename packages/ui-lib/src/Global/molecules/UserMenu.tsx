@@ -200,14 +200,14 @@ const UserMenu: React.FC<IUserMenu> = ({
   return (
     <Fragment>
       <DrawerTop>
-        {hasCurrentUser ?
-          <CurrentUser>
-            <DrawerHeader>{currentUserText}</DrawerHeader>
-            {loggedInUser}
-          </CurrentUser>
-          : null}
-
-        {hasUserDrawerMeta?
+        <>
+          {hasCurrentUser ?
+            <CurrentUser>
+              <DrawerHeader>{currentUserText}</DrawerHeader>
+              {loggedInUser}
+            </CurrentUser>
+            : null}
+          {hasUserDrawerMeta?
           <NavigationContainer>
             {userDrawerMeta?.map((item:IUserDrawerMeta, key:number) => {
             return (
@@ -245,7 +245,8 @@ const UserMenu: React.FC<IUserMenu> = ({
             </LinkMenu>
           </Logout>
           : null}
-      </DrawerTop>
+       </>
+     </DrawerTop>
 
       <DrawerBottom>
         {hasSwitchTheme && <DrawerBottomMenu icon={isLightMode ? 'LightMode' : 'DarkMode'} title={switchThemeText} subTitle={selectedThemeText} onClickCallback={onThemeToggle} />}

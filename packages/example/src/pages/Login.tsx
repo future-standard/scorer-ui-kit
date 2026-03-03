@@ -1,7 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
 import React, { useState, useCallback, ChangeEvent } from 'react';
 import { ButtonWithLoading, TextField, PasswordField, Form, AlertBar, AlertWrapper } from 'scorer-ui-kit';
-import GhostLogo from '../svg/ghost-logo.svg';
+import GhostLogo from '../svg/ghost-logo.svg?url';
 import {LoginScreen} from '../svg';
 import {Link} from 'react-router-dom';
 import ExamplesFilename from '../components/ExamplesFilename';

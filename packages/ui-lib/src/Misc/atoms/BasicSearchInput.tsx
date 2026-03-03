@@ -133,6 +133,8 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   hasCrossButton = false,
   onCrossClick = () => {},
   width,
+  children,
+  formAction,
   ...props
 }) => {
   return (

@@ -12,7 +12,7 @@ const FullWidthInner = styled.div`
   input {width: 100%;}
 `;
 
-const FullWidthContentBlock : React.FC = ({children}) => {
+const FullWidthContentBlock : React.FC<React.PropsWithChildren> = ({children}) => {
   const innerElement = useRef<HTMLDivElement>(null);
   const [ contentHeight, setContentHeight ] = useState<number>(0);
 
@@ -24,7 +24,7 @@ const FullWidthContentBlock : React.FC = ({children}) => {
 
   return <FullWidthContainer $contentHeight={contentHeight}>
     <FullWidthInner ref={innerElement}>
-      {children}
+      <>{children}</>
     </FullWidthInner>
   </FullWidthContainer>;
 };

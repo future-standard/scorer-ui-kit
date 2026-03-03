@@ -1,3 +1,3 @@
-export { ReactComponent as LogoMark } from './logo-mark.svg';
-export { ReactComponent as LogoText } from './logo-text.svg';
-export { ReactComponent as LoginScreen } from './login-screen.svg';
+export { default as LogoMark } from './logo-mark.svg';
+export { default as LogoText } from './logo-text.svg';
+export { default as LoginScreen } from './login-screen.svg';

@@ -135,7 +135,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
   /** Submenu sends -1 because context only is for the parent
     * The -1 value is important in the mobile version of this menu
   */
-  const setFocusedContextCb = useCallback(contextKey => {
+  const setFocusedContextCb = useCallback((contextKey: number) => {
     if(contextKey === -1) { return; }
 
     setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
@@ -143,7 +143,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
 
   return (
     <PushContainer isPinned={menuState.isMenuPinned}>
-      {ReactDom.createPortal(
+      <>{ReactDom.createPortal(
         <Container
           open={menuState.isMenuOpen}
           desktopSize={menuState.desktopSize}
@@ -198,7 +198,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
             </MenuFooter>
           </ContainerInner>
         </Container>,
-      document.body)}
+      document.body)}</>
     </PushContainer>
   );
 };

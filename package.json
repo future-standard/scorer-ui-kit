@@ -1,6 +1,6 @@
 {
   "name": "scorer-ui-kit",
-  "version": "2.10.4",
+  "version": "3.0.0-beta.1",
   "description": "This project is a ui library with an example project of use cases and storybook to showcase the components",
   "main": "index.js",
   "scripts": {
@@ -23,5 +23,11 @@
     "packages/storybook",
     "packages/example",
     "packages/ui-lib"
-  ]
+  ],
+  "overrides": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
 }

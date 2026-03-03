@@ -99,8 +99,8 @@ const Container = styled.div<{ready: boolean, minWidth: number}>`
 
 const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, linkText, onClick}) => {
   
-  const defaultTextRef = useRef() as React.MutableRefObject<HTMLSpanElement>;
-  const linkTextRef = useRef() as React.MutableRefObject<HTMLSpanElement>;
+  const defaultTextRef = useRef<HTMLSpanElement>(null);
+  const linkTextRef = useRef<HTMLSpanElement>(null);
 
   const [ready, setReady] = useState<boolean>(false);
   const [hover, setHover] = useState<boolean>(false);
@@ -108,14 +108,15 @@ const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, lin
 
   useEffect(() => {
     setReady(false);
-    setTimeout(() => {
-      const defaultWidth = defaultTextRef.current.getBoundingClientRect().width;
-      const linkWidth = linkTextRef.current?.getBoundingClientRect().width || 0;
+    const timeoutId = setTimeout(() => {
+      const defaultWidth = defaultTextRef.current?.getBoundingClientRect().width ?? 0;
+      const linkWidth = linkTextRef.current?.getBoundingClientRect().width ?? 0;
       const largestWidth = defaultWidth >= linkWidth ? defaultWidth : linkWidth;
       setMinWidth(Math.ceil(largestWidth));
       setReady(true);
     }, 100);
-  }, [defaultTextRef, linkTextRef, text, linkText, setMinWidth, setReady]);
+    return () => clearTimeout(timeoutId);
+  }, [text, linkText]);
 
   const defaultTextElement = useMemo(() => <DefaultText ref={defaultTextRef}>{text}</DefaultText>,[text]);
 
