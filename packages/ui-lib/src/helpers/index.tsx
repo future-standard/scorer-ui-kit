@@ -88,7 +88,6 @@ const uniqueID = () =>
   const isNotNumber = (value: string) => {
     const intValue = Number(value);
 
-    // eslint-disable-next-line no-self-compare
     return intValue !== intValue;
   };
 
