@@ -4,13 +4,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@future-standard/icons": "^3.0.0",
-    "@types/node": "^20.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "typescript": "^5.9.3"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "8.4.4",
@@ -20,8 +15,12 @@
     "@storybook/preview-api": "8.4.4",
     "@storybook/react": "8.4.4",
     "@storybook/react-vite": "^8.4.4",
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",
     "storybook-dark-mode": "^4.0.2",
+    "typescript": "^5.9.3",
     "vite": "^5.4.0"
   },
   "scripts": {
