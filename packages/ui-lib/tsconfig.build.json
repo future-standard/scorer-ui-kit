@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "target": "es2018",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "ES2022"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
