@@ -37,3 +37,15 @@ jobs:
 
     - name: eslint
       run: npm run test:lint -w packages/ui-lib
+
+  lint-status:
+    name: lint
+    needs: lint
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check lint results
+        run: |
+          if [ "${{ needs.lint.result }}" != "success" ]; then
+            exit 1
+          fi
