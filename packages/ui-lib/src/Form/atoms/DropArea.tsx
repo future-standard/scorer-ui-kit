@@ -28,27 +28,27 @@ interface IDropArea {
 const DropArea : React.FC<IDropArea> = ({height, text, dropCallback, ...props}) => {
   const [inDropZone, setInDropZone] = useState(false);
 
-const onDragEnter = useCallback((e) => {
+const onDragEnter = useCallback((e: React.DragEvent) => {
   e.preventDefault();
   e.stopPropagation();
 
   setInDropZone(true);
 },[]);
 
-const onDragLeave = useCallback((e) => {
+const onDragLeave = useCallback((e: React.DragEvent) => {
   e.preventDefault();
   e.stopPropagation();
 
   setInDropZone(false);
 },[]);
 
-const onDragOver = useCallback((e) => {
+const onDragOver = useCallback((e: React.DragEvent) => {
   e.preventDefault();
   e.stopPropagation();
 
 },[]);
 
-const onDrop = useCallback((e ) => {
+const onDrop = useCallback((e: React.DragEvent) => {
   e.preventDefault();
   e.stopPropagation();
   if(e.dataTransfer?.files && dropCallback) {
@@ -57,7 +57,7 @@ const onDrop = useCallback((e ) => {
   setInDropZone(false);
 },[dropCallback]);
 
-const handleWindowDragAndDrop = useCallback((e) => {
+const handleWindowDragAndDrop = useCallback((e: Event) => {
   e.preventDefault();
 }, []);
 

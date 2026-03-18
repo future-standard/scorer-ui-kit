@@ -7,25 +7,29 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v3.0.2
+    strategy:
+      matrix:
+        node-version: ['20.x', '22.x']
 
-    - name: Use Node.js
-      uses: actions/setup-node@v3.4.1
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v6
       with:
-        node-version: '18.x'
+        node-version: ${{ matrix.node-version }}
 
     - name: Cache node modules
-      uses: actions/cache@v4.2.0
+      uses: actions/cache@v5
       env:
         cache-name: cache-node-modules
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
         path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
+          ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-${{ matrix.node-version }}-build-
           ${{ runner.os }}-
 
     - name: Install Deps
@@ -33,3 +37,15 @@ jobs:
 
     - name: eslint
       run: npm run test:lint -w packages/ui-lib
+
+  lint-status:
+    name: lint
+    needs: lint
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check lint results
+        run: |
+          if [ "${{ needs.lint.result }}" != "success" ]; then
+            exit 1
+          fi

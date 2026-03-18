@@ -17,7 +17,7 @@ const TabContent: React.FC<Props> = ({ children, tabId, ...props }) => {
   return (
     selected === tabId ?
       <Container {...props}>
-        {children}
+        <>{children}</>
       </Container> :
       null
   );

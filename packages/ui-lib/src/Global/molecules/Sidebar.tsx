@@ -106,10 +106,10 @@ export const Logo: React.FC<LogoProps> = ({logoTextTop,logoTextBottom}) => (
 );
 
 
-const Sidebar: React.FC = ({children,...props}) => {
+const Sidebar: React.FC<React.PropsWithChildren> = ({children,...props}) => {
   return (
     <Container {...props}>
-      {children}
+      <>{children}</>
     </Container>
   );
 };

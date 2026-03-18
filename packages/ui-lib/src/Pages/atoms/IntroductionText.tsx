@@ -10,12 +10,14 @@ const Container = styled.p`
   line-height: 20px; /* 142.857% */
 `;
 
-interface IProps {}
+interface IProps {
+  children?: React.ReactNode;
+}
 
 const IntroductionText : React.FC<IProps> = ({children}) => {
   return (
     <Container>
-      {children}
+      <>{children}</>
     </Container>
   );
 };

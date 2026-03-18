@@ -129,9 +129,9 @@ const initialCropValues = (
 const isLeftMouseButton = (e: MouseEvent) => {
 
   let mouseButton;
-  if (typeof (e.buttons) !== undefined) {
+  if (typeof (e.buttons) !== 'undefined') {
     mouseButton = e.buttons;
-  } else if (typeof (e.button) !== undefined) {
+  } else if (typeof (e.button) !== 'undefined') {
     mouseButton = e.button;
   } else {
     mouseButton = e.which;

@@ -1,4 +1,14 @@
-export const colors = {
+export const colors: {
+  pureBase: string;
+  pureTop: string;
+  divider: string;
+  icons: { [key: string]: string };
+  menu: { [key: string]: string };
+  feedback: { [key: string]: string };
+  status: { [key: string]: string };
+  transparent: string;
+  input: { border: { [key: string]: string } };
+} = {
   "pureBase": "var(--white-1)",
   "pureTop": "var(--black-1)",
   "divider": "var(--grey-6)",

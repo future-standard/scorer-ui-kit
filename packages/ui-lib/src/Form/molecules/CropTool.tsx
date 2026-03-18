@@ -234,11 +234,11 @@ const CropTool: React.FC<ICrop> = ({
     }
   }, [onCrop]);
 
-  const handleMouseDown = useCallback((e) => {
+  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (!cropRef) { return; }
-    if (!isLeftMouseButton(e)) { return; }
+    if (!isLeftMouseButton(e.nativeEvent)) { return; }
 
     const rect = cropRef.current?.getBoundingClientRect();
     if (!rect) { return; }
@@ -257,14 +257,14 @@ const CropTool: React.FC<ICrop> = ({
     viewDimensions.isResizing = true;
   }, [isResizable]);
 
-  const handleMouseUp = useCallback((e) => {
+  const handleMouseUp = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (!viewDimensions.isResizing) { return; }
     viewDimensions.isResizing = false;
   }, []);
 
-  const updateSelect = useCallback((left, top, width, height) => {
+  const updateSelect = useCallback((left: number, top: number, width: number, height: number) => {
     if (!cropRef.current) { return; }
     cropRef.current.style.left = `${left}px`;
     cropRef.current.style.top = `${top}px`;
@@ -273,7 +273,7 @@ const CropTool: React.FC<ICrop> = ({
 
   }, []);
 
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (!cropRef) { return; }
@@ -303,7 +303,7 @@ const CropTool: React.FC<ICrop> = ({
 
   }, [aspectRatio, updateSelect]);
 
-  const handleOnMouseLeave = useCallback((e) => {
+  const handleOnMouseLeave = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (!viewDimensions.isResizing) { return; }

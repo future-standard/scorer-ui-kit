@@ -36,7 +36,7 @@ const MobileMenu: React.FC<IMobileMenu> = ({
    * In this mobile version of the menu will close after selecting an option
    * It will not close if the menu has a submenu to allow it to display the options
   */
-  const setFocusedContextCb = useCallback(contextKey => {
+  const setFocusedContextCb = useCallback((contextKey: number) => {
     if((contextKey === -1) || (!content.items[contextKey].submenu) ){
       setSelected(closeId);
     }

@@ -28,7 +28,7 @@ export const _BasicSearchInput = () => {
   const iconSize = number('Icon size', 12);
   const disabled = boolean('Disabled', false)
 
-  const handleChange = useCallback((e) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     textValue(value);
   }, [textValue]);

@@ -71,7 +71,7 @@ const BackButton = styled.div`
   }
 `;
 
-const ExamplesFilename : React.FC = ({ children }) => {
+const ExamplesFilename : React.FC<React.PropsWithChildren> = ({ children }) => {
  return(
   <Container>
     <BackButton>

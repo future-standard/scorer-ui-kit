@@ -1,4 +1,104 @@
-export const typography = {
+import type {TypeCellAlignment } from '../../Tables';
+import type { Properties as CSSProperties } from 'csstype';
+
+type TypographyStyle = Pick<
+  CSSProperties,
+  | 'textAlign'
+  | 'fontStyle'
+  | 'fontSize'
+  | 'fontWeight'
+  | 'lineHeight'
+  | 'letterSpacing'
+  | 'textDecoration'
+  | 'textTransform'
+  | 'color'
+>;
+
+type AlignmentStyles = {
+  [K in TypeCellAlignment]: TypographyStyle;
+};
+
+type ColumnDataStyles = {
+  firstColumn: TypographyStyle;
+  lowImportance: AlignmentStyles;
+  normalImportance: AlignmentStyles;
+  highImportance: AlignmentStyles;
+  unit: TypographyStyle;
+};
+
+type HeaderStyles = {
+  [K in TypeCellAlignment]: TypographyStyle;
+};
+
+type InputStyles = {
+  label?: TypographyStyle;
+  placeholder?: { [key: string]: TypographyStyle };
+  value?: { [key: string]: TypographyStyle };
+};
+
+type SubOptionStyles = {
+  label?: TypographyStyle;
+  value?: TypographyStyle;
+};
+
+type DatepickerStyles = {
+  metaHeader?: { [key: string]: TypographyStyle };
+  calendar?: { [key: string]: TypographyStyle };
+  monthLink?: { [key: string]: TypographyStyle };
+  focusedMonth?: TypographyStyle;
+  focusedYear?: TypographyStyle;
+};
+
+type FormTypography = {
+  label?: { [key: string]: TypographyStyle };
+  tip?: TypographyStyle;
+  button?: { [key: string]: { [key: string]: TypographyStyle } };
+  input?: InputStyles;
+  labelInformation?: TypographyStyle;
+  select?: { [key: string]: TypographyStyle };
+  feedback?: { message?: TypographyStyle };
+};
+
+type ContentTypography = {
+  'section-H2'?: TypographyStyle;
+  sectionH3?: TypographyStyle;
+  actionParagraph?: TypographyStyle;
+  hyperlink?: { [key: string]: TypographyStyle };
+};
+
+type FilterTypography = {
+  datepicker?: DatepickerStyles;
+  value?: TypographyStyle;
+  subOption?: SubOptionStyles;
+  presetAction?: TypographyStyle;
+  filterButton?: { [key: string]: TypographyStyle };
+  searchInput?: { [key: string]: TypographyStyle };
+};
+
+type TableTypography = {
+  columnData: ColumnDataStyles;
+  header: HeaderStyles;
+  subHeader: HeaderStyles;
+};
+
+type MetaTypography = {
+  tagList?: {
+    emptyStates?: { [key: string]: TypographyStyle };
+    item?: { [key: string]: TypographyStyle };
+  };
+};
+
+export const typography: {
+  pageHeader?: { [key: string]: TypographyStyle };
+  form?: FormTypography;
+  content?: ContentTypography;
+  feedbackBar?: { message?: TypographyStyle };
+  searchBar?: { [key: string]: TypographyStyle };
+  meta?: MetaTypography;
+  table: TableTypography;
+  filters?: FilterTypography;
+  tables: { [key: string]: TypographyStyle };
+} = {
     // DEPRECATED: pageHeader
     "pageHeader": {
       "introduction": {

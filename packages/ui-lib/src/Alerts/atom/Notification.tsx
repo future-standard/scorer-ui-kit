@@ -49,13 +49,10 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   text-decoration: none;
   color: var(--white-1);
 
-  ${({theme}) => css`
-    animation: ${initAnimation} ${theme.animation.speed.slow} ${theme.animation.easing.primary.easeInOut};
-    `
-  };
+  animation: ${initAnimation} var(--speed-slow) var(--easing-primary-in-out);
 
-  ${({theme, isClosing}) => isClosing && css`
-    animation: ${closeAnimation} ${theme.animation.speed.normal} ${theme.animation.easing.primary.easeInOut};
+  ${({isClosing}) => isClosing && css`
+    animation: ${closeAnimation} var(--speed-normal) var(--easing-primary-in-out);
     `
   };
 
@@ -111,10 +108,8 @@ const TextButton = styled.button`
   }
 
   &:hover:enabled {
-    ${({theme}) => theme && css`
-      opacity: .8;
-      transition: transform ${theme.animation.speed.normal} ${theme.animation.easing.primary.inOut};
-    `}
+    opacity: .8;
+    transition: transform var(--speed-normal) var(--easing-primary-in-out);
   }
   &:active:enabled {
     opacity: .9;

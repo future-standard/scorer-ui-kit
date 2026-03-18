@@ -18,7 +18,7 @@ const defaultContext: ModalContextType = {
 
 const ModalContext = React.createContext<ModalContextType>(defaultContext);
 
-const ModalProvider: React.FC = ({ children }) => {
+const ModalProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   const [modalProps, setProps] = useState<IModalProps>(defaultContext.modalProps);
 

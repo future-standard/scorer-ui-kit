@@ -123,7 +123,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
   const [ showCopyText, setShowCopyText ] = useState<boolean>(false);
   const [onHoverColorValue, setOnHoverColorValue] = useState<'mono' | 'dimmed' | 'subtle' | 'inverse' | 'primary' | 'danger'>('dimmed');
 
-  const onClickCopyText = useCallback((title , subTitle, notes)=>{
+  const onClickCopyText = useCallback((title?: string , subTitle?: string, notes?: string)=>{
     let copyText;
     if(includeCopyTitle){
       copyText = (title ? title : '') + '\n' + (subTitle ? subTitle : '') + '\n' + (notes ? notes : '');

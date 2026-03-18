@@ -99,7 +99,7 @@ const RadioButton: React.FC<IRadioButton> = ({
   onChangeCallback = () => { },
 }) => {
 
-  const handleChange = useCallback((e) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const checkedValue = e.target.value;
     onChangeCallback(checkedValue);
   }, [onChangeCallback]);

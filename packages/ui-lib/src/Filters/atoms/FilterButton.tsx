@@ -157,6 +157,7 @@ const FilterButton: React.FC<IFilterButton> = ({
   isOpen,
   design = 'default',
   children,
+  formAction,
   ...props
 }) => {
 
@@ -171,7 +172,7 @@ const FilterButton: React.FC<IFilterButton> = ({
             color='filter-button-icon-color'
           />
         </LeftIconWrapper>
-        <ButtonText {...{ hasFlipArrow }}>{children}</ButtonText>
+        <ButtonText {...{ hasFlipArrow }}><>{children}</></ButtonText>
 
         {hasFlipArrow && <FlipArrowContainer {...{ design }}><Icon icon={isOpen ? 'Up' : 'Down'} size={6} color='grey-11' /></FlipArrowContainer>}
 

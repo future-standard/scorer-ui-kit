@@ -9,7 +9,7 @@ const HeaderRow = styled.div`
   height: 50px;
 `;
 
-const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, headerStyle: string, isSortActive?: boolean }>`
+const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, headerStyle: 'header' | 'subHeader', isSortActive?: boolean }>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
@@ -73,7 +73,7 @@ const GroupTitle = styled.div`
 
 const Title = styled.div`
   ${({ theme: {typography} }) => css`
-    ${typography.tables.groupName};
+    ${typography.tables['groupName']};
   `};
   padding-left: 2px;
   padding-right: 8px;

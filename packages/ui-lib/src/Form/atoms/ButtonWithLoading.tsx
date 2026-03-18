@@ -82,7 +82,7 @@ const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', 
     <Container>
       <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading}} {...rest}>
         <InnerContainer $loading={loading} {...{ design, size}}>
-          <TextContainer>{children}</TextContainer>
+          <TextContainer><>{children}</></TextContainer>
           <LoadingContainer {...{ design, position }}>
             <Spinner size={size ==='xsmall' || size ==='small' ? 'xsmall' : 'small'} styling={design} />
           </LoadingContainer>

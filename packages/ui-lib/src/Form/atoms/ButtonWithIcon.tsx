@@ -141,7 +141,7 @@ const ButtonWithIcon: React.FC<IButtonWithIcon> = ({ design = 'primary', size = 
     <Container>
       <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading }} {...props}>
         <InnerContainer {...{ disabled, loading }}>
-          <TextContainer {...{ size, position, weight }}>{children}</TextContainer>
+          <TextContainer {...{ size, position, weight }}><>{children}</></TextContainer>
           <IconArea $loading={loading} {...{ position }}>
             <IconContainer>
               <Icon icon={icon} weight={weight} />
