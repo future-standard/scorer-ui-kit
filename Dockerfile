@@ -1,6 +1,6 @@
 ## This dockerfile sets up a Node.js environment to build and run a Storybook instance for a UI library to review package json changes in isolation.
 
-FROM node:18
+FROM node:22
 
 WORKDIR /app
 COPY package.json .
