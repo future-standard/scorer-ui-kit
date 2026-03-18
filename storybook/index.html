@@ -55,8 +55,6 @@
     <link href="./sb-addons/knobs-3/register-bundle.js" rel="modulepreload" />
     
     <link href="./sb-addons/storybook-dark-mode-esm-preset-4/manager-bundle.js" rel="modulepreload" />
-    
-    <link href="./sb-addons/jsx-5/register-bundle.js" rel="modulepreload" />
        
 
     <style>
@@ -121,11 +119,11 @@
         
       
         
-          window['STORYBOOK_BUILDER'] = "@storybook/builder-webpack5";
+          window['STORYBOOK_BUILDER'] = "@storybook/builder-vite";
         
       
         
-          window['STORYBOOK_FRAMEWORK'] = "@storybook/react-webpack5";
+          window['STORYBOOK_FRAMEWORK'] = "@storybook/react-vite";
         
       
     </script>
@@ -145,14 +143,8 @@
       
         import './sb-addons/storybook-dark-mode-esm-preset-4/manager-bundle.js';
       
-        import './sb-addons/jsx-5/register-bundle.js';
-      
       
       import './sb-manager/runtime.js';
     </script>
-
-    
-    <link href="./sb-preview/runtime.js" rel="prefetch" as="script" />
-    
   </body>
 </html>
