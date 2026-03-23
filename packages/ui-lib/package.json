@@ -17,6 +17,21 @@
       "import": "./dist/index.modern.js",
       "require": "./dist/index.js"
     },
+    "./dist/Tables": {
+      "types": "./dist/Tables/index.d.ts"
+    },
+    "./dist/LineUI": {
+      "types": "./dist/LineUI/index.d.ts"
+    },
+    "./dist/LineUI/LineReducer": {
+      "types": "./dist/LineUI/LineReducer.d.ts"
+    },
+    "./dist/Global": {
+      "types": "./dist/Global/index.d.ts"
+    },
+    "./dist/Form": {
+      "types": "./dist/Form/index.d.ts"
+    },
     "./dist/*": "./dist/*"
   },
   "sideEffects": false,
