@@ -30,13 +30,13 @@ const rotate = keyframes`
   }
 `;
 
-const BaseCircle = styled.circle<{ styling: string, customColor?: string }>`
-  stroke: ${({styling, customColor}) => customColor ? customColor : `var(--spinner-${styling}-base, var(--grey-a8))` };
+const BaseCircle = styled.circle<{ $styling: string, $customColor?: string }>`
+  stroke: ${({$styling, $customColor}) => $customColor ? $customColor : `var(--spinner-${$styling}-base, var(--grey-a8))` };
   fill: none;
 `;
 
-const RotatingCircle = styled.circle<{ r: number, styling: string, customColor?: string }>`
-  stroke: ${({styling, customColor}) => customColor ? customColor : `var(--spinner-${styling}-top, var(--white-1))` };
+const RotatingCircle = styled.circle<{ r: number, $styling: string, $customColor?: string }>`
+  stroke: ${({$styling, $customColor}) => $customColor ? $customColor : `var(--spinner-${$styling}-top, var(--white-1))` };
   fill: none;
   stroke-dasharray: ${({r}) => circumference(r)};
   stroke-dashoffset: ${({r}) => 2 * 3.1416 * r / 2};
@@ -89,8 +89,8 @@ const Spinner : React.FC<IProps> = ({ size = 'medium', styling = 'primary', cust
 
   return (
     <svg viewBox={`-${sizeVal/2} -${sizeVal/2} ${sizeVal} ${sizeVal}`} width={sizeVal} height={sizeVal} xmlns='http://www.w3.org/2000/svg'>
-      <BaseCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={ getButtonDesign(styling) } customColor={ baseColor } />
-      <RotatingCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} styling={ getButtonDesign(styling) } customColor={ topColor } />
+      <BaseCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} $styling={ getButtonDesign(styling) } $customColor={ baseColor } />
+      <RotatingCircle cx='0' cy='0' r={circleRadius} strokeWidth={strokeWidth} $styling={ getButtonDesign(styling) } $customColor={ topColor } />
     </svg>
   );
 
