@@ -4,15 +4,15 @@ import {IDeviceStatus} from '..';
 
 type TypeDeviceStatus = IDeviceStatus;
 
-const Container = styled.div<{ status: TypeDeviceStatus }>`
+const Container = styled.div<{ $status: TypeDeviceStatus }>`
   height: 42px;
   width: 4px;
   border-radius: 3px;
   display: block;
 
-  ${({status, theme: {colors}}) => css`
-    background: ${colors.status[status]};
-    content:'${status}';
+  ${({$status, theme: {colors}}) => css`
+    background: ${colors.status[$status]};
+    content:'${$status}';
   `}
 
 `;
@@ -22,7 +22,7 @@ interface IProps {
 }
 
 const TypeTableDeviceStatus : React.FC<IProps> = ({status = 'neutral'}) => {
-  return <Container status={status} />;
+  return <Container $status={status} />;
 };
 
 export default TypeTableDeviceStatus;

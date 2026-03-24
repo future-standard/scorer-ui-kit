@@ -9,7 +9,7 @@ const HeaderRow = styled.div`
   height: 50px;
 `;
 
-const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignment, hasCopyButton?: boolean, minWidth?: number, headerStyle: 'header' | 'subHeader', isSortActive?: boolean }>`
+const HeaderItem = styled.div<{ $fixedWidth?: number, $alignment?: TypeCellAlignment, $hasCopyButton?: boolean, $minWidth?: number, $headerStyle: 'header' | 'subHeader', $isSortActive?: boolean }>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
@@ -17,25 +17,25 @@ const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignme
   position: relative;
   font-family: ${p => p.theme.fontFamily.ui};
 
-  ${({ hasCopyButton }) => hasCopyButton && css`
+  ${({ $hasCopyButton }) => $hasCopyButton && css`
     padding-right: 20px;
   `};
 
-  ${({ theme, alignment, headerStyle }) => alignment ? css`
-    ${theme.typography.table[headerStyle][alignment]};
+  ${({ theme, $alignment, $headerStyle }) => $alignment ? css`
+    ${theme.typography.table[$headerStyle][$alignment]};
   ` : css`
-    ${theme.typography.table[headerStyle]['left']};
+    ${theme.typography.table[$headerStyle]['left']};
   `};
 
-  ${p => p.fixedWidth && css`
-    width: ${p.fixedWidth}px;
+  ${p => p.$fixedWidth && css`
+    width: ${p.$fixedWidth}px;
   `};
 
-  ${({ minWidth }) => minWidth && css`
-    min-width:${minWidth}px;
+  ${({ $minWidth }) => $minWidth && css`
+    min-width:${$minWidth}px;
   `};
 
-  ${({ theme: {styles}, headerStyle, isSortActive }) => headerStyle === 'subHeader' && css`
+  ${({ theme: {styles}, $headerStyle, $isSortActive }) => $headerStyle === 'subHeader' && css`
   padding-bottom: 15px;
 
   &::after {
@@ -43,9 +43,9 @@ const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignme
     content: '';
     display: block;
     height: 1px;
-    left: ${isSortActive ? '-15px' : '0'};
+    left: ${$isSortActive ? '-15px' : '0'};
     right: 0;
-    width: ${isSortActive ? 'calc(100% + 15px)' : '100%'};
+    width: ${$isSortActive ? 'calc(100% + 15px)' : '100%'};
     bottom: 0px;
     position: absolute;
   }
@@ -53,13 +53,13 @@ const HeaderItem = styled.div<{ fixedWidth?: number, alignment?: TypeCellAlignme
 `;
 
 // Default alignment is left//
-const TitleItems = styled.div<{ alignment?: TypeCellAlignment }>`
+const TitleItems = styled.div<{ $alignment?: TypeCellAlignment }>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  ${({ alignment }) => alignment && css`
-      ${alignment === 'right' ? 'align-items: flex-end' : null};
-      ${alignment === 'center' ? 'align-items: center' : null};
+  ${({ $alignment }) => $alignment && css`
+      ${$alignment === 'right' ? 'align-items: flex-end' : null};
+      ${$alignment === 'center' ? 'align-items: center' : null};
   `};
 `;
 
@@ -85,14 +85,14 @@ const EmptyTitle = styled.div`
   height: 20px;
 `;
 
-const MiddleLine = styled.div<{ isLastOfGroup?: boolean }>`
+const MiddleLine = styled.div<{ $isLastOfGroup?: boolean }>`
   ${({ theme: {styles} }) => css`
     ${styles.tables.header.groupLine};
   `};
 
   height: 1px;
   flex: 1;
-  ${({ isLastOfGroup }) => isLastOfGroup && css`
+  ${({ $isLastOfGroup }) => $isLastOfGroup && css`
     margin-right: 15px;
   `};
 `;
@@ -119,7 +119,7 @@ const renderGroupHeader = (columnConfig: ITableColumnConfig[], index: number) =>
     return (
       <Fragment>
         <EmptyTitle />
-        <MiddleLine {...{ isLastOfGroup }} />
+        <MiddleLine $isLastOfGroup={isLastOfGroup} />
       </Fragment>
     );
   }
@@ -204,24 +204,26 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
   return (
     <HeaderRow>
       {selectable ? (
-        <HeaderItem headerStyle='header' fixedWidth={30}>
+        <HeaderItem $headerStyle='header' $fixedWidth={30}>
           <Checkbox checked={allChecked} disabled={disableAllChecked} onChangeCallback={toggleAllCallbackWrapper} />
         </HeaderItem>)
         : null}
-      {hasStatus ? <HeaderItem headerStyle='header' fixedWidth={10} /> : null}
-      {hasThumbnail ? <HeaderItem headerStyle='header' fixedWidth={70} /> : null}
-      {hasTypeIcon ? <HeaderItem headerStyle='header' fixedWidth={35} /> : null}
+      {hasStatus ? <HeaderItem $headerStyle='header' $fixedWidth={10} /> : null}
+      {hasThumbnail ? <HeaderItem $headerStyle='header' $fixedWidth={70} /> : null}
+      {hasTypeIcon ? <HeaderItem $headerStyle='header' $fixedWidth={35} /> : null}
 
       {columnConfig.map((column, key, allColls) => {
         const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth }: ITableColumnConfig = column;
         return (
           <HeaderItem
             key={key}
-            {...{ alignment, hasCopyButton, minWidth }}
-            headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
-            isSortActive={sortActive}
+            $alignment={alignment}
+            $hasCopyButton={hasCopyButton}
+            $minWidth={minWidth}
+            $headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
+            $isSortActive={sortActive}
           >
-            <TitleItems {...{ alignment }}>
+            <TitleItems $alignment={alignment}>
               {hasHeaderGroups &&
                 <GroupTitle>
                   {hasHeaderGroups && renderGroupHeader(allColls, key)}
