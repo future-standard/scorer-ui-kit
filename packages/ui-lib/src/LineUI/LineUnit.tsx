@@ -151,8 +151,8 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
 
 
   /** --- Mouse Events Section --- */
-  const mouseMoveRef = useRef<((e: any) => void) | null>(null);
-  const mouseUpRef = useRef<((e: any) => void) | null>(null);
+  const mouseMoveRef = useRef<((e: MouseEvent) => void) | null>(null);
+  const mouseUpRef = useRef<((e: MouseEvent) => void) | null>(null);
 
   const cleanupMouseListeners = useCallback(() => {
     if(mouseMoveRef.current){
@@ -165,19 +165,19 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     }
   }, []);
 
-  const handleMouseMove = (e: any) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     lineMoveCallback({ x: e.pageX, y: e.pageY });
     e.preventDefault();
-  };
+  }, [lineMoveCallback]);
 
-  const handleMouseUp = (e: any) => {
+  const handleMouseUp = useCallback((e: MouseEvent) => {
     cleanupMouseListeners();
     lineMoveCallback({ x: e.pageX, y: e.pageY });
     moveEndCB();
     e.preventDefault();
-  };
+  }, [cleanupMouseListeners, lineMoveCallback, moveEndCB]);
 
-  const handleMouseDown = (e: any) => {
+  const handleMouseDown = useCallback((e: React.MouseEvent<SVGCircleElement, MouseEvent>) => {
     cleanupMouseListeners();
     lineMoveStartCallback({ x: e.pageX, y: e.pageY });
     mouseMoveRef.current = handleMouseMove;
@@ -185,7 +185,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
     e.preventDefault();
-  };
+  }, [cleanupMouseListeners, lineMoveStartCallback, handleMouseMove, handleMouseUp]);
 
   useEffect(() => {
     return cleanupMouseListeners;
