@@ -41,6 +41,7 @@ const WebRTCPlayer: React.FC<Props> = ({
   const mountedRef = useRef(false);
   const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const helloIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const enabledRef = useRef(enabled);
 
 
   function handleIncomingError(error: string) {
@@ -167,7 +168,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     }
     setStatus('Disconnected from server');
     closePeerConnection();
-    if (event.code !== 1000 && enabled && mountedRef.current) {
+    if (event.code !== 1000 && enabledRef.current && mountedRef.current) {
       if (reconnectTimeoutRef.current !== null) {
         clearTimeout(reconnectTimeoutRef.current);
       }
@@ -278,6 +279,10 @@ const WebRTCPlayer: React.FC<Props> = ({
       peerConnection.current = null;
     }
   };
+
+  useEffect(() => {
+    enabledRef.current = enabled;
+  }, [enabled]);
 
   useEffect(() => {
     mountedRef.current = true;
