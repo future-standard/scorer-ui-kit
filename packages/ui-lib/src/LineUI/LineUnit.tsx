@@ -4,60 +4,60 @@ import { IDragLineUISharedOptions } from '.';
 import Icon from '../Icons/Icon';
 
 
-const ContrastLine = styled.line<{styling: string, lineClickSensing?: number, showLineBorder?: boolean}>`
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].contrastLine.stroke};
+const ContrastLine = styled.line<{$styling: string, $lineClickSensing?: number, $showLineBorder?: boolean}>`
+  stroke: ${({theme, $styling}) => theme.custom.lines[$styling].contrastLine.stroke};
   mix-blend-mode: multiply;
-  stroke-width: ${({ lineClickSensing }) => lineClickSensing}px;
-  stroke-opacity: ${({ showLineBorder }) => showLineBorder ? '0.35' : '0'};
+  stroke-width: ${({ $lineClickSensing }) => $lineClickSensing}px;
+  stroke-opacity: ${({ $showLineBorder }) => $showLineBorder ? '0.35' : '0'};
   cursor: pointer;
 `;
 
-const HighlightLine = styled.line<{styling: string}>`
+const HighlightLine = styled.line<{$styling: string}>`
   pointer-events: none;
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].highlightLineBorder.stroke};
+  stroke: ${({theme, $styling}) => theme.custom.lines[$styling].highlightLineBorder.stroke};
 `;
 
 
 
-const GrabHandle = styled.circle<{hide: boolean, styling: string}>`
-  fill: ${({theme, styling}) => theme.custom.lines[styling].grabHandle.fill};
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].grabHandle.stroke};
+const GrabHandle = styled.circle<{$hide: boolean, $styling: string}>`
+  fill: ${({theme, $styling}) => theme.custom.lines[$styling].grabHandle.fill};
+  stroke: ${({theme, $styling}) => theme.custom.lines[$styling].grabHandle.stroke};
   opacity: 1;
   transition: opacity 250ms ease;
   cursor: grab;
 
-  ${props => props.hide && css`
+  ${props => props.$hide && css`
     pointer-events: none;
     opacity: 0;
   `};
 `;
 
 
-const GrabHandleIndexGroup = styled.g<{showIndex: boolean}>`
+const GrabHandleIndexGroup = styled.g<{$showIndex: boolean}>`
   opacity: 0;
   pointer-events: none;
-  ${props => props.showIndex && css`
+  ${props => props.$showIndex && css`
     opacity: 1;
   `};
 
 `;
 
-const GrabHandleIndexText = styled.text<{showIndex: boolean, styling: string}>`
+const GrabHandleIndexText = styled.text<{$showIndex: boolean, $styling: string}>`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   text-align: center;
-  fill: ${({theme, styling}) => theme.custom.lines[styling].grabHandleText.stroke};
+  fill: ${({theme, $styling}) => theme.custom.lines[$styling].grabHandleText.stroke};
   font-weight: bold;
   transition: opacity 250ms ease;
   pointer-events: none;
 `;
 
-const LabelText = styled.text<{showIndex: boolean, styling: string, showLabelShadow: boolean}>`
+const LabelText = styled.text<{$showIndex: boolean, $styling: string, $showLabelShadow: boolean}>`
   text-align: center;
-  fill: ${({theme, styling}) => theme.custom.lines[styling].label.fill};
+  fill: ${({theme, $styling}) => theme.custom.lines[$styling].label.fill};
   font-weight: bold;
   transition: opacity 250ms ease;
   cursor: pointer;
-  ${({showLabelShadow}) => showLabelShadow && css`
+  ${({$showLabelShadow}) => $showLabelShadow && css`
     text-shadow:
       -1px -1px 0 #000,
       1px -1px 0 #000,
@@ -68,19 +68,19 @@ const LabelText = styled.text<{showIndex: boolean, styling: string, showLabelSha
 
 const GrabHandleContrast = styled(GrabHandle)`
   fill: none;
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].grabHandleContrast.stroke};
+  stroke: ${({theme, $styling}) => theme.custom.lines[$styling].grabHandleContrast.stroke};
 `;
 
-const GrabHandleGroup = styled.g<{ showIndex: boolean, originalRadius: number, styling: string}>`
+const GrabHandleGroup = styled.g<{ $showIndex: boolean, $originalRadius: number, $styling: string}>`
 
   ${GrabHandle}, ${GrabHandleContrast} {
     transition: r 250ms ease;
   }
 
-  ${props => props.showIndex && css`
+  ${props => props.$showIndex && css`
     ${GrabHandle}, ${GrabHandleContrast} {
       pointer-events: none;
-      r: ${props.originalRadius * 1.75};
+      r: ${props.$originalRadius * 1.75};
     }
   `};
 `;
@@ -220,7 +220,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
           </g>}
         {label &&
           <g transform={`translate(0,${showSmallDirectionMark ? 45 : 30}) rotate(${dmCoordinate.labelRotate})`}>
-            <LabelText onClick={() => lineClickCallback(lineSetId)} textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' styling={styling} fontSize={`${14}px`} x={0} y={0} showIndex={revealSetIndex || handleFinderActive} showLabelShadow={showLabelShadow}>
+            <LabelText onClick={() => lineClickCallback(lineSetId)} textAnchor={showSmallDirectionMark ? dmCoordinate.labelRotate < 0 ? 'end' : 'start' : 'middle'} dominantBaseline='middle' $styling={styling} fontSize={`${14}px`} x={0} y={0} $showIndex={revealSetIndex || handleFinderActive} $showLabelShadow={showLabelShadow}>
               {label}
             </LabelText>
           </g>}
@@ -243,16 +243,16 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
 
   return (
     <g>
-      <ContrastLine onMouseOver={getMouseOver} onMouseOut={getMouseOut} {...{lineClickSensing, showLineBorder}} onClick={() => lineClickCallback(lineSetId)} styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
-      <HighlightLine styling={styling} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
+      <ContrastLine onMouseOver={getMouseOver} onMouseOut={getMouseOut} $lineClickSensing={lineClickSensing} $showLineBorder={showLineBorder} onClick={() => lineClickCallback(lineSetId)} $styling={styling} strokeLinecap='round' x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={4 * unit} />
+      <HighlightLine $styling={styling} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={2 * unit} />
 
-      <GrabHandleGroup styling={styling} showIndex={handleFinderActive && revealSetIndex} originalRadius={8 * unit}>
-        <GrabHandleContrast styling={styling} r={8 * unit} strokeWidth={4 * unit} cx={midpoint.x} cy={midpoint.y} hide={hideGrabHandle} />
-        <GrabHandle styling={styling} textAnchor='middle' r={8 * unit} strokeWidth={1 * unit} cx={midpoint.x} cy={midpoint.y} hide={hideGrabHandle} onTouchMove={grabTouchMove} onTouchStart={grabTouchStart} onMouseDown={handleMouseDown} />
+      <GrabHandleGroup $styling={styling} $showIndex={handleFinderActive && revealSetIndex} $originalRadius={8 * unit}>
+        <GrabHandleContrast $styling={styling} r={8 * unit} strokeWidth={4 * unit} cx={midpoint.x} cy={midpoint.y} $hide={hideGrabHandle} />
+        <GrabHandle $styling={styling} textAnchor='middle' r={8 * unit} strokeWidth={1 * unit} cx={midpoint.x} cy={midpoint.y} $hide={hideGrabHandle} onTouchMove={grabTouchMove} onTouchStart={grabTouchStart} onMouseDown={handleMouseDown} />
       </GrabHandleGroup>
 
-      <GrabHandleIndexGroup showIndex={!hideGrabHandle && (handleFinderActive || revealSetIndex)}>
-        <GrabHandleIndexText styling={styling} fontSize={`${unit * 10}px`} x={midpoint.x - (3 * unit)} y={midpoint.y + (4 * unit)} showIndex={revealSetIndex || handleFinderActive}>
+      <GrabHandleIndexGroup $showIndex={!hideGrabHandle && (handleFinderActive || revealSetIndex)}>
+        <GrabHandleIndexText $styling={styling} fontSize={`${unit * 10}px`} x={midpoint.x - (3 * unit)} y={midpoint.y + (4 * unit)} $showIndex={revealSetIndex || handleFinderActive}>
           {lineSetId + setIndexOffset}
         </GrabHandleIndexText>
       </GrabHandleIndexGroup>
@@ -264,7 +264,7 @@ const LineUnit : React.FC<ILineUnitProps> = (props) => {
         getDirectionMarkLine()
         :
         label &&
-          <LabelText styling={styling} fontSize={`${unit * 14}px`} x={midpoint.x - (16 * unit)} y={midpoint.y - (15 * unit)} showIndex={revealSetIndex || handleFinderActive} showLabelShadow={showLabelShadow}>
+          <LabelText $styling={styling} fontSize={`${unit * 14}px`} x={midpoint.x - (16 * unit)} y={midpoint.y - (15 * unit)} $showIndex={revealSetIndex || handleFinderActive} $showLabelShadow={showLabelShadow}>
             {label}
           </LabelText>}
     </g>
