@@ -7,8 +7,8 @@ const IconContainer = styled.div`
   padding: 0 2px;
 `;
 
-const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackground: boolean, width?: string }>`
-  ${({ hasBorder, disabled, noBackground, width }) => css`
+const Container = styled.div<{ $hasBorder: boolean, $disabled: boolean, $noBackground: boolean, $width?: string }>`
+  ${({ $hasBorder, $disabled, $noBackground, $width }) => css`
 
     transition: all var(--speed-normal) var(--easing-primary-in);
     gap: var(--search-input-container-gap, 6px);
@@ -18,7 +18,7 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
     display: flex;
     border-radius: 3px;
 
-    ${hasBorder && css`
+    ${$hasBorder && css`
       padding: 0 8px;
       border: 1px solid var(--filter-button-stroke-color);
       box-shadow: 0px 4px 9px 0px var(--filter-button-shadow-color);
@@ -33,22 +33,22 @@ const Container = styled.div<{ hasBorder: boolean, disabled: boolean, noBackgrou
       }
     `};
 
-    ${disabled && css`
+    ${$disabled && css`
       opacity: 50%;
       cursor: not-allowed;
       `
     };
 
-    ${width && css`
-      width: ${width};
+    ${$width && css`
+      width: ${$width};
     `};
 
-    background-color: ${noBackground ? 'transparent' : 'var(--grey-1)'};
+    background-color: ${$noBackground ? 'transparent' : 'var(--grey-1)'};
 
     &:focus-within {
-      background-color: ${noBackground ? 'transparent' : 'var(--grey-1)'};
-      border: ${hasBorder ? '1px solid var(--primary-9)' : 'none'};
-      box-shadow: 0px 4px 9px 0px ${noBackground ? 'transparent' : 'var(--primary-a2)'};
+      background-color: ${$noBackground ? 'transparent' : 'var(--grey-1)'};
+      border: ${$hasBorder ? '1px solid var(--primary-9)' : 'none'};
+      box-shadow: 0px 4px 9px 0px ${$noBackground ? 'transparent' : 'var(--primary-a2)'};
     }
 
   `};
@@ -77,7 +77,7 @@ const CrossButton = styled.button`
 
 
 
-const StyledInput = styled.input<{ color: string }>`
+const StyledInput = styled.input<{ $color: string }>`
   ${removeAutoFillStyle};
 
   font-family: var(--search-input-font-family,var(--font-ui));
@@ -86,7 +86,7 @@ const StyledInput = styled.input<{ color: string }>`
   color: var(--grey-12);
 
   &::placeholder {
-    ${({color}) => color && `color: var(--${color})`};
+    ${({$color}) => $color && `color: var(--${$color})`};
     color: var(--grey-11);
     font-style: italic;
   }
@@ -138,12 +138,12 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   ...props
 }) => {
   return (
-    <Container {...{ hasBorder, disabled, noBackground, width }}>
+    <Container {...{ $hasBorder: hasBorder, $disabled: disabled, $noBackground: noBackground, $width: width }}>
       <IconContainer>
         <Icon {...{ color }} icon='Search' weight='regular' size={iconSize} />
       </IconContainer>
       <StyledInput
-        {...{ color, disabled }}
+        {...{ $color: color, disabled }}
         {...props}
       />
       {hasCrossButton && <CrossButton onClick={onCrossClick}> <Icon icon='CloseCompact' color='dimmed' size={12} /></CrossButton>}
