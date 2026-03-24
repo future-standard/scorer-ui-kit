@@ -24,8 +24,8 @@ const InputButtonWrapper = styled.div`
   gap: 20px;
 `;
 
-const FilesUploadGroup = styled.div<{ height?: string, hasFiles: boolean }>`
-  padding: ${({ hasFiles }) => hasFiles ? '26px 0 20px 0' : '65px 0 42px 0'};
+const FilesUploadGroup = styled.div<{ $height?: string, $hasFiles: boolean }>`
+  padding: ${({ $hasFiles }) => $hasFiles ? '26px 0 20px 0' : '65px 0 42px 0'};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -148,7 +148,7 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
 
   return (
     <Container>
-      <FilesUploadGroup hasFiles={files !== null}>
+      <FilesUploadGroup $hasFiles={files !== null}>
         <StyledDropArea dropCallback={handleFiles} />
         {
           customComponent

@@ -22,12 +22,12 @@ import {
 
 const ThumbDiameter = 16;
 
-const SliderWrapper = styled.div<{disabled: boolean}>`
+const SliderWrapper = styled.div<{$disabled: boolean}>`
   font-family: ${({ theme }) => theme.fontFamily.data};
   position: relative;
   height: 30px;
   margin-top: 20px;
-  ${({disabled}) => disabled && css`
+  ${({$disabled}) => $disabled && css`
     opacity: .5;
   `};
 `;
@@ -51,20 +51,20 @@ const Rail = styled.div`
   background-image: linear-gradient(to bottom, var(--grey-10), var(--primary-10) 98%);
 `;
 
-const Mark = styled.span<{leftValue: number}>`
+const Mark = styled.span<{$leftValue: number}>`
   position: absolute;
   top: -3px;
-  left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
+  left: ${({$leftValue}) => `calc(${$leftValue}% + 7px)`};
   width: 1px;
   height: 9px;
   opacity: 0.25;
   background-color: var(--primary-11);
 `;
 
-const MarkLabel = styled.span<{leftValue: number, alignment?: IMarkAlignment}>`
+const MarkLabel = styled.span<{$leftValue: number, $alignment?: IMarkAlignment}>`
   position: absolute;
   top: -24px;
-  left: ${({leftValue}) => `calc(${leftValue}% + 7px)`};
+  left: ${({$leftValue}) => `calc(${$leftValue}% + 7px)`};
 
   font-size: 10px;
   font-style: italic;
@@ -75,9 +75,9 @@ const MarkLabel = styled.span<{leftValue: number, alignment?: IMarkAlignment}>`
   text-align: center;
   color: var(--grey-a11);
 
-  ${({alignment}) => (alignment === 'center') && css`transform: translateX(-50%);;`}
-  ${({alignment}) => (alignment === 'right') && css`transform: translateX(5%);`}
-  ${({alignment}) => (alignment === 'left') && css`transform: translateX(-95%);`}
+  ${({$alignment}) => ($alignment === 'center') && css`transform: translateX(-50%);;`}
+  ${({$alignment}) => ($alignment === 'right') && css`transform: translateX(5%);`}
+  ${({$alignment}) => ($alignment === 'left') && css`transform: translateX(-95%);`}
 `;
 
 const ThumbWrapper = styled.div`
@@ -89,14 +89,14 @@ const ThumbWrapper = styled.div`
   height: 2px;
 `;
 
-const Thumb = styled.span<{leftValue: number, bgColor: IFeedbackColor }>`
+const Thumb = styled.span<{$leftValue: number, $bgColor: IFeedbackColor }>`
   width: ${ThumbDiameter}px;
   height: ${ThumbDiameter}px;
   border-radius: 8px;
-  background-color: ${({theme, bgColor}) => theme.colors.feedback[bgColor]};
+  background-color: ${({theme, $bgColor}) => theme.colors.feedback[$bgColor]};
   position: absolute;
   top: -7.5px;
-  left: ${({leftValue}) => `${leftValue}%`};
+  left: ${({$leftValue}) => `${$leftValue}%`};
 `;
 
 const GhostThumb = styled(Thumb)`
@@ -188,11 +188,11 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
       <Fragment key={`mark-${index}`}>
         <Mark
           data-leftvalue={`${left}%`}
-          leftValue={left}
+          $leftValue={left}
         />
         <MarkLabel
-          leftValue={left}
-          alignment={allMarkCentered ? 'center' : getMarkAlignment(value, min, max)}
+          $leftValue={left}
+          $alignment={allMarkCentered ? 'center' : getMarkAlignment(value, min, max)}
         >
           {label}
         </MarkLabel>
@@ -320,7 +320,7 @@ const SliderInput : React.FC<ISlider> = ({
   }, [defaultValue, maxValid, minValid]);
 
   return(
-    <SliderWrapper disabled={disabled}>
+    <SliderWrapper $disabled={disabled}>
       <Rail />
       <ThumbWrapper>
         {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`, allMarkCentered)}
@@ -328,17 +328,17 @@ const SliderInput : React.FC<ISlider> = ({
           ? (
             <GhostThumb
               data-value={selectedValue}
-              leftValue={ghostThumbValue}
+              $leftValue={ghostThumbValue}
               data-percentage={ghostThumbValue}
-              bgColor={thumbColor}
+              $bgColor={thumbColor}
             />
           )
           : null}
         <Thumb
           data-value={selectedValue}
-          leftValue={thumbValueRef.current}
+          $leftValue={thumbValueRef.current}
           data-percentage={thumbValueRef.current}
-          bgColor={thumbColor}
+          $bgColor={thumbColor}
         />
       </ThumbWrapper>
       <HiddenInput

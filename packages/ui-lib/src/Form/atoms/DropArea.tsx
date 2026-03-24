@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div<{height?: string}>`
-  ${({height}) => height ? `height: ${height}` : null};
+const Container = styled.div<{$height?: string}>`
+  ${({$height}) => $height ? `height: ${$height}` : null};
   position: relative;
 `;
 
-const DragAndDrop = styled.div<{inDropZone: boolean}>`
+const DragAndDrop = styled.div<{$inDropZone: boolean}>`
   border-radius: 5px;
   position: absolute;
   top: 0;
@@ -16,7 +16,7 @@ const DragAndDrop = styled.div<{inDropZone: boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: ${({inDropZone}) => inDropZone ? `dashed var(--grey-8) 2px` : null};
+  border: ${({$inDropZone}) => $inDropZone ? `dashed var(--grey-8) 2px` : null};
 `;
 
 interface IDropArea {
@@ -71,10 +71,10 @@ useEffect(() => {
 }, [handleWindowDragAndDrop]);
 
   return(
-    <Container {...{height}} {...props}>
+    <Container $height={height} {...props}>
       <DragAndDrop
+        $inDropZone={inDropZone}
         {...{
-          inDropZone,
           onDragEnter,
           onDragLeave,
           onDrop,
