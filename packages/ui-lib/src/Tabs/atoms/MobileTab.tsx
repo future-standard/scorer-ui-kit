@@ -12,7 +12,7 @@ const Container = styled.button`
   flex-grow: 1;
 `;
 
-const LinkTab = styled.div<{ isActive: boolean }>`
+const LinkTab = styled.div<{ $isActive: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,7 +38,7 @@ const LinkTab = styled.div<{ isActive: boolean }>`
     }
   `};
 
-  ${({ isActive, theme }) => isActive && css`
+  ${({ $isActive, theme }) => $isActive && css`
     &, &:hover {
       border-bottom-color: ${theme.colors.menu.active};
       ${IconWrapper} {
@@ -68,7 +68,7 @@ const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, closeId, counter, statu
 
   return (
     <Container {...props} onClick={() => onChangeTab(tabFor)}>
-      <LinkTab isActive={selected === tabFor}>
+      <LinkTab $isActive={selected === tabFor}>
         <StatusIcon {...{icon, status, counter}} />
       </LinkTab>
     </Container>
