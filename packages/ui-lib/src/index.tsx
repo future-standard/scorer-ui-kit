@@ -2,6 +2,7 @@
 import defaultTheme from './theme';
 import ThemeVariables from './theme/ThemeVariables';
 import { BaseStyles } from './theme/ThemeHelpers';
+export type { ThemeType } from './styled';
 
 //Components Alerts
 import {
