@@ -198,6 +198,24 @@ const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, line
     }
   }, [lineSetData, updateHandleAngles, handleUsesAngles]);
 
+  const initialClampDone = useRef(false);
+  useEffect(() => {
+    // Clamp existing points to boundaries once when boundaries first become valid (video load)
+    if(boundaries.x.max === 0 && boundaries.y.max === 0) { return; }
+    if(initialClampDone.current) { return; }
+    initialClampDone.current = true;
+
+    const needsUpdate = lineSetData.points.some(({x, y}) =>
+      x < boundaries.x.min || x > boundaries.x.max ||
+      y < boundaries.y.min || y > boundaries.y.max
+    );
+
+    if(needsUpdate){
+      const clampedPoints = lineSetData.points.map(point => enforceBoundaries({...point}));
+      dispatch({type: "UPDATE", index: lineSetId, data: { ...lineSetData, points: clampedPoints }});
+    }
+  }, [boundaries]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handles = (lineSetData?.showPointHandle === undefined || lineSetData?.showPointHandle) &&
     lineSetData.points.map(({ x, y }, index) =>
       <HandleUnit

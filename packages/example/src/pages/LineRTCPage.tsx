@@ -35,6 +35,8 @@ const Line: React.FC<{}> = () => {
   const [ws, setWS] = useState('localhost/wsapp');
   const [wsURL, setWsURL] = useState('');
   const [isShowDirection, setShowDirection] = useState<boolean>(false);
+  const [showSpacer, setShowSpacer] = useState<boolean>(false);
+  const [spacerHeight, setSpacerHeight] = useState<number>(400);
   const [isLabelShadow, setLabelShadow] = useState<boolean>(false);
   const {createMediaModal} = useMediaModal();
 
@@ -216,6 +218,14 @@ const Line: React.FC<{}> = () => {
       </Sidebar>
       <Content>
         {error && <AlertBar message={error} type='error' /> }
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+          <Button design="secondary" onClick={() => setShowSpacer(s => !s)}>{showSpacer ? 'Hide' : 'Show'} Scroll Spacer</Button>
+          {showSpacer && <input type="range" min={100} max={2000} step={50} value={spacerHeight} onChange={e => setSpacerHeight(Number(e.target.value))} style={{ width: '200px' }} />}
+          {showSpacer && <span style={{ color: '#888' }}>{spacerHeight}px</span>}
+        </div>
+        {showSpacer && <div style={{ height: `${spacerHeight}px`, background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px)' }}>
+          <p style={{ padding: '20px', color: '#888' }}>TEMP: Scroll test spacer</p>
+        </div>}
         <TextField label='Host' name='host' fieldState='default' value={ws} onChange={({target:{value}})=> setWS(value)} ></TextField>
         <Button onClick={connect}>Connect</Button>
         {
