@@ -18,8 +18,8 @@ const IntroductionTextWrapper = styled.div`
   max-width: 648px;
 `;
 
-const RightPanel = styled.div<{iconLeftPanel: boolean}>`
-    ${({iconLeftPanel}) => iconLeftPanel && css`
+const RightPanel = styled.div<{$iconLeftPanel: boolean}>`
+    ${({$iconLeftPanel}) => $iconLeftPanel && css`
         padding-top: 32px;
     `};
 
@@ -107,7 +107,7 @@ const PageHeader: React.FC<IProps> = ({
         }
       </LeftPanel>
       {rightContent ?
-        <RightPanel iconLeftPanel={!!icon}>
+        <RightPanel $iconLeftPanel={!!icon}>
           <>{rightContent}</>
         </RightPanel>
         : null
