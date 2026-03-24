@@ -128,7 +128,7 @@ const renderGroupHeader = (columnConfig: ITableColumnConfig[], index: number) =>
   return (
     <Fragment>
       <Title>{columnConfig[index].groupTitle}</Title>
-      <MiddleLine {...{ isLastOfGroup }} />
+      <MiddleLine $isLastOfGroup={isLastOfGroup} />
     </Fragment>
   );
 };
