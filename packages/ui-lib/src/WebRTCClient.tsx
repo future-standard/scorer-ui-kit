@@ -168,6 +168,9 @@ const WebRTCPlayer: React.FC<Props> = ({
     setStatus('Disconnected from server');
     closePeerConnection();
     if (event.code !== 1000 && enabled && mountedRef.current) {
+      if (reconnectTimeoutRef.current !== null) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
       reconnectTimeoutRef.current = setTimeout(connectToPeer, 3000);
     }
   }
