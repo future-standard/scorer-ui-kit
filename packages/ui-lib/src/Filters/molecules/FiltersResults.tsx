@@ -36,8 +36,8 @@ const FilterLabel = styled.div`
   }
   border-right: 1px solid var(--grey-8);
 `;
-const FilterLabelText = styled.div<{ hasIcon?: boolean }>`
-  padding: ${({ hasIcon }) => hasIcon ? '0 15px 0 9px' : '0 15px 0 0'};
+const FilterLabelText = styled.div<{ $hasIcon?: boolean }>`
+  padding: ${({ $hasIcon }) => $hasIcon ? '0 15px 0 9px' : '0 15px 0 0'};
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -125,7 +125,7 @@ const renderLabel = (item: IFilterItem | IDateInterval | Date, resultsDateFormat
       : `${item.start.toDateString()} - ${item.end.toDateString()}`;
   }
 
-  return <FilterLabelText hasIcon={!!icon}>{textLabel}</FilterLabelText>;
+  return <FilterLabelText $hasIcon={!!icon}>{textLabel}</FilterLabelText>;
 };
 
 export interface IFilterLabel {
