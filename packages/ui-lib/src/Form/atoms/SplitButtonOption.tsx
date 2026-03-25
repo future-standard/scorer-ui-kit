@@ -166,6 +166,7 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
     <StyledButton
       ref={buttonRef}
       $noBorderTop={noBorderTop}
+      size={size}
       onClick={handleClick}
       {...props}>
       <LeftIconWrapper $isAscendingIcon={icon === 'FilterAscending'} >
