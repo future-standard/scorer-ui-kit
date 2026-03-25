@@ -105,7 +105,7 @@ export interface ITableRowThumbnail {
 // No Image Placeholder
 
 const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({ hoverZoom = true, image='', mediaUrl, mediaType, retryImageLoad= false, retryLimit=5, closeText, onClickThumbnail}) => {
-  const [showImage, setShowImage] = useState(true);
+  const [showImage, setShowImage] = useState(!!image);
   const [imgSrc, setImgSrc] = useState(image);
   const { createMediaModal } = useMediaModal();
   const [retryCount, setRetryCount] = useState(0);

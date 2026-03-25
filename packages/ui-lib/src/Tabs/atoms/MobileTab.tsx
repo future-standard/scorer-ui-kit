@@ -58,7 +58,7 @@ interface IMobileTab {
   status?: IStatusDot
 }
 
-const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, closeId, counter, status, ...props }) => {
+const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, closeId, counter, status, customComponent: _customComponent, ...props }) => {
   const { selected, setSelected }: ContextProps = useContext(TabContext);
 
   const onChangeTab = useCallback((tabId: string) => {
