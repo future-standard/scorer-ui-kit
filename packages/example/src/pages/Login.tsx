@@ -34,7 +34,7 @@ const Box = styled.div<{ $margin?: string; $flex?: string;}>`
   }
   ${({ $margin }) => $margin && css`margin:${$margin};`}
   ${({ $flex }) => $flex && css`
-    flex:${flex};
+    flex:${$flex};
     justify-content: flex-end;
     display: flex;
     flex-direction: column;
