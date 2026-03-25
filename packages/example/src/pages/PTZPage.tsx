@@ -59,12 +59,12 @@ const PTZ: React.FC<Props> = () => {
         {
           connection === 'connected'
           ?
-            <Img src={image||''} alt='PTZ Camera' />
+            <Img src={image || undefined} alt='PTZ Camera' />
           :
             <Form onChange={onChange} onSubmit={onSubmit}>
-              <TextField required label='PTZ Camera Hostname' fieldState='default' name='host' id='host' value={formData.host} />
-              <TextField required label='Username' fieldState='default' name='username' id='username' value={formData.username} />
-              <PasswordField required label='Password' fieldState='default' name='password' id='password' value={formData.password} />
+              <TextField required label='PTZ Camera Hostname' fieldState='default' name='host' id='host' value={formData.host} onChange={onChange} />
+              <TextField required label='Username' fieldState='default' name='username' id='username' value={formData.username} onChange={onChange} />
+              <PasswordField required label='Password' fieldState='default' name='password' id='password' value={formData.password} onChange={onChange} />
               <ButtonWithLoading loading={loading} type='submit' >Connect</ButtonWithLoading>
             </Form>
         }
