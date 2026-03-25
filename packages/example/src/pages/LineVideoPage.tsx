@@ -243,7 +243,7 @@ const Line: React.FC<{}> = () => {
           </pre>
         </SidebarBox>
       </Sidebar>
-      <Content padBottom={false}>
+      <Content $padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
           <LineUIVideo options={options} onLineClick={selectLine} videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4' />

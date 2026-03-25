@@ -176,7 +176,7 @@ const Checkbox : React.FC<IProps> = ({ indeterminate = false, disabled, checked 
   const iconWeight : number = dimensions.icons.weights['regular'];
 
   return (
-    <Container onChange={customOnChange} {...{indeterminate}} $disabled={disabled} $visualState={visualState}>
+    <Container onChange={customOnChange} $disabled={disabled} $visualState={visualState}>
       <CheckboxOuter>
         <CheckboxInner>
           {visualState === CheckboxState.On ? <IconWrapper $color='input-toggle-icon-color'><CheckMark color='input-toggle-icon-color' stroke='inverse' size={12} weight={iconWeight} /></IconWrapper> : null}
