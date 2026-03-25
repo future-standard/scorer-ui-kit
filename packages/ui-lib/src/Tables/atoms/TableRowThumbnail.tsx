@@ -155,6 +155,7 @@ const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({ hoverZoom = true, ima
   },[]);
 
   const checkIfImageExists = (url: string, imageExistsCallback: (exists: boolean) => void) => {
+    if (!url) { imageExistsCallback(false); return; }
     const img = new Image();
     img.src = url;
 
