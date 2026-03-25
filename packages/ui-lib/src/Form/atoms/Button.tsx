@@ -4,8 +4,8 @@ import { TypeButtonSizes, TypeButtonDesigns } from '..';
 
 
 interface IStyledComponentProps {
-  size: TypeButtonSizes
-  design: TypeButtonDesigns
+  $size: TypeButtonSizes
+  $design: TypeButtonDesigns
   $shadow: boolean
   $noPadding?: boolean
   $loading?: boolean
@@ -142,7 +142,7 @@ type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button : React.FC<Props> = ({ design='primary', size='normal', shadow = false, noPadding = false, loading=false, children, formAction, ...props }) => {
   design === 'danger' ? console.warn('Button.tsx - Warning, the design prop value danger is being deprecated. Use warning instead.') : null;
-  return <StyledButton type='button' $isOutline={design === 'outline'} className={`button-design-${design} button-size-${size}`} {...{design, size}} $noPadding={noPadding} $shadow={shadow} $loading={loading} {...props}><>{children}</></StyledButton>;
+  return <StyledButton type='button' $isOutline={design === 'outline'} className={`button-design-${design} button-size-${size}`} $design={design} $size={size} $noPadding={noPadding} $shadow={shadow} $loading={loading} {...props}><>{children}</></StyledButton>;
 };
 
 export default Button;
