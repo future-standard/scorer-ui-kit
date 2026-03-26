@@ -148,7 +148,7 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
           $open={menuState.isMenuOpen}
           $desktopSize={menuState.desktopSize}
           onPointerEnter={menuState.isMenuPinned ? () => {} : autoMenuOpen}
-          onTouchStart={() => console.log('touch')}
+          onTouchStart={() => console.debug('touch')}
           onMouseLeave={menuState.isMenuPinned ? () => {} : autoMenuClose}
         >
           <ContainerInner>
