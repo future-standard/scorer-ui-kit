@@ -22,6 +22,7 @@ import CustomAlertsPage from './pages/CustomAlertsPage';
 import Layouts from './pages/Layouts';
 import SplitLayouts from './pages/SplitLayout';
 import SwitchWithAPI from './pages/SwitchTest';
+import UsePollTestPage from './pages/UsePollTestPage';
 
 const App: React.FC<{}> = () => {
   return (
@@ -47,6 +48,7 @@ const App: React.FC<{}> = () => {
         <Route path='/layouts' element={<Layouts />} />
         <Route path='/split-layouts' element={<SplitLayouts />} />
         <Route path='/switch-test' element={<SwitchWithAPI />} />
+        <Route path='/usepoll-test' element={<UsePollTestPage />} />
       </Routes>
     </Router>
   )

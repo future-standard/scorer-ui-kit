@@ -189,6 +189,13 @@ const LinksPage : React.FC = () => {
             <FilenameTag>SwitchTest.tsx</FilenameTag>
           </Link>
         </Item>
+        <Item>
+          <Link to={`/usepoll-test`}>
+            <Title>usePoll — StrictMode Fix</Title>
+            <Description>Side-by-side comparison of usePoll before and after the React StrictMode canceled-ref fix.</Description>
+            <FilenameTag>UsePollTestPage.tsx</FilenameTag>
+          </Link>
+        </Item>
       </List>
     </Section>
 
