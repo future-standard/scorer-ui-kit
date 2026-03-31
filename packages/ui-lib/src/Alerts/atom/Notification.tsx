@@ -174,18 +174,9 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
   }, [slideUp, closeCallback, onTextButtonClick, textClicked]);
 
   useEffect(() => {
-    let mounted = true;
-    if(!isPinned) {
-      setTimeout( () => {
-        if(mounted) {
-          handleDismiss();
-        }
-      }, 7000);
-    }
-
-    return () => {
-      mounted = false;
-    };
+    if(isPinned) return;
+    const timerId = setTimeout(() => handleDismiss(), 7000);
+    return () => clearTimeout(timerId);
   },[isPinned, message, handleDismiss, id]);
 
   useEffect(() => {
