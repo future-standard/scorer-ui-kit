@@ -27,7 +27,7 @@ export const usePoll = (callback = ()=>{}, interval = 1000) => {
   },[callback]);
 
   useEffect(()=>{
-
+    canceled.current = false;
     pollOnce();
 
     return () => {
