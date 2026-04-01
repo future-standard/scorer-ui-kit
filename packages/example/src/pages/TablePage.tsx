@@ -10,8 +10,8 @@ import {
   Button,
   FilterBar,
   IFilterDropdownConfig,
-  IFilterItem,
   IFilterResult,
+  IFeedbackColor,
   isFilterItem,
 } from 'scorer-ui-kit';
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
@@ -85,7 +85,7 @@ const columnConfig: ITableColumnConfig[] = [
 ];
 
 // Status classification for each row — used by the filter
-const rowStatusMap: Record<string, string> = {
+const rowStatusMap: Record<string, IFeedbackColor> = {
   'device-id-1': 'success',
   'device-id-2': 'error',
   'device-id-3': 'warning',
@@ -212,30 +212,26 @@ const TablePage: React.FC = () => {
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
-  const getDropdownConfig = useCallback((): IFilterDropdownConfig[] => {
-    const statusList: IFilterItem[] = [
-      { text: t('filterBar.statusSuccess'), value: 'success' },
-      { text: t('filterBar.statusWarning'), value: 'warning' },
-      { text: t('filterBar.statusError'),   value: 'error' },
-      { text: t('filterBar.statusNeutral'), value: 'neutral' },
-    ];
-
-    return [
-      {
-        id: 'statusFilter',
-        buttonText: t('filterBar.status'),
-        list: statusList,
-        buttonIcon: 'Camera',
-        optionType: 'radio',
-        hasReset: true,
-        hasApply: true,
-        resetText:  t('filterBar.reset'),
-        cancelText: t('filterBar.cancel'),
-        closeText:  t('filterBar.close'),
-        applyText:  t('filterBar.apply'),
-      },
-    ];
-  }, [t]);
+  const dropdownsConfig = useMemo((): IFilterDropdownConfig[] => [
+    {
+      id: 'statusFilter',
+      buttonText: t('filterBar.status'),
+      list: [
+        { text: t('filterBar.statusSuccess'), value: 'success' },
+        { text: t('filterBar.statusWarning'), value: 'warning' },
+        { text: t('filterBar.statusError'),   value: 'error' },
+        { text: t('filterBar.statusNeutral'), value: 'neutral' },
+      ],
+      buttonIcon: 'Camera',
+      optionType: 'radio',
+      hasReset: true,
+      hasApply: true,
+      resetText: t('filterBar.reset'),
+      cancelText: t('filterBar.cancel'),
+      closeText: t('filterBar.close'),
+      applyText:  t('filterBar.apply'),
+    },
+  ], [t]);
 
   // Rows filtered by the active status selection
   const displayRows = useMemo(() => {
@@ -277,18 +273,14 @@ const TablePage: React.FC = () => {
         </Button>
       </LanguageRow>
       <FilterBar
-        dropdownsConfig={getDropdownConfig()}
+        dropdownsConfig={dropdownsConfig}
         onChangeCallback={handleFilters}
         totalResults={displayRows.length}
         filtersTitle={t('filterBar.title')}
         resultTextTemplate={t('filterBar.resultTemplate')}
         clearText={t('filterBar.clearAll')}
       />
-      <LangNote>
-        {i18n.language.startsWith('ja')
-          ? 'ヒント：ステータスフィルターを選択してから言語を切り替えると、選択中のタグのラベルが更新されます。'
-          : 'Tip: select a Status filter, then switch language — the selected filter tag label updates.'}
-      </LangNote>
+      <LangNote>{t('filterBar.tip')}</LangNote>
       <TypeTable selectable={true} {...{ columnConfig, rows: displayRows, selectCallback, toggleAllCallback, hasThumbnail: true }} />
       <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
     </Content>

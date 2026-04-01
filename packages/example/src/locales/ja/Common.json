@@ -49,7 +49,8 @@
     "statusWarning": "警告",
     "statusError": "エラー",
     "statusNeutral": "中立",
-    "switchLang": "英語に切替"
+    "switchLang": "英語に切替",
+    "tip": "ヒント：ステータスフィルターを選択してから言語を切り替えると、選択中のタグのラベルが更新されます。"
   },
   "breadcrumbs": {
     "back": "戻る",
