@@ -314,7 +314,7 @@ const CalCellB = styled(CalCell) <{ $thisMonth?: boolean, $isToday?: boolean, $s
     color: var(--grey-6);
     cursor: not-allowed;
 
-    ${({ $state }) => ($state === 'single' || state === 'start' || state === 'end') && css`
+    ${({ $state }) => ($state === 'single' || $state === 'start' || $state === 'end') && css`
       color: var(--white-1);
       background: var(--red-a9);
     `}
