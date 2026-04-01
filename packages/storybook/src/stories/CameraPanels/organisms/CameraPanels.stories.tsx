@@ -108,7 +108,7 @@ export const _CameraPanels = () => {
 
   const VideoPanel: ICameraPanel = useMemo(() => ({
     streamProps: {
-      src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
       mediaType: 'video',
       videoOptions: { autoPlay: false, controls: true },
       isEmptyWithIcon,
