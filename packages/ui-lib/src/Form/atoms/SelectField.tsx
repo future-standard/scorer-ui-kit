@@ -81,9 +81,9 @@ const StyledSelect = styled.select<{ $fieldState: TypeFieldState, $withIcon?: bo
   }
 `;
 
-const Container = styled.div<{ isCompact?: boolean, activePlaceholder: boolean }>`
+const Container = styled.div<{ $isCompact?: boolean, $activePlaceholder: boolean }>`
 
-  ${({activePlaceholder}) => activePlaceholder && css`
+  ${({$activePlaceholder}) => $activePlaceholder && css`
     ${StyledSelect} {
       font-family: var(--font-data);
       color: var(--input-color-placeholder);
@@ -174,7 +174,7 @@ const SelectField: React.FC<ISelect> = ({
   ), [children, defaultValue, handleOnChange, placeholder, props, fieldState, icon, iconColor, isCompact]);
 
   return (
-    <Container {...{ isCompact, activePlaceholder }}>
+    <Container {...{ $isCompact: isCompact, $activePlaceholder: activePlaceholder }}>
       {label
         ? (
           <Label htmlFor={label.htmlFor} labelText={label.text} direction={ label.isSameRow ? 'row' : label.direction }>

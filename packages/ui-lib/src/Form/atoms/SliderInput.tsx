@@ -248,6 +248,7 @@ const SliderInput : React.FC<ISlider> = ({
   inputCallback = () => {},
   onChangeCallback = () => {},
   allMarkCentered = false,
+  showValue: _showValue,
   children,
   formAction,
   ...props

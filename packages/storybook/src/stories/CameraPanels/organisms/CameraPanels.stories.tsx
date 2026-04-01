@@ -12,10 +12,10 @@ const CameraPanelsStory = {
   decorators: []
 };
 
-const Container = styled.div<{ showCustomComponent?: boolean }>`
+const Container = styled.div<{ $showCustomComponent?: boolean }>`
   max-width: 1200px;
 
-  ${({showCustomComponent}) =>  showCustomComponent && css`
+  ${({$showCustomComponent}) =>  $showCustomComponent && css`
     ${CameraPanelWrapper} {
       height: 250px;
     }
@@ -136,7 +136,7 @@ export const _CameraPanels = () => {
   ], [ImagePanel, VideoPanel]);
 
   return (
-    <Container {...{showCustomComponent}}>
+    <Container $showCustomComponent={showCustomComponent}>
       <CameraPanels
         panels={panelConfig}
       />
