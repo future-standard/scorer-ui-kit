@@ -41,9 +41,9 @@ const Container = styled.div`
 `;
 
 const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdowns: boolean, hasShowMore: boolean) => {
-  return dropdownFilters.map((dropdown: IFilterDropdownExt) => {
-    if (!dropdown.canHide || !showMoreDropdowns || (dropdown.canHide && !hasShowMore)) {
-      return <StyledDropdown key={`dropdownFilter-id-${dropdown.id}`} {...dropdown} />;
+  return dropdownFilters.map(({ id, canHide, ...dropdownProps }: IFilterDropdownExt) => {
+    if (!canHide || !showMoreDropdowns || (canHide && !hasShowMore)) {
+      return <StyledDropdown key={`dropdownFilter-id-${id}`} {...dropdownProps} />;
     }
     return null;
   });
@@ -74,11 +74,11 @@ const renderSearchInputs = (
 };
 
 const renderDatePickers = (datePickerFilters: IFilterDatePicker[]) => {
-  return datePickerFilters.map((datePicker: IFilterDatePicker) => {
+  return datePickerFilters.map(({ id, canHide, ...datePickerProps }: IFilterDatePicker) => {
     return (
       <StyledDropdownDatePicker
-        key={`datePicker-filter-${datePicker.id}`}
-        {...{ ...datePicker }}
+        key={`datePicker-filter-${id}`}
+        {...datePickerProps}
       />
     );
   });
