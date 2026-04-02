@@ -36,7 +36,7 @@ import {
 
 import { filterByCreationDatePicker, sortDataBy } from '../../helpers/sample_table_helpers';
 import { emptyCallbackForStory } from '../../helpers';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const SelectRows = styled.pre`
   color: var(--grey-11);
