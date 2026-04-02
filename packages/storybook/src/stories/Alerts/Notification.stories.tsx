@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { text, boolean, select } from "@storybook/addon-knobs";
 import { action } from '@storybook/addon-actions';
@@ -24,24 +24,35 @@ const NotificationStory = {
   decorator: []
 }
 
+const NOTIFICATION_VARIANTS: Pick<INotificationProps, 'type' | 'message'>[] = [
+  { type: 'info',    message: 'Info — this is notification #1' },
+  { type: 'success', message: 'Success — this is notification #2' },
+  { type: 'warning', message: 'Warning — this is notification #3' },
+  { type: 'error',   message: 'Error — this is notification #4' },
+  { type: 'neutral', message: 'Neutral — this is notification #5' },
+];
+
 const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
   const { sendNotification, clearNotifications } = useNotification();
-
   const [notificationSettings, setNotificationSettings] = useState(notiSettings);
+  const countRef = useRef(0);
 
   useEffect(() => {
     setNotificationSettings(notiSettings);
   }, [notiSettings])
+
+  const handleSend = () => {
+    const variant = NOTIFICATION_VARIANTS[countRef.current % NOTIFICATION_VARIANTS.length];
+    countRef.current += 1;
+    sendNotification({ ...notificationSettings, ...variant });
+  };
 
   return (
     <>
       <Button
         design='secondary'
         size='small'
-        onClick={() => {
-          sendNotification(notificationSettings)
-        }
-        }
+        onClick={handleSend}
       >Send notification</Button>
       <Button onClick={() => clearNotifications()}>
         Clear Notifications
