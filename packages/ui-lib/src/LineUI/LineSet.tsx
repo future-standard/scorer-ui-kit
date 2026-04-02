@@ -6,22 +6,22 @@ import { LineSetContext } from './Contexts';
 import { IPointSet, IDragLineUISharedOptions, IVector2 } from '.';
 import styled, { css } from 'styled-components';
 
-const FilledPolygon = styled.polygon<{ color: string; opacity: number }>`
-  fill: ${({ color }) => color };
-  opacity: ${({ opacity }) => opacity };
+const FilledPolygon = styled.polygon<{ $color: string; $opacity: number }>`
+  fill: ${({ $color }) => $color };
+  opacity: ${({ $opacity }) => $opacity };
 `;
 
-const Point = styled.circle<{styling: string}>`
-  fill: ${({theme, styling}) => theme.custom.lines[styling].point.fill};
+const Point = styled.circle<{$styling: string}>`
+  fill: ${({theme, $styling}) => theme.custom.lines[$styling].point.fill};
 `;
 
-const AreaLabelText = styled.text<{styling: string, showAreaLabelShadow: boolean}>`
+const AreaLabelText = styled.text<{$styling: string, $showAreaLabelShadow: boolean}>`
   text-align: center;
-  fill: ${({theme, styling}) => theme.custom.lines[styling].label.fill};
+  fill: ${({theme, $styling}) => theme.custom.lines[$styling].label.fill};
   font-weight: bold;
   transition: opacity 250ms ease;
   pointer-events: none;
-  ${({showAreaLabelShadow}) => showAreaLabelShadow && css`
+  ${({$showAreaLabelShadow}) => $showAreaLabelShadow && css`
     text-shadow:
       -1px -1px 0 #000,
       1px -1px 0 #000,
@@ -63,7 +63,7 @@ const AreaLabel : React.FC<AreaLabelProps> = ( { lineSetData, unit, showAreaLabe
 
   midpoint = { x: midpoint.x / pointsLength, y: midpoint.y / pointsLength };
   const Textlen = lineSetData.areaName?.length || 1;
-  return <AreaLabelText fontSize={`${unit * 14}px`} styling={lineSetData.styling || 'primary'} x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)} showAreaLabelShadow={showAreaLabelShadow}>{lineSetData.areaName}</AreaLabelText>;
+  return <AreaLabelText fontSize={`${unit * 14}px`} $styling={lineSetData.styling || 'primary'} x={midpoint.x - (4 * Textlen * unit)} y={midpoint.y + (6 * unit)} $showAreaLabelShadow={showAreaLabelShadow}>{lineSetData.areaName}</AreaLabelText>;
 };
 
 const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, lineSetId, options, onLineMoveEnd, onLineClick, lineClickSensingBorder, hasClickSensingBorder }) => {
@@ -238,7 +238,7 @@ const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, line
       />
   );
 
-  const points = options.showPoint && (lineSetData.points.map(({x,y}, index) => <Point styling={lineSetData.styling||'primary'} key={index} r={unit} cx={x} cy={y} />));
+  const points = options.showPoint && (lineSetData.points.map(({x,y}, index) => <Point $styling={lineSetData.styling||'primary'} key={index} r={unit} cx={x} cy={y} />));
 
   const lines = lineSetData.points.map(({x:x1,y:y1}, index) => {
     const {points, name, styling = 'primary'} = lineSetData;
@@ -277,7 +277,7 @@ const LineSet: React.FC<ILineSetProps> = ({ getCTM, boundaries, unit, size, line
 
   return (
     <g>
-      <FilledPolygon points={polygonPoints} color={lineSetData.areaFillColor ? lineSetData.areaFillColor : 'transparent'} opacity={lineSetData.areaTransparencyLevel ? lineSetData.areaTransparencyLevel / 100 : 0} />
+      <FilledPolygon points={polygonPoints} $color={lineSetData.areaFillColor ? lineSetData.areaFillColor : 'transparent'} $opacity={lineSetData.areaTransparencyLevel ? lineSetData.areaTransparencyLevel / 100 : 0} />
       {lines}
       {handles}
       {points}

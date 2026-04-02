@@ -23,7 +23,7 @@ const TextContainer = styled.div`
   transition: padding var(--speed-slow) var(--easing-primary-in-out);
 `;
 
-const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean, position?: string }>`
+const LoadingContainer = styled.div<{ $design: TypeButtonDesigns, $show?: boolean, $position?: string }>`
   height: inherit;
   flex: 0 0 calc((var(--button-h-padding) * 2) + var(--button-icon-size));
   width: calc((var(--button-h-padding) * 2) + var(--button-icon-size));
@@ -39,9 +39,9 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
     flex var(--speed-slow) var(--easing-primary-in-out) var(--speed-slow),
     opacity var(--speed-slow) var(--easing-primary-in-out);
 
-  ${({ position }) => css`
-    order: ${ position && position === 'left' ? 0 : 2 };
-    ${ position === 'left'
+  ${({ $position }) => css`
+    order: ${ $position && $position === 'left' ? 0 : 2 };
+    ${ $position === 'left'
       ? `border-right-width: 1px;`
       : `border-left-width: 1px;`
     };
@@ -52,7 +52,7 @@ const LoadingContainer = styled.div<{ design: TypeButtonDesigns, show?: boolean,
   }
 `;
 
-const InnerContainer = styled.div<{position?: string, $loading: boolean, design: TypeButtonDesigns, size: TypeButtonSizes}>`
+const InnerContainer = styled.div<{$position?: string, $loading: boolean, $design: TypeButtonDesigns, $size: TypeButtonSizes}>`
   display: flex;
   flex:1;
   height: inherit;
@@ -81,9 +81,9 @@ const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', 
   return (
     <Container>
       <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading}} {...rest}>
-        <InnerContainer $loading={loading} {...{ design, size}}>
+        <InnerContainer $loading={loading} $design={design} $size={size}>
           <TextContainer><>{children}</></TextContainer>
-          <LoadingContainer {...{ design, position }}>
+          <LoadingContainer $design={design} $position={position}>
             <Spinner size={size ==='xsmall' || size ==='small' ? 'xsmall' : 'small'} styling={design} />
           </LoadingContainer>
         </InnerContainer>

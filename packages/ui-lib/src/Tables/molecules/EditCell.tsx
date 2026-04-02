@@ -58,17 +58,17 @@ const EditContainer = styled.div`
 
 const StyledIconButton = styled(IconButton)``;
 
-const TextContainer = styled.div<{ alignment: TypeCellAlignment }>`
+const TextContainer = styled.div<{ $alignment: TypeCellAlignment }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-right: 18px;
 
-  ${({ alignment }) => alignment === 'center' && css`
+  ${({ $alignment }) => $alignment === 'center' && css`
     justify-content: center;
   `}
 
-  ${({ alignment }) => alignment === 'right' && css`
+  ${({ $alignment }) => $alignment === 'right' && css`
     justify-content: flex-end;
 `}
 
@@ -179,7 +179,7 @@ const EditCell: React.FC<IEditableCell> = ({
               </StyledButton>)}
           </EditContainer>)
         : (
-          <TextContainer alignment={alignment}>
+          <TextContainer $alignment={alignment}>
             {toLink ? <StyledLink to={toLink}>{updatedValue}</StyledLink> : updatedValue}
             <StyledIconButton icon='Edit' weight='light' size={16} onClick={() => setIsEditMode(true)} />
           </TextContainer>)}

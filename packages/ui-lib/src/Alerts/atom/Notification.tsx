@@ -5,7 +5,7 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
 
-const Container = styled.div<{type: AlertType, $isClosing: boolean, $isVisible: boolean}>`
+const Container = styled.div<{$type: AlertType, $isClosing: boolean, $isVisible: boolean}>`
   min-height: 50px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -22,7 +22,7 @@ const Container = styled.div<{type: AlertType, $isClosing: boolean, $isVisible: 
   z-index: 999;
 
   font-family: var(--font-ui);
-  background-color: ${({type}) => `var(--${type})`};
+  background-color: ${({$type}) => `var(--${$type})`};
   text-align: left;
   font-size: 14px;
   font-weight: 400;
@@ -54,9 +54,9 @@ export const IconNames = {
   neutral: 'Information'
 };
 
-const IconButton = styled.div<{selected?: boolean}>`
+const IconButton = styled.div<{$selected?: boolean}>`
   ${resetButtonStyles};
-  ${({selected=false}) => selected && css`
+  ${({$selected=false}) => $selected && css`
     border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
@@ -207,7 +207,7 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
 
   return( (message && !dismiss)
   ? ReactDOM.createPortal(
-    <Container type={type} $isClosing={slideUp} $isVisible={isVisible} onTransitionEnd={animationEnded}>
+    <Container $type={type} $isClosing={slideUp} $isVisible={isVisible} onTransitionEnd={animationEnded}>
       <Icon icon={!icon ? IconNames[type] : icon} color='inverse' />
       <MainMessage>{message}</MainMessage>
       {actionTextButton

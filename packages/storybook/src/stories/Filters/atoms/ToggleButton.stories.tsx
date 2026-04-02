@@ -19,10 +19,10 @@ const CameraData = styled.div``;
 const Camera = styled.li``;
 
 const Container = styled.div``;
-const DataGroup = styled.ol<{ layout: string }>`
+const DataGroup = styled.ol<{ $layout: string }>`
   margin-top: 20px;
   display: grid;
-  ${({ layout }) => layout === 'grid' &&
+  ${({ $layout }) => $layout === 'grid' &&
     `
       list-style-type: none;
       grid-template-columns: repeat(3, 300px);
@@ -36,8 +36,8 @@ const DataGroup = styled.ol<{ layout: string }>`
   };
 `;
 
-const StatusSpan = styled.span<{ isOnline?: boolean }>`
-    ${({ isOnline }) => isOnline ?
+const StatusSpan = styled.span<{ $isOnline?: boolean }>`
+    ${({ $isOnline }) => $isOnline ?
     `
       color: var(--success);
     `
@@ -73,15 +73,15 @@ export const _ToggleButton = () => {
           selectedIndex: selectedLayout
         }} />
 
-      <DataGroup layout={layoutOptions[selectedLayout].value}>
+      <DataGroup $layout={layoutOptions[selectedLayout].value}>
         <Camera>
           <CameraData>
-            Camera01 - <StatusSpan isOnline>Online</StatusSpan>
+            Camera01 - <StatusSpan $isOnline>Online</StatusSpan>
           </CameraData>
         </Camera>
         <Camera>
           <CameraData>
-            Camera02 - <StatusSpan isOnline>Online</StatusSpan>
+            Camera02 - <StatusSpan $isOnline>Online</StatusSpan>
           </CameraData>
         </Camera>
         <Camera>
@@ -106,12 +106,12 @@ export const _ToggleButton = () => {
         </Camera>
         <Camera>
           <CameraData>
-            Camera07 - <StatusSpan isOnline>Online</StatusSpan>
+            Camera07 - <StatusSpan $isOnline>Online</StatusSpan>
           </CameraData>
         </Camera>
         <Camera>
           <CameraData>
-            Camera08 - <StatusSpan isOnline>Online</StatusSpan>
+            Camera08 - <StatusSpan $isOnline>Online</StatusSpan>
           </CameraData>
         </Camera>
         <Camera>

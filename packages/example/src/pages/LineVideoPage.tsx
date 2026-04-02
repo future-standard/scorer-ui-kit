@@ -228,9 +228,9 @@ const Line: React.FC<{}> = () => {
 
           <StyledButton icon={'Add'} design='primary' onClick={()=>addPoint(state.length-1)} >Add Point</StyledButton>
 
-          <StyledButton icon={'Delete'} design='danger' onClick={()=>removePoint(state.length-1)} >Remove Point</StyledButton>
+          <StyledButton icon={'Delete'} design='warning' onClick={()=>removePoint(state.length-1)} >Remove Point</StyledButton>
 
-          <StyledButton  icon={'Delete'}  design='danger' onClick={()=>removeSet(state.length-1)} >Remove Shape</StyledButton>
+          <StyledButton  icon={'Delete'}  design='warning' onClick={()=>removeSet(state.length-1)} >Remove Shape</StyledButton>
 
           <Switch checked={options.showDirectionMark} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
           <br />
@@ -243,7 +243,7 @@ const Line: React.FC<{}> = () => {
           </pre>
         </SidebarBox>
       </Sidebar>
-      <Content padBottom={false}>
+      <Content $padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
           <LineUIVideo options={options} onLineClick={selectLine} videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4' />

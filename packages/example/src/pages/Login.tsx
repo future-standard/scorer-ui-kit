@@ -28,13 +28,13 @@ const fadeInAnimation = keyframes`
 `;
 
 const Wrap = styled.div``
-const Box = styled.div<{ margin?: string; flex?: string;}>`
+const Box = styled.div<{ $margin?: string; $flex?: string;}>`
   button{
     width: 100%;
   }
-  ${({ margin }) => margin && css`margin:${margin};`}
-  ${({ flex }) => flex && css`
-    flex:${flex};
+  ${({ $margin }) => $margin && css`margin:${$margin};`}
+  ${({ $flex }) => $flex && css`
+    flex:${$flex};
     justify-content: flex-end;
     display: flex;
     flex-direction: column;
@@ -168,9 +168,9 @@ const Logo = styled(LoginScreen)`
     width: auto;
 `;
 
-const LogoBackground = styled.img<{design: gradientDesign}>`
+const LogoBackground = styled.img<{$design: gradientDesign}>`
   height: 1080px;
-  background-image: ${({design}) => gradients[design]};
+  background-image: ${({$design}) => gradients[$design]};
   position: absolute;
   bottom: -360px;
   left: -600px;
@@ -292,7 +292,7 @@ const Login: React.FC<OwnProps> = ({
         <LoginBox>
           <LogoContainer>
             <Logo />
-            <LogoBackground src={GhostLogo} {...{design}} />
+            <LogoBackground src={GhostLogo} $design={design} />
           </LogoContainer>
           <LoginForm onSubmit={onSubmit} spacing='25px'>
             <Title>Sign In To Your Account</Title>
@@ -318,7 +318,7 @@ const Login: React.FC<OwnProps> = ({
             />
             {alert && <AlertBar type={alert.type} message={alert.message} />}
 
-            <Box flex='1'>
+            <Box $flex='1'>
               <ButtonWithLoading loading={loading} type='submit' onClick={onSubmit}>Login</ButtonWithLoading>
             </Box>
             <ForgotLinkWrapper>

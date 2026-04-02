@@ -35,10 +35,10 @@ const StaticPageCount = styled.div`
   padding-right: 1px;
 `;
 
-const StyledInput = styled.input<{ maxWidth?: string }>`
+const StyledInput = styled.input<{ $maxWidth?: string }>`
   ${removeAutoFillStyle};
   color: var(--input-color-default);
-  max-width: ${({ maxWidth }) => maxWidth ? maxWidth : '40px'};
+  max-width: ${({ $maxWidth }) => $maxWidth ? $maxWidth : '40px'};
   font-family: var(--font-data);
   height: 100%;
   box-sizing: border-box;
@@ -59,9 +59,9 @@ const shakeAnimation = keyframes`
   100% { transform: translateX(0); }
 `;
 
-const InputContainer = styled.div<{ borderColorState?: string, shouldShake: boolean }>`
+const InputContainer = styled.div<{ $borderColorState?: string, $shouldShake: boolean }>`
   height: var(--input-height, 40px);
-  animation: ${({ shouldShake }) => (shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
+  animation: ${({ $shouldShake }) => ($shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
   flex-grow: 0;
   display: flex;
   flex-direction: row;
@@ -70,7 +70,7 @@ const InputContainer = styled.div<{ borderColorState?: string, shouldShake: bool
   padding: 0 8px;
   border-radius: 3px;
   box-shadow: 0 2px 1px 0 rgba(0, 102, 255, 0.04);
-  ${({ borderColorState }) => borderColorState && `border: 1px solid var(--input-${borderColorState}-border-color)`};
+  ${({ $borderColorState }) => $borderColorState && `border: 1px solid var(--input-${$borderColorState}-border-color)`};
 `;
 
 const GoButton = styled(Button)`
@@ -84,7 +84,7 @@ const ArrowWrapper = styled.div`
   gap: 0 8px;
 `;
 
-const ArrowButton = styled.button<{ active: boolean }>`
+const ArrowButton = styled.button<{ $active: boolean }>`
   ${resetButtonStyles};
   width: 40px;
   height: 40px;
@@ -93,17 +93,17 @@ const ArrowButton = styled.button<{ active: boolean }>`
   box-shadow: 0 4px 9px 0 rgba(152, 174, 189, 0.07);
   border: solid 1px var(--input-default-border-color);
   background-color: var(grey-2);
-  pointer-events: ${({ active }) => active ? 'auto' : 'none'};
-  opacity: ${({ active }) => active ? '1' : '0.5'};
+  pointer-events: ${({ $active }) => $active ? 'auto' : 'none'};
+  opacity: ${({ $active }) => $active ? '1' : '0.5'};
 
   &:focus, &:hover {
     outline: 2px solid #838383;
   }
 `;
 
-const ItemsSelectWrapper = styled.div<{ width: string }>`
+const ItemsSelectWrapper = styled.div<{ $width: string }>`
   ${SelectWrapper} {
-    width: ${({ width }) => width ? width : `60px`};
+    width: ${({ $width }) => $width ? $width : `60px`};
   }
 `;
 
@@ -282,7 +282,7 @@ const Pagination: React.FC<IPagination> = (props) => {
 
   return (
     <PaginationContainer>
-      <ItemsSelectWrapper width={selectWidth}>
+      <ItemsSelectWrapper $width={selectWidth}>
         <SelectField
           disabled={selectDisabled}
           label={{ htmlFor: selectId, text: itemsText, direction: 'row' }}
@@ -297,7 +297,7 @@ const Pagination: React.FC<IPagination> = (props) => {
         </SelectField>
       </ItemsSelectWrapper>
       <Label labelText={pageText} htmlFor='goButton' direction='row'>
-        <InputContainer borderColorState={fieldState} shouldShake={shouldShake}>
+        <InputContainer $borderColorState={fieldState} $shouldShake={shouldShake}>
           <StyledInput
             ref={inputRef}
             value={pageValue}
@@ -306,7 +306,7 @@ const Pagination: React.FC<IPagination> = (props) => {
             onBlur={(e) => onBlur(e)}
             onPaste={(e) => handlePaste(e)}
             onKeyDown={handleKeyDown}
-            maxWidth={getValidWidth()}
+            $maxWidth={getValidWidth()}
           />
           <StaticPageCount>{'/' + '\u00A0' + totalPages.toString()}</StaticPageCount>
           <GoButton id='goButton' size='small' design='primary' disabled={disableGo} onClick={onClickGo}>{buttonText}</GoButton>
@@ -316,13 +316,13 @@ const Pagination: React.FC<IPagination> = (props) => {
           <ArrowButton
             onClick={() => handlePageChange(activePage - 1)}
             disabled={activePage <= 1}
-            active={fieldState === 'default' && activePage > 1}>
+            $active={fieldState === 'default' && activePage > 1}>
             <Icon icon='Left' color='input-lead-icon' size={8} />
           </ArrowButton>
           <ArrowButton
             onClick={() => handlePageChange(activePage + 1)}
             disabled={activePage >= totalPages}
-            active={fieldState === 'default' && activePage < totalPages}>
+            $active={fieldState === 'default' && activePage < totalPages}>
             <Icon icon='Right' color='input-lead-icon' size={8} />
           </ArrowButton>
         </ArrowWrapper>

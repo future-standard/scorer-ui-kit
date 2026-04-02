@@ -62,7 +62,7 @@ const SwitchOuter = styled.div`
   }
 `;
 
-const SwitchInner = styled.div<{ position: PositionKey}>`
+const SwitchInner = styled.div<{ $position: PositionKey}>`
   --offset: calc(((var(--switch-height) - var(--switch-inner-size)) / 2) - var(--switch-border-width));
   --position-off: var(--offset);
   --position-on: calc(var(--switch-width) - var(--switch-inner-size) - (var(--switch-border-width)*2) - var(--offset));
@@ -71,7 +71,7 @@ const SwitchInner = styled.div<{ position: PositionKey}>`
 
   position: absolute;
   top: var(--offset);
-  left: ${({position}) => position && `var(--position-${position})`};
+  left: ${({$position}) => $position && `var(--position-${$position})`};
 
   box-sizing: border-box;
   height: var(--switch-inner-size);
@@ -306,7 +306,7 @@ const Switch : React.FC<IProps> = ({
   return (
     <Container onChange={customOnChange} onMouseLeave={ () => setJustUpdated(false) } $activeTheming={activeTheming} $loading={state === 'loading'} $useIntent={ !justUpdated && (state === 'default' || state === 'failure')} $themeState={switchState} $position={position} $checked={inputRef.current?.checked}>
       <SwitchOuter>
-        <SwitchInner position={getPositionKey(position)} ref={innerRef}>
+        <SwitchInner $position={getPositionKey(position)} ref={innerRef}>
           {state === 'failure' ? <IconWrapper><Icon icon='Exclamation' color='danger' size={18} weight='regular' /></IconWrapper> : null}
           {state === 'locked' ? <IconWrapper><Icon icon='Locked' color='switch-special-locked-icon' size={12} weight='regular' /></IconWrapper> : null}
           {state === 'loading' && innerSize > 0 ? <SpinnerWrapper><Spinner styling='simple' custom={{ size: innerSize }} /></SpinnerWrapper> : null}

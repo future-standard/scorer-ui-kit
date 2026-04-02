@@ -7,7 +7,7 @@ import { NoImage } from '../../svg';
 
 type VideoAspects = '4:3' | '16:9';
 
-const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, mediaUrl?: string}>`
+const Container = styled.div<{ $hoverZoom?: boolean, $aspect?: VideoAspects, $mediaUrl?: string}>`
   position: relative;
   height: inherit;
   background: grey;
@@ -22,7 +22,7 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
     content: '';
     display: block;
     padding-bottom: 75%;
-    ${({ aspect }) => aspect === '16:9' && css`
+    ${({ $aspect }) => $aspect === '16:9' && css`
       padding-left: 56.25%;
     `}
   }
@@ -34,7 +34,7 @@ const Container = styled.div<{ hoverZoom?: boolean, aspect?: VideoAspects, media
   &:hover {
       cursor: pointer;
 
-    ${({ hoverZoom }) => hoverZoom && css`
+    ${({ $hoverZoom }) => $hoverZoom && css`
       transform: scale(1.5);
       opacity: 1;
       transition: transform var(--speed-normal) var(--easing-primary-out);
@@ -105,7 +105,7 @@ export interface ITableRowThumbnail {
 // No Image Placeholder
 
 const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({ hoverZoom = true, image='', mediaUrl, mediaType, retryImageLoad= false, retryLimit=5, closeText, onClickThumbnail}) => {
-  const [showImage, setShowImage] = useState(true);
+  const [showImage, setShowImage] = useState(!!image);
   const [imgSrc, setImgSrc] = useState(image);
   const { createMediaModal } = useMediaModal();
   const [retryCount, setRetryCount] = useState(0);
@@ -155,6 +155,7 @@ const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({ hoverZoom = true, ima
   },[]);
 
   const checkIfImageExists = (url: string, imageExistsCallback: (exists: boolean) => void) => {
+    if (!url) { imageExistsCallback(false); return; }
     const img = new Image();
     img.src = url;
 
@@ -182,7 +183,7 @@ const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({ hoverZoom = true, ima
   },[image]);
 
   return (
-    <Container {...{ hoverZoom, mediaUrl }} aspect='16:9' onClick={ onClickThumbnail || handleModal}>
+    <Container $hoverZoom={hoverZoom} $mediaUrl={mediaUrl} $aspect='16:9' onClick={ onClickThumbnail || handleModal}>
       {showImage ?
         <ImageWrapper ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} /> :
         <NoImageWrapper><NoImage /></NoImageWrapper>}

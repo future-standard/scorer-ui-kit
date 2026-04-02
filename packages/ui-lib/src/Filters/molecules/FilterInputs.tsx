@@ -41,9 +41,9 @@ const Container = styled.div`
 `;
 
 const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdowns: boolean, hasShowMore: boolean) => {
-  return dropdownFilters.map((dropdown: IFilterDropdownExt) => {
-    if (!dropdown.canHide || !showMoreDropdowns || (dropdown.canHide && !hasShowMore)) {
-      return <StyledDropdown key={`dropdownFilter-id-${dropdown.id}`} {...dropdown} />;
+  return dropdownFilters.map(({ id, canHide, ...dropdownProps }: IFilterDropdownExt) => {
+    if (!canHide || !showMoreDropdowns || (canHide && !hasShowMore)) {
+      return <StyledDropdown key={`dropdownFilter-id-${id}`} {...dropdownProps} />;
     }
     return null;
   });
@@ -54,18 +54,18 @@ const renderSearchInputs = (
   visibleSearchInputs: String[],
   handleVisibleSearch: (searchId: string) => void
 ) => {
-  return searchFilters.map((searchInput: ISearchFilter) => {
+  return searchFilters.map(({ id, canHide, showFieldText, selected, ...searchInputProps }: ISearchFilter) => {
 
-    if (visibleSearchInputs.includes(searchInput.id)) {
+    if (visibleSearchInputs.includes(id)) {
       return (
-        <SearchInputWrapper key={`searchFilter-id-${searchInput.id}`}>
-          {searchInput.canHide
+        <SearchInputWrapper key={`searchFilter-id-${id}`}>
+          {canHide
             ? (
               <CloseSearchInputWrapper>
-                <BasicSearchInput {...searchInput} hasCrossButton onCrossClick={() => handleVisibleSearch(searchInput.id)} />
+                <BasicSearchInput {...searchInputProps} hasCrossButton onCrossClick={() => handleVisibleSearch(id)} />
               </CloseSearchInputWrapper>
             )
-            : <BasicSearchInput {...searchInput} />}
+            : <BasicSearchInput {...searchInputProps} />}
         </SearchInputWrapper>
       );
     }
@@ -74,11 +74,11 @@ const renderSearchInputs = (
 };
 
 const renderDatePickers = (datePickerFilters: IFilterDatePicker[]) => {
-  return datePickerFilters.map((datePicker: IFilterDatePicker) => {
+  return datePickerFilters.map(({ id, canHide, ...datePickerProps }: IFilterDatePicker) => {
     return (
       <StyledDropdownDatePicker
-        key={`datePicker-filter-${datePicker.id}`}
-        {...{ ...datePicker }}
+        key={`datePicker-filter-${id}`}
+        {...datePickerProps}
       />
     );
   });
@@ -158,7 +158,7 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   }, [visibleSearchInputs]);
 
   return (
-    <Container {...{ props }}>
+    <Container {...props}>
       {renderSearchInputs(searchFilters, visibleSearchInputs, handleVisibleSearch)}
       {renderDatePickers(datePickerFilters)}
       {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}

@@ -2,13 +2,13 @@ import React, { LabelHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { TypeLabelDirection } from '..';
 
-const LabelText = styled.span<{ required?: boolean }>`
+const LabelText = styled.span<{ $required?: boolean }>`
   display: flex;
   flex: 1;
   align-items: center;
   gap: 8px;
-  
-  ${({required}) => required && css`
+
+  ${({$required}) => $required && css`
     &::after {
       content: '';
       display: var(--input-required-dot-display);
@@ -20,7 +20,7 @@ const LabelText = styled.span<{ required?: boolean }>`
   `}
 `;
 
-export const StyledLabel = styled.label<{ direction?: TypeLabelDirection }>`
+export const StyledLabel = styled.label<{ $direction?: TypeLabelDirection }>`
   font-family: var(--font-ui);
   color: var(--grey-11);
   font-size: 14px;
@@ -29,9 +29,9 @@ export const StyledLabel = styled.label<{ direction?: TypeLabelDirection }>`
   display: flex;
   gap: 8px;
 
-  ${({direction}) => direction && css`
-    flex-direction: ${direction};
-    ${['row', 'row-reverse'].includes(direction) && css`
+  ${({$direction}) => $direction && css`
+    flex-direction: ${$direction};
+    ${['row', 'row-reverse'].includes($direction) && css`
       display: inline-flex;
       
       ${LabelText}{
@@ -65,9 +65,9 @@ const Label: React.FC<Props> = ({
     }
 
   return (
-    <StyledLabel {...{ htmlFor, direction }} {...props}>
+    <StyledLabel htmlFor={htmlFor} $direction={direction} {...props}>
       <>
-        <LabelText {...{ required }}>{labelText}</LabelText>
+        <LabelText $required={required}>{labelText}</LabelText>
         {children}
       </>
     </StyledLabel>

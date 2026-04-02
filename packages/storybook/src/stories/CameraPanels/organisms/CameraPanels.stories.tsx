@@ -12,10 +12,10 @@ const CameraPanelsStory = {
   decorators: []
 };
 
-const Container = styled.div<{ showCustomComponent?: boolean }>`
+const Container = styled.div<{ $showCustomComponent?: boolean }>`
   max-width: 1200px;
 
-  ${({showCustomComponent}) =>  showCustomComponent && css`
+  ${({$showCustomComponent}) =>  $showCustomComponent && css`
     ${CameraPanelWrapper} {
       height: 250px;
     }
@@ -108,7 +108,7 @@ export const _CameraPanels = () => {
 
   const VideoPanel: ICameraPanel = useMemo(() => ({
     streamProps: {
-      src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
       mediaType: 'video',
       videoOptions: { autoPlay: false, controls: true },
       isEmptyWithIcon,
@@ -136,7 +136,7 @@ export const _CameraPanels = () => {
   ], [ImagePanel, VideoPanel]);
 
   return (
-    <Container {...{showCustomComponent}}>
+    <Container $showCustomComponent={showCustomComponent}>
       <CameraPanels
         panels={panelConfig}
       />

@@ -63,7 +63,7 @@ const GlobalUI: React.FC<INavigation> = ({
           <TopBar
             {...{...props}}
           />
-          <ContentArea {...{maxWidth, paddingOverride, legacyLayout}}>
+          <ContentArea $maxWidth={maxWidth} $paddingOverride={paddingOverride} $legacyLayout={legacyLayout}>
             <>{children}</>
           </ContentArea>
         </MainContainer>

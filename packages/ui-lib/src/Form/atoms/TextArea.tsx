@@ -13,13 +13,13 @@ const FeedbackIcon = styled.div`
   padding-top: 2px;
 `;
 
-const StyledTextArea = styled.textarea<{ fieldState : TypeFieldState}>`
+const StyledTextArea = styled.textarea<{ $fieldState : TypeFieldState}>`
 
-  ${({fieldState}) => css`
+  ${({$fieldState}) => css`
     font-family: var(--font-data);
-    border: 1px solid var(--input-${fieldState}-border-color);
-    background: var(--input-${fieldState}-background-color);
-    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${fieldState}-shadow-color, transparent);
+    border: 1px solid var(--input-${$fieldState}-border-color);
+    background: var(--input-${$fieldState}-background-color);
+    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${$fieldState}-shadow-color, transparent);
   `};
 
   padding: 8px 15px;
@@ -72,14 +72,14 @@ const FeedbackMessage = styled.div`
   color: var(--white-1);
 `;
 
-const Container =  styled.div<{ fieldState: string, showFeedback?: boolean }>`
-  ${({fieldState, showFeedback}) => css`
+const Container =  styled.div<{ $fieldState: string, $showFeedback?: boolean }>`
+  ${({$fieldState, $showFeedback}) => css`
     display: flex;
     position: relative;
     flex-direction: column;
 
     ${StyledTextArea}{
-      ${['default', 'disabled'].indexOf(fieldState) === -1 && showFeedback && css`
+      ${['default', 'disabled'].indexOf($fieldState) === -1 && $showFeedback && css`
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
       `};
@@ -89,21 +89,21 @@ const Container =  styled.div<{ fieldState: string, showFeedback?: boolean }>`
       }
 
       &:focus {
-        box-shadow: var(--input-focused-box-shadow-x) var(--input-focused-box-shadow-y) var(--input-focused-box-shadow-blur) var(--input-focused-box-shadow-spread) var(--input-${fieldState}-focused-shadow-color);
+        box-shadow: var(--input-focused-box-shadow-x) var(--input-focused-box-shadow-y) var(--input-focused-box-shadow-blur) var(--input-focused-box-shadow-spread) var(--input-${$fieldState}-focused-shadow-color);
       }
     }
 
     ${FeedbackContainer} {
-      border-color: var(--input-${fieldState}-border-color);
-      background: var(--input-${fieldState}-border-color);
+      border-color: var(--input-${$fieldState}-border-color);
+      background: var(--input-${$fieldState}-border-color);
 
-      ${['default', 'disabled'].indexOf(fieldState) !== -1 && css`
+      ${['default', 'disabled'].indexOf($fieldState) !== -1 && css`
         display:none;
       `}
     }
 
     &:focus-within ${FeedbackContainer} {
-      border-color: var(--input-${fieldState}-focused-border-color, var(--input-${fieldState}-border-color));
+      border-color: var(--input-${$fieldState}-focused-border-color, var(--input-${$fieldState}-border-color));
     }
 
   `};
@@ -144,9 +144,9 @@ const TextArea : React.FC<Props> = ({
   };
 
   return (
-    <Container fieldState={fieldState || 'default'} {...{showFeedback}}>
+    <Container $fieldState={fieldState || 'default'} $showFeedback={showFeedback}>
       <StyledTextArea
-        fieldState={fieldState || 'default'}
+        $fieldState={fieldState || 'default'}
         placeholder={placeholder}
         disabled={fieldState === 'disabled' || fieldState === 'processing'}
         {...props}

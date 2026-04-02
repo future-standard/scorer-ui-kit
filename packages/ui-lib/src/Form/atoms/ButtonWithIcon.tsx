@@ -10,7 +10,7 @@ const Container = styled.div`
   display: inline;
 `;
 
-const TextContainer = styled.div<{ size: TypeButtonSizes, position?: string, weight?: IWeight }>`
+const TextContainer = styled.div<{ $size: TypeButtonSizes, $position?: string, $weight?: IWeight }>`
   height: inherit;
   flex: 1;
   order: 1;
@@ -20,7 +20,7 @@ const TextContainer = styled.div<{ size: TypeButtonSizes, position?: string, wei
   white-space: nowrap;
   padding: 0 var(--button-h-padding);
   transition: padding var(--speed-slow) var(--easing-primary-in-out);
-  font-weight: ${({weight}) => weight === 'light' ? '500' : '600'};
+  font-weight: ${({$weight}) => $weight === 'light' ? '500' : '600'};
 `;
 
 const IconContainer = styled.div`
@@ -42,7 +42,7 @@ const SpinnerContainer = styled.div`
   opacity: 0;
 `;
 
-const IconArea = styled.div<{ position?: string, $loading: boolean }>`
+const IconArea = styled.div<{ $position?: string, $loading: boolean }>`
   position: relative;
   height: inherit;
   display: flex;
@@ -53,9 +53,9 @@ const IconArea = styled.div<{ position?: string, $loading: boolean }>`
   border: 0px solid var(--button-divider-color);
   padding: 0 var(--button-h-padding);
 
-  ${({ position }) => css`
-    order: ${position && position === 'left' ? 0 : 2};
-    ${position === 'left'
+  ${({ $position }) => css`
+    order: ${$position && $position === 'left' ? 0 : 2};
+    ${$position === 'left'
       ? `border-right-width: 1px;`
       : `border-left-width: 1px;`
     };
@@ -90,12 +90,12 @@ const IconArea = styled.div<{ position?: string, $loading: boolean }>`
 
 `;
 
-const InnerContainer = styled.div<{ disabled?: boolean }>`
+const InnerContainer = styled.div<{ $disabled?: boolean }>`
   display: flex;
   height: inherit;
 
   &:hover {
-    ${({ disabled }) => !disabled && css`
+    ${({ $disabled }) => !$disabled && css`
       ${IconContainer}{
         svg {
           path, rect, circle, d {
@@ -107,7 +107,7 @@ const InnerContainer = styled.div<{ disabled?: boolean }>`
   }
 
   &:active{
-    ${({ disabled }) => !disabled && css`
+    ${({ $disabled }) => !$disabled && css`
       ${IconContainer}{
         svg {
           path, rect, circle, d {
@@ -118,7 +118,7 @@ const InnerContainer = styled.div<{ disabled?: boolean }>`
     `};
   }
 
-  ${({ disabled }) => disabled && css`
+  ${({ $disabled }) => $disabled && css`
     ${IconContainer}{
         svg {
           path, rect, circle, d {
@@ -140,9 +140,9 @@ const ButtonWithIcon: React.FC<IButtonWithIcon> = ({ design = 'primary', size = 
   return (
     <Container>
       <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading }} {...props}>
-        <InnerContainer {...{ disabled, loading }}>
-          <TextContainer {...{ size, position, weight }}><>{children}</></TextContainer>
-          <IconArea $loading={loading} {...{ position }}>
+        <InnerContainer $disabled={disabled}>
+          <TextContainer $size={size} $position={position} $weight={weight}><>{children}</></TextContainer>
+          <IconArea $loading={loading} $position={position}>
             <IconContainer>
               <Icon icon={icon} weight={weight} />
             </IconContainer>

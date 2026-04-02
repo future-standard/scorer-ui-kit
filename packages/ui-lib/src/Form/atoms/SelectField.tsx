@@ -11,26 +11,26 @@ export const SelectWrapper = styled.div`
   width: 100%;
 `;
 
-const OpenIcon =  styled.div<{ isCompact?: boolean }>`
+const OpenIcon =  styled.div<{ $isCompact?: boolean }>`
   position: absolute;
   top: 0;
   bottom: 0;
   display: flex;
   align-items: center;
-  right: ${({isCompact}) => isCompact ? '14px' : '16px'};
+  right: ${({$isCompact}) => $isCompact ? '14px' : '16px'};
   pointer-events: none;
 `;
 
-const SubjectIcon = styled.div<{ isCompact?: boolean }>`
+const SubjectIcon = styled.div<{ $isCompact?: boolean }>`
   position: absolute;
-  left: ${({isCompact}) => isCompact ? '10px' : '12px'};
+  left: ${({$isCompact}) => $isCompact ? '10px' : '12px'};
   top: 0;
   bottom: 0;
   display: flex;
   align-items: center;
 `;
 
-const StyledSelect = styled.select<{ fieldState: TypeFieldState, withIcon?: boolean, isCompact?: boolean }>`
+const StyledSelect = styled.select<{ $fieldState: TypeFieldState, $withIcon?: boolean, $isCompact?: boolean }>`
   box-sizing: border-box;
   outline: none;
   border-radius: 3px;
@@ -48,23 +48,23 @@ const StyledSelect = styled.select<{ fieldState: TypeFieldState, withIcon?: bool
     background-color var(--speed-fast) var(--easing-primary-out),
     box-shadow var(--speed-fast) var(--easing-primary-out);
 
-  ${({fieldState}) => css`
-    border: 1px solid var(--input-${fieldState}-border-color);
-    background: var(--input-${fieldState}-background-color);
-    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${fieldState}-shadow-color, transparent);
+  ${({$fieldState}) => css`
+    border: 1px solid var(--input-${$fieldState}-border-color);
+    background: var(--input-${$fieldState}-background-color);
+    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${$fieldState}-shadow-color, transparent);
   `};
 
 
-  ${({ isCompact, withIcon }) => isCompact ? css`
+  ${({ $isCompact, $withIcon }) => $isCompact ? css`
     height: var(--input-compact-height);
-    padding: 0 16px 1px ${withIcon ? '30px' : '8px'};
+    padding: 0 16px 1px ${$withIcon ? '30px' : '8px'};
 
     ${OpenIcon}{
       right: 14px;
     }
   ` : css`
     height: var(--input-height);
-    padding: 0 16px 1px ${withIcon ? '36px' : '12px'};
+    padding: 0 16px 1px ${$withIcon ? '36px' : '12px'};
   `};
 
   &:disabled {
@@ -81,9 +81,9 @@ const StyledSelect = styled.select<{ fieldState: TypeFieldState, withIcon?: bool
   }
 `;
 
-const Container = styled.div<{ isCompact?: boolean, activePlaceholder: boolean }>`
+const Container = styled.div<{ $isCompact?: boolean, $activePlaceholder: boolean }>`
 
-  ${({activePlaceholder}) => activePlaceholder && css`
+  ${({$activePlaceholder}) => $activePlaceholder && css`
     ${StyledSelect} {
       font-family: var(--font-data);
       color: var(--input-color-placeholder);
@@ -154,11 +154,12 @@ const SelectField: React.FC<ISelect> = ({
 
   const renderSelect = useCallback((htmlFor?: string) => (
     <SelectWrapper>
-      {icon && <SubjectIcon {...{isCompact}}><Icon icon={icon} color={iconColor()} size={isCompact ? 12 : 12 } weight='regular' /></SubjectIcon>}
+      {icon && <SubjectIcon $isCompact={isCompact}><Icon icon={icon} color={iconColor()} size={isCompact ? 12 : 12 } weight='regular' /></SubjectIcon>}
       <StyledSelect
-        withIcon={ icon ? true : false }
+        $withIcon={ icon ? true : false }
         id={htmlFor}
-        {...{fieldState, isCompact}}
+        $fieldState={fieldState}
+        $isCompact={isCompact}
         {...props}
         defaultValue={defaultValue ? defaultValue : ''}
         onChange={handleOnChange}
@@ -168,12 +169,12 @@ const SelectField: React.FC<ISelect> = ({
           {children}
         </>
       </StyledSelect>
-      <OpenIcon {...{isCompact}}><Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10 } /></OpenIcon>
+      <OpenIcon $isCompact={isCompact}><Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10 } /></OpenIcon>
     </SelectWrapper>
   ), [children, defaultValue, handleOnChange, placeholder, props, fieldState, icon, iconColor, isCompact]);
 
   return (
-    <Container {...{ isCompact, activePlaceholder }}>
+    <Container {...{ $isCompact: isCompact, $activePlaceholder: activePlaceholder }}>
       {label
         ? (
           <Label htmlFor={label.htmlFor} labelText={label.text} direction={ label.isSameRow ? 'row' : label.direction }>

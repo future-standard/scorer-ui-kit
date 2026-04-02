@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div<{ height?: string }>`
+const Container = styled.div<{ $height?: string }>`
   box-shadow: 0px 5px 25px 0px var(--filter-button-shadow-color);
   background-color: var(--filter-dropdown-background-color-fallback);
   @supports( background-color: var(--filter-dropdown-background-color) ){
@@ -41,7 +41,7 @@ const Inner = styled.div`
 `;
 
 interface IProps {
-  height?: string
+  $height?: string
 }
 
 type Props = IProps & HTMLAttributes<HTMLDivElement>

@@ -4,9 +4,9 @@ import Icon, {IconWrapper} from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
 
-const IconButton = styled.button<{selected?: boolean}>`
+const IconButton = styled.button<{$selected?: boolean}>`
   ${resetButtonStyles};
-  ${({selected=false}) => selected && css`
+  ${({$selected=false}) => $selected && css`
     border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
@@ -24,7 +24,7 @@ const IconButton = styled.button<{selected?: boolean}>`
   }
 `;
 
-export const AlertWrapper = styled.div<{type: AlertType}>`
+export const AlertWrapper = styled.div<{$type: AlertType}>`
   min-height: 50px;
   border-radius: 3px;
   display: flex;
@@ -35,7 +35,7 @@ export const AlertWrapper = styled.div<{type: AlertType}>`
   padding: 0 14px;
 
   font-family: var(--font-ui);
-  background-color: ${({type}) => `var(--${type})` };
+  background-color: ${({$type}) => `var(--${$type})` };
 
   text-align: left;
   font-size: 14px;
@@ -82,7 +82,7 @@ const AlertBar: React.FC<Props> = ({type='info', message, hideCloseButton= false
 
 
   return ( (message && !dismiss)?
-    <AlertWrapper type={type}>
+    <AlertWrapper $type={type}>
       <Icon icon={IconNames[type]} color='inverse' />
       <MessageBox>{message}</MessageBox>
 

@@ -20,8 +20,8 @@ const StyledFilterOption = styled(FilterOption)`
   letter-spacing: 0.2px;
 `;
 
-const OptionList = styled.div<{ moreItem?: boolean }>`
-  max-height: ${({ moreItem }) => moreItem ? '228px' : '196px'};
+const OptionList = styled.div<{ $moreItem?: boolean }>`
+  max-height: ${({ $moreItem }) => $moreItem ? '228px' : '196px'};
   min-height: 40px;
   position: relative;
   overflow-y: auto;
@@ -457,7 +457,7 @@ const handleApply = useCallback(() => {
                     </SortingButtonWrapper>
                   </FilterResultsToolbar>
                 )}
-                <OptionList moreItem={list.length > 5}>
+                <OptionList $moreItem={list.length > 5}>
                   {(visibleList.length > 0)
 
                     ? visibleList.map((item: IFilterItem, index) => {

@@ -5,16 +5,16 @@ import { Link } from 'react-router-dom';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
 
-const ContextTitle = styled.div<{ compact?: boolean }>`
+const ContextTitle = styled.div<{ $compact?: boolean }>`
   opacity: 0;
   transition: opacity var(--speed-fast) var(--easing-primary-in-out);
 
-  ${({ compact }) => compact && css`
+  ${({ $compact }) => $compact && css`
     font-size:14px;
   `}
 `;
 
-const ContextIcon = styled.div<{ compact?: boolean }>`
+const ContextIcon = styled.div<{ $compact?: boolean }>`
   background-color: var(--global-menu-icon-background-default);
   transition: background-color var(--speed-fast) var(--easing-primary-out);
     
@@ -134,10 +134,10 @@ const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }
     }
   `}
 `;
-const ContextActionButton = styled.button<{ menuOpen?: boolean, isActive: boolean }>`
+const ContextActionButton = styled.button<{ $menuOpen?: boolean, $isActive: boolean }>`
   ${ContextActionBaseCSS}
 
-  ${({ menuOpen }) => menuOpen && css`
+  ${({ $menuOpen }) => $menuOpen && css`
     ${ContextTitle}{
       opacity: 1;
     }
@@ -159,7 +159,7 @@ const ContextActionButton = styled.button<{ menuOpen?: boolean, isActive: boolea
     }
   }
 
-  ${({ isActive }) => isActive && css`
+  ${({ $isActive }) => $isActive && css`
     ${ContextIcon},
     &:hover ${ContextIcon}{
       background-color: var(--global-menu-icon-background-active);
@@ -196,16 +196,16 @@ const ContextItem: React.FC<IProps> = ({
 
   const internal = (
     <React.Fragment>
-      <ContextIcon {...{ compact }}>
+      <ContextIcon $compact={compact}>
         <Icon icon={icon} color={isActive ? 'inverse' : 'dimmed'} size={20} />
       </ContextIcon>
-      <ContextTitle {...{ compact }}>{title}</ContextTitle>
+      <ContextTitle $compact={compact}>{title}</ContextTitle>
       {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} color='dimmed' /></ContextIndicator> : null}
     </React.Fragment>);
 
   if (hasSubmenu) {
     return (
-      <ContextActionButton menuOpen={menuOpen} isActive={isActive} onClick={() => onClickCallback && onClickCallback(contextKey)}>
+      <ContextActionButton $menuOpen={menuOpen} $isActive={isActive} onClick={() => onClickCallback && onClickCallback(contextKey)}>
         {internal}
       </ContextActionButton>
     );

@@ -48,7 +48,7 @@ const SubmenuItemAnchor = styled.a`
   align-items: center;
 `;
 
-const SubmenuItem = styled.li<{isActive?: boolean}>`
+const SubmenuItem = styled.li<{$isActive?: boolean}>`
   display: block;
   height: 30px;
   padding-left: 40px;
@@ -72,13 +72,13 @@ const SubmenuItem = styled.li<{isActive?: boolean}>`
     text-decoration: none;
     color: var(--grey-11);
 
-    ${({isActive}) => css`
-    
+    ${({$isActive}) => css`
+
       &:hover {
         color: var(--grey-12);
       }
 
-      ${isActive && css`
+      ${$isActive && css`
         &, &:hover {
           color: var(--grey-11);
           font-weight: 600;
@@ -111,8 +111,8 @@ const SubmenuContainer = styled.div`
 
 `;
 
-const ContextContainer = styled.div<{ open: boolean, mobileMenu?: boolean }>`
-  min-height: ${({mobileMenu}) => mobileMenu ? '30px' : '70px'};
+const ContextContainer = styled.div<{ $open: boolean, $mobileMenu?: boolean }>`
+  min-height: ${({$mobileMenu}) => $mobileMenu ? '30px' : '70px'};
   width: inherit;
 
   ${SubmenuContainer}{
@@ -120,14 +120,14 @@ const ContextContainer = styled.div<{ open: boolean, mobileMenu?: boolean }>`
     grid-template-rows: 0fr;
   };
 
-  ${({open}) => open && css`
+  ${({$open}) => $open && css`
     ${SubmenuContainer}{
       grid-template-rows: 1fr;
-      
+
       transition:
         grid-template-rows var(--speed-normal) var(--easing-primary-in-out),
         opacity var(--speed-fast) var(--easing-primary-in-out);
-      
+
       opacity: 1;
     }
   `};
@@ -153,7 +153,7 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
   const hasSubmenu : boolean = submenus.length > 0;
 
   return (
-    <ContextContainer open={submenuOpen} {...{mobileMenu}}>
+    <ContextContainer $open={submenuOpen} $mobileMenu={mobileMenu}>
       <ContextItem {...{title, href, isActive, icon, hasSubmenu, isExternalLink, submenuOpen, menuOpen, onClickCallback, contextKey}} />
       {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>
         <SubmenuContainerInner>{submenus}</SubmenuContainerInner>
@@ -186,7 +186,7 @@ const generateSubmenus = (
       // Treat as menu item/
       if(isExternalLink) {
         grouping[grouping.length - 1].push(
-          <SubmenuItem key={key} isActive={false}>
+          <SubmenuItem key={key} $isActive={false}>
             <SubmenuItemAnchor href={href} target='_blank'>
               {title}
               <ExternalIconWrapper>
@@ -195,7 +195,7 @@ const generateSubmenus = (
             </SubmenuItemAnchor>
           </SubmenuItem>);
       }else {
-        grouping[grouping.length - 1].push(<SubmenuItem key={key} isActive={false}><SubmenuItemLink to={href} onClick={() => onClickCallback && onClickCallback(-1)}>{title}</SubmenuItemLink></SubmenuItem>);
+        grouping[grouping.length - 1].push(<SubmenuItem key={key} $isActive={false}><SubmenuItemLink to={href} onClick={() => onClickCallback && onClickCallback(-1)}>{title}</SubmenuItemLink></SubmenuItem>);
       }
     } else {
       // Assume this is a grouping header.

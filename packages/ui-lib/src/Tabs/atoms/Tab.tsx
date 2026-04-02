@@ -9,17 +9,17 @@ const TabComponent = styled.div`
   line-height: 20px;
 `;
 
-const TabLabel = styled.label<{ active: boolean }>`
+const TabLabel = styled.label<{ $active: boolean }>`
   height: 40px;
   ${({theme}) => css`
     font-family: ${theme.fontFamily.ui};
   `}
   font-size: 15px;
-  font-weight: ${({ active }) => active ? '600' : '500'};
+  font-weight: ${({ $active }) => $active ? '600' : '500'};
   letter-spacing: 0.09px;
-  color: ${({ active }) => active ? 'var(--primary-11)' : 'var(--grey-11)'};
+  color: ${({ $active }) => $active ? 'var(--primary-11)' : 'var(--grey-11)'};
   cursor: pointer;
-  border-bottom: ${({ active }) => active ? '2px solid var(--primary-11)' : '2px solid transparent'};
+  border-bottom: ${({ $active }) => $active ? '2px solid var(--primary-11)' : '2px solid transparent'};
   padding-top: 6px;
   padding-bottom: 14px;
   flex-shrink: 0;
@@ -42,7 +42,7 @@ const Tab: React.FC<Props> = ({ children, tabFor, onClick, ...props }) => {
 
   return (
     <TabComponent {...props} onClick={onChangeTab}>
-      <TabLabel active={selected === tabFor}>
+      <TabLabel $active={selected === tabFor}>
         <>{children}</>
       </TabLabel>
     </TabComponent>

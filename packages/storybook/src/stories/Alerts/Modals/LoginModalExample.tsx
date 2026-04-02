@@ -20,14 +20,14 @@ const Title = styled.div`
   margin-bottom: 45px;
 `;
 
-const Box = styled.div<{ margin?: string; flex?: string; }>`
+const Box = styled.div<{ $margin?: string; $flex?: string; }>`
   margin-top:30px;
   button{
     width: 100%;
   }
-  ${({ margin }) => margin && css`margin:${margin};`}
-  ${({ flex }) => flex && css`
-    flex:${flex};
+  ${({ $margin }) => $margin && css`margin:${$margin};`}
+  ${({ $flex }) => $flex && css`
+    flex:${$flex};
     justify-content: flex-end;
     display: flex;
     flex-direction: column;
@@ -64,11 +64,11 @@ const LoginModalExample : React.FC = () => {
     setAlert(null);
     try {
       const response = await onLogin(params);
-      console.log(response, 'login');
+      console.debug(response, 'login');
       isSuccess = true;
     } catch (error) {
       if(error instanceof Error) {
-        console.log(`got error: ${error.message}`);
+        console.error(`got error: ${error.message}`);
         setAlert({
           message: error.message,
           type: 'error'
@@ -144,7 +144,7 @@ const LoginModalExample : React.FC = () => {
       id='password'
     />
     {alert && <AlertBar type={alert.type} message={alert.message} />}
-    <Box flex='1'>
+    <Box $flex='1'>
       <ButtonWithLoading loading={loading} type='submit' onClick={handleModalSubmit}>Login</ButtonWithLoading>
     </Box>
   </Form>
