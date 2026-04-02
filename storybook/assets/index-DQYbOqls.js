@@ -1,0 +1,1 @@
+import{L as o}from"./index.modern-CMonYql-.js";const r=t=>new Promise(e=>setTimeout(e,t)),n=t=>(t.toString=()=>"() => {}",t),c=()=>{let t={};for(const e in o)t[e]=e;return t};export{n as e,c as g,r as s};
