@@ -67,11 +67,11 @@ const ButtonsGroup = styled.div`
   }
 `;
 
-const PreviewArea = styled.div<{ canvasHeight?: number, canvasWidth?: number }>`
+const PreviewArea = styled.div<{ $canvasHeight?: number, $canvasWidth?: number }>`
   position: relative;
   overflow: hidden;
-  height: ${({ canvasHeight }) => canvasHeight ? `${canvasHeight}px` : `462px`};
-  width: ${({ canvasWidth }) => canvasWidth ? `${canvasWidth}px` : `485px`};
+  height: ${({ $canvasHeight }) => $canvasHeight ? `${$canvasHeight}px` : `462px`};
+  width: ${({ $canvasWidth }) => $canvasWidth ? `${$canvasWidth}px` : `485px`};
   border-radius: 5px;
   background-color: var(--grey-3);
   background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, var(--white-a10) 35px, var(--white-a10) 70px);
@@ -81,15 +81,15 @@ const HiddenImage = styled.img`
   display: none;
 `;
 
-const SelectedArea = styled.div<{ cropLeft: number, cropTop: number, cropWidth: number, cropHeight: number }>`
+const SelectedArea = styled.div<{ $cropLeft: number, $cropTop: number, $cropWidth: number, $cropHeight: number }>`
   position: absolute;
   border: dashed 1px var(--black-a12);
   box-shadow: 0 0 0 9999em var(--black-a11);
-  ${({ cropLeft, cropTop, cropWidth, cropHeight }) => css`
-    top: ${cropTop}px;
-    left: ${cropLeft}px;
-    width: ${cropWidth}px;
-    height: ${cropHeight}px;
+  ${({ $cropLeft, $cropTop, $cropWidth, $cropHeight }) => css`
+    top: ${$cropTop}px;
+    left: ${$cropLeft}px;
+    width: ${$cropWidth}px;
+    height: ${$cropHeight}px;
   `};
   cursor: move;
 `;
@@ -342,8 +342,8 @@ const CropTool: React.FC<ICrop> = ({
             </ButtonsGroup>
           </ToolHeader>
           <PreviewArea
-            canvasHeight={canvasHeight}
-            canvasWidth={canvasWidth}
+            $canvasHeight={canvasHeight}
+            $canvasWidth={canvasWidth}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleOnMouseLeave}
@@ -357,13 +357,10 @@ const CropTool: React.FC<ICrop> = ({
             <SelectedArea
               ref={cropRef}
               onMouseDown={handleMouseDown}
-              {...{
-                cropLeft: viewDimensions.cropLeft,
-                cropTop: viewDimensions.cropTop,
-                cropWidth: viewDimensions.cropWidth,
-                cropHeight: viewDimensions.cropHeight,
-                isResizing: viewDimensions.isResizing,
-              }}
+              $cropLeft={viewDimensions.cropLeft}
+              $cropTop={viewDimensions.cropTop}
+              $cropWidth={viewDimensions.cropWidth}
+              $cropHeight={viewDimensions.cropHeight}
             >
               <CropArea
                 {...{ isResizable }}

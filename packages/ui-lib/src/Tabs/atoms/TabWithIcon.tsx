@@ -3,7 +3,7 @@ import { TabContext, ContextProps } from '../Tabs';
 import styled, { css } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
-const Container = styled.div<{ active: boolean }>`
+const Container = styled.div<{ $active: boolean }>`
   display: flex;
   align-items: center;
   margin-right: 22px;
@@ -11,7 +11,7 @@ const Container = styled.div<{ active: boolean }>`
   height: 60px;
   cursor: pointer;
 
-  ${({ active }) => active ? css`
+  ${({ $active }) => $active ? css`
     border-bottom: 3px solid var(--primary-11);
     `
     : css`
@@ -23,12 +23,12 @@ const Container = styled.div<{ active: boolean }>`
   }
 `;
 
-const Title = styled.div<{ active: boolean }>`
+const Title = styled.div<{ $active: boolean }>`
   font-size: 14px;
   font-family: ${({ theme }) => theme.fontFamily.ui};
   letter-spacing: 0.09px;
   font-weight: 500;
-  color: ${({ active }) => active ? 'var(--primary-11)' : 'var(--grey-11)'};
+  color: ${({ $active }) => $active ? 'var(--primary-11)' : 'var(--grey-11)'};
   margin-bottom: 5px;
   flex-shrink: 0;
   white-space: nowrap;
@@ -72,10 +72,10 @@ const TabWithIcon: React.FC<ITabWithIcon> = ({ icon, title, subtitle, tabFor, ..
   const active = selected === tabFor;
 
   return (
-    <Container {...{ active }} {...props} onClick={() => onChangeTab(tabFor)}>
+    <Container $active={active} {...props} onClick={() => onChangeTab(tabFor)}>
       <Icon {...{ icon }} weight='regular' size={15} color={active ? 'primary' : 'dimmed'} />
       <TextGroup>
-        <Title {...{ active }}>{title}</Title>
+        <Title $active={active}>{title}</Title>
         {subtitle && <SubTitle>{subtitle}</SubTitle>}
       </TextGroup>
     </Container>

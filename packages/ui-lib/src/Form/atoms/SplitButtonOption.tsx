@@ -5,9 +5,9 @@ import Spinner from '../../Indicators/Spinner';
 import { resetButtonStyles } from '../../common';
 import { TypeButtonDesigns, TypeButtonSizes } from '..';
 
-const StyledButton = styled.button<{noBorderTop?: boolean}>`
+const StyledButton = styled.button<{$noBorderTop?: boolean}>`
   ${resetButtonStyles}
-  ${({noBorderTop}) => noBorderTop ?
+  ${({$noBorderTop}) => $noBorderTop ?
       `border-top: none`
       : css`
         border-top: 1px solid var(--border-color)`
@@ -33,7 +33,7 @@ const StyledButton = styled.button<{noBorderTop?: boolean}>`
   &:active:enabled {
     background: var(--button-active-bg);
 
-    ${({noBorderTop}) => noBorderTop ?
+    ${({$noBorderTop}) => $noBorderTop ?
         `border-top: none`
         : css`
           border-top: 1px solid var(--border-active-color)`
@@ -64,8 +64,8 @@ const OptionText = styled.div`
   line-height: normal;
 `;
 
-const TextWrapper = styled.div<{textMaxWidth?:string}>`
-  ${({textMaxWidth}) => textMaxWidth && css `max-width: ${textMaxWidth};`}
+const TextWrapper = styled.div<{$textMaxWidth?:string}>`
+  ${({$textMaxWidth}) => $textMaxWidth && css `max-width: ${$textMaxWidth};`}
   display: flex;
   padding: 0px var(--button-h-padding);
   justify-content: center;
@@ -74,8 +74,8 @@ const TextWrapper = styled.div<{textMaxWidth?:string}>`
   align-self: stretch;
 `;
 
-const LeftIconWrapper = styled.div<{ isAscendingIcon: boolean }>`
-  ${({ isAscendingIcon }) => isAscendingIcon && css`
+const LeftIconWrapper = styled.div<{ $isAscendingIcon: boolean }>`
+  ${({ $isAscendingIcon }) => $isAscendingIcon && css`
       transform: scaleY(-1);
   `};
 
@@ -165,13 +165,14 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
   return(
     <StyledButton
       ref={buttonRef}
-      {...{ noBorderTop, size }}
+      $noBorderTop={noBorderTop}
+      size={size}
       onClick={handleClick}
       {...props}>
-      <LeftIconWrapper isAscendingIcon={icon === 'FilterAscending'} >
+      <LeftIconWrapper $isAscendingIcon={icon === 'FilterAscending'} >
         {isLoading ? <Spinner custom={{size: iconSize}} styling={design} /> : <Icon icon={icon} />}
       </LeftIconWrapper>
-      <TextWrapper {...{textMaxWidth}}><OptionText>{text}</OptionText></TextWrapper>
+      <TextWrapper $textMaxWidth={textMaxWidth}><OptionText>{text}</OptionText></TextWrapper>
     </StyledButton>
   );
 };

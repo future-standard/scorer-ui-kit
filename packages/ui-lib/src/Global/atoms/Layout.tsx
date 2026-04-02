@@ -11,7 +11,7 @@ export const Layout = styled.div`
 export const MobileLayout = styled.div``;
 
 
-export const Content = styled.div<{ maxWidth?: string, padBottom?: boolean }>`
+export const Content = styled.div<{ $maxWidth?: string, $padBottom?: boolean }>`
   padding: 0;
   flex: 1;
   overflow: auto;
@@ -21,10 +21,10 @@ export const Content = styled.div<{ maxWidth?: string, padBottom?: boolean }>`
   }
 
   ${
-    ({ maxWidth }) =>
-    maxWidth && css`
+    ({ $maxWidth }) =>
+    $maxWidth && css`
       & > div {
-        max-width: ${maxWidth};
+        max-width: ${$maxWidth};
       }
     `
   }
@@ -35,22 +35,22 @@ export const MainContainer = styled.div`
   flex-direction: column;
 `;
 
-export const ContentArea = styled.div<{ maxWidth?: string, paddingOverride?: string, legacyLayout?: boolean }>`
+export const ContentArea = styled.div<{ $maxWidth?: string, $paddingOverride?: string, $legacyLayout?: boolean }>`
   flex: 1;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 
-  ${({legacyLayout, paddingOverride, maxWidth}) => legacyLayout && css`
-    padding: ${paddingOverride ? paddingOverride : '40px 20px'};
+  ${({$legacyLayout, $paddingOverride, $maxWidth}) => $legacyLayout && css`
+    padding: ${$paddingOverride ? $paddingOverride : '40px 20px'};
 
     @media ${deviceMediaQuery.medium} {
-      padding: ${paddingOverride ? paddingOverride : '40px'};
+      padding: ${$paddingOverride ? $paddingOverride : '40px'};
     }
 
     @media ${deviceMediaQuery.large} {
-      max-width: ${maxWidth ? maxWidth : `1200px`};
-      padding: ${paddingOverride ? paddingOverride : '70px 90px'};
+      max-width: ${$maxWidth ? $maxWidth : `1200px`};
+      padding: ${$paddingOverride ? $paddingOverride : '70px 90px'};
     }
   `}
 `;

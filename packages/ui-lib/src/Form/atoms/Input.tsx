@@ -58,13 +58,13 @@ const FeedbackIcon = styled.div`
   }
 `;
 
-const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
+const StyledInput = styled.input<{ $fieldState : TypeFieldState }>`
   ${removeAutoFillStyle};
 
-  ${({fieldState}) => css`
-    border: 1px solid var(--input-${fieldState}-border-color);
-    background: var(--input-${fieldState}-background-color);
-    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${fieldState}-shadow-color, transparent);
+  ${({$fieldState}) => css`
+    border: 1px solid var(--input-${$fieldState}-border-color);
+    background: var(--input-${$fieldState}-background-color);
+    box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${$fieldState}-shadow-color, transparent);
   `};
 
   font-family: var(--font-data);
@@ -97,12 +97,12 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   };
 `;
 
-const InputContainer = styled.div<{hasAction?: boolean}>`
+const InputContainer = styled.div<{$hasAction?: boolean}>`
 
   flex: 1;
   position: relative;
 
-  ${({ hasAction }) => hasAction && css`
+  ${({ $hasAction }) => $hasAction && css`
     ${StyledInput}{
       padding-right: 60px;
 
@@ -113,8 +113,8 @@ const InputContainer = styled.div<{hasAction?: boolean}>`
 
 `;
 
-const Container = styled.div<{ fieldState: TypeFieldState, showFeedback?: boolean }>`
-  ${({fieldState, showFeedback}) => css`
+const Container = styled.div<{ $fieldState: TypeFieldState, $showFeedback?: boolean }>`
+  ${({$fieldState, $showFeedback}) => css`
 
     display: flex;
     position: relative;
@@ -126,7 +126,7 @@ const Container = styled.div<{ fieldState: TypeFieldState, showFeedback?: boolea
         cursor: not-allowed;
       }
 
-      ${['default', 'disabled'].indexOf(fieldState) === -1 && showFeedback && css`
+      ${['default', 'disabled'].indexOf($fieldState) === -1 && $showFeedback && css`
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
       `};
@@ -134,16 +134,16 @@ const Container = styled.div<{ fieldState: TypeFieldState, showFeedback?: boolea
     }
 
     ${FeedbackContainer} {
-      ${['default', 'disabled'].indexOf(fieldState) !== -1 && css`
+      ${['default', 'disabled'].indexOf($fieldState) !== -1 && css`
         display: none;
       `};
-      border-color: var(--input-${fieldState}-border-color);
-      background: var(--input-${fieldState}-border-color);
+      border-color: var(--input-${$fieldState}-border-color);
+      background: var(--input-${$fieldState}-border-color);
     }
 
     &:focus-within ${StyledInput} {
-      border-color: var(--input-${fieldState}-focused-border-color, var(--input-${fieldState}-border-color));
-      box-shadow: var(--input-focused-box-shadow-x) var(--input-focused-box-shadow-y) var(--input-focused-box-shadow-blur) var(--input-focused-box-shadow-spread) var(--input-${fieldState}-focused-shadow-color);
+      border-color: var(--input-${$fieldState}-focused-border-color, var(--input-${$fieldState}-border-color));
+      box-shadow: var(--input-focused-box-shadow-x) var(--input-focused-box-shadow-y) var(--input-focused-box-shadow-blur) var(--input-focused-box-shadow-spread) var(--input-${$fieldState}-focused-shadow-color);
     }
   `}
 
@@ -195,11 +195,11 @@ const Input : React.FC<InputProps> = ({
   };
 
   return (
-    <Container fieldState={fieldState || 'default'} {...{showFeedback}}>
+    <Container $fieldState={fieldState || 'default'} $showFeedback={showFeedback}>
 
-      <InputContainer hasAction={isActionButton}>
+      <InputContainer $hasAction={isActionButton}>
         <StyledInput
-        fieldState={fieldState || 'default'}
+        $fieldState={fieldState || 'default'}
         disabled={fieldState === 'disabled' || fieldState === 'processing'}
         type={type}
         placeholder={placeholder}

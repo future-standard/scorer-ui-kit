@@ -32,75 +32,75 @@ const HandleMouseReactionKeyframes = keyframes`
 `;
 
 
-const HandleBase = styled.svg<{ mouseDragging: boolean, styling: string}>`
+const HandleBase = styled.svg<{ $mouseDragging: boolean, $styling: string}>`
   touch-action: none;
   user-select: none;
   overflow: visible;
   cursor: pointer;
-  fill: ${({theme, styling}) => theme.custom.lines[styling].handleBase.fill};
+  fill: ${({theme, $styling}) => theme.custom.lines[$styling].handleBase.fill};
   appearance: none;
 `;
 
-const HandleRingLayer = styled.circle<{maskID: string, styling: string}>`
+const HandleRingLayer = styled.circle<{$maskID: string, $styling: string}>`
   fill: none;
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].handleRingLayer.stroke};
-  mask: url(#${props => (props.maskID)});
+  stroke: ${({theme, $styling}) => theme.custom.lines[$styling].handleRingLayer.stroke};
+  mask: url(#${props => (props.$maskID)});
 `;
-const HandleReactiveGroup = styled.g<{touchDragging: boolean, mouseDragging: boolean}>`
+const HandleReactiveGroup = styled.g<{$touchDragging: boolean, $mouseDragging: boolean}>`
   opacity: 0.65;
   cursor: pointer;
   transform: scale(1);
 
-  ${props => props.touchDragging && css`
+  ${props => props.$touchDragging && css`
     animation: ${HandleTouchReactionKeyframes} 0.5s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275) 1;
   `}
 
-  ${props => props.mouseDragging && css`
+  ${props => props.$mouseDragging && css`
     animation: ${HandleMouseReactionKeyframes} 0.25s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275) 1;
   `}
 
 `;
-const HandleReactiveFill = styled.circle<{styling: string}>`
+const HandleReactiveFill = styled.circle<{$styling: string}>`
   mix-blend-mode: multiply;
-  fill: ${({theme, styling}) => theme.custom.lines[styling].handleReactiveFill.fill};
+  fill: ${({theme, $styling}) => theme.custom.lines[$styling].handleReactiveFill.fill};
   stroke: none;
 `;
-const HandleReactiveRing = styled.circle<{styling: string}>`
+const HandleReactiveRing = styled.circle<{$styling: string}>`
   fill: none;
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].handleReactiveRing.stroke};
+  stroke: ${({theme, $styling}) => theme.custom.lines[$styling].handleReactiveRing.stroke};
 `;
 
-const HandleContrastLayer = styled.circle<{styling: string}>`
+const HandleContrastLayer = styled.circle<{$styling: string}>`
   overflow: visible;
   mix-blend-mode: multiply;
   fill: none;
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].handleContrastLayer.stroke};
+  stroke: ${({theme, $styling}) => theme.custom.lines[$styling].handleContrastLayer.stroke};
 `;
-const HandleShadowLayer = styled.circle<{fillID: string}>`
+const HandleShadowLayer = styled.circle<{$fillID: string}>`
     mix-blend-mode: multiply;
-    fill: url(#${props => (props.fillID)});
+    fill: url(#${props => (props.$fillID)});
 `;
 
-const GrabHandleIndexGroup = styled.g<{showIndex: boolean}>`
+const GrabHandleIndexGroup = styled.g<{$showIndex: boolean}>`
   opacity: 0;
   pointer-events: none;
-  ${props => props.showIndex && css`
+  ${props => props.$showIndex && css`
     opacity: 1;
   `};
 
 `;
 
-const StopStart = styled.stop<{styling: string}>`
-  stop-color: ${({theme, styling}) => theme.custom.lines[styling].stopStart.stopColor };
+const StopStart = styled.stop<{$styling: string}>`
+  stop-color: ${({theme, $styling}) => theme.custom.lines[$styling].stopStart.stopColor };
 `;
-const StopEnd = styled.stop<{styling: string}>`
-  stop-color: ${({theme, styling}) => theme.custom.lines[styling].stopEnd.stopColor };
+const StopEnd = styled.stop<{$styling: string}>`
+  stop-color: ${({theme, $styling}) => theme.custom.lines[$styling].stopEnd.stopColor };
 `;
 
 
-const GrabHandleIndexText = styled.text<{showIndex: boolean, styling: string}>`
+const GrabHandleIndexText = styled.text<{$showIndex: boolean, $styling: string}>`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  stroke: ${({theme, styling}) => theme.custom.lines[styling].grabHandleText.stroke};
+  stroke: ${({theme, $styling}) => theme.custom.lines[$styling].grabHandleText.stroke};
   text-align: center;
 
   font-weight: bold;
@@ -226,15 +226,15 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
 
   return (
 
-    <HandleBase ref={handleInstance} styling={styling} x={x} y={y} mouseDragging={mouseDragging} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouchMove} onMouseDown={handleMouseDown}>
+    <HandleBase ref={handleInstance} $styling={styling} x={x} y={y} $mouseDragging={mouseDragging} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouchMove} onMouseDown={handleMouseDown}>
       <defs>
         <mask id={maskID}>
           <rect width='100%' height='100%' x='-50%' y='-50%' fill='white' />
           <rect width={size / 3} height={size / 0.9} x={-((size / 3) /2)} y={-((size / 0.9) + 5)} fill='black' transform={`rotate(${angle || 0} 0 0)`} />
         </mask>
         <radialGradient id={shadowGradientID}>
-          <StopStart styling={styling} offset='0%' />
-          <StopEnd styling={styling} offset='80%' />
+          <StopStart $styling={styling} offset='0%' />
+          <StopEnd $styling={styling} offset='80%' />
         </radialGradient>
       </defs>
 
@@ -247,19 +247,19 @@ const HandleUnit : React.FC<IHandleUnitProps> = (props) => {
           showPointHandle &&
             <g transform={`scale(${ unit })`}>
 
-              <HandleShadowLayer r={size * 1} fillID={shadowGradientID} />
-              <HandleContrastLayer styling={styling} r={size / 2.4} strokeWidth={size / 3} />
+              <HandleShadowLayer r={size * 1} $fillID={shadowGradientID} />
+              <HandleContrastLayer $styling={styling} r={size / 2.4} strokeWidth={size / 3} />
 
-              <HandleReactiveGroup touchDragging={touchDragging} mouseDragging={mouseDragging}>
-                <HandleReactiveFill styling={styling} r={size / 1.8} />
-                <HandleReactiveRing styling={styling} r={size / 2.25} strokeWidth={size / 3} />
+              <HandleReactiveGroup $touchDragging={touchDragging} $mouseDragging={mouseDragging}>
+                <HandleReactiveFill $styling={styling} r={size / 1.8} />
+                <HandleReactiveRing $styling={styling} r={size / 2.25} strokeWidth={size / 3} />
               </HandleReactiveGroup>
 
-              <HandleRingLayer styling={styling} r={size / 2} strokeWidth={size / 6} maskID={maskID} />
+              <HandleRingLayer $styling={styling} r={size / 2} strokeWidth={size / 6} $maskID={maskID} />
 
               {showPointLabel &&
-                <GrabHandleIndexGroup showIndex>
-                  <GrabHandleIndexText styling={styling} transform='translate(-5,6)' fontSize='20px' showIndex>
+                <GrabHandleIndexGroup $showIndex>
+                  <GrabHandleIndexText $styling={styling} transform='translate(-5,6)' fontSize='20px' $showIndex>
                     {index + pointIndexOffset}
                   </GrabHandleIndexText>
                 </GrabHandleIndexGroup>}

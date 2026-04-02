@@ -4,7 +4,7 @@ import IconButton, { IconButtonData } from '../atoms/IconButton';
 
 const StyledIconButton = styled(IconButton)``;
 
-const Container = styled.div<{alignment?: IAlignmentOptions}>`
+const Container = styled.div<{$alignment?: IAlignmentOptions}>`
   display: flex;
   ${StyledIconButton} {
     margin-left: 15px;
@@ -13,15 +13,15 @@ const Container = styled.div<{alignment?: IAlignmentOptions}>`
     margin-left: 0px;
   }
 
-  ${({alignment}) => alignment === 'left' && css`
+  ${({$alignment}) => $alignment === 'left' && css`
     justify-content: flex-start;
   `};
 
-  ${({alignment}) => alignment === 'center' && css`
+  ${({$alignment}) => $alignment === 'center' && css`
     justify-content: center;
   `};
 
-  ${({alignment}) => alignment === 'right' && css`
+  ${({$alignment}) => $alignment === 'right' && css`
     justify-content: flex-end;
   `};
 `;
@@ -36,7 +36,7 @@ type IGroupButtonsData = {
 const ActionButtons : React.FC<IGroupButtonsData> = ({buttonsConfig, alignment = 'right' }) => {
 
   return(
-    <Container {...{alignment}}>
+    <Container $alignment={alignment}>
       {
         buttonsConfig.map((btn) => {
           const {icon, size, weight, color, hoverColor, onClick} = btn;

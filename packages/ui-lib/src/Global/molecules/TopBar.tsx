@@ -148,7 +148,7 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ $isActive: boole
 
 const DrawerPortalWrapper = styled.div``;
 
-const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
+const Drawer = styled.div<{ $isOpen: boolean, $baseWidth?: string }>`
   font-family: var(--font-ui);
 
   position: fixed;
@@ -158,7 +158,7 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
   background: var(--global-element-background);
   border-left: var(--dividing-line) 1px solid;
 
-  width: ${({ baseWidth }) => baseWidth ? baseWidth : `200px`};
+  width: ${({ $baseWidth }) => $baseWidth ? $baseWidth : `200px`};
   opacity: 0;
   visibility: hidden;
   z-index: 100;
@@ -170,7 +170,7 @@ const Drawer = styled.div<{ isOpen: boolean, baseWidth?: string }>`
     opacity var(--speed-normal) var(--easing-primary-in-out),
     right var(--speed-normal) var(--easing-primary-in-out);
 
-  ${({ isOpen }) => isOpen && css`
+  ${({ $isOpen }) => $isOpen && css`
     right: 0;
     opacity: 1;
     visibility: visible;
@@ -273,7 +273,7 @@ const TopBar: React.FC<ITopBar> = ({
       {ReactDom.createPortal(
         <DrawerPortalWrapper>
           {/* User Menu */}
-          <Drawer isOpen={openDrawer === 'user'}>
+          <Drawer $isOpen={openDrawer === 'user'}>
             <UserMenu {...{
               hasLanguage,
               hasLogout,
@@ -308,14 +308,14 @@ const TopBar: React.FC<ITopBar> = ({
 
           {/* Notifications */}
           {hasNotifications ?
-            <Drawer isOpen={openDrawer === 'notifications'} baseWidth='300px'>
+            <Drawer $isOpen={openDrawer === 'notifications'} $baseWidth='300px'>
               <NotificationsContainer>
                 {notificationsHistory ? <NotificationsHistory {...notificationsHistory} /> : null}
               </NotificationsContainer>
             </Drawer> : null}
 
           {customDrawer && (
-            <Drawer isOpen={openDrawer === 'custom'} baseWidth={customDrawer.width ? customDrawer.width : "200px"}>
+            <Drawer $isOpen={openDrawer === 'custom'} $baseWidth={customDrawer.width ? customDrawer.width : "200px"}>
               <>{customDrawer.customComponent}</>
             </Drawer>
           )}

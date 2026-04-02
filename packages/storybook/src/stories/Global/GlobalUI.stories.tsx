@@ -520,7 +520,7 @@ export const _GlobalUI = () => {
   },[languageToggle])
 
   const getToggleValue = (isMenuOpen: boolean) => {
-    console.log(isMenuOpen);
+    console.debug(isMenuOpen);
   };
 
   const userDrawerMetaConfig = object("User Drawer Meta", [

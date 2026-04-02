@@ -25,12 +25,12 @@ const CoreStyle = css`
 
 `;
 
-const ContainerStatic = styled.div<{themeColor?: string}>`
+const ContainerStatic = styled.div<{$themeColor?: string}>`
   ${CoreStyle};
 
-  ${({themeColor}) => themeColor ? css`
-    border: 2px solid var(--${themeColor}-9);
-    color: var(--${themeColor}-11);
+  ${({$themeColor}) => $themeColor ? css`
+    border: 2px solid var(--${$themeColor}-9);
+    color: var(--${$themeColor}-11);
   ` : css`
     border: 2px solid var(--info-9);
     color: var(--info-11);
@@ -42,14 +42,14 @@ const DefaultText = styled.span`
 `;
 const LinkText = styled.span``;
 
-const InteractiveStyle = css<{themeColor?: string}>`
+const InteractiveStyle = css<{$themeColor?: string}>`
   ${CoreStyle};
   text-decoration: none;
 
-  ${({themeColor}) => themeColor ? css`
+  ${({$themeColor}) => $themeColor ? css`
     background-color: transparent;
-    border: 2px solid var(--${themeColor}-9);
-    color: var(--${themeColor}-11);
+    border: 2px solid var(--${$themeColor}-9);
+    color: var(--${$themeColor}-11);
   ` : css`
     background-color: transparent;
     border: 2px solid var(--info-9);
@@ -57,9 +57,9 @@ const InteractiveStyle = css<{themeColor?: string}>`
   `};
 
   &:hover {
-    ${({themeColor}) => themeColor ? css`
-      background-color: var(--${themeColor}-9);
-      border: 2px solid var(--${themeColor}-9);
+    ${({$themeColor}) => $themeColor ? css`
+      background-color: var(--${$themeColor}-9);
+      border: 2px solid var(--${$themeColor}-9);
       color: var(--white-12);
     ` : css`
       background-color: var(--info-9);
@@ -69,30 +69,30 @@ const InteractiveStyle = css<{themeColor?: string}>`
   }
 `;
 
-const ContainerLinked = styled.div<{themeColor?: string}>`
+const ContainerLinked = styled.div<{$themeColor?: string}>`
   a {
     ${InteractiveStyle};
   }
 `;
 
-const ContainerButton = styled.div<{themeColor?: string}>`
+const ContainerButton = styled.div<{$themeColor?: string}>`
   button {
     ${resetButtonStyles};
     ${InteractiveStyle};
   }
 `;
 
-const Container = styled.div<{ready: boolean, minWidth: number}>`
-  ${({ready, minWidth}) => css`
-    
-    visibility: ${ready ? 'visible' : 'hidden'};
-    opacity: ${ready ? '1' : '0'};
+const Container = styled.div<{$ready: boolean, $minWidth: number}>`
+  ${({$ready, $minWidth}) => css`
+
+    visibility: ${$ready ? 'visible' : 'hidden'};
+    opacity: ${$ready ? '1' : '0'};
 
     transition: opacity var(--speed-fast) var(--easing-primary-in-out);
 
     ${DefaultText}, ${LinkText}{
       /* Required to accurately measure container sizes and ensure hover doesn't resize. */
-      ${ready && `min-width: ${minWidth}px;`};
+      ${$ready && `min-width: ${$minWidth}px;`};
     }
   `};
 `;
@@ -143,30 +143,30 @@ const TopBarBadge: React.FC<ITopBarBadge> = ({text, color, linkHref, linkTo, lin
 
   const badgeComponent = useMemo(() => {
     if(onClick){
-      return <ContainerButton themeColor={color}>
+      return <ContainerButton $themeColor={color}>
         <button onClick={onClick} type="button">
           {renderContent}
         </button>
       </ContainerButton>;
     } else if(linkTo){
-      return <ContainerLinked themeColor={color}>
+      return <ContainerLinked $themeColor={color}>
         <Link to={linkTo}>
           {renderContent}
         </Link>
       </ContainerLinked>;
     } else if(linkHref){
-      return <ContainerLinked themeColor={color}>
+      return <ContainerLinked $themeColor={color}>
         <a href={linkHref}>
           {renderContent}
         </a>
       </ContainerLinked>;
     } else {
-      return <ContainerStatic themeColor={color}>{defaultTextElement}</ContainerStatic>;
+      return <ContainerStatic $themeColor={color}>{defaultTextElement}</ContainerStatic>;
     }
   }, [onClick, linkTo, linkHref, color, renderContent, defaultTextElement]);
   
   return (
-    <Container {...{ready, minWidth}} onPointerEnter={ () => ready && setHover(true) } onPointerLeave={ () => ready && setHover(false) }>
+    <Container $ready={ready} $minWidth={minWidth} onPointerEnter={ () => ready && setHover(true) } onPointerLeave={ () => ready && setHover(false) }>
       { badgeComponent }
     </Container>
   );

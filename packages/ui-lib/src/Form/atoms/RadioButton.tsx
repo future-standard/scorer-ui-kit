@@ -8,7 +8,7 @@ const InnerRadio = styled.div`
   user-select: none;
 `;
 
-const OuterRadio = styled.div<{ isChecked: boolean, disabled: boolean }>`
+const OuterRadio = styled.div<{ $isChecked: boolean, $disabled: boolean }>`
   position: absolute;
   display: flex;
   align-items: center;
@@ -20,24 +20,24 @@ const OuterRadio = styled.div<{ isChecked: boolean, disabled: boolean }>`
   border-style: solid;
   user-select: none;
 
-  ${({ isChecked, disabled }) => css`
+  ${({ $isChecked, $disabled }) => css`
     border-color: var(--input-toggle-unchecked-border-color);
 
-    ${!disabled && css`
+    ${!$disabled && css`
       &:hover {
         cursor: pointer;
         border-color: var(--input-toggle-unchecked-hover-border-color);
       }
     `};
 
-    ${isChecked && !disabled && css`
+    ${$isChecked && !$disabled && css`
       border-color: var(--input-toggle-checked-border-color);
       ${InnerRadio} {
         background-color: var(--input-toggle-checked-background-color);
       }
     `};
 
-    ${isChecked && !disabled && css`
+    ${$isChecked && !$disabled && css`
       &:hover {
         border-color: var(--input-toggle-checked-hover-border-color);
         ${InnerRadio} {
@@ -46,7 +46,7 @@ const OuterRadio = styled.div<{ isChecked: boolean, disabled: boolean }>`
       }
     `};
 
-    ${isChecked && disabled && css`
+    ${$isChecked && $disabled && css`
       cursor: not-allowed;
       border-color: var(--input-toggle-checked-disabled-border-color);
       ${InnerRadio} {
@@ -54,7 +54,7 @@ const OuterRadio = styled.div<{ isChecked: boolean, disabled: boolean }>`
       }
     `};
 
-    ${!isChecked && disabled && css`
+    ${!$isChecked && $disabled && css`
       cursor: not-allowed;
       border-color: var(--input-toggle-unchecked-disabled-border-color);
       ${InnerRadio} {
@@ -114,7 +114,7 @@ const RadioButton: React.FC<IRadioButton> = ({
         checked={isChecked}
         onChange={handleChange}
       />
-      <OuterRadio {...{ isChecked, disabled }}>
+      <OuterRadio $isChecked={isChecked} $disabled={disabled}>
         <InnerRadio />
       </OuterRadio>
     </Container>

@@ -2,7 +2,7 @@ import React from 'react';
 import styled, {css}from 'styled-components';
 import Icon, {IconWrapper} from '../../Icons/Icon';
 
-const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, ascending?:boolean}>`
+const HeaderTitle = styled.div<{$sortable?: boolean, $isSortActive?: boolean, $ascending?:boolean}>`
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
   display: inline-flex;
@@ -22,7 +22,7 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
     border-top-left-radius: 3px;
     padding: 3px 1px;
 
-    ${({ascending}) => ascending && css`
+    ${({$ascending}) => $ascending && css`
       transform: rotate(180deg);
       border-bottom-right-radius: 3px;
       border-top-right-radius: 3px;
@@ -32,7 +32,7 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
     `}
   }
 
-  ${({isSortActive}) => isSortActive && css`
+  ${({$isSortActive}) => $isSortActive && css`
     &:not(hover) {
       ${IconWrapper} {
         display: inline-flex;
@@ -40,7 +40,7 @@ const HeaderTitle = styled.div<{sortable?: boolean, isSortActive?: boolean, asce
     }
   `}
 
-  ${({theme: { styles }, sortable}) => sortable && css`
+  ${({theme: { styles }, $sortable}) => $sortable && css`
 
     ${styles.tables.header.sortable.default};
 
@@ -82,9 +82,9 @@ const TableHeaderTitle : React.FC<IHeaderProps> = ({
 
   return(
     <HeaderTitle
-      sortable={sortable}
-      isSortActive={isSortActive}
-      ascending={ascending}
+      $sortable={sortable}
+      $isSortActive={isSortActive}
+      $ascending={ascending}
       onClick={() => {handleClick(indexKey, columnId);}}
     >
       {sortable && <Icon icon='FilterSorting' size={14} color='dimmed' />}

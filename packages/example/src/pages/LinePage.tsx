@@ -251,7 +251,7 @@ const Line: React.FC<{}> = () => {
           {/* <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button> */}
         </SidebarBox>
       </Sidebar>
-      <Content padBottom={false}>
+      <Content $padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
           <LineUI options={options} onLineClick={selectLine} src="/scorer-ui-kit/images/line-ui-railyard.jpg" />

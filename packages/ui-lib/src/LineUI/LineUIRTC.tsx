@@ -38,7 +38,7 @@ const LoadingOverlay =styled.div`
   justify-content: center;
 `;
 
-const Frame = styled.svg<{transcalent?: boolean}>`
+const Frame = styled.svg<{$transcalent?: boolean}>`
   touch-action: none;
   user-select: none;
   margin: 0;
@@ -55,7 +55,7 @@ const Frame = styled.svg<{transcalent?: boolean}>`
   transition: background 250ms ease;
   background: hsla(0deg, 0%, 0%, 0%);
 
-  ${props => props.transcalent && css`
+  ${props => props.$transcalent && css`
     background: hsla(0deg, 0%, 0%, 35%);
   `}
 
@@ -199,7 +199,7 @@ const LineUI : React.FC<LineUIProps> = ({
       {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {
         loaded &&
-          <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transcalent={handleFinder}>
+          <Frame ref={frame} viewBox={`0 0 ${videoSize.w} ${videoSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} $transcalent={handleFinder}>
             {state.map((lineSet, index) => (
               <LineSet key={index} hasClickSensingBorder={hasClickSensingBorder} lineClickSensingBorder={lineClickSensingBorder} onLineMoveEnd={onLineMoveEnd} onLineClick={onLineClick} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
               ))}

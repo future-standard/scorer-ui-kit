@@ -5,7 +5,7 @@ import Label from '../atoms/Label';
 import { TypeFieldState } from '..';
 import { removeAutoFillStyle } from '../../common';
 
-const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
+const StyledInput = styled.input<{ $fieldState : TypeFieldState }>`
   ${removeAutoFillStyle};
 
   font-family: var(--font-data);
@@ -35,7 +35,7 @@ const StyledInput = styled.input<{ fieldState : TypeFieldState }>`
   }
 `;
 
-const InputContainer = styled.div<{fieldState : TypeFieldState, hasAction?: boolean}>`
+const InputContainer = styled.div<{$fieldState : TypeFieldState, $hasAction?: boolean}>`
   display: flex;
   height: var(--input-compact-height);
   padding: 0 8px;
@@ -44,15 +44,15 @@ const InputContainer = styled.div<{fieldState : TypeFieldState, hasAction?: bool
   position: relative;
   border-radius: 3px;
 
-  ${({fieldState}) => css`
-    border: 1px solid var(--input-${fieldState}-border-color);
-    background: var(--input-${fieldState}-background-color);
+  ${({$fieldState}) => css`
+    border: 1px solid var(--input-${$fieldState}-border-color);
+    background: var(--input-${$fieldState}-background-color);
     transition:
       border var(--speed-normal) var(--easing-primary-out),
       background-color var(--speed-normal) var(--easing-primary-out);
   `};
 
-  ${({ hasAction }) => hasAction && css`
+  ${({ $hasAction }) => $hasAction && css`
     ${StyledInput}{
       padding-right: 200px;
 
@@ -72,13 +72,13 @@ const UnitKey = styled.div`
   white-space: nowrap;
 `;
 
-const Container = styled.div<{ fieldState: string }>`
+const Container = styled.div<{ $fieldState: string }>`
   position: relative;
 
-  ${({fieldState}) => fieldState && css`
+  ${({$fieldState}) => $fieldState && css`
     &:focus-within ${InputContainer} {
       transition: boxShadow var(--speed-fast) var(--easing-primary-in-out);
-      box-shadow: 0 3px 3px var(--input-${fieldState}-focused-shadow-color, var(--input-${fieldState}-shadow-color));
+      box-shadow: 0 3px 3px var(--input-${$fieldState}-focused-shadow-color, var(--input-${$fieldState}-shadow-color));
     }
   `};
 `;
@@ -109,11 +109,11 @@ const SmallInput : React.FC<Props> = ({
 
 
   return (
-    <Container className={className} fieldState={fieldState || 'default'}>
+    <Container className={className} $fieldState={fieldState || 'default'}>
       <Label labelText={label} htmlFor={name || ''} {...{required}}>
-        <InputContainer fieldState={fieldState || 'default'}>
+        <InputContainer $fieldState={fieldState || 'default'}>
           <StyledInput
-            fieldState={fieldState || 'default'}
+            $fieldState={fieldState || 'default'}
             type={type}
             placeholder={placeholder}
             defaultValue={defaultValue}

@@ -7,27 +7,27 @@ import ReactDOM from 'react-dom';
 const ARROW_SIZE = 8;
 const ARROW_MARGIN = 16;
 
-const Arrow = styled.div<{ type: ITooltipType }>`
+const Arrow = styled.div<{ $type: ITooltipType }>`
   content:'';
   display:block;
   width:0;
   height:0;
   border-left: ${ARROW_SIZE}px solid transparent;
   border-right: ${ARROW_SIZE}px solid transparent;
-  border-bottom: ${ARROW_SIZE}px solid ${({ type }) => `var(--tooltip-${type}-arrow)`};
+  border-bottom: ${ARROW_SIZE}px solid ${({ $type }) => `var(--tooltip-${$type}-arrow)`};
 `;
 
-const TooltipWrapper = styled.div<{ directionStyle: string, maxWidth?: string }>`
+const TooltipWrapper = styled.div<{ $directionStyle: string, $maxWidth?: string }>`
   position: absolute;
   display: flex;
-  ${({ maxWidth }) => maxWidth && css` max-width: ${maxWidth}`};
-  ${({ directionStyle }) => directionStyle && css`${directionStyle}`};
+  ${({ $maxWidth }) => $maxWidth && css` max-width: ${$maxWidth}`};
+  ${({ $directionStyle }) => $directionStyle && css`${$directionStyle}`};
 `;
 
-const MessageWrapper = styled.div<{ type: ITooltipType }>`
-  background-color: ${({ type }) => `var(--tooltip-${type})`};
+const MessageWrapper = styled.div<{ $type: ITooltipType }>`
+  background-color: ${({ $type }) => `var(--tooltip-${$type})`};
   border-radius: 3px;
-  border: 1px solid ${({ type }) => `var(--tooltip-${type}-border)`};
+  border: 1px solid ${({ $type }) => `var(--tooltip-${$type}-border)`};
   box-shadow: 0px 2px var(--input-focused-blur, 3px) 0px rgba(0, 16, 64, 0.06);
   backdrop-filter: blur(2px);
   display: flex;
@@ -311,9 +311,9 @@ const Tooltip: React.FC<ITooltip> = ({ icon, message, type, tooltipFor, tooltipP
   if (!visible || !coords) return null;
 
   return ReactDOM.createPortal(
-    <TooltipWrapper ref={tooltipRef} maxWidth={maxWidth} directionStyle={getDirectionStyle(tooltipPosition || dynamicPosition, coords)}>
-      <Arrow type={type || 'neutral'} />
-      <MessageWrapper type={type || 'neutral'}>
+    <TooltipWrapper ref={tooltipRef} $maxWidth={maxWidth} $directionStyle={getDirectionStyle(tooltipPosition || dynamicPosition, coords)}>
+      <Arrow $type={type || 'neutral'} />
+      <MessageWrapper $type={type || 'neutral'}>
         {icon && <Icon icon={icon} size={16} color='white-a12' />}
         {message}
       </MessageWrapper>

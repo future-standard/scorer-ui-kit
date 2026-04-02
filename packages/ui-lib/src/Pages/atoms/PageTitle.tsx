@@ -23,10 +23,10 @@ const Container = styled.div`
   }
 `;
 
-const TitlesWrapper = styled.div<{areaTitleBottom: boolean}>`
+const TitlesWrapper = styled.div<{$areaTitleBottom: boolean}>`
   position: relative;
   display: flex;
-  flex-direction: ${({areaTitleBottom}) => areaTitleBottom ? `column-reverse`  : `column` };
+  flex-direction: ${({$areaTitleBottom}) => $areaTitleBottom ? `column-reverse`  : `column` };
   gap: 4px;
 `;
 
@@ -107,7 +107,7 @@ const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateD
         <IconContainer ><Icon size={ICON_SIZE} color={iconColor} {...{icon}} /></IconContainer>
       : null}
 
-      <TitlesWrapper areaTitleBottom={areaTitleBottom}>
+      <TitlesWrapper $areaTitleBottom={areaTitleBottom}>
         {areaTitle && onAreaClick ? (
           <AreaButton onClick={onAreaClick} type="button">{areaTitle}</AreaButton>
         ) : areaTitle && areaHref ? (

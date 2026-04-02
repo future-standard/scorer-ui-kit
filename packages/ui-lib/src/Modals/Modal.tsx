@@ -23,7 +23,7 @@ const Container = styled.div`
   background-color: var(--grey-a3);
 `;
 
-const CloseButton = styled.button<{ selected?: boolean }>`
+const CloseButton = styled.button<{ $selected?: boolean }>`
   ${resetButtonStyles};
   display: flex;
   align-items: center;
@@ -39,7 +39,7 @@ const CloseButton = styled.button<{ selected?: boolean }>`
     display: flex;
     margin-left: 12px;
   }
-  ${({ selected = false }) => selected && css`
+  ${({ $selected = false }) => $selected && css`
     border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
@@ -59,12 +59,12 @@ const CloseButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
-const LightBox = styled.div<{ padding?: boolean, width?: string, isCloseEnable?: boolean}>`
+const LightBox = styled.div<{ $padding?: boolean, $width?: string, $isCloseEnable?: boolean}>`
   position: relative;
-  margin: ${({ isCloseEnable }) => isCloseEnable ? `27px 0 0` : `0`};
+  margin: ${({ $isCloseEnable }) => $isCloseEnable ? `27px 0 0` : `0`};
   z-index: 9999;
-  width: ${({ width }) => width ? width : `580px`};
-  padding: ${({ padding }) => padding ? `30px 40px` : `0`};
+  width: ${({ $width }) => $width ? $width : `580px`};
+  padding: ${({ $padding }) => $padding ? `30px 40px` : `0`};
   border-radius: 5px;
   box-shadow: 0px 10px 15px 0px var(--primary-a1);
   background-color: var(--grey-1);
@@ -115,7 +115,7 @@ const Modal: React.FC<IModalProps> = ({
   return (isOpen
     ? ReactDom.createPortal(
       <Container>
-        <LightBox ref={lightBoxRef} width={width} padding={padding} isCloseEnable={isCloseEnable}>
+        <LightBox ref={lightBoxRef} $width={width} $padding={padding} $isCloseEnable={isCloseEnable}>
           <>
             {isCloseEnable
               ?

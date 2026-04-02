@@ -6,13 +6,13 @@ import Label from '../atoms/Label';
 
 
 const Container = styled.div``;
-const Headers = styled.div<{allMarkCentered?:boolean}>`
+const Headers = styled.div<{$allMarkCentered?:boolean}>`
   font-size: 14px;
   color: var(--grey-10);
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  ${({allMarkCentered}) => allMarkCentered ?
+  ${({$allMarkCentered}) => $allMarkCentered ?
       `padding: 0;`
     :
       `padding: 0 6px;`
@@ -85,7 +85,7 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
 
   return(
     <Container>
-      <Headers allMarkCentered={allMarkCentered}>
+      <Headers $allMarkCentered={allMarkCentered}>
         <Label
           htmlFor='percentage-slider'
           labelText={updateTitle ? updateTitle(selectedValue) : getTitleLevel(selectedValue)}

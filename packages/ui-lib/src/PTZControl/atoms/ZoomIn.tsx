@@ -2,14 +2,14 @@ import React, { useState, useCallback, useContext } from 'react';
 import styled, {css} from 'styled-components';
 import { PTZContext } from '../state/PTZProvider';
 
-const Active = styled.g<{active:boolean}>`
+const Active = styled.g<{$active:boolean}>`
   opacity: 0;
-  ${({active}) => active && css`opacity: 1;`}
+  ${({$active}) => $active && css`opacity: 1;`}
 
 `;
-const Hover = styled.g<{hover:boolean}>`
+const Hover = styled.g<{$hover:boolean}>`
   opacity: 0;
-  ${({hover}) => hover && css`opacity: 1;`}
+  ${({$hover}) => $hover && css`opacity: 1;`}
 `;
 
 const Container = styled.g`
@@ -41,7 +41,7 @@ const Up: React.FC<Props> = () => {
 
   return (
     <Container onMouseEnter={hoverStart} onMouseLeave={hoverEnd} onMouseDown={activeStart} onMouseUp={activeEnd} onTouchStart={activeStart} onTouchEnd={activeEnd} transform='translate(10.000000, 10.625000)'>
-      <Hover hover={hover} fillOpacity='0.56'>
+      <Hover $hover={hover} fillOpacity='0.56'>
         <path
           d='M96,0 L96,63.75 L160.883594,63.75 C178.620995,63.75 193,49.4790764 193,31.875 C193,14.2709236 178.620995,0 160.883594,0 L96,0 Z'
           id='PTZ-Zoom-Hover-Plus-Slice'
@@ -49,7 +49,7 @@ const Up: React.FC<Props> = () => {
         />
         {/* <path d="M97,0 L97,63.75 L32.1164062,63.75 C14.3790049,63.75 0,49.4790764 0,31.875 C0,14.2709236 14.3790049,0 32.1164062,0 L97,0 Z" id="PTZ-Zoom-Hover-Minus-Slice" fill="url(#linearGradient-zoom10)"></path> */}
       </Hover>
-      <Active active={zooming === 'in'} transform='translate(96.000000, 0.000000)'>
+      <Active $active={zooming === 'in'} transform='translate(96.000000, 0.000000)'>
         <path
           d='M0,0 L0,63.75 L64.8835938,63.75 C82.6209951,63.75 97,49.4790764 97,31.875 C97,14.2709236 82.6209951,0 64.8835938,0 L0,0 Z' id='PTZ-Zoom-Active-Plus-Slice'
           fillOpacity='0.61'

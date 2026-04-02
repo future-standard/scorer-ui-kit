@@ -47,7 +47,7 @@ export const _AvatarUploader = () => {
     <Container>
       <AvatarUploader
         onAvatarUpdate={uploadReady}
-        currentImg={baseImg ? 'http://placekitten.com/g/200/300' : ''}
+        currentImg={baseImg ? 'https://placekitten.com/g/200/300' : ''}
         {...{
           title,
           photoText,

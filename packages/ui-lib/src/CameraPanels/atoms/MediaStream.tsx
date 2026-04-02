@@ -28,13 +28,13 @@ const Container = styled.div`
     }
 `;
 
-const EmptyWithIcon = styled.div<{hasPadding: boolean}>`
+const EmptyWithIcon = styled.div<{$hasPadding: boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   width: 100%;
-  ${({hasPadding})=> hasPadding && `
+  ${({$hasPadding})=> $hasPadding && `
     padding-bottom: 43px
   `}
 ;
@@ -45,8 +45,8 @@ const EmptyWithIcon = styled.div<{hasPadding: boolean}>`
     justify-content: center;
   }
 `;
-const Notice = styled.div`
-  background-color: ${({color }) => color && `var(--${color})`};
+const Notice = styled.div<{ $color?: IFeedbackColor }>`
+  background-color: ${({$color }) => $color && `var(--${$color})`};
   color: var(--inverse);
   opacity: 0.85;
   height: 46px;
@@ -90,8 +90,8 @@ const NoticeTextGroup = styled.div`
   margin-left: 14px;
 `;
 
-const StatusLine = styled.div<{ color: IFeedbackColor }>`
-  background-color: ${({color }) => color && `var(--${color})`};
+const StatusLine = styled.div<{ $color: IFeedbackColor }>`
+  background-color: ${({$color }) => $color && `var(--${$color})`};
   height: 3px;
   width: 100%;
 `;
@@ -119,10 +119,10 @@ const MediaStream: React.FC<IMediaStream> = ({
   return (
     <Container>
       {isEmptyWithIcon
-        ? <EmptyWithIcon hasPadding={hasNotice}><Icon icon={emptyIcon ? emptyIcon : 'PasswordHide'} color='dimmed' size={41} /></EmptyWithIcon>
+        ? <EmptyWithIcon $hasPadding={hasNotice}><Icon icon={emptyIcon ? emptyIcon : 'PasswordHide'} color='dimmed' size={41} /></EmptyWithIcon>
         : <MediaBox {...{ ...props }} />}
       {hasNotice && (
-        <Notice color={status}>
+        <Notice $color={status}>
           {noticeIcon && <NoticeIcon><Icon icon={noticeIcon} size={20} color='inverse' /></NoticeIcon>}
           <NoticeTextGroup>
             {noticeTitle && <NoticeTitle>{noticeTitle}</NoticeTitle>}
@@ -130,7 +130,7 @@ const MediaStream: React.FC<IMediaStream> = ({
           </NoticeTextGroup>
         </Notice>
       )}
-      <StatusLine color={status} />
+      <StatusLine $color={status} />
     </Container>
   );
 };

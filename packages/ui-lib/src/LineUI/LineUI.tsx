@@ -33,7 +33,7 @@ const LoadingOverlay =styled.div`
   justify-content: center;
 `;
 
-const Frame = styled.svg<{ transculent?: boolean }>`
+const Frame = styled.svg<{ $transculent?: boolean }>`
   touch-action: none;
   user-select: none;
   margin: 0;
@@ -50,7 +50,7 @@ const Frame = styled.svg<{ transculent?: boolean }>`
   transition: background 250ms ease;
   background: hsla(0deg, 0%, 0%, 0%);
 
-  ${props => props.transculent && css`
+  ${props => props.$transculent && css`
     background: hsla(0deg, 0%, 0%, 35%);
   `}
 
@@ -199,7 +199,7 @@ const LineUI: React.FC<LineUIProps> = ({
       <Image ref={imgRef} onLoad={initScaleAndBounds} src={src} alt='' />
       {
         (loaded && boundaries) ?
-          <Frame ref={frame} viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} transculent={handleFinder}>
+          <Frame ref={frame} viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} $transculent={handleFinder}>
             {state.map((lineSet, index) => (
               <LineSet hasClickSensingBorder={hasClickSensingBorder} lineClickSensingBorder={lineClickSensingBorder} key={index} onLineMoveEnd={onLineMoveEnd} onLineClick={onLineClick} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
             ))}

@@ -60,32 +60,32 @@ const FooterItemContainer = styled.div`
   min-height: 70px;
 `;
 
-const PushContainer = styled.div<{ isPinned: boolean; }>`
+const PushContainer = styled.div<{ $isPinned: boolean; }>`
   position: relative;
   height: 100%;
-  ${({ isPinned }) => css`
-    width: ${isPinned ? `var(--global-menu-width-open)` : `var(--global-menu-width-closed)`};
+  ${({ $isPinned }) => css`
+    width: ${$isPinned ? `var(--global-menu-width-open)` : `var(--global-menu-width-closed)`};
   `};
 `;
 
-const Container = styled.div<{ open: boolean; desktopSize: IBreakpoints }>`
+const Container = styled.div<{ $open: boolean; $desktopSize: IBreakpoints }>`
   z-index: 99;
   position: fixed;
   top: 0;
   left: 0;
-  ${({ open, desktopSize }) => css`
+  ${({ $open, $desktopSize }) => css`
     background-color: var(--global-element-background);
     box-shadow: 0px 0px 7px 0px var(--primary-a2);
-    width: ${open ? `var(--global-menu-width-open)` : `var(--global-menu-width-closed)`};
+    width: ${$open ? `var(--global-menu-width-open)` : `var(--global-menu-width-closed)`};
     border-right: 1px solid var(--dividing-line);
 
-    ${desktopSize === 'xxlarge' ? `` : css`
+    ${$desktopSize === 'xxlarge' ? `` : css`
       transition: width var(--speed-normal) var(--easing-primary-in);
     `};
 
     ${LogoType}{
       transition: opacity var(--speed-normal) var(--easing-primary-in-out);
-      opacity: ${open ? 1 : 0};
+      opacity: ${$open ? 1 : 0};
     }
   `}
 
@@ -142,13 +142,13 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
   }, [setFocusedContext, focusedContext]);
 
   return (
-    <PushContainer isPinned={menuState.isMenuPinned}>
+    <PushContainer $isPinned={menuState.isMenuPinned}>
       <>{ReactDom.createPortal(
         <Container
-          open={menuState.isMenuOpen}
-          desktopSize={menuState.desktopSize}
+          $open={menuState.isMenuOpen}
+          $desktopSize={menuState.desktopSize}
           onPointerEnter={menuState.isMenuPinned ? () => {} : autoMenuOpen}
-          onTouchStart={() => console.log('touch')}
+          onTouchStart={() => console.debug('touch')}
           onMouseLeave={menuState.isMenuPinned ? () => {} : autoMenuClose}
         >
           <ContainerInner>

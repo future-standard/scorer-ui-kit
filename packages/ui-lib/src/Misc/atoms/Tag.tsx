@@ -19,14 +19,14 @@ const StyledButton = styled.button`
   display: flex;
 `;
 
-export const TagWrapper = styled.div<{ hoverColor: ISvgIcons['color']; enableHover: boolean; size: number, tagSize?: TypeTagSize, noBorder: boolean }>`
+export const TagWrapper = styled.div<{ $hoverColor: ISvgIcons['color']; $enableHover: boolean; $size: number, $tagSize?: TypeTagSize, $noBorder: boolean }>`
   font-family: var(--font-data);
-  font-size: ${({ size }) => size}px;
+  font-size: ${({ $size }) => $size}px;
   font-weight: 500;
   color: var(--grey-11);
   padding: 4px 10px;
 
-  ${({ noBorder }) => !noBorder && css`
+  ${({ $noBorder }) => !$noBorder && css`
       border: solid 1px var(--grey-8);
       border-radius: 3px;
     `
@@ -37,12 +37,12 @@ export const TagWrapper = styled.div<{ hoverColor: ISvgIcons['color']; enableHov
   flex-shrink: 0;
   gap: 8px;
 
-  ${({ tagSize }) => tagSize === 'compact' && css`
+  ${({ $tagSize }) => $tagSize === 'compact' && css`
     padding: 2px 6px;
     gap: 4px;
   `};
 
-  ${({ tagSize }) => tagSize === 'default' && css`
+  ${({ $tagSize }) => $tagSize === 'default' && css`
     padding: 3px 8px;
   `};
 
@@ -56,14 +56,14 @@ export const TagWrapper = styled.div<{ hoverColor: ISvgIcons['color']; enableHov
     align-items: center;
   }
 
-  ${({ hoverColor, enableHover }) => enableHover && css`
+  ${({ $hoverColor, $enableHover }) => $enableHover && css`
     &:hover {
       cursor: pointer;
-      border-color: var(--${hoverColor});
-      color: var(--${hoverColor});
+      border-color: var(--${$hoverColor});
+      color: var(--${$hoverColor});
       ${IconWrapper} {
         [stroke]{
-          stroke: var(--${hoverColor});
+          stroke: var(--${$hoverColor});
         }
       }
     }
@@ -98,7 +98,7 @@ const Tag: React.FC<ITag> = ({
   const textTagSize = useMemo(() => tagSize === 'compact' ? 12 : 14, [tagSize]);
 
   const renderTag = () => (
-    <TagWrapper hoverColor='primary' enableHover={onTagClick || linkTo ? true : false} size={tagSize ? textTagSize : size} tagSize={tagSize} noBorder={noBorder}>
+    <TagWrapper $hoverColor='primary' $enableHover={onTagClick || linkTo ? true : false} $size={tagSize ? textTagSize : size} $tagSize={tagSize} $noBorder={noBorder}>
       {icon && (
         <Icon
           icon={icon}

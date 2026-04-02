@@ -7,9 +7,9 @@ import { TabWithIcon, ITabWithIcon } from '../atoms/TabWithIcon';
 
 const Container = styled.div``;
 
-const TabListWrapper = styled.div<{ paddingLeft?: string }>`
+const TabListWrapper = styled.div<{ $paddingLeft?: string }>`
   padding-top: 10px;
-  padding-left: ${({ paddingLeft }) => paddingLeft ? paddingLeft : '87px'};
+  padding-left: ${({ $paddingLeft }) => $paddingLeft ? $paddingLeft : '87px'};
   box-shadow: 0 -5px 5px 0 var(--black-a1);
   border-bottom: 1px solid var(--grey-6);
   overflow-y: auto;
@@ -36,7 +36,7 @@ const TabsWithIconBar: React.FC<ITabsWithIconBar> = ({ defaultTabId, tabList, pa
   return (
     <Container>
       <Tabs>
-        <TabListWrapper {...{ paddingLeft }}>
+        <TabListWrapper $paddingLeft={paddingLeft}>
           <TabList {...{ defaultTabId }}>
             {tabList.map(({ icon, title, subtitle, tabFor }) => {
               return (

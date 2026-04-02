@@ -50,72 +50,72 @@ const resizeSquaresCss = css`
   background-color: var(--white-1);
 `;
 
-const PointN = styled.div<{ isResizable: boolean }>`
+const PointN = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   top: -5px;
   margin-left: -5px;
   left: 50%;
-  ${({ isResizable }) => isResizable && css`
+  ${({ $isResizable }) => $isResizable && css`
     cursor: n-resize;
   `};
 `;
-const PointNW = styled.div<{ isResizable: boolean }>`
+const PointNW = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   top: -5px;
   left: -5px;
-  ${({ isResizable }) => isResizable && css`
+  ${({ $isResizable }) => $isResizable && css`
     cursor: nw-resize;
   `};
 `;
 
-const PointNE = styled.div<{ isResizable: boolean }>`
+const PointNE = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   top: -5px;
   right: -5px;
-  ${({ isResizable }) => isResizable && css`
+  ${({ $isResizable }) => $isResizable && css`
     cursor: ne-resize;
   `};
 `;
-const PointE = styled.div<{ isResizable: boolean }>`
+const PointE = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
     margin-top: -5px;
     top: 50%;
     right: -5px;
-  ${({ isResizable }) => isResizable && css`
+  ${({ $isResizable }) => $isResizable && css`
     cursor: e-resize;
   `};
 `;
-const PointSE = styled.div<{ isResizable: boolean }>`
+const PointSE = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   bottom: -5px;
   right: -5px;
-  ${({ isResizable }) => isResizable && css`
+  ${({ $isResizable }) => $isResizable && css`
     cursor: se-resize;
   `};
 `;
-const PointS = styled.div<{ isResizable: boolean }>`
+const PointS = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   bottom: -5px;
   left: 50%;
   margin-left: -5px;
-  ${({ isResizable }) => isResizable && css`
+  ${({ $isResizable }) => $isResizable && css`
     cursor: s-resize;
   `};
 `;
-const PointSW = styled.div<{ isResizable: boolean }>`
+const PointSW = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   bottom: -5px;
   left: -5px;
-  ${({ isResizable }) => isResizable && css`
+  ${({ $isResizable }) => $isResizable && css`
     cursor: sw-resize;
   `};
 `;
-const PointW = styled.div<{ isResizable: boolean }>`
+const PointW = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   margin-top: -5px;
   top: 50%;
   left: -5px;
-  ${({ isResizable }) => isResizable && css`
+  ${({ $isResizable }) => $isResizable && css`
     cursor: w-resize;
   `};
 `;
@@ -145,18 +145,18 @@ const CropArea: React.FC<ICropArea> = ({
       {hasAspectRatio ? null
         : (
           <Fragment>
-            <PointN data-point='cursor-n' {...{ isResizable }} />
-            <PointE data-point='cursor-e' {...{ isResizable }} />
-            <PointS data-point='cursor-s' {...{ isResizable }} />
-            <PointW data-point='cursor-w' {...{ isResizable }} />
+            <PointN data-point='cursor-n' $isResizable={isResizable} />
+            <PointE data-point='cursor-e' $isResizable={isResizable} />
+            <PointS data-point='cursor-s' $isResizable={isResizable} />
+            <PointW data-point='cursor-w' $isResizable={isResizable} />
           </Fragment>
         )}
 
 
-      <PointNW data-point='cursor-nw' {...{ isResizable }} />
-      <PointNE data-point='cursor-ne' {...{ isResizable }} />
-      <PointSE data-point='cursor-se' {...{ isResizable }} />
-      <PointSW data-point='cursor-sw' {...{ isResizable }} />
+      <PointNW data-point='cursor-nw' $isResizable={isResizable} />
+      <PointNE data-point='cursor-ne' $isResizable={isResizable} />
+      <PointSE data-point='cursor-se' $isResizable={isResizable} />
+      <PointSW data-point='cursor-sw' $isResizable={isResizable} />
     </Fragment>
   );
 };

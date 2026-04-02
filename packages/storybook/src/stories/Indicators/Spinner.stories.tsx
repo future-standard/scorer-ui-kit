@@ -9,13 +9,13 @@ const SpinnerStory = {
   decorators: []
 };
 
-const Container = styled.div<{styling: string}>`
+const Container = styled.div<{$styling: string}>`
   border-radius: 3px;
   height: calc(100vh - 2rem);
   display: flex;
   justify-content:center;
   align-items:center;
-  ${({styling}) => `background-color: var(--${styling}-9)` };
+  ${({$styling}) => `background-color: var(--${$styling}-9)` };
 `;
 
 export const LoadingSpinner = () => {
@@ -32,7 +32,7 @@ export const LoadingSpinner = () => {
   baseColor = customBaseColor.indexOf('(') !== -1 && customBaseColor.indexOf(')') === -1 ? customBaseColor + ')' : customBaseColor;
   topColor = customTopColor.indexOf('(') !== -1 && customTopColor.indexOf(')') === -1 ? customTopColor + ')' : customTopColor;
 
-  return <Container styling={spinnerType}>
+  return <Container $styling={spinnerType}>
     <Spinner size={spinnerSize} styling={spinnerType} custom={{ size: customSize, ...{ baseColor, topColor } }} />
   </Container>;
 };

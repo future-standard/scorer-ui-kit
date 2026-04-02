@@ -37,7 +37,7 @@ const CheckboxInner = styled.div<{}>`
   box-sizing: border-box;
 `;
 
-const IconWrapper = styled.div<{color: ISvgIcons['color']}>`
+const IconWrapper = styled.div<{$color: ISvgIcons['color']}>`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -50,19 +50,19 @@ const IconWrapper = styled.div<{color: ISvgIcons['color']}>`
       stroke: transparent;
     }
     [fill] {
-      fill: ${({color}) => `var(--${color})`};
+      fill: ${({$color}) => `var(--${$color})`};
     }
   }
 `;
 
-const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}>`
+const Container = styled.label<{$visualState?: CheckboxState, $disabled?: boolean}>`
   display: inline-block;
   user-select: none;
   ${CheckboxOuter}{
     border: var(--input-toggle-unchecked-border-color) 2px solid;
   }
-  
-  ${({visualState, disabled}) => visualState === CheckboxState.Off && css`
+
+  ${({$visualState, $disabled}) => $visualState === CheckboxState.Off && css`
     /* Unchecked */
     ${CheckboxOuter}{
       background-color: var(--input-toggle-unchecked-background-color);
@@ -70,7 +70,7 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
     }
 
     /* Unchecked - Hover */
-    ${!disabled && css`
+    ${!$disabled && css`
       &:hover ${CheckboxOuter} {
         background-color: var(--input-toggle-unchecked-hover-background-color);
         border-color: var(--input-toggle-unchecked-hover-border-color);
@@ -78,7 +78,7 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
     };
 
     /* Unchecked - Disabled */
-    ${disabled && css`
+    ${$disabled && css`
       ${CheckboxOuter}{
         background-color: var(--input-toggle-unchecked-disabled-background-color);
         border-color: var(--input-toggle-unchecked-disabled-border-color);
@@ -88,22 +88,22 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
     `}
   `}
 
-  ${({visualState, disabled}) => visualState === CheckboxState.On && css`
-    /* Checked */  
+  ${({$visualState, $disabled}) => $visualState === CheckboxState.On && css`
+    /* Checked */
     ${CheckboxOuter}{
       background-color: var(--input-toggle-checked-background-color);
       border-color: var(--input-toggle-checked-border-color);
     }
     /* Checked - Hover */
-    ${!disabled && css`
+    ${!$disabled && css`
       &:hover ${CheckboxOuter}{
         background-color: var(--input-toggle-checked-hover-background-color);
         border-color: var(--input-toggle-checked-hover-border-color);
       }`
     };
 
-    /* Checked - Disabled */    
-    ${disabled && css`
+    /* Checked - Disabled */
+    ${$disabled && css`
       ${CheckboxOuter}{
         background-color: var(--input-toggle-checked-disabled-background-color);
         border-color: var(--input-toggle-checked-disabled-border-color);
@@ -115,18 +115,18 @@ const Container = styled.label<{visualState?: CheckboxState, disabled?: boolean}
     `}
   `}
 
-  ${({visualState, disabled}) => visualState === CheckboxState.Indeterminate && css`
+  ${({$visualState, $disabled}) => $visualState === CheckboxState.Indeterminate && css`
     ${CheckboxOuter}{
       background-color: var(--input-toggle-intermediate-background-color);
       border-color: var(--input-toggle-intermediate-border-color);
     }
-    ${!disabled && css`
+    ${!$disabled && css`
       &:hover ${CheckboxOuter}{
         background-color: var(--input-toggle-intermediate-hover-background-color);
         border-color: var(--input-toggle-intermediate-hover-border-color);
       }
     `};
-    ${disabled && css`
+    ${$disabled && css`
       ${CheckboxOuter}{
         background-color: var(--input-toggle-intermediate-disabled-background-color);
         border-color: var(--input-toggle-intermediate-disabled-border-color);
@@ -148,7 +148,7 @@ interface IProps {
   onChangeCallback?: (checked: boolean, indeterminate?: boolean) => void;
 }
 
-const Checkbox : React.FC<IProps> = ({ indeterminate = false, disabled, checked = false, onChangeCallback }) => {
+const Checkbox : React.FC<IProps> = ({ indeterminate: _indeterminate = false, disabled, checked = false, onChangeCallback }) => {
 
   const [ isChecked, setIsChecked ] = useState<boolean>(checked);
   const [ visualState, setVisualState ] = useState<CheckboxState>(checked ? CheckboxState.On : CheckboxState.Off);
@@ -176,10 +176,10 @@ const Checkbox : React.FC<IProps> = ({ indeterminate = false, disabled, checked 
   const iconWeight : number = dimensions.icons.weights['regular'];
 
   return (
-    <Container onChange={customOnChange} {...{indeterminate, disabled, visualState}}>
+    <Container onChange={customOnChange} $disabled={disabled} $visualState={visualState}>
       <CheckboxOuter>
         <CheckboxInner>
-          {visualState === CheckboxState.On ? <IconWrapper color='input-toggle-icon-color'><CheckMark color='input-toggle-icon-color' stroke='inverse' size={12} weight={iconWeight} /></IconWrapper> : null}
+          {visualState === CheckboxState.On ? <IconWrapper $color='input-toggle-icon-color'><CheckMark color='input-toggle-icon-color' stroke='inverse' size={12} weight={iconWeight} /></IconWrapper> : null}
         </CheckboxInner>
       </CheckboxOuter>
       <RealInput type='checkbox' checked={isChecked} readOnly {...{disabled}} /> {/* disabled={state !== 'default' && state !== 'failure'} */}
