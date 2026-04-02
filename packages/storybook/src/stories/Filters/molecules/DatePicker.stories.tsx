@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { boolean, object, select, text } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
 import { dataContentDays, datesRange, InitialSelectedDate } from '../../helpers/datePicker_sample';
 

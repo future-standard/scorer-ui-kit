@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { DebouncedSearcher } from 'scorer-ui-kit';
 import { text, boolean, select, number } from "@storybook/addon-knobs";
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { emptyCallbackForStory } from '../../helpers';
 
 const DebouncedSearcherStory = {

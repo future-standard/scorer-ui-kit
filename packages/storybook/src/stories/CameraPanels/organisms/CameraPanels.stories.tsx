@@ -4,7 +4,7 @@ import { CameraPanels, ICameraPanel, CameraPanelWrapper, TagList } from 'scorer-
 import { boolean, select, text } from '@storybook/addon-knobs';
 import { generateIconList } from '../../helpers';
 import Photo from '../../assets/placeholder.jpg';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const CameraPanelsStory = {
   title: 'CameraPanels/organisms',

@@ -4,7 +4,7 @@ import {  text, select, boolean, object } from "@storybook/addon-knobs";
 
 import {PageHeader, IHeaderTag, ButtonsStack, IButtonStack, Switch, Label} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const Container = styled.div`
   margin: 100px;

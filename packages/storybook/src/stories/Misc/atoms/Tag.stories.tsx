@@ -3,7 +3,7 @@ import {select, text, number, boolean} from "@storybook/addon-knobs";
 import styled from 'styled-components';
 import {Tag} from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const TagStory = {
   title: 'Misc/atoms',

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { IFilterItem, SortDropdown } from 'scorer-ui-kit';
 import { boolean, object, select } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const SortDropdownStory = {
   title: 'Filters/molecules',

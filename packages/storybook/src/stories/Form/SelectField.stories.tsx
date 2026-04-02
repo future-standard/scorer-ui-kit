@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { text, select, object, boolean } from "@storybook/addon-knobs";
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { SelectField, SelectWrapper} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
 

@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
-// import { action } from '@storybook/addon-actions';
+// import { action } from 'storybook/actions';
 import { boolean, number, object, text, select } from "@storybook/addon-knobs";
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import styled from 'styled-components';
 import { DurationSlider, ISliderMark, PageHeader, ITimeUnit } from 'scorer-ui-kit';
 

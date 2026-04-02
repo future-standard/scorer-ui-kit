@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import photo from '../../assets/placeholder.jpg';
 import { ModalProvider, TableRowThumbnail } from 'scorer-ui-kit';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const video = 'https://future-standard.github.io/scorer-ui-kit/traffic.mp4'
 

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { text, select, boolean } from '@storybook/addon-knobs';
 import { Switch } from 'scorer-ui-kit';
 

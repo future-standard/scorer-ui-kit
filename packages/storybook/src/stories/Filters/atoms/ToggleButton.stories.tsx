@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { ToggleButton } from "scorer-ui-kit";
 import { boolean, object, select, text } from "@storybook/addon-knobs";
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import styled from "styled-components";
 
 const ToggleButtonStory = {
