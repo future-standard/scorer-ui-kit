@@ -19,6 +19,17 @@ module.exports = {
     // Ensure single React instance
     config.resolve = config.resolve || {};
     config.resolve.dedupe = ['react', 'react-dom'];
+    // Alias legacy @storybook/* packages that addon-knobs still imports.
+    // resolve from repo root since the workspace storybook may be a symlink without core/
+    const { resolve } = require('node:path');
+    const repoRoot = resolve(__dirname, '..', '..', '..');
+    const sbCore = resolve(repoRoot, 'node_modules', 'storybook', 'core');
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@storybook/preview-api': resolve(sbCore, 'preview-api', 'index.cjs'),
+      '@storybook/manager-api': resolve(sbCore, 'manager-api', 'index.cjs'),
+      '@storybook/types': resolve(sbCore, 'types', 'index.cjs'),
+    };
     return config;
   },
 }
