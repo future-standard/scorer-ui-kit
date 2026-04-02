@@ -31,13 +31,12 @@ const Container = styled.div<{type: AlertType, $isClosing: boolean, $isVisible: 
   text-decoration: none;
   color: var(--white-1);
 
-  ${({$isVisible, $isClosing}) => $isVisible && !$isClosing && css`
-    transform: translate(-50%, 0%);
+  ${({$isVisible}) => $isVisible && css`
     transition: transform var(--speed-slow) var(--easing-primary-in-out);
   `}
 
-  ${({$isVisible, $isClosing}) => $isVisible && $isClosing && css`
-    transition: transform var(--speed-normal) var(--easing-primary-in-out);
+  ${({$isVisible, $isClosing}) => $isVisible && !$isClosing && css`
+    transform: translate(-50%, 0%);
   `};
 
   ${IconWrapper} {
