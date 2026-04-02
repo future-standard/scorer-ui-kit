@@ -1,18 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css, keyframes } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
-
-const initAnimation = keyframes`
-  0% {
-    transform: translate(-50%, -100%);
-  }
-  100% {
-    transform: translate(-50%, 0%);
-  }
-`;
 
 const closeAnimation = keyframes`
   0% {
@@ -23,7 +14,7 @@ const closeAnimation = keyframes`
   }
 `;
 
-const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
+const Container = styled.div<{type: AlertType, $isClosing: Boolean, $isVisible: Boolean}>`
   min-height: 50px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -36,7 +27,7 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   position: fixed;
   top: 0;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -100%);
   z-index: 999;
 
   font-family: var(--font-ui);
@@ -49,9 +40,12 @@ const Container = styled.div<{type: AlertType, isClosing: Boolean}>`
   text-decoration: none;
   color: var(--white-1);
 
-  animation: ${initAnimation} var(--speed-slow) var(--easing-primary-in-out);
+  ${({$isVisible, $isClosing}) => $isVisible && !$isClosing && css`
+    transform: translate(-50%, 0%);
+    transition: transform var(--speed-slow) var(--easing-primary-in-out);
+  `}
 
-  ${({isClosing}) => isClosing && css`
+  ${({$isClosing}) => $isClosing && css`
     animation: ${closeAnimation} var(--speed-normal) var(--easing-primary-in-out);
     `
   };
@@ -142,12 +136,26 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
   const [textClicked, setTextClicked] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const animatedIdRef = useRef<string | undefined>(undefined);
 
   useEffect(()=>{
     setDismiss(false);
     setSlideUp(false);
     setTextClicked(false);
   },[id]);
+
+  // Slide-in via CSS transition gated by rAF — StrictMode-safe:
+  // StrictMode cleanup runs synchronously before rAF fires, so the rAF is
+  // cancelled during the simulated unmount and only fires on the stable remount.
+  useEffect(() => {
+    if (animatedIdRef.current !== id) {
+      animatedIdRef.current = id;
+      setIsVisible(false);
+    }
+    const rafId = requestAnimationFrame(() => setIsVisible(true));
+    return () => cancelAnimationFrame(rafId);
+  }, [id]);
 
   const handleDismiss = useCallback(() => {
     setSlideUp(true);
@@ -187,7 +195,7 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
 
   return( (message && !dismiss)
   ? ReactDom.createPortal(
-    <Container type={type} isClosing={slideUp} onAnimationEnd={animationEnded}>
+    <Container type={type} $isClosing={slideUp} $isVisible={isVisible} onAnimationEnd={animationEnded}>
       <Icon icon={!icon ? IconNames[type] : icon} color='inverse' />
       <MainMessage>{message}</MainMessage>
       {actionTextButton

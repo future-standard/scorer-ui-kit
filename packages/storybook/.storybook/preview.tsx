@@ -41,7 +41,9 @@ const ThemeDecorator = story => {
       <Fonts />
       <ThemeVariables/>
       <Style/>
-      {story()}
+      <React.StrictMode>
+        {story()}
+      </React.StrictMode>
     </ThemeProvider>
   )
 };
