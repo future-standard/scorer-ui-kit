@@ -1,4 +1,4 @@
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { boolean, number, object, text } from '@storybook/addon-knobs';
 import React, { useEffect, useState } from 'react';
 import {Pagination}  from 'scorer-ui-kit';

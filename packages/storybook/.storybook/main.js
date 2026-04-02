@@ -1,24 +1,28 @@
+const {
+  dirname,
+  join
+} = require("node:path");
+
 /**Updated version with migration guide https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-framework-api */
 
 module.exports = {
   framework: {
-    name: "@storybook/react-vite",
+    name: getAbsolutePath("@storybook/react-vite"),
     options: {},
   },
   stories: [
     '../src/stories/Global/*.stories.tsx',
     '../src/stories/**/*.stories.tsx'
   ],
-  addons: [
-    '@storybook/addon-actions',
-    '@storybook/addon-links',
-    '@storybook/addon-knobs',
-    'storybook-dark-mode',
-  ],
+  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-knobs")],
   viteFinal: async (config) => {
     // Ensure single React instance
     config.resolve = config.resolve || {};
     config.resolve.dedupe = ['react', 'react-dom'];
     return config;
   },
+}
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, "package.json")));
 }

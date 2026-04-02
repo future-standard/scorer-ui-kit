@@ -30,7 +30,7 @@ import logoMarkSvg from '../assets/logo-mark.svg';
 import logoTextSvg from '../assets/logo-text.svg';
 
 import { text, object, boolean, select } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const GlobalUIStory = {
   title: 'Global',

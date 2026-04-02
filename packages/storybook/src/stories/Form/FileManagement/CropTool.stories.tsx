@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CropTool } from 'scorer-ui-kit';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { text, boolean, number } from "@storybook/addon-knobs";
 import photo from '../../assets/placeholder.jpg';
 

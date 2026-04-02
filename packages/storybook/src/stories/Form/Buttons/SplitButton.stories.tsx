@@ -1,4 +1,4 @@
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 import { boolean, select } from "@storybook/addon-knobs";
 import React, { ReactElement, useEffect, useState } from "react";
 import { ISplitButtonProps, ModalProvider, SplitButton, useModal } from 'scorer-ui-kit';

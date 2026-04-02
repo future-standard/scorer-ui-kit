@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { object, text, boolean, select } from "@storybook/addon-knobs";
 import { TopBar, ICustomDrawer, INotificationItem, INotificationsHistory, useThemeToggle } from 'scorer-ui-kit';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const Container = styled.div`
   position: fixed;

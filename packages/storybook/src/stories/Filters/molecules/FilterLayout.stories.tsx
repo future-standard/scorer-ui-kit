@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { FilterLayout } from 'scorer-ui-kit';
 import { select, boolean } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const FilterLayoutStory = {
   title: 'Filters/molecules',

@@ -1,7 +1,7 @@
 import React, {useState, useEffect, ReactElement} from 'react';
 import styled from 'styled-components';
 import { text, boolean } from "@storybook/addon-knobs";
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 import {
   ModalProvider,

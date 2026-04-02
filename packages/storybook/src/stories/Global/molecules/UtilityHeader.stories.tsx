@@ -5,7 +5,7 @@ import {
 
 import styled from 'styled-components';
 import { object, boolean } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const UtilityHeaderStory = {
   title: 'Global/molecules',
