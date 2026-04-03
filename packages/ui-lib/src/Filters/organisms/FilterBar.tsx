@@ -416,48 +416,41 @@ const FilterBar: React.FC<IFilterBar> = ({
    * DatePickers do not change text for now
    */
   useEffect(() => {
-    let mountConfig = true;
+    if (dropdownsConfig.length === 0) return;
 
-    if (mountConfig && dropdownsConfigRef.current) {
-      setFiltersValues((prev) => {
-        const updatedFilters = [...prev];
-        updatedFilters.forEach((filter: IFilterResult) => {
+    setFiltersValues((prev) => {
+      const updatedFilters = [...prev];
+      updatedFilters.forEach((filter: IFilterResult) => {
 
-          const foundDropdown = dropdownsConfigRef.current.find((dropdown) => dropdown.id === filter.id);
+        const foundDropdown = dropdownsConfig.find((dropdown) => dropdown.id === filter.id);
 
-          if (foundDropdown) {
+        if (foundDropdown) {
 
-            if (Array.isArray(filter.selected)) {
-              filter.selected.forEach(item => {
-                const foundItem = foundDropdown.list.find((dropdownItem) => dropdownItem.value === item.value);
-
-                if (foundItem) {
-                  item.text = foundItem.text;
-                }
-              });
-            } else if (isFilterItem(filter.selected)) {
-              const foundItem = foundDropdown.list.find((item: IFilterItem) => {
-                return filter.selected === null
-                  ? false
-                  : isFilterItem(filter.selected) ? item.value === filter.selected.value : false;
-              });
+          if (Array.isArray(filter.selected)) {
+            filter.selected.forEach(item => {
+              const foundItem = foundDropdown.list.find((dropdownItem) => dropdownItem.value === item.value);
 
               if (foundItem) {
-                filter.selected.text = foundItem.text;
+                item.text = foundItem.text;
               }
+            });
+          } else if (isFilterItem(filter.selected)) {
+            const foundItem = foundDropdown.list.find((item: IFilterItem) => {
+              return filter.selected === null
+                ? false
+                : isFilterItem(filter.selected) ? item.value === filter.selected.value : false;
+            });
+
+            if (foundItem) {
+              filter.selected.text = foundItem.text;
             }
           }
-        });
-
-        return updatedFilters;
+        }
       });
-    }
 
-    return () => {
-      mountConfig = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dropdownsConfigRef.current]);
+      return updatedFilters;
+    });
+  }, [dropdownsConfig]);
 
   return (
     <Container {...props}>
