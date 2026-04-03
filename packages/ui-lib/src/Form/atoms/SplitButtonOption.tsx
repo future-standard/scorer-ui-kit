@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 import { resetButtonStyles } from '../../common';
-import { TypeButtonDesigns, TypeButtonSizes } from '..';
+import { TypeButtonDesigns } from '..';
 
 const StyledButton = styled.button<{$noBorderTop?: boolean}>`
   ${resetButtonStyles}
@@ -110,7 +110,6 @@ export interface IMOption {
   design?: TypeButtonDesigns | string
   noBorderTop?: boolean
   textMaxWidth?: string
-  size?: TypeButtonSizes
   onClickCallback?: () => void
   closeCallback: () => void
 }
@@ -124,7 +123,6 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
   design = 'primary',
   noBorderTop = false,
   textMaxWidth='',
-  size: _size = 'normal',
   onClickCallback,
   closeCallback,
   hasOnSelectLoading,
