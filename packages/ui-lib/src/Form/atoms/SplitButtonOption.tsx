@@ -124,7 +124,7 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
   design = 'primary',
   noBorderTop = false,
   textMaxWidth='',
-  size='normal',
+  size: _size = 'normal',
   onClickCallback,
   closeCallback,
   hasOnSelectLoading,
