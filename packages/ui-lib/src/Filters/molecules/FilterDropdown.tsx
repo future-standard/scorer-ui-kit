@@ -292,7 +292,7 @@ export type IFilterDropdownOwn = {
   onCancelCallback?: () => void
 }
 
-export type IFilterDropdown = IFilterDropdownOwn & IFilterFooterControls
+export type IFilterDropdown = IFilterDropdownOwn & IFilterFooterControls & Omit<React.HTMLAttributes<HTMLDivElement>, keyof IFilterDropdownOwn>
 
 const FilterDropdown: React.FC<IFilterDropdown> = ({
   buttonIcon,

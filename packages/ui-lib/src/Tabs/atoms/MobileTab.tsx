@@ -56,6 +56,7 @@ interface IMobileTab {
   closeId: string
   counter?: number
   status?: IStatusDot
+  customComponent?: React.ReactElement
 }
 
 const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, closeId, counter, status, customComponent: _customComponent, ...props }) => {
