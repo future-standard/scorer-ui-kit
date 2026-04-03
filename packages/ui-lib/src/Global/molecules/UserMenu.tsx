@@ -90,7 +90,7 @@ const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
   `};
 `;
 
-const FooterMeta = styled.div <{ icon?: string }>`
+const FooterMeta = styled.div <{ $icon?: string }>`
   font-family: var(--font-ui);
   border-top: var(--dividing-line) 1px solid;
   margin-top: auto;
@@ -102,7 +102,7 @@ const FooterMeta = styled.div <{ icon?: string }>`
   font-weight: 400;
   color: var(--grey-a11);
   padding: 10px;
-  padding-left:  ${({ icon }) => icon !== '' ? '31px;' : '21px;'};
+  padding-left:  ${({ $icon }) => $icon !== '' ? '31px;' : '21px;'};
 `;
 
 const NavigationContainer = styled.div`
@@ -113,13 +113,13 @@ const NavigationContainer = styled.div`
   border-bottom: var(--dividing-line) 1px solid;
 `;
 
-const FooterText = styled.div <{ icon?: string }>`
+const FooterText = styled.div <{ $icon?: string }>`
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 136px;
-  max-width: ${({ icon }) => icon !== '' ? '136px;' : '164px;'};
+  max-width: ${({ $icon }) => $icon !== '' ? '136px;' : '164px;'};
   color: var(--grey-11);
   opacity: 0.5;
 `;
@@ -252,14 +252,14 @@ const UserMenu: React.FC<IUserMenu> = ({
         {hasSwitchTheme && <DrawerBottomMenu icon={isLightMode ? 'LightMode' : 'DarkMode'} title={switchThemeText} subTitle={selectedThemeText} onClickCallback={onThemeToggle} />}
         {hasLanguage && <DrawerBottomMenu icon='Language' title={languageOptionsText} subTitle={selectedLanguageText} onClickCallback={onLanguageToggle} />}
         {(hasUserDrawerFooter) ?
-          <FooterMeta title={title} icon={icon}>
+          <FooterMeta title={title} $icon={icon}>
             {icon ?
               <IconWrapperFooter>
                 <Icon icon={icon} size={14} color='dimmed' />
               </IconWrapperFooter>
             :
               null}
-            <FooterText icon={icon}>
+            <FooterText $icon={icon}>
               {title}
             </FooterText>
           </FooterMeta>
