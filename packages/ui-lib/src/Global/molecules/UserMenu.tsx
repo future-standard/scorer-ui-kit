@@ -102,7 +102,7 @@ const FooterMeta = styled.div <{ $icon?: string }>`
   font-weight: 400;
   color: var(--grey-a11);
   padding: 10px;
-  padding-left:  ${({ $icon }) => $icon !== '' ? '31px;' : '21px;'};
+  padding-left: ${({ $icon }) => $icon ? '31px' : '21px'};
 `;
 
 const NavigationContainer = styled.div`
@@ -119,7 +119,7 @@ const FooterText = styled.div <{ $icon?: string }>`
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 136px;
-  max-width: ${({ $icon }) => $icon !== '' ? '136px;' : '164px;'};
+  max-width: ${({ $icon }) => $icon ? '136px' : '164px'};
   color: var(--grey-11);
   opacity: 0.5;
 `;
