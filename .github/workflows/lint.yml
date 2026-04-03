@@ -1,4 +1,4 @@
-name: Lint check
+name: CI checks
 on:
   push:
 
@@ -35,8 +35,14 @@ jobs:
     - name: Install Deps
       run: npm install
 
+    - name: TypeScript check
+      run: npm run test:types -w packages/ui-lib
+
     - name: eslint
       run: npm run test:lint -w packages/ui-lib
+
+    - name: Build
+      run: npm run build -w packages/ui-lib
 
   lint-status:
     name: lint

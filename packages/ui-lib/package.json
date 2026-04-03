@@ -44,6 +44,7 @@
     "prepublishOnly": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
+    "test:types": "tsc --noEmit",
     "test:lint": "eslint 'src/**/*.{ts,tsx}'",
     "test:unit": "vitest run",
     "test:watch": "vitest",
