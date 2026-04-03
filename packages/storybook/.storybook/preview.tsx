@@ -22,7 +22,17 @@ const RouterDecorator = story => (
 );
 
 // Theme Decorator
-const ThemeDecorator = story => {
+const ThemeDecorator = (story, context) => {
+  const isDark = context.globals.theme === 'dark';
+
+  if (isDark) {
+    document.body.classList.add('dark-theme');
+    document.body.classList.remove('light-theme');
+  } else {
+    document.body.classList.add('light-theme');
+    document.body.classList.remove('dark-theme');
+  }
+
   return (
     <ThemeProvider theme={defaultTheme} >
       <Fonts />
@@ -38,6 +48,23 @@ const ThemeDecorator = story => {
 // Preview configuration
 const preview: Preview = {
   parameters: {},
+  globalTypes: {
+    theme: {
+      description: 'Light/Dark theme',
+      toolbar: {
+        title: 'Theme',
+        icon: 'paintbrush',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: {
+    theme: 'light',
+  },
   decorators: [withKnobs, ThemeDecorator, RouterDecorator],
 };
 

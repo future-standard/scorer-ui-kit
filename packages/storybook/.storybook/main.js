@@ -19,6 +19,11 @@ module.exports = {
     // Ensure single React instance
     config.resolve = config.resolve || {};
     config.resolve.dedupe = ['react', 'react-dom'];
+    // react-router-dom v7 has unguarded process.env.NODE_ENV refs in dev mode
+    config.define = {
+      ...config.define,
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    };
     // Alias legacy @storybook/* packages that addon-knobs still imports.
     // resolve from repo root since the workspace storybook may be a symlink without core/
     const { resolve } = require('node:path');
