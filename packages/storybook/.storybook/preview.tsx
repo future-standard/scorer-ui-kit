@@ -23,6 +23,9 @@ const RouterDecorator = story => (
 
 // Theme Decorator
 const ThemeDecorator = story => {
+  document.body.classList.add('light-theme');
+  document.body.classList.remove('dark-theme');
+
   return (
     <ThemeProvider theme={defaultTheme} >
       <Fonts />
