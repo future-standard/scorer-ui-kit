@@ -22,7 +22,7 @@ export default defineConfig({
     },
     sourcemap: true,
     minify: false,
-    rollupOptions: {
+    rolldownOptions: {
       external: [
         'react',
         'react-dom',

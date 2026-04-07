@@ -25,7 +25,8 @@
     "packages/ui-lib"
   ],
   "devDependencies": {
-    "gh-pages": "^6.3.0"
+    "gh-pages": "^6.3.0",
+    "jsdom": "^26.1.0"
   },
   "overrides": {
     "react": "^19.0.0",
