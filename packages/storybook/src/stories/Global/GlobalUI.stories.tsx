@@ -26,8 +26,12 @@ import {
 import styled from 'styled-components';
 import { Route, Routes, useParams } from 'react-router-dom';
 
-import logoMarkSvg from '../assets/logo-mark.svg';
-import logoTextSvg from '../assets/logo-text.svg';
+import logoMarkSvgRaw from '../assets/logo-mark.svg?raw';
+import logoTextSvgRaw from '../assets/logo-text.svg?raw';
+// base64 encode avoids addon-knobs HTML-encoding ' → &#39; in data URIs, breaking <object> XML parsing.
+// Native controls don't have this HTML-encoding step — verify and simplify when migrating off addon-knobs.
+const logoMarkSvg = `data:image/svg+xml;base64,${btoa(logoMarkSvgRaw)}`;
+const logoTextSvg = `data:image/svg+xml;base64,${btoa(logoTextSvgRaw)}`;
 
 import { text, object, boolean, select } from '@storybook/addon-knobs';
 import { action } from 'storybook/actions';

@@ -1,8 +1,12 @@
 import React from 'react';
 // import { MemoryRouter as Router } from 'react-router-dom'
 import { MainMenu, Layout } from 'scorer-ui-kit';
-import logoMarkSvg from '../assets/logo-mark.svg';
-import logoTextSvg from '../assets/logo-text.svg';
+import logoMarkSvgRaw from '../assets/logo-mark.svg?raw';
+import logoTextSvgRaw from '../assets/logo-text.svg?raw';
+// base64 encode avoids addon-knobs HTML-encoding ' → &#39; in data URIs, breaking <object> XML parsing.
+// Native controls don't have this HTML-encoding step — verify and simplify when migrating off addon-knobs.
+const logoMarkSvg = `data:image/svg+xml;base64,${btoa(logoMarkSvgRaw)}`;
+const logoTextSvg = `data:image/svg+xml;base64,${btoa(logoTextSvgRaw)}`;
 import { text, object, boolean } from '@storybook/addon-knobs';
 
 const MainMenuStory = {
