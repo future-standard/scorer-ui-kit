@@ -26,9 +26,6 @@
     "build-storybook-dev": "storybook build --output-dir ./build",
     "serve": "npx serve build"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "externals": {
     "react": "react",
     "react-dom": "react-dom",
@@ -37,12 +34,6 @@
     "react-use-websocket": "react-use-websocket",
     "styled-components": "styled-components"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "description": "Showcase of components from ui-Lib",
   "main": "index.js",
   "repository": {
