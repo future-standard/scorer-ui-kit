@@ -1,11 +1,13 @@
-const {
-  dirname,
-  join
-} = require("node:path");
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**Updated version with migration guide https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-framework-api */
 
-module.exports = {
+export default {
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
@@ -26,7 +28,6 @@ module.exports = {
     };
     // Alias legacy @storybook/* packages that addon-knobs still imports.
     // resolve from repo root since the workspace storybook may be a symlink without core/
-    const { resolve } = require('node:path');
     const repoRoot = resolve(__dirname, '..', '..', '..');
     const sbCore = resolve(repoRoot, 'node_modules', 'storybook', 'core');
     config.resolve.alias = {
