@@ -82,7 +82,11 @@ const Index : FC = () => {
   );
 };
 
-const root = createRoot(document.getElementById('root')!);
+const root = createRoot(document.getElementById('root')!, {
+  onUncaughtError: (error, errorInfo) => {
+    console.error('Uncaught render error:', error, errorInfo.componentStack);
+  },
+});
 root.render(
   <React.StrictMode>
     <Index />
