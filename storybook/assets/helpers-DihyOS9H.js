@@ -1,1 +1,0 @@
-import{n as e}from"./chunk-BneVvdWh.js";import{Dt as t,Ot as n}from"./iframe-D4thBea3.js";var r,i,a,o=e((()=>{n(),r=e=>new Promise(t=>setTimeout(t,e)),i=e=>(e.toString=()=>`() => {}`,e),a=()=>{let e={};for(let n in t)e[n]=n;return e}}));export{r as i,a as n,o as r,i as t};
