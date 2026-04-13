@@ -1,0 +1,25 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{Ct as n,Et as r,Ft as i,Lt as a,Pt as o,Rt as s,S as c,bt as l,m as u,n as d,t as f,vt as p,xt as m,z as h}from"./iframe-Bq-bFTg_.js";import{n as g,t as _}from"./placeholder-DnTErttm.js";import{r as v,t as y}from"./helpers-CmedATVk.js";import{A as b,c as x,d as S,h as C,k as w,l as T,r as E,u as D}from"./data_samples-BPpc5FO9.js";import{c as O,n as k,o as A}from"./sample_table_helpers-DQh6FEPF.js";var j,M,N,P,F,I,L,R,z,B=t((()=>{j=e(s()),i(),_(),l(),C(),A(),v(),M=r(),{action:N}=__STORYBOOK_MODULE_ACTIONS__,P=a.pre`
+  color: var(--grey-11);
+  margin-top: 75px;
+  background: var(--grey-4);
+  padding: 10px;
+  white-space: normal;
+`,F=a.div`
+  margin: 38px 0 26px 0;
+`,I=(e,t)=>e.map(({id:e,created:n,totalTime:r,usage:i,usageUnit:a,cost:o})=>({id:e,header:{image:g,mediaUrl:g,mediaType:`img`},columns:[{text:n.toDateString()},{text:r},{text:`${i}`,unit:a},{customComponent:(0,M.jsx)(f,{buttonsConfig:t(e)})}]})),L=(e,t)=>Array.isArray(e)&&e.length>0?e.reduce((e,t)=>t.selected===null?e:t.id===`datePickerForRuntime`&&!m(t.selected)&&!Array.isArray(t.selected)?k(e,t.selected):e,t):t,R=e=>{let t=[];return e.forEach(e=>{e._checked&&e.id&&t.push(e.id.toString())}),t},z=({language:e})=>{let[t,r]=(0,j.useState)(b),[i,a]=(0,j.useState)(`filterBar`),o=N(`Downloading...`),s=N(`Deleting...`),{createModal:l}=n(),f=(0,j.useCallback)(t=>{console.log(`creating modal`),l({isCloseEnable:!1,customComponent:(0,M.jsx)(u,{title:e===`english`?x:T,message:e===`english`?D:S,leftButtonText:e===`english`?`Back`:`戻る`,rightButtonText:e===`english`?`Permanently Delete`:`永久削除`,rightButtonDesign:`danger`,rightButtonCallback:t})})},[l,e]),m=(0,j.useCallback)(e=>{r(t.filter(({id:t})=>t!==e)),s(`Deleting ${e}`)},[t]),h=(0,j.useCallback)(e=>{o(`Downloading ${e}`)},[]),g=(0,j.useCallback)(e=>[{icon:`Delete`,onClick:()=>{f(()=>m(e))}},{icon:`Download`,onClick:()=>{h(e)}}],[m,h,f]),[_,v]=(0,j.useState)(I(b,g)),C=[{id:`datePickerForRuntime`,dateMode:`interval`,timeMode:`off`,buttonText:e===`english`?`Date Range`:`日付範囲`,buttonIcon:`DateTime`,dateTimeTextUpper:e===`english`?`From`:`から`,dateTimeTextLower:e===`english`?`To`:`まで`,timeZoneTitle:e===`english`?`Timezone`:`時間帯`,lang:e===`english`?`en`:`ja`}],k=(0,j.useCallback)(e=>{let t=e.some(e=>e._checked===!0);a(e=>e!==`actionsBar`&&t?`actionsBar`:e!==`filterBar`&&!t?`filterBar`:e)},[]),A=(0,j.useCallback)((e,t)=>{let n=[..._],r=n.findIndex(e=>e.id===t);n[r]._checked=e,k(n),v(n)},[_,k]),z=(0,j.useCallback)(e=>{let t=[..._];t.forEach(t=>{t._checked=e}),k(t),v(t)},[_,k]),B=(0,j.useCallback)(()=>{a(`filterBar`),z(!1)},[z]),V=(0,j.useCallback)((e,n)=>{r(O([...t],n,e))},[t]),H=(0,j.useCallback)(t=>{let n=e===`english`?w:b,i=[...n];t.length===0?r(n):r(L(t,i))},[e]),U=(0,j.useCallback)(()=>{let e=R(_);s(`Deleting ${e}`),r(t.filter(({id:t})=>!e.includes(t)))},[t,s,_]),W=(0,j.useCallback)(()=>{o(`Downloading: ${R(_).toString()}`)},[o,_]);return(0,j.useEffect)(()=>{v(I(t,g))},[t,g]),(0,M.jsxs)(M.Fragment,{children:[(0,M.jsxs)(F,{children:[i===`filterBar`&&(0,M.jsx)(c,{searchersConfig:[],dropdownsConfig:[],datePickersConfig:C,onChangeCallback:H,totalResults:_.length,filtersTitle:e===`english`?`Filters`:`フィルター`,resultTextTemplate:e===`english`?`Showing Results ([TOTAL_RESULTS]):`:`表示結果 ([TOTAL_RESULTS]):`,clearText:e===`english`?`CLEAR ALL`:`すべてクリア`,resultsDateFormat:`yyyy-MM-dd`}),i===`actionsBar`&&(0,M.jsx)(d,{title:e===`english`?`Actions`:`アクション`,finishTextButton:e===`english`?`Finish`:`為しおわる`,finishCallback:B,selectedTemplate:e===`english`?`Selected [SELECTED] of [TOTAL] Results`:`[SELECTED] 〜 [TOTAL]件`,totalAvailable:_.length,totalSelected:R(_).length,actionButtons:[{icon:`Delete`,text:e===`english`?`Delete`:`消す`,onClick:()=>{f(U)}},{icon:`Download`,text:e===`english`?`Download`:`ダウンロード`,onClick:()=>{W()}}]})]}),(0,M.jsx)(p,{columnConfig:E,selectable:!0,rows:_,hasThumbnail:!0,defaultAscending:!0,hasHeaderGroups:!0,selectCallback:y(A),toggleAllCallback:y(z),sortCallback:y(V)}),(0,M.jsxs)(P,{children:[`Selected IDs: [`,R(_).toString(),`]`]})]})},z.__docgenInfo={description:``,methods:[],displayName:`MultiActionsExample`,props:{language:{required:!0,tsType:{name:`string`},description:``}}}})),V,H,U,W,G,K;t((()=>{s(),i(),B(),V=o(),l(),H=r(),U=a.div`
+  padding: 100px;
+`,W={title:`Tables/molecules`,component:p,decorators:[],parameters:{jsx:{skip:2}}},G=()=>(0,H.jsx)(U,{children:(0,H.jsx)(h,{children:(0,H.jsx)(z,{language:(0,V.select)(`Language`,{English:`english`,Japanese:`japanese`},`japanese`)})})}),G.__docgenInfo={description:``,methods:[],displayName:`_TableMultiActions`},G.parameters={...G.parameters,docs:{...G.parameters?.docs,source:{originalSource:`() => {
+  const language = select("Language", {
+    English: 'english',
+    Japanese: "japanese"
+  }, "japanese");
+
+  // Provider should be at main Index level, it's here just for the example
+  return <Container>
+      <ModalProvider>
+        <MultiActionsExample {...{
+        language
+      }} />
+      </ModalProvider>
+    </Container>;
+}`,...G.parameters?.docs?.source}}},K=[`_TableMultiActions`]}))();export{G as _TableMultiActions,K as __namedExportsOrder,W as default};
