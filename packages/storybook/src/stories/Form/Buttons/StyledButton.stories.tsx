@@ -34,7 +34,7 @@ export const StyledWrapperPreservesDesignVariant = () => {
       <Wrapper>
         <PageHeader
           title='Wrapped with styled(Button)'
-          introductionText='Should match the plain secondary. Bug: styled() className overwrites internal design class.'
+          introductionText='Wrapped with styled() — design variant must be preserved alongside the wrapper\'s own class.'
         />
         <StyledCancelButton design='secondary'>Secondary</StyledCancelButton>
       </Wrapper>
