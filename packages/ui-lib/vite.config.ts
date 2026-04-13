@@ -29,7 +29,6 @@ export default defineConfig({
         'react/jsx-runtime',
         'react-router',
         'react-router-dom',
-        'react-use-websocket',
         'styled-components',
         'date-fns',
         'date-fns/locale',

@@ -354,24 +354,6 @@ This document provides a comprehensive inventory of all React components in the 
 
 ---
 
-### Controls (PTZ)
-- **Status:** ❌ No Storybook
-- **Component Path:** `ui-lib/src/PTZControl/organisms/Controls.tsx`
-- **Story Path:** N/A
-- **Example Page Path:** `/Users/isa/Dev/FS/scorer-ui-kit-before-npm/scorer-ui-kit/packages/example/src/pages/PTZPage.tsx`
-- **Exported From:** `PTZControl`
-- **Props:**
-  - `debug?`: `boolean` - Show debug state output (default: false)
-- **Notable Features:**
-  - Pan-Tilt-Zoom camera controls
-  - Directional controls (Up, Down, Left, Right components)
-  - Zoom controls (ZoomIn, ZoomOut components)
-  - Uses PTZContext from PTZProvider for state management
-  - Optional debug mode displays current PTZ state as JSON
-  - Composed of Base and ZoomBase molecules with atomic control components
-
----
-
 ### CropTool
 - **Status:** ✅ Has Storybook
 - **Component Path:** `ui-lib/src/Form/molecules/CropTool.tsx`
@@ -1038,7 +1020,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ❌ No Storybook (used in GlobalUI)
 - **Component Path:** `ui-lib/src/Global/atoms/Layout.tsx`
 - **Story Path:** N/A
-- **Example Page Path:** `example/src/pages/PTZPage.tsx`
+- **Example Page Path:** `example/src/pages/GlobalUIPage.tsx`
 - **Exported From:** `Global`
 - **Description:** Collection of styled layout container components for structuring the application UI. These are styled-components, not React functional components.
 - **Exported Components:**
@@ -1559,37 +1541,6 @@ This document provides a comprehensive inventory of all React components in the 
   - Customizable title and thumb color via callback functions
   - Built on SliderInput component
   - Supports all standard input HTML attributes
-
----
-
-### PTZProvider
-- **Status:** ❌ No Storybook
-- **Component Path:** `ui-lib/src/PTZControl/state/PTZProvider.tsx`
-- **Story Path:** N/A
-- **Example Page Path:** `scorer-ui-kit/packages/example/src/App.tsx`
-- **Exported From:** `PTZControl`
-- **Props:**
-  - `socketUrl`: `string` - WebSocket URL for PTZ connection (default: `'ws://localhost/wsapp/'`)
-  - `imageRefresh`: `number` - Image refresh interval in milliseconds (default: `1000`)
-  - `children`: `ReactNode` - Child components to render within the provider
-- **Context Value (IPTZContext):**
-  - `state`: `PTZState` - Current PTZ state from reducer
-  - `dispatch`: `React.Dispatch<PTZReducerActions>` - Dispatch function for PTZ actions
-  - `actions`: `PTZActions` - Action helper functions
-    - **PTZActions interface:**
-      - `move`: `({direction}: {direction: 'up' | 'down' | 'left' | 'right'}) => void` - Move camera in specified direction
-      - `zoom`: `({zooming}: {zooming: 'in' | 'out'}) => void` - Zoom camera in or out
-      - `stop`: `() => void` - Stop current camera movement
-      - `connect`: `(params: {username: string, password: string, host: string, port?: number}) => void` - Connect to PTZ camera
-      - `disconnect`: `() => void` - Disconnect from PTZ camera
-- **Notable Features:**
-  - React Context provider for PTZ (Pan-Tilt-Zoom) camera controls
-  - Manages PTZ state via reducer pattern
-  - Provides action helpers for camera control (move, zoom, stop, connect, disconnect)
-  - WebSocket-based communication with configurable URL
-  - Configurable image refresh rate
-  - Used with usePTZ hook for state management
-  - Exposes both raw dispatch and convenient action helpers
 
 ---
 

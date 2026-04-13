@@ -162,13 +162,6 @@ const LinksPage : React.FC = () => {
           </Link>
         </Item>
         <Item>
-          <Link to={`/ptz`}>
-            <Title>PTZ</Title>
-            <Description>An example of a working PTZ control. Requires a PTZ camera login.</Description>
-            <FilenameTag>PTZPage.tsx</FilenameTag>
-          </Link>
-        </Item>
-        <Item>
           <Link to={`/login`}>
             <Title>Login</Title>
             <Description>A code sample of our commonly used login view.</Description>

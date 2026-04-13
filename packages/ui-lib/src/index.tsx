@@ -142,14 +142,6 @@ import type {
   ITypeTableData,
 } from './Tables';
 
-import {
-  Controls,
-  PTZProvider,
-  PTZReducer,
-  usePTZ,
-  PTZContext
-} from './PTZControl';
-
 // Camera Panels
 import {
   CameraPanels,
@@ -338,14 +330,6 @@ export {
   PageHeader,
   PageTitle,
   MultilineContent,
-
-  // ptz PTZ Controls
-  Controls,
-  PTZProvider,
-  PTZContext,
-  PTZReducer,
-  usePTZ,
-
 
   // Tables
   TypeTable,
