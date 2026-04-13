@@ -70,7 +70,7 @@ jobs:
         # Commit and push
         cd gh-pages-dir
         git add .
-        git commit -m "Deploy preview for PR #${PR_NUM}" || echo "No changes to deploy"
+        git commit -m "Deploy preview for PR ${PR_NUM}" || echo "No changes to deploy"
         git push origin HEAD:gh-pages
 
     - name: Comment preview URLs on PR
@@ -79,16 +79,12 @@ jobs:
         script: |
           const prNumber = context.payload.pull_request.number;
           const sha = context.payload.pull_request.head.sha.substring(0, 7);
-          const exampleUrl = `https://future-standard.github.io/scorer-ui-kit/pr/${prNumber}/`;
-          const storybookUrl = `https://future-standard.github.io/scorer-ui-kit/pr/${prNumber}/storybook/`;
+          const previewUrl = `https://future-standard.github.io/scorer-ui-kit/pr/${prNumber}/`;
 
           const body = [
             `## Deploy Preview`,
             ``,
-            `| App | URL |`,
-            `|-----|-----|`,
-            `| Example | ${exampleUrl} |`,
-            `| Storybook | ${storybookUrl} |`,
+            `${previewUrl}`,
             ``,
             `_Built from ${sha} — ${new Date().toISOString()}_`,
           ].join('\n');
@@ -141,9 +137,9 @@ jobs:
           rm -rf "gh-pages-dir/pr/${PR_NUM}"
           cd gh-pages-dir
           git add .
-          git commit -m "Remove preview for PR #${PR_NUM}"
+          git commit -m "Remove preview for PR ${PR_NUM}"
           git push origin HEAD:gh-pages
-          echo "Cleaned up preview for PR #${PR_NUM}"
+          echo "Cleaned up preview for PR ${PR_NUM}"
         else
-          echo "No preview found for PR #${PR_NUM}, nothing to clean up"
+          echo "No preview found for PR ${PR_NUM}, nothing to clean up"
         fi

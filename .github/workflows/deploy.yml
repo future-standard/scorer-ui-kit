@@ -123,7 +123,6 @@ jobs:
         script: |
           const env = '${{ steps.target.outputs.env_name }}';
           const url = '${{ steps.target.outputs.url }}';
-          const storybookUrl = url + 'storybook/';
 
           const { data: deployment } = await github.rest.repos.createDeployment({
             owner: context.repo.owner,
@@ -141,5 +140,4 @@ jobs:
             deployment_id: deployment.id,
             state: 'success',
             environment_url: url,
-            description: `Example: ${url} | Storybook: ${storybookUrl}`,
           });
