@@ -74,7 +74,7 @@ jobs:
         git push origin HEAD:gh-pages
 
     - name: Comment preview URLs on PR
-      uses: actions/github-script@v7
+      uses: actions/github-script@v9
       with:
         script: |
           const prNumber = context.payload.pull_request.number;
