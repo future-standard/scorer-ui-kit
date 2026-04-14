@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import { FilenameTag } from '../components/ExamplesFilename';
+import { BASE_PATH } from '../basePath';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -86,7 +87,7 @@ const LinksPage : React.FC = () => {
         <Subheader>Key Resources</Subheader>
         <List>
           <Item>
-            <a href='/scorer-ui-kit/storybook'>
+            <a href={`${BASE_PATH}storybook`}>
               <Title>Storybook</Title>
               <Description>All the key components of the SCORER UI Kit, previewable along with options using Storybook.</Description>
             </a>
@@ -159,13 +160,6 @@ const LinksPage : React.FC = () => {
             <Title>Forms</Title>
             <Description>Form inputs and state examples.</Description>
             <FilenameTag>FormPage.tsx</FilenameTag>
-          </Link>
-        </Item>
-        <Item>
-          <Link to={`/ptz`}>
-            <Title>PTZ</Title>
-            <Description>An example of a working PTZ control. Requires a PTZ camera login.</Description>
-            <FilenameTag>PTZPage.tsx</FilenameTag>
           </Link>
         </Item>
         <Item>

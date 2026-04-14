@@ -4,6 +4,15 @@ on:
   push:
     branches: [ 'main', 'demo', 'deploy-test3']
 
+permissions:
+  contents: write
+  deployments: write
+
+# Share concurrency group with PR deploys to avoid push races
+concurrency:
+  group: gh-pages-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
 
@@ -36,11 +45,31 @@ jobs:
     - name: Build library
       run: npm run build -w packages/ui-lib
 
+    - name: Determine deploy target
+      id: target
+      run: |
+        BRANCH="${GITHUB_REF_NAME}"
+        if [ "$BRANCH" = "main" ]; then
+          echo "is_production=true" >> "$GITHUB_OUTPUT"
+          echo "base_path=/scorer-ui-kit" >> "$GITHUB_OUTPUT"
+          echo "dest_dir=" >> "$GITHUB_OUTPUT"
+          echo "env_name=production" >> "$GITHUB_OUTPUT"
+          echo "url=https://future-standard.github.io/scorer-ui-kit/" >> "$GITHUB_OUTPUT"
+        else
+          echo "is_production=false" >> "$GITHUB_OUTPUT"
+          echo "base_path=/scorer-ui-kit/branch/${BRANCH}/" >> "$GITHUB_OUTPUT"
+          echo "dest_dir=branch/${BRANCH}" >> "$GITHUB_OUTPUT"
+          echo "env_name=preview-${BRANCH}" >> "$GITHUB_OUTPUT"
+          echo "url=https://future-standard.github.io/scorer-ui-kit/branch/${BRANCH}/" >> "$GITHUB_OUTPUT"
+        fi
+
     - name: Build example
       run: |
         cd packages/example
         npm run build
         date >> build/deployed.html
+      env:
+        VITE_BASE_PATH: ${{ steps.target.outputs.base_path }}
 
     - name: Build storybook
       run: |
@@ -49,7 +78,66 @@ jobs:
 
     - name: Deploy GH Pages
       run: |
-        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        npm run actions-deploy -- -u "github-actions-bot <support+actions@github.com>"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        git config user.name "github-actions-bot"
+        git config user.email "support+actions@github.com"
+
+        git fetch origin gh-pages
+
+        git worktree add gh-pages-dir origin/gh-pages
+
+        IS_PROD="${{ steps.target.outputs.is_production }}"
+        DEST_DIR="${{ steps.target.outputs.dest_dir }}"
+
+        if [ "$IS_PROD" = "true" ]; then
+          # Production: replace root content but preserve preview subdirectories
+          mkdir -p /tmp/gh-pages-preserve
+          for dir in gh-pages-dir/pr gh-pages-dir/branch; do
+            if [ -d "$dir" ]; then
+              mv "$dir" /tmp/gh-pages-preserve/
+            fi
+          done
+
+          rm -rf gh-pages-dir/*
+          cp -r packages/example/build/* gh-pages-dir/
+
+          for dir in /tmp/gh-pages-preserve/*; do
+            if [ -d "$dir" ]; then
+              mv "$dir" gh-pages-dir/
+            fi
+          done
+        else
+          # Branch deploy: only replace this branch's subdirectory
+          rm -rf "gh-pages-dir/${DEST_DIR}"
+          mkdir -p "gh-pages-dir/${DEST_DIR}"
+          cp -r packages/example/build/* "gh-pages-dir/${DEST_DIR}/"
+        fi
+
+        cd gh-pages-dir
+        git add .
+        git commit -m "Deploy ${DEST_DIR:-production} from ${GITHUB_SHA::7}" || echo "No changes to deploy"
+        git push origin HEAD:gh-pages
+
+    - name: Create deployment status
+      uses: actions/github-script@v9
+      with:
+        script: |
+          const env = '${{ steps.target.outputs.env_name }}';
+          const url = '${{ steps.target.outputs.url }}';
+
+          const { data: deployment } = await github.rest.repos.createDeployment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: context.sha,
+            environment: env,
+            auto_merge: false,
+            required_contexts: [],
+            description: `Deploy ${env}`,
+          });
+
+          await github.rest.repos.createDeploymentStatus({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            deployment_id: deployment.id,
+            state: 'success',
+            environment_url: url,
+          });

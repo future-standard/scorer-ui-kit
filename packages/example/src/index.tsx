@@ -9,7 +9,6 @@ import { defaultTheme,
         } from 'scorer-ui-kit';
 
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 
 import './i18n';
 import Fonts from './fonts';
@@ -83,14 +82,13 @@ const Index : FC = () => {
   );
 };
 
-const root = createRoot(document.getElementById('root')!);
+const root = createRoot(document.getElementById('root')!, {
+  onUncaughtError: (error, errorInfo) => {
+    console.error('Uncaught render error:', error, errorInfo.componentStack);
+  },
+});
 root.render(
   <React.StrictMode>
     <Index />
   </React.StrictMode>
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
