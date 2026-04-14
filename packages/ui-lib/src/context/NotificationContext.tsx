@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import Notification, { INotificationProps } from '../Alerts/atom/Notification';
 import { uniqueID } from '../helpers';
 
@@ -8,19 +8,18 @@ type NotificationContextType = {
 };
 
 const defaultContext: NotificationContextType = {
-  sendNotification: () => console.log("This is the context initialization should not appear"),
-  clearNotifications: () => console.log("This is the context initialization should not appear"),
+  sendNotification: () => console.debug("This is the context initialization should not appear"),
+  clearNotifications: () => console.debug("This is the context initialization should not appear"),
 };
 
 const NotificationContext = React.createContext<NotificationContextType>(defaultContext);
 
-const notificationList: INotificationProps[] = [];
-
 const NotificationProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [activeNotification, setActiveNotification] = useState<INotificationProps | null>(null);
+  const notificationListRef = useRef<INotificationProps[]>([]);
 
   const showNotification = useCallback(() => {
-    const nextNotification = notificationList.shift();
+    const nextNotification = notificationListRef.current.shift();
 
     if (!nextNotification) { return; }
 
@@ -65,15 +64,15 @@ const NotificationProvider: React.FC<React.PropsWithChildren> = ({ children }) =
       validNotification.isPinned = newNotification.isPinned;
     }
 
-    notificationList.push(validNotification);
+    notificationListRef.current.push(validNotification);
 
-    if (notificationList.length === 1 && activeNotification === null) {
+    if (notificationListRef.current.length === 1 && activeNotification === null) {
       showNotification();
     }
   },[activeNotification, showNotification]);
 
   const clearNotifications = useCallback(() => {
-    notificationList.length = 0;
+    notificationListRef.current.length = 0;
     setActiveNotification((prev) => {
 
       if(prev !== null) {

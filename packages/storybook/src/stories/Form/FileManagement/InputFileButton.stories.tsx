@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {InputFileButton} from 'scorer-ui-kit';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { boolean, select, text} from "@storybook/addon-knobs";
 
 const Container = styled.div`

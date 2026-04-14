@@ -36,7 +36,7 @@ const OrderGroup = styled.div`
   }
 `;
 
-const OrderButton = styled.button<{ isSelected: boolean }>`
+const OrderButton = styled.button<{ $isSelected: boolean }>`
   ${resetButtonStyles};
   width: 100%;
   display: flex;
@@ -48,7 +48,7 @@ const OrderButton = styled.button<{ isSelected: boolean }>`
   padding: 0 16px;
   gap: 12px;
 
-  ${({ isSelected }) => css`
+  ${({ $isSelected }) => css`
 
     ${IconWrapper} {
       display: flex;
@@ -66,7 +66,7 @@ const OrderButton = styled.button<{ isSelected: boolean }>`
       }
     }
 
-    ${isSelected && css`
+    ${$isSelected && css`
       ${IconWrapper} {
         [stroke]{
           stroke: var(--primary-9);
@@ -152,7 +152,7 @@ const SortDropdown: React.FC<ISortDropdown> = ({
               </OptionList>
             )}
           <OrderGroup>
-            <OrderButton isSelected={isSortAscending} onClick={() => handleOrderSelect(true)}>
+            <OrderButton $isSelected={isSortAscending} onClick={() => handleOrderSelect(true)}>
               <Icon
                 icon='FilterAscending'
                 size={16}
@@ -160,7 +160,7 @@ const SortDropdown: React.FC<ISortDropdown> = ({
               />
               <FilterOption selected={isSortAscending} title={ascendingText} />
             </OrderButton>
-            <OrderButton isSelected={!isSortAscending} onClick={() => handleOrderSelect(false)}>
+            <OrderButton $isSelected={!isSortAscending} onClick={() => handleOrderSelect(false)}>
               <Icon
                 icon='FilterDescending'
                 size={16}

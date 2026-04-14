@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconProps, IconWrapper } from '../../Icons/Icon';
 
-const StyledButton = styled.button<{color:ISvgIcons['color']; hoverColor:ISvgIcons['color']}>`
+const StyledButton = styled.button<{$color:ISvgIcons['color']; $hoverColor:ISvgIcons['color']}>`
   ${resetButtonStyles};
   [stroke]{
-    stroke: ${({color}) => color};
+    stroke: ${({$color}) => $color};
   }
   &:hover {
     ${IconWrapper} {
       [stroke]{
-        stroke: ${({hoverColor}) => hoverColor};
+        stroke: ${({$hoverColor}) => $hoverColor};
       }
     }
   }
@@ -35,8 +35,8 @@ const IconButton : React.FC<IconButtonData> = ({
   return(
     <StyledButton
       type='button'
-      color={color}
-      hoverColor={hoverColor}
+      $color={color}
+      $hoverColor={hoverColor}
       {...props}
     >
       <Icon icon={icon} size={size} weight={weight} />

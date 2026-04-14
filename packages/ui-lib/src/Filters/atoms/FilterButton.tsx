@@ -5,8 +5,8 @@ import Icon, { IconWrapper } from '../../Icons/Icon';
 import { animation } from '../../theme/common';
 import { FilterButtonDesign } from '../FilterTypes';
 
-const LeftIconWrapper = styled.div<{ isSortAscending: boolean }>`
-  ${({ isSortAscending }) => isSortAscending && css`
+const LeftIconWrapper = styled.div<{ $isSortAscending: boolean }>`
+  ${({ $isSortAscending }) => $isSortAscending && css`
       transform: scaleY(-1);
   `};
   padding: 0 6px;
@@ -21,15 +21,15 @@ const fadeInAnimation = keyframes`
   }
 `;
 
-const FlipArrowContainer = styled.div<{ design?: FilterButtonDesign }>`
-  ${({ design }) => design === 'default' ?
+const FlipArrowContainer = styled.div<{ $design?: FilterButtonDesign }>`
+  ${({ $design }) => $design === 'default' ?
     `padding: 0px 12px 0px 8px;`
     :
     `padding: 0px 8px;`
   };
 `;
 
-const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, design?: FilterButtonDesign }>`
+const StyledButton = styled.button<{ $isOpen?: boolean, $hasFlipArrow?: boolean, $design?: FilterButtonDesign }>`
   ${resetButtonStyles};
   border-radius: 3px;
   height: var(--common-height);
@@ -39,7 +39,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
   flex-shrink: 0;
   padding: 4px 10px 4px 4px;
 
-  ${({ design }) => design === 'basic' ?
+  ${({ $design }) => $design === 'basic' ?
       `
         background-color: transparent;
         border: 1px solid transparent;
@@ -53,7 +53,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
       `
   };
 
-  ${({ hasFlipArrow }) => hasFlipArrow && `padding: 4px 0px 4px 4px;`};
+  ${({ $hasFlipArrow }) => $hasFlipArrow && `padding: 4px 0px 4px 4px;`};
 
   text-align: left;
   font-size: 12px;
@@ -81,7 +81,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
   &:hover:enabled, &:active:enabled {
     color: var(--grey-12);
 
-    ${({design}) => design === 'basic'? '' : css`
+    ${({$design}) => $design === 'basic'? '' : css`
       box-shadow: 0px 4px 9px 0px var(--primary-a2);
       border-color: var(--primary-7);
     `};
@@ -92,7 +92,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
       }
     }
 
-    ${({isOpen}) => !isOpen && css`
+    ${({$isOpen}) => !$isOpen && css`
       ${FlipArrowContainer} ${IconWrapper} {
         [stroke]{
           stroke: var(--grey-12);
@@ -107,7 +107,7 @@ const StyledButton = styled.button<{ isOpen?: boolean, hasFlipArrow?: boolean, d
     opacity: 50%;
   }
 
-  ${({ isOpen, hasFlipArrow }) => isOpen && hasFlipArrow && css`
+  ${({ $isOpen, $hasFlipArrow }) => $isOpen && $hasFlipArrow && css`
     background-color: var(--primary-9);
     border: solid 1px var(--primary-9);
     color: var(--white-1);
@@ -138,7 +138,7 @@ const InnerContainer = styled.div`
   gap: 4px;
 `;
 
-const ButtonText = styled.div<{ hasFlipArrow: boolean }>``;
+const ButtonText = styled.div<{ $hasFlipArrow: boolean }>``;
 
 interface OwnProps {
   icon: string
@@ -162,9 +162,9 @@ const FilterButton: React.FC<IFilterButton> = ({
 }) => {
 
   return (
-    <StyledButton type='button' {...props} {...{ isOpen, hasFlipArrow, design }}>
+    <StyledButton type='button' {...props} $isOpen={isOpen} $hasFlipArrow={hasFlipArrow} $design={design}>
       <InnerContainer>
-        <LeftIconWrapper {...{ isSortAscending }}>
+        <LeftIconWrapper $isSortAscending={isSortAscending}>
           <Icon
             icon={icon}
             size={12}
@@ -172,9 +172,9 @@ const FilterButton: React.FC<IFilterButton> = ({
             color='filter-button-icon-color'
           />
         </LeftIconWrapper>
-        <ButtonText {...{ hasFlipArrow }}><>{children}</></ButtonText>
+        <ButtonText $hasFlipArrow={hasFlipArrow}><>{children}</></ButtonText>
 
-        {hasFlipArrow && <FlipArrowContainer {...{ design }}><Icon icon={isOpen ? 'Up' : 'Down'} size={6} color='grey-11' /></FlipArrowContainer>}
+        {hasFlipArrow && <FlipArrowContainer $design={design}><Icon icon={isOpen ? 'Up' : 'Down'} size={6} color='grey-11' /></FlipArrowContainer>}
 
       </InnerContainer>
     </StyledButton>

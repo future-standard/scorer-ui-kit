@@ -24,17 +24,17 @@ const EmptyImg = styled.div`
   height: 100%;
 `;
 
-const Image = styled.div<{ image?: string }>`
+const Image = styled.div<{ $image?: string }>`
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
-  background-image: url(${p => p.image});
+  background-image: url(${p => p.$image});
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  display: ${p => p.image ? 'block' : 'none'};
+  display: ${p => p.$image ? 'block' : 'none'};
 `;
 
 const InfoContainer = styled.div`
@@ -73,7 +73,7 @@ const NotificationItem: React.FC<INotificationItem> = ({ imgUrl, title, message,
     <Container>
       <ImgWrapper>
         {imgUrl
-          ? <Image image={imgUrl} />
+          ? <Image $image={imgUrl} />
           : <EmptyImg />}
       </ImgWrapper>
       <InfoContainer>

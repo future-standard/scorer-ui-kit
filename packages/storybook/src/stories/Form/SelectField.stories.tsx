@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { text, select, object, boolean } from "@storybook/addon-knobs";
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { SelectField, SelectWrapper} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
 
@@ -18,9 +18,9 @@ const Container = styled.div`
   gap: 16px;
 `;
 
-const FixedSelect = styled.div<{ width?: string }>`
+const FixedSelect = styled.div<{ $width?: string }>`
   ${SelectWrapper} {
-    width: ${({ width }) => width ? width : `60px`};
+    width: ${({ $width }) => $width ? $width : `60px`};
   }
 `;
 
@@ -76,7 +76,6 @@ export const _SelectField = () => {
             isCompact,
             placeholder,
             label,
-            selectWidth,
             disabled,
             defaultValue,
             fieldState
@@ -92,7 +91,7 @@ export const _SelectField = () => {
           
       <Subsection>
         <Title>Select (Fixed Width)</Title>
-        <FixedSelect width={selectWidth}>
+        <FixedSelect $width={selectWidth}>
           <SelectField
             {...{ isCompact, disabled, fieldState }}
             label={fixLabel}
@@ -115,7 +114,6 @@ export const _SelectField = () => {
             isCompact,
             placeholder,
             label,
-            selectWidth,
             disabled,
             defaultValue,
             fieldState,

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import MediaStream, { IMediaStream } from '../atoms/MediaStream';
 import PanelMetaData, { IPanelMetaData } from '../atoms/PanelMetaData';
 
-export const CameraPanelWrapper = styled.div<{hasOnClick: boolean}>`
+export const CameraPanelWrapper = styled.div<{$hasOnClick: boolean}>`
   width: 300px;
   height: 230px;
   border-radius: 3px;
@@ -11,7 +11,7 @@ export const CameraPanelWrapper = styled.div<{hasOnClick: boolean}>`
   background-color: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
   }
 
-  ${({hasOnClick}) => hasOnClick &&`
+  ${({$hasOnClick}) => $hasOnClick &&`
     cursor: pointer;
   `};
 `;
@@ -30,7 +30,7 @@ const NewComponent : React.FC<ICameraPanel> = ({
   panelOnClick,
   ...props}) => {
   return(
-    <CameraPanelWrapper onClick={panelOnClick} hasOnClick={panelOnClick === undefined? false : true} {...props}>
+    <CameraPanelWrapper onClick={panelOnClick} $hasOnClick={panelOnClick === undefined? false : true} {...props}>
       <MediaStream {...streamProps} />
       {customBottom
         ? customBottom

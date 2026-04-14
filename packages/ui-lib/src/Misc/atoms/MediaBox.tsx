@@ -4,11 +4,11 @@ import Spinner from '../../Indicators/Spinner';
 import { IMediaType } from '../../index';
 import NoImage from '../../svg/NoImageBig';
 
-export const MediaBoxWrapper = styled.div<{minWidth?: string, minHeight?: string}>`
+export const MediaBoxWrapper = styled.div<{$minWidth?: string, $minHeight?: string}>`
   position: relative;
   line-height: 0;
-  ${({minHeight}) => minHeight && `min-height: ${minHeight}`};
-  ${({minWidth}) => minWidth && `min-width: ${minWidth}`};
+  ${({$minHeight}) => $minHeight && `min-height: ${$minHeight}`};
+  ${({$minWidth}) => $minWidth && `min-width: ${$minWidth}`};
 `;
 
 const mediaStyle = `
@@ -30,30 +30,30 @@ const LoadingOverlay = styled.div`
   justify-content: center;
 `;
 
-const Video = styled.video<{ isLoaded?: boolean, hasModalLimits?: boolean }>`
+const Video = styled.video<{ $isLoaded?: boolean, $hasModalLimits?: boolean }>`
   ${mediaStyle};
   outline: none;
 
-  ${({ isLoaded, hasModalLimits }) => css`
+  ${({ $isLoaded, $hasModalLimits }) => css`
     transition: opacity var(--speed-slow) var(--easing-primary-out);
-    opacity: ${isLoaded ? `1` : `0`};
+    opacity: ${$isLoaded ? `1` : `0`};
 
-    ${hasModalLimits && css`
+    ${$hasModalLimits && css`
       max-height: calc(100vh - 100px);
       max-width: calc(100vw - 100px);
     `};
   `};
 `;
 
-const StyledImage = styled.img<{ isLoaded?: boolean, hasModalLimits?: boolean }>`
+const StyledImage = styled.img<{ $isLoaded?: boolean, $hasModalLimits?: boolean }>`
   ${mediaStyle};
 
-  ${({ isLoaded, hasModalLimits }) => css`
+  ${({ $isLoaded, $hasModalLimits }) => css`
     transition: opacity var(--speed-slow) var(--easing-primary-out);
-    display: ${isLoaded ? `block` : `none`};
-    opacity: ${isLoaded ? `1` : `0`};
+    display: ${$isLoaded ? `block` : `none`};
+    opacity: ${$isLoaded ? `1` : `0`};
 
-    ${hasModalLimits && css`
+    ${$hasModalLimits && css`
       max-height: calc(100vh - 100px);
       max-width: calc(100vw - 100px);
     `};
@@ -122,23 +122,25 @@ const MediaBox: React.FC<IMediaModal> = ({
   }, [onMediaLoad, setLoaded]);
 
   return (
-    <MediaBoxWrapper {...{minWidth, minHeight}}>
+    <MediaBoxWrapper {...{$minWidth: minWidth, $minHeight: minHeight}}>
       {mediaType === 'video'
         ? <Video
-            {...{ loop, autoPlay, controls, muted, onError, hasModalLimits }}
+            {...{ loop, autoPlay, controls, muted, onError }}
             {...videoValues}
+            $hasModalLimits={hasModalLimits}
             src={loadFailed ? '' : src}
-            isLoaded={loaded && !loadFailed}
+            $isLoaded={loaded && !loadFailed}
             preload='metadata'
             onCanPlayThrough={handleLoad}
           >
             <>{children}</>
           </Video>
         : <StyledImage
-            {...{ alt, onError, hasModalLimits }}
+            {...{ alt, onError }}
+            $hasModalLimits={hasModalLimits}
             src={loadFailed ? '' : src}
             onLoad={handleLoad}
-            isLoaded={loaded && !loadFailed}
+            $isLoaded={loaded && !loadFailed}
           />}
       {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {loadFailed && <NoImage />}

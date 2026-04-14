@@ -73,14 +73,14 @@ const FakeInnerRadio = styled.div`
   user-select: none;
 `;
 
-const Container = styled.div<{ disabled: boolean, selected: boolean }>`
+const Container = styled.div<{ $disabled: boolean, $selected: boolean }>`
   display: flex;
   align-items: center;
   height: 100%;
   width: 100%;
   gap: 12px;
 
-  ${({ selected, disabled }) => css`
+  ${({ $selected, $disabled }) => css`
     
     ${FakeCheckbox}, ${FakeRadioButton} {
       border-color: var(--input-toggle-unchecked-border-color);
@@ -100,7 +100,7 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
       }
     }
 
-    ${selected && css`
+    ${$selected && css`
       ${Title} {
         color: var(--input-label-active);
         font-weight: 600;
@@ -130,7 +130,7 @@ const Container = styled.div<{ disabled: boolean, selected: boolean }>`
 
     `};
 
-    ${disabled && css`
+    ${$disabled && css`
       cursor: not-allowed;
     `};
 
@@ -173,7 +173,9 @@ const FilterOption: React.FC<IFilterOption> = ({
   return (
 
     <Container
-      {...{ onClick, disabled, selected}}
+      onClick={onClick}
+      $disabled={disabled}
+      $selected={selected}
       {...props}
     >
       {(optionType === 'checkbox') && (

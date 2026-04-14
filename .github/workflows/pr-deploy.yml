@@ -1,0 +1,145 @@
+name: PR Deploy Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# Serialize all gh-pages pushes so concurrent PR deploys don't race
+concurrency:
+  group: gh-pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy-preview:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Use Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '22.x'
+
+    - name: Cache node modules
+      uses: actions/cache@v5
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build library
+      run: npm run build -w packages/ui-lib
+
+    - name: Build example
+      run: npm run build -w packages/example
+      env:
+        VITE_BASE_PATH: /scorer-ui-kit/pr/${{ github.event.pull_request.number }}/
+
+    - name: Build storybook
+      run: npm run build-storybook -w packages/storybook
+
+    - name: Deploy preview to gh-pages
+      run: |
+        PR_NUM=${{ github.event.pull_request.number }}
+
+        git config user.name "github-actions-bot"
+        git config user.email "support+actions@github.com"
+
+        # Fetch gh-pages branch
+        git fetch origin gh-pages
+
+        # Create a working copy of gh-pages
+        git worktree add gh-pages-dir origin/gh-pages
+
+        # Clear any previous build for this PR and copy new build
+        rm -rf "gh-pages-dir/pr/${PR_NUM}"
+        mkdir -p "gh-pages-dir/pr/${PR_NUM}"
+        cp -r packages/example/build/* "gh-pages-dir/pr/${PR_NUM}/"
+
+        # Commit and push
+        cd gh-pages-dir
+        git add .
+        git commit -m "Deploy preview for PR ${PR_NUM}" || echo "No changes to deploy"
+        git push origin HEAD:gh-pages
+
+    - name: Comment preview URLs on PR
+      uses: actions/github-script@v9
+      with:
+        script: |
+          const prNumber = context.payload.pull_request.number;
+          const sha = context.payload.pull_request.head.sha.substring(0, 7);
+          const previewUrl = `https://future-standard.github.io/scorer-ui-kit/pr/${prNumber}/`;
+
+          const body = [
+            `## Deploy Preview`,
+            ``,
+            `${previewUrl}`,
+            ``,
+            `_Built from ${sha} — ${new Date().toISOString()}_`,
+          ].join('\n');
+
+          // Update existing comment or create new one
+          const { data: comments } = await github.rest.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: prNumber,
+          });
+          const existing = comments.find(c =>
+            c.user.type === 'Bot' && c.body.includes('Deploy Preview')
+          );
+
+          if (existing) {
+            await github.rest.issues.updateComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: existing.id,
+              body,
+            });
+          } else {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body,
+            });
+          }
+
+  cleanup-preview:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Remove preview from gh-pages
+      run: |
+        PR_NUM=${{ github.event.pull_request.number }}
+
+        git config user.name "github-actions-bot"
+        git config user.email "support+actions@github.com"
+
+        git fetch origin gh-pages
+
+        git worktree add gh-pages-dir origin/gh-pages
+
+        if [ -d "gh-pages-dir/pr/${PR_NUM}" ]; then
+          rm -rf "gh-pages-dir/pr/${PR_NUM}"
+          cd gh-pages-dir
+          git add .
+          git commit -m "Remove preview for PR ${PR_NUM}"
+          git push origin HEAD:gh-pages
+          echo "Cleaned up preview for PR ${PR_NUM}"
+        else
+          echo "No preview found for PR ${PR_NUM}, nothing to clean up"
+        fi

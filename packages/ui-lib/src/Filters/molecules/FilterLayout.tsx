@@ -38,7 +38,7 @@ const ContextIcon = styled.div`
   }
 `;
 
-const ContextActionButton = styled.button<{ isActive?: boolean, isInnerContextButton?: boolean }>`
+const ContextActionButton = styled.button<{ $isActive?: boolean, $isInnerContextButton?: boolean }>`
   ${ContextActionBaseCSS}
   ${ContextIcon}{
     cursor: pointer;
@@ -52,7 +52,7 @@ const ContextActionButton = styled.button<{ isActive?: boolean, isInnerContextBu
     background-color: var(--primary-9);
     }
   }
-  ${({ isActive }) => isActive && css`
+  ${({ $isActive }) => $isActive && css`
     ${ContextIcon} {
       background-color: var(--primary-9);
       [stroke]{
@@ -63,34 +63,34 @@ const ContextActionButton = styled.button<{ isActive?: boolean, isInnerContextBu
       cursor: pointer;
     }
   `}
-  ${({ isInnerContextButton }) => isInnerContextButton && css`
+  ${({ $isInnerContextButton }) => $isInnerContextButton && css`
     margin-right: 5px;
   `}
 `;
 
-const ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean, minWidth: number }>`
+const ContentBox = styled.div<{ $openState: IDropOpen, $disabled: boolean, $minWidth: number }>`
   z-index: 100;
-  min-width: ${({ minWidth }) => minWidth}px;
+  min-width: ${({ $minWidth }) => $minWidth}px;
   position: absolute;
-  ${({ openState, disabled }) => openState && css`
-    display: ${openState.isOpen ? 'inline-block' : 'none'};
-    display: ${disabled && 'none'};
-    ${openState.position === 'bottom-right' && css`
+  ${({ $openState, $disabled }) => $openState && css`
+    display: ${$openState.isOpen ? 'inline-block' : 'none'};
+    display: ${$disabled && 'none'};
+    ${$openState.position === 'bottom-right' && css`
       bottom: 0;
       left: 0;
       transform: translateY(calc(100% + 5px ));
     `};
-    ${openState.position === 'bottom-left' && css`
+    ${$openState.position === 'bottom-left' && css`
       bottom: 0;
       right: 0;
       transform: translateY(calc(100% + 5px ));
     `};
-    ${openState.position === 'top-left' && css`
+    ${$openState.position === 'top-left' && css`
       top: 0;
       right: 0;
       transform: translateY(calc( -100% - 5px ));
     `};
-    ${openState.position === 'top-right' && css`
+    ${$openState.position === 'top-right' && css`
       top: 0;
       left: 0;
       transform: translateY(calc( -100% - 5px ));
@@ -248,21 +248,21 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
     <Container ref={mainRef}>
       <ButtonWrapper ref={buttonWrapperRef}>
         <ContextActionButton
-          isActive={openState.isOpen}
-          isInnerContextButton={false}
+          $isActive={openState.isOpen}
+          $isInnerContextButton={false}
           onClick={() => handleToggleOpen(minWidth, minHeight)}
         >
           {internal}
         </ContextActionButton>
       </ButtonWrapper>
-      <ContentBox {...{ openState, disabled, minWidth }}>
+      <ContentBox $openState={openState} $disabled={disabled} $minWidth={minWidth}>
         <FilterDropdownContainer>
           <LayoutGroup>
             <RowLabel>{layoutText}</RowLabel>
             <IconWrapper>
               {contentArray.map((item, index) => {
                 return (
-                  <ContextActionButton key={index} isInnerContextButton={index !== contentArray.length-1} isActive={isGridLayout === item.id} onClick={() => switchLayout(item.id)}>
+                  <ContextActionButton key={index} $isInnerContextButton={index !== contentArray.length-1} $isActive={isGridLayout === item.id} onClick={() => switchLayout(item.id)}>
                     <ContextIcon title={item.tooltipText}>
                       <Icon icon={item.icon} color={isGridLayout === item.id ? 'inverse' : 'dimmed'} size={16} />
                     </ContextIcon>

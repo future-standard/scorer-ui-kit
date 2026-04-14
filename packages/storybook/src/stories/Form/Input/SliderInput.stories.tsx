@@ -1,7 +1,7 @@
 import React from 'react';
-// import { action } from '@storybook/addon-actions';
+// import { action } from 'storybook/actions';
 import { boolean, number, object } from "@storybook/addon-knobs";
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import styled from 'styled-components';
 import {SliderInput, ISliderMark} from 'scorer-ui-kit';
 

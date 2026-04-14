@@ -8,7 +8,7 @@ const Container = styled.div`
   display: inline-block;
 `;
 
-const StatusCounter = styled.div<{ color?: IStatusDot }>`
+const StatusCounter = styled.div<{ $color?: IStatusDot }>`
   position: absolute;
   left: 14px;;
   top: -12px;
@@ -22,10 +22,10 @@ const StatusCounter = styled.div<{ color?: IStatusDot }>`
   align-items: center;
   justify-content: center;
   transition: background-color var(--speed-slow) var(--easing-primary-in-out);
-  background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'var(--grey-5)'};
+  background-color: ${({ theme, $color }) => $color ? theme.colors.status[$color] : 'var(--grey-5)'};
 `;
 
-const StatusDot = styled.div<{ color?: IStatusDot }>`
+const StatusDot = styled.div<{ $color?: IStatusDot }>`
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -33,7 +33,7 @@ const StatusDot = styled.div<{ color?: IStatusDot }>`
   top: -6px;
   right: -6px;
   transition: background-color var(--speed-slow) var(--easing-primary-in-out);
-  background-color: ${({ theme, color }) => color ? theme.colors.status[color] : 'var(--grey-5)'};
+  background-color: ${({ theme, $color }) => $color ? theme.colors.status[$color] : 'var(--grey-5)'};
 `;
 
 interface IStatusIcon {
@@ -47,8 +47,8 @@ const StatusIcon: React.FC<IStatusIcon> = ({icon, status, counter, maxCounter = 
   return (
     <Container>
       {status && (counter === undefined)
-        ? <StatusDot color={status} />
-        :  (counter === undefined) ? null : <StatusCounter color={status}>{counter > maxCounter ? `${maxCounter}+` : counter}</StatusCounter>}
+        ? <StatusDot $color={status} />
+        :  (counter === undefined) ? null : <StatusCounter $color={status}>{counter > maxCounter ? `${maxCounter}+` : counter}</StatusCounter>}
       <Icon icon={icon} size={18} color='dimmed' />
     </Container>
   );

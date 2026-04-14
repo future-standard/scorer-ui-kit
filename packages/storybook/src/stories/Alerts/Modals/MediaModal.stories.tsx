@@ -7,6 +7,7 @@ import {
   Button
 } from 'scorer-ui-kit';
 import { boolean, text } from '@storybook/addon-knobs';
+import PlaceholderImage from '../../assets/placeholder.jpg';
 
 const MediaModalStory = {
   title: 'Alerts/Modals',
@@ -47,7 +48,7 @@ const MediaImageModal : React.FC<IExampleModal> = ({hasModalLimitsValue, imageSr
 export const _MediaModal = () => {
 
   const hasModalLimits = boolean('Has Modal Limits', true);
-  const imageSrc = text('Image Src', '/images/placeholders/640x480.png');
+  const imageSrc = text('Image Src', PlaceholderImage);
   const retryLoading = boolean('Retry Loading', false);
 
   return (

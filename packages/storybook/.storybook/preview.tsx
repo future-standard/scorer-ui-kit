@@ -1,15 +1,13 @@
 import React from 'react';
-import { Preview } from '@storybook/react';
-import { themes } from '@storybook/theming';
+import { Preview } from '@storybook/react-vite';
 import { ThemeProvider } from 'styled-components';
-import { useDarkMode } from 'storybook-dark-mode';
 import {withKnobs} from "@storybook/addon-knobs";
 import { MemoryRouter as Router } from 'react-router-dom';
 import { defaultTheme, ThemeVariables } from 'scorer-ui-kit';
 import Fonts from '../src/fonts';
 import Style from '../src/style';
 
-// const { addDecorator } = require('@storybook/react'); // Has been deprecated, need alternative or wait for update
+// const { addDecorator } = require('@storybook/react-vite'); // Has been deprecated, need alternative or wait for update
 // import { jsxDecorator } from 'storybook-addon-jsx';
 // addDecorator(jsxDecorator);
 
@@ -24,11 +22,10 @@ const RouterDecorator = story => (
 );
 
 // Theme Decorator
-const ThemeDecorator = story => {
-  const isDarkEnabled = useDarkMode();
-  localStorage.isDarkThemeEnabled = isDarkEnabled;
+const ThemeDecorator = (story, context) => {
+  const isDark = context.globals.theme === 'dark';
 
-  if (isDarkEnabled) {
+  if (isDark) {
     document.body.classList.add('dark-theme');
     document.body.classList.remove('light-theme');
   } else {
@@ -41,18 +38,32 @@ const ThemeDecorator = story => {
       <Fonts />
       <ThemeVariables/>
       <Style/>
-      {story()}
+      <React.StrictMode>
+        {story()}
+      </React.StrictMode>
     </ThemeProvider>
   )
 };
 
 // Preview configuration
 const preview: Preview = {
-  parameters: {
-    darkMode: {
-      dark: { ...themes.dark, appBg: '#252626' },
-      light: { ...themes.normal, appBg: '#efeff3' },
+  parameters: {},
+  globalTypes: {
+    theme: {
+      description: 'Light/Dark theme',
+      toolbar: {
+        title: 'Theme',
+        icon: 'paintbrush',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+        ],
+        dynamicTitle: true,
+      },
     },
+  },
+  initialGlobals: {
+    theme: 'light',
   },
   decorators: [withKnobs, ThemeDecorator, RouterDecorator],
 };

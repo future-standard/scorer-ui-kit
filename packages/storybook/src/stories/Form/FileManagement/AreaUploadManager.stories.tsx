@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { AreaUploadManager, PageHeader } from 'scorer-ui-kit';
 import { text, object, boolean } from "@storybook/addon-knobs";
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 const AreaUploadManagerStory = {
   title: 'Form/File Management',

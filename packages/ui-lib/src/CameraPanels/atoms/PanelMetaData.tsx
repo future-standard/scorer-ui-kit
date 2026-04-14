@@ -8,8 +8,8 @@ const Container = styled.div`
   height: 60px;
 `;
 
-const LeftData = styled.div<{ hasRightData: boolean }>`
-  ${({ hasRightData }) => hasRightData && css`
+const LeftData = styled.div<{ $hasRightData: boolean }>`
+  ${({ $hasRightData }) => $hasRightData && css`
     border-right: var(--grey-6) 1px solid;
     width: 195px;
   `};
@@ -39,22 +39,22 @@ const DeviceDataGroup = styled.div`
   justify-content: center;
 `;
 
-const LeftTitle = styled.div<{ hasMarginBottom: boolean, hasRightData: boolean }>`
+const LeftTitle = styled.div<{ $hasMarginBottom: boolean, $hasRightData: boolean }>`
   ${EllipsisStyles};
-  ${({ hasRightData }) => hasRightData
+  ${({ $hasRightData }) => $hasRightData
     ? `max-margin: 140px;`
     : `max-margin: 250px;`
   }};
-  ${({ hasMarginBottom }) => hasMarginBottom && `margin-bottom: 1px;`};
+  ${({ $hasMarginBottom }) => $hasMarginBottom && `margin-bottom: 1px;`};
 
   color: var(--grey-a10);
   font-size: 10px;
 `;
 
-const LeftSubTitle = styled.div<{ hasRightData: boolean }>`
+const LeftSubTitle = styled.div<{ $hasRightData: boolean }>`
   font-family: var(--font-data);
   ${EllipsisStyles};
-  ${({ hasRightData }) => hasRightData
+  ${({ $hasRightData }) => $hasRightData
     ? `max-width: 140px;`
     : `max-width: 250px;`
   }
@@ -63,12 +63,12 @@ const LeftSubTitle = styled.div<{ hasRightData: boolean }>`
   font-size: 16px;
 `;
 
-const Title = styled.div<{ hasMarginBottom: boolean }>`
+const Title = styled.div<{ $hasMarginBottom: boolean }>`
   ${EllipsisStyles};
   max-width: 80px;
   color: var(--grey-a10);
   font-size: 10px;
-  ${({ hasMarginBottom }) => hasMarginBottom && `margin-bottom: 6px;`};
+  ${({ $hasMarginBottom }) => $hasMarginBottom && `margin-bottom: 6px;`};
 `;
 
 const SubTitle = styled.div`
@@ -100,16 +100,16 @@ const PanelMetaData: React.FC<IPanelMetaData> = ({
 
   return (
     <Container>
-      <LeftData {...{ hasRightData }}>
+      <LeftData $hasRightData={hasRightData}>
         {!hideIcon && <Icon icon={deviceIcon} color='dimmed' size={18} />}
         <DeviceDataGroup>
-          {leftTitle && <LeftTitle hasMarginBottom={!!leftSubTitle} {...{ hasRightData }}>{leftTitle}</LeftTitle>}
-          {leftSubTitle && <LeftSubTitle {...{ hasRightData }}>{leftSubTitle}</LeftSubTitle>}
+          {leftTitle && <LeftTitle $hasMarginBottom={!!leftSubTitle} $hasRightData={hasRightData}>{leftTitle}</LeftTitle>}
+          {leftSubTitle && <LeftSubTitle $hasRightData={hasRightData}>{leftSubTitle}</LeftSubTitle>}
         </DeviceDataGroup>
       </LeftData>
       {hasRightData && (
         <RightData>
-          {rightTitle && <Title hasMarginBottom={!!rightSubTitle}>{rightTitle}</Title>}
+          {rightTitle && <Title $hasMarginBottom={!!rightSubTitle}>{rightTitle}</Title>}
           {rightSubTitle && <SubTitle>{rightSubTitle}</SubTitle>}
         </RightData>
       )}

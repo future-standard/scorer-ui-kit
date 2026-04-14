@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import { FilenameTag } from '../components/ExamplesFilename';
+import { BASE_PATH } from '../basePath';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -86,7 +87,7 @@ const LinksPage : React.FC = () => {
         <Subheader>Key Resources</Subheader>
         <List>
           <Item>
-            <a href='/scorer-ui-kit/storybook'>
+            <a href={`${BASE_PATH}storybook`}>
               <Title>Storybook</Title>
               <Description>All the key components of the SCORER UI Kit, previewable along with options using Storybook.</Description>
             </a>
@@ -162,13 +163,6 @@ const LinksPage : React.FC = () => {
           </Link>
         </Item>
         <Item>
-          <Link to={`/ptz`}>
-            <Title>PTZ</Title>
-            <Description>An example of a working PTZ control. Requires a PTZ camera login.</Description>
-            <FilenameTag>PTZPage.tsx</FilenameTag>
-          </Link>
-        </Item>
-        <Item>
           <Link to={`/login`}>
             <Title>Login</Title>
             <Description>A code sample of our commonly used login view.</Description>
@@ -187,6 +181,13 @@ const LinksPage : React.FC = () => {
             <Title>Switch Example</Title>
             <Description>A demonstration of the Switch component with API integration.</Description>
             <FilenameTag>SwitchTest.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/usepoll-test`}>
+            <Title>usePoll — StrictMode Fix</Title>
+            <Description>Side-by-side comparison of usePoll before and after the React StrictMode canceled-ref fix.</Description>
+            <FilenameTag>UsePollTestPage.tsx</FilenameTag>
           </Link>
         </Item>
       </List>

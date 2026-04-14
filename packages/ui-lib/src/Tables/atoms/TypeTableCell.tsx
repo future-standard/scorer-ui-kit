@@ -31,7 +31,7 @@ const CopyToClipboard = styled.button`
 
 `;
 
-const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCellAlignment, hideDivider?: boolean, hasCopyButton?:boolean }>`
+const CellContainer = styled.div<{ $cellStyle: TypeCellStyle, $alignment: TypeCellAlignment, $hideDivider?: boolean, $hasCopyButton?:boolean }>`
   display: table-cell;
   height: 50px;
   vertical-align: middle;
@@ -44,10 +44,10 @@ const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCell
   }
 
   &, a {
-    ${({theme, cellStyle, alignment}) => cellStyle === 'firstColumn' ? css`
-      ${theme.typography.table.columnData[cellStyle]};
+    ${({theme, $cellStyle, $alignment}) => $cellStyle === 'firstColumn' ? css`
+      ${theme.typography.table.columnData[$cellStyle]};
     ` : css`
-      ${theme.typography.table.columnData[cellStyle][alignment]};
+      ${theme.typography.table.columnData[$cellStyle][$alignment]};
     `}
   }
 
@@ -55,11 +55,11 @@ const CellContainer = styled.div<{ cellStyle: TypeCellStyle, alignment: TypeCell
     text-decoration: underline;
   }
 
-  ${({hasCopyButton}) => hasCopyButton && css`
+  ${({$hasCopyButton}) => $hasCopyButton && css`
     padding-right: 20px;
   `};
 
-  ${({theme: {styles}, hideDivider}) => !hideDivider && css`
+  ${({theme: {styles}, $hideDivider}) => !$hideDivider && css`
     &::after {
       ${styles.tables.rows.divider};
       content: '';
@@ -80,14 +80,14 @@ const UnitText = styled.span`
   `}
 `;
 
-const StatusBlip = styled.div<{status?:string}>`
+const StatusBlip = styled.div<{$status?:string}>`
   display: inline-block;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   margin-right: 8px;
-  ${({status = 'neutral', theme: {colors}}) => css`
-    background: ${colors.status[status]};
+  ${({$status = 'neutral', theme: {colors}}) => css`
+    background: ${colors.status[$status]};
   `}
 `;
 interface IProps {
@@ -113,9 +113,9 @@ const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false
 
 
   return (
-    <CellContainer {...{cellStyle, alignment, hideDivider, hasCopyButton}}>
+    <CellContainer $cellStyle={cellStyle} $alignment={alignment} $hideDivider={hideDivider} $hasCopyButton={hasCopyButton}>
       <>
-        {showStatus ? <StatusBlip {...{status}} /> : null}
+        {showStatus ? <StatusBlip $status={status} /> : null}
         {href ? <a href={href}>{children}</a> : children}
         {showUnit ? <UnitText>{unit}</UnitText> : null}
         {hasCopyButton ? <CopyToClipboard onClick={() => typeof children === 'string' && copyToClipboard(children)}><Icon icon='Copy' size={16} /></CopyToClipboard> : null}

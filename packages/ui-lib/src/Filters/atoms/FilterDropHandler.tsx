@@ -12,34 +12,34 @@ const ButtonWrapper = styled.div`
   display: inline-block;
 `;
 
-const  ContentBox = styled.div<{ openState: IDropOpen, disabled: boolean, minWidth: number }>`
+const  ContentBox = styled.div<{ $openState: IDropOpen, $disabled: boolean, $minWidth: number }>`
   z-index: 100;
-  min-width: ${({ minWidth }) => minWidth}px;
+  min-width: ${({ $minWidth }) => $minWidth}px;
   position: absolute;
 
-  ${({ openState, disabled }) => openState && css`
-    display: ${openState.isOpen ? 'inline-block' : 'none'};
-    display: ${disabled && 'none'};
+  ${({ $openState, $disabled }) => $openState && css`
+    display: ${$openState.isOpen ? 'inline-block' : 'none'};
+    display: ${$disabled && 'none'};
 
-    ${openState.position === 'bottom-right' && `
+    ${$openState.position === 'bottom-right' && `
       bottom: 0;
       left: 0;
       transform: translateY(calc(100% + 5px ));
     `};
 
-    ${openState.position === 'bottom-left' && `
+    ${$openState.position === 'bottom-left' && `
       bottom: 0;
       right: 0;
       transform: translateY(calc(100% + 5px ));
     `};
 
-    ${openState.position === 'top-left' && `
+    ${$openState.position === 'top-left' && `
       top: 0;
       right: 0;
       transform: translateY(calc( -100% - 5px ));
     `};
 
-    ${openState.position === 'top-right' && `
+    ${$openState.position === 'top-right' && `
       top: 0;
       left: 0;
       transform: translateY(calc( -100% - 5px ));
@@ -177,7 +177,7 @@ const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
           >{buttonText}
           </FilterButton>
         </ButtonWrapper>
-        <ContentBox {...{ openState, disabled, minWidth }}>
+        <ContentBox $openState={openState} $disabled={disabled} $minWidth={minWidth}>
           <>{children}</>
         </ContentBox>
       </Container>

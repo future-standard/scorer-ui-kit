@@ -9,9 +9,9 @@ import Icon from '../../Icons/Icon';
 import { ITableColumnConfig, IRowData } from '..';
 
 
-const RowContainer = styled.div<{isEmpty: boolean}>`
+const RowContainer = styled.div<{$isEmpty: boolean}>`
   display: table-row;
-  ${({isEmpty}) =>  isEmpty && css`
+  ${({$isEmpty}) =>  $isEmpty && css`
     visibility: hidden;
   `};
 `;
@@ -37,7 +37,7 @@ const TypeTableRow : React.FC<IProps> = ({selectable = false, selectCallback, ha
   const isEmpty = rowData.columns.length === 0;
 
   return (
-    <RowContainer isEmpty={isEmpty}>
+    <RowContainer $isEmpty={isEmpty}>
       {selectable ? <TypeTableCell hideDivider><Checkbox checked={rowData._checked} disabled={rowData.checkboxDisabled} onChangeCallback={wrappedSelectCallback} /></TypeTableCell> : null}
       {hasStatus ?  <TypeTableCell hideDivider><TypeTableDeviceStatus status={rowData.header?.status} /></TypeTableCell> : null}
       {hasThumbnail ? <TypeTableCell hideDivider><TableRowThumbnail image={rowData.header?.image} mediaUrl={rowData.header?.mediaUrl} mediaType={rowData.header?.mediaType} closeText={closeText} onClickThumbnail={rowData.header?.onClickThumbnail}/></TypeTableCell> : null}

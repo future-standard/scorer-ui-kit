@@ -24,7 +24,7 @@ const ExampleContentBlock = styled.div`
 const defaultBtn : IButtonStack[] = [
   {id:'primaryBase0', buttonType: 'default', text:'Example Action 1'},
   {id:'secondaryBase1', buttonType: 'default', text:'Example Action 2', design: 'secondary'},
-  {id:'buttonWithIcon2', buttonType: 'icon-button', text:'Delete Instance', design: 'danger', icon: 'DevicesScorerEdge'},
+  {id:'buttonWithIcon2', buttonType: 'icon-button', text:'Delete Instance', design: 'warning', icon: 'DevicesScorerEdge'},
 ]
 
 const GlobalUIPage: FC = () => {

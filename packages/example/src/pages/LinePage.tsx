@@ -16,6 +16,7 @@ import {
 } from 'scorer-ui-kit';
 import { IPointSet, LineUIOptions } from 'scorer-ui-kit/dist/LineUI';
 import ExamplesFilename from '../components/ExamplesFilename';
+import { BASE_PATH } from '../basePath';
 
 const Line: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
@@ -251,10 +252,10 @@ const Line: React.FC<{}> = () => {
           {/* <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button> */}
         </SidebarBox>
       </Sidebar>
-      <Content padBottom={false}>
+      <Content $padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUI options={options} onLineClick={selectLine} src="/scorer-ui-kit/images/line-ui-railyard.jpg" />
+          <LineUI options={options} onLineClick={selectLine} src={`${BASE_PATH}images/line-ui-railyard.jpg`} />
         </LineSetContext.Provider>
       </Content>
     </Layout>

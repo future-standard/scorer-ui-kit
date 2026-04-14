@@ -213,7 +213,7 @@ const CalHCell = styled(CalCell)`
   color: var(--grey-a11);
 `;
 
-const ContentDot = styled.div<{ hasContent: boolean, state?: CellStates, isToday?: boolean, }>`
+const ContentDot = styled.div<{ $hasContent: boolean, $state?: CellStates, $isToday?: boolean, }>`
   position: absolute;
   left: 18px;
   bottom: 5px;
@@ -222,20 +222,20 @@ const ContentDot = styled.div<{ hasContent: boolean, state?: CellStates, isToday
   border-radius: 50%;
   background-color: var(--primary-11);
 
-  ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
+  ${({ $state }) => ($state === 'single' || $state === 'start' || $state === 'end') && css`
     background-color: var(--white-12);`
   }
 
-  ${({ state }) => (state === 'inside') && css`
+  ${({ $state }) => ($state === 'inside') && css`
     background-color: var(--primary-12);`
   }
 
-  ${({ isToday }) => isToday && css`
+  ${({ $isToday }) => $isToday && css`
     left: 16px;
     bottom: 3px;
   `}
 
-  ${({ hasContent }) => !hasContent && css`
+  ${({ $hasContent }) => !$hasContent && css`
     display: none;
   `}
 `;
@@ -244,49 +244,49 @@ const DayText = styled.span`
   transform: translateY(-1px);
 `;
 
-const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, state?: CellStates }>`
+const CalCellB = styled(CalCell) <{ $thisMonth?: boolean, $isToday?: boolean, $state?: CellStates }>`
   cursor: pointer;
   position: relative;
   text-align: center;
   font-size: 14px;
   font-weight: 400;
 
-  ${({ thisMonth }) => !thisMonth && css`
+  ${({ $thisMonth }) => !$thisMonth && css`
     color: var(--grey-a8);
   `}
 
-  ${({ isToday }) => isToday && css`
+  ${({ $isToday }) => $isToday && css`
     border: 2px solid var(--primary-a7);
   `}
 
-  ${({ state }) => (state !== 'single' && state !== 'start' && state !== 'end') && css`
+  ${({ $state }) => ($state !== 'single' && $state !== 'start' && $state !== 'end') && css`
     &:hover:enabled {
       background: var(--primary-a6);
       color: var(--white-1);
     }
   `};
 
-  ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
+  ${({ $state }) => ($state === 'single' || $state === 'start' || $state === 'end') && css`
     background: var(--primary-9);
     color: var(--white-1);
   `}
 
-  ${({ state }) => (state === 'start') && css`
+  ${({ $state }) => ($state === 'start') && css`
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   `}
 
-  ${({ state }) => (state === 'end') && css`
+  ${({ $state }) => ($state === 'end') && css`
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   `}
 
-  ${({ state }) => (state === 'insideHover') && css`
+  ${({ $state }) => ($state === 'insideHover') && css`
     background: var(--primary-a9) !important;
     color: var(--white-1);
   `}
 
-  ${({ state }) => (state === 'inside') && css`
+  ${({ $state }) => ($state === 'inside') && css`
     background: var(--primary-a5);
     border-radius: 0;
     opacity: 1;
@@ -314,12 +314,12 @@ const CalCellB = styled(CalCell) <{ thisMonth?: boolean, isToday?: boolean, stat
     color: var(--grey-6);
     cursor: not-allowed;
 
-    ${({ state }) => (state === 'single' || state === 'start' || state === 'end') && css`
+    ${({ $state }) => ($state === 'single' || $state === 'start' || $state === 'end') && css`
       color: var(--white-1);
       background: var(--red-a9);
     `}
 
-    ${({ state }) => (state === 'inside') && css`
+    ${({ $state }) => ($state === 'inside') && css`
       color: var(--white-1);
       background: var(--red-a7);
       &:nth-child(7n+1), &:nth-child(7n){
@@ -549,13 +549,13 @@ const DatePicker: React.FC<IDatePicker> = ({
                       key={index}
                       disabled={isDayOutOfRange(day, availableRange)}
                       onClick={() => onCellClick(day)}
-                      state={dayState}
-                      thisMonth={isSameMonth(day, focusedMonth)}
-                      isToday={isTodayValue}>
+                      $state={dayState}
+                      $thisMonth={isSameMonth(day, focusedMonth)}
+                      $isToday={isTodayValue}>
                       <DayText>
                         {format(day, "d")}
                       </DayText>
-                      <ContentDot hasContent={dayHasContent(day, contentDays)} state={dayState} isToday={isTodayValue} />
+                      <ContentDot $hasContent={dayHasContent(day, contentDays)} $state={dayState} $isToday={isTodayValue} />
                     </CalCellB>
                   );
                 })}

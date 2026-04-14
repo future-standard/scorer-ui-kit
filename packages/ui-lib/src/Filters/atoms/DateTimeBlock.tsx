@@ -4,11 +4,11 @@ import {endOfDay, format,isEqual,min,set } from 'date-fns';
 import {isNotNumber} from '../../helpers/index';
 import Icon from '../../Icons/Icon';
 
-const Container = styled.div<{hide:boolean}>`
+const Container = styled.div<{$hide:boolean}>`
   display: flex;
   flex-direction: column;
 
-  ${({hide}) => hide && css`
+  ${({$hide}) => $hide && css`
     display: none;
   `}
 `;
@@ -37,7 +37,7 @@ const IconWrap = styled.div`
   padding-top: 1px;
 `;
 
-const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isTimeInput?: boolean }>`
+const Input = styled.input<{ readOnly? : boolean, $isTimeRangeValid: boolean, $isTimeInput?: boolean }>`
   font-family: var(--font-data);
   text-align: left;
   font-size: 14px;
@@ -48,8 +48,8 @@ const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isT
   background-color: transparent;
 
   width: 100%;
-  border: ${({ isTimeInput }) => isTimeInput ?
-    ({ isTimeRangeValid }) => isTimeRangeValid ? 'transparent 1px solid' : 'var(--warning-a9) 1px solid'
+  border: ${({ $isTimeInput }) => $isTimeInput ?
+    ({ $isTimeRangeValid }) => $isTimeRangeValid ? 'transparent 1px solid' : 'var(--warning-a9) 1px solid'
     : 'transparent 1px solid'
   };
   outline: none;
@@ -59,8 +59,8 @@ const Input = styled.input<{ readOnly? : boolean, isTimeRangeValid: boolean, isT
 
   &:focus, &:hover {
 
-    border-color: ${({ isTimeInput }) => isTimeInput ?
-      ({ isTimeRangeValid }) => isTimeRangeValid ? 'transparent' : 'var(--warning-a9)'
+    border-color: ${({ $isTimeInput }) => $isTimeInput ?
+      ({ $isTimeRangeValid }) => $isTimeRangeValid ? 'transparent' : 'var(--warning-a9)'
       : 'transparent'
     };
   }
@@ -225,7 +225,7 @@ const DateTimeBlock : React.FC<IProps> = ({
   },[date, allowAfterMidnight]);
 
   return (
-    <Container hide={!hasDate && !hasTime}>
+    <Container $hide={!hasDate && !hasTime}>
       <Label>{title}</Label>
 
       {hasDate && (
@@ -234,7 +234,7 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Date' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <Input type='text' readOnly value={format(date, "yyyy/MM/dd")} {...{isTimeRangeValid}} />
+            <Input type='text' readOnly value={format(date, "yyyy/MM/dd")} $isTimeRangeValid={isTimeRangeValid} />
           </InputWrap>
         </Item>
       )}
@@ -245,9 +245,9 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <Input name='hours' type='number' min='-1' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} {...{isTimeRangeValid}} autoComplete='off' isTimeInput />
+            <Input name='hours' type='number' min='-1' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} $isTimeRangeValid={isTimeRangeValid} autoComplete='off' $isTimeInput />
             <TimeColon>:</TimeColon>
-            <Input name='minutes' type='number' min='-1' max='60' value={displayMinutes} onChange={setDateMinutes} {...{isTimeRangeValid}} autoComplete='off' isTimeInput />
+            <Input name='minutes' type='number' min='-1' max='60' value={displayMinutes} onChange={setDateMinutes} $isTimeRangeValid={isTimeRangeValid} autoComplete='off' $isTimeInput />
           </InputWrap>
         </Item>
       )}

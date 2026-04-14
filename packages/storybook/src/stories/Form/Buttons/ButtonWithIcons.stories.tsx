@@ -1,5 +1,5 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import {  text, select, boolean } from "@storybook/addon-knobs";
 import {ButtonWithIcon} from 'scorer-ui-kit';
 import { generateIconList } from '../../helpers';

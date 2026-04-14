@@ -9,12 +9,12 @@ const StatusWrapper = styled.div`
   gap: 4px;
 `;
 
-const StatusDot = styled.div<{ type?: AlertType, tooltipMessage?: string }>`
+const StatusDot = styled.div<{ $type?: AlertType, $tooltipMessage?: string }>`
   height: 12px;
   width: 12px;
   border-radius: 100%;
-  background-color: ${({ type }) => `var(--${type}, var(--primary-9))`};
-    ${({ tooltipMessage }) => tooltipMessage && css`
+  background-color: ${({ $type }) => `var(--${$type}, var(--primary-9))`};
+    ${({ $tooltipMessage }) => $tooltipMessage && css`
       &:hover {
         cursor: pointer;
       };
@@ -44,7 +44,7 @@ export const StatusComponent: React.FC<IStatusBundle> = ({ statusList }) => {
         statusList.map(({ type, tooltipMessage, tooltipIcon, tooltipType, tooltipPosition }, index) => {
           return (
             <Fragment key={index}>
-              <StatusDot ref={statusRefs.current[index]} type={type} tooltipMessage={tooltipMessage} />
+              <StatusDot ref={statusRefs.current[index]} $type={type} $tooltipMessage={tooltipMessage} />
               {tooltipMessage && (
                 <Tooltip tooltipFor={statusRefs.current[index]} message={tooltipMessage} icon={tooltipIcon} type={tooltipType} tooltipPosition={tooltipPosition} />)
               }

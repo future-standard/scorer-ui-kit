@@ -20,8 +20,8 @@ const StyledFilterOption = styled(FilterOption)`
   letter-spacing: 0.2px;
 `;
 
-const OptionList = styled.div<{ moreItem?: boolean }>`
-  max-height: ${({ moreItem }) => moreItem ? '228px' : '196px'};
+const OptionList = styled.div<{ $moreItem?: boolean }>`
+  max-height: ${({ $moreItem }) => $moreItem ? '228px' : '196px'};
   min-height: 40px;
   position: relative;
   overflow-y: auto;
@@ -292,7 +292,7 @@ export type IFilterDropdownOwn = {
   onCancelCallback?: () => void
 }
 
-export type IFilterDropdown = IFilterDropdownOwn & IFilterFooterControls
+export type IFilterDropdown = IFilterDropdownOwn & IFilterFooterControls & Omit<React.HTMLAttributes<HTMLDivElement>, keyof IFilterDropdownOwn>
 
 const FilterDropdown: React.FC<IFilterDropdown> = ({
   buttonIcon,
@@ -457,7 +457,7 @@ const handleApply = useCallback(() => {
                     </SortingButtonWrapper>
                   </FilterResultsToolbar>
                 )}
-                <OptionList moreItem={list.length > 5}>
+                <OptionList $moreItem={list.length > 5}>
                   {(visibleList.length > 0)
 
                     ? visibleList.map((item: IFilterItem, index) => {

@@ -225,9 +225,7 @@ import { ComponentName } from 'scorer-ui-kit';
 - MediaBox
 - ActionsBar
 
-#### PTZ/LineUI Components (5 components)
-- Controls (PTZ)
-- PTZProvider
+#### LineUI Components (3 components)
 - LineUI
 - LineUIVideo
 - LineUIRTC
@@ -241,14 +239,13 @@ import { ComponentName } from 'scorer-ui-kit';
 
 ## Key Hooks
 
-The library also exports 14 custom hooks
+The library also exports 13 custom hooks
 Note: Hooks must be used within the appropriate providers (ModalProvider, NotificationProvider, ThemeProvider).
 
 - **useModal** - Modal management
 - **useNotification** - Notification system
 - **useMediaModal** - Media modal for images/videos
 - **useThemeToggle** - Theme switching for dark/light mode (use at App.tsx level)
-- **usePTZ** - PTZ control state for PTZ camera controls
 - **useTitle** - Document title management
 - **useCopyToClipboard** - Clipboard operations
 - **useClickOutside** - Click outside detection
