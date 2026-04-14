@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import { FilenameTag } from '../components/ExamplesFilename';
+import { BASE_PATH } from '../basePath';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -86,7 +87,7 @@ const LinksPage : React.FC = () => {
         <Subheader>Key Resources</Subheader>
         <List>
           <Item>
-            <a href='/scorer-ui-kit/storybook'>
+            <a href={`${BASE_PATH}storybook`}>
               <Title>Storybook</Title>
               <Description>All the key components of the SCORER UI Kit, previewable along with options using Storybook.</Description>
             </a>

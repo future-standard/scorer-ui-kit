@@ -14,7 +14,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/scorer-ui-kit',
+  base: process.env.VITE_BASE_PATH || '/scorer-ui-kit',
   publicDir: 'public',
   build: {
     outDir: 'build',
