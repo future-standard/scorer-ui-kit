@@ -4,6 +4,7 @@ import { TypeTable, PageHeader, Content, useModal, SplitButton } from 'scorer-ui
 import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 import { StatusComponent } from '../components/StatusComponent';
 import ExamplesFilename from '../components/ExamplesFilename';
+import { BASE_PATH } from '../basePath';
 
 const Container = styled.div`
   margin: 100px 200px;
@@ -85,7 +86,7 @@ const TablePage: React.FC = () => {
       id: 'device-id-1',
       header: {
         image: "https://picsum.photos/id/43/367/267",
-        mediaUrl: "/scorer-ui-kit/traffic.mp4",
+        mediaUrl: `${BASE_PATH}traffic.mp4`,
         mediaType: 'video',
       },
       columns:
@@ -102,8 +103,8 @@ const TablePage: React.FC = () => {
       _checked: true,
       id: 'device-id-2',
       header: {
-        image: "/scorer-ui-kit/images/cityscape.jpg",
-        mediaUrl: "/scorer-ui-kit/images/cityscape.jpg",
+        image: `${BASE_PATH}images/cityscape.jpg`,
+        mediaUrl: `${BASE_PATH}images/cityscape.jpg`,
         mediaType: 'img',
         onClickThumbnail: () => openCustomModal('device-id-2'),
       },
@@ -129,8 +130,8 @@ const TablePage: React.FC = () => {
     {
       id: 'device-id-3',
       header: {
-        image: "/scorer-ui-kit/images/cityscape.jpg",
-        mediaUrl: "/scorer-ui-kit/images/cityscape.jpg",
+        image: `${BASE_PATH}images/cityscape.jpg`,
+        mediaUrl: `${BASE_PATH}images/cityscape.jpg`,
         mediaType: 'img'
       },
       columns:
@@ -146,8 +147,8 @@ const TablePage: React.FC = () => {
     {
       id: 'device-id-4',
       header: {
-        image: "/scorer-ui-kit/images/cityscape.jpg",
-        mediaUrl: "/scorer-ui-kit/images/cityscape.jpg",
+        image: `${BASE_PATH}images/cityscape.jpg`,
+        mediaUrl: `${BASE_PATH}images/cityscape.jpg`,
         mediaType: 'img'
       },
       columns:

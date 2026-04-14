@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import {LineUIOptions} from 'scorer-ui-kit/dist/LineUI';
 import {LineUIVideoOptions} from 'scorer-ui-kit/dist/LineUI';
 import ExamplesFilename from '../components/ExamplesFilename';
+import { BASE_PATH } from '../basePath';
 
 const StyledButton = styled(ButtonWithIcon)`
   width: 100%;
@@ -193,7 +194,7 @@ const Line: React.FC<{}> = () => {
       muted: true,
     })
 
-    createMediaModal({ mediaType: 'video', src: '/scorer-ui-kit/traffic.mp4', dismissCallback: handleModalClose })
+    createMediaModal({ mediaType: 'video', src: `${BASE_PATH}traffic.mp4`, dismissCallback: handleModalClose })
   }, [createMediaModal, handleModalClose])
 
   const selectLine = useCallback((lineId: number) => {
@@ -246,7 +247,7 @@ const Line: React.FC<{}> = () => {
       <Content $padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUIVideo options={options} onLineClick={selectLine} videoOptions={videoOptions} src='/scorer-ui-kit/traffic.mp4' />
+          <LineUIVideo options={options} onLineClick={selectLine} videoOptions={videoOptions} src={`${BASE_PATH}traffic.mp4`} />
         </LineSetContext.Provider>
         <ButtonWrapper>
           <Button onClick={handleMediaModal}>Open Video Modal</Button>
