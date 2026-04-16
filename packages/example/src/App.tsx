@@ -21,6 +21,7 @@ import Layouts from './pages/Layouts';
 import SplitLayouts from './pages/SplitLayout';
 import SwitchWithAPI from './pages/SwitchTest';
 import UsePollTestPage from './pages/UsePollTestPage';
+import WebRTCStrictModeTestPage from './pages/WebRTCStrictModeTestPage';
 
 const App: React.FC<{}> = () => {
   return (
@@ -42,6 +43,7 @@ const App: React.FC<{}> = () => {
         <Route path='/split-layouts' element={<SplitLayouts />} />
         <Route path='/switch-test' element={<SwitchWithAPI />} />
         <Route path='/usepoll-test' element={<UsePollTestPage />} />
+        <Route path='/webrtc-strictmode-test' element={<WebRTCStrictModeTestPage />} />
       </Routes>
     </Router>
   )

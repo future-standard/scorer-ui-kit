@@ -190,6 +190,13 @@ const LinksPage : React.FC = () => {
             <FilenameTag>UsePollTestPage.tsx</FilenameTag>
           </Link>
         </Item>
+        <Item>
+          <Link to={`/webrtc-strictmode-test`}>
+            <Title>WebRTC — StrictMode Double-Mount</Title>
+            <Description>Verifies WebRTCPlayer mounts without WebSocket errors in StrictMode.</Description>
+            <FilenameTag>WebRTCStrictModeTestPage.tsx</FilenameTag>
+          </Link>
+        </Item>
       </List>
     </Section>
 
