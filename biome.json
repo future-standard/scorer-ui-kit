@@ -37,7 +37,10 @@
       "suspicious": {
         "noExplicitAny": "warn",
         "noArrayIndexKey": "warn",
-        "noConsole": "warn"
+        "noConsole": {
+          "level": "error",
+          "options": { "allow": ["warn", "error", "info", "debug"] }
+        }
       },
       "style": {
         "noNonNullAssertion": "warn",
@@ -58,17 +61,5 @@
       "jsxQuoteStyle": "single",
       "bracketSameLine": false
     }
-  },
-  "overrides": [
-    {
-      "includes": ["**/*.config.{js,ts}", "**/vite.config.{js,ts}"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noConsole": "off"
-          }
-        }
-      }
-    }
-  ]
+  }
 }
