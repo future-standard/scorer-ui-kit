@@ -111,15 +111,10 @@ const DropdownDatePicker: React.FC<IDropdownDatePicker> = ({
    * Caching the selected null /clear flag for this picker from parent component
    */
   useEffect(() => {
-    let canUnmount = true;
-
-    if (canUnmount && selected === null && pickerValue.current !== null) {
+    if (selected === null && pickerValue.current !== null) {
       pickerValue.current = selected;
       setMountedPicker({ initialValue: undefined, isMount: false });
     }
-    return () => {
-      canUnmount = false;
-    };
   }, [selected]);
 
   return (
