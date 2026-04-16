@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
-import { PageHeader, Button, WebRTCPlayer, Tag } from 'scorer-ui-kit';
+import { PageHeader, Button, WebRTCClient, Tag } from 'scorer-ui-kit';
 import ExamplesFilename from '../components/ExamplesFilename';
 
 // ─── Styled components ───────────────────────────────────────────────────────
@@ -253,13 +253,14 @@ const WebRTCStrictModeTestPage: React.FC = () => {
 
       {mounted && (
         <HiddenPlayer>
-          <WebRTCPlayer
+          <WebRTCClient
             enabled
             peerAddress='ws://localhost:1/'
             maxConnectionAttempts={2}
             setStatus={setStatus}
             setError={setError}
           />
+
         </HiddenPlayer>
       )}
 
