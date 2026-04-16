@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, Ref } from 'react';
 import ContentLayout from './organisms/ContentLayout';
 import FullWidthContentBlock from './atoms/FullWidthContentBlock';
 import UtilityHeader from './molecules/UtilityHeader';
@@ -70,6 +70,7 @@ export interface ISplitLayoutProps {
   persist?: boolean;
   persistenceKey?: string;
   showDebug?: boolean;
+  ref?: Ref<ISplitLayoutHandles>;
 }
 
 export interface ISplitLayoutHandles {
