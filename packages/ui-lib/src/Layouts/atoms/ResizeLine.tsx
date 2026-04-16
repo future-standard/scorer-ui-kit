@@ -20,6 +20,8 @@ const Line  = styled.div`
 
 const IconContainer = styled.div`
   flex: 0 0 20px;
+  display: flex;
+  align-items: center;
   svg {
     path {
       stroke: var(--grey-11);
