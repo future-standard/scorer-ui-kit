@@ -1,23 +1,21 @@
 import { createGlobalStyle } from 'styled-components';
-
-import Lato from './Lato3Upr3M-VF.woff2';
 import LatoItalic from './Lato3Ita3M-VF.woff2';
-import MonoraleThin from './Monorale-Thin.woff';
-import MonoraleThinItalic from './Monorale-ThinItalic.woff';
-import MonoraleExtraLight from './Monorale-ExtraLight.woff';
-import MonoraleExtraLightItalic from './Monorale-ExtraLightItalic.woff';
-import MonoraleLight from './Monorale-Light.woff';
-import MonoraleLightItalic from './Monorale-LightItalic.woff';
-import MonoraleRegular from './Monorale-Regular.woff';
-import MonoraleItalic from './Monorale-Italic.woff';
-import MonoraleMedium from './Monorale-Medium.woff';
-import MonoraleMediumItalic from './Monorale-MediumItalic.woff';
-import MonoraleSemiBold from './Monorale-SemiBold.woff';
-import MonoraleSemiBoldItalic from './Monorale-SemiBoldItalic.woff';
+import Lato from './Lato3Upr3M-VF.woff2';
+import MonoraleBlack from './Monorale-Black.woff';
 import MonoraleBold from './Monorale-Bold.woff';
 import MonoraleExtraBold from './Monorale-ExtraBold.woff';
-import MonoraleBlack from './Monorale-Black.woff';
-
+import MonoraleExtraLight from './Monorale-ExtraLight.woff';
+import MonoraleExtraLightItalic from './Monorale-ExtraLightItalic.woff';
+import MonoraleItalic from './Monorale-Italic.woff';
+import MonoraleLight from './Monorale-Light.woff';
+import MonoraleLightItalic from './Monorale-LightItalic.woff';
+import MonoraleMedium from './Monorale-Medium.woff';
+import MonoraleMediumItalic from './Monorale-MediumItalic.woff';
+import MonoraleRegular from './Monorale-Regular.woff';
+import MonoraleSemiBold from './Monorale-SemiBold.woff';
+import MonoraleSemiBoldItalic from './Monorale-SemiBoldItalic.woff';
+import MonoraleThin from './Monorale-Thin.woff';
+import MonoraleThinItalic from './Monorale-ThinItalic.woff';
 
 const GlobalStyle = createGlobalStyle`
 

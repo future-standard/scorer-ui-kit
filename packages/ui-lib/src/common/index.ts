@@ -1,4 +1,4 @@
-import {css} from 'styled-components';
+import { css } from 'styled-components';
 import { FlexContentPlaceholder } from './ContentPlaceholder';
 
 export const RowCss = css`
@@ -40,6 +40,4 @@ export const EllipsisStyles = css`
   white-space: nowrap;
 `;
 
-export { 
-  FlexContentPlaceholder
-};
+export { FlexContentPlaceholder };

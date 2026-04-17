@@ -1,13 +1,7 @@
-import PageTitle from './atoms/PageTitle';
 import IntroductionText from './atoms/IntroductionText';
-import PageHeader, { IHeaderTag } from './molecules/PageHeader';
+import PageTitle from './atoms/PageTitle';
 import MultilineContent from './molecules/MultilineContent';
-
-export {
-  PageTitle,
-  IntroductionText,
-  PageHeader,
-  MultilineContent
-};
+import PageHeader, { type IHeaderTag } from './molecules/PageHeader';
 
 export type { IHeaderTag };
+export { IntroductionText, MultilineContent, PageHeader, PageTitle };

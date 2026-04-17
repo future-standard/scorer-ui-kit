@@ -1,12 +1,11 @@
-import React from 'react';
+import { boolean, select, text } from '@storybook/addon-knobs';
+import { SmallInput } from 'scorer-ui-kit';
 import styled from 'styled-components';
-import {  text, select, boolean } from "@storybook/addon-knobs";
-import {SmallInput} from 'scorer-ui-kit';
 
 const SmallInputStory = {
   title: 'Form/Input',
   component: SmallInput,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -15,29 +14,44 @@ const Container = styled.div`
 `;
 
 export const _SmallInput = () => {
+  const inputType = select(
+    'Type',
+    { Text: 'text', Password: 'password', Email: 'email', Number: 'number' },
+    'text'
+  );
+  const inputName = text('Input Name', 'my_input');
+  const inputLabel = text('Label', 'My Input');
+  const inputUnit = text('Unit', 'º');
+  const inputPlaceholder = text('Placeholder', 'Placeholder...');
+  const fieldRequired = boolean('Required', false);
+  const inputState = select(
+    'State',
+    {
+      Default: 'default',
+      Disabled: 'disabled',
+      Required: 'required',
+      Valid: 'valid',
+      Invalid: 'invalid',
+      Processing: 'processing',
+    },
+    'default'
+  );
 
-  const inputType = select("Type", { Text: "text", Password: "password", Email: "email", Number: "number" }, "text");
-  const inputName = text("Input Name", "my_input");
-  const inputLabel = text("Label", "My Input");
-  const inputUnit = text("Unit", "º");
-  const inputPlaceholder = text("Placeholder", "Placeholder...");
-  const fieldRequired = boolean("Required", false);
-  const inputState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
-
-  return <Container>
-    <SmallInput
-      id = {inputName}
-      type={inputType}
-      unit={inputUnit}
-      name={inputName}
-      label={inputLabel}
-      placeholder={inputPlaceholder}
-      fieldState={inputState}
-      required={fieldRequired}
-      disabled={inputState === 'disabled'}
-    />
-  </Container>;
-
+  return (
+    <Container>
+      <SmallInput
+        id={inputName}
+        type={inputType}
+        unit={inputUnit}
+        name={inputName}
+        label={inputLabel}
+        placeholder={inputPlaceholder}
+        fieldState={inputState}
+        required={fieldRequired}
+        disabled={inputState === 'disabled'}
+      />
+    </Container>
+  );
 };
 
 export default SmallInputStory;

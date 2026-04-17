@@ -1,10 +1,10 @@
-import React, { ReactElement, useCallback, useRef } from 'react';
+import type React from 'react';
+import { type ReactElement, useCallback, useRef } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../common';
-import Icon, {IconWrapper} from '../Icons/Icon';
 import { useClickOutside } from '../hooks/useClickOutside';
-
+import Icon, { IconWrapper } from '../Icons/Icon';
 
 const Container = styled.div`
   position: fixed;
@@ -39,7 +39,9 @@ const CloseButton = styled.button<{ $selected?: boolean }>`
     display: flex;
     margin-left: 12px;
   }
-  ${({ $selected = false }) => $selected && css`
+  ${({ $selected = false }) =>
+    $selected &&
+    css`
     border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
@@ -59,12 +61,12 @@ const CloseButton = styled.button<{ $selected?: boolean }>`
   }
 `;
 
-const LightBox = styled.div<{ $padding?: boolean, $width?: string, $isCloseEnable?: boolean}>`
+const LightBox = styled.div<{ $padding?: boolean; $width?: string; $isCloseEnable?: boolean }>`
   position: relative;
-  margin: ${({ $isCloseEnable }) => $isCloseEnable ? `27px 0 0` : `0`};
+  margin: ${({ $isCloseEnable }) => ($isCloseEnable ? `27px 0 0` : `0`)};
   z-index: 9999;
-  width: ${({ $width }) => $width ? $width : `580px`};
-  padding: ${({ $padding }) => $padding ? `30px 40px` : `0`};
+  width: ${({ $width }) => ($width ? $width : `580px`)};
+  padding: ${({ $padding }) => ($padding ? `30px 40px` : `0`)};
   border-radius: 5px;
   box-shadow: 0px 10px 15px 0px var(--primary-a1);
   background-color: var(--grey-1);
@@ -92,11 +94,10 @@ const Modal: React.FC<IModalProps> = ({
   onDismiss,
   dismissCallback,
 }) => {
-
   const lightBoxRef = useRef<HTMLDivElement>(null);
   const onClickOutside = () => {
     if (isCloseEnable) {
-      if(dismissCallback) {
+      if (dismissCallback) {
         dismissCallback();
       }
       dismiss();
@@ -106,30 +107,33 @@ const Modal: React.FC<IModalProps> = ({
   useClickOutside(lightBoxRef, onClickOutside);
 
   const dismiss = useCallback(() => {
-    if(dismissCallback) {
+    if (dismissCallback) {
       dismissCallback();
     }
     onDismiss();
   }, [onDismiss, dismissCallback]);
 
-  return (isOpen
+  return isOpen
     ? ReactDom.createPortal(
-      <Container>
-        <LightBox ref={lightBoxRef} $width={width} $padding={padding} $isCloseEnable={isCloseEnable}>
-          <>
-            {isCloseEnable
-              ?
-                <CloseButton onClick={() => dismiss()}>
-                  {closeText ? closeText : 'CLOSE'}
-                  <Icon icon='CloseCompact' size={15} color='grey-12' weight='regular' />
-                </CloseButton>
-              : null}
+        <Container>
+          <LightBox
+            ref={lightBoxRef}
+            $width={width}
+            $padding={padding}
+            $isCloseEnable={isCloseEnable}
+          >
+            {isCloseEnable ? (
+              <CloseButton onClick={() => dismiss()}>
+                {closeText ? closeText : 'CLOSE'}
+                <Icon icon='CloseCompact' size={15} color='grey-12' weight='regular' />
+              </CloseButton>
+            ) : null}
             {customComponent}
-          </>
-        </LightBox>
-      </Container>, document.body)
-    : null
-  );
+          </LightBox>
+        </Container>,
+        document.body
+      )
+    : null;
 };
 
 export default Modal;

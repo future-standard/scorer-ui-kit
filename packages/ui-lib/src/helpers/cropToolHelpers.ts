@@ -1,8 +1,8 @@
 import { clamp } from './index';
 
 // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor //
-type ICursorStyles = (
-  'ne-resize'
+type ICursorStyles =
+  | 'ne-resize'
   | 'nw-resize'
   | 'n-resize'
   | 'se-resize'
@@ -11,8 +11,7 @@ type ICursorStyles = (
   | 'e-resize'
   | 'w-resize'
   | 'move'
-  | 'default'
-);
+  | 'default';
 
 const updateCursorStyle = (
   left: number,
@@ -51,12 +50,12 @@ const updateCursorStyle = (
   return cursorStyle;
 };
 
-const drawImgValues = (img: HTMLImageElement, canvasHeight: number, canvasWidth: number): IDrawArea => {
-
-  const scale = Math.min(
-    canvasWidth / img.naturalWidth,
-    canvasHeight / img.naturalHeight
-  );
+const drawImgValues = (
+  img: HTMLImageElement,
+  canvasHeight: number,
+  canvasWidth: number
+): IDrawArea => {
+  const scale = Math.min(canvasWidth / img.naturalWidth, canvasHeight / img.naturalHeight);
 
   const width = Math.floor(img.naturalWidth * scale);
   const height = Math.floor(img.naturalHeight * scale);
@@ -73,12 +72,11 @@ const drawImgValues = (img: HTMLImageElement, canvasHeight: number, canvasWidth:
   return imageDraw;
 };
 
-
 const calculateAspectSizes = (baseHeight: number, baseWidth: number, aspectRatio: number) => {
   const aspect = aspectRatio ? aspectRatio : 1;
-  let height, width;
+  let height: number, width: number;
 
-  if (baseWidth > (baseHeight * aspect)) {
+  if (baseWidth > baseHeight * aspect) {
     width = Math.floor(baseHeight * aspect);
     height = baseHeight;
   } else {
@@ -88,7 +86,7 @@ const calculateAspectSizes = (baseHeight: number, baseWidth: number, aspectRatio
 
   return {
     height,
-    width
+    width,
   };
 };
 
@@ -99,15 +97,14 @@ const initialCropValues = (
   canvasHeight: number,
   imgWidth: number,
   imgHeight: number,
-  aspectRatio?: number,
+  aspectRatio?: number
 ) => {
-
-  let height, width;
+  let height: number, width: number;
   const aspect = aspectRatio ? aspectRatio : 1;
   const minWidth = Math.min(cropWidth, canvasWidth, imgWidth);
   const minHeight = Math.min(cropHeight, canvasHeight, imgHeight);
 
-  if (minWidth > (minHeight * aspect)) {
+  if (minWidth > minHeight * aspect) {
     width = Math.floor(minHeight * aspect);
     height = minHeight;
   } else {
@@ -115,8 +112,8 @@ const initialCropValues = (
     height = Math.floor(minWidth / aspect);
   }
 
-  const top = 0 + Math.floor((canvasHeight / 2) - (height / 2));
-  const left = 0 + Math.floor((canvasWidth / 2) - (width / 2));
+  const top = 0 + Math.floor(canvasHeight / 2 - height / 2);
+  const left = 0 + Math.floor(canvasWidth / 2 - width / 2);
 
   return {
     left,
@@ -127,11 +124,10 @@ const initialCropValues = (
 };
 
 const isLeftMouseButton = (e: MouseEvent) => {
-
-  let mouseButton;
-  if (typeof (e.buttons) !== 'undefined') {
+  let mouseButton: number | undefined;
+  if (typeof e.buttons !== 'undefined') {
     mouseButton = e.buttons;
-  } else if (typeof (e.button) !== 'undefined') {
+  } else if (typeof e.button !== 'undefined') {
     mouseButton = e.button;
   } else {
     mouseButton = e.which;
@@ -145,28 +141,27 @@ const isLeftMouseButton = (e: MouseEvent) => {
 };
 
 interface ISelectedArea {
-  cropLeft: number
-  cropTop: number
-  cropWidth: number
-  cropHeight: number
-  mouseStartX: number
-  mouseStartY: number
-  imgLeft: number
-  imgTop: number
-  imgWidth: number
-  imgHeight: number
-  cursorStart: ICursorStyles
-  isResizing: boolean
+  cropLeft: number;
+  cropTop: number;
+  cropWidth: number;
+  cropHeight: number;
+  mouseStartX: number;
+  mouseStartY: number;
+  imgLeft: number;
+  imgTop: number;
+  imgWidth: number;
+  imgHeight: number;
+  cursorStart: ICursorStyles;
+  isResizing: boolean;
 }
 
-const updateCropValues = (
-  oldSelection: ISelectedArea,
-  newX: number,
-  newY: number,
-) => {
-
-  let [updatedLeft, updatedTop, updatedWidth, updatedHeight] =
-    [oldSelection.cropLeft, oldSelection.cropTop, oldSelection.cropWidth, oldSelection.cropHeight];
+const updateCropValues = (oldSelection: ISelectedArea, newX: number, newY: number) => {
+  let [updatedLeft, updatedTop, updatedWidth, updatedHeight] = [
+    oldSelection.cropLeft,
+    oldSelection.cropTop,
+    oldSelection.cropWidth,
+    oldSelection.cropHeight,
+  ];
 
   const diffX = newX - oldSelection.mouseStartX;
   const diffY = newY - oldSelection.mouseStartY;
@@ -226,10 +221,18 @@ const updateCropValues = (
 
   const width = clamp(updatedWidth, 0, oldSelection.imgWidth);
   const height = clamp(updatedHeight, 0, oldSelection.imgHeight);
-  const left = clamp(updatedLeft, oldSelection.imgLeft, (oldSelection.imgWidth - oldSelection.cropWidth + oldSelection.imgLeft));
-  const top = clamp(updatedTop, oldSelection.imgTop, (oldSelection.imgHeight - oldSelection.cropHeight + oldSelection.imgTop));
+  const left = clamp(
+    updatedLeft,
+    oldSelection.imgLeft,
+    oldSelection.imgWidth - oldSelection.cropWidth + oldSelection.imgLeft
+  );
+  const top = clamp(
+    updatedTop,
+    oldSelection.imgTop,
+    oldSelection.imgHeight - oldSelection.cropHeight + oldSelection.imgTop
+  );
 
-  const isUpdateRequired = areDimensionsDiff(oldSelection, {left, top, height, width});
+  const isUpdateRequired = areDimensionsDiff(oldSelection, { left, top, height, width });
 
   return {
     left,
@@ -244,12 +247,15 @@ const updateCropWithAspect = (
   oldSelection: ISelectedArea,
   newX: number,
   newY: number,
-  aspectRatio?: number,
+  aspectRatio?: number
 ) => {
-
   const aspect = aspectRatio ? aspectRatio : 1;
-  let [updatedLeft, updatedTop, updatedWidth, updatedHeight] =
-    [oldSelection.cropLeft, oldSelection.cropTop, oldSelection.cropWidth, oldSelection.cropHeight];
+  let [updatedLeft, updatedTop, updatedWidth, updatedHeight] = [
+    oldSelection.cropLeft,
+    oldSelection.cropTop,
+    oldSelection.cropWidth,
+    oldSelection.cropHeight,
+  ];
 
   const diffX = newX - oldSelection.mouseStartX;
   const diffY = newY - oldSelection.mouseStartY;
@@ -264,7 +270,7 @@ const updateCropWithAspect = (
 
     case 'nw-resize':
       updatedTop = oldSelection.cropTop + diffY;
-      updatedLeft = oldSelection.cropLeft + (diffY * aspect);
+      updatedLeft = oldSelection.cropLeft + diffY * aspect;
       updatedHeight = oldSelection.cropHeight - diffY;
       updatedWidth = Math.floor(updatedHeight * aspect);
       break;
@@ -291,28 +297,35 @@ const updateCropWithAspect = (
 
   /**img values only change if the image is updated */
 
-  const imgBoundLeft = clamp(updatedLeft, oldSelection.imgLeft, (oldSelection.imgWidth - oldSelection.cropWidth + oldSelection.imgLeft));
-  const imgBoundTop = clamp(updatedTop, oldSelection.imgTop, (oldSelection.imgHeight - oldSelection.cropHeight + oldSelection.imgTop));
+  const imgBoundLeft = clamp(
+    updatedLeft,
+    oldSelection.imgLeft,
+    oldSelection.imgWidth - oldSelection.cropWidth + oldSelection.imgLeft
+  );
+  const imgBoundTop = clamp(
+    updatedTop,
+    oldSelection.imgTop,
+    oldSelection.imgHeight - oldSelection.cropHeight + oldSelection.imgTop
+  );
   const imgBoundWidth = clamp(updatedWidth, 0, oldSelection.imgWidth);
   const imgBoundHeight = clamp(updatedHeight, 0, oldSelection.imgHeight);
-
 
   let left = imgBoundLeft;
   let top = imgBoundTop;
   let width = imgBoundWidth;
   let height = imgBoundHeight;
 
-  if ((oldSelection.cursorStart !== 'move') && (imgBoundWidth === oldSelection.imgWidth)) {
+  if (oldSelection.cursorStart !== 'move' && imgBoundWidth === oldSelection.imgWidth) {
     height = oldSelection.cropHeight;
     top = oldSelection.cropTop;
   }
 
-  if ((oldSelection.cursorStart !== 'move') && (imgBoundHeight === oldSelection.imgHeight)) {
+  if (oldSelection.cursorStart !== 'move' && imgBoundHeight === oldSelection.imgHeight) {
     width = oldSelection.cropWidth;
     left = oldSelection.cropLeft;
   }
 
-  const isUpdateRequired = areDimensionsDiff(oldSelection, {left, top, height, width});
+  const isUpdateRequired = areDimensionsDiff(oldSelection, { left, top, height, width });
 
   return {
     left,
@@ -324,46 +337,42 @@ const updateCropWithAspect = (
 };
 
 interface IDrawArea {
-  left: number
-  top: number
-  width: number
-  height: number
+  left: number;
+  top: number;
+  width: number;
+  height: number;
 }
 
 const areDimensionsDiff = (oldDimensions: ISelectedArea, newValues: IDrawArea) => {
   let isDifferent = false;
 
-  if(oldDimensions.cropLeft !== newValues.left) {
+  if (oldDimensions.cropLeft !== newValues.left) {
     isDifferent = true;
   }
 
-  if(oldDimensions.cropTop !== newValues.top) {
+  if (oldDimensions.cropTop !== newValues.top) {
     isDifferent = true;
   }
 
-  if(oldDimensions.cropHeight !== newValues.height) {
+  if (oldDimensions.cropHeight !== newValues.height) {
     isDifferent = true;
   }
 
-  if(oldDimensions.cropWidth !== newValues.width) {
+  if (oldDimensions.cropWidth !== newValues.width) {
     isDifferent = true;
   }
 
   return isDifferent;
 };
 
-export type {
-  ICursorStyles,
-  IDrawArea,
-  ISelectedArea,
-};
+export type { ICursorStyles, IDrawArea, ISelectedArea };
 
 export {
-  initialCropValues,
+  calculateAspectSizes,
   drawImgValues,
-  updateCursorStyle,
+  initialCropValues,
   isLeftMouseButton,
   updateCropValues,
   updateCropWithAspect,
-  calculateAspectSizes,
+  updateCursorStyle,
 };

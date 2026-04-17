@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import type React from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 
 import { LineSetContext } from './Contexts';
@@ -49,38 +50,35 @@ const DebugOutput = styled.pre`
 
 `;
 
-interface IControlProps {
-
-}
-
-export const Control : React.FC<IControlProps> = () => {
-
-  const {state, dispatch} = useContext(LineSetContext);
+export const Control: React.FC = () => {
+  const { state, dispatch } = useContext(LineSetContext);
 
   return (
     <DebugContainer>
-
       <div>
-        <button onClick={() => dispatch({type: "ADD_SET"})}>Add Set</button>
+        <button type='button' onClick={() => dispatch({ type: 'ADD_SET' })}>
+          Add Set
+        </button>
 
         {state.map((_lineSet, index) => (
           <div key={index}>
             <h5>Set {index}</h5>
-            <button onClick={() => dispatch({type: "REMOVE_SET", index: index})}>Remove Set</button>
-            <button onClick={() => dispatch({type: "ADD_POINT", index: index})}>Add Point</button>
-            <button onClick={() => dispatch({type: "REMOVE_POINT", index: index})}>Remove Point</button>
+            <button type='button' onClick={() => dispatch({ type: 'REMOVE_SET', index: index })}>
+              Remove Set
+            </button>
+            <button type='button' onClick={() => dispatch({ type: 'ADD_POINT', index: index })}>
+              Add Point
+            </button>
+            <button type='button' onClick={() => dispatch({ type: 'REMOVE_POINT', index: index })}>
+              Remove Point
+            </button>
           </div>
         ))}
-
       </div>
 
-      <DebugOutput>
-        {JSON.stringify(state, null, 2)}
-      </DebugOutput>
-
-    </DebugContainer>)
-  ;
-
+      <DebugOutput>{JSON.stringify(state, null, 2)}</DebugOutput>
+    </DebugContainer>
+  );
 };
 
 export default Control;

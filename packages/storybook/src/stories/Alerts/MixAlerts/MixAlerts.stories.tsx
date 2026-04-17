@@ -1,14 +1,14 @@
-import React, { ReactElement } from 'react';
+import type React from 'react';
+import type { ReactElement } from 'react';
+import {
+  Button,
+  ModalProvider,
+  NotificationProvider,
+  useModal,
+  useNotification,
+} from 'scorer-ui-kit';
 import styled from 'styled-components';
 import CardModalExample from './CardModalExample';
-
-import {
-  useNotification,
-  Button,
-  NotificationProvider,
-  ModalProvider,
-  useModal
-} from 'scorer-ui-kit';
 
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
@@ -20,13 +20,12 @@ const Container = styled.div`
 const MixAlertsStory = {
   title: 'Alerts/Mix',
   components: useNotification,
-  decorator: []
-}
+  decorator: [],
+};
 
-const custom: ReactElement = <CardModalExample />
+const custom: ReactElement = <CardModalExample />;
 
 const ModalAndNotification: React.FC = () => {
-
   const { createModal } = useModal();
 
   const createCustomModal = () => {
@@ -35,20 +34,23 @@ const ModalAndNotification: React.FC = () => {
       width: '480px',
       padding: false,
       customComponent: custom,
-    })
-  }
+    });
+  };
 
   return (
     <Button
       design='secondary'
       size='small'
-      onClick={() => { createCustomModal() }}
-    >Open Welcome Modal</Button>
-  )
-}
+      onClick={() => {
+        createCustomModal();
+      }}
+    >
+      Open Welcome Modal
+    </Button>
+  );
+};
 
 export const _MixAlertsExample = () => {
-
   // Providers should be at main Index level, these are here just for the story example
   return (
     <Container>
@@ -59,6 +61,6 @@ export const _MixAlertsExample = () => {
       </NotificationProvider>
     </Container>
   );
-}
+};
 
 export default MixAlertsStory;

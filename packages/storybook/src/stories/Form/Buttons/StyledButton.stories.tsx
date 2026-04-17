@@ -1,12 +1,10 @@
-import React from 'react';
 import { Button, PageHeader } from 'scorer-ui-kit';
 import styled from 'styled-components';
-
 
 const StyledButtonStory = {
   title: 'Form/Buttons',
   component: Button,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`

@@ -1,7 +1,6 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
-import Tag, {ITag, TagWrapper} from '../atoms/Tag';
-
+import Tag, { type ITag, TagWrapper } from '../atoms/Tag';
 
 export const TagListWrapper = styled.div`
   display: flex;
@@ -14,16 +13,14 @@ export const TagListWrapper = styled.div`
 `;
 
 export interface ITagList {
-  tagsConfig: ITag[]
+  tagsConfig: ITag[];
 }
 
-const TagList : React.FC<ITagList> = ({tagsConfig}) => {
-  return(
+const TagList: React.FC<ITagList> = ({ tagsConfig }) => {
+  return (
     <TagListWrapper>
       {tagsConfig.map((tagProps, index) => {
-        return (
-          <Tag key={`tag-${index}`} {...tagProps} />
-        );
+        return <Tag key={`tag-${index}`} {...tagProps} />;
       })}
     </TagListWrapper>
   );

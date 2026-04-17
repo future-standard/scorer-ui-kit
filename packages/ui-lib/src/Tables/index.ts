@@ -1,75 +1,69 @@
-import TypeTable from './organisms/TypeTable';
-import TableRowThumbnail from './atoms/TableRowThumbnail';
+import type { ReactElement } from 'react';
+import type { IMediaType } from '..';
 import TableHeaderTitle from './atoms/TableHeaderTitle';
+import TableRowThumbnail from './atoms/TableRowThumbnail';
 import EditCell from './molecules/EditCell';
-import { ReactElement } from 'react';
-import { IMediaType } from '..';
+import TypeTable from './organisms/TypeTable';
 
-export type TypeCellStyle = 'firstColumn' | 'lowImportance' | 'normalImportance' | 'highImportance' ;
+export type TypeCellStyle = 'firstColumn' | 'lowImportance' | 'normalImportance' | 'highImportance';
 export type TypeCellAlignment = 'left' | 'center' | 'right';
-
 
 //**  I think this is not in use Leonard can I delete? **//
 export interface TableHeaders {
-  columnHeaders: TableHeaderItem[]
-  showSelectAll?: boolean
+  columnHeaders: TableHeaderItem[];
+  showSelectAll?: boolean;
 }
 
 //**  I think this is not in use Leonard can I delete? **//
 //** Not sure if you wanted to do an abstraction of HeaderRow later on */
 export interface TableHeaderItem {
-  name: string
-  type: 'string' | 'tags' | 'image' // Thinking we use this to enforce those different kinds of things we put in the tables.
-  sortable?: boolean
+  name: string;
+  type: 'string' | 'tags' | 'image'; // Thinking we use this to enforce those different kinds of things we put in the tables.
+  sortable?: boolean;
 }
 
 export interface ITableColumnConfig {
-  columnId?: string
-  groupTitle?: string
-  header: string
-  sortable?: boolean
-  sortActive?: boolean
-  cellStyle: TypeCellStyle
-  alignment?: TypeCellAlignment
-  showUnit?: boolean
-  showStatus?: boolean
-  hasCopyButton?: boolean
-  width?: number // TODO: This!
-  minWidth?: number
+  columnId?: string;
+  groupTitle?: string;
+  header: string;
+  sortable?: boolean;
+  sortActive?: boolean;
+  cellStyle: TypeCellStyle;
+  alignment?: TypeCellAlignment;
+  showUnit?: boolean;
+  showStatus?: boolean;
+  hasCopyButton?: boolean;
+  width?: number; // TODO: This!
+  minWidth?: number;
 }
 
 export type IDeviceStatus = 'caution' | 'danger' | 'folder' | 'good' | 'neutral';
 
 export interface ICellData {
-  text?: string
-  href?: string
-  unit?: string
+  text?: string;
+  href?: string;
+  unit?: string;
   status?: IDeviceStatus;
-  customComponent?: ReactElement
+  customComponent?: ReactElement;
 }
 export interface IRowHeader {
-  status?: any
-  image?: string
-  mediaUrl?: string
-  mediaType?: IMediaType
+  status?: any;
+  image?: string;
+  mediaUrl?: string;
+  mediaType?: IMediaType;
   retryImageLoad?: boolean;
-  icon?: string
-  onClickThumbnail?: () => void
+  icon?: string;
+  onClickThumbnail?: () => void;
 }
 
 export interface IRowData {
-  _checked?: boolean
-  checkboxDisabled?: boolean
-  id?: number | string
-  header?: IRowHeader
-  columns: ICellData[]
+  _checked?: boolean;
+  checkboxDisabled?: boolean;
+  id?: number | string;
+  header?: IRowHeader;
+  columns: ICellData[];
 }
 
-export type ITypeTableData = IRowData[]
+export type ITypeTableData = IRowData[];
 
-export {
-  TypeTable,
-  TableRowThumbnail,
-  TableHeaderTitle,
-  EditCell,
-};
+export { EditCell, TableHeaderTitle, TableRowThumbnail, TypeTable };

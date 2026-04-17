@@ -1,19 +1,11 @@
-import React from 'react';
-import {
-  GlobalUI,
-  SplitLayout,
-  ContentLayout,
-  FlexContentPlaceholder,
-} from 'scorer-ui-kit';
-
-import styled from 'styled-components';
 import { boolean } from '@storybook/addon-knobs';
+import { ContentLayout, FlexContentPlaceholder, GlobalUI, SplitLayout } from 'scorer-ui-kit';
+import styled from 'styled-components';
 
 const SplitLayoutStory = {
   title: 'Global/organisms',
   component: GlobalUI,
-  decorators: [
-  ]
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -31,37 +23,56 @@ export const _SplitLayout = () => {
   const layout = 'horizontal';
   const reverse = false;
 
-  const splitLayout = <SplitLayout
-    layout={layout}
-    persist
-    persistenceKey='my_unique_layout_key'
-    reverse={reverse}
-    mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Side Area A' />, collapsable: true, minSize: 200 }} />
+  const splitLayout = (
+    <SplitLayout
+      layout={layout}
+      persist
+      persistenceKey='my_unique_layout_key'
+      reverse={reverse}
+      mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
+      sideArea={{
+        content: <FlexContentPlaceholder title='Side Area A' />,
+        collapsable: true,
+        minSize: 200,
+      }}
+    />
+  );
 
-  const nestedSplitChild = <SplitLayout
-    layout='vertical'
-    persist
-    persistenceKey='my_nested_key'
-    reverse={reverse}
-    mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Side Area A' />, collapsable: true, minSize: 200 }} />;
+  const nestedSplitChild = (
+    <SplitLayout
+      layout='vertical'
+      persist
+      persistenceKey='my_nested_key'
+      reverse={reverse}
+      mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
+      sideArea={{
+        content: <FlexContentPlaceholder title='Side Area A' />,
+        collapsable: true,
+        minSize: 200,
+      }}
+    />
+  );
 
-  const nestedSplitLayout = <SplitLayout
-    layout='horizontal'
-    persist
-    persistenceKey='my_unique_layout_key'
-    reverse={reverse}
-    mainArea={{ content: nestedSplitChild, minSize: 120 }}
-    sideArea={{ content: <FlexContentPlaceholder title='Side Area B' />, collapsable: true, minSize: 200 }} />
+  const nestedSplitLayout = (
+    <SplitLayout
+      layout='horizontal'
+      persist
+      persistenceKey='my_unique_layout_key'
+      reverse={reverse}
+      mainArea={{ content: nestedSplitChild, minSize: 120 }}
+      sideArea={{
+        content: <FlexContentPlaceholder title='Side Area B' />,
+        collapsable: true,
+        minSize: 200,
+      }}
+    />
+  );
 
   return (
     <Container>
-      <ContentLayout layout='dashboard'>
-        {nested ? nestedSplitLayout : splitLayout}
-      </ContentLayout>
+      <ContentLayout layout='dashboard'>{nested ? nestedSplitLayout : splitLayout}</ContentLayout>
     </Container>
-  )
+  );
 };
 
 export default SplitLayoutStory;

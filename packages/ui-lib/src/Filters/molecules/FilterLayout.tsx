@@ -38,7 +38,7 @@ const ContextIcon = styled.div`
   }
 `;
 
-const ContextActionButton = styled.button<{ $isActive?: boolean, $isInnerContextButton?: boolean }>`
+const ContextActionButton = styled.button<{ $isActive?: boolean; $isInnerContextButton?: boolean }>`
   ${ContextActionBaseCSS}
   ${ContextIcon}{
     cursor: pointer;
@@ -52,7 +52,9 @@ const ContextActionButton = styled.button<{ $isActive?: boolean, $isInnerContext
     background-color: var(--primary-9);
     }
   }
-  ${({ $isActive }) => $isActive && css`
+  ${({ $isActive }) =>
+    $isActive &&
+    css`
     ${ContextIcon} {
       background-color: var(--primary-9);
       [stroke]{
@@ -63,38 +65,54 @@ const ContextActionButton = styled.button<{ $isActive?: boolean, $isInnerContext
       cursor: pointer;
     }
   `}
-  ${({ $isInnerContextButton }) => $isInnerContextButton && css`
+  ${({ $isInnerContextButton }) =>
+    $isInnerContextButton &&
+    css`
     margin-right: 5px;
   `}
 `;
 
-const ContentBox = styled.div<{ $openState: IDropOpen, $disabled: boolean, $minWidth: number }>`
+const ContentBox = styled.div<{ $openState: IDropOpen; $disabled: boolean; $minWidth: number }>`
   z-index: 100;
   min-width: ${({ $minWidth }) => $minWidth}px;
   position: absolute;
-  ${({ $openState, $disabled }) => $openState && css`
+  ${({ $openState, $disabled }) =>
+    $openState &&
+    css`
     display: ${$openState.isOpen ? 'inline-block' : 'none'};
     display: ${$disabled && 'none'};
-    ${$openState.position === 'bottom-right' && css`
+    ${
+      $openState.position === 'bottom-right' &&
+      css`
       bottom: 0;
       left: 0;
       transform: translateY(calc(100% + 5px ));
-    `};
-    ${$openState.position === 'bottom-left' && css`
+    `
+    };
+    ${
+      $openState.position === 'bottom-left' &&
+      css`
       bottom: 0;
       right: 0;
       transform: translateY(calc(100% + 5px ));
-    `};
-    ${$openState.position === 'top-left' && css`
+    `
+    };
+    ${
+      $openState.position === 'top-left' &&
+      css`
       top: 0;
       right: 0;
       transform: translateY(calc( -100% - 5px ));
-    `};
-    ${$openState.position === 'top-right' && css`
+    `
+    };
+    ${
+      $openState.position === 'top-right' &&
+      css`
       top: 0;
       left: 0;
       transform: translateY(calc( -100% - 5px ));
-    `};
+    `
+    };
   `};
 `;
 
@@ -136,29 +154,29 @@ const PageSizeContainer = styled.div`
   display: flex;
 `;
 
-const SelectFieldContainer  = styled.div`
+const SelectFieldContainer = styled.div`
   select{
     background-color: transparent;
   }
 `;
 
 interface IOptionsItem {
-  id: string
-  icon: string
-  tooltipText: string
+  id: string;
+  icon: string;
+  tooltipText: string;
 }
 
 interface IProps {
-  disabled?: boolean
-  onToggleOpenCallback?: (isOpen: boolean) => void
+  disabled?: boolean;
+  onToggleOpenCallback?: (isOpen: boolean) => void;
   onCloseCallback?: () => void;
-  pageSizeOptions?: number[],
-  onPageSizeChange: (size: number) => void,
-  defaultPage?: number,
-  defaultPageSize?: number,
-  getLayout: (layout: string) => void,
-  layoutText?: string,
-  pageSizeText?: string,
+  pageSizeOptions?: number[];
+  onPageSizeChange: (size: number) => void;
+  defaultPage?: number;
+  defaultPageSize?: number;
+  getLayout: (layout: string) => void;
+  layoutText?: string;
+  pageSizeText?: string;
   contentArray: IOptionsItem[];
   minWidth?: number;
   minHeight?: number;
@@ -167,8 +185,8 @@ interface IProps {
 
 const getDropPosition = (buttonRect: DOMRect, minWidth: number, minHeight: number): IOpenPos => {
   let position: IOpenPos = 'bottom-right';
-  const openLeft = (buttonRect.left + minWidth) > window.innerWidth;
-  const openTop = (buttonRect.bottom + minHeight) > window.innerHeight;
+  const openLeft = buttonRect.left + minWidth > window.innerWidth;
+  const openTop = buttonRect.bottom + minHeight > window.innerHeight;
   const spaceTop = buttonRect.bottom > minHeight;
 
   if (openLeft && openTop && spaceTop) {
@@ -185,12 +203,29 @@ const getDropPosition = (buttonRect: DOMRect, minWidth: number, minHeight: numbe
 type IOpenPos = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 
 interface IDropOpen {
-  isOpen: boolean,
-  position: IOpenPos,
+  isOpen: boolean;
+  position: IOpenPos;
 }
 
-const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback = () => { }, onCloseCallback= () => { }, pageSizeOptions = [10, 20, 30, 50, 100], onPageSizeChange = () =>{}, defaultPageSize = 10, getLayout = () => {}, layoutText='Layout', pageSizeText='Items Per Page', contentArray, minWidth=250, minHeight=90, hasPageSettings=true}) => {
-  const [openState, setOpenState] = useState<IDropOpen>({ isOpen: false, position: 'bottom-right'});
+const FilterLayout: React.FC<IProps> = ({
+  disabled = false,
+  onToggleOpenCallback = () => {},
+  onCloseCallback = () => {},
+  pageSizeOptions = [10, 20, 30, 50, 100],
+  onPageSizeChange = () => {},
+  defaultPageSize = 10,
+  getLayout = () => {},
+  layoutText = 'Layout',
+  pageSizeText = 'Items Per Page',
+  contentArray,
+  minWidth = 250,
+  minHeight = 90,
+  hasPageSettings = true,
+}) => {
+  const [openState, setOpenState] = useState<IDropOpen>({
+    isOpen: false,
+    position: 'bottom-right',
+  });
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const [isGridLayout, setIsGridLayout] = useState<string>('grid');
@@ -205,33 +240,45 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
       const isOpen = false;
       return { ...prev, isOpen };
     });
-
   }, [onCloseCallback, openState.isOpen]);
 
   useClickOutside(mainRef, handleClose);
 
-  const handleToggleOpen = useCallback((minWidth: number, minHeight: number) => {
-    if (!buttonWrapperRef.current) { return; }
+  const handleToggleOpen = useCallback(
+    (minWidth: number, minHeight: number) => {
+      if (!buttonWrapperRef.current) {
+        return;
+      }
 
-    const buttonRect = buttonWrapperRef.current.getBoundingClientRect();
-    if (!buttonRect) { return; }
-    const position: IOpenPos = getDropPosition(buttonRect, minWidth, minHeight);
+      const buttonRect = buttonWrapperRef.current.getBoundingClientRect();
+      if (!buttonRect) {
+        return;
+      }
+      const position: IOpenPos = getDropPosition(buttonRect, minWidth, minHeight);
 
-    onToggleOpenCallback(openState.isOpen);
-    setOpenState((prev) => {
-      const isOpen = !prev.isOpen;
-      return { ...prev, isOpen, position };
-    });
-  }, [onToggleOpenCallback, openState.isOpen]);
+      onToggleOpenCallback(openState.isOpen);
+      setOpenState((prev) => {
+        const isOpen = !prev.isOpen;
+        return { ...prev, isOpen, position };
+      });
+    },
+    [onToggleOpenCallback, openState.isOpen]
+  );
 
-  const switchLayout = useCallback((layout: string) => {
-    setIsGridLayout(layout);
-    getLayout(layout);
-  },[getLayout]);
+  const switchLayout = useCallback(
+    (layout: string) => {
+      setIsGridLayout(layout);
+      getLayout(layout);
+    },
+    [getLayout]
+  );
 
-  const handlePageSizeChange = useCallback((size:string)=> {
-    onPageSizeChange(Number(size));
-  },[onPageSizeChange]);
+  const handlePageSizeChange = useCallback(
+    (size: string) => {
+      onPageSizeChange(Number(size));
+    },
+    [onPageSizeChange]
+  );
 
   useEffect(() => {
     setPageSize(defaultPageSize);
@@ -242,9 +289,10 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
       <ContextIcon>
         <Icon icon='ViewSettings' color={openState.isOpen ? 'inverse' : 'dimmed'} size={16} />
       </ContextIcon>
-    </React.Fragment>);
+    </React.Fragment>
+  );
 
-  return(
+  return (
     <Container ref={mainRef}>
       <ButtonWrapper ref={buttonWrapperRef}>
         <ContextActionButton
@@ -262,19 +310,28 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
             <IconWrapper>
               {contentArray.map((item, index) => {
                 return (
-                  <ContextActionButton key={index} $isInnerContextButton={index !== contentArray.length-1} $isActive={isGridLayout === item.id} onClick={() => switchLayout(item.id)}>
+                  <ContextActionButton
+                    key={index}
+                    $isInnerContextButton={index !== contentArray.length - 1}
+                    $isActive={isGridLayout === item.id}
+                    onClick={() => switchLayout(item.id)}
+                  >
                     <ContextIcon title={item.tooltipText}>
-                      <Icon icon={item.icon} color={isGridLayout === item.id ? 'inverse' : 'dimmed'} size={16} />
+                      <Icon
+                        icon={item.icon}
+                        color={isGridLayout === item.id ? 'inverse' : 'dimmed'}
+                        size={16}
+                      />
                     </ContextIcon>
                   </ContextActionButton>
                 );
               })}
             </IconWrapper>
           </LayoutGroup>
-          {hasPageSettings &&
+          {hasPageSettings && (
             <PaginationGroup>
               <RowLabel>{pageSizeText}</RowLabel>
-              {pageSizeOptions &&
+              {pageSizeOptions && (
                 <PageSizeContainer>
                   <SelectFieldContainer>
                     <SelectField
@@ -283,13 +340,18 @@ const FilterLayout: React.FC<IProps> = ({disabled = false, onToggleOpenCallback 
                       isCompact
                       value={pageSize}
                     >
-                      {pageSizeOptions.map((size: number, index: number) => <option key={index} value={size}>{size}</option>)}
+                      {pageSizeOptions.map((size: number, index: number) => (
+                        <option key={index} value={size}>
+                          {size}
+                        </option>
+                      ))}
                     </SelectField>
                   </SelectFieldContainer>
-                </PageSizeContainer>}
-            </PaginationGroup>}
+                </PageSizeContainer>
+              )}
+            </PaginationGroup>
+          )}
         </FilterDropdownContainer>
-
       </ContentBox>
     </Container>
   );

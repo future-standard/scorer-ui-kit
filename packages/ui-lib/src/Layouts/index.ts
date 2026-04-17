@@ -1,8 +1,8 @@
-import { ReactElement } from 'react';
-import ContentLayout from './organisms/ContentLayout';
+import type { ReactElement } from 'react';
 import FullWidthContentBlock from './atoms/FullWidthContentBlock';
-import UtilityHeader from './molecules/UtilityHeader';
 import SplitLayout from './molecules/SplitLayout';
+import UtilityHeader from './molecules/UtilityHeader';
+import ContentLayout from './organisms/ContentLayout';
 
 interface IBreadcrumb {
   text: string;
@@ -58,7 +58,7 @@ export interface ISideArea {
   maxSize?: number;
   collapsable?: boolean;
   defaultCollapsed?: boolean;
-  onSideAreaStateChange?: (sideAreaState: ISideAreaState) => void
+  onSideAreaStateChange?: (sideAreaState: ISideAreaState) => void;
 }
 
 export interface ISplitLayoutProps {
@@ -78,9 +78,4 @@ export interface ISplitLayoutHandles {
   reset: () => void;
 }
 
-export {
-  ContentLayout,
-  FullWidthContentBlock,
-  UtilityHeader,
-  SplitLayout,
-};
+export { ContentLayout, FullWidthContentBlock, SplitLayout, UtilityHeader };

@@ -1,8 +1,8 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
-import ButtonWithIcon from '../atoms/ButtonWithIcon';
+import type { IButtonProps } from '..';
 import Button from '../atoms/Button';
-import { IButtonProps } from '..';
+import ButtonWithIcon from '../atoms/ButtonWithIcon';
 
 const Container = styled.div`
   display: flex;
@@ -13,30 +13,42 @@ const Container = styled.div`
   }
 `;
 
-export type IButtonType = 'default' | 'icon-button'
+export type IButtonType = 'default' | 'icon-button';
 
 export interface IButtonStack extends IButtonProps {
-  id?: string
-  buttonType?: IButtonType
-  icon?: string
-  iconPosition?: 'left' | 'right'
-  text: string
+  id?: string;
+  buttonType?: IButtonType;
+  icon?: string;
+  iconPosition?: 'left' | 'right';
+  text: string;
 }
 
 export interface IButtonsStack {
-  buttons : IButtonStack[]
+  buttons: IButtonStack[];
 }
 
-const ButtonsStack : React.FC<IButtonsStack>= ({buttons}) => {
-  return(
+const ButtonsStack: React.FC<IButtonsStack> = ({ buttons }) => {
+  return (
     <Container>
-      {buttons.map(({id, buttonType, icon, text, iconPosition, size, ...buttonProps}) => {
+      {buttons.map(({ id, buttonType, icon, text, iconPosition, size, ...buttonProps }) => {
+        if (buttonType === 'icon-button')
+          return (
+            <ButtonWithIcon
+              key={id || `button-stack-${id}`}
+              size={size || 'small'}
+              icon={icon || ''}
+              position={iconPosition}
+              {...buttonProps}
+            >
+              {text}
+            </ButtonWithIcon>
+          );
 
-        if(buttonType === 'icon-button')
-          return <ButtonWithIcon key={id || `button-stack-${id}`}  size={size || 'small'} icon={icon || ''} position={iconPosition} {...buttonProps} >{text}</ButtonWithIcon>;
-
-        return <Button key={id || `button-stack-${id}`}  size={size || 'small'} {...buttonProps} >{text}</Button>;
-
+        return (
+          <Button key={id || `button-stack-${id}`} size={size || 'small'} {...buttonProps}>
+            {text}
+          </Button>
+        );
       })}
     </Container>
   );

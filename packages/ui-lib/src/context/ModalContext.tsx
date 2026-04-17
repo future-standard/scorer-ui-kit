@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Modal, { IModalProps } from '../Modals/Modal';
+import Modal, { type IModalProps } from '../Modals/Modal';
 
 const defaultModalProps: IModalProps = {
   isOpen: false,
@@ -13,13 +13,12 @@ interface ModalContextType {
 
 const defaultContext: ModalContextType = {
   modalProps: defaultModalProps,
-  setModalProps: (newProps: IModalProps) => { console.debug(newProps); },
+  setModalProps: (_newProps: IModalProps) => {},
 };
 
 const ModalContext = React.createContext<ModalContextType>(defaultContext);
 
 const ModalProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-
   const [modalProps, setProps] = useState<IModalProps>(defaultContext.modalProps);
 
   const setModalProps = (newProps: IModalProps) => {

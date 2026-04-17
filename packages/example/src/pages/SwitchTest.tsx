@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react';
-import { Switch, PageHeader, TypeSwitchState, Label, Checkbox } from 'scorer-ui-kit';
+import type React from 'react';
+import { useCallback, useState } from 'react';
+import { Checkbox, Label, PageHeader, Switch, type TypeSwitchState } from 'scorer-ui-kit';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -74,7 +75,7 @@ const SwitchWithAPI: React.FC = () => {
       setData(responseData);
       setControlledCheck(true);
       setSwitchState('default');
-    } catch (err) {
+    } catch (_err) {
       setData(null);
       setError('Failed to fetch data');
       setSwitchState('failure');
@@ -93,33 +94,37 @@ const SwitchWithAPI: React.FC = () => {
 
   return (
     <Container>
-      <PageHeader title="Switch Component Examples" icon="Settings" />
+      <PageHeader title='Switch Component Examples' icon='Settings' />
 
       <ExampleWrapper>
         <PageHeader
-          title="Uncontrolled Component"
-          introductionText="This switch uses defaultChecked prop and manages its own state internally"
+          title='Uncontrolled Component'
+          introductionText='This switch uses defaultChecked prop and manages its own state internally'
         />
         <SwitchWrapper>
           <Switch
-            labelText="Toggle Switch (Uncontrolled)"
+            labelText='Toggle Switch (Uncontrolled)'
             defaultChecked={true}
-            onChangeCallback={(newValue) => console.log("Uncontrolled switch changed:", newValue)}
+            onChangeCallback={(_newValue) => {}}
           />
         </SwitchWrapper>
       </ExampleWrapper>
 
       <ExampleWrapper>
         <PageHeader
-          title="Controlled Component"
-          introductionText="This switch uses checked and onChangeCallback props to control its state"
+          title='Controlled Component'
+          introductionText='This switch uses checked and onChangeCallback props to control its state'
         />
         <Label labelText='Show Fail Scenario' htmlFor='example1' direction='row'>
-          <Checkbox key='example1' checked={showFailScenario} onChangeCallback={handleFailScenarioCheck} />
+          <Checkbox
+            key='example1'
+            checked={showFailScenario}
+            onChangeCallback={handleFailScenarioCheck}
+          />
         </Label>
         <SwitchWrapper>
           <Switch
-            labelText="Fetch Data (Controlled)"
+            labelText='Fetch Data (Controlled)'
             checked={controlledChecked}
             onChangeCallback={handleSwitchChange}
             state={switchState}

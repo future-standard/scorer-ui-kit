@@ -1,14 +1,14 @@
-import DatePicker, { IDatePicker } from './molecules/DatePicker';
 import { isDateInterval } from '../helpers';
-import FilterDropdownContainer from './atoms/FilterDropdownContainer';
 import FilterButton from './atoms/FilterButton';
-import FilterDropdown from './molecules/FilterDropdown';
-import SortDropdown from './molecules/SortDropdown';
-import FilterLayout from './molecules/FilterLayout';
-import FilterInputs, { IFilterInputs } from './molecules/FilterInputs';
-import FiltersResults, { IFilterLabel } from './molecules/FiltersResults';
-import FilterBar from './organisms/FilterBar';
+import FilterDropdownContainer from './atoms/FilterDropdownContainer';
 import ToggleButton from './atoms/ToggleButton';
+import DatePicker, { type IDatePicker } from './molecules/DatePicker';
+import FilterDropdown from './molecules/FilterDropdown';
+import FilterInputs, { type IFilterInputs } from './molecules/FilterInputs';
+import FilterLayout from './molecules/FilterLayout';
+import FiltersResults, { type IFilterLabel } from './molecules/FiltersResults';
+import SortDropdown from './molecules/SortDropdown';
+import FilterBar from './organisms/FilterBar';
 
 export interface IDateInterval {
   start: Date;
@@ -21,46 +21,45 @@ export interface IDateRange {
 }
 
 import {
-  IFilterType,
-  IFilterItem,
-  IFilterResult,
-  IFilterValue,
-  ISearchFilter,
-  IFilterDropdownExt,
-  IFilterDropdownConfig,
-  IFilterDatePicker,
+  type FilterButtonDesign,
+  type IFilterDatePicker,
+  type IFilterDropdownConfig,
+  type IFilterDropdownExt,
+  type IFilterItem,
+  type IFilterResult,
+  type IFilterType,
+  type IFilterValue,
+  type ISearchFilter,
+  type IToggleOption,
   isFilterItem,
-  IToggleOption,
-  FilterButtonDesign
 } from './FilterTypes';
 
+export type {
+  FilterButtonDesign,
+  IDatePicker,
+  IFilterDatePicker,
+  IFilterDropdownConfig,
+  IFilterDropdownExt,
+  IFilterInputs,
+  IFilterItem,
+  IFilterLabel,
+  IFilterResult,
+  IFilterType,
+  IFilterValue,
+  ISearchFilter,
+  IToggleOption,
+};
 export {
   DatePicker,
-  FilterDropdownContainer,
+  FilterBar,
   FilterButton,
   FilterDropdown,
-  SortDropdown,
-  FilterLayout,
+  FilterDropdownContainer,
   FilterInputs,
+  FilterLayout,
   FiltersResults,
-  FilterBar,
-  isFilterItem,
   isDateInterval,
-  ToggleButton
-};
-
-export type {
-  ISearchFilter,
-  IFilterInputs,
-  IFilterDropdownExt,
-  IFilterLabel,
-  IFilterDropdownConfig,
-  IFilterType,
-  IFilterItem,
-  IFilterResult,
-  IFilterValue,
-  IFilterDatePicker,
-  FilterButtonDesign,
-  IToggleOption,
-  IDatePicker
+  isFilterItem,
+  SortDropdown,
+  ToggleButton,
 };

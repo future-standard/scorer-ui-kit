@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import type React from 'react';
+import type { ReactElement } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -13,8 +14,8 @@ export interface IMultiContent {
   contentArray: ReactElement[];
 }
 
-const MultilineContent : React.FC<IMultiContent> = ({contentArray}) => {
-  return(
+const MultilineContent: React.FC<IMultiContent> = ({ contentArray }) => {
+  return (
     <Container>
       {contentArray.map((element, index) => {
         return <div key={`element-${index}`}>{element}</div>;

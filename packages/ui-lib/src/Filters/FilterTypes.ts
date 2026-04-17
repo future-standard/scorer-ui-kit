@@ -1,19 +1,21 @@
-import { IInputOptionsType } from '../Form';
-import { IBasicSearchInput } from '../Misc/atoms/BasicSearchInput';
-import { IDropdownDatePicker } from './molecules/DropdownDatePicker';
-import { IFilterDropdown } from './molecules/FilterDropdown';
-import { IDateInterval } from '.';
-import { IFilterFooterControls } from './atoms/FooterControls';
+import type { IInputOptionsType } from '../Form';
+import type { IBasicSearchInput } from '../Misc/atoms/BasicSearchInput';
+import type { IDateInterval } from '.';
+import type { IFilterFooterControls } from './atoms/FooterControls';
+import type { IDropdownDatePicker } from './molecules/DropdownDatePicker';
+import type { IFilterDropdown } from './molecules/FilterDropdown';
 
-type IFilterItem = { text: string; value: string | number; }
+type IFilterItem = { text: string; value: string | number };
 type IFilterValue = IFilterItem | IFilterItem[] | null;
 type IFilterType = 'search' | 'dropdown' | 'datepicker';
-type IToggleOption = { text: string; value: string | number; icon: string }
+type IToggleOption = { text: string; value: string | number; icon: string };
 
 // Type checking for IFilterItem
 // https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
 const isFilterItem = (item: any): item is IFilterItem => {
-  if (item === null || item === undefined) { return false; }
+  if (item === null || item === undefined) {
+    return false;
+  }
 
   if (item.value === undefined || item.value === null) {
     return false;
@@ -23,73 +25,73 @@ const isFilterItem = (item: any): item is IFilterItem => {
     return false;
   }
 
-  return ((typeof item.value === 'number') || (typeof item.value === 'string')) && (typeof item.text === 'string');
+  return (
+    (typeof item.value === 'number' || typeof item.value === 'string') &&
+    typeof item.text === 'string'
+  );
 };
 
 interface IFilterResult {
-  id: string
-  type: IFilterType
+  id: string;
+  type: IFilterType;
   selected: IFilterItem | IFilterItem[] | IDateInterval | Date | null;
 }
 
 interface ISearchFilter extends IBasicSearchInput {
-  id: string
-  canHide?: boolean
-  showFieldText?: string
-  selected?: IFilterItem
+  id: string;
+  canHide?: boolean;
+  showFieldText?: string;
+  selected?: IFilterItem;
 }
 
 interface IFilterDropdownExt extends IFilterDropdown {
-  id: string
-  canHide?: boolean
+  id: string;
+  canHide?: boolean;
 }
 
 interface IFilterDatePicker extends IDropdownDatePicker {
-  id: string
-  canHide?: boolean
-  name?: string
+  id: string;
+  canHide?: boolean;
+  name?: string;
 }
 
 interface IFilterDropdownConfig extends IFilterFooterControls {
-  id: string
-  canHide?: boolean
-  buttonIcon: string
-  buttonText: string
+  id: string;
+  canHide?: boolean;
+  buttonIcon: string;
+  buttonText: string;
   list: IFilterItem[];
   selected?: IFilterValue;
-  disabled?: boolean
-  optionType?: IInputOptionsType
-  isLoading?: boolean
-  loadingText?: string
-  hasOptionsFilter?: boolean
-  searchPlaceholder?: string
-  maxDisplayedItems?: number
-  emptyResultText?: string
-  searchResultText?: string
-  name?: string
-  design?: FilterButtonDesign
-  ascendingText?: string
-  descendingText?: string
-  isListAscending?: boolean
-  onResetCallback?: () => void
-  onCancelCallback?: () => void
+  disabled?: boolean;
+  optionType?: IInputOptionsType;
+  isLoading?: boolean;
+  loadingText?: string;
+  hasOptionsFilter?: boolean;
+  searchPlaceholder?: string;
+  maxDisplayedItems?: number;
+  emptyResultText?: string;
+  searchResultText?: string;
+  name?: string;
+  design?: FilterButtonDesign;
+  ascendingText?: string;
+  descendingText?: string;
+  isListAscending?: boolean;
+  onResetCallback?: () => void;
+  onCancelCallback?: () => void;
 }
 
-type FilterButtonDesign = 'default' | 'basic'
-
-export {
-  isFilterItem
-};
+type FilterButtonDesign = 'default' | 'basic';
 
 export type {
-  IFilterType,
-  IFilterItem,
-  IFilterResult,
-  IFilterValue,
-  ISearchFilter,
-  IFilterDropdownExt,
+  FilterButtonDesign,
   IFilterDatePicker,
   IFilterDropdownConfig,
+  IFilterDropdownExt,
+  IFilterItem,
+  IFilterResult,
+  IFilterType,
+  IFilterValue,
+  ISearchFilter,
   IToggleOption,
-  FilterButtonDesign,
 };
+export { isFilterItem };

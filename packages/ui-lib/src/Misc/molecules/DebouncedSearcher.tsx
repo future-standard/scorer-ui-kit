@@ -1,31 +1,38 @@
 import debounce from 'lodash.debounce';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import BasicSearchInput, { IBasicSearchInput } from '../atoms/BasicSearchInput';
+import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import BasicSearchInput, { type IBasicSearchInput } from '../atoms/BasicSearchInput';
 
 // Adding default value thinking of query params or other outside initialized value
 interface IDebouncedSearcher extends IBasicSearchInput {
   defaultValue?: string;
-  onDebouncedChange?: (newValue: string) => void
+  onDebouncedChange?: (newValue: string) => void;
 }
 
 const DebouncedSearcher: React.FC<IDebouncedSearcher> = ({
-  onDebouncedChange = () => { },
+  onDebouncedChange = () => {},
   defaultValue,
   ...props
 }) => {
   const [typedValue, setTypedValue] = useState<string>(defaultValue || '');
 
-  const debounceChange = useRef(debounce(newValue => updateChange(newValue), 600)).current;
+  const debounceChange = useRef(debounce((newValue) => updateChange(newValue), 600)).current;
 
-  const updateChange = useCallback((newValue: string) => {
-    onDebouncedChange(newValue);
-  }, [onDebouncedChange]);
+  const updateChange = useCallback(
+    (newValue: string) => {
+      onDebouncedChange(newValue);
+    },
+    [onDebouncedChange]
+  );
 
-  const updateTyped = useCallback((e: React.FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
-    setTypedValue(newValue);
-    debounceChange(newValue);
-  }, [debounceChange]);
+  const updateTyped = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      const newValue = e.currentTarget.value;
+      setTypedValue(newValue);
+      debounceChange(newValue);
+    },
+    [debounceChange]
+  );
 
   useEffect(() => {
     if (defaultValue) {
@@ -33,9 +40,7 @@ const DebouncedSearcher: React.FC<IDebouncedSearcher> = ({
     }
   }, [defaultValue]);
 
-  return (
-    <BasicSearchInput {...props} onChange={updateTyped} value={typedValue} />
-  );
+  return <BasicSearchInput {...props} onChange={updateTyped} value={typedValue} />;
 };
 
 export default DebouncedSearcher;

@@ -1,27 +1,33 @@
-import React from 'react';
-import {select, text, number, boolean} from "@storybook/addon-knobs";
-import styled from 'styled-components';
-import {Tag} from 'scorer-ui-kit';
-import { generateIconList } from '../../helpers';
+import { boolean, number, select, text } from '@storybook/addon-knobs';
+import { Tag } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
+import styled from 'styled-components';
+import { generateIconList } from '../../helpers';
 
 const TagStory = {
   title: 'Misc/atoms',
   component: Tag,
-  decorators: []
+  decorators: [],
 };
-
 
 const Container = styled.div``;
 
 export const _Tag = () => {
   const iconList = generateIconList();
-  const tagText = text("Label", "Example")
+  const tagText = text('Label', 'Example');
   const noBorder = boolean('No Border', false);
-  const iconName = select("Icon", iconList, 'MetaTags');
-  const size = number('Size',14);
-  const tagSize = select('Tag Size', {Compact: "compact", Default: "default", Undefined: undefined}, 'default');
-  const tagWeight = select("Weight", { Light: "light", Regular: "regular", Heavy: "heavy" }, "regular");
+  const iconName = select('Icon', iconList, 'MetaTags');
+  const size = number('Size', 14);
+  const tagSize = select(
+    'Tag Size',
+    { Compact: 'compact', Default: 'default', Undefined: undefined },
+    'default'
+  );
+  const tagWeight = select(
+    'Weight',
+    { Light: 'light', Regular: 'regular', Heavy: 'heavy' },
+    'regular'
+  );
   const toValue = text('To Link', '/');
   const useOnClick = boolean('Use onTagClick', false);
   const customClick = action('onTagClick was triggered');
@@ -39,7 +45,7 @@ export const _Tag = () => {
         onTagClick={useOnClick ? customClick : undefined}
       />
     </Container>
-  )
-}
+  );
+};
 
 export default TagStory;

@@ -1,14 +1,7 @@
-
-import React from "react";
-import styled from "styled-components";
-import MultiActionsExample from "./MultiActionsExample";
-import { select } from "@storybook/addon-knobs";
-import {
-  ModalProvider,
-  TypeTable,
-} from 'scorer-ui-kit';
-
-
+import { select } from '@storybook/addon-knobs';
+import { ModalProvider, TypeTable } from 'scorer-ui-kit';
+import styled from 'styled-components';
+import MultiActionsExample from './MultiActionsExample';
 
 const Container = styled.div`
   padding: 100px;
@@ -18,19 +11,19 @@ const TableMultiActionsStory = {
   component: TypeTable,
   decorators: [],
   parameters: {
-    jsx: { skip: 2 }
-  }
+    jsx: { skip: 2 },
+  },
 };
 
 // Story starts here o.o
 export const _TableMultiActions = () => {
-  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
+  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
 
   // Provider should be at main Index level, it's here just for the example
   return (
     <Container>
       <ModalProvider>
-        <MultiActionsExample {...{language}}/>
+        <MultiActionsExample {...{ language }} />
       </ModalProvider>
     </Container>
   );

@@ -1,22 +1,19 @@
-import React from 'react';
+import { select } from '@storybook/addon-knobs';
 import {
-  GlobalUI,
-  PageHeader,
-  TabList,
-  Tab,
   ContentLayout,
   FlexContentPlaceholder,
-  IHeaderContent
+  GlobalUI,
+  type IHeaderContent,
+  PageHeader,
+  Tab,
+  TabList,
 } from 'scorer-ui-kit';
-
 import styled from 'styled-components';
-import { select } from '@storybook/addon-knobs';
 
 const ContentLayoutStory = {
   title: 'Global/organisms',
   component: GlobalUI,
-  decorators: [
-  ]
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -29,53 +26,59 @@ const Container = styled.div`
   background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
 `;
 
-const ExampleContent : IHeaderContent = {
+const ExampleContent: IHeaderContent = {
   UtilityHeaderOptions: {
-    back: { label: "Back", link: "/" },
-    breadcrumbs: [{text:'Examples', href:'/'},{text:'Two', href:'#2'},{text:'Three', href:'#3'},{text:'Four', href:'#4'},{text:'Five', href:'#5'}],
+    back: { label: 'Back', link: '/' },
+    breadcrumbs: [
+      { text: 'Examples', href: '/' },
+      { text: 'Two', href: '#2' },
+      { text: 'Three', href: '#3' },
+      { text: 'Four', href: '#4' },
+      { text: 'Five', href: '#5' },
+    ],
     showBreadcrumbs: true,
-    share: { show: true, label: "Share", link: "https://www.example.com", copiedLabel: "Copied" }
+    share: { show: true, label: 'Share', link: 'https://www.example.com', copiedLabel: 'Copied' },
   },
-  PageHeaderArea: <PageHeader
-    title='Welcome'
-    introductionText='Thanks for using our UI library.'
-    icon="Home"
-  />,
-  TabsElementArea: 
+  PageHeaderArea: (
+    <PageHeader title='Welcome' introductionText='Thanks for using our UI library.' icon='Home' />
+  ),
+  TabsElementArea: (
     <TabList defaultTabId='tab1'>
       <Tab tabFor='tab1'>Home</Tab>
       <Tab tabFor='tab2'>Example One</Tab>
       <Tab tabFor='tab3'>Example Two</Tab>
     </TabList>
-}
+  ),
+};
 
 export const _ContentLayout = () => {
-
-  const layoutType = select('Layout Type', { Default: 'default', Dashboard: 'dashboard', Fullscreen: 'fullscreen' }, 'default');
+  const layoutType = select(
+    'Layout Type',
+    { Default: 'default', Dashboard: 'dashboard', Fullscreen: 'fullscreen' },
+    'default'
+  );
 
   return (
     <Container>
-      
-        {layoutType === 'default' ?
-          <ContentLayout layout="default" HeaderContent={ExampleContent}>
-            <FlexContentPlaceholder title='Content Area' />
-          </ContentLayout>
-        : null }
+      {layoutType === 'default' ? (
+        <ContentLayout layout='default' HeaderContent={ExampleContent}>
+          <FlexContentPlaceholder title='Content Area' />
+        </ContentLayout>
+      ) : null}
 
-        {layoutType === 'dashboard' ? 
-          <ContentLayout layout="dashboard">
-            <FlexContentPlaceholder title='Content Area' />
-          </ContentLayout>
-        : null }
+      {layoutType === 'dashboard' ? (
+        <ContentLayout layout='dashboard'>
+          <FlexContentPlaceholder title='Content Area' />
+        </ContentLayout>
+      ) : null}
 
-        {layoutType === 'fullscreen' ? 
-          <ContentLayout layout="fullscreen">
-            <FlexContentPlaceholder title='Content Area' />
-          </ContentLayout>
-        : null }
-
+      {layoutType === 'fullscreen' ? (
+        <ContentLayout layout='fullscreen'>
+          <FlexContentPlaceholder title='Content Area' />
+        </ContentLayout>
+      ) : null}
     </Container>
-  )
-}
+  );
+};
 
 export default ContentLayoutStory;

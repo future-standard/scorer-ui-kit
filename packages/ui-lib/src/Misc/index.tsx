@@ -1,22 +1,21 @@
-import Tag, { ITag } from './atoms/Tag';
-import TagList, { ITagList, TagListWrapper } from './molecules/TagList';
+import ActionsBar, { type IActionsBar, type IActionsButton } from './atoms/ActionsBar';
 import BasicSearchInput from './atoms/BasicSearchInput';
 import BigIconsSummary from './atoms/BigIconsSummary';
 import MediaBox from './atoms/MediaBox';
+import Tag, { type ITag } from './atoms/Tag';
 import DebouncedSearcher from './molecules/DebouncedSearcher';
-import ActionsBar, {IActionsBar, IActionsButton} from './atoms/ActionsBar';
-import Pagination, {IItemsOption, IPagination} from './molecules/Pagination';
+import Pagination, { type IItemsOption, type IPagination } from './molecules/Pagination';
+import TagList, { type ITagList, TagListWrapper } from './molecules/TagList';
 
+export type { IActionsBar, IActionsButton, IItemsOption, IPagination, ITag, ITagList };
 export {
-  Tag,
-  TagList,
-  TagListWrapper,
-  MediaBox,
+  ActionsBar,
   BasicSearchInput,
   BigIconsSummary,
   DebouncedSearcher,
-  ActionsBar,
-  Pagination
+  MediaBox,
+  Pagination,
+  Tag,
+  TagList,
+  TagListWrapper,
 };
-
-export type { ITagList, ITag, IActionsBar, IActionsButton, IItemsOption, IPagination};

@@ -1,14 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { endOfDay, format, isEqual, min, set } from 'date-fns';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import {endOfDay, format,isEqual,min,set } from 'date-fns';
-import {isNotNumber} from '../../helpers/index';
+import { isNotNumber } from '../../helpers/index';
 import Icon from '../../Icons/Icon';
 
-const Container = styled.div<{$hide:boolean}>`
+const Container = styled.div<{ $hide: boolean }>`
   display: flex;
   flex-direction: column;
 
-  ${({$hide}) => $hide && css`
+  ${({ $hide }) =>
+    $hide &&
+    css`
     display: none;
   `}
 `;
@@ -37,7 +40,11 @@ const IconWrap = styled.div`
   padding-top: 1px;
 `;
 
-const Input = styled.input<{ readOnly? : boolean, $isTimeRangeValid: boolean, $isTimeInput?: boolean }>`
+const Input = styled.input<{
+  readOnly?: boolean;
+  $isTimeRangeValid: boolean;
+  $isTimeInput?: boolean;
+}>`
   font-family: var(--font-data);
   text-align: left;
   font-size: 14px;
@@ -48,10 +55,11 @@ const Input = styled.input<{ readOnly? : boolean, $isTimeRangeValid: boolean, $i
   background-color: transparent;
 
   width: 100%;
-  border: ${({ $isTimeInput }) => $isTimeInput ?
-    ({ $isTimeRangeValid }) => $isTimeRangeValid ? 'transparent 1px solid' : 'var(--warning-a9) 1px solid'
-    : 'transparent 1px solid'
-  };
+  border: ${({ $isTimeInput }) =>
+    $isTimeInput
+      ? ({ $isTimeRangeValid }) =>
+          $isTimeRangeValid ? 'transparent 1px solid' : 'var(--warning-a9) 1px solid'
+      : 'transparent 1px solid'};
   outline: none;
   flex: 1;
   justify-content: space-between;
@@ -59,10 +67,10 @@ const Input = styled.input<{ readOnly? : boolean, $isTimeRangeValid: boolean, $i
 
   &:focus, &:hover {
 
-    border-color: ${({ $isTimeInput }) => $isTimeInput ?
-      ({ $isTimeRangeValid }) => $isTimeRangeValid ? 'transparent' : 'var(--warning-a9)'
-      : 'transparent'
-    };
+    border-color: ${({ $isTimeInput }) =>
+      $isTimeInput
+        ? ({ $isTimeRangeValid }) => ($isTimeRangeValid ? 'transparent' : 'var(--warning-a9)')
+        : 'transparent'};
   }
 `;
 
@@ -93,136 +101,142 @@ const InputWrap = styled.div`
 `;
 
 interface IProps {
-  title: string
-  hasDate: boolean
-  hasTime: boolean
-  date?: Date
-  setDateCallback?: (date: Date) => void
-  setTimeCallback?: (date: Date) => void
-  allowAfterMidnight?: boolean,
-  isTimeRangeValid?: boolean,
+  title: string;
+  hasDate: boolean;
+  hasTime: boolean;
+  date?: Date;
+  setDateCallback?: (date: Date) => void;
+  setTimeCallback?: (date: Date) => void;
+  allowAfterMidnight?: boolean;
+  isTimeRangeValid?: boolean;
 }
 
-const DateTimeBlock : React.FC<IProps> = ({
+const DateTimeBlock: React.FC<IProps> = ({
   allowAfterMidnight = false,
   title,
   hasDate,
   hasTime,
   isTimeRangeValid = true,
   date = new Date(),
-  setDateCallback = ()=>{},
+  setDateCallback = () => {},
 }) => {
-
   /**
    *
    * Description of the rules can be found int https://docs.google.com/spreadsheets/d/1POe9uZxKXtLhQFF6DIV-RclUp7T7oXgSeSLlbYmE38g/edit?usp=sharing
    */
-  const validHourMin = (textHour: string, textMin: string, hasDate: boolean, allowAfterMidnight?: boolean): {newHour: number, newMin: number}   => {
-
-    const intHour =  Number(textHour.slice(-2));
-    const intMin =  Number(textMin.slice(-2));
+  const validHourMin = (
+    textHour: string,
+    textMin: string,
+    hasDate: boolean,
+    allowAfterMidnight?: boolean
+  ): { newHour: number; newMin: number } => {
+    const intHour = Number(textHour.slice(-2));
+    const intMin = Number(textMin.slice(-2));
 
     const newHour = intHour > 24 ? Number(textHour.slice(-1)) : intHour;
     const newMin = intMin > 60 ? Number(textMin.slice(-1)) : intMin;
 
     //Rule 8
-    if(newHour >= 24 && newMin !== -1 && allowAfterMidnight ) {
-      return { newHour: 24, newMin: 0};
+    if (newHour >= 24 && newMin !== -1 && allowAfterMidnight) {
+      return { newHour: 24, newMin: 0 };
     }
 
     // Rule 7
-    if(newHour === 0 && newMin === 0 && allowAfterMidnight && !hasDate) {
-      return {newHour: 0, newMin: 1};
+    if (newHour === 0 && newMin === 0 && allowAfterMidnight && !hasDate) {
+      return { newHour: 0, newMin: 1 };
     }
 
     // Rule 6
-    if(newHour === 23 && newMin === 60 && !allowAfterMidnight) {
-      return { newHour:23, newMin: 59};
+    if (newHour === 23 && newMin === 60 && !allowAfterMidnight) {
+      return { newHour: 23, newMin: 59 };
     }
 
     // Rule 5
-    if(newHour >= 24 && !allowAfterMidnight) {
-      return {newHour: 23, newMin};
+    if (newHour >= 24 && !allowAfterMidnight) {
+      return { newHour: 23, newMin };
     }
 
     // Rule 4
-    if(newMin === 60) {
-      return { newHour: newHour + 1, newMin: 0};
+    if (newMin === 60) {
+      return { newHour: newHour + 1, newMin: 0 };
     }
 
     // Rule 3
-    if(newHour > 0 && newMin === -1){
-      return { newHour: newHour -1, newMin: 59};
+    if (newHour > 0 && newMin === -1) {
+      return { newHour: newHour - 1, newMin: 59 };
     }
 
     // Rule 2
-    if(newHour === 0 && newMin === -1) {
-      return { newHour, newMin:0};
+    if (newHour === 0 && newMin === -1) {
+      return { newHour, newMin: 0 };
     }
 
     // Rule 1
-    if(newHour === -1) {
-      return {newHour: 0, newMin};
+    if (newHour === -1) {
+      return { newHour: 0, newMin };
     }
 
     return { newHour, newMin };
   };
 
+  const [displayHours, setDisplayHours] = useState<string>(format(date, 'mm'));
+  const [displayMinutes, setDisplayMinutes] = useState<string>(format(date, 'HH'));
 
-  const [displayHours, setDisplayHours] = useState<string>(format(date, "mm"));
-  const [displayMinutes, setDisplayMinutes] = useState<string>(format(date,'HH'));
+  const setDateHours = useCallback(
+    ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+      if (isNotNumber(value)) {
+        return;
+      }
 
-  const setDateHours = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+      const { newHour, newMin } = validHourMin(value, displayMinutes, hasDate, allowAfterMidnight);
 
-    if(isNotNumber(value)) {
-      return;
-    }
+      setDateCallback(
+        min([
+          endOfDay(date),
+          set(date, {
+            hours: newHour,
+            minutes: newMin,
+            seconds: 0,
+            milliseconds: 0,
+          }),
+        ])
+      );
+    },
+    [allowAfterMidnight, date, displayMinutes, hasDate, setDateCallback, validHourMin]
+  );
 
-    const {newHour, newMin} = validHourMin(value, displayMinutes, hasDate, allowAfterMidnight);
+  const setDateMinutes = useCallback(
+    ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+      if (isNotNumber(value)) {
+        return;
+      }
 
-    setDateCallback(
-      min([
-        endOfDay(date),
-        set(date, {
-          hours: newHour,
-          minutes: newMin,
-          seconds: 0,
-          milliseconds: 0
-        })
-      ])
-    );
-  }, [allowAfterMidnight, date, displayMinutes, hasDate, setDateCallback]);
+      const { newHour, newMin } = validHourMin(displayHours, value, hasDate, allowAfterMidnight);
 
-  const setDateMinutes = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+      setDateCallback(
+        min([
+          endOfDay(date),
+          set(date, {
+            hours: newHour,
+            minutes: newMin,
+            seconds: 0,
+            milliseconds: 0,
+          }),
+        ])
+      );
+    },
+    [allowAfterMidnight, date, displayHours, hasDate, setDateCallback, validHourMin]
+  );
 
-    if(isNotNumber(value)) {
-      return;
-    }
-
-    const {newHour, newMin} = validHourMin(displayHours, value, hasDate, allowAfterMidnight);
-
-    setDateCallback(
-      min([
-        endOfDay(date),
-        set(date, {
-          hours: newHour,
-          minutes: newMin,
-          seconds: 0,
-          milliseconds: 0
-        })
-      ])
-    );
-  }, [allowAfterMidnight, date, displayHours, hasDate, setDateCallback]);
-
-  useEffect(()=>{
-    if(allowAfterMidnight && isEqual(date, endOfDay(date))){
+  useEffect(() => {
+    if (allowAfterMidnight && isEqual(date, endOfDay(date))) {
       setDisplayHours('24');
       setDisplayMinutes('00');
     } else {
       setDisplayMinutes(format(date, 'mm'));
-      setDisplayHours(format(date,'HH'));
+      setDisplayHours(format(date, 'HH'));
     }
-  },[date, allowAfterMidnight]);
+  }, [date, allowAfterMidnight]);
 
   return (
     <Container $hide={!hasDate && !hasTime}>
@@ -234,7 +248,12 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Date' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <Input type='text' readOnly value={format(date, "yyyy/MM/dd")} $isTimeRangeValid={isTimeRangeValid} />
+            <Input
+              type='text'
+              readOnly
+              value={format(date, 'yyyy/MM/dd')}
+              $isTimeRangeValid={isTimeRangeValid}
+            />
           </InputWrap>
         </Item>
       )}
@@ -245,9 +264,29 @@ const DateTimeBlock : React.FC<IProps> = ({
             <Icon icon='Time' color='dimmed' size={14} weight='light' />
           </IconWrap>
           <InputWrap>
-            <Input name='hours' type='number' min='-1' max={allowAfterMidnight ? 24: 23} value={displayHours} onChange={setDateHours} $isTimeRangeValid={isTimeRangeValid} autoComplete='off' $isTimeInput />
+            <Input
+              name='hours'
+              type='number'
+              min='-1'
+              max={allowAfterMidnight ? 24 : 23}
+              value={displayHours}
+              onChange={setDateHours}
+              $isTimeRangeValid={isTimeRangeValid}
+              autoComplete='off'
+              $isTimeInput
+            />
             <TimeColon>:</TimeColon>
-            <Input name='minutes' type='number' min='-1' max='60' value={displayMinutes} onChange={setDateMinutes} $isTimeRangeValid={isTimeRangeValid} autoComplete='off' $isTimeInput />
+            <Input
+              name='minutes'
+              type='number'
+              min='-1'
+              max='60'
+              value={displayMinutes}
+              onChange={setDateMinutes}
+              $isTimeRangeValid={isTimeRangeValid}
+              autoComplete='off'
+              $isTimeInput
+            />
           </InputWrap>
         </Item>
       )}

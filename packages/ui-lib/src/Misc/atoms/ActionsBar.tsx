@@ -1,7 +1,7 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
 import Button from '../../Form/atoms/Button';
-import ButtonWithIcon, { IButtonWithIcon } from '../../Form/atoms/ButtonWithIcon';
+import ButtonWithIcon, { type IButtonWithIcon } from '../../Form/atoms/ButtonWithIcon';
 
 const Container = styled.div``;
 const Title = styled.div`
@@ -35,24 +35,23 @@ const SelectedResults = styled.div`
   font-size: 12px;
 `;
 
-
 const renderSelected = (template: string, selected: number, total: number) => {
   const newSelected = template.replace('[SELECTED]', `${selected}`);
   return newSelected.replace('[TOTAL]', `${total}`);
 };
 
 export interface IActionsButton extends IButtonWithIcon {
-  text: string
+  text: string;
 }
 
 export interface IActionsBar {
-  title?: string
-  finishTextButton?: string
-  actionButtons?: IActionsButton[]
-  selectedTemplate?: string
-  totalSelected?: number
-  totalAvailable?: number
-  finishCallback?: () => void
+  title?: string;
+  finishTextButton?: string;
+  actionButtons?: IActionsButton[];
+  selectedTemplate?: string;
+  totalSelected?: number;
+  totalAvailable?: number;
+  finishCallback?: () => void;
 }
 
 const ActionsBar: React.FC<IActionsBar> = ({
@@ -62,7 +61,7 @@ const ActionsBar: React.FC<IActionsBar> = ({
   selectedTemplate = 'Selected [SELECTED] of [TOTAL] Results',
   totalSelected = 0,
   totalAvailable = 0,
-  finishCallback = () => { }
+  finishCallback = () => {},
 }) => {
   return (
     <Container>
@@ -84,10 +83,14 @@ const ActionsBar: React.FC<IActionsBar> = ({
           })}
         </LeftButtons>
         <RightButtons>
-          <Button size='small' onClick={finishCallback}>{finishTextButton}</Button>
+          <Button size='small' onClick={finishCallback}>
+            {finishTextButton}
+          </Button>
         </RightButtons>
       </ButtonsWrapper>
-      <SelectedResults>{renderSelected(selectedTemplate, totalSelected, totalAvailable)}</SelectedResults>
+      <SelectedResults>
+        {renderSelected(selectedTemplate, totalSelected, totalAvailable)}
+      </SelectedResults>
     </Container>
   );
 };

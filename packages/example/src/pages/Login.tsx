@@ -1,17 +1,25 @@
+import type React from 'react';
+import { type ChangeEvent, useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  AlertBar,
+  AlertWrapper,
+  ButtonWithLoading,
+  Form,
+  PasswordField,
+  TextField,
+} from 'scorer-ui-kit';
 import styled, { css, keyframes } from 'styled-components';
-import React, { useState, useCallback, ChangeEvent } from 'react';
-import { ButtonWithLoading, TextField, PasswordField, Form, AlertBar, AlertWrapper } from 'scorer-ui-kit';
-import GhostLogo from '../svg/ghost-logo.svg?url';
-import {LoginScreen} from '../svg';
-import {Link} from 'react-router-dom';
 import ExamplesFilename from '../components/ExamplesFilename';
+import { LoginScreen } from '../svg';
+import GhostLogo from '../svg/ghost-logo.svg?url';
 
 const widthDesk = 480;
 
 const gradients = {
-  "primary" : 'linear-gradient(-45deg, hsl(205,56%,59%), hsl(202,57%,67%))',
-  "secondary" : 'linear-gradient(139deg, hsl(250, 60%, 62%), hsl(0, 46%, 54%))',
-}
+  primary: 'linear-gradient(-45deg, hsl(205,56%,59%), hsl(202,57%,67%))',
+  secondary: 'linear-gradient(139deg, hsl(250, 60%, 62%), hsl(0, 46%, 54%))',
+};
 
 const RowCss = css`
   display: flex;
@@ -27,13 +35,15 @@ const fadeInAnimation = keyframes`
   }
 `;
 
-const Wrap = styled.div``
-const Box = styled.div<{ $margin?: string; $flex?: string;}>`
+const Wrap = styled.div``;
+const Box = styled.div<{ $margin?: string; $flex?: string }>`
   button{
     width: 100%;
   }
   ${({ $margin }) => $margin && css`margin:${$margin};`}
-  ${({ $flex }) => $flex && css`
+  ${({ $flex }) =>
+    $flex &&
+    css`
     flex:${$flex};
     justify-content: flex-end;
     display: flex;
@@ -119,7 +129,6 @@ const CopyRightStyle = css`
   margin-top:49px;
 `;
 
-
 const CopyRight = styled.div`
   ${CopyRightStyle};
   margin-right: 17px;
@@ -168,9 +177,9 @@ const Logo = styled(LoginScreen)`
     width: auto;
 `;
 
-const LogoBackground = styled.img<{$design: gradientDesign}>`
+const LogoBackground = styled.img<{ $design: gradientDesign }>`
   height: 1080px;
-  background-image: ${({$design}) => gradients[$design]};
+  background-image: ${({ $design }) => gradients[$design]};
   position: absolute;
   bottom: -360px;
   left: -600px;
@@ -238,51 +247,51 @@ interface AuthProps {
 }
 
 interface Props {
-  onLogin: (params: {username: string; password: string}) => void;
-  design?: gradientDesign
+  onLogin: (params: { username: string; password: string }) => void;
+  design?: gradientDesign;
 }
 type OwnProps = AuthProps & Props;
 
 interface Alert {
-  type: 'error'|'warning'|'info'|'success';
+  type: 'error' | 'warning' | 'info' | 'success';
   message: string;
 }
 
 type gradientDesign = 'primary' | 'secondary';
 
-const Login: React.FC<OwnProps> = ({
-  onLogin,
-  design='primary',
-}) => {
+const Login: React.FC<OwnProps> = ({ onLogin, design = 'primary' }) => {
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState<Alert|null>(null);
-  const [form, setForm] = useState({username:'', password:''});
+  const [alert, setAlert] = useState<Alert | null>(null);
+  const [form, setForm] = useState({ username: '', password: '' });
 
-  const onFieldChange = useCallback((key: 'username'|'password') => ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setForm({...form, [key]: value});
-  }, [form]);
+  const onFieldChange = useCallback(
+    (key: 'username' | 'password') =>
+      ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+        setForm({ ...form, [key]: value });
+      },
+    [form]
+  );
 
-
-  const onSubmit = useCallback(async(e: React.FormEvent<HTMLFormElement|HTMLButtonElement>)=>{
-    e.preventDefault();
-    setLoading(true);
-    setAlert(null);
-    try {
-      const response = await onLogin(form);
-      console.log(response, 'login');
-    } catch (error) {
-      if(error instanceof Error) {
-        setAlert({
-          message: error.message,
-          type: 'error'
-        });
-      } else {
-        console.warn(error);
+  const onSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
+      e.preventDefault();
+      setLoading(true);
+      setAlert(null);
+      try {
+        const _response = await onLogin(form);
+      } catch (error) {
+        if (error instanceof Error) {
+          setAlert({
+            message: error.message,
+            type: 'error',
+          });
+        } else {
+        }
       }
-
-    }
-    setLoading(false);
-  },[form, onLogin]);
+      setLoading(false);
+    },
+    [form, onLogin]
+  );
 
   return (
     <Wrap>
@@ -296,7 +305,10 @@ const Login: React.FC<OwnProps> = ({
           </LogoContainer>
           <LoginForm onSubmit={onSubmit} spacing='25px'>
             <Title>Sign In To Your Account</Title>
-            <SubTitle>This service requires an account to login. If you do not have one, please make one first.</SubTitle>
+            <SubTitle>
+              This service requires an account to login. If you do not have one, please make one
+              first.
+            </SubTitle>
             <TextField
               fieldState='default'
               required
@@ -319,22 +331,23 @@ const Login: React.FC<OwnProps> = ({
             {alert && <AlertBar type={alert.type} message={alert.message} />}
 
             <Box $flex='1'>
-              <ButtonWithLoading loading={loading} type='submit' onClick={onSubmit}>Login</ButtonWithLoading>
+              <ButtonWithLoading loading={loading} type='submit' onClick={onSubmit}>
+                Login
+              </ButtonWithLoading>
             </Box>
             <ForgotLinkWrapper>
               <ForgotLink to='#'>Forgotten Password</ForgotLink>
             </ForgotLinkWrapper>
-
           </LoginForm>
         </LoginBox>
         <CopyRightGroup>
-          <CopyRight>Copyright {new Date().getFullYear()} - Future Standard Co. Ltd. All Rights Reserved. </CopyRight>
+          <CopyRight>
+            Copyright {new Date().getFullYear()} - Future Standard Co. Ltd. All Rights Reserved.{' '}
+          </CopyRight>
           <CopyRightLink to='#'>Terms</CopyRightLink>
           <CopyRightDot>&middot;</CopyRightDot>
           <CopyRightLink to='#'>Privacy</CopyRightLink>
         </CopyRightGroup>
-
-
       </Container>
     </Wrap>
   );

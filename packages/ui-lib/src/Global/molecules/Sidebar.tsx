@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import type React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Container = styled.div`
   width: 286px;
@@ -84,7 +84,7 @@ const SLink = styled(Link)`
   padding: 7px 20px;
 `;
 
-export const SidebarLink : React.FC<{title: string; to: string}> = ({title,to}) => {
+export const SidebarLink: React.FC<{ title: string; to: string }> = ({ title, to }) => {
   return (
     <SidebarBox>
       <SidebarLinkHeading>{title}</SidebarLinkHeading>
@@ -93,25 +93,20 @@ export const SidebarLink : React.FC<{title: string; to: string}> = ({title,to}) 
   );
 };
 
-interface LogoProps{
+interface LogoProps {
   logoTextTop: string;
   logoTextBottom: string;
 }
 
-export const Logo: React.FC<LogoProps> = ({logoTextTop,logoTextBottom}) => (
+export const Logo: React.FC<LogoProps> = ({ logoTextTop, logoTextBottom }) => (
   <LogoContainer>
     <LogoTopText>{logoTextTop}</LogoTopText>
     <LogoBottomText>•{logoTextBottom}•</LogoBottomText>
   </LogoContainer>
 );
 
-
-const Sidebar: React.FC<React.PropsWithChildren> = ({children,...props}) => {
-  return (
-    <Container {...props}>
-      <>{children}</>
-    </Container>
-  );
+const Sidebar: React.FC<React.PropsWithChildren> = ({ children, ...props }) => {
+  return <Container {...props}>{children}</Container>;
 };
 
 export default Sidebar;

@@ -1,10 +1,8 @@
-import React from 'react';
+import type React from 'react';
 import styled, { css } from 'styled-components';
-
-import Button from './Button';
 import Spinner from '../../Indicators/Spinner';
-import { TypeButtonDesigns, IButtonProps, TypeButtonSizes} from '..';
-
+import type { IButtonProps, TypeButtonDesigns, TypeButtonSizes } from '..';
+import Button from './Button';
 
 const Container = styled.div`
   display: inline;
@@ -23,7 +21,11 @@ const TextContainer = styled.div`
   transition: padding var(--speed-slow) var(--easing-primary-in-out);
 `;
 
-const LoadingContainer = styled.div<{ $design: TypeButtonDesigns, $show?: boolean, $position?: string }>`
+const LoadingContainer = styled.div<{
+  $design: TypeButtonDesigns;
+  $show?: boolean;
+  $position?: string;
+}>`
   height: inherit;
   flex: 0 0 calc((var(--button-h-padding) * 2) + var(--button-icon-size));
   width: calc((var(--button-h-padding) * 2) + var(--button-icon-size));
@@ -40,11 +42,8 @@ const LoadingContainer = styled.div<{ $design: TypeButtonDesigns, $show?: boolea
     opacity var(--speed-slow) var(--easing-primary-in-out);
 
   ${({ $position }) => css`
-    order: ${ $position && $position === 'left' ? 0 : 2 };
-    ${ $position === 'left'
-      ? `border-right-width: 1px;`
-      : `border-left-width: 1px;`
-    };
+    order: ${$position && $position === 'left' ? 0 : 2};
+    ${$position === 'left' ? `border-right-width: 1px;` : `border-left-width: 1px;`};
   `}
 
   svg {
@@ -52,12 +51,19 @@ const LoadingContainer = styled.div<{ $design: TypeButtonDesigns, $show?: boolea
   }
 `;
 
-const InnerContainer = styled.div<{$position?: string, $loading: boolean, $design: TypeButtonDesigns, $size: TypeButtonSizes}>`
+const InnerContainer = styled.div<{
+  $position?: string;
+  $loading: boolean;
+  $design: TypeButtonDesigns;
+  $size: TypeButtonSizes;
+}>`
   display: flex;
   flex:1;
   height: inherit;
 
-  ${({ $loading }) => $loading ? css`
+  ${({ $loading }) =>
+    $loading
+      ? css`
 
     transition: margin var(--speed-slow) var(--easing-primary-in-out);
 
@@ -65,7 +71,8 @@ const InnerContainer = styled.div<{$position?: string, $loading: boolean, $desig
       opacity: 1;
       transition: flex var(--speed-slow) var(--easing-primary-in-out), opacity var(--speed-slow) var(--easing-primary-in-out) var(--speed-slow);
     }
-  ` : css`
+  `
+      : css`
     ${LoadingContainer}{
       flex: 0 0 0px;
     }
@@ -73,18 +80,36 @@ const InnerContainer = styled.div<{$position?: string, $loading: boolean, $desig
 `;
 
 interface IProps extends IButtonProps {
-  position?: 'left' | 'right'
-  shadow?: boolean
+  position?: 'left' | 'right';
+  shadow?: boolean;
 }
 
-const ButtonWithLoading : React.FC<IProps> = ({design='primary', size='normal', shadow = false, onClick, disabled, position, loading=false, children,...rest}) => {
+const ButtonWithLoading: React.FC<IProps> = ({
+  design = 'primary',
+  size = 'normal',
+  shadow = false,
+  onClick,
+  disabled,
+  position,
+  loading = false,
+  children,
+  ...rest
+}) => {
   return (
     <Container>
-      <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading}} {...rest}>
+      <Button
+        noPadding
+        disabled={disabled || loading}
+        {...{ design, size, shadow, onClick, loading }}
+        {...rest}
+      >
         <InnerContainer $loading={loading} $design={design} $size={size}>
-          <TextContainer><>{children}</></TextContainer>
+          <TextContainer>{children}</TextContainer>
           <LoadingContainer $design={design} $position={position}>
-            <Spinner size={size ==='xsmall' || size ==='small' ? 'xsmall' : 'small'} styling={design} />
+            <Spinner
+              size={size === 'xsmall' || size === 'small' ? 'xsmall' : 'small'}
+              styling={design}
+            />
           </LoadingContainer>
         </InnerContainer>
       </Button>

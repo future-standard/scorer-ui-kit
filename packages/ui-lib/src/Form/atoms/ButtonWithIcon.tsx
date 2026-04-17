@@ -1,16 +1,16 @@
-import React from 'react';
+import type React from 'react';
 import styled, { css } from 'styled-components';
-import Button from './Button';
+import type { IWeight } from '../..';
 import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
-import { IButtonProps, TypeButtonSizes } from '..';
-import { IWeight } from '../..';
+import type { IButtonProps, TypeButtonSizes } from '..';
+import Button from './Button';
 
 const Container = styled.div`
   display: inline;
 `;
 
-const TextContainer = styled.div<{ $size: TypeButtonSizes, $position?: string, $weight?: IWeight }>`
+const TextContainer = styled.div<{ $size: TypeButtonSizes; $position?: string; $weight?: IWeight }>`
   height: inherit;
   flex: 1;
   order: 1;
@@ -20,7 +20,7 @@ const TextContainer = styled.div<{ $size: TypeButtonSizes, $position?: string, $
   white-space: nowrap;
   padding: 0 var(--button-h-padding);
   transition: padding var(--speed-slow) var(--easing-primary-in-out);
-  font-weight: ${({$weight}) => $weight === 'light' ? '500' : '600'};
+  font-weight: ${({ $weight }) => ($weight === 'light' ? '500' : '600')};
 `;
 
 const IconContainer = styled.div`
@@ -42,7 +42,7 @@ const SpinnerContainer = styled.div`
   opacity: 0;
 `;
 
-const IconArea = styled.div<{ $position?: string, $loading: boolean }>`
+const IconArea = styled.div<{ $position?: string; $loading: boolean }>`
   position: relative;
   height: inherit;
   display: flex;
@@ -55,10 +55,7 @@ const IconArea = styled.div<{ $position?: string, $loading: boolean }>`
 
   ${({ $position }) => css`
     order: ${$position && $position === 'left' ? 0 : 2};
-    ${$position === 'left'
-      ? `border-right-width: 1px;`
-      : `border-left-width: 1px;`
-    };
+    ${$position === 'left' ? `border-right-width: 1px;` : `border-left-width: 1px;`};
   `}
 
   ${IconContainer}{
@@ -76,7 +73,9 @@ const IconArea = styled.div<{ $position?: string, $loading: boolean }>`
     transition: opacity var(--speed-fast) var(--easing-primary-out);
   }
 
-  ${({ $loading }) => $loading && css`
+  ${({ $loading }) =>
+    $loading &&
+    css`
     border-color: var(--button-loading-area-divider-color);
 
     ${SpinnerContainer}{
@@ -95,7 +94,9 @@ const InnerContainer = styled.div<{ $disabled?: boolean }>`
   height: inherit;
 
   &:hover {
-    ${({ $disabled }) => !$disabled && css`
+    ${({ $disabled }) =>
+      !$disabled &&
+      css`
       ${IconContainer}{
         svg {
           path, rect, circle, d {
@@ -107,7 +108,9 @@ const InnerContainer = styled.div<{ $disabled?: boolean }>`
   }
 
   &:active{
-    ${({ $disabled }) => !$disabled && css`
+    ${({ $disabled }) =>
+      !$disabled &&
+      css`
       ${IconContainer}{
         svg {
           path, rect, circle, d {
@@ -118,7 +121,9 @@ const InnerContainer = styled.div<{ $disabled?: boolean }>`
     `};
   }
 
-  ${({ $disabled }) => $disabled && css`
+  ${({ $disabled }) =>
+    $disabled &&
+    css`
     ${IconContainer}{
         svg {
           path, rect, circle, d {
@@ -130,24 +135,46 @@ const InnerContainer = styled.div<{ $disabled?: boolean }>`
 `;
 
 export interface IButtonWithIcon extends IButtonProps {
-  icon: string
-  position?: 'left' | 'right'
-  shadow?: boolean
-  weight?: IWeight
+  icon: string;
+  position?: 'left' | 'right';
+  shadow?: boolean;
+  weight?: IWeight;
 }
 
-const ButtonWithIcon: React.FC<IButtonWithIcon> = ({ design = 'primary', size = 'normal', loading = false, shadow = false, onClick, disabled, position, icon, weight = 'regular', children, ...props }) => {
+const ButtonWithIcon: React.FC<IButtonWithIcon> = ({
+  design = 'primary',
+  size = 'normal',
+  loading = false,
+  shadow = false,
+  onClick,
+  disabled,
+  position,
+  icon,
+  weight = 'regular',
+  children,
+  ...props
+}) => {
   return (
     <Container>
-      <Button noPadding disabled={disabled || loading} {...{ design, size, shadow, onClick, loading }} {...props}>
+      <Button
+        noPadding
+        disabled={disabled || loading}
+        {...{ design, size, shadow, onClick, loading }}
+        {...props}
+      >
         <InnerContainer $disabled={disabled}>
-          <TextContainer $size={size} $position={position} $weight={weight}><>{children}</></TextContainer>
+          <TextContainer $size={size} $position={position} $weight={weight}>
+            {children}
+          </TextContainer>
           <IconArea $loading={loading} $position={position}>
             <IconContainer>
               <Icon icon={icon} weight={weight} />
             </IconContainer>
             <SpinnerContainer>
-              <Spinner size={size === 'xsmall' || size === 'small' ? 'xsmall' : 'small'} styling={design} />
+              <Spinner
+                size={size === 'xsmall' || size === 'small' ? 'xsmall' : 'small'}
+                styling={design}
+              />
             </SpinnerContainer>
           </IconArea>
         </InnerContainer>

@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
 import Button from '../../Form/atoms/Button';
 
@@ -24,23 +24,23 @@ const FooterRightSection = styled.div`
 `;
 
 interface OwnProps {
-  onReset?: () => void
-  onCancel?: () => void
-  onApply?: () => void
+  onReset?: () => void;
+  onCancel?: () => void;
+  onApply?: () => void;
 }
 
 export interface IFilterFooterControls {
-  resetText?: string
-  cancelText?: string
-  closeText?: string
-  applyText?: string
-  hasReset?: boolean
-  hasApply?: boolean
-  disableApply?: boolean
-  disableReset?: boolean
+  resetText?: string;
+  cancelText?: string;
+  closeText?: string;
+  applyText?: string;
+  hasReset?: boolean;
+  hasApply?: boolean;
+  disableApply?: boolean;
+  disableReset?: boolean;
 }
 
-type IFooterControls = OwnProps & IFilterFooterControls
+type IFooterControls = OwnProps & IFilterFooterControls;
 
 const FooterControls: React.FC<IFooterControls> = ({
   resetText = 'Reset',
@@ -51,19 +51,27 @@ const FooterControls: React.FC<IFooterControls> = ({
   hasApply = false,
   disableApply = false,
   disableReset = true,
-  onReset = () => { },
-  onCancel = () => { },
-  onApply = () => { },
+  onReset = () => {},
+  onCancel = () => {},
+  onApply = () => {},
 }) => {
   return (
     <FooterContainer>
       <FooterLeftSection>
-        {hasReset && <Button size='small' design="text-only" disabled={disableReset} onClick={onReset}>{resetText}</Button>}
+        {hasReset && (
+          <Button size='small' design='text-only' disabled={disableReset} onClick={onReset}>
+            {resetText}
+          </Button>
+        )}
       </FooterLeftSection>
       {hasApply && (
         <FooterRightSection>
-          <Button size='small' design='secondary' onClick={onCancel}>{disableApply ? closeText : cancelText }</Button>
-          <Button size='small' onClick={onApply} disabled={disableApply}>{applyText}</Button>
+          <Button size='small' design='secondary' onClick={onCancel}>
+            {disableApply ? closeText : cancelText}
+          </Button>
+          <Button size='small' onClick={onApply} disabled={disableApply}>
+            {applyText}
+          </Button>
         </FooterRightSection>
       )}
     </FooterContainer>

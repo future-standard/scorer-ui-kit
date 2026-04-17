@@ -1,21 +1,16 @@
-import React, {useState, useCallback, ReactElement} from 'react';
-import styled from 'styled-components';
-import { object, boolean } from "@storybook/addon-knobs";
-import { action } from 'storybook/actions';
-
-
+import { boolean, object } from '@storybook/addon-knobs';
+import { type ReactElement, useCallback, useState } from 'react';
 import {
-  TypeTable as TypeTableCustom,
   ActionButtons,
-  IconButtonData,
-  MultilineContent,
+  type IconButtonData,
   ModalProvider,
+  MultilineContent,
+  TypeTable as TypeTableCustom,
 } from 'scorer-ui-kit';
+import type { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
+import { action } from 'storybook/actions';
+import styled from 'styled-components';
 import photo from '../../assets/placeholder.jpg';
-import {
-  ITableColumnConfig,
-  ITypeTableData
-} from 'scorer-ui-kit/dist/Tables';
 
 const Container = styled.div`
   padding: 100px;
@@ -34,10 +29,10 @@ const TimeText = styled.div`
 const ActionsTableStory = {
   title: 'Tables/molecules',
   component: TypeTableCustom,
-  decorators: []
+  decorators: [],
 };
 
-const columnConfigSample : ITableColumnConfig[] = [
+const columnConfigSample: ITableColumnConfig[] = [
   {
     header: 'Analysed Range',
     sortable: false,
@@ -62,9 +57,8 @@ const columnConfigSample : ITableColumnConfig[] = [
     header: 'Actions',
     sortable: false,
     cellStyle: 'normalImportance',
-    alignment: 'right'
+    alignment: 'right',
   },
-
 ];
 
 const onDelete = action('Deleting..');
@@ -73,69 +67,72 @@ const onDownloadLogs = action('Downloading logs');
 const onRetry = action('Retry');
 const onConfig = action('Going to config page');
 
-const handleDelete = (deviceId: string) => {
-  console.log(`Running deleting job log for device:  ${deviceId}`);
+const handleDelete = (_deviceId: string) => {
   onDelete();
 };
 
-const handleRetry = (deviceId: string) => {
-  console.log(`Retrying job for device:  ${deviceId}`);
+const handleRetry = (_deviceId: string) => {
   onRetry();
 };
 
-const handleDownloadVideo = (deviceId: string) => {
-  console.log(`Download video of device:  ${deviceId}`);
+const handleDownloadVideo = (_deviceId: string) => {
   onDownloadVideo();
 };
 
-const handleDownloadLogs = (deviceId: string) => {
-  console.log(`Dowload job log for device:  ${deviceId}`);
+const handleDownloadLogs = (_deviceId: string) => {
   onDownloadLogs();
 };
 
-const handleConfigJob = (deviceId: string) => {
-  console.log(`Config analysis job for device:  ${deviceId}`);
+const handleConfigJob = (_deviceId: string) => {
   onConfig();
 };
 
+const generateConfigButtons = (rowId: string): IconButtonData[] => {
+  return [
+    {
+      icon: 'RetryJob',
+      onClick: () => {
+        handleRetry(rowId);
+      },
+    },
+    {
+      icon: 'Delete',
+      onClick: () => {
+        handleDelete(rowId);
+      },
+    },
+    {
+      icon: 'DownloadVideo',
+      onClick: () => {
+        handleDownloadVideo(rowId);
+      },
+    },
+    {
+      icon: 'Download',
+      onClick: () => {
+        handleDownloadLogs(rowId);
+      },
+    },
+    {
+      icon: 'ViewSettings',
+      onClick: () => {
+        handleConfigJob(rowId);
+      },
+    },
+  ];
+};
 
-const generateConfigButtons  = (rowId: string) : IconButtonData[] => {
-  return (
-    [
-      {
-        icon: 'RetryJob',
-        onClick: () => {handleRetry(rowId)},
-      },
-      {
-        icon: 'Delete',
-        onClick: () => {handleDelete(rowId)},
-      },
-      {
-        icon: 'DownloadVideo',
-        onClick: () => {handleDownloadVideo(rowId)},
-      },
-      {
-        icon: 'Download',
-        onClick: () => {handleDownloadLogs(rowId)},
-      },
-      {
-        icon: 'ViewSettings',
-        onClick: () => {handleConfigJob(rowId)},
-      },
-    ]
-  )
-}
+const generateTimeRows = (initTime: string, endTime: string): ReactElement[] => {
+  return [
+    <TimeText key='start'>{`${initTime} ${String.fromCharCode(160)} →`}</TimeText>,
+    <TimeText key='end'>
+      {endTime}
+      <span>{` JST`}</span>
+    </TimeText>,
+  ];
+};
 
-const generateTimeRows = (initTime: string, endTime: string) : ReactElement[] =>  {
-  return (
-    [
-      <TimeText>{`${initTime} ${String.fromCharCode(160)} →`}</TimeText>,
-      <TimeText>{endTime}<span>{` JST`}</span></TimeText>
-    ]
-  )
-}
-
-const initialRows : ITypeTableData = [
+const initialRows: ITypeTableData = [
   {
     id: 'row1',
     header: {
@@ -144,12 +141,18 @@ const initialRows : ITypeTableData = [
       mediaType: 'img',
     },
     columns: [
-      {customComponent: <MultilineContent contentArray={generateTimeRows('2020/06/11 - 16:00','2020/06/11 - 21:30')}/>},
-      {customComponent: <div style={{fontStyle:'italic'}}>Just Now</div>},
-      {text: `00:00:12`},
-      {text: `Complete`},
-      { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device1')}/>},
-    ]
+      {
+        customComponent: (
+          <MultilineContent
+            contentArray={generateTimeRows('2020/06/11 - 16:00', '2020/06/11 - 21:30')}
+          />
+        ),
+      },
+      { customComponent: <div style={{ fontStyle: 'italic' }}>Just Now</div> },
+      { text: `00:00:12` },
+      { text: `Complete` },
+      { customComponent: <ActionButtons buttonsConfig={generateConfigButtons('device1')} /> },
+    ],
   },
   {
     id: 'row2',
@@ -159,12 +162,18 @@ const initialRows : ITypeTableData = [
       mediaType: 'img',
     },
     columns: [
-      {customComponent: <MultilineContent contentArray={generateTimeRows('2020/06/11 - 13:00','2020/06/11 - 17:30')}/>},
-      {text: `2020/06/11 - 17:30`},
-      {text: `00:00:12`},
-      {text: `Complete`},
-      { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device2')}/>},
-    ]
+      {
+        customComponent: (
+          <MultilineContent
+            contentArray={generateTimeRows('2020/06/11 - 13:00', '2020/06/11 - 17:30')}
+          />
+        ),
+      },
+      { text: `2020/06/11 - 17:30` },
+      { text: `00:00:12` },
+      { text: `Complete` },
+      { customComponent: <ActionButtons buttonsConfig={generateConfigButtons('device2')} /> },
+    ],
   },
   {
     id: 'row3',
@@ -174,38 +183,49 @@ const initialRows : ITypeTableData = [
       mediaType: 'img',
     },
     columns: [
-      {customComponent: <MultilineContent contentArray={generateTimeRows('2020/05/10 - 10:00','2020/05/10 - 12:30')}/>},
-      {text: `2020/05/10 - 12:30`},
-      {text: `00:00:12`},
-      {text: `Complete`},
-      { customComponent: <ActionButtons buttonsConfig = {generateConfigButtons('device2')}/>},
-    ]
-  }
+      {
+        customComponent: (
+          <MultilineContent
+            contentArray={generateTimeRows('2020/05/10 - 10:00', '2020/05/10 - 12:30')}
+          />
+        ),
+      },
+      { text: `2020/05/10 - 12:30` },
+      { text: `00:00:12` },
+      { text: `Complete` },
+      { customComponent: <ActionButtons buttonsConfig={generateConfigButtons('device2')} /> },
+    ],
+  },
 ];
 
 export const ActionsTable = () => {
-  const hasThumbnail = boolean("Has Thumbnail", true);
-  const selectable = boolean("Selectable Rows", true);
-  const columnConfig = object("Column Configuration", columnConfigSample);
+  const hasThumbnail = boolean('Has Thumbnail', true);
+  const selectable = boolean('Selectable Rows', true);
+  const columnConfig = object('Column Configuration', columnConfigSample);
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
-  const toggleAllCallback = useCallback((checked:boolean) => {
-    const newRows = [...rows];
+  const toggleAllCallback = useCallback(
+    (checked: boolean) => {
+      const newRows = [...rows];
 
-    newRows.forEach((row) => {
-      row._checked = checked;
-    });
+      newRows.forEach((row) => {
+        row._checked = checked;
+      });
 
-    setRows(newRows);
-  }, [rows, setRows]);
+      setRows(newRows);
+    },
+    [rows]
+  );
 
-  const selectCallback = useCallback((checked:boolean, id?: string | number) => {
-    const newRows = [...rows];
-    const targetRowIndex = newRows.findIndex(row => row.id === id)
-    newRows[targetRowIndex]._checked = checked;
+  const selectCallback = useCallback(
+    (checked: boolean, id?: string | number) => {
+      const newRows = [...rows];
+      const targetRowIndex = newRows.findIndex((row) => row.id === id);
+      newRows[targetRowIndex]._checked = checked;
 
-    setRows(newRows);
-
-  }, [rows, setRows]);
+      setRows(newRows);
+    },
+    [rows]
+  );
 
   // Provider should be at main Index level, it's here just for the example
   return (
@@ -219,12 +239,11 @@ export const ActionsTable = () => {
             selectCallback,
             toggleAllCallback,
             hasThumbnail,
-          }
-          }
+          }}
         />
       </ModalProvider>
     </Container>
-  )
+  );
 };
 
 export default ActionsTableStory;

@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import type React from 'react';
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import {Link} from 'react-router-dom';
-import ContextItem from './ContextItem';
-import { IMenuItemTop, IMenuItemSubmenu } from '..';
-import {resetButtonStyles} from '../../common/index';
+import { resetButtonStyles } from '../../common/index';
 import Icon from '../../Icons/Icon';
+import type { IMenuItemSubmenu, IMenuItemTop } from '..';
+import ContextItem from './ContextItem';
 
 const Submenu = styled.ul`
   display: block;
@@ -48,7 +49,7 @@ const SubmenuItemAnchor = styled.a`
   align-items: center;
 `;
 
-const SubmenuItem = styled.li<{$isActive?: boolean}>`
+const SubmenuItem = styled.li<{ $isActive?: boolean }>`
   display: block;
   height: 30px;
   padding-left: 40px;
@@ -72,18 +73,21 @@ const SubmenuItem = styled.li<{$isActive?: boolean}>`
     text-decoration: none;
     color: var(--grey-11);
 
-    ${({$isActive}) => css`
+    ${({ $isActive }) => css`
 
       &:hover {
         color: var(--grey-12);
       }
 
-      ${$isActive && css`
+      ${
+        $isActive &&
+        css`
         &, &:hover {
           color: var(--grey-11);
           font-weight: 600;
         }
-      `}
+      `
+      }
 
     `};
 
@@ -111,8 +115,8 @@ const SubmenuContainer = styled.div`
 
 `;
 
-const ContextContainer = styled.div<{ $open: boolean, $mobileMenu?: boolean }>`
-  min-height: ${({$mobileMenu}) => $mobileMenu ? '30px' : '70px'};
+const ContextContainer = styled.div<{ $open: boolean; $mobileMenu?: boolean }>`
+  min-height: ${({ $mobileMenu }) => ($mobileMenu ? '30px' : '70px')};
   width: inherit;
 
   ${SubmenuContainer}{
@@ -120,7 +124,9 @@ const ContextContainer = styled.div<{ $open: boolean, $mobileMenu?: boolean }>`
     grid-template-rows: 0fr;
   };
 
-  ${({$open}) => $open && css`
+  ${({ $open }) =>
+    $open &&
+    css`
     ${SubmenuContainer}{
       grid-template-rows: 1fr;
 
@@ -134,33 +140,55 @@ const ContextContainer = styled.div<{ $open: boolean, $mobileMenu?: boolean }>`
 `;
 
 interface IProps {
-  item: IMenuItemTop
-  contextKey: number
-  submenuOpen: boolean
-  menuOpen?: boolean
-  topLevelPath: string
-  mobileMenu?: boolean
-  onClickCallback?: (...args: any[]) => void
+  item: IMenuItemTop;
+  contextKey: number;
+  submenuOpen: boolean;
+  menuOpen?: boolean;
+  topLevelPath: string;
+  mobileMenu?: boolean;
+  onClickCallback?: (...args: any[]) => void;
 }
 
-const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, contextKey, topLevelPath, mobileMenu = false, onClickCallback }) => {
+const NavigationItem: React.FC<IProps> = ({
+  item,
+  menuOpen,
+  submenuOpen,
+  contextKey,
+  topLevelPath,
+  mobileMenu = false,
+  onClickCallback,
+}) => {
   const { icon, title, href, submenu, isExternalLink } = item;
   const isActive = topLevelPath === href;
 
   const refSubmenu = useRef<any>(null);
 
-  const submenus : any[] = generateSubmenus(submenu, onClickCallback ) || [];
-  const hasSubmenu : boolean = submenus.length > 0;
+  const submenus: any[] = generateSubmenus(submenu, onClickCallback) || [];
+  const hasSubmenu: boolean = submenus.length > 0;
 
   return (
     <ContextContainer $open={submenuOpen} $mobileMenu={mobileMenu}>
-      <ContextItem {...{title, href, isActive, icon, hasSubmenu, isExternalLink, submenuOpen, menuOpen, onClickCallback, contextKey}} />
-      {hasSubmenu ? <SubmenuContainer ref={refSubmenu}>
-        <SubmenuContainerInner>{submenus}</SubmenuContainerInner>
-      </SubmenuContainer> : null}
+      <ContextItem
+        {...{
+          title,
+          href,
+          isActive,
+          icon,
+          hasSubmenu,
+          isExternalLink,
+          submenuOpen,
+          menuOpen,
+          onClickCallback,
+          contextKey,
+        }}
+      />
+      {hasSubmenu ? (
+        <SubmenuContainer ref={refSubmenu}>
+          <SubmenuContainerInner>{submenus}</SubmenuContainerInner>
+        </SubmenuContainer>
+      ) : null}
     </ContextContainer>
   );
-
 };
 
 /**
@@ -168,23 +196,24 @@ const NavigationItem : React.FC<IProps> = ({item, menuOpen, submenuOpen, context
  * @param submenu JSON Object with the menu structure
  */
 const generateSubmenus = (
-  submenu? : IMenuItemSubmenu[],
-  onClickCallback?: (...args: any[]) => void,
-  ) => {
+  submenu?: IMenuItemSubmenu[],
+  onClickCallback?: (...args: any[]) => void
+) => {
+  if (!submenu) {
+    return;
+  }
 
-  if(!submenu){ return; }
-
-  const grouping : any[] = [];
-  const output : any = [];
+  const grouping: any[] = [];
+  const output: any = [];
 
   // First submenu
   grouping.push([]);
 
   submenu.forEach((item, key) => {
-    const {title, href, isExternalLink} = item;
-    if(href){
+    const { title, href, isExternalLink } = item;
+    if (href) {
       // Treat as menu item/
-      if(isExternalLink) {
+      if (isExternalLink) {
         grouping[grouping.length - 1].push(
           <SubmenuItem key={key} $isActive={false}>
             <SubmenuItemAnchor href={href} target='_blank'>
@@ -193,14 +222,27 @@ const generateSubmenus = (
                 <Icon icon='ExternalLink' color='dimmed' size={10} />
               </ExternalIconWrapper>
             </SubmenuItemAnchor>
-          </SubmenuItem>);
-      }else {
-        grouping[grouping.length - 1].push(<SubmenuItem key={key} $isActive={false}><SubmenuItemLink to={href} onClick={() => onClickCallback && onClickCallback(-1)}>{title}</SubmenuItemLink></SubmenuItem>);
+          </SubmenuItem>
+        );
+      } else {
+        grouping[grouping.length - 1].push(
+          <SubmenuItem key={key} $isActive={false}>
+            <SubmenuItemLink to={href} onClick={() => onClickCallback?.(-1)}>
+              {title}
+            </SubmenuItemLink>
+          </SubmenuItem>
+        );
       }
     } else {
       // Assume this is a grouping header.
-      if(grouping[grouping.length - 1].length > 1){ grouping.push([]); }
-      grouping[grouping.length - 1].push(<SubmenuHeader key={key}><SubmenuItemTitle>{title}</SubmenuItemTitle></SubmenuHeader>);
+      if (grouping[grouping.length - 1].length > 1) {
+        grouping.push([]);
+      }
+      grouping[grouping.length - 1].push(
+        <SubmenuHeader key={key}>
+          <SubmenuItemTitle>{title}</SubmenuItemTitle>
+        </SubmenuHeader>
+      );
     }
   });
 
@@ -209,7 +251,6 @@ const generateSubmenus = (
   });
 
   return output;
-
 };
 
 export default NavigationItem;

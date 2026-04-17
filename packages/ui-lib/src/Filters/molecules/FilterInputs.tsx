@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
-import FilterDropdown from '../../Filters/molecules/FilterDropdown';
 import FilterButton from '../../Filters/atoms/FilterButton';
+import FilterDropdown from '../../Filters/molecules/FilterDropdown';
+import BasicSearchInput from '../../Misc/atoms/BasicSearchInput';
+import type { IFilterDatePicker, IFilterDropdownExt, ISearchFilter } from '../FilterTypes';
 import DropdownDatePicker from './DropdownDatePicker';
-import { IFilterDatePicker, IFilterDropdownExt, ISearchFilter } from '../FilterTypes';
 
 const fadeInAnimation = keyframes`
   0% {
@@ -25,7 +26,9 @@ const SearchInputWrapper = styled.div`
 `;
 
 const CloseSearchInputWrapper = styled.div`
-  ${({ theme }) => theme && css`
+  ${({ theme }) =>
+    theme &&
+    css`
     animation: ${fadeInAnimation} ${theme.animation.speed.slow} ${theme.animation.easing.primary.inOut};
   `};
 `;
@@ -40,7 +43,11 @@ const Container = styled.div`
   gap: 8px 6px;
 `;
 
-const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdowns: boolean, hasShowMore: boolean) => {
+const renderDropdowns = (
+  dropdownFilters: IFilterDropdownExt[],
+  showMoreDropdowns: boolean,
+  hasShowMore: boolean
+) => {
   return dropdownFilters.map(({ id, canHide, ...dropdownProps }: IFilterDropdownExt) => {
     if (!canHide || !showMoreDropdowns || (canHide && !hasShowMore)) {
       return <StyledDropdown key={`dropdownFilter-id-${id}`} {...dropdownProps} />;
@@ -51,42 +58,42 @@ const renderDropdowns = (dropdownFilters: IFilterDropdownExt[], showMoreDropdown
 
 const renderSearchInputs = (
   searchFilters: ISearchFilter[],
-  visibleSearchInputs: String[],
+  visibleSearchInputs: string[],
   handleVisibleSearch: (searchId: string) => void
 ) => {
-  return searchFilters.map(({ id, canHide, showFieldText, selected, ...searchInputProps }: ISearchFilter) => {
-
-    if (visibleSearchInputs.includes(id)) {
-      return (
-        <SearchInputWrapper key={`searchFilter-id-${id}`}>
-          {canHide
-            ? (
+  return searchFilters.map(
+    ({ id, canHide, showFieldText, selected, ...searchInputProps }: ISearchFilter) => {
+      if (visibleSearchInputs.includes(id)) {
+        return (
+          <SearchInputWrapper key={`searchFilter-id-${id}`}>
+            {canHide ? (
               <CloseSearchInputWrapper>
-                <BasicSearchInput {...searchInputProps} hasCrossButton onCrossClick={() => handleVisibleSearch(id)} />
+                <BasicSearchInput
+                  {...searchInputProps}
+                  hasCrossButton
+                  onCrossClick={() => handleVisibleSearch(id)}
+                />
               </CloseSearchInputWrapper>
-            )
-            : <BasicSearchInput {...searchInputProps} />}
-        </SearchInputWrapper>
-      );
+            ) : (
+              <BasicSearchInput {...searchInputProps} />
+            )}
+          </SearchInputWrapper>
+        );
+      }
+      return null;
     }
-    return null;
-  });
+  );
 };
 
 const renderDatePickers = (datePickerFilters: IFilterDatePicker[]) => {
   return datePickerFilters.map(({ id, canHide, ...datePickerProps }: IFilterDatePicker) => {
-    return (
-      <StyledDropdownDatePicker
-        key={`datePicker-filter-${id}`}
-        {...datePickerProps}
-      />
-    );
+    return <StyledDropdownDatePicker key={`datePicker-filter-${id}`} {...datePickerProps} />;
   });
 };
 
 const renderAddSearchButtons = (
   searchFilters: ISearchFilter[],
-  visibleSearchInputs: String[],
+  visibleSearchInputs: string[],
   handleVisibleSearch: (searchId: string) => void
 ) => {
   return searchFilters.map((element) => {
@@ -107,10 +114,10 @@ const renderAddSearchButtons = (
 };
 
 // initially visible are only the ones that can't hide
-const initialSearchFilters = (searchFilters: ISearchFilter[]): String[] => {
-  const currentVisible: String[] = [];
+const initialSearchFilters = (searchFilters: ISearchFilter[]): string[] => {
+  const currentVisible: string[] = [];
 
-  searchFilters.forEach(element => {
+  searchFilters.forEach((element) => {
     if (!element.canHide) {
       currentVisible.push(element.id);
     }
@@ -120,12 +127,12 @@ const initialSearchFilters = (searchFilters: ISearchFilter[]): String[] => {
 };
 
 export interface IFilterInputs {
-  searchFilters?: ISearchFilter[]
-  dropdownFilters?: IFilterDropdownExt[]
-  datePickerFilters?: IFilterDatePicker[]
-  hasShowMore?: boolean
-  showMoreText?: string
-  showLessText?: string
+  searchFilters?: ISearchFilter[];
+  dropdownFilters?: IFilterDropdownExt[];
+  datePickerFilters?: IFilterDatePicker[];
+  hasShowMore?: boolean;
+  showMoreText?: string;
+  showLessText?: string;
 }
 
 const FilterInputs: React.FC<IFilterInputs> = ({
@@ -137,25 +144,27 @@ const FilterInputs: React.FC<IFilterInputs> = ({
   showLessText = 'Show Less',
   ...props
 }) => {
-
-  const [visibleSearchInputs, setVisibleSearchInputs] = useState<String[]>(initialSearchFilters(searchFilters));
-  const [showMoreDropdowns, setShowMoreDropdowns] = useState(hasShowMore ? true : false);
+  const [visibleSearchInputs, setVisibleSearchInputs] = useState<string[]>(
+    initialSearchFilters(searchFilters)
+  );
+  const [showMoreDropdowns, setShowMoreDropdowns] = useState(!!hasShowMore);
 
   const toggleShowMore = useCallback(() => {
     setShowMoreDropdowns((prev) => !prev);
   }, []);
 
-  const handleVisibleSearch = useCallback((searchId: string) => {
-
-    if (visibleSearchInputs.includes(searchId)) {
-      const newVisible = visibleSearchInputs.filter((id) => searchId !== id);
-      setVisibleSearchInputs(newVisible);
-    } else {
-      const newVisible = [...visibleSearchInputs, searchId];
-      setVisibleSearchInputs(newVisible);
-    }
-
-  }, [visibleSearchInputs]);
+  const handleVisibleSearch = useCallback(
+    (searchId: string) => {
+      if (visibleSearchInputs.includes(searchId)) {
+        const newVisible = visibleSearchInputs.filter((id) => searchId !== id);
+        setVisibleSearchInputs(newVisible);
+      } else {
+        const newVisible = [...visibleSearchInputs, searchId];
+        setVisibleSearchInputs(newVisible);
+      }
+    },
+    [visibleSearchInputs]
+  );
 
   return (
     <Container {...props}>
@@ -164,14 +173,13 @@ const FilterInputs: React.FC<IFilterInputs> = ({
       {renderDropdowns(dropdownFilters, showMoreDropdowns, hasShowMore)}
 
       {/* {When the Dev does not initialize hasShowMore as true but has hidden inputs, it will show the add Searcher of the canHide} */}
-      {(!hasShowMore || !showMoreDropdowns) && renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
+      {(!hasShowMore || !showMoreDropdowns) &&
+        renderAddSearchButtons(searchFilters, visibleSearchInputs, handleVisibleSearch)}
       {hasShowMore && (
-        <FilterButton
-          icon='FilterEllipsis'
-          onClick={toggleShowMore}
-        >
+        <FilterButton icon='FilterEllipsis' onClick={toggleShowMore}>
           {showMoreDropdowns ? showMoreText : showLessText}
-        </FilterButton>)}
+        </FilterButton>
+      )}
     </Container>
   );
 };

@@ -1,9 +1,12 @@
-import React, { FormHTMLAttributes } from 'react';
+import type React from 'react';
+import type { FormHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { StyledLabel } from './atoms/Label';
 
-const FormContainer = styled.form<{$spacing: string}>`
-  ${({$spacing})=> $spacing && css`
+const FormContainer = styled.form<{ $spacing: string }>`
+  ${({ $spacing }) =>
+    $spacing &&
+    css`
       & >  ${StyledLabel} {
         margin-bottom: ${$spacing};
       }
@@ -14,12 +17,16 @@ interface OwnProps {
   spacing?: string;
 }
 
-type Props = OwnProps & FormHTMLAttributes<HTMLFormElement>
+type Props = OwnProps & FormHTMLAttributes<HTMLFormElement>;
 
-const Form : React.FC<Props> = ({ children, spacing = '45px;', action, ...props }) => {
+const Form: React.FC<Props> = ({ children, spacing = '45px;', action, ...props }) => {
   return (
-    <FormContainer $spacing={spacing} action={typeof action === 'string' ? action : undefined} {...props}>
-      <>{children}</>
+    <FormContainer
+      $spacing={spacing}
+      action={typeof action === 'string' ? action : undefined}
+      {...props}
+    >
+      {children}
     </FormContainer>
   );
 };

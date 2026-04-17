@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 function SvgNoImage() {
   return (
     <svg
@@ -8,6 +6,7 @@ function SvgNoImage() {
       height='60'
       fill='none'
       viewBox='5 80 300 174'
+      aria-hidden='true'
     >
       <path fill='#F0F0F0' d='M0 0H320V240H0z' />
       <path

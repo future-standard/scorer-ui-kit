@@ -1,43 +1,37 @@
-import { useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-
-export const usePoll = (callback = ()=>{}, interval = 1000) => {
-  const timeoutIDRef = useRef<ReturnType<typeof setTimeout>  | null>(null);
-  const callbackRef = useRef<()=>void>(callback);
+export const usePoll = (callback = () => {}, interval = 1000) => {
+  const timeoutIDRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const callbackRef = useRef<() => void>(callback);
   const canceled = useRef<boolean>(false);
 
-
-  const pollOnce = useCallback(async()=>{
-    if(timeoutIDRef.current !== null){
-      console.debug('Clearing previous');
+  const pollOnce = useCallback(async () => {
+    if (timeoutIDRef.current !== null) {
       clearTimeout(timeoutIDRef.current);
       timeoutIDRef.current = null;
     }
 
     await callbackRef.current();
     //Start next one in the chain
-    if(!canceled.current){
-      console.debug('Starting next timeout');
+    if (!canceled.current) {
       timeoutIDRef.current = setTimeout(pollOnce, interval);
     }
-  },[interval]);
+  }, [interval]);
 
-  useEffect(()=>{
+  useEffect(() => {
     callbackRef.current = callback;
-  },[callback]);
+  }, [callback]);
 
-  useEffect(()=>{
+  useEffect(() => {
     canceled.current = false;
     pollOnce();
 
     return () => {
-      console.debug('canceled');
       canceled.current = true;
-      if(timeoutIDRef.current !== null){
-        console.debug('clearing final', timeoutIDRef.current);
+      if (timeoutIDRef.current !== null) {
         clearTimeout(timeoutIDRef.current);
         timeoutIDRef.current = null;
       }
     };
-  },[pollOnce]);
+  }, [pollOnce]);
 };
