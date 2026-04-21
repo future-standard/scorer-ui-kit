@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
+import type HlsType from 'hls.js';
 
 import LineSet from './LineSet';
 import { LineSetContext } from './Contexts';
 import Spinner from '../Indicators/Spinner';
 import { LineUIOptions, IBoundary, LineUIVideoOptions } from '.';
+
+const HLS_URL_PATTERN = /\.m3u8(?:$|[?#])/i;
+const NATIVE_HLS_MIME = 'application/vnd.apple.mpegurl';
 
 
 const Container = styled.div`
@@ -106,6 +110,7 @@ const LineUIVideo : React.FC<LineUIProps> = ({
 
   const frame =  useRef<SVGSVGElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const hlsRef = useRef<HlsType | null>(null);
 
   const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
   const {state} = useContext(LineSetContext);
@@ -183,6 +188,72 @@ const LineUIVideo : React.FC<LineUIProps> = ({
     };
   }, [initScaleAndBounds]);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !src) { return; }
+
+    if (!HLS_URL_PATTERN.test(src)) {
+      video.src = src;
+      return;
+    }
+
+    if (video.canPlayType(NATIVE_HLS_MIME)) {
+      video.src = src;
+      return;
+    }
+
+    let cancelled = false;
+    let hls: HlsType | null = null;
+
+    (async () => {
+      try {
+        const { default: Hls } = await import('hls.js');
+        if (cancelled || !videoRef.current) { return; }
+
+        if (!Hls.isSupported()) {
+          console.error('[LineUIVideo] HLS playback is not supported in this browser');
+          return;
+        }
+
+        hls = new Hls({ enableWorker: true, lowLatencyMode: true });
+        hlsRef.current = hls;
+        hls.loadSource(src);
+        hls.attachMedia(videoRef.current);
+
+        hls.on(Hls.Events.ERROR, (_event, data) => {
+          if (!data.fatal || !hls) { return; }
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              hls.startLoad();
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              hls.recoverMediaError();
+              break;
+            default:
+              hls.destroy();
+              hlsRef.current = null;
+              hls = null;
+              break;
+          }
+        });
+      } catch (err) {
+        console.error(
+          '[LineUIVideo] Failed to load hls.js. Install it as a peer dependency to play .m3u8 streams.',
+          err,
+        );
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
+      hlsRef.current = null;
+    };
+  }, [src]);
+
   const options = {
     handleFinderActive: handleFinder,
     revealSetIndex: showSetIndex !== false && (showSetIndex || state.length > 1),
@@ -198,7 +269,7 @@ const LineUIVideo : React.FC<LineUIProps> = ({
 
   return (
     <Container>
-      <Video ref={videoRef} controls={controls} muted={muted} autoPlay={autoPlay} loop={loop} {...videoOptions} onLoadedMetadata={onLoadedMetadata} src={src} id='1'> </Video>
+      <Video ref={videoRef} controls={controls} muted={muted} autoPlay={autoPlay} loop={loop} {...videoOptions} onLoadedMetadata={onLoadedMetadata} id='1'> </Video>
       {!loaded && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
       {
         loaded &&
