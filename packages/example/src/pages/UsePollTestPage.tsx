@@ -58,8 +58,7 @@ const PanelsGrid = styled.div`
 
 const Panel = styled.div<{ $variant: 'broken' | 'fixed' }>`
   border-radius: 4px;
-  border: 1px solid ${({ $variant }) =>
-    $variant === 'broken' ? 'var(--caution-8)' : 'var(--success-8)'};
+  border: 1px solid ${({ $variant }) => ($variant === 'broken' ? 'var(--caution-8)' : 'var(--success-8)')};
   padding: 24px;
   display: flex;
   flex-direction: column;

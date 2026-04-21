@@ -237,7 +237,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     console.debug('Creating RTCPeerConnection');
 
     if (!msg.sdp) {
-      console.debug('WARNING: First message wasn\'t an SDP message!?');
+      console.debug("WARNING: First message wasn't an SDP message!?");
       return;
     }
 
@@ -255,7 +255,7 @@ const WebRTCPlayer: React.FC<Props> = ({
         webSocket.current.send(JSON.stringify({ ice: candidate }));
         //TODO: try catch here?
       } else {
-        console.debug('no WS found on peer connection \'icecandidate\' event... how?');
+        console.debug("no WS found on peer connection 'icecandidate' event... how?");
       }
     });
     // pc.addEventListener('negotiationneeded', ()=>{console.debug('negotiationneeded')})
@@ -309,7 +309,7 @@ const WebRTCPlayer: React.FC<Props> = ({
 
       closeWebSocket();
     };
-  // biome-ignore lint/correctness/useExhaustiveDependencies: connectToPeer and closeWebSocket are intentionally excluded — they are recreated each render and adding them would cause infinite reconnect loops;WebRTC lifecycle is controlled solely by the `enabled` prop; stale closures are handled via refs
+    // biome-ignore lint/correctness/useExhaustiveDependencies: connectToPeer and closeWebSocket are intentionally excluded — they are recreated each render and adding them would cause infinite reconnect loops;WebRTC lifecycle is controlled solely by the `enabled` prop; stale closures are handled via refs
   }, [enabled]);
 
   return (

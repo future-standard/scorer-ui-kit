@@ -304,7 +304,10 @@ const TablePage: React.FC = () => {
         cancelText: t('filterBar.cancel'),
         closeText: t('filterBar.close'),
         applyText: t('filterBar.apply'),
-      },],[t]);
+      },
+    ],
+    [t]
+  );
 
   // Rows filtered by the active status selection
   const displayRows = useMemo(() => {
@@ -321,7 +324,9 @@ const TablePage: React.FC = () => {
       const targetRowIndex = newRows.findIndex((row) => row.id === id);
       newRows[targetRowIndex]._checked = checked;
       setRows(newRows);
-    },[rows]);
+    },
+    [rows]
+  );
 
   const toggleAllCallback = useCallback(
     (checked: boolean) => {
@@ -331,7 +336,8 @@ const TablePage: React.FC = () => {
       });
       setRows(newRows);
     },
-    [rows]);
+    [rows]
+  );
 
   const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
     setFilterResults(currentSelected);

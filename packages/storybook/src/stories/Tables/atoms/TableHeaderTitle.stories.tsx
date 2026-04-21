@@ -30,10 +30,13 @@ export const _TableHeaderTitle = () => {
     setToggleSort(asc);
   }, [asc]);
 
-  const sortHandler = useCallback((indexKey: number) => {
-    console.debug(`arriving ${indexKey}`, toggleSort);
-    setToggleSort((prev) => !prev);
-  }, [toggleSort]);
+  const sortHandler = useCallback(
+    (indexKey: number) => {
+      console.debug(`arriving ${indexKey}`, toggleSort);
+      setToggleSort((prev) => !prev);
+    },
+    [toggleSort]
+  );
 
   return (
     <Container>

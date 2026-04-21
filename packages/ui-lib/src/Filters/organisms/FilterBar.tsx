@@ -48,7 +48,8 @@ const getDisableValue = (
   } else if (singleFilter) {
     const notNullValues = filtersValues.filter((filter) => filter.selected !== null);
     if (notNullValues) {
-      disabled = notNullValues.length > 1 || (notNullValues[0] && notNullValues[0].id !== filter.id);
+      disabled =
+        notNullValues.length > 1 || (notNullValues[0] && notNullValues[0].id !== filter.id);
     }
   }
   return disabled;
@@ -88,7 +89,8 @@ const createSearchers = (
   searchersConfig.forEach((searcher) => {
     const filter = filtersValues.find((filter) => filter.id === searcher.id);
     if (filter && !Array.isArray(filter.selected)) {
-      const value: string = filter.selected === null || !isFilterItem(filter.selected) ? '' : filter.selected.text;
+      const value: string =
+        filter.selected === null || !isFilterItem(filter.selected) ? '' : filter.selected.text;
 
       const onChange = (e: React.FormEvent<HTMLInputElement>) => {
         const newValue = e.currentTarget.value;
@@ -437,14 +439,14 @@ const FilterBar: React.FC<IFilterBar> = ({
     setFiltersValues((prev) => {
       const updatedFilters = [...prev];
       updatedFilters.forEach((filter: IFilterResult) => {
-
         const foundDropdown = dropdownsConfig.find((dropdown) => dropdown.id === filter.id);
 
         if (foundDropdown) {
-
           if (Array.isArray(filter.selected)) {
-            filter.selected.forEach(item => {
-              const foundItem = foundDropdown.list.find((dropdownItem) => dropdownItem.value === item.value);
+            filter.selected.forEach((item) => {
+              const foundItem = foundDropdown.list.find(
+                (dropdownItem) => dropdownItem.value === item.value
+              );
 
               if (foundItem) {
                 item.text = foundItem.text;
@@ -454,7 +456,9 @@ const FilterBar: React.FC<IFilterBar> = ({
             const foundItem = foundDropdown.list.find((item: IFilterItem) => {
               return filter.selected === null
                 ? false
-                : isFilterItem(filter.selected) ? item.value === filter.selected.value : false;
+                : isFilterItem(filter.selected)
+                  ? item.value === filter.selected.value
+                  : false;
             });
 
             if (foundItem) {

@@ -8,8 +8,14 @@ type NotificationContextType = {
 };
 
 const defaultContext: NotificationContextType = {
-  sendNotification: () => console.debug("This is the Notification context initialization should not appear, review NotificationProvider"),
-  clearNotifications: () => console.debug("This is the context initialization should not appear, review NotificationProvider"),
+  sendNotification: () =>
+    console.debug(
+      'This is the Notification context initialization should not appear, review NotificationProvider'
+    ),
+  clearNotifications: () =>
+    console.debug(
+      'This is the context initialization should not appear, review NotificationProvider'
+    ),
 };
 
 const NotificationContext = React.createContext<NotificationContextType>(defaultContext);

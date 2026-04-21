@@ -52,7 +52,9 @@ export const getButtonDesign = (value: string) => {
   if (value === 'primary' || value === 'secondary' || value === 'warning') {
     return value;
   } else if (value === 'danger') {
-    console.warn('Button.tsx - Warning, the design prop value `danger` is being deprecated. Use `warning` instead.');
+    console.warn(
+      'Button.tsx - Warning, the design prop value `danger` is being deprecated. Use `warning` instead.'
+    );
     return 'danger';
   }
 

@@ -13,7 +13,10 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       // Parse stored json or if none return initialValue
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.warn(`[useLocalStorage] Failed to parse key "${key}" from localStorage, using initial value:`, error);
+      console.warn(
+        `[useLocalStorage] Failed to parse key "${key}" from localStorage, using initial value:`,
+        error
+      );
       return initialValue;
     }
   });

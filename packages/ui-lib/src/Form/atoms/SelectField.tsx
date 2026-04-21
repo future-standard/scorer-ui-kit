@@ -136,7 +136,9 @@ const SelectField: React.FC<ISelect> = ({
   ...props
 }) => {
   if (label?.isSameRow) {
-    console.warn('Deprecation warning: `SelectField` is deprecating `label.isSameRow`, please update this to use `label.direction` set to `row`.');
+    console.warn(
+      'Deprecation warning: `SelectField` is deprecating `label.isSameRow`, please update this to use `label.direction` set to `row`.'
+    );
   }
 
   const [activePlaceholder, setPlaceholderStatus] = useState<boolean>(!defaultValue);

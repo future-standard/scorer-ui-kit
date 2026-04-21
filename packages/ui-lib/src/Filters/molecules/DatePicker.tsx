@@ -445,7 +445,7 @@ const DatePicker: React.FC<IDatePicker> = ({
       setSelectedRange(initializeInterval(startOfDay(now)));
       setFocusedMonth(now);
     }
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally resets picker state when dateMode/timeMode props change; setters are stable
+    // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally resets picker state when dateMode/timeMode props change; setters are stable
   }, [dateMode, timeMode]);
 
   useEffect(() => {

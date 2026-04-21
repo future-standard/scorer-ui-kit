@@ -12,22 +12,28 @@ type IToggleOption = { text: string; value: string | number; icon: string };
 
 // Type checking for IFilterItem
 // https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
-const isFilterItem = (item: any): item is IFilterItem => {
+const isFilterItem = (item: unknown): item is IFilterItem => {
   if (item === null || item === undefined) {
     return false;
   }
 
-  if (item.value === undefined || item.value === null) {
+  if (typeof item !== 'object') {
     return false;
   }
 
-  if (item.text === null) {
+  const record = item as Record<string, unknown>;
+
+  if (record.value === undefined || record.value === null) {
+    return false;
+  }
+
+  if (record.text === null) {
     return false;
   }
 
   return (
-    (typeof item.value === 'number' || typeof item.value === 'string') &&
-    typeof item.text === 'string'
+    (typeof record.value === 'number' || typeof record.value === 'string') &&
+    typeof record.text === 'string'
   );
 };
 

@@ -188,7 +188,9 @@ const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({
           imageExistsCallback(false);
         };
       }
-    },[]);
+    },
+    []
+  );
 
   useEffect(() => {
     checkIfImageExists(image, (exists) => {
