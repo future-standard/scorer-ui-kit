@@ -2,7 +2,7 @@ name: PR Deploy Preview
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: write
@@ -114,32 +114,3 @@ jobs:
               body,
             });
           }
-
-  cleanup-preview:
-    if: github.event.action == 'closed'
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v6
-
-    - name: Remove preview from gh-pages
-      run: |
-        PR_NUM=${{ github.event.pull_request.number }}
-
-        git config user.name "github-actions-bot"
-        git config user.email "support+actions@github.com"
-
-        git fetch origin gh-pages
-
-        git worktree add gh-pages-dir origin/gh-pages
-
-        if [ -d "gh-pages-dir/pr/${PR_NUM}" ]; then
-          rm -rf "gh-pages-dir/pr/${PR_NUM}"
-          cd gh-pages-dir
-          git add .
-          git commit -m "Remove preview for PR ${PR_NUM}"
-          git push origin HEAD:gh-pages
-          echo "Cleaned up preview for PR ${PR_NUM}"
-        else
-          echo "No preview found for PR ${PR_NUM}, nothing to clean up"
-        fi
