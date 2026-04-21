@@ -8,6 +8,7 @@ import {
 //pages
 import FormPage from './pages/FormPage';
 import LinePage from './pages/LinePage';
+import LineHLSPage from './pages/LineHLSPage';
 import LineRTCPage from './pages/LineRTCPage';
 import LineVideoPage from './pages/LineVideoPage';
 import LinksPage from './pages/Index';
@@ -30,6 +31,7 @@ const App: React.FC<{}> = () => {
         <Route path='/' element={<LinksPage />} />
         <Route path='/line' element={<LinePage />} />
         <Route path='/linevideo' element={<LineVideoPage />} />
+        <Route path='/linehls' element={<LineHLSPage />} />
         <Route path='/linertc' element={<LineRTCPage />} />
         <Route path='/login' element={<LoginPage onLogin={() =>{}} />} />
         <Route path='/forms' element={<FormPage />} />
