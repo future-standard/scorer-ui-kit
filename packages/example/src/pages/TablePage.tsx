@@ -1,24 +1,24 @@
 import type React from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
-  TypeTable,
-  PageHeader,
-  Content,
-  useModal,
-  SplitButton,
   Button,
+  Content,
   FilterBar,
-  IFilterDropdownConfig,
-  IFilterResult,
-  IFeedbackColor,
+  type IFeedbackColor,
+  type IFilterDropdownConfig,
+  type IFilterResult,
   isFilterItem,
+  PageHeader,
+  SplitButton,
+  TypeTable,
+  useModal,
 } from 'scorer-ui-kit';
-import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
-import { StatusComponent } from '../components/StatusComponent';
-import ExamplesFilename from '../components/ExamplesFilename';
+import type { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
+import styled from 'styled-components';
 import { BASE_PATH } from '../basePath';
+import ExamplesFilename from '../components/ExamplesFilename';
+import { StatusComponent } from '../components/StatusComponent';
 
 const Container = styled.div`
   margin: 100px 200px;
@@ -36,14 +36,14 @@ const LanguageRow = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 12px;
-`
+`;
 
 const LangNote = styled.p`
   font-family: var(--font-ui);
   font-size: 12px;
   color: var(--grey-9);
   margin: 16px 0;
-`
+`;
 
 const columnConfig: ITableColumnConfig[] = [
   {
@@ -285,48 +285,53 @@ const TablePage: React.FC = () => {
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
-  const dropdownsConfig = useMemo((): IFilterDropdownConfig[] => [
-    {
-      id: 'statusFilter',
-      buttonText: t('filterBar.status'),
-      list: [
-        { text: t('filterBar.statusSuccess'), value: 'success' },
-        { text: t('filterBar.statusWarning'), value: 'warning' },
-        { text: t('filterBar.statusError'),   value: 'error' },
-        { text: t('filterBar.statusNeutral'), value: 'neutral' },
-      ],
-      buttonIcon: 'Camera',
-      optionType: 'radio',
-      hasReset: true,
-      hasApply: true,
-      resetText: t('filterBar.reset'),
-      cancelText: t('filterBar.cancel'),
-      closeText: t('filterBar.close'),
-      applyText:  t('filterBar.apply'),
-    },
-  ], [t]);
+  const dropdownsConfig = useMemo(
+    (): IFilterDropdownConfig[] => [
+      {
+        id: 'statusFilter',
+        buttonText: t('filterBar.status'),
+        list: [
+          { text: t('filterBar.statusSuccess'), value: 'success' },
+          { text: t('filterBar.statusWarning'), value: 'warning' },
+          { text: t('filterBar.statusError'), value: 'error' },
+          { text: t('filterBar.statusNeutral'), value: 'neutral' },
+        ],
+        buttonIcon: 'Camera',
+        optionType: 'radio',
+        hasReset: true,
+        hasApply: true,
+        resetText: t('filterBar.reset'),
+        cancelText: t('filterBar.cancel'),
+        closeText: t('filterBar.close'),
+        applyText: t('filterBar.apply'),
+      },],[t]);
 
   // Rows filtered by the active status selection
   const displayRows = useMemo(() => {
-    const statusFilter = filterResults.find(f => f.id === 'statusFilter');
+    const statusFilter = filterResults.find((f) => f.id === 'statusFilter');
     if (!statusFilter?.selected || !isFilterItem(statusFilter.selected)) return rows;
     const value = statusFilter.selected.value;
-    return rows.filter(row => row.id && rowStatusMap[row.id as string] === value);
+    return rows.filter((row) => row.id && rowStatusMap[row.id as string] === value);
   }, [filterResults, rows]);
 
   // Sent to checkbox in TableRow via Table component.
-  const selectCallback = useCallback((checked: boolean, id?: string | number) => {
-    const newRows = [...rows];
-    const targetRowIndex = newRows.findIndex(row => row.id === id);
-    newRows[targetRowIndex]._checked = checked;
-    setRows(newRows);
-  }, [rows, setRows]);
+  const selectCallback = useCallback(
+    (checked: boolean, id?: string | number) => {
+      const newRows = [...rows];
+      const targetRowIndex = newRows.findIndex((row) => row.id === id);
+      newRows[targetRowIndex]._checked = checked;
+      setRows(newRows);
+    },[rows]);
 
-  const toggleAllCallback = useCallback((checked: boolean) => {
-    const newRows = [...rows];
-    newRows.forEach((row) => { row._checked = checked; });
-    setRows(newRows);
-  }, [rows, setRows]);
+  const toggleAllCallback = useCallback(
+    (checked: boolean) => {
+      const newRows = [...rows];
+      newRows.forEach((row) => {
+        row._checked = checked;
+      });
+      setRows(newRows);
+    },
+    [rows]);
 
   const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
     setFilterResults(currentSelected);
@@ -336,28 +341,39 @@ const TablePage: React.FC = () => {
     i18n.changeLanguage(i18n.language.startsWith('ja') ? 'en' : 'ja');
   }, [i18n]);
 
-  return <Container>
-    <ExamplesFilename>TablePage.tsx</ExamplesFilename>
-    <Content>
-      <PageHeader title="Table Example" areaTitle="Examples" areaHref={'/'} />
-      <LanguageRow>
-        <Button design='secondary' size='small' onClick={toggleLanguage}>
-          {t('filterBar.switchLang')}
-        </Button>
-      </LanguageRow>
-      <FilterBar
-        dropdownsConfig={dropdownsConfig}
-        onChangeCallback={handleFilters}
-        totalResults={displayRows.length}
-        filtersTitle={t('filterBar.title')}
-        resultTextTemplate={t('filterBar.resultTemplate')}
-        clearText={t('filterBar.clearAll')}
-      />
-      <LangNote>{t('filterBar.tip')}</LangNote>
-      <TypeTable selectable={true} {...{ columnConfig, rows: displayRows, selectCallback, toggleAllCallback, hasThumbnail: true }} />
-      <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
-    </Content>
-  </Container>
+  return (
+    <Container>
+      <ExamplesFilename>TablePage.tsx</ExamplesFilename>
+      <Content>
+        <PageHeader title='Table Example' areaTitle='Examples' areaHref={'/'} />
+        <LanguageRow>
+          <Button design='secondary' size='small' onClick={toggleLanguage}>
+            {t('filterBar.switchLang')}
+          </Button>
+        </LanguageRow>
+        <FilterBar
+          dropdownsConfig={dropdownsConfig}
+          onChangeCallback={handleFilters}
+          totalResults={displayRows.length}
+          filtersTitle={t('filterBar.title')}
+          resultTextTemplate={t('filterBar.resultTemplate')}
+          clearText={t('filterBar.clearAll')}
+        />
+        <LangNote>{t('filterBar.tip')}</LangNote>
+        <TypeTable
+          selectable={true}
+          {...{
+            columnConfig,
+            rows: displayRows,
+            selectCallback,
+            toggleAllCallback,
+            hasThumbnail: true,
+          }}
+        />
+        <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
+      </Content>
+    </Container>
+  );
 };
 
 const checkedRowIDs = (rows: ITypeTableData) => {
@@ -370,6 +386,6 @@ const checkedRowIDs = (rows: ITypeTableData) => {
   });
 
   return ids;
-}
+};
 
 export default TablePage;

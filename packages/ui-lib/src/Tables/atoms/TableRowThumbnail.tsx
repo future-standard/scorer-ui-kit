@@ -168,26 +168,27 @@ const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({
     setShowImage(true);
   }, []);
 
-  const checkIfImageExists = (url: string, imageExistsCallback: (exists: boolean) => void) => {
-    if (!url) {
-      imageExistsCallback(false);
-      return;
-    }
-    const img = new Image();
-    img.src = url;
-
-    if (img.complete) {
-      imageExistsCallback(true);
-    } else {
-      img.onload = () => {
-        imageExistsCallback(true);
-      };
-
-      img.onerror = () => {
+  const checkIfImageExists = useCallback(
+    (url: string, imageExistsCallback: (exists: boolean) => void) => {
+      if (!url) {
         imageExistsCallback(false);
-      };
-    }
-  };
+        return;
+      }
+      const img = new Image();
+      img.src = url;
+
+      if (img.complete) {
+        imageExistsCallback(true);
+      } else {
+        img.onload = () => {
+          imageExistsCallback(true);
+        };
+
+        img.onerror = () => {
+          imageExistsCallback(false);
+        };
+      }
+    },[]);
 
   useEffect(() => {
     checkIfImageExists(image, (exists) => {

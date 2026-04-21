@@ -34,8 +34,8 @@
   "titleTab3": "Content Tab 3",
   "formName": "Name",
   "formDepartment": "Department",
-  "userDrawerTextP1":"Custom content can be injected under the user menu like this.",
-  "userDrawerTextP2":"The styling for this is left to you to include, keeping it flexible.",
+  "userDrawerTextP1": "Custom content can be injected under the user menu like this.",
+  "userDrawerTextP2": "The styling for this is left to you to include, keeping it flexible.",
   "filterBar": {
     "title": "Filters:",
     "resultTemplate": "Showing Results ([TOTAL_RESULTS]):",

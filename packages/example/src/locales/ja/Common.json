@@ -34,8 +34,8 @@
   "titleTab3": "タブ3の内容",
   "formName": "名",
   "formDepartment": "部門",
-  "userDrawerTextP1":"カスタムコンテンツは、このようにユーザーメニューの下に挿入することができます",
-  "userDrawerTextP2":"スタイリングは自由に設定できます",
+  "userDrawerTextP1": "カスタムコンテンツは、このようにユーザーメニューの下に挿入することができます",
+  "userDrawerTextP2": "スタイリングは自由に設定できます",
   "filterBar": {
     "title": "フィルター:",
     "resultTemplate": "結果 ([TOTAL_RESULTS]):",

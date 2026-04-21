@@ -90,7 +90,7 @@ const LoginModalExample: React.FC = () => {
     [onLogin]
   );
 
-  const validateFields = (params: { username: string; password: string }) => {
+  const validateFields = useCallback((params: { username: string; password: string }) => {
     if (params.username === '') {
       setAlert({
         message: 'User should not be empty',
@@ -108,7 +108,7 @@ const LoginModalExample: React.FC = () => {
     }
 
     return true;
-  };
+  }, []);
 
   const handleModalSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
