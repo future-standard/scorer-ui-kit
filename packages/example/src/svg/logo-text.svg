@@ -1,7 +1,7 @@
 <svg width="138" height="35" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <style>
-            @font-face{font-family:Monorale;font-weight:400;font-style:normal;src:url(/fonts/Monorale-Regular.woff) format(&apos;woff&apos;);font-display:fallback}@font-face{font-family:Monorale;font-weight:500;font-style:normal;src:url(/fonts/Monorale-Medium.woff) format(&apos;woff&apos;);font-display:fallback}
+            @font-face{font-family:Monorale;font-weight:400;font-style:normal;src:url(fonts/Monorale-Regular.woff) format(&apos;woff&apos;);font-display:fallback}@font-face{font-family:Monorale;font-weight:500;font-style:normal;src:url(fonts/Monorale-Medium.woff) format(&apos;woff&apos;);font-display:fallback}
         </style>
     </defs>
     <g fill="#93A5B2" fill-rule="evenodd" font-family="Monorale">

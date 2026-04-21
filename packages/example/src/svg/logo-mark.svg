@@ -9,7 +9,7 @@
                 font-family: Monorale;
                 font-weight: 700;
                 font-style: normal;
-                src: url('/fonts/Monorale-Bold.woff') format('woff');
+                src: url('fonts/Monorale-Bold.woff') format('woff');
                 font-display: fallback;
             }
         </style>

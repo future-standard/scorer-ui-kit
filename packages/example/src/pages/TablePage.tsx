@@ -1,11 +1,24 @@
 import type React from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import { Content, PageHeader, SplitButton, TypeTable, useModal } from 'scorer-ui-kit';
-import type { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 import styled from 'styled-components';
-import { BASE_PATH } from '../basePath';
-import ExamplesFilename from '../components/ExamplesFilename';
+import { useTranslation } from 'react-i18next';
+import {
+  TypeTable,
+  PageHeader,
+  Content,
+  useModal,
+  SplitButton,
+  Button,
+  FilterBar,
+  IFilterDropdownConfig,
+  IFilterResult,
+  IFeedbackColor,
+  isFilterItem,
+} from 'scorer-ui-kit';
+import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 import { StatusComponent } from '../components/StatusComponent';
+import ExamplesFilename from '../components/ExamplesFilename';
+import { BASE_PATH } from '../basePath';
 
 const Container = styled.div`
   margin: 100px 200px;
@@ -18,6 +31,19 @@ const SelectRows = styled.pre`
   padding: 10px;
   white-space: normal;
 `;
+
+const LanguageRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+`
+
+const LangNote = styled.p`
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--grey-9);
+  margin: 16px 0;
+`
 
 const columnConfig: ITableColumnConfig[] = [
   {
@@ -60,8 +86,19 @@ const columnConfig: ITableColumnConfig[] = [
   },
 ];
 
+// Status classification for each row — used by the filter
+const rowStatusMap: Record<string, IFeedbackColor> = {
+  'device-id-1': 'success',
+  'device-id-2': 'error',
+  'device-id-3': 'warning',
+  'device-id-4': 'neutral',
+  'device-id-5': 'neutral',
+};
+
 const TablePage: React.FC = () => {
+  const { t, i18n } = useTranslation('Common');
   const { createModal } = useModal();
+  const [filterResults, setFilterResults] = useState<IFilterResult[]>([]);
 
   const openCustomModal = useCallback(
     (id: string) => {
@@ -248,44 +285,79 @@ const TablePage: React.FC = () => {
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
+  const dropdownsConfig = useMemo((): IFilterDropdownConfig[] => [
+    {
+      id: 'statusFilter',
+      buttonText: t('filterBar.status'),
+      list: [
+        { text: t('filterBar.statusSuccess'), value: 'success' },
+        { text: t('filterBar.statusWarning'), value: 'warning' },
+        { text: t('filterBar.statusError'),   value: 'error' },
+        { text: t('filterBar.statusNeutral'), value: 'neutral' },
+      ],
+      buttonIcon: 'Camera',
+      optionType: 'radio',
+      hasReset: true,
+      hasApply: true,
+      resetText: t('filterBar.reset'),
+      cancelText: t('filterBar.cancel'),
+      closeText: t('filterBar.close'),
+      applyText:  t('filterBar.apply'),
+    },
+  ], [t]);
+
+  // Rows filtered by the active status selection
+  const displayRows = useMemo(() => {
+    const statusFilter = filterResults.find(f => f.id === 'statusFilter');
+    if (!statusFilter?.selected || !isFilterItem(statusFilter.selected)) return rows;
+    const value = statusFilter.selected.value;
+    return rows.filter(row => row.id && rowStatusMap[row.id as string] === value);
+  }, [filterResults, rows]);
+
   // Sent to checkbox in TableRow via Table component.
-  const selectCallback = useCallback(
-    (checked: boolean, id?: string | number) => {
-      const newRows = [...rows];
-      const targetRowIndex = newRows.findIndex((row) => row.id === id);
-      newRows[targetRowIndex]._checked = checked;
+  const selectCallback = useCallback((checked: boolean, id?: string | number) => {
+    const newRows = [...rows];
+    const targetRowIndex = newRows.findIndex(row => row.id === id);
+    newRows[targetRowIndex]._checked = checked;
+    setRows(newRows);
+  }, [rows, setRows]);
 
-      setRows(newRows);
-    },
-    [rows]
-  );
+  const toggleAllCallback = useCallback((checked: boolean) => {
+    const newRows = [...rows];
+    newRows.forEach((row) => { row._checked = checked; });
+    setRows(newRows);
+  }, [rows, setRows]);
 
-  const toggleAllCallback = useCallback(
-    (checked: boolean) => {
-      const newRows = [...rows];
+  const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
+    setFilterResults(currentSelected);
+  }, []);
 
-      newRows.forEach((row) => {
-        row._checked = checked;
-      });
+  const toggleLanguage = useCallback(() => {
+    i18n.changeLanguage(i18n.language.startsWith('ja') ? 'en' : 'ja');
+  }, [i18n]);
 
-      setRows(newRows);
-    },
-    [rows]
-  );
-
-  return (
-    <Container>
-      <ExamplesFilename>TablePage.tsx</ExamplesFilename>
-      <Content>
-        <PageHeader title='Table Example' areaTitle='Examples' areaHref={'/'} />
-        <TypeTable
-          selectable={true}
-          {...{ columnConfig, rows, selectCallback, toggleAllCallback, hasThumbnail: true }}
-        />
-        <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
-      </Content>
-    </Container>
-  );
+  return <Container>
+    <ExamplesFilename>TablePage.tsx</ExamplesFilename>
+    <Content>
+      <PageHeader title="Table Example" areaTitle="Examples" areaHref={'/'} />
+      <LanguageRow>
+        <Button design='secondary' size='small' onClick={toggleLanguage}>
+          {t('filterBar.switchLang')}
+        </Button>
+      </LanguageRow>
+      <FilterBar
+        dropdownsConfig={dropdownsConfig}
+        onChangeCallback={handleFilters}
+        totalResults={displayRows.length}
+        filtersTitle={t('filterBar.title')}
+        resultTextTemplate={t('filterBar.resultTemplate')}
+        clearText={t('filterBar.clearAll')}
+      />
+      <LangNote>{t('filterBar.tip')}</LangNote>
+      <TypeTable selectable={true} {...{ columnConfig, rows: displayRows, selectCallback, toggleAllCallback, hasThumbnail: true }} />
+      <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
+    </Content>
+  </Container>
 };
 
 const checkedRowIDs = (rows: ITypeTableData) => {
@@ -298,6 +370,6 @@ const checkedRowIDs = (rows: ITypeTableData) => {
   });
 
   return ids;
-};
+}
 
 export default TablePage;

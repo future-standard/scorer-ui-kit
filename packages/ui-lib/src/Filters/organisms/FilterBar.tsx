@@ -437,14 +437,14 @@ const FilterBar: React.FC<IFilterBar> = ({
     setFiltersValues((prev) => {
       const updatedFilters = [...prev];
       updatedFilters.forEach((filter: IFilterResult) => {
+
         const foundDropdown = dropdownsConfig.find((dropdown) => dropdown.id === filter.id);
 
         if (foundDropdown) {
+
           if (Array.isArray(filter.selected)) {
-            filter.selected.forEach((item) => {
-              const foundItem = foundDropdown.list.find(
-                (dropdownItem) => dropdownItem.value === item.value
-              );
+            filter.selected.forEach(item => {
+              const foundItem = foundDropdown.list.find((dropdownItem) => dropdownItem.value === item.value);
 
               if (foundItem) {
                 item.text = foundItem.text;
@@ -454,9 +454,7 @@ const FilterBar: React.FC<IFilterBar> = ({
             const foundItem = foundDropdown.list.find((item: IFilterItem) => {
               return filter.selected === null
                 ? false
-                : isFilterItem(filter.selected)
-                  ? item.value === filter.selected.value
-                  : false;
+                : isFilterItem(filter.selected) ? item.value === filter.selected.value : false;
             });
 
             if (foundItem) {

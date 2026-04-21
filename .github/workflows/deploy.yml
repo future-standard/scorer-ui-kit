@@ -51,7 +51,7 @@ jobs:
         BRANCH="${GITHUB_REF_NAME}"
         if [ "$BRANCH" = "main" ]; then
           echo "is_production=true" >> "$GITHUB_OUTPUT"
-          echo "base_path=/scorer-ui-kit" >> "$GITHUB_OUTPUT"
+          echo "base_path=/scorer-ui-kit/" >> "$GITHUB_OUTPUT"
           echo "dest_dir=" >> "$GITHUB_OUTPUT"
           echo "env_name=production" >> "$GITHUB_OUTPUT"
           echo "url=https://future-standard.github.io/scorer-ui-kit/" >> "$GITHUB_OUTPUT"
