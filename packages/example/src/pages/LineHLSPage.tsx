@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useEffect, useState } from 'react';
+import React, { useReducer, useCallback, useState } from 'react';
 
 import {
   LineReducer,
@@ -46,6 +46,7 @@ const LineHLSPage: React.FC = () => {
 
   const [srcInput, setSrcInput] = useState<string>(DEFAULT_HLS_SRC);
   const [src, setSrc] = useState<string>(DEFAULT_HLS_SRC);
+  const [sensingBorder, setSensingBorder] = useState<string>('10');
 
   const [options, setOptions] = useState<LineUIOptions>({
     showSetIndex: true,
@@ -63,28 +64,43 @@ const LineHLSPage: React.FC = () => {
     controls: true,
   });
 
-  const fetchLine = useCallback(() => {
-    dispatch({
-      type: 'LOAD',
-      state: [
-        {
-          name: 'Line 1',
-          points: [
-            { x: 200, y: 300 },
-            { x: 900, y: 400 },
-          ],
-          showPointHandle: true,
-          showSmallDirectionMark: true,
-          readOnly: false,
-          styling: 'primary',
-        },
-      ],
-    });
-  }, []);
+  const handleVideoLoaded = useCallback(
+    ({ width, height }: { width: number; height: number }) => {
+      // Stroke-width on the click-sensing line is expressed in SVG viewBox units,
+      // so it needs to track the actual video resolution rather than a CSS pixel constant.
+      setSensingBorder(String(Math.max(4, Math.round(Math.min(width, height) * 0.015))));
 
-  useEffect(() => {
-    fetchLine();
-  }, [fetchLine]);
+      dispatch({
+        type: 'LOAD',
+        state: [
+          {
+            name: 'Line 1',
+            points: [
+              { x: width * 0.2, y: height * 0.55 },
+              { x: width * 0.8, y: height * 0.55 },
+            ],
+            showPointHandle: true,
+            showMoveHandle: true,
+            showSmallDirectionMark: true,
+            readOnly: false,
+            styling: 'primary',
+          },
+          {
+            name: 'Line 2',
+            points: [
+              { x: width * 0.25, y: height * 0.75 },
+              { x: width * 0.75, y: height * 0.75 },
+            ],
+            showPointHandle: false,
+            showMoveHandle: false,
+            readOnly: false,
+            styling: 'secondary',
+          },
+        ],
+      });
+    },
+    []
+  );
 
   const handleLoadSrc = useCallback(() => {
     setSrc(srcInput);
@@ -164,10 +180,9 @@ const LineHLSPage: React.FC = () => {
           />
 
           <Note>
-            Default stream is Apple's public BipBop HLS test. On Safari this plays via native
-            HLS (no <code>hls.js</code> fetched). On Chrome/Firefox, <code>hls.js</code> is
-            dynamically imported — open DevTools → Network and filter for
-            <code>hls</code> to confirm it loads only on this page.
+            Default stream is Apple's public BipBop HLS test. Safari plays it natively; other
+            browsers dynamically load <code>hls.js</code>. Open DevTools → Network and filter
+            for <code>hls</code> to confirm the chunk is only fetched on this page.
           </Note>
         </SidebarBox>
 
@@ -182,7 +197,9 @@ const LineHLSPage: React.FC = () => {
             key={src}
             options={options}
             onLineClick={selectLine}
+            onLoaded={handleVideoLoaded}
             videoOptions={videoOptions}
+            lineClickSensingBorder={sensingBorder}
             src={src}
           />
         </LineSetContext.Provider>
