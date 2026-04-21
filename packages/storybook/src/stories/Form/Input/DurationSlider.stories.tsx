@@ -227,6 +227,7 @@ export const _DurationSlider = () => {
   const marks = object('Marks', exampleMarks);
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
+    console.debug('updated value', value);
     showValue(`Returned value: ${value}`, value);
   };
 
@@ -252,6 +253,7 @@ export const _DurationSlider = () => {
   const marks2 = object('Marks 2', exampleMarks2);
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate2 = (value: number) => {
+    console.debug('updated value2', value);
     showValue2(`Returned value2: ${value}`, value);
     const newValue = secToMinAndHours(value);
     setValue2(newValue);

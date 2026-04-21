@@ -252,7 +252,7 @@ const getDynamicPosition = (coords: DOMRect, width?: number, height?: number): I
 
 type ITooltip = {
   message: string;
-  tooltipFor: React.RefObject<HTMLElement>;
+  tooltipFor: React.RefObject<HTMLElement | null>;
   icon?: string;
   type?: ITooltipType;
   tooltipPosition?: ITooltipPosition;

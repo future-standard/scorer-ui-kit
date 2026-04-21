@@ -738,7 +738,9 @@ const isPrevMonthOutOfRange = (focusedMonth: Date, availableRange?: IDateRange):
     ) {
       return true;
     }
-  } catch (_error) {}
+  } catch (error) {
+    console.warn('Invalid available range:', availableRange, error);
+  }
 
   return false;
 };
@@ -756,7 +758,9 @@ const isNextMonthOutOfRange = (focusedMonth: Date, availableRange?: IDateRange):
     ) {
       return true;
     }
-  } catch (_error) {}
+  } catch (error) {
+    console.warn('Invalid available range:', availableRange, error);
+  }
 
   return false;
 };
@@ -774,7 +778,9 @@ const isDayOutOfRange = (currentDay: Date, availableRange?: IDateRange): boolean
     if (end && currentDay > end && !isSameDay(currentDay, end)) {
       return true;
     }
-  } catch (_error) {}
+  } catch (error) {
+    console.warn('Invalid available range:', availableRange, error);
+  }
 
   return false;
 };

@@ -28,10 +28,12 @@ export const _AvatarUploader = () => {
   const onRemoveValue = action('On Remove');
 
   const uploadReady = (imgFile: File) => {
+    console.debug('file', imgFile);
     showValue(imgFile.name);
   };
 
   const onError = (msg: string) => {
+    console.debug(msg);
     errorValue(msg);
   };
 

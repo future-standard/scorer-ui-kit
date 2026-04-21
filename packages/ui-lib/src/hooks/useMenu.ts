@@ -38,8 +38,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
     case 'SET_MENU': {
       const openValueStorage = localStorage.getItem(`${window.location.hostname}_isMenuOpen`);
 
-      let isMenuOpen =
-        openValueStorage === 'true' || (openValueStorage === null && !!action.data.defaultMenuOpen);
+      let isMenuOpen = openValueStorage === 'true' || (openValueStorage === null && !!action.data.defaultMenuOpen);
       let isMenuPinned = openValueStorage === 'true' && !!action.data.canAlwaysPin;
       const canPin = action.data.desktopSize === 'xlarge' || !!action.data.canAlwaysPin;
 
@@ -112,6 +111,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
     }
 
     default:
+      console.error(`Action ${action['type']} not registered.`);
       return state;
   }
 };

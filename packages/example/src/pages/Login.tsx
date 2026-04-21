@@ -278,7 +278,8 @@ const Login: React.FC<OwnProps> = ({ onLogin, design = 'primary' }) => {
       setLoading(true);
       setAlert(null);
       try {
-        const _response = await onLogin(form);
+        const response = await onLogin(form);
+        console.debug(response, 'login');
       } catch (error) {
         if (error instanceof Error) {
           setAlert({
@@ -286,6 +287,7 @@ const Login: React.FC<OwnProps> = ({ onLogin, design = 'primary' }) => {
             type: 'error',
           });
         } else {
+          console.warn(error);
         }
       }
       setLoading(false);

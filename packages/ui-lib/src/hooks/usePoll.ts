@@ -7,6 +7,7 @@ export const usePoll = (callback = () => {}, interval = 1000) => {
 
   const pollOnce = useCallback(async () => {
     if (timeoutIDRef.current !== null) {
+      console.debug('Clearing previous');
       clearTimeout(timeoutIDRef.current);
       timeoutIDRef.current = null;
     }
@@ -14,6 +15,7 @@ export const usePoll = (callback = () => {}, interval = 1000) => {
     await callbackRef.current();
     //Start next one in the chain
     if (!canceled.current) {
+      console.debug('Starting next timeout');
       timeoutIDRef.current = setTimeout(pollOnce, interval);
     }
   }, [interval]);
@@ -27,8 +29,10 @@ export const usePoll = (callback = () => {}, interval = 1000) => {
     pollOnce();
 
     return () => {
+      console.debug('canceled');
       canceled.current = true;
       if (timeoutIDRef.current !== null) {
+        console.debug('clearing final', timeoutIDRef.current);
         clearTimeout(timeoutIDRef.current);
         timeoutIDRef.current = null;
       }

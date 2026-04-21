@@ -38,6 +38,7 @@ const ModalExample: React.FC<IExampleModal> = ({
   const { createModal } = useModal();
 
   const openConfirmationModal = () => {
+    console.debug('creatingModal');
     createModal({ isCloseEnable: false, customComponent: addPersonModal });
   };
 

@@ -70,15 +70,18 @@ const LoginModalExample: React.FC = () => {
       setLoading(true);
       setAlert(null);
       try {
-        const _response = await onLogin(params);
+        const response = await onLogin(params);
+        console.debug(response, 'login');
         isSuccess = true;
       } catch (error) {
         if (error instanceof Error) {
+          console.error(`got error: ${error.message}`);
           setAlert({
             message: error.message,
             type: 'error',
           });
         } else {
+          console.warn(error);
         }
       }
       setLoading(false);

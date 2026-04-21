@@ -13,7 +13,7 @@ interface ModalContextType {
 
 const defaultContext: ModalContextType = {
   modalProps: defaultModalProps,
-  setModalProps: (_newProps: IModalProps) => {},
+  setModalProps: (newProps: IModalProps) => { console.debug(newProps); },
 };
 
 const ModalContext = React.createContext<ModalContextType>(defaultContext);

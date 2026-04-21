@@ -548,7 +548,7 @@ export const _GlobalUI = () => {
     });
   }, [languageToggle]);
 
-  const getToggleValue = (_isMenuOpen: boolean) => {};
+  const getToggleValue = (isMenuOpen: boolean) => { console.debug(isMenuOpen); };
 
   const userDrawerMetaConfig = object('User Drawer Meta', [
     {

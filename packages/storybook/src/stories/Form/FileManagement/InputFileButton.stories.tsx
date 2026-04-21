@@ -30,6 +30,7 @@ export const _InputFileButton = () => {
   const showValue = action('Input Callback');
 
   const inputCallback = (newFiles: FileList) => {
+    console.debug('file', newFiles);
     if (newFiles.length === 1) {
       showValue(newFiles[0].name);
     } else {

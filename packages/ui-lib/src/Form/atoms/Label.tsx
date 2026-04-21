@@ -68,6 +68,7 @@ const Label: React.FC<Props> = ({
   ...props
 }) => {
   if (rightAlign) {
+    console.warn('Deprecation warning: `Label` is deprecating `rightAlign`, please update this to use `direction=\'row-reverse\'` instead.');
     direction = 'row-reverse';
   }
 

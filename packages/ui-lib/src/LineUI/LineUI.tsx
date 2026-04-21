@@ -123,6 +123,7 @@ const LineUI: React.FC<LineUIProps> = ({
     if (h !== imgSize.h || w !== imgSize.w) {
       setImgSize({ h, w });
       onSizeChange({ h, w });
+      console.debug('image size:', { naturalHeight, naturalWidth, clientHeight, unit: naturalHeight / clientHeight });
     }
 
     if (h / clientHeight !== unit) {
@@ -137,6 +138,7 @@ const LineUI: React.FC<LineUIProps> = ({
     }
     //On size change make sure to refresh CTM
     const ctm = frame.current.getScreenCTM();
+    console.debug('calculateCTM', ctm);
     return ctm;
   }, []);
 
@@ -167,6 +169,7 @@ const LineUI: React.FC<LineUIProps> = ({
         max: viewBox.baseVal.y + viewBox.baseVal.height - boundaryOffset,
       },
     };
+    console.debug('setBoundaries', bounds);
     setBoundaries(bounds);
   }, [boundaryOffset]);
 

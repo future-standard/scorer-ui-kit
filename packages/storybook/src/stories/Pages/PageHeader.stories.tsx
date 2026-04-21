@@ -114,6 +114,7 @@ export const _PageHeader = () => {
   const hasBottomLeftContent = boolean('Has Bottom Left Bottom', false);
 
   if (updateDocTitle) {
+    console.info("Note: Updating document.title in Storybook has no effect though it should work in projects.");
   }
 
   return (

@@ -105,7 +105,7 @@ const SwitchWithAPI: React.FC = () => {
           <Switch
             labelText='Toggle Switch (Uncontrolled)'
             defaultChecked={true}
-            onChangeCallback={(_newValue) => {}}
+            onChangeCallback={(newValue) => console.debug("Uncontrolled switch changed:", newValue)}
           />
         </SwitchWrapper>
       </ExampleWrapper>

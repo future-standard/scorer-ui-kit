@@ -44,6 +44,7 @@ export const _CropTool = () => {
     setIsCropping(false);
   };
   const onError = (msg: string) => {
+    console.debug(msg);
     errorValue(msg);
   };
 

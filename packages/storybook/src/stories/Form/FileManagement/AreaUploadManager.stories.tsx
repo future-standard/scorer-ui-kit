@@ -33,6 +33,8 @@ export const _AreaUploadManager = () => {
   const beginUploadMsg = action('Begin Upload Button Click');
 
   const inputCallback = (goodFiles: FileList, rejectedFiles: FileList) => {
+    console.debug('good Files', goodFiles);
+    console.debug('rejected', rejectedFiles);
     showValue({ goodFiles, rejectedFiles });
   };
 

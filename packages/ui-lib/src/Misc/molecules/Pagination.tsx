@@ -279,6 +279,7 @@ const Pagination: React.FC<IPagination> = (props) => {
 
   useEffect(() => {
     if (!activePage || !isValidInput(activePage ? activePage.toString() : '')) {
+      console.warn('Pagination: invalid activePage prop value was sent');
       return;
     }
 

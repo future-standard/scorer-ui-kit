@@ -12,7 +12,8 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       const item = window.localStorage.getItem(key);
       // Parse stored json or if none return initialValue
       return item ? JSON.parse(item) : initialValue;
-    } catch (_error) {
+    } catch (error) {
+      console.warn(`[useLocalStorage] Failed to parse key "${key}" from localStorage, using initial value:`, error);
       return initialValue;
     }
   });
@@ -32,7 +33,9 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
           }
           return valueToStore;
         });
-      } catch (_error) {}
+      } catch (error) {
+        console.error(`[useLocalStorage] Failed to write key "${key}" to localStorage:`, error);
+      }
     },
     [key]
   );

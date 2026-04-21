@@ -61,6 +61,7 @@ export const _SliderInput = () => {
   // const step = number('Step', 1); // still fixing step option
 
   const handleUpdate = (value: number) => {
+    console.debug('updated value', value);
     showValue(`Returned value: ${value}`, value);
   };
 

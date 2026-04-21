@@ -51,6 +51,18 @@
       }
     }
   },
+  "overrides": [
+    {
+      "includes": ["**/src/index.tsx"],
+      "assist": {
+        "actions": {
+          "source": {
+            "organizeImports": "off"
+          }
+        }
+      }
+    }
+  ],
   "javascript": {
     "formatter": {
       "quoteStyle": "single",

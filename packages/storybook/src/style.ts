@@ -1,17 +1,7 @@
-import { createGlobalStyle, DefaultTheme } from 'styled-components';
 import { BaseStyles } from 'scorer-ui-kit';
+import { createGlobalStyle } from 'styled-components';
 
-interface MyThemeProps extends DefaultTheme {
-  theme: {
-    styles: {
-      global: {
-        background: {}
-      }
-    }
-  }
-}
-
-const GlobalStyle = createGlobalStyle<MyThemeProps>`
+const GlobalStyle = createGlobalStyle`
   ${BaseStyles};
-`
+`;
 export default GlobalStyle;

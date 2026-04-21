@@ -67,23 +67,28 @@ const onDownloadLogs = action('Downloading logs');
 const onRetry = action('Retry');
 const onConfig = action('Going to config page');
 
-const handleDelete = (_deviceId: string) => {
+const handleDelete = (deviceId: string) => {
+  console.debug(`Running deleting job log for device:  ${deviceId}`);
   onDelete();
 };
 
-const handleRetry = (_deviceId: string) => {
+const handleRetry = (deviceId: string) => {
+  console.debug(`Retrying job for device:  ${deviceId}`);
   onRetry();
 };
 
-const handleDownloadVideo = (_deviceId: string) => {
+const handleDownloadVideo = (deviceId: string) => {
+  console.debug(`Download video of device:  ${deviceId}`);
   onDownloadVideo();
 };
 
-const handleDownloadLogs = (_deviceId: string) => {
+const handleDownloadLogs = (deviceId: string) => {
+  console.debug(`Dowload job log for device:  ${deviceId}`);
   onDownloadLogs();
 };
 
-const handleConfigJob = (_deviceId: string) => {
+const handleConfigJob = (deviceId: string) => {
+  console.debug(`Config analysis job for device:  ${deviceId}`);
   onConfig();
 };
 

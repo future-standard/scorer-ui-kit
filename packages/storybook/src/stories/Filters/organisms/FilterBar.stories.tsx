@@ -1,59 +1,56 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
-import { select, object, boolean, text } from "@storybook/addon-knobs";
-import { action } from 'storybook/actions';
-
+import { boolean, object, select, text } from '@storybook/addon-knobs';
+import { useCallback, useEffect, useState } from 'react';
 import {
   FilterBar,
-  ISearchFilter,
-  TypeTable,
-  IFilterDropdownConfig,
-  IFilterResult,
-  IFilterDatePicker,
+  type IFilterDatePicker,
+  type IFilterDropdownConfig,
+  type IFilterResult,
+  type ISearchFilter,
   isFilterItem,
-} from 'scorer-ui-kit'
-
+  TypeTable,
+} from 'scorer-ui-kit';
+import type { ITypeTableData } from 'scorer-ui-kit/dist/Tables';
+import { action } from 'storybook/actions';
+import styled from 'styled-components';
 import {
-  tableData,
-  tableDataJp,
-  columnConfigSample,
-  ITableSampleData,
-  columnConfigSampleJp,
-  statusValuesEng,
-  statusValuesJp,
-  genericLoadingJp,
-  searchTemplateResultEnglish,
-  searchTemplateResultJapanese,
-  costRangeEng,
-  costRangeJap,
   clearEng,
   clearJp,
+  columnConfigSample,
+  columnConfigSampleJp,
+  costRangeEng,
+  costRangeJap,
+  emptyResultsEnglish,
+  emptyResultsJapanese,
+  genericLoadingJp,
+  type ITableSampleData,
+  resultTextTemplateEng,
+  resultTextTemplateJp,
+  searchTemplateResultEnglish,
+  searchTemplateResultJapanese,
   showLessEng,
   showLessJp,
   showMoreEng,
   showMoreJp,
-  resultTextTemplateEng,
-  resultTextTemplateJp,
-  emptyResultsEnglish,
-  emptyResultsJapanese,
+  statusValuesEng,
+  statusValuesJp,
+  tableData,
+  tableDataJp,
 } from '../../helpers/data_samples';
-
-import {
-  sortDataBy,
-  rowMaker,
-  filterByStatus,
-  filterByPrice,
-  filterByName,
-  filterByCreationDate,
-  filterByCreationDatePicker
-} from '../../helpers/sample_table_helpers';
-import { ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 import { dataContentDays, datesRange, InitialSelectedDate } from '../../helpers/datePicker_sample';
+import {
+  filterByCreationDate,
+  filterByCreationDatePicker,
+  filterByName,
+  filterByPrice,
+  filterByStatus,
+  rowMaker,
+  sortDataBy,
+} from '../../helpers/sample_table_helpers';
 
 const FilterBarStory = {
   title: 'Filters/Organism',
   component: 'FilterBar',
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -70,93 +67,111 @@ before.setDate(before.getDate() - 5);
 
 const dataInitialState = sortDataBy(tableData, 'deviceName', true);
 
-const getFilteredData = (currentSelected: IFilterResult[], data: ITableSampleData[]): ITableSampleData[] => {
+const getFilteredData = (
+  currentSelected: IFilterResult[],
+  data: ITableSampleData[]
+): ITableSampleData[] => {
+  if (Array.isArray(currentSelected) && currentSelected.length > 0) {
+    const filteredData: ITableSampleData[] = currentSelected.reduce(
+      (accumulator, currentFilter) => {
+        if (currentFilter.selected === null) {
+          return accumulator;
+        }
 
-  if (Array.isArray(currentSelected) && (currentSelected.length > 0)) {
-    const filteredData: ITableSampleData[] = currentSelected.reduce((accumulator, currentFilter) => {
-      if (currentFilter.selected === null) {
+        if (
+          currentFilter.id === 'dropdownForStatus' &&
+          (isFilterItem(currentFilter.selected) || Array.isArray(currentFilter.selected))
+        ) {
+          return filterByStatus(accumulator, currentFilter.selected);
+        }
+
+        if (currentFilter.id === 'priceFilter' && isFilterItem(currentFilter.selected)) {
+          return filterByPrice(accumulator, currentFilter.selected);
+        }
+
+        if (currentFilter.id === 'inputForDeviceName' && isFilterItem(currentFilter.selected)) {
+          return filterByName(accumulator, currentFilter.selected);
+        }
+
+        if (currentFilter.id === 'inputForDate' && isFilterItem(currentFilter.selected)) {
+          return filterByCreationDate(accumulator, currentFilter.selected);
+        }
+
+        if (
+          currentFilter.id === 'datePickerForRuntime' &&
+          !isFilterItem(currentFilter.selected) &&
+          !Array.isArray(currentFilter.selected)
+        ) {
+          return filterByCreationDatePicker(accumulator, currentFilter.selected);
+        }
+
         return accumulator;
-      };
-
-      if (currentFilter.id === 'dropdownForStatus' && (isFilterItem(currentFilter.selected) || (Array.isArray(currentFilter.selected)))) {
-        return filterByStatus(accumulator, currentFilter.selected);
-      }
-
-      if ((currentFilter.id === 'priceFilter') && isFilterItem(currentFilter.selected)) {
-        return filterByPrice(accumulator, currentFilter.selected);
-      }
-
-      if (currentFilter.id === 'inputForDeviceName' && isFilterItem(currentFilter.selected)) {
-        return filterByName(accumulator, currentFilter.selected);
-      }
-
-      if (currentFilter.id === 'inputForDate' && isFilterItem(currentFilter.selected)) {
-        return filterByCreationDate(accumulator, currentFilter.selected);
-      }
-
-      if (currentFilter.id === 'datePickerForRuntime' && !isFilterItem(currentFilter.selected) && !Array.isArray(currentFilter.selected)) {
-        return filterByCreationDatePicker(accumulator, currentFilter.selected);
-      }
-
-      return accumulator;
-    }, data);
+      },
+      data
+    );
 
     return filteredData;
   }
 
   return data;
-}
+};
 
 /**
  * Filter Bar Story Starts
  */
 export const _FilterBar = () => {
-  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
+  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
   const [rows, setRows] = useState<ITypeTableData>(rowMaker(dataInitialState));
   const [filters, setFilters] = useState<IFilterResult[]>([]);
   /**
- * Story interaction section
- */
+   * Story interaction section
+   */
   const singleFilter = boolean('Single Filter', false);
   const hasShowMore = boolean('Has Show More', true);
   // valid formats - https://date-fns.org/v2.25.0/docs/format
   const resultsDateFormat = text('Results date format', 'yyyy-MM-dd HH:mm');
   const datePickerHasApply = boolean('Datepicker has Apply', true);
-  const handleStatusReset = action("Status Reset was pressed");
-  const handleStatusCancel = action("Status Cancel was pressed");
-  const handlePriceReset = action("Price Reset was pressed");
-  const handlePriceCancel = action("Price Cancel pressed");
+  const handleStatusReset = action('Status Reset was pressed');
+  const handleStatusCancel = action('Status Cancel was pressed');
+  const handlePriceReset = action('Price Reset was pressed');
+  const handlePriceCancel = action('Price Cancel pressed');
 
   // Sent to checkbox in TableRow via Table component.
-  const selectCallback = useCallback((checked: boolean, id?: string | number) => {
-    const newRows = [...rows];
-    const targetRowIndex = newRows.findIndex(row => row.id === id)
-    newRows[targetRowIndex]._checked = checked;
+  const selectCallback = useCallback(
+    (checked: boolean, id?: string | number) => {
+      const newRows = [...rows];
+      const targetRowIndex = newRows.findIndex((row) => row.id === id);
+      newRows[targetRowIndex]._checked = checked;
 
-    setRows(newRows);
+      setRows(newRows);
+    },
+    [rows]
+  );
 
-  }, [rows, setRows]);
+  const toggleAllCallback = useCallback(
+    (checked: boolean) => {
+      const newRows = [...rows];
 
+      newRows.forEach((row) => {
+        row._checked = checked;
+      });
 
-  const toggleAllCallback = useCallback((checked: boolean) => {
-    const newRows = [...rows];
+      setRows(newRows);
+    },
+    [rows]
+  );
 
-    newRows.forEach((row) => {
-      row._checked = checked;
-    });
+  const sortCallback = useCallback(
+    (ascending: boolean, columnId: string) => {
+      const unsortedData: ITableSampleData[] = [...data];
 
-    setRows(newRows);
-  }, [rows, setRows]);
-
-  const sortCallback = useCallback((ascending: boolean, columnId: string) => {
-    const unsortedData: ITableSampleData[] = [...data];
-
-    const validKey = columnId as keyof ITableSampleData;
-    const sortedData = sortDataBy(unsortedData, validKey, ascending);
-    setData(sortedData);
-
-  }, [data]);
+      const validKey = columnId as keyof ITableSampleData;
+      const sortedData = sortDataBy(unsortedData, validKey, ascending);
+      setData(sortedData);
+    },
+    [data]
+  );
 
   const searchers: ISearchFilter[] = [
     {
@@ -171,8 +186,8 @@ export const _FilterBar = () => {
       name: language === 'english' ? 'Date' : '年月日',
       canHide: true,
       showFieldText: language === 'english' ? 'Show Date Input' : '年月日 みる',
-    }
-  ]
+    },
+  ];
 
   const dropdowns: IFilterDropdownConfig[] = [
     {
@@ -183,7 +198,8 @@ export const _FilterBar = () => {
       optionType: 'checkbox',
       loadingText: language === 'english' ? 'Loading Status ...' : genericLoadingJp,
       searchPlaceholder: language === 'english' ? 'Status...' : 'ステータス...',
-      searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+      searchResultText:
+        language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
       emptyResultText: language === 'english' ? emptyResultsEnglish : emptyResultsJapanese,
       onResetCallback: handleStatusReset,
       onCancelCallback: handleStatusCancel,
@@ -207,7 +223,8 @@ export const _FilterBar = () => {
       optionType: 'radio',
       loadingText: language === 'english' ? 'Loading Cost...' : genericLoadingJp,
       searchPlaceholder: language === 'english' ? 'Cost...' : '価格...',
-      searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+      searchResultText:
+        language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
       emptyResultText: language === 'english' ? emptyResultsEnglish : emptyResultsJapanese,
       onResetCallback: handlePriceReset,
       onCancelCallback: handlePriceCancel,
@@ -221,8 +238,8 @@ export const _FilterBar = () => {
       ascendingText: language === 'english' ? 'Ascending' : '昇順',
       isListAscending: true,
       hasOptionsFilter: true,
-    }
-  ]
+    },
+  ];
 
   const datePickers: IFilterDatePicker[] = [
     {
@@ -239,47 +256,51 @@ export const _FilterBar = () => {
       selected: InitialSelectedDate,
       availableRange: datesRange,
       contentDays: dataContentDays,
-      hasApply: datePickerHasApply
-    }
-  ]
+      hasApply: datePickerHasApply,
+    },
+  ];
 
   /**
    * objects only for display
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const searchersConfig = object('Search Filters', searchers);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dropdownsConfig = object('DropdownFilters', dropdowns);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const datePickersConfig = object('DatePickers', datePickers);
+  const _searchersConfig = object('Search Filters', searchers);
+  const _dropdownsConfig = object('DropdownFilters', dropdowns);
+  const _datePickersConfig = object('DatePickers', datePickers);
   const filtersValues = action('onChangeCallback');
 
-  const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
-    filtersValues(currentSelected);
-    const localData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
-    const tempData: ITableSampleData[] = [...localData];
+  const handleFilters = useCallback(
+    (currentSelected: IFilterResult[]) => {
+      filtersValues(currentSelected);
+      const localData =
+        language === 'english'
+          ? sortDataBy(tableData, 'deviceName', true)
+          : sortDataBy(tableDataJp, 'deviceName', true);
+      const tempData: ITableSampleData[] = [...localData];
 
-    if ((currentSelected.length === 0)) {
-      setData(localData);
-      setFilters([])
-    } else {
-      const filteredData = getFilteredData(currentSelected, tempData);
-      setData(filteredData);
-      setFilters(currentSelected);
-    }
-
-  }, [filtersValues, language])
-
+      if (currentSelected.length === 0) {
+        setData(localData);
+        setFilters([]);
+      } else {
+        const filteredData = getFilteredData(currentSelected, tempData);
+        setData(filteredData);
+        setFilters(currentSelected);
+      }
+    },
+    [filtersValues, language]
+  );
 
   useEffect(() => {
-    const localizeData = language === 'english' ? sortDataBy(tableData, 'deviceName', true) : sortDataBy(tableDataJp, 'deviceName', true);
+    const localizeData =
+      language === 'english'
+        ? sortDataBy(tableData, 'deviceName', true)
+        : sortDataBy(tableDataJp, 'deviceName', true);
     const newData = getFilteredData(filters, localizeData);
     setData(newData);
-  }, [filters, language])
+  }, [filters, language]);
 
   useEffect(() => {
     setRows(rowMaker(data));
-  }, [data])
+  }, [data]);
 
   return (
     <Container>
@@ -298,7 +319,8 @@ export const _FilterBar = () => {
         resultsDateFormat={resultsDateFormat}
       />
       <TypeTableWrapper>
-        <TypeTable {...{ selectCallback, toggleAllCallback, rows, sortCallback, }}
+        <TypeTable
+          {...{ selectCallback, toggleAllCallback, rows, sortCallback }}
           columnConfig={language === 'english' ? columnConfigSample : columnConfigSampleJp}
           hasStatus
           selectable
@@ -308,7 +330,8 @@ export const _FilterBar = () => {
           hasHeaderGroups
         />
       </TypeTableWrapper>
-    </Container>)
-}
+    </Container>
+  );
+};
 
 export default FilterBarStory;

@@ -64,7 +64,8 @@ const TablePage: React.FC = () => {
   const { createModal } = useModal();
 
   const openCustomModal = useCallback(
-    (_id: string) => {
+    (id: string) => {
+      console.debug(`opening custom modal for item ${id}`);
       createModal({
         closeText: 'Close',
         isCloseEnable: true,
