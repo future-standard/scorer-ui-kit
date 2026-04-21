@@ -171,7 +171,7 @@ const LineUI: React.FC<LineUIProps> = ({
     };
     console.debug('setBoundaries', bounds);
     setBoundaries(bounds);
-  }, [boundaryOffset]);
+  }, [imgSize, boundaryOffset]);
 
   useEffect(() => {
     // Make sure we always keep scale up to date on resize.

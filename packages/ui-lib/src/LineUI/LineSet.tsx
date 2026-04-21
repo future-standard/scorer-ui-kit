@@ -205,11 +205,14 @@ const LineSet: React.FC<ILineSetProps> = ({
     [getCTM, lineSetData, handleRadius, dispatch, lineSetId, enforceBoundaries]
   );
 
-  const calcAngle = (originX: number, originY: number, towardsX: number, towardsY: number) => {
-    const angle = Math.atan2(towardsY - originY, towardsX - originX);
-    const degrees = (angle * 180) / Math.PI + 90;
-    return degrees;
-  };
+  const calcAngle = useCallback(
+    (originX: number, originY: number, towardsX: number, towardsY: number) => {
+      const angle = Math.atan2(towardsY - originY, towardsX - originX);
+      const degrees = (angle * 180) / Math.PI + 90;
+      return degrees;
+    },
+    []
+  );
 
   // useCallback maybe to reduce unchanged deals?
   const updateHandleAngles = useCallback(
