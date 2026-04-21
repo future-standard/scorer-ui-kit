@@ -128,7 +128,7 @@ const MainMenu: React.FC<IMenu> = ({
 
   /* Handling of menu open, closing and pinning. */
   const autoMenuOpen = useCallback(
-    (e: any) => {
+    (e: React.PointerEvent) => {
       if (e.pointerType === 'touch') {
         return;
       }
@@ -143,7 +143,7 @@ const MainMenu: React.FC<IMenu> = ({
   }, [setMenuClose]);
 
   const toggleMenuPin = useCallback(
-    (e: any) => {
+    (e: React.PointerEvent) => {
       if (e.pointerType === 'touch') {
         return;
       }

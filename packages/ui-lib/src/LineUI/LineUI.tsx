@@ -142,7 +142,7 @@ const LineUI: React.FC<LineUIProps> = ({
     return ctm;
   }, []);
 
-  const handlePositionTipShow = (e: any) => {
+  const handlePositionTipShow = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.target === frame.current) {
       setHandleFinder(!handleFinder === false && true);
     }

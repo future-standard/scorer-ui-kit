@@ -182,8 +182,8 @@ const Checkbox: React.FC<IProps> = ({
     checked ? CheckboxState.On : CheckboxState.Off
   );
 
-  const customOnChange = (e: any) => {
-    const checked = e.target.checked;
+  const customOnChange = (e: React.ChangeEvent<HTMLLabelElement>) => {
+    const checked = (e.target as unknown as HTMLInputElement).checked;
 
     setIsChecked(checked);
     if (onChangeCallback) {

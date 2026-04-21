@@ -2,7 +2,7 @@ import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Icon from '../Icons/Icon';
-import type { IDragLineUISharedOptions } from '.';
+import type { IDragLineUISharedOptions, IVector2 } from '.';
 
 const ContrastLine = styled.line<{
   $styling: string;
@@ -116,8 +116,8 @@ interface ILineUnitProps {
   y2: number;
   unit: number;
   lineClickCallback?: (lineSetId: number) => void;
-  lineMoveCallback: any;
-  lineMoveStartCallback: any;
+  lineMoveCallback: (position: IVector2) => void;
+  lineMoveStartCallback: (position: IVector2) => void;
   moveEndCB?: () => void;
   label?: string;
   styling?: string;
@@ -165,7 +165,7 @@ const LineUnit: React.FC<ILineUnitProps> = (props) => {
   const lineClickSensing = parseInt(props.lineClickSensingBorder as string, 10);
 
   /** --- Toucher Events Section --- */
-  const grabTouchMove = (e: any) => {
+  const grabTouchMove = (e: React.TouchEvent<SVGCircleElement>) => {
     for (let i = 0; i < e.touches.length; i++) {
       // if(i === touchIndex){
       lineMoveCallback({ x: e.touches[i].pageX, y: e.touches[i].pageY });
@@ -174,7 +174,7 @@ const LineUnit: React.FC<ILineUnitProps> = (props) => {
     moveEndCB();
   };
 
-  const grabTouchStart = (e: any) => {
+  const grabTouchStart = (e: React.TouchEvent<SVGCircleElement>) => {
     for (let i = 0; i < e.touches.length; i++) {
       // if(i === touchIndex){
       lineMoveStartCallback({ x: e.touches[i].pageX, y: e.touches[i].pageY });

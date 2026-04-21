@@ -129,7 +129,7 @@ const LineUIVideo: React.FC<LineUIProps> = ({
     }
   }, [videoSize.h, videoSize.w, unit, onSizeChange]);
 
-  const handlePositionTipShow = (e: any) => {
+  const handlePositionTipShow = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.target === frame.current) {
       setHandleFinder(!handleFinder === false && true);
     }

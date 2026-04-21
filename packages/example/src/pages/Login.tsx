@@ -243,7 +243,7 @@ const LoginBox = styled.div`
 
 interface AuthProps {
   authState?: string;
-  onStateChange?: (authState: string, data?: any) => void;
+  onStateChange?: (authState: string, data?: unknown) => void;
 }
 
 interface Props {

@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import type { IDragLineUISharedOptions } from '.';
+import type { IDragLineUISharedOptions, IVector2 } from '.';
 
 const HandleTouchReactionKeyframes = keyframes`
  0% {
@@ -129,7 +129,7 @@ interface IHandleUnitProps {
   y: number;
   Icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>> & { rotate?: number };
   rotate?: number;
-  moveCallback: any;
+  moveCallback: (pointerPosition: IVector2, index: number) => void;
   moveEndCB?: () => void;
   options: IDragLineUISharedOptions;
   readOnlyHandle?: boolean;
@@ -164,17 +164,17 @@ const HandleUnit: React.FC<IHandleUnitProps> = (props) => {
 
   /** --- Toucher Events Section --- */
   const handleTouchStart = useCallback(
-    (e: any) => {
+    (e: React.TouchEvent<SVGSVGElement>) => {
       e.preventDefault();
       if (readOnlyHandle) {
         return;
       }
       // Remember what touch event index is for this handle.
       for (let i = 0; i < e.touches.length; i++) {
-        const touch = e.touches[i];
+        const touchTarget = e.touches[i].target as Element;
         if (
-          touch.target.parentNode.parentElement === handleInstance.current ||
-          touch.target.parentNode.parentElement.parentElement
+          touchTarget.parentNode?.parentElement === handleInstance.current ||
+          touchTarget.parentNode?.parentElement?.parentElement
         ) {
           setTouchDragging(true);
           setTouchIndex(i);

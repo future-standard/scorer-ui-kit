@@ -51,7 +51,7 @@ const getShortTextTimeUnit = (value: number, unit: string) => {
   }
 };
 
-export const isTimeUnit = (value: any) => {
+export const isTimeUnit = (value: unknown) => {
   switch (value) {
     case 'seconds':
     case 'minutes':
@@ -117,20 +117,26 @@ const areDatesEqual = (
   return false;
 };
 
-const isDateInterval = (value: any): value is IDateInterval => {
+const isDateInterval = (value: unknown): value is IDateInterval => {
   if (value === null || value === undefined) {
     return false;
   }
 
-  if (value.start === null || value.start === undefined) {
+  if (typeof value !== 'object') {
     return false;
   }
 
-  if (value.end === null || value.end === undefined) {
+  const record = value as Record<string, unknown>;
+
+  if (record.start === null || record.start === undefined) {
     return false;
   }
 
-  return value.start instanceof Date && value.end instanceof Date;
+  if (record.end === null || record.end === undefined) {
+    return false;
+  }
+
+  return record.start instanceof Date && record.end instanceof Date;
 };
 
 export {
