@@ -56,7 +56,15 @@ export const Control: React.FC = () => {
   return (
     <DebugContainer>
       <div>
-        <button type='button' onClick={() => dispatch({ type: 'ADD_SET' })}>
+        <button
+          type='button'
+          onClick={() =>
+            dispatch({
+              type: 'ADD_SET',
+              data: { points: [{ x: 0, y: 0 }, { x: 100, y: 0 }] },
+            })
+          }
+        >
           Add Set
         </button>
 

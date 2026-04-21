@@ -269,8 +269,7 @@ const Pagination: React.FC<IPagination> = (props) => {
   );
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    const clipboardData = e.clipboardData || (window as any).clipboardData; // Cross-browser support
-    const pastedText = clipboardData.getData('text');
+    const pastedText = e.clipboardData.getData('text');
 
     if (!/^\d+$/.test(pastedText)) {
       e.preventDefault();

@@ -18,7 +18,7 @@ const Container = styled.div<{ $status: TypeDeviceStatus }>`
 `;
 
 interface IProps {
-  status: TypeDeviceStatus;
+  status?: TypeDeviceStatus;
 }
 
 const TypeTableDeviceStatus: React.FC<IProps> = ({ status = 'neutral' }) => {

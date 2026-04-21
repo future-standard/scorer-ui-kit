@@ -47,7 +47,7 @@ export interface ICellData {
   customComponent?: ReactElement;
 }
 export interface IRowHeader {
-  status?: any;
+  status?: IDeviceStatus;
   image?: string;
   mediaUrl?: string;
   mediaType?: IMediaType;

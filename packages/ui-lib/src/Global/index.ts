@@ -23,7 +23,7 @@ export interface IMenuTop {
 
 export interface IMenuItemTop {
   title: string;
-  icon?: any;
+  icon?: string;
   href?: string;
   isExternalLink?: boolean;
   submenu?: IMenuItemSubmenu[];

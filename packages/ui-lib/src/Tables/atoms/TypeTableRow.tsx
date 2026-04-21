@@ -26,7 +26,7 @@ interface IProps {
   hasTypeIcon?: boolean;
   columnConfig: ITableColumnConfig[];
   rowData: IRowData;
-  selectCallback?: (event: any, id?: string | number) => void;
+  selectCallback?: (checked: boolean, id?: string | number) => void;
   closeText?: string;
 }
 

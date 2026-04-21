@@ -146,7 +146,7 @@ interface IProps {
   menuOpen?: boolean;
   topLevelPath: string;
   mobileMenu?: boolean;
-  onClickCallback?: (...args: any[]) => void;
+  onClickCallback?: (contextKey: number) => void;
 }
 
 const NavigationItem: React.FC<IProps> = ({
@@ -161,9 +161,9 @@ const NavigationItem: React.FC<IProps> = ({
   const { icon, title, href, submenu, isExternalLink } = item;
   const isActive = topLevelPath === href;
 
-  const refSubmenu = useRef<any>(null);
+  const refSubmenu = useRef<HTMLDivElement>(null);
 
-  const submenus: any[] = generateSubmenus(submenu, onClickCallback) || [];
+  const submenus: React.ReactElement[] = generateSubmenus(submenu, onClickCallback) || [];
   const hasSubmenu: boolean = submenus.length > 0;
 
   return (
@@ -197,14 +197,14 @@ const NavigationItem: React.FC<IProps> = ({
  */
 const generateSubmenus = (
   submenu?: IMenuItemSubmenu[],
-  onClickCallback?: (...args: any[]) => void
+  onClickCallback?: (contextKey: number) => void
 ) => {
   if (!submenu) {
     return;
   }
 
-  const grouping: any[] = [];
-  const output: any = [];
+  const grouping: React.ReactElement[][] = [];
+  const output: React.ReactElement[] = [];
 
   // First submenu
   grouping.push([]);

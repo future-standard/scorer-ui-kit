@@ -180,7 +180,7 @@ const ContextActionButton = styled.button<{ $menuOpen?: boolean; $isActive: bool
 
 interface IProps {
   title: string;
-  icon: string;
+  icon?: string;
   isActive: boolean;
   menuOpen?: boolean;
   submenuOpen?: boolean;
@@ -199,7 +199,7 @@ const ContextItem: React.FC<IProps> = ({
   menuOpen,
   title,
   href,
-  icon,
+  icon = '',
   compact,
   isActive,
   isExternalLink,

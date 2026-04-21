@@ -2,7 +2,7 @@ import update from 'immutability-helper';
 import type React from 'react';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import type { IDragLineUISharedOptions, IPointSet, IVector2 } from '.';
+import type { IBoundary, IDragLineUISharedOptions, IPointSet, IVector2 } from '.';
 import { LineSetContext } from './Contexts';
 import HandleUnit from './HandleUnit';
 import LineUnit from './LineUnit';
@@ -35,7 +35,7 @@ const AreaLabelText = styled.text<{ $styling: string; $showAreaLabelShadow: bool
 
 interface ILineSetProps {
   lineSetId: number;
-  boundaries: any;
+  boundaries: IBoundary;
   size: number;
   unit: number;
   lineData: IPointSet;

@@ -3,7 +3,8 @@ declare module '*.jpg' {
   export default value;
 }
 declare module '*.svg' {
-  const content: any;
+  import type React from 'react';
+  const content: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   export default content;
 }
 declare module '*.svg?url' {
