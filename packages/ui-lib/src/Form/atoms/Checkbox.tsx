@@ -220,8 +220,7 @@ const Checkbox: React.FC<IProps> = ({
           ) : null}
         </CheckboxInner>
       </CheckboxOuter>
-      <RealInput type='checkbox' checked={isChecked} readOnly {...{ disabled }} />{' '}
-      {/* disabled={state !== 'default' && state !== 'failure'} */}
+      <RealInput type='checkbox' checked={isChecked} readOnly {...{ disabled }} />
     </Container>
   );
 };
