@@ -112,7 +112,7 @@ const menuReducer = (state: IMenuState, action: IMenuActions) => {
     }
 
     default:
-      console.error(`Action ${action['type']} not registered.`);
+      console.error(`useMenu: Action ${(action as { type: string }).type} not registered.`);
       return state;
   }
 };

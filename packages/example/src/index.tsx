@@ -67,8 +67,7 @@ defaultTheme.custom.lines.weird = {
 
 const Index: FC = () => {
   // Hook used to load the theme variable, not normal use case in this example file for the real reference of usage please look at the GlobalUI Page
-  // biome-ignore lint/correctness/noUnusedVariables: called for its side effect of initializing theme CSS variables
-  const _initialize = useThemeToggle();
+  useThemeToggle();
 
   return (
     <ThemeProvider theme={defaultTheme}>

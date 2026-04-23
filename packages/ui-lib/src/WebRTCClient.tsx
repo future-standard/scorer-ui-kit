@@ -83,7 +83,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     setStatus('Creating Answer');
     try {
       const answer = await peerConnection.current.createAnswer();
-      console.debug('Got local description: ' + JSON.stringify(answer));
+      console.debug(`WebRTC: Got local description: ${JSON.stringify(answer)}`);
       await peerConnection.current.setLocalDescription(answer);
     } catch (error) {
       console.error(error);
@@ -126,7 +126,7 @@ const WebRTCPlayer: React.FC<Props> = ({
       console.debug('Received HELLO');
       setStatus('Registered with server, waiting for offer.');
     } else if (data.startsWith('ERROR')) {
-      console.error('Received ' + data);
+      console.error(`Received ${data}`);
       handleIncomingError(data);
     } else {
       // Handle incoming JSON SDP and ICE messages
@@ -135,9 +135,9 @@ const WebRTCPlayer: React.FC<Props> = ({
         msg = JSON.parse(data);
       } catch (e) {
         if (e instanceof SyntaxError) {
-          handleIncomingError(`Error parsing incoming JSON: ${data}`);
+          handleIncomingError(`WebRTC: Error parsing incoming JSON: ${data}`);
         } else {
-          handleIncomingError(`Unknown error parsing response: ${data}`);
+          handleIncomingError(`WebRTC: Unknown error parsing response: ${data}`);
         }
         return;
       }
@@ -147,13 +147,13 @@ const WebRTCPlayer: React.FC<Props> = ({
       }
 
       if (msg.sdp != null) {
-        console.debug('Received Remote SDP:' + JSON.stringify(msg.sdp));
+        console.debug(`WebRTC: Received Remote SDP:${JSON.stringify(msg.sdp)}`);
         onIncomingSDP(msg.sdp);
       } else if (msg.ice != null) {
-        console.debug('Received Remote ICE:' + JSON.stringify(msg.ice));
+        console.debug(`WebRTC: Received Remote ICE:${JSON.stringify(msg.ice)}`);
         onIncomingICE(msg.ice);
       } else {
-        handleIncomingError(`Unknown incoming JSON: ${msg}`);
+        handleIncomingError(`WebRTC: Unknown incoming JSON: ${msg}`);
       }
     }
   };
@@ -163,7 +163,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     if (!webSocket.current || event.target !== webSocket.current) {
       return;
     }
-    console.debug('serverClose');
+    console.debug('WebRTC: serverClose');
     setStatus('Disconnected from server');
     closePeerConnection();
     if (event.code !== 1000 && enabledRef.current && mountedRef.current) {
@@ -284,6 +284,7 @@ const WebRTCPlayer: React.FC<Props> = ({
     enabledRef.current = enabled;
   }, [enabled]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: connectToPeer and closeWebSocket are inline functions — adding them would cause infinite reconnect loops
   useEffect(() => {
     mountedRef.current = true;
     let connectTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -320,7 +321,6 @@ const WebRTCPlayer: React.FC<Props> = ({
 
       closeWebSocket();
     };
-    // biome-ignore lint/correctness/useExhaustiveDependencies: connectToPeer and closeWebSocket are intentionally excluded — they are recreated each render and adding them would cause infinite reconnect loops;WebRTC lifecycle is controlled solely by the `enabled` prop; stale closures are handled via refs
   }, [enabled]);
 
   return (

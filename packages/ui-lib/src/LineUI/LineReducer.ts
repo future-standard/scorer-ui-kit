@@ -139,7 +139,7 @@ export default (state: IPointSet[], action: IReducerActions) => {
     }
 
     default:
-      console.error(`Action ${action['type']} not registered.`);
+      console.error(`Action ${(action as { type: string }).type} not registered.`);
       return state;
   }
 };

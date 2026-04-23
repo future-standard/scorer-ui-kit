@@ -320,7 +320,7 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({
     // ...and clear the localstorage.
     setSavedSize(null);
     setSavedCollapsedState(null);
-  }, [setSideAreaBasis, sideDefaultSize, setSideAreaState, setSavedSize, setSavedCollapsedState]);
+  }, [sideDefaultSize, setSavedSize, setSavedCollapsedState]);
 
   /**
    * Set the side area to the fully collapsed state.
@@ -336,13 +336,12 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({
       setSavedLastOpenSize(sideAreaStartBasis);
     }
   }, [
-    setSideAreaBasis,
-    setSideAreaState,
-    setSavedCollapsedState,
-    setSavedSize,
-    setSavedLastOpenSize,
+    closedBasis,
     sideAreaStartBasis,
     persist,
+    setSavedSize,
+    setSavedCollapsedState,
+    setSavedLastOpenSize,
   ]);
 
   /**
@@ -463,8 +462,6 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({
       }
     },
     [
-      setSideAreaBasis,
-      setMousePosDiff,
       resizing,
       initialMousePos,
       sideAreaStartBasis,
@@ -580,7 +577,7 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({
       $reverse={reverse ? 'true' : 'false'}
     >
       <MainArea $layout={layout} $minDimension={mainMinSize}>
-        <>{mainArea.content}</>
+        {mainArea.content}
       </MainArea>
 
       <DragContainer
@@ -605,9 +602,7 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({
         $layout={layout}
         $collapseState={sideAreaState}
       >
-        <SideAreaInner>
-          <>{sideArea.content}</>
-        </SideAreaInner>
+        <SideAreaInner>{sideArea.content}</SideAreaInner>
       </SideArea>
 
       {showDebug ? debugData : null}
