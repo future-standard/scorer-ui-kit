@@ -1,8 +1,16 @@
-import React, { PointerEvent, useState, useCallback, useEffect, useRef, useImperativeHandle } from 'react';
-import styled, { css } from "styled-components";
-import ResizeLine, { TResizeLineDirection, TResizeLineStates } from '../atoms/ResizeLine';
+import type React from 'react';
+import {
+  type PointerEvent,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import styled, { css } from 'styled-components';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { ISideAreaState, ISplitLayoutProps } from '..';
+import type { ISideAreaState, ISplitLayoutProps } from '..';
+import ResizeLine, { type TResizeLineDirection, type TResizeLineStates } from '../atoms/ResizeLine';
 
 interface IPosition {
   x: number;
@@ -30,14 +38,17 @@ const DebugData = styled.div`
   }
 `;
 
-const MainArea = styled.div<{$minDimension?: number, $layout?: LayoutType}>`
+const MainArea = styled.div<{ $minDimension?: number; $layout?: LayoutType }>`
   display: flex;
   position: relative;
   flex: 1;
 
-  ${({$layout, $minDimension}) => $layout === 'vertical' ? css`
+  ${({ $layout, $minDimension }) =>
+    $layout === 'vertical'
+      ? css`
     ${$minDimension ? `min-height: ${$minDimension}px;` : null};
-  ` : css`
+  `
+      : css`
     ${$minDimension ? `min-width: ${$minDimension}px;` : null};
   `}
 `;
@@ -49,22 +60,31 @@ const SideAreaInner = styled.div`
   transition: opacity 0.2s cubic-bezier(0.85, 0, 0.15, 1);
 `;
 
-const SideArea = styled.div<{$defaultSize: number, $maxDimension?: number, $minDimension?: number, $layout?: LayoutType, $collapseState: ISideAreaState }>`
+const SideArea = styled.div<{
+  $defaultSize: number;
+  $maxDimension?: number;
+  $minDimension?: number;
+  $layout?: LayoutType;
+  $collapseState: ISideAreaState;
+}>`
   display: flex;
   position: relative;
-  flex: 0 0 ${({$defaultSize}) => $defaultSize}px;
-  display: ${({$collapseState}) => $collapseState === 'collapsed' ? 'none' : 'block'};
+  flex: 0 0 ${({ $defaultSize }) => $defaultSize}px;
+  display: ${({ $collapseState }) => ($collapseState === 'collapsed' ? 'none' : 'block')};
   transition:
     min-width 0.65s cubic-bezier(0, 0.55, 0.45, 1),
     min-height 0.65s cubic-bezier(0, 0.55, 0.45, 1);
 
-  ${({$layout, $maxDimension, $minDimension}) => $layout === 'vertical' ? css`
+  ${({ $layout, $maxDimension, $minDimension }) =>
+    $layout === 'vertical'
+      ? css`
     ${$minDimension ? `min-height: ${$minDimension}px;` : '0'};
     ${$maxDimension ? `max-height: ${$maxDimension}px;` : 'none'};
     ${SideAreaInner}{
       min-height: ${$minDimension}px;
     }
-  ` : css`
+  `
+      : css`
     ${$minDimension ? `min-width: ${$minDimension}px;` : '0'};
     ${$maxDimension ? `max-width: ${$maxDimension}px;` : 'none'};
     ${SideAreaInner}{
@@ -73,7 +93,9 @@ const SideArea = styled.div<{$defaultSize: number, $maxDimension?: number, $minD
   `}
 
 
-  ${({$layout, $collapseState, $minDimension}) => $collapseState === 'collapsing' ? css`
+  ${({ $layout, $collapseState, $minDimension }) =>
+    $collapseState === 'collapsing'
+      ? css`
       transition: none;
       ${$layout === 'horizontal' ? 'min-width: 0' : 'min-height: 0'};
       ${SideAreaInner}{
@@ -81,32 +103,42 @@ const SideArea = styled.div<{$defaultSize: number, $maxDimension?: number, $minD
         min-width: ${$minDimension}px;
         opacity: 0.5;
       }
-    ` : null}
+    `
+      : null}
 
-    ${({$collapseState}) => $collapseState === 'collapsed' ? css`
+    ${({ $collapseState }) =>
+      $collapseState === 'collapsed'
+        ? css`
       ${SideAreaInner}{
         display: none;
       }
-    ` : null}
+    `
+        : null}
 
-    ${({$layout, $collapseState, $minDimension}) => $collapseState === 'peeking' ? css`
+    ${({ $layout, $collapseState, $minDimension }) =>
+      $collapseState === 'peeking'
+        ? css`
       ${$layout === 'horizontal' ? 'min-width: 0' : 'min-height: 0'};
       ${SideAreaInner}{
         min-width: ${$minDimension}px;
         opacity: 0.5;
       }
-    ` : null}
+    `
+        : null}
 
-    ${({$layout, $collapseState, $minDimension}) => $collapseState === 'opening' ? css`
+    ${({ $layout, $collapseState, $minDimension }) =>
+      $collapseState === 'opening'
+        ? css`
     ${$layout === 'horizontal' ? 'min-width: 0' : 'min-height: 0'};
 
     ${SideAreaInner}{
       min-width: ${$minDimension}px;
     }
-    ` : null}
+    `
+        : null}
 `;
-const DragContainer = styled.div<{$size?: number, $fauxHover: 'true' | 'false'}>`
-  flex: 0 0 ${({$size}) => $size}px;
+const DragContainer = styled.div<{ $size?: number; $fauxHover: 'true' | 'false' }>`
+  flex: 0 0 ${({ $size }) => $size}px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,11 +152,14 @@ const DragContainer = styled.div<{$size?: number, $fauxHover: 'true' | 'false'}>
     opacity: 1;
   }
 
-  ${({$fauxHover}) => $fauxHover === 'false' ? css`
+  ${({ $fauxHover }) =>
+    $fauxHover === 'false'
+      ? css`
     > div {
       opacity: 0.6;
     }
-  ` : css`
+  `
+      : css`
     > div {
       opacity: 1;
     }
@@ -132,8 +167,11 @@ const DragContainer = styled.div<{$size?: number, $fauxHover: 'true' | 'false'}>
 
 `;
 
-
-const Container = styled.section<{$initialised?: 'true' | 'false', $layout?: LayoutType, $reverse?: string}>`
+const Container = styled.section<{
+  $initialised?: 'true' | 'false';
+  $layout?: LayoutType;
+  $reverse?: string;
+}>`
   box-sizing: border-box;
   display: flex;
   flex:1;
@@ -143,45 +181,65 @@ const Container = styled.section<{$initialised?: 'true' | 'false', $layout?: Lay
   transition: opacity 0.25s cubic-bezier(0.45, 0, 0.55, 1);
   opacity: 0;
 
-  ${({$initialised}) => $initialised === 'true' ? css`
+  ${({ $initialised }) =>
+    $initialised === 'true'
+      ? css`
     opacity: 1;
-  ` : null}
+  `
+      : null}
 
-  ${({$layout}) => $layout === 'vertical' ? css`
+  ${({ $layout }) =>
+    $layout === 'vertical'
+      ? css`
     flex-direction: column;
     ${MainArea}{}
     ${DragContainer}{
       cursor: row-resize;
     }
-  ` : null}
+  `
+      : null}
 
-  ${({$reverse}) => $reverse === 'true' ? css`
+  ${({ $reverse }) =>
+    $reverse === 'true'
+      ? css`
     ${MainArea}{ order: 2; }
     ${DragContainer}{ order: 1; }
-  ` : null}
+  `
+      : null}
 `;
 
 // A flex container where the two internal areas can be adjusted with a drag handle.
 // The main area has a minimum size - it flexes to the available space.
 // The secondary side area has more restraints and is the part that is actively resized.
-const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout = 'horizontal', reverse, dividerSize = 16, persist = false, persistenceKey = 'resizable_ui', showDebug, ref: controlRef }) => {
+const SplitLayout: React.FC<ISplitLayoutProps> = ({
+  mainArea,
+  sideArea,
+  layout = 'horizontal',
+  reverse,
+  dividerSize = 16,
+  persist = false,
+  persistenceKey = 'resizable_ui',
+  showDebug,
+  ref: controlRef,
+}) => {
+  const componentKey: string = 'resizable_layout_';
+  const referenceKey: string = componentKey + persistenceKey;
 
-  const componentKey : string = 'resizable_layout_';
-  const referenceKey : string = componentKey + persistenceKey;
-
-  const closedBasis : number = 1;
-  const hideTolerance : number = 50;
-  const sideDefaultSize : number = sideArea.defaultSize || 350;
-  const sideMinSize : number = sideArea.minSize || 0;
-  const sideMaxSize : number | undefined = sideArea.maxSize;
-  const mainMinSize : number | undefined = mainArea.minSize;
+  const closedBasis: number = 1;
+  const hideTolerance: number = 50;
+  const sideDefaultSize: number = sideArea.defaultSize || 350;
+  const sideMinSize: number = sideArea.minSize || 0;
+  const sideMaxSize: number | undefined = sideArea.maxSize;
+  const mainMinSize: number | undefined = mainArea.minSize;
 
   const [initialised, setInitialised] = useState<boolean>(false);
   const [initialMousePos, setInitialMousePos] = useState<IPosition>();
   const [mousePosDiff, setMousePosDiff] = useState<IPosition>();
   const [resizing, setResizing] = useState<boolean>();
 
-  const [sideAreaState, setSideAreaState] = useState<ISideAreaState>( sideArea.defaultCollapsed ? 'collapsed' : 'open');
+  const [sideAreaState, setSideAreaState] = useState<ISideAreaState>(
+    sideArea.defaultCollapsed ? 'collapsed' : 'open'
+  );
   const [sideAreaBasis, setSideAreaBasis] = useState<number>(sideDefaultSize);
   const [sideAreaStartBasis, setSideAreaStartBasis] = useState<number>(sideDefaultSize);
   const [lastOpenSize, setLastOpenSize] = useState<number>(sideDefaultSize);
@@ -190,35 +248,46 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
   const AreaB = useRef<HTMLDivElement>(null);
 
   // For persisting across refreshes and view changes.
-  const [savedSize, setSavedSize] = useLocalStorage<number|null>(`${referenceKey}_size`, null);
-  const [savedCollapsedState, setSavedCollapsedState] = useLocalStorage<ISideAreaState|null>(`${referenceKey}_state`, null);
-  const [savedLastOpenSize, setSavedLastOpenSize] = useLocalStorage<number|null>(`${referenceKey}_quick_open_size`, null);
+  const [savedSize, setSavedSize] = useLocalStorage<number | null>(`${referenceKey}_size`, null);
+  const [savedCollapsedState, setSavedCollapsedState] = useLocalStorage<ISideAreaState | null>(
+    `${referenceKey}_state`,
+    null
+  );
+  const [savedLastOpenSize, setSavedLastOpenSize] = useLocalStorage<number | null>(
+    `${referenceKey}_quick_open_size`,
+    null
+  );
 
   /*
   --  Initialisation.
   */
 
-  useEffect(()=>{
-    if(!initialised){
+  useEffect(() => {
+    if (!initialised) {
       // Reload previous state if required.
-      if(persist){
-        if(savedSize){ setSideAreaBasis(savedSize); }
-        if(savedCollapsedState){ setSideAreaState(savedCollapsedState); }
-        if(savedLastOpenSize){ setLastOpenSize(savedLastOpenSize); }
+      if (persist) {
+        if (savedSize) {
+          setSideAreaBasis(savedSize);
+        }
+        if (savedCollapsedState) {
+          setSideAreaState(savedCollapsedState);
+        }
+        if (savedLastOpenSize) {
+          setLastOpenSize(savedLastOpenSize);
+        }
       }
       // Used to run once and also hide render redraw
       setInitialised(true);
     }
-  },[initialised, persist, savedCollapsedState, savedSize, savedLastOpenSize]);
+  }, [initialised, persist, savedCollapsedState, savedSize, savedLastOpenSize]);
 
   useEffect(() => {
-
-    if(!initialised || !sideArea.onSideAreaStateChange) {return;}
+    if (!initialised || !sideArea.onSideAreaStateChange) {
+      return;
+    }
 
     sideArea.onSideAreaStateChange(sideAreaState);
-
-  },[initialised, sideArea, sideAreaState]);
-
+  }, [initialised, sideArea, sideAreaState]);
 
   /*
   ---  Expose Controls To Parent (via Ref) ---
@@ -233,9 +302,8 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
     },
     reset: () => {
       restoreDefault();
-    }
+    },
   }));
-
 
   /*
   ---  Controls For Layout ---
@@ -262,21 +330,29 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
     setSideAreaBasis(closedBasis);
     setSideAreaStartBasis(closedBasis);
 
-    if(persist){
+    if (persist) {
       setSavedSize(closedBasis);
       setSavedCollapsedState('collapsed');
       setSavedLastOpenSize(sideAreaStartBasis);
     }
-  }, [setSideAreaBasis, setSideAreaState, setSavedCollapsedState, setSavedSize, setSavedLastOpenSize, sideAreaStartBasis, persist]);
+  }, [
+    setSideAreaBasis,
+    setSideAreaState,
+    setSavedCollapsedState,
+    setSavedSize,
+    setSavedLastOpenSize,
+    sideAreaStartBasis,
+    persist,
+  ]);
 
   /**
    * Set the side area to the last open size or min size depending behaviour.
    */
   const open = useCallback(() => {
     setSideAreaState('open');
-    let openBasis : number;
+    let openBasis: number;
 
-    if(sideAreaBasis > closedBasis && AreaB.current){
+    if (sideAreaBasis > closedBasis && AreaB.current) {
       openBasis = layout === 'horizontal' ? AreaB.current.clientWidth : AreaB.current.clientHeight;
     } else {
       openBasis = lastOpenSize;
@@ -285,12 +361,11 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
     setSideAreaStartBasis(openBasis);
     setSideAreaBasis(openBasis);
 
-    if(persist){
+    if (persist) {
       setSavedSize(Math.round(sideAreaBasis));
       setSavedCollapsedState('open');
     }
   }, [persist, setSavedCollapsedState, setSavedSize, lastOpenSize, sideAreaBasis, layout]);
-
 
   /*
   ---  Interaction Events ---
@@ -298,7 +373,7 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
 
   const releaseDrag = useCallback(() => {
     // Close if drag is withing the close range.
-    if(sideAreaState === 'collapsing' && sideAreaBasis < sideMinSize - hideTolerance){
+    if (sideAreaState === 'collapsing' && sideAreaBasis < sideMinSize - hideTolerance) {
       collapse();
     } else {
       setSideAreaStartBasis(Math.round(sideAreaBasis)); // ?
@@ -309,81 +384,102 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
     setResizing(false);
   }, [collapse, open, sideMinSize, sideAreaBasis, sideAreaState]);
 
-  const handleDragPointerDown = useCallback((event: PointerEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const { clientX, clientY } = event;
+  const handleDragPointerDown = useCallback(
+    (event: PointerEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      const { clientX, clientY } = event;
 
-    // Need to set this different if collapsed.
-    if(sideAreaState === 'collapsed'){
-      setSideAreaStartBasis( sideAreaBasis );
-    } else {
-      setSideAreaStartBasis( clampInt(sideAreaBasis, sideMinSize, sideMaxSize) );
-    }
+      // Need to set this different if collapsed.
+      if (sideAreaState === 'collapsed') {
+        setSideAreaStartBasis(sideAreaBasis);
+      } else {
+        setSideAreaStartBasis(clampInt(sideAreaBasis, sideMinSize, sideMaxSize));
+      }
 
-    setInitialMousePos({x: clientX, y: clientY});
-    setMousePosDiff({x: 0, y: 0});
-    setResizing(true);
-  }, [sideAreaBasis, sideMaxSize, sideMinSize, sideAreaState]);
+      setInitialMousePos({ x: clientX, y: clientY });
+      setMousePosDiff({ x: 0, y: 0 });
+      setResizing(true);
+    },
+    [sideAreaBasis, sideMaxSize, sideMinSize, sideAreaState]
+  );
 
   const handleDragPointerUp = () => {
-    if(resizing){
-     releaseDrag();
+    if (resizing) {
+      releaseDrag();
     }
   };
 
-  const handleDragPointerMove = useCallback((event: PointerEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = event;
-    let newBasis : number;
-    let collapse : ISideAreaState = sideAreaState;
+  const handleDragPointerMove = useCallback(
+    (event: PointerEvent<HTMLDivElement>) => {
+      const { clientX, clientY } = event;
+      let newBasis: number;
+      let collapse: ISideAreaState = sideAreaState;
 
-    if(resizing && initialMousePos && sideAreaStartBasis){
-      setMousePosDiff({x: initialMousePos.x - clientX, y: initialMousePos.y - clientY});
+      if (resizing && initialMousePos && sideAreaStartBasis) {
+        setMousePosDiff({ x: initialMousePos.x - clientX, y: initialMousePos.y - clientY });
 
-      // Behaviour - Resizing
-      if(layout === 'horizontal'){
-        // Handle Horizontal Resizing
-        const maxClamp = (ContainerRef.current?.clientWidth ?? 0) - dividerSize - (mainMinSize || 0);
-        if(!reverse){
-          newBasis = clampInt(sideAreaStartBasis + (initialMousePos.x - clientX), null, maxClamp);
+        // Behaviour - Resizing
+        if (layout === 'horizontal') {
+          // Handle Horizontal Resizing
+          const maxClamp =
+            (ContainerRef.current?.clientWidth ?? 0) - dividerSize - (mainMinSize || 0);
+          if (!reverse) {
+            newBasis = clampInt(sideAreaStartBasis + (initialMousePos.x - clientX), null, maxClamp);
+          } else {
+            newBasis = clampInt(sideAreaStartBasis - (initialMousePos.x - clientX), null, maxClamp);
+          }
         } else {
-          newBasis = clampInt(sideAreaStartBasis - (initialMousePos.x - clientX), null, maxClamp);
+          // Handle Vertical Resizing
+          const maxClamp =
+            (ContainerRef.current?.clientHeight ?? 0) - dividerSize - (mainMinSize || 0);
+          if (!reverse) {
+            newBasis = clampInt(sideAreaStartBasis + (initialMousePos.y - clientY), null, maxClamp);
+          } else {
+            newBasis = clampInt(sideAreaStartBasis - (initialMousePos.y - clientY), null, maxClamp);
+          }
         }
-      } else {
-        // Handle Vertical Resizing
-        const maxClamp = (ContainerRef.current?.clientHeight ?? 0) - dividerSize - (mainMinSize || 0);
-        if(!reverse){
-          newBasis = clampInt(sideAreaStartBasis + (initialMousePos.y - clientY), null, maxClamp);
-        } else {
-          newBasis = clampInt(sideAreaStartBasis - (initialMousePos.y - clientY), null, maxClamp);
+
+        // Behaviour - Hiding
+        // Only sets to open, collapsing or opening. Closed is handle by the release only.
+        if (sideArea.collapsable) {
+          const inCloseRange = newBasis < sideMinSize - hideTolerance;
+
+          if (sideAreaState === 'open' && inCloseRange) {
+            collapse = 'collapsing';
+          } else if (sideAreaState === 'opening' && inCloseRange) {
+            collapse = 'collapsing';
+          } else if (sideAreaState === 'collapsing' && !inCloseRange) {
+            collapse = 'open';
+          } else if (sideAreaState === 'collapsed') {
+            collapse = 'peeking';
+          } else if (sideAreaState === 'peeking' && !inCloseRange) {
+            collapse = 'opening';
+          }
         }
+
+        // Commit To Scope
+        setSideAreaBasis(newBasis);
+        setSideAreaState(collapse);
       }
-
-      // Behaviour - Hiding
-      // Only sets to open, collapsing or opening. Closed is handle by the release only.
-      if(sideArea.collapsable){
-        const inCloseRange = newBasis < (sideMinSize - hideTolerance);
-
-        if(sideAreaState === 'open' && inCloseRange){
-          collapse = 'collapsing';
-        } else if(sideAreaState === 'opening' && inCloseRange){
-          collapse = 'collapsing';
-        } else if(sideAreaState === 'collapsing' && !inCloseRange){
-          collapse = 'open';
-        } else if(sideAreaState === 'collapsed'){
-          collapse = 'peeking';
-        } else if(sideAreaState === 'peeking' && !inCloseRange){
-          collapse = 'opening';
-        }
-      }
-
-      // Commit To Scope
-      setSideAreaBasis(newBasis);
-      setSideAreaState(collapse);
-    }
-  }, [setSideAreaBasis, setMousePosDiff, resizing, initialMousePos, sideAreaStartBasis, sideAreaState, layout, dividerSize, mainMinSize, sideMinSize, reverse, sideArea.collapsable]);
+    },
+    [
+      setSideAreaBasis,
+      setMousePosDiff,
+      resizing,
+      initialMousePos,
+      sideAreaStartBasis,
+      sideAreaState,
+      layout,
+      dividerSize,
+      mainMinSize,
+      sideMinSize,
+      reverse,
+      sideArea.collapsable,
+    ]
+  );
 
   const handleMouseLeaveViewport = useCallback(() => {
-    if(resizing){
+    if (resizing) {
       releaseDrag();
     }
   }, [resizing, releaseDrag]);
@@ -396,47 +492,46 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
     };
   }, [handleMouseLeaveViewport]);
 
-
   /*
   ---  Drag Handle Logic ---
   */
-  const resizeLineArrowDirection = () : TResizeLineDirection => {
-    if(sideAreaState === 'collapsed' || sideAreaState === 'peeking'){
-      if(layout === 'horizontal'){
-        if(!reverse){
+  const resizeLineArrowDirection = (): TResizeLineDirection => {
+    if (sideAreaState === 'collapsed' || sideAreaState === 'peeking') {
+      if (layout === 'horizontal') {
+        if (!reverse) {
           return 'left';
         } else {
           return 'right';
         }
       } else {
-        if(!reverse){
+        if (!reverse) {
           return 'up';
         } else {
           return 'down';
         }
       }
     } else {
-      if(layout === 'horizontal'){
-        if(!reverse){
+      if (layout === 'horizontal') {
+        if (!reverse) {
           return 'right';
         } else {
           return 'left';
         }
       } else {
-        if(!reverse){
+        if (!reverse) {
           return 'down';
         } else {
           return 'up';
         }
       }
-     }
+    }
   };
 
-  const resizeLineState = () : TResizeLineStates => {
-    if(sideAreaState === 'collapsed' || sideAreaState === 'peeking'){
+  const resizeLineState = (): TResizeLineStates => {
+    if (sideAreaState === 'collapsed' || sideAreaState === 'peeking') {
       // Indicate intent of re-opening.
       return 'arrow';
-    } else if(sideAreaState === 'collapsing'){
+    } else if (sideAreaState === 'collapsing') {
       // Indicate intent of closing.
       return 'arrow';
     } else {
@@ -448,32 +543,68 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
   ---  Useful Debug Overlay ---
   */
 
-  const debugData = <DebugData>
-    <div><span>State:</span> {sideAreaState}</div>
-    <div><span>Position:</span> {initialMousePos?.x}, {initialMousePos?.y}</div>
-    <div><span>Difference:</span> {mousePosDiff?.x}, {mousePosDiff?.y}</div>
-    <div><span>sideAreaStartBasis:</span> {sideAreaStartBasis}</div>
-    <div><span>sideAreaBasis:</span> {sideAreaBasis}</div>
-    <div><span>lastOpenSize:</span> {lastOpenSize}</div>
-  </DebugData>;
-
+  const debugData = (
+    <DebugData>
+      <div>
+        <span>State:</span> {sideAreaState}
+      </div>
+      <div>
+        <span>Position:</span> {initialMousePos?.x}, {initialMousePos?.y}
+      </div>
+      <div>
+        <span>Difference:</span> {mousePosDiff?.x}, {mousePosDiff?.y}
+      </div>
+      <div>
+        <span>sideAreaStartBasis:</span> {sideAreaStartBasis}
+      </div>
+      <div>
+        <span>sideAreaBasis:</span> {sideAreaBasis}
+      </div>
+      <div>
+        <span>lastOpenSize:</span> {lastOpenSize}
+      </div>
+    </DebugData>
+  );
 
   /*
   --- Render ---
   */
 
-  return(
-    <Container ref={ContainerRef} onPointerMove={handleDragPointerMove} onPointerUp={handleDragPointerUp} $initialised={initialised ? 'true' : 'false'} $layout={layout} $reverse={reverse ? 'true' : 'false'}>
-
+  return (
+    <Container
+      ref={ContainerRef}
+      onPointerMove={handleDragPointerMove}
+      onPointerUp={handleDragPointerUp}
+      $initialised={initialised ? 'true' : 'false'}
+      $layout={layout}
+      $reverse={reverse ? 'true' : 'false'}
+    >
       <MainArea $layout={layout} $minDimension={mainMinSize}>
         <>{mainArea.content}</>
       </MainArea>
 
-      <DragContainer onPointerDown={handleDragPointerDown} onDoubleClick={restoreDefault} $size={dividerSize} $fauxHover={resizing ? 'true' : 'false'}>
-        <ResizeLine state={ resizeLineState() } layout={layout} arrowDirection={resizeLineArrowDirection()} />
+      <DragContainer
+        onPointerDown={handleDragPointerDown}
+        onDoubleClick={restoreDefault}
+        $size={dividerSize}
+        $fauxHover={resizing ? 'true' : 'false'}
+      >
+        <ResizeLine
+          state={resizeLineState()}
+          layout={layout}
+          arrowDirection={resizeLineArrowDirection()}
+        />
       </DragContainer>
 
-      <SideArea ref={AreaB} style={{ flexBasis: `${sideAreaBasis}px` }} $defaultSize={ sideDefaultSize } $minDimension={sideMinSize} $maxDimension={sideMaxSize} $layout={layout} $collapseState={sideAreaState}>
+      <SideArea
+        ref={AreaB}
+        style={{ flexBasis: `${sideAreaBasis}px` }}
+        $defaultSize={sideDefaultSize}
+        $minDimension={sideMinSize}
+        $maxDimension={sideMaxSize}
+        $layout={layout}
+        $collapseState={sideAreaState}
+      >
         <SideAreaInner>
           <>{sideArea.content}</>
         </SideAreaInner>
@@ -484,7 +615,6 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
   );
 };
 
-
 /**
  * Returns the number input but binding it within the range provided
  * @param value The value to clamp.
@@ -492,8 +622,8 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout =
  * @param lower The minimum value of the range.
  * @returns The clamped number value.
  */
-const clampInt = (value: number, lower?: number | null, upper?: number) : number => {
-  let clampedInt : number = value;
+const clampInt = (value: number, lower?: number | null, upper?: number): number => {
+  let clampedInt: number = value;
   clampedInt = upper && clampedInt > upper ? upper : clampedInt;
   clampedInt = lower && clampedInt < lower ? lower : clampedInt;
   return clampedInt;

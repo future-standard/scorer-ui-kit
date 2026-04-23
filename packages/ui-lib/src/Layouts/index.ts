@@ -1,8 +1,8 @@
-import { ReactElement, Ref } from 'react';
-import ContentLayout from './organisms/ContentLayout';
+import type { ReactElement, Ref } from 'react';
 import FullWidthContentBlock from './atoms/FullWidthContentBlock';
 import SplitLayout from './molecules/SplitLayout';
 import UtilityHeader from './molecules/UtilityHeader';
+import ContentLayout from './organisms/ContentLayout';
 
 interface IBreadcrumb {
   text: string;

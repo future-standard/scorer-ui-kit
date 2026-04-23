@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback, useImperativeHandle } from 'react';
+import type React from 'react';
+import { useCallback, useImperativeHandle, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import FilterButton from '../atoms/FilterButton';
@@ -102,7 +103,7 @@ interface IFilterDropHandler {
   onToggleOpenCallback?: (isOpen: boolean) => void;
   onCloseCallback?: () => void;
   children?: React.ReactNode;
-  ref?: React.Ref<FilterDropHandlerRef>
+  ref?: React.Ref<FilterDropHandlerRef>;
 }
 
 export interface FilterDropHandlerRef {
@@ -119,88 +120,87 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
   design = 'default',
   noCloseOnClickOutside,
   children,
-  onToggleOpenCallback = () => { },
-  onCloseCallback = () => { },
+  onToggleOpenCallback = () => {},
+  onCloseCallback = () => {},
   ref,
   ...props
 }) => {
+  const [openState, setOpenState] = useState<IDropOpen>({
+    isOpen: false,
+    position: 'bottom-right',
+  });
 
-    const [openState, setOpenState] = useState<IDropOpen>({
-      isOpen: false,
-      position: 'bottom-right',
+  const buttonWrapperRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  const clickOutsideClose = useCallback(() => {
+    if (noCloseOnClickOutside) {
+      return;
+    }
+
+    if (openState.isOpen) {
+      onCloseCallback();
+    }
+
+    setOpenState((prev) => {
+      const isOpen = false;
+      return { ...prev, isOpen };
     });
+  }, [noCloseOnClickOutside, onCloseCallback, openState.isOpen]);
 
-    const buttonWrapperRef = useRef<HTMLDivElement>(null);
-    const mainRef = useRef<HTMLDivElement>(null);
+  useClickOutside(mainRef, clickOutsideClose);
 
-    const clickOutsideClose = useCallback(() => {
-      if (noCloseOnClickOutside) {
+  const handleToggleOpen = useCallback(
+    (minWidth: number, minHeight: number) => {
+      if (!buttonWrapperRef.current) {
         return;
       }
 
-      if (openState.isOpen) {
-        onCloseCallback();
+      const buttonRect = buttonWrapperRef.current.getBoundingClientRect();
+      if (!buttonRect) {
+        return;
       }
+      const position: IOpenPos = getDropPosition(buttonRect, minWidth, minHeight);
 
+      onToggleOpenCallback(!openState.isOpen);
       setOpenState((prev) => {
-        const isOpen = false;
-        return { ...prev, isOpen };
+        const isOpen = !prev.isOpen;
+        return { ...prev, isOpen, position };
       });
-    }, [noCloseOnClickOutside, onCloseCallback, openState.isOpen]);
+    },
+    [onToggleOpenCallback, openState.isOpen]
+  );
 
-    useClickOutside(mainRef, clickOutsideClose);
+  const handleImperativeClose = useCallback(() => {
+    setOpenState((prev) => {
+      const isOpen = false;
+      return { ...prev, isOpen };
+    });
+  }, []);
 
-    const handleToggleOpen = useCallback(
-      (minWidth: number, minHeight: number) => {
-        if (!buttonWrapperRef.current) {
-          return;
-        }
+  // Expose imperativeClose method via ref
+  useImperativeHandle(ref, () => ({
+    imperativeClose: handleImperativeClose,
+  }));
 
-        const buttonRect = buttonWrapperRef.current.getBoundingClientRect();
-        if (!buttonRect) {
-          return;
-        }
-        const position: IOpenPos = getDropPosition(buttonRect, minWidth, minHeight);
-
-        onToggleOpenCallback(!openState.isOpen);
-        setOpenState((prev) => {
-          const isOpen = !prev.isOpen;
-          return { ...prev, isOpen, position };
-        });
-      },
-      [onToggleOpenCallback, openState.isOpen]
-    );
-
-    const handleImperativeClose = useCallback(() => {
-      setOpenState((prev) => {
-        const isOpen = false;
-        return { ...prev, isOpen };
-      });
-    }, []);
-
-    // Expose imperativeClose method via ref
-    useImperativeHandle(ref, () => ({
-      imperativeClose: handleImperativeClose,
-    }));
-
-    return (
-      <Container ref={mainRef} {...props}>
-        <ButtonWrapper ref={buttonWrapperRef}>
-          <FilterButton
-            icon={buttonIcon}
-            isOpen={openState.isOpen}
-            onClick={() => handleToggleOpen(minWidth, minHeight)}
-            {...{ disabled, isSortAscending, design }}
-            hasFlipArrow
-          >
-            {buttonText}
-          </FilterButton>
-        </ButtonWrapper>
-        <ContentBox $openState={openState} $disabled={disabled} $minWidth={minWidth}>
-          {children}
-        </ContentBox>
-      </Container>
-    );
+  return (
+    <Container ref={mainRef} {...props}>
+      <ButtonWrapper ref={buttonWrapperRef}>
+        <FilterButton
+          icon={buttonIcon}
+          isOpen={openState.isOpen}
+          onClick={() => handleToggleOpen(minWidth, minHeight)}
+          {...{ disabled, isSortAscending, design }}
+          hasFlipArrow
+        >
+          {buttonText}
+        </FilterButton>
+      </ButtonWrapper>
+      <ContentBox $openState={openState} $disabled={disabled} $minWidth={minWidth}>
+        {children}
+      </ContentBox>
+    </Container>
+  );
 };
 
 export default FilterDropHandler;

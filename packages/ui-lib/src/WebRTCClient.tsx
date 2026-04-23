@@ -26,8 +26,8 @@ const WebRTCPlayer: React.FC<Props> = ({
   peerAddress,
   maxConnectionAttempts = 30,
   rtcConfiguration = {},
-  setStatus = () => { },
-  setError = () => { },
+  setStatus = () => {},
+  setError = () => {},
   // Video element defaults
   autoPlay = true,
   muted = true,
@@ -176,7 +176,9 @@ const WebRTCPlayer: React.FC<Props> = ({
 
   function onServerError(event: Event) {
     // Ignore errors from stale WebSocket connections
-    if (event.target !== webSocket.current) { return; }
+    if (event.target !== webSocket.current) {
+      return;
+    }
     console.debug('serverError', event);
     setError('Unable to connect to server');
     closeWebSocket();

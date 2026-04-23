@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Button, PageHeader, Tag, WebRTCClient } from 'scorer-ui-kit';
 import styled from 'styled-components';
-import { PageHeader, Button, WebRTCClient, Tag } from 'scorer-ui-kit';
 import ExamplesFilename from '../components/ExamplesFilename';
 
 // ─── Styled components ───────────────────────────────────────────────────────
@@ -88,9 +89,11 @@ const ConsolePanel = styled.div`
 const ConsoleLine = styled.div<{ $level: 'error' | 'debug' | 'info' }>`
   padding: 2px 0;
   color: ${({ $level }) =>
-    $level === 'error' ? 'var(--danger-9)' :
-    $level === 'debug' ? 'var(--grey-8)' :
-    'var(--grey-11)'};
+    $level === 'error'
+      ? 'var(--danger-9)'
+      : $level === 'debug'
+        ? 'var(--grey-8)'
+        : 'var(--grey-11)'};
 `;
 
 const ConsoleHeader = styled.div`
@@ -133,23 +136,28 @@ const useConsoleCapture = () => {
     originalDebug.current = console.debug;
 
     const addLog = (level: LogEntry['level'], args: unknown[]) => {
-      const message = args.map(a =>
-        typeof a === 'object' ? JSON.stringify(a, null, 0) : String(a)
-      ).join(' ');
+      const message = args
+        .map((a) => (typeof a === 'object' ? JSON.stringify(a, null, 0) : String(a)))
+        .join(' ');
       // Only capture WebSocket / WebRTC related messages
-      if (message.toLowerCase().includes('websocket') ||
-          message.toLowerCase().includes('webrtc') ||
-          message.toLowerCase().includes('connect') ||
-          message.toLowerCase().includes('cleanup') ||
-          message.toLowerCase().includes('server') ||
-          message.toLowerCase().includes('peer') ||
-          message.toLowerCase().includes('hello') ||
-          message.toLowerCase().includes('canceled')) {
-        setLogs(prev => [...prev, {
-          level,
-          message,
-          timestamp: new Date().toLocaleTimeString(),
-        }]);
+      if (
+        message.toLowerCase().includes('websocket') ||
+        message.toLowerCase().includes('webrtc') ||
+        message.toLowerCase().includes('connect') ||
+        message.toLowerCase().includes('cleanup') ||
+        message.toLowerCase().includes('server') ||
+        message.toLowerCase().includes('peer') ||
+        message.toLowerCase().includes('hello') ||
+        message.toLowerCase().includes('canceled')
+      ) {
+        setLogs((prev) => [
+          ...prev,
+          {
+            level,
+            message,
+            timestamp: new Date().toLocaleTimeString(),
+          },
+        ]);
       }
     };
 
@@ -182,7 +190,7 @@ const WebRTCStrictModeTestPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { logs, clearLogs } = useConsoleCapture();
 
-  const errorCount = logs.filter(l => l.level === 'error').length;
+  const errorCount = logs.filter((l) => l.level === 'error').length;
 
   return (
     <Container>
@@ -195,26 +203,35 @@ const WebRTCStrictModeTestPage: React.FC = () => {
         <ExParagraph>
           <strong>Bug (issue #627):</strong> In React 18+ StrictMode, components are double-mounted
           (mount → cleanup → remount). <CodeBlock>WebRTCPlayer</CodeBlock> created a WebSocket
-          immediately in <CodeBlock>useEffect</CodeBlock>. StrictMode&apos;s cleanup closed it before
-          the connection was established, producing browser-level errors:
+          immediately in <CodeBlock>useEffect</CodeBlock>. StrictMode&apos;s cleanup closed it
+          before the connection was established, producing browser-level errors:
         </ExParagraph>
         <ExParagraph>
-          <CodeBlock>WebSocket connection to &apos;ws://...&apos; failed: WebSocket is closed before the connection is established.</CodeBlock>
+          <CodeBlock>
+            WebSocket connection to &apos;ws://...&apos; failed: WebSocket is closed before the
+            connection is established.
+          </CodeBlock>
         </ExParagraph>
         <ExParagraph>
           <strong>Fix:</strong> Defer <CodeBlock>connectToPeer()</CodeBlock> with{' '}
           <CodeBlock>setTimeout(fn, 0)</CodeBlock> so StrictMode&apos;s synchronous cleanup cancels
           the timeout before a WebSocket is ever created. The second mount proceeds normally.
         </ExParagraph>
-        <ExParagraph><strong>Steps to test:</strong></ExParagraph>
+        <ExParagraph>
+          <strong>Steps to test:</strong>
+        </ExParagraph>
         <StepList>
           <StepRow>
             <StepNum>1.</StepNum>
-            <StepContent>Click Mount below — the WebRTCPlayer component will mount in StrictMode</StepContent>
+            <StepContent>
+              Click Mount below — the WebRTCPlayer component will mount in StrictMode
+            </StepContent>
           </StepRow>
           <StepRow>
             <StepNum>2.</StepNum>
-            <StepContent>Check the console capture panel — there should be no red error lines</StepContent>
+            <StepContent>
+              Check the console capture panel — there should be no red error lines
+            </StepContent>
           </StepRow>
           <StepRow>
             <StepNum>3.</StepNum>
@@ -227,14 +244,21 @@ const WebRTCStrictModeTestPage: React.FC = () => {
         <Button
           design={mounted ? 'secondary' : 'primary'}
           size='small'
-          onClick={() => { setMounted(m => !m); setError(null); }}
+          onClick={() => {
+            setMounted((m) => !m);
+            setError(null);
+          }}
         >
           {mounted ? 'Unmount' : 'Mount'}
         </Button>
         <Button
           design='secondary'
           size='small'
-          onClick={() => { setMounted(false); setError(null); setTimeout(() => setMounted(true), 50); }}
+          onClick={() => {
+            setMounted(false);
+            setError(null);
+            setTimeout(() => setMounted(true), 50);
+          }}
         >
           Remount
         </Button>
@@ -242,12 +266,12 @@ const WebRTCStrictModeTestPage: React.FC = () => {
 
       <StatusRow>
         <StatusLabel>Status:</StatusLabel>
-        <Tag tagSize='compact' label={status} />
+        <Tag icon='' tagSize='compact' label={status} />
       </StatusRow>
       {error && (
         <StatusRow>
           <StatusLabel>Error:</StatusLabel>
-          <Tag tagSize='compact' label={error} />
+          <Tag icon='' tagSize='compact' label={error} />
         </StatusRow>
       )}
 
@@ -260,19 +284,23 @@ const WebRTCStrictModeTestPage: React.FC = () => {
             setStatus={setStatus}
             setError={setError}
           />
-
         </HiddenPlayer>
       )}
 
       <ConsolePanel>
         <ConsoleHeader>
           <ConsoleTitle>
-            Console Capture {errorCount > 0 ? `(${errorCount} error${errorCount > 1 ? 's' : ''})` : '(clean)'}
+            Console Capture{' '}
+            {errorCount > 0 ? `(${errorCount} error${errorCount > 1 ? 's' : ''})` : '(clean)'}
           </ConsoleTitle>
-          <Button design='secondary' size='small' onClick={clearLogs}>Clear</Button>
+          <Button design='secondary' size='small' onClick={clearLogs}>
+            Clear
+          </Button>
         </ConsoleHeader>
         {logs.length === 0 && (
-          <ConsoleLine $level='info'>No WebSocket/WebRTC messages captured yet. Click Mount to start.</ConsoleLine>
+          <ConsoleLine $level='info'>
+            No WebSocket/WebRTC messages captured yet. Click Mount to start.
+          </ConsoleLine>
         )}
         {logs.map((log, i) => (
           <ConsoleLine key={i} $level={log.level}>
