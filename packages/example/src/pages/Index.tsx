@@ -156,6 +156,13 @@ const LinksPage : React.FC = () => {
           </Link>
         </Item>
         <Item>
+          <Link to={`/linehls`}>
+            <Title>Line HLS</Title>
+            <Description>The Line tool over an HLS (.m3u8) stream. Uses Safari's native HLS when available, falls back to dynamically-imported hls.js otherwise.</Description>
+            <FilenameTag>LineHLSPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
           <Link to={`/forms`}>
             <Title>Forms</Title>
             <Description>Form inputs and state examples.</Description>
