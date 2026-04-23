@@ -1,8 +1,8 @@
-import React, { PointerEvent, useState, useCallback, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import React, { PointerEvent, useState, useCallback, useEffect, useRef, useImperativeHandle } from 'react';
 import styled, { css } from "styled-components";
 import ResizeLine, { TResizeLineDirection, TResizeLineStates } from '../atoms/ResizeLine';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { ISideAreaState, ISplitLayoutHandles, ISplitLayoutProps } from '..';
+import { ISideAreaState, ISplitLayoutProps } from '..';
 
 interface IPosition {
   x: number;
@@ -164,7 +164,7 @@ const Container = styled.section<{$initialised?: 'true' | 'false', $layout?: Lay
 // A flex container where the two internal areas can be adjusted with a drag handle.
 // The main area has a minimum size - it flexes to the available space.
 // The secondary side area has more restraints and is the part that is actively resized.
-const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainArea, sideArea, layout = 'horizontal', reverse, dividerSize = 16, persist = false, persistenceKey = 'resizable_ui', showDebug }, controlRef) => {
+const SplitLayout: React.FC<ISplitLayoutProps> = ({ mainArea, sideArea, layout = 'horizontal', reverse, dividerSize = 16, persist = false, persistenceKey = 'resizable_ui', showDebug, ref: controlRef }) => {
 
   const componentKey : string = 'resizable_layout_';
   const referenceKey : string = componentKey + persistenceKey;
@@ -482,7 +482,7 @@ const SplitLayout = forwardRef<ISplitLayoutHandles, ISplitLayoutProps>(({ mainAr
       {showDebug ? debugData : null}
     </Container>
   );
-});
+};
 
 
 /**
