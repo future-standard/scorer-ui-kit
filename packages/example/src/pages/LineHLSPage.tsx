@@ -58,10 +58,9 @@ const LineHLSPage: React.FC = () => {
   });
 
   const [videoOptions] = useState<LineUIVideoOptions>({
-    loop: false,
+    loop: true,
     autoPlay: true,
     muted: true,
-    controls: true,
   });
 
   const handleVideoLoaded = useCallback(

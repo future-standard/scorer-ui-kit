@@ -197,51 +197,66 @@ const LineUIVideo : React.FC<LineUIProps> = ({
       return;
     }
 
-    if (video.canPlayType(NATIVE_HLS_MIME)) {
-      video.src = src;
-      return;
-    }
-
     let cancelled = false;
     let hls: HlsType | null = null;
 
+    const tryAutoplay = () => {
+      const el = videoRef.current;
+      if (!el || !el.autoplay) { return; }
+      const result = el.play();
+      if (result && typeof result.catch === 'function') {
+        result.catch(() => { /* autoplay blocked by browser policy — user can press play */ });
+      }
+    };
+
     (async () => {
+      // Prefer hls.js over native HLS: Chrome reports canPlayType='maybe' for .m3u8 but
+      // can't actually decode it, so trusting native detection is a footgun.
+      // Safari still uses hls.js here too; drop to native only if hls.js is unavailable.
       try {
         const { default: Hls } = await import('hls.js');
         if (cancelled || !videoRef.current) { return; }
 
-        if (!Hls.isSupported()) {
-          console.error('[LineUIVideo] HLS playback is not supported in this browser');
+        if (Hls.isSupported()) {
+          hls = new Hls({ enableWorker: true, lowLatencyMode: true });
+          hlsRef.current = hls;
+          hls.loadSource(src);
+          hls.attachMedia(videoRef.current);
+
+          hls.on(Hls.Events.MANIFEST_PARSED, tryAutoplay);
+
+          hls.on(Hls.Events.ERROR, (_event, data) => {
+            if (!data.fatal || !hls) { return; }
+            switch (data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                hls.recoverMediaError();
+                break;
+              default:
+                hls.destroy();
+                hlsRef.current = null;
+                hls = null;
+                break;
+            }
+          });
           return;
         }
-
-        hls = new Hls({ enableWorker: true, lowLatencyMode: true });
-        hlsRef.current = hls;
-        hls.loadSource(src);
-        hls.attachMedia(videoRef.current);
-
-        hls.on(Hls.Events.ERROR, (_event, data) => {
-          if (!data.fatal || !hls) { return; }
-          switch (data.type) {
-            case Hls.ErrorTypes.NETWORK_ERROR:
-              hls.startLoad();
-              break;
-            case Hls.ErrorTypes.MEDIA_ERROR:
-              hls.recoverMediaError();
-              break;
-            default:
-              hls.destroy();
-              hlsRef.current = null;
-              hls = null;
-              break;
-          }
-        });
       } catch (err) {
-        console.error(
-          '[LineUIVideo] Failed to load hls.js. Install it as a peer dependency to play .m3u8 streams.',
-          err,
-        );
+        // hls.js not installed — try native fallback below
       }
+
+      if (cancelled || !videoRef.current) { return; }
+
+      if (videoRef.current.canPlayType(NATIVE_HLS_MIME)) {
+        videoRef.current.src = src;
+        return;
+      }
+
+      console.error(
+        '[LineUIVideo] HLS playback is not available. Install hls.js as a peer dependency, or use a browser with native HLS support.',
+      );
     })();
 
     return () => {
