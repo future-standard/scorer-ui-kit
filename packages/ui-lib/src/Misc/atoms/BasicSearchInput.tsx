@@ -1,4 +1,5 @@
-import React, { InputHTMLAttributes } from 'react';
+import type React from 'react';
+import type { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { removeAutoFillStyle, resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
@@ -7,7 +8,12 @@ const IconContainer = styled.div`
   padding: 0 2px;
 `;
 
-const Container = styled.div<{ $hasBorder: boolean, $disabled: boolean, $noBackground: boolean, $width?: string }>`
+const Container = styled.div<{
+  $hasBorder: boolean;
+  $disabled: boolean;
+  $noBackground: boolean;
+  $width?: string;
+}>`
   ${({ $hasBorder, $disabled, $noBackground, $width }) => css`
 
     transition: all var(--speed-normal) var(--easing-primary-in);
@@ -18,7 +24,9 @@ const Container = styled.div<{ $hasBorder: boolean, $disabled: boolean, $noBackg
     display: flex;
     border-radius: 3px;
 
-    ${$hasBorder && css`
+    ${
+      $hasBorder &&
+      css`
       padding: 0 8px;
       border: 1px solid var(--filter-button-stroke-color);
       box-shadow: 0px 4px 9px 0px var(--filter-button-shadow-color);
@@ -31,17 +39,23 @@ const Container = styled.div<{ $hasBorder: boolean, $disabled: boolean, $noBackg
       ${IconContainer}{
         padding: 0;
       }
-    `};
+    `
+    };
 
-    ${$disabled && css`
+    ${
+      $disabled &&
+      css`
       opacity: 50%;
       cursor: not-allowed;
       `
     };
 
-    ${$width && css`
+    ${
+      $width &&
+      css`
       width: ${$width};
-    `};
+    `
+    };
 
     background-color: ${$noBackground ? 'transparent' : 'var(--grey-1)'};
 
@@ -75,8 +89,6 @@ const CrossButton = styled.button`
   }
 `;
 
-
-
 const StyledInput = styled.input<{ $color: string }>`
   ${removeAutoFillStyle};
 
@@ -86,7 +98,7 @@ const StyledInput = styled.input<{ $color: string }>`
   color: var(--grey-12);
 
   &::placeholder {
-    ${({$color}) => $color && `color: var(--${$color})`};
+    ${({ $color }) => $color && `color: var(--${$color})`};
     color: var(--grey-11);
     font-style: italic;
   }
@@ -114,15 +126,15 @@ const StyledInput = styled.input<{ $color: string }>`
 
 interface OwnProps {
   color?: 'mono' | 'dimmed' | 'subtle';
-  hasBorder?: boolean
-  iconSize?: number
-  noBackground?: boolean
-  width?: string
-  hasCrossButton?: boolean
-  onCrossClick?: () => void
+  hasBorder?: boolean;
+  iconSize?: number;
+  noBackground?: boolean;
+  width?: string;
+  hasCrossButton?: boolean;
+  onCrossClick?: () => void;
 }
 
-export type IBasicSearchInput = OwnProps & InputHTMLAttributes<HTMLInputElement>
+export type IBasicSearchInput = OwnProps & InputHTMLAttributes<HTMLInputElement>;
 
 const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   color = 'subtle',
@@ -138,15 +150,24 @@ const BasicSearchInput: React.FC<IBasicSearchInput> = ({
   ...props
 }) => {
   return (
-    <Container {...{ $hasBorder: hasBorder, $disabled: disabled, $noBackground: noBackground, $width: width }}>
+    <Container
+      {...{
+        $hasBorder: hasBorder,
+        $disabled: disabled,
+        $noBackground: noBackground,
+        $width: width,
+      }}
+    >
       <IconContainer>
         <Icon {...{ color }} icon='Search' weight='regular' size={iconSize} />
       </IconContainer>
-      <StyledInput
-        {...{ $color: color, disabled }}
-        {...props}
-      />
-      {hasCrossButton && <CrossButton onClick={onCrossClick}> <Icon icon='CloseCompact' color='dimmed' size={12} /></CrossButton>}
+      <StyledInput {...{ $color: color, disabled }} {...props} />
+      {hasCrossButton && (
+        <CrossButton onClick={onCrossClick}>
+          {' '}
+          <Icon icon='CloseCompact' color='dimmed' size={12} />
+        </CrossButton>
+      )}
     </Container>
   );
 };

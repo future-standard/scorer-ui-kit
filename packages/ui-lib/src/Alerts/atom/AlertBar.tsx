@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import Icon, {IconWrapper} from '../../Icons/Icon';
-import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
+import Icon, { IconWrapper } from '../../Icons/Icon';
+import type { AlertType } from '..';
 
-const IconButton = styled.button<{$selected?: boolean}>`
+const IconButton = styled.button<{ $selected?: boolean }>`
   ${resetButtonStyles};
-  ${({$selected=false}) => $selected && css`
+  ${({ $selected = false }) =>
+    $selected &&
+    css`
     border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
@@ -24,7 +27,7 @@ const IconButton = styled.button<{$selected?: boolean}>`
   }
 `;
 
-export const AlertWrapper = styled.div<{$type: AlertType}>`
+export const AlertWrapper = styled.div<{ $type: AlertType }>`
   min-height: 50px;
   border-radius: 3px;
   display: flex;
@@ -35,7 +38,7 @@ export const AlertWrapper = styled.div<{$type: AlertType}>`
   padding: 0 14px;
 
   font-family: var(--font-ui);
-  background-color: ${({$type}) => `var(--${$type})` };
+  background-color: ${({ $type }) => `var(--${$type})`};
 
   text-align: left;
   font-size: 14px;
@@ -56,7 +59,7 @@ const IconNames = {
   warning: 'BigWarning',
   success: 'Success',
   info: 'Information',
-  neutral: 'Information'
+  neutral: 'Information',
 };
 
 const MessageBox = styled.div`
@@ -69,28 +72,29 @@ export interface IAlert {
 }
 
 interface Props {
-  type?: AlertType
-  message?: string
-  hideCloseButton?: boolean
+  type?: AlertType;
+  message?: string;
+  hideCloseButton?: boolean;
 }
-const AlertBar: React.FC<Props> = ({type='info', message, hideCloseButton= false}) => {
+const AlertBar: React.FC<Props> = ({ type = 'info', message, hideCloseButton = false }) => {
   const [dismiss, setDismiss] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     setDismiss(false);
-  },[message]);
+  }, []);
 
-
-  return ( (message && !dismiss)?
+  return message && !dismiss ? (
     <AlertWrapper $type={type}>
       <Icon icon={IconNames[type]} color='inverse' />
       <MessageBox>{message}</MessageBox>
 
-      {!hideCloseButton && <IconButton onClick={() => setDismiss(true)}><Icon icon='CloseCompact' color='inverse' /></IconButton>}
+      {!hideCloseButton && (
+        <IconButton onClick={() => setDismiss(true)}>
+          <Icon icon='CloseCompact' color='inverse' />
+        </IconButton>
+      )}
     </AlertWrapper>
-    :
-    null
-  );
+  ) : null;
 };
 
 export default AlertBar;

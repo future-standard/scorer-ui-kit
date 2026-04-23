@@ -1,26 +1,54 @@
-import React from 'react';
+import { boolean, select, text } from '@storybook/addon-knobs';
+import { ButtonWithLoading } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
-import {  text, select, boolean } from "@storybook/addon-knobs";
-import {ButtonWithLoading} from 'scorer-ui-kit';
-
 
 const ButtonWithLoadingStory = {
   title: 'Form/Buttons',
   component: ButtonWithLoading,
-  decorators: []
+  decorators: [],
 };
 
 export const _WithLoading = () => {
-  const buttonText = text("Button Text", "Example Title");
-  const buttonDesign = select("Design", { Primary: "primary", Secondary: "secondary", Danger: "danger", TextOnly: "text-only", Outline: 'outline' }, "primary");
-  const buttonSize = select("Size", { Xsmall: 'xsmall', Small: "small", Normal: "normal", Large: "large" }, "normal");
-  const buttonDisabled = boolean("Disabled", false);
-  const buttonLoading = boolean("Loading", true);
-  const buttonLoadingPosition = select("Loading Position", { Left: "left", Right: "right"}, "right");
-  const buttonShadow = boolean("Shadow", false);
+  const buttonText = text('Button Text', 'Example Title');
+  const buttonDesign = select(
+    'Design',
+    {
+      Primary: 'primary',
+      Secondary: 'secondary',
+      Danger: 'danger',
+      TextOnly: 'text-only',
+      Outline: 'outline',
+    },
+    'primary'
+  );
+  const buttonSize = select(
+    'Size',
+    { Xsmall: 'xsmall', Small: 'small', Normal: 'normal', Large: 'large' },
+    'normal'
+  );
+  const buttonDisabled = boolean('Disabled', false);
+  const buttonLoading = boolean('Loading', true);
+  const buttonLoadingPosition = select(
+    'Loading Position',
+    { Left: 'left', Right: 'right' },
+    'right'
+  );
+  const buttonShadow = boolean('Shadow', false);
   const buttonOnClick = action('button-click');
 
-  return <ButtonWithLoading design={buttonDesign} size={buttonSize} shadow={buttonShadow} onClick={buttonOnClick} loading={buttonLoading} position={buttonLoadingPosition} disabled={buttonDisabled}>{buttonText}</ButtonWithLoading>;
+  return (
+    <ButtonWithLoading
+      design={buttonDesign}
+      size={buttonSize}
+      shadow={buttonShadow}
+      onClick={buttonOnClick}
+      loading={buttonLoading}
+      position={buttonLoadingPosition}
+      disabled={buttonDisabled}
+    >
+      {buttonText}
+    </ButtonWithLoading>
+  );
 };
 
 export default ButtonWithLoadingStory;

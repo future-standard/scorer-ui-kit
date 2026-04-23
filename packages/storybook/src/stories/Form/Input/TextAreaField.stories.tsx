@@ -1,7 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import {  text, select, boolean } from "@storybook/addon-knobs";
+import { boolean, select, text } from '@storybook/addon-knobs';
 import { TextAreaField } from 'scorer-ui-kit';
+import styled from 'styled-components';
 
 const Container = styled.div`
   margin: 20px;
@@ -10,27 +9,31 @@ const Container = styled.div`
 const TextAreaFieldStory = {
   title: 'Form/Input',
   component: TextAreaField,
-  decorators: []
+  decorators: [],
 };
 
-
 export const _TextAreaField = () => {
-  const fieldName = text("Textarea Name", "example_texarea");
-  const fieldLabel = text("Label", "Textarea Example");
-  const showFeedback = boolean("Show Feedback", false);
-  const fieldFeedback = text("Feedback", "This is a feedback message.");
-  const fieldPlaceholder = text("Placeholder", "Placeholder...");
-  const fieldRequired = boolean("Required", false);
-  const currentState = select("State",
-    { Default: "default",
+  const fieldName = text('Textarea Name', 'example_texarea');
+  const fieldLabel = text('Label', 'Textarea Example');
+  const showFeedback = boolean('Show Feedback', false);
+  const fieldFeedback = text('Feedback', 'This is a feedback message.');
+  const fieldPlaceholder = text('Placeholder', 'Placeholder...');
+  const fieldRequired = boolean('Required', false);
+  const currentState = select(
+    'State',
+    {
+      Default: 'default',
       Disabled: 'disabled',
       Required: 'required',
       Valid: 'valid',
       Invalid: 'invalid',
-      Processing: 'processing'
-    }, "default");
+      Processing: 'processing',
+    },
+    'default'
+  );
 
-    return <Container>
+  return (
+    <Container>
       <TextAreaField
         id={fieldName}
         name={fieldName}
@@ -42,6 +45,7 @@ export const _TextAreaField = () => {
         required={fieldRequired}
       ></TextAreaField>
     </Container>
+  );
 };
 
 export default TextAreaFieldStory;

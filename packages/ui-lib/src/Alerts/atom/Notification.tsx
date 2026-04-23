@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled, { css } from 'styled-components';
-import Icon, { IconWrapper } from '../../Icons/Icon';
-import { AlertType } from '..';
 import { resetButtonStyles } from '../../common/index';
+import Icon, { IconWrapper } from '../../Icons/Icon';
+import type { AlertType } from '..';
 
-const Container = styled.div<{$type: AlertType, $isClosing: boolean, $isVisible: boolean}>`
+const Container = styled.div<{ $type: AlertType; $isClosing: boolean; $isVisible: boolean }>`
   min-height: 50px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -22,7 +23,7 @@ const Container = styled.div<{$type: AlertType, $isClosing: boolean, $isVisible:
   z-index: 999;
 
   font-family: var(--font-ui);
-  background-color: ${({$type}) => `var(--${$type})`};
+  background-color: ${({ $type }) => `var(--${$type})`};
   text-align: left;
   font-size: 14px;
   font-weight: 400;
@@ -31,11 +32,16 @@ const Container = styled.div<{$type: AlertType, $isClosing: boolean, $isVisible:
   text-decoration: none;
   color: var(--white-1);
 
-  ${({$isVisible}) => $isVisible && css`
+  ${({ $isVisible }) =>
+    $isVisible &&
+    css`
     transition: transform var(--speed-slow) var(--easing-primary-in-out);
   `}
 
-  ${({$isVisible, $isClosing}) => $isVisible && !$isClosing && css`
+  ${({ $isVisible, $isClosing }) =>
+    $isVisible &&
+    !$isClosing &&
+    css`
     transform: translate(-50%, 0%);
   `};
 
@@ -51,12 +57,14 @@ export const IconNames = {
   warning: 'BigWarning',
   success: 'Success',
   info: 'Information',
-  neutral: 'Information'
+  neutral: 'Information',
 };
 
-const IconButton = styled.div<{$selected?: boolean}>`
+const IconButton = styled.div<{ $selected?: boolean }>`
   ${resetButtonStyles};
-  ${({$selected=false}) => $selected && css`
+  ${({ $selected = false }) =>
+    $selected &&
+    css`
     border-bottom: 5px solid var(--primary-7);
   `}
   &:focus {
@@ -110,18 +118,28 @@ const MainMessage = styled.div`
 `;
 
 export type INotificationProps = {
-  id?: string
-  type: AlertType
-  message: string
-  actionTextButton?: string
-  isPinned?: boolean
-  closeNow?: boolean
-  icon?: string
-  onTextButtonClick?: () => void
-  closeCallback?: () => void
-}
+  id?: string;
+  type: AlertType;
+  message: string;
+  actionTextButton?: string;
+  isPinned?: boolean;
+  closeNow?: boolean;
+  icon?: string;
+  onTextButtonClick?: () => void;
+  closeCallback?: () => void;
+};
 
-const Notification : React.FC<INotificationProps> = ({id, type ='info', message, icon = '', isPinned = false, actionTextButton, closeNow = false, closeCallback, onTextButtonClick}) => {
+const Notification: React.FC<INotificationProps> = ({
+  id,
+  type = 'info',
+  message,
+  icon = '',
+  isPinned = false,
+  actionTextButton,
+  closeNow = false,
+  closeCallback,
+  onTextButtonClick,
+}) => {
   const [dismiss, setDismiss] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
   const [textClicked, setTextClicked] = useState(false);
@@ -133,11 +151,11 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
     closeStateRef.current = { slideUp, textClicked, onTextButtonClick, closeCallback };
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     setDismiss(false);
     setSlideUp(false);
     setTextClicked(false);
-  },[id]);
+  }, []);
 
   // Slide-in via CSS transition gated by rAF — StrictMode-safe:
   // StrictMode cleanup runs synchronously before rAF fires, so the rAF is
@@ -158,39 +176,39 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
 
   const handleDismiss = useCallback(() => {
     setSlideUp(true);
-  },[]);
+  }, []);
 
   const handleTextClick = useCallback(async () => {
     setTextClicked(true);
     handleDismiss();
-  },[handleDismiss]);
+  }, [handleDismiss]);
 
   const animationEnded = useCallback(() => {
     // Will only trigger if the animation triggered was closing one
-    if(slideUp){
+    if (slideUp) {
       setDismiss(true);
 
-      if(onTextButtonClick && textClicked) {
+      if (onTextButtonClick && textClicked) {
         onTextButtonClick();
       }
 
-      if(closeCallback) {
+      if (closeCallback) {
         closeCallback();
       }
     }
   }, [slideUp, closeCallback, onTextButtonClick, textClicked]);
 
   useEffect(() => {
-    if(isPinned) return;
+    if (isPinned) return;
     const timerId = setTimeout(() => handleDismiss(), 7000);
     return () => clearTimeout(timerId);
-  },[isPinned, message, handleDismiss, id]);
+  }, [isPinned, handleDismiss]);
 
   useEffect(() => {
-    if(closeNow) {
+    if (closeNow) {
       handleDismiss();
     }
-  },[closeNow, handleDismiss]);
+  }, [closeNow, handleDismiss]);
 
   // If the component unmounts while the close animation is in-flight (e.g. parent
   // force-removes it before onAnimationEnd fires), still invoke the callbacks so
@@ -205,21 +223,27 @@ const Notification : React.FC<INotificationProps> = ({id, type ='info', message,
     };
   }, []);
 
-  return( (message && !dismiss)
-  ? ReactDOM.createPortal(
-    <Container $type={type} $isClosing={slideUp} $isVisible={isVisible} onTransitionEnd={animationEnded}>
-      <Icon icon={!icon ? IconNames[type] : icon} color='inverse' />
-      <MainMessage>{message}</MainMessage>
-      {actionTextButton
-        ? <TextButton onClick={() => handleTextClick()}>{actionTextButton} </TextButton>
-        :
-        <IconButton onClick={() => handleDismiss()}>
-          <Icon icon='CloseCompact' color='inverse' />
-        </IconButton>}
-    </Container>
-    , document.body)
-  : null
-  );
+  return message && !dismiss
+    ? ReactDOM.createPortal(
+        <Container
+          $type={type}
+          $isClosing={slideUp}
+          $isVisible={isVisible}
+          onTransitionEnd={animationEnded}
+        >
+          <Icon icon={!icon ? IconNames[type] : icon} color='inverse' />
+          <MainMessage>{message}</MainMessage>
+          {actionTextButton ? (
+            <TextButton onClick={() => handleTextClick()}>{actionTextButton} </TextButton>
+          ) : (
+            <IconButton onClick={() => handleDismiss()}>
+              <Icon icon='CloseCompact' color='inverse' />
+            </IconButton>
+          )}
+        </Container>,
+        document.body
+      )
+    : null;
 };
 
 export default Notification;

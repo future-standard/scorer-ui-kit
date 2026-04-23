@@ -1,4 +1,5 @@
-import React, { useCallback, InputHTMLAttributes } from 'react';
+import type React from 'react';
+import { type InputHTMLAttributes, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 const InnerRadio = styled.div`
@@ -8,7 +9,7 @@ const InnerRadio = styled.div`
   user-select: none;
 `;
 
-const OuterRadio = styled.div<{ $isChecked: boolean, $disabled: boolean }>`
+const OuterRadio = styled.div<{ $isChecked: boolean; $disabled: boolean }>`
   position: absolute;
   display: flex;
   align-items: center;
@@ -23,44 +24,63 @@ const OuterRadio = styled.div<{ $isChecked: boolean, $disabled: boolean }>`
   ${({ $isChecked, $disabled }) => css`
     border-color: var(--input-toggle-unchecked-border-color);
 
-    ${!$disabled && css`
+    ${
+      !$disabled &&
+      css`
       &:hover {
         cursor: pointer;
         border-color: var(--input-toggle-unchecked-hover-border-color);
       }
-    `};
+    `
+    };
 
-    ${$isChecked && !$disabled && css`
+    ${
+      $isChecked &&
+      !$disabled &&
+      css`
       border-color: var(--input-toggle-checked-border-color);
       ${InnerRadio} {
         background-color: var(--input-toggle-checked-background-color);
       }
-    `};
+    `
+    };
 
-    ${$isChecked && !$disabled && css`
+    ${
+      $isChecked &&
+      !$disabled &&
+      css`
       &:hover {
         border-color: var(--input-toggle-checked-hover-border-color);
         ${InnerRadio} {
           background-color: var(--input-toggle-checked-hover-background-color);
         }
       }
-    `};
+    `
+    };
 
-    ${$isChecked && $disabled && css`
+    ${
+      $isChecked &&
+      $disabled &&
+      css`
       cursor: not-allowed;
       border-color: var(--input-toggle-checked-disabled-border-color);
       ${InnerRadio} {
         background-color: var(--input-toggle-checked-disabled-background-color);
       }
-    `};
+    `
+    };
 
-    ${!$isChecked && $disabled && css`
+    ${
+      !$isChecked &&
+      $disabled &&
+      css`
       cursor: not-allowed;
       border-color: var(--input-toggle-unchecked-disabled-border-color);
       ${InnerRadio} {
         background-color: var(--input-toggle-unchecked-disabled-background-color);
       }
-    `}
+    `
+    }
   `};
 `;
 
@@ -83,11 +103,11 @@ const Container = styled.div`
 `;
 
 interface OwnProps {
-  currentChecked?: number | string
-  onChangeCallback?: (value: number | string) => void
+  currentChecked?: number | string;
+  onChangeCallback?: (value: number | string) => void;
 }
 
-type IRadioButton = OwnProps & InputHTMLAttributes<HTMLInputElement>
+type IRadioButton = OwnProps & InputHTMLAttributes<HTMLInputElement>;
 
 const RadioButton: React.FC<IRadioButton> = ({
   id,
@@ -96,15 +116,17 @@ const RadioButton: React.FC<IRadioButton> = ({
   currentChecked,
   disabled = false,
   required,
-  onChangeCallback = () => { },
+  onChangeCallback = () => {},
 }) => {
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const checkedValue = e.target.value;
+      onChangeCallback(checkedValue);
+    },
+    [onChangeCallback]
+  );
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const checkedValue = e.target.value;
-    onChangeCallback(checkedValue);
-  }, [onChangeCallback]);
-
-  const isChecked = (currentChecked !== undefined) ? (currentChecked === value) : false;
+  const isChecked = currentChecked !== undefined ? currentChecked === value : false;
 
   return (
     <Container>

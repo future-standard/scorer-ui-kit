@@ -1,12 +1,13 @@
-import React, { FC } from 'react';
+import React, { type FC } from 'react';
 import { createRoot } from 'react-dom/client';
+import {
+  defaultTheme,
+  ModalProvider,
+  NotificationProvider,
+  ThemeVariables,
+  useThemeToggle,
+} from 'scorer-ui-kit';
 import { ThemeProvider } from 'styled-components';
-import { defaultTheme,
-          NotificationProvider,
-          ModalProvider,
-          useThemeToggle,
-          ThemeVariables,
-        } from 'scorer-ui-kit';
 
 import App from './App';
 
@@ -15,70 +16,71 @@ import Fonts from './fonts';
 import Style from './style';
 import ThemeOverwrites from './theme/ThemeOverwrites';
 
-//@ts-ignore
-defaultTheme.custom.lines['weird'] = {
+defaultTheme.custom.lines.weird = {
   label: {
-      fill: "#fff"
+    fill: '#fff',
   },
   contrastLine: {
-      stroke:  'transparent;'
+    stroke: 'transparent;',
   },
   highlightLine: {
-      stroke:  'transparent;'
+    stroke: 'transparent;',
+  },
+  highlightLineBorder: {
+    stroke: 'transparent;',
   },
   grabHandle: {
     fill: 'transparent;',
-    stroke: 'transparent;'
+    stroke: 'transparent;',
   },
-  point:{
+  point: {
     fill: 'hsla(205deg, 45%, 90%, 100%)',
   },
-  grabHandleText:{
-    fill: 'transparent'
+  grabHandleText: {
+    fill: 'transparent',
   },
-  grabHandleContrast:{
-    fill: 'transparent'
+  grabHandleContrast: {
+    stroke: 'transparent',
   },
   handleBase: {
-    fill: 'transparent'
+    fill: 'transparent',
   },
   handleRingLayer: {
-    stroke: 'hsla(205deg, 100%, 89%, 100%);'
+    stroke: 'hsla(205deg, 100%, 89%, 100%);',
   },
-  handleReactiveFill:{
-    stroke: 'transparent;'
+  handleReactiveFill: {
+    fill: 'transparent;',
   },
-  handleReactiveRing:{
-    stroke: 'transparent;'
+  handleReactiveRing: {
+    stroke: 'transparent;',
   },
-  handleContrastLayer:{
-    stroke: 'transparent;'
+  handleContrastLayer: {
+    stroke: 'transparent;',
   },
-  stopStart:{
-      stopColor:' hsla(0, 100%, 15%, 35%);'
+  stopStart: {
+    stopColor: ' hsla(0, 100%, 15%, 35%);',
   },
-  stopEnd:{
-      stopColor: 'hsla(0, 100%, 15%, 0%);'
-  }
+  stopEnd: {
+    stopColor: 'hsla(0, 100%, 15%, 0%);',
+  },
 };
 
-const Index : FC = () => {
+const Index: FC = () => {
   // Hook used to load the theme variable, not normal use case in this example file for the real reference of usage please look at the GlobalUI Page
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _initialize = useThemeToggle();
+  useThemeToggle();
 
   return (
     <ThemeProvider theme={defaultTheme}>
-    <ModalProvider>
-      <NotificationProvider>
-        <App />
-        <Fonts />
-        <ThemeVariables />
-        <ThemeOverwrites />
-        <Style />
-      </NotificationProvider>
-    </ModalProvider>
-  </ThemeProvider>
+      <ModalProvider>
+        <NotificationProvider>
+          <App />
+          <Fonts />
+          <ThemeVariables />
+          <ThemeOverwrites />
+          <Style />
+        </NotificationProvider>
+      </ModalProvider>
+    </ThemeProvider>
   );
 };
 

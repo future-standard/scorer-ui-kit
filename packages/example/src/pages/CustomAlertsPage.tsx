@@ -1,4 +1,3 @@
-import React from 'react';
 import { AlertBar } from 'scorer-ui-kit';
 import styled from 'styled-components';
 import ExamplesFilename from '../components/ExamplesFilename';
@@ -20,7 +19,7 @@ const CustomAlertWrapper = styled.div`
 `;
 
 const CustomAlertsPage = () => {
-  return(
+  return (
     <Container>
       <ExamplesFilename>CustomAlertsPage.tsx</ExamplesFilename>
 
@@ -37,7 +36,6 @@ const CustomAlertsPage = () => {
       <h3>Custom Global Project Colors</h3>
       <AlertBar message='Custom color success message' type='success' hideCloseButton></AlertBar>
       <AlertBar message='Custom color warning message' type='warning' hideCloseButton></AlertBar>
-
     </Container>
   );
 };

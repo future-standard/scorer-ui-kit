@@ -1,9 +1,9 @@
-import React, { useCallback, useState, SelectHTMLAttributes } from 'react';
+import type React from 'react';
+import { type SelectHTMLAttributes, useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
-import Label from './Label';
 import Icon from '../../Icons/Icon';
-import { TypeFieldState, TypeLabelDirection } from '..';
-
+import type { TypeFieldState, TypeLabelDirection } from '..';
+import Label from './Label';
 
 export const SelectWrapper = styled.div`
   position: relative;
@@ -11,26 +11,30 @@ export const SelectWrapper = styled.div`
   width: 100%;
 `;
 
-const OpenIcon =  styled.div<{ $isCompact?: boolean }>`
+const OpenIcon = styled.div<{ $isCompact?: boolean }>`
   position: absolute;
   top: 0;
   bottom: 0;
   display: flex;
   align-items: center;
-  right: ${({$isCompact}) => $isCompact ? '14px' : '16px'};
+  right: ${({ $isCompact }) => ($isCompact ? '14px' : '16px')};
   pointer-events: none;
 `;
 
 const SubjectIcon = styled.div<{ $isCompact?: boolean }>`
   position: absolute;
-  left: ${({$isCompact}) => $isCompact ? '10px' : '12px'};
+  left: ${({ $isCompact }) => ($isCompact ? '10px' : '12px')};
   top: 0;
   bottom: 0;
   display: flex;
   align-items: center;
 `;
 
-const StyledSelect = styled.select<{ $fieldState: TypeFieldState, $withIcon?: boolean, $isCompact?: boolean }>`
+const StyledSelect = styled.select<{
+  $fieldState: TypeFieldState;
+  $withIcon?: boolean;
+  $isCompact?: boolean;
+}>`
   box-sizing: border-box;
   outline: none;
   border-radius: 3px;
@@ -48,21 +52,24 @@ const StyledSelect = styled.select<{ $fieldState: TypeFieldState, $withIcon?: bo
     background-color var(--speed-fast) var(--easing-primary-out),
     box-shadow var(--speed-fast) var(--easing-primary-out);
 
-  ${({$fieldState}) => css`
+  ${({ $fieldState }) => css`
     border: 1px solid var(--input-${$fieldState}-border-color);
     background: var(--input-${$fieldState}-background-color);
     box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${$fieldState}-shadow-color, transparent);
   `};
 
 
-  ${({ $isCompact, $withIcon }) => $isCompact ? css`
+  ${({ $isCompact, $withIcon }) =>
+    $isCompact
+      ? css`
     height: var(--input-compact-height);
     padding: 0 16px 1px ${$withIcon ? '30px' : '8px'};
 
     ${OpenIcon}{
       right: 14px;
     }
-  ` : css`
+  `
+      : css`
     height: var(--input-height);
     padding: 0 16px 1px ${$withIcon ? '36px' : '12px'};
   `};
@@ -81,9 +88,11 @@ const StyledSelect = styled.select<{ $fieldState: TypeFieldState, $withIcon?: bo
   }
 `;
 
-const Container = styled.div<{ $isCompact?: boolean, $activePlaceholder: boolean }>`
+const Container = styled.div<{ $isCompact?: boolean; $activePlaceholder: boolean }>`
 
-  ${({$activePlaceholder}) => $activePlaceholder && css`
+  ${({ $activePlaceholder }) =>
+    $activePlaceholder &&
+    css`
     ${StyledSelect} {
       font-family: var(--font-data);
       color: var(--input-color-placeholder);
@@ -98,22 +107,22 @@ const Container = styled.div<{ $isCompact?: boolean, $activePlaceholder: boolean
 `;
 
 interface ILabel {
-  htmlFor: string
-  text: string
-  isSameRow?: boolean
-  direction?: TypeLabelDirection
+  htmlFor: string;
+  text: string;
+  isSameRow?: boolean;
+  direction?: TypeLabelDirection;
 }
 
 interface OwnProps {
-  fieldState?: TypeFieldState
-  label?: ILabel
-  isCompact?: boolean
-  placeholder?: string
-  icon?: string
-  changeCallback?: (value: string) => void
+  fieldState?: TypeFieldState;
+  label?: ILabel;
+  isCompact?: boolean;
+  placeholder?: string;
+  icon?: string;
+  changeCallback?: (value: string) => void;
 }
 
-type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>
+type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>;
 
 const SelectField: React.FC<ISelect> = ({
   fieldState = 'default',
@@ -122,66 +131,96 @@ const SelectField: React.FC<ISelect> = ({
   icon,
   isCompact,
   defaultValue,
-  changeCallback = () => { },
+  changeCallback = () => {},
   children,
   ...props
 }) => {
-
-  if(label?.isSameRow){
-    console.warn('Deprecation warning: `SelectField` is deprecating `label.isSameRow`, please update this to use `label.direction` set to `row`.');
+  if (label?.isSameRow) {
+    console.warn(
+      'Deprecation warning: `SelectField` is deprecating `label.isSameRow`, please update this to use `label.direction` set to `row`.'
+    );
   }
 
-  const [activePlaceholder, setPlaceholderStatus] = useState<boolean>(!defaultValue ? true : false);
+  const [activePlaceholder, setPlaceholderStatus] = useState<boolean>(!defaultValue);
 
-  const handleOnChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleOnChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const { value } = e.target;
 
-    const { value } = e.target;
-
-    setPlaceholderStatus(prev => {
-      if (prev) { return false; }
-      return prev;
-    });
-    changeCallback(value);
-  }, [changeCallback]);
+      setPlaceholderStatus((prev) => {
+        if (prev) {
+          return false;
+        }
+        return prev;
+      });
+      changeCallback(value);
+    },
+    [changeCallback]
+  );
 
   const iconColor = useCallback(() => {
-    if(props.disabled || fieldState === 'disabled'){
+    if (props.disabled || fieldState === 'disabled') {
       return 'input-disabled-lead-icon';
     } else {
       return 'input-lead-icon';
     }
   }, [fieldState, props.disabled]);
 
-  const renderSelect = useCallback((htmlFor?: string) => (
-    <SelectWrapper>
-      {icon && <SubjectIcon $isCompact={isCompact}><Icon icon={icon} color={iconColor()} size={isCompact ? 12 : 12 } weight='regular' /></SubjectIcon>}
-      <StyledSelect
-        $withIcon={ icon ? true : false }
-        id={htmlFor}
-        $fieldState={fieldState}
-        $isCompact={isCompact}
-        {...props}
-        defaultValue={defaultValue ? defaultValue : ''}
-        onChange={handleOnChange}
-      >
-        <>
-          {!defaultValue && <option value='' disabled hidden>{placeholder}</option>}
+  const renderSelect = useCallback(
+    (htmlFor?: string) => (
+      <SelectWrapper>
+        {icon && (
+          <SubjectIcon $isCompact={isCompact}>
+            <Icon icon={icon} color={iconColor()} size={isCompact ? 12 : 12} weight='regular' />
+          </SubjectIcon>
+        )}
+        <StyledSelect
+          $withIcon={!!icon}
+          id={htmlFor}
+          $fieldState={fieldState}
+          $isCompact={isCompact}
+          {...props}
+          defaultValue={defaultValue ? defaultValue : ''}
+          onChange={handleOnChange}
+        >
+          {!defaultValue && (
+            <option value='' disabled hidden>
+              {placeholder}
+            </option>
+          )}
           {children}
-        </>
-      </StyledSelect>
-      <OpenIcon $isCompact={isCompact}><Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10 } /></OpenIcon>
-    </SelectWrapper>
-  ), [children, defaultValue, handleOnChange, placeholder, props, fieldState, icon, iconColor, isCompact]);
+        </StyledSelect>
+        <OpenIcon $isCompact={isCompact}>
+          <Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10} />
+        </OpenIcon>
+      </SelectWrapper>
+    ),
+    [
+      children,
+      defaultValue,
+      handleOnChange,
+      placeholder,
+      props,
+      fieldState,
+      icon,
+      iconColor,
+      isCompact,
+    ]
+  );
 
   return (
     <Container {...{ $isCompact: isCompact, $activePlaceholder: activePlaceholder }}>
-      {label
-        ? (
-          <Label htmlFor={label.htmlFor} labelText={label.text} direction={ label.isSameRow ? 'row' : label.direction }>
-            {renderSelect(label.htmlFor)}
-          </Label>
-        )
-        : renderSelect()}
+      {label ? (
+        <Label
+          htmlFor={label.htmlFor}
+          labelText={label.text}
+          direction={label.isSameRow ? 'row' : label.direction}
+        >
+          {renderSelect(label.htmlFor)}
+        </Label>
+      ) : (
+        renderSelect()
+      )}
     </Container>
   );
 };

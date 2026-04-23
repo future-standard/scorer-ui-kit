@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
 import styled from 'styled-components';
 import Icon from '../../Icons/Icon';
 
@@ -42,14 +42,18 @@ const SubTitle = styled.div`
 `;
 
 interface IDrawerBottomMenu {
-  icon: string,
-  title: string,
-  subTitle: string,
-  onClickCallback?: () => void
+  icon: string;
+  title: string;
+  subTitle: string;
+  onClickCallback?: () => void;
 }
 
-const DrawerBottomMenu: FC<IDrawerBottomMenu> = ({ icon = 'Settings', title, subTitle, onClickCallback = () => {} }) => {
-
+const DrawerBottomMenu: FC<IDrawerBottomMenu> = ({
+  icon = 'Settings',
+  title,
+  subTitle,
+  onClickCallback = () => {},
+}) => {
   return (
     <Container onClick={onClickCallback}>
       <Icon icon={icon} size={18} color='dimmed' />
@@ -58,7 +62,6 @@ const DrawerBottomMenu: FC<IDrawerBottomMenu> = ({ icon = 'Settings', title, sub
         <Title>{title}</Title>
         <SubTitle>{subTitle}</SubTitle>
       </ColumnContainer>
-
     </Container>
   );
 };

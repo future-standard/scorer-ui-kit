@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { boolean, text } from '@storybook/addon-knobs';
+import { useState } from 'react';
+import { Label, RadioButton } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
-import { boolean, text } from "@storybook/addon-knobs";
-import { RadioButton, Label } from 'scorer-ui-kit';
+import styled from 'styled-components';
 
 const RadioButtonStory = {
   title: 'Form/Input',
   component: RadioButton,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div``;
@@ -16,37 +16,51 @@ const OptionsWrapper = styled.div`
 `;
 
 export const _RadioButton = () => {
-
-  const disabled = boolean("Disabled", false);
+  const disabled = boolean('Disabled', false);
   const selection = action('value-changed');
   const name = text('Name', 'Example');
 
   const [currentChecked, setCurrentCheck] = useState<string | number>();
 
   const handleChange = (value: string | number) => {
-    selection(value)
+    selection(value);
     setCurrentCheck(value);
-  }
+  };
 
   return (
     <Container>
       <OptionsWrapper>
         <Label htmlFor={'option1'} labelText={'Option 1'} direction='row-reverse'>
-          <RadioButton {...{ name, disabled, currentChecked }} id={'option1'} value='option1' onChangeCallback={handleChange} />
+          <RadioButton
+            {...{ name, disabled, currentChecked }}
+            id={'option1'}
+            value='option1'
+            onChangeCallback={handleChange}
+          />
         </Label>
       </OptionsWrapper>
       <OptionsWrapper>
         <Label htmlFor={'option2'} labelText={'Option 2'} direction='row-reverse'>
-          <RadioButton {...{ name, disabled, currentChecked }} id={'option2'} value='option2' onChangeCallback={handleChange} />
+          <RadioButton
+            {...{ name, disabled, currentChecked }}
+            id={'option2'}
+            value='option2'
+            onChangeCallback={handleChange}
+          />
         </Label>
       </OptionsWrapper>
       <OptionsWrapper>
         <Label htmlFor={'option3'} labelText={'Option 3'} direction='row-reverse'>
-          <RadioButton {...{ name, disabled, currentChecked }} id={'option3'} value='option3' onChangeCallback={handleChange} />
+          <RadioButton
+            {...{ name, disabled, currentChecked }}
+            id={'option3'}
+            value='option3'
+            onChangeCallback={handleChange}
+          />
         </Label>
       </OptionsWrapper>
-    </Container>)
-
-}
+    </Container>
+  );
+};
 
 export default RadioButtonStory;

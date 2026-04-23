@@ -1,10 +1,10 @@
-import React, { InputHTMLAttributes } from 'react';
+import type React from 'react';
+import type { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
-
+import { removeAutoFillStyle } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
-import { TypeFieldState } from '..';
-import { removeAutoFillStyle } from '../../common';
+import type { TypeFieldState } from '..';
 
 const ActionContainer = styled.div`
   position: absolute;
@@ -12,7 +12,7 @@ const ActionContainer = styled.div`
   top: 0;
 `;
 
-const InputActionButton = styled.button.attrs({ type: "button" })`
+const InputActionButton = styled.button.attrs({ type: 'button' })`
   width: 40px;
   height: 40px;
   background: transparent;
@@ -58,10 +58,10 @@ const FeedbackIcon = styled.div`
   }
 `;
 
-const StyledInput = styled.input<{ $fieldState : TypeFieldState }>`
+const StyledInput = styled.input<{ $fieldState: TypeFieldState }>`
   ${removeAutoFillStyle};
 
-  ${({$fieldState}) => css`
+  ${({ $fieldState }) => css`
     border: 1px solid var(--input-${$fieldState}-border-color);
     background: var(--input-${$fieldState}-background-color);
     box-shadow: var(--input-box-shadow-x) var(--input-box-shadow-y) var(--input-box-shadow-blur) var(--input-box-shadow-spread)  var(--input-${$fieldState}-shadow-color, transparent);
@@ -97,12 +97,14 @@ const StyledInput = styled.input<{ $fieldState : TypeFieldState }>`
   };
 `;
 
-const InputContainer = styled.div<{$hasAction?: boolean}>`
+const InputContainer = styled.div<{ $hasAction?: boolean }>`
 
   flex: 1;
   position: relative;
 
-  ${({ $hasAction }) => $hasAction && css`
+  ${({ $hasAction }) =>
+    $hasAction &&
+    css`
     ${StyledInput}{
       padding-right: 60px;
 
@@ -113,8 +115,8 @@ const InputContainer = styled.div<{$hasAction?: boolean}>`
 
 `;
 
-const Container = styled.div<{ $fieldState: TypeFieldState, $showFeedback?: boolean }>`
-  ${({$fieldState, $showFeedback}) => css`
+const Container = styled.div<{ $fieldState: TypeFieldState; $showFeedback?: boolean }>`
+  ${({ $fieldState, $showFeedback }) => css`
 
     display: flex;
     position: relative;
@@ -126,17 +128,24 @@ const Container = styled.div<{ $fieldState: TypeFieldState, $showFeedback?: bool
         cursor: not-allowed;
       }
 
-      ${['default', 'disabled'].indexOf($fieldState) === -1 && $showFeedback && css`
+      ${
+        ['default', 'disabled'].indexOf($fieldState) === -1 &&
+        $showFeedback &&
+        css`
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
-      `};
+      `
+      };
 
     }
 
     ${FeedbackContainer} {
-      ${['default', 'disabled'].indexOf($fieldState) !== -1 && css`
+      ${
+        ['default', 'disabled'].indexOf($fieldState) !== -1 &&
+        css`
         display: none;
-      `};
+      `
+      };
       border-color: var(--input-${$fieldState}-border-color);
       background: var(--input-${$fieldState}-border-color);
     }
@@ -153,14 +162,14 @@ interface OwnProps {
   fieldState?: TypeFieldState;
   showFeedback?: boolean;
   feedbackMessage?: string;
-  actionCallback?: ()=>void;
-  actionIcon?: string
+  actionCallback?: () => void;
+  actionIcon?: string;
   postfix?: string;
 }
 
-export type InputProps = OwnProps & InputHTMLAttributes<HTMLInputElement>
+export type InputProps = OwnProps & InputHTMLAttributes<HTMLInputElement>;
 
-const Input : React.FC<InputProps> = ({
+const Input: React.FC<InputProps> = ({
   type = 'text',
   placeholder = '',
   defaultValue,
@@ -174,11 +183,10 @@ const Input : React.FC<InputProps> = ({
   formAction,
   ...props
 }) => {
-
   const isActionButton = actionCallback !== undefined;
 
   const feedbackIcon = (fieldState: TypeFieldState) => {
-    switch(fieldState){
+    switch (fieldState) {
       case 'default':
         break;
       case 'disabled':
@@ -196,16 +204,16 @@ const Input : React.FC<InputProps> = ({
 
   return (
     <Container $fieldState={fieldState || 'default'} $showFeedback={showFeedback}>
-
       <InputContainer $hasAction={isActionButton}>
         <StyledInput
-        $fieldState={fieldState || 'default'}
-        disabled={fieldState === 'disabled' || fieldState === 'processing'}
-        type={type}
-        placeholder={placeholder}
-        defaultValue={defaultValue}
-        {...props} />
-        {(isActionButton) ? (
+          $fieldState={fieldState || 'default'}
+          disabled={fieldState === 'disabled' || fieldState === 'processing'}
+          type={type}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+          {...props}
+        />
+        {isActionButton ? (
           <ActionContainer>
             <InputActionButton onClick={actionCallback}>
               <Icon icon={actionIcon || 'NoIcon'} color='primary' />
@@ -217,15 +225,11 @@ const Input : React.FC<InputProps> = ({
       {fieldState && showFeedback ? (
         <FeedbackContainer>
           <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
-          {feedbackMessage ? (
-            <FeedbackMessage>{feedbackMessage}</FeedbackMessage>
-          ) : null}
+          {feedbackMessage ? <FeedbackMessage>{feedbackMessage}</FeedbackMessage> : null}
         </FeedbackContainer>
       ) : null}
-
     </Container>
   );
 };
-
 
 export default Input;

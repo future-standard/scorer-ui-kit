@@ -1,10 +1,11 @@
-import React, { ButtonHTMLAttributes, Fragment, useCallback, useRef, useState } from 'react';
+import type React from 'react';
+import { type ButtonHTMLAttributes, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
-import SplitButtonOption from '../atoms/SplitButtonOption';
-import Icon, { IconWrapper } from '../../Icons/Icon';
-import { TypeButtonSizes, TypeButtonDesigns } from '..';
 import { resetButtonStyles } from '../../common';
 import { useClickOutside } from '../../hooks';
+import Icon, { IconWrapper } from '../../Icons/Icon';
+import type { TypeButtonDesigns, TypeButtonSizes } from '..';
+import SplitButtonOption from '../atoms/SplitButtonOption';
 
 const TOGGLE_ICON_WIDTH = 30;
 
@@ -28,23 +29,23 @@ const ButtonsWrapper = styled.div<{ $isOpen: boolean }>`
 `;
 
 interface IButtonItem {
-  id: string
-  icon?: string
-  text: string
-  hasOnSelectLoading?: boolean
-  onClickCallback?: () => void
+  id: string;
+  icon?: string;
+  text: string;
+  hasOnSelectLoading?: boolean;
+  onClickCallback?: () => void;
 }
 
 type ISplitButtonItem = IButtonItem & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export interface ISplitButtonProps {
-  mainButtonId: string
-  buttonList: ISplitButtonItem[]
-  isSortAscending?: boolean
-  size?: TypeButtonSizes
-  design?: TypeButtonDesigns | string
-  textMaxWidth?: string
-  disabled?: boolean
+  mainButtonId: string;
+  buttonList: ISplitButtonItem[];
+  isSortAscending?: boolean;
+  size?: TypeButtonSizes;
+  design?: TypeButtonDesigns | string;
+  textMaxWidth?: string;
+  disabled?: boolean;
 }
 
 const MainButtonWrapper = styled.div`
@@ -102,19 +103,26 @@ const ToggleIcon = styled.button`
 
 `;
 
-const validateMaxWidth = (btnTextMaxWidth: number | null | undefined, textMaxWidth?: string): string | undefined => {
+const validateMaxWidth = (
+  btnTextMaxWidth: number | null | undefined,
+  textMaxWidth?: string
+): string | undefined => {
+  if (textMaxWidth) return textMaxWidth;
 
-  if (textMaxWidth)
-    return textMaxWidth;
-
-  if (btnTextMaxWidth)
-    return `${btnTextMaxWidth - TOGGLE_ICON_WIDTH}px`;
+  if (btnTextMaxWidth) return `${btnTextMaxWidth - TOGGLE_ICON_WIDTH}px`;
 
   return undefined;
 };
 
-const SplitButton: React.FC<ISplitButtonProps> = ({ mainButtonId, buttonList, design = 'primary', size, textMaxWidth, disabled = false, ...rest }) => {
-
+const SplitButton: React.FC<ISplitButtonProps> = ({
+  mainButtonId,
+  buttonList,
+  design = 'primary',
+  size,
+  textMaxWidth,
+  disabled = false,
+  ...rest
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const mainButtonRef = useRef<HTMLDivElement>(null);
   const buttonsWrapperRef = useRef<HTMLDivElement>(null);
@@ -131,9 +139,15 @@ const SplitButton: React.FC<ISplitButtonProps> = ({ mainButtonId, buttonList, de
 
   return (
     <Container>
-      <ButtonsWrapper ref={buttonsWrapperRef} className={`split-button-${design} split-button-size-${size}`} $isOpen={isOpen} {...rest}>
+      <ButtonsWrapper
+        ref={buttonsWrapperRef}
+        className={`split-button-${design} split-button-size-${size}`}
+        $isOpen={isOpen}
+        {...rest}
+      >
         <MainButtonWrapper ref={mainButtonRef}>
-          {buttonList.filter((button) => button.id === mainButtonId)
+          {buttonList
+            .filter((button) => button.id === mainButtonId)
             .map(({ id, text, icon, disabled: disabledItemProp, ...props }) => (
               <SplitButtonOption
                 key={id}
@@ -144,15 +158,14 @@ const SplitButton: React.FC<ISplitButtonProps> = ({ mainButtonId, buttonList, de
                 {...{ text, design }}
                 {...props}
               />
-            ))
-          }
+            ))}
           <ToggleIcon onClick={toggleOpen} disabled={disabled}>
             {<Icon icon={isOpen ? 'Close' : 'Down'} size={8} />}
           </ToggleIcon>
         </MainButtonWrapper>
-        {(isOpen && !disabled) ?
-          <Fragment>
-            {buttonList.filter((button) => button.id !== mainButtonId)
+        {isOpen && !disabled
+          ? buttonList
+              .filter((button) => button.id !== mainButtonId)
               .map(({ id, text, icon, disabled: disabledItemProp, ...props }) => (
                 <SplitButtonOption
                   key={id}
@@ -164,10 +177,7 @@ const SplitButton: React.FC<ISplitButtonProps> = ({ mainButtonId, buttonList, de
                   closeCallback={closeCallback}
                 />
               ))
-            }
-          </Fragment>
-          : null
-        }
+          : null}
       </ButtonsWrapper>
     </Container>
   );

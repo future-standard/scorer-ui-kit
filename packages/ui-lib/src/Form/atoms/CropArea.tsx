@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import type React from 'react';
+import { Fragment } from 'react';
 import styled, { css } from 'styled-components';
 
 const CropLineStyle = css`
@@ -55,7 +56,9 @@ const PointN = styled.div<{ $isResizable: boolean }>`
   top: -5px;
   margin-left: -5px;
   left: 50%;
-  ${({ $isResizable }) => $isResizable && css`
+  ${({ $isResizable }) =>
+    $isResizable &&
+    css`
     cursor: n-resize;
   `};
 `;
@@ -63,7 +66,9 @@ const PointNW = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   top: -5px;
   left: -5px;
-  ${({ $isResizable }) => $isResizable && css`
+  ${({ $isResizable }) =>
+    $isResizable &&
+    css`
     cursor: nw-resize;
   `};
 `;
@@ -72,7 +77,9 @@ const PointNE = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   top: -5px;
   right: -5px;
-  ${({ $isResizable }) => $isResizable && css`
+  ${({ $isResizable }) =>
+    $isResizable &&
+    css`
     cursor: ne-resize;
   `};
 `;
@@ -81,7 +88,9 @@ const PointE = styled.div<{ $isResizable: boolean }>`
     margin-top: -5px;
     top: 50%;
     right: -5px;
-  ${({ $isResizable }) => $isResizable && css`
+  ${({ $isResizable }) =>
+    $isResizable &&
+    css`
     cursor: e-resize;
   `};
 `;
@@ -89,7 +98,9 @@ const PointSE = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   bottom: -5px;
   right: -5px;
-  ${({ $isResizable }) => $isResizable && css`
+  ${({ $isResizable }) =>
+    $isResizable &&
+    css`
     cursor: se-resize;
   `};
 `;
@@ -98,7 +109,9 @@ const PointS = styled.div<{ $isResizable: boolean }>`
   bottom: -5px;
   left: 50%;
   margin-left: -5px;
-  ${({ $isResizable }) => $isResizable && css`
+  ${({ $isResizable }) =>
+    $isResizable &&
+    css`
     cursor: s-resize;
   `};
 `;
@@ -106,7 +119,9 @@ const PointSW = styled.div<{ $isResizable: boolean }>`
   ${resizeSquaresCss};
   bottom: -5px;
   left: -5px;
-  ${({ $isResizable }) => $isResizable && css`
+  ${({ $isResizable }) =>
+    $isResizable &&
+    css`
     cursor: sw-resize;
   `};
 `;
@@ -115,43 +130,39 @@ const PointW = styled.div<{ $isResizable: boolean }>`
   margin-top: -5px;
   top: 50%;
   left: -5px;
-  ${({ $isResizable }) => $isResizable && css`
+  ${({ $isResizable }) =>
+    $isResizable &&
+    css`
     cursor: w-resize;
   `};
 `;
 
 interface ICropArea {
-  isResizable: boolean
-  hasAspectRatio: boolean
+  isResizable: boolean;
+  hasAspectRatio: boolean;
 }
 
-const CropArea: React.FC<ICropArea> = ({
-  isResizable,
-  hasAspectRatio
-}) => {
-
+const CropArea: React.FC<ICropArea> = ({ isResizable, hasAspectRatio }) => {
   return (
     <Fragment>
-      {(isResizable && (!hasAspectRatio)) ? (
+      {isResizable && !hasAspectRatio ? (
         <Fragment>
           {/* This lines are just for cursor css */}
           <TopLine />
           <RightLine />
           <BottomLine />
           <LeftLine />
-        </Fragment>)
-        : null}
+        </Fragment>
+      ) : null}
 
-      {hasAspectRatio ? null
-        : (
-          <Fragment>
-            <PointN data-point='cursor-n' $isResizable={isResizable} />
-            <PointE data-point='cursor-e' $isResizable={isResizable} />
-            <PointS data-point='cursor-s' $isResizable={isResizable} />
-            <PointW data-point='cursor-w' $isResizable={isResizable} />
-          </Fragment>
-        )}
-
+      {hasAspectRatio ? null : (
+        <Fragment>
+          <PointN data-point='cursor-n' $isResizable={isResizable} />
+          <PointE data-point='cursor-e' $isResizable={isResizable} />
+          <PointS data-point='cursor-s' $isResizable={isResizable} />
+          <PointW data-point='cursor-w' $isResizable={isResizable} />
+        </Fragment>
+      )}
 
       <PointNW data-point='cursor-nw' $isResizable={isResizable} />
       <PointNE data-point='cursor-ne' $isResizable={isResizable} />

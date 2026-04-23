@@ -1,17 +1,16 @@
-import React, {
-  InputHTMLAttributes,
-  useState,
-  useCallback,
-  ChangeEvent,
-  Fragment,
-  useRef,
-  useEffect,
-} from 'react';
-import styled, {css} from 'styled-components';
-import {IFeedbackColor} from '../../index';
+import type React from 'react';
 import {
-  isInsideRange,
-} from '../../helpers';
+  type ChangeEvent,
+  Fragment,
+  type InputHTMLAttributes,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import styled, { css } from 'styled-components';
+import { isInsideRange } from '../../helpers';
+import type { IFeedbackColor } from '../../index';
 
 /**
  * TODO to support all input range features
@@ -22,28 +21,30 @@ import {
 
 const ThumbDiameter = 16;
 
-const SliderWrapper = styled.div<{$disabled: boolean}>`
+const SliderWrapper = styled.div<{ $disabled: boolean }>`
   font-family: ${({ theme }) => theme.fontFamily.data};
   position: relative;
   height: 30px;
   margin-top: 20px;
-  ${({$disabled}) => $disabled && css`
+  ${({ $disabled }) =>
+    $disabled &&
+    css`
     opacity: .5;
   `};
 `;
 
-const HiddenInput = styled.input<{disabled:boolean}>`
+const HiddenInput = styled.input<{ disabled: boolean }>`
   width: 100%;
   margin: 0;
   padding:0;
   opacity: .001;
   z-index: 99;
-  cursor: ${({disabled}) => disabled ? `not-allowed` : `pointer`};
+  cursor: ${({ disabled }) => (disabled ? `not-allowed` : `pointer`)};
 `;
 
 const Rail = styled.div`
   position: absolute;
-  left: ${ThumbDiameter/2}px;
+  left: ${ThumbDiameter / 2}px;
   top: 10px;
   width: calc(100% - ${ThumbDiameter}px);
   height: 2px;
@@ -51,20 +52,20 @@ const Rail = styled.div`
   background-image: linear-gradient(to bottom, var(--grey-10), var(--primary-10) 98%);
 `;
 
-const Mark = styled.span<{$leftValue: number}>`
+const Mark = styled.span<{ $leftValue: number }>`
   position: absolute;
   top: -3px;
-  left: ${({$leftValue}) => `calc(${$leftValue}% + 7px)`};
+  left: ${({ $leftValue }) => `calc(${$leftValue}% + 7px)`};
   width: 1px;
   height: 9px;
   opacity: 0.25;
   background-color: var(--primary-11);
 `;
 
-const MarkLabel = styled.span<{$leftValue: number, $alignment?: IMarkAlignment}>`
+const MarkLabel = styled.span<{ $leftValue: number; $alignment?: IMarkAlignment }>`
   position: absolute;
   top: -24px;
-  left: ${({$leftValue}) => `calc(${$leftValue}% + 7px)`};
+  left: ${({ $leftValue }) => `calc(${$leftValue}% + 7px)`};
 
   font-size: 10px;
   font-style: italic;
@@ -75,9 +76,9 @@ const MarkLabel = styled.span<{$leftValue: number, $alignment?: IMarkAlignment}>
   text-align: center;
   color: var(--grey-a11);
 
-  ${({$alignment}) => ($alignment === 'center') && css`transform: translateX(-50%);;`}
-  ${({$alignment}) => ($alignment === 'right') && css`transform: translateX(5%);`}
-  ${({$alignment}) => ($alignment === 'left') && css`transform: translateX(-95%);`}
+  ${({ $alignment }) => ($alignment === 'center') && css`transform: translateX(-50%);;`}
+  ${({ $alignment }) => ($alignment === 'right') && css`transform: translateX(5%);`}
+  ${({ $alignment }) => ($alignment === 'left') && css`transform: translateX(-95%);`}
 `;
 
 const ThumbWrapper = styled.div`
@@ -89,28 +90,27 @@ const ThumbWrapper = styled.div`
   height: 2px;
 `;
 
-const Thumb = styled.span<{$leftValue: number, $bgColor: IFeedbackColor }>`
+const Thumb = styled.span<{ $leftValue: number; $bgColor: IFeedbackColor }>`
   width: ${ThumbDiameter}px;
   height: ${ThumbDiameter}px;
   border-radius: 8px;
-  background-color: ${({theme, $bgColor}) => theme.colors.feedback[$bgColor]};
+  background-color: ${({ theme, $bgColor }) => theme.colors.feedback[$bgColor]};
   position: absolute;
   top: -7.5px;
-  left: ${({$leftValue}) => `${$leftValue}%`};
+  left: ${({ $leftValue }) => `${$leftValue}%`};
 `;
 
 const GhostThumb = styled(Thumb)`
   opacity: .5;
 `;
 
-const thumbLeftPosition = (value: number, min: number, max: number ) => {
+const thumbLeftPosition = (value: number, min: number, max: number) => {
   return valueToPercent(value, min, max);
 };
 
-const nearMark = (value: number, marks: ISliderMark[]) : number => {
-
+const nearMark = (value: number, marks: ISliderMark[]): number => {
   const closest = marks.reduce((prev, curr) => {
-    return (Math.abs(curr.value - value) < Math.abs(prev.value - value) ? curr : prev);
+    return Math.abs(curr.value - value) < Math.abs(prev.value - value) ? curr : prev;
   });
 
   return closest.value;
@@ -122,17 +122,16 @@ const nearMark = (value: number, marks: ISliderMark[]) : number => {
  * if Min is not available and Max is positive default is 0
  * if Min is not available Max is negative min will be reduce by 1
  */
-const getValidMin = (max: number, min?: number) : number => {
-
-  if((!max) && (!min)) {
+const getValidMin = (max: number, min?: number): number => {
+  if (!max && !min) {
     return 0;
   }
 
-  if(!min) {
-    if(max > 0) {
+  if (!min) {
+    if (max > 0) {
       return 0;
-    }else {
-      return max - 1 ;
+    } else {
+      return max - 1;
     }
   }
   return min;
@@ -143,19 +142,19 @@ const getValidMin = (max: number, min?: number) : number => {
  * Max is required but null because it cans o.O
  * if Max is less value than min fix to one more than min
  */
-const getValidMax = (max: number, min?: number) : number => {
-  if((max === null) && (!min)) {
+const getValidMax = (max: number, min?: number): number => {
+  if (max === null && !min) {
     return 100;
   }
 
-  if(min && (min > max) ) {
-     return min + 1;
+  if (min && min > max) {
+    return min + 1;
   }
 
   return max;
 };
 
-const  valueToPercent = (value: number, min: number, max: number) : number => {
+const valueToPercent = (value: number, min: number, max: number): number => {
   return Math.round(((value - min) * 100) / (max - min));
 };
 
@@ -163,33 +162,34 @@ const  valueToPercent = (value: number, min: number, max: number) : number => {
 //   return (max - min) * percent + min;
 // };
 
-
-const getMarkAlignment = (value: number, min: number, max: number) : IMarkAlignment => {
-  if(value === min) {
+const getMarkAlignment = (value: number, min: number, max: number): IMarkAlignment => {
+  if (value === min) {
     return 'right';
   }
 
-  if(value === max) {
+  if (value === max) {
     return 'left';
   }
 
   return 'center';
 };
 
-const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag: string, allMarkCentered?: boolean) => {
-
-  const listOptions : React.JSX.Element[] = [];
-  const marksElements = markList.map(({value, label}, index) => {
+const renderMarks = (
+  markList: ISliderMark[],
+  min: number,
+  max: number,
+  listTag: string,
+  allMarkCentered?: boolean
+) => {
+  const listOptions: React.JSX.Element[] = [];
+  const marksElements = markList.map(({ value, label }, index) => {
     // * first and last should be 0% and 100%
-    const left = index === (markList.length - 1) ? 100 : valueToPercent(value, min, max);
+    const left = index === markList.length - 1 ? 100 : valueToPercent(value, min, max);
     listOptions.push(<option key={`option-${value}`}>{value}</option>);
 
     return (
       <Fragment key={`mark-${index}`}>
-        <Mark
-          data-leftvalue={`${left}%`}
-          $leftValue={left}
-        />
+        <Mark data-leftvalue={`${left}%`} $leftValue={left} />
         <MarkLabel
           $leftValue={left}
           $alignment={allMarkCentered ? 'center' : getMarkAlignment(value, min, max)}
@@ -203,41 +203,38 @@ const renderMarks = (markList: ISliderMark[], min: number, max: number, listTag:
   return (
     <Fragment>
       {marksElements}
-      <datalist id={listTag}>
-        {listOptions}
-      </datalist>
+      <datalist id={listTag}>{listOptions}</datalist>
     </Fragment>
   );
-
 };
 
 export type IMarkAlignment = 'left' | 'center' | 'right';
 
 export interface ISliderMark {
-  value: number
-  label?: string
+  value: number;
+  label?: string;
 }
 
 interface ISliderOwnProps {
-  min?: number
-  max: number
-  step?: number
-  marks?: ISliderMark[]
-  defaultValue?: number
-  value?: number
-  thumbColor?: IFeedbackColor
-  onlyMarkSelect?: boolean
-  showValue?: boolean
-  inputCallback?: (value: number) => void
-  onChangeCallback?: (value: number) => void
-  allMarkCentered?: boolean
+  min?: number;
+  max: number;
+  step?: number;
+  marks?: ISliderMark[];
+  defaultValue?: number;
+  value?: number;
+  thumbColor?: IFeedbackColor;
+  onlyMarkSelect?: boolean;
+  showValue?: boolean;
+  inputCallback?: (value: number) => void;
+  onChangeCallback?: (value: number) => void;
+  allMarkCentered?: boolean;
 }
 
 export type ISlider = ISliderOwnProps & InputHTMLAttributes<HTMLInputElement>;
 
 let ghostThumbValue = 0;
 
-const SliderInput : React.FC<ISlider> = ({
+const SliderInput: React.FC<ISlider> = ({
   min,
   max,
   marks,
@@ -253,88 +250,100 @@ const SliderInput : React.FC<ISlider> = ({
   formAction,
   ...props
 }) => {
-
   const maxValid = getValidMax(max, min);
   const minValid = getValidMin(max, min);
-  const initValue = (defaultValue && isInsideRange(defaultValue, minValid, maxValid)) ? defaultValue : minValid;
+  const initValue =
+    defaultValue && isInsideRange(defaultValue, minValid, maxValid) ? defaultValue : minValid;
 
   const [selectedValue, setSelectedValue] = useState(initValue);
-  const [isGhostActive, setIsGhostActive ] = useState(false);
+  const [isGhostActive, setIsGhostActive] = useState(false);
 
   const thumbValueRef = useRef(thumbLeftPosition(selectedValue, minValid, maxValid));
 
-  if(marks && onlyMarkSelect) {
+  if (marks && onlyMarkSelect) {
     const mark = nearMark(selectedValue, marks);
     const ghostVal = thumbLeftPosition(mark, minValid, maxValid);
     ghostThumbValue = ghostVal;
   }
 
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, lastValue: number) => {
+      const val = e.target.value;
+      if (val === null) {
+        return;
+      }
+      const numericVal = parseInt(val, 10);
 
-  const handleInputChange =  useCallback((e: ChangeEvent<HTMLInputElement>, lastValue: number) => {
-    const val = e.target.value;
-    if(val === null) { return; }
-    const numericVal = parseInt(val,10);
+      thumbValueRef.current = thumbLeftPosition(numericVal, minValid, maxValid);
+      const mark = marks ? nearMark(numericVal, marks) : numericVal;
+      const prevMark = marks ? nearMark(lastValue, marks) : numericVal;
 
-    thumbValueRef.current = thumbLeftPosition(numericVal, minValid, maxValid);
-    const mark = marks ? nearMark(numericVal, marks) : numericVal;
-    const prevMark  = marks ? nearMark(lastValue, marks) : numericVal;
+      if (onlyMarkSelect && prevMark !== mark) {
+        onChangeCallback(mark);
+      }
 
-    if(onlyMarkSelect && (prevMark !== mark)) {
-      onChangeCallback(mark);
-    }
+      if (!onlyMarkSelect) {
+        onChangeCallback(numericVal);
+      }
 
-    if(!onlyMarkSelect) {
-      onChangeCallback(numericVal);
-    }
-
-    setSelectedValue(prev => {
-      if(numericVal === prev) { return prev; }
-      return numericVal;
-    });
-
-  },[marks, maxValid, minValid, onChangeCallback, onlyMarkSelect]);
-
+      setSelectedValue((prev) => {
+        if (numericVal === prev) {
+          return prev;
+        }
+        return numericVal;
+      });
+    },
+    [marks, maxValid, minValid, onChangeCallback, onlyMarkSelect]
+  );
 
   const handleSelectStart = useCallback(() => {
     setIsGhostActive(true);
   }, []);
 
-  const handleSelectEnd =  useCallback((currentValue: number) => {
-    if(onlyMarkSelect) {
-      inputCallback(ghostThumbValue);
-    } else {
-      inputCallback(currentValue);
-    }
+  const handleSelectEnd = useCallback(
+    (currentValue: number) => {
+      if (onlyMarkSelect) {
+        inputCallback(ghostThumbValue);
+      } else {
+        inputCallback(currentValue);
+      }
 
-    if(onlyMarkSelect) {
-      thumbValueRef.current = ghostThumbValue;
-    }
+      if (onlyMarkSelect) {
+        thumbValueRef.current = ghostThumbValue;
+      }
 
-    setIsGhostActive(false);
-  },[inputCallback, onlyMarkSelect]);
+      setIsGhostActive(false);
+    },
+    [inputCallback, onlyMarkSelect]
+  );
 
   useEffect(() => {
-    const initValue = (defaultValue && isInsideRange(defaultValue, minValid, maxValid)) ? defaultValue : minValid;
+    const initValue =
+      defaultValue && isInsideRange(defaultValue, minValid, maxValid) ? defaultValue : minValid;
     thumbValueRef.current = thumbLeftPosition(initValue, minValid, maxValid);
     setSelectedValue(initValue);
-
   }, [defaultValue, maxValid, minValid]);
 
-  return(
+  return (
     <SliderWrapper $disabled={disabled}>
       <Rail />
       <ThumbWrapper>
-        {marks && renderMarks(marks, minValid, maxValid, `sliderList-${minValid}-${maxValid}`, allMarkCentered)}
-        {isGhostActive && onlyMarkSelect
-          ? (
-            <GhostThumb
-              data-value={selectedValue}
-              $leftValue={ghostThumbValue}
-              data-percentage={ghostThumbValue}
-              $bgColor={thumbColor}
-            />
-          )
-          : null}
+        {marks &&
+          renderMarks(
+            marks,
+            minValid,
+            maxValid,
+            `sliderList-${minValid}-${maxValid}`,
+            allMarkCentered
+          )}
+        {isGhostActive && onlyMarkSelect ? (
+          <GhostThumb
+            data-value={selectedValue}
+            $leftValue={ghostThumbValue}
+            data-percentage={ghostThumbValue}
+            $bgColor={thumbColor}
+          />
+        ) : null}
         <Thumb
           data-value={selectedValue}
           $leftValue={thumbValueRef.current}

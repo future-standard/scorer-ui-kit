@@ -1,13 +1,13 @@
-import React, { useCallback, Fragment, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import type React from 'react';
+import { Fragment, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-import Icon from '../../Icons/Icon';
-import { ITopBar, IUserDrawerFooter, IUserDrawerMeta } from '../index';
+import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../../common/index';
-import UserDetails from '../atoms/UserDrawerMeta';
-import DrawerBottomMenu from '../atoms/DrawerBottomMenu';
+import Icon from '../../Icons/Icon';
 import { deviceMediaQuery } from '../../theme/common';
+import DrawerBottomMenu from '../atoms/DrawerBottomMenu';
+import UserDetails from '../atoms/UserDrawerMeta';
+import type { ITopBar, IUserDrawerFooter, IUserDrawerMeta } from '../index';
 
 const DrawerTop = styled.div``;
 const DrawerBottom = styled.div`
@@ -70,7 +70,7 @@ const IconWrapperFooter = styled.div`
   padding-right: 20px;
 `;
 
-const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
+const LinkMenuItemA = styled(Link)<{ isActive?: boolean }>`
   ${resetButtonStyles};
   display: block;
   width: 100%;
@@ -83,14 +83,16 @@ const LinkMenuItemA = styled(Link) <{ isActive?: boolean }>`
     color: var(--primary-9);
   }
 
-  ${({ isActive }) => isActive && css`
+  ${({ isActive }) =>
+    isActive &&
+    css`
     &, &:hover {
       color: var(--primary-9);
     }
   `};
 `;
 
-const FooterMeta = styled.div <{ $icon?: string }>`
+const FooterMeta = styled.div<{ $icon?: string }>`
   font-family: var(--font-ui);
   border-top: var(--dividing-line) 1px solid;
   margin-top: auto;
@@ -102,7 +104,7 @@ const FooterMeta = styled.div <{ $icon?: string }>`
   font-weight: 400;
   color: var(--grey-a11);
   padding: 10px;
-  padding-left: ${({ $icon }) => $icon ? '31px' : '21px'};
+  padding-left: ${({ $icon }) => ($icon ? '31px' : '21px')};
 `;
 
 const NavigationContainer = styled.div`
@@ -113,29 +115,28 @@ const NavigationContainer = styled.div`
   border-bottom: var(--dividing-line) 1px solid;
 `;
 
-const FooterText = styled.div <{ $icon?: string }>`
+const FooterText = styled.div<{ $icon?: string }>`
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 136px;
-  max-width: ${({ $icon }) => $icon ? '136px' : '164px'};
+  max-width: ${({ $icon }) => ($icon ? '136px' : '164px')};
   color: var(--grey-11);
   opacity: 0.5;
 `;
 
 const updateLanguageAttribute = (initLanguage?: string) => {
-
   if (initLanguage) {
-    document.documentElement.setAttribute("lang", initLanguage);
+    document.documentElement.setAttribute('lang', initLanguage);
     return initLanguage;
   }
 
-  const browserLang = navigator.language.split("-")[0];
+  const browserLang = navigator.language.split('-')[0];
   const htmlLang = document.documentElement.lang;
 
-  if(!htmlLang) {
-    document.documentElement.setAttribute("lang", browserLang);
+  if (!htmlLang) {
+    document.documentElement.setAttribute('lang', browserLang);
     return browserLang;
   }
 
@@ -143,7 +144,7 @@ const updateLanguageAttribute = (initLanguage?: string) => {
 };
 
 interface IUserMenu extends ITopBar {
-  closeOnClick?: () => void
+  closeOnClick?: () => void;
 }
 
 const UserMenu: React.FC<IUserMenu> = ({
@@ -156,7 +157,7 @@ const UserMenu: React.FC<IUserMenu> = ({
   logoutText = 'Logout',
   hasCurrentUser = true,
   currentUserText = 'Current User',
-  accountOptionText = "Account Options",
+  accountOptionText = 'Account Options',
   userSubmenu = [],
   userDrawerBespoke,
   loggedInUser,
@@ -164,28 +165,30 @@ const UserMenu: React.FC<IUserMenu> = ({
   isLightMode = true,
   switchThemeText = 'SWITCH THEME',
   selectedThemeText = '',
-  onLogout = () => { },
-  onLanguageToggle = () => { },
+  onLogout = () => {},
+  onLanguageToggle = () => {},
   closeOnClick,
-  onThemeToggle = () => { },
-  userDrawerFooter = {icon:'', title: ''},
+  onThemeToggle = () => {},
+  userDrawerFooter = { icon: '', title: '' },
   copySuccessMessage,
   includeCopyTitle,
-  onUserDrawerMetaClick = () => { },
+  onUserDrawerMetaClick = () => {},
   userDrawerMeta,
   hasUserDrawerMeta,
-  hasUserDrawerFooter
+  hasUserDrawerFooter,
 }) => {
-
-  const {icon, title} = userDrawerFooter as IUserDrawerFooter;
-  const logoutHandler = useCallback(async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-    await onLogout();
-    window.location.assign(logoutLink);
-    if (closeOnClick) {
-      closeOnClick();
-    }
-  }, [closeOnClick, logoutLink, onLogout]);
+  const { icon, title } = userDrawerFooter as IUserDrawerFooter;
+  const logoutHandler = useCallback(
+    async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      e.preventDefault();
+      await onLogout();
+      window.location.assign(logoutLink);
+      if (closeOnClick) {
+        closeOnClick();
+      }
+    },
+    [closeOnClick, logoutLink, onLogout]
+  );
 
   const handleCloseWhenClick = useCallback(() => {
     if (closeOnClick) {
@@ -195,75 +198,90 @@ const UserMenu: React.FC<IUserMenu> = ({
 
   useEffect(() => {
     updateLanguageAttribute(selectedLangAttribute);
-  },[selectedLangAttribute]);
+  }, [selectedLangAttribute]);
 
   return (
     <Fragment>
       <DrawerTop>
-        <>
-          {hasCurrentUser ?
-            <CurrentUser>
-              <DrawerHeader>{currentUserText}</DrawerHeader>
-              {loggedInUser}
-            </CurrentUser>
-            : null}
-          {hasUserDrawerMeta?
+        {hasCurrentUser ? (
+          <CurrentUser>
+            <DrawerHeader>{currentUserText}</DrawerHeader>
+            {loggedInUser}
+          </CurrentUser>
+        ) : null}
+        {hasUserDrawerMeta ? (
           <NavigationContainer>
-            {userDrawerMeta?.map((item:IUserDrawerMeta, key:number) => {
-            return (
-              <UserDetails
-                onUserDrawerMetaClick={onUserDrawerMetaClick}
-                key={key}
-                {...{ item, includeCopyTitle, copySuccessMessage }}
-              />
-            );
+            {userDrawerMeta?.map((item: IUserDrawerMeta, key: number) => {
+              return (
+                <UserDetails
+                  onUserDrawerMetaClick={onUserDrawerMetaClick}
+                  key={key}
+                  {...{ item, includeCopyTitle, copySuccessMessage }}
+                />
+              );
             })}
           </NavigationContainer>
-        :null}
+        ) : null}
 
-        {userSubmenu.length > 0 ?
+        {userSubmenu.length > 0 ? (
           <UserOptions>
             <DrawerHeader>{accountOptionText}</DrawerHeader>
             <LinkMenu>
               {userSubmenu.map(({ text, href }, index) => {
                 return (
                   <LinkMenuItem key={index}>
-                    <LinkMenuItemA to={href} onClick={handleCloseWhenClick}>{text}</LinkMenuItemA>
+                    <LinkMenuItemA to={href} onClick={handleCloseWhenClick}>
+                      {text}
+                    </LinkMenuItemA>
                   </LinkMenuItem>
                 );
               })}
             </LinkMenu>
           </UserOptions>
-          : null}
+        ) : null}
 
         {userDrawerBespoke ? userDrawerBespoke : null}
 
-        {hasLogout ?
+        {hasLogout ? (
           <Logout>
             <LinkMenu>
-              <LinkMenuItem><LinkMenuItemA onClick={logoutHandler} to={logoutLink}>{logoutText}</LinkMenuItemA></LinkMenuItem>
+              <LinkMenuItem>
+                <LinkMenuItemA onClick={logoutHandler} to={logoutLink}>
+                  {logoutText}
+                </LinkMenuItemA>
+              </LinkMenuItem>
             </LinkMenu>
           </Logout>
-          : null}
-       </>
-     </DrawerTop>
+        ) : null}
+      </DrawerTop>
 
       <DrawerBottom>
-        {hasSwitchTheme && <DrawerBottomMenu icon={isLightMode ? 'LightMode' : 'DarkMode'} title={switchThemeText} subTitle={selectedThemeText} onClickCallback={onThemeToggle} />}
-        {hasLanguage && <DrawerBottomMenu icon='Language' title={languageOptionsText} subTitle={selectedLanguageText} onClickCallback={onLanguageToggle} />}
-        {(hasUserDrawerFooter) ?
+        {hasSwitchTheme && (
+          <DrawerBottomMenu
+            icon={isLightMode ? 'LightMode' : 'DarkMode'}
+            title={switchThemeText}
+            subTitle={selectedThemeText}
+            onClickCallback={onThemeToggle}
+          />
+        )}
+        {hasLanguage && (
+          <DrawerBottomMenu
+            icon='Language'
+            title={languageOptionsText}
+            subTitle={selectedLanguageText}
+            onClickCallback={onLanguageToggle}
+          />
+        )}
+        {hasUserDrawerFooter ? (
           <FooterMeta title={title} $icon={icon}>
-            {icon ?
+            {icon ? (
               <IconWrapperFooter>
                 <Icon icon={icon} size={14} color='dimmed' />
               </IconWrapperFooter>
-            :
-              null}
-            <FooterText $icon={icon}>
-              {title}
-            </FooterText>
+            ) : null}
+            <FooterText $icon={icon}>{title}</FooterText>
           </FooterMeta>
-        : null}
+        ) : null}
       </DrawerBottom>
     </Fragment>
   );

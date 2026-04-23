@@ -1,12 +1,13 @@
-import React, { useCallback } from 'react';
+import type React from 'react';
+import { useCallback } from 'react';
 import styled, { css } from 'styled-components';
-import Icon, { IconWrapper } from '../../Icons/Icon';
+import { resetButtonStyles } from '../../common';
 import FilterOption from '../../Form/atoms/FilterOption';
+import Icon, { IconWrapper } from '../../Icons/Icon';
+import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
 import FilterDropHandler from '../atoms/FilterDropHandler';
 import LoadingBox from '../atoms/LoadingBox';
-import { IFilterItem, FilterButtonDesign } from '../FilterTypes';
-import { resetButtonStyles } from '../../common';
-import FilterDropdownContainer from '../atoms/FilterDropdownContainer';
+import type { FilterButtonDesign, IFilterItem } from '../FilterTypes';
 
 const Container = styled.div`
   display: inline-block;
@@ -66,30 +67,32 @@ const OrderButton = styled.button<{ $isSelected: boolean }>`
       }
     }
 
-    ${$isSelected && css`
+    ${
+      $isSelected &&
+      css`
       ${IconWrapper} {
         [stroke]{
           stroke: var(--primary-9);
         }
       }
-    `}
+    `
+    }
 
   `}
 `;
 
-
 export interface ISortDropdown {
-  buttonText: string
-  list: IFilterItem[]
-  disabled?: boolean
-  isLoading?: boolean
-  loadingText?: string
-  ascendingText?: string
-  descendingText?: string
-  isSortAscending?: boolean
-  selected: IFilterItem
-  design?: FilterButtonDesign
-  onSelect: (newSort: IFilterItem, isSortAscending: boolean) => void
+  buttonText: string;
+  list: IFilterItem[];
+  disabled?: boolean;
+  isLoading?: boolean;
+  loadingText?: string;
+  ascendingText?: string;
+  descendingText?: string;
+  isSortAscending?: boolean;
+  selected: IFilterItem;
+  design?: FilterButtonDesign;
+  onSelect: (newSort: IFilterItem, isSortAscending: boolean) => void;
 }
 
 const SortDropdown: React.FC<ISortDropdown> = ({
@@ -104,26 +107,29 @@ const SortDropdown: React.FC<ISortDropdown> = ({
   ascendingText = 'Ascending',
   design = 'basic',
   onSelect,
-  ...props }) => {
+  ...props
+}) => {
+  const handleSortSelect = useCallback(
+    (newValue: IFilterItem) => {
+      if (newValue.value === selected.value) {
+        return;
+      }
 
+      onSelect(newValue, isSortAscending);
+    },
+    [isSortAscending, onSelect, selected.value]
+  );
 
-  const handleSortSelect = useCallback((newValue: IFilterItem) => {
-    if (newValue.value === selected.value) {
-      return;
-    }
+  const handleOrderSelect = useCallback(
+    (isAscending: boolean) => {
+      if (isSortAscending === isAscending) {
+        return;
+      }
 
-    onSelect(newValue, isSortAscending);
-
-  }, [isSortAscending, onSelect, selected.value]);
-
-  const handleOrderSelect = useCallback((isAscending: boolean) => {
-    if (isSortAscending === isAscending) {
-      return;
-    }
-
-    onSelect(selected, isAscending);
-
-  }, [isSortAscending, onSelect, selected]);
+      onSelect(selected, isAscending);
+    },
+    [isSortAscending, onSelect, selected]
+  );
 
   return (
     <Container {...props}>
@@ -132,46 +138,35 @@ const SortDropdown: React.FC<ISortDropdown> = ({
         buttonIcon='FilterSorting'
       >
         <FilterDropdownContainer>
-          {(isLoading || list.length === 0)
-            ? (
-              <LoadingBox {...{ loadingText }} />
-            )
-            : (
-              <OptionList>
-                {list.map((item, index) => {
-                  return (
-                    <StyledFilterOption
-                      key={index}
-                      title={item.text}
-                      optionType='radio'
-                      selected={selected.value === item.value}
-                      onClick={() => handleSortSelect(item)}
-                    />
-                  );
-                })}
-              </OptionList>
-            )}
+          {isLoading || list.length === 0 ? (
+            <LoadingBox {...{ loadingText }} />
+          ) : (
+            <OptionList>
+              {list.map((item, index) => {
+                return (
+                  <StyledFilterOption
+                    key={index}
+                    title={item.text}
+                    optionType='radio'
+                    selected={selected.value === item.value}
+                    onClick={() => handleSortSelect(item)}
+                  />
+                );
+              })}
+            </OptionList>
+          )}
           <OrderGroup>
             <OrderButton $isSelected={isSortAscending} onClick={() => handleOrderSelect(true)}>
-              <Icon
-                icon='FilterAscending'
-                size={16}
-                weight='light'
-              />
+              <Icon icon='FilterAscending' size={16} weight='light' />
               <FilterOption selected={isSortAscending} title={ascendingText} />
             </OrderButton>
             <OrderButton $isSelected={!isSortAscending} onClick={() => handleOrderSelect(false)}>
-              <Icon
-                icon='FilterDescending'
-                size={16}
-                weight='light'
-              />
+              <Icon icon='FilterDescending' size={16} weight='light' />
               <FilterOption selected={!isSortAscending} title={descendingText} />
             </OrderButton>
           </OrderGroup>
         </FilterDropdownContainer>
       </FilterDropHandler>
-
     </Container>
   );
 };

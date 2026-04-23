@@ -1,19 +1,19 @@
-import React, { useCallback, useState } from "react";
-import { ToggleButton } from "scorer-ui-kit";
-import { boolean, object, select, text } from "@storybook/addon-knobs";
-import { action } from "storybook/actions";
-import styled from "styled-components";
+import { boolean, object, select, text } from '@storybook/addon-knobs';
+import { useCallback, useState } from 'react';
+import { ToggleButton } from 'scorer-ui-kit';
+import { action } from 'storybook/actions';
+import styled from 'styled-components';
 
 const ToggleButtonStory = {
   title: 'Filters/atoms',
   component: ToggleButton,
-  decorators: []
+  decorators: [],
 };
 
 const layoutOptions = [
   { text: 'Grid', value: 'grid', icon: 'LayoutGrid' },
-  { text: 'List', value: 'list', icon: 'LayoutList' }
-]
+  { text: 'List', value: 'list', icon: 'LayoutList' },
+];
 
 const CameraData = styled.div``;
 const Camera = styled.li``;
@@ -22,7 +22,8 @@ const Container = styled.div``;
 const DataGroup = styled.ol<{ $layout: string }>`
   margin-top: 20px;
   display: grid;
-  ${({ $layout }) => $layout === 'grid' &&
+  ${({ $layout }) =>
+    $layout === 'grid' &&
     `
       list-style-type: none;
       grid-template-columns: repeat(3, 300px);
@@ -32,23 +33,22 @@ const DataGroup = styled.ol<{ $layout: string }>`
           border: 1px solid var(--grey-9);
           text-align: center;
         }
-    `
-  };
+    `};
 `;
 
 const StatusSpan = styled.span<{ $isOnline?: boolean }>`
-    ${({ $isOnline }) => $isOnline ?
-    `
+    ${({ $isOnline }) =>
+      $isOnline
+        ? `
       color: var(--success);
     `
-    :
-    `
+        : `
       color: var(--warning);
     `}
   `;
 
 export const _ToggleButton = () => {
-  const [selectedLayout, setSelectedLayout] = useState(0)
+  const [selectedLayout, setSelectedLayout] = useState(0);
 
   const disabled = boolean('Disabled', false);
   const design = select('Design type', { Default: 'default', Basic: 'basic' }, 'basic');
@@ -56,10 +56,13 @@ export const _ToggleButton = () => {
   const options = object('Options', layoutOptions);
   const showToggleValue = action('Button Value: ');
 
-  const onToggle = useCallback((index: number, value: string | number) => {
-    setSelectedLayout(index);
-    showToggleValue(value);
-  }, [showToggleValue])
+  const onToggle = useCallback(
+    (index: number, value: string | number) => {
+      setSelectedLayout(index);
+      showToggleValue(value);
+    },
+    [showToggleValue]
+  );
 
   return (
     <Container>
@@ -70,8 +73,9 @@ export const _ToggleButton = () => {
           onToggle,
           disabled,
           design,
-          selectedIndex: selectedLayout
-        }} />
+          selectedIndex: selectedLayout,
+        }}
+      />
 
       <DataGroup $layout={layoutOptions[selectedLayout].value}>
         <Camera>
@@ -121,7 +125,7 @@ export const _ToggleButton = () => {
         </Camera>
       </DataGroup>
     </Container>
-  )
-}
+  );
+};
 
 export default ToggleButtonStory;

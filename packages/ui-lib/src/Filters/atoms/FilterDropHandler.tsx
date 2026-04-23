@@ -1,8 +1,9 @@
-import React, { useState, useRef, useCallback, useImperativeHandle } from 'react';
+import type React from 'react';
+import { useCallback, useImperativeHandle, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import FilterButton from '../atoms/FilterButton';
 import { useClickOutside } from '../../hooks/useClickOutside';
-import { FilterButtonDesign } from '../FilterTypes';
+import FilterButton from '../atoms/FilterButton';
+import type { FilterButtonDesign } from '../FilterTypes';
 
 const Container = styled.div`
   position: relative;
@@ -12,46 +13,60 @@ const ButtonWrapper = styled.div`
   display: inline-block;
 `;
 
-const  ContentBox = styled.div<{ $openState: IDropOpen, $disabled: boolean, $minWidth: number }>`
+const ContentBox = styled.div<{ $openState: IDropOpen; $disabled: boolean; $minWidth: number }>`
   z-index: 100;
   min-width: ${({ $minWidth }) => $minWidth}px;
   position: absolute;
 
-  ${({ $openState, $disabled }) => $openState && css`
+  ${({ $openState, $disabled }) =>
+    $openState &&
+    css`
     display: ${$openState.isOpen ? 'inline-block' : 'none'};
     display: ${$disabled && 'none'};
 
-    ${$openState.position === 'bottom-right' && `
+    ${
+      $openState.position === 'bottom-right' &&
+      `
       bottom: 0;
       left: 0;
       transform: translateY(calc(100% + 5px ));
-    `};
+    `
+    };
 
-    ${$openState.position === 'bottom-left' && `
+    ${
+      $openState.position === 'bottom-left' &&
+      `
       bottom: 0;
       right: 0;
       transform: translateY(calc(100% + 5px ));
-    `};
+    `
+    };
 
-    ${$openState.position === 'top-left' && `
+    ${
+      $openState.position === 'top-left' &&
+      `
       top: 0;
       right: 0;
       transform: translateY(calc( -100% - 5px ));
-    `};
+    `
+    };
 
-    ${$openState.position === 'top-right' && `
+    ${
+      $openState.position === 'top-right' &&
+      `
       top: 0;
       left: 0;
       transform: translateY(calc( -100% - 5px ));
-    `};
+    `
+    };
 
   `};
 `;
 
 const getDropPosition = (buttonRect: DOMRect, minWidth: number, minHeight: number): IOpenPos => {
   let position: IOpenPos = 'bottom-right';
-  const openLeft = (buttonRect.left + minWidth) > window.innerWidth;
-  const openTop = (buttonRect.bottom + minHeight) > window.innerHeight;
+  const openLeft = buttonRect.left + minWidth > window.innerWidth;
+  const openTop = buttonRect.bottom + minHeight > window.innerHeight;
   const spaceTop = buttonRect.bottom > minHeight;
 
   if (openLeft && openTop && spaceTop) {
@@ -69,26 +84,26 @@ const getDropPosition = (buttonRect: DOMRect, minWidth: number, minHeight: numbe
   return position;
 };
 
-type IOpenPos = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+type IOpenPos = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 
 interface IDropOpen {
-  isOpen: boolean,
-  position: IOpenPos,
+  isOpen: boolean;
+  position: IOpenPos;
 }
 
 interface IFilterDropHandler {
-  buttonIcon: string
-  buttonText: string
-  disabled?: boolean
-  minWidth?: number
-  minHeight?: number
-  isSortAscending?: boolean
-  design?: FilterButtonDesign
-  noCloseOnClickOutside?: boolean
-  onToggleOpenCallback?: (isOpen: boolean) => void
-  onCloseCallback?: () => void
+  buttonIcon: string;
+  buttonText: string;
+  disabled?: boolean;
+  minWidth?: number;
+  minHeight?: number;
+  isSortAscending?: boolean;
+  design?: FilterButtonDesign;
+  noCloseOnClickOutside?: boolean;
+  onToggleOpenCallback?: (isOpen: boolean) => void;
+  onCloseCallback?: () => void;
   children?: React.ReactNode;
-  ref?: React.Ref<FilterDropHandlerRef>
+  ref?: React.Ref<FilterDropHandlerRef>;
 }
 
 export interface FilterDropHandlerRef {
@@ -105,43 +120,46 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
   design = 'default',
   noCloseOnClickOutside,
   children,
-  onToggleOpenCallback = () => { },
-  onCloseCallback = () => { },
+  onToggleOpenCallback = () => {},
+  onCloseCallback = () => {},
   ref,
   ...props
 }) => {
+  const [openState, setOpenState] = useState<IDropOpen>({
+    isOpen: false,
+    position: 'bottom-right',
+  });
 
-    const [openState, setOpenState] = useState<IDropOpen>({
-      isOpen: false,
-      position: 'bottom-right',
+  const buttonWrapperRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  const clickOutsideClose = useCallback(() => {
+    if (noCloseOnClickOutside) {
+      return;
+    }
+
+    if (openState.isOpen) {
+      onCloseCallback();
+    }
+
+    setOpenState((prev) => {
+      const isOpen = false;
+      return { ...prev, isOpen };
     });
+  }, [noCloseOnClickOutside, onCloseCallback, openState.isOpen]);
 
-    const buttonWrapperRef = useRef<HTMLDivElement>(null);
-    const mainRef = useRef<HTMLDivElement>(null);
+  useClickOutside(mainRef, clickOutsideClose);
 
-    const clickOutsideClose = useCallback(() => {
-      if(noCloseOnClickOutside) {
+  const handleToggleOpen = useCallback(
+    (minWidth: number, minHeight: number) => {
+      if (!buttonWrapperRef.current) {
         return;
       }
 
-      if (openState.isOpen) {
-        onCloseCallback();
-      }
-
-      setOpenState((prev) => {
-        const isOpen = false;
-        return { ...prev, isOpen };
-      });
-
-    }, [noCloseOnClickOutside, onCloseCallback, openState.isOpen]);
-
-    useClickOutside(mainRef, clickOutsideClose);
-
-    const handleToggleOpen = useCallback((minWidth: number, minHeight: number) => {
-      if (!buttonWrapperRef.current) { return; }
-
       const buttonRect = buttonWrapperRef.current.getBoundingClientRect();
-      if (!buttonRect) { return; }
+      if (!buttonRect) {
+        return;
+      }
       const position: IOpenPos = getDropPosition(buttonRect, minWidth, minHeight);
 
       onToggleOpenCallback(!openState.isOpen);
@@ -149,37 +167,40 @@ const FilterDropHandler: React.FC<IFilterDropHandler> = ({
         const isOpen = !prev.isOpen;
         return { ...prev, isOpen, position };
       });
-    }, [onToggleOpenCallback, openState.isOpen]);
+    },
+    [onToggleOpenCallback, openState.isOpen]
+  );
 
-    const handleImperativeClose = useCallback(() => {
-      setOpenState((prev) => {
-        const isOpen = false;
-        return { ...prev, isOpen };
-      });
-    }, []);
+  const handleImperativeClose = useCallback(() => {
+    setOpenState((prev) => {
+      const isOpen = false;
+      return { ...prev, isOpen };
+    });
+  }, []);
 
-    // Expose imperativeClose method via ref
-    useImperativeHandle(ref, () => ({
-      imperativeClose: handleImperativeClose,
-    }));
+  // Expose imperativeClose method via ref
+  useImperativeHandle(ref, () => ({
+    imperativeClose: handleImperativeClose,
+  }));
 
-    return (
-      <Container ref={mainRef} {...props}>
-        <ButtonWrapper ref={buttonWrapperRef}>
-          <FilterButton
-            icon={buttonIcon}
-            isOpen={openState.isOpen}
-            onClick={() => handleToggleOpen(minWidth, minHeight)}
-            {...{ disabled, isSortAscending, design }}
-            hasFlipArrow
-          >{buttonText}
-          </FilterButton>
-        </ButtonWrapper>
-        <ContentBox $openState={openState} $disabled={disabled} $minWidth={minWidth}>
-          <>{children}</>
-        </ContentBox>
-      </Container>
-    );
+  return (
+    <Container ref={mainRef} {...props}>
+      <ButtonWrapper ref={buttonWrapperRef}>
+        <FilterButton
+          icon={buttonIcon}
+          isOpen={openState.isOpen}
+          onClick={() => handleToggleOpen(minWidth, minHeight)}
+          {...{ disabled, isSortAscending, design }}
+          hasFlipArrow
+        >
+          {buttonText}
+        </FilterButton>
+      </ButtonWrapper>
+      <ContentBox $openState={openState} $disabled={disabled} $minWidth={minWidth}>
+        {children}
+      </ContentBox>
+    </Container>
+  );
 };
 
 export default FilterDropHandler;

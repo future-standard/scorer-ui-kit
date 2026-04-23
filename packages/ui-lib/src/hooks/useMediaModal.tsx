@@ -1,15 +1,13 @@
-import React, {useCallback, VideoHTMLAttributes } from 'react';
-import { IMediaType } from '..';
-import MediaBox, { IMediaModal } from "../Misc/atoms/MediaBox";
-import { useModal, IModal } from "./useModal";
-
+import { useCallback, type VideoHTMLAttributes } from 'react';
+import type { IMediaType } from '..';
+import MediaBox, { type IMediaModal } from '../Misc/atoms/MediaBox';
+import { type IModal, useModal } from './useModal';
 
 export type ICreateMediaModal = IMediaModal & IModal;
 
 const videoDefaultOptions: VideoHTMLAttributes<HTMLVideoElement> = { controls: true };
 
 export const useMediaModal = () => {
-
   // default options for media box
   const { createModal, isModalOpen, setModalOpen } = useModal();
 
@@ -21,10 +19,13 @@ export const useMediaModal = () => {
       img.src = src;
       try {
         await new Promise((resolve, reject) => {
-          img.onload = () => resolve(isValid = true);
+          img.onload = () => {
+            isValid = true;
+            resolve(true);
+          };
           img.onerror = reject;
         });
-      } catch (error) {
+      } catch (_error) {
         isValid = false;
       }
     }
@@ -35,11 +36,13 @@ export const useMediaModal = () => {
 
       try {
         await new Promise((resolve, reject) => {
-          videoElement.oncanplaythrough = () => resolve(isValid = true);
+          videoElement.oncanplaythrough = () => {
+            isValid = true;
+            resolve(true);
+          };
           videoElement.onerror = reject;
         });
-
-      } catch (error) {
+      } catch (_error) {
         isValid = false;
       }
     }
@@ -47,48 +50,49 @@ export const useMediaModal = () => {
     return isValid;
   }
 
+  const createMediaModal = useCallback(
+    async (mediaModal: ICreateMediaModal) => {
+      const {
+        src,
+        mediaType,
+        alt,
+        videoOptions = videoDefaultOptions,
+        onError,
+        onMediaLoad,
+        closeText,
+        dismissCallback,
+        retryLoading = false,
+        retryLimit = 5,
+        minHeight = '300px',
+        minWidth = '300px',
+      } = mediaModal;
 
-  const createMediaModal = useCallback(async (mediaModal: ICreateMediaModal) => {
-    const {
-      src,
-      mediaType,
-      alt,
-      videoOptions = videoDefaultOptions,
-      onError,
-      onMediaLoad,
-      closeText,
-      dismissCallback,
-      retryLoading = false,
-      retryLimit=5,
-      minHeight='300px',
-      minWidth='300px',
-    } = mediaModal;
-
-    createModal({
-      padding: false,
-      width: 'auto',
-      closeText,
-      dismissCallback,
-      customComponent: (
-        <MediaBox
-          {...{
-            src,
-            mediaType,
-            alt,
-            videoOptions,
-            onError,
-            onMediaLoad,
-            retryLoading,
-            retryLimit,
-            minHeight,
-            minWidth,
-          }}
-          hasModalLimits
-        />
-      )
-    });
-
-  }, [createModal]);
+      createModal({
+        padding: false,
+        width: 'auto',
+        closeText,
+        dismissCallback,
+        customComponent: (
+          <MediaBox
+            {...{
+              src,
+              mediaType,
+              alt,
+              videoOptions,
+              onError,
+              onMediaLoad,
+              retryLoading,
+              retryLimit,
+              minHeight,
+              minWidth,
+            }}
+            hasModalLimits
+          />
+        ),
+      });
+    },
+    [createModal]
+  );
 
   return {
     createMediaModal,

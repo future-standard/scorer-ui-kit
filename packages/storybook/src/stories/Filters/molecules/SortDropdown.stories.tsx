@@ -1,53 +1,60 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import styled from 'styled-components';
-import { IFilterItem, SortDropdown } from 'scorer-ui-kit';
 import { boolean, object, select } from '@storybook/addon-knobs';
+import { useCallback, useMemo, useState } from 'react';
+import { type IFilterItem, SortDropdown } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
+import styled from 'styled-components';
 
 const SortDropdownStory = {
   title: 'Filters/molecules',
   component: SortDropdown,
   decorators: [],
   parameters: {
-    jsx: { skip: 1 }
-  }
+    jsx: { skip: 1 },
+  },
 };
 
 const Container = styled.div``;
 
 export const _SortDropdown = () => {
-  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
+  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
 
-  const dropdownList: IFilterItem[] = useMemo(() => [
-    { text: language === 'english' ? 'Name' : '名前', value: 'name' },
-    { text: language === 'english' ? 'Status' : 'ステータス', value: 'status' },
-    { text: language === 'english' ? 'Cost' : '価格', value: 'cost' }
-  ], [language])
+  const dropdownList: IFilterItem[] = useMemo(
+    () => [
+      { text: language === 'english' ? 'Name' : '名前', value: 'name' },
+      { text: language === 'english' ? 'Status' : 'ステータス', value: 'status' },
+      { text: language === 'english' ? 'Cost' : '価格', value: 'cost' },
+    ],
+    [language]
+  );
 
-  const [sortSelected, setSortSelected] = useState<IFilterItem>({ text: dropdownList[1].text, value: dropdownList[0].value });
+  const [sortSelected, setSortSelected] = useState<IFilterItem>({
+    text: dropdownList[1].text,
+    value: dropdownList[0].value,
+  });
   const [isAscending, setIsAScending] = useState<boolean>(true);
   const isLoading = boolean('Is Loading', false);
-  const design = select('Design type', {Default: 'default', Basic: 'basic'}, 'basic')
+  const design = select('Design type', { Default: 'default', Basic: 'basic' }, 'basic');
   // const buttonText = text('Button Text', `Sorted by ${dropdownList[0].text}`);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const list = object('Dropdown list', dropdownList)
+  const _list = object('Dropdown list', dropdownList);
   const lastSelection = action('new sort');
 
-  const handleSelections = useCallback((newSort: IFilterItem, isSortAscending: boolean) => {
-    setSortSelected(newSort);
-    setIsAScending(isSortAscending);
-    lastSelection({ newSort, isSortAscending });
-  }, [lastSelection])
+  const handleSelections = useCallback(
+    (newSort: IFilterItem, isSortAscending: boolean) => {
+      setSortSelected(newSort);
+      setIsAScending(isSortAscending);
+      lastSelection({ newSort, isSortAscending });
+    },
+    [lastSelection]
+  );
 
   const getSortedTranslation = useCallback(() => {
     const found = dropdownList.find((item) => sortSelected.value === item.value);
     if (found) {
-      return (language === 'english') ? `Sorted by ${found.text}` : `${found.text} で`;
+      return language === 'english' ? `Sorted by ${found.text}` : `${found.text} で`;
     }
 
-    return (language === 'english') ? `Sorted by ${sortSelected.text}` : `${sortSelected.text} で`;
-
-  }, [dropdownList, language, sortSelected.text, sortSelected.value])
+    return language === 'english' ? `Sorted by ${sortSelected.text}` : `${sortSelected.text} で`;
+  }, [dropdownList, language, sortSelected.text, sortSelected.value]);
 
   return (
     <Container>
@@ -61,12 +68,11 @@ export const _SortDropdown = () => {
           selected: sortSelected,
           onSelect: handleSelections,
           ascendingText: language === 'english' ? 'Ascending' : '昇順',
-          descendingText: language === 'english' ? 'Descending' : '降順'
+          descendingText: language === 'english' ? 'Descending' : '降順',
         }}
-
       />
     </Container>
-  )
-}
+  );
+};
 
 export default SortDropdownStory;

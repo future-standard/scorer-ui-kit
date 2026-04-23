@@ -1,22 +1,22 @@
-import React, { useReducer, useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
-
+import type React from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import {
+  AlertBar,
+  Button,
+  Content,
+  Layout,
   LineReducer,
   LineSetContext,
-  Sidebar,
-  SidebarBox,
-  Layout,
-  Content,
-  TextField,
   LineUIRTC,
   Logo,
-  Button,
-  AlertBar,
+  Sidebar,
+  SidebarBox,
   Switch,
-  useMediaModal
+  TextField,
+  useMediaModal,
 } from 'scorer-ui-kit';
-import { LineUIOptions, LineUIVideoOptions } from 'scorer-ui-kit/dist/LineUI';
+import type { LineUIOptions, LineUIVideoOptions } from 'scorer-ui-kit/dist/LineUI';
+import styled from 'styled-components';
 import ExamplesFilename from '../components/ExamplesFilename';
 
 const SwitchBox = styled.div`
@@ -29,7 +29,7 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const Line: React.FC<{}> = () => {
+const Line: React.FC = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
   const [ws, setWS] = useState('localhost/wsapp');
@@ -38,71 +38,72 @@ const Line: React.FC<{}> = () => {
   const [showSpacer, setShowSpacer] = useState<boolean>(false);
   const [spacerHeight, setSpacerHeight] = useState<number>(400);
   const [isLabelShadow, setLabelShadow] = useState<boolean>(false);
-  const {createMediaModal} = useMediaModal();
+  const { createMediaModal } = useMediaModal();
 
-  const [videoOptions, setVideoOptions]= useState<LineUIVideoOptions>({
+  const [videoOptions, setVideoOptions] = useState<LineUIVideoOptions>({
     loop: true,
-    autoPlay: true
+    autoPlay: true,
   });
 
-  const options : LineUIOptions = {
+  const options: LineUIOptions = {
     showSetIndex: true,
     showLabelShadow: true,
     setIndexOffset: 1,
-    showDirectionMark: isShowDirection
-  }
+    showDirectionMark: isShowDirection,
+  };
 
   const fetchLine = useCallback(async () => {
-    const state = [{
-      name: "Line 1",
-      points: [
+    const state = [
+      {
+        name: 'Line 1',
+        points: [
           {
             x: 1407,
-            y: 869
+            y: 869,
           },
           {
             x: 2293,
-            y: 531
-          }
+            y: 531,
+          },
         ],
         showPointHandle: true,
         showMoveHandle: true,
         readOnly: false,
-        styling: "primary"
+        styling: 'primary',
       },
       {
-        name: "Line 2",
+        name: 'Line 2',
         points: [
           {
             x: 1426,
-            y: 254
+            y: 254,
           },
           {
             x: 2260,
-            y: 283
-          }
+            y: 283,
+          },
         ],
         showPointHandle: false,
         showMoveHandle: false,
         readOnly: false,
-        styling: "secondary"
+        styling: 'secondary',
       },
       {
-        name: "Yikes!",
+        name: 'Yikes!',
         points: [
           {
             x: 500,
-            y: 500
+            y: 500,
           },
           {
             x: 1000,
-            y: 1000
-          }
+            y: 1000,
+          },
         ],
         showPointHandle: false,
         showMoveHandle: false,
         readOnly: false,
-        styling: "danger"
+        styling: 'danger',
       },
       {
         name: 'Shape 1',
@@ -110,45 +111,46 @@ const Line: React.FC<{}> = () => {
         points: [
           {
             x: 502,
-            y: 453
+            y: 453,
           },
           {
             x: 1067,
-            y: 581
+            y: 581,
           },
           {
             x: 776,
-            y: 982
+            y: 982,
           },
           {
             x: 376,
-            y: 782
-          }
+            y: 782,
+          },
         ],
         readOnly: false,
         styling: 'secondary',
         areaFillColor: '#0B0B0B',
-        areaTransparencyLevel: 40
-      }
+        areaTransparencyLevel: 40,
+      },
     ];
 
     dispatch({
       type: 'LOAD',
-      state
+      state,
     });
   }, []);
 
-  const saveLine = useCallback(async () => {
-  }, []);
+  const saveLine = useCallback(async () => {}, []);
 
   useEffect(() => {
     fetchLine();
   }, [fetchLine]);
 
-  const connect = useCallback(()=>{
-    if(!ws){return;}
+  const connect = useCallback(() => {
+    if (!ws) {
+      return;
+    }
     setWsURL(ws);
-  },[ws]);
+  }, [ws]);
 
   const showDirection = useCallback((isChecked: boolean) => {
     setShowDirection(isChecked);
@@ -161,8 +163,8 @@ const Line: React.FC<{}> = () => {
   const handleModalClose = useCallback(() => {
     setVideoOptions({
       loop: true,
-      autoPlay: true
-    })
+      autoPlay: true,
+    });
   }, []);
 
   const handleMediaModal = useCallback(() => {
@@ -170,78 +172,130 @@ const Line: React.FC<{}> = () => {
       loop: false,
       autoPlay: false,
       muted: true,
-    })
-
-    createMediaModal({ mediaType: 'video', src: `ws://${wsURL}/`, dismissCallback: handleModalClose })
-  }, [createMediaModal, handleModalClose, wsURL])
-
-  const selectLine = useCallback((lineId: number) => {
-    const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
-    dispatch({
-      type: 'UPDATE_SET_OPTIONS',
-      index: deselectLineIndex,
-      data: {
-        showPointHandle: false,
-        showMoveHandle: false
-      }
     });
-    dispatch({
-      type: 'UPDATE_SET_OPTIONS',
-      index: lineId,
-      data: {
-        showPointHandle: true,
-        showMoveHandle: true
-      }
+
+    createMediaModal({
+      mediaType: 'video',
+      src: `ws://${wsURL}/`,
+      dismissCallback: handleModalClose,
     });
-  }, [state]);
+  }, [createMediaModal, handleModalClose, wsURL]);
+
+  const selectLine = useCallback(
+    (lineId: number) => {
+      const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
+      dispatch({
+        type: 'UPDATE_SET_OPTIONS',
+        index: deselectLineIndex,
+        data: {
+          showPointHandle: false,
+          showMoveHandle: false,
+        },
+      });
+      dispatch({
+        type: 'UPDATE_SET_OPTIONS',
+        index: lineId,
+        data: {
+          showPointHandle: true,
+          showMoveHandle: true,
+        },
+      });
+    },
+    [state]
+  );
 
   return (
-    <Layout >
+    <Layout>
       <ExamplesFilename>LineRTCPage.tsx</ExamplesFilename>
       <Sidebar>
         <Logo logoTextTop={'SCORER'} logoTextBottom={'UI Kit'} />
-        <SidebarBox style={{ flex: '1' }} >
-          <pre>
-            {JSON.stringify(state, null, 2)}
-          </pre>
+        <SidebarBox style={{ flex: '1' }}>
+          <pre>{JSON.stringify(state, null, 2)}</pre>
         </SidebarBox>
         <SidebarBox>
           <SwitchBox>
-            <Switch checked={isShowDirection} labelText='Show Direction Mark' leftTheme='off' onChangeCallback={showDirection} rightTheme='on' state='default' />
+            <Switch
+              checked={isShowDirection}
+              labelText='Show Direction Mark'
+              leftTheme='off'
+              onChangeCallback={showDirection}
+              rightTheme='on'
+              state='default'
+            />
           </SwitchBox>
           <SwitchBox>
-            <Switch checked={isLabelShadow} labelText='Show Label Shadow' leftTheme='off' onChangeCallback={showLabelTextShadow} rightTheme='on' state='default' />
+            <Switch
+              checked={isLabelShadow}
+              labelText='Show Label Shadow'
+              leftTheme='off'
+              onChangeCallback={showLabelTextShadow}
+              rightTheme='on'
+              state='default'
+            />
           </SwitchBox>
-          <Button design="secondary" onClick={fetchLine} >Cancel</Button>
-          <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button>
+          <Button design='secondary' onClick={fetchLine}>
+            Cancel
+          </Button>
+          <Button style={{ marginLeft: '10px' }} onClick={saveLine}>
+            Save
+          </Button>
         </SidebarBox>
       </Sidebar>
       <Content>
-        {error && <AlertBar message={error} type='error' /> }
+        {error && <AlertBar message={error} type='error' />}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-          <Button design="secondary" onClick={() => setShowSpacer(s => !s)}>{showSpacer ? 'Hide' : 'Show'} Scroll Spacer</Button>
-          {showSpacer && <input type="range" min={100} max={2000} step={50} value={spacerHeight} onChange={e => setSpacerHeight(Number(e.target.value))} style={{ width: '200px' }} />}
+          <Button design='secondary' onClick={() => setShowSpacer((s) => !s)}>
+            {showSpacer ? 'Hide' : 'Show'} Scroll Spacer
+          </Button>
+          {showSpacer && (
+            <input
+              type='range'
+              min={100}
+              max={2000}
+              step={50}
+              value={spacerHeight}
+              onChange={(e) => setSpacerHeight(Number(e.target.value))}
+              style={{ width: '200px' }}
+            />
+          )}
           {showSpacer && <span style={{ color: '#888' }}>{spacerHeight}px</span>}
         </div>
-        {showSpacer && <div style={{ height: `${spacerHeight}px`, background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px)' }}>
-          <p style={{ padding: '20px', color: '#888' }}>TEMP: Scroll test spacer</p>
-        </div>}
-        <TextField label='Host' name='host' fieldState='default' value={ws} onChange={({target:{value}})=> setWS(value)} ></TextField>
+        {showSpacer && (
+          <div
+            style={{
+              height: `${spacerHeight}px`,
+              background:
+                'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px)',
+            }}
+          >
+            <p style={{ padding: '20px', color: '#888' }}>TEMP: Scroll test spacer</p>
+          </div>
+        )}
+        <TextField
+          label='Host'
+          name='host'
+          fieldState='default'
+          value={ws}
+          onChange={({ target: { value } }) => setWS(value)}
+        ></TextField>
         <Button onClick={connect}>Connect</Button>
-        {
-          wsURL && <>
+        {wsURL && (
+          <>
             <LineSetContext.Provider value={{ state, dispatch }}>
-              <LineUIRTC ws={`ws://${wsURL}/`} {...{videoOptions, options}} onLineClick={selectLine} />
+              <LineUIRTC
+                ws={`ws://${wsURL}/`}
+                {...{ videoOptions, options }}
+                onLineClick={selectLine}
+              />
             </LineSetContext.Provider>
             <ButtonWrapper>
               <Button onClick={handleMediaModal}>Open Video Modal</Button>
             </ButtonWrapper>
           </>
-
-        }
+        )}
       </Content>
     </Layout>
   );
-}
+};
 
 export default Line;

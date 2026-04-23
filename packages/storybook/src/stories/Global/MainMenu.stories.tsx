@@ -1,9 +1,8 @@
-import React from 'react';
+import { boolean, object, text } from '@storybook/addon-knobs';
 // import { MemoryRouter as Router } from 'react-router-dom'
-import { MainMenu, Layout } from 'scorer-ui-kit';
+import { Layout, MainMenu } from 'scorer-ui-kit';
 import logoMarkSvgRaw from '../assets/logo-mark.svg?raw';
 import logoTextSvgRaw from '../assets/logo-text.svg?raw';
-import { text, object, boolean } from '@storybook/addon-knobs';
 
 // base64 encode avoids addon-knobs HTML-encoding ' → &#39; in data URIs, breaking <object> XML parsing.
 // Native controls don't have this HTML-encoding step — verify and simplify when migrating off addon-knobs.
@@ -15,26 +14,25 @@ const MainMenuStory = {
   component: MainMenu,
   decorators: [
     // RouterDecorator
-  ]
+  ],
 };
 
 export const _MainMenu = () => {
+  const logoMark = text('Logo Mark SVG', logoMarkSvg);
+  const logoText = text('Logo Text SVG', logoTextSvg);
+  const canAlwaysPin = boolean('Can Always Pin', false);
+  const keepOpenText = text('Keep Open', 'Keep Open');
+  const autoHideText = text('Auto-Hide', 'Auto-Hide');
 
-  const logoMark = text("Logo Mark SVG", logoMarkSvg);
-  const logoText = text("Logo Text SVG", logoTextSvg);
-  const canAlwaysPin = boolean("Can Always Pin", false);
-  const keepOpenText = text("Keep Open", "Keep Open");
-  const autoHideText = text("Auto-Hide", "Auto-Hide");
+  const supportUrl = text('Support Url', '#');
 
-  const supportUrl = text("Support Url", "#");
-
-  const menuHomeLink = text("Home Link", "#");
-  const menuConfig = object("Menu Config", {
+  const menuHomeLink = text('Home Link', '#');
+  const menuConfig = object('Menu Config', {
     items: [
       {
         icon: 'Invalid',
         title: 'Basic Item',
-        href: '#'
+        href: '#',
       },
       {
         icon: 'Detection',
@@ -49,22 +47,22 @@ export const _MainMenu = () => {
         submenu: [
           {
             title: 'Child One',
-            href: '/'
+            href: '/',
           },
           {
             title: 'Child Two',
-            href: '#'
+            href: '#',
           },
           {
             title: 'Child Three',
-            href: '#'
+            href: '#',
           },
           {
             title: 'Child with external link',
             href: 'https://www.google.com/',
-            isExternalLink: true
-          }
-        ]
+            isExternalLink: true,
+          },
+        ],
       },
       {
         icon: 'Success',
@@ -72,39 +70,43 @@ export const _MainMenu = () => {
         href: '#',
         submenu: [
           {
-            title: 'Subheader'
+            title: 'Subheader',
           },
           {
             title: 'Nested Child One',
-            href: '#'
+            href: '#',
           },
           {
             title: 'Nested Child Two',
-            href: '#'
+            href: '#',
           },
           {
             title: 'Nested Child Three',
-            href: '#'
+            href: '#',
           },
           {
-            title: 'Subheader Two'
+            title: 'Subheader Two',
           },
           {
             title: 'Nested Child Four',
-            href: '#'
+            href: '#',
           },
           {
             title: 'Nested Child Five',
-            href: '#'
-          }
-        ]
-      }
-    ]
+            href: '#',
+          },
+        ],
+      },
+    ],
   });
 
   return (
     <Layout>
-      <MainMenu content={menuConfig} home={menuHomeLink} {...{ logoMark, logoText, supportUrl, canAlwaysPin, keepOpenText, autoHideText }} />
+      <MainMenu
+        content={menuConfig}
+        home={menuHomeLink}
+        {...{ logoMark, logoText, supportUrl, canAlwaysPin, keepOpenText, autoHideText }}
+      />
     </Layout>
   );
 };

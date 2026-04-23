@@ -1,21 +1,22 @@
-import React, { useState, useCallback, useRef } from 'react';
-import styled, { css } from 'styled-components';
+import type React from 'react';
+import { useCallback, useRef, useState } from 'react';
 import ReactDom from 'react-dom';
+import styled, { css } from 'styled-components';
+import { getImageType } from '../../helpers';
+import {
+  drawImgValues,
+  type ICursorStyles,
+  type IDrawArea,
+  type ISelectedArea,
+  initialCropValues,
+  isLeftMouseButton,
+  updateCropValues,
+  updateCropWithAspect,
+  updateCursorStyle,
+} from '../../helpers/cropToolHelpers';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Button from '../atoms/Button';
 import ButtonWithLoading from '../atoms/ButtonWithLoading';
-import {
-  ICursorStyles,
-  IDrawArea,
-  ISelectedArea,
-  updateCursorStyle,
-  isLeftMouseButton,
-  updateCropValues,
-  drawImgValues,
-  initialCropValues,
-  updateCropWithAspect,
-} from '../../helpers/cropToolHelpers';
-import { getImageType } from '../../helpers';
 import CropArea from '../atoms/CropArea';
 
 // TODO: Add throttle  or window.requestAnimationFrame()//
@@ -67,11 +68,11 @@ const ButtonsGroup = styled.div`
   }
 `;
 
-const PreviewArea = styled.div<{ $canvasHeight?: number, $canvasWidth?: number }>`
+const PreviewArea = styled.div<{ $canvasHeight?: number; $canvasWidth?: number }>`
   position: relative;
   overflow: hidden;
-  height: ${({ $canvasHeight }) => $canvasHeight ? `${$canvasHeight}px` : `462px`};
-  width: ${({ $canvasWidth }) => $canvasWidth ? `${$canvasWidth}px` : `485px`};
+  height: ${({ $canvasHeight }) => ($canvasHeight ? `${$canvasHeight}px` : `462px`)};
+  width: ${({ $canvasWidth }) => ($canvasWidth ? `${$canvasWidth}px` : `485px`)};
   border-radius: 5px;
   background-color: var(--grey-3);
   background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, var(--white-a10) 35px, var(--white-a10) 70px);
@@ -81,7 +82,12 @@ const HiddenImage = styled.img`
   display: none;
 `;
 
-const SelectedArea = styled.div<{ $cropLeft: number, $cropTop: number, $cropWidth: number, $cropHeight: number }>`
+const SelectedArea = styled.div<{
+  $cropLeft: number;
+  $cropTop: number;
+  $cropWidth: number;
+  $cropHeight: number;
+}>`
   position: absolute;
   border: dashed 1px var(--black-a12);
   box-shadow: 0 0 0 9999em var(--black-a11);
@@ -110,19 +116,19 @@ const viewDimensions: ISelectedArea = {
 };
 
 interface ICrop {
-  title?: string
-  cancelBtnTxt?: string
-  cropBtnTxt?: string
-  imgUrl: string
-  isResizable?: boolean
-  cropHeight?: number
-  cropWidth?: number
-  canvasHeight: number
-  canvasWidth: number
-  aspectRatio?: number
-  onCrop?: (newFileUrl: string, fileType: string) => void
-  onClose?: () => void
-  onError?: (msg: string) => void
+  title?: string;
+  cancelBtnTxt?: string;
+  cropBtnTxt?: string;
+  imgUrl: string;
+  isResizable?: boolean;
+  cropHeight?: number;
+  cropWidth?: number;
+  canvasHeight: number;
+  canvasWidth: number;
+  aspectRatio?: number;
+  onCrop?: (newFileUrl: string, fileType: string) => void;
+  onClose?: () => void;
+  onError?: (msg: string) => void;
 }
 
 const CropTool: React.FC<ICrop> = ({
@@ -137,10 +143,9 @@ const CropTool: React.FC<ICrop> = ({
   aspectRatio,
   imgUrl,
   onCrop,
-  onClose = () => { },
-  onError = () => { }
+  onClose = () => {},
+  onError = () => {},
 }) => {
-
   const [isLoading, setIsLoading] = useState(false);
   const [_loadDimensions, setLoadDimensions] = useState(viewDimensions);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -148,7 +153,9 @@ const CropTool: React.FC<ICrop> = ({
   const cropRef = useRef<HTMLDivElement | null>(null);
 
   const drawImgOnCanvas = useCallback(() => {
-    if (!canvasRef || !imgRef) { return; }
+    if (!canvasRef || !imgRef) {
+      return;
+    }
     const newImage = imgRef.current;
     if (!newImage) {
       onError('error loading image');
@@ -160,7 +167,7 @@ const CropTool: React.FC<ICrop> = ({
       return;
     }
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     if (!ctx) {
       onError('error drawing image');
       return;
@@ -178,8 +185,7 @@ const CropTool: React.FC<ICrop> = ({
       aspectRatio
     );
     // triggers a render to repaint canvas
-    setLoadDimensions((prevState) =>
-    ({
+    setLoadDimensions((prevState) => ({
       ...prevState,
       cropLeft: newCrop.left,
       cropTop: newCrop.top,
@@ -189,8 +195,7 @@ const CropTool: React.FC<ICrop> = ({
       imgTop: newImgDraw.top,
       imgWidth: newImgDraw.width,
       imgHeight: newImgDraw.height,
-    })
-    );
+    }));
 
     viewDimensions.cropLeft = newCrop.left;
     viewDimensions.cropTop = newCrop.top;
@@ -206,170 +211,205 @@ const CropTool: React.FC<ICrop> = ({
   }, [aspectRatio, canvasHeight, canvasWidth, cropHeight, cropWidth, onError]);
 
   // Mouse handlers //
-  const handleCrop = useCallback(async (cropArea: IDrawArea) => {
-    setIsLoading(true);
-    if (!canvasRef || !canvasRef.current || !imgRef) { return; }
+  const handleCrop = useCallback(
+    async (cropArea: IDrawArea) => {
+      setIsLoading(true);
+      if (!canvasRef?.current || !imgRef) {
+        return;
+      }
 
-    const newImage = imgRef.current;
-    if (!newImage) { return; }
+      const newImage = imgRef.current;
+      if (!newImage) {
+        return;
+      }
 
-    const canvas = canvasRef.current;
-    if (!canvas) { return; }
+      const canvas = canvasRef.current;
+      if (!canvas) {
+        return;
+      }
 
-    const ctx = canvas.getContext("2d");
-    // ctx.imageSmoothingEnabled = false; </// not sure required
-    const cropImageData = ctx?.getImageData(cropArea.left, cropArea.top, cropArea.width, cropArea.height);
-    if (!cropImageData) { return; }
+      const ctx = canvas.getContext('2d');
+      // ctx.imageSmoothingEnabled = false; </// not sure required
+      const cropImageData = ctx?.getImageData(
+        cropArea.left,
+        cropArea.top,
+        cropArea.width,
+        cropArea.height
+      );
+      if (!cropImageData) {
+        return;
+      }
 
-    const canvasCropped = document.createElement('canvas');
-    const cropContext = canvasCropped.getContext('2d');
-    canvasCropped.width = cropArea.width;
-    canvasCropped.height = cropArea.height;
+      const canvasCropped = document.createElement('canvas');
+      const cropContext = canvasCropped.getContext('2d');
+      canvasCropped.width = cropArea.width;
+      canvasCropped.height = cropArea.height;
 
-    cropContext?.putImageData(cropImageData, 0, 0);
-    const imgType = getImageType(newImage);
-    const newImgUrl = canvasCropped.toDataURL(imgType);
-    if (onCrop) {
-      onCrop(newImgUrl, imgType);
-    }
-  }, [onCrop]);
+      cropContext?.putImageData(cropImageData, 0, 0);
+      const imgType = getImageType(newImage);
+      const newImgUrl = canvasCropped.toDataURL(imgType);
+      if (onCrop) {
+        onCrop(newImgUrl, imgType);
+      }
+    },
+    [onCrop]
+  );
 
-  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!cropRef) { return; }
-    if (!isLeftMouseButton(e.nativeEvent)) { return; }
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!cropRef) {
+        return;
+      }
+      if (!isLeftMouseButton(e.nativeEvent)) {
+        return;
+      }
 
-    const rect = cropRef.current?.getBoundingClientRect();
-    if (!rect) { return; }
-    const { left, top, width, height } = rect;
-    const [posX, posY] = [e.clientX, e.clientY];
-    let newCursorStyle: ICursorStyles;
-    if (!isResizable) {
-      newCursorStyle = 'move';
-    } else {
-      newCursorStyle = updateCursorStyle(left, top, width, height, posX, posY);
-    }
+      const rect = cropRef.current?.getBoundingClientRect();
+      if (!rect) {
+        return;
+      }
+      const { left, top, width, height } = rect;
+      const [posX, posY] = [e.clientX, e.clientY];
+      let newCursorStyle: ICursorStyles;
+      if (!isResizable) {
+        newCursorStyle = 'move';
+      } else {
+        newCursorStyle = updateCursorStyle(left, top, width, height, posX, posY);
+      }
 
-    viewDimensions.mouseStartX = posX;
-    viewDimensions.mouseStartY = posY;
-    viewDimensions.cursorStart = newCursorStyle;
-    viewDimensions.isResizing = true;
-  }, [isResizable]);
+      viewDimensions.mouseStartX = posX;
+      viewDimensions.mouseStartY = posY;
+      viewDimensions.cursorStart = newCursorStyle;
+      viewDimensions.isResizing = true;
+    },
+    [isResizable]
+  );
 
   const handleMouseUp = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!viewDimensions.isResizing) { return; }
+    if (!viewDimensions.isResizing) {
+      return;
+    }
     viewDimensions.isResizing = false;
   }, []);
 
   const updateSelect = useCallback((left: number, top: number, width: number, height: number) => {
-    if (!cropRef.current) { return; }
+    if (!cropRef.current) {
+      return;
+    }
     cropRef.current.style.left = `${left}px`;
     cropRef.current.style.top = `${top}px`;
     cropRef.current.style.width = `${width}px`;
     cropRef.current.style.height = `${height}px`;
-
   }, []);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!cropRef) { return; }
-    if (!viewDimensions.isResizing) { return; }
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!cropRef) {
+        return;
+      }
+      if (!viewDimensions.isResizing) {
+        return;
+      }
 
-    const rect = cropRef.current?.getBoundingClientRect();
-    if (!rect) { return; }
+      const rect = cropRef.current?.getBoundingClientRect();
+      if (!rect) {
+        return;
+      }
 
-    const [posX, posY] = [e.clientX, e.clientY];
-    const newDimensions = aspectRatio
-      ? updateCropWithAspect(viewDimensions, posX, posY, aspectRatio)
-      : updateCropValues(viewDimensions, posX, posY);
+      const [posX, posY] = [e.clientX, e.clientY];
+      const newDimensions = aspectRatio
+        ? updateCropWithAspect(viewDimensions, posX, posY, aspectRatio)
+        : updateCropValues(viewDimensions, posX, posY);
 
-    if (!newDimensions.isUpdateRequired) { return; }
+      if (!newDimensions.isUpdateRequired) {
+        return;
+      }
 
-    viewDimensions.cropTop = newDimensions.top;
-    viewDimensions.cropLeft = newDimensions.left;
-    viewDimensions.cropWidth = newDimensions.width;
-    viewDimensions.cropHeight = newDimensions.height;
-    viewDimensions.mouseStartX = posX;
-    viewDimensions.mouseStartY = posY;
+      viewDimensions.cropTop = newDimensions.top;
+      viewDimensions.cropLeft = newDimensions.left;
+      viewDimensions.cropWidth = newDimensions.width;
+      viewDimensions.cropHeight = newDimensions.height;
+      viewDimensions.mouseStartX = posX;
+      viewDimensions.mouseStartY = posY;
 
-    updateSelect(viewDimensions.cropLeft,
-      viewDimensions.cropTop,
-      viewDimensions.cropWidth,
-      viewDimensions.cropHeight);
-
-  }, [aspectRatio, updateSelect]);
+      updateSelect(
+        viewDimensions.cropLeft,
+        viewDimensions.cropTop,
+        viewDimensions.cropWidth,
+        viewDimensions.cropHeight
+      );
+    },
+    [aspectRatio, updateSelect]
+  );
 
   const handleOnMouseLeave = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!viewDimensions.isResizing) { return; }
+    if (!viewDimensions.isResizing) {
+      return;
+    }
     viewDimensions.isResizing = false;
   }, []);
   //End of Mouse handlers//
 
-  return (
-    ReactDom.createPortal(
-      <Container>
-        <InnerContainer>
-          <ToolHeader>
-            <TextGroup>
-              <Icon icon='Crop' size={20} color='mono' />
-              {title}
-            </TextGroup>
-            <ButtonsGroup>
-              <Button
-                design='secondary'
-                size='small'
-                onClick={onClose}
-              >
-                {cancelBtnTxt}
-              </Button>
-              <ButtonWithLoading
-                loading={isLoading}
-                size='small'
-                onClick={() => handleCrop({
+  return ReactDom.createPortal(
+    <Container>
+      <InnerContainer>
+        <ToolHeader>
+          <TextGroup>
+            <Icon icon='Crop' size={20} color='mono' />
+            {title}
+          </TextGroup>
+          <ButtonsGroup>
+            <Button design='secondary' size='small' onClick={onClose}>
+              {cancelBtnTxt}
+            </Button>
+            <ButtonWithLoading
+              loading={isLoading}
+              size='small'
+              onClick={() =>
+                handleCrop({
                   left: viewDimensions.cropLeft,
                   top: viewDimensions.cropTop,
                   width: viewDimensions.cropWidth,
-                  height: viewDimensions.cropHeight
-                })}
-              > {cropBtnTxt}
-              </ButtonWithLoading>
-            </ButtonsGroup>
-          </ToolHeader>
-          <PreviewArea
-            $canvasHeight={canvasHeight}
-            $canvasWidth={canvasWidth}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleOnMouseLeave}
-          >
-            <HiddenImage ref={imgRef} src={imgUrl} onLoad={drawImgOnCanvas} crossOrigin='anonymous' />
-            <canvas
-              ref={canvasRef}
-              width={`${canvasWidth}px`}
-              height={`${canvasHeight}px`}
-            />
-            <SelectedArea
-              ref={cropRef}
-              onMouseDown={handleMouseDown}
-              $cropLeft={viewDimensions.cropLeft}
-              $cropTop={viewDimensions.cropTop}
-              $cropWidth={viewDimensions.cropWidth}
-              $cropHeight={viewDimensions.cropHeight}
+                  height: viewDimensions.cropHeight,
+                })
+              }
             >
-              <CropArea
-                {...{ isResizable }}
-                hasAspectRatio={aspectRatio ? true : false}
-              />
-            </SelectedArea>
-          </PreviewArea>
-        </InnerContainer>
-      </Container>, document.body)
+              {' '}
+              {cropBtnTxt}
+            </ButtonWithLoading>
+          </ButtonsGroup>
+        </ToolHeader>
+        <PreviewArea
+          $canvasHeight={canvasHeight}
+          $canvasWidth={canvasWidth}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleOnMouseLeave}
+        >
+          <HiddenImage ref={imgRef} src={imgUrl} onLoad={drawImgOnCanvas} crossOrigin='anonymous' />
+          <canvas ref={canvasRef} width={`${canvasWidth}px`} height={`${canvasHeight}px`} />
+          <SelectedArea
+            ref={cropRef}
+            onMouseDown={handleMouseDown}
+            $cropLeft={viewDimensions.cropLeft}
+            $cropTop={viewDimensions.cropTop}
+            $cropWidth={viewDimensions.cropWidth}
+            $cropHeight={viewDimensions.cropHeight}
+          >
+            <CropArea {...{ isResizable }} hasAspectRatio={!!aspectRatio} />
+          </SelectedArea>
+        </PreviewArea>
+      </InnerContainer>
+    </Container>,
+    document.body
   );
 };
 

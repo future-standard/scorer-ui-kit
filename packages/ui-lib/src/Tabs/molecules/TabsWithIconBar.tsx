@@ -1,15 +1,16 @@
-import React, { ReactElement } from 'react';
+import type React from 'react';
+import type { ReactElement } from 'react';
 import styled from 'styled-components';
-import { Tabs } from '../Tabs';
-import { TabList } from '../TabList';
+import { type ITabWithIcon, TabWithIcon } from '../atoms/TabWithIcon';
 import { TabContent } from '../TabContent';
-import { TabWithIcon, ITabWithIcon } from '../atoms/TabWithIcon';
+import { TabList } from '../TabList';
+import { Tabs } from '../Tabs';
 
 const Container = styled.div``;
 
 const TabListWrapper = styled.div<{ $paddingLeft?: string }>`
   padding-top: 10px;
-  padding-left: ${({ $paddingLeft }) => $paddingLeft ? $paddingLeft : '87px'};
+  padding-left: ${({ $paddingLeft }) => ($paddingLeft ? $paddingLeft : '87px')};
   box-shadow: 0 -5px 5px 0 var(--black-a1);
   border-bottom: 1px solid var(--grey-6);
   overflow-y: auto;
@@ -22,17 +23,16 @@ const TabListWrapper = styled.div<{ $paddingLeft?: string }>`
 `;
 
 export interface ITabIcon extends ITabWithIcon {
-  customComponent?: ReactElement
+  customComponent?: ReactElement;
 }
 
 export interface ITabsWithIconBar {
-  defaultTabId: string
-  tabList: ITabIcon[]
-  paddingLeft?: string
+  defaultTabId: string;
+  tabList: ITabIcon[];
+  paddingLeft?: string;
 }
 
 const TabsWithIconBar: React.FC<ITabsWithIconBar> = ({ defaultTabId, tabList, paddingLeft }) => {
-
   return (
     <Container>
       <Tabs>
@@ -48,10 +48,11 @@ const TabsWithIconBar: React.FC<ITabsWithIconBar> = ({ defaultTabId, tabList, pa
 
         {tabList.map(({ tabFor, customComponent }) => {
           return (
-            <TabContent key={`TabContent-${tabFor}`} tabId={tabFor}>{customComponent}</TabContent>
+            <TabContent key={`TabContent-${tabFor}`} tabId={tabFor}>
+              {customComponent}
+            </TabContent>
           );
-        }
-        )}
+        })}
       </Tabs>
     </Container>
   );

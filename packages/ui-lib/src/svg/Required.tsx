@@ -1,8 +1,8 @@
-import * as React from "react";
+import type { SVGProps } from 'react';
 
-function SvgRequired(props: React.SVGProps<SVGSVGElement>) {
+function SvgRequired(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width={24} height={24} {...props}>
+    <svg width={24} height={24} aria-hidden='true' {...props}>
       <path
         fill='none'
         stroke='#000'

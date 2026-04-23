@@ -1,8 +1,9 @@
-import React, {useContext} from 'react';
+import type React from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
-import { TabContext, ContextProps } from '../../Tabs/Tabs';
+import { type ContextProps, TabContext } from '../../Tabs/Tabs';
 
-import { MOBILE_NAVBAR_HEIGHT, MOBILE_CLOSE_HEIGHT } from '../atoms/Layout';
+import { MOBILE_CLOSE_HEIGHT, MOBILE_NAVBAR_HEIGHT } from '../atoms/Layout';
 
 //
 // Containers height is full height but header and close button
@@ -10,7 +11,7 @@ import { MOBILE_NAVBAR_HEIGHT, MOBILE_CLOSE_HEIGHT } from '../atoms/Layout';
 
 const Container = styled.div`
   position: relative;
-  min-height: calc(100vh - ${MOBILE_NAVBAR_HEIGHT + MOBILE_CLOSE_HEIGHT }px);
+  min-height: calc(100vh - ${MOBILE_NAVBAR_HEIGHT + MOBILE_CLOSE_HEIGHT}px);
   width: 100%;
   overflow-y: scroll;
 `;
@@ -31,16 +32,10 @@ interface OwnProps {
 const MobileNavbarContent: React.FC<OwnProps> = ({ closeId, children }) => {
   const { selected }: ContextProps = useContext(TabContext);
 
-  return (
-    selected === closeId
-      ? null
-      : (
-        <Container>
-          <ContentWrapper>
-            <>{children}</>
-          </ContentWrapper>
-        </Container>
-        )
+  return selected === closeId ? null : (
+    <Container>
+      <ContentWrapper>{children}</ContentWrapper>
+    </Container>
   );
 };
 

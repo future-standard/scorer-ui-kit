@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { boolean, number, text } from '@storybook/addon-knobs';
+import { useState } from 'react';
 import { CropTool } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
-import { text, boolean, number } from "@storybook/addon-knobs";
+import styled from 'styled-components';
 import photo from '../../assets/placeholder.jpg';
 
 const Container = styled.div`
@@ -42,39 +42,40 @@ export const _CropTool = () => {
 
   const onClose = () => {
     setIsCropping(false);
-  }
+  };
   const onError = (msg: string) => {
-    console.log(msg);
+    console.debug(msg);
     errorValue(msg);
   };
 
   return (
     <Container>
-      {isCropping ? <CropTool // this key is to force the re-render in storybook
-        key={`${isResizable} - ${canvasHeight} - ${canvasWidth} - ${cropHeight} - ${cropWidth} - ${aspectRatio}`}
-        imgUrl={photo}
-        {...{
-          title,
-          onCrop,
-          onClose,
-          cancelBtnTxt,
-          cropBtnTxt,
-          isResizable,
-          canvasHeight,
-          canvasWidth,
-          cropHeight,
-          cropWidth,
-          onError,
-          aspectRatio,
-        }}
-      />
-        : null}
+      {isCropping ? (
+        <CropTool // this key is to force the re-render in storybook
+          key={`${isResizable} - ${canvasHeight} - ${canvasWidth} - ${cropHeight} - ${cropWidth} - ${aspectRatio}`}
+          imgUrl={photo}
+          {...{
+            title,
+            onCrop,
+            onClose,
+            cancelBtnTxt,
+            cropBtnTxt,
+            isResizable,
+            canvasHeight,
+            canvasWidth,
+            cropHeight,
+            cropWidth,
+            onError,
+            aspectRatio,
+          }}
+        />
+      ) : null}
       <NewImageArea>
         <h3>Cropped Area</h3>
         <CropResult src={cropImg} />
       </NewImageArea>
     </Container>
-  )
+  );
 };
 
 export default CropToolStory;

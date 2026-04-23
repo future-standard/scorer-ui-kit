@@ -1,12 +1,13 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import InputFileButton from '../atoms/InputFileButton';
+import { isValidImage } from '../../helpers';
+import { AvatarPlaceholder } from '../../svg';
 import ButtonWithIcon from '../atoms/ButtonWithIcon';
 import DropArea from '../atoms/DropArea';
-import CropTool from '../molecules/CropTool';
-import { AvatarPlaceholder } from '../../svg';
+import InputFileButton from '../atoms/InputFileButton';
 import Label from '../atoms/Label';
-import { isValidImage } from '../../helpers';
+import CropTool from '../molecules/CropTool';
 
 /** TODO update to useReduce for better state  management*/
 
@@ -85,20 +86,20 @@ const ButtonsWrapper = styled.div`
 `;
 
 interface IAvatar {
-  title?: string
-  photoText?: string
-  buttonText?: string
-  buttonTextReplace?: string
-  cropToolTitle?: string
-  cropToolCancelTxt?: string
-  cropToolConfirmTxt?: string
-  uploaderCropText?: string
-  deletePhotoText?: string
-  currentImg?: string
-  hasCrop?: boolean
-  onAvatarUpdate?: (imgFile: File) => void
-  onError?: (msg: string) => void
-  onRemove?: () => void
+  title?: string;
+  photoText?: string;
+  buttonText?: string;
+  buttonTextReplace?: string;
+  cropToolTitle?: string;
+  cropToolCancelTxt?: string;
+  cropToolConfirmTxt?: string;
+  uploaderCropText?: string;
+  deletePhotoText?: string;
+  currentImg?: string;
+  hasCrop?: boolean;
+  onAvatarUpdate?: (imgFile: File) => void;
+  onError?: (msg: string) => void;
+  onRemove?: () => void;
 }
 
 const AvatarUploader: React.FC<IAvatar> = ({
@@ -113,25 +114,27 @@ const AvatarUploader: React.FC<IAvatar> = ({
   cropToolConfirmTxt,
   currentImg,
   hasCrop = true,
-  onAvatarUpdate = () => { },
-  onError = () => { },
-  onRemove = () => { }
+  onAvatarUpdate = () => {},
+  onError = () => {},
+  onRemove = () => {},
 }) => {
-
   const [avatarImg, setAvatarImg] = useState(currentImg);
   const [cropImg, setCropImg] = useState('');
   const [isCropOpen, setIsCropOpen] = useState(false);
 
-  const handleCrop = useCallback(async (newFileUrl: string, fileType: string) => {
-    setAvatarImg(newFileUrl);
-    const newFile = await fetch(
-      newFileUrl).then(r => r.blob()).then(blobFile => new File([blobFile], "newAvatar", { type: fileType })
-      );
+  const handleCrop = useCallback(
+    async (newFileUrl: string, fileType: string) => {
+      setAvatarImg(newFileUrl);
+      const newFile = await fetch(newFileUrl)
+        .then((r) => r.blob())
+        .then((blobFile) => new File([blobFile], 'newAvatar', { type: fileType }));
 
-    onAvatarUpdate(newFile);
+      onAvatarUpdate(newFile);
 
-    setIsCropOpen(false);
-  }, [onAvatarUpdate]);
+      setIsCropOpen(false);
+    },
+    [onAvatarUpdate]
+  );
 
   const handleCropClose = useCallback(() => {
     setIsCropOpen(false);
@@ -139,26 +142,28 @@ const AvatarUploader: React.FC<IAvatar> = ({
     URL.revokeObjectURL(cropImg);
   }, [cropImg]);
 
-  const handleFileUpload = useCallback((newFiles: FileList) => {
-    if (newFiles.length === 1) {
-      if (!isValidImage(newFiles[0])) {
-        onError('Please upload only jpeg and png file');
-        return;
-      }
-      const prevImg = URL.createObjectURL(newFiles[0]);
+  const handleFileUpload = useCallback(
+    (newFiles: FileList) => {
+      if (newFiles.length === 1) {
+        if (!isValidImage(newFiles[0])) {
+          onError('Please upload only jpeg and png file');
+          return;
+        }
+        const prevImg = URL.createObjectURL(newFiles[0]);
 
-      if (hasCrop) {
-        setCropImg(prevImg);
-        setIsCropOpen(true);
+        if (hasCrop) {
+          setCropImg(prevImg);
+          setIsCropOpen(true);
+        } else {
+          onAvatarUpdate(newFiles[0]);
+          setAvatarImg(prevImg);
+        }
       } else {
-        onAvatarUpdate(newFiles[0]);
-        setAvatarImg(prevImg);
+        onError('Drop only one file');
       }
-
-    } else {
-      onError('Drop only one file');
-    }
-  }, [hasCrop, onError, onAvatarUpdate]);
+    },
+    [hasCrop, onError, onAvatarUpdate]
+  );
 
   const handleEdit = useCallback((fileUrl: string) => {
     setCropImg(fileUrl);
@@ -178,56 +183,76 @@ const AvatarUploader: React.FC<IAvatar> = ({
     <Container>
       <Label labelText={title} htmlFor='avatar-upload' />
       <PreviewImageGroup>
-        {avatarImg
-          ? <PreviewImage src={avatarImg} alt='avatar image' crossOrigin='anonymous' />
-          : (
-            <NoPhoto>
-              <AvatarPlaceholder />
-              <PlaceholderText>{photoText}</PlaceholderText>
-            </NoPhoto>
-          )}
-        {((currentImg && (!hasCrop)) || !currentImg) && <DropArea height={PHOTO_HEIGHT} dropCallback={handleFileUpload} />}
+        {avatarImg ? (
+          <PreviewImage src={avatarImg} alt='avatar image' crossOrigin='anonymous' />
+        ) : (
+          <NoPhoto>
+            <AvatarPlaceholder />
+            <PlaceholderText>{photoText}</PlaceholderText>
+          </NoPhoto>
+        )}
+        {((currentImg && !hasCrop) || !currentImg) && (
+          <DropArea height={PHOTO_HEIGHT} dropCallback={handleFileUpload} />
+        )}
       </PreviewImageGroup>
-      {avatarImg
-        ? (
-          <ButtonsWrapper>
-            {hasCrop
-              ? <ButtonWithIcon icon='Crop' design='secondary' position='left' size='small' onClick={() => handleEdit(avatarImg)}>{uploaderCropText}</ButtonWithIcon>
-              : <StyledInputFileButton
-                  id='avatar-upload'
-                  text={buttonTextReplace}
-                  buttonSize='small'
-                  buttonDesign='secondary'
-                  accept='image/*'
-                  inputCallback={handleFileUpload}
-                />}
-            <ButtonWithIcon icon='Delete' design='secondary' position='left' size='small' onClick={handleRemove}>{deletePhotoText}</ButtonWithIcon>
-          </ButtonsWrapper>
-        )
-        : <StyledInputFileButton
-            id='avatar-upload'
-            text={buttonText}
-            buttonSize='small'
-            accept='image/*'
-            inputCallback={handleFileUpload}
-          />}
-      {isCropOpen && hasCrop
-        ? <CropTool
-            imgUrl={cropImg}
-            onCrop={handleCrop}
-            onClose={handleCropClose}
-            onError={onError}
-            canvasHeight={CANVAS_HEIGHT}
-            canvasWidth={CANVAS_WIDTH}
-            cropHeight={CROP_WIDTH_AREA}
-            cropWidth={CROP_HEIGHT_AREA}
-            aspectRatio={ratio}
-            title={cropToolTitle}
-            cancelBtnTxt={cropToolCancelTxt}
-            cropBtnTxt={cropToolConfirmTxt}
-            isResizable
-          />
-        : null}
+      {avatarImg ? (
+        <ButtonsWrapper>
+          {hasCrop ? (
+            <ButtonWithIcon
+              icon='Crop'
+              design='secondary'
+              position='left'
+              size='small'
+              onClick={() => handleEdit(avatarImg)}
+            >
+              {uploaderCropText}
+            </ButtonWithIcon>
+          ) : (
+            <StyledInputFileButton
+              id='avatar-upload'
+              text={buttonTextReplace}
+              buttonSize='small'
+              buttonDesign='secondary'
+              accept='image/*'
+              inputCallback={handleFileUpload}
+            />
+          )}
+          <ButtonWithIcon
+            icon='Delete'
+            design='secondary'
+            position='left'
+            size='small'
+            onClick={handleRemove}
+          >
+            {deletePhotoText}
+          </ButtonWithIcon>
+        </ButtonsWrapper>
+      ) : (
+        <StyledInputFileButton
+          id='avatar-upload'
+          text={buttonText}
+          buttonSize='small'
+          accept='image/*'
+          inputCallback={handleFileUpload}
+        />
+      )}
+      {isCropOpen && hasCrop ? (
+        <CropTool
+          imgUrl={cropImg}
+          onCrop={handleCrop}
+          onClose={handleCropClose}
+          onError={onError}
+          canvasHeight={CANVAS_HEIGHT}
+          canvasWidth={CANVAS_WIDTH}
+          cropHeight={CROP_WIDTH_AREA}
+          cropWidth={CROP_HEIGHT_AREA}
+          aspectRatio={ratio}
+          title={cropToolTitle}
+          cancelBtnTxt={cropToolCancelTxt}
+          cropBtnTxt={cropToolConfirmTxt}
+          isResizable
+        />
+      ) : null}
     </Container>
   );
 };

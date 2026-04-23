@@ -1,7 +1,7 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
+import type { IStatusDot } from '..';
 import Icon from './Icon';
-import { IStatusDot } from '..';
 
 const Container = styled.div`
   position: relative;
@@ -22,7 +22,7 @@ const StatusCounter = styled.div<{ $color?: IStatusDot }>`
   align-items: center;
   justify-content: center;
   transition: background-color var(--speed-slow) var(--easing-primary-in-out);
-  background-color: ${({ theme, $color }) => $color ? theme.colors.status[$color] : 'var(--grey-5)'};
+  background-color: ${({ theme, $color }) => ($color ? theme.colors.status[$color] : 'var(--grey-5)')};
 `;
 
 const StatusDot = styled.div<{ $color?: IStatusDot }>`
@@ -33,22 +33,26 @@ const StatusDot = styled.div<{ $color?: IStatusDot }>`
   top: -6px;
   right: -6px;
   transition: background-color var(--speed-slow) var(--easing-primary-in-out);
-  background-color: ${({ theme, $color }) => $color ? theme.colors.status[$color] : 'var(--grey-5)'};
+  background-color: ${({ theme, $color }) => ($color ? theme.colors.status[$color] : 'var(--grey-5)')};
 `;
 
 interface IStatusIcon {
-  icon: string
-  status?: IStatusDot
-  counter?: number
-  maxCounter?: number
+  icon: string;
+  status?: IStatusDot;
+  counter?: number;
+  maxCounter?: number;
 }
 
-const StatusIcon: React.FC<IStatusIcon> = ({icon, status, counter, maxCounter = 999}) => {
+const StatusIcon: React.FC<IStatusIcon> = ({ icon, status, counter, maxCounter = 999 }) => {
   return (
     <Container>
-      {status && (counter === undefined)
-        ? <StatusDot $color={status} />
-        :  (counter === undefined) ? null : <StatusCounter $color={status}>{counter > maxCounter ? `${maxCounter}+` : counter}</StatusCounter>}
+      {status && counter === undefined ? (
+        <StatusDot $color={status} />
+      ) : counter === undefined ? null : (
+        <StatusCounter $color={status}>
+          {counter > maxCounter ? `${maxCounter}+` : counter}
+        </StatusCounter>
+      )}
       <Icon icon={icon} size={18} color='dimmed' />
     </Container>
   );

@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { TabContext, ContextProps } from '../../Tabs/Tabs';
-
-import SvgLogoMark from '../../svg/LogoMark';
-import {resetButtonStyles} from '../../common/index';
+import type React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { resetButtonStyles } from '../../common/index';
+import SvgLogoMark from '../../svg/LogoMark';
+import { type ContextProps, TabContext } from '../../Tabs/Tabs';
 
 const Logo = styled(Link)`
   ${resetButtonStyles};
@@ -25,21 +25,19 @@ const LogoMark = styled.div`
 const SVGObject = styled.object``;
 
 interface ILogoLink {
-  closeId: string
-  logoMark?: string,
-  home?: string,
+  closeId: string;
+  logoMark?: string;
+  home?: string;
 }
 
-const MobileLogoLink:  React.FC<ILogoLink> = ({
-  home = "/",
-  logoMark,
-  closeId,
-}) => {
+const MobileLogoLink: React.FC<ILogoLink> = ({ home = '/', logoMark, closeId }) => {
   const { setSelected }: ContextProps = useContext(TabContext);
 
-  return(
+  return (
     <Logo to={home} onClick={() => setSelected(closeId)}>
-      <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
+      <LogoMark>
+        {logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}
+      </LogoMark>
     </Logo>
   );
 };

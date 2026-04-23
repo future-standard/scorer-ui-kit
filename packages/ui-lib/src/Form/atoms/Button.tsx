@@ -1,15 +1,15 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import type React from 'react';
+import type { ButtonHTMLAttributes } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { TypeButtonSizes, TypeButtonDesigns } from '..';
-
+import type { TypeButtonDesigns, TypeButtonSizes } from '..';
 
 interface IStyledComponentProps {
-  $size: TypeButtonSizes
-  $design: TypeButtonDesigns
-  $shadow: boolean
-  $noPadding?: boolean
-  $loading?: boolean
-  $isOutline?: boolean
+  $size: TypeButtonSizes;
+  $design: TypeButtonDesigns;
+  $shadow: boolean;
+  $noPadding?: boolean;
+  $loading?: boolean;
+  $isOutline?: boolean;
 }
 
 const activeAnimation = (shadow?: boolean) => {
@@ -48,12 +48,14 @@ const StyledButton = styled.button<IStyledComponentProps>`
   color: var(--button-text-color);
   font-weight: 600;
 
-  ${({ $noPadding, $isOutline }) => $noPadding ? css`
+  ${({ $noPadding, $isOutline }) =>
+    $noPadding
+      ? css`
       padding: 0px;
-    ` : css`
-      padding: ${$isOutline ? `var(--button-h-padding-outline)` : `var(--button-h-padding)`};
     `
-  }
+      : css`
+      padding: ${$isOutline ? `var(--button-h-padding-outline)` : `var(--button-h-padding)`};
+    `}
 
   overflow: hidden;
   cursor: pointer;
@@ -67,11 +69,14 @@ const StyledButton = styled.button<IStyledComponentProps>`
   background-size: 400%;
   background-position: 99%;
 
-  ${({$shadow}) => $shadow ? css`
+  ${({ $shadow }) =>
+    $shadow
+      ? css`
     box-shadow:
       0 2px 4px 2px var(--button-drop-shadow-color),
       0 0 0 var(--button-inner-shadow-color) inset;
-  ` : css`
+  `
+      : css`
     box-shadow: 0 0 0 var(--button-inner-shadow-color) inset;
   `}
 
@@ -90,11 +95,14 @@ const StyledButton = styled.button<IStyledComponentProps>`
     border-color: var(--button-hover-border-color);
     color: var(--button-hover-text-color);
 
-    ${({$shadow}) => $shadow ? css`
+    ${({ $shadow }) =>
+      $shadow
+        ? css`
       box-shadow:
         0 4px 8px var(--button-hover-drop-shadow-color),
         0 0 5px var(--button-hover-inner-shadow-color) inset;
-    ` : css`
+    `
+        : css`
       box-shadow: 0 0 5px var(--button-hover-inner-shadow-color) inset;
     `}
   }
@@ -103,7 +111,7 @@ const StyledButton = styled.button<IStyledComponentProps>`
     background-color: var(--button-active-background-color);
     border-color: var(--button-active-border-color);
     color: var(--button-active-text-color);
-    ${({$shadow}) => css`
+    ${({ $shadow }) => css`
       animation: var(--speed-normal) var(--easing-primary-in-out) ${() => activeAnimation($shadow)} forwards;
     `};
   }
@@ -115,7 +123,9 @@ const StyledButton = styled.button<IStyledComponentProps>`
     border-color: var(--button-disabled-border-color, transparent);
   }
 
-  ${({$loading}) => $loading && css`
+  ${({ $loading }) =>
+    $loading &&
+    css`
     &:disabled {
       opacity: 1;
       cursor: wait;
@@ -129,21 +139,50 @@ const StyledButton = styled.button<IStyledComponentProps>`
 
 `;
 
-
 interface OwnProps {
-  size?: TypeButtonSizes
-  design?: TypeButtonDesigns
-  shadow?: boolean
-  noPadding?: boolean
-  loading?: boolean
+  size?: TypeButtonSizes;
+  design?: TypeButtonDesigns;
+  shadow?: boolean;
+  noPadding?: boolean;
+  loading?: boolean;
 }
 
-type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>
+type Props = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button : React.FC<Props> = ({ design='primary', size='normal', shadow = false, noPadding = false, loading=false, children, formAction, className, ...props }) => {
-  design === 'danger' ? console.warn('Button.tsx - Warning, the design prop value danger is being deprecated. Use warning instead.') : null;
-  const mergedClassName = [`button-design-${design}`, `button-size-${size}`, className].filter(Boolean).join(' ');
-  return <StyledButton type='button' $isOutline={design === 'outline'} className={mergedClassName} $design={design} $size={size} $noPadding={noPadding} $shadow={shadow} $loading={loading} {...props}><>{children}</></StyledButton>;
+const Button: React.FC<Props> = ({
+  design = 'primary',
+  size = 'normal',
+  shadow = false,
+  noPadding = false,
+  loading = false,
+  children,
+  formAction,
+  className,
+  ...props
+}) => {
+  if (design === 'danger') {
+    console.warn(
+      'Button.tsx - Warning, the design prop value danger is being deprecated. Use warning instead.'
+    );
+  }
+  const mergedClassName = [`button-design-${design}`, `button-size-${size}`, className]
+    .filter(Boolean)
+    .join(' ');
+  return (
+    <StyledButton
+      type='button'
+      $isOutline={design === 'outline'}
+      className={mergedClassName}
+      $design={design}
+      $size={size}
+      $noPadding={noPadding}
+      $shadow={shadow}
+      $loading={loading}
+      {...props}
+    >
+      {children}
+    </StyledButton>
+  );
 };
 
 export default Button;

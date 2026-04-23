@@ -1,7 +1,8 @@
-import React, { useState, useCallback, Fragment } from 'react';
+import type React from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { TypeCellAlignment, ITableColumnConfig } from '..';
 import Checkbox from '../../Form/atoms/Checkbox';
+import type { ITableColumnConfig, TypeCellAlignment } from '..';
 import TableHeaderTitle from '../atoms/TableHeaderTitle';
 
 const HeaderRow = styled.div`
@@ -9,33 +10,51 @@ const HeaderRow = styled.div`
   height: 50px;
 `;
 
-const HeaderItem = styled.div<{ $fixedWidth?: number, $alignment?: TypeCellAlignment, $hasCopyButton?: boolean, $minWidth?: number, $headerStyle: 'header' | 'subHeader', $isSortActive?: boolean }>`
+const HeaderItem = styled.div<{
+  $fixedWidth?: number;
+  $alignment?: TypeCellAlignment;
+  $hasCopyButton?: boolean;
+  $minWidth?: number;
+  $headerStyle: 'header' | 'subHeader';
+  $isSortActive?: boolean;
+}>`
   display: table-cell;
   height: inherit;
   vertical-align:top;
   line-height: 20px;
   position: relative;
-  font-family: ${p => p.theme.fontFamily.ui};
+  font-family: ${(p) => p.theme.fontFamily.ui};
 
-  ${({ $hasCopyButton }) => $hasCopyButton && css`
+  ${({ $hasCopyButton }) =>
+    $hasCopyButton &&
+    css`
     padding-right: 20px;
   `};
 
-  ${({ theme, $alignment, $headerStyle }) => $alignment ? css`
+  ${({ theme, $alignment, $headerStyle }) =>
+    $alignment
+      ? css`
     ${theme.typography.table[$headerStyle][$alignment]};
-  ` : css`
-    ${theme.typography.table[$headerStyle]['left']};
+  `
+      : css`
+    ${theme.typography.table[$headerStyle].left};
   `};
 
-  ${p => p.$fixedWidth && css`
+  ${(p) =>
+    p.$fixedWidth &&
+    css`
     width: ${p.$fixedWidth}px;
   `};
 
-  ${({ $minWidth }) => $minWidth && css`
+  ${({ $minWidth }) =>
+    $minWidth &&
+    css`
     min-width:${$minWidth}px;
   `};
 
-  ${({ theme: {styles}, $headerStyle, $isSortActive }) => $headerStyle === 'subHeader' && css`
+  ${({ theme: { styles }, $headerStyle, $isSortActive }) =>
+    $headerStyle === 'subHeader' &&
+    css`
   padding-bottom: 15px;
 
   &::after {
@@ -57,7 +76,9 @@ const TitleItems = styled.div<{ $alignment?: TypeCellAlignment }>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  ${({ $alignment }) => $alignment && css`
+  ${({ $alignment }) =>
+    $alignment &&
+    css`
       ${$alignment === 'right' ? 'align-items: flex-end' : null};
       ${$alignment === 'center' ? 'align-items: center' : null};
   `};
@@ -72,8 +93,8 @@ const GroupTitle = styled.div`
 `;
 
 const Title = styled.div`
-  ${({ theme: {typography} }) => css`
-    ${typography.tables['groupName']};
+  ${({ theme: { typography } }) => css`
+    ${typography.tables.groupName};
   `};
   padding-left: 2px;
   padding-right: 8px;
@@ -86,36 +107,38 @@ const EmptyTitle = styled.div`
 `;
 
 const MiddleLine = styled.div<{ $isLastOfGroup?: boolean }>`
-  ${({ theme: {styles} }) => css`
+  ${({ theme: { styles } }) => css`
     ${styles.tables.header.groupLine};
   `};
 
   height: 1px;
   flex: 1;
-  ${({ $isLastOfGroup }) => $isLastOfGroup && css`
+  ${({ $isLastOfGroup }) =>
+    $isLastOfGroup &&
+    css`
     margin-right: 15px;
   `};
 `;
 
 const renderGroupHeader = (columnConfig: ITableColumnConfig[], index: number) => {
-  if (index < 0) { return null; }
+  if (index < 0) {
+    return null;
+  }
 
   let isLastOfGroup: boolean = true;
 
   // Is Last of the group if the next is different
-  if (index < (columnConfig.length - 1)) {
-    isLastOfGroup = (columnConfig[index].groupTitle !== columnConfig[index + 1].groupTitle);
+  if (index < columnConfig.length - 1) {
+    isLastOfGroup = columnConfig[index].groupTitle !== columnConfig[index + 1].groupTitle;
   }
 
   // if the column doesn't belong to any group
   if (!columnConfig[index].groupTitle) {
-    return (
-      <EmptyTitle />
-    );
+    return <EmptyTitle />;
   }
 
   // has group, previous was equal
-  if ((index !== 0) && (columnConfig[index - 1].groupTitle === columnConfig[index].groupTitle)) {
+  if (index !== 0 && columnConfig[index - 1].groupTitle === columnConfig[index].groupTitle) {
     return (
       <Fragment>
         <EmptyTitle />
@@ -134,17 +157,17 @@ const renderGroupHeader = (columnConfig: ITableColumnConfig[], index: number) =>
 };
 
 interface ITableHeader {
-  selectable?: boolean
-  hasStatus: boolean
-  hasThumbnail: boolean
-  hasTypeIcon: boolean
-  allChecked: boolean
-  disableAllChecked: boolean
-  hasHeaderGroups: boolean
-  columnConfig: ITableColumnConfig[]
-  defaultAscending: boolean
-  toggleAllCallback?: (checked: boolean) => void
-  sortCallback?: (ascending: boolean, columnId: string) => void
+  selectable?: boolean;
+  hasStatus: boolean;
+  hasThumbnail: boolean;
+  hasTypeIcon: boolean;
+  allChecked: boolean;
+  disableAllChecked: boolean;
+  hasHeaderGroups: boolean;
+  columnConfig: ITableColumnConfig[];
+  defaultAscending: boolean;
+  toggleAllCallback?: (checked: boolean) => void;
+  sortCallback?: (ascending: boolean, columnId: string) => void;
 }
 
 const TypeTableHeader: React.FC<ITableHeader> = ({
@@ -157,63 +180,82 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
   hasHeaderGroups,
   columnConfig,
   defaultAscending,
-  toggleAllCallback = () => { },
-  sortCallback = () => { },
+  toggleAllCallback = () => {},
+  sortCallback = () => {},
 }) => {
-
   const [sortSpec, setSortSpec] = useState(columnConfig);
   const [ascendingState, setAscendingState] = useState(defaultAscending);
 
-  const toggleAllCallbackWrapper = useCallback((checked: boolean) => {
-    toggleAllCallback(checked);
-  }, [toggleAllCallback]);
-
+  const toggleAllCallbackWrapper = useCallback(
+    (checked: boolean) => {
+      toggleAllCallback(checked);
+    },
+    [toggleAllCallback]
+  );
 
   /**
- * Rules for toggling ascending value
- * - Clicked column was active, toggle value of ascending.
- * - No column was sorted before, keep the sorting ascending.
- * - Clicked column was not active persist the last ascending option
- */
-  const toggleSort = useCallback((indexKey: number, columnId?: string) => {
-
-    if (sortSpec[indexKey] === undefined) { return; }
-    if (!sortSpec[indexKey].sortable) { return; }
-
-    const updatedSort = [...sortSpec];
-
-    let lastActiveKey: number | null = null;
-    updatedSort.forEach((col, key) => {
-      if (col.sortActive) {
-        lastActiveKey = key;
+   * Rules for toggling ascending value
+   * - Clicked column was active, toggle value of ascending.
+   * - No column was sorted before, keep the sorting ascending.
+   * - Clicked column was not active persist the last ascending option
+   */
+  const toggleSort = useCallback(
+    (indexKey: number, columnId?: string) => {
+      if (sortSpec[indexKey] === undefined) {
+        return;
       }
-      if (key === indexKey) {
-        col.sortActive = true;
-      } else {
-        col.sortActive = false;
+      if (!sortSpec[indexKey].sortable) {
+        return;
       }
-    });
 
-    const newAscending: boolean = (lastActiveKey === indexKey) ? !ascendingState : ascendingState;
-    const colId: string = (columnId === undefined) ? `column_${indexKey}` : columnId;
-    sortCallback(newAscending, colId);
-    setSortSpec(updatedSort);
-    setAscendingState(newAscending);
-  }, [ascendingState, sortCallback, sortSpec]);
+      const updatedSort = [...sortSpec];
+
+      let lastActiveKey: number | null = null;
+      updatedSort.forEach((col, key) => {
+        if (col.sortActive) {
+          lastActiveKey = key;
+        }
+        if (key === indexKey) {
+          col.sortActive = true;
+        } else {
+          col.sortActive = false;
+        }
+      });
+
+      const newAscending: boolean = lastActiveKey === indexKey ? !ascendingState : ascendingState;
+      const colId: string = columnId === undefined ? `column_${indexKey}` : columnId;
+      sortCallback(newAscending, colId);
+      setSortSpec(updatedSort);
+      setAscendingState(newAscending);
+    },
+    [ascendingState, sortCallback, sortSpec]
+  );
 
   return (
     <HeaderRow>
       {selectable ? (
         <HeaderItem $headerStyle='header' $fixedWidth={30}>
-          <Checkbox checked={allChecked} disabled={disableAllChecked} onChangeCallback={toggleAllCallbackWrapper} />
-        </HeaderItem>)
-        : null}
+          <Checkbox
+            checked={allChecked}
+            disabled={disableAllChecked}
+            onChangeCallback={toggleAllCallbackWrapper}
+          />
+        </HeaderItem>
+      ) : null}
       {hasStatus ? <HeaderItem $headerStyle='header' $fixedWidth={10} /> : null}
       {hasThumbnail ? <HeaderItem $headerStyle='header' $fixedWidth={70} /> : null}
       {hasTypeIcon ? <HeaderItem $headerStyle='header' $fixedWidth={35} /> : null}
 
       {columnConfig.map((column, key, allColls) => {
-        const { header, alignment, hasCopyButton, sortActive, columnId, sortable, minWidth }: ITableColumnConfig = column;
+        const {
+          header,
+          alignment,
+          hasCopyButton,
+          sortActive,
+          columnId,
+          sortable,
+          minWidth,
+        }: ITableColumnConfig = column;
         return (
           <HeaderItem
             key={key}
@@ -224,10 +266,9 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
             $isSortActive={sortActive}
           >
             <TitleItems $alignment={alignment}>
-              {hasHeaderGroups &&
-                <GroupTitle>
-                  {hasHeaderGroups && renderGroupHeader(allColls, key)}
-                </GroupTitle>}
+              {hasHeaderGroups && (
+                <GroupTitle>{hasHeaderGroups && renderGroupHeader(allColls, key)}</GroupTitle>
+              )}
               <TableHeaderTitle
                 header={header}
                 sortable={sortable}
@@ -238,7 +279,8 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
                 toggleSort={toggleSort}
               />
             </TitleItems>
-          </HeaderItem>);
+          </HeaderItem>
+        );
       })}
     </HeaderRow>
   );

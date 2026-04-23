@@ -1,11 +1,11 @@
-import React, { InputHTMLAttributes } from 'react';
+import type React from 'react';
+import type { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
-
-import Label from '../atoms/Label';
-import { TypeFieldState } from '..';
 import { removeAutoFillStyle } from '../../common';
+import type { TypeFieldState } from '..';
+import Label from '../atoms/Label';
 
-const StyledInput = styled.input<{ $fieldState : TypeFieldState }>`
+const StyledInput = styled.input<{ $fieldState: TypeFieldState }>`
   ${removeAutoFillStyle};
 
   font-family: var(--font-data);
@@ -35,7 +35,7 @@ const StyledInput = styled.input<{ $fieldState : TypeFieldState }>`
   }
 `;
 
-const InputContainer = styled.div<{$fieldState : TypeFieldState, $hasAction?: boolean}>`
+const InputContainer = styled.div<{ $fieldState: TypeFieldState; $hasAction?: boolean }>`
   display: flex;
   height: var(--input-compact-height);
   padding: 0 8px;
@@ -44,7 +44,7 @@ const InputContainer = styled.div<{$fieldState : TypeFieldState, $hasAction?: bo
   position: relative;
   border-radius: 3px;
 
-  ${({$fieldState}) => css`
+  ${({ $fieldState }) => css`
     border: 1px solid var(--input-${$fieldState}-border-color);
     background: var(--input-${$fieldState}-background-color);
     transition:
@@ -52,7 +52,9 @@ const InputContainer = styled.div<{$fieldState : TypeFieldState, $hasAction?: bo
       background-color var(--speed-normal) var(--easing-primary-out);
   `};
 
-  ${({ $hasAction }) => $hasAction && css`
+  ${({ $hasAction }) =>
+    $hasAction &&
+    css`
     ${StyledInput}{
       padding-right: 200px;
 
@@ -75,7 +77,9 @@ const UnitKey = styled.div`
 const Container = styled.div<{ $fieldState: string }>`
   position: relative;
 
-  ${({$fieldState}) => $fieldState && css`
+  ${({ $fieldState }) =>
+    $fieldState &&
+    css`
     &:focus-within ${InputContainer} {
       transition: boxShadow var(--speed-fast) var(--easing-primary-in-out);
       box-shadow: 0 3px 3px var(--input-${$fieldState}-focused-shadow-color, var(--input-${$fieldState}-shadow-color));
@@ -85,13 +89,13 @@ const Container = styled.div<{ $fieldState: string }>`
 
 interface OwnProps {
   fieldState?: TypeFieldState;
-  label: string
-  unit?: string
+  label: string;
+  unit?: string;
 }
 
-type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>
+type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>;
 
-const SmallInput : React.FC<Props> = ({
+const SmallInput: React.FC<Props> = ({
   unit,
   label,
   name,
@@ -105,27 +109,22 @@ const SmallInput : React.FC<Props> = ({
   formAction,
   ...props
 }) => {
-
-
-
   return (
     <Container className={className} $fieldState={fieldState || 'default'}>
-      <Label labelText={label} htmlFor={name || ''} {...{required}}>
+      <Label labelText={label} htmlFor={name || ''} {...{ required }}>
         <InputContainer $fieldState={fieldState || 'default'}>
           <StyledInput
             $fieldState={fieldState || 'default'}
             type={type}
             placeholder={placeholder}
             defaultValue={defaultValue}
-            {...props} />
+            {...props}
+          />
           {unit ? <UnitKey>{unit}</UnitKey> : null}
         </InputContainer>
       </Label>
-
     </Container>
   );
-
 };
-
 
 export default SmallInput;

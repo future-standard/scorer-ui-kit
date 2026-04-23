@@ -8,12 +8,12 @@ export type { ThemeType } from './styled';
 import {
   AlertBar,
   Notification,
-  INotificationProps,
+  type INotificationProps,
   AlertWrapper,
   Tooltip,
-  ITooltipPosition,
-  AlertType,
-  ITooltipType
+  type ITooltipPosition,
+  type AlertType,
+  type ITooltipType,
 } from './Alerts';
 
 // Components - Form
@@ -23,7 +23,7 @@ import {
   ButtonWithIcon,
   ButtonWithLoading,
   IconButton,
-  IconButtonData,
+  type IconButtonData,
   ActionButtons,
   SmallInput,
   Input,
@@ -35,7 +35,7 @@ import {
   TextArea,
   TextAreaField,
   SliderInput,
-  ISliderMark,
+  type ISliderMark,
   DurationSlider,
   PercentageSlider,
   InputFileButton,
@@ -47,11 +47,11 @@ import {
   AreaUploadManager,
   RadioButton,
   SplitButton,
-  ISplitButtonProps,
+  type ISplitButtonProps,
   ButtonsStack,
-  IButtonsStack,
-  IButtonStack,
-  TypeSwitchState
+  type IButtonsStack,
+  type IButtonStack,
+  type TypeSwitchState,
 } from './Form';
 import type {
   TypeFieldState,
@@ -67,42 +67,36 @@ import type {
 import {
   DatePicker,
   isDateInterval,
-  IFilterDatePicker,
+  type IFilterDatePicker,
   FilterDropdownContainer,
   FilterButton,
   FilterDropdown,
   SortDropdown,
   FilterLayout,
   FilterInputs,
-  ISearchFilter,
-  IFilterDropdownExt,
+  type ISearchFilter,
+  type IFilterDropdownExt,
   FiltersResults,
-  IFilterLabel,
+  type IFilterLabel,
   FilterBar,
-  IFilterDropdownConfig,
-  IFilterType,
-  IFilterItem,
-  IFilterValue,
-  IFilterResult,
+  type IFilterDropdownConfig,
+  type IFilterType,
+  type IFilterItem,
+  type IFilterValue,
+  type IFilterResult,
   isFilterItem,
-  FilterButtonDesign,
+  type FilterButtonDesign,
   ToggleButton,
-  IToggleOption,
-  IDateInterval,
-  IDateRange
+  type IToggleOption,
+  type IDateInterval,
+  type IDateRange,
 } from './Filters';
 
 import Icon, { IconSVGs } from './Icons/Icon';
 import StatusIcon from './Icons/StatusIcon';
 
 // Components - Line UI
-import {
-  LineUI,
-  LineUIVideo,
-  LineUIRTC,
-  LineSetContext,
-  LineReducer
-} from './LineUI';
+import { LineUI, LineUIVideo, LineUIRTC, LineSetContext, LineReducer } from './LineUI';
 import type {
   IVector2,
   IPointSet,
@@ -119,16 +113,11 @@ import {
   PageHeader,
   PageTitle,
   MultilineContent,
-  IHeaderTag,
+  type IHeaderTag,
 } from './Pages';
 
 // Tables
-import {
-  TypeTable,
-  TableRowThumbnail,
-  TableHeaderTitle,
-  EditCell,
-} from './Tables';
+import { TypeTable, TableRowThumbnail, TableHeaderTitle, EditCell } from './Tables';
 import type {
   TypeCellStyle,
   TypeCellAlignment,
@@ -146,32 +135,29 @@ import type {
 import {
   CameraPanels,
   CameraPanelWrapper,
-  ICameraPanel,
-  IMediaStream,
-  IPanelMetaData
+  type ICameraPanel,
+  type IMediaStream,
+  type IPanelMetaData,
 } from './CameraPanels';
-
 
 // Misc
 import {
   Tag,
   TagList,
-  ITag,
-  ITagList,
+  type ITag,
+  type ITagList,
   TagListWrapper,
   MediaBox,
   BasicSearchInput,
   DebouncedSearcher,
   ActionsBar,
-  IActionsButton,
+  type IActionsButton,
   Pagination,
-  IItemsOption,
-  IPagination
+  type IItemsOption,
+  type IPagination,
 } from './Misc';
 
-import {
-  ConfirmationModal,
-} from './Modals';
+import { ConfirmationModal } from './Modals';
 
 // Other
 import {
@@ -183,21 +169,14 @@ import {
   useNotification,
   useClickOutside,
   useMediaModal,
-  IModal,
+  type IModal,
   usePoll,
-  useThemeToggle
+  useThemeToggle,
 } from './hooks';
 
-import {
-  NotificationProvider,
-  ModalContext,
-  ModalProvider,
-} from './context';
+import { NotificationProvider, ModalContext, ModalProvider } from './context';
 
-import {
-  resetButtonStyles,
-  FlexContentPlaceholder
-} from './common';
+import { resetButtonStyles, FlexContentPlaceholder } from './common';
 
 import Spinner from './Indicators/Spinner';
 import WebRTCClient from './WebRTCClient';
@@ -207,9 +186,10 @@ import {
   FullWidthContentBlock,
   UtilityHeader,
   SplitLayout,
-  IHeaderContent,
-  IUtilityHeader,
-  ISplitLayoutHandles
+  type IHeaderContent,
+  type IUtilityHeader,
+  type ISplitLayoutHandles,
+  type ISideAreaState,
 } from './Layouts';
 
 import {
@@ -226,9 +206,9 @@ import {
   BackLink,
   Sidebar,
   GlobalUI,
-  INotificationItem,
-  INotificationsHistory,
-  ICustomDrawer
+  type INotificationItem,
+  type INotificationsHistory,
+  type ICustomDrawer,
 } from './Global';
 import type {
   IMenuTop,
@@ -251,7 +231,7 @@ import {
   TabContent,
   TabWithIcon,
   TabsWithIconBar,
-  ITabIcon,
+  type ITabIcon,
 } from './Tabs';
 
 export {
@@ -259,20 +239,17 @@ export {
   defaultTheme,
   ThemeVariables,
   BaseStyles,
-
   // Alerts
   AlertBar,
   Notification,
   AlertWrapper,
   Tooltip,
-
   // LineUI
   LineUI,
   LineUIVideo,
   LineUIRTC,
   LineSetContext,
   LineReducer,
-
   // Form
   Form,
   Button,
@@ -302,10 +279,8 @@ export {
   RadioButton,
   SplitButton,
   ButtonsStack,
-
   // Modals
   ConfirmationModal,
-
   // Filters
   DatePicker,
   FilterDropdownContainer,
@@ -319,24 +294,20 @@ export {
   ToggleButton,
   isFilterItem,
   isDateInterval,
-
   //Icon
   Icon,
   IconSVGs,
   StatusIcon,
-
   //Pages
   IntroductionText,
   PageHeader,
   PageTitle,
   MultilineContent,
-
   // Tables
   TypeTable,
   TableRowThumbnail,
   TableHeaderTitle,
   EditCell,
-
   // Common && hooks
   useInterval,
   useTo,
@@ -350,7 +321,6 @@ export {
   FlexContentPlaceholder,
   Spinner,
   WebRTCClient,
-
   // Global
   MainMenu,
   TopBar,
@@ -365,13 +335,11 @@ export {
   BackLink,
   Sidebar,
   GlobalUI,
-
   // Content Layouts
   ContentLayout,
   FullWidthContentBlock,
   UtilityHeader,
   SplitLayout,
-
   // Tabs
   Tabs,
   TabContext,
@@ -380,11 +348,9 @@ export {
   TabContent,
   TabWithIcon,
   TabsWithIconBar,
-
   // CameraPanels
   CameraPanels,
   CameraPanelWrapper,
-
   // Misc
   Tag,
   TagList,
@@ -394,13 +360,12 @@ export {
   DebouncedSearcher,
   ActionsBar,
   Pagination,
-
   //Context
   NotificationProvider,
   useNotification,
   ModalContext,
   ModalProvider,
-  useModal
+  useModal,
 };
 
 /**
@@ -408,7 +373,7 @@ export {
  */
 export type IFeedbackColor = 'error' | 'warning' | 'info' | 'success' | 'neutral';
 export type ITimeUnit = 'seconds' | 'minutes' | 'hours';
-export type IMediaType = 'img' | 'video'
+export type IMediaType = 'img' | 'video';
 export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight';
 export type IWeight = 'light' | 'regular' | 'heavy' | 'strong';
 
@@ -446,6 +411,7 @@ export type {
   IButtonsStack,
   IButtonStack,
   ISplitLayoutHandles,
+  ISideAreaState,
   AlertType,
   ITooltipType,
   FilterButtonDesign,
@@ -453,7 +419,6 @@ export type {
   IDateInterval,
   IDateRange,
   TypeSwitchState,
-
   // LineUI types
   IVector2,
   IPointSet,
@@ -462,7 +427,6 @@ export type {
   IDragLineUISharedOptions,
   LineUIOptions,
   LineUIVideoOptions,
-
   // Tables types
   TypeCellStyle,
   TypeCellAlignment,
@@ -474,7 +438,6 @@ export type {
   IRowHeader,
   IRowData,
   ITypeTableData,
-
   // Global types
   IMenuTop,
   IMenuItemTop,
@@ -485,7 +448,6 @@ export type {
   IUserSubmenuItem,
   ITopBar,
   ITopBarBadge,
-
   // Form types
   TypeFieldState,
   TypeButtonDesigns,

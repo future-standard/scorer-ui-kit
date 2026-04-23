@@ -1,20 +1,14 @@
-import React, {useState, useEffect, ReactElement} from 'react';
-import styled from 'styled-components';
-import { text, boolean } from "@storybook/addon-knobs";
+import { boolean, text } from '@storybook/addon-knobs';
+import { type ReactElement, useEffect, useState } from 'react';
+import { Button, type IModal, ModalProvider, useModal } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
-
-import {
-  ModalProvider,
-  useModal,
-  Button,
-  IModal,
-} from 'scorer-ui-kit';
+import styled from 'styled-components';
 
 const BaseModalStory = {
   title: 'Alerts/Modals',
   components: ModalProvider,
-  decorator: []
-}
+  decorator: [],
+};
 
 const Container = styled.div``;
 
@@ -23,27 +17,24 @@ const EmptyModal = (modal?: IModal) => {
   const { createModal } = useModal();
 
   const openImageModal = () => {
-    createModal({...modalProps})
-  }
+    createModal({ ...modalProps });
+  };
 
   useEffect(() => {
     setModalProps(modal);
-  }, [modal])
+  }, [modal]);
 
   return (
-    <Button
-      design='secondary'
-      onClick={openImageModal}
-    >
+    <Button design='secondary' onClick={openImageModal}>
       Base Modal
     </Button>
-  )
-}
+  );
+};
 
-const customComponentExample : ReactElement = <h1>Hello!</h1>;
+const customComponentExample: ReactElement = <h1>Hello!</h1>;
 
 export const _BaseModal = () => {
-  const closeTxt = text('Close text', 'Close')
+  const closeTxt = text('Close text', 'Close');
   const isCloseEnable = boolean('Is Close Enabled', true);
   const padding = boolean('Padding', true);
   const dismissAction = action('Modal dismissed');
@@ -58,11 +49,11 @@ export const _BaseModal = () => {
           isCloseEnable={isCloseEnable}
           padding={padding}
           dismissCallback={dismissAction}
-          customComponent={ showCustom ? customComponentExample : undefined}
+          customComponent={showCustom ? customComponentExample : undefined}
         />
       </ModalProvider>
     </Container>
-  )
-}
+  );
+};
 
 export default BaseModalStory;

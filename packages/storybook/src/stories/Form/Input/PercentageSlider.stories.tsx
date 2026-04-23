@@ -1,15 +1,13 @@
-import React from 'react';
 // import { action } from 'storybook/actions';
-import { boolean, number, object, text} from "@storybook/addon-knobs";
+import { boolean, number, object, text } from '@storybook/addon-knobs';
+import { type IFeedbackColor, type ISliderMark, PercentageSlider } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
 import styled from 'styled-components';
-import {PercentageSlider, ISliderMark, IFeedbackColor} from 'scorer-ui-kit';
-
 
 const PercentageSliderStory = {
   title: 'Form/Input',
   component: PercentageSlider,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -17,7 +15,7 @@ const Container = styled.div`
     width: 268px;
 `;
 
-const exampleMarks : ISliderMark[] = [
+const exampleMarks: ISliderMark[] = [
   {
     value: 0,
     label: '0%',
@@ -36,7 +34,7 @@ const exampleMarks : ISliderMark[] = [
   },
   {
     value: 100,
-    label:'100%',
+    label: '100%',
   },
 ];
 
@@ -44,59 +42,59 @@ export const _PercentageSlider = () => {
   const title = text('Title', 'Duration');
   const disabled = boolean('Disabled', false);
   const defaultValue = number('Default value', 30);
-  const customThumb = boolean("Custom colors function",false);
-  const customTitle = boolean("Custom Title function",false);
+  const customThumb = boolean('Custom colors function', false);
+  const customTitle = boolean('Custom Title function', false);
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
-  const showTitle = boolean("Show Value", true);
+  const showTitle = boolean('Show Value', true);
   const allMarkCentered = boolean('Center all mark values', false);
 
   // const step = number('Step', 1); // still fixing step option
   const handleUpdate = (value: number) => {
-    console.log('updated value', value);
-    showValue(`Returned value: ${value}`, value)
+    console.debug('updated value', value);
+    showValue(`Returned value: ${value}`, value);
   };
 
-  const otherColorHandler = (value: number)  : IFeedbackColor =>{
-    if(value <= 20) {
+  const otherColorHandler = (value: number): IFeedbackColor => {
+    if (value <= 20) {
       return 'neutral';
     }
 
-    if((value > 20) && (value <= 80)) {
+    if (value > 20 && value <= 80) {
       return 'info';
     }
 
     return 'error';
-  }
+  };
 
-  const otherTitlesHandler = (value: number) : string => {
-    if(value <= 20) {
+  const otherTitlesHandler = (value: number): string => {
+    if (value <= 20) {
       return 'Small sound';
     }
 
-    if((value > 20) && (value <= 80)) {
+    if (value > 20 && value <= 80) {
       return 'Normal sound';
     }
 
     return 'Dangerous sound';
-  }
+  };
 
   return (
     <Container>
       <PercentageSlider
-          disabled={disabled}
-          // step={step}
-          inputCallback={handleUpdate}
-          marks={marks}
-          defaultValue={defaultValue}
-          title={title}
-          updateThumbColor={customThumb ? otherColorHandler : undefined }
-          updateTitle={customTitle ? otherTitlesHandler : undefined}
-          showValue={showTitle}
-          allMarkCentered={allMarkCentered}
-        />
+        disabled={disabled}
+        // step={step}
+        inputCallback={handleUpdate}
+        marks={marks}
+        defaultValue={defaultValue}
+        title={title}
+        updateThumbColor={customThumb ? otherColorHandler : undefined}
+        updateTitle={customTitle ? otherTitlesHandler : undefined}
+        showValue={showTitle}
+        allMarkCentered={allMarkCentered}
+      />
     </Container>
-  )
-}
+  );
+};
 
 export default PercentageSliderStory;

@@ -1,18 +1,15 @@
-import React from 'react';
-import { boolean, select, text } from "@storybook/addon-knobs";
-import styled from 'styled-components';
-
-import photo from '../../assets/placeholder.jpg';
+import { boolean, select, text } from '@storybook/addon-knobs';
 import { ModalProvider, TableRowThumbnail } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
+import styled from 'styled-components';
+import photo from '../../assets/placeholder.jpg';
 
-const video = 'https://future-standard.github.io/scorer-ui-kit/traffic.mp4'
-
+const video = 'https://future-standard.github.io/scorer-ui-kit/traffic.mp4';
 
 const TableRowThumbnailStory = {
   title: 'Tables/atoms',
   component: TableRowThumbnail,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -28,12 +25,11 @@ const ContainerInner = styled.div`
 `;
 
 export const _RowThumbnail = () => {
-
-  const hoverZoom = boolean("Zoom On Hover", true);
-  const image = text("Image Src", photo);
-  const mediaUrl = text("Video Src", video);
-  const mediaType = select("Media Type", ['img', 'video'], 'video');
-  const retryImageLoad = boolean("Retry Image", false);
+  const hoverZoom = boolean('Zoom On Hover', true);
+  const image = text('Image Src', photo);
+  const mediaUrl = text('Video Src', video);
+  const mediaType = select('Media Type', ['img', 'video'], 'video');
+  const retryImageLoad = boolean('Retry Image', false);
   const onClickAction = action('Doing some other action than opening a modal');
   const onClickThumbnail = boolean('Custom onClickThumnail', false);
 
@@ -42,11 +38,14 @@ export const _RowThumbnail = () => {
     <Container>
       <ModalProvider>
         <ContainerInner>
-          <TableRowThumbnail onClickThumbnail={onClickThumbnail ? onClickAction : undefined} {...{ hoverZoom, image, mediaUrl, mediaType, retryImageLoad }} />
+          <TableRowThumbnail
+            onClickThumbnail={onClickThumbnail ? onClickAction : undefined}
+            {...{ hoverZoom, image, mediaUrl, mediaType, retryImageLoad }}
+          />
         </ContainerInner>
       </ModalProvider>
     </Container>
-  )
+  );
 };
 
 export default TableRowThumbnailStory;

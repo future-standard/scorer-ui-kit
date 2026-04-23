@@ -1,17 +1,24 @@
-import React, { ButtonHTMLAttributes, FC, useCallback, useState, useEffect, useRef } from 'react';
+import {
+  type ButtonHTMLAttributes,
+  type FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled, { css } from 'styled-components';
+import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
-import { resetButtonStyles } from '../../common';
-import { TypeButtonDesigns } from '..';
+import type { TypeButtonDesigns } from '..';
 
-const StyledButton = styled.button<{$noBorderTop?: boolean}>`
+const StyledButton = styled.button<{ $noBorderTop?: boolean }>`
   ${resetButtonStyles}
-  ${({$noBorderTop}) => $noBorderTop ?
-      `border-top: none`
+  ${({ $noBorderTop }) =>
+    $noBorderTop
+      ? `border-top: none`
       : css`
-        border-top: 1px solid var(--border-color)`
-  };
+        border-top: 1px solid var(--border-color)`};
 
   color: var(--text-color);
   height: var(--button-height);
@@ -33,11 +40,11 @@ const StyledButton = styled.button<{$noBorderTop?: boolean}>`
   &:active:enabled {
     background: var(--button-active-bg);
 
-    ${({$noBorderTop}) => $noBorderTop ?
-        `border-top: none`
+    ${({ $noBorderTop }) =>
+      $noBorderTop
+        ? `border-top: none`
         : css`
-          border-top: 1px solid var(--border-active-color)`
-    };
+          border-top: 1px solid var(--border-active-color)`};
 
     ${IconWrapper} {
       svg g, svg path {
@@ -64,8 +71,8 @@ const OptionText = styled.div`
   line-height: normal;
 `;
 
-const TextWrapper = styled.div<{$textMaxWidth?:string}>`
-  ${({$textMaxWidth}) => $textMaxWidth && css `max-width: ${$textMaxWidth};`}
+const TextWrapper = styled.div<{ $textMaxWidth?: string }>`
+  ${({ $textMaxWidth }) => $textMaxWidth && css`max-width: ${$textMaxWidth};`}
   display: flex;
   padding: 0px var(--button-h-padding);
   justify-content: center;
@@ -75,7 +82,9 @@ const TextWrapper = styled.div<{$textMaxWidth?:string}>`
 `;
 
 const LeftIconWrapper = styled.div<{ $isAscendingIcon: boolean }>`
-  ${({ $isAscendingIcon }) => $isAscendingIcon && css`
+  ${({ $isAscendingIcon }) =>
+    $isAscendingIcon &&
+    css`
       transform: scaleY(-1);
   `};
 
@@ -104,25 +113,24 @@ const LeftIconWrapper = styled.div<{ $isAscendingIcon: boolean }>`
 `;
 
 export interface IMOption {
-  text: string
-  icon?: string
-  hasOnSelectLoading?: boolean
-  design?: TypeButtonDesigns | string
-  noBorderTop?: boolean
-  textMaxWidth?: string
-  onClickCallback?: () => void
-  closeCallback: () => void
+  text: string;
+  icon?: string;
+  hasOnSelectLoading?: boolean;
+  design?: TypeButtonDesigns | string;
+  noBorderTop?: boolean;
+  textMaxWidth?: string;
+  onClickCallback?: () => void;
+  closeCallback: () => void;
 }
 
+export type ISplitButtonOption = IMOption & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export type ISplitButtonOption = IMOption &  ButtonHTMLAttributes<HTMLButtonElement>;
-
-const SplitButtonOption : FC<ISplitButtonOption> = ({
+const SplitButtonOption: FC<ISplitButtonOption> = ({
   text,
   icon = '',
   design = 'primary',
   noBorderTop = false,
-  textMaxWidth='',
+  textMaxWidth = '',
   onClickCallback,
   closeCallback,
   hasOnSelectLoading,
@@ -130,46 +138,47 @@ const SplitButtonOption : FC<ISplitButtonOption> = ({
   formAction,
   ...props
 }) => {
-
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [ iconSize, setIconSize ] = useState<number>(0);
+  const [iconSize, setIconSize] = useState<number>(0);
 
   const handleClick = useCallback(() => {
+    onClickCallback?.();
 
-    onClickCallback && onClickCallback();
-
-    if(hasOnSelectLoading) {
+    if (hasOnSelectLoading) {
       setIsLoading(true);
 
-      setTimeout( () => {
+      setTimeout(() => {
         setIsLoading(false);
         closeCallback();
       }, 2000);
-    }else {
-      setTimeout( () => {
+    } else {
+      setTimeout(() => {
         closeCallback();
       }, 200);
     }
-
-  },[closeCallback, hasOnSelectLoading, onClickCallback]);
+  }, [closeCallback, hasOnSelectLoading, onClickCallback]);
 
   useEffect(() => {
-    if(buttonRef.current){
-      setIconSize( parseInt( getComputedStyle(buttonRef.current).getPropertyValue('--button-icon-size') ));
+    if (buttonRef.current) {
+      setIconSize(
+        parseInt(getComputedStyle(buttonRef.current).getPropertyValue('--button-icon-size'), 10)
+      );
     }
-  }, [buttonRef]);
+  }, []);
 
-  return(
-    <StyledButton
-      ref={buttonRef}
-      $noBorderTop={noBorderTop}
-      onClick={handleClick}
-      {...props}>
-      <LeftIconWrapper $isAscendingIcon={icon === 'FilterAscending'} >
-        {isLoading ? <Spinner custom={{size: iconSize}} styling={design} /> : <Icon icon={icon} />}
+  return (
+    <StyledButton ref={buttonRef} $noBorderTop={noBorderTop} onClick={handleClick} {...props}>
+      <LeftIconWrapper $isAscendingIcon={icon === 'FilterAscending'}>
+        {isLoading ? (
+          <Spinner custom={{ size: iconSize }} styling={design} />
+        ) : (
+          <Icon icon={icon} />
+        )}
       </LeftIconWrapper>
-      <TextWrapper $textMaxWidth={textMaxWidth}><OptionText>{text}</OptionText></TextWrapper>
+      <TextWrapper $textMaxWidth={textMaxWidth}>
+        <OptionText>{text}</OptionText>
+      </TextWrapper>
     </StyledButton>
   );
 };

@@ -1,8 +1,7 @@
-
 import { createGlobalStyle } from 'styled-components';
-import { layoutVariables } from './variables/Layout';
 import { animationVariables } from './variables/Animation';
 import { colorVariables } from './variables/Colors';
+import { layoutVariables } from './variables/Layout';
 
 const ThemeVariables = createGlobalStyle`
 

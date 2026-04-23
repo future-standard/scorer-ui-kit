@@ -1,6 +1,7 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Button, PageHeader, Tag, usePoll } from 'scorer-ui-kit';
 import styled from 'styled-components';
-import { usePoll, PageHeader, Button, Tag } from 'scorer-ui-kit';
 import ExamplesFilename from '../components/ExamplesFilename';
 
 const POLL_INTERVAL = 2000;
@@ -57,8 +58,7 @@ const PanelsGrid = styled.div`
 
 const Panel = styled.div<{ $variant: 'broken' | 'fixed' }>`
   border-radius: 4px;
-  border: 1px solid ${({ $variant }) =>
-    $variant === 'broken' ? 'var(--caution-8)' : 'var(--success-8)'};
+  border: 1px solid ${({ $variant }) => ($variant === 'broken' ? 'var(--caution-8)' : 'var(--success-8)')};
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -206,11 +206,7 @@ interface PollStatsProps {
 }
 
 const PollStats: React.FC<PollStatsProps> = ({ count, lastPolled, isPolling }) => {
-  const statusLabel = count === 0
-    ? 'Waiting…'
-    : isPolling
-      ? 'Polling continuously'
-      : 'Stopped';
+  const statusLabel = count === 0 ? 'Waiting…' : isPolling ? 'Polling continuously' : 'Stopped';
 
   const statusIcon = count === 0 ? '' : isPolling ? 'Success' : 'BigWarning';
 
@@ -240,7 +236,7 @@ const BrokenPollDemo: React.FC = () => {
   const isPolling = useIsPolling(count);
 
   const tick = useCallback(() => {
-    setCount(c => c + 1);
+    setCount((c) => c + 1);
     setLastPolled(new Date().toLocaleTimeString());
   }, []);
 
@@ -255,7 +251,7 @@ const FixedPollDemo: React.FC = () => {
   const isPolling = useIsPolling(count);
 
   const tick = useCallback(() => {
-    setCount(c => c + 1);
+    setCount((c) => c + 1);
     setLastPolled(new Date().toLocaleTimeString());
   }, []);
 
@@ -279,30 +275,42 @@ const UsePollTestPage: React.FC = () => {
 
       <ExplanationBlock>
         <ExParagraph>
-          ⚠️ The difference is only visible in development builds with React StrictMode active. In production both panels behave identically.
+          ⚠️ The difference is only visible in development builds with React StrictMode active. In
+          production both panels behave identically.
         </ExParagraph>
         <ExParagraph>
-          <strong>React 16 &amp; 17:</strong> StrictMode double-invokes <em>render functions</em> only.{' '}
-          <CodeBlock>useEffect</CodeBlock> callbacks run <strong>once</strong> on mount. <CodeBlock>canceled.current</CodeBlock> starts
-          as <CodeBlock>false</CodeBlock>, <CodeBlock>pollOnce()</CodeBlock> fires, the check <CodeBlock>if (!canceled.current)</CodeBlock> passes,
-          and the chain keeps scheduling. No bug.
+          <strong>React 16 &amp; 17:</strong> StrictMode double-invokes <em>render functions</em>{' '}
+          only. <CodeBlock>useEffect</CodeBlock> callbacks run <strong>once</strong> on mount.{' '}
+          <CodeBlock>canceled.current</CodeBlock> starts as <CodeBlock>false</CodeBlock>,{' '}
+          <CodeBlock>pollOnce()</CodeBlock> fires, the check{' '}
+          <CodeBlock>if (!canceled.current)</CodeBlock> passes, and the chain keeps scheduling. No
+          bug.
         </ExParagraph>
         <ExParagraph>
-          <strong>React 18 &amp; 19:</strong> StrictMode was extended to also double-invoke <em>effects</em> —
-          it simulates mount → cleanup → remount to help surface bugs. The sequence becomes:
+          <strong>React 18 &amp; 19:</strong> StrictMode was extended to also double-invoke{' '}
+          <em>effects</em> — it simulates mount → cleanup → remount to help surface bugs. The
+          sequence becomes:
         </ExParagraph>
         <StepList>
           <StepRow>
             <StepNum>1. Mount</StepNum>
-            <StepContent>→ <CodeBlock>useEffect</CodeBlock> runs → <CodeBlock>canceled.current</CodeBlock> is false → <CodeBlock>pollOnce()</CodeBlock> starts</StepContent>
+            <StepContent>
+              → <CodeBlock>useEffect</CodeBlock> runs → <CodeBlock>canceled.current</CodeBlock> is
+              false → <CodeBlock>pollOnce()</CodeBlock> starts
+            </StepContent>
           </StepRow>
           <StepRow>
             <StepNum>2. Cleanup</StepNum>
-            <StepContent>→ <CodeBlock>canceled.current</CodeBlock> = true (timer cleared)</StepContent>
+            <StepContent>
+              → <CodeBlock>canceled.current</CodeBlock> = true (timer cleared)
+            </StepContent>
           </StepRow>
           <StepRow>
             <StepNum>3. Remount</StepNum>
-            <StepContent>→ <CodeBlock>useEffect</CodeBlock> runs again → <CodeBlock>pollOnce()</CodeBlock> called</StepContent>
+            <StepContent>
+              → <CodeBlock>useEffect</CodeBlock> runs again → <CodeBlock>pollOnce()</CodeBlock>{' '}
+              called
+            </StepContent>
           </StepRow>
           <StepRow>
             <span />
@@ -310,7 +318,10 @@ const UsePollTestPage: React.FC = () => {
           </StepRow>
           <StepRow>
             <span />
-            <StepContent>→ checks <CodeBlock>canceled.current</CodeBlock> → still true <BugNote>← bug stops here</BugNote></StepContent>
+            <StepContent>
+              → checks <CodeBlock>canceled.current</CodeBlock> → still true{' '}
+              <BugNote>← bug stops here</BugNote>
+            </StepContent>
           </StepRow>
           <StepRow>
             <span />
@@ -323,15 +334,19 @@ const UsePollTestPage: React.FC = () => {
         <Panel $variant='broken'>
           <PanelTitle>Before — broken pattern</PanelTitle>
           <TextParagraph>
-            <CodeBlock>canceled.current</CodeBlock> is never reset on remount. In StrictMode
-            the cleanup sets it to <CodeBlock>true</CodeBlock>; on remount{' '}
-            <CodeBlock>pollOnce()</CodeBlock> runs once, sees <CodeBlock>canceled === true</CodeBlock>,
-            and never schedules the next poll.
+            <CodeBlock>canceled.current</CodeBlock> is never reset on remount. In StrictMode the
+            cleanup sets it to <CodeBlock>true</CodeBlock>; on remount{' '}
+            <CodeBlock>pollOnce()</CodeBlock> runs once, sees{' '}
+            <CodeBlock>canceled === true</CodeBlock>, and never schedules the next poll.
           </TextParagraph>
-          {brokenMounted
-            ? <BrokenPollDemo />
-            : <UnmountedPlaceholder>Component unmounted — click Remount to replay</UnmountedPlaceholder>}
-          <Button design='secondary' size='small' onClick={() => setBrokenMounted(m => !m)}>
+          {brokenMounted ? (
+            <BrokenPollDemo />
+          ) : (
+            <UnmountedPlaceholder>
+              Component unmounted — click Remount to replay
+            </UnmountedPlaceholder>
+          )}
+          <Button design='secondary' size='small' onClick={() => setBrokenMounted((m) => !m)}>
             {brokenMounted ? 'Unmount' : 'Remount'}
           </Button>
         </Panel>
@@ -339,14 +354,18 @@ const UsePollTestPage: React.FC = () => {
         <Panel $variant='fixed'>
           <PanelTitle>After — fixed pattern</PanelTitle>
           <TextParagraph>
-            <CodeBlock>canceled.current = false</CodeBlock> is set at the top of the effect,
-            before <CodeBlock>pollOnce()</CodeBlock> is called. The StrictMode remount resets
-            the flag and polling continues on schedule.
+            <CodeBlock>canceled.current = false</CodeBlock> is set at the top of the effect, before{' '}
+            <CodeBlock>pollOnce()</CodeBlock> is called. The StrictMode remount resets the flag and
+            polling continues on schedule.
           </TextParagraph>
-          {fixedMounted
-            ? <FixedPollDemo />
-            : <UnmountedPlaceholder>Component unmounted — click Remount to replay</UnmountedPlaceholder>}
-          <Button design='secondary' size='small' onClick={() => setFixedMounted(m => !m)}>
+          {fixedMounted ? (
+            <FixedPollDemo />
+          ) : (
+            <UnmountedPlaceholder>
+              Component unmounted — click Remount to replay
+            </UnmountedPlaceholder>
+          )}
+          <Button design='secondary' size='small' onClick={() => setFixedMounted((m) => !m)}>
             {fixedMounted ? 'Unmount' : 'Remount'}
           </Button>
         </Panel>

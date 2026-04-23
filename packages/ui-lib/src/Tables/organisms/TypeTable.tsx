@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
+import type { IRowData, ITableColumnConfig, ITypeTableData } from '..';
 import TypeTableRow from '../atoms/TypeTableRow';
-import { ITableColumnConfig, ITypeTableData, IRowData } from '..';
 import TypeTableHeader from '../molecules/TypeTableHeader';
 
 const Container = styled.div``;
@@ -21,7 +22,7 @@ const LoadingBox = styled.div`
   position: absolute;
   left: 0;
   z-index: 99;
-  background-color: ${({ theme }) => theme.colors["pureBase"]};
+  background-color: var(--white-1);
   height: calc(100% - 50px);
   opacity: 85%;
   width: 100%;
@@ -56,27 +57,27 @@ const isChecked = ({ _checked = false }: IRowData) => {
   return _checked === true;
 };
 
-const isCheckBoxDisabled = ({checkboxDisabled = false}: IRowData) => {
+const isCheckBoxDisabled = ({ checkboxDisabled = false }: IRowData) => {
   return checkboxDisabled === true;
 };
 
 interface IProps {
-  columnConfig: ITableColumnConfig[]
-  rows: ITypeTableData
-  selectable?: boolean
-  hasStatus?: boolean
-  hasThumbnail?: boolean
-  hasTypeIcon?: boolean
-  defaultAscending?: boolean
-  isLoading?: boolean
-  loadingText?: string
-  emptyTableTitle?: string
-  emptyTableText?: string
-  hasHeaderGroups?: boolean
-  selectCallback?: (checked: boolean, id?: string | number) => void
-  toggleAllCallback?: (checked: boolean) => void
-  sortCallback?: (ascending: boolean, columnId: string) => void
-  closeText?:string
+  columnConfig: ITableColumnConfig[];
+  rows: ITypeTableData;
+  selectable?: boolean;
+  hasStatus?: boolean;
+  hasThumbnail?: boolean;
+  hasTypeIcon?: boolean;
+  defaultAscending?: boolean;
+  isLoading?: boolean;
+  loadingText?: string;
+  emptyTableTitle?: string;
+  emptyTableText?: string;
+  hasHeaderGroups?: boolean;
+  selectCallback?: (checked: boolean, id?: string | number) => void;
+  toggleAllCallback?: (checked: boolean) => void;
+  sortCallback?: (ascending: boolean, columnId: string) => void;
+  closeText?: string;
 }
 
 const TypeTable: React.FC<IProps> = ({
@@ -93,11 +94,10 @@ const TypeTable: React.FC<IProps> = ({
   emptyTableTitle = '',
   emptyTableText = '',
   hasHeaderGroups = false,
-  sortCallback = () => { },
-  selectCallback = () => { },
-  toggleAllCallback = () => { },
+  sortCallback = () => {},
+  selectCallback = () => {},
+  toggleAllCallback = () => {},
 }) => {
-
   /* Note about Empty table
   Currently IRowData Type enforces user to send columns
   so rows length will always be at least 1
@@ -108,13 +108,13 @@ const TypeTable: React.FC<IProps> = ({
 
   const [allChecked, setAllChecked] = useState(false);
   const [disableAllChecked, setDisableAllChecked] = useState(false);
-  const isEmptyTable = (rows.length === 1) && (rows[0].columns.length === 0) && (!isLoading);
+  const isEmptyTable = rows.length === 1 && rows[0].columns.length === 0 && !isLoading;
 
   useEffect(() => {
     let areAllChecked = false;
     let disableCheckAll = false;
 
-    if (rows.every(isChecked) && (rows.length > 0) && !isEmptyTable) {
+    if (rows.every(isChecked) && rows.length > 0 && !isEmptyTable) {
       areAllChecked = true;
     }
 
@@ -124,7 +124,6 @@ const TypeTable: React.FC<IProps> = ({
 
     setAllChecked(areAllChecked);
     setDisableAllChecked(disableCheckAll);
-
   }, [isEmptyTable, isLoading, rows]);
 
   return (
@@ -151,19 +150,18 @@ const TypeTable: React.FC<IProps> = ({
             <LoadingText>{loadingText}</LoadingText>
           </LoadingBox>
         ) : null}
-        {isEmptyTable
-          ? (
-            <EmptyTableBox>
-              <h3>{emptyTableTitle}</h3>
-              <p>{emptyTableText}</p>
-            </EmptyTableBox>
-          )
-          : null}
+        {isEmptyTable ? (
+          <EmptyTableBox>
+            <h3>{emptyTableTitle}</h3>
+            <p>{emptyTableText}</p>
+          </EmptyTableBox>
+        ) : null}
         {rows.map((rowData, key) => {
-          const isLastRow = (rows.length - 1 === key) ? true : false;
+          const isLastRow = rows.length - 1 === key;
           return (
             <TypeTableRow
-              key={key} {...{
+              key={key}
+              {...{
                 rowData,
                 isLastRow,
                 selectable,
@@ -172,7 +170,7 @@ const TypeTable: React.FC<IProps> = ({
                 hasStatus,
                 hasThumbnail,
                 hasTypeIcon,
-                closeText
+                closeText,
               }}
             />
           );

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css, keyframes } from 'styled-components';
-
+import { removeAutoFillStyle } from '../../common';
 import Icon from '../../Icons/Icon';
 import StatusIcon from '../../Icons/StatusIcon';
-import UserMenu from '../molecules/UserMenu';
-import { ITopBar } from '../index';
-import NotificationsHistory from './NotificationsHistory';
-import { removeAutoFillStyle } from '../../common';
 import TopBarBadge from '../atoms/TopBarBadge';
+import type { ITopBar } from '../index';
+import UserMenu from '../molecules/UserMenu';
+import NotificationsHistory from './NotificationsHistory';
 
 const Container = styled.div`
   z-index: 9;
@@ -94,7 +94,7 @@ const buttonClickAnimation = keyframes`
   }
 `;
 
-const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ $isActive: boolean }>`
+const DrawerToggle = styled.button.attrs({ type: 'button' })<{ $isActive: boolean }>`
   position: relative;
   flex: 0 56px;
   width: 56px;
@@ -131,7 +131,9 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ $isActive: boole
     }
   }
 
-  ${({ $isActive }) => $isActive && css`
+  ${({ $isActive }) =>
+    $isActive &&
+    css`
     &, &:hover {
       border-bottom-color: var(--primary-9);
       &::after {
@@ -148,7 +150,7 @@ const DrawerToggle = styled.button.attrs({ type: 'button' }) <{ $isActive: boole
 
 const DrawerPortalWrapper = styled.div``;
 
-const Drawer = styled.div<{ $isOpen: boolean, $baseWidth?: string }>`
+const Drawer = styled.div<{ $isOpen: boolean; $baseWidth?: string }>`
   font-family: var(--font-ui);
 
   position: fixed;
@@ -158,7 +160,7 @@ const Drawer = styled.div<{ $isOpen: boolean, $baseWidth?: string }>`
   background: var(--global-element-background);
   border-left: var(--dividing-line) 1px solid;
 
-  width: ${({ $baseWidth }) => $baseWidth ? $baseWidth : `200px`};
+  width: ${({ $baseWidth }) => ($baseWidth ? $baseWidth : `200px`)};
   opacity: 0;
   visibility: hidden;
   z-index: 100;
@@ -170,13 +172,14 @@ const Drawer = styled.div<{ $isOpen: boolean, $baseWidth?: string }>`
     opacity var(--speed-normal) var(--easing-primary-in-out),
     right var(--speed-normal) var(--easing-primary-in-out);
 
-  ${({ $isOpen }) => $isOpen && css`
+  ${({ $isOpen }) =>
+    $isOpen &&
+    css`
     right: 0;
     opacity: 1;
     visibility: visible;
   `}
 `;
-
 
 /**
  * Negative margin hides the scroll;
@@ -188,7 +191,6 @@ const NotificationsContainer = styled.div`
 `;
 
 type IDrawerKeys = 'user' | 'notifications' | 'custom' | null;
-
 
 const TopBar: React.FC<ITopBar> = ({
   hasNotifications = false,
@@ -213,54 +215,59 @@ const TopBar: React.FC<ITopBar> = ({
   isLightMode = true,
   switchThemeText = 'SWITCH THEME',
   selectedThemeText = '',
-  onLogout = () => { },
-  onLanguageToggle = () => { },
-  onThemeToggle = () => { },
+  onLogout = () => {},
+  onLanguageToggle = () => {},
+  onThemeToggle = () => {},
   userDrawerFooter,
   userDrawerMeta,
-  onUserDrawerMetaClick = () => { },
+  onUserDrawerMetaClick = () => {},
   hasUserDrawerMeta,
   copySuccessMessage,
   includeCopyTitle,
   hasUserDrawerFooter,
-  badge
+  badge,
 }) => {
-
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
 
   const toggleDrawers = (drawerKey: IDrawerKeys) => {
-    setOpenDrawer(
-      prevDrawer => {
-        // if prevDrawer is open, just update to null to close
-        if (prevDrawer === drawerKey) {
-          return null;
-        }
-
-        return drawerKey;
+    setOpenDrawer((prevDrawer) => {
+      // if prevDrawer is open, just update to null to close
+      if (prevDrawer === drawerKey) {
+        return null;
       }
-    );
+
+      return drawerKey;
+    });
   };
 
   return (
     <Container>
-      <>
-        {hasSearch ?
-          <SearchBar>
-            <IconWrapper>
-              <Icon icon='Search' size={16} color='grey-6' />
-            </IconWrapper>
-            <SearchInput placeholder={searchPlaceholder} />
-          </SearchBar> : <div />}
-        <RightArea>
-          {badge && <TopBarBadge {...badge} />}
+      {hasSearch ? (
+        <SearchBar>
+          <IconWrapper>
+            <Icon icon='Search' size={16} color='grey-6' />
+          </IconWrapper>
+          <SearchInput placeholder={searchPlaceholder} />
+        </SearchBar>
+      ) : (
+        <div />
+      )}
+      <RightArea>
+        {badge && <TopBarBadge {...badge} />}
         <ButtonArea>
           {customDrawer && (
-            <DrawerToggle $isActive={openDrawer === 'custom'} onClick={() => toggleDrawers('custom')}>
+            <DrawerToggle
+              $isActive={openDrawer === 'custom'}
+              onClick={() => toggleDrawers('custom')}
+            >
               <StatusIcon {...customDrawer} />
             </DrawerToggle>
           )}
           {hasNotifications && (
-            <DrawerToggle $isActive={openDrawer === 'notifications'} onClick={() => toggleDrawers('notifications')}>
+            <DrawerToggle
+              $isActive={openDrawer === 'notifications'}
+              onClick={() => toggleDrawers('notifications')}
+            >
               <Icon icon='Notifications' size={20} color='dimmed' />
             </DrawerToggle>
           )}
@@ -274,56 +281,61 @@ const TopBar: React.FC<ITopBar> = ({
         <DrawerPortalWrapper>
           {/* User Menu */}
           <Drawer $isOpen={openDrawer === 'user'}>
-            <UserMenu {...{
-              hasLanguage,
-              hasLogout,
-              logoutLink,
-              logoutText,
-              hasCurrentUser,
-              currentUserText,
-              accountOptionText,
-              userSubmenu,
-              userDrawerBespoke,
-              loggedInUser,
-              onLogout,
-              onLanguageToggle,
-              selectedLanguageText,
-              languageOptionsText,
-              selectedLangAttribute,
-              hasSwitchTheme,
-              isLightMode,
-              switchThemeText,
-              selectedThemeText,
-              onThemeToggle,
-              onUserDrawerMetaClick,
-              userDrawerFooter,
-              userDrawerMeta,
-              hasUserDrawerMeta,
-              copySuccessMessage,
-              includeCopyTitle,
-              hasUserDrawerFooter
-            }}
+            <UserMenu
+              {...{
+                hasLanguage,
+                hasLogout,
+                logoutLink,
+                logoutText,
+                hasCurrentUser,
+                currentUserText,
+                accountOptionText,
+                userSubmenu,
+                userDrawerBespoke,
+                loggedInUser,
+                onLogout,
+                onLanguageToggle,
+                selectedLanguageText,
+                languageOptionsText,
+                selectedLangAttribute,
+                hasSwitchTheme,
+                isLightMode,
+                switchThemeText,
+                selectedThemeText,
+                onThemeToggle,
+                onUserDrawerMetaClick,
+                userDrawerFooter,
+                userDrawerMeta,
+                hasUserDrawerMeta,
+                copySuccessMessage,
+                includeCopyTitle,
+                hasUserDrawerFooter,
+              }}
             />
           </Drawer>
 
           {/* Notifications */}
-          {hasNotifications ?
+          {hasNotifications ? (
             <Drawer $isOpen={openDrawer === 'notifications'} $baseWidth='300px'>
               <NotificationsContainer>
                 {notificationsHistory ? <NotificationsHistory {...notificationsHistory} /> : null}
               </NotificationsContainer>
-            </Drawer> : null}
+            </Drawer>
+          ) : null}
 
           {customDrawer && (
-            <Drawer $isOpen={openDrawer === 'custom'} $baseWidth={customDrawer.width ? customDrawer.width : "200px"}>
-              <>{customDrawer.customComponent}</>
+            <Drawer
+              $isOpen={openDrawer === 'custom'}
+              $baseWidth={customDrawer.width ? customDrawer.width : '200px'}
+            >
+              {customDrawer.customComponent}
             </Drawer>
           )}
-        </DrawerPortalWrapper>, document.body)}
-      </>
+        </DrawerPortalWrapper>,
+        document.body
+      )}
     </Container>
   );
-
 };
 
 export default TopBar;

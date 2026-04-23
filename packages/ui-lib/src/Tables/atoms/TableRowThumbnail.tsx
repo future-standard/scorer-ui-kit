@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
+import type { IMediaType } from '../..';
 import { useMediaModal } from '../../hooks/useMediaModal';
-import { IMediaType } from '../..';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { NoImage } from '../../svg';
 
 type VideoAspects = '4:3' | '16:9';
 
-const Container = styled.div<{ $hoverZoom?: boolean, $aspect?: VideoAspects, $mediaUrl?: string}>`
+const Container = styled.div<{ $hoverZoom?: boolean; $aspect?: VideoAspects; $mediaUrl?: string }>`
   position: relative;
   height: inherit;
   background: grey;
@@ -22,7 +23,9 @@ const Container = styled.div<{ $hoverZoom?: boolean, $aspect?: VideoAspects, $me
     content: '';
     display: block;
     padding-bottom: 75%;
-    ${({ $aspect }) => $aspect === '16:9' && css`
+    ${({ $aspect }) =>
+      $aspect === '16:9' &&
+      css`
       padding-left: 56.25%;
     `}
   }
@@ -34,7 +37,9 @@ const Container = styled.div<{ $hoverZoom?: boolean, $aspect?: VideoAspects, $me
   &:hover {
       cursor: pointer;
 
-    ${({ $hoverZoom }) => $hoverZoom && css`
+    ${({ $hoverZoom }) =>
+      $hoverZoom &&
+      css`
       transform: scale(1.5);
       opacity: 1;
       transition: transform var(--speed-normal) var(--easing-primary-out);
@@ -90,87 +95,102 @@ const PlayableDrop = styled.div`
 `;
 
 export interface ITableRowThumbnail {
-  image?: string
-  hoverZoom?: boolean,
-  aspect?: VideoAspects
-  mediaUrl?: string
-  mediaType?: IMediaType
-  retryImageLoad?: boolean
+  image?: string;
+  hoverZoom?: boolean;
+  aspect?: VideoAspects;
+  mediaUrl?: string;
+  mediaType?: IMediaType;
+  retryImageLoad?: boolean;
   retryLimit?: number;
   closeText?: string;
-  onClickThumbnail?: () => void
+  onClickThumbnail?: () => void;
 }
 
 // Image
 // No Image Placeholder
 
-const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({ hoverZoom = true, image='', mediaUrl, mediaType, retryImageLoad= false, retryLimit=5, closeText, onClickThumbnail}) => {
+const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({
+  hoverZoom = true,
+  image = '',
+  mediaUrl,
+  mediaType,
+  retryImageLoad = false,
+  retryLimit = 5,
+  closeText,
+  onClickThumbnail,
+}) => {
   const [showImage, setShowImage] = useState(!!image);
   const [imgSrc, setImgSrc] = useState(image);
   const { createMediaModal } = useMediaModal();
   const [retryCount, setRetryCount] = useState(0);
   const imgRef = useRef<HTMLImageElement>(null);
-  const timeoutRef = useRef<(ReturnType<typeof setTimeout>)|null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleModal = useCallback(async () => {
-      createMediaModal({
-        src: showImage && mediaUrl ? mediaUrl :'',
-        mediaType: mediaType ? mediaType : 'img',
-        minHeight: '240px',
-        closeText
-      });
+    createMediaModal({
+      src: showImage && mediaUrl ? mediaUrl : '',
+      mediaType: mediaType ? mediaType : 'img',
+      minHeight: '240px',
+      closeText,
+    });
   }, [closeText, createMediaModal, mediaType, mediaUrl, showImage]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setShowImage(false);
     setRetryCount(0);
     setImgSrc(image);
-  },[image]);
+  }, [image]);
 
-  useEffect(()=>{
-    if(imgRef.current && imgRef.current.complete && imgSrc !== ''){
+  useEffect(() => {
+    if (imgRef.current?.complete && imgSrc !== '') {
       timeoutRef.current && clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
       setShowImage(true);
     }
-  },[imgSrc]);
+  }, [imgSrc]);
 
-  const retryTimeout = useCallback(()=>{
+  const retryTimeout = useCallback(() => {
     timeoutRef.current = null;
     setImgSrc(`${image}?v=${Date.now()}`);
-  },[image]);
+  }, [image]);
 
-  const retryImage = useCallback(()=>{
+  const retryImage = useCallback(() => {
     setShowImage(false);
-    if(!retryImageLoad || retryCount >= retryLimit ||timeoutRef.current) return;
-    const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
-    setRetryCount(count => count+1);
+    if (!retryImageLoad || retryCount >= retryLimit || timeoutRef.current) return;
+    const randomDelay = 1000 * (retryCount ** 2 + Math.random()); // exponential back off retry
+    setRetryCount((count) => count + 1);
     timeoutRef.current = setTimeout(retryTimeout, randomDelay);
-  },[retryCount, retryImageLoad, retryLimit, retryTimeout]);
+  }, [retryCount, retryImageLoad, retryLimit, retryTimeout]);
 
-  const onLoad = useCallback(()=>{
+  const onLoad = useCallback(() => {
     timeoutRef.current && clearTimeout(timeoutRef.current);
     timeoutRef.current = null;
     setShowImage(true);
-  },[]);
+  }, []);
 
-  const checkIfImageExists = (url: string, imageExistsCallback: (exists: boolean) => void) => {
-    if (!url) { imageExistsCallback(false); return; }
-    const img = new Image();
-    img.src = url;
-
-    if (img.complete) {
-      imageExistsCallback(true);
-    } else {
-      img.onload = () => {
-        imageExistsCallback(true);
-      };
-
-      img.onerror = () => {
+  const checkIfImageExists = useCallback(
+    (url: string, imageExistsCallback: (exists: boolean) => void) => {
+      if (!url) {
         imageExistsCallback(false);
-      };
-    }
-  };
+        return;
+      }
+      const img = new Image();
+      img.src = url;
+
+      if (img.complete) {
+        imageExistsCallback(true);
+      } else {
+        img.onload = () => {
+          imageExistsCallback(true);
+        };
+
+        img.onerror = () => {
+          imageExistsCallback(false);
+        };
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     checkIfImageExists(image, (exists) => {
@@ -180,17 +200,27 @@ const TableRowThumbnail: React.FC<ITableRowThumbnail> = ({ hoverZoom = true, ima
         setShowImage(false);
       }
     });
-  },[image]);
+  }, [image, checkIfImageExists]);
 
   return (
-    <Container $hoverZoom={hoverZoom} $mediaUrl={mediaUrl} $aspect='16:9' onClick={ onClickThumbnail || handleModal}>
-      {showImage ?
-        <ImageWrapper ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} /> :
-        <NoImageWrapper><NoImage /></NoImageWrapper>}
-      {mediaUrl && (mediaType === 'video') &&
+    <Container
+      $hoverZoom={hoverZoom}
+      $mediaUrl={mediaUrl}
+      $aspect='16:9'
+      onClick={onClickThumbnail || handleModal}
+    >
+      {showImage ? (
+        <ImageWrapper ref={imgRef} src={imgSrc} onError={retryImage} onLoad={onLoad} />
+      ) : (
+        <NoImageWrapper>
+          <NoImage />
+        </NoImageWrapper>
+      )}
+      {mediaUrl && mediaType === 'video' && (
         <PlayableDrop>
           <Icon size={12} icon='Play' color='inverse' />
-        </PlayableDrop>}
+        </PlayableDrop>
+      )}
     </Container>
   );
 };

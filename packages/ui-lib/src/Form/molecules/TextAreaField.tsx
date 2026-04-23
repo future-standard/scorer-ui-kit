@@ -1,29 +1,30 @@
-import React, { TextareaHTMLAttributes } from 'react';
-import { TypeFieldState } from '..';
+import type React from 'react';
+import type { TextareaHTMLAttributes } from 'react';
+import type { TypeFieldState } from '..';
 import Label from '../atoms/Label';
 import TextArea from '../atoms/TextArea';
 
 interface OwnProps {
-  name: string
-  label: string
-  fieldState: TypeFieldState
-  showFeedback?: boolean
-  feedbackMessage?: string
+  name: string;
+  label: string;
+  fieldState: TypeFieldState;
+  showFeedback?: boolean;
+  feedbackMessage?: string;
 }
 
-type Props = OwnProps & TextareaHTMLAttributes<HTMLTextAreaElement>
+type Props = OwnProps & TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-const TextAreaField : React.FC<Props> = ({
+const TextAreaField: React.FC<Props> = ({
   name,
   label,
-  fieldState='default',
+  fieldState = 'default',
   feedbackMessage,
   required = false,
   children,
   ...props
 }) => {
-  return(
-    <Label htmlFor={name} labelText={label} {...{required}}>
+  return (
+    <Label htmlFor={name} labelText={label} {...{ required }}>
       <TextArea {...{ fieldState, feedbackMessage, name, required, ...props }} />
     </Label>
   );

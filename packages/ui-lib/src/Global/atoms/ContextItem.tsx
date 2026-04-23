@@ -1,15 +1,16 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
 import Icon, { IconWrapper } from '../../Icons/Icon';
-
 
 const ContextTitle = styled.div<{ $compact?: boolean }>`
   opacity: 0;
   transition: opacity var(--speed-fast) var(--easing-primary-in-out);
 
-  ${({ $compact }) => $compact && css`
+  ${({ $compact }) =>
+    $compact &&
+    css`
     font-size:14px;
   `}
 `;
@@ -84,10 +85,12 @@ const ExternalIconWrapper = styled.div`
   margin-left: 15px;
 `;
 
-const ContextWrapper = styled.div<{$menuOpen?: boolean}>`
+const ContextWrapper = styled.div<{ $menuOpen?: boolean }>`
   ${ContextActionBaseCSS}
 
-  ${({ $menuOpen }) => $menuOpen && css`
+  ${({ $menuOpen }) =>
+    $menuOpen &&
+    css`
   ${ContextTitle}{
     opacity: 1;
   }
@@ -105,10 +108,12 @@ const ContextWrapper = styled.div<{$menuOpen?: boolean}>`
   }
 `;
 
-const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }>`
+const ContextActionA = styled(Link)<{ $menuOpen?: boolean; $isActive: boolean }>`
   ${ContextActionBaseCSS}
 
-  ${({ $menuOpen }) => $menuOpen && css`
+  ${({ $menuOpen }) =>
+    $menuOpen &&
+    css`
     ${ContextTitle}{
       opacity: 1;
     }
@@ -125,7 +130,9 @@ const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }
     }
   }
 
-  ${({ $isActive }) => $isActive && css`
+  ${({ $isActive }) =>
+    $isActive &&
+    css`
     color: var(--grey-12);
 
     ${ContextIcon},
@@ -134,10 +141,12 @@ const ContextActionA = styled(Link) <{ $menuOpen?: boolean, $isActive: boolean }
     }
   `}
 `;
-const ContextActionButton = styled.button<{ $menuOpen?: boolean, $isActive: boolean }>`
+const ContextActionButton = styled.button<{ $menuOpen?: boolean; $isActive: boolean }>`
   ${ContextActionBaseCSS}
 
-  ${({ $menuOpen }) => $menuOpen && css`
+  ${({ $menuOpen }) =>
+    $menuOpen &&
+    css`
     ${ContextTitle}{
       opacity: 1;
     }
@@ -159,7 +168,9 @@ const ContextActionButton = styled.button<{ $menuOpen?: boolean, $isActive: bool
     }
   }
 
-  ${({ $isActive }) => $isActive && css`
+  ${({ $isActive }) =>
+    $isActive &&
+    css`
     ${ContextIcon},
     &:hover ${ContextIcon}{
       background-color: var(--global-menu-icon-background-active);
@@ -168,17 +179,17 @@ const ContextActionButton = styled.button<{ $menuOpen?: boolean, $isActive: bool
 `;
 
 interface IProps {
-  title: string
-  icon: string
-  isActive: boolean
-  menuOpen?: boolean
-  submenuOpen?: boolean
-  hasSubmenu?: boolean
-  contextKey?: number
-  href?: string
-  compact?: boolean
-  isExternalLink?: boolean
-  onClickCallback?: (...args: any[]) => void
+  title: string;
+  icon?: string;
+  isActive: boolean;
+  menuOpen?: boolean;
+  submenuOpen?: boolean;
+  hasSubmenu?: boolean;
+  contextKey?: number;
+  href?: string;
+  compact?: boolean;
+  isExternalLink?: boolean;
+  onClickCallback?: (...args: any[]) => void;
 }
 
 const ContextItem: React.FC<IProps> = ({
@@ -188,52 +199,57 @@ const ContextItem: React.FC<IProps> = ({
   menuOpen,
   title,
   href,
-  icon,
+  icon = '',
   compact,
   isActive,
   isExternalLink,
-  onClickCallback }) => {
-
+  onClickCallback,
+}) => {
   const internal = (
     <React.Fragment>
       <ContextIcon $compact={compact}>
         <Icon icon={icon} color={isActive ? 'inverse' : 'dimmed'} size={20} />
       </ContextIcon>
       <ContextTitle $compact={compact}>{title}</ContextTitle>
-      {hasSubmenu ? <ContextIndicator><Icon icon={submenuOpen ? 'Up' : 'Down'} color='dimmed' /></ContextIndicator> : null}
-    </React.Fragment>);
+      {hasSubmenu ? (
+        <ContextIndicator>
+          <Icon icon={submenuOpen ? 'Up' : 'Down'} color='dimmed' />
+        </ContextIndicator>
+      ) : null}
+    </React.Fragment>
+  );
 
   if (hasSubmenu) {
     return (
-      <ContextActionButton $menuOpen={menuOpen} $isActive={isActive} onClick={() => onClickCallback && onClickCallback(contextKey)}>
+      <ContextActionButton
+        $menuOpen={menuOpen}
+        $isActive={isActive}
+        onClick={() => onClickCallback?.(contextKey)}
+      >
         {internal}
       </ContextActionButton>
     );
   } else {
-    return (
-      isExternalLink
-        ? (
-          <StyledAnchor href={href} target='_blank'>
-            <ContextWrapper $menuOpen={menuOpen}>
-              {internal}
-              <ExternalIconWrapper>
-                <Icon icon='ExternalLink' color='dimmed' size={12} />
-              </ExternalIconWrapper>
-            </ContextWrapper>
-          </StyledAnchor>
-        )
-        : (
-          <ContextActionA
-            $menuOpen={menuOpen}
-            to={href ? href : '#'}
-            $isActive={isActive}
-            onClick={() => onClickCallback && onClickCallback(contextKey)}
-          >
-            {internal}
-          </ContextActionA>)
+    return isExternalLink ? (
+      <StyledAnchor href={href} target='_blank'>
+        <ContextWrapper $menuOpen={menuOpen}>
+          {internal}
+          <ExternalIconWrapper>
+            <Icon icon='ExternalLink' color='dimmed' size={12} />
+          </ExternalIconWrapper>
+        </ContextWrapper>
+      </StyledAnchor>
+    ) : (
+      <ContextActionA
+        $menuOpen={menuOpen}
+        to={href ? href : '#'}
+        $isActive={isActive}
+        onClick={() => onClickCallback?.(contextKey)}
+      >
+        {internal}
+      </ContextActionA>
     );
   }
-
 };
 
 export default ContextItem;

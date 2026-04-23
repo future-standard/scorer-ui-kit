@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
+import type React from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-
-import LineSet from './LineSet';
-import { LineSetContext } from './Contexts';
-import { LineUIOptions, IBoundary } from '.';
 import Spinner from '../Indicators/Spinner';
-
+import type { IBoundary, LineUIOptions } from '.';
+import { LineSetContext } from './Contexts';
+import LineSet from './LineSet';
 
 const Container = styled.div`
   position: relative;
@@ -21,7 +20,7 @@ const Container = styled.div`
 
 `;
 
-const LoadingOverlay =styled.div`
+const LoadingOverlay = styled.div`
   position: absolute;
   top:0;
   bottom: 0;
@@ -50,7 +49,9 @@ const Frame = styled.svg<{ $transculent?: boolean }>`
   transition: background 250ms ease;
   background: hsla(0deg, 0%, 0%, 0%);
 
-  ${props => props.$transculent && css`
+  ${(props) =>
+    props.$transculent &&
+    css`
     background: hsla(0deg, 0%, 0%, 35%);
   `}
 
@@ -60,7 +61,6 @@ const Image = styled.img`
   width:  100%;
   height: 100%;
 `;
-
 
 interface LineUIProps {
   src: string;
@@ -74,9 +74,9 @@ interface LineUIProps {
 }
 const LineUI: React.FC<LineUIProps> = ({
   src,
-  onSizeChange = () => { },
-  onLineMoveEnd = () => { },
-  onLineClick = () => { },
+  onSizeChange = () => {},
+  onLineMoveEnd = () => {},
+  onLineClick = () => {},
   lineClickSensingBorder = '65',
   hasClickSensingBorder = true,
   options: {
@@ -92,26 +92,24 @@ const LineUI: React.FC<LineUIProps> = ({
     showPoint = false,
     fixedImgDimensions,
     boundaryOffset = 0,
-    showDirectionMark = false
-  } = {}
+    showDirectionMark = false,
+  } = {},
 }) => {
-
-
-  const [boundaries, setBoundaries] = useState<IBoundary>({ x: { min: 0, max: 0 }, y: { min: 0, max: 0 } });
+  const [boundaries, setBoundaries] = useState<IBoundary>({
+    x: { min: 0, max: 0 },
+    y: { min: 0, max: 0 },
+  });
   const { state } = useContext(LineSetContext);
 
   const [handleFinder, setHandleFinder] = useState<boolean>(false);
 
   const [loaded, setLoaded] = useState(false);
 
-
   // Scale Code
   const [imgSize, setImgSize] = useState({ h: 1, w: 1 });
   const [unit, setUnit] = useState(1);
   const imgRef = useRef<HTMLImageElement>(null);
   const frame = useRef<SVGSVGElement>(null);
-
-
 
   // Initialization functions.
   const initScaleAndBounds = useCallback(() => {
@@ -120,12 +118,17 @@ const LineUI: React.FC<LineUIProps> = ({
     }
 
     const { naturalHeight, naturalWidth, clientHeight } = imgRef.current;
-    const h = (fixedImgDimensions && fixedImgDimensions.y) || naturalHeight;
-    const w = (fixedImgDimensions && fixedImgDimensions.x) || naturalWidth;
+    const h = fixedImgDimensions?.y || naturalHeight;
+    const w = fixedImgDimensions?.x || naturalWidth;
     if (h !== imgSize.h || w !== imgSize.w) {
       setImgSize({ h, w });
       onSizeChange({ h, w });
-      console.debug('image size:', { naturalHeight, naturalWidth, clientHeight, unit: naturalHeight / clientHeight });
+      console.debug('image size:', {
+        naturalHeight,
+        naturalWidth,
+        clientHeight,
+        unit: naturalHeight / clientHeight,
+      });
     }
 
     if (h / clientHeight !== unit) {
@@ -135,16 +138,18 @@ const LineUI: React.FC<LineUIProps> = ({
   }, [fixedImgDimensions, imgSize.h, imgSize.w, onSizeChange, unit]);
 
   const calculateCTM = useCallback(() => {
-    if (!frame.current) { return null; }
+    if (!frame.current) {
+      return null;
+    }
     //On size change make sure to refresh CTM
     const ctm = frame.current.getScreenCTM();
     console.debug('calculateCTM', ctm);
     return ctm;
   }, []);
 
-  const handlePositionTipShow = (e: any) => {
+  const handlePositionTipShow = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.target === frame.current) {
-      setHandleFinder((!handleFinder === false) && true);
+      setHandleFinder(!handleFinder === false && true);
     }
   };
 
@@ -153,18 +158,20 @@ const LineUI: React.FC<LineUIProps> = ({
   };
 
   useEffect(() => {
-    if (!frame.current) { return; }
+    if (!frame.current) {
+      return;
+    }
 
     // Redefine boundaries loaded image changes our svg viewbox.
     const { viewBox } = frame.current;
     const bounds = {
       x: {
         min: viewBox.baseVal.x + boundaryOffset,
-        max: viewBox.baseVal.x + viewBox.baseVal.width - boundaryOffset
+        max: viewBox.baseVal.x + viewBox.baseVal.width - boundaryOffset,
       },
       y: {
         min: viewBox.baseVal.y + boundaryOffset,
-        max: viewBox.baseVal.y + viewBox.baseVal.height - boundaryOffset
+        max: viewBox.baseVal.y + viewBox.baseVal.height - boundaryOffset,
       },
     };
     console.debug('setBoundaries', bounds);
@@ -172,7 +179,6 @@ const LineUI: React.FC<LineUIProps> = ({
   }, [imgSize, boundaryOffset]);
 
   useEffect(() => {
-
     // Make sure we always keep scale up to date on resize.
     window.addEventListener('resize', initScaleAndBounds);
     return () => {
@@ -180,36 +186,57 @@ const LineUI: React.FC<LineUIProps> = ({
     };
   }, [initScaleAndBounds]);
 
-
   const options = {
     handleFinderActive: handleFinder,
     revealSetIndex: showSetIndex !== false && (showSetIndex || state.length > 1),
     showPointLabel,
     showLabelShadow,
-    showPointHandle:  showPointHandle || (showPointHandle !== false && showGrabHandle !== false),
-    showMoveHandle:  showMoveHandle || (showMoveHandle !== false && showGrabHandle !== false),
+    showPointHandle: showPointHandle || (showPointHandle !== false && showGrabHandle !== false),
+    showMoveHandle: showMoveHandle || (showMoveHandle !== false && showGrabHandle !== false),
     setIndexOffset,
     pointIndexOffset,
     showPoint,
-    showDirectionMark
+    showDirectionMark,
   };
 
   return (
     <Container>
       <Image ref={imgRef} onLoad={initScaleAndBounds} src={src} alt='' />
-      {
-        (loaded && boundaries) ?
-          <Frame ref={frame} viewBox={`0 0 ${imgSize.w} ${imgSize.h} `} version='1.1' xmlns='http://www.w3.org/2000/svg' onPointerDown={handlePositionTipShow} onPointerUp={handlePositionTipHide} onPointerLeave={handlePositionTipHide} $transculent={handleFinder}>
-            {state.map((lineSet, index) => (
-              <LineSet hasClickSensingBorder={hasClickSensingBorder} lineClickSensingBorder={lineClickSensingBorder} key={index} onLineMoveEnd={onLineMoveEnd} onLineClick={onLineClick} lineSetId={index} lineData={lineSet} getCTM={calculateCTM} boundaries={boundaries} unit={unit} size={30} options={options} />
-            ))}
-          </Frame>
-          :
-          <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>
-      }
+      {loaded && boundaries ? (
+        <Frame
+          ref={frame}
+          viewBox={`0 0 ${imgSize.w} ${imgSize.h} `}
+          version='1.1'
+          xmlns='http://www.w3.org/2000/svg'
+          onPointerDown={handlePositionTipShow}
+          onPointerUp={handlePositionTipHide}
+          onPointerLeave={handlePositionTipHide}
+          $transculent={handleFinder}
+        >
+          {state.map((lineSet, index) => (
+            <LineSet
+              hasClickSensingBorder={hasClickSensingBorder}
+              lineClickSensingBorder={lineClickSensingBorder}
+              key={index}
+              onLineMoveEnd={onLineMoveEnd}
+              onLineClick={onLineClick}
+              lineSetId={index}
+              lineData={lineSet}
+              getCTM={calculateCTM}
+              boundaries={boundaries}
+              unit={unit}
+              size={30}
+              options={options}
+            />
+          ))}
+        </Frame>
+      ) : (
+        <LoadingOverlay>
+          <Spinner size='large' styling='primary' />
+        </LoadingOverlay>
+      )}
     </Container>
   );
-
 };
 
 export default LineUI;

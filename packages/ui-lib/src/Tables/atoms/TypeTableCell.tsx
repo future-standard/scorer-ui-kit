@@ -1,9 +1,8 @@
-import React from 'react';
+import type React from 'react';
 import styled, { css } from 'styled-components';
-
-import Icon from '../../Icons/Icon';
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
-import {TypeCellStyle, TypeCellAlignment} from '..';
+import Icon from '../../Icons/Icon';
+import type { TypeCellAlignment, TypeCellStyle } from '..';
 
 const CopyToClipboard = styled.button`
 
@@ -31,22 +30,30 @@ const CopyToClipboard = styled.button`
 
 `;
 
-const CellContainer = styled.div<{ $cellStyle: TypeCellStyle, $alignment: TypeCellAlignment, $hideDivider?: boolean, $hasCopyButton?:boolean }>`
+const CellContainer = styled.div<{
+  $cellStyle: TypeCellStyle;
+  $alignment: TypeCellAlignment;
+  $hideDivider?: boolean;
+  $hasCopyButton?: boolean;
+}>`
   display: table-cell;
   height: 50px;
   vertical-align: middle;
   position: relative;
   line-height: 30px;
-  font-family: ${p => p.theme.fontFamily.data};
+  font-family: ${(p) => p.theme.fontFamily.data};
 
   &:hover ${CopyToClipboard}{
     opacity: 0.5;
   }
 
   &, a {
-    ${({theme, $cellStyle, $alignment}) => $cellStyle === 'firstColumn' ? css`
+    ${({ theme, $cellStyle, $alignment }) =>
+      $cellStyle === 'firstColumn'
+        ? css`
       ${theme.typography.table.columnData[$cellStyle]};
-    ` : css`
+    `
+        : css`
       ${theme.typography.table.columnData[$cellStyle][$alignment]};
     `}
   }
@@ -55,11 +62,15 @@ const CellContainer = styled.div<{ $cellStyle: TypeCellStyle, $alignment: TypeCe
     text-decoration: underline;
   }
 
-  ${({$hasCopyButton}) => $hasCopyButton && css`
+  ${({ $hasCopyButton }) =>
+    $hasCopyButton &&
+    css`
     padding-right: 20px;
   `};
 
-  ${({theme: {styles}, $hideDivider}) => !$hideDivider && css`
+  ${({ theme: { styles }, $hideDivider }) =>
+    !$hideDivider &&
+    css`
     &::after {
       ${styles.tables.rows.divider};
       content: '';
@@ -75,54 +86,70 @@ const CellContainer = styled.div<{ $cellStyle: TypeCellStyle, $alignment: TypeCe
 `;
 
 const UnitText = styled.span`
-  ${({theme}) => css`
+  ${({ theme }) => css`
     ${theme.typography.table.columnData.unit};
   `}
 `;
 
-const StatusBlip = styled.div<{$status?:string}>`
+const StatusBlip = styled.div<{ $status?: string }>`
   display: inline-block;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   margin-right: 8px;
-  ${({$status = 'neutral', theme: {colors}}) => css`
+  ${({ $status = 'neutral', theme: { colors } }) => css`
     background: ${colors.status[$status]};
   `}
 `;
 interface IProps {
-  isLastRow?: boolean
-  hideDivider?: boolean
-  cellStyle?: TypeCellStyle
-  alignment?: TypeCellAlignment
-  href?: string
-  showUnit?: boolean
-  showStatus?: boolean
-  unit?: string
-  status?: string
-  hasCopyButton?: boolean
-  children?: React.ReactNode
+  isLastRow?: boolean;
+  hideDivider?: boolean;
+  cellStyle?: TypeCellStyle;
+  alignment?: TypeCellAlignment;
+  href?: string;
+  showUnit?: boolean;
+  showStatus?: boolean;
+  unit?: string;
+  status?: string;
+  hasCopyButton?: boolean;
+  children?: React.ReactNode;
 }
 
-const TypeTableCell : React.FC<IProps> = ({ showUnit = false, showStatus = false, status, unit = '', cellStyle = 'normalImportance', alignment = 'left', hideDivider, isLastRow, hasCopyButton, href, children }) => {
-
+const TypeTableCell: React.FC<IProps> = ({
+  showUnit = false,
+  showStatus = false,
+  status,
+  unit = '',
+  cellStyle = 'normalImportance',
+  alignment = 'left',
+  hideDivider,
+  isLastRow,
+  hasCopyButton,
+  href,
+  children,
+}) => {
   // No divider on the last row.
   hideDivider = isLastRow ? true : hideDivider;
 
-  const {copyToClipboard} = useCopyToClipboard();
-
+  const { copyToClipboard } = useCopyToClipboard();
 
   return (
-    <CellContainer $cellStyle={cellStyle} $alignment={alignment} $hideDivider={hideDivider} $hasCopyButton={hasCopyButton}>
-      <>
-        {showStatus ? <StatusBlip $status={status} /> : null}
-        {href ? <a href={href}>{children}</a> : children}
-        {showUnit ? <UnitText>{unit}</UnitText> : null}
-        {hasCopyButton ? <CopyToClipboard onClick={() => typeof children === 'string' && copyToClipboard(children)}><Icon icon='Copy' size={16} /></CopyToClipboard> : null}
-      </>
+    <CellContainer
+      $cellStyle={cellStyle}
+      $alignment={alignment}
+      $hideDivider={hideDivider}
+      $hasCopyButton={hasCopyButton}
+    >
+      {showStatus ? <StatusBlip $status={status} /> : null}
+      {href ? <a href={href}>{children}</a> : children}
+      {showUnit ? <UnitText>{unit}</UnitText> : null}
+      {hasCopyButton ? (
+        <CopyToClipboard onClick={() => typeof children === 'string' && copyToClipboard(children)}>
+          <Icon icon='Copy' size={16} />
+        </CopyToClipboard>
+      ) : null}
     </CellContainer>
   );
 };
 
 export default TypeTableCell;
-

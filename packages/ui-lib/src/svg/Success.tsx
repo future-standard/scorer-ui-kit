@@ -1,8 +1,8 @@
-import * as React from "react";
+import type { SVGProps } from 'react';
 
-function SvgSuccess(props: React.SVGProps<SVGSVGElement>) {
+function SvgSuccess(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width={24} height={24} {...props}>
+    <svg width={24} height={24} aria-hidden='true' {...props}>
       <g
         fill='none'
         fillRule='evenodd'

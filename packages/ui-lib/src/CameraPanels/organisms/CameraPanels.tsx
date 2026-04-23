@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
-import CameraPanel, { ICameraPanel } from '../molecules/CameraPanel';
+import CameraPanel, { type ICameraPanel } from '../molecules/CameraPanel';
 
 const CameraGrid = styled.div`
   display: grid;
@@ -9,7 +9,7 @@ const CameraGrid = styled.div`
 `;
 
 interface ICameraPanels {
-  panels: ICameraPanel[]
+  panels: ICameraPanel[];
 }
 
 const CameraPanels: React.FC<ICameraPanels> = ({ panels }) => {

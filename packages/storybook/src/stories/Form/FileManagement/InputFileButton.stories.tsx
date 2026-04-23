@@ -1,8 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import {InputFileButton} from 'scorer-ui-kit';
+import { boolean, select, text } from '@storybook/addon-knobs';
+import { InputFileButton } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
-import { boolean, select, text} from "@storybook/addon-knobs";
+import styled from 'styled-components';
 
 const Container = styled.div`
     margin: 20px;
@@ -11,37 +10,39 @@ const Container = styled.div`
 const InputFileButtonStory = {
   title: 'Form/File Management',
   component: InputFileButton,
-  decorators:[]
+  decorators: [],
 };
 
 export const _InputFileButton = () => {
-
   const multiple = boolean('Multiple', false);
-  const textVal = text('Text','Select a File');
-  const buttonDesign = select("Button Design", { Primary: "primary", Secondary: "secondary", Danger: "danger" }, "primary");
-  const buttonSize = select("Button Size", { Small: "small", Normal: "normal", Large: "large" }, "normal");
+  const textVal = text('Text', 'Select a File');
+  const buttonDesign = select(
+    'Button Design',
+    { Primary: 'primary', Secondary: 'secondary', Danger: 'danger' },
+    'primary'
+  );
+  const buttonSize = select(
+    'Button Size',
+    { Small: 'small', Normal: 'normal', Large: 'large' },
+    'normal'
+  );
 
   const showValue = action('Input Callback');
 
-
   const inputCallback = (newFiles: FileList) => {
-    console.log('file', newFiles);
-    if(newFiles.length === 1) {
+    console.debug('file', newFiles);
+    if (newFiles.length === 1) {
       showValue(newFiles[0].name);
     } else {
       showValue(newFiles);
     }
   };
 
-  return(
+  return (
     <Container>
-      <InputFileButton
-        text={textVal}
-        {...{buttonDesign, buttonSize, multiple, inputCallback}}
-
-        />
+      <InputFileButton text={textVal} {...{ buttonDesign, buttonSize, multiple, inputCallback }} />
     </Container>
-  )
+  );
 };
 
 export default InputFileButtonStory;

@@ -1,18 +1,22 @@
-import React, {useState} from 'react';
+import { select, text } from '@storybook/addon-knobs';
+import { useState } from 'react';
+import { EditCell } from 'scorer-ui-kit';
 import styled from 'styled-components';
-import { text, select } from "@storybook/addon-knobs";
-import {EditCell} from 'scorer-ui-kit';
-import {sleep} from '../../helpers';
+import { sleep } from '../../helpers';
 
 const EditableCellStory = {
   title: 'Tables/atoms',
   component: EditCell,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
-  font-family: ${p => p.theme.fontFamily.data};
-  ${p => p.theme.typography.table.columnData['normalImportance']};
+  font-family: var(--font-ui);
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--grey-a11);
   margin: 100px;
   display: table-cell;
   height: 50px;
@@ -23,35 +27,35 @@ const Container = styled.div`
   padding: 0 2px;
 `;
 
-const defaultVal = {id:'id-1', cameraName:'Camera1'}
+const defaultVal = { id: 'id-1', cameraName: 'Camera1' };
 
 export const _EditCell = () => {
   const [cameraData, setCameraData] = useState(defaultVal);
-  const alignment = select('Alignment', { Left: "left", Center: "center", Right: "right" }, "left");
+  const alignment = select('Alignment', { Left: 'left', Center: 'center', Right: 'right' }, 'left');
   const toValue = text('ToLink', '/');
 
-
-  const updateCameraName = async (value: string, rowKey:string) => {
+  const updateCameraName = async (value: string, rowKey: string) => {
     // vefiry the row you want to update
-    if(rowKey === 'id-1') {
-      const updatedCell = {...cameraData};
+    if (rowKey === 'id-1') {
+      const updatedCell = { ...cameraData };
       updatedCell.cameraName = value;
-    // Database wait example
+      // Database wait example
       await sleep(2000);
       setCameraData(updatedCell);
     }
-  }
+  };
 
-
-  return <Container>
-    <EditCell
-      defaultValue={cameraData.cameraName}
-      rowKey={cameraData.id}
-      saveCallback={updateCameraName}
-      alignment={alignment}
-      toLink={toValue}
+  return (
+    <Container>
+      <EditCell
+        defaultValue={cameraData.cameraName}
+        rowKey={cameraData.id}
+        saveCallback={updateCameraName}
+        alignment={alignment}
+        toLink={toValue}
       />
-  </Container>
+    </Container>
+  );
 };
 
 export default EditableCellStory;
