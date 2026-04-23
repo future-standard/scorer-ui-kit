@@ -172,9 +172,6 @@ const AvatarUploader: React.FC<IAvatar> = ({
 
   useEffect(() => {
     setAvatarImg(currentImg);
-    return () => {
-      setAvatarImg('');
-    };
   }, [currentImg]);
 
   const handleRemove = useCallback(() => {

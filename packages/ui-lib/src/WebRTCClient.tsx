@@ -26,8 +26,8 @@ const WebRTCPlayer: React.FC<Props> = ({
   peerAddress,
   maxConnectionAttempts = 30,
   rtcConfiguration = {},
-  setStatus = () => {},
-  setError = () => {},
+  setStatus = () => { },
+  setError = () => { },
   // Video element defaults
   autoPlay = true,
   muted = true,
@@ -159,11 +159,11 @@ const WebRTCPlayer: React.FC<Props> = ({
   };
 
   function onServerClose(event: CloseEvent) {
-    console.debug('serverClose');
     // Ignore close events from stale WebSocket connections (e.g. StrictMode cleanup)
     if (!webSocket.current || event.target !== webSocket.current) {
       return;
     }
+    console.debug('serverClose');
     setStatus('Disconnected from server');
     closePeerConnection();
     if (event.code !== 1000 && enabledRef.current && mountedRef.current) {
@@ -176,10 +176,8 @@ const WebRTCPlayer: React.FC<Props> = ({
 
   function onServerError(event: Event) {
     // Ignore errors from stale WebSocket connections
-    if (event.target !== webSocket.current) {
-      return;
-    }
-    console.debug(event);
+    if (event.target !== webSocket.current) { return; }
+    console.debug('serverError', event);
     setError('Unable to connect to server');
     closeWebSocket();
   }
@@ -286,18 +284,29 @@ const WebRTCPlayer: React.FC<Props> = ({
 
   useEffect(() => {
     mountedRef.current = true;
+    let connectTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
     if (enabled === true) {
-      connectToPeer();
+      // Defer connection so StrictMode's synchronous cleanup cancels it
+      // before a WebSocket is ever created, avoiding the browser-level
+      // "WebSocket is closed before the connection is established" error.
+      connectTimeoutId = setTimeout(() => {
+        connectTimeoutId = null;
+        if (mountedRef.current) {
+          connectToPeer();
+        }
+      }, 0);
     } else {
       if (webSocket.current) {
         webSocket.current.close(1000, 'WebRTC Disabled');
       }
     }
     return () => {
-      console.debug('cleanup');
       mountedRef.current = false;
 
+      if (connectTimeoutId !== null) {
+        clearTimeout(connectTimeoutId);
+      }
       if (reconnectTimeoutRef.current !== null) {
         clearTimeout(reconnectTimeoutRef.current);
         reconnectTimeoutRef.current = null;

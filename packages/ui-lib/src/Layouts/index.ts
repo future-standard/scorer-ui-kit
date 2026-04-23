@@ -1,8 +1,8 @@
-import type { ReactElement } from 'react';
+import { ReactElement, Ref } from 'react';
+import ContentLayout from './organisms/ContentLayout';
 import FullWidthContentBlock from './atoms/FullWidthContentBlock';
 import SplitLayout from './molecules/SplitLayout';
 import UtilityHeader from './molecules/UtilityHeader';
-import ContentLayout from './organisms/ContentLayout';
 
 interface IBreadcrumb {
   text: string;
@@ -70,6 +70,7 @@ export interface ISplitLayoutProps {
   persist?: boolean;
   persistenceKey?: string;
   showDebug?: boolean;
+  ref?: Ref<ISplitLayoutHandles>;
 }
 
 export interface ISplitLayoutHandles {

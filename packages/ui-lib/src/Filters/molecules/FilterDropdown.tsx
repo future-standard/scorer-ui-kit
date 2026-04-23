@@ -416,15 +416,8 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
   // This UseEffect ensures visible list is updated when toggling language
   useEffect(() => {
-    let isActive = true;
-    if (isActive) {
-      setSearchText(''); // clears searchText if something was selected and the dropdown is still open
-      setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, isSortAscending));
-    }
-
-    return () => {
-      isActive = false;
-    };
+    setSearchText(''); // clears searchText if something was selected and the dropdown is still open
+    setVisibleList(selectedOrderList(list, maxDisplayedItems, tempSelected, isSortAscending));
   }, [isSortAscending, list, maxDisplayedItems, tempSelected]);
 
   useEffect(() => {

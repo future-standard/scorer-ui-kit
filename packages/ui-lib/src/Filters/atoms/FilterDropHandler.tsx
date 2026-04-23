@@ -1,5 +1,4 @@
-import type React from 'react';
-import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
+import React, { useState, useRef, useCallback, useImperativeHandle } from 'react';
 import styled, { css } from 'styled-components';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import FilterButton from '../atoms/FilterButton';
@@ -103,30 +102,29 @@ interface IFilterDropHandler {
   onToggleOpenCallback?: (isOpen: boolean) => void;
   onCloseCallback?: () => void;
   children?: React.ReactNode;
+  ref?: React.Ref<FilterDropHandlerRef>
 }
 
 export interface FilterDropHandlerRef {
   imperativeClose: () => void;
 }
 
-const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
-  (
-    {
-      buttonIcon,
-      buttonText,
-      disabled = false,
-      minWidth = 270,
-      minHeight = 190,
-      isSortAscending,
-      design = 'default',
-      noCloseOnClickOutside,
-      children,
-      onToggleOpenCallback = () => {},
-      onCloseCallback = () => {},
-      ...props
-    },
-    imperativeRef
-  ) => {
+const FilterDropHandler: React.FC<IFilterDropHandler> = ({
+  buttonIcon,
+  buttonText,
+  disabled = false,
+  minWidth = 270,
+  minHeight = 190,
+  isSortAscending,
+  design = 'default',
+  noCloseOnClickOutside,
+  children,
+  onToggleOpenCallback = () => { },
+  onCloseCallback = () => { },
+  ref,
+  ...props
+}) => {
+
     const [openState, setOpenState] = useState<IDropOpen>({
       isOpen: false,
       position: 'bottom-right',
@@ -181,7 +179,7 @@ const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
     }, []);
 
     // Expose imperativeClose method via ref
-    useImperativeHandle(imperativeRef, () => ({
+    useImperativeHandle(ref, () => ({
       imperativeClose: handleImperativeClose,
     }));
 
@@ -203,7 +201,6 @@ const FilterDropHandler = forwardRef<FilterDropHandlerRef, IFilterDropHandler>(
         </ContentBox>
       </Container>
     );
-  }
-);
+};
 
 export default FilterDropHandler;
