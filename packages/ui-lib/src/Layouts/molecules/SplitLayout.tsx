@@ -335,14 +335,7 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({
       setSavedCollapsedState('collapsed');
       setSavedLastOpenSize(sideAreaStartBasis);
     }
-  }, [
-    closedBasis,
-    sideAreaStartBasis,
-    persist,
-    setSavedSize,
-    setSavedCollapsedState,
-    setSavedLastOpenSize,
-  ]);
+  }, [sideAreaStartBasis, persist, setSavedSize, setSavedCollapsedState, setSavedLastOpenSize]);
 
   /**
    * Set the side area to the last open size or min size depending behaviour.
