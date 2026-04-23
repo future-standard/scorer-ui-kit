@@ -9,6 +9,7 @@ import GlobalUIPage from './pages/GlobalUIPage';
 import LinksPage from './pages/Index';
 import Layouts from './pages/Layouts';
 import LinePage from './pages/LinePage';
+import LineHLSPage from './pages/LineHLSPage';
 import LineRTCPage from './pages/LineRTCPage';
 import LineVideoPage from './pages/LineVideoPage';
 import LoginPage from './pages/Login';
@@ -26,6 +27,7 @@ const App: React.FC = () => {
         <Route path='/' element={<LinksPage />} />
         <Route path='/line' element={<LinePage />} />
         <Route path='/linevideo' element={<LineVideoPage />} />
+        <Route path='/linehls' element={<LineHLSPage />} />
         <Route path='/linertc' element={<LineRTCPage />} />
         <Route path='/login' element={<LoginPage onLogin={() => {}} />} />
         <Route path='/forms' element={<FormPage />} />

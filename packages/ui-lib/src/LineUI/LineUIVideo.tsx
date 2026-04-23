@@ -1,3 +1,4 @@
+import type HlsType from 'hls.js';
 import type React from 'react';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
@@ -5,6 +6,9 @@ import Spinner from '../Indicators/Spinner';
 import type { IBoundary, LineUIOptions, LineUIVideoOptions } from '.';
 import { LineSetContext } from './Contexts';
 import LineSet from './LineSet';
+
+const HLS_URL_PATTERN = /\.m3u8(?:$|[?#])/i;
+const NATIVE_HLS_MIME = 'application/vnd.apple.mpegurl';
 
 const Container = styled.div`
   position: relative;
@@ -98,6 +102,7 @@ const LineUIVideo: React.FC<LineUIProps> = ({
 }) => {
   const frame = useRef<SVGSVGElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const hlsRef = useRef<HlsType | null>(null);
 
   const [boundaries, setBoundaries] = useState<IBoundary>({
     x: { min: 0, max: 0 },
@@ -186,6 +191,99 @@ const LineUIVideo: React.FC<LineUIProps> = ({
     };
   }, [initScaleAndBounds]);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !src) {
+      return;
+    }
+
+    if (!HLS_URL_PATTERN.test(src)) {
+      video.src = src;
+      return;
+    }
+
+    let cancelled = false;
+    let hls: HlsType | null = null;
+
+    const tryAutoplay = () => {
+      const el = videoRef.current;
+      if (!el?.autoplay) {
+        return;
+      }
+      const result = el.play();
+      if (result && typeof result.catch === 'function') {
+        result.catch(() => {
+          /* autoplay blocked by browser policy — user can press play */
+        });
+      }
+    };
+
+    (async () => {
+      // Prefer hls.js over native HLS: Chrome reports canPlayType='maybe' for .m3u8 but
+      // can't actually decode it, so trusting native detection is a footgun.
+      // Safari still uses hls.js here too; drop to native only if hls.js is unavailable.
+      try {
+        const { default: Hls } = await import('hls.js');
+        if (cancelled || !videoRef.current) {
+          return;
+        }
+
+        if (Hls.isSupported()) {
+          hls = new Hls({ enableWorker: true, lowLatencyMode: true });
+          hlsRef.current = hls;
+          hls.loadSource(src);
+          hls.attachMedia(videoRef.current);
+
+          hls.on(Hls.Events.MANIFEST_PARSED, tryAutoplay);
+
+          hls.on(Hls.Events.ERROR, (_event, data) => {
+            if (!data.fatal || !hls) {
+              return;
+            }
+            switch (data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                hls.recoverMediaError();
+                break;
+              default:
+                hls.destroy();
+                hlsRef.current = null;
+                hls = null;
+                break;
+            }
+          });
+          return;
+        }
+      } catch {
+        // hls.js not installed — try native fallback below
+      }
+
+      if (cancelled || !videoRef.current) {
+        return;
+      }
+
+      if (videoRef.current.canPlayType(NATIVE_HLS_MIME)) {
+        videoRef.current.src = src;
+        return;
+      }
+
+      console.error(
+        '[LineUIVideo] HLS playback is not available. Install hls.js as a peer dependency, or use a browser with native HLS support.'
+      );
+    })();
+
+    return () => {
+      cancelled = true;
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
+      hlsRef.current = null;
+    };
+  }, [src]);
+
   const options = {
     handleFinderActive: handleFinder,
     revealSetIndex: showSetIndex !== false && (showSetIndex || state.length > 1),
@@ -209,7 +307,6 @@ const LineUIVideo: React.FC<LineUIProps> = ({
         loop={loop}
         {...videoOptions}
         onLoadedMetadata={onLoadedMetadata}
-        src={src}
         id='1'
       >
         {' '}

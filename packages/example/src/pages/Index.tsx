@@ -98,145 +98,131 @@ const LinksPage: React.FC = () => {
           </List>
         </Section>
       ) : null}
-      <Section>
-        <Subheader>Examples</Subheader>
-        <List>
-          <Item>
-            <Link to='/layouts'>
-              <Title>Global UI - Layout</Title>
-              <Description>
-                A basic implementation example of the page Layout component.
-              </Description>
-              <FilenameTag>Layouts.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to='/split-layouts'>
-              <Title>Split Layout</Title>
-              <Description>A page layout with the drag-to-resize layout component.</Description>
-              <FilenameTag>SplitLayout.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/customdrawer`}>
-              <Title>Custom User Drawer</Title>
-              <Description>
-                Shows how to add custom injected section to the user drawer.
-              </Description>
-              <FilenameTag>CustomUserDrawerPage.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/tabs`}>
-              <Title>Tabs Example</Title>
-              <Description>A simple implementation of tabs.</Description>
-              <FilenameTag>TabsPage.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/table`}>
-              <Title>Table Example</Title>
-              <Description>
-                A TypeTable implementation with examples on setup and how to use selections.
-              </Description>
-              <FilenameTag>TablePage.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/line`}>
-              <Title>Line</Title>
-              <Description>
-                The line tool used commonly for setting up of areas of interest used in system
-                configurations.
-              </Description>
-              <FilenameTag>LinePage.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/linertc`}>
-              <Title>Line WebRTC</Title>
-              <Description>
-                A variation of the Line tool using a WebRTC video background instead of a static
-                image.
-              </Description>
-              <FilenameTag>LineRTCPage.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/linevideo`}>
-              <Title>Line Video</Title>
-              <Description>
-                A variation of the Line tool using a video background instead of a static image.
-              </Description>
-              <FilenameTag>LineVideoPage.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/forms`}>
-              <Title>Forms</Title>
-              <Description>Form inputs and state examples.</Description>
-              <FilenameTag>FormPage.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/login`}>
-              <Title>Login</Title>
-              <Description>A code sample of our commonly used login view.</Description>
-              <FilenameTag>Login.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/customalert`}>
-              <Title>Component Theme Override Example</Title>
-              <Description>Override CSS based theme for components.</Description>
-              <FilenameTag>CustomAlertsPage.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/switch-test`}>
-              <Title>Switch Example</Title>
-              <Description>
-                A demonstration of the Switch component with API integration.
-              </Description>
-              <FilenameTag>SwitchTest.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/usepoll-test`}>
-              <Title>usePoll — StrictMode Fix</Title>
-              <Description>
-                Side-by-side comparison of usePoll before and after the React StrictMode
-                canceled-ref fix.
-              </Description>
-              <FilenameTag>UsePollTestPage.tsx</FilenameTag>
-            </Link>
-          </Item>
-          <Item>
-            <Link to={`/webrtc-strictmode-test`}>
-              <Title>WebRTC — StrictMode Double-Mount</Title>
-              <Description>
-                Verifies WebRTCPlayer mounts without WebSocket errors in StrictMode.
-              </Description>
-              <FilenameTag>WebRTCStrictModeTestPage.tsx</FilenameTag>
-            </Link>
-          </Item>
-        </List>
-      </Section>
+    <Section>
+      <Subheader>Examples</Subheader>
+      <List>
+        <Item>
+          <Link to='/layouts'>
+            <Title>Global UI - Layout</Title>
+            <Description>A basic implementation example of the page Layout component.</Description>
+            <FilenameTag>Layouts.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to='/split-layouts'>
+            <Title>Split Layout</Title>
+            <Description>A page layout with the drag-to-resize layout component.</Description>
+            <FilenameTag>SplitLayout.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/customdrawer`}>
+            <Title>Custom User Drawer</Title>
+            <Description>Shows how to add custom injected section to the user drawer.</Description>
+            <FilenameTag>CustomUserDrawerPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/tabs`}>
+            <Title>Tabs Example</Title>
+            <Description>A simple implementation of tabs.</Description>
+            <FilenameTag>TabsPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/table`}>
+            <Title>Table Example</Title>
+            <Description>A TypeTable implementation with examples on setup and how to use selections.</Description>
+            <FilenameTag>TablePage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/line`}>
+            <Title>Line</Title>
+            <Description>The line tool used commonly for setting up of areas of interest used in system configurations.</Description>
+            <FilenameTag>LinePage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/linertc`}>
+            <Title>Line WebRTC</Title>
+            <Description>A variation of the Line tool using a WebRTC video background instead of a static image.</Description>
+            <FilenameTag>LineRTCPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/linevideo`}>
+            <Title>Line Video</Title>
+            <Description>A variation of the Line tool using a video background instead of a static image.</Description>
+            <FilenameTag>LineVideoPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/linehls`}>
+            <Title>Line HLS</Title>
+            <Description>The Line tool over an HLS (.m3u8) stream. Uses Safari's native HLS when available, falls back to dynamically-imported hls.js otherwise.</Description>
+            <FilenameTag>LineHLSPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/forms`}>
+            <Title>Forms</Title>
+            <Description>Form inputs and state examples.</Description>
+            <FilenameTag>FormPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/login`}>
+            <Title>Login</Title>
+            <Description>A code sample of our commonly used login view.</Description>
+            <FilenameTag>Login.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/customalert`}>
+            <Title>Component Theme Override Example</Title>
+            <Description>Override CSS based theme for components.</Description>
+            <FilenameTag>CustomAlertsPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/switch-test`}>
+            <Title>Switch Example</Title>
+            <Description>A demonstration of the Switch component with API integration.</Description>
+            <FilenameTag>SwitchTest.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/usepoll-test`}>
+            <Title>usePoll — StrictMode Fix</Title>
+            <Description>Side-by-side comparison of usePoll before and after the React StrictMode canceled-ref fix.</Description>
+            <FilenameTag>UsePollTestPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+        <Item>
+          <Link to={`/webrtc-strictmode-test`}>
+            <Title>WebRTC — StrictMode Double-Mount</Title>
+            <Description>Verifies WebRTCPlayer mounts without WebSocket errors in StrictMode.</Description>
+            <FilenameTag>WebRTCStrictModeTestPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+      </List>
+    </Section>
 
-      <Section>
-        <Subheader>Deprecated</Subheader>
-        <List>
-          <Item>
-            <Link to='/globalUI'>
-              <Title>Global UI (Deprecated)</Title>
-              <Description>The legacy implementation used for page layouts.</Description>
-              <FilenameTag>GlobalUIPage.tsx</FilenameTag>
-            </Link>
-          </Item>
-        </List>
-      </Section>
-    </Container>
-  );
-};
+    <Section>
+      <Subheader>Deprecated</Subheader>
+      <List>
+        <Item>
+          <Link to='/globalUI'>
+            <Title>Global UI (Deprecated)</Title>
+            <Description>The legacy implementation used for page layouts.</Description>
+            <FilenameTag>GlobalUIPage.tsx</FilenameTag>
+          </Link>
+        </Item>
+      </List>
+    </Section>
+
+  </Container>
+)};
 
 export default LinksPage;
