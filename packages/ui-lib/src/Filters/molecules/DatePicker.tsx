@@ -600,27 +600,27 @@ const DatePicker: React.FC<IDatePicker> = ({
         </CalendarHeader>
 
         <CalHRow>
-          {dayGuide.map((day, index) => {
-            return <CalHCell key={index}>{day}</CalHCell>;
+          {dayGuide.map((day) => {
+            return <CalHCell key={day}>{day}</CalHCell>;
           })}
         </CalHRow>
 
         <CalBody>
-          {weeksOfMonth.map((week, index) => {
+          {weeksOfMonth.map((week) => {
             const days = eachDayOfInterval({
               start: week,
               end: endOfWeek(week),
             });
 
             return (
-              <CalRow key={index}>
-                {days.map((day, index) => {
+              <CalRow key={+week}>
+                {days.map((day) => {
                   const dayState = cellState(day, selectedRange);
                   const isTodayValue = isToday(day);
 
                   return (
                     <CalCellB
-                      key={index}
+                      key={+day}
                       disabled={isDayOutOfRange(day, availableRange)}
                       onClick={() => onCellClick(day)}
                       $state={dayState}
