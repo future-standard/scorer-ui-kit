@@ -16,6 +16,7 @@ const CameraPanels: React.FC<ICameraPanels> = ({ panels }) => {
   return (
     <CameraGrid>
       {panels.map((props, index) => {
+        // biome-ignore lint/suspicious/noArrayIndexKey: ICameraPanel has no stable identifier field — streamProps is itself an object, panelMetaData is optional. #646.
         return <CameraPanel key={index} {...props} />;
       })}
     </CameraGrid>
