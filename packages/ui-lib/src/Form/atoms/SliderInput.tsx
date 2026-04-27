@@ -188,7 +188,7 @@ const renderMarks = (
     listOptions.push(<option key={`option-${value}`}>{value}</option>);
 
     return (
-      <Fragment key={`mark-${index}`}>
+      <Fragment key={`mark-${value}`}>
         <Mark data-leftvalue={`${left}%`} $leftValue={left} />
         <MarkLabel
           $leftValue={left}
