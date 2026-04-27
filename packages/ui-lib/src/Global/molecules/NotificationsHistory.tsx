@@ -24,9 +24,9 @@ const NotificationWrapper = styled.div`
 `;
 
 const renderNotifications = (items: INotificationItem[], type: string) =>
-  items.map((item, index) => {
+  items.map((item) => {
     return (
-      <NotificationWrapper key={`alert-${type}-${index}`}>
+      <NotificationWrapper key={`alert-${type}-${item.time}-${item.title}`}>
         <NotificationItem {...item} />
       </NotificationWrapper>
     );
