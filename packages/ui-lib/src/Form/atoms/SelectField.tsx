@@ -200,6 +200,7 @@ const SelectField: React.FC<ISelect> = ({
       defaultValue,
       handleOnChange,
       placeholder,
+      // biome-ignore lint/correctness/useExhaustiveDependencies: props is the rest object from the destructuring of OwnProps & SelectHTMLAttributes — its identity changes every render. Stabilising requires an API change to forward props explicitly. See #644.
       props,
       fieldState,
       icon,

@@ -202,6 +202,7 @@ const DateTimeBlock: React.FC<IProps> = ({
         ])
       );
     },
+    // biome-ignore lint/correctness/useExhaustiveDependencies: validHourMin is declared inline, so its identity changes every render — fixing properly means wrapping it in useCallback. See #644.
     [allowAfterMidnight, date, displayMinutes, hasDate, setDateCallback, validHourMin]
   );
 
@@ -225,6 +226,7 @@ const DateTimeBlock: React.FC<IProps> = ({
         ])
       );
     },
+    // biome-ignore lint/correctness/useExhaustiveDependencies: validHourMin is declared inline, so its identity changes every render — fixing properly means wrapping it in useCallback. See #644.
     [allowAfterMidnight, date, displayHours, hasDate, setDateCallback, validHourMin]
   );
 
