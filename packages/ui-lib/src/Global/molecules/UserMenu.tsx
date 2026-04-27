@@ -215,6 +215,7 @@ const UserMenu: React.FC<IUserMenu> = ({
               return (
                 <UserDetails
                   onUserDrawerMetaClick={onUserDrawerMetaClick}
+                  // biome-ignore lint/suspicious/noArrayIndexKey: IUserDrawerMeta has only optional fields (title/icon/subTitle/notes) — no guaranteed stable identifier. #646.
                   key={key}
                   {...{ item, includeCopyTitle, copySuccessMessage }}
                 />
@@ -227,9 +228,9 @@ const UserMenu: React.FC<IUserMenu> = ({
           <UserOptions>
             <DrawerHeader>{accountOptionText}</DrawerHeader>
             <LinkMenu>
-              {userSubmenu.map(({ text, href }, index) => {
+              {userSubmenu.map(({ text, href }) => {
                 return (
-                  <LinkMenuItem key={index}>
+                  <LinkMenuItem key={href}>
                     <LinkMenuItemA to={href} onClick={handleCloseWhenClick}>
                       {text}
                     </LinkMenuItemA>
