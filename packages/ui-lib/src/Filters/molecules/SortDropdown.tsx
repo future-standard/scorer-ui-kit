@@ -142,10 +142,10 @@ const SortDropdown: React.FC<ISortDropdown> = ({
             <LoadingBox {...{ loadingText }} />
           ) : (
             <OptionList>
-              {list.map((item, index) => {
+              {list.map((item) => {
                 return (
                   <StyledFilterOption
-                    key={index}
+                    key={String(item.value)}
                     title={item.text}
                     optionType='radio'
                     selected={selected.value === item.value}
