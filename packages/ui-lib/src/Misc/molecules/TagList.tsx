@@ -20,6 +20,7 @@ const TagList: React.FC<ITagList> = ({ tagsConfig }) => {
   return (
     <TagListWrapper>
       {tagsConfig.map((tagProps, index) => {
+        // biome-ignore lint/suspicious/noArrayIndexKey: ITag has only optional fields (label, linkTo, icon) and labels may repeat — index is the only stable identity for this list. #646.
         return <Tag key={`tag-${index}`} {...tagProps} />;
       })}
     </TagListWrapper>
