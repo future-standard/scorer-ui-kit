@@ -157,6 +157,7 @@ const LineUI: React.FC<LineUIProps> = ({
     setHandleFinder(showHandleFinder || false);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: imgSize is a trigger dep — it isn't read directly here, but it flows into the <Frame> viewBox attribute, so the effect must re-run after React applies the new viewBox to read the updated frame.current.viewBox.baseVal
   useEffect(() => {
     if (!frame.current) {
       return;
