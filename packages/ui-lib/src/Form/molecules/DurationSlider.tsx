@@ -96,16 +96,22 @@ const getValueTitle = (value: number, timeUnit: ITimeUnit | string, timeFormat?:
   const updatedTitle = timeFormat.split(/(\[H+\]|\[M+\]|\[S+\])/).map((part, index) => {
     switch (part) {
       case '[HH]':
+        // biome-ignore lint/suspicious/noArrayIndexKey: parts come from timeFormat.split() — order is fixed and tokens may repeat (e.g. '[HH]:[HH]'), so index is the right key. #646.
         return <span key={index}>{timeValues.hours.toString().padStart(2, '0')}</span>;
       case '[H]':
+        // biome-ignore lint/suspicious/noArrayIndexKey: see above. #646.
         return <span key={index}>{timeValues.hours}</span>;
       case '[MM]':
+        // biome-ignore lint/suspicious/noArrayIndexKey: see above. #646.
         return <span key={index}>{timeValues.minutes.toString().padStart(2, '0')}</span>;
       case '[M]':
+        // biome-ignore lint/suspicious/noArrayIndexKey: see above. #646.
         return <span key={index}>{timeValues.minutes}</span>;
       case '[SS]':
+        // biome-ignore lint/suspicious/noArrayIndexKey: see above. #646.
         return <span key={index}>{timeValues.seconds.toString().padStart(2, '0')}</span>;
       case '[S]':
+        // biome-ignore lint/suspicious/noArrayIndexKey: see above. #646.
         return <span key={index}>{timeValues.seconds}</span>;
       default: {
         const preserveSpacesInPart = part.replace(/\s+/g, '\u00A0');
