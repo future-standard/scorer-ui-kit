@@ -311,7 +311,7 @@ const FilterLayout: React.FC<IProps> = ({
               {contentArray.map((item, index) => {
                 return (
                   <ContextActionButton
-                    key={index}
+                    key={item.id}
                     $isInnerContextButton={index !== contentArray.length - 1}
                     $isActive={isGridLayout === item.id}
                     onClick={() => switchLayout(item.id)}
@@ -340,8 +340,8 @@ const FilterLayout: React.FC<IProps> = ({
                       isCompact
                       value={pageSize}
                     >
-                      {pageSizeOptions.map((size: number, index: number) => (
-                        <option key={index} value={size}>
+                      {pageSizeOptions.map((size: number) => (
+                        <option key={size} value={size}>
                           {size}
                         </option>
                       ))}
