@@ -278,6 +278,7 @@ const LineSet: React.FC<ILineSetProps> = ({
     (lineSetData?.showPointHandle === undefined || lineSetData?.showPointHandle) &&
     lineSetData.points.map(({ x, y }, index) => (
       <HandleUnit
+        // biome-ignore lint/suspicious/noArrayIndexKey: points have only {x,y} (no id) and index is meaningful — used to look up handleAngles[index] and as the index prop. #646.
         key={index + lineSetId}
         lineSetId={lineSetId}
         rotate={lineSetData.rotate}
@@ -300,6 +301,7 @@ const LineSet: React.FC<ILineSetProps> = ({
   const points =
     options.showPoint &&
     lineSetData.points.map(({ x, y }, index) => (
+      // biome-ignore lint/suspicious/noArrayIndexKey: points have only {x,y} — index is the only stable identity. #646.
       <Point $styling={lineSetData.styling || 'primary'} key={index} r={unit} cx={x} cy={y} />
     ));
 
@@ -315,6 +317,7 @@ const LineSet: React.FC<ILineSetProps> = ({
 
     return (
       <LineUnit
+        // biome-ignore lint/suspicious/noArrayIndexKey: lines connect adjacent points (via nextIndex math); index is structural. #646.
         key={index}
         moveEndCB={onLineMoveEnd}
         lineSetId={lineSetId}
