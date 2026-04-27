@@ -294,8 +294,8 @@ const Pagination: React.FC<IPagination> = (props) => {
           defaultValue={itemsDefaultValue ? itemsDefaultValue : itemsOptions[0].value || 1}
           changeCallback={onItemsSelectChange}
         >
-          {itemsOptions.map(({ value, textValue }, index) => (
-            <option key={index} value={value}>
+          {itemsOptions.map(({ value, textValue }) => (
+            <option key={value} value={value}>
               {textValue}
             </option>
           ))}
