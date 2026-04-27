@@ -258,6 +258,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
         }: ITableColumnConfig = column;
         return (
           <HeaderItem
+            // biome-ignore lint/suspicious/noArrayIndexKey: ITableColumnConfig.columnId is optional; column position is the stable identity. #646.
             key={key}
             $alignment={alignment}
             $hasCopyButton={hasCopyButton}
