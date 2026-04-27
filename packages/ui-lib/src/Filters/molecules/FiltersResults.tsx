@@ -163,9 +163,9 @@ const FiltersResults: React.FC<IFilterResults> = ({
     <Container {...props}>
       <ResultsTextWrapper>{renderResults(resultTextTemplate, totalResults)}</ResultsTextWrapper>
       <FilterLabelsGroup>
-        {labelLists.map(({ icon, item, filterName, filterId, type }, index) => {
+        {labelLists.map(({ icon, item, filterName, filterId, type }) => {
           return (
-            <FilterLabel key={`Filter-Label-id-${index}`}>
+            <FilterLabel key={`Filter-Label-id-${filterId}`}>
               {icon && <Icon icon={icon} color='dimmed' size={10} weight='light' />}
               {renderLabel(item, resultsDateFormat, icon, filterName)}
               <RemoveButton onClick={() => onRemoveFilter(filterId, type, item)}>
