@@ -437,6 +437,7 @@ const DatePicker: React.FC<IDatePicker> = ({
   const [isTimeRangeValid, setIsTimeRangeValid] = useState<boolean>(true);
   const dayGuide = lang === 'ja' ? jpDayGuide : enDayGuide;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally resets picker state when dateMode/timeMode props change; setters are stable
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -445,7 +446,6 @@ const DatePicker: React.FC<IDatePicker> = ({
       setSelectedRange(initializeInterval(startOfDay(now)));
       setFocusedMonth(now);
     }
-    // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally resets picker state when dateMode/timeMode props change; setters are stable
   }, [dateMode, timeMode]);
 
   useEffect(() => {
