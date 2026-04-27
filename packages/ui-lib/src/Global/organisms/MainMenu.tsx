@@ -200,6 +200,7 @@ const MainMenu: React.FC<IMenu> = ({
                 return (
                   <NavigationItem
                     topLevelPath={getTopLevelPath(location.pathname)}
+                    // biome-ignore lint/suspicious/noArrayIndexKey: index is also passed as contextKey and compared against focusedContext — index has structural meaning here. #646.
                     key={key}
                     contextKey={key}
                     menuOpen={menuState.isMenuOpen}
