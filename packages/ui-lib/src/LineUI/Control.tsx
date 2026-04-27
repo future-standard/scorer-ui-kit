@@ -74,6 +74,7 @@ export const Control: React.FC = () => {
         </button>
 
         {state.map((_lineSet, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: index IS the lineSetId — used in dispatch payloads ({type: 'REMOVE_SET', index}). #646.
           <div key={index}>
             <h5>Set {index}</h5>
             <button type='button' onClick={() => dispatch({ type: 'REMOVE_SET', index: index })}>
