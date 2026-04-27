@@ -17,6 +17,11 @@
       "import": "./dist/index.modern.js",
       "require": "./dist/index.js"
     },
+    "./hls": {
+      "types": "./dist/LineUIHls/index.d.ts",
+      "import": "./dist/hls.modern.js",
+      "require": "./dist/hls.js"
+    },
     "./dist/Tables": {
       "types": "./dist/Tables/index.d.ts"
     },

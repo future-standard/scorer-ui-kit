@@ -19,11 +19,14 @@ export default defineConfig(() => {
     ],
     build: {
       lib: {
-        entry: resolve(__dirname, 'src/index.tsx'),
+        entry: {
+          index: resolve(__dirname, 'src/index.tsx'),
+          hls: resolve(__dirname, 'src/LineUIHls/index.ts'),
+        },
         formats: ['es', 'cjs'],
-        fileName: (format) => {
-          if (format === 'es') return 'index.modern.js';
-          return 'index.js';
+        fileName: (format, entryName) => {
+          if (format === 'es') return `${entryName}.modern.js`;
+          return `${entryName}.js`;
         },
       },
       sourcemap: true,
