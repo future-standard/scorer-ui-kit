@@ -189,6 +189,7 @@ interface IProps {
   href?: string;
   compact?: boolean;
   isExternalLink?: boolean;
+  // biome-ignore lint/suspicious/noExplicitAny: tightening to unknown[] exposes a latent type mismatch in MainMenu (toggleMenuPin is typed as a PointerEvent handler but ContextItem invokes it with a number contextKey). Fixing properly requires touching MainMenu's callback signature; out of scope for the Biome migration.
   onClickCallback?: (...args: any[]) => void;
 }
 
