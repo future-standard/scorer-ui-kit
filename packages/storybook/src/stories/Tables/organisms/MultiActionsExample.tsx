@@ -143,23 +143,20 @@ const MultiActionsExample: React.FC<IMultiActionsExample> = ({ language }) => {
     [createModal, language]
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: deleteAction is intentionally excluded — Storybook action() creates a new reference every render and including it would cause an infinite loop
   const handleDelete = useCallback(
     (deviceId: string) => {
       const notDeletedData: ITableSampleData[] = data.filter(({ id }) => id !== deviceId);
       setData(notDeletedData);
       deleteAction(`Deleting ${deviceId}`);
     },
-    // biome-ignore lint/correctness/useExhaustiveDependencies: deleteAction is intentionally excluded — Storybook action() creates a new reference every render and including it would cause an infinite loop
     [data]
-  ); // deps for with addon actions was looping
+  );
 
-  const handleDownloadLogs = useCallback(
-    (deviceId: string) => {
-      downloadAction(`Downloading ${deviceId}`);
-    },
-    // biome-ignore lint/correctness/useExhaustiveDependencies: downloadAction is intentionally excluded — Storybook action() creates a new reference every render and including it would cause an infinite loop
-    []
-  ); // deps with addon actions was looping
+  // biome-ignore lint/correctness/useExhaustiveDependencies: downloadAction is intentionally excluded — Storybook action() creates a new reference every render and including it would cause an infinite loop
+  const handleDownloadLogs = useCallback((deviceId: string) => {
+    downloadAction(`Downloading ${deviceId}`);
+  }, []);
 
   const generateConfigButtons = useCallback(
     (rowId: string): IconButtonData[] => {
