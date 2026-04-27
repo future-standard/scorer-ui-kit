@@ -90,6 +90,7 @@ const TypeTableRow: React.FC<IProps> = ({
         const { unit, status, text, customComponent } = cell;
         return (
           <TypeTableCell
+            // biome-ignore lint/suspicious/noArrayIndexKey: cells are positional and index is used to look up the parallel columnConfig[key]. #646.
             key={key}
             href={cell.href}
             {...{
