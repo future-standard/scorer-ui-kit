@@ -143,7 +143,7 @@ const UtilityHeader: React.FC<IUtilityHeader> = ({
               );
 
               return (
-                <React.Fragment key={index}>
+                <React.Fragment key={text}>
                   <Breadcrumb>
                     {onClick ? (
                       <BreadcrumbButton onClick={onClick} type='button'>
