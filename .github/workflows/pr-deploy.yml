@@ -165,6 +165,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Cache Playwright browsers
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-chromium-${{ hashFiles('package-lock.json') }}
+
       - name: Install Playwright Chromium
         run: npx playwright install chromium --with-deps
 
@@ -173,6 +179,7 @@ jobs:
         env:
           PR_NUM: ${{ github.event.pull_request.number }}
           PW_CHROMIUM_PATH: ''
+          SETTLE_MS: '200'
         run: |
           BASE="https://future-standard.github.io/scorer-ui-kit/pr/${PR_NUM}"
           EXAMPLE_URL="$BASE" STORYBOOK_URL="$BASE/storybook" \
