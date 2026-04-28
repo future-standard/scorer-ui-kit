@@ -224,6 +224,7 @@ const LineUIVideoBase: React.FC<LineUIVideoBaseProps> = ({
         >
           {state.map((lineSet, index) => (
             <LineSet
+              // biome-ignore lint/suspicious/noArrayIndexKey: index IS the lineSetId, also passed to LineSet as the prop of the same name. #646.
               key={index}
               hasClickSensingBorder={hasClickSensingBorder}
               lineClickSensingBorder={lineClickSensingBorder}
