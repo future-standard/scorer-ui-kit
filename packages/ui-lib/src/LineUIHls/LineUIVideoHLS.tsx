@@ -26,7 +26,7 @@ const LineUIVideoHLS: React.FC<LineUIProps> = (props) => {
 
     const tryAutoplay = () => {
       const el = videoRef.current;
-      if (!el || !el.autoplay) {
+      if (!el?.autoplay) {
         return;
       }
       const result = el.play();

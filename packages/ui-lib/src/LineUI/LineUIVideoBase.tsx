@@ -125,7 +125,7 @@ const LineUIVideoBase: React.FC<LineUIVideoBaseProps> = ({
     }
   }, [videoSize.h, videoSize.w, unit, onSizeChange, videoRef]);
 
-  const handlePositionTipShow = (e: any) => {
+  const handlePositionTipShow = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.target === frame.current) {
       setHandleFinder(!handleFinder === false && true);
     }
@@ -142,6 +142,7 @@ const LineUIVideoBase: React.FC<LineUIVideoBaseProps> = ({
     return frame.current.getScreenCTM();
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: videoSize is a trigger dep — flows into <Frame> viewBox attr, so the effect must re-run after React applies the new viewBox. Same pattern as LineUI's imgSize. See #645.
   useEffect(() => {
     if (!frame.current || !loaded) {
       return;
