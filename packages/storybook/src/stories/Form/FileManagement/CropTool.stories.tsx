@@ -72,7 +72,7 @@ export const _CropTool = () => {
       ) : null}
       <NewImageArea>
         <h3>Cropped Area</h3>
-        <CropResult src={cropImg} />
+        <CropResult src={cropImg || undefined} />
       </NewImageArea>
     </Container>
   );
