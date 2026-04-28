@@ -1,7 +1,11 @@
 ---
 name: beta-release
-description: Create a beta release for scorer-ui-kit. Bumps version, creates PR, merges, tags, and pushes.
-user_invocable: true
+description: Create a beta release of scorer-ui-kit (3.0.0-beta.*). Bumps the version in the root and packages/ui-lib, opens a release PR, then tags and pushes after the user merges.
+when_to_use: Use when the user wants to create a beta release, release a new beta version, or update beta.*. Do not invoke automatically, the user always triggers this.
+argument-hint: "[beta.* or 3.0.0-beta.*]"
+disable-model-invocation: true
+user-invocable: true
+allowed-tools: Bash(git *) Bash(gh *) Bash(npm *)
 ---
 
 # Release skill for scorer-ui-kit
@@ -67,11 +71,35 @@ Stop if:
    ```
 
 5. **Create PR**
-   - Use `gh pr create` targeting `main`
+   - Use `gh pr create` targeting `main`.
    - Title: `Release v<VERSION>`
-   - Body should include:
-     - Summary of what's included (run `git log v<PREV_TAG>..main --oneline` to see what's new since the last release)
-     - Release steps reminder (tag commands to run after merge)
+   - Get the changes since the previous tag (`<PREV_TAG>` is the most recent `v3.0.0-beta.*` tag before the new one):
+
+     ```bash
+     git log v<PREV_TAG>..main --oneline
+     ```
+
+   - Use this body template, filling in the version numbers and the commit list from the command above:
+
+     ````markdown
+     ## Summary
+
+     Bumps version to `<VERSION>`.
+
+     ### Changes since v<PREV_TAG>
+     - <commit subject> (#<PR>)
+     - <commit subject> (#<PR>)
+
+     ## After merge
+
+     Run the following to tag and publish:
+
+     ```bash
+     git checkout main && git pull
+     git tag v<VERSION>
+     git push origin v<VERSION>
+     ```
+     ````
 
 6. **Wait for the user to merge the PR**
    - Share the PR URL and tell the user to merge it themselves.
