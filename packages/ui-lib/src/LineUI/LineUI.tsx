@@ -218,6 +218,7 @@ const LineUI: React.FC<LineUIProps> = ({
             <LineSet
               hasClickSensingBorder={hasClickSensingBorder}
               lineClickSensingBorder={lineClickSensingBorder}
+              // biome-ignore lint/suspicious/noArrayIndexKey: index IS the lineSetId, also passed to LineSet as the prop of the same name. #646.
               key={index}
               onLineMoveEnd={onLineMoveEnd}
               onLineClick={onLineClick}

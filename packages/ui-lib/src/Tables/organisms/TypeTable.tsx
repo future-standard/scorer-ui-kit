@@ -160,6 +160,7 @@ const TypeTable: React.FC<IProps> = ({
           const isLastRow = rows.length - 1 === key;
           return (
             <TypeTableRow
+              // biome-ignore lint/suspicious/noArrayIndexKey: IRowData.id is optional and consumers don't always set it; index is the safest fallback. #646.
               key={key}
               {...{
                 rowData,

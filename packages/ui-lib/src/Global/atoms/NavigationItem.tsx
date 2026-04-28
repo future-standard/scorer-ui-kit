@@ -215,6 +215,7 @@ const generateSubmenus = (
       // Treat as menu item/
       if (isExternalLink) {
         grouping[grouping.length - 1].push(
+          // biome-ignore lint/suspicious/noArrayIndexKey: forEach iterates a static submenu config that doesn't reorder; submenu items aren't all guaranteed to have a unique field. #646.
           <SubmenuItem key={key} $isActive={false}>
             <SubmenuItemAnchor href={href} target='_blank'>
               {title}
@@ -226,6 +227,7 @@ const generateSubmenus = (
         );
       } else {
         grouping[grouping.length - 1].push(
+          // biome-ignore lint/suspicious/noArrayIndexKey: see above. #646.
           <SubmenuItem key={key} $isActive={false}>
             <SubmenuItemLink to={href} onClick={() => onClickCallback?.(-1)}>
               {title}
@@ -239,6 +241,7 @@ const generateSubmenus = (
         grouping.push([]);
       }
       grouping[grouping.length - 1].push(
+        // biome-ignore lint/suspicious/noArrayIndexKey: see above. #646.
         <SubmenuHeader key={key}>
           <SubmenuItemTitle>{title}</SubmenuItemTitle>
         </SubmenuHeader>
@@ -247,6 +250,7 @@ const generateSubmenus = (
   });
 
   grouping.forEach((group, key) => {
+    // biome-ignore lint/suspicious/noArrayIndexKey: grouping is built in this same function; the index is the only identity. #646.
     output.push(<Submenu key={key}>{group}</Submenu>);
   });
 

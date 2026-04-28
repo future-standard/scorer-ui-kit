@@ -303,6 +303,7 @@ const WebRTCStrictModeTestPage: React.FC = () => {
           </ConsoleLine>
         )}
         {logs.map((log, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: log entries are append-only, no reordering — index is stable for this list. #646.
           <ConsoleLine key={i} $level={log.level}>
             [{log.timestamp}] [{log.level.toUpperCase()}] {log.message}
           </ConsoleLine>

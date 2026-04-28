@@ -44,6 +44,7 @@ export const StatusComponent: React.FC<IStatusBundle> = ({ statusList }) => {
       {statusList.map(
         ({ type, tooltipMessage, tooltipIcon, tooltipType, tooltipPosition }, index) => {
           return (
+            // biome-ignore lint/suspicious/noArrayIndexKey: index is also used to look up the parallel statusRefs.current[index] ref array — it has structural meaning. #646.
             <Fragment key={index}>
               <StatusDot
                 ref={statusRefs.current[index]}

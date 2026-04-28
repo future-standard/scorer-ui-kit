@@ -57,6 +57,7 @@ const MobileMenu: React.FC<IMobileMenu> = ({
     <Container>
       {content.items.map((item, key) => {
         return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: index is also used as data-key and contextKey, and compared against focusedContext — structural meaning. #646.
           <ItemWrapper key={key} data-key={key}>
             <NavigationItem
               mobileMenu

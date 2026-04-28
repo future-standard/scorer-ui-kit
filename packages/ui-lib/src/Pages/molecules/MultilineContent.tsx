@@ -18,6 +18,7 @@ const MultilineContent: React.FC<IMultiContent> = ({ contentArray }) => {
   return (
     <Container>
       {contentArray.map((element, index) => {
+        // biome-ignore lint/suspicious/noArrayIndexKey: contentArray entries are arbitrary ReactNodes (string | JSX | etc) with no stable identity. #646.
         return <div key={`element-${index}`}>{element}</div>;
       })}
     </Container>
