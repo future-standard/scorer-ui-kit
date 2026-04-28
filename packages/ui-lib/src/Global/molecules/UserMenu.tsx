@@ -230,7 +230,7 @@ const UserMenu: React.FC<IUserMenu> = ({
             <LinkMenu>
               {userSubmenu.map(({ text, href }) => {
                 return (
-                  <LinkMenuItem key={href}>
+                  <LinkMenuItem key={`${text}-${href}`}>
                     <LinkMenuItemA to={href} onClick={handleCloseWhenClick}>
                       {text}
                     </LinkMenuItemA>
