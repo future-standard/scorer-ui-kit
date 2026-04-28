@@ -99,9 +99,10 @@ const PageHeader: React.FC<IProps> = ({
         />
         {!tagList ? null : (
           <TagListWrapper>
-            {tagList.map(({ icon, label, linkTo, onTagClick }) => (
+            {tagList.map(({ icon, label, linkTo, onTagClick }, index) => (
               <Tag
-                key={`tag-`}
+                // biome-ignore lint/suspicious/noArrayIndexKey: IHeaderTag has no guaranteed-unique field — labels may repeat, only the position is stable. #646.
+                key={`tag-${index}-${label}`}
                 icon={icon || ''}
                 noBorder={true}
                 tagSize='compact'

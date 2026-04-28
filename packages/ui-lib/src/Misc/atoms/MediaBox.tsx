@@ -137,7 +137,7 @@ const MediaBox: React.FC<IMediaModal> = ({
           {...{ loop, autoPlay, controls, muted, onError }}
           {...videoValues}
           $hasModalLimits={hasModalLimits}
-          src={loadFailed ? '' : src}
+          src={loadFailed ? undefined : src}
           $isLoaded={loaded && !loadFailed}
           preload='metadata'
           onCanPlayThrough={handleLoad}
@@ -148,7 +148,7 @@ const MediaBox: React.FC<IMediaModal> = ({
         <StyledImage
           {...{ alt, onError }}
           $hasModalLimits={hasModalLimits}
-          src={loadFailed ? '' : src}
+          src={loadFailed ? undefined : src}
           onLoad={handleLoad}
           $isLoaded={loaded && !loadFailed}
         />
