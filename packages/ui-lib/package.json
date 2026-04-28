@@ -17,6 +17,11 @@
       "import": "./dist/index.modern.js",
       "require": "./dist/index.js"
     },
+    "./hls": {
+      "types": "./dist/LineUIHls/index.d.ts",
+      "import": "./dist/hls.modern.js",
+      "require": "./dist/hls.js"
+    },
     "./dist/Tables": {
       "types": "./dist/Tables/index.d.ts"
     },
@@ -41,6 +46,7 @@
   "scripts": {
     "build": "vite build",
     "start": "vite build --watch",
+    "start:types": "tsc --project tsconfig.build.json --watch --preserveWatchOutput",
     "prepublishOnly": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",

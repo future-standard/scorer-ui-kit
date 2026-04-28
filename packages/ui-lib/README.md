@@ -36,27 +36,30 @@ If you want to run the project follow the next steps
   npm dedupe
 ```
 
-- If you want to run the example project, run library workspace first and then the example workspace in a different terminal
+- Run everything from the repo root. These scripts are defined in the root `package.json`:
 
 ```
-  // Terminal 1
+  // Run ui-lib watcher + example dev server together (most common)
+  npm start
 
-  npm start --workspace=packages/ui-lib
+  // Run ui-lib + types + example + storybook together
+  npm run start:all
 ```
 
-```
-  // Terminal 2
-
-  npm start --workspace=packages/example
-```
-
-- If you want to run the storybook
+- Or start each workspace individually (from the repo root):
 
 ```
-  // Terminal 3
-
-  npm start --workspace=packages/storybook
+  npm run start:ui-lib     // library build watcher
+  npm run start:types      // incremental .d.ts generation (optional, see below)
+  npm run start:example    // example dev server
+  npm run start:storybook  // storybook
 ```
+
+### Watch mode and type declarations
+
+The ui-lib watch build skips `.d.ts` generation so rebuilds finish in ~50ms instead of ~10s. A full `npm run build` still emits declarations as usual, and your IDE continues to read types from source.
+
+If you need live-regenerated `.d.ts` files during dev (e.g. consumers that resolve from `dist/*.d.ts` rather than source), add the incremental type watcher — either use `npm run start:all` from the root, or run `npm run start:types` alongside `npm start`.
 
 ## Contributing
 

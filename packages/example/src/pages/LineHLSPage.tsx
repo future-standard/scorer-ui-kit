@@ -9,13 +9,13 @@ import {
   Layout,
   LineReducer,
   LineSetContext,
-  LineUIVideo,
   Logo,
   Sidebar,
   SidebarBox,
   Switch,
 } from 'scorer-ui-kit';
 import type { LineUIOptions, LineUIVideoOptions } from 'scorer-ui-kit/dist/LineUI';
+import { LineUIVideoHLS } from 'scorer-ui-kit/hls';
 import styled from 'styled-components';
 import ExamplesFilename from '../components/ExamplesFilename';
 
@@ -190,7 +190,7 @@ const LineHLSPage: React.FC = () => {
 
       <Content $padBottom={false}>
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUIVideo
+          <LineUIVideoHLS
             key={src}
             options={options}
             onLineClick={selectLine}
