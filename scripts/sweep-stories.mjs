@@ -8,7 +8,9 @@ import { chromium } from 'playwright';
 
 const STORYBOOK = process.env.STORYBOOK_URL || 'http://localhost:9009';
 const EXAMPLE = process.env.EXAMPLE_URL || 'http://localhost:3000/scorer-ui-kit';
-const CHROME = process.env.PW_CHROMIUM_PATH || '/usr/bin/chromium';
+// Empty PW_CHROMIUM_PATH falls back to Playwright's bundled chromium (CI).
+// The default points at system chromium for local dev (no 150MB download).
+const CHROME = process.env.PW_CHROMIUM_PATH ?? '/usr/bin/chromium';
 const PAGE_TIMEOUT = Number(process.env.PAGE_TIMEOUT_MS || 15000);
 const SETTLE_MS = Number(process.env.SETTLE_MS || 500);
 const LOOP_THRESHOLD = Number(process.env.LOOP_THRESHOLD || 500);
@@ -54,7 +56,7 @@ console.error(
   `Sweeping ${targets.length} pages (${storyIds.length} stories + ${exampleRoutes.length} example routes)...`
 );
 
-const browser = await chromium.launch({ executablePath: CHROME });
+const browser = await chromium.launch(CHROME ? { executablePath: CHROME } : {});
 const ctx = await browser.newContext();
 const page = await ctx.newPage();
 

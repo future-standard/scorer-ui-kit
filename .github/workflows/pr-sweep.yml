@@ -1,0 +1,150 @@
+name: PR Sweep
+
+on:
+  workflow_run:
+    workflows: ['PR Deploy Preview']
+    types: [completed]
+
+permissions:
+  contents: read
+  pull-requests: write
+  actions: read
+
+concurrency:
+  group: pr-sweep-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  sweep:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Resolve PR number
+        id: pr
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:${context.payload.workflow_run.head_branch}`,
+            });
+            if (prs.length === 0) {
+              core.setFailed(`No open PR for branch ${context.payload.workflow_run.head_branch}`);
+              return;
+            }
+            core.setOutput('number', prs[0].number);
+            core.setOutput('sha', context.payload.workflow_run.head_sha.substring(0, 7));
+
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22.x'
+
+      - name: Cache node modules
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Wait for deploy preview to propagate
+        env:
+          PR_NUM: ${{ steps.pr.outputs.number }}
+        run: |
+          URL="https://future-standard.github.io/scorer-ui-kit/pr/${PR_NUM}/"
+          for i in {1..30}; do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
+            if [ "$CODE" = "200" ]; then
+              echo "Deploy preview reachable after $i attempts."
+              exit 0
+            fi
+            echo "Attempt $i: $URL returned $CODE — waiting 10s"
+            sleep 10
+          done
+          echo "Deploy preview never came up at $URL"
+          exit 1
+
+      - name: Run sweep against deployed PR preview
+        id: sweep
+        env:
+          PR_NUM: ${{ steps.pr.outputs.number }}
+          PW_CHROMIUM_PATH: ''
+        run: |
+          BASE="https://future-standard.github.io/scorer-ui-kit/pr/${PR_NUM}"
+          EXAMPLE_URL="$BASE" STORYBOOK_URL="$BASE/storybook" \
+            npm run sweep > sweep-result.json 2> sweep-progress.txt || true
+          echo "$(jq -r '"Total: \(.total) | With errors: \(.withErrors) | Timed out: \(.timedOut|length) | Loop suspect: \(.loopSuspect|length)"' sweep-result.json)" >> "$GITHUB_STEP_SUMMARY"
+          jq -r '.bad[] | "- **\(.id)** (\(.kind)): \(.errors[0] // "high console volume")"' sweep-result.json >> "$GITHUB_STEP_SUMMARY"
+          # Surface failures to the job
+          BAD=$(jq -r '.bad | length' sweep-result.json)
+          echo "bad=$BAD" >> "$GITHUB_OUTPUT"
+
+      - name: Upload sweep result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sweep-result
+          path: sweep-result.json
+
+      - name: Comment sweep result on PR
+        if: always()
+        uses: actions/github-script@v9
+        env:
+          PR_NUM: ${{ steps.pr.outputs.number }}
+        with:
+          script: |
+            const fs = require('fs');
+            const result = JSON.parse(fs.readFileSync('sweep-result.json', 'utf8'));
+            const sha = '${{ steps.pr.outputs.sha }}';
+            const lines = [`## Story Sweep`, ``];
+            if (result.bad.length === 0) {
+              lines.push(`Clean — ${result.total} pages swept, no console errors, no loops detected.`);
+            } else {
+              lines.push(`${result.bad.length} of ${result.total} pages flagged:`);
+              lines.push('');
+              for (const r of result.bad) {
+                const first = r.errors[0] ? r.errors[0].split('\n')[0] : `${r.consoleCount} console msgs`;
+                lines.push(`- **${r.id}** (${r.kind}) — ${first}`);
+              }
+            }
+            lines.push('');
+            lines.push(`_Swept ${sha} via npm run sweep — full JSON in workflow artifacts._`);
+            const body = lines.join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: Number(process.env.PR_NUM),
+            });
+            const existing = comments.find((c) => c.user.type === 'Bot' && c.body.startsWith('## Story Sweep'));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: Number(process.env.PR_NUM),
+                body,
+              });
+            }
+
+      - name: Fail job if sweep flagged pages
+        if: steps.sweep.outputs.bad != '0'
+        run: exit 1
