@@ -6,28 +6,65 @@ user_invocable: true
 
 # Release skill for scorer-ui-kit
 
-This skill automates the full release process. The user may pass a version like `/release beta.6` or just `/release` to auto-detect the next version.
+This skill automates the full release process. The user may pass a version like `/beta-release beta.8` or just `/beta-release` to auto-detect the next version.
+
+Do not improvise. If any command fails or any expected condition is not met, stop immediately and report the issue.
+
+## Core rules
+
+- Do not merge the PR.
+- Do not push the release tag until the user confirms the PR has been merged.
+- Do not run `npm publish` manually.
+- Always use `npm run` for npm scripts. Never use `npx` directly.
+- The root `package.json` and `packages/ui-lib/package.json` must have matching versions.
+- If the working tree is dirty before starting, stop.
+- If the release branch or tag already exists, stop.
+- If GitHub CLI is unavailable or unauthenticated, stop.
+- If CI checks fail, stop.
+- After the version bump, only `package.json`, `packages/ui-lib/package.json`, and `package-lock.json` may change. If `node_modules` or any unrelated files change, stop.
 
 ## Steps
 
+**Step 0: Preflight checks**
+
+```bash
+git status --short
+git branch --show-current
+git remote -v
+git fetch origin main --tags
+gh auth status
+```
+
+Stop if:
+- `git status --short` is not empty.
+- Current branch is not `main`.
+- Local `main` is not up to date with `origin/main`.
+- `gh auth status` fails.
+
 1. **Determine the version**
-   - If the user provided a version argument, use it (e.g. `beta.6` becomes `3.0.0-beta.6`, or accept full semver like `3.0.0-beta.6`).
+   - If the user provided a version argument, use it (e.g. `beta.8` becomes `3.0.0-beta.8`, or accept full semver like `3.0.0-beta.8`).
    - If no argument, auto-detect: find the latest `v3.0.0-beta.*` git tag, increment the beta number by 1.
    - Confirm the version with the user before proceeding.
 
 2. **Create the release branch**
    - Ensure you're on `main` and up to date: `git checkout main && git pull`
-   - Create branch: `git checkout -b release/v<VERSION>` (e.g. `release/v3.0.0-beta.6`)
+   - Create branch: `git checkout -b release/v<VERSION>` (e.g. `release/v3.0.0-beta.8`)
 
 3. **Update version in files**
-   - `packages/ui-lib/package.json` — update `"version"` field
-   - `package.json` (root) — update `"version"` field
-   - Run `npm install` to update `package-lock.json`
+
+   ```bash
+   npm pkg set version=<VERSION>
+   npm pkg set version=<VERSION> -w packages/ui-lib
+   npm install --package-lock-only
+   ```
 
 4. **Commit and push**
-   - Stage the changed files: `package.json`, `packages/ui-lib/package.json`, `package-lock.json`
-   - Commit with message: `Bump version to <VERSION>`
-   - Push with: `git push -u origin release/v<VERSION>`
+
+   ```bash
+   git add package.json packages/ui-lib/package.json package-lock.json
+   git commit -m "Bump version to <VERSION>"
+   git push -u origin release/v<VERSION>
+   ```
 
 5. **Create PR**
    - Use `gh pr create` targeting `main`
@@ -45,8 +82,3 @@ This skill automates the full release process. The user may pass a version like 
    - `git tag v<VERSION>`
    - `git push origin v<VERSION>`
    - Confirm the tag was pushed successfully.
-
-## Important
-- Always use `npm run` for any scripts, never `npx` directly.
-- The root `package.json` and `packages/ui-lib/package.json` must have matching versions.
-- Wait for user confirmation before merging and before tagging.
