@@ -334,12 +334,7 @@ const FilterLayout: React.FC<IProps> = ({
               {pageSizeOptions && (
                 <PageSizeContainer>
                   <SelectFieldContainer>
-                    <SelectField
-                      changeCallback={handlePageSizeChange}
-                      defaultValue={pageSize}
-                      isCompact
-                      value={pageSize}
-                    >
+                    <SelectField changeCallback={handlePageSizeChange} isCompact value={pageSize}>
                       {pageSizeOptions.map((size: number) => (
                         <option key={size} value={size}>
                           {size}
