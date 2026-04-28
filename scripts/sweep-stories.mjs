@@ -22,18 +22,37 @@ const stories = await fetch(`${STORYBOOK}/index.json`)
 const storyIds = Object.keys(stories.entries);
 
 const exampleRoutes = [
-  '/', '/line', '/linevideo', '/linehls', '/linertc', '/login', '/forms',
-  '/table', '/customdrawer', '/tabs', '/customalert', '/globalUI',
-  '/layouts', '/split-layouts', '/switch-test', '/usepoll-test',
+  '/',
+  '/line',
+  '/linevideo',
+  '/linehls',
+  '/linertc',
+  '/login',
+  '/forms',
+  '/table',
+  '/customdrawer',
+  '/tabs',
+  '/customalert',
+  '/globalUI',
+  '/layouts',
+  '/split-layouts',
+  '/switch-test',
+  '/usepoll-test',
   '/webrtc-strictmode-test',
 ];
 
 const targets = [
-  ...storyIds.map((id) => ({ kind: 'story', id, url: `${STORYBOOK}/iframe.html?id=${id}&viewMode=story` })),
+  ...storyIds.map((id) => ({
+    kind: 'story',
+    id,
+    url: `${STORYBOOK}/iframe.html?id=${id}&viewMode=story`,
+  })),
   ...exampleRoutes.map((r) => ({ kind: 'example', id: r, url: `${EXAMPLE}/#${r}` })),
 ];
 
-console.error(`Sweeping ${targets.length} pages (${storyIds.length} stories + ${exampleRoutes.length} example routes)...`);
+console.error(
+  `Sweeping ${targets.length} pages (${storyIds.length} stories + ${exampleRoutes.length} example routes)...`
+);
 
 const browser = await chromium.launch({ executablePath: CHROME });
 const ctx = await browser.newContext();
@@ -64,7 +83,9 @@ for (const t of targets) {
   page.off('pageerror', onErr);
 
   const filtered = errors.filter(
-    (e) => !e.includes('favicon') && !/Failed to load resource: the server responded with a status of 404/.test(e)
+    (e) =>
+      !e.includes('favicon') &&
+      !/Failed to load resource: the server responded with a status of 404/.test(e)
   );
   const result = { ...t, errors: filtered, consoleCount, timedOut };
   results.push(result);
@@ -75,14 +96,18 @@ process.stderr.write('\n');
 
 await browser.close();
 
-const bad = results.filter((r) => r.errors.length > 0 || r.consoleCount > LOOP_THRESHOLD || r.timedOut);
-console.log(
+const bad = results.filter(
+  (r) => r.errors.length > 0 || r.consoleCount > LOOP_THRESHOLD || r.timedOut
+);
+console.info(
   JSON.stringify(
     {
       total: results.length,
       withErrors: results.filter((r) => r.errors.length > 0).length,
       timedOut: results.filter((r) => r.timedOut).map((r) => r.id),
-      loopSuspect: results.filter((r) => r.consoleCount > LOOP_THRESHOLD).map((r) => ({ id: r.id, consoleCount: r.consoleCount })),
+      loopSuspect: results
+        .filter((r) => r.consoleCount > LOOP_THRESHOLD)
+        .map((r) => ({ id: r.id, consoleCount: r.consoleCount })),
       bad,
     },
     null,
