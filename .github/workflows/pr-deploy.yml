@@ -73,6 +73,34 @@ jobs:
           git commit -m "Deploy preview for PR ${PR_NUM}" || echo "No changes to deploy"
           git push origin HEAD:gh-pages
 
+      - name: Wait for GitHub Pages to publish
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const { data: branch } = await github.rest.repos.getBranch({
+              owner, repo, branch: 'gh-pages',
+            });
+            const sha = branch.commit.sha;
+            const TIMEOUT_MS = 5 * 60 * 1000;
+            const start = Date.now();
+            while (Date.now() - start < TIMEOUT_MS) {
+              const { data: deployments } = await github.rest.repos.listDeployments({
+                owner, repo, sha, environment: 'github-pages', per_page: 5,
+              });
+              for (const d of deployments) {
+                const { data: statuses } = await github.rest.repos.listDeploymentStatuses({
+                  owner, repo, deployment_id: d.id,
+                });
+                if (statuses.find((s) => s.state === 'success')) {
+                  core.info(`Pages deployment ${d.id} succeeded for ${sha.substring(0, 7)}`);
+                  return;
+                }
+              }
+              await new Promise((r) => setTimeout(r, 5000));
+            }
+            core.setFailed(`Timed out waiting for github-pages deployment for ${sha}`);
+
       - name: Comment preview URLs on PR
         uses: actions/github-script@v9
         with:
@@ -140,23 +168,6 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install chromium --with-deps
 
-      - name: Wait for deploy preview to propagate
-        env:
-          PR_NUM: ${{ github.event.pull_request.number }}
-        run: |
-          URL="https://future-standard.github.io/scorer-ui-kit/pr/${PR_NUM}/"
-          for i in {1..30}; do
-            CODE=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
-            if [ "$CODE" = "200" ]; then
-              echo "Deploy preview reachable after $i attempts."
-              exit 0
-            fi
-            echo "Attempt $i: $URL returned $CODE — waiting 10s"
-            sleep 10
-          done
-          echo "Deploy preview never came up at $URL"
-          exit 1
-
       - name: Run sweep against deployed PR preview
         id: sweep
         env:
@@ -165,7 +176,7 @@ jobs:
         run: |
           BASE="https://future-standard.github.io/scorer-ui-kit/pr/${PR_NUM}"
           EXAMPLE_URL="$BASE" STORYBOOK_URL="$BASE/storybook" \
-            npm run sweep > sweep-result.json 2> sweep-progress.txt || true
+            npm run sweep --silent > sweep-result.json 2> sweep-progress.txt || true
           jq -r '"Total: \(.total) | With errors: \(.withErrors) | Timed out: \(.timedOut|length) | Loop suspect: \(.loopSuspect|length)"' sweep-result.json >> "$GITHUB_STEP_SUMMARY"
           jq -r '.bad[] | "- **\(.id)** (\(.kind)): \(.errors[0] // "high console volume")"' sweep-result.json >> "$GITHUB_STEP_SUMMARY"
           BAD=$(jq -r '.bad | length' sweep-result.json)
