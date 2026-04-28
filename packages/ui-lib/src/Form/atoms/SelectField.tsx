@@ -180,7 +180,7 @@ const SelectField: React.FC<ISelect> = ({
           $fieldState={fieldState}
           $isCompact={isCompact}
           {...props}
-          defaultValue={defaultValue ? defaultValue : ''}
+          {...(props.value === undefined ? { defaultValue: defaultValue ?? '' } : {})}
           onChange={handleOnChange}
         >
           {!defaultValue && (
