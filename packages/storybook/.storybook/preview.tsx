@@ -1,9 +1,9 @@
+import { withKnobs } from '@storybook/addon-knobs';
+import type { Decorator, Preview } from '@storybook/react-vite';
 import React from 'react';
-import { Preview } from '@storybook/react-vite';
-import { ThemeProvider } from 'styled-components';
-import {withKnobs} from "@storybook/addon-knobs";
 import { MemoryRouter as Router } from 'react-router-dom';
 import { defaultTheme, ThemeVariables } from 'scorer-ui-kit';
+import { ThemeProvider } from 'styled-components';
 import Fonts from '../src/fonts';
 import Style from '../src/style';
 
@@ -12,17 +12,14 @@ import Style from '../src/style';
 // addDecorator(jsxDecorator);
 
 // Router Decorator
-const RouterDecorator = story => (
-  <Router
-    initialEntries={["/welcome"]}
-    initialIndex={1}
-  >
+const RouterDecorator: Decorator = (story) => (
+  <Router initialEntries={['/welcome']} initialIndex={1}>
     {story()}
   </Router>
 );
 
 // Theme Decorator
-const ThemeDecorator = (story, context) => {
+const ThemeDecorator: Decorator = (story, context) => {
   const isDark = context.globals.theme === 'dark';
 
   if (isDark) {
@@ -34,15 +31,13 @@ const ThemeDecorator = (story, context) => {
   }
 
   return (
-    <ThemeProvider theme={defaultTheme} >
+    <ThemeProvider theme={defaultTheme}>
       <Fonts />
-      <ThemeVariables/>
-      <Style/>
-      <React.StrictMode>
-        {story()}
-      </React.StrictMode>
+      <ThemeVariables />
+      <Style />
+      <React.StrictMode>{story()}</React.StrictMode>
     </ThemeProvider>
-  )
+  );
 };
 
 // Preview configuration

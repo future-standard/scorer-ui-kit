@@ -1,19 +1,19 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
-import { Tabs, TabContent, MobileTab } from '../../Tabs/index';
-import { TabListWrapper, TabList } from '../../Tabs/TabList';
-import { IMenu, ITopBar, INotificationsHistory } from '..';
+import { MobileTab, TabContent, Tabs } from '../../Tabs/index';
+import { TabList, TabListWrapper } from '../../Tabs/TabList';
+import type { IMenu, INotificationsHistory, ITopBar } from '..';
 import CloseButton from '../atoms/CloseButton';
-import MobileNavbarContainer from '../atoms/MobileNavbarContent';
-import MobileMenu from './MobileMenu';
+import { MOBILE_NAVBAR_HEIGHT } from '../atoms/Layout';
 import MobileLogoLink from '../atoms/MobileLogoLink';
+import MobileNavbarContainer from '../atoms/MobileNavbarContent';
 import MobileUserMenu from '../molecules/MobileUserMenu';
 import NotificationsHistory from '../molecules/NotificationsHistory';
-import { MOBILE_NAVBAR_HEIGHT } from '../atoms/Layout';
+import MobileMenu from './MobileMenu';
 
 const CLOSE_ID = 'closeMenu';
 const NOTI_TAB = 'notifications';
-const USER_TAB= 'user';
+const USER_TAB = 'user';
 const MENU_TAB = 'menu';
 const CUSTOM_TAB = 'custom';
 
@@ -39,8 +39,8 @@ const HeaderContainer = styled.div`
 `;
 
 interface OwnProps {
-  closeText?: string
-  notificationsHistory?: INotificationsHistory
+  closeText?: string;
+  notificationsHistory?: INotificationsHistory;
 }
 
 type IMobileNavbar = OwnProps & IMenu & ITopBar;
@@ -67,7 +67,6 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   onLanguageToggle,
   ...props
 }) => {
-
   return (
     <Container>
       <Tabs>
@@ -75,38 +74,42 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
           <MobileLogoLink {...{ home, logoMark }} closeId={CLOSE_ID} />
           <TabList defaultTabId={CLOSE_ID}>
             {customDrawer && <MobileTab {...customDrawer} tabFor={CUSTOM_TAB} closeId={CLOSE_ID} />}
-            {hasNotifications? <MobileTab tabFor={NOTI_TAB} icon='Notifications' closeId={CLOSE_ID} /> : null}
+            {hasNotifications ? (
+              <MobileTab tabFor={NOTI_TAB} icon='Notifications' closeId={CLOSE_ID} />
+            ) : null}
             <MobileTab tabFor={USER_TAB} icon='UserProfile' closeId={CLOSE_ID} />
             <MobileTab tabFor={MENU_TAB} icon='Menu' closeId={CLOSE_ID} />
           </TabList>
         </HeaderContainer>
         <MobileNavbarContainer closeId={CLOSE_ID}>
-          <TabContent tabId={CUSTOM_TAB}>
-            {customDrawer && customDrawer.customComponent}
-          </TabContent>
+          <TabContent tabId={CUSTOM_TAB}>{customDrawer?.customComponent}</TabContent>
           <TabContent tabId={NOTI_TAB}>
-            {notificationsHistory && hasNotifications ? <NotificationsHistory {...notificationsHistory} /> : null}
+            {notificationsHistory && hasNotifications ? (
+              <NotificationsHistory {...notificationsHistory} />
+            ) : null}
           </TabContent>
           <TabContent tabId={USER_TAB}>
             <MobileUserMenu
               {...{
-              hasLanguage,
-              hasLogout,
-              logoutLink,
-              hasCurrentUser,
-              userSubmenu,
-              userDrawerBespoke,
-              loggedInUser,
-              onLogout,
-              onLanguageToggle,
-              ...props
-            }}
+                hasLanguage,
+                hasLogout,
+                logoutLink,
+                hasCurrentUser,
+                userSubmenu,
+                userDrawerBespoke,
+                loggedInUser,
+                onLogout,
+                onLanguageToggle,
+                ...props,
+              }}
               closeId={CLOSE_ID}
             />
-
           </TabContent>
           <TabContent tabId={MENU_TAB}>
-            <MobileMenu {...{ content, supportUrl, supportText, defaultMenuOpen }} closeId={CLOSE_ID} />
+            <MobileMenu
+              {...{ content, supportUrl, supportText, defaultMenuOpen }}
+              closeId={CLOSE_ID}
+            />
           </TabContent>
           <CloseButton {...{ closeText }} closeId={CLOSE_ID} />
         </MobileNavbarContainer>

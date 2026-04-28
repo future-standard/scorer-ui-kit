@@ -1,18 +1,17 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ReactDom from 'react-dom';
-import styled, { css } from 'styled-components';
-
 import { Link, useLocation } from 'react-router-dom';
-import ContextItem from '../atoms/ContextItem';
+import styled, { css } from 'styled-components';
+import { getTopLevelPath } from '../../helpers/index';
+import type { IBreakpoints } from '../../hooks/useBreakpoints';
 import useMenu from '../../hooks/useMenu';
-
-import { IBreakpoints } from '../../hooks/useBreakpoints';
 
 import SvgLogoMark from '../../svg/LogoMark';
 import SvgLogoText from '../../svg/LogoText';
+import type { IMenu } from '..';
+import ContextItem from '../atoms/ContextItem';
 import NavigationItem from '../atoms/NavigationItem';
-import { IMenu } from '..';
-import { getTopLevelPath } from '../../helpers/index';
 
 const Logo = styled(Link)`
   height: 50px;
@@ -60,7 +59,7 @@ const FooterItemContainer = styled.div`
   min-height: 70px;
 `;
 
-const PushContainer = styled.div<{ $isPinned: boolean; }>`
+const PushContainer = styled.div<{ $isPinned: boolean }>`
   position: relative;
   height: 100%;
   ${({ $isPinned }) => css`
@@ -79,9 +78,13 @@ const Container = styled.div<{ $open: boolean; $desktopSize: IBreakpoints }>`
     width: ${$open ? `var(--global-menu-width-open)` : `var(--global-menu-width-closed)`};
     border-right: 1px solid var(--dividing-line);
 
-    ${$desktopSize === 'xxlarge' ? `` : css`
+    ${
+      $desktopSize === 'xxlarge'
+        ? ``
+        : css`
       transition: width var(--speed-normal) var(--easing-primary-in);
-    `};
+    `
+    };
 
     ${LogoType}{
       transition: opacity var(--speed-normal) var(--easing-primary-in-out);
@@ -102,48 +105,75 @@ const ContainerInner = styled.div`
   height: 100%;
 `;
 
-
-const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, keepOpenText = "Keep Open", autoHideText = "Auto-Hide", supportUrl, supportText="Help & Support", defaultMenuOpen = true, canAlwaysPin = false, onMenuToggle= ()=>{}}) => {
-
-  const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(defaultMenuOpen, canAlwaysPin);
+const MainMenu: React.FC<IMenu> = ({
+  content,
+  home = '/',
+  logoMark,
+  logoText,
+  keepOpenText = 'Keep Open',
+  autoHideText = 'Auto-Hide',
+  supportUrl,
+  supportText = 'Help & Support',
+  defaultMenuOpen = true,
+  canAlwaysPin = false,
+  onMenuToggle = () => {},
+}) => {
+  const { menuState, setMenuOpen, setMenuClose, togglePinned } = useMenu(
+    defaultMenuOpen,
+    canAlwaysPin
+  );
 
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const location = useLocation();
 
   /* Handling of menu open, closing and pinning. */
-  const autoMenuOpen = useCallback((e: any) => {
-    if (e.pointerType === 'touch') { return; }
-    setMenuOpen();
-
-  }, [setMenuOpen]);
+  const autoMenuOpen = useCallback(
+    (e: React.PointerEvent) => {
+      if (e.pointerType === 'touch') {
+        return;
+      }
+      setMenuOpen();
+    },
+    [setMenuOpen]
+  );
 
   const autoMenuClose = useCallback(() => {
     // TODO: Move the focused back to the active view so it re-opens on current context.
     setMenuClose();
   }, [setMenuClose]);
 
-  const toggleMenuPin = useCallback((e: any) => {
-    if (e.pointerType === 'touch') { return; }
-    togglePinned();
-  }, [togglePinned]);
+  const toggleMenuPin = useCallback(
+    (e: React.PointerEvent) => {
+      if (e.pointerType === 'touch') {
+        return;
+      }
+      togglePinned();
+    },
+    [togglePinned]
+  );
 
   useEffect(() => {
     onMenuToggle(menuState.isMenuOpen);
-  },[menuState.isMenuOpen, onMenuToggle]);
+  }, [menuState.isMenuOpen, onMenuToggle]);
 
   /** Manage which context is open. */
   /** Submenu sends -1 because context only is for the parent
-    * The -1 value is important in the mobile version of this menu
-  */
-  const setFocusedContextCb = useCallback((contextKey: number) => {
-    if(contextKey === -1) { return; }
+   * The -1 value is important in the mobile version of this menu
+   */
+  const setFocusedContextCb = useCallback(
+    (contextKey: number) => {
+      if (contextKey === -1) {
+        return;
+      }
 
-    setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
-  }, [setFocusedContext, focusedContext]);
+      setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
+    },
+    [focusedContext]
+  );
 
   return (
     <PushContainer $isPinned={menuState.isMenuPinned}>
-      <>{ReactDom.createPortal(
+      {ReactDom.createPortal(
         <Container
           $open={menuState.isMenuOpen}
           $desktopSize={menuState.desktopSize}
@@ -153,36 +183,49 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
         >
           <ContainerInner>
             <Logo to={home}>
-              <LogoMark>{logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}</LogoMark>
-              <LogoType>{logoText ? <SVGObjectText type='image/svg+xml' data={logoText} /> : <SvgLogoText />}</LogoType>
+              <LogoMark>
+                {logoMark ? <SVGObject type='image/svg+xml' data={logoMark} /> : <SvgLogoMark />}
+              </LogoMark>
+              <LogoType>
+                {logoText ? (
+                  <SVGObjectText type='image/svg+xml' data={logoText} />
+                ) : (
+                  <SvgLogoText />
+                )}
+              </LogoType>
             </Logo>
 
             <NavigationContainer>
               {content.items.map((item, key) => {
-              return (
-                <NavigationItem
-                  topLevelPath={getTopLevelPath(location.pathname)}
-                  key={key}
-                  contextKey={key}
-                  menuOpen={menuState.isMenuOpen}
-                  submenuOpen={key === focusedContext && menuState.isMenuOpen}
-                  onClickCallback={setFocusedContextCb}
-                  {...{ item, focusedContext }}
-                />
-              );
+                return (
+                  <NavigationItem
+                    topLevelPath={getTopLevelPath(location.pathname)}
+                    key={key}
+                    contextKey={key}
+                    menuOpen={menuState.isMenuOpen}
+                    submenuOpen={key === focusedContext && menuState.isMenuOpen}
+                    onClickCallback={setFocusedContextCb}
+                    {...{ item, focusedContext }}
+                  />
+                );
               })}
             </NavigationContainer>
 
             <MenuFooter>
-
               {supportUrl && (
                 <FooterItemContainer>
-                  <ContextItem compact isActive={false} icon='Question' title={supportText} href={supportUrl} menuOpen={menuState.isMenuOpen} />
+                  <ContextItem
+                    compact
+                    isActive={false}
+                    icon='Question'
+                    title={supportText}
+                    href={supportUrl}
+                    menuOpen={menuState.isMenuOpen}
+                  />
                 </FooterItemContainer>
               )}
 
-              {(menuState.canPin)
-              ? (
+              {menuState.canPin ? (
                 <FooterItemContainer>
                   <ContextItem
                     compact
@@ -193,12 +236,12 @@ const MainMenu: React.FC<IMenu> = ({ content, home = "/", logoMark, logoText, ke
                     menuOpen={menuState.isMenuOpen}
                   />
                 </FooterItemContainer>
-              )
-              : null}
+              ) : null}
             </MenuFooter>
           </ContainerInner>
         </Container>,
-      document.body)}</>
+        document.body
+      )}
     </PushContainer>
   );
 };

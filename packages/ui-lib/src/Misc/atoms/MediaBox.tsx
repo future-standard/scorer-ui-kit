@@ -1,14 +1,15 @@
-import React, { useState, useCallback, VideoHTMLAttributes } from 'react';
+import type React from 'react';
+import { useCallback, useState, type VideoHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
-import { IMediaType } from '../../index';
+import type { IMediaType } from '../../index';
 import NoImage from '../../svg/NoImageBig';
 
-export const MediaBoxWrapper = styled.div<{$minWidth?: string, $minHeight?: string}>`
+export const MediaBoxWrapper = styled.div<{ $minWidth?: string; $minHeight?: string }>`
   position: relative;
   line-height: 0;
-  ${({$minHeight}) => $minHeight && `min-height: ${$minHeight}`};
-  ${({$minWidth}) => $minWidth && `min-width: ${$minWidth}`};
+  ${({ $minHeight }) => $minHeight && `min-height: ${$minHeight}`};
+  ${({ $minWidth }) => $minWidth && `min-width: ${$minWidth}`};
 `;
 
 const mediaStyle = `
@@ -30,7 +31,7 @@ const LoadingOverlay = styled.div`
   justify-content: center;
 `;
 
-const Video = styled.video<{ $isLoaded?: boolean, $hasModalLimits?: boolean }>`
+const Video = styled.video<{ $isLoaded?: boolean; $hasModalLimits?: boolean }>`
   ${mediaStyle};
   outline: none;
 
@@ -38,14 +39,17 @@ const Video = styled.video<{ $isLoaded?: boolean, $hasModalLimits?: boolean }>`
     transition: opacity var(--speed-slow) var(--easing-primary-out);
     opacity: ${$isLoaded ? `1` : `0`};
 
-    ${$hasModalLimits && css`
+    ${
+      $hasModalLimits &&
+      css`
       max-height: calc(100vh - 100px);
       max-width: calc(100vw - 100px);
-    `};
+    `
+    };
   `};
 `;
 
-const StyledImage = styled.img<{ $isLoaded?: boolean, $hasModalLimits?: boolean }>`
+const StyledImage = styled.img<{ $isLoaded?: boolean; $hasModalLimits?: boolean }>`
   ${mediaStyle};
 
   ${({ $isLoaded, $hasModalLimits }) => css`
@@ -53,25 +57,28 @@ const StyledImage = styled.img<{ $isLoaded?: boolean, $hasModalLimits?: boolean 
     display: ${$isLoaded ? `block` : `none`};
     opacity: ${$isLoaded ? `1` : `0`};
 
-    ${$hasModalLimits && css`
+    ${
+      $hasModalLimits &&
+      css`
       max-height: calc(100vh - 100px);
       max-width: calc(100vw - 100px);
-    `};
+    `
+    };
   `};
 `;
 
 export interface IMediaModal {
-  src: string
-  mediaType: IMediaType
-  alt?: string
-  videoOptions?: VideoHTMLAttributes<HTMLVideoElement>
-  hasModalLimits?: boolean
-  retryLoading?: boolean
-  retryLimit?: number
-  minWidth?: string
-  minHeight?: string
-  onError?: (e: Event) => void
-  onMediaLoad?: () => void
+  src: string;
+  mediaType: IMediaType;
+  alt?: string;
+  videoOptions?: VideoHTMLAttributes<HTMLVideoElement>;
+  hasModalLimits?: boolean;
+  retryLoading?: boolean;
+  retryLimit?: number;
+  minWidth?: string;
+  minHeight?: string;
+  onError?: (e: Event) => void;
+  onMediaLoad?: () => void;
 }
 
 const MediaBox: React.FC<IMediaModal> = ({
@@ -80,12 +87,12 @@ const MediaBox: React.FC<IMediaModal> = ({
   videoOptions = {},
   mediaType,
   hasModalLimits,
-  retryLoading= false,
-  retryLimit=5,
+  retryLoading = false,
+  retryLimit = 5,
   minWidth,
   minHeight,
-  onError: onErrorCallback = () => { },
-  onMediaLoad = () => { },
+  onError: onErrorCallback = () => {},
+  onMediaLoad = () => {},
 }) => {
   const [retryCount, setRetryCount] = useState(0);
   const [src, setSrc] = useState(incomingSrc);
@@ -101,48 +108,56 @@ const MediaBox: React.FC<IMediaModal> = ({
     ...videoValues
   } = videoOptions;
 
-  const onError = useCallback((e: React.SyntheticEvent<HTMLVideoElement | HTMLImageElement, Event>) => {
-    if(!retryLoading || retryCount >= retryLimit) {
-      onErrorCallback(e.nativeEvent);
-      setLoaded(true);
-      setLoadFailed(true);
-    } else {
-      const randomDelay = (1000 * (retryCount ** 2 + Math.random())); // exponential back off retry
-      setRetryCount(count => count+1);
-      setTimeout(()=>{
-        setSrc(`${incomingSrc}?v=${Date.now()}`);
-      }, randomDelay);
-    }
-
-  },[incomingSrc, onErrorCallback, retryCount, retryLoading, retryLimit]);
+  const onError = useCallback(
+    (e: React.SyntheticEvent<HTMLVideoElement | HTMLImageElement, Event>) => {
+      if (!retryLoading || retryCount >= retryLimit) {
+        onErrorCallback(e.nativeEvent);
+        setLoaded(true);
+        setLoadFailed(true);
+      } else {
+        const randomDelay = 1000 * (retryCount ** 2 + Math.random()); // exponential back off retry
+        setRetryCount((count) => count + 1);
+        setTimeout(() => {
+          setSrc(`${incomingSrc}?v=${Date.now()}`);
+        }, randomDelay);
+      }
+    },
+    [incomingSrc, onErrorCallback, retryCount, retryLoading, retryLimit]
+  );
 
   const handleLoad = useCallback(() => {
     onMediaLoad();
     setLoaded(true);
-  }, [onMediaLoad, setLoaded]);
+  }, [onMediaLoad]);
 
   return (
-    <MediaBoxWrapper {...{$minWidth: minWidth, $minHeight: minHeight}}>
-      {mediaType === 'video'
-        ? <Video
-            {...{ loop, autoPlay, controls, muted, onError }}
-            {...videoValues}
-            $hasModalLimits={hasModalLimits}
-            src={loadFailed ? '' : src}
-            $isLoaded={loaded && !loadFailed}
-            preload='metadata'
-            onCanPlayThrough={handleLoad}
-          >
-            <>{children}</>
-          </Video>
-        : <StyledImage
-            {...{ alt, onError }}
-            $hasModalLimits={hasModalLimits}
-            src={loadFailed ? '' : src}
-            onLoad={handleLoad}
-            $isLoaded={loaded && !loadFailed}
-          />}
-      {(!loaded) && <LoadingOverlay><Spinner size='large' styling='primary' /></LoadingOverlay>}
+    <MediaBoxWrapper {...{ $minWidth: minWidth, $minHeight: minHeight }}>
+      {mediaType === 'video' ? (
+        <Video
+          {...{ loop, autoPlay, controls, muted, onError }}
+          {...videoValues}
+          $hasModalLimits={hasModalLimits}
+          src={loadFailed ? '' : src}
+          $isLoaded={loaded && !loadFailed}
+          preload='metadata'
+          onCanPlayThrough={handleLoad}
+        >
+          {children}
+        </Video>
+      ) : (
+        <StyledImage
+          {...{ alt, onError }}
+          $hasModalLimits={hasModalLimits}
+          src={loadFailed ? '' : src}
+          onLoad={handleLoad}
+          $isLoaded={loaded && !loadFailed}
+        />
+      )}
+      {!loaded && (
+        <LoadingOverlay>
+          <Spinner size='large' styling='primary' />
+        </LoadingOverlay>
+      )}
       {loadFailed && <NoImage />}
     </MediaBoxWrapper>
   );

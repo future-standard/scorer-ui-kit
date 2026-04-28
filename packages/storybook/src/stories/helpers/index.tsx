@@ -1,4 +1,4 @@
-import {IconSVGs} from '@future-standard/icons';
+import { IconSVGs } from '@future-standard/icons';
 
 export const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay));
 
@@ -6,7 +6,7 @@ export const sleep = (delay: number) => new Promise((resolve) => setTimeout(reso
  * Overrides the toString on a function so that it addon-jsx prints
  * the callbacks in a copy-paste-able way.
  */
- export const emptyCallbackForStory = <T extends Function>(fn: T): T => {
+export const emptyCallbackForStory = <T extends (...args: unknown[]) => unknown>(fn: T): T => {
   /** A toString to render the function in storybook */
   // eslint-disable-next-line no-param-reassign
   fn.toString = () => '() => {}';
@@ -14,9 +14,9 @@ export const sleep = (delay: number) => new Promise((resolve) => setTimeout(reso
 };
 
 export const generateIconList = () => {
-  let iconList : {[key: string]: string}= {};
+  const iconList: { [key: string]: string } = {};
 
-  for(const key in IconSVGs){
+  for (const key in IconSVGs) {
     iconList[key] = key;
   }
 

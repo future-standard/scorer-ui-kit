@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import type React from 'react';
+import { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { EllipsisStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
@@ -9,7 +10,9 @@ const Container = styled.div`
 `;
 
 const LeftData = styled.div<{ $hasRightData: boolean }>`
-  ${({ $hasRightData }) => $hasRightData && css`
+  ${({ $hasRightData }) =>
+    $hasRightData &&
+    css`
     border-right: var(--grey-6) 1px solid;
     width: 195px;
   `};
@@ -39,12 +42,9 @@ const DeviceDataGroup = styled.div`
   justify-content: center;
 `;
 
-const LeftTitle = styled.div<{ $hasMarginBottom: boolean, $hasRightData: boolean }>`
+const LeftTitle = styled.div<{ $hasMarginBottom: boolean; $hasRightData: boolean }>`
   ${EllipsisStyles};
-  ${({ $hasRightData }) => $hasRightData
-    ? `max-margin: 140px;`
-    : `max-margin: 250px;`
-  }};
+  ${({ $hasRightData }) => ($hasRightData ? `max-margin: 140px;` : `max-margin: 250px;`)}};
   ${({ $hasMarginBottom }) => $hasMarginBottom && `margin-bottom: 1px;`};
 
   color: var(--grey-a10);
@@ -54,10 +54,7 @@ const LeftTitle = styled.div<{ $hasMarginBottom: boolean, $hasRightData: boolean
 const LeftSubTitle = styled.div<{ $hasRightData: boolean }>`
   font-family: var(--font-data);
   ${EllipsisStyles};
-  ${({ $hasRightData }) => $hasRightData
-    ? `max-width: 140px;`
-    : `max-width: 250px;`
-  }
+  ${({ $hasRightData }) => ($hasRightData ? `max-width: 140px;` : `max-width: 250px;`)}
 
   color: var(--grey-11);
   font-size: 16px;
@@ -79,12 +76,12 @@ const SubTitle = styled.div`
 `;
 
 export interface IPanelMetaData {
-  deviceIcon?: string
-  leftSubTitle?: string
-  leftTitle?: string
-  rightTitle?: string
-  rightSubTitle?: string
-  hideIcon?: boolean
+  deviceIcon?: string;
+  leftSubTitle?: string;
+  leftTitle?: string;
+  rightTitle?: string;
+  rightSubTitle?: string;
+  hideIcon?: boolean;
 }
 
 const PanelMetaData: React.FC<IPanelMetaData> = ({
@@ -93,17 +90,20 @@ const PanelMetaData: React.FC<IPanelMetaData> = ({
   leftTitle,
   rightTitle,
   rightSubTitle,
-  hideIcon = false
+  hideIcon = false,
 }) => {
-
-  const hasRightData = useMemo(() => (!!rightTitle || !!rightSubTitle) , [rightSubTitle, rightTitle]);
+  const hasRightData = useMemo(() => !!rightTitle || !!rightSubTitle, [rightSubTitle, rightTitle]);
 
   return (
     <Container>
       <LeftData $hasRightData={hasRightData}>
         {!hideIcon && <Icon icon={deviceIcon} color='dimmed' size={18} />}
         <DeviceDataGroup>
-          {leftTitle && <LeftTitle $hasMarginBottom={!!leftSubTitle} $hasRightData={hasRightData}>{leftTitle}</LeftTitle>}
+          {leftTitle && (
+            <LeftTitle $hasMarginBottom={!!leftSubTitle} $hasRightData={hasRightData}>
+              {leftTitle}
+            </LeftTitle>
+          )}
           {leftSubTitle && <LeftSubTitle $hasRightData={hasRightData}>{leftSubTitle}</LeftSubTitle>}
         </DeviceDataGroup>
       </LeftData>

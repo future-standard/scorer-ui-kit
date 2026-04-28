@@ -1,7 +1,8 @@
-import React, { useContext, useCallback } from 'react';
-import { TabContext, ContextProps } from '../Tabs';
+import type React from 'react';
+import { useCallback, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
+import { type ContextProps, TabContext } from '../Tabs';
 
 const Container = styled.div<{ $active: boolean }>`
   display: flex;
@@ -11,10 +12,12 @@ const Container = styled.div<{ $active: boolean }>`
   height: 60px;
   cursor: pointer;
 
-  ${({ $active }) => $active ? css`
+  ${({ $active }) =>
+    $active
+      ? css`
     border-bottom: 3px solid var(--primary-11);
     `
-    : css`
+      : css`
     border-bottom: 3px solid transparent;
   `};
   ${IconWrapper} {
@@ -28,13 +31,12 @@ const Title = styled.div<{ $active: boolean }>`
   font-family: ${({ theme }) => theme.fontFamily.ui};
   letter-spacing: 0.09px;
   font-weight: 500;
-  color: ${({ $active }) => $active ? 'var(--primary-11)' : 'var(--grey-11)'};
+  color: ${({ $active }) => ($active ? 'var(--primary-11)' : 'var(--grey-11)')};
   margin-bottom: 5px;
   flex-shrink: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
-
 
 const SubTitle = styled.div`
   font-size: 12px;
@@ -55,19 +57,21 @@ const TextGroup = styled.div`
 `;
 
 export interface ITabWithIcon {
-  icon: string
-  title: string
-  subtitle?: string
-  tabFor: string
+  icon: string;
+  title: string;
+  subtitle?: string;
+  tabFor: string;
 }
 
 const TabWithIcon: React.FC<ITabWithIcon> = ({ icon, title, subtitle, tabFor, ...props }) => {
-
   const { selected, setSelected }: ContextProps = useContext(TabContext);
 
-  const onChangeTab = useCallback((tabId: string) => {
-    setSelected(tabId);
-  }, [setSelected]);
+  const onChangeTab = useCallback(
+    (tabId: string) => {
+      setSelected(tabId);
+    },
+    [setSelected]
+  );
 
   const active = selected === tabFor;
 

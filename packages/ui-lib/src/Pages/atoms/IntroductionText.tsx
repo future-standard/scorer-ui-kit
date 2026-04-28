@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.p`
@@ -14,12 +14,8 @@ interface IProps {
   children?: React.ReactNode;
 }
 
-const IntroductionText : React.FC<IProps> = ({children}) => {
-  return (
-    <Container>
-      <>{children}</>
-    </Container>
-  );
+const IntroductionText: React.FC<IProps> = ({ children }) => {
+  return <Container>{children}</Container>;
 };
 
 export default IntroductionText;

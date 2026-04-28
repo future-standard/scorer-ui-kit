@@ -1,70 +1,71 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import styled from 'styled-components';
-import { select, boolean, number } from "@storybook/addon-knobs";
-import { action } from 'storybook/actions';
+import { boolean, number, select } from '@storybook/addon-knobs';
+import type React from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   FilterInputs,
-  IFilterValue,
-  ISearchFilter,
-  IFilterDropdownExt,
   FiltersResults,
+  type IDateInterval,
+  type IFilterDropdownExt,
+  type IFilterItem,
+  type IFilterLabel,
+  type IFilterType,
+  type IFilterValue,
+  type ISearchFilter,
   isFilterItem,
-  IFilterLabel,
-  IFilterItem,
-  IFilterType,
-  IDateInterval,
 } from 'scorer-ui-kit';
+import { action } from 'storybook/actions';
+import styled from 'styled-components';
 
 import {
-  loadingTagsEnglish,
+  clearEng,
+  clearJp,
   genericLoadingJp,
+  loadingTagsEnglish,
+  resultTextTemplateEng,
+  resultTextTemplateJp,
   searchPlaceholderEnglish,
   searchPlaceholderJapanese,
   searchTemplateResultEnglish,
   searchTemplateResultJapanese,
-  showMoreEng,
-  showMoreJp,
   showLessEng,
   showLessJp,
-  resultTextTemplateEng,
-  resultTextTemplateJp,
-  clearEng,
-  clearJp,
+  showMoreEng,
+  showMoreJp,
 } from '../../helpers/data_samples';
 
 const FilterInputsStory = {
   title: 'Filters/molecules',
   component: 'FilterInputs',
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div``;
 
 const depList: IFilterValue = [
   {
-    text: "Adipiscing",
-    value: "Adipiscing",
+    text: 'Adipiscing',
+    value: 'Adipiscing',
   },
   {
-    text: "Amet",
-    value: "Amet"
+    text: 'Amet',
+    value: 'Amet',
   },
   {
-    text: "Consectetur",
-    value: "Consectetur"
+    text: 'Consectetur',
+    value: 'Consectetur',
   },
   {
-    text: "Dolor sit",
-    value: "Dolor sit"
+    text: 'Dolor sit',
+    value: 'Dolor sit',
   },
   {
-    text: "Lorem ipsum",
-    value: "Lorem ipsum"
+    text: 'Lorem ipsum',
+    value: 'Lorem ipsum',
   },
   {
-    text: "Vestibulum",
-    value: "Vestibulum"
-  }
+    text: 'Vestibulum',
+    value: 'Vestibulum',
+  },
 ];
 
 const englishDataList: IFilterValue = [
@@ -83,20 +84,27 @@ const japaneseDataList: IFilterValue = [
   { text: 'すし', value: 4 },
 ];
 
-const generateResultsLabelData = (dropdownFilters: IFilterDropdownExt[], searchFilters: ISearchFilter[]): IFilterLabel[] => {
+const generateResultsLabelData = (
+  dropdownFilters: IFilterDropdownExt[],
+  searchFilters: ISearchFilter[]
+): IFilterLabel[] => {
   const labelLists: IFilterLabel[] = [];
 
   searchFilters.forEach((searcher) => {
-    if (searcher.value !== '' && (typeof searcher.value === 'string' || typeof searcher.value === 'number')) {
-      const textValue: string = typeof searcher.value === 'number' ? searcher.value.toString() : searcher.value;
+    if (
+      searcher.value !== '' &&
+      (typeof searcher.value === 'string' || typeof searcher.value === 'number')
+    ) {
+      const textValue: string =
+        typeof searcher.value === 'number' ? searcher.value.toString() : searcher.value;
       labelLists.push({
         filterId: searcher.id,
         item: { text: textValue, value: textValue },
         filterName: searcher.name,
         type: 'search',
-      })
+      });
     }
-  })
+  });
 
   dropdownFilters.forEach((dropdown) => {
     if (dropdown.selected === null) {
@@ -108,7 +116,7 @@ const generateResultsLabelData = (dropdownFilters: IFilterDropdownExt[], searchF
         filterId: dropdown.id,
         item: dropdown.selected,
         icon: dropdown.buttonIcon,
-        type: 'dropdown'
+        type: 'dropdown',
       });
       return;
     }
@@ -119,26 +127,28 @@ const generateResultsLabelData = (dropdownFilters: IFilterDropdownExt[], searchF
           filterId: dropdown.id,
           item: item,
           icon: dropdown.buttonIcon,
-          type: 'dropdown'
-        })
-      })
+          type: 'dropdown',
+        });
+      });
     }
-  })
+  });
 
   return labelLists;
-}
+};
 
-const isDifferentValue = (item: IFilterItem | Date | IDateInterval, compareItem: IFilterItem | Date | IDateInterval) : boolean => {
-  if(isFilterItem(item) && isFilterItem(compareItem)) {
+const isDifferentValue = (
+  item: IFilterItem | Date | IDateInterval,
+  compareItem: IFilterItem | Date | IDateInterval
+): boolean => {
+  if (isFilterItem(item) && isFilterItem(compareItem)) {
     return compareItem.value !== item.value;
   }
 
   return true;
-}
+};
 
 export const _FilterInputs = () => {
-
-  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
+  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
   const hasShowMore = boolean('Has ShowMore', true);
   const totalResults = number('Total Results', 6);
   const foodValue = action('food selection');
@@ -149,17 +159,20 @@ export const _FilterInputs = () => {
   const [foodSelected, setFoodSelected] = useState('');
   const [exampleSearch, setExampleSearch] = useState('');
 
-  const handleSelectItemType = useCallback((newSelection: IFilterValue) => {
-    foodValue(newSelection);
-    setSelectedObj(newSelection);
-  }, [foodValue]);
+  const handleSelectItemType = useCallback(
+    (newSelection: IFilterValue) => {
+      foodValue(newSelection);
+      setSelectedObj(newSelection);
+    },
+    [foodValue]
+  );
 
   const handleCategorySelected = useCallback((newSelection: IFilterValue) => {
     setCategorySelected(newSelection);
   }, []);
 
   const handleSearcher = useCallback((newValue: string | null, id: string) => {
-    const validValue = newValue === null ? '' : newValue
+    const validValue = newValue === null ? '' : newValue;
 
     if ('search1' === id) {
       setNameVal(validValue);
@@ -172,62 +185,76 @@ export const _FilterInputs = () => {
     if ('search3' === id) {
       setExampleSearch(validValue);
     }
+  }, []);
 
-  },[]);
+  const dropdownFilters: IFilterDropdownExt[] = useMemo(
+    () => [
+      {
+        id: 'category1',
+        buttonText: 'Department',
+        buttonIcon: 'MetaCategories',
+        list: depList,
+        loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
+        searchPlaceholder:
+          language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
+        searchResultText:
+          language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+        onSelect: handleCategorySelected,
+        selected: categorySelected,
+      },
+      {
+        id: 'food',
+        canHide: true,
+        buttonText: language === 'english' ? 'Menu' : 'メニュー',
+        buttonIcon: 'Zone',
+        list: language === 'english' ? englishDataList : japaneseDataList,
+        loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
+        searchPlaceholder: language === 'english' ? 'Menu options...' : 'メニュー...',
+        searchResultText:
+          language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+        optionType: 'checkbox',
+        onSelect: handleSelectItemType,
+        selected: selectedObj,
+      },
+    ],
+    [categorySelected, handleCategorySelected, handleSelectItemType, language, selectedObj]
+  );
 
-  const dropdownFilters: IFilterDropdownExt[] = useMemo(() => [
-    {
-      id: 'category1',
-      buttonText: 'Department',
-      buttonIcon: 'MetaCategories',
-      list: depList,
-      loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
-      searchPlaceholder: language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
-      searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
-      onSelect: handleCategorySelected,
-      selected: categorySelected
-    },
-    {
-      id: 'food',
-      canHide: true,
-      buttonText: language === 'english' ? 'Menu' : 'メニュー',
-      buttonIcon: 'Zone',
-      list: language === 'english' ? englishDataList : japaneseDataList,
-      loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
-      searchPlaceholder: language === 'english' ? 'Menu options...' : 'メニュー...',
-      searchResultText: language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
-      optionType: 'checkbox',
-      onSelect: handleSelectItemType,
-      selected: selectedObj
-    },
-  ], [categorySelected, handleCategorySelected, handleSelectItemType, language, selectedObj]);
-
-  const searchFilters: ISearchFilter[] = useMemo(() => [
-    {
-      id: 'search1',
-      placeholder: language === 'english' ? 'Filter by name...' : '名前 フィルター',
-      value: nameVal,
-      name: language === 'english' ? 'Name filter' : '名前 フィルター',
-      onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search1')}
-    },
-    {
-      id: 'search2',
-      placeholder: language === 'english' ? 'Filter by food' : '食べ物 フィルター',
-      canHide: true,
-      showFieldText: 'Search by food',
-      value: foodSelected,
-      name: language === 'english' ? 'Menu filter' : 'メニュー  フィルター',
-      onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search2')}
-    },
-    {
-      id: 'search3',
-      placeholder: 'Search by Item Id',
-      showFieldText: 'Search Example String Field',
-      value: exampleSearch,
-      name: 'Example',
-      onChange: ( e: React.ChangeEvent<HTMLInputElement>) => {   handleSearcher(e.target.value, 'search3')}
-    }
-  ], [exampleSearch, foodSelected, handleSearcher, language, nameVal]);
+  const searchFilters: ISearchFilter[] = useMemo(
+    () => [
+      {
+        id: 'search1',
+        placeholder: language === 'english' ? 'Filter by name...' : '名前 フィルター',
+        value: nameVal,
+        name: language === 'english' ? 'Name filter' : '名前 フィルター',
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+          handleSearcher(e.target.value, 'search1');
+        },
+      },
+      {
+        id: 'search2',
+        placeholder: language === 'english' ? 'Filter by food' : '食べ物 フィルター',
+        canHide: true,
+        showFieldText: 'Search by food',
+        value: foodSelected,
+        name: language === 'english' ? 'Menu filter' : 'メニュー  フィルター',
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+          handleSearcher(e.target.value, 'search2');
+        },
+      },
+      {
+        id: 'search3',
+        placeholder: 'Search by Item Id',
+        showFieldText: 'Search Example String Field',
+        value: exampleSearch,
+        name: 'Example',
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+          handleSearcher(e.target.value, 'search3');
+        },
+      },
+    ],
+    [exampleSearch, foodSelected, handleSearcher, language, nameVal]
+  );
 
   const labelLists = generateResultsLabelData(dropdownFilters, searchFilters);
 
@@ -239,26 +266,29 @@ export const _FilterInputs = () => {
     setExampleSearch('');
   }, []);
 
-
-  const onRemoveFilter = useCallback((filterId: string, type: IFilterType, item: IFilterItem | Date | IDateInterval) => {
-    if (type === 'dropdown' ) {
-      const foundFilter = dropdownFilters.find((dropdown) => dropdown.id === filterId);
-      if (foundFilter && foundFilter.onSelect) {
-        const newSelected: IFilterValue = Array.isArray(foundFilter.selected)
-          ? foundFilter.selected.filter((currentItem : IFilterItem) => isDifferentValue(currentItem, item))
-          : null
-        foundFilter.onSelect(newSelected);
+  const onRemoveFilter = useCallback(
+    (filterId: string, type: IFilterType, item: IFilterItem | Date | IDateInterval) => {
+      if (type === 'dropdown') {
+        const foundFilter = dropdownFilters.find((dropdown) => dropdown.id === filterId);
+        if (foundFilter?.onSelect) {
+          const newSelected: IFilterValue = Array.isArray(foundFilter.selected)
+            ? foundFilter.selected.filter((currentItem: IFilterItem) =>
+                isDifferentValue(currentItem, item)
+              )
+            : null;
+          foundFilter.onSelect(newSelected);
+        }
       }
-    }
 
-    if (type === 'search') {
-      const foundFilter = searchFilters.find((searcher) => searcher.id === filterId);
-      if (foundFilter) {
-        handleSearcher('', filterId);
+      if (type === 'search') {
+        const foundFilter = searchFilters.find((searcher) => searcher.id === filterId);
+        if (foundFilter) {
+          handleSearcher('', filterId);
+        }
       }
-    }
-
-  }, [dropdownFilters, handleSearcher, searchFilters]);
+    },
+    [dropdownFilters, handleSearcher, searchFilters]
+  );
 
   return (
     <Container>
@@ -270,9 +300,10 @@ export const _FilterInputs = () => {
       <FiltersResults
         {...{ labelLists, totalResults, onClearAll, onRemoveFilter }}
         resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
-        clearText = {language === 'english' ? clearEng : clearJp}
+        clearText={language === 'english' ? clearEng : clearJp}
       />
-    </Container>)
-}
+    </Container>
+  );
+};
 
 export default FilterInputsStory;

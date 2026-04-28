@@ -1,9 +1,10 @@
-import React, { Fragment, ReactElement, useCallback, useState } from 'react';
+import type React from 'react';
+import { Fragment, type ReactElement, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import BigIconsSummary from '../../Misc/atoms/BigIconsSummary';
+import Button from '../atoms/Button';
 import DropArea from '../atoms/DropArea';
 import InputFileButton from '../atoms/InputFileButton';
-import Button from '../atoms/Button';
 
 const Container = styled.div`
   font-family: ${({ theme }) => theme.fontFamily.ui};
@@ -24,8 +25,8 @@ const InputButtonWrapper = styled.div`
   gap: 20px;
 `;
 
-const FilesUploadGroup = styled.div<{ $height?: string, $hasFiles: boolean }>`
-  padding: ${({ $hasFiles }) => $hasFiles ? '26px 0 20px 0' : '65px 0 42px 0'};
+const FilesUploadGroup = styled.div<{ $height?: string; $hasFiles: boolean }>`
+  padding: ${({ $hasFiles }) => ($hasFiles ? '26px 0 20px 0' : '65px 0 42px 0')};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,15 +49,20 @@ const Description = styled.div`
   max-width: 386px;
 `;
 
-const getUpdateFiles = (newFiles: FileList, files: FileList | null, allowedFileTypes?: string[]): IUploadedFiles => {
-
+const getUpdateFiles = (
+  newFiles: FileList,
+  files: FileList | null,
+  allowedFileTypes?: string[]
+): IUploadedFiles => {
   // creates a newFiles variable to prevent errors with input
   const newFilesTransfer = new DataTransfer();
   const rejectedFilesTransfer = new DataTransfer();
 
   for (let index = 0; index < newFiles.length; index++) {
-
-    const isCorrectType = (allowedFileTypes === undefined) || (allowedFileTypes.length === 0) ? true : allowedFileTypes.includes(newFiles[index].type);
+    const isCorrectType =
+      allowedFileTypes === undefined || allowedFileTypes.length === 0
+        ? true
+        : allowedFileTypes.includes(newFiles[index].type);
     if (isCorrectType) {
       newFilesTransfer.items.add(newFiles[index]);
     } else {
@@ -65,7 +71,10 @@ const getUpdateFiles = (newFiles: FileList, files: FileList | null, allowedFileT
   }
 
   if (files === null) {
-    const result: IUploadedFiles = { goodFiles: newFilesTransfer.files, rejectedFiles: rejectedFilesTransfer.files };
+    const result: IUploadedFiles = {
+      goodFiles: newFilesTransfer.files,
+      rejectedFiles: rejectedFilesTransfer.files,
+    };
     return result;
   }
 
@@ -79,9 +88,11 @@ const getUpdateFiles = (newFiles: FileList, files: FileList | null, allowedFileT
   }
 
   for (let index = 0; index < newFilesTransfer.files.length; index++) {
-
     const isAlready = fileNamesSet.has(newFilesTransfer.files[index].name);
-    const isCorrectType = (allowedFileTypes === undefined) || (allowedFileTypes.length === 0) ? true : allowedFileTypes.includes(newFiles[index].type);
+    const isCorrectType =
+      allowedFileTypes === undefined || allowedFileTypes.length === 0
+        ? true
+        : allowedFileTypes.includes(newFiles[index].type);
 
     if (isAlready || !isCorrectType) {
       rejectedFilesTransfer.items.add(newFiles[index]);
@@ -89,29 +100,32 @@ const getUpdateFiles = (newFiles: FileList, files: FileList | null, allowedFileT
       updatedFilesTransfer.items.add(newFilesTransfer.files[index]);
     }
   }
-  const result: IUploadedFiles = { goodFiles: updatedFilesTransfer.files, rejectedFiles: rejectedFilesTransfer.files };
+  const result: IUploadedFiles = {
+    goodFiles: updatedFilesTransfer.files,
+    rejectedFiles: rejectedFilesTransfer.files,
+  };
 
   return result;
 };
 
 interface IUploadedFiles {
-  goodFiles: FileList
-  rejectedFiles: FileList
+  goodFiles: FileList;
+  rejectedFiles: FileList;
 }
 
 interface IAreaUploaderManager {
-  title?: string
-  description?: string
-  fileIcons?: string[]
-  selectFilesText?: string
-  addMoreFilesText?: string
-  clearFilesText?: string
-  beginUploadText?: string
-  allowedFileTypes?: string[]
-  customComponent?: ReactElement
-  onChangeCallback?: (goodFiles: FileList, rejectedFiles: FileList) => void
-  clearFilesCallback?: () => void
-  beginUploadCallback?: () => void
+  title?: string;
+  description?: string;
+  fileIcons?: string[];
+  selectFilesText?: string;
+  addMoreFilesText?: string;
+  clearFilesText?: string;
+  beginUploadText?: string;
+  allowedFileTypes?: string[];
+  customComponent?: ReactElement;
+  onChangeCallback?: (goodFiles: FileList, rejectedFiles: FileList) => void;
+  clearFilesCallback?: () => void;
+  beginUploadCallback?: () => void;
 }
 
 const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
@@ -124,43 +138,42 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
   beginUploadText = 'Begin Upload',
   allowedFileTypes,
   customComponent,
-  onChangeCallback = () => { },
-  clearFilesCallback = () => { },
-  beginUploadCallback = () => { }
+  onChangeCallback = () => {},
+  clearFilesCallback = () => {},
+  beginUploadCallback = () => {},
 }) => {
-
   const [files, setFiles] = useState<FileList | null>(null);
 
-  const handleFiles = useCallback((newFiles: FileList) => {
-    if (newFiles === null) {
-      return;
-    }
-    const { goodFiles, rejectedFiles } = getUpdateFiles(newFiles, files, allowedFileTypes);
-    setFiles(goodFiles);
-    onChangeCallback(goodFiles, rejectedFiles);
-
-  }, [files, allowedFileTypes, onChangeCallback]);
+  const handleFiles = useCallback(
+    (newFiles: FileList) => {
+      if (newFiles === null) {
+        return;
+      }
+      const { goodFiles, rejectedFiles } = getUpdateFiles(newFiles, files, allowedFileTypes);
+      setFiles(goodFiles);
+      onChangeCallback(goodFiles, rejectedFiles);
+    },
+    [files, allowedFileTypes, onChangeCallback]
+  );
 
   const clearFiles = useCallback(() => {
     setFiles(null);
     clearFilesCallback();
-  },[clearFilesCallback]);
+  }, [clearFilesCallback]);
 
   return (
     <Container>
       <FilesUploadGroup $hasFiles={files !== null}>
         <StyledDropArea dropCallback={handleFiles} />
-        {
+        {customComponent ? (
           customComponent
-            ? customComponent
-            : (
-              <Fragment>
-                {fileIcons && <BigIconsSummary icons={fileIcons} />}
-                <Title>{title}</Title>
-                {files === null && <Description>{description}</Description>}
-              </Fragment>
-            )
-        }
+        ) : (
+          <Fragment>
+            {fileIcons && <BigIconsSummary icons={fileIcons} />}
+            <Title>{title}</Title>
+            {files === null && <Description>{description}</Description>}
+          </Fragment>
+        )}
 
         <InputButtonWrapper>
           <InputFileButton
@@ -171,21 +184,16 @@ const AreaUploadManager: React.FC<IAreaUploaderManager> = ({
             buttonDesign={files !== null ? 'secondary' : 'primary'}
             accept={allowedFileTypes?.join(', ')}
           />
-          {files !== null &&
+          {files !== null && (
             <Fragment>
-              <Button
-                size='small'
-                onClick={beginUploadCallback}
-                design='primary'
-              >{beginUploadText}
+              <Button size='small' onClick={beginUploadCallback} design='primary'>
+                {beginUploadText}
               </Button>
-              <Button
-                size='small'
-                onClick={clearFiles}
-                design='secondary'
-              >{clearFilesText}
+              <Button size='small' onClick={clearFiles} design='secondary'>
+                {clearFilesText}
               </Button>
-            </Fragment>}
+            </Fragment>
+          )}
         </InputButtonWrapper>
       </FilesUploadGroup>
     </Container>

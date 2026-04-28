@@ -1,33 +1,27 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import styled from 'styled-components';
-import { object } from "@storybook/addon-knobs";
-
-
-import {TypeTable as EditableTable,
-  EditCell,
-  ModalProvider,
-} from 'scorer-ui-kit';
-import photo from '../../assets/placeholder.jpg';
-import {sleep} from '../../helpers';
-
-import {
-  IRowData,
+import { object } from '@storybook/addon-knobs';
+import { useCallback, useEffect, useState } from 'react';
+import { TypeTable as EditableTable, EditCell, ModalProvider } from 'scorer-ui-kit';
+import type {
   IDeviceStatus,
+  IRowData,
   ITableColumnConfig,
-  ITypeTableData
+  ITypeTableData,
 } from 'scorer-ui-kit/dist/Tables';
+import styled from 'styled-components';
+import photo from '../../assets/placeholder.jpg';
+import { sleep } from '../../helpers';
 
 const EditableTableStory = {
   title: 'Tables/molecules',
   component: EditableTable,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
   padding: 100px;
 `;
 
-const columnConfigSample : ITableColumnConfig[] = [
+const columnConfigSample: ITableColumnConfig[] = [
   {
     header: 'Job Number',
     sortable: false,
@@ -37,13 +31,13 @@ const columnConfigSample : ITableColumnConfig[] = [
     header: 'Camera Name',
     sortable: false,
     cellStyle: 'normalImportance',
-    alignment:'left',
+    alignment: 'left',
   },
   {
     header: 'When',
     sortable: false,
     cellStyle: 'normalImportance',
-    alignment:'center',
+    alignment: 'center',
   },
   {
     header: 'Status',
@@ -60,13 +54,13 @@ const columnConfigSample : ITableColumnConfig[] = [
 ];
 
 interface IExampleData {
-  id: string,
-  jobName: string,
-  cameraName: string,
-  jobTime: string,
-  status: IDeviceStatus,
-  statusText: string,
-  temperature: string,
+  id: string;
+  jobName: string;
+  cameraName: string;
+  jobTime: string;
+  status: IDeviceStatus;
+  statusText: string;
+  temperature: string;
 }
 const sampleData: IExampleData[] = [
   {
@@ -102,9 +96,9 @@ const sampleData: IExampleData[] = [
     cameraName: 'Camera4',
     jobTime: '12 mins ago',
     status: 'danger',
-    statusText:'Warning',
+    statusText: 'Warning',
     temperature: '38.2ºC',
-  }
+  },
 ];
 
 export const _EditableTable = () => {
@@ -112,67 +106,84 @@ export const _EditableTable = () => {
   const [rows, setRows] = useState<ITypeTableData>([]);
   const columnConfig = object('ColumConfig', columnConfigSample);
 
-  const updateCameraName = useCallback(async (name: string, rowKey: string) => {
-    const updatedData = [...data];
-    const updatedRow = updatedData.find(({id}) =>  id === rowKey);
-    if(updatedRow && name.length > 0) {
+  const updateCameraName = useCallback(
+    async (name: string, rowKey: string) => {
+      const updatedData = [...data];
+      const updatedRow = updatedData.find(({ id }) => id === rowKey);
+      if (updatedRow && name.length > 0) {
+        updatedRow.cameraName = name;
+        // Database wait example
+        await sleep(3000);
+        setData(updatedData);
+      }
+    },
+    [data]
+  );
 
-      updatedRow.cameraName = name;
-      // Database wait example
-      await sleep(3000);
-      setData(updatedData);
-    }
-  },[data]);
+  const buildDataRows = useCallback(
+    (data: IExampleData[]): ITypeTableData => {
+      const newRows: ITypeTableData = data.map(
+        ({ id, jobName, cameraName, jobTime, status, statusText, temperature }) => {
+          const row: IRowData = {
+            id,
+            header: {
+              image: photo,
+              mediaUrl: photo,
+              mediaType: 'img',
+            },
+            columns: [
+              { text: jobName },
+              {
+                customComponent: (
+                  <EditCell
+                    alignment={'left'}
+                    defaultValue={cameraName}
+                    rowKey={id}
+                    saveCallback={updateCameraName}
+                    toLink='/'
+                  />
+                ),
+              },
+              { text: jobTime },
+              { text: statusText, status },
+              { text: temperature },
+            ],
+          };
+          return row;
+        }
+      );
 
-  const buildDataRows = useCallback((data : IExampleData[]) : ITypeTableData =>  {
-    const newRows : ITypeTableData = data.map(({id, jobName, cameraName, jobTime, status, statusText, temperature}) => {
-      const row : IRowData =  ({
-        id,
-        header: {
-          image: photo,
-          mediaUrl: photo,
-          mediaType: 'img',
-        },
-        columns:
-        [ {text: jobName },
-          {customComponent: <EditCell alignment={'left'} defaultValue={cameraName} rowKey={id} saveCallback={updateCameraName} toLink='/'/>},
-          { text: jobTime},
-          { text: statusText, status },
-          { text: temperature },
-        ]
-      })
-      return row;
-    })
-
-    return newRows;
-  },[updateCameraName])
+      return newRows;
+    },
+    [updateCameraName]
+  );
 
   /**
    * If data is updated the table will be rebuild
    */
 
   useEffect(() => {
-    const dataRows : ITypeTableData = buildDataRows(data);
+    const dataRows: ITypeTableData = buildDataRows(data);
     setRows(dataRows);
     return () => {
-      setRows([])
-    }
+      setRows([]);
+    };
   }, [data, buildDataRows]);
 
   // Provider should be at main Index level, it's here just for the example
   return (
     <Container>
       <ModalProvider>
-        <EditableTable {
-          ...{
+        <EditableTable
+          {...{
             columnConfig: columnConfig,
             rows,
             hasThumbnail: true,
-          }
-        } />
+          }}
+        />
       </ModalProvider>
     </Container>
-  )
+  );
 };
 
 export default EditableTableStory;

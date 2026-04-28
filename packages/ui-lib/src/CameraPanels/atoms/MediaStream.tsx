@@ -1,10 +1,9 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
-import { MediaBoxWrapper } from '../../Misc/atoms/MediaBox';
-import { IFeedbackColor } from '../..';
-import Icon, { IconWrapper } from '../../Icons/Icon';
-import MediaBox, { IMediaModal } from '../../Misc/atoms/MediaBox';
+import type { IFeedbackColor } from '../..';
 import { EllipsisStyles } from '../../common';
+import Icon, { IconWrapper } from '../../Icons/Icon';
+import MediaBox, { type IMediaModal, MediaBoxWrapper } from '../../Misc/atoms/MediaBox';
 
 const Container = styled.div`
   width: 100%;
@@ -28,13 +27,15 @@ const Container = styled.div`
     }
 `;
 
-const EmptyWithIcon = styled.div<{$hasPadding: boolean}>`
+const EmptyWithIcon = styled.div<{ $hasPadding: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   width: 100%;
-  ${({$hasPadding})=> $hasPadding && `
+  ${({ $hasPadding }) =>
+    $hasPadding &&
+    `
     padding-bottom: 43px
   `}
 ;
@@ -46,7 +47,7 @@ const EmptyWithIcon = styled.div<{$hasPadding: boolean}>`
   }
 `;
 const Notice = styled.div<{ $color?: IFeedbackColor }>`
-  background-color: ${({$color }) => $color && `var(--${$color})`};
+  background-color: ${({ $color }) => $color && `var(--${$color})`};
   color: var(--inverse);
   opacity: 0.85;
   height: 46px;
@@ -91,19 +92,19 @@ const NoticeTextGroup = styled.div`
 `;
 
 const StatusLine = styled.div<{ $color: IFeedbackColor }>`
-  background-color: ${({$color }) => $color && `var(--${$color})`};
+  background-color: ${({ $color }) => $color && `var(--${$color})`};
   height: 3px;
   width: 100%;
 `;
 
 export interface IMediaStream extends IMediaModal {
-  isEmptyWithIcon?: boolean
-  emptyIcon?: string
-  status?: IFeedbackColor
-  noticeMessage?: string
-  noticeTitle?: string
-  noticeIcon?: string
-  hasNotice?: boolean
+  isEmptyWithIcon?: boolean;
+  emptyIcon?: string;
+  status?: IFeedbackColor;
+  noticeMessage?: string;
+  noticeTitle?: string;
+  noticeIcon?: string;
+  hasNotice?: boolean;
 }
 
 const MediaStream: React.FC<IMediaStream> = ({
@@ -118,12 +119,20 @@ const MediaStream: React.FC<IMediaStream> = ({
 }) => {
   return (
     <Container>
-      {isEmptyWithIcon
-        ? <EmptyWithIcon $hasPadding={hasNotice}><Icon icon={emptyIcon ? emptyIcon : 'PasswordHide'} color='dimmed' size={41} /></EmptyWithIcon>
-        : <MediaBox {...{ ...props }} />}
+      {isEmptyWithIcon ? (
+        <EmptyWithIcon $hasPadding={hasNotice}>
+          <Icon icon={emptyIcon ? emptyIcon : 'PasswordHide'} color='dimmed' size={41} />
+        </EmptyWithIcon>
+      ) : (
+        <MediaBox {...{ ...props }} />
+      )}
       {hasNotice && (
         <Notice $color={status}>
-          {noticeIcon && <NoticeIcon><Icon icon={noticeIcon} size={20} color='inverse' /></NoticeIcon>}
+          {noticeIcon && (
+            <NoticeIcon>
+              <Icon icon={noticeIcon} size={20} color='inverse' />
+            </NoticeIcon>
+          )}
           <NoticeTextGroup>
             {noticeTitle && <NoticeTitle>{noticeTitle}</NoticeTitle>}
             {noticeMessage && <NoticeMessage>{noticeMessage}</NoticeMessage>}

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   .light-theme {
@@ -14,5 +14,5 @@ const GlobalStyle = createGlobalStyle`
     --success: #5DBB63;
     --warning: #FFDC00;
   }
-`
+`;
 export default GlobalStyle;

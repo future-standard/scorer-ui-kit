@@ -1,10 +1,9 @@
-import React, { useState, useCallback, useEffect } from "react";
-import styled from "styled-components";
-
-import Icon from "../../Icons/Icon";
-import { IUtilityHeaderLinkShare } from "..";
-import { useCopyToClipboard } from "../../hooks";
-
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useCopyToClipboard } from '../../hooks';
+import Icon from '../../Icons/Icon';
+import type { IUtilityHeaderLinkShare } from '..';
 
 const ExtraActionIcon = styled.div`
   display: flex;
@@ -49,14 +48,18 @@ const ExtraAction = styled.button`
 
 `;
 
-const UtilityHeaderShare : React.FC<IUtilityHeaderLinkShare> = ({show, link, label = 'Share', copiedLabel = 'Copied'}) => {
-  
-  const [ copyActionText, setCopyActionText ] = useState<string>(label);
-  const {copyToClipboard} = useCopyToClipboard();
-  
+const UtilityHeaderShare: React.FC<IUtilityHeaderLinkShare> = ({
+  show,
+  link,
+  label = 'Share',
+  copiedLabel = 'Copied',
+}) => {
+  const [copyActionText, setCopyActionText] = useState<string>(label);
+  const { copyToClipboard } = useCopyToClipboard();
+
   const clickHandlerShareLink = useCallback(() => {
     // Copy to clip board and change UI for short period.
-    copyToClipboard( link ? link : window.location.href);
+    copyToClipboard(link ? link : window.location.href);
     setCopyActionText(copiedLabel);
     setTimeout(() => setCopyActionText(copyActionText), 2000);
   }, [link, copiedLabel, copyActionText, copyToClipboard]);
@@ -65,18 +68,19 @@ const UtilityHeaderShare : React.FC<IUtilityHeaderLinkShare> = ({show, link, lab
     // Update the label if prop is updated.
     setCopyActionText(label);
   }, [label]);
-  
-  if(!show){ return null; }
-  
-  return(
-    <ExtraAction onClick={ clickHandlerShareLink }>
+
+  if (!show) {
+    return null;
+  }
+
+  return (
+    <ExtraAction onClick={clickHandlerShareLink}>
       <ExtraActionIcon>
-        <Icon icon="Link" size={16} color="grey-10" />
+        <Icon icon='Link' size={16} color='grey-10' />
       </ExtraActionIcon>
       {copyActionText}
     </ExtraAction>
   );
-  
 };
 
 export default UtilityHeaderShare;

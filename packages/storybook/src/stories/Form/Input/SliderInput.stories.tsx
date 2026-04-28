@@ -1,15 +1,13 @@
-import React from 'react';
 // import { action } from 'storybook/actions';
-import { boolean, number, object } from "@storybook/addon-knobs";
+import { boolean, number, object } from '@storybook/addon-knobs';
+import { type ISliderMark, SliderInput } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
 import styled from 'styled-components';
-import {SliderInput, ISliderMark} from 'scorer-ui-kit';
-
 
 const SliderInputStory = {
   title: 'Form/Input',
   component: SliderInput,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -17,7 +15,7 @@ const Container = styled.div`
     width: 268px;
 `;
 
-const exampleMarks : ISliderMark[] = [
+const exampleMarks: ISliderMark[] = [
   {
     value: 1,
     label: '1H',
@@ -36,52 +34,51 @@ const exampleMarks : ISliderMark[] = [
   },
   {
     value: 5,
-    label:'5H',
+    label: '5H',
   },
   {
     value: 6,
-    label:'6H',
+    label: '6H',
   },
   {
     value: 7,
-    label:'7H',
+    label: '7H',
   },
   {
     value: 8,
-    label:'8H',
+    label: '8H',
   },
 ];
-
 
 export const _SliderInput = () => {
   const disabled = boolean('Disabled', false);
   const maxValue = number('Max', 8);
   const minValue = number('Min', 1);
-  const defaultValue = number('Default value', 6)
+  const defaultValue = number('Default value', 6);
   const showValue = action('Input Callback');
   const marks = object('Marks', exampleMarks);
   const allMarkCentered = boolean('Center aligned end numbers', false);
   // const step = number('Step', 1); // still fixing step option
 
   const handleUpdate = (value: number) => {
-    console.log('updated value', value);
-    showValue(`Returned value: ${value}`, value)
+    console.debug('updated value', value);
+    showValue(`Returned value: ${value}`, value);
   };
 
   return (
     <Container>
       <SliderInput
-          max={maxValue}
-          min={minValue}
-          disabled={disabled}
-          // step={step}
-          inputCallback={handleUpdate}
-          marks={marks}
-          defaultValue={defaultValue}
-          allMarkCentered={allMarkCentered}
-        />
+        max={maxValue}
+        min={minValue}
+        disabled={disabled}
+        // step={step}
+        inputCallback={handleUpdate}
+        marks={marks}
+        defaultValue={defaultValue}
+        allMarkCentered={allMarkCentered}
+      />
     </Container>
-  )
-}
+  );
+};
 
 export default SliderInputStory;

@@ -1,4 +1,5 @@
-import React, {Fragment} from 'react';
+import type React from 'react';
+import { Fragment } from 'react';
 import styled from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 
@@ -25,17 +26,17 @@ const PlusIconWrapper = styled.div`
 `;
 
 interface IBigIconsSummary {
-  icons: string[]
-  color?: ISvgIcons['color']
-  size?: number,
-  weight?: 'light' | 'regular' | 'heavy' | 'strong'
+  icons: string[];
+  color?: ISvgIcons['color'];
+  size?: number;
+  weight?: 'light' | 'regular' | 'heavy' | 'strong';
 }
 
 const BigIconsSummary: React.FC<IBigIconsSummary> = ({
   icons,
   color = 'dimmed',
   size = 72,
-  weight='light',
+  weight = 'light',
   ...props
 }) => {
   return (
@@ -43,8 +44,12 @@ const BigIconsSummary: React.FC<IBigIconsSummary> = ({
       {icons.map((icon, index) => {
         return (
           <Fragment key={`type-upload-${icon}}`}>
-            {(index !== 0) && <PlusIconWrapper><PlusIcon icon='CloseCompact' size={22} /></PlusIconWrapper>}
-            <Icon icon={icon} {...{color, size, weight}} />
+            {index !== 0 && (
+              <PlusIconWrapper>
+                <PlusIcon icon='CloseCompact' size={22} />
+              </PlusIconWrapper>
+            )}
+            <Icon icon={icon} {...{ color, size, weight }} />
           </Fragment>
         );
       })}

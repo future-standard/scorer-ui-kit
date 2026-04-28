@@ -1,89 +1,85 @@
-import React, {InputHTMLAttributes, useState, useCallback} from 'react';
+import type React from 'react';
+import { type InputHTMLAttributes, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import SliderInput, {ISliderMark} from '../atoms/SliderInput';
-import {IFeedbackColor} from '../../index';
+import type { IFeedbackColor } from '../../index';
 import Label from '../atoms/Label';
-
+import SliderInput, { type ISliderMark } from '../atoms/SliderInput';
 
 const Container = styled.div``;
-const Headers = styled.div<{$allMarkCentered?:boolean}>`
+const Headers = styled.div<{ $allMarkCentered?: boolean }>`
   font-size: 14px;
   color: var(--grey-10);
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  ${({$allMarkCentered}) => $allMarkCentered ?
-      `padding: 0;`
-    :
-      `padding: 0 6px;`
-  };
+  ${({ $allMarkCentered }) => ($allMarkCentered ? `padding: 0;` : `padding: 0 6px;`)};
 `;
 
 const ValueTitle = styled(Label)`
   font-family: ${({ theme }) => theme.fontFamily.data};
 `;
 
-const getThumbColor = (value: number) : IFeedbackColor =>  {
-  if(value <= 10) {
+const getThumbColor = (value: number): IFeedbackColor => {
+  if (value <= 10) {
     return 'error';
   }
 
-  if((value > 10) && (value <= 30)) {
+  if (value > 10 && value <= 30) {
     return 'warning';
   }
 
   return 'success';
 };
 
-const getTitleLevel = (value: number) : string => {
-  if(value <= 10) {
+const getTitleLevel = (value: number): string => {
+  if (value <= 10) {
     return 'Critical Level';
   }
 
-  if((value > 10) && (value <= 30)) {
+  if (value > 10 && value <= 30) {
     return 'Warning Level';
   }
 
   return 'Safe Level';
 };
 
-
 interface IPercentageSliderProps {
-  step?: number
-  marks?: ISliderMark[]
-  defaultValue?: number
-  value?: number
-  showValue?: boolean
-  inputCallback?: (value: number) => void
-  updateThumbColor?:  (value: number) => IFeedbackColor
-  updateTitle?: (value: number) => string
-  allMarkCentered?: boolean
+  step?: number;
+  marks?: ISliderMark[];
+  defaultValue?: number;
+  value?: number;
+  showValue?: boolean;
+  inputCallback?: (value: number) => void;
+  updateThumbColor?: (value: number) => IFeedbackColor;
+  updateTitle?: (value: number) => string;
+  allMarkCentered?: boolean;
 }
 
 type IPercentageSlider = IPercentageSliderProps & InputHTMLAttributes<HTMLInputElement>;
 
-const PercentageSlider: React.FC<IPercentageSlider> = (
-  {
-    defaultValue=0,
-    // title='',
-    inputCallback,
-    updateThumbColor,
-    updateTitle,
-    showValue,
-    allMarkCentered,
-    ...props
-  }
-  ) => {
+const PercentageSlider: React.FC<IPercentageSlider> = ({
+  defaultValue = 0,
+  // title='',
+  inputCallback,
+  updateThumbColor,
+  updateTitle,
+  showValue,
+  allMarkCentered,
+  ...props
+}) => {
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
-  const handleSelectedValue = useCallback((value: number) => {
-    if(inputCallback) {
-      inputCallback(value);
-    }
-    setSelectedValue(value);
-  },[inputCallback]);
+  const handleSelectedValue = useCallback(
+    (value: number) => {
+      if (inputCallback) {
+        inputCallback(value);
+      }
+      setSelectedValue(value);
+    },
+    [inputCallback]
+  );
 
-  return(
+  return (
     <Container>
       <Headers $allMarkCentered={allMarkCentered}>
         <Label
@@ -101,10 +97,8 @@ const PercentageSlider: React.FC<IPercentageSlider> = (
         showValue={showValue}
         onChangeCallback={handleSelectedValue}
         thumbColor={
-            updateThumbColor
-            ? updateThumbColor(selectedValue)
-            : getThumbColor(selectedValue)
-          }
+          updateThumbColor ? updateThumbColor(selectedValue) : getThumbColor(selectedValue)
+        }
         allMarkCentered={allMarkCentered}
       />
     </Container>

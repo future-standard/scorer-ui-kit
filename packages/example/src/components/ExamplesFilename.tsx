@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import type { FC, PropsWithChildren } from 'react';
+import { Link } from 'react-router-dom';
 import { Icon } from 'scorer-ui-kit';
+import styled from 'styled-components';
 
 export const FilenameTag = styled.div`
   display: inline-block;
@@ -71,15 +71,17 @@ const BackButton = styled.div`
   }
 `;
 
-const ExamplesFilename : React.FC<React.PropsWithChildren> = ({ children }) => {
- return(
-  <Container>
-    <BackButton>
-      <Link to={'/'}><Icon size={12} icon='Home' /></Link>
-    </BackButton>
-    <FilenameTag>{ children }</FilenameTag>
-  </Container>
- ); 
+const ExamplesFilename: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <Container>
+      <BackButton>
+        <Link to={'/'}>
+          <Icon size={12} icon='Home' />
+        </Link>
+      </BackButton>
+      <FilenameTag>{children}</FilenameTag>
+    </Container>
+  );
 };
 
 export default ExamplesFilename;

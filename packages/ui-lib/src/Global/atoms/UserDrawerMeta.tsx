@@ -1,8 +1,9 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import type React from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { IUserDrawerMeta } from '..';
 import { useCopyToClipboard } from '../../hooks';
 import Icon from '../../Icons/Icon';
+import type { IUserDrawerMeta } from '..';
 
 const MetaConatiner = styled.div`
   margin: 10px 10px;
@@ -112,30 +113,40 @@ const CopyBox = styled.div`
 
 interface IProps {
   item: IUserDrawerMeta;
-  onUserDrawerMetaClick?:() => void;
+  onUserDrawerMetaClick?: () => void;
   includeCopyTitle?: boolean;
-  copySuccessMessage?: string
+  copySuccessMessage?: string;
 }
 
-const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuccessMessage, includeCopyTitle}) => {
+const UserDrawerMeta: React.FC<IProps> = ({
+  item,
+  onUserDrawerMetaClick,
+  copySuccessMessage,
+  includeCopyTitle,
+}) => {
   const { icon, title, subTitle, notes, hasCopyIcon } = item;
   const { copyToClipboard } = useCopyToClipboard();
-  const [ showCopyText, setShowCopyText ] = useState<boolean>(false);
-  const [onHoverColorValue, setOnHoverColorValue] = useState<'mono' | 'dimmed' | 'subtle' | 'inverse' | 'primary' | 'danger'>('dimmed');
+  const [showCopyText, setShowCopyText] = useState<boolean>(false);
+  const [onHoverColorValue, setOnHoverColorValue] = useState<
+    'mono' | 'dimmed' | 'subtle' | 'inverse' | 'primary' | 'danger'
+  >('dimmed');
 
-  const onClickCopyText = useCallback((title?: string , subTitle?: string, notes?: string)=>{
-    let copyText;
-    if(includeCopyTitle){
-      copyText = (title ? title : '') + '\n' + (subTitle ? subTitle : '') + '\n' + (notes ? notes : '');
-    } else {
-      copyText = (subTitle ? subTitle : '') + '\n' + (notes ? notes : '');
-    }
-    copyToClipboard(copyText);
-    setShowCopyText(true);
-    setTimeout(()=>{
-      setShowCopyText(false);
-    }, 1500);
-  },[includeCopyTitle, copyToClipboard]);
+  const onClickCopyText = useCallback(
+    (title?: string, subTitle?: string, notes?: string) => {
+      let copyText: string;
+      if (includeCopyTitle) {
+        copyText = `${title ? title : ''}\n${subTitle ? subTitle : ''}\n${notes ? notes : ''}`;
+      } else {
+        copyText = `${subTitle ? subTitle : ''}\n${notes ? notes : ''}`;
+      }
+      copyToClipboard(copyText);
+      setShowCopyText(true);
+      setTimeout(() => {
+        setShowCopyText(false);
+      }, 1500);
+    },
+    [includeCopyTitle, copyToClipboard]
+  );
 
   const onHoverMetaInfo = useCallback(() => {
     setOnHoverColorValue('mono');
@@ -147,7 +158,7 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
 
   return (
     <Fragment>
-      {(title !== '' ) &&
+      {title !== '' && (
         <Container onClick={onUserDrawerMetaClick}>
           <MetaConatiner>
             <TitleBox>
@@ -156,25 +167,27 @@ const UserDrawerMeta : React.FC<IProps> = ({item, onUserDrawerMetaClick, copySuc
                 <LabelTitle title={title}>{title}</LabelTitle>
               </TitleContainer>
               <CopyBox>
-                {showCopyText &&
+                {showCopyText && (
                   <CopyTextBox>
                     {copySuccessMessage !== '' ? copySuccessMessage : 'Copied!'}
-                  </CopyTextBox>}
-                {(hasCopyIcon) ?
-                  <IconBox onClick={() => onClickCopyText(title , subTitle, notes)} onMouseEnter={onHoverMetaInfo} onMouseLeave={onLeaveMeatInfo}>
+                  </CopyTextBox>
+                )}
+                {hasCopyIcon ? (
+                  <IconBox
+                    onClick={() => onClickCopyText(title, subTitle, notes)}
+                    onMouseEnter={onHoverMetaInfo}
+                    onMouseLeave={onLeaveMeatInfo}
+                  >
                     <Icon icon='Copy' size={12} color={onHoverColorValue} />
-                  </IconBox>:
-                  null}
+                  </IconBox>
+                ) : null}
               </CopyBox>
             </TitleBox>
-            {subTitle !=='' ?
-              <LabelContent title={subTitle}>{subTitle}</LabelContent>
-            : null}
-            {notes !=='' ?
-              <LabelNotes title={notes}>{notes}</LabelNotes>
-            : null}
+            {subTitle !== '' ? <LabelContent title={subTitle}>{subTitle}</LabelContent> : null}
+            {notes !== '' ? <LabelNotes title={notes}>{notes}</LabelNotes> : null}
           </MetaConatiner>
-        </Container>}
+        </Container>
+      )}
     </Fragment>
   );
 };

@@ -1,14 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import { text, select, object, boolean } from "@storybook/addon-knobs";
+import { boolean, object, select, text } from '@storybook/addon-knobs';
+import { SelectField, SelectWrapper } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
-import { SelectField, SelectWrapper} from 'scorer-ui-kit';
+import styled from 'styled-components';
 import { generateIconList } from '../helpers';
 
 const SelectFieldStory = {
   title: 'Form/atoms',
   component: SelectField,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -20,7 +19,7 @@ const Container = styled.div`
 
 const FixedSelect = styled.div<{ $width?: string }>`
   ${SelectWrapper} {
-    width: ${({ $width }) => $width ? $width : `60px`};
+    width: ${({ $width }) => ($width ? $width : `60px`)};
   }
 `;
 
@@ -37,36 +36,47 @@ const Title = styled.h1`
 
 export const _SelectField = () => {
   const iconList = generateIconList();
-  
+
   const isCompact = boolean('isCompact', false);
   const disabled = boolean('Disabled', false);
-  const fieldState = select("State", { Default: "default",  Disabled: 'disabled', Required: 'required',  Valid: 'valid',  Invalid: 'invalid', Processing: 'processing' }, "default");
+  const fieldState = select(
+    'State',
+    {
+      Default: 'default',
+      Disabled: 'disabled',
+      Required: 'required',
+      Valid: 'valid',
+      Invalid: 'invalid',
+      Processing: 'processing',
+    },
+    'default'
+  );
   const placeholder = text('Placeholder (Free Width)', 'Choose an option...');
   const defaultValue = text('Default Value (Free Width)', '');
   const freeSelectValue = action('Free select value');
   const fixedSelectValue = action('Free select value');
-  const icon = select("Icon", iconList, Object.keys(iconList)[0]);
+  const icon = select('Icon', iconList, Object.keys(iconList)[0]);
 
   const selectWidth = text('Fix width', '80px');
   const label = object('Free Select Label', {
     htmlFor: 'free_select',
-    text: 'Field Label'
-  })
+    text: 'Field Label',
+  });
 
   const fixLabel = object('Fix Select Label', {
     htmlFor: 'fix_select',
     text: 'Page',
-    isSameRow: true
-  })
+    isSameRow: true,
+  });
 
   const freeOnChange = (value: string) => {
     freeSelectValue(value);
-  }
+  };
 
   const fixSelectOnChange = (value: string) => {
     fixedSelectValue(value);
-  }
-  
+  };
+
   return (
     <Container>
       <Subsection>
@@ -78,17 +88,17 @@ export const _SelectField = () => {
             label,
             disabled,
             defaultValue,
-            fieldState
+            fieldState,
           }}
           changeCallback={freeOnChange}
         >
-          <option value="option1">Example Option 1</option>
-          <option value="option2">Example Option 2</option>
-          <option value="option3">Example Option 3</option>
-          <option value="option4">Example Option 4</option>
+          <option value='option1'>Example Option 1</option>
+          <option value='option2'>Example Option 2</option>
+          <option value='option3'>Example Option 3</option>
+          <option value='option4'>Example Option 4</option>
         </SelectField>
       </Subsection>
-          
+
       <Subsection>
         <Title>Select (Fixed Width)</Title>
         <FixedSelect $width={selectWidth}>
@@ -97,7 +107,7 @@ export const _SelectField = () => {
             label={fixLabel}
             defaultValue={1}
             changeCallback={fixSelectOnChange}
-            >
+          >
             <option value={1}>1</option>
             <option value={5}>5</option>
             <option value={10}>10</option>
@@ -106,7 +116,7 @@ export const _SelectField = () => {
           </SelectField>
         </FixedSelect>
       </Subsection>
-        
+
       <Subsection>
         <Title>Select (With Icon)</Title>
         <SelectField
@@ -117,18 +127,18 @@ export const _SelectField = () => {
             disabled,
             defaultValue,
             fieldState,
-            icon
+            icon,
           }}
           changeCallback={freeOnChange}
-          >
-          <option value="option1">Example Option 1</option>
-          <option value="option2">Example Option 2</option>
-          <option value="option3">Example Option 3</option>
-          <option value="option4">Example Option 4</option>
+        >
+          <option value='option1'>Example Option 1</option>
+          <option value='option2'>Example Option 2</option>
+          <option value='option3'>Example Option 3</option>
+          <option value='option4'>Example Option 4</option>
         </SelectField>
       </Subsection>
     </Container>
   );
-}
+};
 
 export default SelectFieldStory;

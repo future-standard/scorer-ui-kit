@@ -1,12 +1,11 @@
-import React from 'react';
+import { add, format, startOfDay } from 'date-fns';
+import type React from 'react';
 import styled from 'styled-components';
-import { IFilterItem, IFilterType } from '../FilterTypes';
 import { resetButtonStyles } from '../../common/index';
-import Icon, { IconWrapper } from '../../Icons/Icon';
-import { isFilterItem } from '../FilterTypes';
-import { format, add, startOfDay } from 'date-fns';
 import { isDateInterval } from '../../helpers';
-import { IDateInterval } from '..';
+import Icon, { IconWrapper } from '../../Icons/Icon';
+import type { IDateInterval } from '..';
+import { type IFilterItem, type IFilterType, isFilterItem } from '../FilterTypes';
 
 const Container = styled.div`
   display: flex;
@@ -37,7 +36,7 @@ const FilterLabel = styled.div`
   border-right: 1px solid var(--grey-8);
 `;
 const FilterLabelText = styled.div<{ $hasIcon?: boolean }>`
-  padding: ${({ $hasIcon }) => $hasIcon ? '0 15px 0 9px' : '0 15px 0 0'};
+  padding: ${({ $hasIcon }) => ($hasIcon ? '0 15px 0 9px' : '0 15px 0 0')};
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -68,10 +67,9 @@ const FilterLabelsGroup = styled.div`
  * Here is not changing the value that the developer receives, just displaying 00:00 of the next Day
  */
 
-const validWithMidnight = (endDate: Date, resultsDateFormat: string) =>  {
-
+const validWithMidnight = (endDate: Date, resultsDateFormat: string) => {
   if (endDate.getHours() === 23 && endDate.getSeconds() > 0) {
-  return format( add(startOfDay(endDate), {days:1}), resultsDateFormat);
+    return format(add(startOfDay(endDate), { days: 1 }), resultsDateFormat);
   }
 
   return format(endDate, resultsDateFormat);
@@ -85,7 +83,7 @@ const validateDateFormat = (resultsDateFormat: string): boolean => {
       const tryDate = new Date();
       format(tryDate, resultsDateFormat);
       isFormatValid = true;
-    } catch (error) {
+    } catch (_error) {
       isFormatValid = false;
     }
   }
@@ -97,10 +95,13 @@ const renderResults = (template: string, total: number) => {
   return template.replace('[TOTAL_RESULTS]', `${total}`);
 };
 
-
-const renderLabel = (item: IFilterItem | IDateInterval | Date, resultsDateFormat: string, icon?: string, filterName?: string) => {
-
-  let textLabel: string = "";
+const renderLabel = (
+  item: IFilterItem | IDateInterval | Date,
+  resultsDateFormat: string,
+  icon?: string,
+  filterName?: string
+) => {
+  let textLabel: string = '';
   const isDateFormatValid = validateDateFormat(resultsDateFormat);
 
   if (filterName && isFilterItem(item)) {
@@ -116,9 +117,7 @@ const renderLabel = (item: IFilterItem | IDateInterval | Date, resultsDateFormat
   } else if (!filterName && isFilterItem(item)) {
     textLabel = item.text;
   } else if (!filterName && item instanceof Date) {
-    textLabel = isDateFormatValid
-      ? format(item, resultsDateFormat)
-      : item.toDateString();
+    textLabel = isDateFormatValid ? format(item, resultsDateFormat) : item.toDateString();
   } else if (!filterName && isDateInterval(item)) {
     textLabel = isDateFormatValid
       ? `${format(item.start, resultsDateFormat)} - ${validWithMidnight(item.end, resultsDateFormat)}`
@@ -129,21 +128,25 @@ const renderLabel = (item: IFilterItem | IDateInterval | Date, resultsDateFormat
 };
 
 export interface IFilterLabel {
-  filterId: string
-  item: IFilterItem | Date | IDateInterval
-  type: IFilterType
-  icon?: string
-  filterName?: string
+  filterId: string;
+  item: IFilterItem | Date | IDateInterval;
+  type: IFilterType;
+  icon?: string;
+  filterName?: string;
 }
 
 interface IFilterResults {
-  labelLists: IFilterLabel[]
-  totalResults: number
-  resultTextTemplate?: string
-  clearText?: string
-  resultsDateFormat?: string
-  onRemoveFilter?: (filterId: string, type: IFilterType, item: IFilterItem | Date | IDateInterval) => void
-  onClearAll?: () => void
+  labelLists: IFilterLabel[];
+  totalResults: number;
+  resultTextTemplate?: string;
+  clearText?: string;
+  resultsDateFormat?: string;
+  onRemoveFilter?: (
+    filterId: string,
+    type: IFilterType,
+    item: IFilterItem | Date | IDateInterval
+  ) => void;
+  onClearAll?: () => void;
 }
 
 const FiltersResults: React.FC<IFilterResults> = ({
@@ -152,8 +155,8 @@ const FiltersResults: React.FC<IFilterResults> = ({
   resultTextTemplate = 'Showing Results ([TOTAL_RESULTS]):',
   clearText = 'CLEAR ALL',
   resultsDateFormat = '',
-  onRemoveFilter = () => { },
-  onClearAll = () => { },
+  onRemoveFilter = () => {},
+  onClearAll = () => {},
   ...props
 }) => {
   return (
@@ -165,17 +168,16 @@ const FiltersResults: React.FC<IFilterResults> = ({
             <FilterLabel key={`Filter-Label-id-${index}`}>
               {icon && <Icon icon={icon} color='dimmed' size={10} weight='light' />}
               {renderLabel(item, resultsDateFormat, icon, filterName)}
-              <RemoveButton
-                onClick={() => onRemoveFilter(filterId, type, item)}
-              >
+              <RemoveButton onClick={() => onRemoveFilter(filterId, type, item)}>
                 <Icon icon='CloseCompact' color='dimmed' size={10} weight='light' />
               </RemoveButton>
             </FilterLabel>
           );
         })}
-        {(labelLists.length > 0) && <ClearTextButton onClick={onClearAll}>{clearText}</ClearTextButton>}
+        {labelLists.length > 0 && (
+          <ClearTextButton onClick={onClearAll}>{clearText}</ClearTextButton>
+        )}
       </FilterLabelsGroup>
-
     </Container>
   );
 };

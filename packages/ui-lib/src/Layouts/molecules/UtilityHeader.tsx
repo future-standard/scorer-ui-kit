@@ -1,13 +1,12 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import {Link} from 'react-router-dom';
-
-import { IUtilityHeader } from "..";
-import Icon from "../../Icons/Icon";
-import { useBreakpoints } from "../../hooks";
-import UtilityHeaderShare from "../atoms/UtilityHeaderShare";
-import UtilityHeaderBack from "../atoms/UtilityHeaderBack";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../../common';
+import { useBreakpoints } from '../../hooks';
+import Icon from '../../Icons/Icon';
+import type { IUtilityHeader } from '..';
+import UtilityHeaderBack from '../atoms/UtilityHeaderBack';
+import UtilityHeaderShare from '../atoms/UtilityHeaderShare';
 
 const Container = styled.div`
   max-width: var(--max-content-width);
@@ -107,58 +106,69 @@ const RightArea = styled.div`
   justify-content: right;
 `;
 
-
-const UtilityHeader : React.FC<IUtilityHeader> = ({ showBreadcrumbs = true, breadcrumbs = [], showHomeIcon = true, back, share, $iconInGutter }) => {
-
+const UtilityHeader: React.FC<IUtilityHeader> = ({
+  showBreadcrumbs = true,
+  breadcrumbs = [],
+  showHomeIcon = true,
+  back,
+  share,
+  $iconInGutter,
+}) => {
   const { isLarge } = useBreakpoints();
   const iconInGutter = $iconInGutter !== undefined ? $iconInGutter : isLarge;
   const hasBreadcrumbs = showBreadcrumbs && breadcrumbs.length > 0;
 
   return (
     <Container>
-    <LeftArea>
-      {back && <UtilityHeaderBack $showDivider={hasBreadcrumbs} $iconInGutter={iconInGutter} {...back} />}
-      {hasBreadcrumbs ?
-        <Breadcrumbs>
-          { breadcrumbs.map((breadcrumb, index) => {
-            const {text, href, onClick} = breadcrumb;
-            const isFirst = index === 0;
-            const isLast = index === breadcrumbs.length - 1;
+      <LeftArea>
+        {back && (
+          <UtilityHeaderBack $showDivider={hasBreadcrumbs} $iconInGutter={iconInGutter} {...back} />
+        )}
+        {hasBreadcrumbs ? (
+          <Breadcrumbs>
+            {breadcrumbs.map((breadcrumb, index) => {
+              const { text, href, onClick } = breadcrumb;
+              const isFirst = index === 0;
+              const isLast = index === breadcrumbs.length - 1;
 
-            const innerContent = (
-              <React.Fragment>
-                {isFirst && showHomeIcon ? <HomeIcon><Icon icon="Home" size={11} color='grey-10' /></HomeIcon> : null }
-                {text}
-              </React.Fragment>
-            );
+              const innerContent = (
+                <React.Fragment>
+                  {isFirst && showHomeIcon ? (
+                    <HomeIcon>
+                      <Icon icon='Home' size={11} color='grey-10' />
+                    </HomeIcon>
+                  ) : null}
+                  {text}
+                </React.Fragment>
+              );
 
-            return (
-              <React.Fragment key={index}>
-                <Breadcrumb>
-                  {onClick ? (
-                    <BreadcrumbButton onClick={onClick} type="button">
-                      {innerContent}
-                    </BreadcrumbButton>
-                  ) : href ? (
-                    <BreadcrumbLink to={href}>
-                      {innerContent}
-                    </BreadcrumbLink>
-                  ) : (
-                    <BreadcrumbText>
-                      {innerContent}
-                    </BreadcrumbText>
-                  )}
-                  {!isLast ? <BreadcrumbIcon><Icon icon="Right" size={6} color='grey-8' /></BreadcrumbIcon> : null }
-                </Breadcrumb>
-              </React.Fragment>
-            );
-          })}
-        </Breadcrumbs>
-      : null }
-    </LeftArea>
-    <RightArea>
-      <UtilityHeaderShare {...share} />
-    </RightArea>
+              return (
+                <React.Fragment key={index}>
+                  <Breadcrumb>
+                    {onClick ? (
+                      <BreadcrumbButton onClick={onClick} type='button'>
+                        {innerContent}
+                      </BreadcrumbButton>
+                    ) : href ? (
+                      <BreadcrumbLink to={href}>{innerContent}</BreadcrumbLink>
+                    ) : (
+                      <BreadcrumbText>{innerContent}</BreadcrumbText>
+                    )}
+                    {!isLast ? (
+                      <BreadcrumbIcon>
+                        <Icon icon='Right' size={6} color='grey-8' />
+                      </BreadcrumbIcon>
+                    ) : null}
+                  </Breadcrumb>
+                </React.Fragment>
+              );
+            })}
+          </Breadcrumbs>
+        ) : null}
+      </LeftArea>
+      <RightArea>
+        <UtilityHeaderShare {...share} />
+      </RightArea>
     </Container>
   );
 };

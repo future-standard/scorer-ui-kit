@@ -1,21 +1,22 @@
-import React, { useReducer, useCallback, useState } from 'react';
+import type React from 'react';
+import { useCallback, useReducer, useState } from 'react';
 
 import {
-  LineReducer,
-  LineSetContext,
-  Sidebar,
-  SidebarBox,
-  Layout,
-  Content,
-  Logo,
   ButtonWithIcon,
-  Switch,
+  Content,
   Input,
   Label,
+  Layout,
+  LineReducer,
+  LineSetContext,
+  Logo,
+  Sidebar,
+  SidebarBox,
+  Switch,
 } from 'scorer-ui-kit';
+import type { LineUIOptions, LineUIVideoOptions } from 'scorer-ui-kit/dist/LineUI';
 import { LineUIVideoHLS } from 'scorer-ui-kit/hls';
 import styled from 'styled-components';
-import { LineUIOptions, LineUIVideoOptions } from 'scorer-ui-kit/dist/LineUI';
 import ExamplesFilename from '../components/ExamplesFilename';
 
 const DEFAULT_HLS_SRC =
@@ -63,43 +64,40 @@ const LineHLSPage: React.FC = () => {
     muted: true,
   });
 
-  const handleVideoLoaded = useCallback(
-    ({ width, height }: { width: number; height: number }) => {
-      // Stroke-width on the click-sensing line is expressed in SVG viewBox units,
-      // so it needs to track the actual video resolution rather than a CSS pixel constant.
-      setSensingBorder(String(Math.max(4, Math.round(Math.min(width, height) * 0.015))));
+  const handleVideoLoaded = useCallback(({ width, height }: { width: number; height: number }) => {
+    // Stroke-width on the click-sensing line is expressed in SVG viewBox units,
+    // so it needs to track the actual video resolution rather than a CSS pixel constant.
+    setSensingBorder(String(Math.max(4, Math.round(Math.min(width, height) * 0.015))));
 
-      dispatch({
-        type: 'LOAD',
-        state: [
-          {
-            name: 'Line 1',
-            points: [
-              { x: width * 0.2, y: height * 0.55 },
-              { x: width * 0.8, y: height * 0.55 },
-            ],
-            showPointHandle: true,
-            showMoveHandle: true,
-            showSmallDirectionMark: true,
-            readOnly: false,
-            styling: 'primary',
-          },
-          {
-            name: 'Line 2',
-            points: [
-              { x: width * 0.25, y: height * 0.75 },
-              { x: width * 0.75, y: height * 0.75 },
-            ],
-            showPointHandle: false,
-            showMoveHandle: false,
-            readOnly: false,
-            styling: 'secondary',
-          },
-        ],
-      });
-    },
-    []
-  );
+    dispatch({
+      type: 'LOAD',
+      state: [
+        {
+          name: 'Line 1',
+          points: [
+            { x: width * 0.2, y: height * 0.55 },
+            { x: width * 0.8, y: height * 0.55 },
+          ],
+          showPointHandle: true,
+          showMoveHandle: true,
+          showSmallDirectionMark: true,
+          readOnly: false,
+          styling: 'primary',
+        },
+        {
+          name: 'Line 2',
+          points: [
+            { x: width * 0.25, y: height * 0.75 },
+            { x: width * 0.75, y: height * 0.75 },
+          ],
+          showPointHandle: false,
+          showMoveHandle: false,
+          readOnly: false,
+          styling: 'secondary',
+        },
+      ],
+    });
+  }, []);
 
   const handleLoadSrc = useCallback(() => {
     setSrc(srcInput);
@@ -180,8 +178,8 @@ const LineHLSPage: React.FC = () => {
 
           <Note>
             Default stream is Apple's public BipBop HLS test. Safari plays it natively; other
-            browsers dynamically load <code>hls.js</code>. Open DevTools → Network and filter
-            for <code>hls</code> to confirm the chunk is only fetched on this page.
+            browsers dynamically load <code>hls.js</code>. Open DevTools → Network and filter for{' '}
+            <code>hls</code> to confirm the chunk is only fetched on this page.
           </Note>
         </SidebarBox>
 

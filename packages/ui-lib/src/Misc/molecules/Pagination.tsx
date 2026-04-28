@@ -1,11 +1,19 @@
-import React, { ChangeEvent, HTMLAttributes, useCallback, useState, useRef, Fragment, useEffect } from 'react';
+import type React from 'react';
+import {
+  type ChangeEvent,
+  type HTMLAttributes,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled, { keyframes } from 'styled-components';
-import Button from '../../Form/atoms/Button';
-import Icon from '../../Icons/Icon';
 import { removeAutoFillStyle, resetButtonStyles } from '../../common';
-import { isNotNumber } from '../../helpers';
+import Button from '../../Form/atoms/Button';
+import Label from '../../Form/atoms/Label';
 import SelectField, { SelectWrapper } from '../../Form/atoms/SelectField';
-import Label from  '../../Form/atoms/Label';
+import { isNotNumber } from '../../helpers';
+import Icon from '../../Icons/Icon';
 
 const WIDTH_PER_NUMBER = 12;
 
@@ -38,7 +46,7 @@ const StaticPageCount = styled.div`
 const StyledInput = styled.input<{ $maxWidth?: string }>`
   ${removeAutoFillStyle};
   color: var(--input-color-default);
-  max-width: ${({ $maxWidth }) => $maxWidth ? $maxWidth : '40px'};
+  max-width: ${({ $maxWidth }) => ($maxWidth ? $maxWidth : '40px')};
   font-family: var(--font-data);
   height: 100%;
   box-sizing: border-box;
@@ -59,7 +67,7 @@ const shakeAnimation = keyframes`
   100% { transform: translateX(0); }
 `;
 
-const InputContainer = styled.div<{ $borderColorState?: string, $shouldShake: boolean }>`
+const InputContainer = styled.div<{ $borderColorState?: string; $shouldShake: boolean }>`
   height: var(--input-height, 40px);
   animation: ${({ $shouldShake }) => ($shouldShake ? shakeAnimation : 'none')} 150ms 2 linear;
   flex-grow: 0;
@@ -93,8 +101,8 @@ const ArrowButton = styled.button<{ $active: boolean }>`
   box-shadow: 0 4px 9px 0 rgba(152, 174, 189, 0.07);
   border: solid 1px var(--input-default-border-color);
   background-color: var(grey-2);
-  pointer-events: ${({ $active }) => $active ? 'auto' : 'none'};
-  opacity: ${({ $active }) => $active ? '1' : '0.5'};
+  pointer-events: ${({ $active }) => ($active ? 'auto' : 'none')};
+  opacity: ${({ $active }) => ($active ? '1' : '0.5')};
 
   &:focus, &:hover {
     outline: 2px solid #838383;
@@ -103,31 +111,31 @@ const ArrowButton = styled.button<{ $active: boolean }>`
 
 const ItemsSelectWrapper = styled.div<{ $width: string }>`
   ${SelectWrapper} {
-    width: ${({ $width }) => $width ? $width : `60px`};
+    width: ${({ $width }) => ($width ? $width : `60px`)};
   }
 `;
 
 export interface IItemsOption {
-  value: number
-  textValue: string
+  value: number;
+  textValue: string;
 }
 
 interface OwnProps {
-  pageText?: string
-  totalPages: number
-  activePage?: number
-  buttonText?: string
-  itemsText?: string
-  itemsDefaultValue?: number
-  selectWidth?: string
-  selectDisabled?: boolean
-  selectId?: string
-  itemsOptions: IItemsOption[]
-  onPageChange: (page: number) => void
-  onItemsChange: (items: number) => void
+  pageText?: string;
+  totalPages: number;
+  activePage?: number;
+  buttonText?: string;
+  itemsText?: string;
+  itemsDefaultValue?: number;
+  selectWidth?: string;
+  selectDisabled?: boolean;
+  selectId?: string;
+  itemsOptions: IItemsOption[];
+  onPageChange: (page: number) => void;
+  onItemsChange: (items: number) => void;
 }
 
-export type IPagination = OwnProps & HTMLAttributes<HTMLDivElement>
+export type IPagination = OwnProps & HTMLAttributes<HTMLDivElement>;
 
 const Pagination: React.FC<IPagination> = (props) => {
   const {
@@ -147,110 +155,105 @@ const Pagination: React.FC<IPagination> = (props) => {
 
   const [fieldState, setFieldState] = useState<string>('default');
   const [pageValue, setPageValue] = useState<string>(activePage ? activePage.toString() : '1');
-  const [disableGo, setDisabledGo] = useState<boolean>(parseInt(pageValue) > totalPages && fieldState !== '' ? false : true);
+  const [disableGo, setDisabledGo] = useState<boolean>(
+    !(parseInt(pageValue, 10) > totalPages && fieldState !== '')
+  );
   const [shouldShake, setShouldShake] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const getValidWidth = useCallback(() => {
-    return `${(totalPages.toString().length * WIDTH_PER_NUMBER) + WIDTH_PER_NUMBER / 2}px`;
+    return `${totalPages.toString().length * WIDTH_PER_NUMBER + WIDTH_PER_NUMBER / 2}px`;
   }, [totalPages]);
 
+  const isValidInput = useCallback(
+    (value: string) => {
+      if (isNotNumber(value)) {
+        return false;
+      }
 
-  const isValidInput = useCallback((value: string) => {
+      if (parseInt(value, 10) > totalPages) {
+        return false;
+      }
 
-    if (isNotNumber(value)) {
-      return false;
-    }
+      if (parseInt(value, 10) <= 0) {
+        return false;
+      }
 
-    if (parseInt(value) > totalPages) {
-      return false;
-    }
+      if (value === '') {
+        return false;
+      }
 
-    if (parseInt(value) <= 0) {
-      return false;
-    }
+      return true;
+    },
+    [totalPages]
+  );
 
-    if (value === '') {
-      return false;
-    }
+  const onInputChange = useCallback(
+    ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+      setShouldShake(false);
+      if (isNotNumber(value)) {
+        return;
+      }
 
-    return true;
-  }, [totalPages]);
+      // max total digits, without left zeros or empty value
+      const validDigitValue =
+        value === '' ? '' : Number(value.slice(-totalPages.toString().length)).toString();
 
+      setPageValue(validDigitValue);
+      if (isValidInput(validDigitValue)) {
+        setFieldState('processing');
+        setDisabledGo(false);
+      } else {
+        setFieldState('invalid');
+        setDisabledGo(true);
+        setShouldShake(true);
+      }
+    },
+    [isValidInput, totalPages]
+  );
 
-  const onInputChange = useCallback(({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onBlur = useCallback(
+    ({ target: { value } }: React.FocusEvent<HTMLInputElement>) => {
+      if (value === '') {
+        setPageValue(activePage.toString());
+      } else if (isValidInput(value) && parseInt(value, 10) !== activePage) {
+        setDisabledGo(false);
+        setFieldState('processing');
+        return;
+      } else if (!isValidInput(value)) {
+        setFieldState('invalid');
+        setDisabledGo(true);
+        return;
+      }
 
-    setShouldShake(false);
-    if (isNotNumber(value)) {
-      return;
-    }
-
-    // max total digits, without left zeros or empty value
-    const validDigitValue = value === '' ? '' : Number(value.slice(-totalPages.toString().length)).toString();
-
-    setPageValue(validDigitValue);
-    if (isValidInput(validDigitValue)) {
-      setFieldState('processing');
-      setDisabledGo(false);
-
-    } else {
-      setFieldState('invalid');
-      setDisabledGo(true);
-      setShouldShake(true);
-    }
-
-  }, [isValidInput, totalPages]);
-
-
-  const onBlur = useCallback(({ target: { value } }: React.FocusEvent<HTMLInputElement>) => {
-
-    if ((value === '')) {
-      setPageValue(activePage.toString());
-
-    } else if (isValidInput(value) && parseInt(value) !== activePage) {
-      setDisabledGo(false);
-      setFieldState('processing');
-      return;
-
-    } else if (!isValidInput(value)) {
-      setFieldState('invalid');
-      setDisabledGo(true);
-      return;
-    }
-
-    setFieldState('default');
-
-  }, [activePage, isValidInput]);
+      setFieldState('default');
+    },
+    [activePage, isValidInput]
+  );
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-
-    if ((event.key === 'Enter') && isValidInput(pageValue)) {
+    if (event.key === 'Enter' && isValidInput(pageValue)) {
       onClickGo();
     }
-
   };
 
   /**
    * Review if current edith is valid if not make disable
    */
   const onFocus = ({ target: { value } }: React.FocusEvent<HTMLInputElement>) => {
-
     if (isValidInput(value)) {
       setFieldState('processing');
     } else {
       setFieldState('invalid');
       setDisabledGo(true);
     }
-
   };
 
   const onClickGo = useCallback(() => {
-
-    onPageChange(parseInt(pageValue));
-    inputRef.current && inputRef.current.blur();
+    onPageChange(parseInt(pageValue, 10));
+    inputRef.current?.blur();
     setDisabledGo(true);
     setFieldState('default');
-
   }, [onPageChange, pageValue]);
 
   const handlePageChange = (value: number) => {
@@ -258,13 +261,15 @@ const Pagination: React.FC<IPagination> = (props) => {
     setPageValue(value.toString());
   };
 
-  const onItemsSelectChange = useCallback((value: string) => {
-    onItemsChange(Number(value));
-  }, [onItemsChange]);
+  const onItemsSelectChange = useCallback(
+    (value: string) => {
+      onItemsChange(Number(value));
+    },
+    [onItemsChange]
+  );
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    const clipboardData = e.clipboardData || (window as any).clipboardData; // Cross-browser support
-    const pastedText = clipboardData.getData('text');
+    const pastedText = e.clipboardData.getData('text');
 
     if (!/^\d+$/.test(pastedText)) {
       e.preventDefault();
@@ -272,7 +277,7 @@ const Pagination: React.FC<IPagination> = (props) => {
   };
 
   useEffect(() => {
-    if(!activePage || !isValidInput(activePage ? activePage.toString() : '')) {
+    if (!activePage || !isValidInput(activePage ? activePage.toString() : '')) {
       console.warn('Pagination: invalid activePage prop value was sent');
       return;
     }
@@ -289,11 +294,11 @@ const Pagination: React.FC<IPagination> = (props) => {
           defaultValue={itemsDefaultValue ? itemsDefaultValue : itemsOptions[0].value || 1}
           changeCallback={onItemsSelectChange}
         >
-          <Fragment>
-            {itemsOptions.map(({ value, textValue }, index) =>
-              <option key={index} value={value}>{textValue}</option>
-            )}
-          </Fragment>
+          {itemsOptions.map(({ value, textValue }, index) => (
+            <option key={index} value={value}>
+              {textValue}
+            </option>
+          ))}
         </SelectField>
       </ItemsSelectWrapper>
       <Label labelText={pageText} htmlFor='goButton' direction='row'>
@@ -308,26 +313,35 @@ const Pagination: React.FC<IPagination> = (props) => {
             onKeyDown={handleKeyDown}
             $maxWidth={getValidWidth()}
           />
-          <StaticPageCount>{'/' + '\u00A0' + totalPages.toString()}</StaticPageCount>
-          <GoButton id='goButton' size='small' design='primary' disabled={disableGo} onClick={onClickGo}>{buttonText}</GoButton>
+          <StaticPageCount>{`/\u00A0${totalPages.toString()}`}</StaticPageCount>
+          <GoButton
+            id='goButton'
+            size='small'
+            design='primary'
+            disabled={disableGo}
+            onClick={onClickGo}
+          >
+            {buttonText}
+          </GoButton>
         </InputContainer>
 
         <ArrowWrapper>
           <ArrowButton
             onClick={() => handlePageChange(activePage - 1)}
             disabled={activePage <= 1}
-            $active={fieldState === 'default' && activePage > 1}>
+            $active={fieldState === 'default' && activePage > 1}
+          >
             <Icon icon='Left' color='input-lead-icon' size={8} />
           </ArrowButton>
           <ArrowButton
             onClick={() => handlePageChange(activePage + 1)}
             disabled={activePage >= totalPages}
-            $active={fieldState === 'default' && activePage < totalPages}>
+            $active={fieldState === 'default' && activePage < totalPages}
+          >
             <Icon icon='Right' color='input-lead-icon' size={8} />
           </ArrowButton>
         </ArrowWrapper>
       </Label>
-
     </PaginationContainer>
   );
 };

@@ -1,16 +1,11 @@
-import * as React from "react";
+import type { SVGProps } from 'react';
 
-function SvgLogoMark(props: React.SVGProps<SVGSVGElement>) {
+function SvgLogoMark(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width={35} height={35} {...props}>
+    <svg width={35} height={35} role='img' {...props}>
+      <title>SCORER UI Logo</title>
       <defs>
-        <linearGradient
-          id='LogoMark_svg__a'
-          x1='36.708%'
-          x2='69.959%'
-          y1='2.579%'
-          y2='98.009%'
-        >
+        <linearGradient id='LogoMark_svg__a' x1='36.708%' x2='69.959%' y1='2.579%' y2='98.009%'>
           <stop offset='0%' stopColor='#7DB8DB' />
           <stop offset='100%' stopColor='#5CA0D1' />
         </linearGradient>

@@ -1,8 +1,8 @@
-import React from 'react';
+import type React from 'react';
 import styled, { css } from 'styled-components';
 import { CheckMark } from '../../svg';
-import { IInputOptionsType } from '..';
 import { dimensions } from '../../theme/common';
+import type { IInputOptionsType } from '..';
 
 const Title = styled.div`
   font-family: var(--font-ui);
@@ -73,7 +73,7 @@ const FakeInnerRadio = styled.div`
   user-select: none;
 `;
 
-const Container = styled.div<{ $disabled: boolean, $selected: boolean }>`
+const Container = styled.div<{ $disabled: boolean; $selected: boolean }>`
   display: flex;
   align-items: center;
   height: 100%;
@@ -100,7 +100,9 @@ const Container = styled.div<{ $disabled: boolean, $selected: boolean }>`
       }
     }
 
-    ${$selected && css`
+    ${
+      $selected &&
+      css`
       ${Title} {
         color: var(--input-label-active);
         font-weight: 600;
@@ -128,11 +130,15 @@ const Container = styled.div<{ $disabled: boolean, $selected: boolean }>`
       }
      
 
-    `};
+    `
+    };
 
-    ${$disabled && css`
+    ${
+      $disabled &&
+      css`
       cursor: not-allowed;
-    `};
+    `
+    };
 
     ${FakeCheckbox}, ${FakeRadioButton} {
       transition: border-color var(--speed-faster) var(--easing-primary-out);
@@ -150,42 +156,43 @@ const Container = styled.div<{ $disabled: boolean, $selected: boolean }>`
 `;
 
 interface IFilterOption {
-  title: string
-  value?: string | number
-  optionType?: IInputOptionsType
-  selected?: boolean
-  disabled?: boolean
-  onClick?: () => void
+  title: string;
+  value?: string | number;
+  optionType?: IInputOptionsType;
+  selected?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
 const FilterOption: React.FC<IFilterOption> = ({
   title,
   value,
-  optionType = "text",
+  optionType = 'text',
   selected = false,
   disabled = false,
-  onClick = () => { },
+  onClick = () => {},
   ...props
 }) => {
-
-  const iconWeight: number = dimensions.icons.weights['regular'];
+  const iconWeight: number = dimensions.icons.weights.regular;
 
   return (
-
-    <Container
-      onClick={onClick}
-      $disabled={disabled}
-      $selected={selected}
-      {...props}
-    >
-      {(optionType === 'checkbox') && (
+    <Container onClick={onClick} $disabled={disabled} $selected={selected} {...props}>
+      {optionType === 'checkbox' && (
         <FakeCheckbox>
           <FakeCheckboxInner>
-            {selected && <CheckMarkWrapper><CheckMark color='inverse' stroke='inverse' size={12} weight={iconWeight} /></CheckMarkWrapper>}
+            {selected && (
+              <CheckMarkWrapper>
+                <CheckMark color='inverse' stroke='inverse' size={12} weight={iconWeight} />
+              </CheckMarkWrapper>
+            )}
           </FakeCheckboxInner>
         </FakeCheckbox>
       )}
-      {(optionType === 'radio') && <FakeRadioButton><FakeInnerRadio /></FakeRadioButton>}
+      {optionType === 'radio' && (
+        <FakeRadioButton>
+          <FakeInnerRadio />
+        </FakeRadioButton>
+      )}
       <Title>{title}</Title>
     </Container>
   );

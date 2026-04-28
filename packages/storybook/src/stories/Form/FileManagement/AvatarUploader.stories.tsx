@@ -1,24 +1,22 @@
-import React from 'react';
-import styled from 'styled-components';
+import { boolean, text } from '@storybook/addon-knobs';
 import { AvatarUploader } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
-import { text, boolean } from "@storybook/addon-knobs";
+import styled from 'styled-components';
 
 const Container = styled.div``;
 
 const AvatarUploaderStory = {
   title: 'Form/File Management',
   component: AvatarUploader,
-  decorators: []
+  decorators: [],
 };
 
 export const _AvatarUploader = () => {
-
   const title = text('Uploader Title', 'Photograph');
   const photoText = text('Photo Text', 'Drop Photo');
   const buttonText = text('Button Text', 'Select File');
   const buttonTextReplace = text('Button Text Replace', 'Replace Photo');
-  const uploaderCropText = text('Uploader Crop Text','Crop Image');
+  const uploaderCropText = text('Uploader Crop Text', 'Crop Image');
   const cropToolTitle = text('CropTool Title', 'Crop utility');
   const cropToolCancelTxt = text('CropTool Cancel Text', 'Cancel');
   const cropToolConfirmTxt = text('CropTool Confirm Text', 'Crop and Save');
@@ -30,18 +28,18 @@ export const _AvatarUploader = () => {
   const onRemoveValue = action('On Remove');
 
   const uploadReady = (imgFile: File) => {
-    console.log('file', imgFile);
+    console.debug('file', imgFile);
     showValue(imgFile.name);
   };
 
   const onError = (msg: string) => {
-    console.log(msg);
+    console.debug(msg);
     errorValue(msg);
   };
 
   const onRemove = () => {
     onRemoveValue('The user has deleted Avatar image');
-  }
+  };
 
   return (
     <Container>
@@ -60,11 +58,11 @@ export const _AvatarUploader = () => {
           cropToolTitle,
           cropToolCancelTxt,
           cropToolConfirmTxt,
-          deletePhotoText
+          deletePhotoText,
         }}
       />
     </Container>
-  )
+  );
 };
 
 export default AvatarUploaderStory;

@@ -1,10 +1,9 @@
-import { useCallback,  useEffect,  useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const matchDark = '(prefers-color-scheme: dark)';
 
 //Current state of Dark changes to the opposite
 const toggleThemeClass = (isDarkEnabled: boolean) => {
-
   if (isDarkEnabled) {
     document.body.classList.add('light-theme');
     document.body.classList.remove('dark-theme');
@@ -15,12 +14,11 @@ const toggleThemeClass = (isDarkEnabled: boolean) => {
 };
 
 const setInitial = () => {
-
-  const localStorageTheme =  localStorage.getItem('isDarkThemeEnabled');
+  const localStorageTheme = localStorage.getItem('isDarkThemeEnabled');
   let startDark = true;
 
-  if(localStorageTheme === null){
-    startDark =  window.matchMedia(matchDark) && window.matchMedia(matchDark).matches;
+  if (localStorageTheme === null) {
+    startDark = window.matchMedia(matchDark)?.matches;
   } else {
     startDark = localStorageTheme !== 'false';
   }
@@ -31,7 +29,6 @@ const setInitial = () => {
 };
 
 const useThemeToggle = () => {
-
   const [isDarkThemeEnabled, setIsDarkThemeEnabled] = useState(setInitial);
 
   // toggle with Button
@@ -45,10 +42,11 @@ const useThemeToggle = () => {
   }, []);
 
   // Toggle when changing with OS and no local Storage variable has been set yet
-  const osThemeToggle = useCallback((event: MediaQueryListEvent ) => {
-
-    const localStorageTheme =  localStorage.getItem('isDarkThemeEnabled');
-    if(localStorageTheme !== null) { return; }
+  const osThemeToggle = useCallback((event: MediaQueryListEvent) => {
+    const localStorageTheme = localStorage.getItem('isDarkThemeEnabled');
+    if (localStorageTheme !== null) {
+      return;
+    }
 
     const isDark = event.matches;
 
@@ -56,8 +54,7 @@ const useThemeToggle = () => {
       toggleThemeClass(!isDark);
       return isDark;
     });
-
-  },[]);
+  }, []);
 
   useEffect(() => {
     const matcher = window.matchMedia(matchDark);
@@ -66,16 +63,14 @@ const useThemeToggle = () => {
     return () => {
       matcher.removeEventListener('change', osThemeToggle);
     };
-
-  }, [onThemeToggle, osThemeToggle]);
+  }, [osThemeToggle]);
 
   return {
     isDarkThemeEnabled,
     setIsDarkThemeEnabled,
     onThemeToggle,
-    isLightMode: !isDarkThemeEnabled
+    isLightMode: !isDarkThemeEnabled,
   };
-
 };
 
 export default useThemeToggle;

@@ -1,15 +1,14 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-
-import Icon from '../../Icons/Icon';
+import type React from 'react';
 import { Link } from 'react-router-dom';
-import { useTitle } from '../../hooks/useTitle';
-import { deviceMediaQuery } from '../../theme/common';
+import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../../common';
+import { useTitle } from '../../hooks/useTitle';
+import Icon from '../../Icons/Icon';
+import { deviceMediaQuery } from '../../theme/common';
 
 const ICON_SIZE = 24;
 const GAP_LEFT = 20;
-const ICON_MARGIN_LEFT = -GAP_LEFT - ICON_SIZE ;
+const ICON_MARGIN_LEFT = -GAP_LEFT - ICON_SIZE;
 
 const Container = styled.div`
   position: relative;
@@ -23,10 +22,10 @@ const Container = styled.div`
   }
 `;
 
-const TitlesWrapper = styled.div<{$areaTitleBottom: boolean}>`
+const TitlesWrapper = styled.div<{ $areaTitleBottom: boolean }>`
   position: relative;
   display: flex;
-  flex-direction: ${({$areaTitleBottom}) => $areaTitleBottom ? `column-reverse`  : `column` };
+  flex-direction: ${({ $areaTitleBottom }) => ($areaTitleBottom ? `column-reverse` : `column`)};
   gap: 4px;
 `;
 
@@ -85,31 +84,45 @@ const AreaButton = styled.button`
 `;
 
 interface IProps {
-  title: string
-  icon?: string
-  iconColor?: ISvgIcons['color']
-  areaTitle?: string
-  areaHref?: string
-  updateDocTitle?: boolean
-  hideAreaInDocTitle? : boolean
-  areaTitleBottom?: boolean
-  onAreaClick?: () => void
+  title: string;
+  icon?: string;
+  iconColor?: ISvgIcons['color'];
+  areaTitle?: string;
+  areaHref?: string;
+  updateDocTitle?: boolean;
+  hideAreaInDocTitle?: boolean;
+  areaTitleBottom?: boolean;
+  onAreaClick?: () => void;
 }
 
-const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateDocTitle = true, hideAreaInDocTitle=false, areaTitleBottom=false, iconColor='dimmed', onAreaClick }) => {
+const PageTitle: React.FC<IProps> = ({
+  title,
+  icon,
+  areaTitle,
+  areaHref,
+  updateDocTitle = true,
+  hideAreaInDocTitle = false,
+  areaTitleBottom = false,
+  iconColor = 'dimmed',
+  onAreaClick,
+}) => {
   // Set <title> attribute automagically.
 
   useTitle(title, hideAreaInDocTitle ? undefined : areaTitle || '', undefined, updateDocTitle);
 
   return (
     <Container>
-      {icon ?
-        <IconContainer ><Icon size={ICON_SIZE} color={iconColor} {...{icon}} /></IconContainer>
-      : null}
+      {icon ? (
+        <IconContainer>
+          <Icon size={ICON_SIZE} color={iconColor} {...{ icon }} />
+        </IconContainer>
+      ) : null}
 
       <TitlesWrapper $areaTitleBottom={areaTitleBottom}>
         {areaTitle && onAreaClick ? (
-          <AreaButton onClick={onAreaClick} type="button">{areaTitle}</AreaButton>
+          <AreaButton onClick={onAreaClick} type='button'>
+            {areaTitle}
+          </AreaButton>
         ) : areaTitle && areaHref ? (
           <AreaLinkTitle to={areaHref}>{areaTitle}</AreaLinkTitle>
         ) : areaTitle ? (
@@ -117,8 +130,6 @@ const PageTitle : React.FC<IProps> = ({title, icon, areaTitle, areaHref, updateD
         ) : null}
         <Title>{title}</Title>
       </TitlesWrapper>
-
-
     </Container>
   );
 };

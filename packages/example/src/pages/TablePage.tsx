@@ -1,27 +1,28 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import styled from 'styled-components';
+import type React from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  TypeTable,
-  PageHeader,
-  Content,
-  useModal,
-  SplitButton,
   Button,
+  Content,
   FilterBar,
-  IFilterDropdownConfig,
-  IFilterResult,
-  IFeedbackColor,
+  type IFeedbackColor,
+  type IFilterDropdownConfig,
+  type IFilterResult,
   isFilterItem,
+  PageHeader,
+  SplitButton,
+  TypeTable,
+  useModal,
 } from 'scorer-ui-kit';
-import { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
-import { StatusComponent } from '../components/StatusComponent';
-import ExamplesFilename from '../components/ExamplesFilename';
+import type { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
+import styled from 'styled-components';
 import { BASE_PATH } from '../basePath';
+import ExamplesFilename from '../components/ExamplesFilename';
+import { StatusComponent } from '../components/StatusComponent';
 
 const Container = styled.div`
   margin: 100px 200px;
-`
+`;
 
 const SelectRows = styled.pre`
   color: var(--grey-11);
@@ -29,20 +30,20 @@ const SelectRows = styled.pre`
   background: var(--grey-4);
   padding: 10px;
   white-space: normal;
-`
+`;
 
 const LanguageRow = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 12px;
-`
+`;
 
 const LangNote = styled.p`
   font-family: var(--font-ui);
   font-size: 12px;
   color: var(--grey-9);
   margin: 16px 0;
-`
+`;
 
 const columnConfig: ITableColumnConfig[] = [
   {
@@ -55,21 +56,21 @@ const columnConfig: ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'lowImportance',
     alignment: 'center',
-    hasCopyButton: true
+    hasCopyButton: true,
   },
   {
     header: 'Usage',
     sortable: false,
     cellStyle: 'normalImportance',
     alignment: 'right',
-    showUnit: true
+    showUnit: true,
   },
   {
     header: 'Cost',
     sortable: true,
     cellStyle: 'highImportance',
     alignment: 'right',
-    hasCopyButton: true
+    hasCopyButton: true,
   },
   {
     header: 'Status',
@@ -82,7 +83,7 @@ const columnConfig: ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'highImportance',
     alignment: 'right',
-  }
+  },
 ];
 
 // Status classification for each row — used by the filter
@@ -99,162 +100,244 @@ const TablePage: React.FC = () => {
   const { createModal } = useModal();
   const [filterResults, setFilterResults] = useState<IFilterResult[]>([]);
 
-  const openCustomModal = useCallback((id: string) => {
-    console.log(`opening custom modal for item ${id}`);
-    createModal({
-      closeText: 'Close',
-      isCloseEnable: true,
-      customComponent: <PageHeader
-        title='Example of custom component on Modal'
-        introductionText="Anything can be added inside de modal, I hope you find this modal useful" />
-    });
-  }, [createModal]);
+  const openCustomModal = useCallback(
+    (id: string) => {
+      console.debug(`opening custom modal for item ${id}`);
+      createModal({
+        closeText: 'Close',
+        isCloseEnable: true,
+        customComponent: (
+          <PageHeader
+            title='Example of custom component on Modal'
+            introductionText='Anything can be added inside de modal, I hope you find this modal useful'
+          />
+        ),
+      });
+    },
+    [createModal]
+  );
 
-  const buttonList = useMemo(() => [
-    { id: 'a0', text: 'Main Action', icon: 'Success', onClickCallback: () => { } },
-    { id: 'a1', text: '日本語の場合はランダム', onClickCallback: () => { } },
-    { id: 'a2', text: 'Save Action', icon: 'Analyse', hasOnSelectLoading: true, onClickCallback: () => { } },
-    { id: 'a3', text: 'Download Action', icon: 'Download', onClickCallback: () => { }, disabled: true },
-  ], [])
-
-  const initialRows: ITypeTableData = useMemo(() => [
-    {
-      id: 'device-id-1',
-      header: {
-        image: "https://picsum.photos/id/43/367/267",
-        mediaUrl: `${BASE_PATH}traffic.mp4`,
-        mediaType: 'video',
+  const buttonList = useMemo(
+    () => [
+      { id: 'a0', text: 'Main Action', icon: 'Success', onClickCallback: () => {} },
+      { id: 'a1', text: '日本語の場合はランダム', onClickCallback: () => {} },
+      {
+        id: 'a2',
+        text: 'Save Action',
+        icon: 'Analyse',
+        hasOnSelectLoading: true,
+        onClickCallback: () => {},
       },
-      columns:
-        [
+      {
+        id: 'a3',
+        text: 'Download Action',
+        icon: 'Download',
+        onClickCallback: () => {},
+        disabled: true,
+      },
+    ],
+    []
+  );
+
+  const initialRows: ITypeTableData = useMemo(
+    () => [
+      {
+        id: 'device-id-1',
+        header: {
+          image: 'https://picsum.photos/id/43/367/267',
+          mediaUrl: `${BASE_PATH}traffic.mp4`,
+          mediaType: 'video',
+        },
+        columns: [
           { text: 'Device Name', href: '#' },
           { text: 'Just Now' },
           { text: '242', unit: 'mb' },
           { text: '¥20,000' },
-          { customComponent: <StatusComponent statusList={[{ type: 'success' }, { type: 'success' }, { type: 'success' }]} /> },
+          {
+            customComponent: (
+              <StatusComponent
+                statusList={[{ type: 'success' }, { type: 'success' }, { type: 'success' }]}
+              />
+            ),
+          },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
-        ]
-    },
-    {
-      _checked: true,
-      id: 'device-id-2',
-      header: {
-        image: `${BASE_PATH}images/cityscape.jpg`,
-        mediaUrl: `${BASE_PATH}images/cityscape.jpg`,
-        mediaType: 'img',
-        onClickThumbnail: () => openCustomModal('device-id-2'),
+        ],
       },
-      columns:
-        [
+      {
+        _checked: true,
+        id: 'device-id-2',
+        header: {
+          image: `${BASE_PATH}images/cityscape.jpg`,
+          mediaUrl: `${BASE_PATH}images/cityscape.jpg`,
+          mediaType: 'img',
+          onClickThumbnail: () => openCustomModal('device-id-2'),
+        },
+        columns: [
           { text: 'Another Device', href: '#' },
           { text: '1st October 2019' },
           { text: '2.1', unit: 'gb' },
           { text: '¥4,000' },
           {
-            customComponent:
+            customComponent: (
               <StatusComponent
-                statusList={
-                  [
-                    { type: 'error', tooltipIcon: 'BigWarning', tooltipType: 'warning', tooltipMessage: '4 Images have reported upload failures', tooltipPosition: 'left' },
-                    { type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: '1 images file is corrupted', tooltipPosition: 'bottom' },
-                    { type: 'info', tooltipIcon: 'Information', tooltipType: 'info', tooltipMessage: 'All Images have been updated in the server', tooltipPosition: 'right' },
-                  ]} />
+                statusList={[
+                  {
+                    type: 'error',
+                    tooltipIcon: 'BigWarning',
+                    tooltipType: 'warning',
+                    tooltipMessage: '4 Images have reported upload failures',
+                    tooltipPosition: 'left',
+                  },
+                  {
+                    type: 'warning',
+                    tooltipIcon: 'Information',
+                    tooltipType: 'neutral',
+                    tooltipMessage: '1 images file is corrupted',
+                    tooltipPosition: 'bottom',
+                  },
+                  {
+                    type: 'info',
+                    tooltipIcon: 'Information',
+                    tooltipType: 'info',
+                    tooltipMessage: 'All Images have been updated in the server',
+                    tooltipPosition: 'right',
+                  },
+                ]}
+              />
+            ),
           },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ],
-    },
-    {
-      id: 'device-id-3',
-      header: {
-        image: `${BASE_PATH}images/cityscape.jpg`,
-        mediaUrl: `${BASE_PATH}images/cityscape.jpg`,
-        mediaType: 'img'
       },
-      columns:
-        [
+      {
+        id: 'device-id-3',
+        header: {
+          image: `${BASE_PATH}images/cityscape.jpg`,
+          mediaUrl: `${BASE_PATH}images/cityscape.jpg`,
+          mediaType: 'img',
+        },
+        columns: [
           { text: 'Old Device', href: '#' },
           { text: '22nd March 2020' },
           { text: '2.1', unit: 'tb' },
           { text: '¥7,000' },
-          { customComponent: <StatusComponent statusList={[{ type: 'warning', tooltipIcon: 'Information', tooltipType: 'neutral', tooltipMessage: 'Upload took too long' }, { type: 'neutral' }, { type: 'neutral' }]} /> },
+          {
+            customComponent: (
+              <StatusComponent
+                statusList={[
+                  {
+                    type: 'warning',
+                    tooltipIcon: 'Information',
+                    tooltipType: 'neutral',
+                    tooltipMessage: 'Upload took too long',
+                  },
+                  { type: 'neutral' },
+                  { type: 'neutral' },
+                ]}
+              />
+            ),
+          },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
         ],
-    },
-    {
-      id: 'device-id-4',
-      header: {
-        image: `${BASE_PATH}images/cityscape.jpg`,
-        mediaUrl: `${BASE_PATH}images/cityscape.jpg`,
-        mediaType: 'img'
       },
-      columns:
-        [
+      {
+        id: 'device-id-4',
+        header: {
+          image: `${BASE_PATH}images/cityscape.jpg`,
+          mediaUrl: `${BASE_PATH}images/cityscape.jpg`,
+          mediaType: 'img',
+        },
+        columns: [
           { text: 'Magic Edge Cloud', href: '#' },
           { text: '2nd April 2020' },
           { text: '153', unit: 'mb' },
           { text: '¥25,000' },
-          { customComponent: <StatusComponent statusList={[{ type: 'neutral' }, { type: 'neutral' }, { type: 'neutral' }]} /> },
+          {
+            customComponent: (
+              <StatusComponent
+                statusList={[{ type: 'neutral' }, { type: 'neutral' }, { type: 'neutral' }]}
+              />
+            ),
+          },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
-        ]
-    },
-    {
-      id: 'device-id-5',
-      columns:
-        [
+        ],
+      },
+      {
+        id: 'device-id-5',
+        columns: [
           { text: 'Special Camera', href: '#' },
           { text: '16th June 2020' },
           { text: '153', unit: 'mb' },
           { text: '¥25,000' },
-          { customComponent: <StatusComponent statusList={[{ type: 'neutral' }, { type: 'neutral' }, { type: 'neutral' }]} /> },
+          {
+            customComponent: (
+              <StatusComponent
+                statusList={[{ type: 'neutral' }, { type: 'neutral' }, { type: 'neutral' }]}
+              />
+            ),
+          },
           { customComponent: <SplitButton mainButtonId={'a0'} buttonList={buttonList} /> },
-        ]
-    },
-  ], [buttonList, openCustomModal]);
+        ],
+      },
+    ],
+    [buttonList, openCustomModal]
+  );
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
-  const dropdownsConfig = useMemo((): IFilterDropdownConfig[] => [
-    {
-      id: 'statusFilter',
-      buttonText: t('filterBar.status'),
-      list: [
-        { text: t('filterBar.statusSuccess'), value: 'success' },
-        { text: t('filterBar.statusWarning'), value: 'warning' },
-        { text: t('filterBar.statusError'),   value: 'error' },
-        { text: t('filterBar.statusNeutral'), value: 'neutral' },
-      ],
-      buttonIcon: 'Camera',
-      optionType: 'radio',
-      hasReset: true,
-      hasApply: true,
-      resetText: t('filterBar.reset'),
-      cancelText: t('filterBar.cancel'),
-      closeText: t('filterBar.close'),
-      applyText:  t('filterBar.apply'),
-    },
-  ], [t]);
+  const dropdownsConfig = useMemo(
+    (): IFilterDropdownConfig[] => [
+      {
+        id: 'statusFilter',
+        buttonText: t('filterBar.status'),
+        list: [
+          { text: t('filterBar.statusSuccess'), value: 'success' },
+          { text: t('filterBar.statusWarning'), value: 'warning' },
+          { text: t('filterBar.statusError'), value: 'error' },
+          { text: t('filterBar.statusNeutral'), value: 'neutral' },
+        ],
+        buttonIcon: 'Camera',
+        optionType: 'radio',
+        hasReset: true,
+        hasApply: true,
+        resetText: t('filterBar.reset'),
+        cancelText: t('filterBar.cancel'),
+        closeText: t('filterBar.close'),
+        applyText: t('filterBar.apply'),
+      },
+    ],
+    [t]
+  );
 
   // Rows filtered by the active status selection
   const displayRows = useMemo(() => {
-    const statusFilter = filterResults.find(f => f.id === 'statusFilter');
+    const statusFilter = filterResults.find((f) => f.id === 'statusFilter');
     if (!statusFilter?.selected || !isFilterItem(statusFilter.selected)) return rows;
     const value = statusFilter.selected.value;
-    return rows.filter(row => row.id && rowStatusMap[row.id as string] === value);
+    return rows.filter((row) => row.id && rowStatusMap[row.id as string] === value);
   }, [filterResults, rows]);
 
   // Sent to checkbox in TableRow via Table component.
-  const selectCallback = useCallback((checked: boolean, id?: string | number) => {
-    const newRows = [...rows];
-    const targetRowIndex = newRows.findIndex(row => row.id === id);
-    newRows[targetRowIndex]._checked = checked;
-    setRows(newRows);
-  }, [rows, setRows]);
+  const selectCallback = useCallback(
+    (checked: boolean, id?: string | number) => {
+      const newRows = [...rows];
+      const targetRowIndex = newRows.findIndex((row) => row.id === id);
+      newRows[targetRowIndex]._checked = checked;
+      setRows(newRows);
+    },
+    [rows]
+  );
 
-  const toggleAllCallback = useCallback((checked: boolean) => {
-    const newRows = [...rows];
-    newRows.forEach((row) => { row._checked = checked; });
-    setRows(newRows);
-  }, [rows, setRows]);
+  const toggleAllCallback = useCallback(
+    (checked: boolean) => {
+      const newRows = [...rows];
+      newRows.forEach((row) => {
+        row._checked = checked;
+      });
+      setRows(newRows);
+    },
+    [rows]
+  );
 
   const handleFilters = useCallback((currentSelected: IFilterResult[]) => {
     setFilterResults(currentSelected);
@@ -264,28 +347,39 @@ const TablePage: React.FC = () => {
     i18n.changeLanguage(i18n.language.startsWith('ja') ? 'en' : 'ja');
   }, [i18n]);
 
-  return <Container>
-    <ExamplesFilename>TablePage.tsx</ExamplesFilename>
-    <Content>
-      <PageHeader title="Table Example" areaTitle="Examples" areaHref={'/'} />
-      <LanguageRow>
-        <Button design='secondary' size='small' onClick={toggleLanguage}>
-          {t('filterBar.switchLang')}
-        </Button>
-      </LanguageRow>
-      <FilterBar
-        dropdownsConfig={dropdownsConfig}
-        onChangeCallback={handleFilters}
-        totalResults={displayRows.length}
-        filtersTitle={t('filterBar.title')}
-        resultTextTemplate={t('filterBar.resultTemplate')}
-        clearText={t('filterBar.clearAll')}
-      />
-      <LangNote>{t('filterBar.tip')}</LangNote>
-      <TypeTable selectable={true} {...{ columnConfig, rows: displayRows, selectCallback, toggleAllCallback, hasThumbnail: true }} />
-      <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
-    </Content>
-  </Container>
+  return (
+    <Container>
+      <ExamplesFilename>TablePage.tsx</ExamplesFilename>
+      <Content>
+        <PageHeader title='Table Example' areaTitle='Examples' areaHref={'/'} />
+        <LanguageRow>
+          <Button design='secondary' size='small' onClick={toggleLanguage}>
+            {t('filterBar.switchLang')}
+          </Button>
+        </LanguageRow>
+        <FilterBar
+          dropdownsConfig={dropdownsConfig}
+          onChangeCallback={handleFilters}
+          totalResults={displayRows.length}
+          filtersTitle={t('filterBar.title')}
+          resultTextTemplate={t('filterBar.resultTemplate')}
+          clearText={t('filterBar.clearAll')}
+        />
+        <LangNote>{t('filterBar.tip')}</LangNote>
+        <TypeTable
+          selectable={true}
+          {...{
+            columnConfig,
+            rows: displayRows,
+            selectCallback,
+            toggleAllCallback,
+            hasThumbnail: true,
+          }}
+        />
+        <SelectRows>Selected IDs: [{checkedRowIDs(rows).toString()}]</SelectRows>
+      </Content>
+    </Container>
+  );
 };
 
 const checkedRowIDs = (rows: ITypeTableData) => {
@@ -298,6 +392,6 @@ const checkedRowIDs = (rows: ITypeTableData) => {
   });
 
   return ids;
-}
+};
 
 export default TablePage;

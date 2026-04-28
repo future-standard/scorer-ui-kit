@@ -1,8 +1,8 @@
-import * as React from 'react';
+import type { SVGProps } from 'react';
 
-function SvgAvatarPlaceholder(props: React.SVGProps<SVGSVGElement>) {
+function SvgAvatarPlaceholder(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width={48} height={48} {...props} viewBox='0 0 48 48'>
+    <svg width={48} height={48} aria-hidden='true' {...props} viewBox='0 0 48 48'>
       <g fill='none' fillRule='evenodd' strokeLinecap='round' strokeLinejoin='round'>
         <g stroke='#C1C1C1' strokeWidth='1.5'>
           <g>

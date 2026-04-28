@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import UtilityHeader from "../molecules/UtilityHeader";
-import { IHeaderContent } from "..";
+import type React from 'react';
+import styled from 'styled-components';
 import { Tabs } from '../../Tabs/Tabs';
+import type { IHeaderContent } from '..';
+import UtilityHeader from '../molecules/UtilityHeader';
 
 const Container = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ const TabAreaInner = styled.div`
     0
     var(--content-layout-padding-left);
 `;
-  
+
 const Content = styled.div`
   width: 100%;
   max-width: var(--max-content-width);
@@ -57,47 +57,38 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
-
 interface IContentLayout {
   layout?: 'default' | 'fullscreen' | 'dashboard';
   HeaderContent?: IHeaderContent;
   children?: React.ReactNode;
 }
 
-const ContentLayout : React.FC<IContentLayout> = ({ layout = 'default', HeaderContent = {}, children }) => {
+const ContentLayout: React.FC<IContentLayout> = ({
+  layout = 'default',
+  HeaderContent = {},
+  children,
+}) => {
   const { PageHeaderArea, TabsElementArea, UtilityHeaderOptions } = HeaderContent;
-  
-  const containerClass = 'content-layout-' + layout;
+
+  const containerClass = `content-layout-${layout}`;
 
   return (
     <Container className={containerClass}>
-      
-      {UtilityHeaderOptions ? 
-        <UtilityHeader {...UtilityHeaderOptions} />
-      : null }
-      
-      {PageHeaderArea ? <HeaderArea>
-        <>{PageHeaderArea}</>
-      </HeaderArea> : null }
-      
-      {TabsElementArea ?
+      {UtilityHeaderOptions ? <UtilityHeader {...UtilityHeaderOptions} /> : null}
+
+      {PageHeaderArea ? <HeaderArea>{PageHeaderArea}</HeaderArea> : null}
+
+      {TabsElementArea ? (
         <Tabs>
           <TabArea>
-            <TabAreaInner>
-              <>{TabsElementArea}</>
-            </TabAreaInner>
+            <TabAreaInner>{TabsElementArea}</TabAreaInner>
           </TabArea>
-    
-          <Content>
-            <>{children}</>
-          </Content>
-        </Tabs>
-      :
-        <Content>
-          <>{children}</>
-        </Content>
-      }
 
+          <Content>{children}</Content>
+        </Tabs>
+      ) : (
+        <Content>{children}</Content>
+      )}
     </Container>
   );
 };

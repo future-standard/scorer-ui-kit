@@ -1,8 +1,4 @@
-import NotificationProvider from './NotificationContext';
 import ModalProvider, { ModalContext } from './ModalContext';
+import NotificationProvider from './NotificationContext';
 
-export {
-  NotificationProvider,
-  ModalContext,
-  ModalProvider,
-};
+export { ModalContext, ModalProvider, NotificationProvider };

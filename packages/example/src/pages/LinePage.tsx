@@ -1,24 +1,25 @@
-import React, { useReducer, useCallback, useEffect, useState } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 // import styled from 'styled-components';
 import {
+  Button,
+  Content,
+  Input,
+  Label,
+  Layout,
   LineReducer,
   LineSetContext,
-  Sidebar,
-  SidebarBox,
-  Layout,
-  Content,
   LineUI,
   Logo,
-  Button,
+  Sidebar,
+  SidebarBox,
   TextField,
-  Label,
-  Input
 } from 'scorer-ui-kit';
-import { IPointSet, LineUIOptions } from 'scorer-ui-kit/dist/LineUI';
-import ExamplesFilename from '../components/ExamplesFilename';
+import type { IPointSet, LineUIOptions } from 'scorer-ui-kit/dist/LineUI';
 import { BASE_PATH } from '../basePath';
+import ExamplesFilename from '../components/ExamplesFilename';
 
-const Line: React.FC<{}> = () => {
+const Line: React.FC = () => {
   const [state, dispatch] = useReducer(LineReducer, []);
   const [error] = useState<string | null>('');
 
@@ -32,234 +33,332 @@ const Line: React.FC<{}> = () => {
     showMoveHandle: true,
     fixedImgDimensions: {
       x: 2310,
-      y: 1535
+      y: 1535,
     },
     boundaryOffset: 0,
     showDirectionMark: true,
     areaFillColor: '',
-    areaTransparencyLevel: 0
+    areaTransparencyLevel: 0,
   });
 
   const fetchLine = useCallback(async () => {
-
-    const state: IPointSet[] = [{
-      name: 'Line 1',
-      points: [
+    const state: IPointSet[] = [
+      {
+        name: 'Line 1',
+        points: [
           {
             x: 600,
-            y: 200
+            y: 200,
           },
           {
             x: 1100,
-            y: 450
-          }
+            y: 450,
+          },
         ],
         readOnly: false,
-        styling: 'primary'
-      }
+        styling: 'primary',
+      },
     ];
 
     dispatch({
       type: 'LOAD',
-      state
+      state,
     });
   }, []);
 
   const fetchDirectionLine = useCallback(async () => {
-
-    const state: IPointSet[] = [{
+    const state: IPointSet[] = [
+      {
         name: 'UP',
         points: [
           {
             x: 1048,
-            y: 456
+            y: 456,
           },
           {
             x: 1613,
-            y: 584
+            y: 584,
           },
           {
             x: 1322,
-            y: 985
+            y: 985,
           },
           {
             x: 922,
-            y: 785
-          }
+            y: 785,
+          },
         ],
         showPointHandle: true,
         showSmallDirectionMark: true,
         readOnly: false,
         styling: 'primary',
         areaFillColor: '#0B0B0B',
-        areaTransparencyLevel: 40
+        areaTransparencyLevel: 40,
       },
       {
         name: 'DOWN',
         points: [
           {
             x: 841,
-            y: 700
+            y: 700,
           },
           {
             x: 256,
-            y: 576
-          }
+            y: 576,
+          },
         ],
         showPointHandle: false,
         showMoveHandle: false,
         readOnly: false,
-        styling: 'primary'
-      }
+        styling: 'primary',
+      },
     ];
 
     dispatch({
       type: 'LOAD',
-      state
+      state,
     });
   }, []);
 
-  const renameLine = useCallback( ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+  const renameLine = useCallback(({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'RENAME_SET',
       index: 0,
       data: {
-        name: value
-      }
+        name: value,
+      },
     });
   }, []);
 
-  const renamePointLine = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: 'RENAME_SET',
-      index: lineIndex,
-      data: {
-        name: value
-      }
-    });
-  }, []);
+  const renamePointLine = useCallback(
+    (lineIndex: number, { target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch({
+        type: 'RENAME_SET',
+        index: lineIndex,
+        data: {
+          name: value,
+        },
+      });
+    },
+    []
+  );
 
-  const changeFillColor = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: 'UPDATE_FILL_COLOR',
-      index: lineIndex,
-      data: {
-        areaFillColor: value
-      }
-    });
-  }, []);
+  const changeFillColor = useCallback(
+    (lineIndex: number, { target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch({
+        type: 'UPDATE_FILL_COLOR',
+        index: lineIndex,
+        data: {
+          areaFillColor: value,
+        },
+      });
+    },
+    []
+  );
 
-  const changeTranparencyLevel = useCallback( (lineIndex: number, {target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: 'UPDATE_TRANSPARENCY_LEVEL',
-      index: lineIndex,
-      data: {
-        areaTransparencyLevel: parseInt(value)
-      }
-    });
-  }, []);
+  const changeTranparencyLevel = useCallback(
+    (lineIndex: number, { target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch({
+        type: 'UPDATE_TRANSPARENCY_LEVEL',
+        index: lineIndex,
+        data: {
+          areaTransparencyLevel: parseInt(value, 10),
+        },
+      });
+    },
+    []
+  );
 
-  const toggleReadOnly = useCallback((index=0) => () => {
-    dispatch({
-      type: 'UPDATE_SET_OPTIONS',
-      index,
-      data: {
-        readOnly: !(state[0]?.readOnly)
-      }
-    });
-  }, [state]);
+  const toggleReadOnly = useCallback(
+    (index = 0) =>
+      () => {
+        dispatch({
+          type: 'UPDATE_SET_OPTIONS',
+          index,
+          data: {
+            readOnly: !state[0]?.readOnly,
+          },
+        });
+      },
+    [state]
+  );
 
-  const selectLine = useCallback((lineId: number) => {
-    const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
-    dispatch({
-      type: 'UPDATE_SET_OPTIONS',
-      index: deselectLineIndex,
-      data: {
-        showPointHandle: false,
-        showMoveHandle: false
-      }
-    });
-    dispatch({
-      type: 'UPDATE_SET_OPTIONS',
-      index: lineId,
-      data: {
-        showPointHandle: true,
-        showMoveHandle: true
-      }
-    });
-  }, [state]);
+  const selectLine = useCallback(
+    (lineId: number) => {
+      const deselectLineIndex = state.findIndex((item) => item.showPointHandle);
+      dispatch({
+        type: 'UPDATE_SET_OPTIONS',
+        index: deselectLineIndex,
+        data: {
+          showPointHandle: false,
+          showMoveHandle: false,
+        },
+      });
+      dispatch({
+        type: 'UPDATE_SET_OPTIONS',
+        index: lineId,
+        data: {
+          showPointHandle: true,
+          showMoveHandle: true,
+        },
+      });
+    },
+    [state]
+  );
 
-  const toggleOptions = useCallback((option: keyof LineUIOptions) => () => {
-    setOptions({...options, [option]: !options[option]});
-  }, [options]);
+  const toggleOptions = useCallback(
+    (option: keyof LineUIOptions) => () => {
+      setOptions({ ...options, [option]: !options[option] });
+    },
+    [options]
+  );
 
   // const saveLine = useCallback(async () => {
   // }, []);
 
   useEffect(() => {
     options.showDirectionMark ? fetchDirectionLine() : fetchLine();
-  }, [fetchLine, fetchDirectionLine, options])
+  }, [fetchLine, fetchDirectionLine, options]);
 
-  const updateBoudaryOffset =  useCallback( ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-    setOptions({...options, boundaryOffset: parseInt(value) });
-  }, [options]);
+  const updateBoudaryOffset = useCallback(
+    ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+      setOptions({ ...options, boundaryOffset: parseInt(value, 10) });
+    },
+    [options]
+  );
 
   return (
-    <Layout >
+    <Layout>
       <ExamplesFilename>LinePage.tsx</ExamplesFilename>
 
       <Sidebar>
         <Logo logoTextTop={'SCORER'} logoTextBottom={'UI Kit'} />
-        <SidebarBox style={{ flex: '1' }} >
-          <pre>
-            {JSON.stringify(state, null, 2)}
-          </pre>
+        <SidebarBox style={{ flex: '1' }}>
+          <pre>{JSON.stringify(state, null, 2)}</pre>
         </SidebarBox>
         <SidebarBox>
-          <Label labelText='Show Point Handle' htmlFor='showPointHandle' >
-            <input id='showPointHandle' type='checkbox' name='showPointHandle' checked={options.showPointHandle} onChange={toggleOptions('showPointHandle')}/>
+          <Label labelText='Show Point Handle' htmlFor='showPointHandle'>
+            <input
+              id='showPointHandle'
+              type='checkbox'
+              name='showPointHandle'
+              checked={options.showPointHandle}
+              onChange={toggleOptions('showPointHandle')}
+            />
           </Label>
-          <Label labelText='Show Move Handle' htmlFor='showMoveHandle' >
-            <input id='showMoveHandle' type='checkbox' name='showMoveHandle' checked={options.showMoveHandle} onChange={toggleOptions('showMoveHandle')}/>
+          <Label labelText='Show Move Handle' htmlFor='showMoveHandle'>
+            <input
+              id='showMoveHandle'
+              type='checkbox'
+              name='showMoveHandle'
+              checked={options.showMoveHandle}
+              onChange={toggleOptions('showMoveHandle')}
+            />
           </Label>
-          <Label labelText='Show Point' htmlFor='showPoint' >
-            <input id='showPoint' type='checkbox' name='showPoint' checked={options.showPoint} onChange={toggleOptions('showPoint')}/>
+          <Label labelText='Show Point' htmlFor='showPoint'>
+            <input
+              id='showPoint'
+              type='checkbox'
+              name='showPoint'
+              checked={options.showPoint}
+              onChange={toggleOptions('showPoint')}
+            />
           </Label>
-          <Label labelText='Show Direction Mark' htmlFor='showDirectionMark' >
-            <input id='showDirectionMark' type='checkbox' name='showDirectionMark' checked={options.showDirectionMark} onChange={toggleOptions('showDirectionMark')}/>
+          <Label labelText='Show Direction Mark' htmlFor='showDirectionMark'>
+            <input
+              id='showDirectionMark'
+              type='checkbox'
+              name='showDirectionMark'
+              checked={options.showDirectionMark}
+              onChange={toggleOptions('showDirectionMark')}
+            />
           </Label>
-          <Label labelText='Show Label Shadow' htmlFor='showLabelShadow' >
-            <input id='showLabelShadow' type='checkbox' name='showLabelShadow' checked={options.showLabelShadow} onChange={toggleOptions('showLabelShadow')}/>
+          <Label labelText='Show Label Shadow' htmlFor='showLabelShadow'>
+            <input
+              id='showLabelShadow'
+              type='checkbox'
+              name='showLabelShadow'
+              checked={options.showLabelShadow}
+              onChange={toggleOptions('showLabelShadow')}
+            />
           </Label>
         </SidebarBox>
         <SidebarBox>
-          { options.showDirectionMark ?
+          {options.showDirectionMark ? (
             <>
-              <TextField id='renameLine1' label='Rename UP Line' fieldState='default' name='renameLine1' value={state[0]?.name ||''} onChange={(e) => renamePointLine(0, e)} />
-              <TextField id='renameLine2' label='Rename DOWN Line' fieldState='default' name='renameLine2' value={state[1]?.name ||''} onChange={(e) => renamePointLine(1, e)} />
+              <TextField
+                id='renameLine1'
+                label='Rename UP Line'
+                fieldState='default'
+                name='renameLine1'
+                value={state[0]?.name || ''}
+                onChange={(e) => renamePointLine(0, e)}
+              />
+              <TextField
+                id='renameLine2'
+                label='Rename DOWN Line'
+                fieldState='default'
+                name='renameLine2'
+                value={state[1]?.name || ''}
+                onChange={(e) => renamePointLine(1, e)}
+              />
             </>
-            :
-            <TextField id='rename' label='Rename Line' fieldState='default' name='rename' value={state[0]?.name ||''} onChange={renameLine}/>
-          }
-          <Label labelText='Boundary Offset' htmlFor='boundaryOffset' >
-            <Input id='boundaryOffset' type='number' name='boundaryOffset' min={0} value={options.boundaryOffset} onChange={updateBoudaryOffset}/>
+          ) : (
+            <TextField
+              id='rename'
+              label='Rename Line'
+              fieldState='default'
+              name='rename'
+              value={state[0]?.name || ''}
+              onChange={renameLine}
+            />
+          )}
+          <Label labelText='Boundary Offset' htmlFor='boundaryOffset'>
+            <Input
+              id='boundaryOffset'
+              type='number'
+              name='boundaryOffset'
+              min={0}
+              value={options.boundaryOffset}
+              onChange={updateBoudaryOffset}
+            />
           </Label>
-          <TextField id='fillColor' label='Area Fill Color' fieldState='default' name='fillColor' value={state[0]?.areaFillColor ||''} onChange={(e) => changeFillColor(0, e)}/>
-          <TextField id='transparencyLevel' label='Area Tranparency Level' fieldState='default' name='transparencyLevel' value={state[0]?.areaTransparencyLevel ||''} onChange={(e) => changeTranparencyLevel(0, e)}/>
+          <TextField
+            id='fillColor'
+            label='Area Fill Color'
+            fieldState='default'
+            name='fillColor'
+            value={state[0]?.areaFillColor || ''}
+            onChange={(e) => changeFillColor(0, e)}
+          />
+          <TextField
+            id='transparencyLevel'
+            label='Area Tranparency Level'
+            fieldState='default'
+            name='transparencyLevel'
+            value={state[0]?.areaTransparencyLevel || ''}
+            onChange={(e) => changeTranparencyLevel(0, e)}
+          />
         </SidebarBox>
         <SidebarBox>
-          <Button design="secondary" onClick={toggleReadOnly()} >Toggle Read Only</Button>
+          <Button design='secondary' onClick={toggleReadOnly()}>
+            Toggle Read Only
+          </Button>
           {/* <Button style={{ marginLeft: '10px' }} onClick={saveLine}>Save</Button> */}
         </SidebarBox>
       </Sidebar>
       <Content $padBottom={false}>
         {error && <div>{error}</div>}
         <LineSetContext.Provider value={{ state, dispatch }}>
-          <LineUI options={options} onLineClick={selectLine} src={`${BASE_PATH}images/line-ui-railyard.jpg`} />
+          <LineUI
+            options={options}
+            onLineClick={selectLine}
+            src={`${BASE_PATH}images/line-ui-railyard.jpg`}
+          />
         </LineSetContext.Provider>
       </Content>
     </Layout>
   );
-}
+};
 
 export default Line;

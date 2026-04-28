@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
 import Spinner from '../../Indicators/Spinner';
 
@@ -23,7 +23,7 @@ const LoadingText = styled.div`
 `;
 
 interface ILoadingBox {
-  loadingText?: string
+  loadingText?: string;
 }
 
 const LoadingBox: React.FC<ILoadingBox> = ({ loadingText }) => {

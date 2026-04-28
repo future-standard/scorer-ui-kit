@@ -1,19 +1,16 @@
-import React from 'react';
+import { object } from '@storybook/addon-knobs';
+import { type ITag, TagList } from 'scorer-ui-kit';
 import styled from 'styled-components';
-import {TagList, ITag} from 'scorer-ui-kit';
-import {object} from "@storybook/addon-knobs";
-
 
 const TagListStory = {
   title: 'Misc/Molecules',
   component: TagList,
-  decorators: []
+  decorators: [],
 };
-
 
 // overflow-x: scroll;
 const Container = styled.div`
-  font-family: ${p => p.theme.fontFamily.data};
+  font-family: ${(p) => p.theme.fontFamily.data};
   margin: 100px;
   display: table-cell;
   height: 50px;
@@ -24,7 +21,7 @@ const Container = styled.div`
   padding: 0 2px;
 `;
 
-const defaultTags : ITag[] = [
+const defaultTags: ITag[] = [
   {
     label: 'Shop A',
     icon: 'MetaCategories',
@@ -32,21 +29,19 @@ const defaultTags : ITag[] = [
   {
     label: 'Example',
     icon: 'MetaTags',
-    color: 'primary'
+    color: 'primary',
   },
   {
     label: 'Smart',
     icon: 'MetaTags',
   },
-
 ];
 
 export const _TagList = () => {
-
-  const someTags = object("tagsConfig", defaultTags)
-  return(
+  const someTags = object('tagsConfig', defaultTags);
+  return (
     <Container>
-      <TagList tagsConfig={someTags}/>
+      <TagList tagsConfig={someTags} />
     </Container>
   );
 };

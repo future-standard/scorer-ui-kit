@@ -1,8 +1,9 @@
-import React, { ButtonHTMLAttributes, useContext } from 'react';
-import { TabContext, ContextProps } from '../../Tabs/Tabs';
+import type React from 'react';
+import { type ButtonHTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
 import { resetButtonStyles } from '../../common/index';
 import Icon from '../../Icons/Icon';
+import { type ContextProps, TabContext } from '../../Tabs/Tabs';
 import { MOBILE_CLOSE_HEIGHT } from './Layout';
 
 const StyledButton = styled.button`
@@ -48,25 +49,23 @@ const TextWrapper = styled.div`
 `;
 
 interface ICloseProps {
-  closeId: string
-  closeText?: string
+  closeId: string;
+  closeText?: string;
 }
 
-type IClose = ICloseProps & ButtonHTMLAttributes<HTMLButtonElement>
+type IClose = ICloseProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const CloseButton: React.FC<IClose> = ({
   closeId,
   closeText = 'CLOSE MENU',
   children,
   formAction,
-  ...props }) => {
+  ...props
+}) => {
   const { setSelected }: ContextProps = useContext(TabContext);
 
   return (
-    <StyledButton
-      onClick={() => setSelected(closeId)}
-      {...props}
-    >
+    <StyledButton onClick={() => setSelected(closeId)} {...props}>
       <IconContainer>
         <Icon icon='CloseCompact' color='dimmed' size={16} />
       </IconContainer>

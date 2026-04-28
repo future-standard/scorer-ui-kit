@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
 
-import LineUIVideoBase, { LineUIProps } from './LineUIVideoBase';
+import LineUIVideoBase, { type LineUIProps } from './LineUIVideoBase';
 
 const LineUIVideo: React.FC<LineUIProps> = (props) => {
   const videoRef = useRef<HTMLVideoElement>(null);

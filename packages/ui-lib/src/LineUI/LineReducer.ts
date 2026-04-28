@@ -1,5 +1,5 @@
-import { IPointSet, IVector2 } from './';
 import update from 'immutability-helper';
+import type { IPointSet, IVector2 } from './';
 
 export type IReducerActions =
   | UpdateAction
@@ -11,15 +11,14 @@ export type IReducerActions =
   | UpdateSetOptions
   | RenameSetAction
   | ChangeFillColorAction
-  | ChangeTranparencyLevelAction
-  ;
+  | ChangeTranparencyLevelAction;
 
-interface AddSetAction{
+interface AddSetAction {
   type: 'ADD_SET';
   data: IPointSet;
 }
 interface UpdateAction {
-  type: 'UPDATE'|'UPDATE_SET_POINTS';
+  type: 'UPDATE' | 'UPDATE_SET_POINTS';
   index: number;
   data: IPointSet;
 }
@@ -41,8 +40,8 @@ interface RemoveAction {
   index: number;
 }
 interface LoadAction {
-    type: 'LOAD';
-    state: IPointSet[];
+  type: 'LOAD';
+  state: IPointSet[];
 }
 interface AddPointAction {
   type: 'ADD_POINT';
@@ -69,71 +68,78 @@ interface ChangeTranparencyLevelAction {
   };
 }
 
-const getMidpoint = (pointA : IVector2, pointB : IVector2) => {
-  return({
+const getMidpoint = (pointA: IVector2, pointB: IVector2) => {
+  return {
     x: pointA.x + (pointB.x - pointA.x) * 0.5,
-    y: pointA.y + (pointB.y - pointA.y) * 0.5
-  });
+    y: pointA.y + (pointB.y - pointA.y) * 0.5,
+  };
 };
 
-export default (state : IPointSet[], action: IReducerActions) => {
-
-  switch(action.type){
+export default (state: IPointSet[], action: IReducerActions) => {
+  switch (action.type) {
     //This UPDATE is better named 'UPDATE_SET_POINTS'
-    case "UPDATE_SET_POINTS":
-    case "UPDATE": {
-      const points = action.data.points.map((point) => ({...point}));
-      return update(state, {[action.index]: { points: {$set: points}}});
+    case 'UPDATE_SET_POINTS':
+    case 'UPDATE': {
+      const points = action.data.points.map((point) => ({ ...point }));
+      return update(state, { [action.index]: { points: { $set: points } } });
     }
 
-    case "RENAME_SET": {
-      const set = { ...state[action.index], name: action.data.name};
-      return update(state, {[action.index]: {$set: set}});
+    case 'RENAME_SET': {
+      const set = { ...state[action.index], name: action.data.name };
+      return update(state, { [action.index]: { $set: set } });
     }
 
-    case "UPDATE_SET_OPTIONS": {
-      const set = { ...state[action.index], ...action.data};
-      return update(state, {[action.index]: {$set: set}});
+    case 'UPDATE_SET_OPTIONS': {
+      const set = { ...state[action.index], ...action.data };
+      return update(state, { [action.index]: { $set: set } });
     }
 
-    case "ADD_SET":
+    case 'ADD_SET':
       return [...state, action.data];
 
-    case "REMOVE_SET":
-      return update(state, { $splice: [[action.index,1]]});
+    case 'REMOVE_SET':
+      return update(state, { $splice: [[action.index, 1]] });
 
-    case "ADD_POINT": {
-      const newPoint: IVector2 = getMidpoint(state[action.index].points[0], state[action.index].points[1]);
-      return update(state, {[action.index]: {points: {$splice: [[1, 0, newPoint]]}}});
+    case 'ADD_POINT': {
+      const newPoint: IVector2 = getMidpoint(
+        state[action.index].points[0],
+        state[action.index].points[1]
+      );
+      return update(state, { [action.index]: { points: { $splice: [[1, 0, newPoint]] } } });
     }
 
-    case "REMOVE_POINT":
-      if(state[action.index].points.length <= 2){ return state; }
-      return update(state, {[action.index]: {points: {$splice: [[state[action.index].points.length - 1, 1]]}}});
+    case 'REMOVE_POINT':
+      if (state[action.index].points.length <= 2) {
+        return state;
+      }
+      return update(state, {
+        [action.index]: { points: { $splice: [[state[action.index].points.length - 1, 1]] } },
+      });
 
     case 'LOAD': {
-      const newState = action.state.map(
-          ({name, points, ...rest}) => ({
-            name,
-            points: points.map( ({x,y}) => ({x,y}) ),
-            ...rest
-          })
-        );
+      const newState = action.state.map(({ name, points, ...rest }) => ({
+        name,
+        points: points.map(({ x, y }) => ({ x, y })),
+        ...rest,
+      }));
       return newState;
     }
 
-    case "UPDATE_FILL_COLOR": {
-      const set = { ...state[action.index], areaFillColor: action.data.areaFillColor};
-      return update(state, {[action.index]: {$set: set}});
+    case 'UPDATE_FILL_COLOR': {
+      const set = { ...state[action.index], areaFillColor: action.data.areaFillColor };
+      return update(state, { [action.index]: { $set: set } });
     }
 
-    case "UPDATE_TRANSPARENCY_LEVEL": {
-      const set = { ...state[action.index], areaTransparencyLevel: action.data.areaTransparencyLevel};
-      return update(state, {[action.index]: {$set: set}});
+    case 'UPDATE_TRANSPARENCY_LEVEL': {
+      const set = {
+        ...state[action.index],
+        areaTransparencyLevel: action.data.areaTransparencyLevel,
+      };
+      return update(state, { [action.index]: { $set: set } });
     }
 
     default:
-      console.error(`Action ${action['type']} not registered.`);
+      console.error(`Action ${(action as { type: string }).type} not registered.`);
       return state;
   }
 };

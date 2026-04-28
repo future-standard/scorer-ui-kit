@@ -1,12 +1,12 @@
-import React, { useCallback, useState, useContext } from 'react';
-import styled from 'styled-components';
+import type React from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { TabContext, ContextProps } from '../../Tabs/Tabs';
-
-import { IMenu } from '..';
-import NavigationItem from '../atoms/NavigationItem';
-import ContextItem from '../atoms/ContextItem';
+import styled from 'styled-components';
 import { getTopLevelPath } from '../../helpers/index';
+import { type ContextProps, TabContext } from '../../Tabs/Tabs';
+import type { IMenu } from '..';
+import ContextItem from '../atoms/ContextItem';
+import NavigationItem from '../atoms/NavigationItem';
 
 const Container = styled.div``;
 
@@ -16,40 +16,42 @@ const ItemWrapper = styled.div`
 `;
 
 interface IMobileMenu extends IMenu {
-  closeId: string
+  closeId: string;
 }
 
 const MobileMenu: React.FC<IMobileMenu> = ({
   content,
   supportUrl,
-  supportText="Help & Support",
-  closeId
+  supportText = 'Help & Support',
+  closeId,
 }) => {
-
   const [focusedContext, setFocusedContext] = useState<number>(0);
   const location = useLocation();
   const { setSelected }: ContextProps = useContext(TabContext);
-
 
   /** Manage which context is open.
    * -1 is the value of a sub menu
    * In this mobile version of the menu will close after selecting an option
    * It will not close if the menu has a submenu to allow it to display the options
-  */
-  const setFocusedContextCb = useCallback((contextKey: number) => {
-    if((contextKey === -1) || (!content.items[contextKey].submenu) ){
-      setSelected(closeId);
-    }
+   */
+  const setFocusedContextCb = useCallback(
+    (contextKey: number) => {
+      if (contextKey === -1 || !content.items[contextKey].submenu) {
+        setSelected(closeId);
+      }
 
-    if(contextKey === -1) { return; }
+      if (contextKey === -1) {
+        return;
+      }
 
-    setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
-
-  }, [closeId, content.items, focusedContext, setSelected]);
+      setFocusedContext(focusedContext !== contextKey ? contextKey : -1);
+    },
+    [closeId, content.items, focusedContext, setSelected]
+  );
 
   const handleCloseMenu = useCallback(() => {
     setSelected(closeId);
-  },[closeId, setSelected]);
+  }, [closeId, setSelected]);
 
   return (
     <Container>
@@ -66,7 +68,6 @@ const MobileMenu: React.FC<IMobileMenu> = ({
               {...{ item, focusedContext }}
             />
           </ItemWrapper>
-
         );
       })}
       {supportUrl && (
@@ -80,7 +81,8 @@ const MobileMenu: React.FC<IMobileMenu> = ({
             menuOpen
             onClickCallback={handleCloseMenu}
           />
-        </ItemWrapper>)}
+        </ItemWrapper>
+      )}
     </Container>
   );
 };

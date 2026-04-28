@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { AlertType, ITooltipPosition, ITooltipType, Tooltip } from 'scorer-ui-kit';
+import { type AlertType, type ITooltipPosition, type ITooltipType, Tooltip } from 'scorer-ui-kit';
 import styled, { css } from 'styled-components';
 
 const StatusWrapper = styled.div`
@@ -9,12 +9,14 @@ const StatusWrapper = styled.div`
   gap: 4px;
 `;
 
-const StatusDot = styled.div<{ $type?: AlertType, $tooltipMessage?: string }>`
+const StatusDot = styled.div<{ $type?: AlertType; $tooltipMessage?: string }>`
   height: 12px;
   width: 12px;
   border-radius: 100%;
   background-color: ${({ $type }) => `var(--${$type}, var(--primary-9))`};
-    ${({ $tooltipMessage }) => $tooltipMessage && css`
+    ${({ $tooltipMessage }) =>
+      $tooltipMessage &&
+      css`
       &:hover {
         cursor: pointer;
       };
@@ -22,36 +24,45 @@ const StatusDot = styled.div<{ $type?: AlertType, $tooltipMessage?: string }>`
 `;
 
 interface IStatusDot {
-  type?: AlertType
-  tooltipMessage?: string
-  tooltipIcon?: string
-  tooltipType?: ITooltipType
-  tooltipPosition?: ITooltipPosition
+  type?: AlertType;
+  tooltipMessage?: string;
+  tooltipIcon?: string;
+  tooltipType?: ITooltipType;
+  tooltipPosition?: ITooltipPosition;
 }
 
 interface IStatusBundle {
-  statusList: IStatusDot[]
+  statusList: IStatusDot[];
 }
 
 export const StatusComponent: React.FC<IStatusBundle> = ({ statusList }) => {
-
-  const statusRefs = useRef<(React.RefObject<HTMLDivElement>)[]>([]);
+  const statusRefs = useRef<React.RefObject<HTMLDivElement | null>[]>([]);
   statusRefs.current = statusList.map(() => React.createRef<HTMLDivElement>());
 
   return (
     <StatusWrapper>
-      {
-        statusList.map(({ type, tooltipMessage, tooltipIcon, tooltipType, tooltipPosition }, index) => {
+      {statusList.map(
+        ({ type, tooltipMessage, tooltipIcon, tooltipType, tooltipPosition }, index) => {
           return (
             <Fragment key={index}>
-              <StatusDot ref={statusRefs.current[index]} $type={type} $tooltipMessage={tooltipMessage} />
+              <StatusDot
+                ref={statusRefs.current[index]}
+                $type={type}
+                $tooltipMessage={tooltipMessage}
+              />
               {tooltipMessage && (
-                <Tooltip tooltipFor={statusRefs.current[index]} message={tooltipMessage} icon={tooltipIcon} type={tooltipType} tooltipPosition={tooltipPosition} />)
-              }
+                <Tooltip
+                  tooltipFor={statusRefs.current[index]}
+                  message={tooltipMessage}
+                  icon={tooltipIcon}
+                  type={tooltipType}
+                  tooltipPosition={tooltipPosition}
+                />
+              )}
             </Fragment>
-          )
-        })
-      }
+          );
+        }
+      )}
     </StatusWrapper>
-  )
-}
+  );
+};

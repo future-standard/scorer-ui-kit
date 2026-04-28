@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
+import type React from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-
-import LineSet from './LineSet';
-import { LineSetContext } from './Contexts';
 import Spinner from '../Indicators/Spinner';
-import { LineUIOptions, IBoundary, LineUIVideoOptions } from '.';
+import type { IBoundary, LineUIOptions, LineUIVideoOptions } from '.';
+import { LineSetContext } from './Contexts';
+import LineSet from './LineSet';
 
 const Container = styled.div`
   position: relative;
@@ -79,13 +79,7 @@ const LineUIVideoBase: React.FC<LineUIVideoBaseProps> = ({
   onLoaded = () => {},
   lineClickSensingBorder = '65',
   hasClickSensingBorder = true,
-  videoOptions: {
-    loop = false,
-    autoPlay = false,
-    controls = false,
-    muted = true,
-    ...videoOptions
-  },
+  videoOptions: { loop = false, autoPlay = false, controls = false, muted = true, ...videoOptions },
   options: {
     showHandleFinder,
     showSetIndex,
@@ -133,7 +127,7 @@ const LineUIVideoBase: React.FC<LineUIVideoBaseProps> = ({
 
   const handlePositionTipShow = (e: any) => {
     if (e.target === frame.current) {
-      setHandleFinder((!handleFinder === false) && true);
+      setHandleFinder(!handleFinder === false && true);
     }
   };
 
@@ -175,7 +169,7 @@ const LineUIVideoBase: React.FC<LineUIVideoBaseProps> = ({
         onLoaded({ height: videoHeight, width: videoWidth });
       }
     },
-    [initScaleAndBounds, onLoaded],
+    [initScaleAndBounds, onLoaded]
   );
 
   useEffect(() => {

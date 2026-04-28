@@ -1,10 +1,11 @@
-import React, { useContext, useCallback } from 'react';
+import type React from 'react';
+import { useCallback, useContext } from 'react';
 import styled, { css } from 'styled-components';
-import { TabContext, ContextProps } from '../Tabs';
+import type { IStatusDot } from '../..';
+import { resetButtonStyles } from '../../common/index';
 import { IconWrapper } from '../../Icons/Icon';
 import StatusIcon from '../../Icons/StatusIcon';
-import { resetButtonStyles } from '../../common/index';
-import { IStatusDot } from '../..';
+import { type ContextProps, TabContext } from '../Tabs';
 
 const Container = styled.button`
   ${resetButtonStyles}
@@ -38,7 +39,9 @@ const LinkTab = styled.div<{ $isActive: boolean }>`
     }
   `};
 
-  ${({ $isActive, theme }) => $isActive && css`
+  ${({ $isActive, theme }) =>
+    $isActive &&
+    css`
     &, &:hover {
       border-bottom-color: ${theme.colors.menu.active};
       ${IconWrapper} {
@@ -51,26 +54,37 @@ const LinkTab = styled.div<{ $isActive: boolean }>`
 `;
 
 interface IMobileTab {
-  tabFor: string
-  icon: string
-  closeId: string
-  counter?: number
-  status?: IStatusDot
-  customComponent?: React.ReactElement
+  tabFor: string;
+  icon: string;
+  closeId: string;
+  counter?: number;
+  status?: IStatusDot;
+  customComponent?: React.ReactElement;
 }
 
-const MobileTab: React.FC<IMobileTab> = ({ tabFor, icon, closeId, counter, status, customComponent: _customComponent, ...props }) => {
+const MobileTab: React.FC<IMobileTab> = ({
+  tabFor,
+  icon,
+  closeId,
+  counter,
+  status,
+  customComponent: _customComponent,
+  ...props
+}) => {
   const { selected, setSelected }: ContextProps = useContext(TabContext);
 
-  const onChangeTab = useCallback((tabId: string) => {
-    const newValue = (selected === tabId) ? closeId : tabId;
-    setSelected(newValue);
-  }, [closeId, selected, setSelected]);
+  const onChangeTab = useCallback(
+    (tabId: string) => {
+      const newValue = selected === tabId ? closeId : tabId;
+      setSelected(newValue);
+    },
+    [closeId, selected, setSelected]
+  );
 
   return (
     <Container {...props} onClick={() => onChangeTab(tabFor)}>
       <LinkTab $isActive={selected === tabFor}>
-        <StatusIcon {...{icon, status, counter}} />
+        <StatusIcon {...{ icon, status, counter }} />
       </LinkTab>
     </Container>
   );

@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, HTMLAttributes } from 'react';
+import type React from 'react';
+import { type HTMLAttributes, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { TabContext, ContextProps } from './Tabs';
+import { type ContextProps, TabContext } from './Tabs';
 
 export const TabListWrapper = styled.div`
   display: flex;
@@ -8,23 +9,19 @@ export const TabListWrapper = styled.div`
 `;
 
 interface OwnProps {
-  defaultTabId: string
+  defaultTabId: string;
 }
 
-type Props = OwnProps & HTMLAttributes<HTMLDivElement>
+type Props = OwnProps & HTMLAttributes<HTMLDivElement>;
 
-const TabList: React.FC<Props> = ({ children, defaultTabId}) => {
+const TabList: React.FC<Props> = ({ children, defaultTabId }) => {
   const { setSelected }: ContextProps = useContext(TabContext);
 
   useEffect(() => {
     setSelected(defaultTabId);
   }, [defaultTabId, setSelected]);
 
-  return (
-    <TabListWrapper>
-      <>{children}</>
-    </TabListWrapper>
-  );
+  return <TabListWrapper>{children}</TabListWrapper>;
 };
 
 export { TabList };

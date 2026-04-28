@@ -1,6 +1,16 @@
-import { fontFamily, dimensions, animation, deviceSize, deviceMediaQuery } from './common';
-import { typography } from './legacy/typography';
+import { animation, deviceMediaQuery, deviceSize, dimensions, fontFamily } from './common';
 import { colors } from './legacy/colors';
-import { styles } from './legacy/styles';
 import { custom } from './legacy/custom';
-export default { fontFamily, dimensions, typography, colors, styles, animation, custom, deviceSize, deviceMediaQuery };
+import { styles } from './legacy/styles';
+import { typography } from './legacy/typography';
+export default {
+  fontFamily,
+  dimensions,
+  typography,
+  colors,
+  styles,
+  animation,
+  custom,
+  deviceSize,
+  deviceMediaQuery,
+};

@@ -1,21 +1,22 @@
-import React, { useState, useCallback } from 'react';
-import styled from 'styled-components';
-import { boolean, select } from "@storybook/addon-knobs";
+import { boolean, select } from '@storybook/addon-knobs';
+import { useCallback, useState } from 'react';
+import { FilterDropdown, type IFilterValue, PageHeader } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
-import {
-  FilterDropdown,
-  IFilterValue,
-  PageHeader,
-} from 'scorer-ui-kit';
+import styled from 'styled-components';
 import { generateIconList } from '../../helpers';
-import { emptyResultsEnglish, emptyResultsJapanese, searchTemplateResultEnglish, searchTemplateResultJapanese } from '../../helpers/data_samples';
+import {
+  emptyResultsEnglish,
+  emptyResultsJapanese,
+  searchTemplateResultEnglish,
+  searchTemplateResultJapanese,
+} from '../../helpers/data_samples';
 
 const FilterDropdownWithFooterStory = {
   title: 'Filters/molecules/FilterDropdown',
   component: FilterDropdown,
   parameters: {
     componentSubtitle: 'FilterDropdown component with footer controls',
-  }
+  },
 };
 
 const Wrapper = styled.div`
@@ -51,9 +52,9 @@ const foodItemsJap = [
 ];
 
 export const DropdownWithApplyAndReset = () => {
-  const language = select("Language", { English: 'english', Japanese: "japanese" }, "japanese");
+  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
   const iconList = generateIconList();
-  const buttonIcon = select("Icon", iconList, Object.keys(iconList)[0]);
+  const buttonIcon = select('Icon', iconList, Object.keys(iconList)[0]);
   const disabled = boolean('Disabled', false);
   const hasOptionsFilter = boolean('Has Options Filter', true);
 
@@ -68,10 +69,13 @@ export const DropdownWithApplyAndReset = () => {
   const hasReset = boolean('Has Reset', true);
 
   // Handlers for the dropdown
-  const handleSelect = useCallback((newSelection: IFilterValue) => {
-    selectAction(newSelection);
-    setSelected(newSelection);
-  }, [selectAction]);
+  const handleSelect = useCallback(
+    (newSelection: IFilterValue) => {
+      selectAction(newSelection);
+      setSelected(newSelection);
+    },
+    [selectAction]
+  );
 
   const handleReset = useCallback(() => {
     resetAction();
@@ -85,32 +89,34 @@ export const DropdownWithApplyAndReset = () => {
     <Container>
       <Wrapper>
         <PageHeader
-          title="FilterDropdown with Footer Controls"
-          introductionText="This example demonstrates the FilterDropdown component with both Reset and Apply buttons."
+          title='FilterDropdown with Footer Controls'
+          introductionText='This example demonstrates the FilterDropdown component with both Reset and Apply buttons.'
         />
 
         <FilterDropdown
           buttonIcon={buttonIcon}
-          buttonText={language === 'japanese' ? 'メニュー' : 'Menu' }
+          buttonText={language === 'japanese' ? 'メニュー' : 'Menu'}
           list={language === 'japanese' ? foodItemsJap : foodItemsEng}
           selected={selected}
           disabled={disabled}
           hasOptionsFilter={hasOptionsFilter}
-          searchPlaceholder={language === 'japanese' ?  'メニュー...' : 'Menu options...' }
-          searchResultText={language === 'japanese' ? searchTemplateResultJapanese : searchTemplateResultEnglish}
-          optionType="checkbox"
+          searchPlaceholder={language === 'japanese' ? 'メニュー...' : 'Menu options...'}
+          searchResultText={
+            language === 'japanese' ? searchTemplateResultJapanese : searchTemplateResultEnglish
+          }
+          optionType='checkbox'
           onSelect={handleSelect}
           onResetCallback={handleReset}
           onCancelCallback={handleCancel}
           hasReset={hasReset}
           hasApply={hasApply}
-          resetText={ language === 'japanese' ? 'リセット' : 'Reset'}
-          cancelText={ language === 'japanese' ? 'キャンセル' : 'Cancel'}
-          closeText={ language === 'japanese' ? '閉じる' : 'Close' }
-          applyText={ language === 'japanese' ? '適用' : 'Apply' }
-          descendingText = { language === 'japanese' ? '降順' : 'Descending'}
-          ascendingText={ language === 'japanese' ? '昇順' : 'Ascending'}
-          emptyResultText= { language === 'english' ? emptyResultsEnglish : emptyResultsJapanese}
+          resetText={language === 'japanese' ? 'リセット' : 'Reset'}
+          cancelText={language === 'japanese' ? 'キャンセル' : 'Cancel'}
+          closeText={language === 'japanese' ? '閉じる' : 'Close'}
+          applyText={language === 'japanese' ? '適用' : 'Apply'}
+          descendingText={language === 'japanese' ? '降順' : 'Descending'}
+          ascendingText={language === 'japanese' ? '昇順' : 'Ascending'}
+          emptyResultText={language === 'english' ? emptyResultsEnglish : emptyResultsJapanese}
           isListAscending={true}
         />
       </Wrapper>

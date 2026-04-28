@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 import styled, { css } from 'styled-components';
-import {IDeviceStatus} from '..';
+import type { IDeviceStatus } from '..';
 
 type TypeDeviceStatus = IDeviceStatus;
 
@@ -10,7 +10,7 @@ const Container = styled.div<{ $status: TypeDeviceStatus }>`
   border-radius: 3px;
   display: block;
 
-  ${({$status, theme: {colors}}) => css`
+  ${({ $status, theme: { colors } }) => css`
     background: ${colors.status[$status]};
     content:'${$status}';
   `}
@@ -18,10 +18,10 @@ const Container = styled.div<{ $status: TypeDeviceStatus }>`
 `;
 
 interface IProps {
-  status: TypeDeviceStatus
+  status?: TypeDeviceStatus;
 }
 
-const TypeTableDeviceStatus : React.FC<IProps> = ({status = 'neutral'}) => {
+const TypeTableDeviceStatus: React.FC<IProps> = ({ status = 'neutral' }) => {
   return <Container $status={status} />;
 };
 

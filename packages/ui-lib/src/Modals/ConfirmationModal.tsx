@@ -1,7 +1,7 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
+import type { TypeButtonDesigns } from '../Form';
 import Button from '../Form/atoms/Button';
-import { TypeButtonDesigns } from '../Form';
 import { useModal } from '../hooks';
 
 const Container = styled.div``;
@@ -35,29 +35,27 @@ const ButtonsGroup = styled.div`
   justify-content: flex-end;
 `;
 
-
 type IConfirmationModal = {
-  title?: string,
-  message: string,
-  leftButtonText?: string,
-  leftButtonDesign?: TypeButtonDesigns,
-  leftButtonCallback?: () => void,
-  rightButtonText?: string,
-  rightButtonDesign?: TypeButtonDesigns,
-  rightButtonCallback?: () => void,
-}
+  title?: string;
+  message: string;
+  leftButtonText?: string;
+  leftButtonDesign?: TypeButtonDesigns;
+  leftButtonCallback?: () => void;
+  rightButtonText?: string;
+  rightButtonDesign?: TypeButtonDesigns;
+  rightButtonCallback?: () => void;
+};
 
 const ConfirmationModal: React.FC<IConfirmationModal> = ({
   title = '',
   message = '',
   leftButtonText = 'submit',
   leftButtonDesign = 'primary',
-  leftButtonCallback = () => { },
+  leftButtonCallback = () => {},
   rightButtonDesign = 'secondary',
   rightButtonText = 'cancel',
-  rightButtonCallback = () => { },
+  rightButtonCallback = () => {},
 }) => {
-
   const { setModalOpen } = useModal();
 
   const handlePrimaryBtn = () => {
@@ -75,16 +73,10 @@ const ConfirmationModal: React.FC<IConfirmationModal> = ({
       <Title>{title}</Title>
       <MessageBox>{message}</MessageBox>
       <ButtonsGroup>
-        <StyledButton
-          design={leftButtonDesign}
-          onClick={handlePrimaryBtn}
-        >
+        <StyledButton design={leftButtonDesign} onClick={handlePrimaryBtn}>
           {leftButtonText}
         </StyledButton>
-        <StyledButton
-          design={rightButtonDesign}
-          onClick={handleSecondaryBtn}
-        >
+        <StyledButton design={rightButtonDesign} onClick={handleSecondaryBtn}>
           {rightButtonText}
         </StyledButton>
       </ButtonsGroup>

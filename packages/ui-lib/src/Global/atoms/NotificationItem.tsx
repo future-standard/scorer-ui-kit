@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
-import { INotificationItem } from '../index';
+import type { INotificationItem } from '../index';
 
 const Container = styled.div`
   display: flex;
@@ -30,11 +30,11 @@ const Image = styled.div<{ $image?: string }>`
   top: 0;
   right: 0;
   bottom: 0;
-  background-image: url(${p => p.$image});
+  background-image: url(${(p) => p.$image});
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  display: ${p => p.$image ? 'block' : 'none'};
+  display: ${(p) => (p.$image ? 'block' : 'none')};
 `;
 
 const InfoContainer = styled.div`
@@ -67,15 +67,10 @@ const TimeMsg = styled.div`
   margin-top: 15px;
 `;
 
-
 const NotificationItem: React.FC<INotificationItem> = ({ imgUrl, title, message, time }) => {
   return (
     <Container>
-      <ImgWrapper>
-        {imgUrl
-          ? <Image $image={imgUrl} />
-          : <EmptyImg />}
-      </ImgWrapper>
+      <ImgWrapper>{imgUrl ? <Image $image={imgUrl} /> : <EmptyImg />}</ImgWrapper>
       <InfoContainer>
         <Title>{title}</Title>
         <Message>{message}</Message>

@@ -1,6 +1,6 @@
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import { createRequire } from "node:module";
+import { createRequire } from 'node:module';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -9,14 +9,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default {
   framework: {
-    name: getAbsolutePath("@storybook/react-vite"),
+    name: getAbsolutePath('@storybook/react-vite'),
     options: {},
   },
-  stories: [
-    '../src/stories/Global/*.stories.tsx',
-    '../src/stories/**/*.stories.tsx'
-  ],
-  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-knobs")],
+  stories: ['../src/stories/Global/*.stories.tsx', '../src/stories/**/*.stories.tsx'],
+  addons: [getAbsolutePath('@storybook/addon-links'), getAbsolutePath('@storybook/addon-knobs')],
   viteFinal: async (config) => {
     // Ensure single React instance
     config.resolve = config.resolve || {};
@@ -38,8 +35,8 @@ export default {
     };
     return config;
   },
-}
+};
 
 function getAbsolutePath(value) {
-  return dirname(require.resolve(join(value, "package.json")));
+  return dirname(require.resolve(join(value, 'package.json')));
 }

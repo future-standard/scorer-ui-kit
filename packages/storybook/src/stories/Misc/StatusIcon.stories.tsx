@@ -1,14 +1,12 @@
-import React from 'react';
-import {  select, number, boolean } from "@storybook/addon-knobs";
+import { boolean, number, select } from '@storybook/addon-knobs';
+import { StatusIcon } from 'scorer-ui-kit';
 import styled from 'styled-components';
-import {StatusIcon} from 'scorer-ui-kit';
 import { generateIconList } from '../helpers';
-
 
 const StatusIconStory = {
   title: 'Misc',
   component: StatusIcon,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -18,17 +16,31 @@ const Container = styled.div`
 export const _Status_Icon = () => {
   const iconList = generateIconList();
 
-  const icon = select("Name", iconList, Object.keys(iconList)[0]);
+  const icon = select('Name', iconList, Object.keys(iconList)[0]);
   const counter = number('Counter', 5);
-  const status = select("Status", { Caution: 'caution', Danger: 'danger', Good: 'good', Neutral:'neutral', Highlight:'highlight'}, 'danger');
+  const status = select(
+    'Status',
+    {
+      Caution: 'caution',
+      Danger: 'danger',
+      Good: 'good',
+      Neutral: 'neutral',
+      Highlight: 'highlight',
+    },
+    'danger'
+  );
   const undefineCounter = boolean('Show empty counter', false);
   const maxCounter = number('MaxCounter', 999);
 
   return (
     <Container>
-      <StatusIcon {...{icon, status}} counter={undefineCounter ? undefined : counter} maxCounter={maxCounter}/>
+      <StatusIcon
+        {...{ icon, status }}
+        counter={undefineCounter ? undefined : counter}
+        maxCounter={maxCounter}
+      />
     </Container>
   );
-}
+};
 
 export default StatusIconStory;

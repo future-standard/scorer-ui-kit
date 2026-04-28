@@ -1,10 +1,8 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
 import { IconSVGs } from '@future-standard/icons';
-
+import type React from 'react';
+import styled, { css } from 'styled-components';
+import type { IWeight } from '..';
 import { dimensions } from '../theme/common';
-import { IWeight } from '..';
-
 
 const wrapperCss = css`
 
@@ -29,7 +27,7 @@ const IconWrapperForSVG = styled.g`
   ${wrapperCss};
 `;
 
-export { IconWrapper, IconWrapperForSVG, IconSVGs };
+export { IconSVGs, IconWrapper, IconWrapperForSVG };
 
 export interface IconProps {
   icon: string;
@@ -39,7 +37,13 @@ export interface IconProps {
   forSvgUsage?: boolean;
 }
 
-const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color = 'grey-12', forSvgUsage = false }) => {
+const Icon: React.FC<IconProps> = ({
+  icon,
+  size = 24,
+  weight = 'regular',
+  color = 'grey-12',
+  forSvgUsage = false,
+}) => {
   // For later use in deprecation of aliases.
   // const legacyColors = ['mono', 'dimmed', 'subtle', 'inverse', 'primary', 'danger'];
   // if(legacyColors.indexOf(color) >= 0){
@@ -47,23 +51,20 @@ const Icon: React.FC<IconProps> = ({ icon, size = 24, weight = 'regular', color 
   // }
 
   const iconWeight: number = dimensions.icons.weights[weight];
-  //@ts-ignore
+  //@ts-expect-error
   const IconSVG = IconSVGs[icon];
 
-  return (
-    IconSVG != null ?
-      forSvgUsage ?
-        <IconWrapperForSVG>
-          {IconSVG({ size: size, weight: iconWeight, color: `var(--${color}, var(--grey-12))` })}
-        </IconWrapperForSVG>
-        :
-        <IconWrapper>
-          {IconSVG({ size: size, weight: iconWeight, color: `var(--${color}, var(--grey-12))` })}
-        </IconWrapper>
-      :
-      null
-  );
-
+  return IconSVG != null ? (
+    forSvgUsage ? (
+      <IconWrapperForSVG>
+        {IconSVG({ size: size, weight: iconWeight, color: `var(--${color}, var(--grey-12))` })}
+      </IconWrapperForSVG>
+    ) : (
+      <IconWrapper>
+        {IconSVG({ size: size, weight: iconWeight, color: `var(--${color}, var(--grey-12))` })}
+      </IconWrapper>
+    )
+  ) : null;
 };
 
 export default Icon;

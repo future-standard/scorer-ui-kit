@@ -1,13 +1,13 @@
-import LineUI from './LineUI';
-import LineUIVideo from './LineUIVideo';
-import LineUIRTC from './LineUIRTC';
-import LineReducer from './LineReducer';
+import type { VideoHTMLAttributes } from 'react';
 import { LineSetContext } from './Contexts';
-import { VideoHTMLAttributes } from 'react';
+import LineReducer from './LineReducer';
+import LineUI from './LineUI';
+import LineUIRTC from './LineUIRTC';
+import LineUIVideo from './LineUIVideo';
 
 export interface IVector2 {
-  x: number,
-  y: number
+  x: number;
+  y: number;
 }
 
 export interface IPointSet {
@@ -27,13 +27,13 @@ export interface IPointSet {
 }
 
 export interface IMinMax {
-  min: number,
-  max: number
+  min: number;
+  max: number;
 }
 
 export interface IBoundary {
-  x: IMinMax,
-  y: IMinMax,
+  x: IMinMax;
+  y: IMinMax;
 }
 
 export interface IDragLineUISharedOptions {
@@ -72,18 +72,12 @@ export interface LineUIOptions {
     y: number;
   };
 
-  boundaryOffset?: number,
-  showDirectionMark?: boolean,
+  boundaryOffset?: number;
+  showDirectionMark?: boolean;
   areaFillColor?: string;
   areaTransparencyLevel?: number;
 }
 
-export type  LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>
+export type LineUIVideoOptions = VideoHTMLAttributes<HTMLVideoElement>;
 
-export {
-  LineUI,
-  LineUIVideo,
-  LineUIRTC,
-  LineReducer,
-  LineSetContext
-};
+export { LineReducer, LineSetContext, LineUI, LineUIRTC, LineUIVideo };

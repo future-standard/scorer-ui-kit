@@ -1,12 +1,15 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import type React from 'react';
+import type { ButtonHTMLAttributes } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { resetButtonStyles } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { animation } from '../../theme/common';
-import { FilterButtonDesign } from '../FilterTypes';
+import type { FilterButtonDesign } from '../FilterTypes';
 
 const LeftIconWrapper = styled.div<{ $isSortAscending: boolean }>`
-  ${({ $isSortAscending }) => $isSortAscending && css`
+  ${({ $isSortAscending }) =>
+    $isSortAscending &&
+    css`
       transform: scaleY(-1);
   `};
   padding: 0 6px;
@@ -22,14 +25,14 @@ const fadeInAnimation = keyframes`
 `;
 
 const FlipArrowContainer = styled.div<{ $design?: FilterButtonDesign }>`
-  ${({ $design }) => $design === 'default' ?
-    `padding: 0px 12px 0px 8px;`
-    :
-    `padding: 0px 8px;`
-  };
+  ${({ $design }) => ($design === 'default' ? `padding: 0px 12px 0px 8px;` : `padding: 0px 8px;`)};
 `;
 
-const StyledButton = styled.button<{ $isOpen?: boolean, $hasFlipArrow?: boolean, $design?: FilterButtonDesign }>`
+const StyledButton = styled.button<{
+  $isOpen?: boolean;
+  $hasFlipArrow?: boolean;
+  $design?: FilterButtonDesign;
+}>`
   ${resetButtonStyles};
   border-radius: 3px;
   height: var(--common-height);
@@ -39,19 +42,18 @@ const StyledButton = styled.button<{ $isOpen?: boolean, $hasFlipArrow?: boolean,
   flex-shrink: 0;
   padding: 4px 10px 4px 4px;
 
-  ${({ $design }) => $design === 'basic' ?
-      `
+  ${({ $design }) =>
+    $design === 'basic'
+      ? `
         background-color: transparent;
         border: 1px solid transparent;
         padding: 4px;
       `
-    :
-      `
+      : `
         background-color: var(--filter-button-background-color);
         border: var(--filter-button-stroke-color) 1px solid;
         box-shadow: 0px 4px 9px 0px var(--filter-button-shadow-color);
-      `
-  };
+      `};
 
   ${({ $hasFlipArrow }) => $hasFlipArrow && `padding: 4px 0px 4px 4px;`};
 
@@ -81,7 +83,10 @@ const StyledButton = styled.button<{ $isOpen?: boolean, $hasFlipArrow?: boolean,
   &:hover:enabled, &:active:enabled {
     color: var(--grey-12);
 
-    ${({$design}) => $design === 'basic'? '' : css`
+    ${({ $design }) =>
+      $design === 'basic'
+        ? ''
+        : css`
       box-shadow: 0px 4px 9px 0px var(--primary-a2);
       border-color: var(--primary-7);
     `};
@@ -92,7 +97,9 @@ const StyledButton = styled.button<{ $isOpen?: boolean, $hasFlipArrow?: boolean,
       }
     }
 
-    ${({$isOpen}) => !$isOpen && css`
+    ${({ $isOpen }) =>
+      !$isOpen &&
+      css`
       ${FlipArrowContainer} ${IconWrapper} {
         [stroke]{
           stroke: var(--grey-12);
@@ -107,7 +114,10 @@ const StyledButton = styled.button<{ $isOpen?: boolean, $hasFlipArrow?: boolean,
     opacity: 50%;
   }
 
-  ${({ $isOpen, $hasFlipArrow }) => $isOpen && $hasFlipArrow && css`
+  ${({ $isOpen, $hasFlipArrow }) =>
+    $isOpen &&
+    $hasFlipArrow &&
+    css`
     background-color: var(--primary-9);
     border: solid 1px var(--primary-9);
     color: var(--white-1);
@@ -130,8 +140,6 @@ const StyledButton = styled.button<{ $isOpen?: boolean, $hasFlipArrow?: boolean,
 
 `;
 
-
-
 const InnerContainer = styled.div`
   display: flex;
   align-items: center;
@@ -141,11 +149,11 @@ const InnerContainer = styled.div`
 const ButtonText = styled.div<{ $hasFlipArrow: boolean }>``;
 
 interface OwnProps {
-  icon: string
-  hasFlipArrow?: boolean
-  isSortAscending?: boolean
-  isOpen?: boolean
-  design?: FilterButtonDesign
+  icon: string;
+  hasFlipArrow?: boolean;
+  isSortAscending?: boolean;
+  isOpen?: boolean;
+  design?: FilterButtonDesign;
 }
 
 type IFilterButton = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>;
@@ -160,22 +168,25 @@ const FilterButton: React.FC<IFilterButton> = ({
   formAction,
   ...props
 }) => {
-
   return (
-    <StyledButton type='button' {...props} $isOpen={isOpen} $hasFlipArrow={hasFlipArrow} $design={design}>
+    <StyledButton
+      type='button'
+      {...props}
+      $isOpen={isOpen}
+      $hasFlipArrow={hasFlipArrow}
+      $design={design}
+    >
       <InnerContainer>
         <LeftIconWrapper $isSortAscending={isSortAscending}>
-          <Icon
-            icon={icon}
-            size={12}
-            weight='light'
-            color='filter-button-icon-color'
-          />
+          <Icon icon={icon} size={12} weight='light' color='filter-button-icon-color' />
         </LeftIconWrapper>
-        <ButtonText $hasFlipArrow={hasFlipArrow}><>{children}</></ButtonText>
+        <ButtonText $hasFlipArrow={hasFlipArrow}>{children}</ButtonText>
 
-        {hasFlipArrow && <FlipArrowContainer $design={design}><Icon icon={isOpen ? 'Up' : 'Down'} size={6} color='grey-11' /></FlipArrowContainer>}
-
+        {hasFlipArrow && (
+          <FlipArrowContainer $design={design}>
+            <Icon icon={isOpen ? 'Up' : 'Down'} size={6} color='grey-11' />
+          </FlipArrowContainer>
+        )}
       </InnerContainer>
     </StyledButton>
   );

@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
-import styled, { css } from "styled-components";
-import {Link} from 'react-router-dom';
-import Icon from "../../Icons/Icon";
-import { IUtilityHeaderLinkBack } from "..";
+import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 import { resetButtonStyles } from '../../common';
+import Icon from '../../Icons/Icon';
+import type { IUtilityHeaderLinkBack } from '..';
 
 const BackLinkIcon = styled.div`
   display: flex;
@@ -62,23 +62,27 @@ const dividerStyle = css`
   border-right: 1px solid var(--grey-10);
 `;
 
-const BackLink = styled(Link)<{$iconInGutter: boolean, $showDivider: boolean}>`
+const BackLink = styled(Link)<{ $iconInGutter: boolean; $showDivider: boolean }>`
   ${backLinkStyle};
-  margin-left: ${props => props.$iconInGutter ? '-24px' : '0' };
+  margin-left: ${(props) => (props.$iconInGutter ? '-24px' : '0')};
 
-  ${({$showDivider}) => $showDivider && css`
+  ${({ $showDivider }) =>
+    $showDivider &&
+    css`
     &::after {
       ${dividerStyle};
     }
   `}
 `;
 
-const BackButton = styled.button<{$iconInGutter: boolean, $showDivider: boolean}>`
+const BackButton = styled.button<{ $iconInGutter: boolean; $showDivider: boolean }>`
   ${resetButtonStyles};
   ${backLinkStyle};
-  margin-left: ${props => props.$iconInGutter ? '-24px' : '0' };
+  margin-left: ${(props) => (props.$iconInGutter ? '-24px' : '0')};
 
-  ${({$showDivider}) => $showDivider && css`
+  ${({ $showDivider }) =>
+    $showDivider &&
+    css`
     &::after {
       ${dividerStyle};
     }
@@ -90,26 +94,43 @@ interface IUtilityHeaderLinkBackInstance extends IUtilityHeaderLinkBack {
   $showDivider: boolean;
 }
 
-const UtilityHeaderBack : React.FC<IUtilityHeaderLinkBackInstance> = ({show = true, link, label = 'Back', $showDivider, $iconInGutter, onClick,}) => {
+const UtilityHeaderBack: React.FC<IUtilityHeaderLinkBackInstance> = ({
+  show = true,
+  link,
+  label = 'Back',
+  $showDivider,
+  $iconInGutter,
+  onClick,
+}) => {
+  const innerContent = useMemo(
+    () => (
+      <React.Fragment>
+        <BackLinkIcon>
+          <Icon icon='Back' size={16} color='grey-10' />
+        </BackLinkIcon>
+        {label}
+      </React.Fragment>
+    ),
+    [label]
+  );
 
-  const innerContent = useMemo(() => <React.Fragment>
-    <BackLinkIcon>
-      <Icon icon="Back" size={16} color="grey-10" />
-    </BackLinkIcon>
-    {label}
-  </React.Fragment>,[label]);
+  if (!show) {
+    return null;
+  }
 
-  if(!show){ return null; }
-
-  return <React.Fragment>
-
-    {onClick ?
-      <BackButton {...{$showDivider, $iconInGutter, onClick}}>{innerContent}</BackButton>
-      :
-      link && <BackLink to={link} {...{$showDivider, $iconInGutter}}>{innerContent}</BackLink>
-    }
-  </React.Fragment>;
-
+  return (
+    <React.Fragment>
+      {onClick ? (
+        <BackButton {...{ $showDivider, $iconInGutter, onClick }}>{innerContent}</BackButton>
+      ) : (
+        link && (
+          <BackLink to={link} {...{ $showDivider, $iconInGutter }}>
+            {innerContent}
+          </BackLink>
+        )
+      )}
+    </React.Fragment>
+  );
 };
 
 export default UtilityHeaderBack;

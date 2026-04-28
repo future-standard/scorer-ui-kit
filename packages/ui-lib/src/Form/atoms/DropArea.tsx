@@ -1,12 +1,13 @@
-import React, { useState, useCallback, useEffect} from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div<{$height?: string}>`
-  ${({$height}) => $height ? `height: ${$height}` : null};
+const Container = styled.div<{ $height?: string }>`
+  ${({ $height }) => ($height ? `height: ${$height}` : null)};
   position: relative;
 `;
 
-const DragAndDrop = styled.div<{$inDropZone: boolean}>`
+const DragAndDrop = styled.div<{ $inDropZone: boolean }>`
   border-radius: 5px;
   position: absolute;
   top: 0;
@@ -16,61 +17,63 @@ const DragAndDrop = styled.div<{$inDropZone: boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: ${({$inDropZone}) => $inDropZone ? `dashed var(--grey-8) 2px` : null};
+  border: ${({ $inDropZone }) => ($inDropZone ? `dashed var(--grey-8) 2px` : null)};
 `;
 
 interface IDropArea {
-  height?: string
-  text?: string
-  dropCallback?: (newFiles: FileList) => void
+  height?: string;
+  text?: string;
+  dropCallback?: (newFiles: FileList) => void;
 }
 
-const DropArea : React.FC<IDropArea> = ({height, text, dropCallback, ...props}) => {
+const DropArea: React.FC<IDropArea> = ({ height, text, dropCallback, ...props }) => {
   const [inDropZone, setInDropZone] = useState(false);
 
-const onDragEnter = useCallback((e: React.DragEvent) => {
-  e.preventDefault();
-  e.stopPropagation();
+  const onDragEnter = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-  setInDropZone(true);
-},[]);
+    setInDropZone(true);
+  }, []);
 
-const onDragLeave = useCallback((e: React.DragEvent) => {
-  e.preventDefault();
-  e.stopPropagation();
+  const onDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-  setInDropZone(false);
-},[]);
+    setInDropZone(false);
+  }, []);
 
-const onDragOver = useCallback((e: React.DragEvent) => {
-  e.preventDefault();
-  e.stopPropagation();
+  const onDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
 
-},[]);
+  const onDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.dataTransfer?.files && dropCallback) {
+        dropCallback(e.dataTransfer.files);
+      }
+      setInDropZone(false);
+    },
+    [dropCallback]
+  );
 
-const onDrop = useCallback((e: React.DragEvent) => {
-  e.preventDefault();
-  e.stopPropagation();
-  if(e.dataTransfer?.files && dropCallback) {
-    dropCallback(e.dataTransfer.files);
-  }
-  setInDropZone(false);
-},[dropCallback]);
+  const handleWindowDragAndDrop = useCallback((e: Event) => {
+    e.preventDefault();
+  }, []);
 
-const handleWindowDragAndDrop = useCallback((e: Event) => {
-  e.preventDefault();
-}, []);
+  useEffect(() => {
+    window.addEventListener('dragover', handleWindowDragAndDrop);
+    window.addEventListener('drop', handleWindowDragAndDrop);
+    return () => {
+      window.removeEventListener('dragover', handleWindowDragAndDrop);
+      window.removeEventListener('drop', handleWindowDragAndDrop);
+    };
+  }, [handleWindowDragAndDrop]);
 
-useEffect(() => {
-  window.addEventListener("dragover", handleWindowDragAndDrop);
-  window.addEventListener("drop", handleWindowDragAndDrop);
-  return () => {
-    window.removeEventListener('dragover', handleWindowDragAndDrop);
-    window.removeEventListener('drop', handleWindowDragAndDrop);
-  };
-}, [handleWindowDragAndDrop]);
-
-  return(
+  return (
     <Container $height={height} {...props}>
       <DragAndDrop
         $inDropZone={inDropZone}
@@ -78,7 +81,7 @@ useEffect(() => {
           onDragEnter,
           onDragLeave,
           onDrop,
-          onDragOver
+          onDragOver,
         }}
       >
         {text}

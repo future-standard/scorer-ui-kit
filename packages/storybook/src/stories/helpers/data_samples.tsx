@@ -1,53 +1,48 @@
-import { IFilterItem } from 'scorer-ui-kit'
-import {
-  IDeviceStatus,
-  ITableColumnConfig,
-} from 'scorer-ui-kit/dist/Tables';
+import type { IFilterItem } from 'scorer-ui-kit';
+import type { IDeviceStatus, ITableColumnConfig } from 'scorer-ui-kit/dist/Tables';
 
-interface ITableSampleData  {
-  id: string
-  deviceName: string
-  deviceLink: string
-  status: IDeviceStatus
-  statusText: string
-  created: Date
-  totalTime: string
-  usage: number
-  usageUnit: string
-  cost: number
+interface ITableSampleData {
+  id: string;
+  deviceName: string;
+  deviceLink: string;
+  status: IDeviceStatus;
+  statusText: string;
+  created: Date;
+  totalTime: string;
+  usage: number;
+  usageUnit: string;
+  cost: number;
 }
 
-
 const statusValuesEng: IFilterItem[] = [
-  {text: 'OK', value: 'good'},
-  {text: 'Caution', value: 'caution'},
-  {text: 'Warning', value: 'danger'},
-  {text: 'Offline', value: 'neutral'}
-]
+  { text: 'OK', value: 'good' },
+  { text: 'Caution', value: 'caution' },
+  { text: 'Warning', value: 'danger' },
+  { text: 'Offline', value: 'neutral' },
+];
 
 const statusValuesJp: IFilterItem[] = [
-  {text: 'OKです。', value: 'good'},
-  {text: '注意', value: 'caution'},
-  {text: '警告', value: 'danger'},
-  {text: 'オフライン', value: 'neutral'}
-]
+  { text: 'OKです。', value: 'good' },
+  { text: '注意', value: 'caution' },
+  { text: '警告', value: 'danger' },
+  { text: 'オフライン', value: 'neutral' },
+];
 
 const costRangeEng: IFilterItem[] = [
-  {text: 'Less than 5000', value: 5000},
-  {text: 'Less than 10000', value: 10000},
-  {text: 'Less than 20000', value: 20000}
-]
+  { text: 'Less than 5000', value: 5000 },
+  { text: 'Less than 10000', value: 10000 },
+  { text: 'Less than 20000', value: 20000 },
+];
 
 const costRangeJap: IFilterItem[] = [
-  {text: '以下 5000', value: 5000},
-  {text: '以下 10000', value: 10000},
-  {text: '以下 20000', value: 20000}
-]
+  { text: '以下 5000', value: 5000 },
+  { text: '以下 10000', value: 10000 },
+  { text: '以下 20000', value: 20000 },
+];
 
 /** Imagine this data comes from Server :) */
 
-
-const tableData : ITableSampleData[] = [
+const tableData: ITableSampleData[] = [
   {
     id: 'device-1',
     deviceName: 'Device Name',
@@ -66,7 +61,7 @@ const tableData : ITableSampleData[] = [
     deviceLink: '',
     status: 'danger',
     statusText: 'Warning',
-    created: new Date("8/1/21"),
+    created: new Date('8/1/21'),
     totalTime: '00:40:12',
     usage: 2.1,
     usageUnit: 'gb',
@@ -78,7 +73,7 @@ const tableData : ITableSampleData[] = [
     deviceLink: '#',
     status: 'danger',
     statusText: 'Warning',
-    created: new Date("6/22/21"),
+    created: new Date('6/22/21'),
     totalTime: '00:70:00',
     usage: 2.1,
     usageUnit: 'tb',
@@ -90,9 +85,9 @@ const tableData : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OK',
-    created: new Date("5/2/21"),
+    created: new Date('5/2/21'),
     totalTime: '00:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -102,9 +97,9 @@ const tableData : ITableSampleData[] = [
     deviceLink: '#',
     status: 'caution',
     statusText: 'Caution',
-    created: new Date("4/10/21"),
+    created: new Date('4/10/21'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -114,9 +109,9 @@ const tableData : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OK',
-    created: new Date("2/1/21"),
+    created: new Date('2/1/21'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -126,9 +121,9 @@ const tableData : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OK',
-    created: new Date("12/1/20"),
+    created: new Date('12/1/20'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -138,9 +133,9 @@ const tableData : ITableSampleData[] = [
     deviceLink: '#',
     status: 'neutral',
     statusText: 'Offline',
-    created: new Date("8/1/20"),
+    created: new Date('8/1/20'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -150,9 +145,9 @@ const tableData : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OK',
-    created: new Date("7/1/20"),
+    created: new Date('7/1/20'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -163,8 +158,8 @@ const tableData : ITableSampleData[] = [
     status: 'good',
     statusText: 'OK',
     totalTime: '01:30:00',
-    created: new Date("5/1/20"),
-    usage:  153,
+    created: new Date('5/1/20'),
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -174,16 +169,16 @@ const tableData : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OK',
-    created: new Date("2/1/20"),
+    created: new Date('2/1/20'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
 ];
 
 /** Imagine this data comes from Server :) */
-const tableDataJp : ITableSampleData[] = [
+const tableDataJp: ITableSampleData[] = [
   {
     id: 'device-1',
     deviceName: 'Device Name',
@@ -202,7 +197,7 @@ const tableDataJp : ITableSampleData[] = [
     deviceLink: '',
     status: 'danger',
     statusText: '注意事項',
-    created: new Date("8/1/21"),
+    created: new Date('8/1/21'),
     totalTime: '00:40:12',
     usage: 2.1,
     usageUnit: 'gb',
@@ -214,7 +209,7 @@ const tableDataJp : ITableSampleData[] = [
     deviceLink: '#',
     status: 'danger',
     statusText: '警告',
-    created: new Date("6/22/21"),
+    created: new Date('6/22/21'),
     totalTime: '00:60:00',
     usage: 2.1,
     usageUnit: 'tb',
@@ -226,9 +221,9 @@ const tableDataJp : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OKです',
-    created: new Date("5/2/21"),
+    created: new Date('5/2/21'),
     totalTime: '00:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -238,9 +233,9 @@ const tableDataJp : ITableSampleData[] = [
     deviceLink: '#',
     status: 'caution',
     statusText: '注意事項',
-    created: new Date("4/10/21"),
+    created: new Date('4/10/21'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -250,9 +245,9 @@ const tableDataJp : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OKです。',
-    created: new Date("2/1/21"),
+    created: new Date('2/1/21'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -262,9 +257,9 @@ const tableDataJp : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OKです。',
-    created: new Date("12/1/20"),
+    created: new Date('12/1/20'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -274,9 +269,9 @@ const tableDataJp : ITableSampleData[] = [
     deviceLink: '#',
     status: 'neutral',
     statusText: 'オフライン',
-    created: new Date("8/1/20"),
+    created: new Date('8/1/20'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -286,9 +281,9 @@ const tableDataJp : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OKです。',
-    created: new Date("7/1/20"),
+    created: new Date('7/1/20'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
@@ -299,8 +294,8 @@ const tableDataJp : ITableSampleData[] = [
     status: 'good',
     statusText: 'OKです。',
     totalTime: '01:10:00',
-    created: new Date("5/1/20"),
-    usage:  153,
+    created: new Date('5/1/20'),
+    usage: 153,
     usageUnit: 'mb',
     cost: 18000,
   },
@@ -310,15 +305,15 @@ const tableDataJp : ITableSampleData[] = [
     deviceLink: '#',
     status: 'good',
     statusText: 'OKです。',
-    created: new Date("2/1/20"),
+    created: new Date('2/1/20'),
     totalTime: '01:30:00',
-    usage:  153,
+    usage: 153,
     usageUnit: 'mb',
     cost: 25000,
   },
 ];
 
-const columnConfigSample : ITableColumnConfig[] = [
+const columnConfigSample: ITableColumnConfig[] = [
   {
     columnId: 'deviceName',
     groupTitle: 'Device',
@@ -342,7 +337,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'lowImportance',
     alignment: 'center',
-    hasCopyButton: true
+    hasCopyButton: true,
   },
   {
     columnId: 'run',
@@ -351,7 +346,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'lowImportance',
     alignment: 'left',
-    hasCopyButton: true
+    hasCopyButton: true,
   },
   {
     columnId: 'usage',
@@ -359,7 +354,7 @@ const columnConfigSample : ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'normalImportance',
     alignment: 'right',
-    showUnit: true
+    showUnit: true,
   },
   {
     columnId: 'cost',
@@ -367,11 +362,11 @@ const columnConfigSample : ITableColumnConfig[] = [
     sortable: true,
     cellStyle: 'highImportance',
     alignment: 'right',
-    hasCopyButton: true
-  }
+    hasCopyButton: true,
+  },
 ];
 
-const columnConfigSampleJp : ITableColumnConfig[] = [
+const columnConfigSampleJp: ITableColumnConfig[] = [
   {
     columnId: 'deviceName',
     groupTitle: 'デバイス',
@@ -395,7 +390,7 @@ const columnConfigSampleJp : ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'lowImportance',
     alignment: 'center',
-    hasCopyButton: true
+    hasCopyButton: true,
   },
   {
     columnId: 'run',
@@ -404,7 +399,7 @@ const columnConfigSampleJp : ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'lowImportance',
     alignment: 'left',
-    hasCopyButton: true
+    hasCopyButton: true,
   },
   {
     columnId: 'usage',
@@ -412,7 +407,7 @@ const columnConfigSampleJp : ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'normalImportance',
     alignment: 'right',
-    showUnit: true
+    showUnit: true,
   },
   {
     columnId: 'cost',
@@ -420,12 +415,11 @@ const columnConfigSampleJp : ITableColumnConfig[] = [
     sortable: true,
     cellStyle: 'highImportance',
     alignment: 'right',
-    hasCopyButton: true
-  }
+    hasCopyButton: true,
+  },
 ];
 
-
-const columnActionsSample : ITableColumnConfig[] = [
+const columnActionsSample: ITableColumnConfig[] = [
   {
     columnId: 'created',
     groupTitle: 'Device',
@@ -448,20 +442,18 @@ const columnActionsSample : ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'normalImportance',
     alignment: 'right',
-    showUnit: true
+    showUnit: true,
   },
   {
     columnId: 'actions',
     header: 'Actions',
     sortable: false,
     cellStyle: 'normalImportance',
-    alignment: 'right'
+    alignment: 'right',
   },
 ];
 
-
-
-const columnActionsSampleJp : ITableColumnConfig[] = [
+const columnActionsSampleJp: ITableColumnConfig[] = [
   {
     columnId: 'created',
     groupTitle: 'デバイス',
@@ -484,14 +476,14 @@ const columnActionsSampleJp : ITableColumnConfig[] = [
     sortable: false,
     cellStyle: 'normalImportance',
     alignment: 'right',
-    showUnit: true
+    showUnit: true,
   },
   {
     columnId: 'アクション',
     header: 'Actions',
     sortable: false,
     cellStyle: 'normalImportance',
-    alignment: 'right'
+    alignment: 'right',
   },
 ];
 
@@ -516,43 +508,42 @@ const clearJp = 'すべてクリア';
 
 const deleteFilesTitleEn = 'Delete selected files';
 const deleteFilesTitleJP = '選択したファイルを削除しますか？';
-const deleteMessageEn = 'Are you sure you wish to delete these files? Once deleted they cannot be recovered.';
+const deleteMessageEn =
+  'Are you sure you wish to delete these files? Once deleted they cannot be recovered.';
 const deleteMessageJp = 'これらのファイルを本当に削除してよいですか？一度削除すると元に戻せません';
 const emptyResultsEnglish = 'No tags available.';
 const emptyResultsJapanese = 'タグは使用できません。';
 
-
+export type { ITableSampleData };
 export {
-  tableData,
-  tableDataJp,
-  columnConfigSample,
-  columnConfigSampleJp,
+  clearEng,
+  clearJp,
   columnActionsSample,
   columnActionsSampleJp,
-  statusValuesEng,
-  statusValuesJp,
+  columnConfigSample,
+  columnConfigSampleJp,
   costRangeEng,
   costRangeJap,
-  searchTemplateResultEnglish,
-  searchTemplateResultJapanese,
-  searchPlaceholderJapanese,
-  searchPlaceholderEnglish,
-  loadingTagsEnglish,
-  genericLoadingJp,
-  showMoreEng,
-  showMoreJp,
-  showLessEng,
-  showLessJp,
-  resultTextTemplateEng,
-  resultTextTemplateJp,
   deleteFilesTitleEn,
   deleteFilesTitleJP,
   deleteMessageEn,
   deleteMessageJp,
   emptyResultsEnglish,
   emptyResultsJapanese,
-  clearEng,
-  clearJp
+  genericLoadingJp,
+  loadingTagsEnglish,
+  resultTextTemplateEng,
+  resultTextTemplateJp,
+  searchPlaceholderEnglish,
+  searchPlaceholderJapanese,
+  searchTemplateResultEnglish,
+  searchTemplateResultJapanese,
+  showLessEng,
+  showLessJp,
+  showMoreEng,
+  showMoreJp,
+  statusValuesEng,
+  statusValuesJp,
+  tableData,
+  tableDataJp,
 };
-
-export type { ITableSampleData };

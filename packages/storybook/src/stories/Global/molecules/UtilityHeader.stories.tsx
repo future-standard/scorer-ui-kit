@@ -1,17 +1,12 @@
-import React from 'react';
-import {
-  UtilityHeader,
-} from 'scorer-ui-kit';
-
-import styled from 'styled-components';
-import { object, boolean } from '@storybook/addon-knobs';
+import { boolean, object } from '@storybook/addon-knobs';
+import { UtilityHeader } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
+import styled from 'styled-components';
 
 const UtilityHeaderStory = {
   title: 'Global/molecules',
   component: UtilityHeader,
-  decorators: [
-  ]
+  decorators: [],
 };
 
 const Container = styled.div`
@@ -26,39 +21,43 @@ const Container = styled.div`
 `;
 
 export const _UtilityHeader = () => {
-
   const returnAction = action('Return action');
-  const backLink = object("Back Link", { label: "Back", onClick:returnAction });
-  const showBreadcrumbs = boolean("Show Breadcrumbs", true);
-  const showHomeIcon = boolean("Show Home Icon", true);
+  const backLink = object('Back Link', { label: 'Back', onClick: returnAction });
+  const showBreadcrumbs = boolean('Show Breadcrumbs', true);
+  const showHomeIcon = boolean('Show Home Icon', true);
   const clickAction = action('The Breadcrumb is using a callback');
-  
-  const breadcrumbs = object("breadcrumbs", [
+
+  const breadcrumbs = object('breadcrumbs', [
     {
-      text: 'Examples', 
-      href:'/'
+      text: 'Examples',
+      href: '/',
     },
     {
-      text:'Two', 
-      href:'#2'
+      text: 'Two',
+      href: '#2',
     },
     {
-      text:'Three', 
-      href:'#3'
+      text: 'Three',
+      href: '#3',
     },
     {
-      text:'Four', 
-      onClick: clickAction
+      text: 'Four',
+      onClick: clickAction,
     },
     {
-      text:'Five', //Last breadcrumb is current page so it will not be a link
-    }
+      text: 'Five', //Last breadcrumb is current page so it will not be a link
+    },
   ]);
-  const shareLink = object("Share Link", { show: true, label: "Share", link: "https://www.example.com", copiedLabel: "Copied" });
-  
+  const shareLink = object('Share Link', {
+    show: true,
+    label: 'Share',
+    link: 'https://www.example.com',
+    copiedLabel: 'Copied',
+  });
+
   return (
     <Container>
-      <UtilityHeader 
+      <UtilityHeader
         back={backLink}
         showBreadcrumbs={showBreadcrumbs}
         breadcrumbs={breadcrumbs}
@@ -66,7 +65,7 @@ export const _UtilityHeader = () => {
         share={shareLink}
       />
     </Container>
-  )
-}
+  );
+};
 
 export default UtilityHeaderStory;

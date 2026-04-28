@@ -1,15 +1,16 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
 // import GhostLogo from '../../svg/ghost-logo.svg';
 // import { LoginScreen } from '../../../../../example/src/svg/index';
 
 import {
   Button,
+  type INotificationProps,
   resetButtonStyles,
-  useNotification,
-  INotificationProps,
   useModal,
+  useNotification,
 } from 'scorer-ui-kit';
+
 // These is the code related to the logo background but this asses are in the Example pages folder.
 // I left the code here in case this needs to be moved back or into the UI Library folder to be put it back.
 //
@@ -101,7 +102,7 @@ const CardModalExample: React.FC = () => {
   const notiInfoSettings: INotificationProps = {
     type: 'info',
     message: 'You have enabled that requested process',
-  }
+  };
 
   return (
     <CardModal>
@@ -111,24 +112,34 @@ const CardModalExample: React.FC = () => {
       </CardCover>
       <CardContent>
         <CardTitle>Welcome To Modal</CardTitle>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra porta mi, eget sollicitudin orci blandit eget. Morbi risus tortor.</p>
-        <p>Vivamus condimentum mi ac nibh faucibus, ac vehicula libero fermentum. Aenean et nisl non enim elementum vestibulum sed sit.</p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra porta mi, eget
+          sollicitudin orci blandit eget. Morbi risus tortor.
+        </p>
+        <p>
+          Vivamus condimentum mi ac nibh faucibus, ac vehicula libero fermentum. Aenean et nisl non
+          enim elementum vestibulum sed sit.
+        </p>
         <ButtonGroup>
           <Button
             onClick={() => {
               sendNotification(notiInfoSettings);
               setModalOpen(false);
             }}
-          >Enable Now</Button>
+          >
+            Enable Now
+          </Button>
           <StyledButton
             onClick={() => {
               setModalOpen(false);
             }}
-          >Enable Later</StyledButton>
+          >
+            Enable Later
+          </StyledButton>
         </ButtonGroup>
       </CardContent>
     </CardModal>
-  )
-}
+  );
+};
 
 export default CardModalExample;

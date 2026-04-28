@@ -1,8 +1,9 @@
-import React, { TextareaHTMLAttributes } from 'react';
-import styled, { css } from  'styled-components';
-import Spinner from '../../Indicators/Spinner';
+import type React from 'react';
+import type { TextareaHTMLAttributes } from 'react';
+import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
-import { TypeFieldState } from '..';
+import Spinner from '../../Indicators/Spinner';
+import type { TypeFieldState } from '..';
 
 const FeedbackIcon = styled.div`
   flex: 0 0 40px;
@@ -13,9 +14,9 @@ const FeedbackIcon = styled.div`
   padding-top: 2px;
 `;
 
-const StyledTextArea = styled.textarea<{ $fieldState : TypeFieldState}>`
+const StyledTextArea = styled.textarea<{ $fieldState: TypeFieldState }>`
 
-  ${({$fieldState}) => css`
+  ${({ $fieldState }) => css`
     font-family: var(--font-data);
     border: 1px solid var(--input-${$fieldState}-border-color);
     background: var(--input-${$fieldState}-background-color);
@@ -72,17 +73,21 @@ const FeedbackMessage = styled.div`
   color: var(--white-1);
 `;
 
-const Container =  styled.div<{ $fieldState: string, $showFeedback?: boolean }>`
-  ${({$fieldState, $showFeedback}) => css`
+const Container = styled.div<{ $fieldState: string; $showFeedback?: boolean }>`
+  ${({ $fieldState, $showFeedback }) => css`
     display: flex;
     position: relative;
     flex-direction: column;
 
     ${StyledTextArea}{
-      ${['default', 'disabled'].indexOf($fieldState) === -1 && $showFeedback && css`
+      ${
+        ['default', 'disabled'].indexOf($fieldState) === -1 &&
+        $showFeedback &&
+        css`
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
-      `};
+      `
+      };
 
       &:disabled {
         cursor: not-allowed;
@@ -97,9 +102,12 @@ const Container =  styled.div<{ $fieldState: string, $showFeedback?: boolean }>`
       border-color: var(--input-${$fieldState}-border-color);
       background: var(--input-${$fieldState}-border-color);
 
-      ${['default', 'disabled'].indexOf($fieldState) !== -1 && css`
+      ${
+        ['default', 'disabled'].indexOf($fieldState) !== -1 &&
+        css`
         display:none;
-      `}
+      `
+      }
     }
 
     &:focus-within ${FeedbackContainer} {
@@ -110,14 +118,14 @@ const Container =  styled.div<{ $fieldState: string, $showFeedback?: boolean }>`
 `;
 
 interface OwnProps {
-  fieldState: TypeFieldState
-  showFeedback?: boolean
-  feedbackMessage?: string
+  fieldState: TypeFieldState;
+  showFeedback?: boolean;
+  feedbackMessage?: string;
 }
 
-type Props = OwnProps & TextareaHTMLAttributes<HTMLTextAreaElement>
+type Props = OwnProps & TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-const TextArea : React.FC<Props> = ({
+const TextArea: React.FC<Props> = ({
   placeholder = '',
   fieldState = 'default',
   showFeedback = false,
@@ -125,9 +133,8 @@ const TextArea : React.FC<Props> = ({
   children,
   ...props
 }) => {
-
   const feedbackIcon = (fieldState: TypeFieldState) => {
-    switch(fieldState){
+    switch (fieldState) {
       case 'default':
         break;
       case 'disabled':
@@ -150,7 +157,8 @@ const TextArea : React.FC<Props> = ({
         placeholder={placeholder}
         disabled={fieldState === 'disabled' || fieldState === 'processing'}
         {...props}
-      ><>{children}</>
+      >
+        {children}
       </StyledTextArea>
       {showFeedback && fieldState && (
         <FeedbackContainer>

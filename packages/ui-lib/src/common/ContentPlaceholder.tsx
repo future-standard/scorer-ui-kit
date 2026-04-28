@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from "styled-components";
+import type React from 'react';
+import styled from 'styled-components';
 
 /**
  * -- Content Placeholder --
@@ -35,14 +35,14 @@ const Container = styled.div`
   color: var(--grey-10);
 `;
 
-export const FlexContentPlaceholder : React.FC<{title?: string}> = ({ title = 'Placeholder' }) => {
-  return(
+export const FlexContentPlaceholder: React.FC<{ title?: string }> = ({ title = 'Placeholder' }) => {
+  return (
     <Container>
       {title}
-      <Arrow className='t l' style={{transform: 'rotate(-90deg)'}} />
-      <Arrow className='t r' style={{transform: 'rotate(0deg)'}} />
-      <Arrow className='b r' style={{transform: 'rotate(90deg)'}} />
-      <Arrow className='b l' style={{transform: 'rotate(180deg)'}} />
-    </Container>      
+      <Arrow className='t l' style={{ transform: 'rotate(-90deg)' }} />
+      <Arrow className='t r' style={{ transform: 'rotate(0deg)' }} />
+      <Arrow className='b r' style={{ transform: 'rotate(90deg)' }} />
+      <Arrow className='b l' style={{ transform: 'rotate(180deg)' }} />
+    </Container>
   );
 };

@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
 
-import LineUIVideoBase, { LineUIProps } from '../LineUI/LineUIVideoBase';
+import LineUIVideoBase, { type LineUIProps } from '../LineUI/LineUIVideoBase';
 
 const HLS_URL_PATTERN = /\.m3u8(?:$|[?#])/i;
 const NATIVE_HLS_MIME = 'application/vnd.apple.mpegurl';
@@ -63,9 +64,7 @@ const LineUIVideoHLS: React.FC<LineUIProps> = (props) => {
     } else if (video.canPlayType(NATIVE_HLS_MIME)) {
       video.src = props.src;
     } else {
-      console.error(
-        '[LineUIVideoHLS] HLS playback is not supported in this browser.',
-      );
+      console.error('[LineUIVideoHLS] HLS playback is not supported in this browser.');
     }
 
     return () => {

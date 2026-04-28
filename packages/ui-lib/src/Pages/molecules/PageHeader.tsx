@@ -1,9 +1,9 @@
-import React from 'react';
+import type React from 'react';
 import styled, { css } from 'styled-components';
-import PageTitle from '../atoms/PageTitle';
-import IntroductionText from '../atoms/IntroductionText';
 import Tag from '../../Misc/atoms/Tag';
 import { deviceMediaQuery } from '../../theme/common';
+import IntroductionText from '../atoms/IntroductionText';
+import PageTitle from '../atoms/PageTitle';
 
 const Container = styled.div`
   display: flex;
@@ -18,8 +18,10 @@ const IntroductionTextWrapper = styled.div`
   max-width: 648px;
 `;
 
-const RightPanel = styled.div<{$iconLeftPanel: boolean}>`
-    ${({$iconLeftPanel}) => $iconLeftPanel && css`
+const RightPanel = styled.div<{ $iconLeftPanel: boolean }>`
+    ${({ $iconLeftPanel }) =>
+      $iconLeftPanel &&
+      css`
         padding-top: 32px;
     `};
 
@@ -41,32 +43,32 @@ const TagListWrapper = styled.div`
 const BottomLeft = styled.div``;
 
 export type IHeaderTag = {
-  label: string
-  linkTo?: string
-  icon?: string
-  onTagClick?: () => void
-}
+  label: string;
+  linkTo?: string;
+  icon?: string;
+  onTagClick?: () => void;
+};
 
 interface IProps {
-  title: string
-  areaHref?: string
-  areaTitle?: string
-  icon?: string
-  iconColor?: string
-  introductionText?: string
-  updateDocTitle?: boolean
-  hideAreaInDocTitle?: boolean
-  tagList?: IHeaderTag[]
-  areaTitleBottom?: boolean
+  title: string;
+  areaHref?: string;
+  areaTitle?: string;
+  icon?: string;
+  iconColor?: string;
+  introductionText?: string;
+  updateDocTitle?: boolean;
+  hideAreaInDocTitle?: boolean;
+  tagList?: IHeaderTag[];
+  areaTitleBottom?: boolean;
   rightContent?: React.ReactNode;
   bottomLeftContent?: React.ReactNode;
-  onAreaClick?: () => void
+  onAreaClick?: () => void;
 }
 
 const PageHeader: React.FC<IProps> = ({
   title,
   icon,
-  iconColor='primary-9',
+  iconColor = 'primary-9',
   introductionText,
   areaHref,
   areaTitle,
@@ -78,40 +80,44 @@ const PageHeader: React.FC<IProps> = ({
   bottomLeftContent,
   onAreaClick,
 }) => {
-
   return (
     <Container>
       <LeftPanel>
-        <PageTitle iconColor={iconColor} {...{ title, icon, areaHref, areaTitle, updateDocTitle, hideAreaInDocTitle, areaTitleBottom, onAreaClick, bottomLeftContent }} />
-        {!tagList ?
-          null
-          :
+        <PageTitle
+          iconColor={iconColor}
+          {...{
+            title,
+            icon,
+            areaHref,
+            areaTitle,
+            updateDocTitle,
+            hideAreaInDocTitle,
+            areaTitleBottom,
+            onAreaClick,
+            bottomLeftContent,
+          }}
+        />
+        {!tagList ? null : (
           <TagListWrapper>
-            {
-              tagList.map(({ icon, label, linkTo, onTagClick }) => (
-                <Tag key={`tag-`} icon={icon || ''} noBorder={true} tagSize='compact' {...{ label, linkTo, onTagClick }} />
-              ))
-            }
+            {tagList.map(({ icon, label, linkTo, onTagClick }) => (
+              <Tag
+                key={`tag-`}
+                icon={icon || ''}
+                noBorder={true}
+                tagSize='compact'
+                {...{ label, linkTo, onTagClick }}
+              />
+            ))}
           </TagListWrapper>
-        }
-        {introductionText ?
+        )}
+        {introductionText ? (
           <IntroductionTextWrapper>
             <IntroductionText>{introductionText}</IntroductionText>
           </IntroductionTextWrapper>
-          : null
-        }
-        {
-          <BottomLeft>
-            <>{bottomLeftContent}</>
-          </BottomLeft>
-        }
+        ) : null}
+        {<BottomLeft>{bottomLeftContent}</BottomLeft>}
       </LeftPanel>
-      {rightContent ?
-        <RightPanel $iconLeftPanel={!!icon}>
-          <>{rightContent}</>
-        </RightPanel>
-        : null
-      }
+      {rightContent ? <RightPanel $iconLeftPanel={!!icon}>{rightContent}</RightPanel> : null}
     </Container>
   );
 };

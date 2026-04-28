@@ -1,27 +1,21 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import { boolean, object, text } from '@storybook/addon-knobs';
+import { useCallback, useEffect, useState } from 'react';
+import { TypeTable as LoadingTable } from 'scorer-ui-kit';
+import type { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
 import styled from 'styled-components';
-import {boolean, text, object} from "@storybook/addon-knobs";
-
-import {TypeTable as LoadingTable } from 'scorer-ui-kit';
 import photo from '../../assets/placeholder.jpg';
-
-import {
-  ITableColumnConfig,
-  ITypeTableData
-} from 'scorer-ui-kit/dist/Tables';
 
 const LoadingTableStory = {
   title: 'Tables/molecules',
   component: LoadingTable,
-  decorators: []
+  decorators: [],
 };
 
 const Container = styled.div`
   padding: 100px;
 `;
 
-
-const columnConfigSample : ITableColumnConfig[] = [
+const columnConfigSample: ITableColumnConfig[] = [
   {
     header: 'When',
     groupTitle: 'Time',
@@ -46,75 +40,53 @@ const columnConfigSample : ITableColumnConfig[] = [
   },
 ];
 
-const initialRows : ITypeTableData = [
+const initialRows: ITypeTableData = [
   {
-    columns: []
-  }
+    columns: [],
+  },
 ];
 
-
-const dataRows : ITypeTableData = [
+const dataRows: ITypeTableData = [
   {
     id: 'device-1',
     header: {
       image: photo,
     },
-    columns:
-    [
-      { text: 'JustNow'},
-      { text: 'OK', status: 'good' },
-      { text: '38.2ºC' },
-    ]
+    columns: [{ text: 'JustNow' }, { text: 'OK', status: 'good' }, { text: '38.2ºC' }],
   },
   {
     id: 'device-2',
     header: {
       image: photo,
     },
-    columns:
-    [
-      { text: '3 mins ago'},
-      { text: 'Warning', status: 'danger' },
-      { text: '38.2ºC' },
-    ]
+    columns: [{ text: '3 mins ago' }, { text: 'Warning', status: 'danger' }, { text: '38.2ºC' }],
   },
   {
     id: 'device-3',
     header: {
       image: photo,
     },
-    columns:
-    [
-      { text: '12 mins ago'},
-      { text: 'OK', status: 'good' },
-      { text: '38.2ºC' },
-    ]
+    columns: [{ text: '12 mins ago' }, { text: 'OK', status: 'good' }, { text: '38.2ºC' }],
   },
   {
     id: 'device-4',
     header: {
       image: photo,
     },
-    columns:
-    [
-      { text: '1 hour ago'},
-      { text: 'OK', status: 'good' },
-      { text: '38.2ºC' },
-    ]
+    columns: [{ text: '1 hour ago' }, { text: 'OK', status: 'good' }, { text: '38.2ºC' }],
   },
 ];
 
 export const _LoadingTable = () => {
-  const isLoading = boolean("IsLoading", true);
-  const emptyTable = boolean("Show Empty Table", true);
+  const isLoading = boolean('IsLoading', true);
+  const emptyTable = boolean('Show Empty Table', true);
   const disableOneCheckbox = boolean('Disable 1st Checkbox', false);
-  const emptyTableTitle = text("emptyTableTitle","No Data Available");
-  const emptyTableText = text("emptyTableText", 'There is currently no data');
-  const loadingText = text("loadingText", 'Loading Data..')
-  const selectable = boolean("Selectable Rows", true);
+  const emptyTableTitle = text('emptyTableTitle', 'No Data Available');
+  const emptyTableText = text('emptyTableText', 'There is currently no data');
+  const loadingText = text('loadingText', 'Loading Data..');
+  const selectable = boolean('Selectable Rows', true);
   const hasGroups = boolean('Has Header Groups', true);
-  const columnConfig = object("Column Configuration", columnConfigSample);
-
+  const columnConfig = object('Column Configuration', columnConfigSample);
 
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
 
@@ -126,30 +98,30 @@ export const _LoadingTable = () => {
       });
       return newRows;
     });
-  }, [setRows]);
+  }, []);
 
-    // Sent to checkbox in TableRow via Table component.
-    const selectCallback = useCallback((checked: boolean, id?: string | number) => {
-      setRows((prevRows) => {
-        const newRows = [...prevRows];
-        const targetRowIndex = newRows.findIndex((row) => row.id === id);
-        if (targetRowIndex > -1) {
-          newRows[targetRowIndex]._checked = checked;
-        }
-        return newRows;
-      });
-    }, [setRows]);
+  // Sent to checkbox in TableRow via Table component.
+  const selectCallback = useCallback((checked: boolean, id?: string | number) => {
+    setRows((prevRows) => {
+      const newRows = [...prevRows];
+      const targetRowIndex = newRows.findIndex((row) => row.id === id);
+      if (targetRowIndex > -1) {
+        newRows[targetRowIndex]._checked = checked;
+      }
+      return newRows;
+    });
+  }, []);
 
   useEffect(() => {
-    if(emptyTable) {
-      setRows(initialRows)
+    if (emptyTable) {
+      setRows(initialRows);
     } else {
       setRows(dataRows);
     }
     return () => {
       setRows(initialRows);
-    }
-  }, [emptyTable])
+    };
+  }, [emptyTable]);
 
   useEffect(() => {
     setRows((prevRows) => {
@@ -157,7 +129,7 @@ export const _LoadingTable = () => {
       newRows[0].checkboxDisabled = disableOneCheckbox;
       return newRows;
     });
-  }, [disableOneCheckbox])
+  }, [disableOneCheckbox]);
 
   return (
     <Container>
@@ -177,9 +149,7 @@ export const _LoadingTable = () => {
         }}
       />
     </Container>
-  )
-
-
+  );
 };
 
 export default LoadingTableStory;

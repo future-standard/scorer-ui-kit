@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
+import type React from 'react';
+import { Fragment } from 'react';
 import styled from 'styled-components';
-import { INotificationsHistory, INotificationItem } from '../index';
 import NotificationItem from '../atoms/NotificationItem';
+import type { INotificationItem, INotificationsHistory } from '../index';
 
 const Container = styled.div`
   display: flex;
@@ -22,14 +23,14 @@ const NotificationWrapper = styled.div`
   border-bottom: var(--dividing-line) 1px solid;
 `;
 
-const renderNotifications = (items: INotificationItem[], type: string) => (
+const renderNotifications = (items: INotificationItem[], type: string) =>
   items.map((item, index) => {
     return (
       <NotificationWrapper key={`alert-${type}-${index}`}>
         <NotificationItem {...item} />
-      </NotificationWrapper>);
-  })
-);
+      </NotificationWrapper>
+    );
+  });
 
 const NotificationsHistory: React.FC<INotificationsHistory> = ({
   read,
@@ -37,10 +38,8 @@ const NotificationsHistory: React.FC<INotificationsHistory> = ({
   noNotificationsText = 'No new notifications',
   readNotificationsText = 'New',
   unreadNotificationsText = 'Read',
-
 }) => {
-
-  if ((read.length === 0) && (unread.length === 0)) {
+  if (read.length === 0 && unread.length === 0) {
     return (
       <Container>
         <StatusContainer>{noNotificationsText}</StatusContainer>
