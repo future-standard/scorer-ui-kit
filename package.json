@@ -9,6 +9,7 @@
     "format": "biome format --write .",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
+    "sweep": "node scripts/sweep-stories.mjs",
     "start": "concurrently -n ui-lib,example -c blue,green \"npm run start:ui-lib\" \"npm run start:example\"",
     "start:all": "concurrently -n ui-lib,types,example,storybook -c blue,magenta,green,yellow \"npm run start:ui-lib\" \"npm run start:types\" \"npm run start:example\" \"npm run start:storybook\"",
     "start:ui-lib": "npm start --workspace=packages/ui-lib",
@@ -40,6 +41,7 @@
     "concurrently": "^9.2.1",
     "gh-pages": "^6.3.0",
     "jsdom": "^26.1.0",
+    "playwright": "^1.59.1",
     "vite": "^8.0.5"
   },
   "overrides": {
