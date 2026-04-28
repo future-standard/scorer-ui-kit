@@ -8,109 +8,222 @@ permissions:
   contents: write
   pull-requests: write
 
-# Serialize all gh-pages pushes so concurrent PR deploys don't race
-concurrency:
-  group: gh-pages-deploy
-  cancel-in-progress: false
-
 jobs:
   deploy-preview:
     if: github.event.action != 'closed'
     runs-on: ubuntu-latest
 
+    # Serialize gh-pages pushes so concurrent PR deploys don't race
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
+
     steps:
-    - uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-    - name: Use Node.js
-      uses: actions/setup-node@v6
-      with:
-        node-version: '22.x'
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22.x'
 
-    - name: Cache node modules
-      uses: actions/cache@v5
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+      - name: Cache node modules
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build library
-      run: npm run build -w packages/ui-lib
+      - name: Build library
+        run: npm run build -w packages/ui-lib
 
-    - name: Build example
-      run: npm run build -w packages/example
-      env:
-        VITE_BASE_PATH: /scorer-ui-kit/pr/${{ github.event.pull_request.number }}/
+      - name: Build example
+        run: npm run build -w packages/example
+        env:
+          VITE_BASE_PATH: /scorer-ui-kit/pr/${{ github.event.pull_request.number }}/
 
-    - name: Build storybook
-      run: npm run build-storybook -w packages/storybook
+      - name: Build storybook
+        run: npm run build-storybook -w packages/storybook
 
-    - name: Deploy preview to gh-pages
-      run: |
-        PR_NUM=${{ github.event.pull_request.number }}
+      - name: Deploy preview to gh-pages
+        run: |
+          PR_NUM=${{ github.event.pull_request.number }}
 
-        git config user.name "github-actions-bot"
-        git config user.email "support+actions@github.com"
+          git config user.name "github-actions-bot"
+          git config user.email "support+actions@github.com"
 
-        # Fetch gh-pages branch
-        git fetch origin gh-pages
+          # Fetch gh-pages branch
+          git fetch origin gh-pages
 
-        # Create a working copy of gh-pages
-        git worktree add gh-pages-dir origin/gh-pages
+          # Create a working copy of gh-pages
+          git worktree add gh-pages-dir origin/gh-pages
 
-        # Clear any previous build for this PR and copy new build
-        rm -rf "gh-pages-dir/pr/${PR_NUM}"
-        mkdir -p "gh-pages-dir/pr/${PR_NUM}"
-        cp -r packages/example/build/* "gh-pages-dir/pr/${PR_NUM}/"
+          # Clear any previous build for this PR and copy new build
+          rm -rf "gh-pages-dir/pr/${PR_NUM}"
+          mkdir -p "gh-pages-dir/pr/${PR_NUM}"
+          cp -r packages/example/build/* "gh-pages-dir/pr/${PR_NUM}/"
 
-        # Commit and push
-        cd gh-pages-dir
-        git add .
-        git commit -m "Deploy preview for PR ${PR_NUM}" || echo "No changes to deploy"
-        git push origin HEAD:gh-pages
+          # Commit and push
+          cd gh-pages-dir
+          git add .
+          git commit -m "Deploy preview for PR ${PR_NUM}" || echo "No changes to deploy"
+          git push origin HEAD:gh-pages
 
-    - name: Comment preview URLs on PR
-      uses: actions/github-script@v9
-      with:
-        script: |
-          const prNumber = context.payload.pull_request.number;
-          const sha = context.payload.pull_request.head.sha.substring(0, 7);
-          const previewUrl = `https://future-standard.github.io/scorer-ui-kit/pr/${prNumber}/`;
+      - name: Comment preview URLs on PR
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const sha = context.payload.pull_request.head.sha.substring(0, 7);
+            const previewUrl = `https://future-standard.github.io/scorer-ui-kit/pr/${prNumber}/`;
 
-          const body = [
-            `## Deploy Preview`,
-            ``,
-            `${previewUrl}`,
-            ``,
-            `_Built from ${sha} — ${new Date().toISOString()}_`,
-          ].join('\n');
+            const body = [
+              `## Deploy Preview`,
+              ``,
+              `${previewUrl}`,
+              ``,
+              `_Built from ${sha} — ${new Date().toISOString()}_`,
+            ].join('\n');
 
-          // Update existing comment or create new one
-          const { data: comments } = await github.rest.issues.listComments({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: prNumber,
-          });
-          const existing = comments.find(c =>
-            c.user.type === 'Bot' && c.body.includes('Deploy Preview')
-          );
-
-          if (existing) {
-            await github.rest.issues.updateComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: existing.id,
-              body,
-            });
-          } else {
-            await github.rest.issues.createComment({
+            // Update existing comment or create new one
+            const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body,
             });
-          }
+            const existing = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('Deploy Preview')
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
+
+  sweep:
+    needs: deploy-preview
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22.x'
+
+      - name: Cache node modules
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Wait for deploy preview to propagate
+        env:
+          PR_NUM: ${{ github.event.pull_request.number }}
+        run: |
+          URL="https://future-standard.github.io/scorer-ui-kit/pr/${PR_NUM}/"
+          for i in {1..30}; do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
+            if [ "$CODE" = "200" ]; then
+              echo "Deploy preview reachable after $i attempts."
+              exit 0
+            fi
+            echo "Attempt $i: $URL returned $CODE — waiting 10s"
+            sleep 10
+          done
+          echo "Deploy preview never came up at $URL"
+          exit 1
+
+      - name: Run sweep against deployed PR preview
+        id: sweep
+        env:
+          PR_NUM: ${{ github.event.pull_request.number }}
+          PW_CHROMIUM_PATH: ''
+        run: |
+          BASE="https://future-standard.github.io/scorer-ui-kit/pr/${PR_NUM}"
+          EXAMPLE_URL="$BASE" STORYBOOK_URL="$BASE/storybook" \
+            npm run sweep > sweep-result.json 2> sweep-progress.txt || true
+          jq -r '"Total: \(.total) | With errors: \(.withErrors) | Timed out: \(.timedOut|length) | Loop suspect: \(.loopSuspect|length)"' sweep-result.json >> "$GITHUB_STEP_SUMMARY"
+          jq -r '.bad[] | "- **\(.id)** (\(.kind)): \(.errors[0] // "high console volume")"' sweep-result.json >> "$GITHUB_STEP_SUMMARY"
+          BAD=$(jq -r '.bad | length' sweep-result.json)
+          echo "bad=$BAD" >> "$GITHUB_OUTPUT"
+
+      - name: Upload sweep result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sweep-result
+          path: sweep-result.json
+
+      - name: Comment sweep result on PR
+        if: always()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const fs = require('fs');
+            const result = JSON.parse(fs.readFileSync('sweep-result.json', 'utf8'));
+            const prNumber = context.payload.pull_request.number;
+            const sha = context.payload.pull_request.head.sha.substring(0, 7);
+            const lines = [`## Story Sweep`, ``];
+            if (result.bad.length === 0) {
+              lines.push(`Clean — ${result.total} pages swept, no console errors, no loops detected.`);
+            } else {
+              lines.push(`${result.bad.length} of ${result.total} pages flagged:`);
+              lines.push('');
+              for (const r of result.bad) {
+                const first = r.errors[0] ? r.errors[0].split('\n')[0] : `${r.consoleCount} console msgs`;
+                lines.push(`- **${r.id}** (${r.kind}) — ${first}`);
+              }
+            }
+            lines.push('');
+            lines.push(`_Swept ${sha} via npm run sweep — full JSON in workflow artifacts._`);
+            const body = lines.join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+            const existing = comments.find((c) => c.user.type === 'Bot' && c.body.startsWith('## Story Sweep'));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
+
+      - name: Fail job if sweep flagged pages
+        if: steps.sweep.outputs.bad != '0'
+        run: exit 1
