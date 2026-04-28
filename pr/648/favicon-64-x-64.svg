@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <defs>
+        <linearGradient id="a" x1="50%" x2="50%" y1="0%" y2="99.182%">
+            <stop offset="0%" stop-color="#304F65"/>
+            <stop offset="100%" stop-color="#284458"/>
+        </linearGradient>
+        <radialGradient id="b" cx="6.224%" cy="137.134%" r="342.131%" fx="6.224%" fy="137.134%" gradientTransform="matrix(.56757 0 0 1 .027 0)">
+            <stop offset="0%" stop-color="#80FFFF"/>
+            <stop offset="5.03%" stop-color="#7CF8FD"/>
+            <stop offset="70.34%" stop-color="#4CA1EB"/>
+            <stop offset="100%" stop-color="#397FE3"/>
+        </radialGradient>
+        <radialGradient id="c" cx="-22.935%" cy="-106.479%" r="397.449%" fx="-22.935%" fy="-106.479%" gradientTransform="matrix(.57586 0 0 1 -.097 0)">
+            <stop offset="0%" stop-color="#80FFFF"/>
+            <stop offset="5.03%" stop-color="#7CF8FD"/>
+            <stop offset="70.34%" stop-color="#4CA1EB"/>
+            <stop offset="100%" stop-color="#397FE3"/>
+        </radialGradient>
+        <radialGradient id="d" cx="-65.139%" cy="146.739%" r="489.87%" fx="-65.139%" fy="146.739%" gradientTransform="matrix(1 0 0 .86828 0 .193)">
+            <stop offset="0%" stop-color="#80FFFF"/>
+            <stop offset="5.03%" stop-color="#7CF8FD"/>
+            <stop offset="70.34%" stop-color="#4CA1EB"/>
+            <stop offset="100%" stop-color="#397FE3"/>
+        </radialGradient>
+        <radialGradient id="e" cx="6.224%" cy="137.135%" r="342.008%" fx="6.224%" fy="137.135%" gradientTransform="matrix(.56757 0 0 1 .027 0)">
+            <stop offset="0%" stop-color="#80FFFF"/>
+            <stop offset="5.03%" stop-color="#7CF8FD"/>
+            <stop offset="70.34%" stop-color="#4CA1EB"/>
+            <stop offset="100%" stop-color="#397FE3"/>
+        </radialGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <rect width="64" height="64" fill="url(#a)" rx="2"/>
+        <g fill-rule="nonzero">
+            <path fill="url(#b)" d="M1.043 36.488L22.43 24.5l21.387 11.988a.38.38 0 0 1 .197.33.38.38 0 0 1-.197.332L22.888 48.88a.94.94 0 0 1-.917 0L1.043 37.15a.38.38 0 0 1-.197-.331.38.38 0 0 1 .197-.33z" opacity=".5" transform="translate(10 8)"/>
+            <path fill="url(#c)" d="M0 24.5l22.195-12.672 21.629 12.349a.373.373 0 0 1 0 .646l-21.629 12.35L0 24.5z" opacity=".79" transform="translate(10 8)"/>
+            <path fill="url(#d)" d="M0 24.5V11.828L22.006 24.5v12.672z" opacity=".95" transform="translate(10 8)"/>
+            <path fill="url(#e)" d="M0 12.189L21.4.106a.827.827 0 0 1 .81 0l20.734 11.706a.433.433 0 0 1 .222.377.433.433 0 0 1-.222.376L21.805 24.5 0 12.189z" opacity=".9" transform="translate(10 8)"/>
+        </g>
+    </g>
+</svg>
