@@ -69,7 +69,7 @@ Do not improvise. If any command fails or any expected condition is not met, sto
      - If the user passed a full semver like `3.0.0-beta.*`, use it as-is.
      - If no argument, increment the trailing beta number of `<PREV_TAG>` by 1 (e.g., `3.0.0-beta.7` → `3.0.0-beta.8`).
 
-     If the user passed a value whose trailing beta number is greater than `<PREV_TAG>`'s number + 1 (i.e., it skips one or more versions), stop and ask the user to confirm. Example: with `<PREV_TAG>` = `3.0.0-beta.7`, the natural next is `3.0.0-beta.8`; if the user passed `beta.12`, ask whether they meant to skip versions or whether it's a typo. Wait for explicit confirmation before continuing.
+     If the user-supplied `<VERSION>` differs from the expected next (`<PREV_TAG>` + 1), stop and ask the user to confirm. Example: with `<PREV_TAG>` = `3.0.0-beta.7`, the expected next is `3.0.0-beta.8`; anything else (e.g. `beta.12` or `beta.5`) needs explicit confirmation before continuing.
 
    - Verify the target tag and release branch don't already exist:
 
