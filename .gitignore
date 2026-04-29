@@ -24,3 +24,6 @@ yarn-error.log*
 storybook-static/
 packages/example/public/storybook/
 packages/storybook/build/
+
+# Release notes drafts (created by .claude/skills/release; user decides to keep or delete)
+release_scorer-ui-kit_*.md
