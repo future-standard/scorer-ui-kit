@@ -48,20 +48,20 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
    - `gh auth status` exits non-zero.
 
 2. **Determine the version**
-   - Get the latest **published** stable tag from origin:
+   - Get the latest **published** stable tag from origin (across any major version):
 
      ```bash
-     git ls-remote --tags --sort=-v:refname origin "v3.*" | grep -E 'refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 | sed 's|.*refs/tags/v||'
+     git ls-remote --tags --sort=-v:refname origin "v*" | grep -E 'refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 | sed 's|.*refs/tags/v||'
      ```
 
-     The output is `<PREV_TAG>` (e.g., `3.0.3`). The `v` is added back wherever a tag form is needed (`v<PREV_TAG>`). The grep filter ensures only stable tags are considered (excludes `-beta`, `-rc`, etc.).
+     The output is `<PREV_TAG>` (e.g., `2.10.4`). The `v` is added back wherever a tag form is needed (`v<PREV_TAG>`). The grep filter ensures only stable tags are considered (excludes `-beta`, `-rc`, etc.). The version-aware sort returns the highest stable version regardless of major.
 
-     If the command returns nothing (no published stable tags), stop and ask the user to pass a version argument explicitly. Do not guess a starting version.
+     If the command returns nothing (the repository has no stable tags at all), stop and ask the user to pass a starting version explicitly. Do not guess.
 
    - Check if local has a newer stable tag that hasn't been published:
 
      ```bash
-     git tag --list "v3.*" --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 | sed 's/^v//'
+     git tag --list "v*" --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 | sed 's/^v//'
      ```
 
      If this output differs from `<PREV_TAG>` (i.e., local has a newer tag than origin), show both to the user and ask which to use as the previous tag. Wait for explicit confirmation before continuing.
@@ -78,16 +78,7 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
      gh pr view <PR-NUM>
      ```
 
-     Classify each change using these rules (used both for the release notes content and for the version recommendation below):
-     - **Components**: new components or substantial component additions.
-     - **Features**: new capabilities, enhancements, new props, new behaviors, UX improvements.
-     - **Hooks**: new hooks or meaningful hook updates.
-     - **Icons**: new icons, icon library updates, icon behavior/design changes.
-     - **Fixes**: bug fixes, layout fixes, behavior corrections, visual corrections.
-     - **Dependencies**: dependency additions, upgrades, tooling changes relevant to consumers or maintainers.
-     - **Deprecated features and breaking changes**: anything requiring consumer attention, migration, renamed props/interfaces, removed behavior.
-
-     Do not invent changes that aren't supported by the PRs. Make breaking changes / migrations explicit. Avoid raw PR implementation language. Consolidate overlapping PRs into a single bullet.
+     Classify each change and write the bullets following [references/RELEASE_NOTES_STYLE_GUIDE.md](references/RELEASE_NOTES_STYLE_GUIDE.md). The style guide defines the section names, bullet structure, voice, capitalization, and formatting conventions — apply them as written. Do not invent changes that aren't supported by the PRs. Consolidate overlapping PRs into a single bullet.
 
    - Compute `<RECOMMENDED_VERSION>` from the classified content using these rules:
      - **Patch**: the consumer does not need to change their code. Includes new components, features, hooks, icons, and fixes — anything that doesn't break or alter existing usage. Bump patch (e.g., `3.0.3` → `3.0.4`).
@@ -124,30 +115,7 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
      date +%Y%m%d
      ```
 
-     Save to `release_scorer-ui-kit_<TODAY>.md` at the project root, using this template (omit any section that has no entries):
-
-     ```markdown
-     ## Components
-     - <change> (#<PR>)
-
-     ## Features
-     - <change> (#<PR>)
-
-     ## Hooks
-     - <change> (#<PR>)
-
-     ## Icons
-     - <change> (#<PR>)
-
-     ## Fixes
-     - <change> (#<PR>)
-
-     ## Dependencies
-     - <change> (#<PR>)
-
-     ## Deprecated features and breaking changes
-     - <change> (#<PR>)
-     ```
+     Save to `release_scorer-ui-kit_<TODAY>.md` at the project root. The file's structure, section names, and formatting are defined in [references/RELEASE_NOTES_STYLE_GUIDE.md](references/RELEASE_NOTES_STYLE_GUIDE.md). Follow that guide.
 
    - Show the user the resolved values and the path to the release notes draft:
 
