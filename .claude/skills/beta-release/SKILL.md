@@ -29,34 +29,60 @@ Do not improvise. If any command fails or any expected condition is not met, sto
 
 ## Steps
 
-**Step 0: Preflight checks**
+1. **Preflight checks**
 
-```bash
-git status --short
-git branch --show-current
-git remote -v
-git fetch origin main --tags
-gh auth status
-```
+   ```bash
+   git status --short
+   git branch --show-current
+   git fetch origin main --tags
+   git rev-list --count main..origin/main
+   gh auth status
+   ```
 
-Stop if:
-- `git status --short` is not empty.
-- Current branch is not `main`.
-- Local `main` is not up to date with `origin/main`.
-- `gh auth status` fails.
+   Stop if:
+   - `git status --short` produces any output (working tree is dirty).
+   - `git branch --show-current` is not `main`.
+   - `git rev-list --count main..origin/main` is not `0` (local `main` is behind `origin/main`).
+   - `gh auth status` exits non-zero.
 
-1. **Determine the version**
-   - Get the latest existing beta tag:
+2. **Determine the version**
+   - Get the latest **published** beta tag from origin:
 
      ```bash
-     git tag --list "v3.0.0-beta.*" --sort=-v:refname | head -n 1
+     git ls-remote --tags --sort=-v:refname origin "v3.0.0-beta.*" | head -n 1 | sed 's|.*refs/tags/v||'
      ```
 
-     Strip the leading `v` to get `<PREV_TAG>` (e.g. tag `v3.0.0-beta.7` → `<PREV_TAG>` is `3.0.0-beta.7`). The `v` is added back wherever a tag form is needed (`v<PREV_TAG>`).
+     The output is `<PREV_TAG>` (e.g., `3.0.0-beta.7`). The `v` is added back wherever a tag form is needed (`v<PREV_TAG>`).
+
+     If the command returns nothing (no published betas), stop and ask the user to pass a version argument explicitly. Do not guess a starting version.
+
+   - Check if local has a newer beta tag that hasn't been published:
+
+     ```bash
+     git tag --list "v3.0.0-beta.*" --sort=-v:refname | head -n 1 | sed 's/^v//'
+     ```
+
+     If this output differs from `<PREV_TAG>` (i.e., local has a newer tag than origin), show both to the user and ask which to use as the previous tag. Wait for explicit confirmation before continuing.
 
    - Determine `<VERSION>`:
-     - If the user passed an argument, use it (e.g. `beta.8` → `3.0.0-beta.8`, or accept full semver like `3.0.0-beta.8`).
-     - If no argument, increment the beta number of `<PREV_TAG>` by 1.
+     - If the user passed a short form like `beta.*`, use `3.0.0-beta.*`.
+     - If the user passed a full semver like `3.0.0-beta.*`, use it as-is.
+     - If no argument, increment the trailing beta number of `<PREV_TAG>` by 1 (e.g., `3.0.0-beta.7` → `3.0.0-beta.8`).
+
+     If the user passed a value whose trailing beta number is greater than `<PREV_TAG>`'s number + 1 (i.e., it skips one or more versions), stop and ask the user to confirm. Example: with `<PREV_TAG>` = `3.0.0-beta.7`, the natural next is `3.0.0-beta.8`; if the user passed `beta.12`, ask whether they meant to skip versions or whether it's a typo. Wait for explicit confirmation before continuing.
+
+   - Verify the target tag and release branch don't already exist:
+
+     ```bash
+     git tag -l "v<VERSION>"
+     git branch --list "release/v<VERSION>"
+     git ls-remote --heads origin "release/v<VERSION>"
+     ```
+
+     Stop if any command produces output:
+     - First: tag `v<VERSION>` already exists.
+     - Second: local branch `release/v<VERSION>` already exists.
+     - Third: remote branch `release/v<VERSION>` already exists.
 
    - Show the user the resolved values and ask for confirmation before proceeding:
 
@@ -66,13 +92,13 @@ Stop if:
      Release branch:      release/v<VERSION>
      ```
 
-     Wait for explicit confirmation before continuing to step 2.
+     Wait for explicit confirmation before continuing to step 3.
 
-2. **Create the release branch**
+3. **Create the release branch**
    - Ensure you're on `main` and up to date: `git checkout main && git pull`
    - Create branch: `git checkout -b release/v<VERSION>` (e.g. `release/v3.0.0-beta.8`)
 
-3. **Update version in files**
+4. **Update version in files**
 
    ```bash
    npm pkg set version=<VERSION>
@@ -80,7 +106,15 @@ Stop if:
    npm install --package-lock-only
    ```
 
-4. **Commit and push**
+   Verify that only the expected files were modified:
+
+   ```bash
+   git diff --name-only
+   ```
+
+   Stop if any file other than `package.json`, `packages/ui-lib/package.json`, or `package-lock.json` appears in the output.
+
+5. **Commit and push**
 
    ```bash
    git add package.json packages/ui-lib/package.json package-lock.json
@@ -88,16 +122,14 @@ Stop if:
    git push -u origin release/v<VERSION>
    ```
 
-5. **Create PR**
-   - Use `gh pr create` targeting `main`.
-   - Title: `Release v<VERSION>`
-   - Get the commit list since the previous tag (using `<PREV_TAG>` from step 1):
+6. **Create PR**
+   - Get the commit list since the previous tag (using `<PREV_TAG>` from step 2):
 
      ```bash
      git log v<PREV_TAG>..main --oneline
      ```
 
-   - Use this body template, filling in the version numbers and the commit list from the command above:
+   - Use this body template, filling in `<VERSION>`, `<PREV_TAG>`, and the commit list from above:
 
      ```markdown
      ## Description
@@ -109,12 +141,36 @@ Stop if:
      - <commit subject> (#<PR>)
      ```
 
-6. **Wait for the user to merge the PR**
-   - Share the PR URL and tell the user to merge it themselves.
+   - Create the PR with the title `Release v<VERSION>` and the body above:
+
+     ```bash
+     gh pr create \
+       --base main \
+       --head "release/v<VERSION>" \
+       --title "Release v<VERSION>" \
+       --body "<paste body here>"
+     ```
+
+7. **Wait for CI and the user's merge**
+   - Share the PR URL with the user.
+   - Wait for CI checks to complete on the release branch:
+
+     ```bash
+     gh pr checks --watch
+     ```
+
+     This blocks until all checks finish. If it exits non-zero (any check failed), stop and report the failure — do not let the user merge a failing PR.
+
+   - Once CI is green, tell the user to merge the PR themselves.
    - Do NOT merge the PR. Wait for the user to confirm they have merged it before proceeding.
 
-7. **Tag and push**
-   - `git checkout main && git pull`
-   - `git tag v<VERSION>`
-   - `git push origin v<VERSION>`
-   - Confirm the tag was pushed successfully.
+8. **Tag and push**
+
+   ```bash
+   git checkout main && git pull
+   git tag v<VERSION>
+   git push origin v<VERSION>
+
+   # Verify the tag is on the remote
+   git ls-remote --exit-code --tags origin "v<VERSION>"
+   ```
