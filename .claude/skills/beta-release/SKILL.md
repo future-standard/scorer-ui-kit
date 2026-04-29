@@ -46,9 +46,27 @@ Stop if:
 - `gh auth status` fails.
 
 1. **Determine the version**
-   - If the user provided a version argument, use it (e.g. `beta.8` becomes `3.0.0-beta.8`, or accept full semver like `3.0.0-beta.8`).
-   - If no argument, auto-detect: find the latest `v3.0.0-beta.*` git tag, increment the beta number by 1.
-   - Confirm the version with the user before proceeding.
+   - Get the latest existing beta tag:
+
+     ```bash
+     git tag --list "v3.0.0-beta.*" --sort=-v:refname | head -n 1
+     ```
+
+     Strip the leading `v` to get `<PREV_TAG>` (e.g. tag `v3.0.0-beta.7` → `<PREV_TAG>` is `3.0.0-beta.7`). The `v` is added back wherever a tag form is needed (`v<PREV_TAG>`).
+
+   - Determine `<VERSION>`:
+     - If the user passed an argument, use it (e.g. `beta.8` → `3.0.0-beta.8`, or accept full semver like `3.0.0-beta.8`).
+     - If no argument, increment the beta number of `<PREV_TAG>` by 1.
+
+   - Show the user the resolved values and ask for confirmation before proceeding:
+
+     ```
+     Target beta version: <VERSION>
+     Previous beta tag:   v<PREV_TAG>
+     Release branch:      release/v<VERSION>
+     ```
+
+     Wait for explicit confirmation before continuing to step 2.
 
 2. **Create the release branch**
    - Ensure you're on `main` and up to date: `git checkout main && git pull`
@@ -73,7 +91,7 @@ Stop if:
 5. **Create PR**
    - Use `gh pr create` targeting `main`.
    - Title: `Release v<VERSION>`
-   - Get the changes since the previous tag (`<PREV_TAG>` is the most recent `v3.0.0-beta.*` tag before the new one):
+   - Get the commit list since the previous tag (using `<PREV_TAG>` from step 1):
 
      ```bash
      git log v<PREV_TAG>..main --oneline
@@ -81,25 +99,15 @@ Stop if:
 
    - Use this body template, filling in the version numbers and the commit list from the command above:
 
-     ````markdown
-     ## Summary
+     ```markdown
+     ## Description
 
      Bumps version to `<VERSION>`.
 
      ### Changes since v<PREV_TAG>
      - <commit subject> (#<PR>)
      - <commit subject> (#<PR>)
-
-     ## After merge
-
-     Run the following to tag and publish:
-
-     ```bash
-     git checkout main && git pull
-     git tag v<VERSION>
-     git push origin v<VERSION>
      ```
-     ````
 
 6. **Wait for the user to merge the PR**
    - Share the PR URL and tell the user to merge it themselves.
