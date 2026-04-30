@@ -74,6 +74,8 @@ First, classify the change:
 - **Has consumer-facing impact**: put it in the most fitting consumer-facing section (`Components`, `Features`, `Hooks`, `Icons`, `Fixes`, `Dependencies`). If none fits, use `Other`.
 - **No consumer-facing impact**: put it in `Internal`. Significant work (build system migrations, large refactors, test infrastructure overhauls) gets a normal-length bullet. Smaller contributions (small refactors, doc tweaks, test additions, single-line CI fixes) get a concise one-liner — enough to acknowledge the work.
 
+**Each change is listed in exactly one section, never duplicated.** If a change qualifies for a consumer-facing section (`Components`, `Features`, `Hooks`, `Icons`, `Fixes`, `Dependencies`), it goes there only. Do not also list it under `Internal` even if the work was technically internal in nature (e.g., a dependabot-driven security bump already documented under `Dependencies`). `Internal` is the catch-all for work that has no home in any other section.
+
 If the same kind of change keeps appearing under `Other` across multiple releases, that's a signal to promote it to its own canonical section in this style guide.
 
 ## Header format
@@ -247,7 +249,9 @@ Within a single release, apply these rules consistently. Don't backtick a prop i
 
 ## Links
 
-Three kinds of links may appear:
+Three kinds of links may appear.
+
+**Source-of-truth rule for URLs.** Only include an external link if the exact URL appears in a source PR description, an existing source file in the repo, or is a project-owned URL (the project's Storybook, its GitHub repo, or its npm page). Do not invent, guess, or extrapolate URLs for upstream documentation, migration guides, blog posts, or release notes. If a migration would benefit from an external reference but no source URL is available, write the prose without a link — for example, "Refer to the upstream React 19 upgrade guide" — and let the reader search. A plausible-looking URL that does not actually exist is worse than no URL.
 
 ### Storybook live views
 
