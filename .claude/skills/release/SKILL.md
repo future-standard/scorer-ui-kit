@@ -72,11 +72,17 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
      git log v<PREV_TAG>..main --oneline
      ```
 
-     For each PR referenced in the commit list (the `(#NNN)` suffix), fetch the full description:
+     For each PR referenced in the commit list (the `(#NNN)` suffix), fetch the full description. A batched form:
 
      ```bash
-     gh pr view <PR-NUM>
+     for pr in $(git log v<PREV_TAG>..main --oneline | grep -oE '#[0-9]+' | tr -d '#' | sort -u); do
+       echo "=== PR #$pr ==="
+       gh pr view "$pr" --json title,body --jq '.title + "\n---\n" + .body'
+       echo ""
+     done
      ```
+
+     **For larger releases**: if the commit count exceeds ~25, the PR descriptions can pull a lot of content into context. In that case, delegate the classification step to a sub-agent — pass it the style guide path, the PR list, and instructions to return the synthesized release-notes content only. The main flow then continues with that synthesized content, keeping context lean. Worth doing whenever the raw PR-description output would be more than a few thousand tokens.
 
      Classify each change and write the bullets following [references/RELEASE_NOTES_STYLE_GUIDE.md](references/RELEASE_NOTES_STYLE_GUIDE.md). The style guide defines the section names, bullet structure, voice, capitalization, and formatting conventions — apply them as written. Do not invent changes that aren't supported by the PRs. Consolidate overlapping PRs into a single bullet.
 
@@ -187,14 +193,31 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
 
 8. **Tag and push**
 
-   ```bash
-   git checkout main && git pull
-   git tag v<VERSION>
-   git push origin v<VERSION>
+   - Before tagging, verify the PR was actually merged AND that CI finished and passed. The user said "merged", but trust nothing — confirm with GitHub:
 
-   # Verify the tag is on the remote
-   git ls-remote --exit-code --tags origin "v<VERSION>"
-   ```
+     ```bash
+     gh pr view "release/v<VERSION>" --json state --jq '.state'
+     gh pr checks "release/v<VERSION>"
+     ```
+
+     Stop if:
+     - The first command does not output exactly `MERGED` (e.g., `OPEN` means not merged; `CLOSED` means closed without merging).
+     - The second command shows any check that is not `pass` — a `fail`, `pending`, `cancel`, or `error` blocks tagging.
+
+   - Sync main, get the merge commit SHA from the release PR, and tag that exact commit. This is the canonical "what's in v<VERSION>" reference — we always tag this commit specifically, regardless of what landed on main after the merge.
+     Substitute `<MERGE_SHA>` with the SHA obtained from the second command:
+
+     ```bash
+     git checkout main && git pull
+     gh pr view "release/v<VERSION>" --json mergeCommit --jq '.mergeCommit.oid'
+     git tag v<VERSION> <MERGE_SHA>
+     git push origin v<VERSION>
+
+     # Verify the tag is on the remote
+     git ls-remote --exit-code --tags origin "v<VERSION>"
+     ```
+
+     If anything else has merged on top of the release commit, those changes stay on main and will be picked up by the next release's `git log v<VERSION>..main` — nothing gets lost.
 
 9. **Clean up the release notes file**
    - Ask the user whether to keep or delete `release_scorer-ui-kit_<TODAY>.md`.
