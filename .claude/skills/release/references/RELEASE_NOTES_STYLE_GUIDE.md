@@ -67,7 +67,7 @@ Listed in canonical order — same order in which they appear in a release.
 
 In past practice, `Features`, `Fixes`, and `Deprecated Features and Breaking Changes` are the most common sections. `Hooks` has not been used as a top-level section to date — standalone hook additions have historically been listed under `Features` — but the section exists for releases that include meaningful standalone-hook work.
 
-### When a change doesn't fit a section
+### How to classify a change
 
 First, classify the change:
 
@@ -99,7 +99,7 @@ The standard pattern is:
 - **ComponentName:** description ending with a period.
 ```
 
-- The component or feature name comes first, in `**bold**`.
+- The bullet prefix comes first, in `**bold**`. The prefix is the subject of the bullet — typically a component or feature name, but it can also be a type, hook, module, prop, or topic. See [Code formatting](#code-formatting) for the full position-based rule.
 - Followed by a colon and one space.
 - Description starts with a capital letter and ends with a period.
 - One bullet per visible change.
@@ -310,7 +310,7 @@ Use this order when multiple sections appear:
 
 ## Examples to study
 
-These releases predate this style guide and are the source it was derived from. They follow most of the canonical conventions — bullet shape, multi-bullet entries, section headers, capitalization, and tone — and are good references for those patterns. They do **not** yet follow the 4-part breaking-change format (added by this guide), so use them as bullet-shape and tone references rather than as exemplars of breaking-change entries.
+These releases predate this style guide and are the source it was derived from. They follow most of the canonical conventions — bullet shape, multi-bullet entries, section headers, capitalization, and tone — and are good references for those patterns. They do **not** yet follow the 4-part breaking-change format or the `Internal` section (both added by this guide), so use them as bullet-shape and tone references rather than as exemplars of breaking-change entries or internal-section entries.
 
 - **[v2.7.0](https://github.com/future-standard/scorer-ui-kit/releases/tag/v2.7.0)** — cleanest full-shape release. Three sections (Features, Fixes, Deprecated Features and Breaking Changes), multi-line bullets with nested sub-bullets, Storybook live-view links, backticked props, past-tense voice.
 - **[v2.6.7](https://github.com/future-standard/scorer-ui-kit/releases/tag/v2.6.7)** — solid Features-with-nested-detail example, plus a Fixes section. Backticks used consistently. Standard `[View in Storybook]` link form.
@@ -335,6 +335,8 @@ These antipatterns appear in past releases. Don't repeat them.
 - ❌ **Section ordering changes between releases** without reason. Follow the canonical order above.
 - ❌ **`for example`, `etc.`, or `and others` in breaking-change entries.** `Affected symbols` lists must be exhaustive — list every renamed, removed, or changed export/prop/type.
 - ❌ **One-line breaking-change bullets** that skip the required 4-part structure (`Affected symbols` / `You're affected if` / `Migration`). Every entry in `Deprecated Features and Breaking Changes` must include all four parts.
+- ❌ **Bolding a code reference inside a description** (e.g., `made the **Switch** consistent...`). Within prose, code references — including component names — go in backticks. Bold is reserved for the bullet prefix.
+- ❌ **Omitting internal work entirely**. Significant internal contributions (build system migrations, large refactors) and even smaller ones (test additions, doc tweaks) belong under `Internal` so contributors are acknowledged.
 
 ## Consistency checklist
 
@@ -352,6 +354,8 @@ Before publishing a release, verify:
 - [ ] Affected-symbol lists are exhaustive — no `for example`, `etc.`, or `and others` in breaking-change entries.
 - [ ] No PR-implementation jargon, no internal refactor noise.
 - [ ] Bullets read as user-facing release notes, not as a changelog dump.
+- [ ] Every consumer-facing change is in the right section; every internal-only change is acknowledged in `Internal` (significant work at normal length, smaller contributions as one-liners).
+- [ ] Bullet prefixes are bold; code references inside descriptions use backticks (position-based formatting, not category-based).
 
 ---
 
