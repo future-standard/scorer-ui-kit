@@ -5,7 +5,7 @@ when_to_use: Use when the user wants to create a release, release a new version,
 argument-hint: "[3.x.y or patch | minor | major]"
 disable-model-invocation: true
 user-invocable: true
-allowed-tools: Bash(git *) Bash(gh *) Bash(npm *)
+allowed-tools: Bash(git *) Bash(gh *) Bash(npm pkg *) Bash(npm install *) Bash(npm *)
 ---
 
 # Release skill for scorer-ui-kit
@@ -26,7 +26,7 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
 - If the working tree is dirty before starting, stop.
 - If the release branch or tag already exists, stop.
 - If GitHub CLI is unavailable or unauthenticated, stop.
-- If CI checks fail, stop.
+- If CI checks fail, stop. Report the cause, list possible fixes, and let the user decide.
 - After the version bump, only `package.json`, `packages/ui-lib/package.json`, and `package-lock.json` may change. If `node_modules` or any unrelated files change, stop.
 
 ## Steps
@@ -168,15 +168,20 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
    ```
 
 6. **Create PR**
-   - The release notes file from step 2 is the PR body. Create the PR using `--body-file`:
+   - The release notes file from step 2 is the PR body. Inject a version header at PR-creation time so the file on disk stays version-agnostic (the file is written in step 2, before the version is fully confirmed):
 
      ```bash
-     gh pr create \
-       --base main \
-       --head "release/v<VERSION>" \
-       --title "Release v<VERSION>" \
-       --body-file release_scorer-ui-kit_<TODAY>.md
+     {
+       printf '## Description\n\n### Bump version to %s\n\n' "<VERSION>"
+       cat release_scorer-ui-kit_<TODAY>.md
+     } | gh pr create \
+         --base main \
+         --head "release/v<VERSION>" \
+         --title "Release v<VERSION>" \
+         --body-file -
      ```
+
+     `--body-file -` reads from stdin so no temp file is created. The release-notes file on disk is untouched.
 
 7. **Wait for CI and the user's merge**
    - Share the PR URL with the user.
@@ -188,8 +193,9 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
 
      This blocks until all checks finish. If it exits non-zero (any check failed), stop and report the failure — do not let the user merge a failing PR.
 
-   - Once CI is green, tell the user to merge the PR themselves.
+   - Once CI is green, tell the user the PR is ready to review and merge, and share the PR URL again.
    - Do NOT merge the PR. Wait for the user to confirm they have merged it before proceeding.
+   - If the user reports the PR was closed without merging, confirm the closure was intentional. If intentional, ask whether to create a new PR for the same version, exit the release process, or restart from step 1. Do not delete the branch or release-notes file unless the user explicitly asks.
 
 8. **Tag and push**
 
@@ -218,6 +224,22 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
      ```
 
      If anything else has merged on top of the release commit, those changes stay on main and will be picked up by the next release's `git log v<VERSION>..main` — nothing gets lost.
+
+   - The tag push triggers `.github/workflows/publish.yml`, which publishes the package to npm. Wait for that workflow and verify the package is queryable on the registry:
+
+     ```bash
+     gh run watch \
+       $(gh run list --workflow=publish.yml --commit=<MERGE_SHA> --json databaseId --jq '.[0].databaseId') \
+       --exit-status
+
+     npm view scorer-ui-kit@<VERSION> version
+     ```
+
+     Stop if:
+     - `gh run watch ... --exit-status` exits non-zero (the publish workflow failed).
+     - `npm view` does not echo back exactly `<VERSION>`.
+
+     Once both pass, tell the user the package is published and installable, and that they can announce the release to their team. Do not generate the announcement message — that part is intentionally manual for now.
 
 9. **Clean up the release notes file**
    - Ask the user whether to keep or delete `release_scorer-ui-kit_<TODAY>.md`.
