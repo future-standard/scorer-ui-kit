@@ -11,28 +11,19 @@ const InnerRadio = styled.div`
 
 const OuterRadio = styled.div<{ $isChecked: boolean; $disabled: boolean }>`
   position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
   border-radius: 50%;
   border-width: 2px;
   border-style: solid;
+  box-sizing: border-box;
+  pointer-events: none;
   user-select: none;
 
   ${({ $isChecked, $disabled }) => css`
     border-color: var(--input-toggle-unchecked-border-color);
-
-    ${
-      !$disabled &&
-      css`
-      &:hover {
-        cursor: pointer;
-        border-color: var(--input-toggle-unchecked-hover-border-color);
-      }
-    `
-    };
 
     ${
       $isChecked &&
@@ -47,22 +38,8 @@ const OuterRadio = styled.div<{ $isChecked: boolean; $disabled: boolean }>`
 
     ${
       $isChecked &&
-      !$disabled &&
-      css`
-      &:hover {
-        border-color: var(--input-toggle-checked-hover-border-color);
-        ${InnerRadio} {
-          background-color: var(--input-toggle-checked-hover-background-color);
-        }
-      }
-    `
-    };
-
-    ${
-      $isChecked &&
       $disabled &&
       css`
-      cursor: not-allowed;
       border-color: var(--input-toggle-checked-disabled-border-color);
       ${InnerRadio} {
         background-color: var(--input-toggle-checked-disabled-background-color);
@@ -74,7 +51,6 @@ const OuterRadio = styled.div<{ $isChecked: boolean; $disabled: boolean }>`
       !$isChecked &&
       $disabled &&
       css`
-      cursor: not-allowed;
       border-color: var(--input-toggle-unchecked-disabled-border-color);
       ${InnerRadio} {
         background-color: var(--input-toggle-unchecked-disabled-background-color);
@@ -86,11 +62,28 @@ const OuterRadio = styled.div<{ $isChecked: boolean; $disabled: boolean }>`
 
 const HiddenInput = styled.input`
   position: absolute;
-  height: 100%;
-  width: 100%;
+  inset: 0;
   margin: 0;
-  padding:0;
+  padding: 0;
   opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) + ${OuterRadio} {
+    border-color: var(--input-toggle-unchecked-hover-border-color);
+  }
+
+  &:checked:hover:not(:disabled) + ${OuterRadio} {
+    border-color: var(--input-toggle-checked-hover-border-color);
+
+    ${InnerRadio} {
+      background-color: var(--input-toggle-checked-hover-background-color);
+    }
+  }
 `;
 
 const Container = styled.div`

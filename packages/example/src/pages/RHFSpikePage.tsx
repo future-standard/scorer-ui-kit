@@ -9,7 +9,7 @@ type FormValues = {
   name: string;
   colour: string;
   email: string;
-  preference?: string;
+  preference: string;
   flavours: string[];
 };
 
@@ -28,7 +28,7 @@ const RHFSpikePage: React.FC = () => {
   const [submittedData, setSubmittedData] = useState<FormValues | null>(null);
   const methods = useForm<FormValues>({
     mode: 'onTouched',
-    defaultValues: { name: '', colour: '', flavours: [] },
+    defaultValues: { name: '', colour: '', email: '', preference: '', flavours: [] },
   });
   const { handleSubmit } = methods;
 

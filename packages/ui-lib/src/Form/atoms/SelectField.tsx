@@ -133,6 +133,7 @@ const SelectField = forwardRef<HTMLSelectElement, ISelect>(({
   defaultValue,
   changeCallback = () => {},
   onChange,
+  onKeyDown,
   children,
   ...props
 }, ref) => {
@@ -160,6 +161,30 @@ const SelectField = forwardRef<HTMLSelectElement, ISelect>(({
     [changeCallback, onChange]
   );
 
+  const handleOnKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLSelectElement>) => {
+      onKeyDown?.(e);
+
+      if (e.defaultPrevented || e.key !== 'ArrowDown' || e.currentTarget.value !== '') {
+        return;
+      }
+
+      // In placeholder mode the empty option is reserved for the placeholder.
+      const nextOption = Array.from(e.currentTarget.options).find(
+        (option) => !option.disabled && !option.hidden && option.value !== ''
+      );
+
+      if (!nextOption) {
+        return;
+      }
+
+      e.preventDefault();
+      e.currentTarget.value = nextOption.value;
+      e.currentTarget.dispatchEvent(new Event('change', { bubbles: true }));
+    },
+    [onKeyDown]
+  );
+
   const iconColor = useCallback(() => {
     if (props.disabled || fieldState === 'disabled') {
       return 'input-disabled-lead-icon';
@@ -185,6 +210,7 @@ const SelectField = forwardRef<HTMLSelectElement, ISelect>(({
           {...props}
           {...(props.value === undefined ? { defaultValue: defaultValue ?? '' } : {})}
           onChange={handleOnChange}
+          onKeyDown={handleOnKeyDown}
         >
           {!defaultValue && (
             <option value='' disabled hidden>
@@ -203,6 +229,7 @@ const SelectField = forwardRef<HTMLSelectElement, ISelect>(({
       children,
       defaultValue,
       handleOnChange,
+      handleOnKeyDown,
       placeholder,
       // biome-ignore lint/correctness/useExhaustiveDependencies: props is the rest object from the destructuring of OwnProps & SelectHTMLAttributes — its identity changes every render. Stabilising requires an API change to forward props explicitly. See #644.
       props,
