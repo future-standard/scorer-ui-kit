@@ -25,5 +25,9 @@ storybook-static/
 packages/example/public/storybook/
 packages/storybook/build/
 
+# Playwright test artifacts
+packages/example/test-results/
+playwright-report/
+
 # Release notes drafts (created by .claude/skills/release; user decides to keep or delete)
 release_scorer-ui-kit_*.md
