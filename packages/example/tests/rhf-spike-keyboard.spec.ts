@@ -1,10 +1,12 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 // Tab order in the DOM:
 // Name → Colour select → Email → Radio group (Mountain/Ocean) → Checkboxes → Submit
 // No page.click() or page.fill() — keyboard-only interactions throughout.
 
-test('keyboard-only: full form submission using tab, arrows, space, and enter', async ({ page }) => {
+test('keyboard-only: full form submission using tab, arrows, space, and enter', async ({
+  page,
+}) => {
   await page.goto('/#/rhf-spike');
 
   // Focus Name field

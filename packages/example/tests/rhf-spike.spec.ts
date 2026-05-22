@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test('submitting empty form shows both required errors', async ({ page }) => {
   await page.goto('/#/rhf-spike');
@@ -27,7 +27,9 @@ test('submitting with name filled but no colour shows colour required error', as
   await page.getByRole('textbox', { name: 'Name' }).fill('Alice');
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  await expect(page.getByRole('alert').filter({ hasText: 'Favourite colour is required' })).toBeVisible();
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'Favourite colour is required' })
+  ).toBeVisible();
 });
 
 test('selecting a colour after error clears the colour error', async ({ page }) => {
@@ -36,11 +38,15 @@ test('selecting a colour after error clears the colour error', async ({ page }) 
   await page.getByRole('textbox', { name: 'Name' }).fill('Alice');
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  await expect(page.getByRole('alert').filter({ hasText: 'Favourite colour is required' })).toBeVisible();
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'Favourite colour is required' })
+  ).toBeVisible();
 
   await page.getByRole('combobox').selectOption('red');
 
-  await expect(page.getByRole('alert').filter({ hasText: 'Favourite colour is required' })).not.toBeVisible();
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'Favourite colour is required' })
+  ).not.toBeVisible();
 });
 
 test('email field aria wiring is correct when invalid', async ({ page }) => {
@@ -63,7 +69,9 @@ test('valid name and invalid email shows only email format error', async ({ page
   await page.getByRole('textbox', { name: 'Email' }).fill('not-an-email');
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  await expect(page.getByRole('alert').filter({ hasText: 'Enter a valid email address' })).toBeVisible();
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'Enter a valid email address' })
+  ).toBeVisible();
   await expect(page.getByRole('alert').filter({ hasText: 'Name is required' })).not.toBeVisible();
 });
 
@@ -107,7 +115,9 @@ test('submitting with no flavours checked shows group-level flavour error', asyn
   await page.getByRole('combobox').selectOption('red');
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  await expect(page.getByRole('alert').filter({ hasText: 'Pick at least one flavour' })).toBeVisible();
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'Pick at least one flavour' })
+  ).toBeVisible();
 });
 
 test('checking one flavour and submitting valid form shows no flavour error', async ({ page }) => {
@@ -119,7 +129,9 @@ test('checking one flavour and submitting valid form shows no flavour error', as
   await page.getByLabel('Vanilla').click();
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  await expect(page.getByRole('alert').filter({ hasText: 'Pick at least one flavour' })).not.toBeVisible();
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'Pick at least one flavour' })
+  ).not.toBeVisible();
 });
 
 test('happy-path submit records correct payload', async ({ page }) => {

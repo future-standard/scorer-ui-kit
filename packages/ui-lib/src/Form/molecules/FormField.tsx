@@ -1,9 +1,9 @@
 import type React from 'react';
-import styled from 'styled-components';
-import { useController } from 'react-hook-form';
 import type { ControllerRenderProps, RegisterOptions } from 'react-hook-form';
-import Label from '../atoms/Label';
+import { useController } from 'react-hook-form';
+import styled from 'styled-components';
 import type { TypeFieldState } from '..';
+import Label from '../atoms/Label';
 
 const ErrorMessage = styled.span`
   display: block;
@@ -62,7 +62,15 @@ type FormFieldProps = {
   children: (renderProps: FormFieldRenderProps) => React.ReactNode;
 };
 
-const FormField: React.FC<FormFieldProps> = ({ name, label, required, hint, rules, variant, children }) => {
+const FormField: React.FC<FormFieldProps> = ({
+  name,
+  label,
+  required,
+  hint,
+  rules,
+  variant,
+  children,
+}) => {
   const { field, fieldState: rhfFieldState } = useController({ name, rules });
   const hasError = !!rhfFieldState.error;
   const errorId = `${name}-error`;
@@ -76,11 +84,12 @@ const FormField: React.FC<FormFieldProps> = ({ name, label, required, hint, rule
     'aria-invalid': hasError,
   };
 
-  const errorNode = hasError && rhfFieldState.error?.message ? (
-    <ErrorMessage id={errorId} role='alert'>
-      {rhfFieldState.error.message}
-    </ErrorMessage>
-  ) : null;
+  const errorNode =
+    hasError && rhfFieldState.error?.message ? (
+      <ErrorMessage id={errorId} role='alert'>
+        {rhfFieldState.error.message}
+      </ErrorMessage>
+    ) : null;
 
   const hintNode = hint && !hasError ? <HintMessage>{hint}</HintMessage> : null;
 

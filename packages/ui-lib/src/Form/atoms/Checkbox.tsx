@@ -219,7 +219,9 @@ const Checkbox: React.FC<IProps> = ({
 
   const effectiveChecked = controlled ? checked : isChecked;
   const effectiveVisualState = controlled
-    ? checked ? CheckboxState.On : CheckboxState.Off
+    ? checked
+      ? CheckboxState.On
+      : CheckboxState.Off
     : visualState;
 
   const iconWeight: number = dimensions.icons.weights.regular;

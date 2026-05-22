@@ -13,13 +13,13 @@ import LinePage from './pages/LinePage';
 import LineRTCPage from './pages/LineRTCPage';
 import LineVideoPage from './pages/LineVideoPage';
 import LoginPage from './pages/Login';
+import RHFSpikePage from './pages/RHFSpikePage';
 import SplitLayouts from './pages/SplitLayout';
 import SwitchWithAPI from './pages/SwitchTest';
 import TablePage from './pages/TablePage';
 import TabsPage from './pages/TabsPage';
 import UsePollTestPage from './pages/UsePollTestPage';
 import WebRTCStrictModeTestPage from './pages/WebRTCStrictModeTestPage';
-import RHFSpikePage from './pages/RHFSpikePage';
 
 const App: React.FC = () => {
   return (

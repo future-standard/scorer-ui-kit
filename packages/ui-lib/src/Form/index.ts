@@ -16,11 +16,11 @@ import Switch, { type TypeSwitchState } from './atoms/Switch';
 import TextArea from './atoms/TextArea';
 import Form from './Form';
 import ActionButtons from './molecules/ActionButtons';
-import FormField from './molecules/FormField';
-import type { FormFieldProps, FormFieldRenderProps } from './molecules/FormField';
 import ButtonsStack, { type IButtonStack, type IButtonsStack } from './molecules/ButtonsStack';
 import CropTool from './molecules/CropTool';
 import DurationSlider from './molecules/DurationSlider';
+import type { FormFieldProps, FormFieldRenderProps } from './molecules/FormField';
+import FormField from './molecules/FormField';
 import PasswordField from './molecules/PasswordField';
 import PercentageSlider from './molecules/PercentageSlider';
 import SplitButton, { type ISplitButtonProps } from './molecules/SplitButton';
@@ -31,7 +31,6 @@ import AvatarUploader from './organisms/AvatarUploader';
 
 export {
   ActionButtons,
-  FormField,
   AreaUploadManager,
   AvatarUploader,
   Button,
@@ -43,6 +42,7 @@ export {
   DropArea,
   DurationSlider,
   Form,
+  FormField,
   IconButton,
   Input,
   InputFileButton,

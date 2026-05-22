@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Button, Checkbox, FormField, Input, RadioButton, SelectField } from 'scorer-ui-kit';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,12 +41,7 @@ const RHFSpikePage: React.FC = () => {
       <h1>React Hook Form</h1>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <FormField
-            name='name'
-            label='Name'
-            required
-            rules={{ required: 'Name is required' }}
-          >
+          <FormField name='name' label='Name' required rules={{ required: 'Name is required' }}>
             {({ field, fieldState, id, errorId, 'aria-invalid': ariaInvalid }) => (
               <Input
                 {...field}

@@ -1,5 +1,5 @@
-import React from 'react';
 import type { InputHTMLAttributes } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { removeAutoFillStyle } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
@@ -169,69 +169,74 @@ interface OwnProps {
 
 export type InputProps = OwnProps & InputHTMLAttributes<HTMLInputElement>;
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({
-  type = 'text',
-  placeholder = '',
-  defaultValue,
-  fieldState = 'default',
-  showFeedback = false,
-  feedbackMessage,
-  actionCallback,
-  actionIcon,
-  postfix,
-  children,
-  formAction,
-  ...props
-}, ref) => {
-  const isActionButton = actionCallback !== undefined;
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      type = 'text',
+      placeholder = '',
+      defaultValue,
+      fieldState = 'default',
+      showFeedback = false,
+      feedbackMessage,
+      actionCallback,
+      actionIcon,
+      postfix,
+      children,
+      formAction,
+      ...props
+    },
+    ref
+  ) => {
+    const isActionButton = actionCallback !== undefined;
 
-  const feedbackIcon = (fieldState: TypeFieldState) => {
-    switch (fieldState) {
-      case 'default':
-        break;
-      case 'disabled':
-        break;
-      case 'required':
-        return <Icon icon='Required' size={16} />;
-      case 'valid':
-        return <Icon icon='Success' size={16} />;
-      case 'invalid':
-        return <Icon icon='Invalid' size={16} />;
-      case 'processing':
-        return <Spinner size='medium' styling='primary' />;
-    }
-  };
+    const feedbackIcon = (fieldState: TypeFieldState) => {
+      switch (fieldState) {
+        case 'default':
+          break;
+        case 'disabled':
+          break;
+        case 'required':
+          return <Icon icon='Required' size={16} />;
+        case 'valid':
+          return <Icon icon='Success' size={16} />;
+        case 'invalid':
+          return <Icon icon='Invalid' size={16} />;
+        case 'processing':
+          return <Spinner size='medium' styling='primary' />;
+      }
+    };
 
-  return (
-    <Container $fieldState={fieldState || 'default'} $showFeedback={showFeedback}>
-      <InputContainer $hasAction={isActionButton}>
-        <StyledInput
-          ref={ref}
-          $fieldState={fieldState || 'default'}
-          disabled={fieldState === 'disabled' || fieldState === 'processing'}
-          type={type}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
-          {...props}
-        />
-        {isActionButton ? (
-          <ActionContainer>
-            <InputActionButton onClick={actionCallback}>
-              <Icon icon={actionIcon || 'NoIcon'} color='primary' />
-            </InputActionButton>
-          </ActionContainer>
+    return (
+      <Container $fieldState={fieldState || 'default'} $showFeedback={showFeedback}>
+        <InputContainer $hasAction={isActionButton}>
+          <StyledInput
+            ref={ref}
+            $fieldState={fieldState || 'default'}
+            disabled={fieldState === 'disabled' || fieldState === 'processing'}
+            type={type}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            {...props}
+          />
+          {isActionButton ? (
+            <ActionContainer>
+              <InputActionButton onClick={actionCallback}>
+                <Icon icon={actionIcon || 'NoIcon'} color='primary' />
+              </InputActionButton>
+            </ActionContainer>
+          ) : null}
+        </InputContainer>
+
+        {fieldState && showFeedback ? (
+          <FeedbackContainer>
+            <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
+            {feedbackMessage ? <FeedbackMessage>{feedbackMessage}</FeedbackMessage> : null}
+          </FeedbackContainer>
         ) : null}
-      </InputContainer>
-
-      {fieldState && showFeedback ? (
-        <FeedbackContainer>
-          <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
-          {feedbackMessage ? <FeedbackMessage>{feedbackMessage}</FeedbackMessage> : null}
-        </FeedbackContainer>
-      ) : null}
-    </Container>
-  );
-});
+      </Container>
+    );
+  }
+);
 
 Input.displayName = 'Input';
 
