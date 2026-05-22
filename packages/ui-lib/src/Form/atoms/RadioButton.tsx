@@ -117,6 +117,7 @@ const RadioButton: React.FC<IRadioButton> = ({
   disabled = false,
   required,
   onChangeCallback = () => {},
+  onBlur,
 }) => {
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,6 +136,7 @@ const RadioButton: React.FC<IRadioButton> = ({
         {...{ id, name, disabled, required, value }}
         checked={isChecked}
         onChange={handleChange}
+        onBlur={onBlur}
       />
       <OuterRadio $isChecked={isChecked} $disabled={disabled}>
         <InnerRadio />

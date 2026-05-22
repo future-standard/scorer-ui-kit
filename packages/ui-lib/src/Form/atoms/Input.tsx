@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import type { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { removeAutoFillStyle } from '../../common';
@@ -169,7 +169,7 @@ interface OwnProps {
 
 export type InputProps = OwnProps & InputHTMLAttributes<HTMLInputElement>;
 
-const Input: React.FC<InputProps> = ({
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({
   type = 'text',
   placeholder = '',
   defaultValue,
@@ -182,7 +182,7 @@ const Input: React.FC<InputProps> = ({
   children,
   formAction,
   ...props
-}) => {
+}, ref) => {
   const isActionButton = actionCallback !== undefined;
 
   const feedbackIcon = (fieldState: TypeFieldState) => {
@@ -206,6 +206,7 @@ const Input: React.FC<InputProps> = ({
     <Container $fieldState={fieldState || 'default'} $showFeedback={showFeedback}>
       <InputContainer $hasAction={isActionButton}>
         <StyledInput
+          ref={ref}
           $fieldState={fieldState || 'default'}
           disabled={fieldState === 'disabled' || fieldState === 'processing'}
           type={type}
@@ -230,6 +231,8 @@ const Input: React.FC<InputProps> = ({
       ) : null}
     </Container>
   );
-};
+});
+
+Input.displayName = 'Input';
 
 export default Input;

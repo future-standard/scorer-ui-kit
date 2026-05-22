@@ -11,7 +11,15 @@ enum CheckboxState {
 }
 
 const RealInput = styled.input`
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
 `;
 const CheckboxOuter = styled.div`
   cursor: pointer;
@@ -58,6 +66,7 @@ const IconWrapper = styled.div<{ $color: ISvgIcons['color'] }>`
 
 const Container = styled.label<{ $visualState?: CheckboxState; $disabled?: boolean }>`
   display: inline-block;
+  position: relative;
   user-select: none;
   ${CheckboxOuter}{
     border: var(--input-toggle-unchecked-border-color) 2px solid;
@@ -165,17 +174,23 @@ const Container = styled.label<{ $visualState?: CheckboxState; $disabled?: boole
 `;
 
 interface IProps {
+  id?: string;
   checked?: boolean;
   disabled?: boolean;
   indeterminate?: boolean;
   onChangeCallback?: (checked: boolean, indeterminate?: boolean) => void;
+  // When true, `checked` prop is authoritative and internal state is bypassed.
+  // Use this for RHF/controlled-form integration to avoid stale-state fights.
+  controlled?: boolean;
 }
 
 const Checkbox: React.FC<IProps> = ({
+  id,
   indeterminate: _indeterminate = false,
   disabled,
   checked = false,
   onChangeCallback,
+  controlled = false,
 }) => {
   const [isChecked, setIsChecked] = useState<boolean>(checked);
   const [visualState, setVisualState] = useState<CheckboxState>(
@@ -183,11 +198,11 @@ const Checkbox: React.FC<IProps> = ({
   );
 
   const customOnChange = (e: React.ChangeEvent<HTMLLabelElement>) => {
-    const checked = (e.target as unknown as HTMLInputElement).checked;
+    const newChecked = (e.target as unknown as HTMLInputElement).checked;
 
-    setIsChecked(checked);
+    setIsChecked(newChecked);
     if (onChangeCallback) {
-      onChangeCallback(checked);
+      onChangeCallback(newChecked);
     }
   };
 
@@ -202,13 +217,18 @@ const Checkbox: React.FC<IProps> = ({
     setIsChecked(checked);
   }, [checked]);
 
+  const effectiveChecked = controlled ? checked : isChecked;
+  const effectiveVisualState = controlled
+    ? checked ? CheckboxState.On : CheckboxState.Off
+    : visualState;
+
   const iconWeight: number = dimensions.icons.weights.regular;
 
   return (
-    <Container onChange={customOnChange} $disabled={disabled} $visualState={visualState}>
+    <Container onChange={customOnChange} $disabled={disabled} $visualState={effectiveVisualState}>
       <CheckboxOuter>
         <CheckboxInner>
-          {visualState === CheckboxState.On ? (
+          {effectiveVisualState === CheckboxState.On ? (
             <IconWrapper $color='input-toggle-icon-color'>
               <CheckMark
                 color='input-toggle-icon-color'
@@ -220,7 +240,7 @@ const Checkbox: React.FC<IProps> = ({
           ) : null}
         </CheckboxInner>
       </CheckboxOuter>
-      <RealInput type='checkbox' checked={isChecked} readOnly {...{ disabled }} />
+      <RealInput type='checkbox' id={id} checked={effectiveChecked} readOnly {...{ disabled }} />
     </Container>
   );
 };

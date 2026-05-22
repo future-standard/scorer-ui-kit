@@ -38,6 +38,7 @@ export default defineConfig(() => {
           'react/jsx-runtime',
           'react-router',
           'react-router-dom',
+          'react-hook-form',
           'styled-components',
           'date-fns',
           'date-fns/locale',

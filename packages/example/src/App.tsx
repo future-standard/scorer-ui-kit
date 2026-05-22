@@ -19,6 +19,7 @@ import TablePage from './pages/TablePage';
 import TabsPage from './pages/TabsPage';
 import UsePollTestPage from './pages/UsePollTestPage';
 import WebRTCStrictModeTestPage from './pages/WebRTCStrictModeTestPage';
+import RHFSpikePage from './pages/RHFSpikePage';
 
 const App: React.FC = () => {
   return (
@@ -41,6 +42,7 @@ const App: React.FC = () => {
         <Route path='/switch-test' element={<SwitchWithAPI />} />
         <Route path='/usepoll-test' element={<UsePollTestPage />} />
         <Route path='/webrtc-strictmode-test' element={<WebRTCStrictModeTestPage />} />
+        <Route path='/rhf-spike' element={<RHFSpikePage />} />
       </Routes>
     </Router>
   );

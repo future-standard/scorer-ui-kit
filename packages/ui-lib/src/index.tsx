@@ -25,6 +25,7 @@ import {
   IconButton,
   type IconButtonData,
   ActionButtons,
+  FormField,
   SmallInput,
   Input,
   Label,
@@ -54,6 +55,8 @@ import {
   type TypeSwitchState,
 } from './Form';
 import type {
+  FormFieldProps,
+  FormFieldRenderProps,
   TypeFieldState,
   TypeButtonDesigns,
   TypeButtonSizes,
@@ -257,6 +260,7 @@ export {
   ButtonWithLoading,
   IconButton,
   ActionButtons,
+  FormField,
   Input,
   SmallInput,
   Label,
@@ -378,6 +382,8 @@ export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight'
 export type IWeight = 'light' | 'regular' | 'heavy' | 'strong';
 
 export type {
+  FormFieldProps,
+  FormFieldRenderProps,
   IModal,
   INotificationProps,
   IconButtonData,

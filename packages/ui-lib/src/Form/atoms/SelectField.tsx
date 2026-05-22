@@ -1,5 +1,5 @@
 import type React from 'react';
-import { type SelectHTMLAttributes, useCallback, useState } from 'react';
+import { type SelectHTMLAttributes, forwardRef, useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import type { TypeFieldState, TypeLabelDirection } from '..';
@@ -124,7 +124,7 @@ interface OwnProps {
 
 type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>;
 
-const SelectField: React.FC<ISelect> = ({
+const SelectField = forwardRef<HTMLSelectElement, ISelect>(({
   fieldState = 'default',
   placeholder,
   label,
@@ -132,9 +132,10 @@ const SelectField: React.FC<ISelect> = ({
   isCompact,
   defaultValue,
   changeCallback = () => {},
+  onChange,
   children,
   ...props
-}) => {
+}, ref) => {
   if (label?.isSameRow) {
     console.warn(
       'Deprecation warning: `SelectField` is deprecating `label.isSameRow`, please update this to use `label.direction` set to `row`.'
@@ -154,8 +155,9 @@ const SelectField: React.FC<ISelect> = ({
         return prev;
       });
       changeCallback(value);
+      onChange?.(e);
     },
-    [changeCallback]
+    [changeCallback, onChange]
   );
 
   const iconColor = useCallback(() => {
@@ -175,6 +177,7 @@ const SelectField: React.FC<ISelect> = ({
           </SubjectIcon>
         )}
         <StyledSelect
+          ref={ref}
           $withIcon={!!icon}
           id={htmlFor}
           $fieldState={fieldState}
@@ -196,6 +199,7 @@ const SelectField: React.FC<ISelect> = ({
       </SelectWrapper>
     ),
     [
+      ref,
       children,
       defaultValue,
       handleOnChange,
@@ -224,6 +228,8 @@ const SelectField: React.FC<ISelect> = ({
       )}
     </Container>
   );
-};
+});
+
+SelectField.displayName = 'SelectField';
 
 export default SelectField;
