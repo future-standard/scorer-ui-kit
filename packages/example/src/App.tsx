@@ -7,6 +7,7 @@ import CustomUserDrawerPage from './pages/CustomUserDrawerPage';
 import FormPage from './pages/FormPage';
 import GlobalUIPage from './pages/GlobalUIPage';
 import LinksPage from './pages/Index';
+import IntegratedNativeRHFSpikePage from './pages/IntegratedNativeRHFSpikePage';
 import Layouts from './pages/Layouts';
 import LineHLSPage from './pages/LineHLSPage';
 import LinePage from './pages/LinePage';
@@ -45,6 +46,7 @@ const App: React.FC = () => {
         <Route path='/webrtc-strictmode-test' element={<WebRTCStrictModeTestPage />} />
         <Route path='/rhf-spike' element={<RHFSpikePage />} />
         <Route path='/rhf-spike-native' element={<NativeRHFSpikePage />} />
+        <Route path='/rhf-spike-integrated' element={<IntegratedNativeRHFSpikePage />} />
       </Routes>
     </Router>
   );

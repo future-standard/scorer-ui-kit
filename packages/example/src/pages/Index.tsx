@@ -209,6 +209,16 @@ const LinksPage: React.FC = () => {
             </Link>
           </Item>
           <Item>
+            <Link to={`/rhf-spike-integrated`}>
+              <Title>React Hook Form (Integrated)</Title>
+              <Description>
+                UI Kit components with RHF integration baked in — no per-field useController. Spike
+                PoC matching RHF's native-HTML DX promise.
+              </Description>
+              <FilenameTag>IntegratedNativeRHFSpikePage.tsx</FilenameTag>
+            </Link>
+          </Item>
+          <Item>
             <Link to={`/login`}>
               <Title>Login</Title>
               <Description>A code sample of our commonly used login view.</Description>

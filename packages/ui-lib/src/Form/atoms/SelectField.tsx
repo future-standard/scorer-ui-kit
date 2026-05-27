@@ -1,5 +1,6 @@
 import type React from 'react';
-import { type Ref, type SelectHTMLAttributes, useCallback, useState } from 'react';
+import { type Ref, type SelectHTMLAttributes, useCallback, useId, useState } from 'react';
+import { type RegisterOptions, useController, useFormContext } from 'react-hook-form';
 import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import type { TypeFieldState, TypeLabelDirection } from '..';
@@ -117,7 +118,8 @@ interface ILabel {
 
 interface OwnProps {
   fieldState?: TypeFieldState;
-  label?: ILabel;
+  // Integrated mode accepts a flat string; standalone keeps the ILabel shape.
+  label?: ILabel | string;
   isCompact?: boolean;
   placeholder?: string;
   icon?: string;
@@ -125,12 +127,16 @@ interface OwnProps {
   // Native mode props — when `error` or `hint` is set, SelectField renders its own error/hint shell.
   error?: string;
   hint?: string;
+  required?: boolean;
   ref?: Ref<HTMLSelectElement>;
+  // Integrated mode — when wrapped in <FormProvider> with `name` set, SelectField subscribes to RHF.
+  rules?: RegisterOptions;
+  options?: Array<{ value: string; label: string }>;
 }
 
 type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>;
 
-function SelectField({
+const StandaloneSelectField = ({
   fieldState = 'default',
   placeholder,
   label,
@@ -144,9 +150,14 @@ function SelectField({
   error,
   hint,
   ref,
+  required: _required,
+  rules: _rules,
+  options: _options,
   ...props
-}: ISelect) {
-  if (label?.isSameRow) {
+}: ISelect) => {
+  const labelObj = typeof label === 'object' ? label : undefined;
+
+  if (labelObj?.isSameRow) {
     console.warn(
       'Deprecation warning: `SelectField` is deprecating `label.isSameRow`, please update this to use `label.direction` set to `row`.'
     );
@@ -157,7 +168,7 @@ function SelectField({
   const hasError = Boolean(error);
   const isNative = hasError || Boolean(hint);
   const effectiveFieldState: TypeFieldState = hasError ? 'invalid' : fieldState;
-  const fieldId = label?.htmlFor ?? props.id ?? props.name;
+  const fieldId = labelObj?.htmlFor ?? props.id ?? props.name;
   const errorId = fieldId ? `${fieldId}-error` : undefined;
   const hintId = fieldId && hint ? `${fieldId}-hint` : undefined;
   const describedBy = hasError ? errorId : hintId;
@@ -249,14 +260,14 @@ function SelectField({
 
   const container = (
     <Container $isCompact={isCompact} $activePlaceholder={activePlaceholder}>
-      {label ? (
+      {labelObj ? (
         <Label
-          htmlFor={label.htmlFor}
-          labelText={label.text}
-          direction={label.isSameRow ? 'row' : label.direction}
-          required={label.required}
+          htmlFor={labelObj.htmlFor}
+          labelText={labelObj.text}
+          direction={labelObj.isSameRow ? 'row' : labelObj.direction}
+          required={labelObj.required}
         >
-          {renderSelect(label.htmlFor)}
+          {renderSelect(labelObj.htmlFor)}
         </Label>
       ) : (
         renderSelect()
@@ -279,6 +290,56 @@ function SelectField({
       ) : null}
     </FieldWrapper>
   );
-}
+};
+
+const IntegratedSelectField = (props: ISelect) => {
+  const { name, rules, defaultValue, id, label, error, required, options, ...rest } = props;
+  const { field, fieldState } = useController({
+    // biome-ignore lint/style/noNonNullAssertion: dispatcher guarantees name is set
+    name: name!,
+    rules,
+    // biome-ignore lint/suspicious/noExplicitAny: per-field default flows into RHF's typed store
+    defaultValue: defaultValue as any,
+  });
+  const autoId = useId();
+  const fieldId = (id as string | undefined) ?? autoId;
+
+  const standaloneLabel: ILabel | undefined =
+    typeof label === 'string'
+      ? { htmlFor: fieldId, text: label, required }
+      : (label as ILabel | undefined);
+
+  return (
+    <StandaloneSelectField
+      {...rest}
+      ref={field.ref}
+      name={field.name}
+      value={field.value ?? ''}
+      onChange={field.onChange}
+      onBlur={field.onBlur}
+      id={fieldId}
+      label={standaloneLabel}
+      error={error ?? fieldState.error?.message}
+    >
+      {options
+        ? options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))
+        : null}
+    </StandaloneSelectField>
+  );
+};
+
+const SelectField = (props: ISelect) => {
+  const formContext = useFormContext();
+  // Integrated mode is opt-in: name set inside a FormProvider AND consumer is not
+  // managing value externally. When `value` is present the consumer is doing their
+  // own wiring (rounds 1 and 2), so stay on the standalone path.
+  const isIntegrated =
+    formContext !== null && props.name !== undefined && props.value === undefined;
+  return isIntegrated ? <IntegratedSelectField {...props} /> : <StandaloneSelectField {...props} />;
+};
 
 export default SelectField;

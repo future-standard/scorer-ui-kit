@@ -1,4 +1,5 @@
-import type { InputHTMLAttributes, Ref } from 'react';
+import { type InputHTMLAttributes, type Ref, useId } from 'react';
+import { type RegisterOptions, useController, useFormContext } from 'react-hook-form';
 import styled, { css } from 'styled-components';
 import { removeAutoFillStyle } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
@@ -172,6 +173,8 @@ interface OwnProps {
   hint?: string;
   required?: boolean;
   ref?: Ref<HTMLInputElement>;
+  // Integrated mode — when wrapped in <FormProvider> with `name` set, Input subscribes to RHF.
+  rules?: RegisterOptions;
 }
 
 export type InputProps = OwnProps & InputHTMLAttributes<HTMLInputElement>;
@@ -193,7 +196,7 @@ const feedbackIcon = (fieldState: TypeFieldState) => {
   }
 };
 
-function Input({
+const StandaloneInput = ({
   type = 'text',
   placeholder = '',
   defaultValue,
@@ -210,8 +213,9 @@ function Input({
   hint,
   required,
   ref,
+  rules: _rules,
   ...props
-}: InputProps) {
+}: InputProps) => {
   const isActionButton = actionCallback !== undefined;
   const isNative = label !== undefined;
   const hasError = Boolean(error);
@@ -278,6 +282,42 @@ function Input({
       ) : null}
     </FieldWrapper>
   );
-}
+};
+
+const IntegratedInput = (props: InputProps) => {
+  const { name, rules, defaultValue, id, error, ...rest } = props;
+  const { field, fieldState } = useController({
+    // biome-ignore lint/style/noNonNullAssertion: dispatcher guarantees name is set
+    name: name!,
+    rules,
+    // biome-ignore lint/suspicious/noExplicitAny: per-field default flows into RHF's typed store
+    defaultValue: defaultValue as any,
+  });
+  const autoId = useId();
+  const fieldId = (id as string | undefined) ?? autoId;
+
+  return (
+    <StandaloneInput
+      {...rest}
+      ref={field.ref}
+      name={field.name}
+      value={field.value ?? ''}
+      onChange={field.onChange}
+      onBlur={field.onBlur}
+      id={fieldId}
+      error={error ?? fieldState.error?.message}
+    />
+  );
+};
+
+const Input = (props: InputProps) => {
+  const formContext = useFormContext();
+  // Integrated mode is opt-in: name set inside a FormProvider AND consumer is not
+  // managing value externally. When `value` is present the consumer is doing their
+  // own wiring (rounds 1 and 2), so stay on the standalone path.
+  const isIntegrated =
+    formContext !== null && props.name !== undefined && props.value === undefined;
+  return isIntegrated ? <IntegratedInput {...props} /> : <StandaloneInput {...props} />;
+};
 
 export default Input;
