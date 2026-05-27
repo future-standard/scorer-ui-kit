@@ -1,10 +1,11 @@
-import type { InputHTMLAttributes } from 'react';
-import React from 'react';
+import type { InputHTMLAttributes, Ref } from 'react';
 import styled, { css } from 'styled-components';
 import { removeAutoFillStyle } from '../../common';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
 import type { TypeFieldState } from '..';
+import { ErrorMessage, FieldWrapper, HintMessage } from './fieldStyles';
+import Label from './Label';
 
 const ActionContainer = styled.div`
   position: absolute;
@@ -165,79 +166,118 @@ interface OwnProps {
   actionCallback?: () => void;
   actionIcon?: string;
   postfix?: string;
+  // Native mode props — when `label` is set, Input renders its own label/error/hint shell.
+  label?: string;
+  error?: string;
+  hint?: string;
+  required?: boolean;
+  ref?: Ref<HTMLInputElement>;
 }
 
 export type InputProps = OwnProps & InputHTMLAttributes<HTMLInputElement>;
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      type = 'text',
-      placeholder = '',
-      defaultValue,
-      fieldState = 'default',
-      showFeedback = false,
-      feedbackMessage,
-      actionCallback,
-      actionIcon,
-      postfix,
-      children,
-      formAction,
-      ...props
-    },
-    ref
-  ) => {
-    const isActionButton = actionCallback !== undefined;
-
-    const feedbackIcon = (fieldState: TypeFieldState) => {
-      switch (fieldState) {
-        case 'default':
-          break;
-        case 'disabled':
-          break;
-        case 'required':
-          return <Icon icon='Required' size={16} />;
-        case 'valid':
-          return <Icon icon='Success' size={16} />;
-        case 'invalid':
-          return <Icon icon='Invalid' size={16} />;
-        case 'processing':
-          return <Spinner size='medium' styling='primary' />;
-      }
-    };
-
-    return (
-      <Container $fieldState={fieldState || 'default'} $showFeedback={showFeedback}>
-        <InputContainer $hasAction={isActionButton}>
-          <StyledInput
-            ref={ref}
-            $fieldState={fieldState || 'default'}
-            disabled={fieldState === 'disabled' || fieldState === 'processing'}
-            type={type}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            {...props}
-          />
-          {isActionButton ? (
-            <ActionContainer>
-              <InputActionButton onClick={actionCallback}>
-                <Icon icon={actionIcon || 'NoIcon'} color='primary' />
-              </InputActionButton>
-            </ActionContainer>
-          ) : null}
-        </InputContainer>
-
-        {fieldState && showFeedback ? (
-          <FeedbackContainer>
-            <FeedbackIcon>{feedbackIcon(fieldState)}</FeedbackIcon>
-            {feedbackMessage ? <FeedbackMessage>{feedbackMessage}</FeedbackMessage> : null}
-          </FeedbackContainer>
-        ) : null}
-      </Container>
-    );
+const feedbackIcon = (fieldState: TypeFieldState) => {
+  switch (fieldState) {
+    case 'default':
+      break;
+    case 'disabled':
+      break;
+    case 'required':
+      return <Icon icon='Required' size={16} />;
+    case 'valid':
+      return <Icon icon='Success' size={16} />;
+    case 'invalid':
+      return <Icon icon='Invalid' size={16} />;
+    case 'processing':
+      return <Spinner size='medium' styling='primary' />;
   }
-);
+};
 
-Input.displayName = 'Input';
+function Input({
+  type = 'text',
+  placeholder = '',
+  defaultValue,
+  fieldState = 'default',
+  showFeedback = false,
+  feedbackMessage,
+  actionCallback,
+  actionIcon,
+  postfix,
+  children,
+  formAction,
+  label,
+  error,
+  hint,
+  required,
+  ref,
+  ...props
+}: InputProps) {
+  const isActionButton = actionCallback !== undefined;
+  const isNative = label !== undefined;
+  const hasError = Boolean(error);
+  const effectiveFieldState: TypeFieldState = isNative && hasError ? 'invalid' : fieldState;
+
+  const derivedId = props.id ?? props.name;
+  const errorId = derivedId ? `${derivedId}-error` : undefined;
+  const hintId = derivedId && hint ? `${derivedId}-hint` : undefined;
+  const describedBy = hasError ? errorId : hintId;
+
+  const nativeAriaProps = isNative
+    ? {
+        id: derivedId,
+        'aria-invalid': hasError,
+        'aria-describedby': describedBy,
+      }
+    : {};
+
+  const inputElement = (
+    <Container $fieldState={effectiveFieldState} $showFeedback={showFeedback}>
+      <InputContainer $hasAction={isActionButton}>
+        <StyledInput
+          ref={ref}
+          $fieldState={effectiveFieldState}
+          disabled={fieldState === 'disabled' || fieldState === 'processing'}
+          type={type}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+          {...props}
+          {...nativeAriaProps}
+        />
+        {isActionButton ? (
+          <ActionContainer>
+            <InputActionButton onClick={actionCallback}>
+              <Icon icon={actionIcon || 'NoIcon'} color='primary' />
+            </InputActionButton>
+          </ActionContainer>
+        ) : null}
+      </InputContainer>
+
+      {fieldState && showFeedback ? (
+        <FeedbackContainer>
+          <FeedbackIcon>{feedbackIcon(effectiveFieldState)}</FeedbackIcon>
+          {feedbackMessage ? <FeedbackMessage>{feedbackMessage}</FeedbackMessage> : null}
+        </FeedbackContainer>
+      ) : null}
+    </Container>
+  );
+
+  if (!isNative) {
+    return inputElement;
+  }
+
+  return (
+    <FieldWrapper>
+      <Label htmlFor={derivedId ?? ''} labelText={label} required={required}>
+        {inputElement}
+      </Label>
+      {hint && !hasError ? <HintMessage id={hintId}>{hint}</HintMessage> : null}
+      {hasError ? (
+        <ErrorMessage id={errorId} role='alert'>
+          {error}
+        </ErrorMessage>
+      ) : null}
+    </FieldWrapper>
+  );
+}
 
 export default Input;

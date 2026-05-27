@@ -13,6 +13,7 @@ import LinePage from './pages/LinePage';
 import LineRTCPage from './pages/LineRTCPage';
 import LineVideoPage from './pages/LineVideoPage';
 import LoginPage from './pages/Login';
+import NativeRHFSpikePage from './pages/NativeRHFSpikePage';
 import RHFSpikePage from './pages/RHFSpikePage';
 import SplitLayouts from './pages/SplitLayout';
 import SwitchWithAPI from './pages/SwitchTest';
@@ -43,6 +44,7 @@ const App: React.FC = () => {
         <Route path='/usepoll-test' element={<UsePollTestPage />} />
         <Route path='/webrtc-strictmode-test' element={<WebRTCStrictModeTestPage />} />
         <Route path='/rhf-spike' element={<RHFSpikePage />} />
+        <Route path='/rhf-spike-native' element={<NativeRHFSpikePage />} />
       </Routes>
     </Router>
   );

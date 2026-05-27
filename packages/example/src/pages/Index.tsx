@@ -199,6 +199,16 @@ const LinksPage: React.FC = () => {
             </Link>
           </Item>
           <Item>
+            <Link to={`/rhf-spike-native`}>
+              <Title>React Hook Form (Native)</Title>
+              <Description>
+                React Hook Form wired to UI Kit components supported natively (no FormField
+                wrapper). Spike PoC covering Input and SelectField with built-in label/error/hint.
+              </Description>
+              <FilenameTag>NativeRHFSpikePage.tsx</FilenameTag>
+            </Link>
+          </Item>
+          <Item>
             <Link to={`/login`}>
               <Title>Login</Title>
               <Description>A code sample of our commonly used login view.</Description>
