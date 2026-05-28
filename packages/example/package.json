@@ -11,7 +11,7 @@
     "react-dom": "^19.0.0",
     "react-i18next": "^16",
     "react-router-dom": "^7.0.0",
-    "styled-components": "^6.3.0"
+    "styled-components": "^6.4.2"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
