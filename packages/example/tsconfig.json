@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2022",
+    "target": "es2023",
     "useDefineForClassFields": true,
-    "lib": ["dom", "dom.iterable", "ES2022"],
+    "lib": ["dom", "dom.iterable", "ES2023"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
