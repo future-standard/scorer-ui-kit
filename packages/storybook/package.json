@@ -11,7 +11,7 @@
     "@storybook/addon-knobs": "8.0.1",
     "@storybook/addon-links": "10.3.4",
     "@storybook/react-vite": "10.3.4",
-    "@types/node": "^20.19.39",
+    "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.0.1",
