@@ -83,7 +83,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "gh-pages": "^6.3.0",
     "hls.js": "^1.6.16",
-    "jsdom": "^26.1.0",
+    "jsdom": "^29.1.1",
     "npm-run-all": "^4.1.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
