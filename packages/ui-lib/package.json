@@ -91,7 +91,7 @@
     "react-router-dom": "^7.18.0",
     "styled-components": "^6.4.2",
     "vite": "^8.0.16",
-    "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-dts": "^5.0.2",
     "vitest": "^4.1.9"
   },
   "files": [
