@@ -110,6 +110,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { defaultTheme, ModalProvider, NotificationProvider, ThemeVariables } from 'scorer-ui-kit';
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 // Lato and Monorale fonts must be present either in your public directory or src folder.
 import Fonts from './Fonts';
@@ -126,9 +127,11 @@ createRoot(rootElement).render(
       <ThemeVariables />
       <NotificationProvider>
         <ModalProvider>
-          <App />
-          <Fonts />
-          <Style />
+          <Router>
+            <App />
+            <Fonts />
+            <Style />
+          </Router>
         </ModalProvider>
       </NotificationProvider>
     </ThemeProvider>
