@@ -166,47 +166,33 @@ const SelectField: React.FC<ISelect> = ({
     }
   }, [fieldState, props.disabled]);
 
-  const renderSelect = useCallback(
-    (htmlFor?: string) => (
-      <SelectWrapper>
-        {icon && (
-          <SubjectIcon $isCompact={isCompact}>
-            <Icon icon={icon} color={iconColor()} size={isCompact ? 12 : 12} weight='regular' />
-          </SubjectIcon>
+  const renderSelect = (htmlFor?: string) => (
+    <SelectWrapper>
+      {icon && (
+        <SubjectIcon $isCompact={isCompact}>
+          <Icon icon={icon} color={iconColor()} size={isCompact ? 12 : 12} weight='regular' />
+        </SubjectIcon>
+      )}
+      <StyledSelect
+        $withIcon={!!icon}
+        id={htmlFor}
+        $fieldState={fieldState}
+        $isCompact={isCompact}
+        {...props}
+        {...(props.value === undefined ? { defaultValue: defaultValue ?? '' } : {})}
+        onChange={handleOnChange}
+      >
+        {!defaultValue && (
+          <option value='' disabled hidden>
+            {placeholder}
+          </option>
         )}
-        <StyledSelect
-          $withIcon={!!icon}
-          id={htmlFor}
-          $fieldState={fieldState}
-          $isCompact={isCompact}
-          {...props}
-          {...(props.value === undefined ? { defaultValue: defaultValue ?? '' } : {})}
-          onChange={handleOnChange}
-        >
-          {!defaultValue && (
-            <option value='' disabled hidden>
-              {placeholder}
-            </option>
-          )}
-          {children}
-        </StyledSelect>
-        <OpenIcon $isCompact={isCompact}>
-          <Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10} />
-        </OpenIcon>
-      </SelectWrapper>
-    ),
-    [
-      children,
-      defaultValue,
-      handleOnChange,
-      placeholder,
-      // biome-ignore lint/correctness/useExhaustiveDependencies: props is the rest object from the destructuring of OwnProps & SelectHTMLAttributes — its identity changes every render. Stabilising requires an API change to forward props explicitly. See #644.
-      props,
-      fieldState,
-      icon,
-      iconColor,
-      isCompact,
-    ]
+        {children}
+      </StyledSelect>
+      <OpenIcon $isCompact={isCompact}>
+        <Icon icon='Down' color={iconColor()} weight='regular' size={isCompact ? 8 : 10} />
+      </OpenIcon>
+    </SelectWrapper>
   );
 
   return (
