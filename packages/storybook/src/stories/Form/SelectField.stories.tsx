@@ -66,7 +66,7 @@ export const _SelectField = () => {
   const fixLabel = object('Fix Select Label', {
     htmlFor: 'fix_select',
     text: 'Page',
-    isSameRow: true,
+    direction: 'row' as const,
   });
 
   const freeOnChange = (value: string) => {

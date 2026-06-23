@@ -378,9 +378,30 @@ const CalCellB = styled(CalCell)<{ $thisMonth?: boolean; $isToday?: boolean; $st
 
 `;
 
-const enDayGuide: string[] = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+interface IDayGuide {
+  key: string;
+  label: string;
+}
 
-const jpDayGuide: string[] = ['日', '月', '火', '水', '木', '金', '土'];
+const enDayGuide: IDayGuide[] = [
+  { key: 'sun', label: 'S' },
+  { key: 'mon', label: 'M' },
+  { key: 'tue', label: 'T' },
+  { key: 'wed', label: 'W' },
+  { key: 'thu', label: 'T' },
+  { key: 'fri', label: 'F' },
+  { key: 'sat', label: 'S' },
+];
+
+const jpDayGuide: IDayGuide[] = [
+  { key: 'sun', label: '日' },
+  { key: 'mon', label: '月' },
+  { key: 'tue', label: '火' },
+  { key: 'wed', label: '水' },
+  { key: 'thu', label: '木' },
+  { key: 'fri', label: '金' },
+  { key: 'sat', label: '土' },
+];
 
 export interface IDatePicker {
   initialValue?: Date | IDateInterval;
@@ -600,8 +621,8 @@ const DatePicker: React.FC<IDatePicker> = ({
         </CalendarHeader>
 
         <CalHRow>
-          {dayGuide.map((day) => {
-            return <CalHCell key={day}>{day}</CalHCell>;
+          {dayGuide.map(({ key, label }) => {
+            return <CalHCell key={key}>{label}</CalHCell>;
           })}
         </CalHRow>
 

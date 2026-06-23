@@ -111,6 +111,65 @@ interface IProps {
   isTimeRangeValid?: boolean;
 }
 
+/**
+ *
+ * Description of the rules can be found int https://docs.google.com/spreadsheets/d/1POe9uZxKXtLhQFF6DIV-RclUp7T7oXgSeSLlbYmE38g/edit?usp=sharing
+ */
+const validHourMin = (
+  textHour: string,
+  textMin: string,
+  hasDate: boolean,
+  allowAfterMidnight?: boolean
+): { newHour: number; newMin: number } => {
+  const intHour = Number(textHour.slice(-2));
+  const intMin = Number(textMin.slice(-2));
+
+  const newHour = intHour > 24 ? Number(textHour.slice(-1)) : intHour;
+  const newMin = intMin > 60 ? Number(textMin.slice(-1)) : intMin;
+
+  //Rule 8
+  if (newHour >= 24 && newMin !== -1 && allowAfterMidnight) {
+    return { newHour: 24, newMin: 0 };
+  }
+
+  // Rule 7
+  if (newHour === 0 && newMin === 0 && allowAfterMidnight && !hasDate) {
+    return { newHour: 0, newMin: 1 };
+  }
+
+  // Rule 6
+  if (newHour === 23 && newMin === 60 && !allowAfterMidnight) {
+    return { newHour: 23, newMin: 59 };
+  }
+
+  // Rule 5
+  if (newHour >= 24 && !allowAfterMidnight) {
+    return { newHour: 23, newMin };
+  }
+
+  // Rule 4
+  if (newMin === 60) {
+    return { newHour: newHour + 1, newMin: 0 };
+  }
+
+  // Rule 3
+  if (newHour > 0 && newMin === -1) {
+    return { newHour: newHour - 1, newMin: 59 };
+  }
+
+  // Rule 2
+  if (newHour === 0 && newMin === -1) {
+    return { newHour, newMin: 0 };
+  }
+
+  // Rule 1
+  if (newHour === -1) {
+    return { newHour: 0, newMin };
+  }
+
+  return { newHour, newMin };
+};
+
 const DateTimeBlock: React.FC<IProps> = ({
   allowAfterMidnight = false,
   title,
@@ -120,65 +179,6 @@ const DateTimeBlock: React.FC<IProps> = ({
   date = new Date(),
   setDateCallback = () => {},
 }) => {
-  /**
-   *
-   * Description of the rules can be found int https://docs.google.com/spreadsheets/d/1POe9uZxKXtLhQFF6DIV-RclUp7T7oXgSeSLlbYmE38g/edit?usp=sharing
-   */
-  const validHourMin = (
-    textHour: string,
-    textMin: string,
-    hasDate: boolean,
-    allowAfterMidnight?: boolean
-  ): { newHour: number; newMin: number } => {
-    const intHour = Number(textHour.slice(-2));
-    const intMin = Number(textMin.slice(-2));
-
-    const newHour = intHour > 24 ? Number(textHour.slice(-1)) : intHour;
-    const newMin = intMin > 60 ? Number(textMin.slice(-1)) : intMin;
-
-    //Rule 8
-    if (newHour >= 24 && newMin !== -1 && allowAfterMidnight) {
-      return { newHour: 24, newMin: 0 };
-    }
-
-    // Rule 7
-    if (newHour === 0 && newMin === 0 && allowAfterMidnight && !hasDate) {
-      return { newHour: 0, newMin: 1 };
-    }
-
-    // Rule 6
-    if (newHour === 23 && newMin === 60 && !allowAfterMidnight) {
-      return { newHour: 23, newMin: 59 };
-    }
-
-    // Rule 5
-    if (newHour >= 24 && !allowAfterMidnight) {
-      return { newHour: 23, newMin };
-    }
-
-    // Rule 4
-    if (newMin === 60) {
-      return { newHour: newHour + 1, newMin: 0 };
-    }
-
-    // Rule 3
-    if (newHour > 0 && newMin === -1) {
-      return { newHour: newHour - 1, newMin: 59 };
-    }
-
-    // Rule 2
-    if (newHour === 0 && newMin === -1) {
-      return { newHour, newMin: 0 };
-    }
-
-    // Rule 1
-    if (newHour === -1) {
-      return { newHour: 0, newMin };
-    }
-
-    return { newHour, newMin };
-  };
-
   const [displayHours, setDisplayHours] = useState<string>(format(date, 'mm'));
   const [displayMinutes, setDisplayMinutes] = useState<string>(format(date, 'HH'));
 
@@ -202,8 +202,7 @@ const DateTimeBlock: React.FC<IProps> = ({
         ])
       );
     },
-    // biome-ignore lint/correctness/useExhaustiveDependencies: validHourMin is declared inline, so its identity changes every render — fixing properly means wrapping it in useCallback. See #644.
-    [allowAfterMidnight, date, displayMinutes, hasDate, setDateCallback, validHourMin]
+    [allowAfterMidnight, date, displayMinutes, hasDate, setDateCallback]
   );
 
   const setDateMinutes = useCallback(
@@ -226,8 +225,7 @@ const DateTimeBlock: React.FC<IProps> = ({
         ])
       );
     },
-    // biome-ignore lint/correctness/useExhaustiveDependencies: validHourMin is declared inline, so its identity changes every render — fixing properly means wrapping it in useCallback. See #644.
-    [allowAfterMidnight, date, displayHours, hasDate, setDateCallback, validHourMin]
+    [allowAfterMidnight, date, displayHours, hasDate, setDateCallback]
   );
 
   useEffect(() => {
