@@ -16,7 +16,9 @@
 
 ## Development
 
-The version 2 is preferred to be run node version 18 and above due [Storybook 8 support requirement](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#dropping-support-for-nodejs-16).
+Developing this repo uses **Node 24** — the version pinned in [`.nvmrc`](../../.nvmrc) and used by CI (run `nvm use`). The dev toolchain (Vite 8, jsdom 29, `concurrently` 10, TypeScript 6, Storybook 10) requires **Node 22.12+**, so Node 18/20 are no longer supported for *developing* the kit.
+
+> This is separate from the **published** library's support contract: `scorer-ui-kit` itself still targets Node 18+ for consumers (see `engines.node` in `package.json`). Only the contributor toolchain needs Node 24.
 
 
 If you want to run the project follow the next steps
@@ -26,7 +28,7 @@ If you want to run the project follow the next steps
   git clone git@github.com:future-standard/scorer-ui-kit.git
 ```
 
-- Install with npm version 10 node 18 or above from the root folder
+- Install from the root folder (Node 24 per [`.nvmrc`](../../.nvmrc); npm 10+)
 ```
   npm install
 ```

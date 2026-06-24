@@ -4,6 +4,10 @@
 # dependencies
 node_modules
 
+# local security-scan tooling (dependency-update task, not committed)
+.venv/
+.tools/
+
 # builds
 build
 dist

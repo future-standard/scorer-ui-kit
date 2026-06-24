@@ -28,12 +28,60 @@ const PAGE_TIMEOUT = Number(process.env.PAGE_TIMEOUT_MS || 15000);
 const SETTLE_MS = Number(process.env.SETTLE_MS || 500);
 const LOOP_THRESHOLD = Number(process.env.LOOP_THRESHOLD || 500);
 
-const stories = await fetch(`${STORYBOOK}/index.json`)
-  .then((r) => r.json())
-  .catch((e) => {
-    console.error(`Could not fetch ${STORYBOOK}/index.json — is storybook running? (${e.message})`);
-    process.exit(1);
-  });
+// The CI sweep targets a freshly-deployed GitHub Pages preview whose edge-CDN
+// propagation can lag the deploy push by a minute or two. Retry the index.json
+// fetch so a not-yet-served preview doesn't abort with empty stdout (which would
+// make the CI consumer `JSON.parse('')` and fail with a cryptic error). Patient
+// in CI; fast-fail locally so a typo'd URL / down storybook surfaces quickly.
+const isCI = !!process.env.CI;
+const INDEX_TRIES = Number(process.env.INDEX_FETCH_TRIES || (isCI ? 18 : 3));
+const INDEX_DELAY_MS = Number(process.env.INDEX_FETCH_DELAY_MS || (isCI ? 10000 : 1500));
+
+async function fetchStoryIndex(url) {
+  for (let i = 0; i < INDEX_TRIES; i++) {
+    try {
+      const r = await fetch(url);
+      if (r.ok) return await r.json();
+      // fetch() does not reject on 404 — a not-yet-served preview lands here.
+      console.error(`  ${url} → HTTP ${r.status} (try ${i + 1}/${INDEX_TRIES})`);
+    } catch (e) {
+      console.error(`  ${url} → ${e.message} (try ${i + 1}/${INDEX_TRIES})`);
+    }
+    if (i < INDEX_TRIES - 1) await new Promise((s) => setTimeout(s, INDEX_DELAY_MS));
+  }
+  return null;
+}
+
+const stories = await fetchStoryIndex(`${STORYBOOK}/index.json`);
+if (!stories?.entries) {
+  const msg = `Could not fetch ${STORYBOOK}/index.json after ${INDEX_TRIES} tries — is storybook running / preview served?`;
+  console.error(msg);
+  // Emit a VALID result carrying a failing entry: the CI consumer never parses
+  // empty stdout, and the existing `.bad != 0` gate still fails the job (red,
+  // not a false-green "0 pages swept").
+  console.info(
+    JSON.stringify(
+      {
+        total: 0,
+        withErrors: 0,
+        timedOut: [],
+        loopSuspect: [],
+        bad: [
+          {
+            id: 'storybook-index.json',
+            kind: 'setup',
+            errors: [msg],
+            consoleCount: 0,
+            timedOut: false,
+          },
+        ],
+      },
+      null,
+      2
+    )
+  );
+  process.exit(1);
+}
 const storyIds = Object.keys(stories.entries);
 
 const exampleRoutes = [
