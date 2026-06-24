@@ -1,8 +1,0 @@
-import{i as e}from"./preload-helper-xPQekRTU.js";import{Mt as t,N as n,jt as r,kt as i,vt as a,zt as o}from"./iframe-C59WqszT.js";var s,c,l,u,d,f;e((()=>{s=o(),a(),t(),c=i(),l=r.div`
-  margin: 100px;
-`,u={title:`Pages/atoms`,component:n,decorators:[]},d=()=>(0,c.jsx)(l,{children:(0,c.jsx)(n,{children:(0,s.text)(`Text`,`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.`)})}),d.__docgenInfo={description:``,methods:[],displayName:`_IntroductionText`},d.parameters={...d.parameters,docs:{...d.parameters?.docs,source:{originalSource:`() => {
-  const introductionText = text('Text', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.');
-  return <Container>
-      <IntroductionText>{introductionText}</IntroductionText>
-    </Container>;
-}`,...d.parameters?.docs?.source}}},f=[`_IntroductionText`]}))();export{d as _IntroductionText,f as __namedExportsOrder,u as default};
