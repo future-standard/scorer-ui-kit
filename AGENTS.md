@@ -88,6 +88,12 @@ npm run sweep
 - Prefer **arrow-function components** (`const Foo = () => { ... }`) for new and refactored top-level components.
 - Prefer explicit interfaces for public component props.
 
+## Dependency policy (maintainers)
+
+- Pin every `dependencies`, `devDependencies`, and `overrides` entry to an **exact** version — no `^` or `~`. This is a supply-chain safeguard (e.g. the Shai-Hulud npm worm): exact pins stop `npm install` from silently resolving to a newly published, possibly compromised release within a range.
+- **Exception:** ui-lib's `peerDependencies` stay as ranges. They are resolved by the consuming app, not installed here, so pinning them adds no protection and would force an exact version on consumers.
+- When bumping a dependency, set the exact version that `package-lock.json` resolves (`npm ls <pkg>`), and always commit the updated `package-lock.json` so installs are reproducible. Run the story sweep (`npm run sweep`) before merging.
+
 ## Using the library on your project
 
 ### Requirements (consuming the library)
