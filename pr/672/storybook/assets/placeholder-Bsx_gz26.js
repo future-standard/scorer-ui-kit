@@ -1,0 +1,1 @@
+import{i as e}from"./preload-helper-xPQekRTU.js";var t,n=e((()=>{t=``+new URL(`placeholder-CI-hMcUK.jpg`,import.meta.url).href}));export{t as n,n as t};
