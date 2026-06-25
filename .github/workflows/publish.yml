@@ -24,4 +24,16 @@ jobs:
       # npm >= 11.5.1 (bundled with Node 24) performs the OIDC token exchange
       # automatically. `prepublishOnly` runs the build; provenance is generated
       # automatically for this public repo + public package.
-      - run: npm publish -w packages/ui-lib
+      #
+      # The version guard keeps re-runs idempotent: native `npm publish` errors
+      # (EPUBLISHCONFLICT) when the version already exists, whereas the previous
+      # JS-DevTools/npm-publish action skipped silently. Re-running a tag that is
+      # already published is therefore a no-op success, not a red run.
+      - name: Publish to npm (skip if version already on registry)
+        run: |
+          VERSION=$(node -p "require('./packages/ui-lib/package.json').version")
+          if [ -n "$(npm view "scorer-ui-kit@${VERSION}" version 2>/dev/null)" ]; then
+            echo "scorer-ui-kit@${VERSION} is already published; skipping publish."
+            exit 0
+          fi
+          npm publish -w packages/ui-lib
