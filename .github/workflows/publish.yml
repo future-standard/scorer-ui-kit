@@ -4,6 +4,12 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
+# OIDC trusted publishing: GitHub mints a short-lived id-token that npm verifies
+# against the trusted publisher configured for `scorer-ui-kit` (this repo +
+# workflow filename). No long-lived NPM_TOKEN secret is used.
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   publish:
@@ -13,10 +19,9 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
       - run: npm install
-      - uses: JS-DevTools/npm-publish@v4
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: ./packages/ui-lib/package.json
-          ignore-scripts: false
-          # dry-run: true
+      # npm >= 11.5.1 (bundled with Node 24) performs the OIDC token exchange
+      # automatically. `prepublishOnly` runs the build; provenance is generated
+      # automatically for this public repo + public package.
+      - run: npm publish -w packages/ui-lib
