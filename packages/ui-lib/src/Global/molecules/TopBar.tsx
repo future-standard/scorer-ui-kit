@@ -256,10 +256,10 @@ const TopBar: React.FC<ITopBar> = ({
           <SearchInput placeholder={searchPlaceholder} />
         </SearchBar>
       ) : leftAreaElement ? (
-        <LeftArea>
-          {leftAreaElement}
-        </LeftArea>
-      ) : <div />}
+        <LeftArea>{leftAreaElement}</LeftArea>
+      ) : (
+        <div />
+      )}
       <RightArea>
         {badge && <TopBarBadge {...badge} />}
         <ButtonArea>
