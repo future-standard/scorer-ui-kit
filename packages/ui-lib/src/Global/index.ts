@@ -85,6 +85,13 @@ export interface IUserSubmenuItem {
   href: string;
 }
 
+/**
+ * Identifies which TopBar drawer is currently open, or `null` when all are
+ * closed. Pass `activeDrawer`/`onActiveDrawerChange` to control it from outside the
+ * component (e.g. to open a drawer from a button in the page content).
+ */
+export type IActiveDrawer = 'user' | 'notifications' | 'custom' | null;
+
 export interface ITopBar {
   hasNotifications?: boolean;
   userSubmenu?: IUserSubmenuItem[];
@@ -105,6 +112,14 @@ export interface ITopBar {
   notificationsHistory?: INotificationsHistory;
   customDrawer?: ICustomDrawer;
   leftAreaElement?: ReactElement;
+  /**
+   * Which drawer is open, for controlled usage. When provided (including
+   * `null`), TopBar becomes controlled and the consumer owns the state.
+   * When omitted, TopBar manages the open drawer with its own internal state.
+   */
+  activeDrawer?: IActiveDrawer;
+  /** Called whenever a drawer is opened or closed (icon clicks included). */
+  onActiveDrawerChange?: (activeDrawer: IActiveDrawer) => void;
   hasSwitchTheme?: boolean;
   isLightMode?: boolean;
   switchThemeText?: string;

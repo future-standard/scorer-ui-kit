@@ -6,7 +6,7 @@ import { removeAutoFillStyle } from '../../common';
 import Icon from '../../Icons/Icon';
 import StatusIcon from '../../Icons/StatusIcon';
 import TopBarBadge from '../atoms/TopBarBadge';
-import type { ITopBar } from '../index';
+import type { IActiveDrawer, ITopBar } from '../index';
 import UserMenu from '../molecules/UserMenu';
 import NotificationsHistory from './NotificationsHistory';
 
@@ -195,8 +195,6 @@ const NotificationsContainer = styled.div`
     margin-right: -17px;
 `;
 
-type IDrawerKeys = 'user' | 'notifications' | 'custom' | null;
-
 const TopBar: React.FC<ITopBar> = ({
   hasNotifications = false,
   hasLanguage = false,
@@ -232,18 +230,26 @@ const TopBar: React.FC<ITopBar> = ({
   hasUserDrawerFooter,
   badge,
   leftAreaElement,
+  activeDrawer,
+  onActiveDrawerChange,
 }) => {
-  const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
+  const [internalDrawer, setInternalDrawer] = useState<IActiveDrawer>(null);
 
-  const toggleDrawers = (drawerKey: IDrawerKeys) => {
-    setOpenDrawer((prevDrawer) => {
-      // if prevDrawer is open, just update to null to close
-      if (prevDrawer === drawerKey) {
-        return null;
-      }
+  // Controlled when `activeDrawer` is provided (including `null`); otherwise
+  // TopBar falls back to its own internal state, so existing consumers that
+  // don't pass the prop keep working unchanged.
+  const isControlled = activeDrawer !== undefined;
+  const openDrawer = isControlled ? activeDrawer : internalDrawer;
 
-      return drawerKey;
-    });
+  const toggleDrawers = (drawerKey: IActiveDrawer) => {
+    // if the drawer is already open, close it (null); otherwise open it
+    const nextDrawer = openDrawer === drawerKey ? null : drawerKey;
+
+    if (!isControlled) {
+      setInternalDrawer(nextDrawer);
+    }
+
+    onActiveDrawerChange?.(nextDrawer);
   };
 
   return (

@@ -1,6 +1,8 @@
 import { boolean, object, select, text } from '@storybook/addon-knobs';
 import { type ReactElement, useCallback, useState } from 'react';
 import {
+  Button,
+  type IActiveDrawer,
   type ICustomDrawer,
   type INotificationItem,
   type INotificationsHistory,
@@ -10,6 +12,7 @@ import {
 } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
 import styled from 'styled-components';
+import placeholderImage from '../assets/placeholder.jpg';
 
 const Container = styled.div`
   position: fixed;
@@ -24,13 +27,45 @@ const LeftContent = styled.div`
   height: 100%;
 `;
 
+// Page content sits below the fixed top bar; the top padding clears the 56px bar.
+const PageContent = styled.div`
+  padding: 80px 24px 24px;
+`;
+
+const CustomDrawerContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+`;
+
+const CustomDrawerImage = styled.img`
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 4px;
+`;
+
+const CustomDrawerTitle = styled.h2`
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--grey-11);
+  margin: 0;
+`;
+
 const TopBarStory = {
   title: 'Global',
   component: TopBar,
   decorators: [],
 };
 
-const MyCustomDrawer: ReactElement = <h1>Hello Drawer</h1>;
+const MyCustomDrawer: ReactElement = (
+  <CustomDrawerContent>
+    <CustomDrawerImage src={placeholderImage} alt='About the Cafeteria snapshot' />
+    <CustomDrawerTitle>About the Cafeteria</CustomDrawerTitle>
+  </CustomDrawerContent>
+);
 
 const drawerProps: ICustomDrawer = {
   customComponent: MyCustomDrawer,
@@ -107,6 +142,9 @@ const allNotifications: INotificationsHistory = {
 export const _TopBar = () => {
   const { onThemeToggle, isLightMode } = useThemeToggle();
   const [attributeLanguage, setAttributeLanguage] = useState('en');
+  // Controlled drawer state: lets an element in the page content (the button
+  // below) open a TopBar drawer, while icon clicks still work via onActiveDrawerChange.
+  const [activeDrawer, setActiveDrawer] = useState<IActiveDrawer>(null);
 
   const loggedInUser = text('Logged In User', 'full.name@example.com');
 
@@ -227,47 +265,56 @@ export const _TopBar = () => {
   );
 
   return (
-    <Container>
-      <TopBar
-        badge={{
-          text: badgeText,
-          color: badgeColor,
-          linkTo: badgeLinkTo,
-          linkText: badgeLinkText,
-          onClick: useBadgeOnClick ? badgeClickAction : undefined,
-        }}
-        {...{
-          loggedInUser,
-          userSubmenu,
-          hasSearch,
-          hasLogout,
-          hasNotifications,
-          logoutLink,
-          searchPlaceholder,
-          hasLanguage,
-          hasUserDrawerMeta,
-          hasUserDrawerFooter,
-          hasCurrentUser,
-          notificationsHistory,
-          hasSwitchTheme,
-          isLightMode,
-          switchThemeText,
-          selectedThemeText,
-          onThemeToggle,
-          onLanguageToggle,
-          currentUserText,
-          logoutText,
-          userDrawerFooter,
-          copySuccessMessage,
-          includeCopyTitle,
-          leftAreaElement,
-        }}
-        userDrawerMeta={userDrawerMetaConfig}
-        customDrawer={drawerProps}
-        selectedLangAttribute={attributeLanguage}
-        selectedLanguageText={attributeLanguage === 'ja' ? '日本語' : 'ENGLISH'}
-      />
-    </Container>
+    <>
+      <Container>
+        <TopBar
+          badge={{
+            text: badgeText,
+            color: badgeColor,
+            linkTo: badgeLinkTo,
+            linkText: badgeLinkText,
+            onClick: useBadgeOnClick ? badgeClickAction : undefined,
+          }}
+          {...{
+            loggedInUser,
+            userSubmenu,
+            hasSearch,
+            hasLogout,
+            hasNotifications,
+            logoutLink,
+            searchPlaceholder,
+            hasLanguage,
+            hasUserDrawerMeta,
+            hasUserDrawerFooter,
+            hasCurrentUser,
+            notificationsHistory,
+            hasSwitchTheme,
+            isLightMode,
+            switchThemeText,
+            selectedThemeText,
+            onThemeToggle,
+            onLanguageToggle,
+            currentUserText,
+            logoutText,
+            userDrawerFooter,
+            copySuccessMessage,
+            includeCopyTitle,
+            leftAreaElement,
+          }}
+          userDrawerMeta={userDrawerMetaConfig}
+          customDrawer={drawerProps}
+          activeDrawer={activeDrawer}
+          onActiveDrawerChange={setActiveDrawer}
+          selectedLangAttribute={attributeLanguage}
+          selectedLanguageText={attributeLanguage === 'ja' ? '日本語' : 'ENGLISH'}
+        />
+      </Container>
+      <PageContent>
+        <Button design='secondary' onClick={() => setActiveDrawer('custom')}>
+          About the cafeteria
+        </Button>
+      </PageContent>
+    </>
   );
 };
 

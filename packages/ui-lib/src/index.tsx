@@ -220,6 +220,7 @@ import type {
   IUserSubmenuItem,
   ITopBar,
   ITopBarBadge,
+  IActiveDrawer,
 } from './Global';
 
 // Tabs
@@ -448,6 +449,7 @@ export type {
   IUserSubmenuItem,
   ITopBar,
   ITopBarBadge,
+  IActiveDrawer,
   // Form types
   TypeFieldState,
   TypeButtonDesigns,
