@@ -4,6 +4,7 @@ import {
   type ICustomDrawer,
   type INotificationItem,
   type INotificationsHistory,
+  SplitButton,
   TopBar,
   useThemeToggle,
 } from 'scorer-ui-kit';
@@ -15,6 +16,12 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
+`;
+
+const LeftContent = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
 `;
 
 const TopBarStory = {
@@ -99,11 +106,11 @@ const allNotifications: INotificationsHistory = {
 
 export const _TopBar = () => {
   const { onThemeToggle, isLightMode } = useThemeToggle();
-  const [attributeLanguage, setAttributeLanguage] = useState('ja');
+  const [attributeLanguage, setAttributeLanguage] = useState('en');
 
   const loggedInUser = text('Logged In User', 'full.name@example.com');
 
-  const hasSearch = boolean('Has Search', true);
+  const hasSearch = boolean('Has Search', false);
   const hasLogout = boolean('Has Logout', true);
   const hasNotifications = boolean('Has Notifications', true);
   const hasCurrentUser = boolean('Has Current User', true);
@@ -112,8 +119,8 @@ export const _TopBar = () => {
   const hasLanguage = boolean('Has Language', true);
   const hasSwitchTheme = boolean('Has Switch Theme', true);
   const switchThemeText = text('Switch Theme Text', 'SWITCH THEME');
-  const selectedThemeText = text('Selected Theme Text', 'Light/Dark Mode');
   const languageToggle = action('onLanguageToggle');
+  const selectedThemeText = text('Selected Theme Text', 'Light/Dark Mode');
 
   const currentUserText = text('Current User Text', 'Current User');
   const logoutText = text('Logout Text', 'Logout');
@@ -185,6 +192,40 @@ export const _TopBar = () => {
     });
   }, [languageToggle]);
 
+  const saveLayoutAction = action('Save layout pressed');
+  const takeSnapshotAction = action('Take a Snapshot pressed');
+  const resetAction = action('Reset pressed');
+
+  // Consumers can pass their own element to the left area. It only renders when
+  // `hasSearch` is false, replacing the built-in search bar.
+  const leftAreaButtonList = [
+    {
+      id: 'save-layout',
+      text: attributeLanguage === 'ja' ? 'レイアウトを保存' : 'Save layout',
+      icon: 'LayoutGrid',
+      hasOnSelectLoading: true,
+      onClickCallback: saveLayoutAction,
+    },
+    {
+      id: 'take-snapshot',
+      text: attributeLanguage === 'ja' ? 'スナップショットを撮影' : 'Take a Snapshot',
+      icon: 'Camera',
+      onClickCallback: takeSnapshotAction,
+    },
+    {
+      id: 'reset',
+      text: attributeLanguage === 'ja' ? 'リセット' : 'Reset',
+      icon: 'RetryJob',
+      onClickCallback: resetAction,
+    },
+  ];
+
+  const leftAreaElement = (
+    <LeftContent>
+      <SplitButton mainButtonId='save-layout' buttonList={leftAreaButtonList} />
+    </LeftContent>
+  );
+
   return (
     <Container>
       <TopBar
@@ -219,6 +260,7 @@ export const _TopBar = () => {
           userDrawerFooter,
           copySuccessMessage,
           includeCopyTitle,
+          leftAreaElement,
         }}
         userDrawerMeta={userDrawerMetaConfig}
         customDrawer={drawerProps}

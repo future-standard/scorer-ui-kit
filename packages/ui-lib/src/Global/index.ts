@@ -104,6 +104,7 @@ export interface ITopBar {
   userDrawerBespoke?: ReactElement;
   notificationsHistory?: INotificationsHistory;
   customDrawer?: ICustomDrawer;
+  leftAreaElement?: ReactElement;
   hasSwitchTheme?: boolean;
   isLightMode?: boolean;
   switchThemeText?: string;

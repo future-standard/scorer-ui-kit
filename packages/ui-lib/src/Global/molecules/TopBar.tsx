@@ -32,6 +32,11 @@ const RightArea = styled.div`
   height: 100%;
 `;
 
+const LeftArea = styled.div`
+  display: flex;
+  height: 100%;
+`;
+
 const SearchBar = styled.div`
   flex: 0 1 500px;
   display: flex;
@@ -226,6 +231,7 @@ const TopBar: React.FC<ITopBar> = ({
   includeCopyTitle,
   hasUserDrawerFooter,
   badge,
+  leftAreaElement,
 }) => {
   const [openDrawer, setOpenDrawer] = useState<IDrawerKeys>(null);
 
@@ -249,9 +255,11 @@ const TopBar: React.FC<ITopBar> = ({
           </IconWrapper>
           <SearchInput placeholder={searchPlaceholder} />
         </SearchBar>
-      ) : (
-        <div />
-      )}
+      ) : leftAreaElement ? (
+        <LeftArea>
+          {leftAreaElement}
+        </LeftArea>
+      ) : <div />}
       <RightArea>
         {badge && <TopBarBadge {...badge} />}
         <ButtonArea>
