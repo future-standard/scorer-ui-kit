@@ -209,6 +209,7 @@ import {
   type INotificationItem,
   type INotificationsHistory,
   type ICustomDrawer,
+  type ISideDrawer,
 } from './Global';
 import type {
   IMenuTop,
@@ -450,6 +451,7 @@ export type {
   ITopBar,
   ITopBarBadge,
   IActiveDrawer,
+  ISideDrawer,
   // Form types
   TypeFieldState,
   TypeButtonDesigns,

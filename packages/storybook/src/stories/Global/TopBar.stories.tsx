@@ -6,6 +6,7 @@ import {
   type ICustomDrawer,
   type INotificationItem,
   type INotificationsHistory,
+  type ISideDrawer,
   SplitButton,
   TopBar,
   useThemeToggle,
@@ -30,6 +31,10 @@ const LeftContent = styled.div`
 // Page content sits below the fixed top bar; the top padding clears the 56px bar.
 const PageContent = styled.div`
   padding: 80px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 `;
 
 const CustomDrawerContent = styled.div`
@@ -54,26 +59,109 @@ const CustomDrawerTitle = styled.h2`
   margin: 0;
 `;
 
+const MenuList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+const MenuItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--grey-11);
+`;
+
+const SectionHeading = styled.h3`
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+  color: var(--grey-9);
+  margin: 8px 0 0;
+`;
+
 const TopBarStory = {
   title: 'Global',
   component: TopBar,
   decorators: [],
 };
 
-const MyCustomDrawer: ReactElement = (
+const AboutCafeteria: ReactElement = (
   <CustomDrawerContent>
     <CustomDrawerImage src={placeholderImage} alt='About the Cafeteria snapshot' />
     <CustomDrawerTitle>About the Cafeteria</CustomDrawerTitle>
   </CustomDrawerContent>
 );
 
-const drawerProps: ICustomDrawer = {
-  customComponent: MyCustomDrawer,
-  icon: 'Add',
-  status: 'danger',
-  // counter: 5,
-  width: '300px;',
+const TodaysMenu: ReactElement = (
+  <CustomDrawerContent>
+    <CustomDrawerTitle>Today's Menu</CustomDrawerTitle>
+    <MenuList>
+      <MenuItem>
+        <span>Tea</span>
+        <span>130 yen</span>
+      </MenuItem>
+      <MenuItem>
+        <span>Coffee</span>
+        <span>300 yen</span>
+      </MenuItem>
+      <MenuItem>
+        <span>Cake</span>
+        <span>350 yen</span>
+      </MenuItem>
+    </MenuList>
+  </CustomDrawerContent>
+);
+
+// Icon-triggered drawer (opens from the top bar). The counter badge shows how
+// many orders are currently waiting.
+const OrdersDrawerContent: ReactElement = (
+  <CustomDrawerContent>
+    <CustomDrawerTitle>Orders</CustomDrawerTitle>
+    <SectionHeading>In the making</SectionHeading>
+    <MenuList>
+      <MenuItem>
+        <span>#014 · Coffee</span>
+        <span>2 min</span>
+      </MenuItem>
+      <MenuItem>
+        <span>#015 · Cake</span>
+        <span>5 min</span>
+      </MenuItem>
+    </MenuList>
+    <SectionHeading>Ready for pick up</SectionHeading>
+    <MenuList>
+      <MenuItem>
+        <span>#012 · Tea</span>
+        <span>Ready</span>
+      </MenuItem>
+      <MenuItem>
+        <span>#013 · Coffee</span>
+        <span>Ready</span>
+      </MenuItem>
+    </MenuList>
+  </CustomDrawerContent>
+);
+
+const ordersDrawer: ICustomDrawer = {
+  customComponent: OrdersDrawerContent,
+  icon: 'Time',
+  status: 'caution',
+  counter: 2,
+  width: '300px',
 };
+
+// Side drawers have no top-bar button; they open from the page content below.
+const sideDrawers: ISideDrawer[] = [
+  { id: 'menu', width: '260px', content: TodaysMenu },
+  { id: 'about', width: '320px', content: AboutCafeteria },
+];
 
 const unreadNotifications: INotificationItem[] = [
   {
@@ -142,8 +230,8 @@ const allNotifications: INotificationsHistory = {
 export const _TopBar = () => {
   const { onThemeToggle, isLightMode } = useThemeToggle();
   const [attributeLanguage, setAttributeLanguage] = useState('en');
-  // Controlled drawer state: lets an element in the page content (the button
-  // below) open a TopBar drawer, while icon clicks still work via onActiveDrawerChange.
+  // Controlled drawer state: the page-content buttons open the side drawers by id,
+  // while the Orders icon in the top bar still works via onActiveDrawerChange.
   const [activeDrawer, setActiveDrawer] = useState<IActiveDrawer>(null);
 
   const loggedInUser = text('Logged In User', 'full.name@example.com');
@@ -302,7 +390,8 @@ export const _TopBar = () => {
             leftAreaElement,
           }}
           userDrawerMeta={userDrawerMetaConfig}
-          customDrawer={drawerProps}
+          customDrawer={ordersDrawer}
+          sideDrawers={sideDrawers}
           activeDrawer={activeDrawer}
           onActiveDrawerChange={setActiveDrawer}
           selectedLangAttribute={attributeLanguage}
@@ -310,7 +399,10 @@ export const _TopBar = () => {
         />
       </Container>
       <PageContent>
-        <Button design='secondary' onClick={() => setActiveDrawer('custom')}>
+        <Button design='secondary' onClick={() => setActiveDrawer('menu')}>
+          Today's Menu
+        </Button>
+        <Button design='secondary' onClick={() => setActiveDrawer('about')}>
           About the cafeteria
         </Button>
       </PageContent>

@@ -1,14 +1,18 @@
 import type React from 'react';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ReactDom from 'react-dom';
 import styled, { css, keyframes } from 'styled-components';
 import { removeAutoFillStyle } from '../../common';
 import Icon from '../../Icons/Icon';
 import StatusIcon from '../../Icons/StatusIcon';
 import TopBarBadge from '../atoms/TopBarBadge';
-import type { IActiveDrawer, ITopBar } from '../index';
+import type { IActiveDrawer, ISideDrawer, ITopBar } from '../index';
 import UserMenu from '../molecules/UserMenu';
 import NotificationsHistory from './NotificationsHistory';
+
+// Keys used by the built-in drawers. A side drawer must not reuse them, or both
+// it and the built-in drawer would match the same `openDrawer` value at once.
+const RESERVED_DRAWER_IDS = ['user', 'notifications', 'custom'];
 
 const Container = styled.div`
   z-index: 9;
@@ -230,6 +234,7 @@ const TopBar: React.FC<ITopBar> = ({
   hasUserDrawerFooter,
   badge,
   leftAreaElement,
+  sideDrawers,
   activeDrawer,
   onActiveDrawerChange,
 }) => {
@@ -251,6 +256,41 @@ const TopBar: React.FC<ITopBar> = ({
 
     onActiveDrawerChange?.(nextDrawer);
   };
+
+  // Split side drawers once: `sideDrawersToRender` is used below, and any rejected
+  // ids are reported by the mount-time warning. Reserved ids clash with a built-in
+  // drawer, and duplicate ids would open twice and collide on the React key — both
+  // are excluded so a single, uniquely-keyed drawer opens per activeDrawer value.
+  const { sideDrawersToRender, sideDrawerWarnings } = useMemo(() => {
+    const toRender: ISideDrawer[] = [];
+    const warnings: string[] = [];
+    const acceptedIds = new Set<string>();
+    for (const drawer of sideDrawers ?? []) {
+      if (RESERVED_DRAWER_IDS.includes(drawer.id)) {
+        warnings.push(
+          `the side drawer with id "${drawer.id}" uses a reserved id (${RESERVED_DRAWER_IDS.join(', ')}), so it will not open when its trigger is clicked. Please use a different id.`
+        );
+        continue;
+      }
+      if (acceptedIds.has(drawer.id)) {
+        warnings.push(
+          `a side drawer with id "${drawer.id}" already exists; the duplicate will not open when its trigger is clicked. Please use a unique id.`
+        );
+        continue;
+      }
+      acceptedIds.add(drawer.id);
+      toRender.push(drawer);
+    }
+    return { sideDrawersToRender: toRender, sideDrawerWarnings: warnings };
+  }, [sideDrawers]);
+
+  // Warn once on mount (not per render) so the console does not get noisy.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: warn once on mount, not on every render
+  useEffect(() => {
+    for (const warning of sideDrawerWarnings) {
+      console.warn(`TopBar: ${warning}`);
+    }
+  }, []);
 
   return (
     <Container>
@@ -345,6 +385,18 @@ const TopBar: React.FC<ITopBar> = ({
               {customDrawer.customComponent}
             </Drawer>
           )}
+
+          {/* Side drawers: no toggle button, opened via the controlled activeDrawer.
+              Reserved and duplicate ids are excluded (see the mount-time warning above). */}
+          {sideDrawersToRender.map((drawer) => (
+            <Drawer
+              key={drawer.id}
+              $isOpen={openDrawer === drawer.id}
+              $baseWidth={drawer.width ? drawer.width : '200px'}
+            >
+              {drawer.content}
+            </Drawer>
+          ))}
         </DrawerPortalWrapper>,
         document.body
       )}
