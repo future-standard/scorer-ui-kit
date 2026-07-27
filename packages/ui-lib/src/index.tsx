@@ -157,6 +157,10 @@ import {
   type IPagination,
 } from './Misc';
 
+// Components - Chips
+import { ChipButton } from './Chips';
+import type { IChipButton, IChipVariant } from './Chips';
+
 import { ConfirmationModal } from './Modals';
 
 // Other
@@ -360,6 +364,8 @@ export {
   DebouncedSearcher,
   ActionsBar,
   Pagination,
+  // Chips
+  ChipButton,
   //Context
   NotificationProvider,
   useNotification,
@@ -456,4 +462,7 @@ export type {
   IInputOptionsType,
   TypeLabelDirection,
   IButtonProps,
+  // Chips types
+  IChipButton,
+  IChipVariant,
 };
