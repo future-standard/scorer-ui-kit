@@ -1,7 +1,7 @@
 # Scorer UI Kit - Component Inventory
 
 **Generated:** 2026-02-04
-**Last Updated:** 2026-07-24
+**Last Updated:** 2026-07-27
 **Source:** ui-lib/src & storybook/src/stories
 
 This document provides a comprehensive inventory of all React components in the Scorer UI Kit to be used by human and AI, organized alphabetically with their corresponding Storybook documentation status, file paths, props, and notable features.
@@ -313,14 +313,37 @@ This document provides a comprehensive inventory of all React components in the 
   - `icon?`: `string` - Icon name rendered when variant='icon'
   - `label?`: `string` - Text/numeral rendered when variant='text' (falls back to children)
   - `selected?`: `boolean` - Persistent selected state: primary wash background + bottom bar (default: false)
-  - `noDivider?`: `boolean` - Suppress the 1px left divider shown by default on 'text' chips (default: false)
+  - `noDivider?`: `boolean` - Suppress the 1px left divider shown by default on all chips (default: false)
   - Plus all standard HTML button attributes (`onClick`, `disabled`, `aria-label`, etc.)
 - **Notable Features:**
   - 56×56 top-bar "Space" chip (Figma: Spaces / Top Bar / Chip)
   - Two content variants: icon (workspace grid glyph) and text/number
   - CSS-driven hover bar; prop-driven persistent selected state (bar + wash)
   - 4px bottom bar overhanging 1px each side to cover cell hairlines
-  - 1px left divider on text chips, suppressible via noDivider (for zone breaks)
+  - 1px left divider on both variants, suppressible via noDivider (leftmost cell / zone breaks)
+  - Uses theme CSS variables for automatic light/dark support
+
+---
+
+### ChipDropdown
+- **Status:** ✅ Has Storybook
+- **Component Path:** `ui-lib/src/Chips/molecules/ChipDropdown.tsx`
+- **Story Path:** `storybook/src/stories/Chips/molecules/ChipDropdown.stories.tsx`
+- **Exported From:** `Chips`
+- **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
+  - `items`: `IChipDropdownItem[]` - Menu rows: `{ id, label, icon?, disabled?, onClick? }` (required)
+  - `icon?`: `string` - Trigger icon name (default: 'FilterEllipsis')
+  - `triggerLabel?`: `string` - Accessible label for the trigger button (default: 'Space actions')
+  - `noDivider?`: `boolean` - Hide the trigger chip's 1px left divider (default: false)
+  - `disabled?`: `boolean` - Disable the trigger (default: false)
+  - `onOpenChange?`: `(open: boolean) => void` - Notified when the menu opens/closes
+- **Notable Features:**
+  - Top-bar ellipsis "Space actions" cell (Figma: Spaces / Top Bar / Space Menu Cell)
+  - Composes the ChipButton atom as the trigger (open state = chip 'selected' bar)
+  - Click-outside and Escape close the menu (uses useClickOutside)
+  - Action menu with per-row icon + label; selecting a row fires onClick and closes
+  - Menu shadow reuses FilterDropdownContainer's `--filter-button-shadow-color` token
+    (deviation from Figma's untokenised "Spaces/Card Shadow")
   - Uses theme CSS variables for automatic light/dark support
 
 ---

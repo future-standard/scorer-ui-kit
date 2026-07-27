@@ -87,7 +87,7 @@ const ChipButton: React.FC<IChipButton> = ({
   children,
   ...props
 }) => {
-  const showDivider = variant === 'text' && !noDivider;
+  const showDivider = !noDivider;
   return (
     <StyledChip
       type='button'

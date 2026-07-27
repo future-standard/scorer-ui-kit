@@ -275,8 +275,9 @@ The exhaustive, source-of-truth export list lives in [`packages/ui-lib/src/index
 - MediaBox
 - ActionsBar
 
-#### Chip Components (1 component)
+#### Chip Components (2 components)
 - ChipButton
+- ChipDropdown
 
 #### LineUI Components (3 components)
 - LineUI

@@ -158,8 +158,8 @@ import {
 } from './Misc';
 
 // Components - Chips
-import { ChipButton } from './Chips';
-import type { IChipButton, IChipVariant } from './Chips';
+import { ChipButton, ChipDropdown } from './Chips';
+import type { IChipButton, IChipDropdown, IChipDropdownItem, IChipVariant } from './Chips';
 
 import { ConfirmationModal } from './Modals';
 
@@ -366,6 +366,7 @@ export {
   Pagination,
   // Chips
   ChipButton,
+  ChipDropdown,
   //Context
   NotificationProvider,
   useNotification,
@@ -465,4 +466,6 @@ export type {
   // Chips types
   IChipButton,
   IChipVariant,
+  IChipDropdown,
+  IChipDropdownItem,
 };
