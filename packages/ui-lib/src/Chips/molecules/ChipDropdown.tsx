@@ -29,6 +29,15 @@ const Wrapper = styled.div`
   display: inline-flex;
 `;
 
+/* Figma calls this cell "a different kind of button from the chips": its Open state is the
+   Primary/9 4px bar only, with no Primary/a3 wash. We still map Open to ChipButton's `selected`
+   so the bar (and the hover bar) come from the atom, and drop just the wash here — otherwise an
+   open menu sitting next to an active chip reads as one merged block. `&&` doubles the class so
+   this beats the atom's own rule without depending on stylesheet order. */
+const Trigger = styled(ChipButton)`
+  && { background-color: transparent; }
+`;
+
 /* Deviation from Figma "Spaces/Card Shadow": that shadow has no theme token, and its
    literal rgba pair (a blue drop + a white outer glow) read badly — the glow is invisible
    on light and a halo on dark. We reuse FilterDropdownContainer's dropdown shadow instead,
@@ -132,7 +141,7 @@ const ChipDropdown: React.FC<IChipDropdown> = ({
 
   return (
     <Wrapper ref={wrapperRef} {...props} onKeyDown={handleKeyDown}>
-      <ChipButton
+      <Trigger
         variant='icon'
         icon={icon}
         selected={isOpen}
