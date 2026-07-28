@@ -119,6 +119,12 @@ const ChipButton: React.FC<IChipButton> = ({
 }) => {
   const showDivider = !noDivider;
 
+  /* `selected` means "wears the wash and the bar", which for a chip is also "pressed". But a button
+     that owns a popup is a menu button, whose state is aria-expanded — carrying aria-pressed too
+     would announce it as a toggle button as well. So the cell that opens a menu keeps the visual
+     state without the toggle semantics. */
+  const isMenuButton = props['aria-haspopup'] !== undefined;
+
   // fire onLeaveEnd exactly once per collapse
   const hasFired = useRef(false);
   const fireLeaveEnd = useCallback(() => {
@@ -155,7 +161,7 @@ const ChipButton: React.FC<IChipButton> = ({
   return (
     <StyledChip
       type='button'
-      aria-pressed={selected}
+      aria-pressed={isMenuButton ? undefined : selected}
       $selected={selected}
       $showDivider={showDivider}
       $leaving={leaving}

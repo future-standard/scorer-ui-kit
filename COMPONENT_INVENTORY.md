@@ -333,7 +333,7 @@ This document provides a comprehensive inventory of all React components in the 
   - `variant?`: `IChipVariant` (`'icon' | 'text'`) - Content mode; 'icon' renders an Icon, 'text' renders a number/letter label (default: 'text')
   - `icon?`: `string` - Icon name rendered when variant='icon'
   - `label?`: `string` - Text/numeral rendered when variant='text' (falls back to children)
-  - `selected?`: `boolean` - Persistent selected state: primary wash background + bottom bar (default: false)
+  - `selected?`: `boolean` - Persistent selected state: primary wash background + bottom bar (default: false). Surfaces as `aria-pressed`, making the chip a toggle button - unless the cell is given `aria-haspopup`, in which case it is a menu button and `aria-pressed` is omitted so `aria-expanded` is its only state
   - `noDivider?`: `boolean` - Suppress the 1px left divider shown by default on all chips (default: false)
   - `leaving?`: `boolean` - Play the removal animation: collapse the cell to zero width (default: false)
   - `onLeaveEnd?`: `() => void` - Fired when the collapse finishes, or immediately when the user prefers reduced motion. Unmount the cell here
@@ -375,6 +375,9 @@ This document provides a comprehensive inventory of all React components in the 
     so an open menu next to an active chip does not read as one merged block (Figma: the ellipsis
     cell is "a different kind of button from the chips")
   - Click-outside and Escape close the menu (uses useClickOutside)
+  - The trigger is a **menu button**: `aria-haspopup='menu'` plus `aria-expanded`, and no
+    `aria-pressed`. It borrows ChipButton's `selected` only to get the open bar, so the atom drops
+    the toggle-button semantics whenever a cell owns a popup
   - Action menu with per-row icon + label; selecting a row fires onClick and closes
   - **Labelled mode** (`label` set) is the Arrangement cell, the active-layout picker (Figma:
     Spaces / Top Bar / Arrangement Cell). The trigger becomes glyph (18px) + text + a 12px `Down`

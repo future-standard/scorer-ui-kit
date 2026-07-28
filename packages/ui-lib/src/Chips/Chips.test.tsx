@@ -96,6 +96,16 @@ describe('ChipBar', () => {
 });
 
 describe('ChipButton', () => {
+  it('keeps toggle semantics on a plain chip', async () => {
+    // the other half of the rule asserted on ChipDropdown's trigger: a chip that owns no popup is a
+    // toggle button, so `selected` must still surface as aria-pressed
+    const off = await render(<ChipButton label='1' />);
+    expect(off.querySelector('button')?.getAttribute('aria-pressed')).toBe('false');
+
+    const on = await render(<ChipButton label='2' selected />);
+    expect(on.querySelector('button')?.getAttribute('aria-pressed')).toBe('true');
+  });
+
   it('fires onLeaveEnd immediately when the user prefers reduced motion', async () => {
     const restore = setReducedMotion(true);
     const onLeaveEnd = vi.fn();
@@ -224,6 +234,21 @@ describe('ChipDropdown labelled', () => {
 
     expect(trigger?.textContent).toContain('6-up');
     expect(trigger?.hasAttribute('aria-label')).toBe(false);
+  });
+
+  it('is a menu button, not a toggle button: aria-expanded without aria-pressed', async () => {
+    // the trigger borrows ChipButton's `selected` purely for the bar, and on the atom that also
+    // means aria-pressed — carrying both states would announce the cell twice and contradictorily
+    const container = await render(<ChipDropdown items={ARRANGEMENTS} label='6-up' />);
+    const trigger = container.querySelector('button');
+
+    expect(trigger?.hasAttribute('aria-pressed')).toBe(false);
+    expect(trigger?.getAttribute('aria-haspopup')).toBe('menu');
+    expect(trigger?.getAttribute('aria-expanded')).toBe('false');
+
+    await act(async () => trigger?.click());
+    expect(trigger?.getAttribute('aria-expanded')).toBe('true');
+    expect(trigger?.hasAttribute('aria-pressed')).toBe(false);
   });
 
   it('still honours a triggerLabel the consumer passes alongside a label', async () => {
