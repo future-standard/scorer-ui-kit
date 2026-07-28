@@ -1,6 +1,6 @@
 import type React from 'react';
 import { type HTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useClickOutside } from '../../hooks';
 import Icon from '../../Icons/Icon';
 import ChipButton from '../atoms/ChipButton';
@@ -15,8 +15,11 @@ export interface IChipDropdownItem {
 
 interface OwnProps {
   items: IChipDropdownItem[];
-  icon?: string; // trigger icon name, default the 3-dot kebab 'FilterEllipsis'
-  triggerLabel?: string; // trigger aria-label (default 'Space actions')
+  icon?: string; // icon-only mode: the trigger icon, 16px. Labelled mode: the leading glyph, 18px
+  label?: string; // visible trigger text, e.g. '6-up'; switches the trigger to labelled mode
+  selectedId?: string; // items[].id of the current row: --grey-4 background, check, radio semantics
+  checkIcon?: string; // icon name for the current-row indicator (default 'Success')
+  triggerLabel?: string; // trigger aria-label; defaulted to 'Space actions' in icon-only mode only
   noDivider?: boolean; // pass-through: hide the chip's 1px left divider
   disabled?: boolean; // disable the trigger
   onOpenChange?: (open: boolean) => void;
@@ -33,9 +36,29 @@ const Wrapper = styled.div`
    Primary/9 4px bar only, with no Primary/a3 wash. We still map Open to ChipButton's `selected`
    so the bar (and the hover bar) come from the atom, and drop just the wash here — otherwise an
    open menu sitting next to an active chip reads as one merged block. `&&` doubles the class so
-   this beats the atom's own rule without depending on stylesheet order. */
-const Trigger = styled(ChipButton)`
-  && { background-color: transparent; }
+   this beats the atom's own rule without depending on stylesheet order.
+
+   $labelled holds the Arrangement cell's geometry, scoped to the transient prop so the icon-only
+   trigger keeps the atom's 56 x 56 square untouched. */
+const Trigger = styled(ChipButton)<{ $labelled: boolean }>`
+  && {
+    background-color: transparent;
+
+    ${({ $labelled }) =>
+      $labelled &&
+      css`
+      width: auto;
+      padding: 0 16px 0 14px;
+      gap: 8px;
+      justify-content: flex-start;
+      white-space: nowrap; /* wrapping would break the 56px height, not widen the cell */
+
+      /* Figma's Open state keeps the label on --grey-12 and turns only the bar primary; the atom
+         ties its selected state to --primary-11 text, far louder on a word than on a glyph */
+      color: var(--grey-12);
+      & svg [stroke] { stroke: var(--grey-12); }
+    `}
+  }
 `;
 
 /* Deviation from Figma "Spaces/Card Shadow": that shadow has no theme token, and its
@@ -60,7 +83,7 @@ const Menu = styled.div`
   box-shadow: 0px 5px 25px 0px var(--filter-button-shadow-color);
 `;
 
-const MenuItem = styled.button`
+const MenuItem = styled.button<{ $current: boolean }>`
   display: flex;
   align-items: center;
   gap: 4px;
@@ -85,12 +108,30 @@ const MenuItem = styled.button`
   &:last-child { border-bottom: none; }
   &:hover:enabled { background-color: var(--grey-3); }
   &:disabled { cursor: not-allowed; opacity: 0.5; }
+
+  /* After the hover rule so it wins: --grey-4 is a step darker than the --grey-3 hover in both
+     themes, so letting hover win would make the current row look less selected when pointed at. */
+  ${({ $current }) =>
+    $current &&
+    css`
+    background-color: var(--grey-4);
+    &:hover:enabled { background-color: var(--grey-5); }
+  `}
+`;
+
+/* auto margin rather than absolute, so it reuses MenuItem's padding-right */
+const CheckSlot = styled.span`
+  display: flex;
+  margin-left: auto;
 `;
 
 const ChipDropdown: React.FC<IChipDropdown> = ({
   items,
   icon = 'FilterEllipsis',
-  triggerLabel = 'Space actions',
+  label,
+  selectedId,
+  checkIcon = 'Success',
+  triggerLabel,
   noDivider = false,
   disabled = false,
   onOpenChange,
@@ -99,6 +140,17 @@ const ChipDropdown: React.FC<IChipDropdown> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // empty counts as absent: a consumer binding label={state} gets the square back
+  const isLabelled = Boolean(label);
+
+  // an undefined check, not a truthiness one: absent must leave the menu as it shipped, but a
+  // selectedId matching nothing is a real state — a radio group with nothing chosen yet
+  const marksCurrent = selectedId !== undefined;
+
+  // 'Space actions' on a button that visibly reads "6-up" is a WCAG 2.5.3 (Label in Name) failure,
+  // so labelled mode takes the visible text as its name and only an explicit triggerLabel overrides
+  const ariaLabel = triggerLabel ?? (isLabelled ? undefined : 'Space actions');
 
   const setOpen = useCallback(
     (next: boolean) => {
@@ -141,34 +193,59 @@ const ChipDropdown: React.FC<IChipDropdown> = ({
 
   return (
     <Wrapper ref={wrapperRef} {...props} onKeyDown={handleKeyDown}>
+      {/* labelled mode passes no `variant` and no ChipButton `label`: either would win over the
+          children in the atom and drop the glyph and caret */}
       <Trigger
-        variant='icon'
-        icon={icon}
+        $labelled={isLabelled}
+        variant={isLabelled ? undefined : 'icon'}
+        icon={isLabelled ? undefined : icon}
         selected={isOpen}
         noDivider={noDivider}
         disabled={disabled}
-        aria-label={triggerLabel}
+        aria-label={ariaLabel}
         aria-haspopup='menu'
         aria-expanded={isOpen}
         onClick={toggle}
-      />
+      >
+        {isLabelled ? (
+          <>
+            {icon ? <Icon icon={icon} size={18} /> : null}
+            {label}
+            {/* does not flip when open — Figma uses one caret asset in all three states */}
+            <Icon icon='Down' size={12} />
+          </>
+        ) : null}
+      </Trigger>
       {isOpen && !disabled ? (
         <Menu role='menu'>
-          {items.map((item) => (
-            <MenuItem
-              key={item.id}
-              type='button'
-              role='menuitem'
-              disabled={item.disabled}
-              onClick={() => {
-                item.onClick?.();
-                close();
-              }}
-            >
-              {item.icon ? <Icon icon={item.icon} size={14} /> : null}
-              {item.label}
-            </MenuItem>
-          ))}
+          {items.map((item) => {
+            const isCurrent = marksCurrent && item.id === selectedId;
+            return (
+              <MenuItem
+                key={item.id}
+                type='button'
+                // so a screen reader gets "current" too, not just the glyph
+                role={marksCurrent ? 'menuitemradio' : 'menuitem'}
+                aria-checked={marksCurrent ? isCurrent : undefined}
+                $current={isCurrent}
+                disabled={item.disabled}
+                onClick={() => {
+                  item.onClick?.();
+                  close();
+                }}
+              >
+                {item.icon ? <Icon icon={item.icon} size={14} /> : null}
+                {item.label}
+                {isCurrent ? (
+                  // decorative: aria-checked carries it. `light` because non-scaling-stroke keeps
+                  // `regular` at 1.5px, muddy on a 14px tick.
+                  <CheckSlot aria-hidden='true'>
+                    <Icon icon={checkIcon} size={14} weight='light' />
+                  </CheckSlot>
+                ) : null}
+              </MenuItem>
+            );
+          })}
         </Menu>
       ) : null}
     </Wrapper>

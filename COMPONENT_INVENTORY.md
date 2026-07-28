@@ -356,10 +356,14 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Chips/molecules/ChipDropdown.tsx`
 - **Story Path:** `storybook/src/stories/Chips/molecules/ChipDropdown.stories.tsx`
 - **Exported From:** `Chips`
+- **Story Path (labelled / Arrangement cell):** `storybook/src/stories/Chips/molecules/ChipDropdownArrangement.stories.tsx`, and in context in `storybook/src/stories/Chips/organisms/SpacesTopBar.stories.tsx`
 - **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
   - `items`: `IChipDropdownItem[]` - Menu rows: `{ id, label, icon?, disabled?, onClick? }` (required)
-  - `icon?`: `string` - Trigger icon name (default: 'FilterEllipsis')
-  - `triggerLabel?`: `string` - Accessible label for the trigger button (default: 'Space actions')
+  - `icon?`: `string` - Icon-only mode: the trigger icon, 16px. Labelled mode: the leading glyph, 18px (default: 'FilterEllipsis')
+  - `label?`: `string` - Visible trigger text, e.g. '6-up'. Setting it switches the trigger to labelled mode: glyph + label + caret, sized to its content. Empty counts as absent
+  - `selectedId?`: `string` - `items[].id` of the current row: `--grey-4` background + a check, and the rows become `menuitemradio`/`aria-checked`
+  - `checkIcon?`: `string` - Icon name for the current-row indicator (default: 'Success')
+  - `triggerLabel?`: `string` - Accessible label for the trigger button (default: 'Space actions' in icon-only mode only - see below)
   - `noDivider?`: `boolean` - Hide the trigger chip's 1px left divider (default: false)
   - `disabled?`: `boolean` - Disable the trigger (default: false)
   - `onOpenChange?`: `(open: boolean) => void` - Notified when the menu opens/closes
@@ -372,8 +376,33 @@ This document provides a comprehensive inventory of all React components in the 
     cell is "a different kind of button from the chips")
   - Click-outside and Escape close the menu (uses useClickOutside)
   - Action menu with per-row icon + label; selecting a row fires onClick and closes
+  - **Labelled mode** (`label` set) is the Arrangement cell, the active-layout picker (Figma:
+    Spaces / Top Bar / Arrangement Cell). The trigger becomes glyph (18px) + text + a 12px `Down`
+    caret, 56px tall but sized to its content instead of the 56px square, with 14px/16px padding and
+    no left divider - it always sits right of a ChipZoneBreak, which owns both hairlines
+  - The caret does **not** flip when the menu opens (Figma uses one caret asset in all three
+    states). Note `SplitButton` swaps `Down`→`Close`; the two kit components differ on purpose
+  - `triggerLabel` is only defaulted in icon-only mode. In labelled mode the visible text is the
+    accessible name, so defaulting it would be a WCAG 2.5.3 (Label in Name) failure - an explicitly
+    passed `triggerLabel` is still honoured
+  - **Trap:** in labelled mode `triggerLabel` becomes an `aria-label`, which *replaces* the visible
+    text as the accessible name rather than adding to it. `triggerLabel='Arrangement'` on a trigger
+    reading "6-up" hides "6-up" from assistive tech and from voice control, failing WCAG 2.5.3.
+    Either omit it - the visible text is already the name - or lead with the visible value, e.g.
+    `` triggerLabel={`${value} arrangement`} ``
+  - **Current-row semantics:** with `selectedId` set, rows switch from `role='menuitem'` to
+    `role='menuitemradio'` + `aria-checked`, so "current" reaches a screen reader and the check
+    glyph is decorative (`aria-hidden`). Without `selectedId` the menu is byte-identical to before
+  - A hovered current row deepens to `--grey-5` rather than taking the `--grey-3` hover: `--grey-4`
+    is a step darker than the hover in both themes, so letting hover win would make the current row
+    look *less* selected when pointed at
   - Menu shadow reuses FilterDropdownContainer's `--filter-button-shadow-color` token
     (deviation from Figma's untokenised "Spaces/Card Shadow")
+  - **Deviations from Figma:** the menu keeps `min-width: 216px` (shared with the ellipsis menu)
+    against Figma's 192px for the Arrangement menu; and `checkIcon` defaults to `Success`, a tick
+    inside a circle, because `@future-standard/icons` has no bare check mark - swapping the default
+    later is a one-line, non-breaking change. The four layout glyphs (6-up / 4-up / 2-up /
+    1 big + 2) are **not** in the icon package: pass whatever names the consuming project provides
   - Uses theme CSS variables for automatic light/dark support
 
 ---
@@ -1861,6 +1890,16 @@ This document provides a comprehensive inventory of all React components in the 
   - Supports all standard button HTML attributes via ISplitButtonItem
   - Automatic text width calculation for dropdown options
   - Used for primary action with alternatives
+  - The leading icon column is **always** reserved, even on a row with no icon: `SplitButton`
+    substitutes the `NoIcon` placeholder, which draws nothing but still measures
+    `--button-icon-size`. That is deliberate - it is what keeps the text of icon-less dropdown rows
+    aligned with the rows that do have icons. The cost is ~30px (`--button-icon-size` plus
+    2 × `--button-icon-h-padding`) on a button with no icon anywhere, so such a button cannot be
+    made as narrow as a design that hides its icon slot entirely
+  - **Known issue:** `...rest` is spread after the component's own `className`, so
+    `styled(SplitButton)` replaces the `split-button-<design>` class instead of merging with it and
+    the design's theme variables are lost. Wrap it in a styled container rather than calling
+    `styled()` on it. `Button` was fixed for this in PR #632; SplitButton has not been
 
 ---
 
