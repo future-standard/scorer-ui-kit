@@ -378,6 +378,29 @@ This document provides a comprehensive inventory of all React components in the 
 
 ---
 
+### ChipZoneBreak
+- **Status:** ✅ Has Storybook
+- **Component Path:** `ui-lib/src/Chips/atoms/ChipZoneBreak.tsx`
+- **Story Path:** `storybook/src/stories/Chips/atoms/ChipZoneBreak.stories.tsx`
+- **Exported From:** `Chips`
+- **Props:** (`HTMLAttributes<HTMLDivElement>` — no props of its own)
+  - All standard HTML div attributes (`className`, `style`, `role`, `aria-hidden`, etc.)
+- **Notable Features:**
+  - 12×56 band separating two zones of the top bar (Figma: Spaces / Top Bar / Zone Break)
+  - `--grey-3` fill with a 1px `--grey-4` hairline on each edge; no states, not interactive
+  - Owns both edge hairlines, so the cells either side drop their adjoining border - this is why
+    ChipBar suppresses its first cell's left divider unconditionally
+  - `box-sizing: border-box` keeps both hairlines inside the 12px; without it the band renders
+    14px and the top bar drifts 2px per zone break
+  - `flex-shrink: 0` - it sits outside any ChipBar, so it protects its own width
+  - `aria-hidden='true'` by default (decorative). To have it announced, pass **both**
+    `role='separator'` and `aria-hidden={false}` - `role` alone is inert, because the default
+    `aria-hidden='true'` survives and keeps the element out of the accessibility tree
+  - Place it **between** ChipBars, never inside one: a zone break is not a cell of either zone
+  - Uses theme CSS variables for automatic light/dark support
+
+---
+
 ### ConfirmationModal
 - **Status:** ✅ Has Storybook
 - **Component Path:** `ui-lib/src/Modals/ConfirmationModal.tsx`
