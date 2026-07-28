@@ -1,7 +1,7 @@
 # Scorer UI Kit - Component Inventory
 
 **Generated:** 2026-02-04
-**Last Updated:** 2026-07-27
+**Last Updated:** 2026-07-28
 **Source:** ui-lib/src & storybook/src/stories
 
 This document provides a comprehensive inventory of all React components in the Scorer UI Kit to be used by human and AI, organized alphabetically with their corresponding Storybook documentation status, file paths, props, and notable features.
@@ -303,6 +303,27 @@ This document provides a comprehensive inventory of all React components in the 
 
 ---
 
+### ChipBar
+- **Status:** ✅ Has Storybook
+- **Component Path:** `ui-lib/src/Chips/organisms/ChipBar.tsx`
+- **Story Path:** `storybook/src/stories/Chips/organisms/ChipBar.stories.tsx`
+- **Exported From:** `Chips`
+- **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
+  - `children`: `ReactNode` - The cells: any mix of ChipButton / ChipDropdown, in any order (required)
+  - Plus all standard HTML div attributes (`className`, `style`, `aria-label`, etc.)
+- **Notable Features:**
+  - 56px top-bar chip row (Figma: Spaces / Top Bar / Space Selection)
+  - Pure layout glue - holds no selection state; the consumer sets `selected` per chip
+  - Composes ChipButton and ChipDropdown children in any order and any count
+  - Suppresses the first cell's 1px left divider automatically
+  - `role='toolbar'` with arrow-key roving focus (Left/Right/Home/End), one tab stop - kept in
+    sync by a MutationObserver, so a child that enables its own button cannot add a second tab stop
+  - Does not hijack arrow keys while a ChipDropdown menu is open
+  - Cells never shrink (`flex-shrink: 0`): in a narrow container the row overflows rather than
+    squashing the 56px cells. Overflow itself is undefined in v1 - wrap ChipBar if you need scrolling
+
+---
+
 ### ChipButton
 - **Status:** ✅ Has Storybook
 - **Component Path:** `ui-lib/src/Chips/atoms/ChipButton.tsx`
@@ -314,6 +335,8 @@ This document provides a comprehensive inventory of all React components in the 
   - `label?`: `string` - Text/numeral rendered when variant='text' (falls back to children)
   - `selected?`: `boolean` - Persistent selected state: primary wash background + bottom bar (default: false)
   - `noDivider?`: `boolean` - Suppress the 1px left divider shown by default on all chips (default: false)
+  - `leaving?`: `boolean` - Play the removal animation: collapse the cell to zero width (default: false)
+  - `onLeaveEnd?`: `() => void` - Fired when the collapse finishes, or immediately when the user prefers reduced motion. Unmount the cell here
   - Plus all standard HTML button attributes (`onClick`, `disabled`, `aria-label`, etc.)
 - **Notable Features:**
   - 56×56 top-bar "Space" chip (Figma: Spaces / Top Bar / Chip)
@@ -321,6 +344,9 @@ This document provides a comprehensive inventory of all React components in the 
   - CSS-driven hover bar; prop-driven persistent selected state (bar + wash)
   - 4px bottom bar overhanging 1px each side to cover cell hairlines
   - 1px left divider on both variants, suppressible via noDivider (leftmost cell / zone breaks)
+  - Built-in removal animation (`leaving` + `onLeaveEnd`): the cell collapses to zero width over
+    `--speed-fast`, and in a flex row every later cell slides left on its own. Honours
+    `prefers-reduced-motion`, in which case `onLeaveEnd` fires at once so the caller never stalls
   - Uses theme CSS variables for automatic light/dark support
 
 ---
@@ -339,7 +365,11 @@ This document provides a comprehensive inventory of all React components in the 
   - `onOpenChange?`: `(open: boolean) => void` - Notified when the menu opens/closes
 - **Notable Features:**
   - Top-bar ellipsis "Space actions" cell (Figma: Spaces / Top Bar / Space Menu Cell)
-  - Composes the ChipButton atom as the trigger (open state = chip 'selected' bar)
+  - Composes the ChipButton atom as the trigger (idle = no bar, hover = `--primary-6` bar,
+    open = `--primary-9` bar)
+  - The open trigger takes the bar only - the atom's `--primary-a3` selected wash is suppressed,
+    so an open menu next to an active chip does not read as one merged block (Figma: the ellipsis
+    cell is "a different kind of button from the chips")
   - Click-outside and Escape close the menu (uses useClickOutside)
   - Action menu with per-row icon + label; selecting a row fires onClick and closes
   - Menu shadow reuses FilterDropdownContainer's `--filter-button-shadow-color` token
