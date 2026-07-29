@@ -80,8 +80,9 @@ const ChipBar: React.FC<IChipBar> = ({ children, onKeyDown, onFocus, ...props })
     return () => observer.disconnect();
   }, [activeIndex, getCells]);
 
-  // A Fragment wrapper is not a supported child: it arrives as one element, so the cells inside it
-  // are never seen.
+  // A Fragment wrapper is not a supported child: toArray flattens arrays but not fragments, so the
+  // wrapper itself arrives as the first element and noDivider lands on it — the leading chip keeps
+  // its hairline, and React logs the invalid-prop warning only on re-render, never on mount.
   const cells = Children.toArray(children).filter(isValidElement);
 
   const handleFocus = useCallback(

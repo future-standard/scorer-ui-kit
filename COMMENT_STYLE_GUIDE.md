@@ -44,6 +44,11 @@ said, what is not finished, which PR is coming — goes in the PR description, u
 **Considerations on Implementation** in [`pull_request_template.md`](pull_request_template.md). That
 section already exists for exactly this purpose.
 
+**Both homes must be self-contained.** Working notes that live only on one machine — a local spec, a
+scratch harness, a checklist, an agent's working folder — cannot be cited from either place. A
+reviewer cannot open them, and a reader in a year will not have them. If a fact in those notes is
+worth keeping, copy the fact itself into the code or the PR, and cite nothing.
+
 ## Comments That Earn Their Place
 
 ### 1. A constraint that is invisible in the code
@@ -139,7 +144,8 @@ import { ChipBar, ChipButton } from './Chips';
 - **Avoid "for now", "temporarily", "will change when".** Nothing makes them expire.
 - **Do not point at a document that is not in the repository.** "see SPEC §4" or "per the design doc"
   cannot be followed by the next reader and cannot be kept in step. Either the document is committed
-  here and you link to it, or you state the constraint itself in one sentence.
+  here and you link to it, or you state the constraint itself in one sentence. A reference can be
+  accurate and still be useless: if the document is not committed, the pointer is dead on arrival.
 - **Do not quote a value from the code.** A comment saying "280px here" dies the moment the value
   changes, and nothing warns you. Say why the value is what it is, and let the code hold the number.
 
