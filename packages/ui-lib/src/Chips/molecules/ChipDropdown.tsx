@@ -32,14 +32,18 @@ const Wrapper = styled.div`
   display: inline-flex;
 `;
 
-/* Figma calls this cell "a different kind of button from the chips": its Open state is the
-   Primary/9 4px bar only, with no Primary/a3 wash. We still map Open to ChipButton's `selected`
-   so the bar (and the hover bar) come from the atom, and drop just the wash here — otherwise an
-   open menu sitting next to an active chip reads as one merged block. `&&` doubles the class so
-   this beats the atom's own rule without depending on stylesheet order.
+/* The open state is the 4px Primary/9 bar only, with no Primary/a3 wash. Open still maps to
+   ChipButton's `selected` so the bar (and the hover bar) come from the atom, and only the wash is
+   dropped here — otherwise an open menu sitting next to an active chip reads as one merged block.
+   `&&` doubles the class so this beats the atom's own rule without depending on stylesheet order.
 
    $labelled holds the Arrangement cell's geometry, scoped to the transient prop so the icon-only
-   trigger keeps the atom's 56 x 56 square untouched. */
+   trigger keeps the atom's 56 x 56 square untouched.
+
+   `white-space: nowrap`: wrapping would break the 56px height, not widen the cell.
+
+   `color` and the `[stroke]` override: the label stays on --grey-12 and only the bar turns primary;
+   the atom ties its selected state to --primary-11 text, far louder on a word than on a glyph. */
 const Trigger = styled(ChipButton)<{ $labelled: boolean }>`
   && {
     background-color: transparent;
@@ -51,24 +55,18 @@ const Trigger = styled(ChipButton)<{ $labelled: boolean }>`
       padding: 0 16px 0 14px;
       gap: 8px;
       justify-content: flex-start;
-      white-space: nowrap; /* wrapping would break the 56px height, not widen the cell */
-
-      /* Figma's Open state keeps the label on --grey-12 and turns only the bar primary; the atom
-         ties its selected state to --primary-11 text, far louder on a word than on a glyph */
+      white-space: nowrap;
       color: var(--grey-12);
       & svg [stroke] { stroke: var(--grey-12); }
     `}
   }
 `;
 
-/* Deviation from Figma "Spaces/Card Shadow": that shadow has no theme token, and its
-   literal rgba pair (a blue drop + a white outer glow) read badly — the glow is invisible
-   on light and a halo on dark. We reuse FilterDropdownContainer's dropdown shadow instead,
-   which is theme-aware via --filter-button-shadow-color (primary-a3 light / black-a8 dark)
-   and keeps every colour on a token. */
+/* Uses FilterDropdownContainer's dropdown shadow, not Figma's "Spaces/Card Shadow" — do not switch
+   back: that shadow has no theme token, and its literal rgba pair is invisible on light and a halo
+   on dark. */
 const Menu = styled.div`
   position: absolute;
-  /* 8px below the cell — Figma has the 56px cell's menu instance starting at y=64 */
   top: calc(100% + 8px);
   left: -1px;
   z-index: 100;
@@ -83,6 +81,12 @@ const Menu = styled.div`
   box-shadow: 0px 5px 25px 0px var(--filter-button-shadow-color);
 `;
 
+/* `& svg [stroke]`: icon colour follows the row text — mirrors ChipButton/IconButton targeting
+   [stroke].
+
+   `$current` comes after the hover rule so it wins: --grey-4 is a step darker than the --grey-3
+   hover in both themes, so letting hover win would make the current row look less selected when
+   pointed at. */
 const MenuItem = styled.button<{ $current: boolean }>`
   display: flex;
   align-items: center;
@@ -102,15 +106,12 @@ const MenuItem = styled.button<{ $current: boolean }>`
   text-align: left;
   transition: background-color var(--speed-fast) var(--easing-primary-in-out);
 
-  /* icon colour follows the row text — mirrors ChipButton/IconButton targeting [stroke] */
   & svg [stroke] { stroke: var(--grey-12); }
 
   &:last-child { border-bottom: none; }
   &:hover:enabled { background-color: var(--grey-3); }
   &:disabled { cursor: not-allowed; opacity: 0.5; }
 
-  /* After the hover rule so it wins: --grey-4 is a step darker than the --grey-3 hover in both
-     themes, so letting hover win would make the current row look less selected when pointed at. */
   ${({ $current }) =>
     $current &&
     css`
@@ -180,7 +181,6 @@ const ChipDropdown: React.FC<IChipDropdown> = ({
     }
   }, [disabled, isOpen, close]);
 
-  // compose with any consumer onKeyDown — it would otherwise replace this one
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(e);
@@ -211,7 +211,7 @@ const ChipDropdown: React.FC<IChipDropdown> = ({
           <>
             {icon ? <Icon icon={icon} size={18} /> : null}
             {label}
-            {/* does not flip when open — Figma uses one caret asset in all three states */}
+            {/* deliberately does not flip when open */}
             <Icon icon='Down' size={12} />
           </>
         ) : null}

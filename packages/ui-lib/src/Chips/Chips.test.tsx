@@ -1,7 +1,7 @@
 /**
- * Regression tests for two defects that the Storybook sweep cannot see: it watches for console
- * errors, page errors and render loops, so a second tab stop or a missed completion callback both
- * pass it silently. Behavioural verification for the Chips family otherwise lives in the sweep.
+ * Regression tests for defects the Storybook sweep cannot see: it watches for console errors, page
+ * errors and render loops, so a second tab stop or a missed completion callback both pass it
+ * silently. Behavioural verification for the Chips family otherwise lives in the sweep.
  */
 import { act, type ReactElement, useEffect, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
@@ -147,7 +147,7 @@ describe('ChipButton', () => {
 
 describe('ChipZoneBreak', () => {
   it('keeps both hairlines inside the 12px band', async () => {
-    // Figma's node is 12px *including* both 1px borders. Under the CSS default of content-box
+    // the band is 12px *including* both 1px borders. Under the CSS default of content-box
     // the band renders 14px and the top bar drifts 2px per zone break — silent, cumulative, and
     // invisible to the sweep, which only watches for console errors and render loops.
     // offsetWidth is not asserted: jsdom does no layout and always returns 0.
@@ -201,11 +201,11 @@ describe('ChipZoneBreak', () => {
 });
 
 /**
- * The Arrangement cell (Figma "Spaces/Top Bar/Arrangement Cell") is ChipDropdown's labelled mode
- * rather than a component of its own. What the sweep cannot see is the accessibility contract: the
- * accessible name in labelled mode, and "which row is current" reaching a screen reader rather than
- * only reaching an eye. Geometry is deliberately not asserted here — jsdom does no layout, so
- * offsetWidth is always 0; the widths are checked in a real browser instead.
+ * The Arrangement cell is ChipDropdown's labelled mode rather than a component of its own. What the
+ * sweep cannot see is the accessibility contract: the accessible name in labelled mode, and "which
+ * row is current" reaching a screen reader rather than only reaching an eye. Geometry is
+ * deliberately not asserted here — jsdom does no layout, so offsetWidth is always 0; the widths are
+ * checked in a real browser instead.
  */
 describe('ChipDropdown labelled', () => {
   const ARRANGEMENTS: IChipDropdownItem[] = [
@@ -252,7 +252,6 @@ describe('ChipDropdown labelled', () => {
   });
 
   it('still honours a triggerLabel the consumer passes alongside a label', async () => {
-    // not defaulting it must not mean ignoring it
     const container = await render(
       <ChipDropdown items={ARRANGEMENTS} label='6-up' triggerLabel='Arrangement' />
     );

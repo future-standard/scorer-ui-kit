@@ -4,17 +4,17 @@ import styled from 'styled-components';
 
 export type IChipZoneBreak = HTMLAttributes<HTMLDivElement>;
 
-/* Figma "Spaces/Top Bar/Zone Break": the 12px band that separates two zones of the top bar. It
-   owns both edge hairlines, which is why ChipBar suppresses its first cell's left divider
-   unconditionally — that half of the rule already shipped, this is the other half.
+/* The 12px band that separates two zones of the top bar, owning both edge hairlines.
 
-   Sits BETWEEN bars, never inside one: a zone break is not a cell of either zone. */
+   Sits BETWEEN bars, never inside one: a zone break is not a cell of either zone.
+
+   `box-sizing: border-box` keeps both 1px hairlines inside the 12px. With the CSS default the band
+   renders 14px and the top bar drifts 2px per zone break.
+
+   `flex-shrink: 0`: a zone break sits outside any bar, so it has to protect itself or a narrow top
+   bar squashes the band. */
 const Break = styled.div`
-  /* border-box keeps both 1px hairlines inside the 12px, matching Figma's 12px node. With the
-     CSS default the band renders 14px and the top bar drifts 2px per zone break. */
   box-sizing: border-box;
-  /* ChipBar protects its own children, but a zone break sits outside any bar, so it has to
-     protect itself or a narrow top bar squashes the band. */
   flex-shrink: 0;
   width: 12px;
   height: 56px;
@@ -23,8 +23,7 @@ const Break = styled.div`
   border-right: 1px solid var(--grey-4);
 `;
 
-/* aria-hidden before the spread, so a consumer can override it — the ordering ChipBar uses for
-   role / aria-label. Decorative by default.
+/* aria-hidden before the spread, so a consumer can override it. Decorative by default.
 
    To have it announced, both attributes are required: `role='separator'` on its own is inert,
    because the default aria-hidden='true' survives the spread and keeps the element out of the

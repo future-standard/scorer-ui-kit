@@ -9,8 +9,8 @@ const ChipBarStory = {
   decorators: [],
 };
 
-// ChipBar has no overflow handling in v1 (it is a plain flex row), so the demo keeps the
-// bar inside a sensible width
+// ChipBar has no overflow handling (it is a plain flex row), so the demo keeps the bar inside a
+// sensible width
 const MAX_SPACES = 6;
 
 interface ISpace {
@@ -45,7 +45,7 @@ export const _ChipBar = () => {
   const appendSpace = () => {
     const uid = `s${nextUid.current++}`;
     setSpaces([...spaces, { uid }]);
-    setSelectedUid(uid); // the new Space becomes the active one
+    setSelectedUid(uid);
     setIsWorkspaceActive(false);
   };
 

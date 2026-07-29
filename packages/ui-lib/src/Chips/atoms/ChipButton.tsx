@@ -34,6 +34,14 @@ const collapse = keyframes`
   }
 `;
 
+/* `& svg [stroke]`: icon colour follows state — mirrors IconButton.tsx targeting [stroke].
+
+   `&:focus-visible`: the keyboard focus ring. Mouse and selected states keep the `outline: none`
+   set above.
+
+   `$leaving`: `overflow: hidden` and `min-width: 0` are scoped to the leaving state on purpose —
+   permanent overflow would clip the 4px bar's 1px overhang, and a flex item will not shrink past
+   its content without `min-width: 0`. */
 const StyledChip = styled.button<IStyledChip>`
   position: relative;
   display: flex;
@@ -58,7 +66,6 @@ const StyledChip = styled.button<IStyledChip>`
 
   ${({ $showDivider }) => $showDivider && css`border-left: 1px solid var(--grey-4);`}
 
-  /* icon colour follows state — mirrors IconButton.tsx targeting [stroke] */
   & svg [stroke] { stroke: var(--grey-12); }
 
   &::after {
@@ -73,7 +80,6 @@ const StyledChip = styled.button<IStyledChip>`
   }
   &:hover:enabled::after { background-color: var(--primary-6); }
 
-  /* keyboard focus ring (mouse/selected states keep outline: none above) */
   &:focus-visible {
     outline: 2px solid var(--primary-9);
     outline-offset: -2px;
@@ -94,8 +100,6 @@ const StyledChip = styled.button<IStyledChip>`
   ${({ $leaving }) =>
     $leaving &&
     css`
-    /* both scoped to the leaving state on purpose: permanent overflow would clip the 4px bar's
-       1px overhang, and a flex item will not shrink past its content without min-width: 0 */
     overflow: hidden;
     min-width: 0;
     pointer-events: none;
@@ -125,7 +129,6 @@ const ChipButton: React.FC<IChipButton> = ({
      state without the toggle semantics. */
   const isMenuButton = props['aria-haspopup'] !== undefined;
 
-  // fire onLeaveEnd exactly once per collapse
   const hasFired = useRef(false);
   const fireLeaveEnd = useCallback(() => {
     if (hasFired.current) {
@@ -147,7 +150,6 @@ const ChipButton: React.FC<IChipButton> = ({
     }
   }, [leaving, fireLeaveEnd]);
 
-  // compose with a consumer handler rather than replacing it
   const handleAnimationEnd = useCallback(
     (e: React.AnimationEvent<HTMLButtonElement>) => {
       onAnimationEnd?.(e);

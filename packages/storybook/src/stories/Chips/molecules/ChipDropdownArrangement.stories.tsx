@@ -10,10 +10,10 @@ const ChipDropdownArrangementStory = {
   decorators: [],
 };
 
-/* ChipDropdown's labelled mode — Figma "Spaces/Top Bar/Arrangement Cell" (9154:6033). Same
-   component as the ellipsis cell; passing `label` switches the trigger to glyph + text + caret.
+/* ChipDropdown's labelled mode: the same component as the ellipsis cell, where passing `label`
+   switches the trigger to glyph + text + caret.
 
-   LayoutGrid / LayoutList stand in for the four layout glyphs, which are in no icon package yet. */
+   LayoutGrid / LayoutList stand in for the four layout glyphs, which no icon package provides. */
 const ARRANGEMENTS = [
   { id: '6-up', label: '6-up', icon: 'LayoutGrid' },
   { id: '4-up', label: '4-up', icon: 'LayoutGrid' },
@@ -30,7 +30,6 @@ export const _ChipDropdownArrangement = () => {
   const checkIcon = select('Check icon', iconList, 'Success');
   const disabled = boolean('Disabled', false);
 
-  // state, so clicking a row actually moves the check
   const [selectedId, setSelectedId] = useState('6-up');
   const onSelect = action('arrangement-select');
 

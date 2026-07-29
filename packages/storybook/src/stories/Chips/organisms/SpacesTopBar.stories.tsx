@@ -12,14 +12,12 @@ import {
 import { action } from 'storybook/actions';
 import styled from 'styled-components';
 
-/* The left half of Figma "Top Bar 56 (componentized)" (9159:6142), assembled from kit components.
-
-   Not finished work, and not to be copied as-is:
-   - Top Bar Right (Admin / Notifications / Account) is omitted on purpose — the kit's own `TopBar`
-     already provides that chrome, so imitating it here would invite rebuilding it.
-   - LayoutGrid / LayoutList stand in for the four layout glyphs, which are in no icon package yet.
-   - The container stands in for `TopBar`, whose `leftAreaElement` (PR #675) is not on this branch.
-     Its `padding: 0 16px 0 24px` will inset the chips, so they will not sit flush at x=0. */
+/* The left half of a 56px top bar, assembled from kit components. A demo, not a pattern to copy:
+   - Top Bar Right (Admin / Notifications / Account) is omitted — the kit's own `TopBar` already
+     provides that chrome, so imitating it here would invite rebuilding it.
+   - LayoutGrid / LayoutList stand in for the four layout glyphs, which no icon package provides.
+   - The container stands in for `TopBar`, so the chips sit flush at x=0 here. Inside the real
+     `TopBar` its own padding will inset them. */
 const SpacesTopBarStory = {
   title: 'Chips/organisms',
   component: ChipBar,
@@ -47,8 +45,7 @@ const SaveCell = styled.div`
   border-left: 1px solid var(--grey-4);
 `;
 
-/* The cell owns the padding and centres the 32px Button in the 56px band. Closest kit variant to
-   Figma's Reset, but --grey-12 text where the design asks --grey-10. */
+/* The cell owns the padding and centres the 32px Button in the 56px band. */
 const ResetCell = styled.div`
   display: flex;
   flex-shrink: 0;
@@ -64,7 +61,7 @@ const ARRANGEMENTS = [
   { id: '1-big-2', label: '1 big + 2', icon: 'LayoutList' },
 ];
 
-// ChipBar has no overflow handling in v1, so the demo keeps the row to a sensible width
+// ChipBar has no overflow handling, so the demo keeps the row to a sensible width
 const MAX_SPACES = 6;
 
 interface ISpace {
@@ -102,7 +99,7 @@ export const _SpacesTopBar = () => {
   const appendSpace = () => {
     const uid = `s${nextUid.current++}`;
     setSpaces([...spaces, { uid }]);
-    setSelectedUid(uid); // the new Space becomes the active one
+    setSelectedUid(uid);
     setIsWorkspaceActive(false);
   };
 
@@ -191,7 +188,6 @@ export const _SpacesTopBar = () => {
     // room below the bar so the open menus are visible in the canvas
     <div style={{ padding: '0 0 260px' }}>
       <TopBar>
-        {/* 280px here against Figma's 268: the shipped ⋯ cell is a 56px square, Figma's is 44px */}
         <ChipBar aria-label='Spaces'>
           {showWorkspace ? (
             <ChipButton
@@ -237,7 +233,6 @@ export const _SpacesTopBar = () => {
         <ChipBar aria-label='Layout controls'>
           <ChipDropdown
             items={arrangementItems}
-            // the trigger glyph tracks the value, as the Figma component description requires
             icon={arrangement?.icon ?? 'LayoutGrid'}
             label={arrangement?.label}
             selectedId={arrangementId}

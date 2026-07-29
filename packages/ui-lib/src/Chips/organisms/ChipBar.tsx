@@ -19,15 +19,15 @@ interface OwnProps {
 
 export type IChipBar = OwnProps & HTMLAttributes<HTMLDivElement>;
 
+/* The `& > *` rule below pins every cell's width, so the row overflows instead of squashing — a
+   consumer that needs scrolling wraps ChipBar itself. Without it, flex items default to
+   flex-shrink: 1 and a narrow container silently shrinks the 56px cells — measured at 36px in a
+   200px container — which is not a designed state. */
 const Bar = styled.div`
   display: flex;
   align-items: center;
   height: 56px;
 
-  /* Cells keep their fixed width and the row overflows instead (SPEC decision 7: overflow is
-     undefined in v1 and the consumer wraps ChipBar if it needs scrolling). Without this, flex
-     items default to flex-shrink: 1 and a narrow container silently squashes the 56px cells —
-     measured at 36px in a 200px container — which is not a designed state. */
   & > * {
     flex-shrink: 0;
   }
@@ -39,7 +39,6 @@ const ChipBar: React.FC<IChipBar> = ({ children, onKeyDown, onFocus, ...props })
   const barRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // focusable cells, excluding the rows of an open ChipDropdown menu
   const getCells = useCallback(() => {
     const root = barRef.current;
     if (!root) {
@@ -81,8 +80,8 @@ const ChipBar: React.FC<IChipBar> = ({ children, onKeyDown, onFocus, ...props })
     return () => observer.disconnect();
   }, [activeIndex, getCells]);
 
-  // the cells: ChipButton / ChipDropdown elements, in any order. A Fragment wrapper is not a
-  // supported child — see SPEC §4 subtlety A.
+  // A Fragment wrapper is not a supported child: it arrives as one element, so the cells inside it
+  // are never seen.
   const cells = Children.toArray(children).filter(isValidElement);
 
   const handleFocus = useCallback(
