@@ -220,6 +220,7 @@ import {
   type INotificationItem,
   type INotificationsHistory,
   type ICustomDrawer,
+  type ISideDrawer,
 } from './Global';
 import type {
   IMenuTop,
@@ -231,6 +232,7 @@ import type {
   IUserSubmenuItem,
   ITopBar,
   ITopBarBadge,
+  IActiveDrawer,
 } from './Global';
 
 // Tabs
@@ -464,6 +466,8 @@ export type {
   IUserSubmenuItem,
   ITopBar,
   ITopBarBadge,
+  IActiveDrawer,
+  ISideDrawer,
   // Form types
   TypeFieldState,
   TypeButtonDesigns,

@@ -979,8 +979,13 @@ This document provides a comprehensive inventory of all React components in the 
     - `notificationsHistory?`: `INotificationsHistory` - Notifications data
       - **INotificationsHistory:** `{ read: INotificationItem[], unread: INotificationItem[], noNotificationsText?: string, readNotificationsText?: string, unreadNotificationsText?: string }`
       - **INotificationItem:** `{ imgUrl?: string, title: string, message: string, time: string }`
-    - `customDrawer?`: `ICustomDrawer` - Custom drawer configuration
+    - `customDrawer?`: `ICustomDrawer` - Custom drawer configuration (icon-triggered)
       - **ICustomDrawer:** `{ customComponent: ReactElement, icon: string, status?: IStatusDot, counter?: number, width?: string, maxCounter?: number }`
+    - `sideDrawers?`: `ISideDrawer[]` - Extra drawers with no top-bar toggle, opened via `activeDrawer` by id (desktop `TopBar` only; not supported by `GlobalUI` on mobile)
+      - **ISideDrawer:** `{ id: string, content: ReactElement, width?: string }`
+    - `leftAreaElement?`: `ReactElement` - Custom content for the left area; rendered only when `hasSearch` is false, replacing the search bar
+    - `activeDrawer?`: `IActiveDrawer` (`'user' | 'notifications' | 'custom' | (string & {}) | null`) - Controlled open drawer. Built-in keys are `'user'`/`'notifications'`/`'custom'`; the `(string & {})` member accepts any custom side-drawer id while keeping those keys as editor autocomplete. When provided (including `null`) the consumer owns drawer state, otherwise TopBar uses internal state
+    - `onActiveDrawerChange?`: `(activeDrawer: IActiveDrawer) => void` - Callback whenever a drawer opens or closes (icon clicks included)
     - `hasSwitchTheme?`: `boolean` - Show theme switcher
     - `isLightMode?`: `boolean` - Current theme mode
     - `switchThemeText?`: `string` - Switch theme text
@@ -2372,7 +2377,12 @@ This document provides a comprehensive inventory of all React components in the 
   - `currentUserText`: `string` - Text for current user menu
   - `accountOptionText`: `string` - Text for account option
   - `userDrawerBespoke`: `ReactElement` - Custom drawer content element
-  - `customDrawer`: `ICustomDrawer` - Custom drawer configuration
+  - `customDrawer`: `ICustomDrawer` - Custom drawer configuration (icon-triggered)
+  - `sideDrawers?`: `ISideDrawer[]` - Extra drawers with no top-bar toggle, opened via `activeDrawer` by id (desktop only; not supported on mobile)
+    - **ISideDrawer:** `{ id: string, content: ReactElement, width?: string }`
+  - `leftAreaElement?`: `ReactElement` - Custom content for the left area; rendered only when `hasSearch` is false, replacing the search bar
+  - `activeDrawer?`: `IActiveDrawer` (`'user' | 'notifications' | 'custom' | (string & {}) | null`) - Controlled open drawer. Built-in keys are `'user'`/`'notifications'`/`'custom'`; the `(string & {})` member accepts any custom side-drawer id while keeping those keys as editor autocomplete. When provided (including `null`) the consumer owns drawer state, otherwise TopBar uses internal state
+  - `onActiveDrawerChange?`: `(activeDrawer: IActiveDrawer) => void` - Callback whenever a drawer opens or closes (icon clicks included)
   - `hasSwitchTheme`: `boolean` - Shows theme toggle option
   - `isLightMode`: `boolean` - Current theme mode state
   - `switchThemeText`: `string` - Text for theme switch button
@@ -2396,6 +2406,9 @@ This document provides a comprehensive inventory of all React components in the 
   - **Language Toggle**: Optional language switcher with custom text
   - **Theme Toggle**: Optional light/dark mode switcher
   - **User Drawer**: Customizable drawer with metadata, footer, and bespoke content
+  - **Left-Area Content**: Optional `leftAreaElement` replaces the search bar when `hasSearch` is false
+  - **Controlled Drawers**: Optional `activeDrawer`/`onActiveDrawerChange` open any drawer from outside the top bar (falls back to internal state when omitted)
+  - **Side Drawers**: `sideDrawers` add extra drawers with no toggle button, opened via `activeDrawer`, reusing the built-in open/close transition (desktop only; reserved/duplicate ids are ignored with a warning)
   - **Badge Support**: Optional badge with link or click handler
   - **Portal Rendering**: Dropdowns render to document.body
   - **Responsive Layout**: Flexbox layout with gap spacing
