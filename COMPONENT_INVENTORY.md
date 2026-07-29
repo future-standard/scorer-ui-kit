@@ -321,6 +321,11 @@ This document provides a comprehensive inventory of all React components in the 
   - Does not hijack arrow keys while a ChipDropdown menu is open
   - Cells never shrink (`flex-shrink: 0`): in a narrow container the row overflows rather than
     squashing the 56px cells. Overflow itself is undefined in v1 - wrap ChipBar if you need scrolling
+  - **Trap:** children must not be wrapped in a `Fragment`. `Children.toArray` flattens arrays but
+    not fragments, so the fragment itself arrives as the first child - `noDivider` then lands on the
+    (prop-less) fragment instead of the chip inside it, silently leaving the leading cell's hairline
+    in place. React only logs the invalid-prop warning on a re-render, never on mount, so the bug is
+    easy to miss on first render
 
 ---
 
@@ -381,8 +386,10 @@ This document provides a comprehensive inventory of all React components in the 
   - Action menu with per-row icon + label; selecting a row fires onClick and closes
   - **Labelled mode** (`label` set) is the Arrangement cell, the active-layout picker (Figma:
     Spaces / Top Bar / Arrangement Cell). The trigger becomes glyph (18px) + text + a 12px `Down`
-    caret, 56px tall but sized to its content instead of the 56px square, with 14px/16px padding and
-    no left divider - it always sits right of a ChipZoneBreak, which owns both hairlines
+    caret, 56px tall but sized to its content instead of the 56px square, with 14px/16px padding. In
+    the Arrangement layout it sits right of a ChipZoneBreak, which owns both hairlines - but `noDivider`
+    is not set automatically in labelled mode, it stays a plain pass-through defaulting to `false`.
+    Pass `noDivider` yourself, or the trigger keeps its own 1px divider next to the Zone Break's
   - The caret does **not** flip when the menu opens (Figma uses one caret asset in all three
     states). Note `SplitButton` swaps `Down`→`Close`; the two kit components differ on purpose
   - `triggerLabel` is only defaulted in icon-only mode. In labelled mode the visible text is the
