@@ -1,4 +1,5 @@
 import type React from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { MobileTab, TabContent, Tabs } from '../../Tabs/index';
 import { TabList, TabListWrapper } from '../../Tabs/TabList';
@@ -62,11 +63,25 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   loggedInUser,
   notificationsHistory,
   customDrawer,
+  sideDrawers,
   supportText,
   onLogout,
   onLanguageToggle,
   ...props
 }) => {
+  // Side drawers are opened only through the controlled `activeDrawer` prop, which
+  // the mobile navbar does not implement — so they are not supported on mobile.
+  // Warn once on mount (not per render) instead of failing silently. `customDrawer`
+  // remains fully supported.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: warn once on mount, not on every render
+  useEffect(() => {
+    if (sideDrawers?.length) {
+      console.warn(
+        'MobileNavbar: `sideDrawers` are not supported on mobile and will not open. Use `customDrawer` for a drawer that works across breakpoints.'
+      );
+    }
+  }, []);
+
   return (
     <Container>
       <Tabs>

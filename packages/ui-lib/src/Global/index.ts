@@ -85,6 +85,38 @@ export interface IUserSubmenuItem {
   href: string;
 }
 
+/**
+ * Identifies which TopBar drawer is currently open, or `null` when all are
+ * closed. Pass `activeDrawer`/`onActiveDrawerChange` to control it from outside the
+ * component (e.g. to open a drawer from a button in the page content).
+ *
+ * Built-in keys are `'user'`, `'notifications'` and `'custom'`; a side drawer is
+ * addressed by its own `id`, so the type also accepts any string.
+ */
+export type IActiveDrawer = 'user' | 'notifications' | 'custom' | (string & {}) | null;
+
+/**
+ * A drawer that has no top-bar toggle button. It is opened from anywhere in the
+ * app through the controlled `activeDrawer` prop (matched by `id`), and reuses
+ * the same open/close transition as the built-in drawers. Each can set its own
+ * `width`.
+ *
+ * Not supported on mobile: `GlobalUI` renders `MobileNavbar` below the large
+ * breakpoint, which does not implement side drawers. Use `customDrawer` for a
+ * drawer that works across breakpoints.
+ */
+export interface ISideDrawer {
+  /**
+   * Unique id used to open this drawer via `activeDrawer`. Must not be one of the
+   * reserved built-in keys (`'user'`, `'notifications'`, `'custom'`) or duplicate
+   * another side drawer's id: a reserved or duplicate id will not open from its
+   * trigger and logs a warning.
+   */
+  id: string;
+  content: ReactElement;
+  width?: string;
+}
+
 export interface ITopBar {
   hasNotifications?: boolean;
   userSubmenu?: IUserSubmenuItem[];
@@ -104,6 +136,21 @@ export interface ITopBar {
   userDrawerBespoke?: ReactElement;
   notificationsHistory?: INotificationsHistory;
   customDrawer?: ICustomDrawer;
+  /**
+   * Extra drawers with no top-bar toggle, opened from anywhere via the
+   * controlled `activeDrawer` prop (matched by `id`). Requires controlled usage.
+   * Desktop `TopBar` only — not supported by `GlobalUI` on mobile.
+   */
+  sideDrawers?: ISideDrawer[];
+  leftAreaElement?: ReactElement;
+  /**
+   * Which drawer is open, for controlled usage. When provided (including
+   * `null`), TopBar becomes controlled and the consumer owns the state.
+   * When omitted, TopBar manages the open drawer with its own internal state.
+   */
+  activeDrawer?: IActiveDrawer;
+  /** Called whenever a drawer is opened or closed (icon clicks included). */
+  onActiveDrawerChange?: (activeDrawer: IActiveDrawer) => void;
   hasSwitchTheme?: boolean;
   isLightMode?: boolean;
   switchThemeText?: string;
