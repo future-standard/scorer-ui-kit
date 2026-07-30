@@ -6,13 +6,20 @@ import Icon from '../../Icons/Icon';
 export type IChipVariant = 'icon' | 'text';
 
 interface OwnProps {
-  variant?: IChipVariant; // default 'text'
-  icon?: string; // icon name (@future-standard/icons) when variant='icon'
-  label?: string; // numeral/text when variant='text' (falls back to children)
-  selected?: boolean; // persistent selected state (Figma "Active"): wash + bar
-  noDivider?: boolean; // force-hide the 1px left divider
-  leaving?: boolean; // collapse the cell to zero width — the removal animation
-  onLeaveEnd?: () => void; // collapse finished (or was skipped): safe to unmount the cell now
+  /** content mode (default 'text') */
+  variant?: IChipVariant;
+  /** icon name (@future-standard/icons) when variant='icon' */
+  icon?: string;
+  /** numeral/text when variant='text' (falls back to children) */
+  label?: string;
+  /** persistent selected state (Figma "Active"): wash + bar */
+  selected?: boolean;
+  /** force-hide the 1px left divider */
+  noDivider?: boolean;
+  /** collapse the cell to zero width — the removal animation */
+  leaving?: boolean;
+  /** collapse finished (or was skipped): safe to unmount the cell now */
+  onLeaveEnd?: () => void;
 }
 
 export type IChipButton = OwnProps & ButtonHTMLAttributes<HTMLButtonElement>;

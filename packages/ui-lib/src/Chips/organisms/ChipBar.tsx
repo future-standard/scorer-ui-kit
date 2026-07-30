@@ -14,7 +14,8 @@ import {
 import styled from 'styled-components';
 
 interface OwnProps {
-  children: ReactNode; // the cells: any mix of ChipButton / ChipDropdown, in any order
+  /** the cells: any mix of ChipButton / ChipDropdown, in any order */
+  children: ReactNode;
 }
 
 export type IChipBar = OwnProps & HTMLAttributes<HTMLDivElement>;

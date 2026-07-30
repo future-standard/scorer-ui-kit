@@ -8,20 +8,28 @@ import ChipButton from '../atoms/ChipButton';
 export interface IChipDropdownItem {
   id: string;
   label: string;
-  icon?: string; // icon name (@future-standard/icons)
+  /** icon name (@future-standard/icons) */
+  icon?: string;
   disabled?: boolean;
   onClick?: () => void;
 }
 
 interface OwnProps {
   items: IChipDropdownItem[];
-  icon?: string; // icon-only mode: the trigger icon, 16px. Labelled mode: the leading glyph, 18px
-  label?: string; // visible trigger text, e.g. '6-up'; switches the trigger to labelled mode
-  selectedId?: string; // items[].id of the current row: --grey-4 background, check, radio semantics
-  checkIcon?: string; // icon name for the current-row indicator (default 'Success')
-  triggerLabel?: string; // trigger aria-label; defaulted to 'Space actions' in icon-only mode only
-  noDivider?: boolean; // pass-through: hide the chip's 1px left divider
-  disabled?: boolean; // disable the trigger
+  /** icon-only mode: the trigger icon, 16px. Labelled mode: the leading glyph, 18px */
+  icon?: string;
+  /** visible trigger text, e.g. '6-up'; switches the trigger to labelled mode */
+  label?: string;
+  /** items[].id of the current row: --grey-4 background, check, radio semantics */
+  selectedId?: string;
+  /** icon name for the current-row indicator (default 'Success') */
+  checkIcon?: string;
+  /** trigger aria-label; defaulted to 'Space actions' in icon-only mode only */
+  triggerLabel?: string;
+  /** pass-through: hide the chip's 1px left divider */
+  noDivider?: boolean;
+  /** disable the trigger */
+  disabled?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
