@@ -576,7 +576,7 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">22/22 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">22/22 infos</a><span class="filter-pill ok" aria-disabled="true">22 stories ok</span></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">25/25 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">25/25 infos</a><span class="filter-pill ok" aria-disabled="true">25 stories ok</span></div>
   </div>
 </header>
 <main>
@@ -2073,14 +2073,479 @@ Code:
   no-story-error
   no-doc-error"
   role="listitem"
+  aria-label="ChipBar">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> ChipBar</h2>
+      <div class="badges">
+        <label for="c-7-chips-organisms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-7-chips-organisms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-7-chips-organisms-stories" class="badge ok as-toggle">1 story</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/stories/Chips/organisms/ChipBar.stories.tsx">chips-organisms · ./src/stories/Chips/organisms/ChipBar.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-7-chips-organisms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-7-chips-organisms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-7-chips-organisms-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>File: /home/runner/work/scorer-ui-kit/scorer-ui-kit/node_modules/scorer-ui-kit/dist/index.modern.js
+Error:
+Component files in node_modules are not supported.
+The distributed files in node_modules usually don&#39;t contain the necessary comments or types needed to analyze component information.
+Configure TypeScript path aliases to map your package name to the source file instead.
+
+Example (tsconfig.json):
+{
+  &quot;compilerOptions&quot;: {
+    &quot;baseUrl&quot;: &quot;.&quot;,
+    &quot;paths&quot;: {
+      &quot;@design-system/button&quot;: [&quot;src/components/Button.tsx&quot;],
+      &quot;@design-system/*&quot;: [&quot;src/components/*&quot;]
+    }
+  }
+}
+
+Then import using:
+import { Button } from &#39;@design-system/button&#39;
+
+Storybook resolves tsconfig paths automatically.
+Code:
+/* File in node_modules */</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { ChipBar, ChipButton, ChipDropdown } from "scorer-ui-kit";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Chip Bar</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const _ChipBar = () =&gt; {
+  const showWorkspace = boolean(&#39;Show workspace chip&#39;, true);
+
+  // Spaces carry a stable uid and take their number from their position. That is what makes the
+  // removal legible: the chip you removed is the one that unmounts, and the chips to its right
+  // really do get a new number. Keying by the number instead would silently unmount the
+  // *rightmost* chip and change no label at all.
+  const [spaces, setSpaces] = useState&lt;ISpace[]&gt;([{ uid: &#39;s1&#39; }, { uid: &#39;s2&#39; }, { uid: &#39;s3&#39; }]);
+  const [selectedUid, setSelectedUid] = useState(&#39;s1&#39;);
+  const [leavingUid, setLeavingUid] = useState&lt;string | null&gt;(null);
+  const [isWorkspaceActive, setIsWorkspaceActive] = useState(false);
+  const nextUid = useRef(spaces.length + 1);
+
+  // a hidden Workspace chip cannot be the active cell
+  const workspaceActive = showWorkspace &amp;&amp; isWorkspaceActive;
+  const selectedNumber = String(spaces.findIndex((space) =&gt; space.uid === selectedUid) + 1);
+
+  const onWorkspaceClick = action(&#39;workspace-click&#39;);
+  const onSpaceClick = action(&#39;space-click&#39;);
+  const onAdd = action(&#39;add-space&#39;);
+  const onDuplicate = action(&#39;duplicate-space&#39;);
+  const onRemove = action(&#39;remove-space&#39;);
+
+  // Add and Duplicate both append: a Space carries no content of its own here, so a copy is just
+  // another Space on the right, taking the next number.
+  const appendSpace = () =&gt; {
+    const uid = `s${nextUid.current++}`;
+    setSpaces([...spaces, { uid }]);
+    setSelectedUid(uid);
+    setIsWorkspaceActive(false);
+  };
+
+  const dropSpace = (uid: string) =&gt; {
+    const index = spaces.findIndex((space) =&gt; space.uid === uid);
+    if (index &lt; 0) {
+      return; // already gone
+    }
+    const remaining = spaces.filter((space) =&gt; space.uid !== uid);
+    setSpaces(remaining);
+    // the Space that sat to the right takes its number — clamp when the last one went
+    setSelectedUid(remaining[Math.min(index, remaining.length - 1)].uid);
+    setLeavingUid(null);
+    setIsWorkspaceActive(false);
+  };
+
+  // Mark the cell as leaving and let the chip collapse; it calls onLeaveEnd when it is done (or
+  // immediately, if the user prefers reduced motion). The numbers to its right therefore only
+  // shift once the gap has finished closing.
+  const removeSelectedSpace = () =&gt; setLeavingUid(selectedUid);
+
+  const menuItems: IChipDropdownItem[] = [
+    {
+      id: &#39;add&#39;,
+      label: &#39;Add Space&#39;,
+      icon: &#39;Add&#39;,
+      disabled: spaces.length &gt;= MAX_SPACES,
+      onClick: () =&gt; {
+        onAdd();
+        appendSpace();
+      },
+    },
+    {
+      id: &#39;duplicate&#39;,
+      label: `Duplicate Space ${selectedNumber}`,
+      icon: &#39;Copy&#39;,
+      disabled: spaces.length &gt;= MAX_SPACES,
+      onClick: () =&gt; {
+        onDuplicate(selectedNumber);
+        appendSpace();
+      },
+    },
+    {
+      id: &#39;remove&#39;,
+      label: `Remove Space ${selectedNumber}`,
+      icon: &#39;Delete&#39;,
+      disabled: spaces.length &lt;= 1,
+      onClick: () =&gt; {
+        onRemove(selectedNumber);
+        removeSelectedSpace();
+      },
+    },
+  ];
+
+  return (
+    // room below the bar so the open dropdown menu is visible in the canvas
+    &lt;div style={{ padding: &#39;0 0 220px&#39; }}&gt;
+      &lt;ChipBar aria-label=&#39;Spaces&#39;&gt;
+        {showWorkspace ? (
+          &lt;ChipButton
+            variant=&#39;icon&#39;
+            icon=&#39;LayoutGrid&#39;
+            aria-label=&#39;Workspace&#39;
+            selected={workspaceActive}
+            onClick={() =&gt; {
+              onWorkspaceClick();
+              setIsWorkspaceActive(true);
+            }}
+          /&gt;
+        ) : null}
+        {spaces.map((space, index) =&gt; {
+          const number = String(index + 1);
+          return (
+            &lt;ChipButton
+              key={space.uid}
+              leaving={space.uid === leavingUid}
+              onLeaveEnd={() =&gt; dropSpace(space.uid)}
+              variant=&#39;text&#39;
+              label={number}
+              selected={!workspaceActive &amp;&amp; space.uid === selectedUid}
+              aria-label={`Space ${number}`}
+              onClick={() =&gt; {
+                onSpaceClick(number);
+                setSelectedUid(space.uid);
+                setIsWorkspaceActive(false);
+              }}
+            /&gt;
+          );
+        })}
+        {/* the Workspace is not a Space, so it cannot be duplicated or removed —
+            the whole menu is disabled while it is the active cell */}
+        &lt;ChipDropdown
+          items={menuItems}
+          disabled={workspaceActive}
+          onOpenChange={action(&#39;open-change&#39;)}
+        /&gt;
+      &lt;/ChipBar&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="ChipButton">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> ChipButton</h2>
+      <div class="badges">
+        <label for="c-8-chips-atoms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-8-chips-atoms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-8-chips-atoms-stories" class="badge ok as-toggle">1 story</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/stories/Chips/atoms/ChipButton.stories.tsx">chips-atoms · ./src/stories/Chips/atoms/ChipButton.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-8-chips-atoms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-8-chips-atoms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-8-chips-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>File: /home/runner/work/scorer-ui-kit/scorer-ui-kit/node_modules/scorer-ui-kit/dist/index.modern.js
+Error:
+Component files in node_modules are not supported.
+The distributed files in node_modules usually don&#39;t contain the necessary comments or types needed to analyze component information.
+Configure TypeScript path aliases to map your package name to the source file instead.
+
+Example (tsconfig.json):
+{
+  &quot;compilerOptions&quot;: {
+    &quot;baseUrl&quot;: &quot;.&quot;,
+    &quot;paths&quot;: {
+      &quot;@design-system/button&quot;: [&quot;src/components/Button.tsx&quot;],
+      &quot;@design-system/*&quot;: [&quot;src/components/*&quot;]
+    }
+  }
+}
+
+Then import using:
+import { Button } from &#39;@design-system/button&#39;
+
+Storybook resolves tsconfig paths automatically.
+Code:
+/* File in node_modules */</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { ChipButton } from "scorer-ui-kit";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Chip Button</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const _ChipButton = () =&gt; {
+  const iconList = generateIconList();
+  const variant = select(&#39;Variant&#39;, { Icon: &#39;icon&#39;, Text: &#39;text&#39; }, &#39;text&#39;);
+  const icon = select(&#39;Icon&#39;, iconList, &#39;LayoutGrid&#39;);
+  const label = text(&#39;Label&#39;, &#39;1&#39;);
+  const selected = boolean(&#39;Selected&#39;, false);
+  const noDivider = boolean(&#39;No divider&#39;, false);
+  const onClick = action(&#39;chip-click&#39;);
+
+  return (
+    &lt;ChipButton
+      variant={variant as IChipVariant}
+      icon={icon}
+      label={label}
+      selected={selected}
+      noDivider={noDivider}
+      onClick={onClick}
+      aria-label={variant === &#39;icon&#39; ? &#39;Workspace&#39; : `Space ${label}`}
+    /&gt;
+  );
+};</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="ChipDropdown">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> ChipDropdown</h2>
+      <div class="badges">
+        <label for="c-9-chips-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-9-chips-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-9-chips-molecules-stories" class="badge ok as-toggle">1 story</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/stories/Chips/molecules/ChipDropdown.stories.tsx">chips-molecules · ./src/stories/Chips/molecules/ChipDropdown.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-9-chips-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-9-chips-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-9-chips-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>File: /home/runner/work/scorer-ui-kit/scorer-ui-kit/node_modules/scorer-ui-kit/dist/index.modern.js
+Error:
+Component files in node_modules are not supported.
+The distributed files in node_modules usually don&#39;t contain the necessary comments or types needed to analyze component information.
+Configure TypeScript path aliases to map your package name to the source file instead.
+
+Example (tsconfig.json):
+{
+  &quot;compilerOptions&quot;: {
+    &quot;baseUrl&quot;: &quot;.&quot;,
+    &quot;paths&quot;: {
+      &quot;@design-system/button&quot;: [&quot;src/components/Button.tsx&quot;],
+      &quot;@design-system/*&quot;: [&quot;src/components/*&quot;]
+    }
+  }
+}
+
+Then import using:
+import { Button } from &#39;@design-system/button&#39;
+
+Storybook resolves tsconfig paths automatically.
+Code:
+/* File in node_modules */</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { ChipDropdown } from "scorer-ui-kit";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Chip Dropdown</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const _ChipDropdown = () =&gt; {
+  const noDivider = boolean(&#39;No divider&#39;, false);
+  const disabled = boolean(&#39;Disabled&#39;, false);
+
+  const items: IChipDropdownItem[] = [
+    { id: &#39;add&#39;, label: &#39;Add Space&#39;, icon: &#39;Add&#39;, onClick: action(&#39;add-space&#39;) },
+    {
+      id: &#39;duplicate&#39;,
+      label: &#39;Duplicate Space 3&#39;,
+      icon: &#39;Copy&#39;,
+      onClick: action(&#39;duplicate-space&#39;),
+    },
+    { id: &#39;remove&#39;, label: &#39;Remove Space 3&#39;, icon: &#39;Delete&#39;, onClick: action(&#39;remove-space&#39;) },
+  ];
+
+  return (
+    // room below the trigger so the open menu is visible in the canvas
+    &lt;div style={{ padding: &#39;20px 20px 220px&#39; }}&gt;
+      &lt;ChipDropdown
+        items={items}
+        noDivider={noDivider}
+        disabled={disabled}
+        onOpenChange={action(&#39;open-change&#39;)}
+      /&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
   aria-label="DatePicker">
   <div class="head">
     <div class="title">
       <h2><span class="status-dot dot-err"></span> DatePicker</h2>
       <div class="badges">
-        <label for="c-7-filters-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-7-filters-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-7-filters-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-10-filters-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-10-filters-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-10-filters-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -2091,9 +2556,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-7-filters-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-7-filters-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-7-filters-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-10-filters-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-10-filters-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-10-filters-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -2227,9 +2692,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> DebouncedSearcher</h2>
       <div class="badges">
-        <label for="c-8-misc-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-8-misc-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-8-misc-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-11-misc-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-11-misc-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-11-misc-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -2240,9 +2705,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-8-misc-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-8-misc-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-8-misc-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-11-misc-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-11-misc-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-11-misc-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -2349,9 +2814,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> DurationSlider</h2>
       <div class="badges">
-        <label for="c-9-form-input-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-9-form-input-info" class="badge info as-toggle">1 info</label>
-        <label for="c-9-form-input-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-12-form-input-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-12-form-input-info" class="badge info as-toggle">1 info</label>
+        <label for="c-12-form-input-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -2362,9 +2827,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-9-form-input-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-9-form-input-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-9-form-input-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-12-form-input-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-12-form-input-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-12-form-input-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -2564,9 +3029,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> EditCell</h2>
       <div class="badges">
-        <label for="c-10-tables-atoms-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-10-tables-atoms-info" class="badge info as-toggle">1 info</label>
-        <label for="c-10-tables-atoms-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-13-tables-atoms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-13-tables-atoms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-13-tables-atoms-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -2577,9 +3042,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-10-tables-atoms-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-10-tables-atoms-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-10-tables-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-13-tables-atoms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-13-tables-atoms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-13-tables-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -2688,9 +3153,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> FilterButton</h2>
       <div class="badges">
-        <label for="c-11-filters-atoms-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-11-filters-atoms-info" class="badge info as-toggle">1 info</label>
-        <label for="c-11-filters-atoms-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-14-filters-atoms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-14-filters-atoms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-14-filters-atoms-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -2701,9 +3166,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-11-filters-atoms-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-11-filters-atoms-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-11-filters-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-14-filters-atoms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-14-filters-atoms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-14-filters-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -2802,9 +3267,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> FilterDropdown</h2>
       <div class="badges">
-        <label for="c-12-filters-molecules-filterdropdown-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-12-filters-molecules-filterdropdown-info" class="badge info as-toggle">1 info</label>
-        <label for="c-12-filters-molecules-filterdropdown-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-15-filters-molecules-filterdropdown-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-15-filters-molecules-filterdropdown-info" class="badge info as-toggle">1 info</label>
+        <label for="c-15-filters-molecules-filterdropdown-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -2815,9 +3280,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-12-filters-molecules-filterdropdown-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-12-filters-molecules-filterdropdown-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-12-filters-molecules-filterdropdown-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-15-filters-molecules-filterdropdown-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-15-filters-molecules-filterdropdown-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-15-filters-molecules-filterdropdown-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -3124,9 +3589,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> GlobalUI</h2>
       <div class="badges">
-        <label for="c-13-global-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-13-global-info" class="badge info as-toggle">1 info</label>
-        <label for="c-13-global-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-16-global-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-16-global-info" class="badge info as-toggle">1 info</label>
+        <label for="c-16-global-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -3137,9 +3602,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-13-global-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-13-global-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-13-global-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-16-global-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-16-global-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-16-global-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -3463,9 +3928,9 @@ import { Route, Routes } from "react-router-dom";</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-err"></span> GlobalUI</h2>
       <div class="badges">
-        <label for="c-14-global-organisms-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-14-global-organisms-info" class="badge info as-toggle">1 info</label>
-        <label for="c-14-global-organisms-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-17-global-organisms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-17-global-organisms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-17-global-organisms-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -3476,9 +3941,9 @@ import { Route, Routes } from "react-router-dom";</code></pre>
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-14-global-organisms-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-14-global-organisms-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-14-global-organisms-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-17-global-organisms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-17-global-organisms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-17-global-organisms-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -3588,9 +4053,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> IntroductionText</h2>
       <div class="badges">
-        <label for="c-15-pages-atoms-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-15-pages-atoms-info" class="badge info as-toggle">1 info</label>
-        <label for="c-15-pages-atoms-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-18-pages-atoms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-18-pages-atoms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-18-pages-atoms-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -3601,9 +4066,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-15-pages-atoms-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-15-pages-atoms-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-15-pages-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-18-pages-atoms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-18-pages-atoms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-18-pages-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -3696,9 +4161,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> Mix</h2>
       <div class="badges">
-        <label for="c-16-alerts-mix-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-16-alerts-mix-info" class="badge info as-toggle">1 info</label>
-        <label for="c-16-alerts-mix-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-19-alerts-mix-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-19-alerts-mix-info" class="badge info as-toggle">1 info</label>
+        <label for="c-19-alerts-mix-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -3709,9 +4174,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-16-alerts-mix-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-16-alerts-mix-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-16-alerts-mix-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-19-alerts-mix-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-19-alerts-mix-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-19-alerts-mix-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -3859,9 +4324,9 @@ import { CardModalExample } from "scorer-ui-kit-storybook";</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-err"></span> Modals</h2>
       <div class="badges">
-        <label for="c-17-alerts-modals-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-17-alerts-modals-info" class="badge info as-toggle">1 info</label>
-        <label for="c-17-alerts-modals-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-20-alerts-modals-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-20-alerts-modals-info" class="badge info as-toggle">1 info</label>
+        <label for="c-20-alerts-modals-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -3872,9 +4337,9 @@ import { CardModalExample } from "scorer-ui-kit-storybook";</code></pre>
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-17-alerts-modals-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-17-alerts-modals-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-17-alerts-modals-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-20-alerts-modals-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-20-alerts-modals-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-20-alerts-modals-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -4024,9 +4489,9 @@ export default BaseModalStory;
     <div class="title">
       <h2><span class="status-dot dot-err"></span> PageHeader</h2>
       <div class="badges">
-        <label for="c-18-pages-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-18-pages-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-18-pages-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-21-pages-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-21-pages-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-21-pages-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -4037,9 +4502,9 @@ export default BaseModalStory;
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-18-pages-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-18-pages-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-18-pages-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-21-pages-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-21-pages-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-21-pages-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -4186,9 +4651,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> Spinner</h2>
       <div class="badges">
-        <label for="c-19-misc-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-19-misc-info" class="badge info as-toggle">1 info</label>
-        <label for="c-19-misc-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-22-misc-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-22-misc-info" class="badge info as-toggle">1 info</label>
+        <label for="c-22-misc-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -4199,9 +4664,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-19-misc-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-19-misc-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-19-misc-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-22-misc-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-22-misc-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-22-misc-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -4320,9 +4785,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> TypeTableCustom</h2>
       <div class="badges">
-        <label for="c-20-tables-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-20-tables-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-20-tables-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-23-tables-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-23-tables-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-23-tables-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -4333,9 +4798,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-20-tables-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-20-tables-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-20-tables-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-23-tables-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-23-tables-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-23-tables-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -4468,9 +4933,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> UtilityHeader</h2>
       <div class="badges">
-        <label for="c-21-global-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-21-global-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-21-global-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-24-global-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-24-global-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-24-global-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -4481,9 +4946,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-21-global-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-21-global-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-21-global-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-24-global-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-24-global-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-24-global-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -4606,7 +5071,7 @@ Code:
           <label for="component-file-in-node-modules-toggle" class="group-header">
             <span class="caret">▸</span>
             <span class="group-title">Component file in node_modules</span>
-            <span class="group-count">19</span>
+            <span class="group-count">22</span>
           </label>
           <div class="group-cards">
 <article
@@ -5455,14 +5920,479 @@ Code:
   no-story-error
   no-doc-error"
   role="listitem"
+  aria-label="ChipBar">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> ChipBar</h2>
+      <div class="badges">
+        <label for="c-error-6-chips-organisms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-6-chips-organisms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-6-chips-organisms-stories" class="badge ok as-toggle">1 story</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/stories/Chips/organisms/ChipBar.stories.tsx">chips-organisms · ./src/stories/Chips/organisms/ChipBar.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-error-6-chips-organisms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-6-chips-organisms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-6-chips-organisms-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>File: /home/runner/work/scorer-ui-kit/scorer-ui-kit/node_modules/scorer-ui-kit/dist/index.modern.js
+Error:
+Component files in node_modules are not supported.
+The distributed files in node_modules usually don&#39;t contain the necessary comments or types needed to analyze component information.
+Configure TypeScript path aliases to map your package name to the source file instead.
+
+Example (tsconfig.json):
+{
+  &quot;compilerOptions&quot;: {
+    &quot;baseUrl&quot;: &quot;.&quot;,
+    &quot;paths&quot;: {
+      &quot;@design-system/button&quot;: [&quot;src/components/Button.tsx&quot;],
+      &quot;@design-system/*&quot;: [&quot;src/components/*&quot;]
+    }
+  }
+}
+
+Then import using:
+import { Button } from &#39;@design-system/button&#39;
+
+Storybook resolves tsconfig paths automatically.
+Code:
+/* File in node_modules */</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { ChipBar, ChipButton, ChipDropdown } from "scorer-ui-kit";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Chip Bar</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const _ChipBar = () =&gt; {
+  const showWorkspace = boolean(&#39;Show workspace chip&#39;, true);
+
+  // Spaces carry a stable uid and take their number from their position. That is what makes the
+  // removal legible: the chip you removed is the one that unmounts, and the chips to its right
+  // really do get a new number. Keying by the number instead would silently unmount the
+  // *rightmost* chip and change no label at all.
+  const [spaces, setSpaces] = useState&lt;ISpace[]&gt;([{ uid: &#39;s1&#39; }, { uid: &#39;s2&#39; }, { uid: &#39;s3&#39; }]);
+  const [selectedUid, setSelectedUid] = useState(&#39;s1&#39;);
+  const [leavingUid, setLeavingUid] = useState&lt;string | null&gt;(null);
+  const [isWorkspaceActive, setIsWorkspaceActive] = useState(false);
+  const nextUid = useRef(spaces.length + 1);
+
+  // a hidden Workspace chip cannot be the active cell
+  const workspaceActive = showWorkspace &amp;&amp; isWorkspaceActive;
+  const selectedNumber = String(spaces.findIndex((space) =&gt; space.uid === selectedUid) + 1);
+
+  const onWorkspaceClick = action(&#39;workspace-click&#39;);
+  const onSpaceClick = action(&#39;space-click&#39;);
+  const onAdd = action(&#39;add-space&#39;);
+  const onDuplicate = action(&#39;duplicate-space&#39;);
+  const onRemove = action(&#39;remove-space&#39;);
+
+  // Add and Duplicate both append: a Space carries no content of its own here, so a copy is just
+  // another Space on the right, taking the next number.
+  const appendSpace = () =&gt; {
+    const uid = `s${nextUid.current++}`;
+    setSpaces([...spaces, { uid }]);
+    setSelectedUid(uid);
+    setIsWorkspaceActive(false);
+  };
+
+  const dropSpace = (uid: string) =&gt; {
+    const index = spaces.findIndex((space) =&gt; space.uid === uid);
+    if (index &lt; 0) {
+      return; // already gone
+    }
+    const remaining = spaces.filter((space) =&gt; space.uid !== uid);
+    setSpaces(remaining);
+    // the Space that sat to the right takes its number — clamp when the last one went
+    setSelectedUid(remaining[Math.min(index, remaining.length - 1)].uid);
+    setLeavingUid(null);
+    setIsWorkspaceActive(false);
+  };
+
+  // Mark the cell as leaving and let the chip collapse; it calls onLeaveEnd when it is done (or
+  // immediately, if the user prefers reduced motion). The numbers to its right therefore only
+  // shift once the gap has finished closing.
+  const removeSelectedSpace = () =&gt; setLeavingUid(selectedUid);
+
+  const menuItems: IChipDropdownItem[] = [
+    {
+      id: &#39;add&#39;,
+      label: &#39;Add Space&#39;,
+      icon: &#39;Add&#39;,
+      disabled: spaces.length &gt;= MAX_SPACES,
+      onClick: () =&gt; {
+        onAdd();
+        appendSpace();
+      },
+    },
+    {
+      id: &#39;duplicate&#39;,
+      label: `Duplicate Space ${selectedNumber}`,
+      icon: &#39;Copy&#39;,
+      disabled: spaces.length &gt;= MAX_SPACES,
+      onClick: () =&gt; {
+        onDuplicate(selectedNumber);
+        appendSpace();
+      },
+    },
+    {
+      id: &#39;remove&#39;,
+      label: `Remove Space ${selectedNumber}`,
+      icon: &#39;Delete&#39;,
+      disabled: spaces.length &lt;= 1,
+      onClick: () =&gt; {
+        onRemove(selectedNumber);
+        removeSelectedSpace();
+      },
+    },
+  ];
+
+  return (
+    // room below the bar so the open dropdown menu is visible in the canvas
+    &lt;div style={{ padding: &#39;0 0 220px&#39; }}&gt;
+      &lt;ChipBar aria-label=&#39;Spaces&#39;&gt;
+        {showWorkspace ? (
+          &lt;ChipButton
+            variant=&#39;icon&#39;
+            icon=&#39;LayoutGrid&#39;
+            aria-label=&#39;Workspace&#39;
+            selected={workspaceActive}
+            onClick={() =&gt; {
+              onWorkspaceClick();
+              setIsWorkspaceActive(true);
+            }}
+          /&gt;
+        ) : null}
+        {spaces.map((space, index) =&gt; {
+          const number = String(index + 1);
+          return (
+            &lt;ChipButton
+              key={space.uid}
+              leaving={space.uid === leavingUid}
+              onLeaveEnd={() =&gt; dropSpace(space.uid)}
+              variant=&#39;text&#39;
+              label={number}
+              selected={!workspaceActive &amp;&amp; space.uid === selectedUid}
+              aria-label={`Space ${number}`}
+              onClick={() =&gt; {
+                onSpaceClick(number);
+                setSelectedUid(space.uid);
+                setIsWorkspaceActive(false);
+              }}
+            /&gt;
+          );
+        })}
+        {/* the Workspace is not a Space, so it cannot be duplicated or removed —
+            the whole menu is disabled while it is the active cell */}
+        &lt;ChipDropdown
+          items={menuItems}
+          disabled={workspaceActive}
+          onOpenChange={action(&#39;open-change&#39;)}
+        /&gt;
+      &lt;/ChipBar&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="ChipButton">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> ChipButton</h2>
+      <div class="badges">
+        <label for="c-error-7-chips-atoms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-7-chips-atoms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-7-chips-atoms-stories" class="badge ok as-toggle">1 story</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/stories/Chips/atoms/ChipButton.stories.tsx">chips-atoms · ./src/stories/Chips/atoms/ChipButton.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-error-7-chips-atoms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-7-chips-atoms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-7-chips-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>File: /home/runner/work/scorer-ui-kit/scorer-ui-kit/node_modules/scorer-ui-kit/dist/index.modern.js
+Error:
+Component files in node_modules are not supported.
+The distributed files in node_modules usually don&#39;t contain the necessary comments or types needed to analyze component information.
+Configure TypeScript path aliases to map your package name to the source file instead.
+
+Example (tsconfig.json):
+{
+  &quot;compilerOptions&quot;: {
+    &quot;baseUrl&quot;: &quot;.&quot;,
+    &quot;paths&quot;: {
+      &quot;@design-system/button&quot;: [&quot;src/components/Button.tsx&quot;],
+      &quot;@design-system/*&quot;: [&quot;src/components/*&quot;]
+    }
+  }
+}
+
+Then import using:
+import { Button } from &#39;@design-system/button&#39;
+
+Storybook resolves tsconfig paths automatically.
+Code:
+/* File in node_modules */</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { ChipButton } from "scorer-ui-kit";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Chip Button</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const _ChipButton = () =&gt; {
+  const iconList = generateIconList();
+  const variant = select(&#39;Variant&#39;, { Icon: &#39;icon&#39;, Text: &#39;text&#39; }, &#39;text&#39;);
+  const icon = select(&#39;Icon&#39;, iconList, &#39;LayoutGrid&#39;);
+  const label = text(&#39;Label&#39;, &#39;1&#39;);
+  const selected = boolean(&#39;Selected&#39;, false);
+  const noDivider = boolean(&#39;No divider&#39;, false);
+  const onClick = action(&#39;chip-click&#39;);
+
+  return (
+    &lt;ChipButton
+      variant={variant as IChipVariant}
+      icon={icon}
+      label={label}
+      selected={selected}
+      noDivider={noDivider}
+      onClick={onClick}
+      aria-label={variant === &#39;icon&#39; ? &#39;Workspace&#39; : `Space ${label}`}
+    /&gt;
+  );
+};</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="ChipDropdown">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> ChipDropdown</h2>
+      <div class="badges">
+        <label for="c-error-8-chips-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-8-chips-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-8-chips-molecules-stories" class="badge ok as-toggle">1 story</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/stories/Chips/molecules/ChipDropdown.stories.tsx">chips-molecules · ./src/stories/Chips/molecules/ChipDropdown.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-error-8-chips-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-8-chips-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-8-chips-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>File: /home/runner/work/scorer-ui-kit/scorer-ui-kit/node_modules/scorer-ui-kit/dist/index.modern.js
+Error:
+Component files in node_modules are not supported.
+The distributed files in node_modules usually don&#39;t contain the necessary comments or types needed to analyze component information.
+Configure TypeScript path aliases to map your package name to the source file instead.
+
+Example (tsconfig.json):
+{
+  &quot;compilerOptions&quot;: {
+    &quot;baseUrl&quot;: &quot;.&quot;,
+    &quot;paths&quot;: {
+      &quot;@design-system/button&quot;: [&quot;src/components/Button.tsx&quot;],
+      &quot;@design-system/*&quot;: [&quot;src/components/*&quot;]
+    }
+  }
+}
+
+Then import using:
+import { Button } from &#39;@design-system/button&#39;
+
+Storybook resolves tsconfig paths automatically.
+Code:
+/* File in node_modules */</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { ChipDropdown } from "scorer-ui-kit";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Chip Dropdown</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const _ChipDropdown = () =&gt; {
+  const noDivider = boolean(&#39;No divider&#39;, false);
+  const disabled = boolean(&#39;Disabled&#39;, false);
+
+  const items: IChipDropdownItem[] = [
+    { id: &#39;add&#39;, label: &#39;Add Space&#39;, icon: &#39;Add&#39;, onClick: action(&#39;add-space&#39;) },
+    {
+      id: &#39;duplicate&#39;,
+      label: &#39;Duplicate Space 3&#39;,
+      icon: &#39;Copy&#39;,
+      onClick: action(&#39;duplicate-space&#39;),
+    },
+    { id: &#39;remove&#39;, label: &#39;Remove Space 3&#39;, icon: &#39;Delete&#39;, onClick: action(&#39;remove-space&#39;) },
+  ];
+
+  return (
+    // room below the trigger so the open menu is visible in the canvas
+    &lt;div style={{ padding: &#39;20px 20px 220px&#39; }}&gt;
+      &lt;ChipDropdown
+        items={items}
+        noDivider={noDivider}
+        disabled={disabled}
+        onOpenChange={action(&#39;open-change&#39;)}
+      /&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
   aria-label="DatePicker">
   <div class="head">
     <div class="title">
       <h2><span class="status-dot dot-err"></span> DatePicker</h2>
       <div class="badges">
-        <label for="c-error-6-filters-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-6-filters-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-6-filters-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-9-filters-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-9-filters-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-9-filters-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -5473,9 +6403,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-6-filters-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-6-filters-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-6-filters-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-9-filters-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-9-filters-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-9-filters-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -5609,9 +6539,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> DebouncedSearcher</h2>
       <div class="badges">
-        <label for="c-error-7-misc-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-7-misc-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-7-misc-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-10-misc-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-10-misc-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-10-misc-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -5622,9 +6552,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-7-misc-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-7-misc-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-7-misc-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-10-misc-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-10-misc-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-10-misc-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -5731,9 +6661,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> DurationSlider</h2>
       <div class="badges">
-        <label for="c-error-8-form-input-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-8-form-input-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-8-form-input-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-11-form-input-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-11-form-input-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-11-form-input-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -5744,9 +6674,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-8-form-input-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-8-form-input-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-8-form-input-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-11-form-input-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-11-form-input-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-11-form-input-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -5946,9 +6876,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> EditCell</h2>
       <div class="badges">
-        <label for="c-error-9-tables-atoms-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-9-tables-atoms-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-9-tables-atoms-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-12-tables-atoms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-12-tables-atoms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-12-tables-atoms-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -5959,9 +6889,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-9-tables-atoms-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-9-tables-atoms-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-9-tables-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-12-tables-atoms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-12-tables-atoms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-12-tables-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -6070,9 +7000,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> FilterButton</h2>
       <div class="badges">
-        <label for="c-error-10-filters-atoms-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-10-filters-atoms-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-10-filters-atoms-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-13-filters-atoms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-13-filters-atoms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-13-filters-atoms-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -6083,9 +7013,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-10-filters-atoms-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-10-filters-atoms-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-10-filters-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-13-filters-atoms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-13-filters-atoms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-13-filters-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -6184,9 +7114,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> FilterDropdown</h2>
       <div class="badges">
-        <label for="c-error-11-filters-molecules-filterdropdown-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-11-filters-molecules-filterdropdown-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-11-filters-molecules-filterdropdown-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-14-filters-molecules-filterdropdown-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-14-filters-molecules-filterdropdown-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-14-filters-molecules-filterdropdown-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -6197,9 +7127,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-11-filters-molecules-filterdropdown-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-11-filters-molecules-filterdropdown-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-11-filters-molecules-filterdropdown-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-14-filters-molecules-filterdropdown-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-14-filters-molecules-filterdropdown-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-14-filters-molecules-filterdropdown-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -6506,9 +7436,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> GlobalUI</h2>
       <div class="badges">
-        <label for="c-error-12-global-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-12-global-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-12-global-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-15-global-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-15-global-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-15-global-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -6519,9 +7449,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-12-global-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-12-global-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-12-global-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-15-global-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-15-global-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-15-global-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -6845,9 +7775,9 @@ import { Route, Routes } from "react-router-dom";</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-err"></span> GlobalUI</h2>
       <div class="badges">
-        <label for="c-error-13-global-organisms-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-13-global-organisms-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-13-global-organisms-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-16-global-organisms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-16-global-organisms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-16-global-organisms-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -6858,9 +7788,9 @@ import { Route, Routes } from "react-router-dom";</code></pre>
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-13-global-organisms-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-13-global-organisms-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-13-global-organisms-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-16-global-organisms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-16-global-organisms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-16-global-organisms-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -6970,9 +7900,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> IntroductionText</h2>
       <div class="badges">
-        <label for="c-error-14-pages-atoms-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-14-pages-atoms-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-14-pages-atoms-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-17-pages-atoms-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-17-pages-atoms-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-17-pages-atoms-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -6983,9 +7913,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-14-pages-atoms-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-14-pages-atoms-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-14-pages-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-17-pages-atoms-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-17-pages-atoms-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-17-pages-atoms-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -7078,9 +8008,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> PageHeader</h2>
       <div class="badges">
-        <label for="c-error-15-pages-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-15-pages-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-15-pages-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-18-pages-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-18-pages-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-18-pages-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -7091,9 +8021,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-15-pages-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-15-pages-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-15-pages-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-18-pages-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-18-pages-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-18-pages-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -7240,9 +8170,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> Spinner</h2>
       <div class="badges">
-        <label for="c-error-16-misc-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-16-misc-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-16-misc-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-19-misc-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-19-misc-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-19-misc-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -7253,9 +8183,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-16-misc-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-16-misc-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-16-misc-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-19-misc-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-19-misc-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-19-misc-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -7374,9 +8304,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> TypeTableCustom</h2>
       <div class="badges">
-        <label for="c-error-17-tables-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-17-tables-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-17-tables-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-20-tables-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-20-tables-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-20-tables-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -7387,9 +8317,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-17-tables-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-17-tables-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-17-tables-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-20-tables-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-20-tables-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-20-tables-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -7522,9 +8452,9 @@ Code:
     <div class="title">
       <h2><span class="status-dot dot-err"></span> UtilityHeader</h2>
       <div class="badges">
-        <label for="c-error-18-global-molecules-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-error-18-global-molecules-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-18-global-molecules-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-error-21-global-molecules-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-21-global-molecules-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-21-global-molecules-stories" class="badge ok as-toggle">1 story</label>
         
       </div>
     </div>
@@ -7535,9 +8465,9 @@ Code:
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-error-18-global-molecules-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-error-18-global-molecules-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-error-18-global-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-error-21-global-molecules-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-21-global-molecules-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-21-global-molecules-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
