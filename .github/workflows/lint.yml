@@ -37,6 +37,11 @@ jobs:
     - name: TypeScript check
       run: npm run test:types -w packages/ui-lib
 
+    # ~2s. Targeted regression tests only — behavioural verification is the story sweep
+    # (pr-deploy.yml); these cover the few things the sweep structurally cannot see.
+    - name: Unit tests
+      run: npm run test:unit -w packages/ui-lib
+
     - name: Build
       run: npm run build -w packages/ui-lib
 

@@ -87,6 +87,7 @@ npm run sweep
   - `any` is discouraged (`noExplicitAny` warns); TypeScript strict mode is enabled — do not use `any`.
 - Prefer **arrow-function components** (`const Foo = () => { ... }`) for new and refactored top-level components.
 - Prefer explicit interfaces for public component props.
+- Comments follow [COMMENT_STYLE_GUIDE.md](COMMENT_STYLE_GUIDE.md). In short: default to none, and write one only when you can name the wrong change it prevents. Design deviations and status notes go in the PR description, not in the code. Keep every comment **out of** `styled` / `css` / `keyframes` template literals — a single backtick inside one ends the literal, and Biome then reformats the result into code that no longer parses.
 
 ## Dependency policy (maintainers)
 
@@ -274,6 +275,12 @@ The exhaustive, source-of-truth export list lives in [`packages/ui-lib/src/index
 - Pagination
 - MediaBox
 - ActionsBar
+
+#### Chip Components (4 components)
+- ChipBar
+- ChipButton
+- ChipDropdown
+- ChipZoneBreak
 
 #### LineUI Components (3 components)
 - LineUI

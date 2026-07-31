@@ -1,7 +1,7 @@
 # Scorer UI Kit - Component Inventory
 
 **Generated:** 2026-02-04
-**Last Updated:** 2026-02-06
+**Last Updated:** 2026-07-28
 **Source:** ui-lib/src & storybook/src/stories
 
 This document provides a comprehensive inventory of all React components in the Scorer UI Kit to be used by human and AI, organized alphabetically with their corresponding Storybook documentation status, file paths, props, and notable features.
@@ -300,6 +300,143 @@ This document provides a comprehensive inventory of all React components in the 
   - Controlled/uncontrolled modes
   - Accessibility compliant
   - Visual state management (on/off/indeterminate)
+
+---
+
+### ChipBar
+- **Status:** ✅ Has Storybook
+- **Component Path:** `ui-lib/src/Chips/organisms/ChipBar.tsx`
+- **Story Path:** `storybook/src/stories/Chips/organisms/ChipBar.stories.tsx`
+- **Exported From:** `Chips`
+- **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
+  - `children`: `ReactNode` - The cells: any mix of ChipButton / ChipDropdown, in any order (required)
+  - Plus all standard HTML div attributes (`className`, `style`, `aria-label`, etc.)
+- **Notable Features:**
+  - 56px top-bar chip row (Figma: Spaces / Top Bar / Space Selection)
+  - Pure layout glue - holds no selection state; the consumer sets `selected` per chip
+  - Composes ChipButton and ChipDropdown children in any order and any count
+  - Suppresses the first cell's 1px left divider automatically
+  - `role='toolbar'` with arrow-key roving focus (Left/Right/Home/End), one tab stop - kept in
+    sync by a MutationObserver, so a child that enables its own button cannot add a second tab stop
+  - Does not hijack arrow keys while a ChipDropdown menu is open
+  - Cells never shrink (`flex-shrink: 0`): in a narrow container the row overflows rather than
+    squashing the 56px cells. Overflow itself is undefined in v1 - wrap ChipBar if you need scrolling
+  - **Trap:** children must not be wrapped in a `Fragment`. `Children.toArray` flattens arrays but
+    not fragments, so the fragment itself arrives as the first child - `noDivider` then lands on the
+    (prop-less) fragment instead of the chip inside it, silently leaving the leading cell's hairline
+    in place. React only logs the invalid-prop warning on a re-render, never on mount, so the bug is
+    easy to miss on first render
+
+---
+
+### ChipButton
+- **Status:** ✅ Has Storybook
+- **Component Path:** `ui-lib/src/Chips/atoms/ChipButton.tsx`
+- **Story Path:** `storybook/src/stories/Chips/atoms/ChipButton.stories.tsx`
+- **Exported From:** `Chips`
+- **Props:** (extends `ButtonHTMLAttributes<HTMLButtonElement>`)
+  - `variant?`: `IChipVariant` (`'icon' | 'text'`) - Content mode; 'icon' renders an Icon, 'text' renders a number/letter label (default: 'text')
+  - `icon?`: `string` - Icon name rendered when variant='icon'
+  - `label?`: `string` - Text/numeral rendered when variant='text' (falls back to children)
+  - `selected?`: `boolean` - Persistent selected state: primary wash background + bottom bar (default: false). Surfaces as `aria-pressed`, making the chip a toggle button - unless the cell is given `aria-haspopup`, in which case it is a menu button and `aria-pressed` is omitted so `aria-expanded` is its only state
+  - `noDivider?`: `boolean` - Suppress the 1px left divider shown by default on all chips (default: false)
+  - `leaving?`: `boolean` - Play the removal animation: collapse the cell to zero width (default: false)
+  - `onLeaveEnd?`: `() => void` - Fired when the collapse finishes, or immediately when the user prefers reduced motion. Unmount the cell here
+  - Plus all standard HTML button attributes (`onClick`, `disabled`, `aria-label`, etc.)
+- **Notable Features:**
+  - 56×56 top-bar "Space" chip (Figma: Spaces / Top Bar / Chip)
+  - Two content variants: icon (workspace grid glyph) and text/number
+  - CSS-driven hover bar; prop-driven persistent selected state (bar + wash)
+  - 4px bottom bar overhanging 1px each side to cover cell hairlines
+  - 1px left divider on both variants, suppressible via noDivider (leftmost cell / zone breaks)
+  - Built-in removal animation (`leaving` + `onLeaveEnd`): the cell collapses to zero width over
+    `--speed-fast`, and in a flex row every later cell slides left on its own. Honours
+    `prefers-reduced-motion`, in which case `onLeaveEnd` fires at once so the caller never stalls
+  - Uses theme CSS variables for automatic light/dark support
+
+---
+
+### ChipDropdown
+- **Status:** ✅ Has Storybook
+- **Component Path:** `ui-lib/src/Chips/molecules/ChipDropdown.tsx`
+- **Story Path:** `storybook/src/stories/Chips/molecules/ChipDropdown.stories.tsx`
+- **Exported From:** `Chips`
+- **Story Path (labelled / Arrangement cell):** `storybook/src/stories/Chips/molecules/ChipDropdownArrangement.stories.tsx`, and in context in `storybook/src/stories/Chips/organisms/SpacesTopBar.stories.tsx`
+- **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
+  - `items`: `IChipDropdownItem[]` - Menu rows: `{ id, label, icon?, disabled?, onClick? }` (required)
+  - `icon?`: `string` - Icon-only mode: the trigger icon, 16px. Labelled mode: the leading glyph, 18px (default: 'FilterEllipsis')
+  - `label?`: `string` - Visible trigger text, e.g. '6-up'. Setting it switches the trigger to labelled mode: glyph + label + caret, sized to its content. Empty counts as absent
+  - `selectedId?`: `string` - `items[].id` of the current row: `--grey-4` background + a check, and the rows become `menuitemradio`/`aria-checked`
+  - `checkIcon?`: `string` - Icon name for the current-row indicator (default: 'Success')
+  - `triggerLabel?`: `string` - Accessible label for the trigger button (default: 'Space actions' in icon-only mode only - see below)
+  - `noDivider?`: `boolean` - Hide the trigger chip's 1px left divider (default: false)
+  - `disabled?`: `boolean` - Disable the trigger (default: false)
+  - `onOpenChange?`: `(open: boolean) => void` - Notified when the menu opens/closes
+- **Notable Features:**
+  - Top-bar ellipsis "Space actions" cell (Figma: Spaces / Top Bar / Space Menu Cell)
+  - Composes the ChipButton atom as the trigger (idle = no bar, hover = `--primary-6` bar,
+    open = `--primary-9` bar)
+  - The open trigger takes the bar only - the atom's `--primary-a3` selected wash is suppressed,
+    so an open menu next to an active chip does not read as one merged block (Figma: the ellipsis
+    cell is "a different kind of button from the chips")
+  - Click-outside and Escape close the menu (uses useClickOutside)
+  - The trigger is a **menu button**: `aria-haspopup='menu'` plus `aria-expanded`, and no
+    `aria-pressed`. It borrows ChipButton's `selected` only to get the open bar, so the atom drops
+    the toggle-button semantics whenever a cell owns a popup
+  - Action menu with per-row icon + label; selecting a row fires onClick and closes
+  - **Labelled mode** (`label` set) is the Arrangement cell, the active-layout picker (Figma:
+    Spaces / Top Bar / Arrangement Cell). The trigger becomes glyph (18px) + text + a 12px `Down`
+    caret, 56px tall but sized to its content instead of the 56px square, with 14px/16px padding. In
+    the Arrangement layout it sits right of a ChipZoneBreak, which owns both hairlines - but `noDivider`
+    is not set automatically in labelled mode, it stays a plain pass-through defaulting to `false`.
+    Pass `noDivider` yourself, or the trigger keeps its own 1px divider next to the Zone Break's
+  - The caret does **not** flip when the menu opens (Figma uses one caret asset in all three
+    states). Note `SplitButton` swaps `Down`→`Close`; the two kit components differ on purpose
+  - `triggerLabel` is only defaulted in icon-only mode. In labelled mode the visible text is the
+    accessible name, so defaulting it would be a WCAG 2.5.3 (Label in Name) failure - an explicitly
+    passed `triggerLabel` is still honoured
+  - **Trap:** in labelled mode `triggerLabel` becomes an `aria-label`, which *replaces* the visible
+    text as the accessible name rather than adding to it. `triggerLabel='Arrangement'` on a trigger
+    reading "6-up" hides "6-up" from assistive tech and from voice control, failing WCAG 2.5.3.
+    Either omit it - the visible text is already the name - or lead with the visible value, e.g.
+    `` triggerLabel={`${value} arrangement`} ``
+  - **Current-row semantics:** with `selectedId` set, rows switch from `role='menuitem'` to
+    `role='menuitemradio'` + `aria-checked`, so "current" reaches a screen reader and the check
+    glyph is decorative (`aria-hidden`). Without `selectedId` the menu is byte-identical to before
+  - A hovered current row deepens to `--grey-5` rather than taking the `--grey-3` hover: `--grey-4`
+    is a step darker than the hover in both themes, so letting hover win would make the current row
+    look *less* selected when pointed at
+  - Menu shadow reuses FilterDropdownContainer's `--filter-button-shadow-color` token
+    (deviation from Figma's untokenised "Spaces/Card Shadow")
+  - **Deviations from Figma:** the menu keeps `min-width: 216px` (shared with the ellipsis menu)
+    against Figma's 192px for the Arrangement menu; and `checkIcon` defaults to `Success`, a tick
+    inside a circle, because `@future-standard/icons` has no bare check mark - swapping the default
+    later is a one-line, non-breaking change. The four layout glyphs (6-up / 4-up / 2-up /
+    1 big + 2) are **not** in the icon package: pass whatever names the consuming project provides
+  - Uses theme CSS variables for automatic light/dark support
+
+---
+
+### ChipZoneBreak
+- **Status:** ✅ Has Storybook
+- **Component Path:** `ui-lib/src/Chips/atoms/ChipZoneBreak.tsx`
+- **Story Path:** `storybook/src/stories/Chips/atoms/ChipZoneBreak.stories.tsx`
+- **Exported From:** `Chips`
+- **Props:** (`HTMLAttributes<HTMLDivElement>` — no props of its own)
+  - All standard HTML div attributes (`className`, `style`, `role`, `aria-hidden`, etc.)
+- **Notable Features:**
+  - 12×56 band separating two zones of the top bar (Figma: Spaces / Top Bar / Zone Break)
+  - `--grey-3` fill with a 1px `--grey-4` hairline on each edge; no states, not interactive
+  - Owns both edge hairlines, so the cells either side drop their adjoining border - this is why
+    ChipBar suppresses its first cell's left divider unconditionally
+  - `box-sizing: border-box` keeps both hairlines inside the 12px; without it the band renders
+    14px and the top bar drifts 2px per zone break
+  - `flex-shrink: 0` - it sits outside any ChipBar, so it protects its own width
+  - `aria-hidden='true'` by default (decorative). To have it announced, pass **both**
+    `role='separator'` and `aria-hidden={false}` - `role` alone is inert, because the default
+    `aria-hidden='true'` survives and keeps the element out of the accessibility tree
+  - Place it **between** ChipBars, never inside one: a zone break is not a cell of either zone
+  - Uses theme CSS variables for automatic light/dark support
 
 ---
 
@@ -1768,6 +1905,16 @@ This document provides a comprehensive inventory of all React components in the 
   - Supports all standard button HTML attributes via ISplitButtonItem
   - Automatic text width calculation for dropdown options
   - Used for primary action with alternatives
+  - The leading icon column is **always** reserved, even on a row with no icon: `SplitButton`
+    substitutes the `NoIcon` placeholder, which draws nothing but still measures
+    `--button-icon-size`. That is deliberate - it is what keeps the text of icon-less dropdown rows
+    aligned with the rows that do have icons. The cost is ~30px (`--button-icon-size` plus
+    2 × `--button-icon-h-padding`) on a button with no icon anywhere, so such a button cannot be
+    made as narrow as a design that hides its icon slot entirely
+  - **Known issue:** `...rest` is spread after the component's own `className`, so
+    `styled(SplitButton)` replaces the `split-button-<design>` class instead of merging with it and
+    the design's theme variables are lost. Wrap it in a styled container rather than calling
+    `styled()` on it. `Button` was fixed for this in PR #632; SplitButton has not been
 
 ---
 
