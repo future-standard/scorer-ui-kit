@@ -64,6 +64,7 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   notificationsHistory,
   customDrawer,
   sideDrawers,
+  bottomAreaElement,
   supportText,
   onLogout,
   onLanguageToggle,
@@ -72,12 +73,18 @@ const MobileNavbar: React.FC<IMobileNavbar> = ({
   // Side drawers are opened only through the controlled `activeDrawer` prop, which
   // the mobile navbar does not implement — so they are not supported on mobile.
   // Warn once on mount (not per render) instead of failing silently. `customDrawer`
-  // remains fully supported.
+  // remains fully supported. `bottomAreaElement` has no mobile layout for the same
+  // reason: the desktop name bar assumes a width the mobile navbar does not have.
   // biome-ignore lint/correctness/useExhaustiveDependencies: warn once on mount, not on every render
   useEffect(() => {
     if (sideDrawers?.length) {
       console.warn(
         'MobileNavbar: `sideDrawers` are not supported on mobile and will not open. Use `customDrawer` for a drawer that works across breakpoints.'
+      );
+    }
+    if (bottomAreaElement) {
+      console.warn(
+        'MobileNavbar: `bottomAreaElement` is not supported on mobile and will not render.'
       );
     }
   }, []);

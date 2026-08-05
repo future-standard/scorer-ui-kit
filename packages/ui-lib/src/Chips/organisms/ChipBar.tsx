@@ -11,11 +11,16 @@ import {
   useRef,
   useState,
 } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ChipCompactContext } from '../ChipCompactContext';
 
 interface OwnProps {
   /** the cells: any mix of ChipButton / ChipDropdown, in any order */
   children: ReactNode;
+  /** the shorter name-bar band; passed down to every cell that does not set its own */
+  isCompact?: boolean;
+  /** keep the leading cell's 1px hairline, for a bar that does not start a row */
+  leadingDivider?: boolean;
 }
 
 export type IChipBar = OwnProps & HTMLAttributes<HTMLDivElement>;
@@ -23,8 +28,11 @@ export type IChipBar = OwnProps & HTMLAttributes<HTMLDivElement>;
 /* The `& > *` rule below pins every cell's width, so the row overflows instead of squashing — a
    consumer that needs scrolling wraps ChipBar itself. Without it, flex items default to
    flex-shrink: 1 and a narrow container silently shrinks the 56px cells — measured at 36px in a
-   200px container — which is not a designed state. */
-const Bar = styled.div`
+   200px container — which is not a designed state.
+
+   `$isCompact` takes its height from the parent so the band follows TopBar's `bottomAreaHeight`,
+   with `min-height` covering a compact bar placed in an auto-height container. */
+const Bar = styled.div<{ $isCompact: boolean }>`
   display: flex;
   align-items: center;
   height: 56px;
@@ -32,11 +40,25 @@ const Bar = styled.div`
   & > * {
     flex-shrink: 0;
   }
+
+  ${({ $isCompact }) =>
+    $isCompact &&
+    css`
+    height: 100%;
+    min-height: 32px;
+  `}
 `;
 
 const NAV_KEYS = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
 
-const ChipBar: React.FC<IChipBar> = ({ children, onKeyDown, onFocus, ...props }) => {
+const ChipBar: React.FC<IChipBar> = ({
+  children,
+  isCompact = false,
+  leadingDivider = false,
+  onKeyDown,
+  onFocus,
+  ...props
+}) => {
   const barRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -134,21 +156,24 @@ const ChipBar: React.FC<IChipBar> = ({ children, onKeyDown, onFocus, ...props })
   );
 
   return (
-    <Bar
-      ref={barRef}
-      role='toolbar'
-      aria-label='Chip bar'
-      {...props}
-      onFocus={handleFocus}
-      onKeyDown={handleKeyDown}
-    >
-      {cells.map((child, i) =>
-        // guard on child.type so a plain DOM child never gets an unknown noDivider attribute
-        i === 0 && typeof child.type !== 'string'
-          ? cloneElement(child as ReactElement<{ noDivider?: boolean }>, { noDivider: true })
-          : child
-      )}
-    </Bar>
+    <ChipCompactContext.Provider value={isCompact}>
+      <Bar
+        ref={barRef}
+        role='toolbar'
+        aria-label='Chip bar'
+        $isCompact={isCompact}
+        {...props}
+        onFocus={handleFocus}
+        onKeyDown={handleKeyDown}
+      >
+        {cells.map((child, i) =>
+          // guard on child.type so a plain DOM child never gets an unknown noDivider attribute
+          i === 0 && !leadingDivider && typeof child.type !== 'string'
+            ? cloneElement(child as ReactElement<{ noDivider?: boolean }>, { noDivider: true })
+            : child
+        )}
+      </Bar>
+    </ChipCompactContext.Provider>
   );
 };
 

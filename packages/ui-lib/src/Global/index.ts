@@ -144,6 +144,16 @@ export interface ITopBar {
   sideDrawers?: ISideDrawer[];
   leftAreaElement?: ReactElement;
   /**
+   * Content for a second row below the bar (Figma's "name bar"). Full width, with a
+   * hairline above it. Desktop `TopBar` only — not supported by `GlobalUI` on mobile.
+   */
+  bottomAreaElement?: ReactElement;
+  /**
+   * Height of the bottom row as a CSS length, default `'32px'`. Also feeds the
+   * `--top-bar-total-height` variable, so the drawers and any consumer offset follow it.
+   */
+  bottomAreaHeight?: string;
+  /**
    * Which drawer is open, for controlled usage. When provided (including
    * `null`), TopBar becomes controlled and the consumer owns the state.
    * When omitted, TopBar manages the open drawer with its own internal state.

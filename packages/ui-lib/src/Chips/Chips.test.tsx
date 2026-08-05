@@ -119,6 +119,63 @@ describe('ChipButton', () => {
     }
   });
 
+  it('renders the glyph and the label together for variant="icon-text"', async () => {
+    // the atom used to be strictly icon-or-text; a regression here silently drops one of the two
+    const container = await render(
+      <ChipButton variant='icon-text' icon='Crop' label='Crop' isCompact />
+    );
+    expect(container.querySelector('svg')).not.toBeNull();
+    expect(container.querySelector('button')?.textContent).toBe('Crop');
+  });
+
+  it('still falls back to the label when variant="icon" has no icon', async () => {
+    // pre-existing behaviour the three-way content switch must not drop, or such a cell blanks out
+    const container = await render(<ChipButton variant='icon' label='7' />);
+    expect(container.querySelector('button')?.textContent).toBe('7');
+  });
+
+  /* jsdom runs no layout, so offsetWidth is always 0 and the pinned value would be meaningless —
+     stub it. What matters here is the branch, not the number: `width: auto` cannot interpolate to
+     the keyframe's `width: 0`, so without a pinned length the cell holds full width and snaps at
+     the halfway point instead of sliding, taking every later cell with it. */
+  const withOffsetWidth = (px: number) => {
+    const original = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetWidth');
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', { configurable: true, value: px });
+    return () => {
+      if (original) {
+        Object.defineProperty(HTMLElement.prototype, 'offsetWidth', original);
+      }
+    };
+  };
+
+  it('pins a compact cell to its measured width so the collapse can interpolate', async () => {
+    const restoreMotion = setReducedMotion(false);
+    const restoreWidth = withOffsetWidth(94);
+    try {
+      const container = await render(<ChipButton label='Controls' isCompact leaving />);
+      expect((container.querySelector('button') as HTMLElement).style.width).toBe('94px');
+    } finally {
+      restoreWidth();
+      restoreMotion();
+    }
+  });
+
+  it('leaves the fixed-width cell unpinned, and clears the pin when it stops leaving', async () => {
+    const restoreMotion = setReducedMotion(false);
+    const restoreWidth = withOffsetWidth(56);
+    try {
+      const fixed = await render(<ChipButton label='1' leaving />);
+      expect((fixed.querySelector('button') as HTMLElement).style.width).toBe('');
+
+      // a cell can be pulled back out of the leaving state, and must not keep the pinned width
+      const staying = await render(<ChipButton label='Controls' isCompact />);
+      expect((staying.querySelector('button') as HTMLElement).style.width).toBe('');
+    } finally {
+      restoreWidth();
+      restoreMotion();
+    }
+  });
+
   it('fires onLeaveEnd once per collapse, however many animationend events arrive', async () => {
     const restore = setReducedMotion(false);
     const onLeaveEnd = vi.fn();
@@ -142,6 +199,62 @@ describe('ChipButton', () => {
     } finally {
       restore();
     }
+  });
+});
+
+describe('ChipBar compact band', () => {
+  // styled-components puts its rules in jsdom's stylesheet, so declared values are readable even
+  // though jsdom does no layout — the same trick the ChipZoneBreak box-sizing test relies on.
+  const chipStyle = (container: HTMLElement, index = 0) =>
+    getComputedStyle(container.querySelectorAll<HTMLElement>('button')[index]);
+
+  it('makes its cells compact without them asking', async () => {
+    // the flag travels by context, not cloneElement, so it must reach a cell that sets no prop
+    const container = await render(
+      <ChipBar isCompact leadingDivider>
+        <ChipButton variant='icon-text' icon='Crop' label='Crop' />
+      </ChipBar>
+    );
+    expect(chipStyle(container).padding).toBe('0px 12px');
+  });
+
+  it('lets a cell opt back out with isCompact={false}', async () => {
+    const container = await render(
+      <ChipBar isCompact leadingDivider>
+        <ChipButton label='1' isCompact={false} />
+      </ChipBar>
+    );
+    // the 56px square is the default cell, so the compact padding must not have been applied
+    expect(chipStyle(container).padding).toBe('0px');
+    expect(chipStyle(container).width).toBe('56px');
+  });
+
+  /* Asserted through the cloned prop, not through CSS: jsdom drops the whole
+     `border-left: 1px solid var(--grey-4)` shorthand because it cannot parse var() inside a
+     shorthand, so getComputedStyle reports the initial `medium` either way and cannot tell the
+     two cases apart. */
+  it('keeps the leading hairline only when asked', async () => {
+    const seen: (boolean | undefined)[] = [];
+    const Probe = ({ noDivider }: { noDivider?: boolean }) => {
+      seen.push(noDivider);
+      return <ChipButton label='1' noDivider={noDivider} />;
+    };
+
+    // Figma's view controls give every cell a left hairline, which the default suppression makes
+    // impossible on its own: the cloned noDivider wins over a consumer's own noDivider={false}
+    await render(
+      <ChipBar isCompact leadingDivider>
+        <Probe />
+      </ChipBar>
+    );
+    expect(seen.at(-1)).toBeUndefined();
+
+    await render(
+      <ChipBar isCompact>
+        <Probe />
+      </ChipBar>
+    );
+    expect(seen.at(-1)).toBe(true);
   });
 });
 

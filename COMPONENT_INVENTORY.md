@@ -310,12 +310,18 @@ This document provides a comprehensive inventory of all React components in the 
 - **Exported From:** `Chips`
 - **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
   - `children`: `ReactNode` - The cells: any mix of ChipButton / ChipDropdown, in any order (required)
+  - `isCompact?`: `boolean` - The shorter name-bar band: takes its height from the parent (`min-height: 32px`) instead of the fixed 56px, and passes the compact geometry down to every cell that does not set its own `isCompact` (default: false)
+  - `leadingDivider?`: `boolean` - Keep the leading cell's 1px hairline, for a bar that does not start a row - Figma's name-bar view controls give every cell a hairline (default: false)
   - Plus all standard HTML div attributes (`className`, `style`, `aria-label`, etc.)
 - **Notable Features:**
-  - 56px top-bar chip row (Figma: Spaces / Top Bar / Space Selection)
+  - 56px top-bar chip row (Figma: Spaces / Top Bar / Space Selection), or a compact band for
+    TopBar's `bottomAreaElement` via `isCompact`
   - Pure layout glue - holds no selection state; the consumer sets `selected` per chip
   - Composes ChipButton and ChipDropdown children in any order and any count
-  - Suppresses the first cell's 1px left divider automatically
+  - Suppresses the first cell's 1px left divider automatically, unless `leadingDivider` is set
+  - `isCompact` travels by context (`ChipCompactContext`), not `cloneElement`: the clone guard only
+    excludes plain DOM children, so a cloned prop would leak a stray attribute onto a `styled.div`
+    cell. Context also reaches a cell wrapped in `styled(ChipButton)` or nested in a fragment
   - `role='toolbar'` with arrow-key roving focus (Left/Right/Home/End), one tab stop - kept in
     sync by a MutationObserver, so a child that enables its own button cannot add a second tab stop
   - Does not hijack arrow keys while a ChipDropdown menu is open
@@ -335,23 +341,34 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Chips/atoms/ChipButton.stories.tsx`
 - **Exported From:** `Chips`
 - **Props:** (extends `ButtonHTMLAttributes<HTMLButtonElement>`)
-  - `variant?`: `IChipVariant` (`'icon' | 'text'`) - Content mode; 'icon' renders an Icon, 'text' renders a number/letter label (default: 'text')
-  - `icon?`: `string` - Icon name rendered when variant='icon'
-  - `label?`: `string` - Text/numeral rendered when variant='text' (falls back to children)
+  - `variant?`: `IChipVariant` (`'icon' | 'text' | 'icon-text'`) - Content mode; 'icon' renders an Icon, 'text' renders a number/letter label, 'icon-text' renders both with an 8px gap (default: 'text')
+  - `isCompact?`: `boolean` - The shorter name-bar cell: auto width, `padding: 0 12px`, `gap: 8px`, left-aligned content, and a 2px state bar instead of 4px. Height comes from the parent (`min-height: 32px`), so the cell tracks TopBar's `bottomAreaHeight`. **Deliberately has no default** - `undefined` inherits from the enclosing ChipBar's `isCompact`, and `false` opts a single cell back out
+  - `barOnly?`: `boolean` - `selected` shows the bar only: no `--primary-a3` wash, and the label stays on `--grey-12` instead of `--primary-11` (default: false). This is Figma's name-bar "Controls" on-state
+  - `icon?`: `string` - Icon name rendered when variant='icon' or 'icon-text'
+  - `label?`: `string` - Text/numeral rendered when variant='text' or 'icon-text' (falls back to children)
   - `selected?`: `boolean` - Persistent selected state: primary wash background + bottom bar (default: false). Surfaces as `aria-pressed`, making the chip a toggle button - unless the cell is given `aria-haspopup`, in which case it is a menu button and `aria-pressed` is omitted so `aria-expanded` is its only state
   - `noDivider?`: `boolean` - Suppress the 1px left divider shown by default on all chips (default: false)
   - `leaving?`: `boolean` - Play the removal animation: collapse the cell to zero width (default: false)
   - `onLeaveEnd?`: `() => void` - Fired when the collapse finishes, or immediately when the user prefers reduced motion. Unmount the cell here
   - Plus all standard HTML button attributes (`onClick`, `disabled`, `aria-label`, etc.)
 - **Notable Features:**
-  - 56×56 top-bar "Space" chip (Figma: Spaces / Top Bar / Chip)
-  - Two content variants: icon (workspace grid glyph) and text/number
-  - CSS-driven hover bar; prop-driven persistent selected state (bar + wash)
-  - 4px bottom bar overhanging 1px each side to cover cell hairlines
-  - 1px left divider on both variants, suppressible via noDivider (leftmost cell / zone breaks)
+  - 56×56 top-bar "Space" chip (Figma: Spaces / Top Bar / Chip), or a content-width name-bar cell
+    via `isCompact` (Figma: Spaces / Name Bar / View Controls)
+  - Three content variants: icon (workspace grid glyph), text/number, and icon+text
+  - CSS-driven hover bar; prop-driven persistent selected state (bar + wash, or bar only via `barOnly`)
+  - 4px bottom bar (2px when compact) overhanging 1px each side to cover cell hairlines
+  - 1px left divider on all variants, suppressible via noDivider (leftmost cell / zone breaks)
+  - `variant='icon'` with no `icon` still falls back to the label, as it always has
+  - **Deviations from Figma in compact mode:** the glyph renders at 16px, so Figma's 14px Crop icon
+    is 2px large; and a trailing cell's label sits 12px from the bar's right edge rather than 16px,
+    because that 16px is a right-edge inset in the design, not a per-cell rule
   - Built-in removal animation (`leaving` + `onLeaveEnd`): the cell collapses to zero width over
     `--speed-fast`, and in a flex row every later cell slides left on its own. Honours
-    `prefers-reduced-motion`, in which case `onLeaveEnd` fires at once so the caller never stalls
+    `prefers-reduced-motion`, in which case `onLeaveEnd` fires at once so the caller never stalls.
+    Works at both sizes: a compact cell is `width: auto`, which CSS cannot interpolate to zero, so
+    the component pins its measured width in a layout effect before the animation paints —
+    otherwise the cell would hold full width and snap at the halfway point. The keyframe also
+    zeroes the horizontal padding, without which `box-sizing: border-box` would leave a 24px stub
   - Uses theme CSS variables for automatic light/dark support
 
 ---
@@ -2381,6 +2398,8 @@ This document provides a comprehensive inventory of all React components in the 
   - `sideDrawers?`: `ISideDrawer[]` - Extra drawers with no top-bar toggle, opened via `activeDrawer` by id (desktop only; not supported on mobile)
     - **ISideDrawer:** `{ id: string, content: ReactElement, width?: string }`
   - `leftAreaElement?`: `ReactElement` - Custom content for the left area; rendered only when `hasSearch` is false, replacing the search bar
+  - `bottomAreaElement?`: `ReactElement` - Content for a second row below the bar (Figma: Spaces / Name Bar). Full width, `background: var(--global-element-background)` (the same surface as the bar), a hairline above it, `align-items: center`, `gap: 8px`, `padding-left: 16px`. Desktop only - MobileNavbar warns once on mount and renders nothing
+  - `bottomAreaHeight?`: `string` - Height of the bottom row as a CSS length (default: `'32px'`). Also feeds `--top-bar-total-height`, so the drawers and any consumer offset follow it
   - `activeDrawer?`: `IActiveDrawer` (`'user' | 'notifications' | 'custom' | (string & {}) | null`) - Controlled open drawer. Built-in keys are `'user'`/`'notifications'`/`'custom'`; the `(string & {})` member accepts any custom side-drawer id while keeping those keys as editor autocomplete. When provided (including `null`) the consumer owns drawer state, otherwise TopBar uses internal state
   - `onActiveDrawerChange?`: `(activeDrawer: IActiveDrawer) => void` - Callback whenever a drawer opens or closes (icon clicks included)
   - `hasSwitchTheme`: `boolean` - Shows theme toggle option
@@ -2400,6 +2419,20 @@ This document provides a comprehensive inventory of all React components in the 
   - `badge`: `ITopBarBadge` - Badge configuration object
 - **Notable Features:**
   - **Application Top Bar**: Sticky header with 56px height and shadow
+  - **Bottom Area**: Optional second row below the bar via `bottomAreaElement`. The hairline between
+    the rows sits inside the bottom row's own height, so the 56px bar keeps its exact geometry.
+    **Deviation from Figma:** the design specifies `--grey-1` for this row, which is lighter than the
+    bar in light mode and darker in dark mode; the kit paints the same surface as the bar instead, so
+    the two rows read as one element separated only by the hairline
+  - **Published Height Variables**: `--top-bar-height` (56px) and `--top-bar-divider-width` (1px),
+    both from `ThemeVariables`, plus `--top-bar-bottom-height` and `--top-bar-total-height` (set by
+    TopBar on `:root`). `--top-bar-total-height` is the assembly's **outer** height, divider
+    included, so a drawer or a consumer offset placed at it sits just below the divider rather than
+    on top of it. The bar row is `56px - divider` so the divider lives inside the 56px band. Offset
+    page content with `calc(var(--top-bar-total-height) + …)` instead of hardcoding a number. They
+    are on `:root` rather than the container because the drawers are portalled to `document.body`
+    and cannot inherit from TopBar's own subtree. Two TopBars mounted at once would fight over
+    them - TopBar is already effectively single-instance, since its drawers are fixed to the viewport
   - **Search Integration**: Optional search bar with placeholder support
   - **User Menu**: Dropdown with submenu items and account options
   - **Notifications**: Dropdown with history and status icon
