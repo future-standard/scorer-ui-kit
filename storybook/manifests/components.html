@@ -2384,10 +2384,16 @@ Code:
               
               <pre><code>const _ChipButton = () =&gt; {
   const iconList = generateIconList();
-  const variant = select(&#39;Variant&#39;, { Icon: &#39;icon&#39;, Text: &#39;text&#39; }, &#39;text&#39;);
+  const variant = select(
+    &#39;Variant&#39;,
+    { Icon: &#39;icon&#39;, Text: &#39;text&#39;, &#39;Icon + text&#39;: &#39;icon-text&#39; },
+    &#39;text&#39;
+  );
   const icon = select(&#39;Icon&#39;, iconList, &#39;LayoutGrid&#39;);
   const label = text(&#39;Label&#39;, &#39;1&#39;);
+  const isCompact = boolean(&#39;Compact&#39;, false);
   const selected = boolean(&#39;Selected&#39;, false);
+  const barOnly = boolean(&#39;Bar only (no wash, needs Selected)&#39;, false);
   const noDivider = boolean(&#39;No divider&#39;, false);
   const onClick = action(&#39;chip-click&#39;);
 
@@ -2396,10 +2402,16 @@ Code:
       variant={variant as IChipVariant}
       icon={icon}
       label={label}
+      isCompact={isCompact}
       selected={selected}
+      barOnly={barOnly}
       noDivider={noDivider}
       onClick={onClick}
-      aria-label={variant === &#39;icon&#39; ? &#39;Workspace&#39; : `Space ${label}`}
+      // the rendered label is the accessible name in icon-text mode, so an aria-label that dropped
+      // it would fail WCAG 2.5.3 — the same trap ChipDropdown documents for its labelled trigger
+      aria-label={
+        variant === &#39;icon&#39; ? &#39;Workspace&#39; : variant === &#39;text&#39; ? `Space ${label}` : undefined
+      }
     /&gt;
   );
 };</code></pre>
@@ -6231,10 +6243,16 @@ Code:
               
               <pre><code>const _ChipButton = () =&gt; {
   const iconList = generateIconList();
-  const variant = select(&#39;Variant&#39;, { Icon: &#39;icon&#39;, Text: &#39;text&#39; }, &#39;text&#39;);
+  const variant = select(
+    &#39;Variant&#39;,
+    { Icon: &#39;icon&#39;, Text: &#39;text&#39;, &#39;Icon + text&#39;: &#39;icon-text&#39; },
+    &#39;text&#39;
+  );
   const icon = select(&#39;Icon&#39;, iconList, &#39;LayoutGrid&#39;);
   const label = text(&#39;Label&#39;, &#39;1&#39;);
+  const isCompact = boolean(&#39;Compact&#39;, false);
   const selected = boolean(&#39;Selected&#39;, false);
+  const barOnly = boolean(&#39;Bar only (no wash, needs Selected)&#39;, false);
   const noDivider = boolean(&#39;No divider&#39;, false);
   const onClick = action(&#39;chip-click&#39;);
 
@@ -6243,10 +6261,16 @@ Code:
       variant={variant as IChipVariant}
       icon={icon}
       label={label}
+      isCompact={isCompact}
       selected={selected}
+      barOnly={barOnly}
       noDivider={noDivider}
       onClick={onClick}
-      aria-label={variant === &#39;icon&#39; ? &#39;Workspace&#39; : `Space ${label}`}
+      // the rendered label is the accessible name in icon-text mode, so an aria-label that dropped
+      // it would fail WCAG 2.5.3 — the same trap ChipDropdown documents for its labelled trigger
+      aria-label={
+        variant === &#39;icon&#39; ? &#39;Workspace&#39; : variant === &#39;text&#39; ? `Space ${label}` : undefined
+      }
     /&gt;
   );
 };</code></pre>
