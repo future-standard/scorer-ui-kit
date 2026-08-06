@@ -717,18 +717,28 @@ This document provides a comprehensive inventory of all React components in the 
 - **Status:** ✅ Has Storybook
 - **Component Path:** `ui-lib/src/Tables/molecules/EditCell.tsx`
 - **Story Path:** `storybook/src/stories/Tables/atoms/EditableCell.stories.tsx`
+- **Story Path (inside a TypeTable):** `storybook/src/stories/Tables/molecules/EditableTable.stories.tsx`
 - **Exported From:** `Tables`
-- **Props:**
-  - `value`: `string | number` - Cell value
-  - `onSave`: `(value: string | number) => void` - Save callback
-  - `type`: `'text' | 'number'` - Input type
-  - `disabled`: `boolean` - Disabled state
+- **Props:** (own props & `InputHTMLAttributes<HTMLInputElement>`. The prop type is **not** exported: `IEditableCell` is file-local, and the `OwnProps` interface is not re-exported from the package root)
+  - `defaultValue`: `string` (required) - The cell's text. Read once to seed internal state - see the trap below
+  - `rowKey`: `string` (required) - Identifies the row; passed back as the second argument to `saveCallback` so one handler can serve every row
+  - `alignment?`: `TypeCellAlignment` (`'left' | 'center' | 'right'`) - Horizontal alignment of the text in its display state (default: `'left'`). Must be set here as well as in the table's `columnConfig`, which does not reach a custom cell
+  - `toLink?`: `string` - Renders the text as a react-router `Link` to this path (default: `''`, no link). Needs a Router in context when set
+  - `saveCallback?`: `(inputValue: string, rowKey: string) => void` - Commit handler; awaited, so it may return a promise and the cell shows a busy state until it settles
+  - Plus all standard HTML input attributes, spread onto the `SmallInput` in edit mode (`type` defaults to `'text'`, `placeholder` to `''`)
 - **Notable Features:**
-  - Inline editable table cell
-  - Click to edit
-  - Save/cancel actions
-  - Validation support
-  - Loading state during save
+  - Inline editable table cell (`50px` `TypeTableCell`): the text with a pencil, which swaps for an editing panel
+  - Editing is a **popover, not in place**: a `min-width: 320px` panel absolutely positioned at `bottom: -15px; left: -11px` with `z-index: 99`, so it overflows the cell. It anchors to the nearest positioned ancestor - `TypeTableCell` is already `position: relative`, but outside a table you must supply that yourself (the atom story wraps it in a `display: table-cell; position: relative` container)
+  - Enter saves and Escape reverts; a click outside **discards** the edit rather than saving it
+  - Save is a `ButtonWithLoading` that reads "Saving" while the promise is in flight; Cancel is **unmounted** during the save, so the panel's width changes mid-save
+  - **Using it in a TypeTable:** there is no `componentType`/`cellType` API. Pass it through `ICellData.customComponent`, which `TypeTableRow` renders in place of the cell's `text`
+  - **Trap:** `defaultValue` is read **once**. It seeds internal state and is never re-synced, so a value changed from outside after mount is ignored, and the cell keeps showing whatever it last saved locally. The `EditableTable` story works around this by rebuilding every row in a `useEffect` when its data changes
+  - **Trap:** a `saveCallback` that rejects leaves the cell stuck. `setLoading(false)` sits after the `await` with no `try`/`catch`, so a rejection skips it and the panel stays on "Saving" with the input disabled and no Cancel button - a dead end for the user, plus an unhandled promise rejection
+  - **Trap:** the pencil is `opacity: 0`, revealed on the container's `:hover` only. Measured in the browser: with the pencil focused and `:focus-visible` matching, its computed opacity is still `0`, so a keyboard user tabs onto a target that is completely invisible
+  - **Trap:** it reads `theme.fontFamily.ui` through the styled-components theme, so it throws without a `ThemeProvider`. The Chips family and `EditableText` take everything from CSS variables and render bare, so a test or a harness that works for those needs a provider added for this one
+  - Key handling reads `eve.keyCode | eve.which | parseInt(eve.key, 10)` on `keyUp` - two deprecated fields OR'd with a `NaN`, so the branch runs only when the event carries `keyCode` or `which`. Browsers still populate them, but an event carrying only `key`, the spec-compliant shape, does **not** save. New code should compare `e.key`, as the Chips family and `EditableText` do
+  - For editing outside a table - a title, a name bar, any row - use **EditableText**, which edits in place, keeps `value` authoritative, guards IME composition and repeated commits, and restores focus. Converging the two is a known follow-up
+  - Everything above is pinned by `ui-lib/src/Tables/EditCell.test.tsx`, characterization tests covering the traps as well as the working behaviour. They describe the component as it is, so one failing after a fix is the signal to update this entry - not to restore the old behaviour. The popover geometry and the invisible-when-focused pencil were measured in the browser instead, since jsdom applies neither layout nor `:hover`/`:focus-visible`
 
 ---
 
