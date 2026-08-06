@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import ReactDom from 'react-dom';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { createGlobalStyle, css, keyframes } from 'styled-components';
 import { removeAutoFillStyle } from '../../common';
 import Icon from '../../Icons/Icon';
 import StatusIcon from '../../Icons/StatusIcon';
@@ -14,19 +14,77 @@ import NotificationsHistory from './NotificationsHistory';
 // it and the built-in drawer would match the same `openDrawer` value at once.
 const RESERVED_DRAWER_IDS = ['user', 'notifications', 'custom'];
 
+/* Published on :root rather than on Container because the drawers are portalled to document.body
+   — they cannot inherit anything scoped to TopBar's own subtree, but they do inherit from :root.
+   Consumers offset page content against --top-bar-total-height instead of hardcoding a number. */
+const TopBarHeightVars = createGlobalStyle<{ $bottomHeight: string }>`
+  :root {
+    --top-bar-bottom-height: ${({ $bottomHeight }) => $bottomHeight};
+    --top-bar-total-height: calc(var(--top-bar-height, 56px) + var(--top-bar-bottom-height, 0px));
+  }
+`;
+
 const Container = styled.div`
   z-index: 9;
   position: sticky;
   top: 0;
-  height: 56px;
-  padding: 0 16px 0 24px;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-self: flex-start;
-  border-bottom: 1px solid var(--dividing-line);
+  border-bottom: var(--top-bar-divider-width, 1px) solid var(--dividing-line);
   background: var(--grey-2);
   box-shadow: 5px 0px 10px 0px var(--primary-a2);
+`;
+
+/* The divider is part of the 56px band, so the row takes what is left of it. Container's height is
+   `auto` now that it stacks two rows, and `box-sizing: border-box` does nothing for an auto height
+   — the border is added outside the content either way. Giving the row the full 56px therefore
+   pushes the assembly to 57px and leaves --top-bar-total-height one pixel short, which parks the
+   drawers on top of the divider instead of below it. 55px + divider reproduces the geometry from
+   when Container carried `height: 56px` itself, and it closes the arithmetic:
+   55 + bottom + divider === 56 + bottom === --top-bar-total-height. */
+const BarRow = styled.div`
+  height: calc(var(--top-bar-height, 56px) - var(--top-bar-divider-width, 1px));
+  padding: 0 16px 0 24px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+/* The hairline lives inside the row's own height, as in Figma, so the 56px bar above keeps its
+   exact geometry and its content does not shift by half a pixel.
+
+   It is an overlay rather than a `border-top` — matching Figma, which draws it as an under-layer
+   rectangle inside the row. A border would eat 1px of the content box, and a cell sized
+   `height: 100%; min-height: 32px` then cannot shrink to 31px, so it overhangs the row and drags
+   its state bar 1px below the bottom edge.
+
+   The background is the same surface as the bar above, not Figma's `--grey-1`: that token is
+   lighter than the bar in light mode and darker in dark mode, so the row read as a separate
+   panel. `--global-element-background` resolves to `--grey-2`, which is what Container paints.
+
+   No padding and no gap, unlike BarRow above: every child here belongs to the consumer, so spacing
+   set at this level would be the library deciding where someone else's content may begin. A cell
+   meant to sit flush against the viewport edge — a chip bar drawing its own hairlines, say — could
+   not get there. The inset in Figma's name bar is the consumer's to apply. `align-items: center`
+   stays: a child that wants the whole band still gets it by asking for `height: 100%`. */
+const BottomArea = styled.div`
+  position: relative;
+  box-sizing: border-box;
+  height: var(--top-bar-bottom-height, 32px);
+  display: flex;
+  align-items: center;
+  background: var(--global-element-background);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--dividing-line);
+  }
 `;
 
 const RightArea = styled.div`
@@ -164,7 +222,7 @@ const Drawer = styled.div<{ $isOpen: boolean; $baseWidth?: string }>`
 
   position: fixed;
   right: -10px;
-  top: 56px;
+  top: var(--top-bar-total-height, 56px);
   bottom: 0;
   background: var(--global-element-background);
   border-left: var(--dividing-line) 1px solid;
@@ -234,6 +292,8 @@ const TopBar: React.FC<ITopBar> = ({
   hasUserDrawerFooter,
   badge,
   leftAreaElement,
+  bottomAreaElement,
+  bottomAreaHeight = '32px',
   sideDrawers,
   activeDrawer,
   onActiveDrawerChange,
@@ -294,42 +354,47 @@ const TopBar: React.FC<ITopBar> = ({
 
   return (
     <Container>
-      {hasSearch ? (
-        <SearchBar>
-          <IconWrapper>
-            <Icon icon='Search' size={16} color='grey-6' />
-          </IconWrapper>
-          <SearchInput placeholder={searchPlaceholder} />
-        </SearchBar>
-      ) : leftAreaElement ? (
-        <LeftArea>{leftAreaElement}</LeftArea>
-      ) : (
-        <div />
-      )}
-      <RightArea>
-        {badge && <TopBarBadge {...badge} />}
-        <ButtonArea>
-          {customDrawer && (
-            <DrawerToggle
-              $isActive={openDrawer === 'custom'}
-              onClick={() => toggleDrawers('custom')}
-            >
-              <StatusIcon {...customDrawer} />
+      <TopBarHeightVars $bottomHeight={bottomAreaElement ? bottomAreaHeight : '0px'} />
+      <BarRow>
+        {hasSearch ? (
+          <SearchBar>
+            <IconWrapper>
+              <Icon icon='Search' size={16} color='grey-6' />
+            </IconWrapper>
+            <SearchInput placeholder={searchPlaceholder} />
+          </SearchBar>
+        ) : leftAreaElement ? (
+          <LeftArea>{leftAreaElement}</LeftArea>
+        ) : (
+          <div />
+        )}
+        <RightArea>
+          {badge && <TopBarBadge {...badge} />}
+          <ButtonArea>
+            {customDrawer && (
+              <DrawerToggle
+                $isActive={openDrawer === 'custom'}
+                onClick={() => toggleDrawers('custom')}
+              >
+                <StatusIcon {...customDrawer} />
+              </DrawerToggle>
+            )}
+            {hasNotifications && (
+              <DrawerToggle
+                $isActive={openDrawer === 'notifications'}
+                onClick={() => toggleDrawers('notifications')}
+              >
+                <Icon icon='Notifications' size={20} color='dimmed' />
+              </DrawerToggle>
+            )}
+            <DrawerToggle $isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
+              <Icon icon='UserProfile' size={20} color='dimmed' />
             </DrawerToggle>
-          )}
-          {hasNotifications && (
-            <DrawerToggle
-              $isActive={openDrawer === 'notifications'}
-              onClick={() => toggleDrawers('notifications')}
-            >
-              <Icon icon='Notifications' size={20} color='dimmed' />
-            </DrawerToggle>
-          )}
-          <DrawerToggle $isActive={openDrawer === 'user'} onClick={() => toggleDrawers('user')}>
-            <Icon icon='UserProfile' size={20} color='dimmed' />
-          </DrawerToggle>
-        </ButtonArea>
-      </RightArea>
+          </ButtonArea>
+        </RightArea>
+      </BarRow>
+
+      {bottomAreaElement ? <BottomArea>{bottomAreaElement}</BottomArea> : null}
 
       {ReactDom.createPortal(
         <DrawerPortalWrapper>

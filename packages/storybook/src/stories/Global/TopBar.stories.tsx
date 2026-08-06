@@ -37,9 +37,11 @@ const BrandTitle = styled.span`
   white-space: nowrap;
 `;
 
-// Page content sits below the fixed top bar; the top padding clears the 56px bar.
+/* Page content sits below the fixed top bar. TopBar publishes --top-bar-total-height on :root, so
+   the offset follows the bar even when a bottom area makes it taller — read it instead of
+   hardcoding a number. */
 const PageContent = styled.div`
-  padding: 80px 24px 24px;
+  padding: calc(var(--top-bar-total-height, 56px) + 24px) 24px 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

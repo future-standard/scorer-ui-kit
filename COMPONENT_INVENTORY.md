@@ -1,7 +1,7 @@
 # Scorer UI Kit - Component Inventory
 
 **Generated:** 2026-02-04
-**Last Updated:** 2026-07-28
+**Last Updated:** 2026-08-06
 **Source:** ui-lib/src & storybook/src/stories
 
 This document provides a comprehensive inventory of all React components in the Scorer UI Kit to be used by human and AI, organized alphabetically with their corresponding Storybook documentation status, file paths, props, and notable features.
@@ -310,12 +310,18 @@ This document provides a comprehensive inventory of all React components in the 
 - **Exported From:** `Chips`
 - **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
   - `children`: `ReactNode` - The cells: any mix of ChipButton / ChipDropdown, in any order (required)
+  - `isCompact?`: `boolean` - The shorter name-bar band: takes its height from the parent (`min-height: 32px`) instead of the fixed 56px, and passes the compact geometry down to every cell that does not set its own `isCompact` (default: false)
+  - `leadingDivider?`: `boolean` - Keep the leading cell's 1px hairline, for a bar that does not start a row - Figma's name-bar view controls give every cell a hairline (default: false)
   - Plus all standard HTML div attributes (`className`, `style`, `aria-label`, etc.)
 - **Notable Features:**
-  - 56px top-bar chip row (Figma: Spaces / Top Bar / Space Selection)
+  - 56px top-bar chip row (Figma: Spaces / Top Bar / Space Selection), or a compact band for
+    TopBar's `bottomAreaElement` via `isCompact`
   - Pure layout glue - holds no selection state; the consumer sets `selected` per chip
   - Composes ChipButton and ChipDropdown children in any order and any count
-  - Suppresses the first cell's 1px left divider automatically
+  - Suppresses the first cell's 1px left divider automatically, unless `leadingDivider` is set
+  - `isCompact` travels by context (`ChipCompactContext`), not `cloneElement`: the clone guard only
+    excludes plain DOM children, so a cloned prop would leak a stray attribute onto a `styled.div`
+    cell. Context also reaches a cell wrapped in `styled(ChipButton)` or nested in a fragment
   - `role='toolbar'` with arrow-key roving focus (Left/Right/Home/End), one tab stop - kept in
     sync by a MutationObserver, so a child that enables its own button cannot add a second tab stop
   - Does not hijack arrow keys while a ChipDropdown menu is open
@@ -335,23 +341,34 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Chips/atoms/ChipButton.stories.tsx`
 - **Exported From:** `Chips`
 - **Props:** (extends `ButtonHTMLAttributes<HTMLButtonElement>`)
-  - `variant?`: `IChipVariant` (`'icon' | 'text'`) - Content mode; 'icon' renders an Icon, 'text' renders a number/letter label (default: 'text')
-  - `icon?`: `string` - Icon name rendered when variant='icon'
-  - `label?`: `string` - Text/numeral rendered when variant='text' (falls back to children)
+  - `variant?`: `IChipVariant` (`'icon' | 'text' | 'icon-text'`) - Content mode; 'icon' renders an Icon, 'text' renders a number/letter label, 'icon-text' renders both with an 8px gap (default: 'text')
+  - `isCompact?`: `boolean` - The shorter name-bar cell: auto width, `padding: 0 12px`, `gap: 8px`, left-aligned content, and a 2px state bar instead of 4px. Height comes from the parent (`min-height: 32px`), so the cell tracks TopBar's `bottomAreaHeight`. **Deliberately has no default** - `undefined` inherits from the enclosing ChipBar's `isCompact`, and `false` opts a single cell back out
+  - `barOnly?`: `boolean` - `selected` shows the bar only: no `--primary-a3` wash, and the label stays on `--grey-12` instead of `--primary-11` (default: false). This is Figma's name-bar "Controls" on-state
+  - `icon?`: `string` - Icon name rendered when variant='icon' or 'icon-text'
+  - `label?`: `string` - Text/numeral rendered when variant='text' or 'icon-text' (falls back to children)
   - `selected?`: `boolean` - Persistent selected state: primary wash background + bottom bar (default: false). Surfaces as `aria-pressed`, making the chip a toggle button - unless the cell is given `aria-haspopup`, in which case it is a menu button and `aria-pressed` is omitted so `aria-expanded` is its only state
   - `noDivider?`: `boolean` - Suppress the 1px left divider shown by default on all chips (default: false)
   - `leaving?`: `boolean` - Play the removal animation: collapse the cell to zero width (default: false)
   - `onLeaveEnd?`: `() => void` - Fired when the collapse finishes, or immediately when the user prefers reduced motion. Unmount the cell here
   - Plus all standard HTML button attributes (`onClick`, `disabled`, `aria-label`, etc.)
 - **Notable Features:**
-  - 56×56 top-bar "Space" chip (Figma: Spaces / Top Bar / Chip)
-  - Two content variants: icon (workspace grid glyph) and text/number
-  - CSS-driven hover bar; prop-driven persistent selected state (bar + wash)
-  - 4px bottom bar overhanging 1px each side to cover cell hairlines
-  - 1px left divider on both variants, suppressible via noDivider (leftmost cell / zone breaks)
+  - 56×56 top-bar "Space" chip (Figma: Spaces / Top Bar / Chip), or a content-width name-bar cell
+    via `isCompact` (Figma: Spaces / Name Bar / View Controls)
+  - Three content variants: icon (workspace grid glyph), text/number, and icon+text
+  - CSS-driven hover bar; prop-driven persistent selected state (bar + wash, or bar only via `barOnly`)
+  - 4px bottom bar (2px when compact) overhanging 1px each side to cover cell hairlines
+  - 1px left divider on all variants, suppressible via noDivider (leftmost cell / zone breaks)
+  - `variant='icon'` with no `icon` still falls back to the label, as it always has
+  - **Deviations from Figma in compact mode:** the glyph renders at 16px, so Figma's 14px Crop icon
+    is 2px large; and a trailing cell's label sits 12px from the bar's right edge rather than 16px,
+    because that 16px is a right-edge inset in the design, not a per-cell rule
   - Built-in removal animation (`leaving` + `onLeaveEnd`): the cell collapses to zero width over
     `--speed-fast`, and in a flex row every later cell slides left on its own. Honours
-    `prefers-reduced-motion`, in which case `onLeaveEnd` fires at once so the caller never stalls
+    `prefers-reduced-motion`, in which case `onLeaveEnd` fires at once so the caller never stalls.
+    Works at both sizes: a compact cell is `width: auto`, which CSS cannot interpolate to zero, so
+    the component pins its measured width in a layout effect before the animation paints —
+    otherwise the cell would hold full width and snap at the halfway point. The keyframe also
+    zeroes the horizontal padding, without which `box-sizing: border-box` would leave a 24px stub
   - Uses theme CSS variables for automatic light/dark support
 
 ---
@@ -362,7 +379,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Chips/molecules/ChipDropdown.stories.tsx`
 - **Exported From:** `Chips`
 - **Story Path (labelled / Arrangement cell):** `storybook/src/stories/Chips/molecules/ChipDropdownArrangement.stories.tsx`, and in context in `storybook/src/stories/Chips/organisms/SpacesTopBar.stories.tsx`
-- **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
+- **Props:** (extends `Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>`)
   - `items`: `IChipDropdownItem[]` - Menu rows: `{ id, label, icon?, disabled?, onClick? }` (required)
   - `icon?`: `string` - Icon-only mode: the trigger icon, 16px. Labelled mode: the leading glyph, 18px (default: 'FilterEllipsis')
   - `label?`: `string` - Visible trigger text, e.g. '6-up'. Setting it switches the trigger to labelled mode: glyph + label + caret, sized to its content. Empty counts as absent
@@ -372,6 +389,7 @@ This document provides a comprehensive inventory of all React components in the 
   - `noDivider?`: `boolean` - Hide the trigger chip's 1px left divider (default: false)
   - `disabled?`: `boolean` - Disable the trigger (default: false)
   - `onOpenChange?`: `(open: boolean) => void` - Notified when the menu opens/closes
+  - Plus all standard HTML div attributes (`className`, `style`, `aria-label`, etc.) except `onChange`, which is omitted so it cannot be mistaken for a selection callback - use the rows' own `onClick`, or `onOpenChange`
 - **Notable Features:**
   - Top-bar ellipsis "Space actions" cell (Figma: Spaces / Top Bar / Space Menu Cell)
   - Composes the ChipButton atom as the trigger (idle = no bar, hover = `--primary-6` bar,
@@ -646,22 +664,81 @@ This document provides a comprehensive inventory of all React components in the 
 
 ---
 
+### EditableText
+- **Status:** ✅ Has Storybook
+- **Component Path:** `ui-lib/src/Form/molecules/EditableText.tsx`
+- **Story Path:** `storybook/src/stories/Form/Input/EditableText.stories.tsx`
+- **Exported From:** `Form`
+- **Props:** (`IEditableText` = own props & `Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'defaultValue' | 'onChange' | 'width' | 'readOnly' | 'aria-label' | 'aria-busy'>`)
+  - `value?`: `string` - Controlled: the text on show, and it stays authoritative, so a value saved elsewhere replaces it
+  - `defaultValue?`: `string` - Uncontrolled: the starting text, after which the component keeps it and adopts each save
+  - `label`: `string` (required) - Accessible name for the field, e.g. 'Space name'
+  - `onSave?`: `(value: string) => void | Promise<void>` - Commit; the controls stay busy until a returned promise settles
+  - `onCancel?`: `() => void` - Edit abandoned: Escape, Cancel, or a click outside
+  - `onEditingChange?`: `(isEditing: boolean) => void` - Entering or leaving edit mode
+  - `saveOnClickOutside?`: `boolean` - Commit on click outside instead of discarding (default: false)
+  - `allowEmpty?`: `boolean` - Allow committing an empty value (default: false)
+  - `fieldWidth?`: `string` - Width of the field while editing, any CSS length (default: '240px')
+  - `editIcon?`: `string` - Icon name for the edit affordance (default: 'Edit')
+  - `alwaysShowEditIcon?`: `boolean` - Keep the pencil visible instead of revealing it on hover and focus (default: false)
+  - `editText?`: `string` - Appended to the value as the trigger's accessible name (default: 'Edit')
+  - `saveText?`: `string` - Save button text (default: 'Save')
+  - `savingText?`: `string` - Save button text while the save is in flight (default: 'Saving')
+  - `cancelText?`: `string` - Cancel button text (default: 'Cancel')
+  - `disabled?`: `boolean` - Render as plain text, with no edit affordance (default: false)
+  - Plus all standard HTML input attributes except `value`, `defaultValue`, `onChange`, `width`, `readOnly`, `aria-label` and `aria-busy` — the first two are redeclared above as the component's text, and the rest are driven internally (`onSave`, `fieldWidth`, `label`, and the save-in-flight state). They are omitted rather than merged so passing one is a compile error instead of a silent no-op
+- **Notable Features:**
+  - Controlled or uncontrolled, the same choice `Input` and `SmallInput` give: pass `value` and the caller owns the text, pass `defaultValue` and the component keeps it. Presence of `value` decides, so `value=''` is a real controlled empty string
+  - **React Hook Form:** bind with `<Controller>`, not `register()`. The field is mounted only while editing, so a `register()` ref has nothing to attach to the rest of the time:
+    ```tsx
+    <Controller name='spaceName' control={control} render={({ field }) => (
+      <EditableText value={field.value} label='Space name' onSave={field.onChange} name={field.name} />
+    )} />
+    ```
+  - Edits in place, inside whatever row it is given: the display text is swapped for a 24px field plus Save and Cancel at `size='small'`, so the set fits a 32px band with 4px to spare
+  - `height: 100%`, so it tracks TopBar's `bottomAreaHeight` (32px by default, 40px if the consumer asks)
+  - Enter commits, Escape reverts; the value is trimmed, and committing an unchanged value closes the field without calling `onSave`
+  - **IME safe:** both keys are ignored while a composition is open (`e.nativeEvent.isComposing`), since an IME sends Enter to confirm a candidate and Escape to abandon one. Acting on them would close the editor mid-word, and Enter could store truncated text because the confirmed characters have not necessarily reached the draft yet
+  - A commit is rejected while a save is in flight, so a repeated Enter cannot fire `onSave` twice or close the editor early against a parent that updates `value` optimistically
+  - Opens with the text selected, so typing replaces the name
+  - A returned promise drives the busy state via `ButtonWithLoading`; a rejection leaves the field open with the typed text intact so the user can retry
+  - The field goes `readOnly` rather than `disabled` while saving, which keeps focus and leaves Escape working
+  - Focus returns to the display trigger after Enter, Escape, Save and Cancel, but not after a click outside, which would take focus off whatever was clicked
+  - One tab stop: the pencil is part of the trigger, and the trigger is unmounted while editing rather than hidden
+  - The trigger's accessible name carries the visible text (`'<value>, Edit'`) to satisfy WCAG 2.5.3 (Label in Name)
+  - Typography is set once on the root and inherited by both states, so a consumer restyles the control in one place
+  - **Deviations from Figma:** the design set (Spaces / Name Bar / Title) has Default and Hover states only; the editing state, its geometry and its wording are the kit's
+  - **Trap:** `fieldWidth` rather than `width` — `width` already exists on `InputHTMLAttributes` and would reach the input as the HTML attribute instead
+  - Uses theme CSS variables for automatic light/dark support
+
+---
+
 ### EditCell
 - **Status:** ✅ Has Storybook
 - **Component Path:** `ui-lib/src/Tables/molecules/EditCell.tsx`
 - **Story Path:** `storybook/src/stories/Tables/atoms/EditableCell.stories.tsx`
+- **Story Path (inside a TypeTable):** `storybook/src/stories/Tables/molecules/EditableTable.stories.tsx`
 - **Exported From:** `Tables`
-- **Props:**
-  - `value`: `string | number` - Cell value
-  - `onSave`: `(value: string | number) => void` - Save callback
-  - `type`: `'text' | 'number'` - Input type
-  - `disabled`: `boolean` - Disabled state
+- **Props:** (own props & `InputHTMLAttributes<HTMLInputElement>`. The prop type is **not** exported: `IEditableCell` is file-local, and the `OwnProps` interface is not re-exported from the package root)
+  - `defaultValue`: `string` (required) - The cell's text. Read once to seed internal state - see the trap below
+  - `rowKey`: `string` (required) - Identifies the row; passed back as the second argument to `saveCallback` so one handler can serve every row
+  - `alignment?`: `TypeCellAlignment` (`'left' | 'center' | 'right'`) - Horizontal alignment of the text in its display state (default: `'left'`). Must be set here as well as in the table's `columnConfig`, which does not reach a custom cell
+  - `toLink?`: `string` - Renders the text as a react-router `Link` to this path (default: `''`, no link). Needs a Router in context when set
+  - `saveCallback?`: `(inputValue: string, rowKey: string) => void` - Commit handler; awaited, so it may return a promise and the cell shows a busy state until it settles
+  - Plus all standard HTML input attributes, spread onto the `SmallInput` in edit mode (`type` defaults to `'text'`, `placeholder` to `''`)
 - **Notable Features:**
-  - Inline editable table cell
-  - Click to edit
-  - Save/cancel actions
-  - Validation support
-  - Loading state during save
+  - Inline editable table cell (`50px` `TypeTableCell`): the text with a pencil, which swaps for an editing panel
+  - Editing is a **popover, not in place**: a `min-width: 320px` panel absolutely positioned at `bottom: -15px; left: -11px` with `z-index: 99`, so it overflows the cell. It anchors to the nearest positioned ancestor - `TypeTableCell` is already `position: relative`, but outside a table you must supply that yourself (the atom story wraps it in a `display: table-cell; position: relative` container)
+  - Enter saves and Escape reverts; a click outside **discards** the edit rather than saving it
+  - Save is a `ButtonWithLoading` that reads "Saving" while the promise is in flight; Cancel is **unmounted** during the save, so the panel's width changes mid-save
+  - **Using it in a TypeTable:** there is no `componentType`/`cellType` API. Pass it through `ICellData.customComponent`, which `TypeTableRow` renders in place of the cell's `text`
+  - **Trap:** `defaultValue` is read **once**. It seeds internal state and is never re-synced, so a value changed from outside after mount is ignored, and the cell keeps showing whatever it last saved locally. The `EditableTable` story works around this by rebuilding every row in a `useEffect` when its data changes
+  - **Trap:** a `saveCallback` that rejects leaves the cell stuck. `setLoading(false)` sits after the `await` with no `try`/`catch`, so a rejection skips it and the panel stays on "Saving" with the input disabled and no Cancel button - a dead end for the user, plus an unhandled promise rejection
+  - **Trap:** the pencil is `opacity: 0`, revealed on the container's `:hover` only. Measured in the browser: with the pencil focused and `:focus-visible` matching, its computed opacity is still `0`, so a keyboard user tabs onto a target that is completely invisible
+  - **Trap:** it reads `theme.fontFamily.ui` through the styled-components theme, so it throws without a `ThemeProvider`. The Chips family and `EditableText` take everything from CSS variables and render bare, so a test or a harness that works for those needs a provider added for this one
+  - Key handling reads `eve.keyCode | eve.which | parseInt(eve.key, 10)` on `keyUp` - two deprecated fields OR'd with a `NaN`, so the branch runs only when the event carries `keyCode` or `which`. Browsers still populate them, but an event carrying only `key`, the spec-compliant shape, does **not** save. New code should compare `e.key`, as the Chips family and `EditableText` do
+  - For editing outside a table - a title, a name bar, any row - use **EditableText**, which edits in place, keeps `value` authoritative, guards IME composition and repeated commits, and restores focus. Converging the two is a known follow-up
+  - Everything above is pinned by `ui-lib/src/Tables/EditCell.test.tsx`, characterization tests covering the traps as well as the working behaviour. They describe the component as it is, so one failing after a fix is the signal to update this entry - not to restore the old behaviour. The popover geometry and the invisible-when-focused pencil were measured in the browser instead, since jsdom applies neither layout nor `:hover`/`:focus-visible`
 
 ---
 
@@ -2381,6 +2458,8 @@ This document provides a comprehensive inventory of all React components in the 
   - `sideDrawers?`: `ISideDrawer[]` - Extra drawers with no top-bar toggle, opened via `activeDrawer` by id (desktop only; not supported on mobile)
     - **ISideDrawer:** `{ id: string, content: ReactElement, width?: string }`
   - `leftAreaElement?`: `ReactElement` - Custom content for the left area; rendered only when `hasSearch` is false, replacing the search bar
+  - `bottomAreaElement?`: `ReactElement` - Content for a second row below the bar (Figma: Spaces / Name Bar). Full width, `background: var(--global-element-background)` (the same surface as the bar), a hairline above it, and `align-items: center`. The row adds no padding and no gap of its own, so content can reach either edge and any inset is yours to set; a child that wants the whole band asks for `height: 100%`. Desktop only - MobileNavbar warns once on mount and renders nothing
+  - `bottomAreaHeight?`: `string` - Height of the bottom row as a CSS length (default: `'32px'`). Also feeds `--top-bar-total-height`, so the drawers and any consumer offset follow it
   - `activeDrawer?`: `IActiveDrawer` (`'user' | 'notifications' | 'custom' | (string & {}) | null`) - Controlled open drawer. Built-in keys are `'user'`/`'notifications'`/`'custom'`; the `(string & {})` member accepts any custom side-drawer id while keeping those keys as editor autocomplete. When provided (including `null`) the consumer owns drawer state, otherwise TopBar uses internal state
   - `onActiveDrawerChange?`: `(activeDrawer: IActiveDrawer) => void` - Callback whenever a drawer opens or closes (icon clicks included)
   - `hasSwitchTheme`: `boolean` - Shows theme toggle option
@@ -2400,6 +2479,23 @@ This document provides a comprehensive inventory of all React components in the 
   - `badge`: `ITopBarBadge` - Badge configuration object
 - **Notable Features:**
   - **Application Top Bar**: Sticky header with 56px height and shadow
+  - **Bottom Area**: Optional second row below the bar via `bottomAreaElement`. The hairline between
+    the rows sits inside the bottom row's own height, so the 56px bar keeps its exact geometry. The
+    row is an empty slot: no padding and no gap, so content can sit flush against either edge and any
+    inset is the consumer's to apply. Children are centred vertically, and `height: 100%` fills the
+    band (unlike the top row, which pads its content because it also lays out TopBar's own elements)
+    **Deviation from Figma:** the design specifies `--grey-1` for this row, which is lighter than the
+    bar in light mode and darker in dark mode; the kit paints the same surface as the bar instead, so
+    the two rows read as one element separated only by the hairline
+  - **Published Height Variables**: `--top-bar-height` (56px) and `--top-bar-divider-width` (1px),
+    both from `ThemeVariables`, plus `--top-bar-bottom-height` and `--top-bar-total-height` (set by
+    TopBar on `:root`). `--top-bar-total-height` is the assembly's **outer** height, divider
+    included, so a drawer or a consumer offset placed at it sits just below the divider rather than
+    on top of it. The bar row is `56px - divider` so the divider lives inside the 56px band. Offset
+    page content with `calc(var(--top-bar-total-height) + …)` instead of hardcoding a number. They
+    are on `:root` rather than the container because the drawers are portalled to `document.body`
+    and cannot inherit from TopBar's own subtree. Two TopBars mounted at once would fight over
+    them - TopBar is already effectively single-instance, since its drawers are fixed to the viewport
   - **Search Integration**: Optional search bar with placeholder support
   - **User Menu**: Dropdown with submenu items and account options
   - **Notifications**: Dropdown with history and status icon

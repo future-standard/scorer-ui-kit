@@ -187,7 +187,7 @@ The exhaustive, source-of-truth export list lives in [`packages/ui-lib/src/index
 - Tooltip
 - ConfirmationModal
 
-#### Form Components (28 components)
+#### Form Components (29 components)
 - Button
 - ButtonWithIcon
 - ButtonWithLoading
@@ -199,6 +199,7 @@ The exhaustive, source-of-truth export list lives in [`packages/ui-lib/src/index
 - PasswordField
 - TextAreaField
 - SmallInput
+- EditableText
 - SelectField
 - Checkbox
 - RadioButton
