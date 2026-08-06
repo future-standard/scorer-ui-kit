@@ -663,6 +663,55 @@ This document provides a comprehensive inventory of all React components in the 
 
 ---
 
+### EditableText
+- **Status:** ✅ Has Storybook
+- **Component Path:** `ui-lib/src/Form/molecules/EditableText.tsx`
+- **Story Path:** `storybook/src/stories/Form/Input/EditableText.stories.tsx`
+- **Exported From:** `Form`
+- **Props:** (`IEditableText` = own props & `Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'defaultValue' | 'onChange' | 'width'>`)
+  - `value?`: `string` - Controlled: the text on show, and it stays authoritative, so a value saved elsewhere replaces it
+  - `defaultValue?`: `string` - Uncontrolled: the starting text, after which the component keeps it and adopts each save
+  - `label`: `string` (required) - Accessible name for the field, e.g. 'Space name'
+  - `onSave?`: `(value: string) => void | Promise<void>` - Commit; the controls stay busy until a returned promise settles
+  - `onCancel?`: `() => void` - Edit abandoned: Escape, Cancel, or a click outside
+  - `onEditingChange?`: `(isEditing: boolean) => void` - Entering or leaving edit mode
+  - `saveOnClickOutside?`: `boolean` - Commit on click outside instead of discarding (default: false)
+  - `allowEmpty?`: `boolean` - Allow committing an empty value (default: false)
+  - `fieldWidth?`: `string` - Width of the field while editing, any CSS length (default: '240px')
+  - `editIcon?`: `string` - Icon name for the edit affordance (default: 'Edit')
+  - `alwaysShowEditIcon?`: `boolean` - Keep the pencil visible instead of revealing it on hover and focus (default: false)
+  - `editText?`: `string` - Appended to the value as the trigger's accessible name (default: 'Edit')
+  - `saveText?`: `string` - Save button text (default: 'Save')
+  - `savingText?`: `string` - Save button text while the save is in flight (default: 'Saving')
+  - `cancelText?`: `string` - Cancel button text (default: 'Cancel')
+  - `disabled?`: `boolean` - Render as plain text, with no edit affordance (default: false)
+  - Plus all standard HTML input attributes except `value`, `defaultValue`, `onChange`, `width`, `readOnly`, `aria-label` and `aria-busy` — the first two are redeclared above as the component's text, and the rest are driven internally (`onSave`, `fieldWidth`, `label`, and the save-in-flight state). They are omitted rather than merged so passing one is a compile error instead of a silent no-op
+- **Notable Features:**
+  - Controlled or uncontrolled, the same choice `Input` and `SmallInput` give: pass `value` and the caller owns the text, pass `defaultValue` and the component keeps it. Presence of `value` decides, so `value=''` is a real controlled empty string
+  - **React Hook Form:** bind with `<Controller>`, not `register()`. The field is mounted only while editing, so a `register()` ref has nothing to attach to the rest of the time:
+    ```tsx
+    <Controller name='spaceName' control={control} render={({ field }) => (
+      <EditableText value={field.value} label='Space name' onSave={field.onChange} name={field.name} />
+    )} />
+    ```
+  - Edits in place, inside whatever row it is given: the display text is swapped for a 24px field plus Save and Cancel at `size='small'`, so the set fits a 32px band with 4px to spare
+  - `height: 100%`, so it tracks TopBar's `bottomAreaHeight` (32px by default, 40px if the consumer asks)
+  - Enter commits, Escape reverts; the value is trimmed, and committing an unchanged value closes the field without calling `onSave`
+  - **IME safe:** both keys are ignored while a composition is open (`e.nativeEvent.isComposing`), since an IME sends Enter to confirm a candidate and Escape to abandon one. Acting on them would close the editor mid-word, and Enter could store truncated text because the confirmed characters have not necessarily reached the draft yet
+  - A commit is rejected while a save is in flight, so a repeated Enter cannot fire `onSave` twice or close the editor early against a parent that updates `value` optimistically
+  - Opens with the text selected, so typing replaces the name
+  - A returned promise drives the busy state via `ButtonWithLoading`; a rejection leaves the field open with the typed text intact so the user can retry
+  - The field goes `readOnly` rather than `disabled` while saving, which keeps focus and leaves Escape working
+  - Focus returns to the display trigger after Enter, Escape, Save and Cancel, but not after a click outside, which would take focus off whatever was clicked
+  - One tab stop: the pencil is part of the trigger, and the trigger is unmounted while editing rather than hidden
+  - The trigger's accessible name carries the visible text (`'<value>, Edit'`) to satisfy WCAG 2.5.3 (Label in Name)
+  - Typography is set once on the root and inherited by both states, so a consumer restyles the control in one place
+  - **Deviations from Figma:** the design set (Spaces / Name Bar / Title) has Default and Hover states only; the editing state, its geometry and its wording are the kit's
+  - **Trap:** `fieldWidth` rather than `width` — `width` already exists on `InputHTMLAttributes` and would reach the input as the HTML attribute instead
+  - Uses theme CSS variables for automatic light/dark support
+
+---
+
 ### EditCell
 - **Status:** ✅ Has Storybook
 - **Component Path:** `ui-lib/src/Tables/molecules/EditCell.tsx`
@@ -2420,7 +2469,10 @@ This document provides a comprehensive inventory of all React components in the 
 - **Notable Features:**
   - **Application Top Bar**: Sticky header with 56px height and shadow
   - **Bottom Area**: Optional second row below the bar via `bottomAreaElement`. The hairline between
-    the rows sits inside the bottom row's own height, so the 56px bar keeps its exact geometry.
+    the rows sits inside the bottom row's own height, so the 56px bar keeps its exact geometry. The
+    row is an empty slot: no padding and no gap, so content can sit flush against either edge and any
+    inset is the consumer's to apply. Children are centred vertically, and `height: 100%` fills the
+    band (unlike the top row, which pads its content because it also lays out TopBar's own elements)
     **Deviation from Figma:** the design specifies `--grey-1` for this row, which is lighter than the
     bar in light mode and darker in dark mode; the kit paints the same surface as the bar instead, so
     the two rows read as one element separated only by the hairline

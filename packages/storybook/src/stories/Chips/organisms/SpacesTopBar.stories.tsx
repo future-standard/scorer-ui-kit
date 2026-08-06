@@ -6,9 +6,9 @@ import {
   ChipButton,
   ChipDropdown,
   ChipZoneBreak,
+  EditableText,
   type IActiveDrawer,
   type IChipDropdownItem,
-  Icon,
   type INotificationsHistory,
   type ISideDrawer,
   SplitButton,
@@ -16,6 +16,7 @@ import {
 } from 'scorer-ui-kit';
 import { action } from 'storybook/actions';
 import styled from 'styled-components';
+import { sleep } from '../../helpers';
 
 /* Spaces/Arrangement/Save/Reset content for the kit's real `TopBar`, passed in as
    `leftAreaElement`, plus the name bar passed in as `bottomAreaElement`. A demo, not a pattern
@@ -24,7 +25,9 @@ import styled from 'styled-components';
      bordered pill unless given `onClick`/`linkTo`/`linkHref`, which switch it to interactive styling.
    - LayoutGrid / LayoutList stand in for the four layout glyphs, which no icon package provides.
    - The Crop/Full and Controls cells are app vocabulary, so they live here rather than in the
-     library: the kit ships the compact chip and the bottom slot, nothing more. */
+     library: the kit ships the compact chip, the bottom slot and `EditableText`, nothing more.
+   - The name's `1:` prefix is the selected chip's position in `spaces`, so it is app state and stays
+     here. Only the name itself is editable. */
 const SpacesTopBarStory = {
   title: 'Chips/organisms',
   component: ChipBar,
@@ -62,32 +65,29 @@ const FixedTopBar = styled.div`
   right: 0;
 `;
 
-/* Figma's Spaces/Name Bar/Title: the space name with an edit pencil revealed on hover. The
-   component set has Default and Hover states only — there is no editing state to build against,
-   so this shows the affordance and stops there. */
-const NameTitle = styled.button`
+/* Figma's Spaces/Name Bar/Title. `bottomAreaElement` is an empty slot with no padding of its own, so
+   the inset lives here — but 44px, not the design's 16px, and the difference is not a design choice.
+   TopBar's top row insets `leftAreaElement` by 24px where the design has the chip bar flush at 0, so
+   the Workspace chip's icon lands at 44 instead of the design's 20. 44px = that 24px row inset + the
+   icon's own 20px inside its 56px cell, which is what puts the title under the icon on screen.
+   Both numbers are TopBar's, so revisit this if BarRow's padding changes or the rows drift apart.
+
+   4px between the number and the name, so the two read as one title rather than two cells. */
+const NameBar = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  cursor: pointer;
+  gap: 4px;
+  height: 100%;
+  padding-left: 44px;
+`;
+
+// matches EditableText's own typography, so the number and the name sit on one line
+const NameNumber = styled.span`
   font-family: var(--font-ui);
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   color: var(--grey-12);
-
-  & svg {
-    opacity: 0;
-    transition: opacity var(--speed-normal) var(--easing-primary-in-out);
-  }
-
-  &:hover svg,
-  &:focus-visible svg {
-    opacity: 1;
-  }
 `;
 
 // pushes the view controls to the far edge and lets the compact bar fill the row's height
@@ -131,6 +131,7 @@ const NOTIFICATIONS_HISTORY: INotificationsHistory = { read: [], unread: [] };
 
 interface ISpace {
   uid: string;
+  name: string;
 }
 
 export const _SpacesTopBar = () => {
@@ -138,10 +139,15 @@ export const _SpacesTopBar = () => {
   const canReset = boolean('Reset enabled (dirty)', true);
   const showNameBar = boolean('Show name bar (bottom area)', true);
   const isTallNameBar = boolean('Taller name bar (40px)', false);
+  const isSlowSave = boolean('Slow rename (shows Saving state)', false);
 
   // a stable uid with the number taken from position, so the chip you remove is the one that
   // unmounts and the chips to its right really do renumber
-  const [spaces, setSpaces] = useState<ISpace[]>([{ uid: 's1' }, { uid: 's2' }, { uid: 's3' }]);
+  const [spaces, setSpaces] = useState<ISpace[]>([
+    { uid: 's1', name: 'Example Name' },
+    { uid: 's2', name: 'Example Name' },
+    { uid: 's3', name: 'Example Name' },
+  ]);
   const [selectedUid, setSelectedUid] = useState('s3');
   const [leavingUid, setLeavingUid] = useState<string | null>(null);
   const [isWorkspaceActive, setIsWorkspaceActive] = useState(false);
@@ -154,6 +160,7 @@ export const _SpacesTopBar = () => {
   // a hidden Workspace chip cannot be the active cell
   const workspaceActive = showWorkspace && isWorkspaceActive;
   const selectedNumber = String(spaces.findIndex((space) => space.uid === selectedUid) + 1);
+  const selectedSpace = spaces.find((space) => space.uid === selectedUid);
   const arrangement = ARRANGEMENTS.find(({ id }) => id === arrangementId);
 
   const onWorkspaceClick = action('workspace-click');
@@ -172,9 +179,23 @@ export const _SpacesTopBar = () => {
 
   const appendSpace = () => {
     const uid = `s${nextUid.current++}`;
-    setSpaces([...spaces, { uid }]);
+    setSpaces([...spaces, { uid, name: 'Example Name' }]);
     setSelectedUid(uid);
     setIsWorkspaceActive(false);
+  };
+
+  // the name belongs to the Space, not to the row, so it follows the chip you switch back to
+  const renameSpace = async (uid: string, name: string) => {
+    if (isSlowSave) {
+      // database wait example
+      await sleep(1200);
+    }
+    // a functional update, unlike the rest of this story: the await above means `spaces` may have
+    // gained or lost a cell by now, and a stale copy would bring a removed Space back
+    setSpaces((current) =>
+      current.map((space) => (space.uid === uid ? { ...space, name } : space))
+    );
+    onRename(uid, name);
   };
 
   const dropSpace = (uid: string) => {
@@ -330,10 +351,19 @@ export const _SpacesTopBar = () => {
      left hairline, so the bar opts in with `leadingDivider`. */
   const bottomAreaElement = (
     <>
-      <NameTitle type='button' onClick={() => onRename(selectedNumber)}>
-        {`${selectedNumber}: Example Name`}
-        <Icon icon='Edit' size={12} color='grey-12' />
-      </NameTitle>
+      {/* The Workspace is not a Space: it has no position and no name of its own, so the bar drops
+          the number and falls back to a fixed label. `disabled` rather than a different element, so
+          the text keeps the same typography and the row does not shift as you switch between them. */}
+      <NameBar>
+        {workspaceActive ? null : <NameNumber>{`${selectedNumber}:`}</NameNumber>}
+        <EditableText
+          value={workspaceActive ? 'Workspace' : (selectedSpace?.name ?? '')}
+          label={workspaceActive ? 'Workspace' : `Space ${selectedNumber} name`}
+          disabled={workspaceActive}
+          fieldWidth='200px'
+          onSave={(name) => renameSpace(selectedUid, name)}
+        />
+      </NameBar>
       <ViewControls>
         <ChipBar isCompact leadingDivider aria-label='View controls'>
           <ChipButton

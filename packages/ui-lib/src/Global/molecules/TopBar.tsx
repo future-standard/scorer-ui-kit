@@ -61,15 +61,19 @@ const BarRow = styled.div`
 
    The background is the same surface as the bar above, not Figma's `--grey-1`: that token is
    lighter than the bar in light mode and darker in dark mode, so the row read as a separate
-   panel. `--global-element-background` resolves to `--grey-2`, which is what Container paints. */
+   panel. `--global-element-background` resolves to `--grey-2`, which is what Container paints.
+
+   No padding and no gap, unlike BarRow above: every child here belongs to the consumer, so spacing
+   set at this level would be the library deciding where someone else's content may begin. A cell
+   meant to sit flush against the viewport edge — a chip bar drawing its own hairlines, say — could
+   not get there. The inset in Figma's name bar is the consumer's to apply. `align-items: center`
+   stays: a child that wants the whole band still gets it by asking for `height: 100%`. */
 const BottomArea = styled.div`
   position: relative;
   box-sizing: border-box;
   height: var(--top-bar-bottom-height, 32px);
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding-left: 16px;
   background: var(--global-element-background);
 
   &::before {

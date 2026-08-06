@@ -19,6 +19,7 @@ import ActionButtons from './molecules/ActionButtons';
 import ButtonsStack, { type IButtonStack, type IButtonsStack } from './molecules/ButtonsStack';
 import CropTool from './molecules/CropTool';
 import DurationSlider from './molecules/DurationSlider';
+import EditableText, { type IEditableText } from './molecules/EditableText';
 import PasswordField from './molecules/PasswordField';
 import PercentageSlider from './molecules/PercentageSlider';
 import SplitButton, { type ISplitButtonProps } from './molecules/SplitButton';
@@ -39,6 +40,7 @@ export {
   CropTool,
   DropArea,
   DurationSlider,
+  EditableText,
   Form,
   IconButton,
   Input,
@@ -89,6 +91,7 @@ export type {
   IButtonStack,
   IButtonsStack,
   IconButtonData,
+  IEditableText,
   ISliderMark,
   ISplitButtonProps,
   TypeSwitchState,

@@ -146,6 +146,8 @@ export interface ITopBar {
   /**
    * Content for a second row below the bar (Figma's "name bar"). Full width, with a
    * hairline above it. Desktop `TopBar` only — not supported by `GlobalUI` on mobile.
+   * The row applies no padding or gap, so content can reach either edge and any inset
+   * is yours to set. Children are centred vertically; use `height: 100%` to fill the band.
    */
   bottomAreaElement?: ReactElement;
   /**
