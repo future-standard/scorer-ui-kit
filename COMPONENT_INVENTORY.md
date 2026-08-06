@@ -1,7 +1,7 @@
 # Scorer UI Kit - Component Inventory
 
 **Generated:** 2026-02-04
-**Last Updated:** 2026-07-28
+**Last Updated:** 2026-08-06
 **Source:** ui-lib/src & storybook/src/stories
 
 This document provides a comprehensive inventory of all React components in the Scorer UI Kit to be used by human and AI, organized alphabetically with their corresponding Storybook documentation status, file paths, props, and notable features.
@@ -379,7 +379,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Story Path:** `storybook/src/stories/Chips/molecules/ChipDropdown.stories.tsx`
 - **Exported From:** `Chips`
 - **Story Path (labelled / Arrangement cell):** `storybook/src/stories/Chips/molecules/ChipDropdownArrangement.stories.tsx`, and in context in `storybook/src/stories/Chips/organisms/SpacesTopBar.stories.tsx`
-- **Props:** (extends `HTMLAttributes<HTMLDivElement>`)
+- **Props:** (extends `Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>`)
   - `items`: `IChipDropdownItem[]` - Menu rows: `{ id, label, icon?, disabled?, onClick? }` (required)
   - `icon?`: `string` - Icon-only mode: the trigger icon, 16px. Labelled mode: the leading glyph, 18px (default: 'FilterEllipsis')
   - `label?`: `string` - Visible trigger text, e.g. '6-up'. Setting it switches the trigger to labelled mode: glyph + label + caret, sized to its content. Empty counts as absent
@@ -389,6 +389,7 @@ This document provides a comprehensive inventory of all React components in the 
   - `noDivider?`: `boolean` - Hide the trigger chip's 1px left divider (default: false)
   - `disabled?`: `boolean` - Disable the trigger (default: false)
   - `onOpenChange?`: `(open: boolean) => void` - Notified when the menu opens/closes
+  - Plus all standard HTML div attributes (`className`, `style`, `aria-label`, etc.) except `onChange`, which is omitted so it cannot be mistaken for a selection callback - use the rows' own `onClick`, or `onOpenChange`
 - **Notable Features:**
   - Top-bar ellipsis "Space actions" cell (Figma: Spaces / Top Bar / Space Menu Cell)
   - Composes the ChipButton atom as the trigger (idle = no bar, hover = `--primary-6` bar,
@@ -668,7 +669,7 @@ This document provides a comprehensive inventory of all React components in the 
 - **Component Path:** `ui-lib/src/Form/molecules/EditableText.tsx`
 - **Story Path:** `storybook/src/stories/Form/Input/EditableText.stories.tsx`
 - **Exported From:** `Form`
-- **Props:** (`IEditableText` = own props & `Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'defaultValue' | 'onChange' | 'width'>`)
+- **Props:** (`IEditableText` = own props & `Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'defaultValue' | 'onChange' | 'width' | 'readOnly' | 'aria-label' | 'aria-busy'>`)
   - `value?`: `string` - Controlled: the text on show, and it stays authoritative, so a value saved elsewhere replaces it
   - `defaultValue?`: `string` - Uncontrolled: the starting text, after which the component keeps it and adopts each save
   - `label`: `string` (required) - Accessible name for the field, e.g. 'Space name'
@@ -2447,7 +2448,7 @@ This document provides a comprehensive inventory of all React components in the 
   - `sideDrawers?`: `ISideDrawer[]` - Extra drawers with no top-bar toggle, opened via `activeDrawer` by id (desktop only; not supported on mobile)
     - **ISideDrawer:** `{ id: string, content: ReactElement, width?: string }`
   - `leftAreaElement?`: `ReactElement` - Custom content for the left area; rendered only when `hasSearch` is false, replacing the search bar
-  - `bottomAreaElement?`: `ReactElement` - Content for a second row below the bar (Figma: Spaces / Name Bar). Full width, `background: var(--global-element-background)` (the same surface as the bar), a hairline above it, `align-items: center`, `gap: 8px`, `padding-left: 16px`. Desktop only - MobileNavbar warns once on mount and renders nothing
+  - `bottomAreaElement?`: `ReactElement` - Content for a second row below the bar (Figma: Spaces / Name Bar). Full width, `background: var(--global-element-background)` (the same surface as the bar), a hairline above it, and `align-items: center`. The row adds no padding and no gap of its own, so content can reach either edge and any inset is yours to set; a child that wants the whole band asks for `height: 100%`. Desktop only - MobileNavbar warns once on mount and renders nothing
   - `bottomAreaHeight?`: `string` - Height of the bottom row as a CSS length (default: `'32px'`). Also feeds `--top-bar-total-height`, so the drawers and any consumer offset follow it
   - `activeDrawer?`: `IActiveDrawer` (`'user' | 'notifications' | 'custom' | (string & {}) | null`) - Controlled open drawer. Built-in keys are `'user'`/`'notifications'`/`'custom'`; the `(string & {})` member accepts any custom side-drawer id while keeping those keys as editor autocomplete. When provided (including `null`) the consumer owns drawer state, otherwise TopBar uses internal state
   - `onActiveDrawerChange?`: `(activeDrawer: IActiveDrawer) => void` - Callback whenever a drawer opens or closes (icon clicks included)
