@@ -34,7 +34,8 @@
   "workspaces": [
     "packages/storybook",
     "packages/example",
-    "packages/ui-lib"
+    "packages/ui-lib",
+    "packages/create-fs-app"
   ],
   "devDependencies": {
     "@biomejs/biome": "2.5.0",
