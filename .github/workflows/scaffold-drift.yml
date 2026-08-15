@@ -1,0 +1,63 @@
+name: Scaffold drift check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+
+      - name: Cache node modules
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm install
+
+      # ui-lib has no prepack hook, so it must be built before packing
+      - name: Build library
+        run: npm run build -w packages/ui-lib
+
+      - name: Pack library
+        run: npm pack -w packages/ui-lib --pack-destination "$RUNNER_TEMP"
+
+      # prepack bundles packages/fs-app-template into the CLI tarball
+      - name: Pack create-fs-app
+        run: npm pack -w packages/create-fs-app --pack-destination "$RUNNER_TEMP"
+
+      - name: Scaffold project via tarball
+        working-directory: ${{ runner.temp }}
+        run: npx --yes ./create-fs-app-*.tgz ci-smoke
+
+      - name: Point scaffolded project at workspace ui-lib
+        working-directory: ${{ runner.temp }}/ci-smoke
+        run: npm install "$RUNNER_TEMP"/scorer-ui-kit-*.tgz
+
+      - name: Build scaffolded project
+        working-directory: ${{ runner.temp }}/ci-smoke
+        run: npm run build
+
+  scaffold-status:
+    name: scaffold-drift
+    needs: scaffold
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check scaffold results
+        run: |
+          if [ "${{ needs.scaffold.result }}" != "success" ]; then
+            exit 1
+          fi
