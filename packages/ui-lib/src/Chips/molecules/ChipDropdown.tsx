@@ -82,15 +82,16 @@ const Menu = styled.div`
   flex-direction: column;
   align-items: stretch;
   min-width: 216px;
-  padding: 4px 0;
+  padding: 0;
+  overflow: hidden;
   background: var(--grey-1);
-  border: 1px solid var(--grey-4);
+  border: 1px solid var(--grey-7);
   border-radius: 4px;
   box-shadow: 0px 5px 25px 0px var(--filter-button-shadow-color);
 `;
 
-/* `& svg [stroke]`: icon colour follows the row text — mirrors ChipButton/IconButton targeting
-   [stroke].
+/* `& svg [stroke]`: --grey-10 keeps the glyph a step lighter than the label; the same [stroke]
+   targeting as ChipButton/IconButton.
 
    `$current` comes after the hover rule so it wins: --grey-4 is a step darker than the --grey-3
    hover in both themes, so letting hover win would make the current row look less selected when
@@ -98,10 +99,10 @@ const Menu = styled.div`
 const MenuItem = styled.button<{ $current: boolean }>`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
   width: 100%;
   height: var(--button-height, 32px);
-  padding: 3px 8px;
+  padding: 0 8px;
   border: none;
   border-bottom: 1px solid var(--grey-7);
   background: transparent;
@@ -114,11 +115,15 @@ const MenuItem = styled.button<{ $current: boolean }>`
   text-align: left;
   transition: background-color var(--speed-fast) var(--easing-primary-in-out);
 
-  & svg [stroke] { stroke: var(--grey-12); }
+  & svg [stroke] { stroke: var(--grey-10); }
 
   &:last-child { border-bottom: none; }
   &:hover:enabled { background-color: var(--grey-3); }
-  &:disabled { cursor: not-allowed; opacity: 0.5; }
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--grey-7);
+    & svg [stroke] { stroke: var(--grey-7); }
+  }
 
   ${({ $current }) =>
     $current &&
@@ -132,6 +137,8 @@ const MenuItem = styled.button<{ $current: boolean }>`
 const CheckSlot = styled.span`
   display: flex;
   margin-left: auto;
+
+  & svg [stroke] { stroke: var(--primary-11); }
 `;
 
 const ChipDropdown: React.FC<IChipDropdown> = ({
