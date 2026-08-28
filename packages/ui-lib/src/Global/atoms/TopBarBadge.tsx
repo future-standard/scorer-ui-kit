@@ -21,6 +21,7 @@ const CoreStyle = css`
   font-weight: 500;
   line-height: 12px; /* 85.714% */
   white-space: nowrap;
+  user-select: none;
 
   transition: opacity var(--speed-fast) var(--easing-primary-out);
 
