@@ -171,6 +171,8 @@ const ContextActionButton = styled.button<{ $menuOpen?: boolean; $isActive: bool
   ${({ $isActive }) =>
     $isActive &&
     css`
+    color: var(--grey-12);
+
     ${ContextIcon},
     &:hover ${ContextIcon}{
       background-color: var(--global-menu-icon-background-active);
@@ -220,9 +222,10 @@ const ContextItem: React.FC<IProps> = ({
     </React.Fragment>
   );
 
-  if (hasSubmenu) {
+  if (hasSubmenu || (!href && !isExternalLink)) {
     return (
       <ContextActionButton
+        type='button'
         $menuOpen={menuOpen}
         $isActive={isActive}
         onClick={() => onClickCallback?.(contextKey)}
