@@ -220,7 +220,11 @@ const ContextItem: React.FC<IProps> = ({
     </React.Fragment>
   );
 
-  if (hasSubmenu) {
+  /* An item without an href is an action (e.g. MainMenu's pin toggle), not a navigation, so it
+     must not fall through to the <Link to='#'> below: react-router resolves a hash-only `to` to
+     the bare current pathname, so every click pushed a history entry with the query string
+     stripped — see #697. */
+  if (hasSubmenu || (!href && !isExternalLink)) {
     return (
       <ContextActionButton
         $menuOpen={menuOpen}
