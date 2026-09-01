@@ -171,6 +171,8 @@ const ContextActionButton = styled.button<{ $menuOpen?: boolean; $isActive: bool
   ${({ $isActive }) =>
     $isActive &&
     css`
+    color: var(--grey-12);
+
     ${ContextIcon},
     &:hover ${ContextIcon}{
       background-color: var(--global-menu-icon-background-active);
@@ -220,13 +222,13 @@ const ContextItem: React.FC<IProps> = ({
     </React.Fragment>
   );
 
-  /* An item without an href is an action (e.g. MainMenu's pin toggle), not a navigation, so it
-     must not fall through to the <Link to='#'> below: react-router resolves a hash-only `to` to
-     the bare current pathname, so every click pushed a history entry with the query string
-     stripped — see #697. */
+  /* An href-less item is an action, not a navigation — it must not fall through to the
+     <Link to='#'> below, which react-router resolves to the bare current pathname,
+     stripping the query string on click. */
   if (hasSubmenu || (!href && !isExternalLink)) {
     return (
       <ContextActionButton
+        type='button'
         $menuOpen={menuOpen}
         $isActive={isActive}
         onClick={() => onClickCallback?.(contextKey)}
