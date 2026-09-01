@@ -222,6 +222,9 @@ const ContextItem: React.FC<IProps> = ({
     </React.Fragment>
   );
 
+  /* An href-less item is an action, not a navigation — it must not fall through to the
+     <Link to='#'> below, which react-router resolves to the bare current pathname,
+     stripping the query string on click. */
   if (hasSubmenu || (!href && !isExternalLink)) {
     return (
       <ContextActionButton
