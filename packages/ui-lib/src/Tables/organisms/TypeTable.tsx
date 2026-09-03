@@ -22,7 +22,7 @@ const LoadingBox = styled.div`
   position: absolute;
   left: 0;
   z-index: 99;
-  background-color: var(--grey-1);
+  background-color: var(--grey-2);
   height: calc(100% - 50px);
   opacity: 85%;
   width: 100%;
