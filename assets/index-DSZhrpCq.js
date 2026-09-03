@@ -5267,7 +5267,7 @@ Please change the parent <Route path="${e}"> to <Route path="${e===`/`?`*`:`${e}
   position: absolute;
   left: 0;
   z-index: 99;
-  background-color: var(--white-1);
+  background-color: var(--grey-2);
   height: calc(100% - 50px);
   opacity: 85%;
   width: 100%;
@@ -8152,4 +8152,4 @@ Schedule: ${a.map(e=>UF(e))} pos: ${this.timelinePos}`),s.length&&this.log(`Remo
     --warning: #FFDC00;
   }
 `;Au.custom.lines.weird={label:{fill:`#fff`},contrastLine:{stroke:`transparent;`},highlightLine:{stroke:`transparent;`},highlightLineBorder:{stroke:`transparent;`},grabHandle:{fill:`transparent;`,stroke:`transparent;`},point:{fill:`hsla(205deg, 45%, 90%, 100%)`},grabHandleText:{fill:`transparent`},grabHandleContrast:{stroke:`transparent`},handleBase:{fill:`transparent`},handleRingLayer:{stroke:`hsla(205deg, 100%, 89%, 100%);`},handleReactiveFill:{fill:`transparent;`},handleReactiveRing:{stroke:`transparent;`},handleContrastLayer:{stroke:`transparent;`},stopStart:{stopColor:` hsla(0, 100%, 15%, 35%);`},stopEnd:{stopColor:`hsla(0, 100%, 15%, 0%);`}};var Oz=()=>(ap(),(0,V.jsx)(kn,{theme:Au,children:(0,V.jsx)(Yf,{children:(0,V.jsxs)(ep,{children:[(0,V.jsx)(QR,{}),(0,V.jsx)(Tz,{}),(0,V.jsx)(Nu,{}),(0,V.jsx)(Dz,{}),(0,V.jsx)(Ez,{})]})})})),kz=document.getElementById(`root`);if(!kz)throw Error(`Root element #root not found`);(0,ze.createRoot)(kz,{onUncaughtError:(e,t)=>{console.error(`Uncaught render error:`,e,t.componentStack)}}).render((0,V.jsx)(R.StrictMode,{children:(0,V.jsx)(Oz,{})}));
-//# sourceMappingURL=index-BTGmD5rw.js.map
+//# sourceMappingURL=index-DSZhrpCq.js.map
