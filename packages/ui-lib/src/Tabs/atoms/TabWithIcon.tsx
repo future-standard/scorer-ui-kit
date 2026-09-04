@@ -11,6 +11,7 @@ const Container = styled.div<{ $active: boolean }>`
   padding-bottom: 7px;
   height: 60px;
   cursor: pointer;
+  user-select: none;
 
   ${({ $active }) =>
     $active
