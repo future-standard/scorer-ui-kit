@@ -63,7 +63,7 @@ const isCheckBoxDisabled = ({ checkboxDisabled = false }: IRowData) => {
 
 interface IProps {
   columnConfig: ITableColumnConfig[];
-  rows: ITypeTableData;
+  rows?: ITypeTableData | null;
   selectable?: boolean;
   hasStatus?: boolean;
   hasThumbnail?: boolean;
@@ -83,7 +83,7 @@ interface IProps {
 const TypeTable: React.FC<IProps> = ({
   columnConfig,
   selectable,
-  rows = [],
+  rows: rowsProp = [],
   closeText,
   hasStatus = false,
   hasThumbnail = false,
@@ -98,17 +98,21 @@ const TypeTable: React.FC<IProps> = ({
   selectCallback = () => {},
   toggleAllCallback = () => {},
 }) => {
-  /* Note about Empty table
-  Currently IRowData Type enforces user to send columns
-  so rows length will always be at least 1
-  I wasn't sure if I should edit IRowData to have columns optional
-  If we allow columns to be optional, previous implementations
-  wont be able to have "No data" Message
-*/
+  /* An empty table can be said four ways, and they all mean the same thing here (#223): omit rows,
+     pass null, pass [], or pass the historical single-row-with-no-cells sentinel that IRowData's
+     required `columns` field forced on callers. */
+  const rows = rowsProp ?? [];
 
   const [allChecked, setAllChecked] = useState(false);
   const [disableAllChecked, setDisableAllChecked] = useState(false);
-  const isEmptyTable = rows.length === 1 && rows[0].columns.length === 0 && !isLoading;
+  const isEmptyTable =
+    !isLoading && (rows.length === 0 || (rows.length === 1 && rows[0].columns.length === 0));
+
+  /* Supplying either piece of empty-state copy is what opts a caller in to the box. Without it,
+     `rows={[]}` keeps rendering a bare header as it always has - which matters because [] is
+     ambiguous: it is both "no data" and "not loaded yet", and a caller that fills rows in an effect
+     would otherwise flash an empty message on first paint. */
+  const hasEmptyStateCopy = emptyTableTitle !== '' || emptyTableText !== '';
 
   useEffect(() => {
     let areAllChecked = false;
@@ -163,7 +167,7 @@ const TypeTable: React.FC<IProps> = ({
             <LoadingText>{loadingText}</LoadingText>
           </LoadingBox>
         ) : null}
-        {isEmptyTable ? (
+        {isEmptyTable && hasEmptyStateCopy ? (
           <EmptyTableBox>
             <h3>{emptyTableTitle}</h3>
             <p>{emptyTableText}</p>

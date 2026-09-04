@@ -6,7 +6,7 @@
  *
  * Covers issue #703.
  */
-import { act, type ReactElement } from 'react';
+import { act, type ReactElement, useEffect, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../theme';
@@ -126,13 +126,18 @@ describe('TypeTable rows/columnConfig contract', () => {
     expect(warn).not.toHaveBeenCalled();
   });
 
-  it('leaves the empty-row sentinel rendering the empty state, without warning', async () => {
+  it.each([
+    ['omitted', undefined],
+    ['null', null],
+    ['an empty array', []],
+    ['the single-empty-row sentinel', [{ columns: [] }]],
+  ])('renders the empty state when rows is %s', async (_label, rows) => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     const container = await render(
       <TypeTable
         columnConfig={[col('A'), col('B')]}
-        rows={[{ columns: [] }]}
+        rows={rows as ITypeTableData | null | undefined}
         emptyTableTitle='Nothing here'
         emptyTableText='Try another filter'
       />
@@ -141,6 +146,41 @@ describe('TypeTable rows/columnConfig contract', () => {
     expect(container.textContent).toContain('Nothing here');
     expect(container.textContent).toContain('Try another filter');
     expect(warn).not.toHaveBeenCalled();
+  });
+
+  it('renders a bare header, not an empty message, when no empty copy is supplied', async () => {
+    const container = await render(<TypeTable columnConfig={[col('A'), col('B')]} rows={[]} />);
+
+    // The headers are still there; nothing claims the table is empty.
+    expect(container.textContent).toContain('A');
+    expect(container.textContent).toContain('B');
+    expect(container.querySelectorAll('h3')).toHaveLength(0);
+  });
+
+  it('does not flash the empty state for a caller that fills rows in an effect', async () => {
+    /* Mirrors the shape EditableTable.stories.tsx uses, which EditCell forces: rows start empty and
+       arrive after the first commit. [] must not be read as "no data" for such a caller. */
+    const RowsFromEffect = () => {
+      const [rows, setRows] = useState<ITypeTableData>([]);
+      useEffect(() => {
+        setRows([{ columns: [{ text: 'a' }, { text: 'b' }] }]);
+      }, []);
+      return <TypeTable columnConfig={[col('A'), col('B')]} rows={rows} />;
+    };
+
+    const container = document.createElement('div');
+    document.body.append(container);
+    const root = createRoot(container);
+    roots.push(root);
+
+    // Commit the first render without flushing effects, so only the first paint is observed.
+    act(() => {
+      root.render(themed(<RowsFromEffect />));
+    });
+    expect(container.querySelectorAll('h3')).toHaveLength(0);
+
+    await act(async () => {});
+    expect(cellTexts(container)).toEqual(expect.arrayContaining(['a', 'b']));
   });
 
   it('survives a middle column being removed while the rows still hold its cell', async () => {

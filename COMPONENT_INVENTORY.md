@@ -2532,7 +2532,7 @@ This document provides a comprehensive inventory of all React components in the 
       - `hasCopyButton`: `boolean` - Adds copy button to cells
       - `width`: `number` - Fixed column width
       - `minWidth`: `number` - Minimum column width
-  - `rows`: ITypeTableData (required) - Array of row data (IRowData[])
+  - `rows?`: `ITypeTableData | null` - Array of row data (IRowData[]) (default: `[]`). Omitting it, or passing `null` or `[]`, means an empty table; the legacy `[{ columns: [] }]` sentinel still works. See the empty-state note below
     - **IRowData interface:**
       - `_checked`: `boolean` - Row selection state
       - `checkboxDisabled`: `boolean` - Disables checkbox for this row
@@ -2585,7 +2585,7 @@ This document provides a comprehensive inventory of all React components in the 
   - **Trap:** give every column a `columnId` if the column set changes at runtime. Without one a column's sort identity is its position (`column_${index}`, which is also the id passed to `sortCallback`), so inserting or removing a column moves the arrow to whatever now sits at that index
   - `defaultAscending` is a **default, not a control**: it seeds the direction, and changing it still takes effect while nobody has sorted yet. Once the user clicks a header, internal state owns the direction and later changes to the prop are ignored - otherwise a second click on the active column would stop flipping
   - `ITableColumnConfig.width` is declared but never consumed - only `minWidth` reaches the DOM
-  - The empty state needs a **sentinel row**: `rows={[{ columns: [] }]}`, not `rows={[]}`, because `IRowData.columns` is required. See #223
+  - **Empty state:** any of `rows` omitted, `null`, `[]`, or the legacy `[{ columns: [] }]` sentinel counts as empty (#223 - the sentinel used to be the only accepted spelling, because `IRowData.columns` is required). The box only renders when you supply `emptyTableTitle` and/or `emptyTableText`; that copy is the opt-in. Without it, `rows={[]}` renders a bare header exactly as before - deliberate, because `[]` means both "no data" and "not loaded yet", and a table that fills `rows` in an effect would otherwise flash an empty message on first paint. Use `isLoading` for the loading state
   - The parallel-array and sorting behaviour above is pinned by `ui-lib/src/Tables/TypeTable.test.tsx`
 
 ---
