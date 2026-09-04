@@ -1,4 +1,4 @@
-import useBreakpoints from './useBreakpoints';
+import useBreakpoints, { type IBreakpoints } from './useBreakpoints';
 import { useClickOutside } from './useClickOutside';
 import { useCopyToClipboard } from './useCopyToClipboard';
 import { useInterval } from './useInterval';
@@ -12,7 +12,7 @@ import useThemeToggle from './useThemeToggle';
 import { useTitle } from './useTitle';
 import { useTo } from './useTo';
 
-export type { IModal };
+export type { IBreakpoints, IModal };
 export {
   useBreakpoints,
   useClickOutside,

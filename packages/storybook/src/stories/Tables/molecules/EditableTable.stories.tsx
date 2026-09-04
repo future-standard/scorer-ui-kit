@@ -1,6 +1,6 @@
 import { object } from '@storybook/addon-knobs';
 import { useCallback, useEffect, useState } from 'react';
-import { TypeTable as EditableTable, EditCell, ModalProvider } from 'scorer-ui-kit';
+import { TypeTable as EditableTable, EditCell, ModalProvider, useBreakpoints } from 'scorer-ui-kit';
 import type {
   IDeviceStatus,
   IRowData,
@@ -46,6 +46,13 @@ const columnConfigSample: ITableColumnConfig[] = [
     showStatus: true,
   },
   {
+    columnId: 'uptime',
+    header: 'Uptime',
+    sortable: false,
+    cellStyle: 'lowImportance',
+    alignment: 'center',
+  },
+  {
     header: 'Temperature',
     sortable: false,
     cellStyle: 'normalImportance',
@@ -60,6 +67,7 @@ interface IExampleData {
   jobTime: string;
   status: IDeviceStatus;
   statusText: string;
+  uptime: string;
   temperature: string;
 }
 const sampleData: IExampleData[] = [
@@ -70,6 +78,7 @@ const sampleData: IExampleData[] = [
     jobTime: 'Just Now',
     status: 'good',
     statusText: 'OK',
+    uptime: '3d 14h',
     temperature: '38.2ºC',
   },
   {
@@ -79,6 +88,7 @@ const sampleData: IExampleData[] = [
     jobTime: 'Just Now',
     status: 'good',
     statusText: 'OK',
+    uptime: '12h 40m',
     temperature: '38.2ºC',
   },
   {
@@ -88,6 +98,7 @@ const sampleData: IExampleData[] = [
     jobTime: '3 mins ago',
     status: 'danger',
     statusText: 'Warning',
+    uptime: '5d 2h',
     temperature: '38.2ºC',
   },
   {
@@ -97,14 +108,19 @@ const sampleData: IExampleData[] = [
     jobTime: '12 mins ago',
     status: 'danger',
     statusText: 'Warning',
+    uptime: '18h 05m',
     temperature: '38.2ºC',
   },
 ];
 
 export const _EditableTable = () => {
+  const { isXXLarge } = useBreakpoints();
   const [data, setData] = useState<IExampleData[]>(sampleData);
   const [rows, setRows] = useState<ITypeTableData>([]);
-  const columnConfig = object('ColumConfig', columnConfigSample);
+  const allColumns = object('ColumConfig', columnConfigSample);
+  const columnConfig = isXXLarge
+    ? allColumns
+    : allColumns.filter(({ columnId }) => columnId !== 'uptime');
 
   const updateCameraName = useCallback(
     async (name: string, rowKey: string) => {
@@ -123,7 +139,7 @@ export const _EditableTable = () => {
   const buildDataRows = useCallback(
     (data: IExampleData[]): ITypeTableData => {
       const newRows: ITypeTableData = data.map(
-        ({ id, jobName, cameraName, jobTime, status, statusText, temperature }) => {
+        ({ id, jobName, cameraName, jobTime, status, statusText, uptime, temperature }) => {
           const row: IRowData = {
             id,
             header: {
@@ -146,6 +162,7 @@ export const _EditableTable = () => {
               },
               { text: jobTime },
               { text: statusText, status },
+              ...(isXXLarge ? [{ text: uptime }] : []),
               { text: temperature },
             ],
           };
@@ -155,11 +172,16 @@ export const _EditableTable = () => {
 
       return newRows;
     },
-    [updateCameraName]
+    [updateCameraName, isXXLarge]
   );
 
   /**
-   * If data is updated the table will be rebuild
+   * If data is updated the table will be rebuild.
+   *
+   * Rebuilding in an effect, rather than deriving rows with useMemo, is what EditCell requires: it
+   * reads defaultValue once, so a row object has to be recreated to show an externally changed
+   * value. The side effect is that rows lag columnConfig by one render whenever the Uptime column
+   * appears or disappears, which is the mismatch TypeTable has to survive.
    */
 
   useEffect(() => {

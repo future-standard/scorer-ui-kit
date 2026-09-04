@@ -1,5 +1,5 @@
 import type React from 'react';
-import { Fragment, useCallback, useState } from 'react';
+import { Fragment, useCallback, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Checkbox from '../../Form/atoms/Checkbox';
 import type { ITableColumnConfig, TypeCellAlignment } from '..';
@@ -120,6 +120,11 @@ const MiddleLine = styled.div<{ $isLastOfGroup?: boolean }>`
   `};
 `;
 
+/* A column's sort identity. columnId is optional, so position is the fallback - which is also the
+   id toggleSort has always reported to sortCallback for a column without one. */
+const columnKeyOf = (column: ITableColumnConfig, index: number) =>
+  column.columnId ?? `column_${index}`;
+
 const renderGroupHeader = (columnConfig: ITableColumnConfig[], index: number) => {
   if (index < 0) {
     return null;
@@ -183,8 +188,35 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
   toggleAllCallback = () => {},
   sortCallback = () => {},
 }) => {
-  const [sortSpec, setSortSpec] = useState(columnConfig);
-  const [ascendingState, setAscendingState] = useState(defaultAscending);
+  /* Which column the props declare active, as an identity rather than a snapshot of the config.
+     Comparing this derived string is what lets a consumer hand over a fresh array every render
+     without wiping out the column the user clicked. */
+  const propActiveKey = useMemo(() => {
+    const index = columnConfig.findIndex(({ sortActive }) => sortActive);
+    return index === -1 ? null : columnKeyOf(columnConfig[index], index);
+  }, [columnConfig]);
+
+  const [activeKey, setActiveKey] = useState<string | null>(propActiveKey);
+  const [ascending, setAscending] = useState(defaultAscending);
+
+  // Adopt the props' answer whenever it changes; clicks own it in between.
+  const lastPropActiveKey = useRef(propActiveKey);
+  if (lastPropActiveKey.current !== propActiveKey) {
+    lastPropActiveKey.current = propActiveKey;
+    setActiveKey(propActiveKey);
+  }
+
+  /* defaultAscending is a default, not a control: it seeds the direction and a change still lands
+     while the table is untouched, but once the user has sorted, adopting it would redirect the
+     direction they are toggling and a second click on the active column would stop flipping. */
+  const hasUserSorted = useRef(false);
+  const lastDefaultAscending = useRef(defaultAscending);
+  if (lastDefaultAscending.current !== defaultAscending) {
+    lastDefaultAscending.current = defaultAscending;
+    if (!hasUserSorted.current) {
+      setAscending(defaultAscending);
+    }
+  }
 
   const toggleAllCallbackWrapper = useCallback(
     (checked: boolean) => {
@@ -201,34 +233,20 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
    */
   const toggleSort = useCallback(
     (indexKey: number, columnId?: string) => {
-      if (sortSpec[indexKey] === undefined) {
+      const column = columnConfig[indexKey];
+      if (column === undefined || !column.sortable) {
         return;
       }
-      if (!sortSpec[indexKey].sortable) {
-        return;
-      }
 
-      const updatedSort = [...sortSpec];
+      const key = columnKeyOf(column, indexKey);
+      const newAscending: boolean = activeKey === key ? !ascending : ascending;
 
-      let lastActiveKey: number | null = null;
-      updatedSort.forEach((col, key) => {
-        if (col.sortActive) {
-          lastActiveKey = key;
-        }
-        if (key === indexKey) {
-          col.sortActive = true;
-        } else {
-          col.sortActive = false;
-        }
-      });
-
-      const newAscending: boolean = lastActiveKey === indexKey ? !ascendingState : ascendingState;
-      const colId: string = columnId === undefined ? `column_${indexKey}` : columnId;
-      sortCallback(newAscending, colId);
-      setSortSpec(updatedSort);
-      setAscendingState(newAscending);
+      hasUserSorted.current = true;
+      setActiveKey(key);
+      setAscending(newAscending);
+      sortCallback(newAscending, columnId ?? key);
     },
-    [ascendingState, sortCallback, sortSpec]
+    [activeKey, ascending, columnConfig, sortCallback]
   );
 
   return (
@@ -251,11 +269,11 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
           header,
           alignment,
           hasCopyButton,
-          sortActive,
           columnId,
           sortable,
           minWidth,
         }: ITableColumnConfig = column;
+        const isSortActive = activeKey === columnKeyOf(column, key);
         return (
           <HeaderItem
             // biome-ignore lint/suspicious/noArrayIndexKey: ITableColumnConfig.columnId is optional; column position is the stable identity. #646.
@@ -264,7 +282,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
             $hasCopyButton={hasCopyButton}
             $minWidth={minWidth}
             $headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
-            $isSortActive={sortActive}
+            $isSortActive={isSortActive}
           >
             <TitleItems $alignment={alignment}>
               {hasHeaderGroups && (
@@ -275,8 +293,8 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
                 sortable={sortable}
                 indexKey={key}
                 columnId={columnId}
-                isSortActive={sortActive}
-                ascending={ascendingState}
+                isSortActive={isSortActive}
+                ascending={ascending}
                 toggleSort={toggleSort}
               />
             </TitleItems>

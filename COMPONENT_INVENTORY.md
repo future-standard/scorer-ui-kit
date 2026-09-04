@@ -2532,7 +2532,7 @@ This document provides a comprehensive inventory of all React components in the 
       - `hasCopyButton`: `boolean` - Adds copy button to cells
       - `width`: `number` - Fixed column width
       - `minWidth`: `number` - Minimum column width
-  - `rows`: ITypeTableData (required) - Array of row data (IRowData[])
+  - `rows?`: `ITypeTableData | null` - Array of row data (IRowData[]) (default: `[]`). Omitting it, or passing `null` or `[]`, means an empty table; the legacy `[{ columns: [] }]` sentinel still works. See the empty-state note below
     - **IRowData interface:**
       - `_checked`: `boolean` - Row selection state
       - `checkboxDisabled`: `boolean` - Disables checkbox for this row
@@ -2580,6 +2580,13 @@ This document provides a comprehensive inventory of all React components in the 
   - **Copy Functionality**: Optional copy button per column
   - **Link Support**: Cells can be links via href property
   - **Responsive Design**: Table layout with flexible column widths
+  - **Trap:** `rows[].columns` and `columnConfig` are **parallel arrays matched by position**, and nothing enforces that their lengths agree. A row with more cells than the config has entries drops the extras and logs a `console.warn` naming the row and both lengths; a row with fewer cells simply renders short. If your column set changes at runtime - a column that only appears above a breakpoint, say - change the config and the rows in the **same render**, or the row shows values under the wrong headers for one frame. Building rows in a `useEffect` (which `EditCell` forces, see its entry) guarantees that lag; `_EditableTable` demonstrates it deliberately
+  - **Trap:** the header is **uncontrolled, with `sortActive` as its initial value**. Ship `sortActive: true` on one column to choose where the arrow starts; after that, clicks own it. The kit does **not** write `sortActive` back into your objects - it used to, which silently rewrote memoised and module-level configs (#703). If you want to own the active column, update `sortActive` in your own `sortCallback` and the header adopts each change
+  - **Trap:** give every column a `columnId` if the column set changes at runtime. Without one a column's sort identity is its position (`column_${index}`, which is also the id passed to `sortCallback`), so inserting or removing a column moves the arrow to whatever now sits at that index
+  - `defaultAscending` is a **default, not a control**: it seeds the direction, and changing it still takes effect while nobody has sorted yet. Once the user clicks a header, internal state owns the direction and later changes to the prop are ignored - otherwise a second click on the active column would stop flipping
+  - `ITableColumnConfig.width` is declared but never consumed - only `minWidth` reaches the DOM
+  - **Empty state:** any of `rows` omitted, `null`, `[]`, or the legacy `[{ columns: [] }]` sentinel counts as empty (#223 - the sentinel used to be the only accepted spelling, because `IRowData.columns` is required). The box only renders when you supply `emptyTableTitle` and/or `emptyTableText`; that copy is the opt-in. Without it, `rows={[]}` renders a bare header exactly as before - deliberate, because `[]` means both "no data" and "not loaded yet", and a table that fills `rows` in an effect would otherwise flash an empty message on first paint. Use `isLoading` for the loading state
+  - The parallel-array and sorting behaviour above is pinned by `ui-lib/src/Tables/TypeTable.test.tsx`
 
 ---
 
