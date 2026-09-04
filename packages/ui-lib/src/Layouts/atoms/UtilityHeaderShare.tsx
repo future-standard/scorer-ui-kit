@@ -30,6 +30,7 @@ const ExtraAction = styled.button`
   text-decoration: none;
   transition: color 0.25s ease;
   cursor: pointer;
+  user-select: none;
 
   ${ExtraActionIcon}{
     svg * {

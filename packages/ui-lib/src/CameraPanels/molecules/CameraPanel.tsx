@@ -16,6 +16,7 @@ export const CameraPanelWrapper = styled.div<{ $hasOnClick: boolean }>`
     $hasOnClick &&
     `
     cursor: pointer;
+    user-select: none;
   `};
 `;
 

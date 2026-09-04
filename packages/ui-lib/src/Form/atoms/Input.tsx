@@ -18,6 +18,7 @@ const InputActionButton = styled.button.attrs({ type: 'button' })`
   background: transparent;
   border: none;
   cursor: pointer;
+  user-select: none;
   outline: none;
 `;
 
