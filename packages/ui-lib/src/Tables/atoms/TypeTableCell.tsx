@@ -7,6 +7,7 @@ import type { TypeCellAlignment, TypeCellStyle } from '..';
 const CopyToClipboard = styled.button`
 
   cursor: pointer;
+  user-select: none;
   opacity: 0;
 
   position: absolute;

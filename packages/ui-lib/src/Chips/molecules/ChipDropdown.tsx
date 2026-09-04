@@ -107,6 +107,7 @@ const MenuItem = styled.button<{ $current: boolean }>`
   border-bottom: 1px solid var(--grey-7);
   background: transparent;
   cursor: pointer;
+  user-select: none;
   font-family: var(--font-ui);
   font-size: 14px;
   font-weight: 500;

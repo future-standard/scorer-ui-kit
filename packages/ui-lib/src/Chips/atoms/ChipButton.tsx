@@ -87,6 +87,7 @@ const StyledChip = styled.button<IStyledChip>`
   border: none;
   background: transparent;
   cursor: pointer;
+  user-select: none;
   outline: none;
   box-sizing: border-box;
   font-family: var(--font-ui);

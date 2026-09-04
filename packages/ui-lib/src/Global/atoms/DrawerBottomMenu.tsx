@@ -9,6 +9,7 @@ const Container = styled.div`
   border-top: 1px solid var(--dividing-line);
   align-items: center;
   cursor: pointer;
+  user-select: none;
   svg {
     margin-top: 7px;
   }

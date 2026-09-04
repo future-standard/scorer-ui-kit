@@ -59,6 +59,7 @@ const StyledButton = styled.button<IStyledComponentProps>`
 
   overflow: hidden;
   cursor: pointer;
+  user-select: none;
   outline: none;
   box-sizing: border-box;
 

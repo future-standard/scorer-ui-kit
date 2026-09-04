@@ -68,6 +68,7 @@ const TitleContainer = styled.div`
   align-items: center;
   margin-left: 10px;
   margin: 3px 0 5px 10px;
+  user-select: none;
 `;
 
 const Container = styled.div`
