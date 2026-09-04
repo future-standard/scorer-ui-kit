@@ -1,1 +1,0 @@
-import{Ft as e,Pt as t}from"./iframe-C28gtL4u.js";import{n}from"./rolldown-runtime-DkW27tQK.js";var r,i;function a(){return(a=n((()=>{e(),r=e=>new Promise(t=>setTimeout(t,e)),i=()=>{let e={};for(let n in t)e[n]=n;return e}})))()}export{a as n,r,i as t};

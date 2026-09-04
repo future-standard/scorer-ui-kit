@@ -1,8 +1,0 @@
-import{Gt as e,It as t,Rt as n,wt as r,z as i,zt as a}from"./iframe-C28gtL4u.js";import{n as o}from"./rolldown-runtime-DkW27tQK.js";var s,c,l,u,d,f;function p(){return(p=o((()=>{s=e(),r(),a(),c=t(),l=n.div`
-  margin: 100px;
-`,u={title:`Pages/atoms`,component:i,decorators:[]},d=()=>{let e=(0,s.text)(`Text`,`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.`);return(0,c.jsx)(l,{children:(0,c.jsx)(i,{children:e})})},d.__docgenInfo={description:``,methods:[],displayName:`_IntroductionText`},d.parameters={...d.parameters,docs:{...d.parameters?.docs,source:{originalSource:`() => {
-  const introductionText = text('Text', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.');
-  return <Container>
-      <IntroductionText>{introductionText}</IntroductionText>
-    </Container>;
-}`,...d.parameters?.docs?.source}}},f=[`_IntroductionText`]})))()}p();export{d as _IntroductionText,f as __namedExportsOrder,u as default};
