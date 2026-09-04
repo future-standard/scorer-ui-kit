@@ -74,7 +74,9 @@ npm run format         # format only
 npm run sweep
 ```
 
-> There is also a minimal Vitest smoke test (`packages/ui-lib/src/index.test.tsx`) that runs as part of `npm test -w packages/ui-lib` alongside lint and build — it only asserts the package's public exports resolve. It is not a component test suite; behavioral verification is done via the story sweep above.
+> Vitest also runs as part of `npm test -w packages/ui-lib`, alongside lint and build. `src/index.test.tsx` is a smoke test asserting the package's public exports resolve; a handful of `*.test.tsx` files (`Chips`, `EditableText`, `EditCell`, `TypeTable`) cover the narrow set of defects the sweep **cannot** observe — anything needing a viewport resize, focus order and tab stops, callback timing, or props a component mutates behind its caller's back.
+>
+> The sweep is the primary runtime check, and **most changes need no test**. If you cannot name what the sweep would miss, write a story instead.
 
 ## Code style guidelines for developing new components
 - Always check [COMPONENT_INVENTORY.md](COMPONENT_INVENTORY.md) before creating new UI.

@@ -126,6 +126,19 @@ const TypeTable: React.FC<IProps> = ({
     setDisableAllChecked(disableCheckAll);
   }, [isEmptyTable, isLoading, rows]);
 
+  /* Cells and columnConfig are parallel arrays whose lengths nothing enforces, and a row that
+     outgrows the config loses its extra cells silently. Only `>` is a mismatch: shorter rows are
+     supported, and the empty-table sentinel is a row with no cells at all. */
+  useEffect(() => {
+    const rowKey = rows.findIndex((row) => row.columns.length > columnConfig.length);
+    if (rowKey !== -1) {
+      console.warn(
+        `TypeTable: row ${rowKey} has ${rows[rowKey].columns.length} cells but columnConfig has ` +
+          `${columnConfig.length} entries. The extra cells are not rendered.`
+      );
+    }
+  }, [rows, columnConfig]);
+
   return (
     <Container>
       <TableContainer>
