@@ -6,7 +6,7 @@
  *
  * Covers issue #703.
  */
-import { act, type ReactElement, useEffect, useState } from 'react';
+import { act, type ReactElement, Suspense, startTransition, use, useEffect, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../theme';
@@ -354,6 +354,66 @@ describe('TypeTable header sorting', () => {
     );
 
     // B is now the active column, so clicking it flips the direction instead of persisting it.
+    await click(headerTitle(container, 'B'));
+
+    expect(sortCallback).toHaveBeenCalledWith(true, 'b');
+  });
+
+  it('adopts a sortActive moved inside a transition whose sibling suspends', async () => {
+    /* React may render a component and then throw that render away - here because a sibling
+       suspends inside a transition - and retry it later. Anything the discarded render wrote to a
+       ref survives into the retry, while its state updates do not. Tracking the previous prop in a
+       ref therefore makes the retry believe it already reconciled, and the arrow never moves. */
+    const sortCallback = vi.fn();
+    const onA = [
+      col('A', { sortable: true, columnId: 'a', sortActive: true }),
+      col('B', { sortable: true, columnId: 'b' }),
+    ];
+    const onB = [
+      col('A', { sortable: true, columnId: 'a' }),
+      col('B', { sortable: true, columnId: 'b', sortActive: true }),
+    ];
+
+    let release!: () => void;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const SuspendsWhen = ({ active }: { active: boolean }) => {
+      if (active) {
+        use(gate);
+      }
+      return null;
+    };
+
+    let moveToB!: () => void;
+    const Harness = () => {
+      const [isOnB, setIsOnB] = useState(false);
+      moveToB = () => setIsOnB(true);
+      return (
+        <Suspense fallback={null}>
+          <TypeTable
+            columnConfig={isOnB ? onB : onA}
+            rows={cells('a', 'b')}
+            sortCallback={sortCallback}
+          />
+          <SuspendsWhen active={isOnB} />
+        </Suspense>
+      );
+    };
+
+    const container = await render(<Harness />);
+
+    // The header renders with B active, then the sibling suspends and the attempt is discarded.
+    await act(async () => {
+      startTransition(() => moveToB());
+    });
+    // Let the sibling resolve; React retries the transition and commits it.
+    await act(async () => {
+      release();
+      await gate;
+    });
+
+    // B is the active column now, so clicking it must flip the direction rather than persist it.
     await click(headerTitle(container, 'B'));
 
     expect(sortCallback).toHaveBeenCalledWith(true, 'b');

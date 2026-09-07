@@ -1,5 +1,5 @@
 import type React from 'react';
-import { Fragment, useCallback, useMemo, useRef, useState } from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Checkbox from '../../Form/atoms/Checkbox';
 import type { ITableColumnConfig, TypeCellAlignment } from '..';
@@ -198,22 +198,26 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
 
   const [activeKey, setActiveKey] = useState<string | null>(propActiveKey);
   const [ascending, setAscending] = useState(defaultAscending);
+  const [hasUserSorted, setHasUserSorted] = useState(false);
 
-  // Adopt the props' answer whenever it changes; clicks own it in between.
-  const lastPropActiveKey = useRef(propActiveKey);
-  if (lastPropActiveKey.current !== propActiveKey) {
-    lastPropActiveKey.current = propActiveKey;
+  /* Adopt the props' answer whenever it changes; clicks own it in between. The previous value lives
+     in state, not a ref, on purpose: React may discard a render (a sibling suspending inside a
+     transition, say) and retry it. A ref written during the discarded render keeps the new value, so
+     the retry would believe it had already reconciled and skip the update; state rolls back with the
+     render, so the retry reconciles again. */
+  const [prevPropActiveKey, setPrevPropActiveKey] = useState(propActiveKey);
+  if (prevPropActiveKey !== propActiveKey) {
+    setPrevPropActiveKey(propActiveKey);
     setActiveKey(propActiveKey);
   }
 
   /* defaultAscending is a default, not a control: it seeds the direction and a change still lands
      while the table is untouched, but once the user has sorted, adopting it would redirect the
      direction they are toggling and a second click on the active column would stop flipping. */
-  const hasUserSorted = useRef(false);
-  const lastDefaultAscending = useRef(defaultAscending);
-  if (lastDefaultAscending.current !== defaultAscending) {
-    lastDefaultAscending.current = defaultAscending;
-    if (!hasUserSorted.current) {
+  const [prevDefaultAscending, setPrevDefaultAscending] = useState(defaultAscending);
+  if (prevDefaultAscending !== defaultAscending) {
+    setPrevDefaultAscending(defaultAscending);
+    if (!hasUserSorted) {
       setAscending(defaultAscending);
     }
   }
@@ -241,7 +245,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
       const key = columnKeyOf(column, indexKey);
       const newAscending: boolean = activeKey === key ? !ascending : ascending;
 
-      hasUserSorted.current = true;
+      setHasUserSorted(true);
       setActiveKey(key);
       setAscending(newAscending);
       sortCallback(newAscending, columnId ?? key);
