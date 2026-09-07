@@ -113,9 +113,13 @@ const checkedRowIDs = (rows: ITypeTableData) => {
 
 interface IMultiActionsExample {
   language: string;
+  actionsLayout?: 'inline' | 'stack';
 }
 
-const MultiActionsExample: React.FC<IMultiActionsExample> = ({ language }) => {
+const MultiActionsExample: React.FC<IMultiActionsExample> = ({
+  language,
+  actionsLayout = 'inline',
+}) => {
   const [data, setData] = useState<ITableSampleData[]>(tableDataJp);
   const [visibleBar, setVisibleBar] = useState('filterBar');
   const downloadAction = action('Downloading...');
@@ -304,6 +308,7 @@ const MultiActionsExample: React.FC<IMultiActionsExample> = ({ language }) => {
             title={language === 'english' ? 'Actions' : 'アクション'}
             finishTextButton={language === 'english' ? 'Finish' : '為しおわる'}
             finishCallback={handleActionsFinish}
+            actionsLayout={actionsLayout}
             selectedTemplate={
               language === 'english'
                 ? 'Selected [SELECTED] of [TOTAL] Results'
