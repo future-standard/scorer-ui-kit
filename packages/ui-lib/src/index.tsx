@@ -185,6 +185,9 @@ import {
   type IModal,
   usePoll,
   useThemeToggle,
+  useBreakpoints,
+  useMediaQuery,
+  type IBreakpoints,
 } from './hooks';
 
 import { NotificationProvider, ModalContext, ModalProvider } from './context';
@@ -333,6 +336,8 @@ export {
   usePoll,
   useMediaModal,
   useThemeToggle,
+  useBreakpoints,
+  useMediaQuery,
   resetButtonStyles,
   FlexContentPlaceholder,
   Spinner,
@@ -399,6 +404,7 @@ export type IStatusDot = 'caution' | 'danger' | 'good' | 'neutral' | 'highlight'
 export type IWeight = 'light' | 'regular' | 'heavy' | 'strong';
 
 export type {
+  IBreakpoints,
   IModal,
   INotificationProps,
   IconButtonData,

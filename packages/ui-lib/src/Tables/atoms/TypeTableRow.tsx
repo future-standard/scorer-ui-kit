@@ -86,7 +86,11 @@ const TypeTableRow: React.FC<IProps> = ({
       ) : null}
 
       {rowData.columns.map((cell, key) => {
-        const { cellStyle, alignment, showUnit, showStatus, hasCopyButton } = columnConfig[key];
+        const config = columnConfig[key];
+        if (config === undefined) {
+          return null;
+        }
+        const { cellStyle, alignment, showUnit, showStatus, hasCopyButton } = config;
         const { unit, status, text, customComponent } = cell;
         return (
           <TypeTableCell
