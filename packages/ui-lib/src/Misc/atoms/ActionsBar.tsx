@@ -1,5 +1,5 @@
 import type React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '../../Form/atoms/Button';
 import ButtonWithIcon, { type IButtonWithIcon } from '../../Form/atoms/ButtonWithIcon';
 
@@ -17,10 +17,19 @@ const ButtonsWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const LeftButtons = styled.div`
-  button {
-    margin: 0 10px 10px 0;
-  }
+const LeftButtons = styled.div<{ $actionsLayout: IActionsBar['actionsLayout'] }>`
+  display: flex;
+  gap: 10px;
+
+  ${({ $actionsLayout }) =>
+    $actionsLayout === 'stack'
+      ? css`
+    flex-direction: column;
+    align-items: flex-start;
+  `
+      : css`
+    flex-wrap: wrap;
+  `}
 `;
 
 const RightButtons = styled.div`
@@ -41,16 +50,26 @@ const renderSelected = (template: string, selected: number, total: number) => {
 };
 
 export interface IActionsButton extends IButtonWithIcon {
+  /** label shown on the action button */
   text: string;
 }
 
 export interface IActionsBar {
+  /** heading shown above the buttons */
   title?: string;
+  /** label of the right hand side button that ends the selection */
   finishTextButton?: string;
+  /** action buttons shown on the left, defaulting to secondary, normal size, left icon */
   actionButtons?: IActionsButton[];
+  /** lay the left action buttons out in a row, or one per line */
+  actionsLayout?: 'inline' | 'stack';
+  /** count line below the buttons, with [SELECTED] and [TOTAL] replaced */
   selectedTemplate?: string;
+  /** number of currently selected items */
   totalSelected?: number;
+  /** number of items available to select */
   totalAvailable?: number;
+  /** called when the finish button is clicked */
   finishCallback?: () => void;
 }
 
@@ -58,6 +77,7 @@ const ActionsBar: React.FC<IActionsBar> = ({
   title = 'Actions:',
   finishTextButton = 'Finish',
   actionButtons = [],
+  actionsLayout = 'inline',
   selectedTemplate = 'Selected [SELECTED] of [TOTAL] Results',
   totalSelected = 0,
   totalAvailable = 0,
@@ -67,13 +87,13 @@ const ActionsBar: React.FC<IActionsBar> = ({
     <Container>
       <Title>{title}</Title>
       <ButtonsWrapper>
-        <LeftButtons>
+        <LeftButtons $actionsLayout={actionsLayout}>
           {actionButtons.map(({ design, size, position, text, ...props }) => {
             return (
               <ButtonWithIcon
                 key={text}
                 design={design || 'secondary'}
-                size={size || 'small'}
+                size={size || 'normal'}
                 position={position || 'left'}
                 {...props}
               >
@@ -83,9 +103,7 @@ const ActionsBar: React.FC<IActionsBar> = ({
           })}
         </LeftButtons>
         <RightButtons>
-          <Button size='small' onClick={finishCallback}>
-            {finishTextButton}
-          </Button>
+          <Button onClick={finishCallback}>{finishTextButton}</Button>
         </RightButtons>
       </ButtonsWrapper>
       <SelectedResults>

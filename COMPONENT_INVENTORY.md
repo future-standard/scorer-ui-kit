@@ -1,7 +1,7 @@
 # Scorer UI Kit - Component Inventory
 
 **Generated:** 2026-02-04
-**Last Updated:** 2026-08-06
+**Last Updated:** 2026-09-07
 **Source:** ui-lib/src & storybook/src/stories
 
 This document provides a comprehensive inventory of all React components in the Scorer UI Kit to be used by human and AI, organized alphabetically with their corresponding Storybook documentation status, file paths, props, and notable features.
@@ -22,13 +22,16 @@ This document provides a comprehensive inventory of all React components in the 
 - **Props:**
   - `title?`: `string` - Actions bar title (default: 'Actions:')
   - `finishTextButton?`: `string` - Finish button text (default: 'Finish')
-  - `actionButtons?`: `IActionsButton[]` - Array of action button configurations (extends `IButtonWithIcon` with `text: string`)
+  - `actionButtons?`: `IActionsButton[]` - Array of action button configurations (extends `IButtonWithIcon` with `text: string`; each button defaults to `design: 'secondary'`, `size: 'normal'`, `position: 'left'`)
+  - `actionsLayout?`: `'inline' | 'stack'` - Layout of the left action buttons: side by side, or one per line (default: 'inline')
   - `selectedTemplate?`: `string` - Template string for selected count (default: 'Selected [SELECTED] of [TOTAL] Results')
   - `totalSelected?`: `number` - Number of selected items (default: 0)
   - `totalAvailable?`: `number` - Total number of available items (default: 0)
   - `finishCallback?`: `() => void` - Callback when finish button is clicked
 - **Notable Features:**
   - Renders a bar with multiple action buttons in the left side plus a `Finish` button in the right side of the screen.
+  - Left action buttons flow inline and wrap by default, or stack one per line at their natural width with `actionsLayout='stack'`
+  - Action buttons and the `Finish` button render at `normal` size
   - Used for bulk actions in tables and lists when selecting checkboxes in rows
   - Displays selected item count with customizable template
 
