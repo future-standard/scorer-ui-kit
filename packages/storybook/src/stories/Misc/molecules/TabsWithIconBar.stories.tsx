@@ -1,5 +1,6 @@
 import { object, text } from '@storybook/addon-knobs';
 import { type ITabIcon, PageHeader, TabsWithIconBar } from 'scorer-ui-kit';
+import { action } from 'storybook/actions';
 import styled from 'styled-components';
 
 const TabsWithIconBarStory = {
@@ -22,12 +23,16 @@ const LayoutWrapper = styled.div`
   padding: ${`30px 30px 30px ${PADDING_LEFT}`} ;
 `;
 
+const tabOnClick = action('tab-click');
+const onTabClick = (tabFor: string) => () => tabOnClick(tabFor);
+
 const list: ITabIcon[] = [
   {
     icon: 'Success',
     title: 'New People',
     subtitle: 'Selected 120 of 120',
-    tabFor: 'example1',
+    tabFor: 'newPeopleTab',
+    onClick: onTabClick('newPeopleTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -41,7 +46,8 @@ const list: ITabIcon[] = [
     icon: 'RecognitionPhoto',
     title: 'Updates To People',
     subtitle: 'Selected 0 of 4',
-    tabFor: 'example2',
+    tabFor: 'updatesToPeopleTab',
+    onClick: onTabClick('updatesToPeopleTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -55,7 +61,8 @@ const list: ITabIcon[] = [
     icon: 'BigWarning',
     title: 'Missing Images',
     subtitle: '4 entries w/out images',
-    tabFor: 'example3',
+    tabFor: 'missingImagesTab',
+    onClick: onTabClick('missingImagesTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -69,7 +76,8 @@ const list: ITabIcon[] = [
     icon: 'Warning',
     title: 'Errors',
     subtitle: '6 entries with errors',
-    tabFor: 'example4',
+    tabFor: 'errorsTab',
+    onClick: onTabClick('errorsTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -82,7 +90,7 @@ const list: ITabIcon[] = [
 ];
 
 export const _TabWithIconBar = () => {
-  const defaultTabId = text('Default Tab Id', 'example1');
+  const defaultTabId = text('Default Tab Id', 'newPeopleTab');
   const paddingLeft = text('Padding Left Override', PADDING_LEFT);
   const tabList = object('TabList', list);
 
