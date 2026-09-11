@@ -250,6 +250,7 @@ import {
   TabWithIcon,
   TabsWithIconBar,
   type ITabIcon,
+  type ITabWithIcon,
 } from './Tabs';
 
 export {
@@ -419,6 +420,7 @@ export type {
   IFilterLabel,
   IFilterDropdownConfig,
   ITabIcon,
+  ITabWithIcon,
   IFilterType,
   IFilterItem,
   IFilterValue,

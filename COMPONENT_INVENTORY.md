@@ -2205,12 +2205,13 @@ This document provides a comprehensive inventory of all React components in the 
 - **Props:**
   - `defaultTabId`: `string` (required) - ID of the tab to select by default on mount
   - `tabList`: `ITabIcon[]` (required) - Array of tab configurations with icons and content
-    - **ITabIcon interface** (extends ITabWithIcon):
+    - **ITabIcon interface** (extends ITabWithIcon, which extends `HTMLAttributes<HTMLDivElement>`):
       - `icon`: `string` (required) - Icon name for the tab
       - `title`: `string` (required) - Main title text for the tab
       - `subtitle`: `string` - Optional subtitle text displayed below title
       - `tabFor`: `string` (required) - Unique identifier for the tab
-      - `customComponent`: `ReactElement` - Custom component to render as tab content
+      - `customComponent`: `ReactElement` - Custom component to render as tab content (held back, never forwarded to the DOM)
+      - Standard div attributes including `onClick` - forwarded per-entry to the rendered `TabWithIcon` and composed with tab selection, so a caller learns which tab was picked
   - `paddingLeft`: `string` - Left padding override for tab list wrapper (default: `'87px'`)
 - **Notable Features:**
   - **Complete Tab System**: Combines Tabs, TabList, TabWithIcon, and TabContent into single component
@@ -2233,12 +2234,13 @@ This document provides a comprehensive inventory of all React components in the 
   - `title`: `string` (required) - Main title text for the tab
   - `subtitle`: `string` - Optional subtitle text displayed below title in italic
   - `tabFor`: `string` (required) - Unique identifier for the tab (matches with TabContent's tabId)
+  - Also accepts standard `div` attributes (extends `HTMLAttributes<HTMLDivElement>`), including `onClick` - composed with the tab's own selection behaviour rather than dropped
 - **Notable Features:**
   - **Context-Based Active State**: Uses TabContext to determine if tab is active (selected === tabFor)
   - **Icon Integration**: Displays icon with dynamic color (primary when active, dimmed when inactive)
   - **Two-Line Layout**: Title and optional subtitle in vertical layout with icon on left
   - **Active Indicator**: 3px bottom border in primary color when active, transparent when inactive
-  - **Auto Click Handling**: Automatically calls setSelected from context on click
+  - **Composed Click Handling**: A caller-supplied `onClick` fires first, then `setSelected` from context runs
   - **Text Overflow**: Both title and subtitle use nowrap and text-overflow ellipsis
   - **Responsive Sizing**: Icon size 15px, title 14px, subtitle 12px
   - **Used In**: TabsWithIconBar component for icon-based tab navigation

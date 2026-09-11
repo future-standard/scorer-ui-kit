@@ -1,4 +1,5 @@
 import { boolean, text } from '@storybook/addon-knobs';
+import { useState } from 'react';
 import { TabList, Tabs, TabWithIcon } from 'scorer-ui-kit';
 import styled from 'styled-components';
 
@@ -15,13 +16,19 @@ export const _TabWithIcon = () => {
   const title = text('Title', 'New Items');
   const subtitle = text('Subtitle', 'Selected 120 of 120');
   const selected = boolean('Show selected', false);
+  const [clickCount, setClickCount] = useState(0);
   return (
     <Container>
       <Tabs>
         <TabList defaultTabId={selected ? 'exampleTab' : 'none'}>
-          <TabWithIcon {...{ icon, title, subtitle }} tabFor='exampleTab' />
+          <TabWithIcon
+            {...{ icon, title, subtitle }}
+            tabFor='exampleTab'
+            onClick={() => setClickCount((count) => count + 1)}
+          />
         </TabList>
       </Tabs>
+      <p>Caller onClick fired: {clickCount}</p>
     </Container>
   );
 };
