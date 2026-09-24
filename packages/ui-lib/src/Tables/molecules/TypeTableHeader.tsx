@@ -44,6 +44,7 @@ const HeaderItem = styled.div<{
     p.$fixedWidth &&
     css`
     width: ${p.$fixedWidth}px;
+    min-width: ${p.$fixedWidth}px;
   `};
 
   ${({ $minWidth }) =>
@@ -253,10 +254,14 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
     [activeKey, ascending, columnConfig, sortCallback]
   );
 
+  /* In table-layout auto, width alone is a preferred width: when the table overflows its container
+     the column shrinks to its content and the checkbox, status bar and type icon touch their
+     neighbours (#712). min-width holds these columns, and the checkbox one is 18px + 14px so the
+     thumbnail's 1.5x hover zoom stays clear of it. */
   return (
     <HeaderRow>
       {selectable ? (
-        <HeaderItem $headerStyle='header' $fixedWidth={30}>
+        <HeaderItem $headerStyle='header' $fixedWidth={32}>
           <Checkbox
             checked={allChecked}
             disabled={disableAllChecked}

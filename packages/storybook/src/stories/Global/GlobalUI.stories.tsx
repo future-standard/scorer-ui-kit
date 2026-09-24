@@ -222,30 +222,35 @@ const Support = () => <PageHeader title={`Support`} introductionText='Call 00000
 const columnConfig: ITableColumnConfig[] = [
   {
     header: 'Start time',
+    minWidth: 180,
     groupTitle: 'Time',
     sortable: false,
     cellStyle: 'normalImportance',
   },
   {
     header: 'Job Created At',
+    minWidth: 180,
     groupTitle: 'Time',
     sortable: false,
     cellStyle: 'normalImportance',
   },
   {
     header: 'Run Time',
+    minWidth: 180,
     groupTitle: 'Time',
     sortable: false,
     cellStyle: 'normalImportance',
   },
   {
     header: 'Status',
+    minWidth: 180,
     groupTitle: 'Meta',
     sortable: false,
     cellStyle: 'normalImportance',
   },
   {
     header: 'Details',
+    minWidth: 180,
     groupTitle: 'Meta',
     sortable: false,
     cellStyle: 'normalImportance',
@@ -257,6 +262,7 @@ const rows: ITypeTableData = [
     id: 'row1',
     header: {
       image: photo,
+      icon: 'Play',
     },
     columns: [
       { text: `2020/06/11 - 16:00` },
@@ -270,6 +276,7 @@ const rows: ITypeTableData = [
     id: 'row2',
     header: {
       image: photo,
+      icon: 'Play',
     },
     columns: [
       { text: '2020/06/11 - 13:00' },
@@ -283,6 +290,7 @@ const rows: ITypeTableData = [
     id: 'row3',
     header: {
       image: photo,
+      icon: 'Play',
     },
     columns: [
       { text: `2020/05/10 - 05:30` },
@@ -306,6 +314,7 @@ const TablePage = () => (
         rows,
         selectable: true,
         hasThumbnail: true,
+        hasTypeIcon: true,
         hasHeaderGroups: true,
       }}
     />
