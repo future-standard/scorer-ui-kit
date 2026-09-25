@@ -33,7 +33,7 @@ export interface ITableColumnConfig {
   showUnit?: boolean;
   showStatus?: boolean;
   hasCopyButton?: boolean;
-  width?: number; // TODO: This!
+  width?: number;
   minWidth?: number;
 }
 
