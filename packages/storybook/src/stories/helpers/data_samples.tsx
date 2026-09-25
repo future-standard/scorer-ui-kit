@@ -329,6 +329,7 @@ const columnConfigSample: ITableColumnConfig[] = [
     sortable: true,
     showStatus: true,
     cellStyle: 'normalImportance',
+    width: 100,
   },
   {
     columnId: 'created',
@@ -338,7 +339,7 @@ const columnConfigSample: ITableColumnConfig[] = [
     cellStyle: 'lowImportance',
     alignment: 'center',
     hasCopyButton: true,
-    width: 140,
+    width: 200,
   },
   {
     columnId: 'run',
@@ -348,6 +349,7 @@ const columnConfigSample: ITableColumnConfig[] = [
     cellStyle: 'lowImportance',
     alignment: 'left',
     hasCopyButton: true,
+    width: 140,
   },
   {
     columnId: 'usage',
@@ -383,6 +385,7 @@ const columnConfigSampleJp: ITableColumnConfig[] = [
     sortable: true,
     showStatus: true,
     cellStyle: 'normalImportance',
+    width: 100,
   },
   {
     columnId: 'created',
@@ -392,7 +395,7 @@ const columnConfigSampleJp: ITableColumnConfig[] = [
     cellStyle: 'lowImportance',
     alignment: 'center',
     hasCopyButton: true,
-    width: 140,
+    width: 200,
   },
   {
     columnId: 'run',
@@ -402,6 +405,7 @@ const columnConfigSampleJp: ITableColumnConfig[] = [
     cellStyle: 'lowImportance',
     alignment: 'left',
     hasCopyButton: true,
+    width: 140,
   },
   {
     columnId: 'usage',
