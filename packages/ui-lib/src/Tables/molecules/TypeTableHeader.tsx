@@ -46,15 +46,11 @@ const HeaderItem = styled.div<{
     width: ${p.$fixedWidth}px;
   `};
 
-  ${({ $fixedWidth, $minWidth }) => {
-    const floor = Math.max($fixedWidth ?? 0, $minWidth ?? 0);
-    return (
-      floor > 0 &&
-      css`
-      min-width: ${floor}px;
-    `
-    );
-  }};
+  ${({ $minWidth }) =>
+    $minWidth &&
+    css`
+    min-width:${$minWidth}px;
+  `};
 
   ${({ theme: { styles }, $headerStyle, $isSortActive }) =>
     $headerStyle === 'subHeader' &&
@@ -128,6 +124,11 @@ const MiddleLine = styled.div<{ $isLastOfGroup?: boolean }>`
    id toggleSort has always reported to sortCallback for a column without one. */
 const columnKeyOf = (column: ITableColumnConfig, index: number) =>
   column.columnId ?? `column_${index}`;
+
+/* A column's floor. width is only a preferred width in table-layout auto, so a fixed column needs
+   the same value as its floor; a larger minWidth raises it. */
+const columnFloor = (width?: number, minWidth?: number) =>
+  Math.max(width ?? 0, minWidth ?? 0) || undefined;
 
 const renderGroupHeader = (columnConfig: ITableColumnConfig[], index: number) => {
   if (index < 0) {
@@ -264,7 +265,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
   return (
     <HeaderRow>
       {selectable ? (
-        <HeaderItem $headerStyle='header' $fixedWidth={32}>
+        <HeaderItem $headerStyle='header' $fixedWidth={32} $minWidth={32}>
           <Checkbox
             checked={allChecked}
             disabled={disableAllChecked}
@@ -272,9 +273,9 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
           />
         </HeaderItem>
       ) : null}
-      {hasStatus ? <HeaderItem $headerStyle='header' $fixedWidth={10} /> : null}
-      {hasThumbnail ? <HeaderItem $headerStyle='header' $fixedWidth={70} /> : null}
-      {hasTypeIcon ? <HeaderItem $headerStyle='header' $fixedWidth={35} /> : null}
+      {hasStatus ? <HeaderItem $headerStyle='header' $fixedWidth={10} $minWidth={10} /> : null}
+      {hasThumbnail ? <HeaderItem $headerStyle='header' $fixedWidth={70} $minWidth={70} /> : null}
+      {hasTypeIcon ? <HeaderItem $headerStyle='header' $fixedWidth={35} $minWidth={35} /> : null}
 
       {columnConfig.map((column, key, allColls) => {
         const {
@@ -294,7 +295,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
             $alignment={alignment}
             $hasCopyButton={hasCopyButton}
             $fixedWidth={width}
-            $minWidth={minWidth}
+            $minWidth={columnFloor(width, minWidth)}
             $headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
             $isSortActive={isSortActive}
           >
