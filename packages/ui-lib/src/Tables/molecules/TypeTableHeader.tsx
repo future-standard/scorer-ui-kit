@@ -280,6 +280,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
           hasCopyButton,
           columnId,
           sortable,
+          width,
           minWidth,
         }: ITableColumnConfig = column;
         const isSortActive = activeKey === columnKeyOf(column, key);
@@ -289,6 +290,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
             key={key}
             $alignment={alignment}
             $hasCopyButton={hasCopyButton}
+            $fixedWidth={width}
             $minWidth={minWidth}
             $headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
             $isSortActive={isSortActive}

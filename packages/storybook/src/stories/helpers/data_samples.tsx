@@ -338,6 +338,7 @@ const columnConfigSample: ITableColumnConfig[] = [
     cellStyle: 'lowImportance',
     alignment: 'center',
     hasCopyButton: true,
+    width: 140,
   },
   {
     columnId: 'run',
@@ -391,6 +392,7 @@ const columnConfigSampleJp: ITableColumnConfig[] = [
     cellStyle: 'lowImportance',
     alignment: 'center',
     hasCopyButton: true,
+    width: 140,
   },
   {
     columnId: 'run',

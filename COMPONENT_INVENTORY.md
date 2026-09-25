@@ -2533,8 +2533,8 @@ This document provides a comprehensive inventory of all React components in the 
       - `showUnit`: `boolean` - Shows unit text in cells
       - `showStatus`: `boolean` - Shows status indicator in cells
       - `hasCopyButton`: `boolean` - Adds copy button to cells
-      - `width`: `number` - Fixed column width
-      - `minWidth`: `number` - Minimum column width
+      - `width`: `number` - Fixed column width in px. The column keeps this width instead of taking a share of the table's spare width, and does not shrink below it when the table overflows. Content wider than the value still widens the column, as table layout never clips cells
+      - `minWidth`: `number` - Minimum column width in px. The column can still grow with spare width
   - `rows?`: `ITypeTableData | null` - Array of row data (IRowData[]) (default: `[]`). Omitting it, or passing `null` or `[]`, means an empty table; the legacy `[{ columns: [] }]` sentinel still works. See the empty-state note below
     - **IRowData interface:**
       - `_checked`: `boolean` - Row selection state

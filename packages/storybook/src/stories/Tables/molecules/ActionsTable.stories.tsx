@@ -50,7 +50,7 @@ const columnConfigSample: ITableColumnConfig[] = [
     header: 'Run Time',
     sortable: false,
     cellStyle: 'normalImportance',
-    minWidth: 120,
+    width: 120,
   },
   {
     header: 'Status',
