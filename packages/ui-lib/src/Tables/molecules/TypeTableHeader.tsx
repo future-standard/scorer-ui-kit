@@ -260,7 +260,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
 
   /* In table-layout auto, width alone is a preferred width: when the table overflows its container
      the column shrinks to its content and the checkbox, status bar and type icon touch their
-     neighbours (#712). min-width holds these columns, and the checkbox one is 18px + 14px so the
+     neighbours. min-width holds these columns, and the checkbox one is 18px + 14px so the
      thumbnail's 1.5x hover zoom stays clear of it. */
   return (
     <HeaderRow>
