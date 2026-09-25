@@ -98,7 +98,7 @@ const TypeTable: React.FC<IProps> = ({
   selectCallback = () => {},
   toggleAllCallback = () => {},
 }) => {
-  /* An empty table can be said four ways, and they all mean the same thing here (#223): omit rows,
+  /* An empty table can be said four ways, and they all mean the same thing here: omit rows,
      pass null, pass [], or pass the historical single-row-with-no-cells sentinel that IRowData's
      required `columns` field forced on callers. */
   const rows = rowsProp ?? [];
@@ -177,7 +177,7 @@ const TypeTable: React.FC<IProps> = ({
           const isLastRow = rows.length - 1 === key;
           return (
             <TypeTableRow
-              // biome-ignore lint/suspicious/noArrayIndexKey: IRowData.id is optional and consumers don't always set it; index is the safest fallback. #646.
+              // biome-ignore lint/suspicious/noArrayIndexKey: IRowData.id is optional and consumers don't always set it; index is the safest fallback.
               key={key}
               {...{
                 rowData,

@@ -290,7 +290,7 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
         const isSortActive = activeKey === columnKeyOf(column, key);
         return (
           <HeaderItem
-            // biome-ignore lint/suspicious/noArrayIndexKey: ITableColumnConfig.columnId is optional; column position is the stable identity. #646.
+            // biome-ignore lint/suspicious/noArrayIndexKey: ITableColumnConfig.columnId is optional; column position is the stable identity.
             key={key}
             $alignment={alignment}
             $hasCopyButton={hasCopyButton}
