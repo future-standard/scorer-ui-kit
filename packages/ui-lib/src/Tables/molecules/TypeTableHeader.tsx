@@ -44,14 +44,17 @@ const HeaderItem = styled.div<{
     p.$fixedWidth &&
     css`
     width: ${p.$fixedWidth}px;
-    min-width: ${p.$fixedWidth}px;
   `};
 
-  ${({ $minWidth }) =>
-    $minWidth &&
-    css`
-    min-width:${$minWidth}px;
-  `};
+  ${({ $fixedWidth, $minWidth }) => {
+    const floor = Math.max($fixedWidth ?? 0, $minWidth ?? 0);
+    return (
+      floor > 0 &&
+      css`
+      min-width: ${floor}px;
+    `
+    );
+  }};
 
   ${({ theme: { styles }, $headerStyle, $isSortActive }) =>
     $headerStyle === 'subHeader' &&
