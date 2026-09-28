@@ -1227,7 +1227,7 @@ This document provides a comprehensive inventory of all React components in the 
   - Plus all standard HTML label attributes (`className`, `style`, `onClick`, etc.)
 - **Notable Features:**
   - Form label component with flexible layout
-  - Required field indicator (primary blue dot via ::after pseudo-element)
+  - Required field indicator (primary blue dot via ::after pseudo-element). `required` here means "show the dot": TextField, PasswordField, TextAreaField and SmallInput compute it, hiding the dot while their field has a value
   - Accessibility support via htmlFor attribute
   - Four layout directions (column, row, column-reverse, row-reverse)
   - Deprecated rightAlign prop (shows console warning)
@@ -1726,8 +1726,11 @@ This document provides a comprehensive inventory of all React components in the 
   - `fieldState`: `TypeFieldState` (required) - Field validation state (`'default' | 'valid' | 'invalid'`)
   - `showFeedback`: `boolean` - Whether to show validation feedback icon
   - `feedbackMessage`: `string` - Validation feedback message text
+  - `required`: `boolean` - Shows the required dot in the label while the field is empty
+  - `alwaysShowRequiredDot?`: `boolean` - Keep the required dot visible even while the field has a value (default: false)
 - **Notable Features:**
   - Password input with automatic show/hide toggle
+  - Required dot hides once the field has a value and returns when cleared (`alwaysShowRequiredDot` keeps it visible)
   - Eye icon button to reveal/hide password (PasswordShow/PasswordHide icons)
   - Toggles between password and text input types
   - Built on Input component with action callback
@@ -1889,9 +1892,12 @@ This document provides a comprehensive inventory of all React components in the 
   - `fieldState`: `TypeFieldState` (`'default' | 'valid' | 'invalid'`) - Field validation state (default: `'default'`)
   - `label`: `string` (required) - Label text for the input
   - `unit`: `string` - Unit text displayed after the input (e.g., 'px', 'ms')
+  - `required`: `boolean` - Shows the required dot in the label while the field is empty (default: `false`)
+  - `alwaysShowRequiredDot?`: `boolean` - Keep the required dot visible even while the field has a value (default: false)
 - **Notable Features:**
   - Compact input variant with reduced height (var(--input-compact-height))
   - Integrated label wrapper for accessibility
+  - Required dot hides once the field has a value and returns when cleared (`alwaysShowRequiredDot` keeps it visible)
   - Optional unit display on the right side
   - Validation state styling with colored borders
   - Focus-within shadow effect
@@ -2338,10 +2344,11 @@ This document provides a comprehensive inventory of all React components in the 
   - `showFeedback`: `boolean` - Shows feedback bar below textarea
   - `feedbackMessage`: `string` - Message text displayed in feedback bar
   - `required`: `boolean` - Shows required indicator in label (default: `false`)
+  - `alwaysShowRequiredDot?`: `boolean` - Keep the required dot visible even while the field has a value (default: false)
   - `children`: `ReactNode` - Content to render inside textarea
 - **Notable Features:**
   - **Label Integration**: Wraps TextArea with Label component for proper field labeling
-  - **Required Indicator**: Label displays required marker when required prop is true
+  - **Required Indicator**: Label displays the required dot while `required` is true and the field is empty; it hides once the field has a value and returns when cleared. `alwaysShowRequiredDot` keeps it visible regardless
   - **State Management**: Passes fieldState to both Label and TextArea for consistent styling
   - **Feedback System**: Supports feedback messages with state-specific icons
   - **Composition**: Combines Label and TextArea components with proper prop forwarding
@@ -2365,10 +2372,11 @@ This document provides a comprehensive inventory of all React components in the 
   - `actionIcon`: `string` - Icon name for action button (from InputProps)
   - `postfix`: `string` - Text displayed after input value (from InputProps)
   - `required`: `boolean` - Shows required indicator in label
+  - `alwaysShowRequiredDot?`: `boolean` - Keep the required dot visible even while the field has a value (default: false)
 - **Notable Features:**
   - **Label Integration**: Wraps Input with Label component for proper field labeling
   - **Text Type Only**: Always renders as `type='text'` input (type prop is ignored)
-  - **Required Indicator**: Label displays required marker when required prop is true
+  - **Required Indicator**: Label displays the required dot while `required` is true and the field is empty; it hides once the field has a value (controlled `value` or typed into an uncontrolled field) and returns when cleared. `alwaysShowRequiredDot` keeps it visible regardless
   - **State Management**: Passes fieldState to both Label and Input for consistent styling
   - **Feedback System**: Supports feedback messages with state-specific icons
   - **Action Icon**: Optional action button with icon (e.g., for password visibility toggle)

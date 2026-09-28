@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { removeAutoFillStyle } from '../../common';
 import type { TypeFieldState } from '..';
 import Label from '../atoms/Label';
+import { useRequiredDot } from '../useRequiredDot';
 
 const StyledInput = styled.input<{ $fieldState: TypeFieldState }>`
   ${removeAutoFillStyle};
@@ -91,6 +92,7 @@ interface OwnProps {
   fieldState?: TypeFieldState;
   label: string;
   unit?: string;
+  alwaysShowRequiredDot?: boolean;
 }
 
 type Props = OwnProps & InputHTMLAttributes<HTMLInputElement>;
@@ -101,24 +103,37 @@ const SmallInput: React.FC<Props> = ({
   name,
   type = 'text',
   placeholder = '',
+  value,
   defaultValue,
+  onChange,
   fieldState = 'default',
   required = false,
+  alwaysShowRequiredDot,
   className,
   children,
   formAction,
   ...props
 }) => {
+  const { showRequiredDot, onChange: handleChange } = useRequiredDot({
+    required,
+    alwaysShowRequiredDot,
+    value,
+    defaultValue,
+    onChange,
+  });
+
   return (
     <Container className={className} $fieldState={fieldState || 'default'}>
-      <Label labelText={label} htmlFor={name || ''} {...{ required }}>
+      <Label labelText={label} htmlFor={name || ''} required={showRequiredDot}>
         <InputContainer $fieldState={fieldState || 'default'}>
           <StyledInput
             $fieldState={fieldState || 'default'}
             type={type}
             placeholder={placeholder}
-            defaultValue={defaultValue}
             {...props}
+            value={value}
+            defaultValue={defaultValue}
+            onChange={handleChange}
           />
           {unit ? <UnitKey>{unit}</UnitKey> : null}
         </InputContainer>
