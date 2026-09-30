@@ -13,15 +13,14 @@ export default defineConfig(() => {
         : [
             dts({
               tsconfigPath: './tsconfig.build.json',
-              rollupTypes: false,
             }),
           ]),
     ],
     build: {
       lib: {
         entry: {
-          index: resolve(__dirname, 'src/index.tsx'),
-          hls: resolve(__dirname, 'src/LineUIHls/index.ts'),
+          index: resolve(import.meta.dirname, 'src/index.tsx'),
+          hls: resolve(import.meta.dirname, 'src/LineUIHls/index.ts'),
         },
         formats: ['es', 'cjs'],
         fileName: (format, entryName) => {
