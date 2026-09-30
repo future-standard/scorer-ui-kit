@@ -18,6 +18,7 @@ export const PasswordInput = () => {
   const inputValue = text('Value', 'Test');
   const inputPlaceholder = text('Placeholder', 'Placeholder...');
   const fieldRequired = boolean('Required', false);
+  const alwaysShowRequiredDot = boolean('Always Show Required Dot', false);
   const showFeedback = boolean('Show Feedback', false);
   const inputFeedback = text('Feedback', 'This is a feedback message.');
   const inputState = select(
@@ -44,6 +45,7 @@ export const PasswordInput = () => {
         showFeedback={showFeedback}
         feedbackMessage={inputFeedback}
         required={fieldRequired}
+        alwaysShowRequiredDot={alwaysShowRequiredDot}
       />
     </Container>
   );

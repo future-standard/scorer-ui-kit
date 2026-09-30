@@ -19,6 +19,7 @@ export const _TextAreaField = () => {
   const fieldFeedback = text('Feedback', 'This is a feedback message.');
   const fieldPlaceholder = text('Placeholder', 'Placeholder...');
   const fieldRequired = boolean('Required', false);
+  const alwaysShowRequiredDot = boolean('Always Show Required Dot', false);
   const currentState = select(
     'State',
     {
@@ -43,6 +44,7 @@ export const _TextAreaField = () => {
         feedbackMessage={fieldFeedback}
         fieldState={currentState}
         required={fieldRequired}
+        alwaysShowRequiredDot={alwaysShowRequiredDot}
       ></TextAreaField>
     </Container>
   );

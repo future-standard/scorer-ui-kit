@@ -33,6 +33,7 @@ export const TextInput = () => {
     'default'
   );
   const fieldRequired = boolean('Required', false);
+  const alwaysShowRequiredDot = boolean('Always Show Required Dot', false);
 
   useEffect(() => {
     document.documentElement.setAttribute('lang', language);
@@ -49,6 +50,7 @@ export const TextInput = () => {
         showFeedback={showFeedback}
         feedbackMessage={inputFeedback}
         required={fieldRequired}
+        alwaysShowRequiredDot={alwaysShowRequiredDot}
       />
     </Container>
   );

@@ -24,6 +24,7 @@ export const _SmallInput = () => {
   const inputUnit = text('Unit', 'º');
   const inputPlaceholder = text('Placeholder', 'Placeholder...');
   const fieldRequired = boolean('Required', false);
+  const alwaysShowRequiredDot = boolean('Always Show Required Dot', false);
   const inputState = select(
     'State',
     {
@@ -48,6 +49,7 @@ export const _SmallInput = () => {
         placeholder={inputPlaceholder}
         fieldState={inputState}
         required={fieldRequired}
+        alwaysShowRequiredDot={alwaysShowRequiredDot}
         disabled={inputState === 'disabled'}
       />
     </Container>
