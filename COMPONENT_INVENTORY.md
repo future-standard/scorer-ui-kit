@@ -2533,8 +2533,8 @@ This document provides a comprehensive inventory of all React components in the 
       - `showUnit`: `boolean` - Shows unit text in cells
       - `showStatus`: `boolean` - Shows status indicator in cells
       - `hasCopyButton`: `boolean` - Adds copy button to cells
-      - `width`: `number` - Fixed column width
-      - `minWidth`: `number` - Minimum column width
+      - `width`: `number` - Fixed column width in px. The column keeps this width instead of taking a share of the table's spare width, and does not shrink below it when the table overflows. Content wider than the value still widens the column, as table layout never clips cells
+      - `minWidth`: `number` - Minimum column width in px. The column can still grow with spare width
   - `rows?`: `ITypeTableData | null` - Array of row data (IRowData[]) (default: `[]`). Omitting it, or passing `null` or `[]`, means an empty table; the legacy `[{ columns: [] }]` sentinel still works. See the empty-state note below
     - **IRowData interface:**
       - `_checked`: `boolean` - Row selection state
@@ -2587,7 +2587,7 @@ This document provides a comprehensive inventory of all React components in the 
   - **Trap:** the header is **uncontrolled, with `sortActive` as its initial value**. Ship `sortActive: true` on one column to choose where the arrow starts; after that, clicks own it. The kit does **not** write `sortActive` back into your objects - it used to, which silently rewrote memoised and module-level configs (#703). If you want to own the active column, update `sortActive` in your own `sortCallback` and the header adopts each change
   - **Trap:** give every column a `columnId` if the column set changes at runtime. Without one a column's sort identity is its position (`column_${index}`, which is also the id passed to `sortCallback`), so inserting or removing a column moves the arrow to whatever now sits at that index
   - `defaultAscending` is a **default, not a control**: it seeds the direction, and changing it still takes effect while nobody has sorted yet. Once the user clicks a header, internal state owns the direction and later changes to the prop are ignored - otherwise a second click on the active column would stop flipping
-  - `ITableColumnConfig.width` is declared but never consumed - only `minWidth` reaches the DOM
+  - `width` fixes a column but cannot make it narrower than its content; constrain the cell content itself if you need truncation. With both `width` and `minWidth` on one column, the larger value is the floor
   - **Empty state:** any of `rows` omitted, `null`, `[]`, or the legacy `[{ columns: [] }]` sentinel counts as empty (#223 - the sentinel used to be the only accepted spelling, because `IRowData.columns` is required). The box only renders when you supply `emptyTableTitle` and/or `emptyTableText`; that copy is the opt-in. Without it, `rows={[]}` renders a bare header exactly as before - deliberate, because `[]` means both "no data" and "not loaded yet", and a table that fills `rows` in an effect would otherwise flash an empty message on first paint. Use `isLoading` for the loading state
   - The parallel-array and sorting behaviour above is pinned by `ui-lib/src/Tables/TypeTable.test.tsx`
 

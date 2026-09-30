@@ -125,6 +125,11 @@ const MiddleLine = styled.div<{ $isLastOfGroup?: boolean }>`
 const columnKeyOf = (column: ITableColumnConfig, index: number) =>
   column.columnId ?? `column_${index}`;
 
+/* A column's floor. width is only a preferred width in table-layout auto, so a fixed column needs
+   the same value as its floor; a larger minWidth raises it. */
+const columnFloor = (width?: number, minWidth?: number) =>
+  Math.max(width ?? 0, minWidth ?? 0) || undefined;
+
 const renderGroupHeader = (columnConfig: ITableColumnConfig[], index: number) => {
   if (index < 0) {
     return null;
@@ -253,10 +258,14 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
     [activeKey, ascending, columnConfig, sortCallback]
   );
 
+  /* In table-layout auto, width alone is a preferred width: when the table overflows its container
+     the column shrinks to its content and the checkbox, status bar and type icon touch their
+     neighbours. min-width holds these columns, and the checkbox one is 18px + 14px so the
+     thumbnail's 1.5x hover zoom stays clear of it. */
   return (
     <HeaderRow>
       {selectable ? (
-        <HeaderItem $headerStyle='header' $fixedWidth={30}>
+        <HeaderItem $headerStyle='header' $fixedWidth={32} $minWidth={32}>
           <Checkbox
             checked={allChecked}
             disabled={disableAllChecked}
@@ -264,9 +273,9 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
           />
         </HeaderItem>
       ) : null}
-      {hasStatus ? <HeaderItem $headerStyle='header' $fixedWidth={10} /> : null}
-      {hasThumbnail ? <HeaderItem $headerStyle='header' $fixedWidth={70} /> : null}
-      {hasTypeIcon ? <HeaderItem $headerStyle='header' $fixedWidth={35} /> : null}
+      {hasStatus ? <HeaderItem $headerStyle='header' $fixedWidth={10} $minWidth={10} /> : null}
+      {hasThumbnail ? <HeaderItem $headerStyle='header' $fixedWidth={70} $minWidth={70} /> : null}
+      {hasTypeIcon ? <HeaderItem $headerStyle='header' $fixedWidth={35} $minWidth={35} /> : null}
 
       {columnConfig.map((column, key, allColls) => {
         const {
@@ -275,16 +284,18 @@ const TypeTableHeader: React.FC<ITableHeader> = ({
           hasCopyButton,
           columnId,
           sortable,
+          width,
           minWidth,
         }: ITableColumnConfig = column;
         const isSortActive = activeKey === columnKeyOf(column, key);
         return (
           <HeaderItem
-            // biome-ignore lint/suspicious/noArrayIndexKey: ITableColumnConfig.columnId is optional; column position is the stable identity. #646.
+            // biome-ignore lint/suspicious/noArrayIndexKey: ITableColumnConfig.columnId is optional; column position is the stable identity.
             key={key}
             $alignment={alignment}
             $hasCopyButton={hasCopyButton}
-            $minWidth={minWidth}
+            $fixedWidth={width}
+            $minWidth={columnFloor(width, minWidth)}
             $headerStyle={hasHeaderGroups ? 'subHeader' : 'header'}
             $isSortActive={isSortActive}
           >

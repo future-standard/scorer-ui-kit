@@ -1,4 +1,4 @@
-import { boolean, object } from '@storybook/addon-knobs';
+import { boolean, number, object } from '@storybook/addon-knobs';
 import { type ReactElement, useCallback, useState } from 'react';
 import {
   ActionButtons,
@@ -12,8 +12,9 @@ import { action } from 'storybook/actions';
 import styled from 'styled-components';
 import photo from '../../assets/placeholder.jpg';
 
-const Container = styled.div`
+const Container = styled.div<{ $width: number }>`
   padding: 100px;
+  ${({ $width }) => $width > 0 && `width: ${$width}px;`}
 `;
 
 const TimeText = styled.div`
@@ -37,21 +38,25 @@ const columnConfigSample: ITableColumnConfig[] = [
     header: 'Analysed Range',
     sortable: false,
     cellStyle: 'normalImportance',
+    minWidth: 200,
   },
   {
     header: 'Job Created At',
     sortable: false,
     cellStyle: 'normalImportance',
+    minWidth: 160,
   },
   {
     header: 'Run Time',
     sortable: false,
     cellStyle: 'normalImportance',
+    width: 120,
   },
   {
     header: 'Status',
     sortable: false,
     cellStyle: 'normalImportance',
+    minWidth: 120,
   },
   {
     header: 'Actions',
@@ -144,6 +149,7 @@ const initialRows: ITypeTableData = [
       image: photo,
       mediaUrl: photo,
       mediaType: 'img',
+      icon: 'Play',
     },
     columns: [
       {
@@ -165,6 +171,7 @@ const initialRows: ITypeTableData = [
       image: photo,
       mediaUrl: photo,
       mediaType: 'img',
+      icon: 'Play',
     },
     columns: [
       {
@@ -186,6 +193,7 @@ const initialRows: ITypeTableData = [
       image: photo,
       mediaUrl: photo,
       mediaType: 'img',
+      icon: 'Play',
     },
     columns: [
       {
@@ -205,7 +213,9 @@ const initialRows: ITypeTableData = [
 
 export const ActionsTable = () => {
   const hasThumbnail = boolean('Has Thumbnail', true);
+  const hasTypeIcon = boolean('Has Type Icon', true);
   const selectable = boolean('Selectable Rows', true);
+  const containerWidth = number('Container Width (px, 0 = fill)', 0);
   const columnConfig = object('Column Configuration', columnConfigSample);
   const [rows, setRows] = useState<ITypeTableData>(initialRows);
   const toggleAllCallback = useCallback(
@@ -234,7 +244,7 @@ export const ActionsTable = () => {
 
   // Provider should be at main Index level, it's here just for the example
   return (
-    <Container>
+    <Container $width={containerWidth}>
       <ModalProvider>
         <TypeTableCustom
           {...{
@@ -244,6 +254,7 @@ export const ActionsTable = () => {
             selectCallback,
             toggleAllCallback,
             hasThumbnail,
+            hasTypeIcon,
           }}
         />
       </ModalProvider>
