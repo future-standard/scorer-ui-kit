@@ -2,7 +2,9 @@ import { type ChangeEventHandler, useState } from 'react';
 
 type FieldValue = string | readonly string[] | number | undefined | null;
 
-interface IUseRequiredDot<E extends HTMLInputElement | HTMLTextAreaElement> {
+type FieldElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+
+interface IUseRequiredDot<E extends FieldElement> {
   required?: boolean;
   alwaysShowRequiredDot?: boolean;
   value?: FieldValue;
@@ -10,13 +12,20 @@ interface IUseRequiredDot<E extends HTMLInputElement | HTMLTextAreaElement> {
   onChange?: ChangeEventHandler<E>;
 }
 
-const hasContent = (value: FieldValue) =>
-  value !== undefined && value !== null && String(value) !== '';
+const hasContent = (value: FieldValue): boolean => {
+  if (value === undefined || value === null) {
+    return false;
+  }
+  if (Array.isArray(value)) {
+    return value.some((entry) => entry !== '');
+  }
+  return String(value) !== '';
+};
 
 /* Decides whether the label's required dot shows: only while the field is required and empty, unless
    the consumer opted out. `value != null` decides controlled mode, the same rule React applies, so a
    controlled consumer keeps their own onChange and React's "value without onChange" warning. */
-export const useRequiredDot = <E extends HTMLInputElement | HTMLTextAreaElement>({
+export const useRequiredDot = <E extends FieldElement>({
   required = false,
   alwaysShowRequiredDot = false,
   value,
@@ -34,5 +43,5 @@ export const useRequiredDot = <E extends HTMLInputElement | HTMLTextAreaElement>
     onChange?.(event);
   };
 
-  return { showRequiredDot, onChange: isControlled ? onChange : trackedOnChange };
+  return { hasValue, showRequiredDot, onChange: isControlled ? onChange : trackedOnChange };
 };

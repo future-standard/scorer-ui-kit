@@ -1227,7 +1227,7 @@ This document provides a comprehensive inventory of all React components in the 
   - Plus all standard HTML label attributes (`className`, `style`, `onClick`, etc.)
 - **Notable Features:**
   - Form label component with flexible layout
-  - Required field indicator (primary blue dot via ::after pseudo-element). `required` here means "show the dot": TextField, PasswordField, TextAreaField and SmallInput compute it, hiding the dot while their field has a value
+  - Required field indicator (primary blue dot via ::after pseudo-element). `required` here means "show the dot": TextField, PasswordField, TextAreaField, SmallInput and SelectField compute it, hiding the dot while their field has a value
   - Accessibility support via htmlFor attribute
   - Four layout directions (column, row, column-reverse, row-reverse)
   - Deprecated rightAlign prop (shows console warning)
@@ -1807,7 +1807,12 @@ This document provides a comprehensive inventory of all React components in the 
   - `placeholder`: `string` - Placeholder text (shown as disabled first option)
   - `icon`: `string` - Icon name to display on the left
   - `changeCallback`: `(value: string) => void` - Callback when selection changes
+  - `required`: `boolean` - Shows the required dot in the label while no option is selected
+  - `alwaysShowRequiredDot?`: `boolean` - Keep the required dot visible even while an option is selected (default: false)
 - **Notable Features:**
+  - Required dot hides once an option is selected and returns when the selection is cleared (`alwaysShowRequiredDot` keeps it visible)
+  - Placeholder styling applies only while a `placeholder` is given and no option is selected, in both controlled (`value`) and uncontrolled (`defaultValue`) mode; a consumer's own `<option value=''>` is styled as a value
+  - A consumer `onChange` is called alongside `changeCallback`
   - Custom styled select dropdown with hidden native appearance
   - Optional left icon with automatic color adjustment for disabled state
   - Down arrow icon on the right (always visible)

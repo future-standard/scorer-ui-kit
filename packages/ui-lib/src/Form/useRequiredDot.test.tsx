@@ -5,6 +5,7 @@
  */
 import { act, type ReactElement, type ReactNode, useEffect, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
+import SelectField from './atoms/SelectField';
 import SmallInput from './atoms/SmallInput';
 import TextAreaField from './molecules/TextAreaField';
 import TextField from './molecules/TextField';
@@ -49,22 +50,30 @@ const must = <T,>(node: T | null | undefined, what: string): T => {
 const dotShown = (container: HTMLElement) =>
   must(container.querySelector('label'), 'the label').dataset.required === 'true';
 
+type FieldElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+
 const field = (container: HTMLElement) =>
-  must(container.querySelector('input, textarea'), 'the field') as
-    | HTMLInputElement
-    | HTMLTextAreaElement;
+  must(container.querySelector('input, textarea, select'), 'the field') as FieldElement;
+
+const prototypeOf = (element: FieldElement) => {
+  if (element instanceof HTMLSelectElement) {
+    return HTMLSelectElement.prototype;
+  }
+  if (element instanceof HTMLTextAreaElement) {
+    return HTMLTextAreaElement.prototype;
+  }
+  return HTMLInputElement.prototype;
+};
 
 /* React tracks the field's value on the DOM node, so assigning `.value` directly is swallowed as a
-   no-op change. Going through the prototype setter is what makes the synthetic onChange fire. */
-const typeInto = async (element: HTMLInputElement | HTMLTextAreaElement, value: string) => {
-  const proto =
-    element instanceof HTMLTextAreaElement
-      ? HTMLTextAreaElement.prototype
-      : HTMLInputElement.prototype;
-  const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
+   no-op change. Going through the prototype setter is what makes the synthetic onChange fire. A
+   select only reports `change`, never `input`. */
+const typeInto = async (element: FieldElement, value: string) => {
+  const setter = Object.getOwnPropertyDescriptor(prototypeOf(element), 'value')?.set;
+  const eventName = element instanceof HTMLSelectElement ? 'change' : 'input';
   await act(async () => {
     setter?.call(element, value);
-    element.dispatchEvent(new Event('input', { bubbles: true }));
+    element.dispatchEvent(new Event(eventName, { bubbles: true }));
   });
 };
 
@@ -117,6 +126,21 @@ describe.each([
       <SmallInput name='f' label='Field' required {...props} />
     ),
   },
+  {
+    name: 'SelectField',
+    make: (props: Record<string, unknown>) => (
+      <SelectField
+        label={{ htmlFor: 'f', text: 'Field' }}
+        placeholder='Pick one'
+        required
+        {...props}
+      >
+        <option value='seed'>Seed</option>
+        <option value='a'>A</option>
+        <option value='more'>More</option>
+      </SelectField>
+    ),
+  },
 ])('$name required dot', ({ make }) => {
   it('hides on input and returns once the field is cleared', async () => {
     const container = await render(make({}));
@@ -164,6 +188,44 @@ describe('controlled required dot', () => {
 
     await act(async () => setOwnerValue?.('set from outside'));
     expect(dotShown(container)).toBe(false);
+  });
+
+  it('follows a controlled select value, with or without a defaultValue', async () => {
+    const options = [
+      <option key='' value=''>
+        None
+      </option>,
+      <option key='a' value='a'>
+        A
+      </option>,
+    ];
+    const picked = await render(
+      <SelectField label={{ htmlFor: 's', text: 'S' }} required value='a' changeCallback={() => {}}>
+        {options}
+      </SelectField>
+    );
+    expect(dotShown(picked)).toBe(false);
+
+    const cleared = await render(
+      <SelectField label={{ htmlFor: 's', text: 'S' }} required value='' changeCallback={() => {}}>
+        {options}
+      </SelectField>
+    );
+    expect(dotShown(cleared)).toBe(true);
+
+    // the pattern consumers used to get a controlled select out of placeholder styling
+    const seeded = await render(
+      <SelectField
+        label={{ htmlFor: 's', text: 'S' }}
+        required
+        value='a'
+        defaultValue='a'
+        changeCallback={() => {}}
+      >
+        {options}
+      </SelectField>
+    );
+    expect(dotShown(seeded)).toBe(false);
   });
 
   it('leaves a controlled consumer their own onChange', async () => {
