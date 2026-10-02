@@ -39,6 +39,8 @@ export const _SelectField = () => {
 
   const isCompact = boolean('isCompact', false);
   const disabled = boolean('Disabled', false);
+  const required = boolean('Required', false);
+  const alwaysShowRequiredDot = boolean('Always Show Required Dot', false);
   const fieldState = select(
     'State',
     {
@@ -54,7 +56,7 @@ export const _SelectField = () => {
   const placeholder = text('Placeholder (Free Width)', 'Choose an option...');
   const defaultValue = text('Default Value (Free Width)', '');
   const freeSelectValue = action('Free select value');
-  const fixedSelectValue = action('Free select value');
+  const fixedSelectValue = action('Fixed select value');
   const icon = select('Icon', iconList, Object.keys(iconList)[0]);
 
   const selectWidth = text('Fix width', '80px');
@@ -89,6 +91,8 @@ export const _SelectField = () => {
             disabled,
             defaultValue,
             fieldState,
+            required,
+            alwaysShowRequiredDot,
           }}
           changeCallback={freeOnChange}
         >
@@ -103,7 +107,7 @@ export const _SelectField = () => {
         <Title>Select (Fixed Width)</Title>
         <FixedSelect $width={selectWidth}>
           <SelectField
-            {...{ isCompact, disabled, fieldState }}
+            {...{ isCompact, disabled, fieldState, required, alwaysShowRequiredDot }}
             label={fixLabel}
             defaultValue={1}
             changeCallback={fixSelectOnChange}
@@ -128,6 +132,8 @@ export const _SelectField = () => {
             defaultValue,
             fieldState,
             icon,
+            required,
+            alwaysShowRequiredDot,
           }}
           changeCallback={freeOnChange}
         >

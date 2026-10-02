@@ -1,8 +1,9 @@
 import type React from 'react';
-import { type SelectHTMLAttributes, useCallback, useState } from 'react';
+import { type SelectHTMLAttributes, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import Icon from '../../Icons/Icon';
 import type { TypeFieldState, TypeLabelDirection } from '..';
+import { useRequiredDot } from '../useRequiredDot';
 import Label from './Label';
 
 export const SelectWrapper = styled.div`
@@ -120,6 +121,7 @@ interface OwnProps {
   placeholder?: string;
   icon?: string;
   changeCallback?: (value: string) => void;
+  alwaysShowRequiredDot?: boolean;
 }
 
 type ISelect = OwnProps & SelectHTMLAttributes<HTMLSelectElement>;
@@ -130,7 +132,11 @@ const SelectField: React.FC<ISelect> = ({
   label,
   icon,
   isCompact,
+  value,
   defaultValue,
+  onChange,
+  required,
+  alwaysShowRequiredDot,
   changeCallback = () => {},
   children,
   ...props
@@ -141,22 +147,22 @@ const SelectField: React.FC<ISelect> = ({
     );
   }
 
-  const [activePlaceholder, setPlaceholderStatus] = useState<boolean>(!defaultValue);
+  const {
+    hasValue,
+    showRequiredDot,
+    onChange: trackedOnChange,
+  } = useRequiredDot<HTMLSelectElement>({
+    required,
+    alwaysShowRequiredDot,
+    value,
+    defaultValue,
+    onChange,
+  });
 
-  const handleOnChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const { value } = e.target;
-
-      setPlaceholderStatus((prev) => {
-        if (prev) {
-          return false;
-        }
-        return prev;
-      });
-      changeCallback(value);
-    },
-    [changeCallback]
-  );
+  const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    trackedOnChange?.(e);
+    changeCallback(e.target.value);
+  };
 
   const iconColor = useCallback(() => {
     if (props.disabled || fieldState === 'disabled') {
@@ -179,7 +185,9 @@ const SelectField: React.FC<ISelect> = ({
         $fieldState={fieldState}
         $isCompact={isCompact}
         {...props}
-        {...(props.value === undefined ? { defaultValue: defaultValue ?? '' } : {})}
+        required={required}
+        value={value}
+        {...(value === undefined ? { defaultValue: defaultValue ?? '' } : {})}
         onChange={handleOnChange}
       >
         {!defaultValue && (
@@ -196,12 +204,13 @@ const SelectField: React.FC<ISelect> = ({
   );
 
   return (
-    <Container {...{ $isCompact: isCompact, $activePlaceholder: activePlaceholder }}>
+    <Container {...{ $isCompact: isCompact, $activePlaceholder: !!placeholder && !hasValue }}>
       {label ? (
         <Label
           htmlFor={label.htmlFor}
           labelText={label.text}
           direction={label.isSameRow ? 'row' : label.direction}
+          required={showRequiredDot}
         >
           {renderSelect(label.htmlFor)}
         </Label>
