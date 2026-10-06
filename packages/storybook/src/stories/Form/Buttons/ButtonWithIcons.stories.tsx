@@ -34,6 +34,7 @@ export const _WithIcon = () => {
   const buttonIconPosition = select('Icon Position', { Left: 'left', Right: 'right' }, 'right');
   const buttonLoading = boolean('Loading', false);
   const buttonShadow = boolean('Shadow', false);
+  const buttonFullWidth = boolean('Full Width', false);
   const buttonOnClick = action('button-click');
 
   return (
@@ -46,6 +47,7 @@ export const _WithIcon = () => {
       position={buttonIconPosition}
       disabled={buttonDisabled}
       loading={buttonLoading}
+      isFullWidth={buttonFullWidth}
     >
       {buttonText}
     </ButtonWithIcon>

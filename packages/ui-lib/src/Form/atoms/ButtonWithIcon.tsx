@@ -6,16 +6,40 @@ import Spinner from '../../Indicators/Spinner';
 import type { IButtonProps, TypeButtonSizes } from '..';
 import Button from './Button';
 
-const Container = styled.div`
+/* `display: block` when full width: an inline box ignores `width`, so the button could not fill
+   the space its parent gives. `min-width`, not `width`, so a label longer than the parent still
+   overflows instead of being clipped by the button's `overflow: hidden`. */
+const Container = styled.div<{ $isFullWidth: boolean }>`
   display: inline;
+
+  ${({ $isFullWidth }) =>
+    $isFullWidth &&
+    css`
+      display: block;
+      width: 100%;
+
+      > button {
+        min-width: 100%;
+      }
+    `}
 `;
 
-const TextContainer = styled.div<{ $size: TypeButtonSizes; $position?: string; $weight?: IWeight }>`
+/* Full width puts the label against the icon divider, not centred, so buttons of equal width line
+   up their labels whatever each label's length; do not switch it back to `center`. */
+const TextContainer = styled.div<{
+  $size: TypeButtonSizes;
+  $position?: string;
+  $weight?: IWeight;
+  $isFullWidth: boolean;
+}>`
   height: inherit;
   flex: 1;
   order: 1;
   display: flex;
-  justify-content: center;
+  justify-content: ${({ $isFullWidth, $position }) => {
+    if (!$isFullWidth) return 'center';
+    return $position === 'left' ? 'flex-start' : 'flex-end';
+  }};
   align-items: center;
   white-space: nowrap;
   padding: 0 var(--button-h-padding);
@@ -89,9 +113,10 @@ const IconArea = styled.div<{ $position?: string; $loading: boolean }>`
 
 `;
 
-const InnerContainer = styled.div<{ $disabled?: boolean }>`
+const InnerContainer = styled.div<{ $disabled?: boolean; $isFullWidth: boolean }>`
   display: flex;
   height: inherit;
+  ${({ $isFullWidth }) => $isFullWidth && 'flex: 1;'}
 
   &:hover {
     ${({ $disabled }) =>
@@ -139,6 +164,8 @@ export interface IButtonWithIcon extends IButtonProps {
   position?: 'left' | 'right';
   shadow?: boolean;
   weight?: IWeight;
+  /** fill the width the parent gives, keeping the label beside the icon divider */
+  isFullWidth?: boolean;
 }
 
 const ButtonWithIcon: React.FC<IButtonWithIcon> = ({
@@ -151,19 +178,25 @@ const ButtonWithIcon: React.FC<IButtonWithIcon> = ({
   position,
   icon,
   weight = 'regular',
+  isFullWidth = false,
   children,
   ...props
 }) => {
   return (
-    <Container>
+    <Container $isFullWidth={isFullWidth}>
       <Button
         noPadding
         disabled={disabled || loading}
         {...{ design, size, shadow, onClick, loading }}
         {...props}
       >
-        <InnerContainer $disabled={disabled}>
-          <TextContainer $size={size} $position={position} $weight={weight}>
+        <InnerContainer $disabled={disabled} $isFullWidth={isFullWidth}>
+          <TextContainer
+            $size={size}
+            $position={position}
+            $weight={weight}
+            $isFullWidth={isFullWidth}
+          >
             {children}
           </TextContainer>
           <IconArea $loading={loading} $position={position}>
