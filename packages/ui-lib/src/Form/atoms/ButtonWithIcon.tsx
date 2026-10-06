@@ -3,19 +3,18 @@ import styled, { css } from 'styled-components';
 import type { IWeight } from '../..';
 import Icon from '../../Icons/Icon';
 import Spinner from '../../Indicators/Spinner';
-import type { IButtonProps, TypeButtonSizes } from '..';
+import type { IButtonProps } from '..';
 import Button from './Button';
 
 /* `display: block` when full width: an inline box ignores `width`, so the button could not fill
-   the space its parent gives. `min-width`, not `width`, so a label longer than the parent still
-   overflows instead of being clipped by the button's `overflow: hidden`. */
+   the space its parent gives. `min-width`, not `width`, so a long label overflows instead of
+   being clipped. */
 const Container = styled.div<{ $isFullWidth: boolean }>`
-  display: inline;
+  display: ${({ $isFullWidth }) => ($isFullWidth ? 'block' : 'inline')};
 
   ${({ $isFullWidth }) =>
     $isFullWidth &&
     css`
-      display: block;
       width: 100%;
 
       > button {
@@ -27,7 +26,6 @@ const Container = styled.div<{ $isFullWidth: boolean }>`
 /* Full width puts the label against the icon divider, not centred, so buttons of equal width line
    up their labels whatever each label's length; do not switch it back to `center`. */
 const TextContainer = styled.div<{
-  $size: TypeButtonSizes;
   $position?: string;
   $weight?: IWeight;
   $isFullWidth: boolean;
@@ -191,12 +189,7 @@ const ButtonWithIcon: React.FC<IButtonWithIcon> = ({
         {...props}
       >
         <InnerContainer $disabled={disabled} $isFullWidth={isFullWidth}>
-          <TextContainer
-            $size={size}
-            $position={position}
-            $weight={weight}
-            $isFullWidth={isFullWidth}
-          >
+          <TextContainer $position={position} $weight={weight} $isFullWidth={isFullWidth}>
             {children}
           </TextContainer>
           <IconArea $loading={loading} $position={position}>
