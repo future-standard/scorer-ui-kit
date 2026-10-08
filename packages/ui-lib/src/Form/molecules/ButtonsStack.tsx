@@ -30,12 +30,11 @@ export interface IButtonsStack {
 const ButtonsStack: React.FC<IButtonsStack> = ({ buttons }) => {
   return (
     <Container>
-      {buttons.map(({ id, buttonType, icon, text, iconPosition, size, ...buttonProps }, index) => {
+      {buttons.map(({ id, buttonType, icon, text, iconPosition, ...buttonProps }, index) => {
         if (buttonType === 'icon-button')
           return (
             <ButtonWithIcon
               key={id || `button-stack-${index}`}
-              size={size || 'small'}
               icon={icon || ''}
               position={iconPosition}
               isFullWidth
@@ -46,7 +45,7 @@ const ButtonsStack: React.FC<IButtonsStack> = ({ buttons }) => {
           );
 
         return (
-          <Button key={id || `button-stack-${index}`} size={size || 'small'} {...buttonProps}>
+          <Button key={id || `button-stack-${index}`} {...buttonProps}>
             {text}
           </Button>
         );

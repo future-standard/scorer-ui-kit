@@ -200,7 +200,7 @@ This document provides a comprehensive inventory of all React components in the 
   - Stacks multiple buttons vertically with 8px gap
   - Every button gets the same width; icon buttons use `isFullWidth`, so their icons and labels line up
   - Supports both regular buttons and icon buttons
-  - Default size is 'small' for all buttons
+  - Buttons use their own default size ('normal') unless an entry sets `size`
   - Text wrapping disabled (nowrap)
   - Used in page headers and forms
 
