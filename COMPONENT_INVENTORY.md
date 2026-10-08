@@ -198,8 +198,9 @@ This document provides a comprehensive inventory of all React components in the 
       - Plus all `IButtonProps` properties (`size`, `design`, `onClick`, `disabled`, etc.)
 - **Notable Features:**
   - Stacks multiple buttons vertically with 8px gap
+  - Every button gets the same width; icon buttons use `isFullWidth`, so their icons and labels line up
   - Supports both regular buttons and icon buttons
-  - Default size is 'small' for all buttons
+  - Buttons use their own default size ('normal') unless an entry sets `size`
   - Text wrapping disabled (nowrap)
   - Used in page headers and forms
 
@@ -212,9 +213,10 @@ This document provides a comprehensive inventory of all React components in the 
 - **Exported From:** `Form`
 - **Props:** (extends `IButtonProps` which extends `ButtonHTMLAttributes<HTMLButtonElement>`)
   - `icon`: `string` - Icon name (required)
-  - `position?`: `'left' | 'right'` - Icon position (default: 'left')
+  - `position?`: `'left' | 'right'` - Icon position (icon renders on the right when not set)
   - `shadow?`: `boolean` - Add shadow effect (default: false)
   - `weight?`: `IWeight` (`'light' | 'regular' | 'heavy' | 'strong'`) - Icon weight (default: 'regular')
+  - `isFullWidth?`: `boolean` - Fill the width the parent gives, keeping the label beside the icon divider (default: false, content width)
   - `size?`: `TypeButtonSizes` - Button size (default: 'normal')
   - `design?`: `TypeButtonDesigns` - Button design (default: 'primary')
   - `loading?`: `boolean` - Loading state (default: false)
