@@ -38,10 +38,8 @@ const TabsWithIconBar: React.FC<ITabsWithIconBar> = ({ defaultTabId, tabList, pa
       <Tabs>
         <TabListWrapper $paddingLeft={paddingLeft}>
           <TabList {...{ defaultTabId }}>
-            {tabList.map(({ icon, title, subtitle, tabFor }) => {
-              return (
-                <TabWithIcon key={`tabWithIcon-${tabFor}`} {...{ icon, title, subtitle, tabFor }} />
-              );
+            {tabList.map(({ customComponent: _customComponent, ...tabProps }) => {
+              return <TabWithIcon key={`tabWithIcon-${tabProps.tabFor}`} {...tabProps} />;
             })}
           </TabList>
         </TabListWrapper>

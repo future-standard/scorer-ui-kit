@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useCallback, useContext } from 'react';
+import { type ButtonHTMLAttributes, useCallback, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import type { IStatusDot } from '../..';
 import { resetButtonStyles } from '../../common/index';
@@ -53,7 +53,7 @@ const LinkTab = styled.div<{ $isActive: boolean }>`
   `}
 `;
 
-interface IMobileTab {
+interface IMobileTab extends ButtonHTMLAttributes<HTMLButtonElement> {
   tabFor: string;
   icon: string;
   closeId: string;
@@ -69,20 +69,22 @@ const MobileTab: React.FC<IMobileTab> = ({
   counter,
   status,
   customComponent: _customComponent,
+  onClick,
   ...props
 }) => {
   const { selected, setSelected }: ContextProps = useContext(TabContext);
 
   const onChangeTab = useCallback(
-    (tabId: string) => {
-      const newValue = selected === tabId ? closeId : tabId;
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      onClick?.(event);
+      const newValue = selected === tabFor ? closeId : tabFor;
       setSelected(newValue);
     },
-    [closeId, selected, setSelected]
+    [closeId, onClick, selected, setSelected, tabFor]
   );
 
   return (
-    <Container {...props} onClick={() => onChangeTab(tabFor)}>
+    <Container {...props} onClick={onChangeTab}>
       <LinkTab $isActive={selected === tabFor}>
         <StatusIcon {...{ icon, status, counter }} />
       </LinkTab>
