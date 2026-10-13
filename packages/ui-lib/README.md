@@ -96,17 +96,24 @@ The Scorer UI Kit is released under the [MIT license](../../LICENSE.md).
 Please note however that the icon set included in this software is included under license and remains property of Webalys LLC. These icons can be used only in the context of this open source project. For more information regarding this license, see [Streamline Icons Premium License](https://help.streamlineicons.com/license-premium).
 
 ## Release
-1. Update the version in package.json in this ui-lib folder and commit it. (this can done on a branch and then merged)
-2. Add a release tag with the following format: vXX.XX.XX or vXX.XX.XX-beta.x(for beta) - this should match the package.json version
-3. Push the tag to Github (this should cause the release)
+
+Releases are driven by two Claude Code skills in `.claude/skills/`, which bump the version in the root and `packages/ui-lib` `package.json`, open a release PR, and tag `main` once the PR is merged:
+
+- `/release` for stable versions (`X.Y.Z`, npm dist-tag `latest`)
+- `/beta-release` for betas (`X.Y.Z-beta.N`, npm dist-tag `beta`). A beta is a pre-release of the next patch after the latest stable version.
+
+Pushing the tag is what publishes. `vX.Y.Z` triggers `.github/workflows/publish.yml` and `vX.Y.Z-beta.N` triggers `.github/workflows/publish-beta.yml`. Each workflow checks that the `package.json` version matches its own pattern before publishing, so a tag that disagrees with `package.json` fails instead of publishing under the wrong dist-tag. Re-running a tag that is already on npm is a safe no-op.
+
+Both workflows authenticate with npm [trusted publishing](https://docs.npmjs.com/trusted-publishers) (OIDC). There is no npm token anywhere: GitHub issues a short-lived identity token for the run and npm checks it against a trusted publisher configured on the `scorer-ui-kit` package. There are two entries, one per workflow filename (`publish.yml` and `publish-beta.yml`), both for the `future-standard/scorer-ui-kit` repository with no environment. Renaming either workflow file breaks its publish until the matching npm entry is updated. A publish that fails on npm authentication almost always means the entry for that filename is missing or does not have direct publishing enabled; fix it on npm and re-run the workflow for the same tag.
+
+Manual fallback (same result, without the skill):
 
 ```
-// Updating to v2.5.2
-
-  git commit -m "Bump 2.5.2"
-  grep version package.json
-  ~  "version": "2.5.2",
-  git tag v2.5.2
-  git push origin v2.5.2
+  # Updating to v3.0.11
+  npm pkg set version=3.0.11
+  npm pkg set version=3.0.11 -w packages/ui-lib
+  npm install --package-lock-only
+  # commit, open a PR, merge it, then on main:
+  git tag v3.0.11
+  git push origin v3.0.11
 ```
-

@@ -25,6 +25,10 @@ jobs:
       # automatically. `prepublishOnly` runs the build; provenance is generated
       # automatically for this public repo + public package.
       #
+      # The suffix guard keeps this workflow from ever publishing a pre-release
+      # as `latest`: it only runs for `vX.Y.Z` tags, but the tag and
+      # package.json can disagree, and package.json is what gets published.
+      #
       # The version guard keeps re-runs idempotent: native `npm publish` errors
       # (EPUBLISHCONFLICT) when the version already exists, whereas the previous
       # JS-DevTools/npm-publish action skipped silently. Re-running a tag that is
@@ -32,6 +36,10 @@ jobs:
       - name: Publish to npm (skip if version already on registry)
         run: |
           VERSION=$(node -p "require('./packages/ui-lib/package.json').version")
+          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::package.json version '${VERSION}' is not a stable version (X.Y.Z); refusing to publish as latest."
+            exit 1
+          fi
           if [ -n "$(npm view "scorer-ui-kit@${VERSION}" version 2>/dev/null)" ]; then
             echo "scorer-ui-kit@${VERSION} is already published; skipping publish."
             exit 0
