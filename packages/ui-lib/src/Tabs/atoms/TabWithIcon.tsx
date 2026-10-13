@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useCallback, useContext } from 'react';
+import { type HTMLAttributes, useCallback, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import Icon, { IconWrapper } from '../../Icons/Icon';
 import { type ContextProps, TabContext } from '../Tabs';
@@ -57,27 +57,35 @@ const TextGroup = styled.div`
   margin-right: 20px;
 `;
 
-export interface ITabWithIcon {
+export interface ITabWithIcon extends HTMLAttributes<HTMLDivElement> {
   icon: string;
   title: string;
   subtitle?: string;
   tabFor: string;
 }
 
-const TabWithIcon: React.FC<ITabWithIcon> = ({ icon, title, subtitle, tabFor, ...props }) => {
+const TabWithIcon: React.FC<ITabWithIcon> = ({
+  icon,
+  title,
+  subtitle,
+  tabFor,
+  onClick,
+  ...props
+}) => {
   const { selected, setSelected }: ContextProps = useContext(TabContext);
 
   const onChangeTab = useCallback(
-    (tabId: string) => {
-      setSelected(tabId);
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      onClick?.(event);
+      setSelected(tabFor);
     },
-    [setSelected]
+    [onClick, setSelected, tabFor]
   );
 
   const active = selected === tabFor;
 
   return (
-    <Container $active={active} {...props} onClick={() => onChangeTab(tabFor)}>
+    <Container $active={active} {...props} onClick={onChangeTab}>
       <Icon {...{ icon }} weight='regular' size={15} color={active ? 'primary' : 'dimmed'} />
       <TextGroup>
         <Title $active={active}>{title}</Title>
