@@ -5,7 +5,7 @@ when_to_use: Use when the user wants to create a beta release, release a new bet
 argument-hint: "[beta.N or X.Y.Z-beta.N]"
 disable-model-invocation: true
 user-invocable: true
-allowed-tools: Bash(git *) Bash(gh *) Bash(npm *)
+allowed-tools: Bash(git *) Bash(gh *) Bash(npm *) Bash(date *) Bash(rm -f release_scorer-ui-kit_*) Write
 ---
 
 # Beta release skill for scorer-ui-kit
@@ -60,7 +60,7 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
 
    - Resolve `<BASE>`, the stable version this beta precedes. Every lookup below depends on it, so settle it before anything else:
      - Default: the patch bump of `<STABLE>` (e.g., `3.0.10` → `3.0.11`).
-     - If the user passed a full version like `X.Y.Z-beta.N` whose base is not the default, stop and ask the user to confirm that base. Once confirmed, `<BASE>` is that base.
+     - If the user passed a full version like `X.Y.Z-beta.N`, `<BASE>` is its base, even when it differs from the default. Do not ask now; the summary at the end of this step flags the difference and is where the user confirms.
      - Otherwise, check for a beta on a newer base than the default (left behind by an earlier explicit full-version release):
 
        ```bash
@@ -69,7 +69,7 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
 
        If the output's base (`X.Y.Z` before `-beta`) is higher than the default, show both to the user and ask which base to continue on. Wait for explicit confirmation. `<BASE>` is the chosen one.
 
-     `<BASE>` is final from here. If it changes for any reason later (for example the user overrides the version at the confirmation prompt with a different base), come back to this point and redo every step below with the new `<BASE>`.
+     `<BASE>` is final from here. If it changes for any reason later (for example the user rejects the summary and picks a different base), come back to this point and redo every step below with the new `<BASE>`.
 
    - Get the latest **published** beta tag for `<BASE>` from origin:
 
@@ -101,13 +101,11 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
      gh pr view <PR-NUM>
      ```
 
-     Classify each change and write the bullets following [../release/references/RELEASE_NOTES_STYLE_GUIDE.md](../release/references/RELEASE_NOTES_STYLE_GUIDE.md). The style guide defines the section names, bullet structure, voice, capitalization, and formatting conventions — apply them as written. Do not invent changes that aren't supported by the PRs. Consolidate overlapping PRs into a single bullet.
-
-     Betas are often cut with few changes. If nothing since `<PREV_TAG>` is consumer-facing, the notes file contains the single line `No consumer-facing changes since v<PREV_TAG>.` and no sections.
+     Classify each change and write the bullets following [../release/references/RELEASE_NOTES_STYLE_GUIDE.md](../release/references/RELEASE_NOTES_STYLE_GUIDE.md). The style guide defines the section names, bullet structure, voice, capitalization, and formatting conventions, including what to write when nothing is consumer-facing — apply them as written. Do not invent changes that aren't supported by the PRs. Consolidate overlapping PRs into a single bullet.
 
    - Determine `<VERSION>`:
      - If the user passed a short form like `beta.N`, use `<BASE>-beta.N`.
-     - If the user passed a full version like `X.Y.Z-beta.N`, use it as-is (its base was already confirmed as `<BASE>` above).
+     - If the user passed a full version like `X.Y.Z-beta.N`, use it as-is.
      - If no argument: `<PREV_BETA>` with the trailing beta number incremented by 1 (e.g., `3.0.11-beta.1` → `3.0.11-beta.2`), or `<BASE>-beta.0` when there is no `<PREV_BETA>`.
 
      If the user-supplied `<VERSION>` differs from the expected next (`<PREV_BETA>` + 1, or `<BASE>-beta.0`), stop and ask the user to confirm. Example: with `<PREV_BETA>` = `3.0.11-beta.1`, the expected next is `3.0.11-beta.2`; anything else (e.g. `beta.5` or `beta.0`) needs explicit confirmation before continuing.
@@ -145,6 +143,8 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
 
      Release notes draft:  ./release_scorer-ui-kit_<TODAY>.md
      ```
+
+     If `<BASE>` is not the default next patch of `<STABLE>`, add one line under the block that says so, for example `Base 3.1.0 differs from the default 3.0.11 (taken from the version you passed).`
 
      Wait for explicit confirmation before continuing to step 3. The user may edit the release notes file or override the version. (If the version is overridden, no file update is needed — the file does not contain the version.)
 
@@ -211,14 +211,15 @@ When this skill says "stop": halt automatic progression, tell the user exactly w
    git ls-remote --exit-code --tags origin "v<VERSION>"
    ```
 
-   The tag push triggers the `NPM Publish (Beta)` workflow. Share its run URL with the user and confirm it finishes green:
+   The tag push triggers the `NPM Publish (Beta)` workflow. Find its run (the run can take a few seconds to appear; repeat the first command until it prints an id, up to about a minute), share the URL with the user, and wait for it to finish:
 
    ```bash
-   gh run list --workflow=publish-beta.yml --limit 1
+   gh run list --workflow=publish-beta.yml --branch "v<VERSION>" --json databaseId,url --jq '.[0] | "\(.databaseId) \(.url)"'
+   gh run watch <RUN_ID> --exit-status
    npm view scorer-ui-kit dist-tags --json
    ```
 
-   The `beta` dist-tag must now be `<VERSION>` and `latest` must be unchanged. If the run fails, stop and report; re-running the same tag is safe once the cause is fixed.
+   Only after `gh run watch` exits zero: the `beta` dist-tag must be `<VERSION>` and `latest` must be unchanged. If the run fails, stop and report. Re-run the same run only when the cause is on the npm side (for example a missing or misconfigured trusted publisher); a re-run checks out the tagged commit, so a `package.json` or workflow fix is never picked up and needs the next `beta.N` instead.
 
 9. **Clean up the release notes file**
    - Ask the user whether to keep or delete `release_scorer-ui-kit_<TODAY>.md`.

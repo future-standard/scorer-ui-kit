@@ -5,7 +5,7 @@ when_to_use: Use when the user wants to create a release, release a new version,
 argument-hint: "[3.x.y or patch | minor | major]"
 disable-model-invocation: true
 user-invocable: true
-allowed-tools: Bash(git *) Bash(gh *) Bash(npm *)
+allowed-tools: Bash(git *) Bash(gh *) Bash(npm *) Bash(date *) Bash(rm -f release_scorer-ui-kit_*) Write
 ---
 
 # Release skill for scorer-ui-kit

@@ -25,9 +25,11 @@ jobs:
       # automatically. `prepublishOnly` runs the build; provenance is generated
       # automatically for this public repo + public package.
       #
-      # The suffix guard keeps this workflow from ever publishing a pre-release
-      # as `latest`: it only runs for `vX.Y.Z` tags, but the tag and
-      # package.json can disagree, and package.json is what gets published.
+      # The tag guard requires package.json to carry exactly the version the
+      # pushed tag names. The tag filter above already restricts the shape to
+      # `vX.Y.Z`, so this also keeps pre-releases off `latest`, and it stops a
+      # mistyped tag from publishing (or silently skipping) a different version
+      # than the one named.
       #
       # The version guard keeps re-runs idempotent: native `npm publish` errors
       # (EPUBLISHCONFLICT) when the version already exists, whereas the previous
@@ -36,8 +38,8 @@ jobs:
       - name: Publish to npm (skip if version already on registry)
         run: |
           VERSION=$(node -p "require('./packages/ui-lib/package.json').version")
-          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
-            echo "::error::package.json version '${VERSION}' is not a stable version (X.Y.Z); refusing to publish as latest."
+          if [ "v${VERSION}" != "${GITHUB_REF_NAME}" ]; then
+            echo "::error::Tag '${GITHUB_REF_NAME}' does not match package.json version '${VERSION}' (expected tag 'v${VERSION}'); refusing to publish."
             exit 1
           fi
           if [ -n "$(npm view "scorer-ui-kit@${VERSION}" version 2>/dev/null)" ]; then
