@@ -62,6 +62,10 @@ If the change does affect consumers but no canonical section fits, put it under 
 
 If the same kind of change keeps appearing under `Other` across multiple releases, that's a signal to promote it to its own canonical section in this style guide.
 
+### When nothing is consumer-facing
+
+A release (typically a beta, or a dependency-only patch) can have no consumer-facing change at all. The notes then consist of the single line `No consumer-facing changes since v<previous tag>.` with no section headers.
+
 ## Header format
 
 Use **bold paragraph headers** (`**Section Name**`) — not markdown headings (`## Section Name`).

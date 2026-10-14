@@ -97,6 +97,10 @@ npm run sweep
 - **Exception:** ui-lib's `peerDependencies` stay as ranges. They are resolved by the consuming app, not installed here, so pinning them adds no protection and would force an exact version on consumers.
 - When bumping a dependency, set the exact version that `package-lock.json` resolves (`npm ls <pkg>`), and always commit the updated `package-lock.json` so installs are reproducible. Run the story sweep (`npm run sweep`) before merging.
 
+## Releasing (maintainers)
+
+Use the `/release` skill for stable versions and `/beta-release` for betas. Both open a release PR and tag `main` after the merge; the tag push publishes to npm through OIDC trusted publishing, with no token. Details, including the npm trusted-publisher setup, are in [packages/ui-lib/README.md](packages/ui-lib/README.md#release).
+
 ## Using the library on your project
 
 ### Requirements (consuming the library)
