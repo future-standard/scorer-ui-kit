@@ -23,10 +23,10 @@ const Container = styled.div<{ $isFullWidth: boolean }>`
     `}
 `;
 
-/* Full width puts the label against the icon divider, not centred, so buttons of equal width line
-   up their labels whatever each label's length; do not switch it back to `center`. */
+/* Full width starts the label at the left, not centred, whichever side the icon is on, so buttons
+   of equal width line up their labels whatever each label's length; do not switch it back to
+   `center`. */
 const TextContainer = styled.div<{
-  $position?: string;
   $weight?: IWeight;
   $isFullWidth: boolean;
 }>`
@@ -34,10 +34,7 @@ const TextContainer = styled.div<{
   flex: 1;
   order: 1;
   display: flex;
-  justify-content: ${({ $isFullWidth, $position }) => {
-    if (!$isFullWidth) return 'center';
-    return $position === 'left' ? 'flex-start' : 'flex-end';
-  }};
+  justify-content: ${({ $isFullWidth }) => ($isFullWidth ? 'flex-start' : 'center')};
   align-items: center;
   white-space: nowrap;
   padding: 0 var(--button-h-padding);
@@ -162,7 +159,7 @@ export interface IButtonWithIcon extends IButtonProps {
   position?: 'left' | 'right';
   shadow?: boolean;
   weight?: IWeight;
-  /** fill the width the parent gives, keeping the label beside the icon divider */
+  /** fill the width the parent gives, with the label aligned to the left */
   isFullWidth?: boolean;
 }
 
@@ -189,7 +186,7 @@ const ButtonWithIcon: React.FC<IButtonWithIcon> = ({
         {...props}
       >
         <InnerContainer $disabled={disabled} $isFullWidth={isFullWidth}>
-          <TextContainer $position={position} $weight={weight} $isFullWidth={isFullWidth}>
+          <TextContainer $weight={weight} $isFullWidth={isFullWidth}>
             {children}
           </TextContainer>
           <IconArea $loading={loading} $position={position}>

@@ -216,7 +216,7 @@ This document provides a comprehensive inventory of all React components in the 
   - `position?`: `'left' | 'right'` - Icon position (icon renders on the right when not set)
   - `shadow?`: `boolean` - Add shadow effect (default: false)
   - `weight?`: `IWeight` (`'light' | 'regular' | 'heavy' | 'strong'`) - Icon weight (default: 'regular')
-  - `isFullWidth?`: `boolean` - Fill the width the parent gives, keeping the label beside the icon divider (default: false, content width)
+  - `isFullWidth?`: `boolean` - Fill the width the parent gives, with the label aligned to the left whichever side the icon is on (default: false, content width)
   - `size?`: `TypeButtonSizes` - Button size (default: 'normal')
   - `design?`: `TypeButtonDesigns` - Button design (default: 'primary')
   - `loading?`: `boolean` - Loading state (default: false)
