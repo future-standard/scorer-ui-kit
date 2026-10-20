@@ -1,4 +1,5 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -7,9 +8,8 @@ import {
   NotificationProvider,
   useNotification,
 } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
-import { generateIconList } from '../helpers';
 
 const Container = styled.div`
   margin: 100px 20px 20px 20px;
@@ -17,12 +17,6 @@ const Container = styled.div`
   grid-template-columns: 200px;
   row-gap: 15px;
 `;
-
-const NotificationStory = {
-  title: 'Alerts/atoms',
-  components: useNotification,
-  decorator: [],
-};
 
 const NOTIFICATION_VARIANTS: Pick<INotificationProps, 'type' | 'message'>[] = [
   { type: 'info', message: 'Info — this is notification #1' },
@@ -57,41 +51,46 @@ const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
   );
 };
 
-// Provider should be at main Index level, it's here just for the story example
-export const _Notification = () => {
-  const isPin = boolean('Is Pinned', false);
-  const type = select(
-    'Type',
-    { Error: 'error', Warning: 'warning', Info: 'info', Success: 'success', Neutral: 'neutral' },
-    'info'
-  );
-  const msg = text('Message', 'This is a message example');
-  const iconList = { '': '', ...generateIconList() };
-  const icon = select('Icon', iconList, Object.keys(iconList)[0]);
-  const actionText = text('Action Text Button', '');
-  const onTextBtnClick = action('Action was clicked');
-  const closeCall = action('The message was closed by the user');
-
-  const handleActionTextCall = () => {
-    const text = `User clicked on [${actionText}] button`;
-    onTextBtnClick(text);
-  };
-
-  return (
+const meta = {
+  title: 'Alerts/atoms/Notification',
+  tags: ['!autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Demonstrates the useNotification() hook: the buttons call sendNotification() with these args, cycling through the five types. The provider is normally mounted once at the app root; it sits here only so the story is self-contained.',
+      },
+    },
+  },
+  argTypes: {
+    type: { control: 'select', options: ['error', 'warning', 'info', 'success', 'neutral'] },
+    icon: { control: 'select', options: ['', ...Object.keys(IconSVGs)] },
+  },
+  args: {
+    type: 'info',
+    message: 'This is a message example',
+    icon: '',
+    actionTextButton: '',
+    isPinned: false,
+    onTextButtonClick: fn(),
+    closeCallback: fn(),
+  },
+  render: (args) => (
     <Container>
       <NotificationProvider>
-        <NotificationExample
-          type={type}
-          message={msg}
-          icon={icon}
-          closeCallback={closeCall}
-          actionTextButton={actionText}
-          onTextButtonClick={handleActionTextCall}
-          isPinned={isPin}
-        />
+        <NotificationExample {...args} />
       </NotificationProvider>
     </Container>
-  );
-};
+  ),
+} satisfies Meta<INotificationProps>;
 
-export default NotificationStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    isPinned: false,
+    type: 'warning',
+    message: 'Message editable',
+  },
+};

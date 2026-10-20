@@ -1,5 +1,5 @@
-import { boolean, object, select, text } from '@storybook/addon-knobs';
-import { useCallback, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type ComponentProps, useCallback, useState } from 'react';
 import {
   Button,
   type IActiveDrawer,
@@ -11,7 +11,7 @@ import {
   TopBar,
   useThemeToggle,
 } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
 import placeholderImage from '../assets/placeholder.jpg';
 
@@ -162,12 +162,6 @@ const COPY = {
   },
 };
 
-const TopBarStory = {
-  title: 'Global',
-  component: TopBar,
-  decorators: [],
-};
-
 const unreadNotifications: INotificationItem[] = [
   {
     imgUrl: '',
@@ -232,7 +226,52 @@ const allNotifications: INotificationsHistory = {
   unreadNotificationsText: 'READ',
 };
 
-export const _TopBar = () => {
+// Story-only inputs that are not TopBar props: the badge is assembled from them plus the
+// language-dependent text, and the left-area SplitButton actions need spies of their own.
+type Args = ComponentProps<typeof TopBar> & {
+  badgeColor: string;
+  badgeLinkTo: string;
+  useBadgeOnClick: boolean;
+  onBadgeClick: () => void;
+  onNewOrder: () => void;
+  onPrintReceipt: () => void;
+  onClearOrders: () => void;
+};
+
+const userDrawerMetaSample = [
+  {
+    icon: '',
+    title: 'Device ID:',
+    subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
+    notes: '',
+    hasCopyIcon: true,
+  },
+  {
+    icon: 'Information',
+    title: 'GPU machine with 4 GPU',
+    subTitle: 'Building B',
+    notes: `This is a GPU machine having 30 camera support`,
+    hasCopyIcon: true,
+  },
+  {
+    icon: 'Success',
+    title: 'Device is Live',
+    subTitle: 'Building C',
+    notes: `This is a GPU machine having 30 camera support`,
+  },
+];
+
+const Scene = ({
+  badgeColor,
+  badgeLinkTo,
+  useBadgeOnClick,
+  onBadgeClick,
+  onNewOrder,
+  onPrintReceipt,
+  onClearOrders,
+  onLanguageToggle: languageToggle,
+  ...topBarProps
+}: Args) => {
   const { onThemeToggle, isLightMode } = useThemeToggle();
   const [attributeLanguage, setAttributeLanguage] = useState('en');
   // Controlled drawer state: the page-content buttons open the side drawers by id,
@@ -242,57 +281,6 @@ export const _TopBar = () => {
   // All visible cafeteria/chrome text comes from here and flips with the toggle.
   const t = attributeLanguage === 'ja' ? COPY.ja : COPY.en;
 
-  // Structural config stays knob-driven; user-facing text is language-driven.
-  const loggedInUser = text('Logged In User', 'full.name@example.com');
-  const hasSearch = boolean('Has Search', false);
-  const hasLogout = boolean('Has Logout', true);
-  const hasNotifications = boolean('Has Notifications', true);
-  const hasCurrentUser = boolean('Has Current User', true);
-  const logoutLink = text('Logout Url', '#');
-  const hasLanguage = boolean('Has Language', true);
-  const hasSwitchTheme = boolean('Has Switch Theme', true);
-  const languageToggle = action('onLanguageToggle');
-  const hasUserDrawerMeta = boolean('Has User Drawer Meta', true);
-  const includeCopyTitle = boolean('Include Title Copy', true);
-  const hasUserDrawerFooter = boolean('Has User Drawer Footer', false);
-  const userDrawerFooter = object('User Drawer Footer', {
-    icon: 'Information',
-    title: 'V12.3.4',
-  });
-  const notificationsHistory = object('Notifications History', allNotifications);
-
-  const userDrawerMetaConfig = object('User Drawer Meta', [
-    {
-      icon: '',
-      title: 'Device ID:',
-      subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
-      notes: '',
-      hasCopyIcon: true,
-    },
-    {
-      icon: 'Information',
-      title: 'GPU machine with 4 GPU',
-      subTitle: 'Building B',
-      notes: `This is a GPU machine having 30 camera support`,
-      hasCopyIcon: true,
-    },
-    {
-      icon: 'Success',
-      title: 'Device is Live',
-      subTitle: 'Building C',
-      notes: `This is a GPU machine having 30 camera support`,
-    },
-  ]);
-
-  const badgeColor = select(
-    'Badge Color',
-    ['primary', 'grey', 'info', 'success', 'caution', 'warning'],
-    'info'
-  );
-  const badgeLinkTo = text('Badge To', '/login');
-  const useBadgeOnClick = boolean('Use Badge onClick', false);
-  const badgeClickAction = action('Badge onClick was triggered');
-
   const userSubmenu = [
     { text: t.accounts, href: '#' },
     { text: t.billing, href: '#' },
@@ -300,16 +288,9 @@ export const _TopBar = () => {
   ];
 
   const onLanguageToggle = useCallback(() => {
-    setAttributeLanguage((prev: string) => {
-      const newLang = prev === 'en' ? 'ja' : 'en';
-      languageToggle(newLang);
-      return newLang;
-    });
+    setAttributeLanguage((prev: string) => (prev === 'en' ? 'ja' : 'en'));
+    languageToggle?.();
   }, [languageToggle]);
-
-  const newOrderAction = action('New Order pressed');
-  const printReceiptAction = action('Print Receipt pressed');
-  const clearOrdersAction = action('Clear Orders pressed');
 
   // Consumer content for the left area. It only renders when `hasSearch` is
   // false, replacing the built-in search bar.
@@ -319,19 +300,19 @@ export const _TopBar = () => {
       text: t.newOrder,
       icon: 'Add',
       hasOnSelectLoading: true,
-      onClickCallback: newOrderAction,
+      onClickCallback: onNewOrder,
     },
     {
       id: 'print-receipt',
       text: t.printReceipt,
       icon: 'Download',
-      onClickCallback: printReceiptAction,
+      onClickCallback: onPrintReceipt,
     },
     {
       id: 'clear-orders',
       text: t.clearOrders,
       icon: 'RetryJob',
-      onClickCallback: clearOrdersAction,
+      onClickCallback: onClearOrders,
     },
   ];
 
@@ -419,33 +400,19 @@ export const _TopBar = () => {
     <>
       <Container>
         <TopBar
+          {...topBarProps}
           badge={{
             text: t.badgeText,
             color: badgeColor,
             linkTo: badgeLinkTo,
             linkText: t.badgeLinkText,
-            onClick: useBadgeOnClick ? badgeClickAction : undefined,
+            onClick: useBadgeOnClick ? onBadgeClick : undefined,
           }}
-          {...{
-            loggedInUser,
-            userSubmenu,
-            hasSearch,
-            hasLogout,
-            hasNotifications,
-            logoutLink,
-            hasLanguage,
-            hasUserDrawerMeta,
-            hasUserDrawerFooter,
-            hasCurrentUser,
-            notificationsHistory,
-            hasSwitchTheme,
-            isLightMode,
-            onThemeToggle,
-            onLanguageToggle,
-            userDrawerFooter,
-            includeCopyTitle,
-            leftAreaElement,
-          }}
+          userSubmenu={userSubmenu}
+          isLightMode={isLightMode}
+          onThemeToggle={onThemeToggle}
+          onLanguageToggle={onLanguageToggle}
+          leftAreaElement={leftAreaElement}
           searchPlaceholder={t.searchPlaceholder}
           switchThemeText={t.switchTheme}
           selectedThemeText={t.themeMode}
@@ -453,7 +420,6 @@ export const _TopBar = () => {
           logoutText={t.logout}
           accountOptionText={t.accountOptions}
           copySuccessMessage={t.copied}
-          userDrawerMeta={userDrawerMetaConfig}
           customDrawer={ordersDrawer}
           sideDrawers={sideDrawers}
           activeDrawer={activeDrawer}
@@ -474,4 +440,44 @@ export const _TopBar = () => {
   );
 };
 
-export default TopBarStory;
+const meta = {
+  title: 'Global/TopBar',
+  component: TopBar,
+  tags: ['autodocs'],
+  argTypes: {
+    badgeColor: {
+      control: 'select',
+      options: ['primary', 'grey', 'info', 'success', 'caution', 'warning'],
+    },
+  },
+  args: {
+    loggedInUser: 'full.name@example.com',
+    hasSearch: false,
+    hasLogout: true,
+    hasNotifications: true,
+    hasCurrentUser: true,
+    logoutLink: '#',
+    hasLanguage: true,
+    hasSwitchTheme: true,
+    hasUserDrawerMeta: true,
+    includeCopyTitle: true,
+    hasUserDrawerFooter: false,
+    userDrawerFooter: { icon: 'Information', title: 'V12.3.4' },
+    notificationsHistory: allNotifications,
+    userDrawerMeta: userDrawerMetaSample,
+    badgeColor: 'info',
+    badgeLinkTo: '/login',
+    useBadgeOnClick: false,
+    onLanguageToggle: fn(),
+    onBadgeClick: fn(),
+    onNewOrder: fn(),
+    onPrintReceipt: fn(),
+    onClearOrders: fn(),
+  },
+  render: (args) => <Scene {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

@@ -1,150 +1,89 @@
-import { boolean, object, select, text } from '@storybook/addon-knobs';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { SelectField, SelectWrapper } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
-import { generateIconList } from '../helpers';
-
-const SelectFieldStory = {
-  title: 'Form/atoms',
-  component: SelectField,
-  decorators: [],
-};
 
 const Container = styled.div`
   margin: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 `;
 
-const FixedSelect = styled.div<{ $width?: string }>`
+const FixedSelect = styled.div<{ $width: string }>`
   ${SelectWrapper} {
-    width: ${({ $width }) => ($width ? $width : `60px`)};
+    width: ${({ $width }) => $width};
   }
 `;
 
-const Subsection = styled.div`
-  flex: 1;
-`;
+type Args = ComponentProps<typeof SelectField> & { fixedWidth?: string };
 
-const Title = styled.h1`
-  font-family: var(--font-title);
-  font-size: 24px;
-  color: var(--grey-12);
-  font-weight: 500;
-`;
+const meta = {
+  title: 'Form/atoms/SelectField',
+  component: SelectField,
+  tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <Container>
+        <Story />
+      </Container>
+    ),
+  ],
+  argTypes: {
+    icon: { control: 'select', options: Object.keys(IconSVGs) },
+    children: { control: false },
+    fixedWidth: { control: 'text' },
+  },
+  args: {
+    isCompact: false,
+    disabled: false,
+    required: false,
+    alwaysShowRequiredDot: false,
+    fieldState: 'default',
+    placeholder: 'Choose an option...',
+    defaultValue: '',
+    label: { htmlFor: 'free_select', text: 'Field Label' },
+    changeCallback: fn(),
+    children: (
+      <>
+        <option value='option1'>Example Option 1</option>
+        <option value='option2'>Example Option 2</option>
+        <option value='option3'>Example Option 3</option>
+        <option value='option4'>Example Option 4</option>
+      </>
+    ),
+  },
+} satisfies Meta<Args>;
 
-export const _SelectField = () => {
-  const iconList = generateIconList();
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  const isCompact = boolean('isCompact', false);
-  const disabled = boolean('Disabled', false);
-  const required = boolean('Required', false);
-  const alwaysShowRequiredDot = boolean('Always Show Required Dot', false);
-  const fieldState = select(
-    'State',
-    {
-      Default: 'default',
-      Disabled: 'disabled',
-      Required: 'required',
-      Valid: 'valid',
-      Invalid: 'invalid',
-      Processing: 'processing',
-    },
-    'default'
-  );
-  const placeholder = text('Placeholder (Free Width)', 'Choose an option...');
-  const defaultValue = text('Default Value (Free Width)', '');
-  const freeSelectValue = action('Free select value');
-  const fixedSelectValue = action('Fixed select value');
-  const icon = select('Icon', iconList, Object.keys(iconList)[0]);
+export const Default: Story = {};
 
-  const selectWidth = text('Fix width', '80px');
-  const label = object('Free Select Label', {
-    htmlFor: 'free_select',
-    text: 'Field Label',
-  });
-
-  const fixLabel = object('Fix Select Label', {
-    htmlFor: 'fix_select',
-    text: 'Page',
-    direction: 'row' as const,
-  });
-
-  const freeOnChange = (value: string) => {
-    freeSelectValue(value);
-  };
-
-  const fixSelectOnChange = (value: string) => {
-    fixedSelectValue(value);
-  };
-
-  return (
-    <Container>
-      <Subsection>
-        <Title>Select (Free Width)</Title>
-        <SelectField
-          {...{
-            isCompact,
-            placeholder,
-            label,
-            disabled,
-            defaultValue,
-            fieldState,
-            required,
-            alwaysShowRequiredDot,
-          }}
-          changeCallback={freeOnChange}
-        >
-          <option value='option1'>Example Option 1</option>
-          <option value='option2'>Example Option 2</option>
-          <option value='option3'>Example Option 3</option>
-          <option value='option4'>Example Option 4</option>
-        </SelectField>
-      </Subsection>
-
-      <Subsection>
-        <Title>Select (Fixed Width)</Title>
-        <FixedSelect $width={selectWidth}>
-          <SelectField
-            {...{ isCompact, disabled, fieldState, required, alwaysShowRequiredDot }}
-            label={fixLabel}
-            defaultValue={1}
-            changeCallback={fixSelectOnChange}
-          >
-            <option value={1}>1</option>
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={15}>15</option>
-            <option value={20}>20</option>
-          </SelectField>
-        </FixedSelect>
-      </Subsection>
-
-      <Subsection>
-        <Title>Select (With Icon)</Title>
-        <SelectField
-          {...{
-            isCompact,
-            placeholder,
-            label,
-            disabled,
-            defaultValue,
-            fieldState,
-            icon,
-            required,
-            alwaysShowRequiredDot,
-          }}
-          changeCallback={freeOnChange}
-        >
-          <option value='option1'>Example Option 1</option>
-          <option value='option2'>Example Option 2</option>
-          <option value='option3'>Example Option 3</option>
-          <option value='option4'>Example Option 4</option>
-        </SelectField>
-      </Subsection>
-    </Container>
-  );
+export const FixedWidth: Story = {
+  args: {
+    fixedWidth: '80px',
+    label: { htmlFor: 'fix_select', text: 'Page', direction: 'row' },
+    defaultValue: 1,
+    placeholder: undefined,
+    children: (
+      <>
+        <option value={1}>1</option>
+        <option value={5}>5</option>
+        <option value={10}>10</option>
+        <option value={15}>15</option>
+        <option value={20}>20</option>
+      </>
+    ),
+  },
+  render: ({ fixedWidth = '80px', ...args }) => (
+    <FixedSelect $width={fixedWidth}>
+      <SelectField {...args} />
+    </FixedSelect>
+  ),
 };
 
-export default SelectFieldStory;
+export const WithIcon: Story = {
+  args: {
+    icon: 'Information',
+  },
+};
