@@ -1,8 +1,0 @@
-import{n as e}from"./rolldown-runtime-DkW27tQK.js";import{t}from"./jsx-runtime-DeHZSEgm.js";import{n,t as r}from"./IntroductionText-D-6-osxo.js";import{_ as i,a,o}from"./iframe-PEYaYO03.js";var s,c,l,u,d,f;function p(){return(p=e((()=>{s=i(),n(),o(),c=t(),l=a.div`
-  margin: 100px;
-`,u={title:`Pages/atoms`,component:r,decorators:[]},d=()=>{let e=(0,s.text)(`Text`,`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.`);return(0,c.jsx)(l,{children:(0,c.jsx)(r,{children:e})})},f=[`_IntroductionText`],d.parameters={...d.parameters,docs:{...d.parameters?.docs,source:{originalSource:`() => {
-  const introductionText = text('Text', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.');
-  return <Container>
-      <IntroductionText>{introductionText}</IntroductionText>
-    </Container>;
-}`,...d.parameters?.docs?.source}}}})))()}p();export{d as _IntroductionText,f as __namedExportsOrder,u as default};
