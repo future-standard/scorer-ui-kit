@@ -1,3 +1,11 @@
+import {
+  ArgTypes,
+  Description,
+  Primary,
+  Stories,
+  Subtitle,
+  Title,
+} from '@storybook/addon-docs/blocks';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { type ComponentProps, useState } from 'react';
 import {
@@ -22,6 +30,22 @@ const Container = styled.div`
   left: 0;
   right: 0;
 `;
+
+/* TopBar portals its drawers to document.body, so an inline docs preview would show them at the
+   page's edge instead of under the bar. The docs page therefore embeds the stories in their own
+   frames and documents the props with a static table: live docs controls could not reach a
+   framed story (the frame has its own args store), and a table that looks live but does nothing
+   is worse than one that is plainly static. The Default story is the playground. */
+const TopBarDocsPage = () => (
+  <>
+    <Title />
+    <Subtitle />
+    <Description />
+    <Primary />
+    <ArgTypes />
+    <Stories />
+  </>
+);
 
 const LeftContent = styled.div`
   display: flex;
@@ -485,9 +509,10 @@ const meta = {
   component: TopBar,
   tags: ['autodocs'],
   parameters: {
-    // The bar is position: fixed and its drawers overlay the page, so the docs page renders the
-    // stories in their own frames instead of inline.
-    docs: { story: { inline: false, iframeHeight: '520px' } },
+    docs: {
+      page: TopBarDocsPage,
+      story: { inline: false, iframeHeight: '520px' },
+    },
   },
   argTypes: {
     userDrawerBespoke: sceneOnly('Not set here; see the WithBespokeUserDrawer story'),
