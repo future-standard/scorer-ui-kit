@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { type ComponentProps, useCallback, useState } from 'react';
+import { type ComponentProps, useState } from 'react';
 import {
   Button,
   type IActiveDrawer,
@@ -11,6 +11,7 @@ import {
   TopBar,
   useThemeToggle,
 } from 'scorer-ui-kit';
+import { useArgs } from 'storybook/preview-api';
 import { fn } from 'storybook/test';
 import styled from 'styled-components';
 import placeholderImage from '../assets/placeholder.jpg';
@@ -97,8 +98,21 @@ const SectionHeading = styled.h3`
   margin: 8px 0 0;
 `;
 
-// All user-facing cafeteria + chrome text, toggled by the language switch. The
-// generic notifications and device-meta demo data below stay as-is (English).
+const BespokeDrawerContent = styled.div`
+  padding: 10px 20px;
+  border-bottom: var(--grey-6) 1px solid;
+`;
+
+const BespokeDrawerText = styled.div`
+  font-size: 14px;
+  font-style: italic;
+  line-height: 20px;
+  color: var(--grey-9);
+`;
+
+// Cafeteria and chrome text that flips with the language switch. The TopBar text props take their
+// English value from `args` (defaults from COPY.en) so they can be edited; COPY.ja replaces them
+// while Japanese is selected in the bar.
 const COPY = {
   en: {
     brand: 'Smart Cafeteria',
@@ -115,20 +129,23 @@ const COPY = {
     todaysMenu: "Today's Menu",
     aboutTitle: 'About the Cafeteria',
     aboutImageAlt: 'Cafeteria photo',
-    currentUser: 'Current User',
-    logout: 'Logout',
-    accountOptions: 'Account Options',
-    accounts: 'Accounts',
-    billing: 'Billing',
-    payments: 'Payments',
-    switchTheme: 'SWITCH THEME',
-    themeMode: 'Light/Dark Mode',
-    copied: 'Copied',
-    searchPlaceholder: 'Search area names, etc.',
     badgeText: 'Guest',
     badgeLinkText: 'Login',
     minutes: (n: number) => `${n} min`,
     yen: (n: number) => `${n} yen`,
+    logoutText: 'Logout',
+    currentUserText: 'Current User',
+    accountOptionText: 'Account Options',
+    switchThemeText: 'SWITCH THEME',
+    selectedThemeText: 'Light/Dark Mode',
+    copySuccessMessage: 'Copied',
+    searchPlaceholder: 'Search area names, etc.',
+    selectedLanguageText: 'ENGLISH',
+    userSubmenu: [
+      { text: 'Accounts', href: '#' },
+      { text: 'Billing', href: '#' },
+      { text: 'Payments', href: '#' },
+    ],
   },
   ja: {
     brand: 'スマートカフェテリア',
@@ -145,20 +162,23 @@ const COPY = {
     todaysMenu: '本日のメニュー',
     aboutTitle: 'カフェテリアについて',
     aboutImageAlt: 'カフェテリアの写真',
-    currentUser: '現在のユーザー',
-    logout: 'ログアウト',
-    accountOptions: 'アカウント設定',
-    accounts: 'アカウント',
-    billing: '請求',
-    payments: '支払い',
-    switchTheme: 'テーマ切り替え',
-    themeMode: 'ライト/ダークモード',
-    copied: 'コピーしました',
-    searchPlaceholder: 'エリア名などを検索',
     badgeText: 'ゲスト',
     badgeLinkText: 'ログイン',
     minutes: (n: number) => `${n}分`,
     yen: (n: number) => `${n}円`,
+    logoutText: 'ログアウト',
+    currentUserText: '現在のユーザー',
+    accountOptionText: 'アカウント設定',
+    switchThemeText: 'テーマ切り替え',
+    selectedThemeText: 'ライト/ダークモード',
+    copySuccessMessage: 'コピーしました',
+    searchPlaceholder: 'エリア名などを検索',
+    selectedLanguageText: '日本語',
+    userSubmenu: [
+      { text: 'アカウント', href: '#' },
+      { text: '請求', href: '#' },
+      { text: '支払い', href: '#' },
+    ],
   },
 };
 
@@ -226,18 +246,6 @@ const allNotifications: INotificationsHistory = {
   unreadNotificationsText: 'READ',
 };
 
-// Story-only inputs that are not TopBar props: the badge is assembled from them plus the
-// language-dependent text, and the left-area SplitButton actions need spies of their own.
-type Args = ComponentProps<typeof TopBar> & {
-  badgeColor: string;
-  badgeLinkTo: string;
-  useBadgeOnClick: boolean;
-  onBadgeClick: () => void;
-  onNewOrder: () => void;
-  onPrintReceipt: () => void;
-  onClearOrders: () => void;
-};
-
 const userDrawerMetaSample = [
   {
     icon: '',
@@ -261,171 +269,198 @@ const userDrawerMetaSample = [
   },
 ];
 
+type Copy = typeof COPY.en;
+type LeftAreaActions = Pick<Args, 'onNewOrder' | 'onPrintReceipt' | 'onClearOrders'>;
+
+// Consumer content for the left area. It only renders when `hasSearch` is false, replacing the
+// built-in search bar.
+const buildLeftAreaElement = (t: Copy, actions: LeftAreaActions) => (
+  <LeftContent>
+    <BrandTitle>{t.brand}</BrandTitle>
+    <SplitButton
+      mainButtonId='new-order'
+      buttonList={[
+        {
+          id: 'new-order',
+          text: t.newOrder,
+          icon: 'Add',
+          hasOnSelectLoading: true,
+          onClickCallback: actions.onNewOrder,
+        },
+        {
+          id: 'print-receipt',
+          text: t.printReceipt,
+          icon: 'Download',
+          onClickCallback: actions.onPrintReceipt,
+        },
+        {
+          id: 'clear-orders',
+          text: t.clearOrders,
+          icon: 'RetryJob',
+          onClickCallback: actions.onClearOrders,
+        },
+      ]}
+    />
+  </LeftContent>
+);
+
+// Icon-triggered drawer (opens from the top bar). The counter badge shows how many orders are
+// currently waiting.
+const buildOrdersDrawer = (t: Copy): ICustomDrawer => ({
+  customComponent: (
+    <CustomDrawerContent>
+      <CustomDrawerTitle>{t.ordersTitle}</CustomDrawerTitle>
+      <SectionHeading>{t.inTheMaking}</SectionHeading>
+      <MenuList>
+        <MenuItem>
+          <span>#014 · {t.coffee}</span>
+          <span>{t.minutes(2)}</span>
+        </MenuItem>
+        <MenuItem>
+          <span>#015 · {t.cake}</span>
+          <span>{t.minutes(5)}</span>
+        </MenuItem>
+      </MenuList>
+      <SectionHeading>{t.readyForPickup}</SectionHeading>
+      <MenuList>
+        <MenuItem>
+          <span>#012 · {t.tea}</span>
+          <span>{t.ready}</span>
+        </MenuItem>
+        <MenuItem>
+          <span>#013 · {t.coffee}</span>
+          <span>{t.ready}</span>
+        </MenuItem>
+      </MenuList>
+    </CustomDrawerContent>
+  ),
+  icon: 'Time',
+  status: 'caution',
+  counter: 2,
+  width: '300px',
+});
+
+// Side drawers have no top-bar button; they open from the page content below.
+const buildSideDrawers = (t: Copy): ISideDrawer[] => [
+  {
+    id: 'menu',
+    width: '260px',
+    content: (
+      <CustomDrawerContent>
+        <CustomDrawerTitle>{t.todaysMenu}</CustomDrawerTitle>
+        <MenuList>
+          <MenuItem>
+            <span>{t.tea}</span>
+            <span>{t.yen(130)}</span>
+          </MenuItem>
+          <MenuItem>
+            <span>{t.coffee}</span>
+            <span>{t.yen(300)}</span>
+          </MenuItem>
+          <MenuItem>
+            <span>{t.cake}</span>
+            <span>{t.yen(350)}</span>
+          </MenuItem>
+        </MenuList>
+      </CustomDrawerContent>
+    ),
+  },
+  {
+    id: 'about',
+    width: '320px',
+    content: (
+      <CustomDrawerContent>
+        <CustomDrawerImage src={placeholderImage} alt={t.aboutImageAlt} />
+        <CustomDrawerTitle>{t.aboutTitle}</CustomDrawerTitle>
+      </CustomDrawerContent>
+    ),
+  },
+];
+
+// Spies for the left-area SplitButton actions; the same instances are passed as args so the
+// Actions panel logs them and the English leftAreaElement arg can reference them.
+const leftAreaActions = { onNewOrder: fn(), onPrintReceipt: fn(), onClearOrders: fn() };
+
+// Story-only inputs that are not TopBar props.
+type Args = ComponentProps<typeof TopBar> & {
+  useBadgeOnClick: boolean;
+  onBadgeClick: () => void;
+  onNewOrder: () => void;
+  onPrintReceipt: () => void;
+  onClearOrders: () => void;
+};
+
 const Scene = ({
-  badgeColor,
-  badgeLinkTo,
+  badge,
+  customDrawer,
+  sideDrawers,
+  leftAreaElement,
   useBadgeOnClick,
   onBadgeClick,
   onNewOrder,
   onPrintReceipt,
   onClearOrders,
-  onLanguageToggle: languageToggle,
+  onLanguageToggle,
+  selectedLangAttribute = 'en',
+  selectedLanguageText,
+  logoutText,
+  currentUserText,
+  accountOptionText,
+  switchThemeText,
+  selectedThemeText,
+  copySuccessMessage,
+  searchPlaceholder,
+  userSubmenu,
   ...topBarProps
 }: Args) => {
   const { onThemeToggle, isLightMode } = useThemeToggle();
-  const [attributeLanguage, setAttributeLanguage] = useState('en');
   // Controlled drawer state: the page-content buttons open the side drawers by id,
   // while the Orders icon in the top bar still works via onActiveDrawerChange.
   const [activeDrawer, setActiveDrawer] = useState<IActiveDrawer>(null);
 
-  // All visible cafeteria/chrome text comes from here and flips with the toggle.
-  const t = attributeLanguage === 'ja' ? COPY.ja : COPY.en;
+  // The language lives in the selectedLangAttribute arg (render toggles it through useArgs), so the
+  // control and the bar never disagree.
+  const isJa = selectedLangAttribute === 'ja';
+  const t = isJa ? COPY.ja : COPY.en;
+  // English comes from the editable args; Japanese from COPY.ja.
+  const localized = <T,>(argValue: T, jaValue: T) => (isJa ? jaValue : argValue);
 
-  const userSubmenu = [
-    { text: t.accounts, href: '#' },
-    { text: t.billing, href: '#' },
-    { text: t.payments, href: '#' },
-  ];
-
-  const onLanguageToggle = useCallback(() => {
-    setAttributeLanguage((prev: string) => (prev === 'en' ? 'ja' : 'en'));
-    languageToggle?.();
-  }, [languageToggle]);
-
-  // Consumer content for the left area. It only renders when `hasSearch` is
-  // false, replacing the built-in search bar.
-  const leftAreaButtonList = [
-    {
-      id: 'new-order',
-      text: t.newOrder,
-      icon: 'Add',
-      hasOnSelectLoading: true,
-      onClickCallback: onNewOrder,
-    },
-    {
-      id: 'print-receipt',
-      text: t.printReceipt,
-      icon: 'Download',
-      onClickCallback: onPrintReceipt,
-    },
-    {
-      id: 'clear-orders',
-      text: t.clearOrders,
-      icon: 'RetryJob',
-      onClickCallback: onClearOrders,
-    },
-  ];
-
-  const leftAreaElement = (
-    <LeftContent>
-      <BrandTitle>{t.brand}</BrandTitle>
-      <SplitButton mainButtonId='new-order' buttonList={leftAreaButtonList} />
-    </LeftContent>
-  );
-
-  // Icon-triggered drawer (opens from the top bar). The counter badge shows how
-  // many orders are currently waiting.
-  const ordersDrawer: ICustomDrawer = {
-    customComponent: (
-      <CustomDrawerContent>
-        <CustomDrawerTitle>{t.ordersTitle}</CustomDrawerTitle>
-        <SectionHeading>{t.inTheMaking}</SectionHeading>
-        <MenuList>
-          <MenuItem>
-            <span>#014 · {t.coffee}</span>
-            <span>{t.minutes(2)}</span>
-          </MenuItem>
-          <MenuItem>
-            <span>#015 · {t.cake}</span>
-            <span>{t.minutes(5)}</span>
-          </MenuItem>
-        </MenuList>
-        <SectionHeading>{t.readyForPickup}</SectionHeading>
-        <MenuList>
-          <MenuItem>
-            <span>#012 · {t.tea}</span>
-            <span>{t.ready}</span>
-          </MenuItem>
-          <MenuItem>
-            <span>#013 · {t.coffee}</span>
-            <span>{t.ready}</span>
-          </MenuItem>
-        </MenuList>
-      </CustomDrawerContent>
-    ),
-    icon: 'Time',
-    status: 'caution',
-    counter: 2,
-    width: '300px',
-  };
-
-  // Side drawers have no top-bar button; they open from the page content below.
-  const sideDrawers: ISideDrawer[] = [
-    {
-      id: 'menu',
-      width: '260px',
-      content: (
-        <CustomDrawerContent>
-          <CustomDrawerTitle>{t.todaysMenu}</CustomDrawerTitle>
-          <MenuList>
-            <MenuItem>
-              <span>{t.tea}</span>
-              <span>{t.yen(130)}</span>
-            </MenuItem>
-            <MenuItem>
-              <span>{t.coffee}</span>
-              <span>{t.yen(300)}</span>
-            </MenuItem>
-            <MenuItem>
-              <span>{t.cake}</span>
-              <span>{t.yen(350)}</span>
-            </MenuItem>
-          </MenuList>
-        </CustomDrawerContent>
-      ),
-    },
-    {
-      id: 'about',
-      width: '320px',
-      content: (
-        <CustomDrawerContent>
-          <CustomDrawerImage src={placeholderImage} alt={t.aboutImageAlt} />
-          <CustomDrawerTitle>{t.aboutTitle}</CustomDrawerTitle>
-        </CustomDrawerContent>
-      ),
-    },
-  ];
+  const activeBadge = badge
+    ? {
+        ...badge,
+        text: localized(badge.text, COPY.ja.badgeText),
+        linkText: localized(badge.linkText, COPY.ja.badgeLinkText),
+        onClick: useBadgeOnClick ? onBadgeClick : undefined,
+      }
+    : undefined;
 
   return (
     <>
       <Container>
         <TopBar
           {...topBarProps}
-          badge={{
-            text: t.badgeText,
-            color: badgeColor,
-            linkTo: badgeLinkTo,
-            linkText: t.badgeLinkText,
-            onClick: useBadgeOnClick ? onBadgeClick : undefined,
-          }}
-          userSubmenu={userSubmenu}
+          badge={activeBadge}
           isLightMode={isLightMode}
           onThemeToggle={onThemeToggle}
           onLanguageToggle={onLanguageToggle}
-          leftAreaElement={leftAreaElement}
-          searchPlaceholder={t.searchPlaceholder}
-          switchThemeText={t.switchTheme}
-          selectedThemeText={t.themeMode}
-          currentUserText={t.currentUser}
-          logoutText={t.logout}
-          accountOptionText={t.accountOptions}
-          copySuccessMessage={t.copied}
-          customDrawer={ordersDrawer}
-          sideDrawers={sideDrawers}
+          selectedLangAttribute={selectedLangAttribute}
+          selectedLanguageText={localized(selectedLanguageText, COPY.ja.selectedLanguageText)}
+          userSubmenu={localized(userSubmenu, COPY.ja.userSubmenu)}
+          logoutText={localized(logoutText, COPY.ja.logoutText)}
+          currentUserText={localized(currentUserText, COPY.ja.currentUserText)}
+          accountOptionText={localized(accountOptionText, COPY.ja.accountOptionText)}
+          switchThemeText={localized(switchThemeText, COPY.ja.switchThemeText)}
+          selectedThemeText={localized(selectedThemeText, COPY.ja.selectedThemeText)}
+          copySuccessMessage={localized(copySuccessMessage, COPY.ja.copySuccessMessage)}
+          searchPlaceholder={localized(searchPlaceholder, COPY.ja.searchPlaceholder)}
+          leftAreaElement={localized(
+            leftAreaElement,
+            buildLeftAreaElement(COPY.ja, { onNewOrder, onPrintReceipt, onClearOrders })
+          )}
+          customDrawer={localized(customDrawer, buildOrdersDrawer(COPY.ja))}
+          sideDrawers={localized(sideDrawers, buildSideDrawers(COPY.ja))}
           activeDrawer={activeDrawer}
           onActiveDrawerChange={setActiveDrawer}
-          selectedLangAttribute={attributeLanguage}
-          selectedLanguageText={attributeLanguage === 'ja' ? '日本語' : 'ENGLISH'}
         />
       </Container>
       <PageContent>
@@ -440,15 +475,25 @@ const Scene = ({
   );
 };
 
+const sceneOnly = (summary: string, detail?: string) => ({
+  control: false as const,
+  table: { defaultValue: { summary, detail } },
+});
+
 const meta = {
   title: 'Global/TopBar',
   component: TopBar,
   tags: ['autodocs'],
+  parameters: {
+    // The bar is position: fixed and its drawers overlay the page, so the docs page renders the
+    // stories in their own frames instead of inline.
+    docs: { story: { inline: false, iframeHeight: '520px' } },
+  },
   argTypes: {
-    badgeColor: {
-      control: 'select',
-      options: ['primary', 'grey', 'info', 'success', 'caution', 'warning'],
-    },
+    userDrawerBespoke: sceneOnly('Not set here; see the WithBespokeUserDrawer story'),
+    bottomAreaElement: sceneOnly('Not set here: content for a second row below the bar'),
+    isLightMode: sceneOnly('Follows the Theme toolbar through useThemeToggle()'),
+    activeDrawer: sceneOnly('Controlled by the story: null until a drawer is opened'),
   },
   args: {
     loggedInUser: 'full.name@example.com',
@@ -456,28 +501,74 @@ const meta = {
     hasLogout: true,
     hasNotifications: true,
     hasCurrentUser: true,
-    logoutLink: '#',
     hasLanguage: true,
     hasSwitchTheme: true,
     hasUserDrawerMeta: true,
-    includeCopyTitle: true,
     hasUserDrawerFooter: false,
+    includeCopyTitle: true,
+    bottomAreaHeight: '32px',
+    logoutLink: '#',
+    logoutText: COPY.en.logoutText,
+    currentUserText: COPY.en.currentUserText,
+    accountOptionText: COPY.en.accountOptionText,
+    searchPlaceholder: COPY.en.searchPlaceholder,
+    switchThemeText: COPY.en.switchThemeText,
+    selectedThemeText: COPY.en.selectedThemeText,
+    copySuccessMessage: COPY.en.copySuccessMessage,
+    selectedLangAttribute: 'en',
+    selectedLanguageText: COPY.en.selectedLanguageText,
+    languageOptionsText: 'LANGUAGE / 言語',
+    userSubmenu: COPY.en.userSubmenu,
     userDrawerFooter: { icon: 'Information', title: 'V12.3.4' },
     notificationsHistory: allNotifications,
     userDrawerMeta: userDrawerMetaSample,
-    badgeColor: 'info',
-    badgeLinkTo: '/login',
+    badge: {
+      text: COPY.en.badgeText,
+      color: 'info',
+      linkTo: '/login',
+      linkText: COPY.en.badgeLinkText,
+    },
+    customDrawer: buildOrdersDrawer(COPY.en),
+    sideDrawers: buildSideDrawers(COPY.en),
+    leftAreaElement: buildLeftAreaElement(COPY.en, leftAreaActions),
     useBadgeOnClick: false,
     onLanguageToggle: fn(),
+    onLogout: fn(),
+    onUserDrawerMetaClick: fn(),
     onBadgeClick: fn(),
-    onNewOrder: fn(),
-    onPrintReceipt: fn(),
-    onClearOrders: fn(),
+    ...leftAreaActions,
   },
-  render: (args) => <Scene {...args} />,
+  render: function Render(args) {
+    const [{ selectedLangAttribute = 'en' }, updateArgs] = useArgs<Args>();
+    const onLanguageToggle = () => {
+      args.onLanguageToggle?.();
+      updateArgs({ selectedLangAttribute: selectedLangAttribute === 'en' ? 'ja' : 'en' });
+    };
+    return (
+      <Scene
+        {...args}
+        selectedLangAttribute={selectedLangAttribute}
+        onLanguageToggle={onLanguageToggle}
+      />
+    );
+  },
 } satisfies Meta<Args>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const WithBespokeUserDrawer: Story = {
+  argTypes: { userDrawerBespoke: { control: 'object' } },
+  args: {
+    userDrawerBespoke: (
+      <BespokeDrawerContent>
+        <BespokeDrawerText>
+          <p>This area is yours: userDrawerBespoke renders any element inside the user drawer.</p>
+          <p>Use it for account details, a plan summary or links the menu does not cover.</p>
+        </BespokeDrawerText>
+      </BespokeDrawerContent>
+    ),
+  },
+};

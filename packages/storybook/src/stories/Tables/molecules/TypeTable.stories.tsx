@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ModalProvider, TypeTable } from 'scorer-ui-kit';
-import type { ITypeTableData } from 'scorer-ui-kit/dist/Tables';
+import { type ITypeTableData, ModalProvider, TypeTable } from 'scorer-ui-kit';
 import { useArgs } from 'storybook/preview-api';
 import { fn } from 'storybook/test';
 import styled from 'styled-components';
@@ -33,6 +32,10 @@ const meta = {
     hasTypeIcon: true,
     hasHeaderGroups: true,
     defaultAscending: true,
+    isLoading: false,
+    loadingText: 'Loading Data...',
+    emptyTableTitle: '',
+    emptyTableText: '',
     closeText: 'CLOSE',
     selectCallback: fn(),
     toggleAllCallback: fn(),

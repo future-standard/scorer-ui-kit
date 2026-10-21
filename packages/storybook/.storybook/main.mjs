@@ -25,6 +25,9 @@ export default {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
+      // Without this, optional props are typed `boolean | undefined` and enums gain an `undefined`
+      // option, so Controls shows booleans as text fields and lists undefined as a choice.
+      shouldRemoveUndefinedFromOptional: true,
       tsconfigPath: resolve(__dirname, 'tsconfig.docgen.json'),
       include: [
         resolve(__dirname, '../src/**/*.tsx'),

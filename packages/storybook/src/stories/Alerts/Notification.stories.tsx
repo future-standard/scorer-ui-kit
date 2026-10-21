@@ -1,7 +1,7 @@
 import { IconSVGs } from '@future-standard/icons';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import {
   Button,
   type INotificationProps,
@@ -26,25 +26,24 @@ const NOTIFICATION_VARIANTS: Pick<INotificationProps, 'type' | 'message'>[] = [
   { type: 'neutral', message: 'Neutral — this is notification #5' },
 ];
 
-const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
+const NotificationExample: React.FC<INotificationProps> = (notification) => {
   const { sendNotification, clearNotifications } = useNotification();
-  const [notificationSettings, setNotificationSettings] = useState(notiSettings);
   const countRef = useRef(0);
 
-  useEffect(() => {
-    setNotificationSettings(notiSettings);
-  }, [notiSettings]);
-
-  const handleSend = () => {
+  // Cycles through the variants so repeated clicks show how notifications queue up.
+  const sendRandom = () => {
     const variant = NOTIFICATION_VARIANTS[countRef.current % NOTIFICATION_VARIANTS.length];
     countRef.current += 1;
-    sendNotification({ ...notificationSettings, ...variant });
+    sendNotification({ ...notification, ...variant });
   };
 
   return (
     <>
-      <Button design='secondary' size='small' onClick={handleSend}>
-        Send notification
+      <Button design='secondary' size='small' onClick={sendRandom}>
+        Send random notification
+      </Button>
+      <Button design='secondary' size='small' onClick={() => sendNotification(notification)}>
+        Send custom notification
       </Button>
       <Button onClick={() => clearNotifications()}>Clear Notifications</Button>
     </>
@@ -53,12 +52,12 @@ const NotificationExample: React.FC<INotificationProps> = (notiSettings) => {
 
 const meta = {
   title: 'Alerts/atoms/Notification',
-  tags: ['!autodocs'],
+  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        story:
-          'Demonstrates the useNotification() hook: the buttons call sendNotification() with these args, cycling through the five types. The provider is normally mounted once at the app root; it sits here only so the story is self-contained.',
+        component:
+          'Demonstrates the useNotification() hook. "Send random notification" cycles through five sample types and messages so repeated clicks show how notifications queue; "Send custom notification" sends exactly what the controls say. The provider is normally mounted once at the app root; it sits here only so the story is self-contained.',
       },
     },
   },
@@ -68,7 +67,7 @@ const meta = {
   },
   args: {
     type: 'info',
-    message: 'This is a message example',
+    message: 'You can customize the message and type of this notification using the controls',
     icon: '',
     actionTextButton: '',
     isPinned: false,
@@ -87,10 +86,4 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    isPinned: false,
-    type: 'warning',
-    message: 'Message editable',
-  },
-};
+export const Default: Story = {};

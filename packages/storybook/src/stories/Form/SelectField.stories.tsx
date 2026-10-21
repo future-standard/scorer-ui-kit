@@ -17,6 +17,9 @@ const FixedSelect = styled.div<{ $width: string }>`
 
 type Args = ComponentProps<typeof SelectField> & { fixedWidth?: string };
 
+const exampleOptions = ['option1', 'option2', 'option3', 'option4'];
+const pageOptions = [1, 5, 10, 15, 20];
+
 const meta = {
   title: 'Form/atoms/SelectField',
   component: SelectField,
@@ -29,9 +32,10 @@ const meta = {
     ),
   ],
   argTypes: {
-    icon: { control: 'select', options: Object.keys(IconSVGs) },
-    children: { control: false },
-    fixedWidth: { control: 'text' },
+    fieldState: { control: 'select' },
+    icon: { control: 'select', options: ['', ...Object.keys(IconSVGs)] },
+    defaultValue: { control: 'select', options: ['', ...exampleOptions] },
+    children: { table: { disable: true } },
   },
   args: {
     isCompact: false,
@@ -39,19 +43,19 @@ const meta = {
     required: false,
     alwaysShowRequiredDot: false,
     fieldState: 'default',
+    icon: '',
     placeholder: 'Choose an option...',
     defaultValue: '',
     label: { htmlFor: 'free_select', text: 'Field Label' },
     changeCallback: fn(),
-    children: (
-      <>
-        <option value='option1'>Example Option 1</option>
-        <option value='option2'>Example Option 2</option>
-        <option value='option3'>Example Option 3</option>
-        <option value='option4'>Example Option 4</option>
-      </>
-    ),
+    children: exampleOptions.map((value, index) => (
+      <option key={value} value={value}>
+        Example Option {index + 1}
+      </option>
+    )),
   },
+  // A native select reads defaultValue only when it mounts, so the control remounts it.
+  render: ({ fixedWidth, ...args }) => <SelectField key={String(args.defaultValue)} {...args} />,
 } satisfies Meta<Args>;
 
 export default meta;
@@ -60,24 +64,23 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const FixedWidth: Story = {
+  argTypes: {
+    defaultValue: { control: 'select', options: pageOptions },
+    fixedWidth: { control: 'text' },
+  },
   args: {
     fixedWidth: '80px',
     label: { htmlFor: 'fix_select', text: 'Page', direction: 'row' },
     defaultValue: 1,
-    placeholder: undefined,
-    children: (
-      <>
-        <option value={1}>1</option>
-        <option value={5}>5</option>
-        <option value={10}>10</option>
-        <option value={15}>15</option>
-        <option value={20}>20</option>
-      </>
-    ),
+    children: pageOptions.map((value) => (
+      <option key={value} value={value}>
+        {value}
+      </option>
+    )),
   },
   render: ({ fixedWidth = '80px', ...args }) => (
     <FixedSelect $width={fixedWidth}>
-      <SelectField {...args} />
+      <SelectField key={String(args.defaultValue)} {...args} />
     </FixedSelect>
   ),
 };
