@@ -90,7 +90,7 @@
     "react-router": "7.18.4",
     "react-router-dom": "7.18.4",
     "styled-components": "6.5.3",
-    "vite": "8.3.1",
+    "vite": "8.3.3",
     "vite-plugin-dts": "5.1.1",
     "vitest": "5.0.2"
   },
