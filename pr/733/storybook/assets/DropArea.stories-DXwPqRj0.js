@@ -1,0 +1,3 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{Gt as t,It as n,Rt as r,w as i,wt as a,zt as o}from"./iframe-1ODtkiNt.js";var s,c,l,u,d,f,p;function m(){return(m=e((()=>{s=t(),a(),o(),c=n(),{action:l}=__STORYBOOK_MODULE_ACTIONS__,u=r.div`
+  max-width: 500px;
+`,d={title:`Form/File Management`,component:i,decorators:[]},f=()=>{let e=(0,s.text)(`Text`,`Drop a file`),t=(0,s.text)(`Height`,`300px`),n=l(`Input Callback`);return(0,c.jsx)(u,{children:(0,c.jsx)(i,{height:t,text:e,dropCallback:e=>{console.debug(`file`,e),e.length===1?n(e[0].name):n(e)}})})},f.__docgenInfo={description:``,methods:[],displayName:`_DropArea`},p=[`_DropArea`]})))()}m();export{f as _DropArea,p as __namedExportsOrder,d as default};
