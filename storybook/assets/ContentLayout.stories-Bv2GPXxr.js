@@ -1,0 +1,9 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{F as t,Gt as n,It as r,L as i,Rt as a,b as o,ct as s,lt as c,q as l,wt as u,zt as d}from"./iframe-BclkYTZO.js";var f,p,m,h,g,_,v;function y(){return(y=e((()=>{f=n(),u(),d(),p=r(),m={title:`Global/organisms`,component:i,decorators:[]},h=a.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--grey-2);
+  background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
+`,g={UtilityHeaderOptions:{back:{label:`Back`,link:`/`},breadcrumbs:[{text:`Examples`,href:`/`},{text:`Two`,href:`#2`},{text:`Three`,href:`#3`},{text:`Four`,href:`#4`},{text:`Five`,href:`#5`}],showBreadcrumbs:!0,share:{show:!0,label:`Share`,link:`https://www.example.com`,copiedLabel:`Copied`}},PageHeaderArea:(0,p.jsx)(l,{title:`Welcome`,introductionText:`Thanks for using our UI library.`,icon:`Home`}),TabsElementArea:(0,p.jsxs)(c,{defaultTabId:`tab1`,children:[(0,p.jsx)(s,{tabFor:`tab1`,children:`Home`}),(0,p.jsx)(s,{tabFor:`tab2`,children:`Example One`}),(0,p.jsx)(s,{tabFor:`tab3`,children:`Example Two`})]})},_=()=>{let e=(0,f.select)(`Layout Type`,{Default:`default`,Dashboard:`dashboard`,Fullscreen:`fullscreen`},`default`);return(0,p.jsxs)(h,{children:[e==="default"?(0,p.jsx)(o,{layout:`default`,HeaderContent:g,children:(0,p.jsx)(t,{title:`Content Area`})}):null,e===`dashboard`?(0,p.jsx)(o,{layout:`dashboard`,children:(0,p.jsx)(t,{title:`Content Area`})}):null,e===`fullscreen`?(0,p.jsx)(o,{layout:`fullscreen`,children:(0,p.jsx)(t,{title:`Content Area`})}):null]})},_.__docgenInfo={description:``,methods:[],displayName:`_ContentLayout`},v=[`_ContentLayout`]})))()}y();export{_ as _ContentLayout,v as __namedExportsOrder,m as default};
