@@ -91,6 +91,36 @@ npm run sweep
 - Prefer explicit interfaces for public component props.
 - Comments follow [COMMENT_STYLE_GUIDE.md](COMMENT_STYLE_GUIDE.md). In short: default to none, and write one only when you can name the wrong change it prevents. Design deviations and status notes go in the PR description, not in the code. Keep every comment **out of** `styled` / `css` / `keyframes` template literals — a single backtick inside one ends the literal, and Biome then reformats the result into code that no longer parses.
 
+## Storybook stories
+
+Stories live in `packages/storybook/src/stories/**/*.stories.tsx` and use CSF 3 with Controls. Knobs are being removed (issue #370); never add a new `@storybook/addon-knobs` import.
+
+- One file per component, titled `<Group>/<ComponentName>` (for example `Form/Buttons/Button`). The primary, fully controllable story is `Default`; further stories are named by the concept they show (`WithIcon`, `LongValue`).
+- Props are `args` on the meta, and every boolean or union prop gets an explicit default there, otherwise its control shows a "Set boolean" button instead of a toggle; callbacks are `fn()` from `storybook/test`; they appear in the docs table and in Controls with no control and log in the Actions panel (never exclude them, the docs table would lose them too). Union props get `control: 'select'`; use `argTypes.<prop>.name` when a prop needs a friendlier label (`children` → `Button text`); icon names use `options: Object.keys(IconSVGs)`.
+- Values a story builds itself (drawer content, badge objects, elements) are still args: build the English value once at module scope and let the scene swap in translations, so the object control shows the structure. Use `control: false` with a `table.defaultValue` summary only for props the story deliberately leaves unset.
+- A new prop variant is a new arg on the existing story, not a new story. Add a second story only for a distinct use case.
+- Stateful demos keep React state in a small wrapper component inside the file and pass it `args`; call `useArgs()` only directly in `render` or a decorator. When a control and the component can both change the same value, keep it in the arg and update it with `updateArgs`, so the panel never shows a stale value.
+- Hook demos without a component keep autodocs on and explain the hook in `parameters.docs.description.component`.
+- Every component story file carries `tags: ['autodocs']` (the tag moves to `preview.tsx` once Knobs are gone); only reference pages (Colors, Fonts, Icons) use `tags: ['!autodocs']`. Docs pages are generated from the component's TypeScript props, so prop descriptions belong in JSDoc on the component interface in `packages/ui-lib/src`, not in the story.
+
+```tsx
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Button } from 'scorer-ui-kit';
+import { fn } from 'storybook/test';
+
+const meta = {
+  title: 'Form/Buttons/Button',
+  component: Button,
+  tags: ['autodocs'],
+  args: { children: 'Example Title', design: 'primary', size: 'normal', onClick: fn() },
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+```
+
 ## Dependency policy (maintainers)
 
 - Pin every `dependencies`, `devDependencies`, and `overrides` entry to an **exact** version — no `^` or `~`. This is a supply-chain safeguard (e.g. the Shai-Hulud npm worm): exact pins stop `npm install` from silently resolving to a newly published, possibly compromised release within a range.

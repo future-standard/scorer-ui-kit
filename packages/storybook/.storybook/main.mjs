@@ -13,7 +13,28 @@ export default {
     options: {},
   },
   stories: ['../src/stories/Global/*.stories.tsx', '../src/stories/**/*.stories.tsx'],
-  addons: [getAbsolutePath('@storybook/addon-links'), getAbsolutePath('@storybook/addon-knobs')],
+  addons: [
+    getAbsolutePath('@storybook/addon-links'),
+    getAbsolutePath('@storybook/addon-docs'),
+    getAbsolutePath('@storybook/addon-knobs'),
+  ],
+  typescript: {
+    // react-docgen (the default) cannot resolve prop unions that ui-lib re-exports from '..', so
+    // Controls would fall back to free-text inputs. The explicit include is required: the plugin
+    // only documents files inside its tsconfig project, and the storybook tsconfig covers ./src only.
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      // Without this, optional props are typed `boolean | undefined` and enums gain an `undefined`
+      // option, so Controls shows booleans as text fields and lists undefined as a choice.
+      shouldRemoveUndefinedFromOptional: true,
+      tsconfigPath: resolve(__dirname, 'tsconfig.docgen.json'),
+      include: [
+        resolve(__dirname, '../src/**/*.tsx'),
+        resolve(__dirname, '../../ui-lib/src/**/*.tsx'),
+      ],
+    },
+  },
   viteFinal: async (config) => {
     // Ensure single React instance
     config.resolve = config.resolve || {};
@@ -27,12 +48,24 @@ export default {
     // resolve from repo root since the workspace storybook may be a symlink without core/
     const repoRoot = resolve(__dirname, '..', '..', '..');
     const sbCore = resolve(repoRoot, 'node_modules', 'storybook', 'core');
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@storybook/preview-api': resolve(sbCore, 'preview-api', 'index.cjs'),
-      '@storybook/manager-api': resolve(sbCore, 'manager-api', 'index.cjs'),
-      '@storybook/types': resolve(sbCore, 'types', 'index.cjs'),
-    };
+    const existingAliases = Array.isArray(config.resolve.alias)
+      ? config.resolve.alias
+      : Object.entries(config.resolve.alias ?? {}).map(([find, replacement]) => ({
+          find,
+          replacement,
+        }));
+    config.resolve.alias = [
+      // Stories render ui-lib source so that docgen sees the component props. The package's
+      // `exports` point at dist, which docgen cannot read; the example app still consumes dist.
+      {
+        find: /^scorer-ui-kit$/,
+        replacement: resolve(repoRoot, 'packages', 'ui-lib', 'src', 'index.tsx'),
+      },
+      ...existingAliases,
+      { find: '@storybook/preview-api', replacement: resolve(sbCore, 'preview-api', 'index.cjs') },
+      { find: '@storybook/manager-api', replacement: resolve(sbCore, 'manager-api', 'index.cjs') },
+      { find: '@storybook/types', replacement: resolve(sbCore, 'types', 'index.cjs') },
+    ];
     return config;
   },
 };
