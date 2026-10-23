@@ -78,6 +78,36 @@ const defaultBtn: IButtonStack[] = [
   },
 ];
 
+const leftIconStack: IButtonStack[] = [
+  { id: 'newClip', buttonType: 'icon-button', text: 'New Clip', icon: 'Add', iconPosition: 'left' },
+  {
+    id: 'jobDetails',
+    buttonType: 'icon-button',
+    text: 'Job Details',
+    design: 'secondary',
+    icon: 'Time',
+    iconPosition: 'left',
+  },
+];
+
+const rightIconStack: IButtonStack[] = leftIconStack.map((button) => ({
+  ...button,
+  iconPosition: 'right',
+}));
+
+const mixedStack: IButtonStack[] = [
+  { id: 'plainAction', buttonType: 'default', text: 'Example Action', design: 'secondary' },
+  leftIconStack[0],
+  rightIconStack[1],
+];
+
+const buttonStackPresets: Record<string, IButtonStack[]> = {
+  Default: defaultBtn,
+  'Icons on the left': leftIconStack,
+  'Icons on the right': rightIconStack,
+  Mixed: mixedStack,
+};
+
 export const _PageHeader = () => {
   const iconList = Object.assign({ None: null }, generateIconList());
 
@@ -104,15 +134,23 @@ export const _PageHeader = () => {
   const noButtonsExample = boolean('No Buttons Example', false);
   const noIconExample = boolean('No Icon', false);
   const customClick = action('Custom onAreaClick was used');
+  const optionalAreaOnclick = boolean('Example with area on Click', false);
+  const hasBottomLeftContent = boolean('Has Bottom Left Bottom', false);
+
+  const buttonStackPreset = select(
+    'Buttons Stack Preset',
+    Object.keys(buttonStackPresets),
+    'Default'
+  );
   const introductionText = text(
     'Text',
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.'
   );
+  const buttonList = object(
+    `Buttons Stack (${buttonStackPreset})`,
+    buttonStackPresets[buttonStackPreset]
+  );
   const tagList = object('Tag List', defaultTags);
-  const buttonList = object('Buttons Stack', defaultBtn);
-  const optionalAreaOnclick = boolean('Example with area on Click', false);
-  const hasBottomLeftContent = boolean('Has Bottom Left Bottom', false);
-
   if (updateDocTitle) {
     console.info(
       'Note: Updating document.title in Storybook has no effect though it should work in projects.'
