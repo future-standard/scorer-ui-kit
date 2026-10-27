@@ -49,5 +49,10 @@
     "react-dom": "19.3.0",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0"
+  },
+  "allowScripts": {
+    "esbuild": false,
+    "core-js": false,
+    "fsevents": false
   }
 }
