@@ -1,7 +1,0 @@
-import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{It as t,Rt as n,c as r,q as i,wt as a,zt as o}from"./iframe-CG6MPxmZ.js";var s,c,l,u,d,f,p;function m(){return(m=e((()=>{a(),o(),s=t(),c={title:`Form/Buttons`,component:r,decorators:[]},l=n.div`
-  display: flex;
-`,u=n.div`
-  margin: 20px;
-`,d=n(r)`
-  margin-right: 10px;
-`,f=()=>(0,s.jsxs)(l,{children:[(0,s.jsxs)(u,{children:[(0,s.jsx)(i,{title:`Plain Button`,introductionText:`Reference — design prop applied directly, no styled() wrapper.`}),(0,s.jsx)(r,{design:`secondary`,children:`Secondary`})]}),(0,s.jsxs)(u,{children:[(0,s.jsx)(i,{title:`Wrapped with styled(Button)`,introductionText:`Wrapped with styled() — design variant must be preserved alongside the wrapper's own class.`}),(0,s.jsx)(d,{design:`secondary`,children:`Secondary`})]}),(0,s.jsxs)(u,{children:[(0,s.jsx)(i,{title:`Primary Reference`,introductionText:`Baseline primary to make the design difference visible.`}),(0,s.jsx)(r,{design:`primary`,children:`Primary`})]})]}),f.__docgenInfo={description:``,methods:[],displayName:`StyledWrapperPreservesDesignVariant`},p=[`StyledWrapperPreservesDesignVariant`]})))()}m();export{f as StyledWrapperPreservesDesignVariant,p as __namedExportsOrder,c as default};
