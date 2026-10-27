@@ -1,0 +1,3 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{Gt as t,It as n,Rt as r,i,wt as a,zt as o}from"./iframe-CG6MPxmZ.js";var s,c,l,u,d,f;function p(){return(p=e((()=>{s=t(),a(),o(),c=n(),l=r.div`
+  margin: 100px;
+`,u={title:`Alerts/atoms`,component:i,decorators:[]},d=()=>{let e=(0,s.text)(`Message`,`Look Out!`),t=(0,s.select)(`Type`,{Error:`error`,Warning:`warning`,Info:`info`,Success:`success`,Neutral:`neutral`},`error`),n=(0,s.boolean)(`Hide close icon`,!1);return(0,c.jsx)(l,{children:(0,c.jsx)(i,{message:e,type:t,hideCloseButton:n})})},d.__docgenInfo={description:``,methods:[],displayName:`_AlertBar`},f=[`_AlertBar`]})))()}p();export{d as _AlertBar,f as __namedExportsOrder,u as default};
