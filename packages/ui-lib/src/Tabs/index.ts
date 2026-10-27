@@ -1,5 +1,6 @@
 export { MobileTab } from './atoms/MobileTab';
 export { Tab } from './atoms/Tab';
+export type { ITabWithIcon } from './atoms/TabWithIcon';
 export { TabWithIcon } from './atoms/TabWithIcon';
 export type { ITabIcon } from './molecules/TabsWithIconBar';
 export { TabsWithIconBar } from './molecules/TabsWithIconBar';
