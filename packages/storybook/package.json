@@ -9,15 +9,15 @@
   },
   "devDependencies": {
     "@storybook/addon-knobs": "8.0.1",
-    "@storybook/addon-links": "10.6.1",
-    "@storybook/react-vite": "10.6.1",
-    "@types/node": "24.19.0",
+    "@storybook/addon-links": "10.6.4",
+    "@storybook/react-vite": "10.6.4",
+    "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@vitejs/plugin-react": "6.1.1",
+    "@vitejs/plugin-react": "6.1.2",
     "react-router-dom": "7.18.4",
     "typescript": "6.0.3",
-    "vite": "8.3.4"
+    "vite": "8.3.5"
   },
   "scripts": {
     "start": "npm run storybook",
