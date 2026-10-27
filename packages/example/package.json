@@ -5,20 +5,20 @@
   "private": true,
   "dependencies": {
     "hls.js": "1.7.3",
-    "i18next": "26.4.2",
-    "i18next-browser-languagedetector": "8.2.1",
+    "i18next": "26.5.11",
+    "i18next-browser-languagedetector": "8.2.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-i18next": "17.0.15",
+    "react-i18next": "17.1.9",
     "react-router-dom": "7.18.4",
-    "styled-components": "6.5.3"
+    "styled-components": "6.6.0"
   },
   "devDependencies": {
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@vitejs/plugin-react": "6.1.1",
+    "@vitejs/plugin-react": "6.1.2",
     "typescript": "6.0.3",
-    "vite": "8.3.4",
+    "vite": "8.3.5",
     "vite-plugin-svgr": "5.2.0"
   },
   "scripts": {
