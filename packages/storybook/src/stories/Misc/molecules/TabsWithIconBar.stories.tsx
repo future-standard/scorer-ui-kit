@@ -1,12 +1,6 @@
-import { object, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { type ITabIcon, PageHeader, TabsWithIconBar } from 'scorer-ui-kit';
 import styled from 'styled-components';
-
-const TabsWithIconBarStory = {
-  title: 'Misc/molecules',
-  component: TabsWithIconBar,
-  decorators: [],
-};
 
 const PADDING_LEFT = '87px';
 
@@ -81,16 +75,25 @@ const list: ITabIcon[] = [
   },
 ];
 
-export const _TabWithIconBar = () => {
-  const defaultTabId = text('Default Tab Id', 'example1');
-  const paddingLeft = text('Padding Left Override', PADDING_LEFT);
-  const tabList = object('TabList', list);
+const meta = {
+  title: 'Misc/molecules/TabsWithIconBar',
+  component: TabsWithIconBar,
+  tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <Container>
+        <Story />
+      </Container>
+    ),
+  ],
+  args: {
+    defaultTabId: 'example1',
+    tabList: list,
+    paddingLeft: PADDING_LEFT,
+  },
+} satisfies Meta<typeof TabsWithIconBar>;
 
-  return (
-    <Container>
-      <TabsWithIconBar {...{ defaultTabId, tabList, paddingLeft }} />
-    </Container>
-  );
-};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export default TabsWithIconBarStory;
+export const Default: Story = {};

@@ -1,47 +1,33 @@
-import { boolean, number, select, text } from '@storybook/addon-knobs';
-import { useCallback } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DebouncedSearcher } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 
-const DebouncedSearcherStory = {
-  title: 'Misc/molecules',
+const meta = {
+  title: 'Misc/molecules/DebouncedSearcher',
   component: DebouncedSearcher,
-  decorators: [],
-  parameters: {
-    jsx: { skip: 1 },
+  tags: ['autodocs'],
+  argTypes: {
+    color: { control: 'select' },
+    defaultValue: { control: 'text' },
   },
-};
+  args: {
+    placeholder: 'Search by name...',
+    defaultValue: '',
+    hasBorder: true,
+    noBackground: false,
+    color: 'subtle',
+    iconSize: 12,
+    disabled: false,
+    width: '',
+    hasCrossButton: false,
+    onDebouncedChange: fn(),
+    onCrossClick: fn(),
+  },
+  // The searcher only copies a non-empty defaultValue into its state, so the control remounts it.
+  render: (args) => <DebouncedSearcher key={String(args.defaultValue)} {...args} />,
+} satisfies Meta<typeof DebouncedSearcher>;
 
-const Container = styled.div`
-  margin: 20px;
-`;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const _DebouncedSearcher = () => {
-  const inputPlaceholder = text('Placeholder', 'Search by name...');
-  const textValue = action('Search value');
-  const hasBorder = boolean('Has border', true);
-  const color = select('Color', { Mono: 'mono', Dimmed: 'dimmed', Subtle: 'subtle' }, 'subtle');
-  const iconSize = number('Icon size', 12);
-  const disabled = boolean('Disabled', false);
-  const defaultValue = text('Default Value', '');
-
-  const handleChange = useCallback(
-    (debounceInput: string) => {
-      textValue(debounceInput);
-    },
-    [textValue]
-  );
-
-  return (
-    <Container>
-      <DebouncedSearcher
-        placeholder={inputPlaceholder}
-        onDebouncedChange={handleChange}
-        {...{ hasBorder, color, iconSize, disabled, defaultValue }}
-      />
-    </Container>
-  );
-};
-
-export default DebouncedSearcherStory;
+export const Default: Story = {};

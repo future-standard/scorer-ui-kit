@@ -1,55 +1,35 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ButtonWithIcon } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import { generateIconList } from '../../helpers';
+import { fn } from 'storybook/test';
 
-const ButtonWithIconsStory = {
-  title: 'Form/Buttons',
+const meta = {
+  title: 'Form/Buttons/ButtonWithIcon',
   component: ButtonWithIcon,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    children: { name: 'Button text', control: 'text' },
+    design: { control: 'select' },
+    size: { control: 'select' },
+    icon: { control: 'select', options: Object.keys(IconSVGs) },
+    position: { control: 'select' },
+    weight: { control: 'select' },
+  },
+  args: {
+    children: 'Example Title',
+    design: 'primary',
+    size: 'normal',
+    icon: 'ActionPause',
+    position: 'right',
+    weight: 'regular',
+    disabled: false,
+    loading: false,
+    shadow: false,
+    onClick: fn(),
+  },
+} satisfies Meta<typeof ButtonWithIcon>;
 
-export const _WithIcon = () => {
-  const iconList = generateIconList();
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  const buttonText = text('Button Text', 'Example Title');
-  const buttonDesign = select(
-    'Design',
-    {
-      Primary: 'primary',
-      Secondary: 'secondary',
-      Danger: 'danger',
-      TextOnly: 'text-only',
-      Outline: 'outline',
-    },
-    'primary'
-  );
-  const buttonSize = select(
-    'Size',
-    { Xsmall: 'xsmall', Small: 'small', Normal: 'normal', Large: 'large' },
-    'normal'
-  );
-  const buttonDisabled = boolean('Disabled', false);
-  const buttonIcon = select('Icon', iconList, Object.keys(iconList)[0]);
-  const buttonIconPosition = select('Icon Position', { Left: 'left', Right: 'right' }, 'right');
-  const buttonLoading = boolean('Loading', false);
-  const buttonShadow = boolean('Shadow', false);
-  const buttonOnClick = action('button-click');
-
-  return (
-    <ButtonWithIcon
-      design={buttonDesign}
-      size={buttonSize}
-      shadow={buttonShadow}
-      onClick={buttonOnClick}
-      icon={buttonIcon}
-      position={buttonIconPosition}
-      disabled={buttonDisabled}
-      loading={buttonLoading}
-    >
-      {buttonText}
-    </ButtonWithIcon>
-  );
-};
-
-export default ButtonWithIconsStory;
+export const Default: Story = {};

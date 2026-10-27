@@ -1,54 +1,30 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ButtonWithLoading } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 
-const ButtonWithLoadingStory = {
-  title: 'Form/Buttons',
+const meta = {
+  title: 'Form/Buttons/ButtonWithLoading',
   component: ButtonWithLoading,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    children: { name: 'Button text', control: 'text' },
+    design: { control: 'select' },
+    size: { control: 'select' },
+    position: { control: 'select' },
+  },
+  args: {
+    children: 'Example Title',
+    design: 'primary',
+    size: 'normal',
+    position: 'right',
+    loading: true,
+    disabled: false,
+    shadow: false,
+    onClick: fn(),
+  },
+} satisfies Meta<typeof ButtonWithLoading>;
 
-export const _WithLoading = () => {
-  const buttonText = text('Button Text', 'Example Title');
-  const buttonDesign = select(
-    'Design',
-    {
-      Primary: 'primary',
-      Secondary: 'secondary',
-      Danger: 'danger',
-      TextOnly: 'text-only',
-      Outline: 'outline',
-    },
-    'primary'
-  );
-  const buttonSize = select(
-    'Size',
-    { Xsmall: 'xsmall', Small: 'small', Normal: 'normal', Large: 'large' },
-    'normal'
-  );
-  const buttonDisabled = boolean('Disabled', false);
-  const buttonLoading = boolean('Loading', true);
-  const buttonLoadingPosition = select(
-    'Loading Position',
-    { Left: 'left', Right: 'right' },
-    'right'
-  );
-  const buttonShadow = boolean('Shadow', false);
-  const buttonOnClick = action('button-click');
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  return (
-    <ButtonWithLoading
-      design={buttonDesign}
-      size={buttonSize}
-      shadow={buttonShadow}
-      onClick={buttonOnClick}
-      loading={buttonLoading}
-      position={buttonLoadingPosition}
-      disabled={buttonDisabled}
-    >
-      {buttonText}
-    </ButtonWithLoading>
-  );
-};
-
-export default ButtonWithLoadingStory;
+export const Default: Story = {};

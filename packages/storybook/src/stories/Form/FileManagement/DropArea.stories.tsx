@@ -1,37 +1,31 @@
-import { text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DropArea } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
 
 const Container = styled.div`
   max-width: 500px;
 `;
 
-const DropAreaStory = {
-  title: 'Form/File Management',
+const meta = {
+  title: 'Form/FileManagement/DropArea',
   component: DropArea,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <Container>
+        <Story />
+      </Container>
+    ),
+  ],
+  args: {
+    text: 'Drop a file',
+    height: '300px',
+    dropCallback: fn(),
+  },
+} satisfies Meta<typeof DropArea>;
 
-export const _DropArea = () => {
-  const textVal = text('Text', 'Drop a file');
-  const heightVal = text('Height', '300px');
-  const showValue = action('Input Callback');
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  const myCallback = (newFiles: FileList) => {
-    console.debug('file', newFiles);
-    if (newFiles.length === 1) {
-      showValue(newFiles[0].name);
-    } else {
-      showValue(newFiles);
-    }
-  };
-
-  return (
-    <Container>
-      <DropArea height={heightVal} text={textVal} dropCallback={myCallback} />
-    </Container>
-  );
-};
-
-export default DropAreaStory;
+export const Default: Story = {};
