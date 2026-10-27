@@ -1,8 +1,10 @@
+import { DocsContainer, type DocsContainerProps } from '@storybook/addon-docs/blocks';
 import { withKnobs } from '@storybook/addon-knobs';
 import type { Decorator, Preview } from '@storybook/react-vite';
-import React from 'react';
+import React, { type PropsWithChildren, useEffect, useState } from 'react';
 import { MemoryRouter as Router } from 'react-router-dom';
 import { defaultTheme, ThemeVariables } from 'scorer-ui-kit';
+import { themes } from 'storybook/theming';
 import { ThemeProvider } from 'styled-components';
 import Fonts from '../src/fonts';
 import Style from '../src/style';
@@ -40,9 +42,40 @@ const ThemeDecorator: Decorator = (story, context) => {
   );
 };
 
+// The docs page has its own Storybook theme, independent of the kit's body class, so without
+// this the toolbar's dark mode renders dark components on a white docs page. The body class is
+// the source of truth: ThemeDecorator sets it from the toolbar global on every (re)render.
+const useBodyIsDark = () => {
+  const [isDark, setIsDark] = useState(() => document.body.classList.contains('dark-theme'));
+  useEffect(() => {
+    const observer = new MutationObserver(() =>
+      setIsDark(document.body.classList.contains('dark-theme'))
+    );
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+  return isDark;
+};
+
+const ThemedDocsContainer = ({ children, context }: PropsWithChildren<DocsContainerProps>) => {
+  const isDark = useBodyIsDark();
+  return (
+    <DocsContainer context={context} theme={isDark ? themes.dark : themes.light}>
+      {children}
+    </DocsContainer>
+  );
+};
+
 // Preview configuration
 const preview: Preview = {
-  parameters: {},
+  parameters: {
+    controls: {
+      disableSaveFromUI: true,
+    },
+    docs: {
+      container: ThemedDocsContainer,
+    },
+  },
   globalTypes: {
     theme: {
       description: 'Light/Dark theme',

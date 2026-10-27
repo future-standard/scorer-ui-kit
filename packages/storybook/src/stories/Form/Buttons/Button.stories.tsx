@@ -1,46 +1,29 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 
-const ButtonStory = {
-  title: 'Form/Buttons',
+const meta = {
+  title: 'Form/Buttons/Button',
   component: Button,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    children: { name: 'Button text', control: 'text' },
+    size: { control: 'select' },
+    design: { control: 'select' },
+  },
+  args: {
+    children: 'Example Title',
+    design: 'primary',
+    size: 'normal',
+    disabled: false,
+    shadow: false,
+    noPadding: false,
+    loading: false,
+    onClick: fn(),
+  },
+} satisfies Meta<typeof Button>;
 
-export const StandardButton = () => {
-  const buttonText = text('Button Text', 'Example Title');
-  const buttonDesign = select(
-    'Design',
-    {
-      Primary: 'primary',
-      Secondary: 'secondary',
-      Danger: 'danger',
-      TextOnly: 'text-only',
-      Outline: 'outline',
-    },
-    'primary'
-  );
-  const buttonSize = select(
-    'Size',
-    { Xsmall: 'xsmall', Small: 'small', Normal: 'normal', Large: 'large' },
-    'normal'
-  );
-  const buttonDisabled = boolean('Disabled', false);
-  const buttonShadow = boolean('Shadow', false);
-  const buttonOnClick = action('button-click');
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  return (
-    <Button
-      design={buttonDesign}
-      size={buttonSize}
-      shadow={buttonShadow}
-      onClick={buttonOnClick}
-      disabled={buttonDisabled}
-    >
-      {buttonText}
-    </Button>
-  );
-};
-
-export default ButtonStory;
+export const Default: Story = {};

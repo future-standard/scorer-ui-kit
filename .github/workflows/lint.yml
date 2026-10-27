@@ -45,6 +45,10 @@ jobs:
     - name: Build
       run: npm run build -w packages/ui-lib
 
+    # After Build: stories still using Knobs import types from scorer-ui-kit/dist/* (ui-lib/dist).
+    - name: TypeScript check (storybook)
+      run: npm run test:types -w packages/storybook
+
   lint-status:
     name: lint
     needs: lint
