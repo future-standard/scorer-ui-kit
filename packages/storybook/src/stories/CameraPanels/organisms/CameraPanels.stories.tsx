@@ -1,16 +1,16 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
-import { type ReactElement, useMemo } from 'react';
-import { CameraPanels, CameraPanelWrapper, type ICameraPanel, TagList } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps, ReactElement } from 'react';
+import {
+  CameraPanels,
+  CameraPanelWrapper,
+  type ICameraPanel,
+  type IFeedbackColor,
+  TagList,
+} from 'scorer-ui-kit';
+import { fn } from 'storybook/test';
 import styled, { css } from 'styled-components';
 import Photo from '../../assets/placeholder.jpg';
-import { generateIconList } from '../../helpers';
-
-const CameraPanelsStory = {
-  title: 'CameraPanels/organisms',
-  component: CameraPanels,
-  decorators: [],
-};
 
 const Container = styled.div<{ $showCustomComponent?: boolean }>`
   max-width: 1200px;
@@ -39,162 +39,133 @@ const customBottom: ReactElement = (
     <Title>Custom Component Example</Title>
     <TagList
       tagsConfig={[
-        {
-          icon: 'MetaCategories',
-          label: 'Shop A',
-          weight: 'light',
-          size: 12,
-        },
-        {
-          icon: 'MetaTags',
-          label: 'Example',
-          weight: 'light',
-          size: 12,
-        },
-        {
-          icon: 'MetaTags',
-          label: 'Smart',
-          weight: 'light',
-          size: 12,
-        },
+        { icon: 'MetaCategories', label: 'Shop A', weight: 'light', size: 12 },
+        { icon: 'MetaTags', label: 'Example', weight: 'light', size: 12 },
+        { icon: 'MetaTags', label: 'Smart', weight: 'light', size: 12 },
       ]}
     />
   </TagListWrapper>
 );
 
-export const _CameraPanels = () => {
-  const iconList = { '': '', ...generateIconList() };
-  const showCustomComponent = boolean('Show Custom Component Example', false);
-  const status = select(
-    'Type',
-    { Error: 'error', Warning: 'warning', Info: 'info', Success: 'success', Neutral: 'neutral' },
-    'neutral'
-  );
-  const noticeIcon = select('Status Icon', iconList, 'Information');
-  const hasNotice = boolean('Has Notice', false);
-  const noticeMessage = text('Notice Message', 'Please wait while the first stream is processed.');
-  const noticeTitle = text('Notice Title', 'Initial Stream Pending');
-  const isEmptyWithIcon = boolean('Has Empty Stream with Icon', false);
-  const emptyIcon = select('Empty stream icon', iconList, '');
+const iconOptions = ['', ...Object.keys(IconSVGs)];
 
-  const deviceIcon = select('Device Icon', iconList, 'Camera');
-  const hideIcon = boolean('Hide Panel Data Icon', false);
-  const leftTitle = text('Left Title', `Location - Zone`);
-  const leftSubTitle = text('Left SubTitle', 'Camera Name');
-  const rightTitle = text('Right Title', 'Analysis');
-  const rightSubTitle = text('Right Subtitle', 'PeopleCount');
-  const reRouting = action('Changing to camera page');
+type Args = ComponentProps<typeof CameraPanels> & {
+  showCustomComponent: boolean;
+  isEmptyWithIcon: boolean;
+  emptyIcon: string;
+  hasNotice: boolean;
+  status: IFeedbackColor;
+  noticeIcon: string;
+  noticeTitle: string;
+  noticeMessage: string;
+  deviceIcon: string;
+  hideIcon: boolean;
+  leftTitle: string;
+  leftSubTitle: string;
+  rightTitle: string;
+  rightSubTitle: string;
+  onPanelClick: () => void;
+};
 
-  const ImagePanel: ICameraPanel = useMemo(
-    () => ({
-      streamProps: {
-        src: Photo,
-        mediaType: 'img',
-        isEmptyWithIcon,
-        noticeTitle,
-        noticeMessage,
-        status,
-        noticeIcon,
-        hasNotice,
-        emptyIcon,
-      },
-      panelMetaData: {
-        deviceIcon,
-        leftSubTitle,
-        leftTitle,
-        rightTitle,
-        rightSubTitle,
-        hideIcon,
-      },
-      customBottom: showCustomComponent ? customBottom : undefined,
-
-      panelOnClick: () => {
-        reRouting();
-      },
-    }),
-    [
-      isEmptyWithIcon,
-      noticeTitle,
-      noticeMessage,
-      status,
-      noticeIcon,
-      hasNotice,
-      emptyIcon,
-      deviceIcon,
-      leftSubTitle,
-      leftTitle,
-      rightTitle,
-      rightSubTitle,
-      hideIcon,
-      showCustomComponent,
-      reRouting,
-    ]
-  );
-
-  const VideoPanel: ICameraPanel = useMemo(
-    () => ({
-      streamProps: {
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        mediaType: 'video',
-        videoOptions: { autoPlay: false, controls: true },
-        isEmptyWithIcon,
-        noticeTitle,
-        noticeMessage,
-        status,
-        noticeIcon,
-        hasNotice,
-        emptyIcon,
-      },
-      panelMetaData: {
-        deviceIcon,
-        leftSubTitle,
-        leftTitle,
-        rightTitle,
-        rightSubTitle,
-        hideIcon,
-      },
-      customBottom: showCustomComponent ? customBottom : undefined,
-    }),
-    [
-      isEmptyWithIcon,
-      noticeTitle,
-      noticeMessage,
-      status,
-      noticeIcon,
-      hasNotice,
-      emptyIcon,
-      deviceIcon,
-      leftSubTitle,
-      leftTitle,
-      rightTitle,
-      rightSubTitle,
-      hideIcon,
-      showCustomComponent,
-    ]
-  );
-
-  const panelConfig: ICameraPanel[] = useMemo(
-    () => [
-      ImagePanel,
-      VideoPanel,
-      ImagePanel,
-      VideoPanel,
-      ImagePanel,
-      VideoPanel,
-      ImagePanel,
-      VideoPanel,
-      ImagePanel,
-      VideoPanel,
-      ImagePanel,
-    ],
-    [ImagePanel, VideoPanel]
+const Scene = ({
+  showCustomComponent,
+  isEmptyWithIcon,
+  emptyIcon,
+  hasNotice,
+  status,
+  noticeIcon,
+  noticeTitle,
+  noticeMessage,
+  deviceIcon,
+  hideIcon,
+  leftTitle,
+  leftSubTitle,
+  rightTitle,
+  rightSubTitle,
+  onPanelClick,
+  ...args
+}: Args) => {
+  const streamProps = {
+    isEmptyWithIcon,
+    emptyIcon,
+    hasNotice,
+    status,
+    noticeIcon,
+    noticeTitle,
+    noticeMessage,
+  };
+  const panelMetaData = {
+    deviceIcon,
+    hideIcon,
+    leftTitle,
+    leftSubTitle,
+    rightTitle,
+    rightSubTitle,
+  };
+  const imagePanel: ICameraPanel = {
+    streamProps: { ...streamProps, src: Photo, mediaType: 'img' },
+    panelMetaData,
+    customBottom: showCustomComponent ? customBottom : undefined,
+    panelOnClick: onPanelClick,
+  };
+  const videoPanel: ICameraPanel = {
+    streamProps: {
+      ...streamProps,
+      src: 'https://future-standard.github.io/scorer-ui-kit/traffic.mp4',
+      mediaType: 'video',
+      videoOptions: { autoPlay: false, controls: true },
+    },
+    panelMetaData,
+    customBottom: showCustomComponent ? customBottom : undefined,
+  };
+  const panels = Array.from({ length: 11 }, (_, index) =>
+    index % 2 === 0 ? imagePanel : videoPanel
   );
 
   return (
     <Container $showCustomComponent={showCustomComponent}>
-      <CameraPanels panels={panelConfig} />
+      <CameraPanels {...args} panels={panels} />
     </Container>
   );
 };
 
-export default CameraPanelsStory;
+const meta = {
+  title: 'CameraPanels/organisms/CameraPanels',
+  component: CameraPanels,
+  tags: ['autodocs'],
+  argTypes: {
+    panels: {
+      control: false,
+      table: { defaultValue: { summary: 'built by the story: 11 panels from the args below' } },
+    },
+    showCustomComponent: { name: 'Show custom component example' },
+    status: { control: 'select', options: ['error', 'warning', 'info', 'success', 'neutral'] },
+    noticeIcon: { control: 'select', options: iconOptions },
+    emptyIcon: { control: 'select', options: iconOptions },
+    deviceIcon: { control: 'select', options: iconOptions },
+  },
+  args: {
+    panels: [],
+    showCustomComponent: false,
+    isEmptyWithIcon: false,
+    emptyIcon: '',
+    hasNotice: false,
+    status: 'neutral',
+    noticeIcon: 'Information',
+    noticeTitle: 'Initial Stream Pending',
+    noticeMessage: 'Please wait while the first stream is processed.',
+    deviceIcon: 'Camera',
+    hideIcon: false,
+    leftTitle: 'Location - Zone',
+    leftSubTitle: 'Camera Name',
+    rightTitle: 'Analysis',
+    rightSubTitle: 'PeopleCount',
+    onPanelClick: fn(),
+  },
+  render: (args) => <Scene {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
