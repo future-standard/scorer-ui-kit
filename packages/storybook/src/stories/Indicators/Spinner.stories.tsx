@@ -3,9 +3,10 @@ import type { ComponentProps } from 'react';
 import { Spinner } from 'scorer-ui-kit';
 import styled from 'styled-components';
 
+// a coloured surface for the spinner; a fixed height keeps the docs preview short
 const Container = styled.div<{ $styling: string }>`
   border-radius: 3px;
-  height: calc(100vh - 2rem);
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;

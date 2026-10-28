@@ -1,16 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { type ITabIcon, PageHeader, TabsWithIconBar } from 'scorer-ui-kit';
 import styled from 'styled-components';
+import { pageFrame } from '../../helpers/PageFrame';
 
 const PADDING_LEFT = '87px';
-
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 30px 0;
-`;
 
 const LayoutWrapper = styled.div`
   padding: ${`30px 30px 30px ${PADDING_LEFT}`} ;
@@ -79,13 +72,9 @@ const meta = {
   title: 'Misc/molecules/TabsWithIconBar',
   component: TabsWithIconBar,
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <Container>
-        <Story />
-      </Container>
-    ),
-  ],
+  // the bar brings its own page gutter (paddingLeft), so the page frame alone is its parent
+  parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '420px' } },
+  decorators: [pageFrame],
   args: {
     defaultTabId: 'example1',
     tabList: list,

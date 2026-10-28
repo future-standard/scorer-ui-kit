@@ -1,19 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
-import { UtilityHeader } from 'scorer-ui-kit';
+import { ContentLayout, UtilityHeader } from 'scorer-ui-kit';
 import { fn } from 'storybook/test';
-import styled from 'styled-components';
-
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 80px;
-  background-color: var(--grey-2);
-  background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
-`;
+import { pageFrame } from '../../helpers/PageFrame';
 
 const onBackClick = fn();
 const onBreadcrumbClick = fn();
@@ -27,13 +16,10 @@ const meta = {
   title: 'Global/molecules/UtilityHeader',
   component: UtilityHeader,
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <Container>
-        <Story />
-      </Container>
-    ),
-  ],
+  // The header's padding comes from CSS variables that only exist inside ContentLayout, which
+  // renders it as the page's first child, so the story hands the args to ContentLayout.
+  parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '240px' } },
+  decorators: [pageFrame],
   argTypes: {
     $iconInGutter: {
       control: false,
@@ -55,7 +41,9 @@ const meta = {
     onBackClick,
     onBreadcrumbClick,
   },
-  render: ({ onBackClick: _b, onBreadcrumbClick: _c, ...args }) => <UtilityHeader {...args} />,
+  render: ({ onBackClick: _b, onBreadcrumbClick: _c, ...args }) => (
+    <ContentLayout HeaderContent={{ UtilityHeaderOptions: args }} />
+  ),
 } satisfies Meta<Args>;
 
 export default meta;
