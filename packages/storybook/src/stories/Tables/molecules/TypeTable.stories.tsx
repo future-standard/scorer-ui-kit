@@ -1,27 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { type ITypeTableData, ModalProvider, TypeTable } from 'scorer-ui-kit';
+import { ContentLayout, type ITypeTableData, ModalProvider, TypeTable } from 'scorer-ui-kit';
 import { useArgs } from 'storybook/preview-api';
 import { fn } from 'storybook/test';
-import styled from 'styled-components';
 import { columnConfigSample, type ITableSampleData, tableData } from '../../helpers/data_samples';
+import { pageFrame } from '../../helpers/PageFrame';
 import { rowMaker, sortDataBy } from '../../helpers/sample_table_helpers';
-
-const Container = styled.div`
-  padding: 100px;
-`;
 
 const meta = {
   title: 'Tables/molecules/TypeTable',
   component: TypeTable,
   tags: ['autodocs'],
+  parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '900px' } },
+  // the first decorator is the innermost one, so the page frame goes last
   decorators: [
     (Story) => (
-      <Container>
-        <ModalProvider>
+      <ModalProvider>
+        <ContentLayout>
           <Story />
-        </ModalProvider>
-      </Container>
+        </ContentLayout>
+      </ModalProvider>
     ),
+    pageFrame,
   ],
   args: {
     columnConfig: columnConfigSample,

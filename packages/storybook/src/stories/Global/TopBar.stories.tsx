@@ -1,11 +1,3 @@
-import {
-  ArgTypes,
-  Description,
-  Primary,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs/blocks';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { type ComponentProps, useState } from 'react';
 import {
@@ -23,6 +15,7 @@ import { useArgs } from 'storybook/preview-api';
 import { fn } from 'storybook/test';
 import styled from 'styled-components';
 import placeholderImage from '../assets/placeholder.jpg';
+import { FramedDocsPage } from '../helpers/FramedDocsPage';
 
 const Container = styled.div`
   position: fixed;
@@ -30,22 +23,6 @@ const Container = styled.div`
   left: 0;
   right: 0;
 `;
-
-/* TopBar portals its drawers to document.body, so an inline docs preview would show them at the
-   page's edge instead of under the bar. The docs page therefore embeds the stories in their own
-   frames and documents the props with a static table: live docs controls could not reach a
-   framed story (the frame has its own args store), and a table that looks live but does nothing
-   is worse than one that is plainly static. The Default story is the playground. */
-const TopBarDocsPage = () => (
-  <>
-    <Title />
-    <Subtitle />
-    <Description />
-    <Primary />
-    <ArgTypes />
-    <Stories />
-  </>
-);
 
 const LeftContent = styled.div`
   display: flex;
@@ -508,9 +485,10 @@ const meta = {
   title: 'Global/TopBar',
   component: TopBar,
   tags: ['autodocs'],
+  // The drawers portal to document.body, so the docs preview needs its own frame (FramedDocsPage).
   parameters: {
     docs: {
-      page: TopBarDocsPage,
+      page: FramedDocsPage,
       story: { inline: false, iframeHeight: '520px' },
     },
   },

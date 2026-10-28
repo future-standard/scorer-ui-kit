@@ -1,59 +1,61 @@
-import { number, select, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { Spinner } from 'scorer-ui-kit';
 import styled from 'styled-components';
-
-const SpinnerStory = {
-  title: 'Misc',
-  component: Spinner,
-  decorators: [],
-};
 
 const Container = styled.div<{ $styling: string }>`
   border-radius: 3px;
   height: calc(100vh - 2rem);
   display: flex;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
   ${({ $styling }) => `background-color: var(--${$styling}-9)`};
 `;
 
-export const LoadingSpinner = () => {
-  const spinnerSize = select(
-    'Size',
-    { Small: 'small', Medium: 'medium', Large: 'large', XLarge: 'xlarge' },
-    'medium'
-  );
-  const spinnerType = select(
-    'Style',
-    { Primary: 'primary', Secondary: 'grey', Warning: 'warning' },
-    'primary'
-  );
-  const customSize = number('Custom Size', 0);
-  const customBaseColor = text('Custom Base Color', '');
-  const customTopColor = text('Custom Top Color', '');
+// a half-typed var( would break the stylesheet, so the missing bracket is closed while typing
+const closeBracket = (value: string) =>
+  value.includes('(') && !value.includes(')') ? `${value})` : value;
 
-  let baseColor = customBaseColor !== '' ? customBaseColor : undefined;
-  let topColor = customTopColor !== '' ? customTopColor : undefined;
-
-  // Fixes issue if story breaks when typing an open bracket for var()
-  baseColor =
-    customBaseColor.indexOf('(') !== -1 && customBaseColor.indexOf(')') === -1
-      ? `${customBaseColor})`
-      : customBaseColor;
-  topColor =
-    customTopColor.indexOf('(') !== -1 && customTopColor.indexOf(')') === -1
-      ? `${customTopColor})`
-      : customTopColor;
-
-  return (
-    <Container $styling={spinnerType}>
-      <Spinner
-        size={spinnerSize}
-        styling={spinnerType}
-        custom={{ size: customSize, ...{ baseColor, topColor } }}
-      />
-    </Container>
-  );
+type Args = ComponentProps<typeof Spinner> & {
+  customSize: number;
+  customBaseColor: string;
+  customTopColor: string;
 };
 
-export default SpinnerStory;
+const meta = {
+  title: 'Misc/Spinner',
+  component: Spinner,
+  tags: ['autodocs'],
+  argTypes: {
+    size: { control: 'select' },
+    styling: { control: 'select', options: ['primary', 'grey', 'warning'] },
+    custom: {
+      control: false,
+      table: { defaultValue: { summary: 'built from the custom* args' } },
+    },
+  },
+  args: {
+    size: 'medium',
+    styling: 'primary',
+    customSize: 0,
+    customBaseColor: '',
+    customTopColor: '',
+  },
+  render: ({ customSize, customBaseColor, customTopColor, ...args }) => (
+    <Container $styling={args.styling}>
+      <Spinner
+        {...args}
+        custom={{
+          size: customSize,
+          baseColor: closeBracket(customBaseColor) || undefined,
+          topColor: closeBracket(customTopColor) || undefined,
+        }}
+      />
+    </Container>
+  ),
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

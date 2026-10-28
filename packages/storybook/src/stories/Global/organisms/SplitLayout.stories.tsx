@@ -1,78 +1,71 @@
-import { boolean } from '@storybook/addon-knobs';
-import { ContentLayout, FlexContentPlaceholder, GlobalUI, SplitLayout } from 'scorer-ui-kit';
-import styled from 'styled-components';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
+import { ContentLayout, FlexContentPlaceholder, SplitLayout } from 'scorer-ui-kit';
+import { pageFrame } from '../../helpers/PageFrame';
 
-const SplitLayoutStory = {
-  title: 'Global/organisms',
-  component: GlobalUI,
-  decorators: [],
-};
+const nestedSplitChild = (
+  <SplitLayout
+    layout='vertical'
+    persist
+    persistenceKey='my_nested_key'
+    mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
+    sideArea={{
+      content: <FlexContentPlaceholder title='Side Area A' />,
+      collapsable: true,
+      minSize: 200,
+    }}
+  />
+);
 
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--grey-2);
-  background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
-`;
+type Args = ComponentProps<typeof SplitLayout> & { nested: boolean };
 
-export const _SplitLayout = () => {
-  const nested = boolean('Nested', false);
-  const layout = 'horizontal';
-  const reverse = false;
+const meta = {
+  title: 'Global/organisms/SplitLayout',
+  component: SplitLayout,
+  tags: ['autodocs'],
+  parameters: { layout: 'fullscreen' },
+  // the first decorator is the innermost one, so the page frame goes last
+  decorators: [
+    (Story) => (
+      <ContentLayout layout='dashboard'>
+        <Story />
+      </ContentLayout>
+    ),
+    pageFrame,
+  ],
+  argTypes: {
+    nested: { name: 'Nested (a vertical split inside the main area)' },
+    layout: { control: 'select' },
+    ref: { control: false },
+  },
+  args: {
+    nested: false,
+    layout: 'horizontal',
+    reverse: false,
+    persist: true,
+    persistenceKey: 'my_unique_layout_key',
+    dividerSize: 16,
+    showDebug: false,
+    mainArea: { content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 },
+    sideArea: {
+      content: <FlexContentPlaceholder title='Side Area A' />,
+      collapsable: true,
+      minSize: 200,
+    },
+  },
+  render: ({ nested, ...args }) =>
+    nested ? (
+      <SplitLayout
+        {...args}
+        mainArea={{ ...args.mainArea, content: nestedSplitChild }}
+        sideArea={{ ...args.sideArea, content: <FlexContentPlaceholder title='Side Area B' /> }}
+      />
+    ) : (
+      <SplitLayout {...args} />
+    ),
+} satisfies Meta<Args>;
 
-  const splitLayout = (
-    <SplitLayout
-      layout={layout}
-      persist
-      persistenceKey='my_unique_layout_key'
-      reverse={reverse}
-      mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
-      sideArea={{
-        content: <FlexContentPlaceholder title='Side Area A' />,
-        collapsable: true,
-        minSize: 200,
-      }}
-    />
-  );
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  const nestedSplitChild = (
-    <SplitLayout
-      layout='vertical'
-      persist
-      persistenceKey='my_nested_key'
-      reverse={reverse}
-      mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
-      sideArea={{
-        content: <FlexContentPlaceholder title='Side Area A' />,
-        collapsable: true,
-        minSize: 200,
-      }}
-    />
-  );
-
-  const nestedSplitLayout = (
-    <SplitLayout
-      layout='horizontal'
-      persist
-      persistenceKey='my_unique_layout_key'
-      reverse={reverse}
-      mainArea={{ content: nestedSplitChild, minSize: 120 }}
-      sideArea={{
-        content: <FlexContentPlaceholder title='Side Area B' />,
-        collapsable: true,
-        minSize: 200,
-      }}
-    />
-  );
-
-  return (
-    <Container>
-      <ContentLayout layout='dashboard'>{nested ? nestedSplitLayout : splitLayout}</ContentLayout>
-    </Container>
-  );
-};
-
-export default SplitLayoutStory;
+export const Default: Story = {};

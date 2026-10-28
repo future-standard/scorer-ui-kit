@@ -1,51 +1,53 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
-import { PageTitle } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
-import { generateIconList } from '../helpers';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
+import { ContentLayout, PageTitle } from 'scorer-ui-kit';
+import { fn } from 'storybook/test';
+import { pageFrame } from '../helpers/PageFrame';
 
-const Container = styled.div`
-  margin: 100px;
-`;
+type Args = ComponentProps<typeof PageTitle> & { withAreaClick: boolean };
 
-const PageTitleStory = {
-  title: 'Pages/atoms',
+const meta = {
+  title: 'Pages/atoms/PageTitle',
   component: PageTitle,
-  decorators: [],
-};
-
-export const _PageTitle = () => {
-  const iconList = Object.assign({ None: null }, generateIconList());
-
-  const title = text('Title', 'My Page Title');
-  const icon = select('Icon', iconList, 'Link');
-  const iconColor = select(
-    'Color',
-    {
-      Mono: 'mono',
-      Dimmed: 'dimmed',
-      Subtle: 'subtle',
-      Inverse: 'inverse',
-      Primary: 'primary',
-      Danger: 'danger',
+  tags: ['autodocs'],
+  parameters: { layout: 'fullscreen' },
+  // The icon hangs 44px into the left gutter, so the title needs ContentLayout's padding around
+  // it; the first decorator is the innermost one, so the page frame goes last.
+  decorators: [
+    (Story) => (
+      <ContentLayout>
+        <Story />
+      </ContentLayout>
+    ),
+    pageFrame,
+  ],
+  argTypes: {
+    icon: { control: 'select', options: ['', ...Object.keys(IconSVGs)] },
+    iconColor: {
+      control: 'select',
+      options: ['mono', 'dimmed', 'subtle', 'inverse', 'primary', 'danger'],
     },
-    'mono'
-  );
-  const areaTitleBottom = boolean('Area Title Bottom', false);
-  const areaTitle = text('Area Title', 'Area Title');
-  const areaHref = text('Area Href', '#');
-  const optionalAreaOnclick = boolean('Example with area on Click', false);
-  const customClick = action('Custom onAreaClick was used');
+    withAreaClick: { name: 'Area title as button (onAreaClick)' },
+  },
+  args: {
+    title: 'My Page Title',
+    icon: 'Link',
+    iconColor: 'mono',
+    areaTitle: 'Area Title',
+    areaHref: '#',
+    updateDocTitle: true,
+    hideAreaInDocTitle: false,
+    areaTitleBottom: false,
+    withAreaClick: false,
+    onAreaClick: fn(),
+  },
+  render: ({ withAreaClick, ...args }) => (
+    <PageTitle {...args} onAreaClick={withAreaClick ? args.onAreaClick : undefined} />
+  ),
+} satisfies Meta<Args>;
 
-  return (
-    <Container>
-      <PageTitle
-        {...{ title, areaTitle, areaHref, areaTitleBottom, iconColor }}
-        icon={icon || undefined}
-        onAreaClick={optionalAreaOnclick ? customClick : undefined}
-      />
-    </Container>
-  );
-};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export default PageTitleStory;
+export const Default: Story = {};

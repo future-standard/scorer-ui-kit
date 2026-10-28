@@ -1,46 +1,33 @@
-import { boolean, number, select } from '@storybook/addon-knobs';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { StatusIcon } from 'scorer-ui-kit';
-import styled from 'styled-components';
-import { generateIconList } from '../helpers';
 
-const StatusIconStory = {
-  title: 'Misc',
+type Args = ComponentProps<typeof StatusIcon> & { showEmptyCounter: boolean };
+
+const meta = {
+  title: 'Misc/StatusIcon',
   component: StatusIcon,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    icon: { control: 'select', options: Object.keys(IconSVGs) },
+    status: { control: 'select' },
+    showEmptyCounter: { name: 'Show empty counter' },
+  },
+  args: {
+    icon: 'ActionPause',
+    status: 'danger',
+    counter: 5,
+    maxCounter: 999,
+    showEmptyCounter: false,
+  },
+  // Without a counter the status renders as a dot, so a toggle decides whether counter is passed.
+  render: ({ showEmptyCounter, ...args }) => (
+    <StatusIcon {...args} counter={showEmptyCounter ? undefined : args.counter} />
+  ),
+} satisfies Meta<Args>;
 
-const Container = styled.div`
-  margin: 20px;
-`;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const _Status_Icon = () => {
-  const iconList = generateIconList();
-
-  const icon = select('Name', iconList, Object.keys(iconList)[0]);
-  const counter = number('Counter', 5);
-  const status = select(
-    'Status',
-    {
-      Caution: 'caution',
-      Danger: 'danger',
-      Good: 'good',
-      Neutral: 'neutral',
-      Highlight: 'highlight',
-    },
-    'danger'
-  );
-  const undefineCounter = boolean('Show empty counter', false);
-  const maxCounter = number('MaxCounter', 999);
-
-  return (
-    <Container>
-      <StatusIcon
-        {...{ icon, status }}
-        counter={undefineCounter ? undefined : counter}
-        maxCounter={maxCounter}
-      />
-    </Container>
-  );
-};
-
-export default StatusIconStory;
+export const Default: Story = {};

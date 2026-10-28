@@ -13,9 +13,10 @@ const Frame = styled.div<{ $height: string }>`
 /* Page-level stories fill the canvas, but an absolutely positioned wrapper adds no height to the
    inline docs preview, which then collapses to a thin strip. The frame takes the viewport on the
    canvas and a fixed height in docs, so the preview stays inline and the docs controls keep
-   working. Pair it with parameters.layout 'fullscreen'. */
-export const pageFrame: Decorator = (Story, { viewMode }) => (
-  <Frame $height={viewMode === 'docs' ? '600px' : '100vh'}>
+   working. Pair it with parameters.layout 'fullscreen'; a story with tall content (tables) sets
+   parameters.pageFrame.docsHeight. */
+export const pageFrame: Decorator = (Story, { viewMode, parameters }) => (
+  <Frame $height={viewMode === 'docs' ? (parameters.pageFrame?.docsHeight ?? '600px') : '100vh'}>
     <Story />
   </Frame>
 );

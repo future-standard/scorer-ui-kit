@@ -1,34 +1,35 @@
-import { boolean, select } from '@storybook/addon-knobs';
-import { ModalProvider, TypeTable } from 'scorer-ui-kit';
-import styled from 'styled-components';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ContentLayout, ModalProvider } from 'scorer-ui-kit';
+import { pageFrame } from '../../helpers/PageFrame';
 import MultiActionsExample from './MultiActionsExample';
 
-const Container = styled.div`
-  padding: 100px;
-`;
-const TableMultiActionsStory = {
-  title: 'Tables/molecules',
-  component: TypeTable,
-  decorators: [],
-  parameters: {
-    jsx: { skip: 2 },
-  },
-};
-
-// Story starts here o.o
-export const _TableMultiActions = () => {
-  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
-  const stackActionButtons = boolean('Stack Action Buttons', false);
-  const actionsLayout = stackActionButtons ? 'stack' : 'inline';
-
-  // Provider should be at main Index level, it's here just for the example
-  return (
-    <Container>
+const meta = {
+  title: 'Tables/molecules/TableMultiActions',
+  component: MultiActionsExample,
+  tags: ['autodocs'],
+  parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '900px' } },
+  // the first decorator is the innermost one, so the page frame goes last
+  decorators: [
+    (Story) => (
       <ModalProvider>
-        <MultiActionsExample {...{ language, actionsLayout }} />
+        <ContentLayout>
+          <Story />
+        </ContentLayout>
       </ModalProvider>
-    </Container>
-  );
-};
+    ),
+    pageFrame,
+  ],
+  argTypes: {
+    language: { control: 'select', options: ['english', 'japanese'] },
+    actionsLayout: { control: 'select' },
+  },
+  args: {
+    language: 'japanese',
+    actionsLayout: 'inline',
+  },
+} satisfies Meta<typeof MultiActionsExample>;
 
-export default TableMultiActionsStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

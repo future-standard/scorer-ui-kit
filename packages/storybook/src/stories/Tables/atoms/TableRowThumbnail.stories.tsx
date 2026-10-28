@@ -1,51 +1,50 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { ModalProvider, TableRowThumbnail } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 import photo from '../../assets/placeholder.jpg';
 
 const video = 'https://future-standard.github.io/scorer-ui-kit/traffic.mp4';
 
-const TableRowThumbnailStory = {
-  title: 'Tables/atoms',
+type Args = ComponentProps<typeof TableRowThumbnail> & { withCustomClick: boolean };
+
+const meta = {
+  title: 'Tables/atoms/TableRowThumbnail',
   component: TableRowThumbnail,
-  decorators: [],
-};
-
-const Container = styled.div`
-  height: 200px;
-  width:  800px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const ContainerInner = styled.div`
-  flex: 0;
-  height: 35px;
-`;
-
-export const _RowThumbnail = () => {
-  const hoverZoom = boolean('Zoom On Hover', true);
-  const image = text('Image Src', photo);
-  const mediaUrl = text('Video Src', video);
-  const mediaType = select('Media Type', ['img', 'video'], 'video');
-  const retryImageLoad = boolean('Retry Image', false);
-  const onClickAction = action('Doing some other action than opening a modal');
-  const onClickThumbnail = boolean('Custom onClickThumnail', false);
-
-  // Provider should be at main Index level, it's here just for the example
-  return (
-    <Container>
+  tags: ['autodocs'],
+  parameters: { layout: 'centered' },
+  decorators: [
+    (Story) => (
       <ModalProvider>
-        <ContainerInner>
-          <TableRowThumbnail
-            onClickThumbnail={onClickThumbnail ? onClickAction : undefined}
-            {...{ hoverZoom, image, mediaUrl, mediaType, retryImageLoad }}
-          />
-        </ContainerInner>
+        <Story />
       </ModalProvider>
-    </Container>
-  );
-};
+    ),
+  ],
+  argTypes: {
+    mediaType: { control: 'select' },
+    aspect: { control: false, table: { defaultValue: { summary: 'unset' } } },
+    withCustomClick: { name: 'Custom onClickThumbnail (skips the modal)' },
+  },
+  args: {
+    image: photo,
+    hoverZoom: true,
+    mediaUrl: video,
+    mediaType: 'video',
+    retryImageLoad: false,
+    retryLimit: 5,
+    closeText: '',
+    withCustomClick: false,
+    onClickThumbnail: fn(),
+  },
+  render: ({ withCustomClick, ...args }) => (
+    <TableRowThumbnail
+      {...args}
+      onClickThumbnail={withCustomClick ? args.onClickThumbnail : undefined}
+    />
+  ),
+} satisfies Meta<Args>;
 
-export default TableRowThumbnailStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

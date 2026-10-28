@@ -1,71 +1,110 @@
-import { boolean } from '@storybook/addon-knobs';
-import { ContentLayout, FlexContentPlaceholder, GlobalUI, SplitLayout } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type ComponentProps, useMemo } from 'react';
+import {
+  ContentLayout,
+  FlexContentPlaceholder,
+  type ISideAreaState,
+  SplitLayout,
+} from 'scorer-ui-kit';
+import { fn } from 'storybook/test';
+import { pageFrame } from '../../helpers/PageFrame';
 
-import styled from 'styled-components';
+const onSideAreaAChange = fn();
+const onSideAreaBChange = fn();
 
-const NestedSplitLayoutStory = {
-  title: 'Global/organisms',
-  component: GlobalUI,
-  decorators: [],
+type Args = ComponentProps<typeof SplitLayout> & {
+  sideAreaACollapsed: boolean;
+  sideAreaBCollapsed: boolean;
+  onSideAreaAChange: (state: ISideAreaState) => void;
+  onSideAreaBChange: (state: ISideAreaState) => void;
 };
 
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--grey-2);
-  background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
-`;
-
-export const _SplitLayoutNested = () => {
-  const reverse = false;
-  const defaultSideAState = boolean('Side Area A - Default Collapsed', false);
-  const onSideAreaAChange = action('Side Area A State');
-  const defaultSideBState = boolean('Side Area B - Default Collapsed', false);
-  const onSideAreaBChange = action('Side Area B State');
-
-  const nestedSplitChild = (
-    <SplitLayout
-      layout='vertical'
-      persist
-      persistenceKey='my_nested_key'
-      reverse={reverse}
-      mainArea={{ content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 }}
-      sideArea={{
-        content: <FlexContentPlaceholder title='Side Area A' />,
-        collapsable: true,
-        minSize: 200,
-        onSideAreaStateChange: onSideAreaAChange,
-        defaultCollapsed: defaultSideAState,
-      }}
-    />
-  );
-
-  const nestedSplitLayout = (
-    <SplitLayout
-      layout='horizontal'
-      persist
-      persistenceKey='my_unique_layout_key'
-      reverse={reverse}
-      mainArea={{ content: nestedSplitChild, minSize: 120 }}
-      sideArea={{
-        content: <FlexContentPlaceholder title='Side Area B' />,
-        collapsable: true,
-        minSize: 200,
-        onSideAreaStateChange: onSideAreaBChange,
-        defaultCollapsed: defaultSideBState,
-      }}
-    />
+// SplitLayout hangs the tab when a nested SplitLayout element it receives as mainArea.content
+// changes identity on a re-render, so the inner element is rebuilt only when its inputs change.
+const Scene = ({
+  sideAreaACollapsed,
+  sideAreaBCollapsed,
+  onSideAreaAChange,
+  onSideAreaBChange: _b,
+  ...args
+}: Args) => {
+  const { mainArea, reverse, persist } = args;
+  const nestedSplit = useMemo(
+    () => (
+      <SplitLayout
+        layout='vertical'
+        persist={persist}
+        persistenceKey='my_nested_key'
+        reverse={reverse}
+        mainArea={mainArea}
+        sideArea={{
+          content: <FlexContentPlaceholder title='Side Area A' />,
+          collapsable: true,
+          minSize: 200,
+          onSideAreaStateChange: onSideAreaAChange,
+          defaultCollapsed: sideAreaACollapsed,
+        }}
+      />
+    ),
+    [mainArea, reverse, persist, onSideAreaAChange, sideAreaACollapsed]
   );
 
   return (
-    <Container>
-      <ContentLayout layout='dashboard'>{nestedSplitLayout}</ContentLayout>
-    </Container>
+    <SplitLayout
+      key={`${sideAreaACollapsed}-${sideAreaBCollapsed}`}
+      {...args}
+      mainArea={{ ...mainArea, content: nestedSplit }}
+      sideArea={{ ...args.sideArea, defaultCollapsed: sideAreaBCollapsed }}
+    />
   );
 };
 
-export default NestedSplitLayoutStory;
+const meta = {
+  title: 'Global/organisms/NestedSplitLayout',
+  component: SplitLayout,
+  tags: ['autodocs'],
+  parameters: { layout: 'fullscreen' },
+  // the first decorator is the innermost one, so the page frame goes last
+  decorators: [
+    (Story) => (
+      <ContentLayout layout='dashboard'>
+        <Story />
+      </ContentLayout>
+    ),
+    pageFrame,
+  ],
+  argTypes: {
+    sideAreaACollapsed: { name: 'Side Area A - default collapsed (nested split)' },
+    sideAreaBCollapsed: { name: 'Side Area B - default collapsed (sideArea.defaultCollapsed)' },
+    layout: { control: 'select' },
+    ref: { control: false },
+  },
+  args: {
+    sideAreaACollapsed: false,
+    sideAreaBCollapsed: false,
+    onSideAreaAChange,
+    onSideAreaBChange,
+    layout: 'horizontal',
+    reverse: false,
+    // a saved localStorage state would override both default-collapsed toggles; the SplitLayout
+    // story shows persistence
+    persist: false,
+    persistenceKey: 'my_unique_layout_key',
+    dividerSize: 16,
+    showDebug: false,
+    mainArea: { content: <FlexContentPlaceholder title='Main Area' />, minSize: 120 },
+    sideArea: {
+      content: <FlexContentPlaceholder title='Side Area B' />,
+      collapsable: true,
+      minSize: 200,
+      onSideAreaStateChange: onSideAreaBChange,
+    },
+  },
+  // defaultCollapsed is read only on mount, so the collapsed controls remount the layouts
+  render: (args) => <Scene {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
