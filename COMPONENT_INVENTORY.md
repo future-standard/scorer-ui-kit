@@ -1152,13 +1152,11 @@ This document provides a comprehensive inventory of all React components in the 
   - `feedbackMessage`: `string` - Message text displayed in feedback bar
   - `actionCallback`: `() => void` - Callback for action icon click
   - `actionIcon`: `string` - Icon name for action button displayed inside input (right side)
-  - `postfix`: `string` - Text displayed after input value (e.g., units like "px", "%")
 - **Notable Features:**
   - **Base Input Component**: Foundation input with state-based styling
   - **Field States**: Six states with color-coded borders and shadows (default, disabled, required, valid, invalid, processing)
   - **Feedback System**: Optional feedback bar with state-specific icons (Required, Success, Invalid, Spinner)
   - **Action Icon**: Optional icon button inside input for actions (e.g., clear, show password, search)
-  - **Postfix Support**: Display text after input value for units or context
   - **State-Based Styling**: Border colors, shadows, and backgrounds change based on fieldState
   - **Auto-Disable**: Automatically disables input when fieldState is 'disabled' or 'processing'
   - **Focus Effects**: Enhanced box shadow on focus with state-specific colors
@@ -2375,7 +2373,6 @@ This document provides a comprehensive inventory of all React components in the 
   - `feedbackMessage`: `string` - Message text displayed in feedback bar
   - `actionCallback`: `() => void` - Callback for action icon click (from InputProps)
   - `actionIcon`: `string` - Icon name for action button (from InputProps)
-  - `postfix`: `string` - Text displayed after input value (from InputProps)
   - `required`: `boolean` - Shows required indicator in label
   - `alwaysShowRequiredDot?`: `boolean` - Keep the required dot visible even while the field has a value (default: false)
 - **Notable Features:**
@@ -2385,7 +2382,6 @@ This document provides a comprehensive inventory of all React components in the 
   - **State Management**: Passes fieldState to both Label and Input for consistent styling
   - **Feedback System**: Supports feedback messages with state-specific icons
   - **Action Icon**: Optional action button with icon (e.g., for password visibility toggle)
-  - **Postfix Support**: Can display text after input value (e.g., units)
   - **Composition**: Combines Label and Input components with proper prop forwarding
   - **HTML Attributes**: Supports all standard input HTML attributes (placeholder, maxLength, etc.)
   - **Default State**: fieldState defaults to 'default' if not provided

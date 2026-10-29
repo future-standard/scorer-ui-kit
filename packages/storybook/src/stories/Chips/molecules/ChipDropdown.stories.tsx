@@ -51,9 +51,14 @@ const meta = {
     onDuplicateSpace,
     onRemoveSpace,
   },
-  // an empty triggerLabel would replace the icon-only default ('Space actions') with ''
+  // '' in the panel means unset: an empty triggerLabel would replace the icon-only default
+  // ('Space actions') and an empty selectedId would still turn the menu into a radio group.
   render: ({ onAddSpace: _a, onDuplicateSpace: _d, onRemoveSpace: _r, ...args }) => (
-    <ChipDropdown {...args} triggerLabel={args.triggerLabel || undefined} />
+    <ChipDropdown
+      {...args}
+      triggerLabel={args.triggerLabel || undefined}
+      selectedId={args.selectedId || undefined}
+    />
   ),
 } satisfies Meta<Args>;
 

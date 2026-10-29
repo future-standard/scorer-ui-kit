@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { type ComponentProps, useMemo } from 'react';
+import type { ComponentProps } from 'react';
 import {
   ContentLayout,
   FlexContentPlaceholder,
@@ -19,45 +19,38 @@ type Args = ComponentProps<typeof SplitLayout> & {
   onSideAreaBChange: (state: ISideAreaState) => void;
 };
 
-// SplitLayout hangs the tab when a nested SplitLayout element it receives as mainArea.content
-// changes identity on a re-render, so the inner element is rebuilt only when its inputs change.
 const Scene = ({
   sideAreaACollapsed,
   sideAreaBCollapsed,
   onSideAreaAChange,
   onSideAreaBChange: _b,
   ...args
-}: Args) => {
-  const { mainArea, reverse, persist } = args;
-  const nestedSplit = useMemo(
-    () => (
-      <SplitLayout
-        layout='vertical'
-        persist={persist}
-        persistenceKey='my_nested_key'
-        reverse={reverse}
-        mainArea={mainArea}
-        sideArea={{
-          content: <FlexContentPlaceholder title='Side Area A' />,
-          collapsable: true,
-          minSize: 200,
-          onSideAreaStateChange: onSideAreaAChange,
-          defaultCollapsed: sideAreaACollapsed,
-        }}
-      />
-    ),
-    [mainArea, reverse, persist, onSideAreaAChange, sideAreaACollapsed]
-  );
-
-  return (
-    <SplitLayout
-      key={`${sideAreaACollapsed}-${sideAreaBCollapsed}`}
-      {...args}
-      mainArea={{ ...mainArea, content: nestedSplit }}
-      sideArea={{ ...args.sideArea, defaultCollapsed: sideAreaBCollapsed }}
-    />
-  );
-};
+}: Args) => (
+  <SplitLayout
+    key={`${sideAreaACollapsed}-${sideAreaBCollapsed}`}
+    {...args}
+    mainArea={{
+      ...args.mainArea,
+      content: (
+        <SplitLayout
+          layout='vertical'
+          persist={args.persist}
+          persistenceKey='my_nested_key'
+          reverse={args.reverse}
+          mainArea={args.mainArea}
+          sideArea={{
+            content: <FlexContentPlaceholder title='Side Area A' />,
+            collapsable: true,
+            minSize: 200,
+            onSideAreaStateChange: onSideAreaAChange,
+            defaultCollapsed: sideAreaACollapsed,
+          }}
+        />
+      ),
+    }}
+    sideArea={{ ...args.sideArea, defaultCollapsed: sideAreaBCollapsed }}
+  />
+);
 
 const meta = {
   title: 'Global/organisms/NestedSplitLayout',
