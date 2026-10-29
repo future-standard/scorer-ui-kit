@@ -118,8 +118,10 @@ const Scene = ({
     panelMetaData,
     customBottom: showCustomComponent ? customBottom : undefined,
   };
+  // Two video panels: each video element fetches about 1 MB of the 20 MB sample at load, and
+  // five of them kept the CI story sweep from reaching network idle within its page timeout.
   const panels = Array.from({ length: 11 }, (_, index) =>
-    index % 2 === 0 ? imagePanel : videoPanel
+    index === 1 || index === 6 ? videoPanel : imagePanel
   );
 
   return (
