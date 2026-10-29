@@ -1,4 +1,0 @@
-import{n as e}from"./rolldown-runtime-DkW27tQK.js";import{t}from"./jsx-runtime-DeHZSEgm.js";import{n,t as r}from"./SmallInput-MUH9L9nQ.js";import{a as i,o as a}from"./iframe-DkCQ6b6C.js";var o,s,c,l,u;function d(){return(d=e((()=>{n(),a(),o=t(),s=i.div`
-  margin: 100px;
-  max-width: 200px;
-`,c={title:`Form/Input/SmallInput`,component:r,tags:[`autodocs`],decorators:[e=>(0,o.jsx)(s,{children:(0,o.jsx)(e,{})})],argTypes:{type:{control:`select`,options:[`text`,`password`,`email`,`number`]},fieldState:{control:`select`}},args:{type:`text`,id:`my_input`,name:`my_input`,label:`My Input`,unit:`º`,placeholder:`Placeholder...`,fieldState:`default`,required:!1,alwaysShowRequiredDot:!1},render:e=>(0,o.jsx)(r,{...e,disabled:e.fieldState===`disabled`})},l={},u=[`Default`],l.parameters={...l.parameters,docs:{...l.parameters?.docs,source:{originalSource:`{}`,...l.parameters?.docs?.source}}}})))()}d();export{l as Default,u as __namedExportsOrder,c as default};
