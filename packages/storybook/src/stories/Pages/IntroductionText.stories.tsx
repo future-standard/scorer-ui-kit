@@ -1,28 +1,20 @@
-import { text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { IntroductionText } from 'scorer-ui-kit';
-import styled from 'styled-components';
 
-const Container = styled.div`
-  margin: 100px;
-`;
-
-const IntroductionTextStory = {
-  title: 'Pages/atoms',
+const meta = {
+  title: 'Pages/atoms/IntroductionText',
   component: IntroductionText,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    children: { name: 'Text', control: 'text' },
+  },
+  args: {
+    children:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.',
+  },
+} satisfies Meta<typeof IntroductionText>;
 
-export const _IntroductionText = () => {
-  const introductionText = text(
-    'Text',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales non mauris sed fermentum. Proin non elit at lectus semper lacinia a sed nisi. Sed nibh neque, sagittis at laoreet non, sodales non nisl. Nam nec lectus erat. Etiam bibendum tristique ipsum eu dictum. Nam egestas felis in mauris molestie tristique.'
-  );
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  return (
-    <Container>
-      <IntroductionText>{introductionText}</IntroductionText>
-    </Container>
-  );
-};
-
-export default IntroductionTextStory;
+export const Default: Story = {};

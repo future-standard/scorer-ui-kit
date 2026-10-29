@@ -1,20 +1,38 @@
-import { boolean } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 
-const CheckboxStory = {
-  title: 'Form/atoms',
+const meta = {
+  title: 'Form/atoms/Checkbox',
   component: Checkbox,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    indeterminate: {
+      control: false,
+      table: { defaultValue: { summary: 'not implemented by the component' } },
+    },
+  },
+  args: {
+    checked: false,
+    disabled: false,
+    onChangeCallback: fn(),
+  },
+  render: function Render(args) {
+    const [, updateArgs] = useArgs();
+    return (
+      <Checkbox
+        {...args}
+        onChangeCallback={(checked, indeterminate) => {
+          args.onChangeCallback?.(checked, indeterminate);
+          updateArgs({ checked });
+        }}
+      />
+    );
+  },
+} satisfies Meta<typeof Checkbox>;
 
-export const _Checkbox = () => {
-  // const indeterminate = boolean("Indeterminate", false);
-  const disabled = boolean('Disabled', false);
-  const checked = boolean('Checked', false);
-  const onChange = action('value-changed');
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  return <Checkbox {...{ checked, disabled, onChange }} />;
-};
-
-export default CheckboxStory;
+export const Default: Story = {};

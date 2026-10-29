@@ -1,33 +1,30 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FilterButton } from 'scorer-ui-kit';
-import styled from 'styled-components';
-import { generateIconList } from '../../helpers';
+import { fn } from 'storybook/test';
 
-const FilterButtonStory = {
-  title: 'Filters/atoms',
+const meta = {
+  title: 'Filters/atoms/FilterButton',
   component: FilterButton,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    children: { name: 'Button text', control: 'text' },
+    icon: { control: 'select', options: Object.keys(IconSVGs) },
+    design: { control: 'select' },
+  },
+  args: {
+    children: 'Search Example String Field',
+    icon: 'ActionPause',
+    hasFlipArrow: false,
+    isSortAscending: false,
+    isOpen: false,
+    disabled: false,
+    design: 'default',
+    onClick: fn(),
+  },
+} satisfies Meta<typeof FilterButton>;
 
-const Content = styled.div``;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const _FilterButton = () => {
-  const iconList = generateIconList();
-
-  const buttonText = text('Text', 'Search Example String Field');
-  const iconName = select('Icon', iconList, Object.keys(iconList)[0]);
-  const hasFlipArrow = boolean('Has Flip Arrow', false);
-  const isOpen = boolean('is Open', false);
-  const disabled = boolean('disable', false);
-  const design = select('Design type', { Default: 'default', Basic: 'basic' }, 'default');
-
-  return (
-    <Content>
-      <FilterButton icon={iconName} {...{ hasFlipArrow, isOpen, disabled, design }}>
-        {buttonText}
-      </FilterButton>
-    </Content>
-  );
-};
-
-export default FilterButtonStory;
+export const Default: Story = {};

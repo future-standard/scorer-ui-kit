@@ -1,31 +1,21 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AlertBar } from 'scorer-ui-kit';
-import styled from 'styled-components';
 
-const Container = styled.div`
-  margin: 100px;
-`;
-
-const AlertBarStory = {
-  title: 'Alerts/atoms',
+const meta = {
+  title: 'Alerts/atoms/AlertBar',
   component: AlertBar,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    type: { control: 'select' },
+  },
+  args: {
+    message: 'Look Out!',
+    type: 'error',
+    hideCloseButton: false,
+  },
+} satisfies Meta<typeof AlertBar>;
 
-export const _AlertBar = () => {
-  const message = text('Message', 'Look Out!');
-  const type = select(
-    'Type',
-    { Error: 'error', Warning: 'warning', Info: 'info', Success: 'success', Neutral: 'neutral' },
-    'error'
-  );
-  const hideCloseButton = boolean('Hide close icon', false);
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  return (
-    <Container>
-      <AlertBar {...{ message, type, hideCloseButton }}></AlertBar>
-    </Container>
-  );
-};
-
-export default AlertBarStory;
+export const Default: Story = {};

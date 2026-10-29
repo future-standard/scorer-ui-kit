@@ -1,53 +1,27 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TextAreaField } from 'scorer-ui-kit';
-import styled from 'styled-components';
 
-const Container = styled.div`
-  margin: 20px;
-`;
-
-const TextAreaFieldStory = {
-  title: 'Form/Input',
+const meta = {
+  title: 'Form/Input/TextAreaField',
   component: TextAreaField,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    fieldState: { control: 'select' },
+  },
+  args: {
+    id: 'example_texarea',
+    name: 'example_texarea',
+    label: 'Textarea Example',
+    placeholder: 'Placeholder...',
+    fieldState: 'default',
+    showFeedback: false,
+    feedbackMessage: 'This is a feedback message.',
+    required: false,
+    alwaysShowRequiredDot: false,
+  },
+} satisfies Meta<typeof TextAreaField>;
 
-export const _TextAreaField = () => {
-  const fieldName = text('Textarea Name', 'example_texarea');
-  const fieldLabel = text('Label', 'Textarea Example');
-  const showFeedback = boolean('Show Feedback', false);
-  const fieldFeedback = text('Feedback', 'This is a feedback message.');
-  const fieldPlaceholder = text('Placeholder', 'Placeholder...');
-  const fieldRequired = boolean('Required', false);
-  const alwaysShowRequiredDot = boolean('Always Show Required Dot', false);
-  const currentState = select(
-    'State',
-    {
-      Default: 'default',
-      Disabled: 'disabled',
-      Required: 'required',
-      Valid: 'valid',
-      Invalid: 'invalid',
-      Processing: 'processing',
-    },
-    'default'
-  );
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  return (
-    <Container>
-      <TextAreaField
-        id={fieldName}
-        name={fieldName}
-        label={fieldLabel}
-        placeholder={fieldPlaceholder}
-        showFeedback={showFeedback}
-        feedbackMessage={fieldFeedback}
-        fieldState={currentState}
-        required={fieldRequired}
-        alwaysShowRequiredDot={alwaysShowRequiredDot}
-      ></TextAreaField>
-    </Container>
-  );
-};
-
-export default TextAreaFieldStory;
+export const Default: Story = {};

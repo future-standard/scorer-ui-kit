@@ -68,6 +68,16 @@ const ThemedDocsContainer = ({ children, context }: PropsWithChildren<DocsContai
 
 // Preview configuration
 const preview: Preview = {
+  // A story's language control (`language` or `lang`) goes first in the Controls panel and the
+  // docs table; docgen order would otherwise bury it among the component props.
+  argTypesEnhancers: [
+    ({ argTypes }) => {
+      const key = ['language', 'lang'].find((k) => k in argTypes);
+      if (!key) return argTypes;
+      const { [key]: first, ...rest } = argTypes;
+      return { [key]: first, ...rest };
+    },
+  ],
   parameters: {
     controls: {
       disableSaveFromUI: true,

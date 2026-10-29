@@ -1,49 +1,29 @@
-import { boolean, number, select, text } from '@storybook/addon-knobs';
-import type React from 'react';
-import { useCallback } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { BasicSearchInput } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 
-const BasicSearchInputStory = {
-  title: 'Misc/atoms',
+const meta = {
+  title: 'Misc/atoms/BasicSearchInput',
   component: BasicSearchInput,
-  decorators: [],
-  parameters: {
-    jsx: { skip: 1 },
+  tags: ['autodocs'],
+  argTypes: {
+    color: { control: 'select' },
   },
-};
+  args: {
+    placeholder: 'Search by name...',
+    hasBorder: true,
+    noBackground: true,
+    color: 'subtle',
+    iconSize: 12,
+    disabled: false,
+    width: '',
+    hasCrossButton: false,
+    onChange: fn(),
+    onCrossClick: fn(),
+  },
+} satisfies Meta<typeof BasicSearchInput>;
 
-const Container = styled.div`
-  margin: 20px;
-`;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const _BasicSearchInput = () => {
-  const inputPlaceholder = text('Placeholder', 'Search by name...');
-  const textValue = action('Search value');
-  const hasBorder = boolean('Has border', true);
-  const noBackground = boolean('No Background', true);
-  const color = select('Color', { Mono: 'mono', Dimmed: 'dimmed', Subtle: 'subtle' }, 'subtle');
-  const iconSize = number('Icon size', 12);
-  const disabled = boolean('Disabled', false);
-
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { value } = e.target;
-      textValue(value);
-    },
-    [textValue]
-  );
-
-  return (
-    <Container>
-      <BasicSearchInput
-        placeholder={inputPlaceholder}
-        onChange={handleChange}
-        {...{ hasBorder, noBackground, color, iconSize, disabled }}
-      />
-    </Container>
-  );
-};
-
-export default BasicSearchInputStory;
+export const Default: Story = {};

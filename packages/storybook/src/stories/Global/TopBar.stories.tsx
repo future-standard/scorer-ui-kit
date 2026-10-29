@@ -1,11 +1,3 @@
-import {
-  ArgTypes,
-  Description,
-  Primary,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs/blocks';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { type ComponentProps, useState } from 'react';
 import {
@@ -23,6 +15,7 @@ import { useArgs } from 'storybook/preview-api';
 import { fn } from 'storybook/test';
 import styled from 'styled-components';
 import placeholderImage from '../assets/placeholder.jpg';
+import { FramedDocsPage } from '../helpers/FramedDocsPage';
 
 const Container = styled.div`
   position: fixed;
@@ -30,22 +23,6 @@ const Container = styled.div`
   left: 0;
   right: 0;
 `;
-
-/* TopBar portals its drawers to document.body, so an inline docs preview would show them at the
-   page's edge instead of under the bar. The docs page therefore embeds the stories in their own
-   frames and documents the props with a static table: live docs controls could not reach a
-   framed story (the frame has its own args store), and a table that looks live but does nothing
-   is worse than one that is plainly static. The Default story is the playground. */
-const TopBarDocsPage = () => (
-  <>
-    <Title />
-    <Subtitle />
-    <Description />
-    <Primary />
-    <ArgTypes />
-    <Stories />
-  </>
-);
 
 const LeftContent = styled.div`
   display: flex;
@@ -404,6 +381,11 @@ const buildSideDrawers = (t: Copy): ISideDrawer[] => [
 // Spies for the left-area SplitButton actions; the same instances are passed as args so the
 // Actions panel logs them and the English leftAreaElement arg can reference them.
 const leftAreaActions = { onNewOrder: fn(), onPrintReceipt: fn(), onClearOrders: fn() };
+// Japanese counterparts of the English element args, built once so the drawers keep their
+// identity across renders.
+const JA_LEFT_AREA_ELEMENT = buildLeftAreaElement(COPY.ja, leftAreaActions);
+const JA_ORDERS_DRAWER = buildOrdersDrawer(COPY.ja);
+const JA_SIDE_DRAWERS = buildSideDrawers(COPY.ja);
 
 // Story-only inputs that are not TopBar props.
 type Args = ComponentProps<typeof TopBar> & {
@@ -421,9 +403,9 @@ const Scene = ({
   leftAreaElement,
   useBadgeOnClick,
   onBadgeClick,
-  onNewOrder,
-  onPrintReceipt,
-  onClearOrders,
+  onNewOrder: _n,
+  onPrintReceipt: _p,
+  onClearOrders: _c,
   onLanguageToggle,
   selectedLangAttribute = 'en',
   selectedLanguageText,
@@ -477,12 +459,9 @@ const Scene = ({
           selectedThemeText={localized(selectedThemeText, COPY.ja.selectedThemeText)}
           copySuccessMessage={localized(copySuccessMessage, COPY.ja.copySuccessMessage)}
           searchPlaceholder={localized(searchPlaceholder, COPY.ja.searchPlaceholder)}
-          leftAreaElement={localized(
-            leftAreaElement,
-            buildLeftAreaElement(COPY.ja, { onNewOrder, onPrintReceipt, onClearOrders })
-          )}
-          customDrawer={localized(customDrawer, buildOrdersDrawer(COPY.ja))}
-          sideDrawers={localized(sideDrawers, buildSideDrawers(COPY.ja))}
+          leftAreaElement={localized(leftAreaElement, JA_LEFT_AREA_ELEMENT)}
+          customDrawer={localized(customDrawer, JA_ORDERS_DRAWER)}
+          sideDrawers={localized(sideDrawers, JA_SIDE_DRAWERS)}
           activeDrawer={activeDrawer}
           onActiveDrawerChange={setActiveDrawer}
         />
@@ -508,9 +487,10 @@ const meta = {
   title: 'Global/TopBar',
   component: TopBar,
   tags: ['autodocs'],
+  // The drawers portal to document.body, so the docs preview needs its own frame (FramedDocsPage).
   parameters: {
     docs: {
-      page: TopBarDocsPage,
+      page: FramedDocsPage,
       story: { inline: false, iframeHeight: '520px' },
     },
   },

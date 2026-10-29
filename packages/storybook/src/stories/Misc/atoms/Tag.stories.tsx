@@ -1,51 +1,48 @@
-import { boolean, number, select, text } from '@storybook/addon-knobs';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { Tag } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
-import { generateIconList } from '../../helpers';
+import { fn } from 'storybook/test';
 
-const TagStory = {
-  title: 'Misc/atoms',
+type Args = ComponentProps<typeof Tag> & { useOnTagClick: boolean };
+
+const meta = {
+  title: 'Misc/atoms/Tag',
   component: Tag,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    icon: { control: 'select', options: Object.keys(IconSVGs) },
+    tagSize: {
+      control: { type: 'select', labels: { undefined: 'unset' } },
+      options: [undefined, 'compact', 'default'],
+    },
+    weight: { control: 'select' },
+    color: {
+      control: 'select',
+      options: ['grey-12', 'mono', 'dimmed', 'subtle', 'inverse', 'primary', 'danger'],
+    },
+    useOnTagClick: { name: 'Use onTagClick' },
+  },
+  args: {
+    label: 'Example',
+    icon: 'MetaTags',
+    size: 14,
+    weight: 'regular',
+    color: 'grey-12',
+    forSvgUsage: false,
+    linkTo: '/',
+    noBorder: false,
+    tagSize: 'default',
+    useOnTagClick: false,
+    onTagClick: fn(),
+  },
+  // Passing onTagClick turns the tag into a button, so a toggle decides whether it is passed.
+  render: ({ useOnTagClick, ...args }) => (
+    <Tag {...args} onTagClick={useOnTagClick ? args.onTagClick : undefined} />
+  ),
+} satisfies Meta<Args>;
 
-const Container = styled.div``;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const _Tag = () => {
-  const iconList = generateIconList();
-  const tagText = text('Label', 'Example');
-  const noBorder = boolean('No Border', false);
-  const iconName = select('Icon', iconList, 'MetaTags');
-  const size = number('Size', 14);
-  const tagSize = select(
-    'Tag Size',
-    { Compact: 'compact', Default: 'default', Undefined: undefined },
-    'default'
-  );
-  const tagWeight = select(
-    'Weight',
-    { Light: 'light', Regular: 'regular', Heavy: 'heavy' },
-    'regular'
-  );
-  const toValue = text('To Link', '/');
-  const useOnClick = boolean('Use onTagClick', false);
-  const customClick = action('onTagClick was triggered');
-
-  return (
-    <Container>
-      <Tag
-        label={tagText}
-        icon={iconName}
-        size={size}
-        weight={tagWeight}
-        linkTo={toValue}
-        noBorder={noBorder}
-        tagSize={tagSize}
-        onTagClick={useOnClick ? customClick : undefined}
-      />
-    </Container>
-  );
-};
-
-export default TagStory;
+export const Default: Story = {};

@@ -1,54 +1,29 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PasswordField } from 'scorer-ui-kit';
-import styled from 'styled-components';
 
-const Container = styled.div`
-    margin: 20px;
-`;
-
-const PasswordInputStory = {
-  title: 'Form/Input',
+const meta = {
+  title: 'Form/Input/PasswordField',
   component: PasswordField,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    fieldState: { control: 'select' },
+  },
+  args: {
+    name: 'my_input',
+    label: 'My Input',
+    defaultValue: 'Test',
+    placeholder: 'Placeholder...',
+    fieldState: 'default',
+    showFeedback: false,
+    feedbackMessage: 'This is a feedback message.',
+    required: false,
+    alwaysShowRequiredDot: false,
+  },
+  // An uncontrolled input reads defaultValue only when it mounts, so the control remounts it.
+  render: (args) => <PasswordField key={String(args.defaultValue)} {...args} />,
+} satisfies Meta<typeof PasswordField>;
 
-export const PasswordInput = () => {
-  const inputName = text('Input Name', 'my_input');
-  const inputLabel = text('Label', 'My Input');
-  const inputValue = text('Value', 'Test');
-  const inputPlaceholder = text('Placeholder', 'Placeholder...');
-  const fieldRequired = boolean('Required', false);
-  const alwaysShowRequiredDot = boolean('Always Show Required Dot', false);
-  const showFeedback = boolean('Show Feedback', false);
-  const inputFeedback = text('Feedback', 'This is a feedback message.');
-  const inputState = select(
-    'State',
-    {
-      Default: 'default',
-      Disabled: 'disabled',
-      Required: 'required',
-      Valid: 'valid',
-      Invalid: 'invalid',
-      Processing: 'processing',
-    },
-    'default'
-  );
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  return (
-    <Container>
-      <PasswordField
-        name={inputName}
-        label={inputLabel}
-        defaultValue={inputValue}
-        placeholder={inputPlaceholder}
-        fieldState={inputState}
-        showFeedback={showFeedback}
-        feedbackMessage={inputFeedback}
-        required={fieldRequired}
-        alwaysShowRequiredDot={alwaysShowRequiredDot}
-      />
-    </Container>
-  );
-};
-
-export default PasswordInputStory;
+export const Default: Story = {};

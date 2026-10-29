@@ -211,10 +211,10 @@ Two things to skip:
 
 - **`@param` and `@returns` tags.** TypeScript already carries the names and types, and nothing here
   reads the tags.
-- **Writing for a docs generator.** Storybook's autodocs prop tables and the components manifest for
-  AI agents read the JSDoc on component props (`packages/storybook/.storybook/main.mjs` runs
-  react-docgen-typescript over `packages/ui-lib/src`), alongside the editor tooltip. One sentence that
-  reads well in all three places is the target; no extra tags or formatting for the generator.
+- **Writing for a docs generator.** Storybook's autodocs prop tables read the JSDoc on component
+  props (`packages/storybook/.storybook/main.mjs` runs react-docgen-typescript over
+  `packages/ui-lib/src`), alongside the editor tooltip. One sentence that reads well in both places
+  is the target; no extra tags or formatting for the generator.
 
 > Checking what actually ships: the declaration output is cached, and a plain rebuild can leave
 > `dist/**/*.d.ts` untouched. Run `rm -rf packages/ui-lib/dist` first, then `npm run build -w

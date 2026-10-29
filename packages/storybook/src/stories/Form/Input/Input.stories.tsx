@@ -1,59 +1,53 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
-import { useEffect } from 'react';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type ComponentProps, useEffect } from 'react';
 import { TextField } from 'scorer-ui-kit';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 
-const Container = styled.div`
-    margin: 20px;
-`;
+type Args = ComponentProps<typeof TextField> & { language: 'en' | 'ja' };
 
-const InputStory = {
-  title: 'Form/Input',
-  component: TextField,
-  decorators: [],
-};
-
-export const TextInput = () => {
-  const language = select('Language', { English: 'en', Japanese: 'ja' }, 'ja');
-  const inputName = text('Input Name', 'my_input');
-  const inputLabel = text('Label', 'My Input');
-  const showFeedback = boolean('Show Feedback', false);
-  const inputFeedback = text('Input Feedback', 'This is a feedback message.');
-  const inputPlaceholder = text('Placeholder', 'Placeholder...');
-  const inputState = select(
-    'State',
-    {
-      Default: 'default',
-      Disabled: 'disabled',
-      Required: 'required',
-      Valid: 'valid',
-      Invalid: 'invalid',
-      Processing: 'processing',
-    },
-    'default'
-  );
-  const fieldRequired = boolean('Required', false);
-  const alwaysShowRequiredDot = boolean('Always Show Required Dot', false);
-
+const Scene = ({ language, actionIcon, actionCallback, ...args }: Args) => {
   useEffect(() => {
     document.documentElement.setAttribute('lang', language);
   }, [language]);
 
   return (
-    <Container>
-      <TextField
-        id={inputName}
-        name={inputName}
-        label={inputLabel}
-        placeholder={inputPlaceholder}
-        fieldState={inputState}
-        showFeedback={showFeedback}
-        feedbackMessage={inputFeedback}
-        required={fieldRequired}
-        alwaysShowRequiredDot={alwaysShowRequiredDot}
-      />
-    </Container>
+    <TextField
+      {...args}
+      actionIcon={actionIcon}
+      actionCallback={actionIcon ? actionCallback : undefined}
+    />
   );
 };
 
-export default InputStory;
+const meta = {
+  title: 'Form/Input/TextField',
+  component: TextField,
+  tags: ['autodocs'],
+  argTypes: {
+    language: { control: 'select', options: ['en', 'ja'] },
+    fieldState: { control: 'select' },
+    actionIcon: { control: 'select', options: ['', ...Object.keys(IconSVGs)] },
+  },
+  args: {
+    language: 'ja',
+    id: 'my_input',
+    name: 'my_input',
+    label: 'My Input',
+    placeholder: 'Placeholder...',
+    fieldState: 'default',
+    showFeedback: false,
+    feedbackMessage: 'This is a feedback message.',
+    required: false,
+    alwaysShowRequiredDot: false,
+    actionIcon: '',
+    actionCallback: fn(),
+    postfix: '',
+  },
+  render: (args) => <Scene {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

@@ -44,7 +44,7 @@ const DeviceDataGroup = styled.div`
 
 const LeftTitle = styled.div<{ $hasMarginBottom: boolean; $hasRightData: boolean }>`
   ${EllipsisStyles};
-  ${({ $hasRightData }) => ($hasRightData ? `max-margin: 140px;` : `max-margin: 250px;`)}};
+  ${({ $hasRightData }) => ($hasRightData ? `max-width: 140px;` : `max-width: 250px;`)}
   ${({ $hasMarginBottom }) => $hasMarginBottom && `margin-bottom: 1px;`};
 
   color: var(--grey-a10);

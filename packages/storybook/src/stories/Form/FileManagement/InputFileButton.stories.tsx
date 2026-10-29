@@ -1,48 +1,25 @@
-import { boolean, select, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { InputFileButton } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 
-const Container = styled.div`
-    margin: 20px;
-`;
-
-const InputFileButtonStory = {
-  title: 'Form/File Management',
+const meta = {
+  title: 'Form/FileManagement/InputFileButton',
   component: InputFileButton,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    buttonDesign: { control: 'select' },
+    buttonSize: { control: 'select' },
+  },
+  args: {
+    text: 'Select a File',
+    buttonDesign: 'primary',
+    buttonSize: 'normal',
+    multiple: false,
+    inputCallback: fn(),
+  },
+} satisfies Meta<typeof InputFileButton>;
 
-export const _InputFileButton = () => {
-  const multiple = boolean('Multiple', false);
-  const textVal = text('Text', 'Select a File');
-  const buttonDesign = select(
-    'Button Design',
-    { Primary: 'primary', Secondary: 'secondary', Danger: 'danger' },
-    'primary'
-  );
-  const buttonSize = select(
-    'Button Size',
-    { Small: 'small', Normal: 'normal', Large: 'large' },
-    'normal'
-  );
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  const showValue = action('Input Callback');
-
-  const inputCallback = (newFiles: FileList) => {
-    console.debug('file', newFiles);
-    if (newFiles.length === 1) {
-      showValue(newFiles[0].name);
-    } else {
-      showValue(newFiles);
-    }
-  };
-
-  return (
-    <Container>
-      <InputFileButton text={textVal} {...{ buttonDesign, buttonSize, multiple, inputCallback }} />
-    </Container>
-  );
-};
-
-export default InputFileButtonStory;
+export const Default: Story = {};

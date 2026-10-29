@@ -1,14 +1,7 @@
-import { object } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { type ITag, TagList } from 'scorer-ui-kit';
 import styled from 'styled-components';
 
-const TagListStory = {
-  title: 'Misc/Molecules',
-  component: TagList,
-  decorators: [],
-};
-
-// overflow-x: scroll;
 const Container = styled.div`
   font-family: ${(p) => p.theme.fontFamily.data};
   margin: 100px;
@@ -37,13 +30,23 @@ const defaultTags: ITag[] = [
   },
 ];
 
-export const _TagList = () => {
-  const someTags = object('tagsConfig', defaultTags);
-  return (
-    <Container>
-      <TagList tagsConfig={someTags} />
-    </Container>
-  );
-};
+const meta = {
+  title: 'Misc/molecules/TagList',
+  component: TagList,
+  tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <Container>
+        <Story />
+      </Container>
+    ),
+  ],
+  args: {
+    tagsConfig: defaultTags,
+  },
+} satisfies Meta<typeof TagList>;
 
-export default TagListStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

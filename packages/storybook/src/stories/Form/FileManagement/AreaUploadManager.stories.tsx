@@ -1,65 +1,52 @@
-import { boolean, object, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { AreaUploadManager, PageHeader } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 
-const AreaUploadManagerStory = {
-  title: 'Form/File Management',
+const customComponent = (
+  <PageHeader
+    title='CustomComponent Example'
+    introductionText='This is a page header component that was sent as an example of a custom component. Select multiple files'
+  />
+);
+
+type Args = ComponentProps<typeof AreaUploadManager> & { showCustomComponent: boolean };
+
+const meta = {
+  title: 'Form/FileManagement/AreaUploadManager',
   component: AreaUploadManager,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  argTypes: {
+    showCustomComponent: { name: 'Show custom component' },
+    customComponent: {
+      control: false,
+      table: { defaultValue: { summary: 'unset: toggled by "Show custom component"' } },
+    },
+  },
+  args: {
+    showCustomComponent: false,
+    title: 'Select Files',
+    description:
+      'To begin, drop your CSV and Images files here to continue or click Select Files below.',
+    fileIcons: ['MonitoringProfile', 'RetryJob'],
+    selectFilesText: 'Select Files',
+    addMoreFilesText: 'Add More files',
+    clearFilesText: 'Clear Files',
+    beginUploadText: 'Begin Upload',
+    allowedFileTypes: ['image/jpeg', 'image/png', 'text/csv'],
+    onChangeCallback: fn(),
+    clearFilesCallback: fn(),
+    beginUploadCallback: fn(),
+  },
+  render: ({ showCustomComponent, ...args }) => (
+    <AreaUploadManager
+      {...args}
+      customComponent={showCustomComponent ? customComponent : undefined}
+    />
+  ),
+} satisfies Meta<Args>;
 
-const Container = styled.div`
-  margin: 20px
-`;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-const defaultIcons: string[] = ['MonitoringProfile', 'RetryJob'];
-
-const fileTypes = ['image/jpeg', 'image/png', 'text/csv'];
-export const _AreaUploadManager = () => {
-  const showCustomComponent = boolean('Show Custom Component', false);
-  const title = text('Title', 'Select Files');
-  const selectFilesText = text('Select Files Text', 'Select Files');
-  const description = text(
-    'Description',
-    'To begin, drop your CSV and Images files here to continue or click Select Files below.'
-  );
-  const addMoreFilesText = text('Add More Files Text', 'Add More files');
-  const fileIcons = object('File Icons', defaultIcons);
-  const showValue = action('Input Callback');
-  const clearedFilesText = text('Message', 'Cleared all selected files');
-  const onClearFilesBtnClick = action('Action was clicked');
-  const allowedFileTypes = object('Allowed File Types', fileTypes);
-  const beginUploadMsg = action('Begin Upload Button Click');
-
-  const inputCallback = (goodFiles: FileList, rejectedFiles: FileList) => {
-    console.debug('good Files', goodFiles);
-    console.debug('rejected', rejectedFiles);
-    showValue({ goodFiles, rejectedFiles });
-  };
-
-  const clearFilesInputCallback = () => {
-    onClearFilesBtnClick(clearedFilesText);
-  };
-
-  return (
-    <Container>
-      <AreaUploadManager
-        {...{ selectFilesText, title, fileIcons, description, allowedFileTypes, addMoreFilesText }}
-        onChangeCallback={inputCallback}
-        clearFilesCallback={clearFilesInputCallback}
-        beginUploadCallback={beginUploadMsg}
-        customComponent={
-          showCustomComponent ? (
-            <PageHeader
-              title='CustomComponent Example'
-              introductionText='This is a page header component that was sent as an example of a custom component. Select multiple files'
-            />
-          ) : undefined
-        }
-      />
-    </Container>
-  );
-};
-
-export default AreaUploadManagerStory;
+export const Default: Story = {};

@@ -1,81 +1,83 @@
-import { boolean, object, select, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 import { dataContentDays, datesRange, InitialSelectedDate } from '../../helpers/datePicker_sample';
 
-const Container = styled.div`
-  margin: 20px;
-`;
+type Args = ComponentProps<typeof DatePicker> & {
+  sendAvailableRange: boolean;
+  showContentDays: boolean;
+};
 
-const DatePickerStory = {
-  title: 'Filters/molecules',
+// The object controls edit JSON, so an edited value comes back with ISO strings where the
+// component expects Dates.
+const withDates = <T,>(value: T): T => {
+  if (typeof value === 'string') return new Date(value) as T;
+  if (Array.isArray(value)) return value.map((item) => withDates(item)) as T;
+  if (value && typeof value === 'object' && !(value instanceof Date)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, withDates(item)])
+    ) as T;
+  }
+  return value;
+};
+
+const meta = {
+  title: 'Filters/molecules/DatePicker',
   component: DatePicker,
-  decorators: [],
-  parameters: {
-    jsx: { skip: 1 },
-  },
-};
-
-const exampleCallback = <T extends (...args: unknown[]) => unknown>(fn: T): T => {
-  /** A toString to render the function in storybook */
-  // eslint-disable-next-line no-param-reassign
-  fn.toString = () => '   updateCallback: (data: IDateInterval | Date) => {}';
-  return fn;
-};
-
-export const _DatePicker = () => {
-  const language = select('Language', { English: 'en', Japanese: 'ja' }, 'ja');
-  const initialValueObj = object('Initial Value', InitialSelectedDate);
-  const dateMode = select('Date Mode', { single: 'single', interval: 'interval' }, 'interval');
-  const timeMode = select(
-    'Time Mode',
-    { off: 'off', single: 'single', interval: 'interval' },
-    'interval'
-  );
-  const dateTimeTextUpper = text('Date Time Text Upper', 'From');
-  const dateTimeTextLower = text('Date Time Text Lower', 'To');
-  const timeZoneTitle = text('Time Zone Title', 'Timezone');
-  const timeZoneValueTitle = text('Time Zone Value', 'JST');
-  const updateCallback = action('Date / Time Updated');
-  const sendRange = boolean('Send Available Range', true);
-  const availableRangeDates = object('Available Range', datesRange);
-  const contentDaysObj = object('Content Days', dataContentDays);
-  const showContentDays = boolean('Show Content Days', true);
-  const hasApply = boolean('Has Apply Button', false);
-  const disableApply = boolean('Disable Apply button', false);
-  const cancelText = text('Cancel Text', 'Cancel');
-  const applyText = text('Apply Text', 'Apply');
-  const applyCallback = action('Apply Button Pressed');
-  const cancelCallback = action('Cancel Button Pressed');
-
-  return (
-    <Container>
+  tags: ['autodocs'],
+  decorators: [
+    (Story) => (
       <FilterDropdownContainer>
-        <DatePicker
-          {...{
-            timeMode,
-            dateMode,
-            timeZoneValueTitle,
-            hasApply,
-            disableApply,
-            cancelText,
-            applyText,
-            applyCallback,
-            cancelCallback,
-          }}
-          updateCallback={exampleCallback(updateCallback)}
-          dateTimeTextUpper={language === 'ja' ? 'から' : dateTimeTextUpper}
-          dateTimeTextLower={language === 'ja' ? 'まで' : dateTimeTextLower}
-          timeZoneTitle={language === 'ja' ? '時間帯' : timeZoneTitle}
-          lang={language}
-          initialValue={initialValueObj}
-          availableRange={sendRange ? availableRangeDates : undefined}
-          contentDays={showContentDays ? contentDaysObj : undefined}
-        />
+        <Story />
       </FilterDropdownContainer>
-    </Container>
-  );
-};
+    ),
+  ],
+  argTypes: {
+    lang: { control: 'select' },
+    dateMode: { control: 'select' },
+    timeMode: { control: 'select' },
+    sendAvailableRange: { name: 'Send available range' },
+    showContentDays: { name: 'Show content days' },
+  },
+  args: {
+    lang: 'ja',
+    initialValue: InitialSelectedDate,
+    dateMode: 'interval',
+    timeMode: 'interval',
+    hasEmptyValue: false,
+    dateTimeTextUpper: 'From',
+    dateTimeTextLower: 'To',
+    timeZoneTitle: 'Timezone',
+    timeZoneValueTitle: 'JST',
+    availableRange: datesRange,
+    sendAvailableRange: true,
+    contentDays: dataContentDays,
+    showContentDays: true,
+    hasApply: false,
+    disableApply: false,
+    cancelText: 'Cancel',
+    applyText: 'Apply',
+    updateCallback: fn(),
+    applyCallback: fn(),
+    cancelCallback: fn(),
+  },
+  // The picker reads initialValue and hasEmptyValue only when it mounts, so the controls remount it.
+  render: ({ sendAvailableRange, showContentDays, ...args }) => (
+    <DatePicker
+      key={JSON.stringify([args.hasEmptyValue, args.initialValue])}
+      {...args}
+      initialValue={withDates(args.initialValue)}
+      dateTimeTextUpper={args.lang === 'ja' ? 'から' : args.dateTimeTextUpper}
+      dateTimeTextLower={args.lang === 'ja' ? 'まで' : args.dateTimeTextLower}
+      timeZoneTitle={args.lang === 'ja' ? '時間帯' : args.timeZoneTitle}
+      availableRange={sendAvailableRange ? withDates(args.availableRange) : undefined}
+      contentDays={showContentDays ? withDates(args.contentDays) : undefined}
+    />
+  ),
+} satisfies Meta<Args>;
 
-export default DatePickerStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

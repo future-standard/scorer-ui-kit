@@ -1,32 +1,15 @@
-import { select } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   ContentLayout,
   FlexContentPlaceholder,
-  GlobalUI,
   type IHeaderContent,
   PageHeader,
   Tab,
   TabList,
 } from 'scorer-ui-kit';
-import styled from 'styled-components';
+import { pageFrame } from '../../helpers/PageFrame';
 
-const ContentLayoutStory = {
-  title: 'Global/organisms',
-  component: GlobalUI,
-  decorators: [],
-};
-
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--grey-2);
-  background-image: linear-gradient(180.00deg, var(--grey-2) 0%, var(--grey-3) 100%);
-`;
-
-const ExampleContent: IHeaderContent = {
+const exampleContent: IHeaderContent = {
   UtilityHeaderOptions: {
     back: { label: 'Back', link: '/' },
     breadcrumbs: [
@@ -51,34 +34,31 @@ const ExampleContent: IHeaderContent = {
   ),
 };
 
-export const _ContentLayout = () => {
-  const layoutType = select(
-    'Layout Type',
-    { Default: 'default', Dashboard: 'dashboard', Fullscreen: 'fullscreen' },
-    'default'
-  );
+const meta = {
+  title: 'Global/organisms/ContentLayout',
+  component: ContentLayout,
+  tags: ['autodocs'],
+  parameters: { layout: 'fullscreen' },
+  decorators: [pageFrame],
+  argTypes: {
+    layout: { control: 'select' },
+    children: { control: false },
+  },
+  args: {
+    layout: 'default',
+    HeaderContent: exampleContent,
+    children: <FlexContentPlaceholder title='Content Area' />,
+  },
+  // the demo shows the header area on the default layout only, as before the migration
+  render: (args) => (
+    <ContentLayout
+      {...args}
+      HeaderContent={args.layout === 'default' ? args.HeaderContent : undefined}
+    />
+  ),
+} satisfies Meta<typeof ContentLayout>;
 
-  return (
-    <Container>
-      {layoutType === 'default' ? (
-        <ContentLayout layout='default' HeaderContent={ExampleContent}>
-          <FlexContentPlaceholder title='Content Area' />
-        </ContentLayout>
-      ) : null}
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-      {layoutType === 'dashboard' ? (
-        <ContentLayout layout='dashboard'>
-          <FlexContentPlaceholder title='Content Area' />
-        </ContentLayout>
-      ) : null}
-
-      {layoutType === 'fullscreen' ? (
-        <ContentLayout layout='fullscreen'>
-          <FlexContentPlaceholder title='Content Area' />
-        </ContentLayout>
-      ) : null}
-    </Container>
-  );
-};
-
-export default ContentLayoutStory;
+export const Default: Story = {};

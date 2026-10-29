@@ -1,68 +1,30 @@
-import { boolean, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AvatarUploader } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 
-const Container = styled.div``;
-
-const AvatarUploaderStory = {
-  title: 'Form/File Management',
+const meta = {
+  title: 'Form/FileManagement/AvatarUploader',
   component: AvatarUploader,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  args: {
+    title: 'Photograph',
+    photoText: 'Drop Photo',
+    buttonText: 'Select File',
+    buttonTextReplace: 'Replace Photo',
+    uploaderCropText: 'Crop Image',
+    cropToolTitle: 'Crop utility',
+    cropToolCancelTxt: 'Cancel',
+    cropToolConfirmTxt: 'Crop and Save',
+    deletePhotoText: 'Remove',
+    currentImg: '',
+    hasCrop: true,
+    onAvatarUpdate: fn(),
+    onError: fn(),
+    onRemove: fn(),
+  },
+} satisfies Meta<typeof AvatarUploader>;
 
-export const _AvatarUploader = () => {
-  const title = text('Uploader Title', 'Photograph');
-  const photoText = text('Photo Text', 'Drop Photo');
-  const buttonText = text('Button Text', 'Select File');
-  const buttonTextReplace = text('Button Text Replace', 'Replace Photo');
-  const uploaderCropText = text('Uploader Crop Text', 'Crop Image');
-  const cropToolTitle = text('CropTool Title', 'Crop utility');
-  const cropToolCancelTxt = text('CropTool Cancel Text', 'Cancel');
-  const cropToolConfirmTxt = text('CropTool Confirm Text', 'Crop and Save');
-  const deletePhotoText = text('Delete Photo Text', 'Remove');
-  const baseImg = boolean('Current Image', false);
-  const hasCrop = boolean('Has Crop', true);
-  const showValue = action('Update Callback');
-  const errorValue = action('On Error');
-  const onRemoveValue = action('On Remove');
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  const uploadReady = (imgFile: File) => {
-    console.debug('file', imgFile);
-    showValue(imgFile.name);
-  };
-
-  const onError = (msg: string) => {
-    console.debug(msg);
-    errorValue(msg);
-  };
-
-  const onRemove = () => {
-    onRemoveValue('The user has deleted Avatar image');
-  };
-
-  return (
-    <Container>
-      <AvatarUploader
-        onAvatarUpdate={uploadReady}
-        currentImg={baseImg ? 'https://placekitten.com/g/200/300' : ''}
-        {...{
-          title,
-          photoText,
-          buttonText,
-          buttonTextReplace,
-          onError,
-          onRemove,
-          uploaderCropText,
-          hasCrop,
-          cropToolTitle,
-          cropToolCancelTxt,
-          cropToolConfirmTxt,
-          deletePhotoText,
-        }}
-      />
-    </Container>
-  );
-};
-
-export default AvatarUploaderStory;
+export const Default: Story = {};
