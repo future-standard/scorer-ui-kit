@@ -1,3 +1,0 @@
-import{n as e}from"./rolldown-runtime-DkW27tQK.js";import{t}from"./jsx-runtime-DeHZSEgm.js";import{n,t as r}from"./DropArea-DRl2h6CA.js";import{a as i,o as a}from"./iframe-BmxEQ5Tp.js";var o,s,c,l,u,d;function f(){return(f=e((()=>{n(),a(),o=t(),{fn:s}=__STORYBOOK_MODULE_TEST__,c=i.div`
-  max-width: 500px;
-`,l={title:`Form/FileManagement/DropArea`,component:r,tags:[`autodocs`],decorators:[e=>(0,o.jsx)(c,{children:(0,o.jsx)(e,{})})],args:{text:`Drop a file`,height:`300px`,dropCallback:s()}},u={},d=[`Default`],u.parameters={...u.parameters,docs:{...u.parameters?.docs,source:{originalSource:`{}`,...u.parameters?.docs?.source}}}})))()}f();export{u as Default,d as __namedExportsOrder,l as default};
