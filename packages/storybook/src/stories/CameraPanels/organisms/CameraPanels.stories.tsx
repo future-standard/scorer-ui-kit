@@ -108,21 +108,9 @@ const Scene = ({
     customBottom: showCustomComponent ? customBottom : undefined,
     panelOnClick: onPanelClick,
   };
-  const videoPanel: ICameraPanel = {
-    streamProps: {
-      ...streamProps,
-      src: 'https://future-standard.github.io/scorer-ui-kit/traffic.mp4',
-      mediaType: 'video',
-      videoOptions: { autoPlay: false, controls: true },
-    },
-    panelMetaData,
-    customBottom: showCustomComponent ? customBottom : undefined,
-  };
-  // Two video panels: each video element fetches about 1 MB of the 20 MB sample at load, and
-  // five of them kept the CI story sweep from reaching network idle within its page timeout.
-  const panels = Array.from({ length: 11 }, (_, index) =>
-    index === 1 || index === 6 ? videoPanel : imagePanel
-  );
+  // Images only: a video panel streams the 4K sample and the CI story sweep never reaches
+  // network idle on the page (#741).
+  const panels = Array.from({ length: 11 }, () => imagePanel);
 
   return (
     <Container $showCustomComponent={showCustomComponent}>
