@@ -1,13 +1,7 @@
-import { boolean } from '@storybook/addon-knobs';
-import { useRef, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type ComponentProps, useRef, useState } from 'react';
 import { ChipBar, ChipButton, ChipDropdown, type IChipDropdownItem } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-
-const ChipBarStory = {
-  title: 'Chips/organisms',
-  component: ChipBar,
-  decorators: [],
-};
+import { fn } from 'storybook/test';
 
 // ChipBar has no overflow handling (it is a plain flex row), so the demo keeps the bar inside a
 // sensible width
@@ -17,9 +11,27 @@ interface ISpace {
   uid: string;
 }
 
-export const _ChipBar = () => {
-  const showWorkspace = boolean('Show workspace chip', true);
+type Args = ComponentProps<typeof ChipBar> & {
+  showWorkspace: boolean;
+  onWorkspaceClick: () => void;
+  onSpaceClick: (number: string) => void;
+  onAddSpace: () => void;
+  onDuplicateSpace: (number: string) => void;
+  onRemoveSpace: (number: string) => void;
+  onMenuOpenChange: (open: boolean) => void;
+};
 
+const SpacesBar = ({
+  showWorkspace,
+  onWorkspaceClick,
+  onSpaceClick,
+  onAddSpace,
+  onDuplicateSpace,
+  onRemoveSpace,
+  onMenuOpenChange,
+  children: _children,
+  ...barProps
+}: Args) => {
   // Spaces carry a stable uid and take their number from their position. That is what makes the
   // removal legible: the chip you removed is the one that unmounts, and the chips to its right
   // really do get a new number. Keying by the number instead would silently unmount the
@@ -33,12 +45,6 @@ export const _ChipBar = () => {
   // a hidden Workspace chip cannot be the active cell
   const workspaceActive = showWorkspace && isWorkspaceActive;
   const selectedNumber = String(spaces.findIndex((space) => space.uid === selectedUid) + 1);
-
-  const onWorkspaceClick = action('workspace-click');
-  const onSpaceClick = action('space-click');
-  const onAdd = action('add-space');
-  const onDuplicate = action('duplicate-space');
-  const onRemove = action('remove-space');
 
   // Add and Duplicate both append: a Space carries no content of its own here, so a copy is just
   // another Space on the right, taking the next number.
@@ -56,7 +62,7 @@ export const _ChipBar = () => {
     }
     const remaining = spaces.filter((space) => space.uid !== uid);
     setSpaces(remaining);
-    // the Space that sat to the right takes its number — clamp when the last one went
+    // the Space that sat to the right takes its number; clamp when the last one went
     setSelectedUid(remaining[Math.min(index, remaining.length - 1)].uid);
     setLeavingUid(null);
     setIsWorkspaceActive(false);
@@ -74,7 +80,7 @@ export const _ChipBar = () => {
       icon: 'Add',
       disabled: spaces.length >= MAX_SPACES,
       onClick: () => {
-        onAdd();
+        onAddSpace();
         appendSpace();
       },
     },
@@ -84,7 +90,7 @@ export const _ChipBar = () => {
       icon: 'Copy',
       disabled: spaces.length >= MAX_SPACES,
       onClick: () => {
-        onDuplicate(selectedNumber);
+        onDuplicateSpace(selectedNumber);
         appendSpace();
       },
     },
@@ -94,57 +100,88 @@ export const _ChipBar = () => {
       icon: 'Delete',
       disabled: spaces.length <= 1,
       onClick: () => {
-        onRemove(selectedNumber);
+        onRemoveSpace(selectedNumber);
         removeSelectedSpace();
       },
     },
   ];
 
   return (
-    // room below the bar so the open dropdown menu is visible in the canvas
-    <div style={{ padding: '0 0 220px' }}>
-      <ChipBar aria-label='Spaces'>
-        {showWorkspace ? (
+    <ChipBar {...barProps}>
+      {showWorkspace ? (
+        <ChipButton
+          variant='icon'
+          icon='LayoutGrid'
+          aria-label='Workspace'
+          selected={workspaceActive}
+          onClick={() => {
+            onWorkspaceClick();
+            setIsWorkspaceActive(true);
+          }}
+        />
+      ) : null}
+      {spaces.map((space, index) => {
+        const number = String(index + 1);
+        return (
           <ChipButton
-            variant='icon'
-            icon='LayoutGrid'
-            aria-label='Workspace'
-            selected={workspaceActive}
+            key={space.uid}
+            leaving={space.uid === leavingUid}
+            onLeaveEnd={() => dropSpace(space.uid)}
+            variant='text'
+            label={number}
+            selected={!workspaceActive && space.uid === selectedUid}
+            aria-label={`Space ${number}`}
             onClick={() => {
-              onWorkspaceClick();
-              setIsWorkspaceActive(true);
+              onSpaceClick(number);
+              setSelectedUid(space.uid);
+              setIsWorkspaceActive(false);
             }}
           />
-        ) : null}
-        {spaces.map((space, index) => {
-          const number = String(index + 1);
-          return (
-            <ChipButton
-              key={space.uid}
-              leaving={space.uid === leavingUid}
-              onLeaveEnd={() => dropSpace(space.uid)}
-              variant='text'
-              label={number}
-              selected={!workspaceActive && space.uid === selectedUid}
-              aria-label={`Space ${number}`}
-              onClick={() => {
-                onSpaceClick(number);
-                setSelectedUid(space.uid);
-                setIsWorkspaceActive(false);
-              }}
-            />
-          );
-        })}
-        {/* the Workspace is not a Space, so it cannot be duplicated or removed —
-            the whole menu is disabled while it is the active cell */}
-        <ChipDropdown
-          items={menuItems}
-          disabled={workspaceActive}
-          onOpenChange={action('open-change')}
-        />
-      </ChipBar>
-    </div>
+        );
+      })}
+      {/* the Workspace is not a Space, so it cannot be duplicated or removed:
+          the whole menu is disabled while it is the active cell */}
+      <ChipDropdown items={menuItems} disabled={workspaceActive} onOpenChange={onMenuOpenChange} />
+    </ChipBar>
   );
 };
 
-export default ChipBarStory;
+const meta = {
+  title: 'Chips/organisms/ChipBar',
+  component: ChipBar,
+  tags: ['autodocs'],
+  decorators: [
+    // room below the bar so the open dropdown menu is visible in the canvas
+    (Story) => (
+      <div style={{ padding: '0 0 220px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    showWorkspace: { name: 'Show workspace chip' },
+    children: {
+      control: false,
+      table: { defaultValue: { summary: 'built by the story: Workspace chip, Space chips, menu' } },
+    },
+  },
+  args: {
+    showWorkspace: true,
+    'aria-label': 'Spaces',
+    isCompact: false,
+    leadingDivider: false,
+    children: null,
+    onWorkspaceClick: fn(),
+    onSpaceClick: fn(),
+    onAddSpace: fn(),
+    onDuplicateSpace: fn(),
+    onRemoveSpace: fn(),
+    onMenuOpenChange: fn(),
+  },
+  render: (args) => <SpacesBar {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

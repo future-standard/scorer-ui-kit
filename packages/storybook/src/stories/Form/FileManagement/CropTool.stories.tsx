@@ -1,81 +1,87 @@
-import { boolean, number, text } from '@storybook/addon-knobs';
-import { useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type ComponentProps, useState } from 'react';
 import { CropTool } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
 import photo from '../../assets/placeholder.jpg';
+import { FramedDocsPage } from '../../helpers/FramedDocsPage';
 
-const Container = styled.div`
-    margin: 20px;
-`;
+const CropResult = styled.img``;
 
-const CropResult = styled.img`
-`;
+type Args = ComponentProps<typeof CropTool>;
 
-const NewImageArea = styled.div``;
-
-const CropToolStory = {
-  title: 'Form/File Management',
-  component: CropTool,
-  decorators: [],
-  escapeHTML: false,
-};
-
-export const _CropTool = () => {
-  const isResizable = boolean('Is Resizable', true);
+const CropDemo = (args: Args) => {
   const [cropImg, setCropImg] = useState('');
   const [isCropping, setIsCropping] = useState(true);
-  const title = text('Title', 'Crop Image');
-  const cancelBtnTxt = text('Cancel Button Text', 'Cancel');
-  const cropBtnTxt = text('Crop Button Text', `Crop and Save`);
-  const canvasHeight = number('Canvas Height', 400);
-  const canvasWidth = number('Canvas Width', 450);
-  const cropHeight = number('Crop Height', 300);
-  const cropWidth = number('Crop Width', 300);
-  const aspectRatio = number('Aspect Ratio', 0);
-  const errorValue = action('Error');
 
-  const onCrop = (newImgUrl: string) => {
+  const onCrop = (newImgUrl: string, fileType: string) => {
+    args.onCrop?.(newImgUrl, fileType);
     setCropImg(newImgUrl);
     setIsCropping(false);
   };
 
   const onClose = () => {
+    args.onClose?.();
     setIsCropping(false);
-  };
-  const onError = (msg: string) => {
-    console.debug(msg);
-    errorValue(msg);
   };
 
   return (
-    <Container>
-      {isCropping ? (
-        <CropTool // this key is to force the re-render in storybook
-          key={`${isResizable} - ${canvasHeight} - ${canvasWidth} - ${cropHeight} - ${cropWidth} - ${aspectRatio}`}
-          imgUrl={photo}
-          {...{
-            title,
-            onCrop,
-            onClose,
-            cancelBtnTxt,
-            cropBtnTxt,
-            isResizable,
-            canvasHeight,
-            canvasWidth,
-            cropHeight,
-            cropWidth,
-            onError,
-            aspectRatio,
-          }}
-        />
-      ) : null}
-      <NewImageArea>
+    <div>
+      {isCropping ? <CropTool {...args} onCrop={onCrop} onClose={onClose} /> : null}
+      <div>
         <h3>Cropped Area</h3>
         <CropResult src={cropImg || undefined} />
-      </NewImageArea>
-    </Container>
+      </div>
+    </div>
   );
 };
 
-export default CropToolStory;
+const meta = {
+  title: 'Form/FileManagement/CropTool',
+  component: CropTool,
+  tags: ['autodocs'],
+  // The tool is a fixed full-viewport overlay, so an inline docs preview would cover the whole
+  // page; it gets its own frame (FramedDocsPage).
+  parameters: {
+    docs: {
+      page: FramedDocsPage,
+      story: { inline: false, iframeHeight: '560px' },
+    },
+  },
+  args: {
+    imgUrl: photo,
+    title: 'Crop Image',
+    cancelBtnTxt: 'Cancel',
+    cropBtnTxt: 'Crop and Save',
+    isResizable: true,
+    canvasHeight: 400,
+    canvasWidth: 450,
+    cropHeight: 300,
+    cropWidth: 300,
+    aspectRatio: 0,
+    onCrop: fn(),
+    onClose: fn(),
+    onError: fn(),
+  },
+  // The tool sizes its canvas when it mounts, so a size control remounts the demo (and brings the
+  // tool back after a crop).
+  render: (args) => (
+    <CropDemo
+      key={JSON.stringify([
+        args.imgUrl,
+        args.isResizable,
+        args.canvasHeight,
+        args.canvasWidth,
+        args.cropHeight,
+        args.cropWidth,
+        args.aspectRatio,
+      ])}
+      {...args}
+    />
+  ),
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

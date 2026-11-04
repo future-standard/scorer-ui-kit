@@ -1,56 +1,49 @@
-import { boolean, text } from '@storybook/addon-knobs';
-import { useCallback, useEffect, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TableHeaderTitle } from 'scorer-ui-kit';
+import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
 
-const TableHeaderTitleStory = {
-  title: 'Tables/atoms',
-  component: TableHeaderTitle,
-  decorators: [],
-};
-
-const Container = styled.div`
+// TableHeaderTitle is sized for a header cell, so the demo gives it one.
+const HeaderCell = styled.div`
   font-family: var(--font-ui);
   display: table-cell;
   height: inherit;
-  vertical-align:top;
+  vertical-align: top;
   line-height: 20px;
   position: relative;
-  margin: 100px;
 `;
 
-export const _TableHeaderTitle = () => {
-  const [toggleSort, setToggleSort] = useState(true);
-  const isSortActive = boolean('isSortActive', true);
-  const sortable = boolean('sortable', toggleSort);
-  const asc = boolean('ascending', toggleSort);
-  const header = text('header', 'Device Name');
+const meta = {
+  title: 'Tables/atoms/TableHeaderTitle',
+  component: TableHeaderTitle,
+  tags: ['autodocs'],
+  args: {
+    header: 'Device Name',
+    sortable: true,
+    isSortActive: true,
+    ascending: true,
+    columnId: 'firstColumn',
+    indexKey: 1,
+    toggleSort: fn(),
+  },
+  render: function Render(args) {
+    const [{ ascending }, updateArgs] = useArgs<typeof args>();
 
-  useEffect(() => {
-    setToggleSort(asc);
-  }, [asc]);
+    const toggleSort = (indexKey: number, columnId?: string) => {
+      args.toggleSort(indexKey, columnId);
+      updateArgs({ ascending: !ascending });
+    };
 
-  const sortHandler = useCallback(
-    (indexKey: number) => {
-      console.debug(`arriving ${indexKey}`, toggleSort);
-      setToggleSort((prev) => !prev);
-    },
-    [toggleSort]
-  );
+    return (
+      <HeaderCell>
+        <TableHeaderTitle {...args} ascending={ascending} toggleSort={toggleSort} />
+      </HeaderCell>
+    );
+  },
+} satisfies Meta<typeof TableHeaderTitle>;
 
-  return (
-    <Container>
-      <TableHeaderTitle
-        sortable={sortable}
-        isSortActive={isSortActive}
-        ascending={toggleSort}
-        columnId={'firstColumn'}
-        indexKey={1}
-        header={header}
-        toggleSort={sortHandler}
-      />
-    </Container>
-  );
-};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export default TableHeaderTitleStory;
+export const Default: Story = {};

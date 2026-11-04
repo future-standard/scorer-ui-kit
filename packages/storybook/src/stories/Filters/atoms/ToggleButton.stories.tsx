@@ -1,14 +1,9 @@
-import { boolean, object, select, text } from '@storybook/addon-knobs';
-import { useCallback, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { ToggleButton } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
-
-const ToggleButtonStory = {
-  title: 'Filters/atoms',
-  component: ToggleButton,
-  decorators: [],
-};
 
 const layoutOptions = [
   { text: 'Grid', value: 'grid', icon: 'LayoutGrid' },
@@ -18,7 +13,6 @@ const layoutOptions = [
 const CameraData = styled.div``;
 const Camera = styled.li``;
 
-const Container = styled.div``;
 const DataGroup = styled.ol<{ $layout: string }>`
   margin-top: 20px;
   display: grid;
@@ -47,85 +41,65 @@ const StatusSpan = styled.span<{ $isOnline?: boolean }>`
     `}
   `;
 
-export const _ToggleButton = () => {
-  const [selectedLayout, setSelectedLayout] = useState(0);
+const CAMERAS = [
+  { name: 'Camera01', online: true },
+  { name: 'Camera02', online: true },
+  { name: 'Camera03', online: false },
+  { name: 'Camera04', online: false },
+  { name: 'Camera05', online: false },
+  { name: 'Camera06', online: false },
+  { name: 'Camera07', online: true },
+  { name: 'Camera08', online: true },
+  { name: 'Camera09', online: false },
+];
 
-  const disabled = boolean('Disabled', false);
-  const design = select('Design type', { Default: 'default', Basic: 'basic' }, 'basic');
-  const categoryLabel = text('Category Label', 'Layout');
-  const options = object('Options', layoutOptions);
-  const showToggleValue = action('Button Value: ');
+// `disabled` is not in the ToggleButton props, but the component forwards unknown props to its
+// FilterButton, so the control still disables the button.
+type Args = ComponentProps<typeof ToggleButton> & { disabled: boolean };
 
-  const onToggle = useCallback(
-    (index: number, value: string | number) => {
-      setSelectedLayout(index);
-      showToggleValue(value);
-    },
-    [showToggleValue]
-  );
+const meta = {
+  title: 'Filters/atoms/ToggleButton',
+  component: ToggleButton,
+  tags: ['autodocs'],
+  argTypes: {
+    design: { control: 'select' },
+    selectedIndex: { control: 'select', options: [0, 1] },
+  },
+  args: {
+    categoryLabel: 'Layout',
+    options: layoutOptions,
+    selectedIndex: 0,
+    design: 'basic',
+    disabled: false,
+    onToggle: fn(),
+  },
+} satisfies Meta<Args>;
 
-  return (
-    <Container>
-      <ToggleButton
-        {...{
-          categoryLabel,
-          options,
-          onToggle,
-          disabled,
-          design,
-          selectedIndex: selectedLayout,
-        }}
-      />
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-      <DataGroup $layout={layoutOptions[selectedLayout].value}>
-        <Camera>
-          <CameraData>
-            Camera01 - <StatusSpan $isOnline>Online</StatusSpan>
-          </CameraData>
-        </Camera>
-        <Camera>
-          <CameraData>
-            Camera02 - <StatusSpan $isOnline>Online</StatusSpan>
-          </CameraData>
-        </Camera>
-        <Camera>
-          <CameraData>
-            Camera03 - <StatusSpan>OffLine</StatusSpan>
-          </CameraData>
-        </Camera>
-        <Camera>
-          <CameraData>
-            Camera04 - <StatusSpan>OffLine</StatusSpan>
-          </CameraData>
-        </Camera>
-        <Camera>
-          <CameraData>
-            Camera05 - <StatusSpan>OffLine</StatusSpan>
-          </CameraData>
-        </Camera>
-        <Camera>
-          <CameraData>
-            Camera06 - <StatusSpan>OffLine</StatusSpan>
-          </CameraData>
-        </Camera>
-        <Camera>
-          <CameraData>
-            Camera07 - <StatusSpan $isOnline>Online</StatusSpan>
-          </CameraData>
-        </Camera>
-        <Camera>
-          <CameraData>
-            Camera08 - <StatusSpan $isOnline>Online</StatusSpan>
-          </CameraData>
-        </Camera>
-        <Camera>
-          <CameraData>
-            Camera09 - <StatusSpan>Online</StatusSpan>
-          </CameraData>
-        </Camera>
-      </DataGroup>
-    </Container>
-  );
+export const Default: Story = {
+  render: function Render(args) {
+    const [{ selectedIndex }, updateArgs] = useArgs<Args>();
+
+    const onToggle = (index: number, value: string | number) => {
+      args.onToggle(index, value);
+      updateArgs({ selectedIndex: index });
+    };
+
+    return (
+      <div>
+        <ToggleButton {...args} selectedIndex={selectedIndex} onToggle={onToggle} />
+        <DataGroup $layout={String(args.options[selectedIndex]?.value)}>
+          {CAMERAS.map(({ name, online }) => (
+            <Camera key={name}>
+              <CameraData>
+                {name} - <StatusSpan $isOnline={online}>{online ? 'Online' : 'OffLine'}</StatusSpan>
+              </CameraData>
+            </Camera>
+          ))}
+        </DataGroup>
+      </div>
+    );
+  },
 };
-
-export default ToggleButtonStory;

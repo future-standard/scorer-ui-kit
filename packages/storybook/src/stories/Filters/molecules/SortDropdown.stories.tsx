@@ -1,78 +1,84 @@
-import { boolean, object, select } from '@storybook/addon-knobs';
-import { useCallback, useMemo, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { type IFilterItem, SortDropdown } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 
-const SortDropdownStory = {
-  title: 'Filters/molecules',
+const listEnglish: IFilterItem[] = [
+  { text: 'Name', value: 'name' },
+  { text: 'Status', value: 'status' },
+  { text: 'Cost', value: 'cost' },
+];
+
+const listJapanese: IFilterItem[] = [
+  { text: '名前', value: 'name' },
+  { text: 'ステータス', value: 'status' },
+  { text: '価格', value: 'cost' },
+];
+
+type Args = ComponentProps<typeof SortDropdown> & { language: 'english' | 'japanese' };
+
+const meta = {
+  title: 'Filters/molecules/SortDropdown',
   component: SortDropdown,
-  decorators: [],
-  parameters: {
-    jsx: { skip: 1 },
-  },
-};
-
-const Container = styled.div``;
-
-export const _SortDropdown = () => {
-  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
-
-  const dropdownList: IFilterItem[] = useMemo(
-    () => [
-      { text: language === 'english' ? 'Name' : '名前', value: 'name' },
-      { text: language === 'english' ? 'Status' : 'ステータス', value: 'status' },
-      { text: language === 'english' ? 'Cost' : '価格', value: 'cost' },
-    ],
-    [language]
-  );
-
-  const [sortSelected, setSortSelected] = useState<IFilterItem>({
-    text: dropdownList[1].text,
-    value: dropdownList[0].value,
-  });
-  const [isAscending, setIsAScending] = useState<boolean>(true);
-  const isLoading = boolean('Is Loading', false);
-  const design = select('Design type', { Default: 'default', Basic: 'basic' }, 'basic');
-  // const buttonText = text('Button Text', `Sorted by ${dropdownList[0].text}`);
-  const _list = object('Dropdown list', dropdownList);
-  const lastSelection = action('new sort');
-
-  const handleSelections = useCallback(
-    (newSort: IFilterItem, isSortAscending: boolean) => {
-      setSortSelected(newSort);
-      setIsAScending(isSortAscending);
-      lastSelection({ newSort, isSortAscending });
+  tags: ['autodocs'],
+  decorators: [
+    // room below the button so the open list is not cropped by the docs canvas
+    (Story) => (
+      <div style={{ paddingBottom: '200px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    language: { control: 'select', options: ['english', 'japanese'] },
+    design: { control: 'select' },
+    buttonText: {
+      control: false,
+      table: { defaultValue: { summary: '"Sorted by <selected>" in the chosen language' } },
     },
-    [lastSelection]
-  );
+  },
+  args: {
+    language: 'japanese',
+    list: listEnglish,
+    selected: listEnglish[0],
+    isSortAscending: true,
+    disabled: false,
+    isLoading: false,
+    loadingText: '',
+    design: 'basic',
+    ascendingText: 'Ascending',
+    descendingText: 'Descending',
+    buttonText: '',
+    onSelect: fn(),
+  },
+  render: function Render({ language, ...args }) {
+    const [{ selected, isSortAscending }, updateArgs] = useArgs<Args>();
+    const isJapanese = language === 'japanese';
+    const list = isJapanese ? listJapanese : args.list;
+    const current = list.find((item) => item.value === selected.value) ?? selected;
 
-  const getSortedTranslation = useCallback(() => {
-    const found = dropdownList.find((item) => sortSelected.value === item.value);
-    if (found) {
-      return language === 'english' ? `Sorted by ${found.text}` : `${found.text} で`;
-    }
+    const onSelect = (newSort: IFilterItem, ascending: boolean) => {
+      args.onSelect(newSort, ascending);
+      updateArgs({ selected: newSort, isSortAscending: ascending });
+    };
 
-    return language === 'english' ? `Sorted by ${sortSelected.text}` : `${sortSelected.text} で`;
-  }, [dropdownList, language, sortSelected.text, sortSelected.value]);
-
-  return (
-    <Container>
+    return (
       <SortDropdown
-        {...{
-          isSortAscending: isAscending,
-          buttonText: getSortedTranslation(),
-          isLoading,
-          design,
-          list: dropdownList,
-          selected: sortSelected,
-          onSelect: handleSelections,
-          ascendingText: language === 'english' ? 'Ascending' : '昇順',
-          descendingText: language === 'english' ? 'Descending' : '降順',
-        }}
+        {...args}
+        list={list}
+        selected={current}
+        isSortAscending={isSortAscending}
+        buttonText={isJapanese ? `${current.text} で` : `Sorted by ${current.text}`}
+        ascendingText={isJapanese ? '昇順' : args.ascendingText}
+        descendingText={isJapanese ? '降順' : args.descendingText}
+        onSelect={onSelect}
       />
-    </Container>
-  );
-};
+    );
+  },
+} satisfies Meta<Args>;
 
-export default SortDropdownStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
