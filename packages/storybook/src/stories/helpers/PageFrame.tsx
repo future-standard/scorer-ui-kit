@@ -6,6 +6,7 @@ const Frame = styled.div<{ $height: string }>`
   display: flex;
   flex-direction: column;
   height: ${({ $height }) => $height};
+  min-height: max-content;
   background-color: var(--grey-2);
   background-image: linear-gradient(180deg, var(--grey-2) 0%, var(--grey-3) 100%);
 `;
@@ -13,8 +14,10 @@ const Frame = styled.div<{ $height: string }>`
 /* Page-level stories fill the canvas, but an absolutely positioned wrapper adds no height to the
    inline docs preview, which then collapses to a thin strip. The frame takes the viewport on the
    canvas and a fixed height in docs, so the preview stays inline and the docs controls keep
-   working. Pair it with parameters.layout 'fullscreen'; a story with tall content (tables) sets
-   parameters.pageFrame.docsHeight. */
+   working. The height stays definite because the layouts size their children with percentage
+   heights; the max-content minimum lets content taller than the frame (tables) grow it, so the
+   frame's background does not stop above the body's. Pair it with parameters.layout
+   'fullscreen'; a story with tall content sets parameters.pageFrame.docsHeight. */
 export const pageFrame: Decorator = (Story, { viewMode, parameters }) => (
   <Frame $height={viewMode === 'docs' ? (parameters.pageFrame?.docsHeight ?? '600px') : '100vh'}>
     <Story />

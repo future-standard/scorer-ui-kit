@@ -1,15 +1,9 @@
-import { boolean, number, object, text } from '@storybook/addon-knobs';
-import { useEffect, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Pagination } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 
-const PaginationStory = {
-  title: 'Misc/Molecules',
-  component: Pagination,
-  decorators: [],
-};
-
-const ItemsOptions = [
+const itemsOptions = [
   { value: 5, textValue: '5' },
   { value: 10, textValue: '10' },
   { value: 20, textValue: '20' },
@@ -17,50 +11,45 @@ const ItemsOptions = [
   { value: 100, textValue: '100' },
 ];
 
-export const _Pagination = () => {
-  const controlledActivePage = number('Active Page', 1);
-  const [currentPage, setCurrentPage] = useState(controlledActivePage);
-  const buttonOnClick = action('Page changed');
-  const itemsChange = action('Items Per Page');
-  const pageText = text('Page Text', 'Page:');
-  const buttonText = text('Button Text', 'GO');
-  const itemsText = text('Items Per Page', 'Items Per Page:');
-  const itemsDefaultValue = number('Items Default Value', 10);
-  const selectWidth = text('Select Width', '70px');
-  const selectId = text('SelectId', 'UniqID23');
-  const totalPages = number('Total Pages', 20);
-  const selectDisabled = boolean('Select Disabled', false);
-  const itemOptionsObj = object('Items Options', ItemsOptions);
+const meta = {
+  title: 'Misc/molecules/Pagination',
+  component: Pagination,
+  tags: ['autodocs'],
+  args: {
+    activePage: 1,
+    totalPages: 20,
+    pageText: 'Page:',
+    buttonText: 'GO',
+    itemsText: 'Items Per Page:',
+    itemsDefaultValue: 10,
+    itemsOptions,
+    selectId: 'UniqID23',
+    selectWidth: '70px',
+    selectDisabled: false,
+    onPageChange: fn(),
+    onItemsChange: fn(),
+  },
+  // The items select reads itemsDefaultValue only when it mounts, so the control remounts it.
+  render: function Render(args) {
+    const [{ activePage }, updateArgs] = useArgs<typeof args>();
 
-  const onPageChange = (page: number) => {
-    buttonOnClick(page);
-    setCurrentPage(page);
-  };
+    const onPageChange = (page: number) => {
+      args.onPageChange(page);
+      updateArgs({ activePage: page });
+    };
 
-  const onItemsChange = (items: number) => {
-    itemsChange(items);
-  };
+    return (
+      <Pagination
+        key={String(args.itemsDefaultValue)}
+        {...args}
+        activePage={activePage}
+        onPageChange={onPageChange}
+      />
+    );
+  },
+} satisfies Meta<typeof Pagination>;
 
-  useEffect(() => {
-    setCurrentPage(controlledActivePage);
-  }, [controlledActivePage]);
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  return (
-    <Pagination
-      selectId={selectId}
-      pageText={pageText}
-      totalPages={totalPages}
-      activePage={currentPage}
-      buttonText={buttonText}
-      itemsText={itemsText}
-      selectWidth={selectWidth}
-      selectDisabled={selectDisabled}
-      itemsDefaultValue={itemsDefaultValue}
-      itemsOptions={itemOptionsObj}
-      onPageChange={onPageChange}
-      onItemsChange={onItemsChange}
-    />
-  );
-};
-
-export default PaginationStory;
+export const Default: Story = {};

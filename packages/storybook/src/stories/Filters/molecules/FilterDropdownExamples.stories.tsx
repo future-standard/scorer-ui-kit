@@ -14,7 +14,7 @@ import {
 } from '../../helpers/data_samples';
 
 const FilterDropdownStory = {
-  title: 'Filters/molecules/FilterDropdown',
+  title: 'Filters/molecules/FilterDropdownExamples',
   component: FilterDropdown,
   decorators: [],
 };

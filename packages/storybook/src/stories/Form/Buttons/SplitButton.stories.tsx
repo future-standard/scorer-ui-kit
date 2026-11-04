@@ -1,84 +1,113 @@
-import { boolean, select } from '@storybook/addon-knobs';
-import { type ReactElement, useEffect, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { type ISplitButtonProps, ModalProvider, SplitButton, useModal } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 
-const SplitButtonStory = {
-  title: 'Form/Buttons',
-  component: SplitButton,
-  decorators: [],
+const onMainActionClick = fn();
+const onRandomActionClick = fn();
+const onSaveActionClick = fn();
+const onDownloadActionClick = fn();
+
+const buttonList: ISplitButtonProps['buttonList'] = [
+  { id: 'a0', text: 'Main Action Open Modal', icon: 'Success', onClickCallback: onMainActionClick },
+  { id: 'a1', text: '日本語の場合はランダム', onClickCallback: onRandomActionClick },
+  {
+    id: 'a2',
+    text: 'Save Action',
+    icon: 'Analyse',
+    hasOnSelectLoading: true,
+    onClickCallback: onSaveActionClick,
+  },
+  {
+    id: 'a3',
+    text: 'Download Action',
+    icon: 'Download',
+    onClickCallback: onDownloadActionClick,
+    disabled: true,
+  },
+];
+
+type Args = ComponentProps<typeof SplitButton> & {
+  onMainActionClick: () => void;
+  onRandomActionClick: () => void;
+  onSaveActionClick: () => void;
+  onDownloadActionClick: () => void;
 };
 
-const Container = styled.div`
-`;
-
-const customComponentExample: ReactElement = <h1>Main Action Modal</h1>;
-
-const SplitExampleWithModal = (props: ISplitButtonProps) => {
-  const [splitButtonProps, setSplitButtonProps] = useState(props);
+// The main action also opens a modal, which needs the hook, so the list is finished in a component.
+const SplitButtonWithModal = ({
+  onMainActionClick: _m,
+  onRandomActionClick: _r,
+  onSaveActionClick: _s,
+  onDownloadActionClick: _d,
+  ...args
+}: Args) => {
   const { createModal } = useModal();
 
-  const buttonClickA0 = action('Main pressed, modal opened');
-  const buttonClickA1 = action('日本語の場合はランダム pressed');
-  const buttonClickA2 = action('Save Action pressed');
-  const buttonClickA3 = action('Download pressed');
-
-  const openImageModal = () => {
-    createModal({ customComponent: customComponentExample, padding: true, width: 'auto' });
-    buttonClickA0();
-  };
-
-  const buttonList = [
-    { id: 'a0', text: 'Main Action Open Modal', icon: 'Success', onClickCallback: openImageModal },
-    { id: 'a1', text: '日本語の場合はランダム', onClickCallback: buttonClickA1 },
-    {
-      id: 'a2',
-      text: 'Save Action',
-      icon: 'Analyse',
-      hasOnSelectLoading: true,
-      onClickCallback: buttonClickA2,
-    },
-    {
-      id: 'a3',
-      text: 'Download Action',
-      icon: 'Download',
-      onClickCallback: buttonClickA3,
-      disabled: true,
-    },
-  ];
-
-  useEffect(() => {
-    setSplitButtonProps(props);
-  }, [props]);
-
-  return (
-    <Container>
-      <SplitButton {...splitButtonProps} buttonList={buttonList} />
-    </Container>
+  const list = args.buttonList.map((item) =>
+    item.id === args.mainButtonId
+      ? {
+          ...item,
+          onClickCallback: () => {
+            item.onClickCallback?.();
+            createModal({
+              customComponent: <h1>Main Action Modal</h1>,
+              padding: true,
+              width: 'auto',
+            });
+          },
+        }
+      : item
   );
+
+  return <SplitButton {...args} buttonList={list} />;
 };
 
-export const _SplitButton = () => {
-  const buttonDesign = select(
-    'Design',
-    { Primary: 'primary', Secondary: 'secondary', Danger: 'danger', Custom: 'custom' },
-    'primary'
-  );
-  const buttonDisabled = boolean('Disabled', false);
-  const buttonSize = select('Size', { Small: 'small', Normal: 'normal', Large: 'large' }, 'normal');
+const meta = {
+  title: 'Form/Buttons/SplitButton',
+  component: SplitButton,
+  tags: ['autodocs'],
+  decorators: [
+    // room below the button so the open list is not cropped by the docs canvas
+    (Story) => (
+      <ModalProvider>
+        <div style={{ paddingBottom: '200px' }}>
+          <Story />
+        </div>
+      </ModalProvider>
+    ),
+  ],
+  argTypes: {
+    mainButtonId: { control: 'select', options: buttonList.map((item) => item.id) },
+    design: {
+      control: 'select',
+      options: ['primary', 'secondary', 'warning', 'danger', 'text-only', 'outline', 'custom'],
+    },
+    size: { control: 'select' },
+    // SplitButton never reads isSortAscending; it reaches the DOM with the other rest props.
+    isSortAscending: {
+      control: false,
+      table: { defaultValue: { summary: 'unused by the component' } },
+    },
+  },
+  args: {
+    mainButtonId: 'a0',
+    buttonList,
+    design: 'primary',
+    size: 'normal',
+    disabled: false,
+    textMaxWidth: '',
+    onMainActionClick,
+    onRandomActionClick,
+    onSaveActionClick,
+    onDownloadActionClick,
+  },
+  render: (args) => (
+    <SplitButtonWithModal {...args} textMaxWidth={args.textMaxWidth || undefined} />
+  ),
+} satisfies Meta<Args>;
 
-  return (
-    <ModalProvider>
-      <SplitExampleWithModal
-        mainButtonId={'a0'}
-        design={buttonDesign}
-        size={buttonSize}
-        disabled={buttonDisabled}
-        buttonList={[]} // this is replaced with data in the SplitExample component
-      />
-    </ModalProvider>
-  );
-};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export default SplitButtonStory;
+export const Default: Story = {};

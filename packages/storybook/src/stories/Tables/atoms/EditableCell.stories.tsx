@@ -1,23 +1,19 @@
-import { select, text } from '@storybook/addon-knobs';
-import { useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { EditCell } from 'scorer-ui-kit';
+import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
 import { sleep } from '../../helpers';
 
-const EditableCellStory = {
-  title: 'Tables/atoms',
-  component: EditCell,
-  decorators: [],
-};
-
-const Container = styled.div`
+// EditCell is sized for a table cell, so the demo gives it one.
+const Cell = styled.div`
   font-family: var(--font-ui);
   text-align: left;
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
   color: var(--grey-a11);
-  margin: 100px;
   display: table-cell;
   height: 50px;
   width: 150px;
@@ -27,35 +23,45 @@ const Container = styled.div`
   padding: 0 2px;
 `;
 
-const defaultVal = { id: 'id-1', cameraName: 'Camera1' };
+type Args = ComponentProps<typeof EditCell> & { saveDelay: number };
 
-export const _EditCell = () => {
-  const [cameraData, setCameraData] = useState(defaultVal);
-  const alignment = select('Alignment', { Left: 'left', Center: 'center', Right: 'right' }, 'left');
-  const toValue = text('ToLink', '/');
+const meta = {
+  title: 'Tables/atoms/EditCell',
+  component: EditCell,
+  tags: ['autodocs'],
+  argTypes: {
+    saveDelay: { name: 'Save delay (ms)' },
+    alignment: { control: 'select' },
+    defaultValue: { control: 'text' },
+  },
+  args: {
+    saveDelay: 2000,
+    defaultValue: 'Camera1',
+    rowKey: 'id-1',
+    alignment: 'left',
+    toLink: '/',
+    placeholder: '',
+    saveCallback: fn(),
+  },
+  render: function Render({ saveDelay, ...args }) {
+    const [{ defaultValue }, updateArgs] = useArgs<Args>();
 
-  const updateCameraName = async (value: string, rowKey: string) => {
-    // vefiry the row you want to update
-    if (rowKey === 'id-1') {
-      const updatedCell = { ...cameraData };
-      updatedCell.cameraName = value;
+    const saveCallback = async (value: string, rowKey: string) => {
+      args.saveCallback?.(value, rowKey);
       // Database wait example
-      await sleep(2000);
-      setCameraData(updatedCell);
-    }
-  };
+      await sleep(saveDelay);
+      updateArgs({ defaultValue: value });
+    };
 
-  return (
-    <Container>
-      <EditCell
-        defaultValue={cameraData.cameraName}
-        rowKey={cameraData.id}
-        saveCallback={updateCameraName}
-        alignment={alignment}
-        toLink={toValue}
-      />
-    </Container>
-  );
-};
+    return (
+      <Cell>
+        <EditCell {...args} defaultValue={defaultValue} saveCallback={saveCallback} />
+      </Cell>
+    );
+  },
+} satisfies Meta<Args>;
 
-export default EditableCellStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

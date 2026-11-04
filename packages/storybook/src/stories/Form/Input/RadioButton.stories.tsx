@@ -1,66 +1,65 @@
-import { boolean, text } from '@storybook/addon-knobs';
-import { useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Label, RadioButton } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
 
-const RadioButtonStory = {
-  title: 'Form/Input',
-  component: RadioButton,
-  decorators: [],
-};
-
-const Container = styled.div``;
 const OptionsWrapper = styled.div`
   margin: 20px 0;
 `;
 
-export const _RadioButton = () => {
-  const disabled = boolean('Disabled', false);
-  const selection = action('value-changed');
-  const name = text('Name', 'Example');
+const OPTIONS = ['option1', 'option2', 'option3'];
 
-  const [currentChecked, setCurrentCheck] = useState<string | number>();
+const meta = {
+  title: 'Form/Input/RadioButton',
+  component: RadioButton,
+  tags: ['autodocs'],
+  argTypes: {
+    currentChecked: { control: 'select', options: ['', ...OPTIONS] },
+    id: { control: false, table: { defaultValue: { summary: 'one per option' } } },
+    value: { control: false, table: { defaultValue: { summary: 'one per option' } } },
+    required: {
+      control: false,
+      table: { defaultValue: { summary: 'native form validation only' } },
+    },
+  },
+  args: {
+    name: 'Example',
+    currentChecked: '',
+    disabled: false,
+    onChangeCallback: fn(),
+  },
+  // A radio only means something in a group: the three options share name and disabled, and the
+  // checked one is the currentChecked arg, so the panel follows a click.
+  render: function Render(args) {
+    const [{ currentChecked }, updateArgs] = useArgs<typeof args>();
 
-  const handleChange = (value: string | number) => {
-    selection(value);
-    setCurrentCheck(value);
-  };
+    const onChangeCallback = (value: string | number) => {
+      args.onChangeCallback?.(value);
+      updateArgs({ currentChecked: value });
+    };
 
-  return (
-    <Container>
-      <OptionsWrapper>
-        <Label htmlFor={'option1'} labelText={'Option 1'} direction='row-reverse'>
-          <RadioButton
-            {...{ name, disabled, currentChecked }}
-            id={'option1'}
-            value='option1'
-            onChangeCallback={handleChange}
-          />
-        </Label>
-      </OptionsWrapper>
-      <OptionsWrapper>
-        <Label htmlFor={'option2'} labelText={'Option 2'} direction='row-reverse'>
-          <RadioButton
-            {...{ name, disabled, currentChecked }}
-            id={'option2'}
-            value='option2'
-            onChangeCallback={handleChange}
-          />
-        </Label>
-      </OptionsWrapper>
-      <OptionsWrapper>
-        <Label htmlFor={'option3'} labelText={'Option 3'} direction='row-reverse'>
-          <RadioButton
-            {...{ name, disabled, currentChecked }}
-            id={'option3'}
-            value='option3'
-            onChangeCallback={handleChange}
-          />
-        </Label>
-      </OptionsWrapper>
-    </Container>
-  );
-};
+    return (
+      <div>
+        {OPTIONS.map((option, index) => (
+          <OptionsWrapper key={option}>
+            <Label htmlFor={option} labelText={`Option ${index + 1}`} direction='row-reverse'>
+              <RadioButton
+                {...args}
+                id={option}
+                value={option}
+                currentChecked={currentChecked}
+                onChangeCallback={onChangeCallback}
+              />
+            </Label>
+          </OptionsWrapper>
+        ))}
+      </div>
+    );
+  },
+} satisfies Meta<typeof RadioButton>;
 
-export default RadioButtonStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

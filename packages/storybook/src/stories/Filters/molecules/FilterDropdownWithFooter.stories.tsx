@@ -1,9 +1,10 @@
-import { boolean, select } from '@storybook/addon-knobs';
-import { useCallback, useState } from 'react';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { FilterDropdown, type IFilterValue, PageHeader } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
-import { generateIconList } from '../../helpers';
 import {
   emptyResultsEnglish,
   emptyResultsJapanese,
@@ -11,26 +12,12 @@ import {
   searchTemplateResultJapanese,
 } from '../../helpers/data_samples';
 
-const FilterDropdownWithFooterStory = {
-  title: 'Filters/molecules/FilterDropdown',
-  component: FilterDropdown,
-  parameters: {
-    componentSubtitle: 'FilterDropdown component with footer controls',
-  },
-};
-
-const Wrapper = styled.div`
-  margin: 100px;
-  display: inline-block;
-`;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
 `;
 
-// Sample data for the dropdown
 const foodItemsEng = [
   { text: 'Ramen', value: 0 },
   { text: 'Takoyaki', value: 1 },
@@ -51,77 +38,116 @@ const foodItemsJap = [
   { text: 'お造り', value: 6 },
 ];
 
-export const DropdownWithApplyAndReset = () => {
-  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
-  const iconList = generateIconList();
-  const buttonIcon = select('Icon', iconList, Object.keys(iconList)[0]);
-  const disabled = boolean('Disabled', false);
-  const hasOptionsFilter = boolean('Has Options Filter', true);
+// The Japanese copy replaces the English text args while the language control is 'japanese'.
+const JAPANESE: Partial<ComponentProps<typeof FilterDropdown>> = {
+  buttonText: 'メニュー',
+  list: foodItemsJap,
+  searchPlaceholder: 'メニュー...',
+  searchResultText: searchTemplateResultJapanese,
+  emptyResultText: emptyResultsJapanese,
+  resetText: 'リセット',
+  cancelText: 'キャンセル',
+  closeText: '閉じる',
+  applyText: '適用',
+  descendingText: '降順',
+  ascendingText: '昇順',
+};
 
-  // State for selected items
-  const [selected, setSelected] = useState<IFilterValue>(null);
+type Args = ComponentProps<typeof FilterDropdown> & { language: 'english' | 'japanese' };
 
-  // Action trackers
-  const resetAction = action('Reset clicked');
-  const cancelAction = action('Cancel/Close clicked');
-  const selectAction = action('Item selected');
-  const hasApply = boolean('Has Apply', true);
-  const hasReset = boolean('Has Reset', true);
-
-  // Handlers for the dropdown
-  const handleSelect = useCallback(
-    (newSelection: IFilterValue) => {
-      selectAction(newSelection);
-      setSelected(newSelection);
+const meta = {
+  title: 'Filters/molecules/FilterDropdown',
+  component: FilterDropdown,
+  tags: ['autodocs'],
+  decorators: [
+    // room below the button so the open list is not cropped by the docs canvas
+    (Story) => (
+      <div style={{ paddingBottom: '360px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    language: { control: 'select', options: ['english', 'japanese'] },
+    buttonIcon: { control: 'select', options: Object.keys(IconSVGs) },
+    optionType: { control: 'select' },
+    design: { control: 'select' },
+    // FilterDropdown computes both from the selection and spreads the props it receives onto its
+    // container, so a value here only reaches the DOM.
+    disableApply: {
+      control: false,
+      table: {
+        defaultValue: {
+          summary:
+            'Internal logic. Disabled while the selection has not changed since the last apply.',
+        },
+      },
     },
-    [selectAction]
-  );
+    disableReset: {
+      control: false,
+      table: {
+        defaultValue: {
+          summary:
+            'Internal logic. Disabled while nothing is selected, the sort order is the default and the search box is empty.',
+        },
+      },
+    },
+  },
+  args: {
+    language: 'japanese',
+    buttonIcon: 'ActionPause',
+    buttonText: 'Menu',
+    list: foodItemsEng,
+    selected: [],
+    disabled: false,
+    optionType: 'checkbox',
+    isLoading: false,
+    loadingText: '',
+    hasOptionsFilter: true,
+    searchPlaceholder: 'Menu options...',
+    maxDisplayedItems: 5,
+    searchResultText: searchTemplateResultEnglish,
+    emptyResultText: emptyResultsEnglish,
+    design: 'default',
+    ascendingText: 'Ascending',
+    descendingText: 'Descending',
+    isListAscending: true,
+    hasReset: true,
+    hasApply: true,
+    resetText: 'Reset',
+    cancelText: 'Cancel',
+    closeText: 'Close',
+    applyText: 'Apply',
+    onSelect: fn(),
+    onResetCallback: fn(),
+    onCancelCallback: fn(),
+  },
+  render: function Render({ language, ...args }) {
+    const [{ selected }, updateArgs] = useArgs<Args>();
 
-  const handleReset = useCallback(() => {
-    resetAction();
-  }, [resetAction]);
+    const onSelect = (newSelection: IFilterValue) => {
+      args.onSelect(newSelection);
+      updateArgs({ selected: newSelection });
+    };
 
-  const handleCancel = useCallback(() => {
-    cancelAction();
-  }, [cancelAction]);
-
-  return (
-    <Container>
-      <Wrapper>
+    return (
+      <Container>
         <PageHeader
           title='FilterDropdown with Footer Controls'
           introductionText='This example demonstrates the FilterDropdown component with both Reset and Apply buttons.'
         />
-
         <FilterDropdown
-          buttonIcon={buttonIcon}
-          buttonText={language === 'japanese' ? 'メニュー' : 'Menu'}
-          list={language === 'japanese' ? foodItemsJap : foodItemsEng}
+          {...args}
+          {...(language === 'japanese' ? JAPANESE : {})}
           selected={selected}
-          disabled={disabled}
-          hasOptionsFilter={hasOptionsFilter}
-          searchPlaceholder={language === 'japanese' ? 'メニュー...' : 'Menu options...'}
-          searchResultText={
-            language === 'japanese' ? searchTemplateResultJapanese : searchTemplateResultEnglish
-          }
-          optionType='checkbox'
-          onSelect={handleSelect}
-          onResetCallback={handleReset}
-          onCancelCallback={handleCancel}
-          hasReset={hasReset}
-          hasApply={hasApply}
-          resetText={language === 'japanese' ? 'リセット' : 'Reset'}
-          cancelText={language === 'japanese' ? 'キャンセル' : 'Cancel'}
-          closeText={language === 'japanese' ? '閉じる' : 'Close'}
-          applyText={language === 'japanese' ? '適用' : 'Apply'}
-          descendingText={language === 'japanese' ? '降順' : 'Descending'}
-          ascendingText={language === 'japanese' ? '昇順' : 'Ascending'}
-          emptyResultText={language === 'english' ? emptyResultsEnglish : emptyResultsJapanese}
-          isListAscending={true}
+          onSelect={onSelect}
         />
-      </Wrapper>
-    </Container>
-  );
-};
+      </Container>
+    );
+  },
+} satisfies Meta<Args>;
 
-export default FilterDropdownWithFooterStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

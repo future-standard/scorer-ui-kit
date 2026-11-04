@@ -1,61 +1,69 @@
-import { boolean, select } from '@storybook/addon-knobs';
-import { useCallback, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { FilterLayout } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 
-const FilterLayoutStory = {
-  title: 'Filters/molecules',
+const contentArray = [
+  { icon: 'LayoutGrid', id: 'grid', tooltipText: 'Grid View' },
+  { icon: 'LayoutList', id: 'list', tooltipText: 'List View' },
+];
+
+type Args = ComponentProps<typeof FilterLayout> & { language: 'english' | 'japanese' };
+
+const meta = {
+  title: 'Filters/molecules/FilterLayout',
   component: FilterLayout,
-  decorators: [],
-};
+  tags: ['autodocs'],
+  decorators: [
+    // room below the button so the open panel is not cropped by the docs canvas
+    (Story) => (
+      <div style={{ paddingBottom: '160px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    language: { control: 'select', options: ['english', 'japanese'] },
+    defaultPage: { control: false, table: { defaultValue: { summary: 'unset' } } },
+  },
+  args: {
+    language: 'japanese',
+    disabled: false,
+    pageSizeOptions: [10, 20, 50, 100],
+    defaultPageSize: 20,
+    layoutText: 'Layout',
+    pageSizeText: 'Items Per Page',
+    contentArray,
+    minWidth: 250,
+    minHeight: 90,
+    hasPageSettings: true,
+    onPageSizeChange: fn(),
+    getLayout: fn(),
+    onToggleOpenCallback: fn(),
+    onCloseCallback: fn(),
+  },
+  render: function Render({ language, ...args }) {
+    const [{ defaultPageSize }, updateArgs] = useArgs<Args>();
 
-const Container = styled.div``;
+    const onPageSizeChange = (size: number) => {
+      args.onPageSizeChange(size);
+      updateArgs({ defaultPageSize: size });
+    };
 
-export const _FilterLayout = () => {
-  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
-  const hasPageSettings = boolean('Has Page Settings', true);
-  const handleLayout = action('layout-button-click');
-  const handlePageSizeChange = action('page-size');
-  const sizeOptions = [10, 20, 50, 100];
-  const [pageSize, setPageSize] = useState(20);
-
-  const arrayList = [
-    {
-      icon: 'LayoutGrid',
-      id: 'grid',
-      tooltipText: 'Grid View',
-    },
-    {
-      icon: 'LayoutList',
-      id: 'list',
-      tooltipText: 'List View',
-    },
-  ];
-
-  const onSizePerPageChange = useCallback((size: number) => {
-    setPageSize(size);
-  }, []);
-
-  return (
-    <Container>
+    return (
       <FilterLayout
-        {...{
-          onPageSizeChange: (size: number) => {
-            handlePageSizeChange(size);
-            onSizePerPageChange(size);
-          },
-          pageSizeOptions: sizeOptions,
-          defaultPageSize: pageSize,
-          getLayout: handleLayout,
-          layoutText: language === 'english' ? 'Layout' : 'レイアウト',
-          pageSizeText: language === 'english' ? 'Items Per Page' : '１ページのアイテム数',
-          contentArray: arrayList,
-          hasPageSettings: hasPageSettings,
-        }}
+        {...args}
+        defaultPageSize={defaultPageSize}
+        onPageSizeChange={onPageSizeChange}
+        layoutText={language === 'japanese' ? 'レイアウト' : args.layoutText}
+        pageSizeText={language === 'japanese' ? '１ページのアイテム数' : args.pageSizeText}
       />
-    </Container>
-  );
-};
+    );
+  },
+} satisfies Meta<Args>;
 
-export default FilterLayoutStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
