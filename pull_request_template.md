@@ -36,6 +36,6 @@ Like unit tests, steps, use cases or screenshots of the pages to review.
  ### Reviewing/ Testing Steps
 
  You can review this feature in this page
- https://future-standard.github.io/scorer-ui-kit/storybook/?path=/story/alerts-atoms--alert-bar
+ https://future-standard.github.io/scorer-ui-kit/storybook/?path=/story/alerts-atoms-alertbar--default
 
 Here are some screenshots of the expected result.

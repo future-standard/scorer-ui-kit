@@ -1,11 +1,6 @@
-import { select } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Fragment } from 'react';
 import styled from 'styled-components';
-
-const FontsStory = {
-  title: 'Misc',
-  decorators: [],
-};
 
 const Container = styled.div`
   padding: 80px;
@@ -28,9 +23,9 @@ const Item = styled.div<{ $font: string; $weight: number | string; $italic?: boo
   }
 `;
 
-export const _FontSheet = () => {
-  const font = select('Font', ['Lato', 'Monorale', 'Noto Sans (JP)'], 'Lato');
+type Args = { font: 'Lato' | 'Monorale' | 'Noto Sans (JP)' };
 
+const FontSheet = ({ font }: Args) => {
   return (
     <Container>
       {font === 'Lato' ? (
@@ -178,4 +173,17 @@ export const _FontSheet = () => {
   );
 };
 
-export default FontsStory;
+const meta = {
+  title: 'Misc/Fonts',
+  tags: ['!autodocs'],
+  argTypes: {
+    font: { control: 'select', options: ['Lato', 'Monorale', 'Noto Sans (JP)'] },
+  },
+  args: { font: 'Lato' },
+  render: (args) => <FontSheet {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
