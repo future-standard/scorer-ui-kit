@@ -66,7 +66,6 @@ const SplitButtonWithModal = ({
 const meta = {
   title: 'Form/Buttons/SplitButton',
   component: SplitButton,
-  tags: ['autodocs'],
   decorators: [
     // room below the button so the open list is not cropped by the docs canvas
     (Story) => (

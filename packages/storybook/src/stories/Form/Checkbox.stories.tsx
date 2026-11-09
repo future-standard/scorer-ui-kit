@@ -6,7 +6,6 @@ import { fn } from 'storybook/test';
 const meta = {
   title: 'Form/atoms/Checkbox',
   component: Checkbox,
-  tags: ['autodocs'],
   argTypes: {
     indeterminate: {
       control: false,

@@ -149,7 +149,6 @@ const SpacesBar = ({
 const meta = {
   title: 'Chips/organisms/ChipBar',
   component: ChipBar,
-  tags: ['autodocs'],
   decorators: [
     // room below the bar so the open dropdown menu is visible in the canvas
     (Story) => (

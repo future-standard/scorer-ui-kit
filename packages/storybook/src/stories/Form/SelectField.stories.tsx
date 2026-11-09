@@ -23,7 +23,6 @@ const pageOptions = [1, 5, 10, 15, 20];
 const meta = {
   title: 'Form/atoms/SelectField',
   component: SelectField,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <Container>

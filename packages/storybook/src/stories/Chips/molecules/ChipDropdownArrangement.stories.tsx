@@ -24,7 +24,6 @@ type Args = ComponentProps<typeof ChipDropdown> & {
 const meta = {
   title: 'Chips/molecules/ChipDropdownArrangement',
   component: ChipDropdown,
-  tags: ['autodocs'],
   decorators: [
     // room below the trigger so the open menu is visible in the canvas
     (Story) => (

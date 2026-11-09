@@ -117,7 +117,6 @@ const DynamicFormatSlider = ({ useDynamicFormat, ...args }: Args) => {
 const meta = {
   title: 'Form/Input/DurationSlider',
   component: DurationSlider,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <Container>

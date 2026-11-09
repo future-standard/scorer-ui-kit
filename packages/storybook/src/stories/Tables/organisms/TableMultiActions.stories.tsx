@@ -6,7 +6,6 @@ import MultiActionsExample from './MultiActionsExample';
 const meta = {
   title: 'Tables/molecules/TableMultiActions',
   component: MultiActionsExample,
-  tags: ['autodocs'],
   parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '900px' } },
   // the first decorator is the innermost one, so the page frame goes last
   decorators: [

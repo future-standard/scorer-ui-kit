@@ -5,7 +5,6 @@ import { fn } from 'storybook/test';
 const meta = {
   title: 'Form/Buttons/Button',
   component: Button,
-  tags: ['autodocs'],
   argTypes: {
     children: { name: 'Button text', control: 'text' },
     size: { control: 'select' },

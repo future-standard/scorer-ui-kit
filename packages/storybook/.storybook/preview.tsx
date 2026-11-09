@@ -1,5 +1,4 @@
 import { DocsContainer, type DocsContainerProps } from '@storybook/addon-docs/blocks';
-import { withKnobs } from '@storybook/addon-knobs';
 import type { Decorator, Preview } from '@storybook/react-vite';
 import React, { type PropsWithChildren, useEffect, useState } from 'react';
 import { MemoryRouter as Router } from 'react-router-dom';
@@ -103,7 +102,9 @@ const preview: Preview = {
   initialGlobals: {
     theme: 'light',
   },
-  decorators: [withKnobs, ThemeDecorator, RouterDecorator],
+  // Every component story gets a docs page; reference pages opt out with tags: ['!autodocs'].
+  tags: ['autodocs'],
+  decorators: [ThemeDecorator, RouterDecorator],
 };
 
 export default preview;

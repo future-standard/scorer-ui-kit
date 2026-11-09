@@ -52,7 +52,6 @@ const NotificationExample: React.FC<INotificationProps> = (notification) => {
 
 const meta = {
   title: 'Alerts/atoms/Notification',
-  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {

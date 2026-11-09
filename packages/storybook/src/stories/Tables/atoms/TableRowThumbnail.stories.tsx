@@ -11,7 +11,6 @@ type Args = ComponentProps<typeof TableRowThumbnail> & { withCustomClick: boolea
 const meta = {
   title: 'Tables/atoms/TableRowThumbnail',
   component: TableRowThumbnail,
-  tags: ['autodocs'],
   parameters: { layout: 'centered' },
   decorators: [
     (Story) => (

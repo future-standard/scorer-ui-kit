@@ -63,7 +63,6 @@ const TooltipScene = ({ icon, message, tooltipFor: _ref, ...args }: Args) => {
 const meta = {
   title: 'Alerts/atoms/Tooltip',
   component: Tooltip,
-  tags: ['autodocs'],
   argTypes: {
     type: { control: 'select' },
     icon: { control: 'select', options: ['', ...Object.keys(IconSVGs)] },

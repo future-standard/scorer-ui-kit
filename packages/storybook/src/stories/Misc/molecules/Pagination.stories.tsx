@@ -14,7 +14,6 @@ const itemsOptions = [
 const meta = {
   title: 'Misc/molecules/Pagination',
   component: Pagination,
-  tags: ['autodocs'],
   args: {
     activePage: 1,
     totalPages: 20,

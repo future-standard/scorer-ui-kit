@@ -9,7 +9,6 @@ import { rowMaker, sortDataBy } from '../../helpers/sample_table_helpers';
 const meta = {
   title: 'Tables/molecules/TypeTable',
   component: TypeTable,
-  tags: ['autodocs'],
   parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '900px' } },
   // the first decorator is the innermost one, so the page frame goes last
   decorators: [

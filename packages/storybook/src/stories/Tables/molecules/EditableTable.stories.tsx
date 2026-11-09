@@ -160,7 +160,6 @@ const EditableTableDemo = ({ saveDelay, onCameraNameSave, rows: _rows, ...args }
 const meta = {
   title: 'Tables/molecules/EditableTable',
   component: TypeTable,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <ModalProvider>

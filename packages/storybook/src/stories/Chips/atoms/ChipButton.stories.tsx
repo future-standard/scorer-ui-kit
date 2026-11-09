@@ -10,7 +10,6 @@ import { fn } from 'storybook/test';
 const meta = {
   title: 'Chips/atoms/ChipButton',
   component: ChipButton,
-  tags: ['autodocs'],
   argTypes: {
     variant: { control: 'select' },
     icon: { control: 'select', options: Object.keys(IconSVGs) },

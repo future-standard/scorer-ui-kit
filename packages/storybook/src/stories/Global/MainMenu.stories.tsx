@@ -53,7 +53,6 @@ const menuContent: IMenuTop = {
 const meta = {
   title: 'Global/MainMenu',
   component: MainMenu,
-  tags: ['autodocs'],
   // The menu portals to document.body, so the docs preview needs its own frame (FramedDocsPage).
   parameters: {
     docs: {

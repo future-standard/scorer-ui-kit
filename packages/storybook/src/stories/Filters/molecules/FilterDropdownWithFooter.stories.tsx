@@ -58,7 +58,6 @@ type Args = ComponentProps<typeof FilterDropdown> & { language: 'english' | 'jap
 const meta = {
   title: 'Filters/molecules/FilterDropdown',
   component: FilterDropdown,
-  tags: ['autodocs'],
   decorators: [
     // room below the button so the open list is not cropped by the docs canvas
     (Story) => (

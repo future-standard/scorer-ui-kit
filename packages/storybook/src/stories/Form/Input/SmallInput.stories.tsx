@@ -10,7 +10,6 @@ const Container = styled.div`
 const meta = {
   title: 'Form/Input/SmallInput',
   component: SmallInput,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <Container>

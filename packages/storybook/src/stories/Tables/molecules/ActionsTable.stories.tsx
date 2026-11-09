@@ -122,7 +122,6 @@ type Args = ComponentProps<typeof TypeTable> & {
 const meta = {
   title: 'Tables/molecules/ActionsTable',
   component: TypeTable,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <ModalProvider>
