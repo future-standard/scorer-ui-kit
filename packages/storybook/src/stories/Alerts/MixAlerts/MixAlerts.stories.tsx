@@ -1,31 +1,8 @@
-import type React from 'react';
-import type { ReactElement } from 'react';
-import {
-  Button,
-  ModalProvider,
-  NotificationProvider,
-  useModal,
-  useNotification,
-} from 'scorer-ui-kit';
-import styled from 'styled-components';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Button, ModalProvider, NotificationProvider, useModal } from 'scorer-ui-kit';
 import CardModalExample from './CardModalExample';
 
-const Container = styled.div`
-  margin: 100px 20px 20px 20px;
-  display: grid;
-  grid-template-columns: 200px;
-  row-gap: 15px;
-`;
-
-const MixAlertsStory = {
-  title: 'Alerts/Mix',
-  components: useNotification,
-  decorator: [],
-};
-
-const custom: ReactElement = <CardModalExample />;
-
-const ModalAndNotification: React.FC = () => {
+const OpenModalButton = () => {
   const { createModal } = useModal();
 
   const createCustomModal = () => {
@@ -33,34 +10,37 @@ const ModalAndNotification: React.FC = () => {
       isCloseEnable: false,
       width: '480px',
       padding: false,
-      customComponent: custom,
+      customComponent: <CardModalExample />,
     });
   };
 
   return (
-    <Button
-      design='secondary'
-      size='small'
-      onClick={() => {
-        createCustomModal();
-      }}
-    >
+    <Button design='secondary' size='small' onClick={createCustomModal}>
       Open Welcome Modal
     </Button>
   );
 };
 
-export const _MixAlertsExample = () => {
-  // Providers should be at main Index level, these are here just for the story example
-  return (
-    <Container>
-      <NotificationProvider>
-        <ModalProvider>
-          <ModalAndNotification />
-        </ModalProvider>
-      </NotificationProvider>
-    </Container>
-  );
-};
+const meta = {
+  title: 'Alerts/Mix/MixAlerts',
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'useModal() and useNotification() together: the button opens a welcome card through `createModal()`, and the buttons inside the card (`CardModalExample.tsx` next to this story) send notifications through `useNotification()` and close the modal with `setModalOpen(false)`. Both providers are normally mounted once at the app root; they sit here only so the story is self-contained.',
+      },
+    },
+  },
+  render: () => (
+    <NotificationProvider>
+      <ModalProvider>
+        <OpenModalButton />
+      </ModalProvider>
+    </NotificationProvider>
+  ),
+} satisfies Meta<Record<string, never>>;
 
-export default MixAlertsStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

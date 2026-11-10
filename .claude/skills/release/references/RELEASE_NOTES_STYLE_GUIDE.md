@@ -155,7 +155,7 @@ Three kinds of links may appear:
 Use the standard label `[View in Storybook](url)`. Link to the specific story page.
 
 ```markdown
-- **AlertBar:** Added a new `direction` prop. [View in Storybook](https://future-standard.github.io/scorer-ui-kit/storybook/?path=/story/alerts-atoms--alert-bar)
+- **AlertBar:** Added a new `direction` prop. [View in Storybook](https://future-standard.github.io/scorer-ui-kit/storybook/?path=/story/alerts-atoms-alertbar--default)
 ```
 
 Do NOT use varying labels like `[Live view]`, `[Live Example]`, `[New Design Live view]`. Pick one label and stick to it.

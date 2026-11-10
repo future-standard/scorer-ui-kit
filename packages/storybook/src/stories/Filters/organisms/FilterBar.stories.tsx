@@ -1,17 +1,18 @@
-import { boolean, object, select, text } from '@storybook/addon-knobs';
-import { useCallback, useEffect, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type ComponentProps, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   FilterBar,
   type IFilterDatePicker,
   type IFilterDropdownConfig,
   type IFilterResult,
   type ISearchFilter,
+  type ITypeTableData,
   isFilterItem,
   TypeTable,
 } from 'scorer-ui-kit';
-import type { ITypeTableData } from 'scorer-ui-kit/dist/Tables';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
+import { sceneOnly, withDates } from '../../helpers';
 import {
   clearEng,
   clearJp,
@@ -47,23 +48,9 @@ import {
   sortDataBy,
 } from '../../helpers/sample_table_helpers';
 
-const FilterBarStory = {
-  title: 'Filters/Organism',
-  component: 'FilterBar',
-  decorators: [],
-};
-
-const Container = styled.div`
-  margin: 20px;
-`;
-
 const TypeTableWrapper = styled.div`
-margin: 60px 0 20px 0
+  margin: 60px 0 20px 0;
 `;
-
-// const today: Date = new Date();
-const before: Date = new Date();
-before.setDate(before.getDate() - 5);
 
 const dataInitialState = sortDataBy(tableData, 'deviceName', true);
 
@@ -116,51 +103,156 @@ const getFilteredData = (
   return data;
 };
 
-/**
- * Filter Bar Story Starts
- */
-export const _FilterBar = () => {
-  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
+const buildSearchers = (en: boolean): ISearchFilter[] => [
+  {
+    id: 'inputForDeviceName',
+    placeholder: en ? 'Filter by Device Name...' : 'デバイス名前 フィルター',
+    name: en ? 'Device Name' : 'デバイス名前',
+  },
+  {
+    id: 'inputForDate',
+    placeholder: en ? 'Filter by Date' : '年月日 フィルター',
+    name: en ? 'Date' : '年月日',
+    canHide: true,
+    showFieldText: en ? 'Show Date Input' : '年月日 みる',
+  },
+];
+
+const buildDropdowns = (en: boolean): IFilterDropdownConfig[] => {
+  const footerTexts = {
+    resetText: en ? 'Reset' : 'リセット',
+    cancelText: en ? 'Cancel' : 'キャンセル',
+    closeText: en ? 'Close' : '閉じる',
+    applyText: en ? 'Apply' : '適用',
+    descendingText: en ? 'Descending' : '降順',
+    ascendingText: en ? 'Ascending' : '昇順',
+    searchResultText: en ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+    emptyResultText: en ? emptyResultsEnglish : emptyResultsJapanese,
+    hasReset: true,
+    hasApply: true,
+    isListAscending: true,
+    hasOptionsFilter: true,
+  };
+  return [
+    {
+      id: 'dropdownForStatus',
+      buttonText: en ? 'Status' : 'ステータス',
+      list: en ? statusValuesEng : statusValuesJp,
+      buttonIcon: 'Camera',
+      optionType: 'checkbox',
+      loadingText: en ? 'Loading Status ...' : genericLoadingJp,
+      searchPlaceholder: en ? 'Status...' : 'ステータス...',
+      ...footerTexts,
+    },
+    {
+      id: 'priceFilter',
+      canHide: true,
+      buttonText: en ? 'Cost' : '価格',
+      list: en ? costRangeEng : costRangeJap,
+      buttonIcon: 'Usage',
+      optionType: 'radio',
+      loadingText: en ? 'Loading Cost...' : genericLoadingJp,
+      searchPlaceholder: en ? 'Cost...' : '価格...',
+      ...footerTexts,
+    },
+  ];
+};
+
+// valid formats - https://date-fns.org/v2.25.0/docs/format
+const buildDatePickers = (en: boolean): IFilterDatePicker[] => [
+  {
+    id: 'datePickerForRuntime',
+    dateMode: 'interval',
+    buttonText: en ? 'Date Range' : '日付範囲',
+    buttonIcon: 'DateTime',
+    dateTimeTextUpper: en ? 'From' : 'から',
+    dateTimeTextLower: en ? 'To' : 'まで',
+    timeZoneTitle: en ? 'Timezone' : '時間帯',
+    cancelText: en ? 'Cancel' : 'キャンセル',
+    applyText: en ? 'Apply' : '完了',
+    lang: en ? 'en' : 'ja',
+    selected: InitialSelectedDate,
+    availableRange: datesRange,
+    contentDays: dataContentDays,
+    hasApply: true,
+  },
+];
+
+// Editing the object control turns the picker's Dates into ISO strings; restore them.
+const withPickerDates = (pickers: IFilterDatePicker[] = []): IFilterDatePicker[] =>
+  pickers.map((picker) => ({
+    ...picker,
+    selected: withDates(picker.selected),
+    initialValue: withDates(picker.initialValue),
+    availableRange: withDates(picker.availableRange),
+    contentDays: withDates(picker.contentDays),
+  }));
+
+// Built once: rebuilding per render would hand FilterBar new config objects on every render.
+const JA_SEARCHERS = buildSearchers(false);
+const JA_DROPDOWNS = buildDropdowns(false);
+const JA_DATE_PICKERS = buildDatePickers(false);
+
+type Args = ComponentProps<typeof FilterBar> & {
+  language: 'english' | 'japanese';
+  onStatusReset: () => void;
+  onStatusCancel: () => void;
+  onPriceReset: () => void;
+  onPriceCancel: () => void;
+};
+
+const Scene = ({
+  language,
+  onStatusReset,
+  onStatusCancel,
+  onPriceReset,
+  onPriceCancel,
+  searchersConfig,
+  dropdownsConfig,
+  datePickersConfig,
+  filtersTitle,
+  showMoreText,
+  showLessText,
+  resultTextTemplate,
+  clearText,
+  totalResults: _totalResults,
+  onChangeCallback,
+  ...filterBarProps
+}: Args) => {
+  const en = language === 'english';
+  const localized = <T,>(argValue: T, jaValue: T) => (en ? argValue : jaValue);
+
+  // The footer spies are attached here, not inside the config arg: an edit in the object control
+  // re-creates nested functions as inert stubs that no longer log to the Actions panel.
+  const dropdowns = useMemo(() => {
+    const footer: Record<string, Partial<IFilterDropdownConfig>> = {
+      dropdownForStatus: { onResetCallback: onStatusReset, onCancelCallback: onStatusCancel },
+      priceFilter: { onResetCallback: onPriceReset, onCancelCallback: onPriceCancel },
+    };
+    return (en ? (dropdownsConfig ?? []) : JA_DROPDOWNS).map((dropdown) => ({
+      ...dropdown,
+      ...(footer[dropdown.id] ?? {}),
+    }));
+  }, [en, dropdownsConfig, onStatusReset, onStatusCancel, onPriceReset, onPriceCancel]);
+  const datePickers = useMemo(
+    () => (en ? withPickerDates(datePickersConfig) : JA_DATE_PICKERS),
+    [en, datePickersConfig]
+  );
+
   const [data, setData] = useState<ITableSampleData[]>(dataInitialState);
   const [rows, setRows] = useState<ITypeTableData>(rowMaker(dataInitialState));
   const [filters, setFilters] = useState<IFilterResult[]>([]);
-  /**
-   * Story interaction section
-   */
-  const singleFilter = boolean('Single Filter', false);
-  const hasShowMore = boolean('Has Show More', true);
-  // valid formats - https://date-fns.org/v2.25.0/docs/format
-  const resultsDateFormat = text('Results date format', 'yyyy-MM-dd HH:mm');
-  const datePickerHasApply = boolean('Datepicker has Apply', true);
-  const handleStatusReset = action('Status Reset was pressed');
-  const handleStatusCancel = action('Status Cancel was pressed');
-  const handlePriceReset = action('Price Reset was pressed');
-  const handlePriceCancel = action('Price Cancel pressed');
 
   // Sent to checkbox in TableRow via Table component.
-  const selectCallback = useCallback(
-    (checked: boolean, id?: string | number) => {
-      const newRows = [...rows];
-      const targetRowIndex = newRows.findIndex((row) => row.id === id);
-      newRows[targetRowIndex]._checked = checked;
+  const selectCallback = useCallback((checked: boolean, id?: string | number) => {
+    setRows((current) =>
+      current.map((row) => (row.id === id ? { ...row, _checked: checked } : row))
+    );
+  }, []);
 
-      setRows(newRows);
-    },
-    [rows]
-  );
-
-  const toggleAllCallback = useCallback(
-    (checked: boolean) => {
-      const newRows = [...rows];
-
-      newRows.forEach((row) => {
-        row._checked = checked;
-      });
-
-      setRows(newRows);
-    },
-    [rows]
-  );
+  const toggleAllCallback = useCallback((checked: boolean) => {
+    setRows((current) => current.map((row) => ({ ...row, _checked: checked })));
+  }, []);
 
   const sortCallback = useCallback(
     (ascending: boolean, columnId: string) => {
@@ -173,108 +265,12 @@ export const _FilterBar = () => {
     [data]
   );
 
-  const searchers: ISearchFilter[] = [
-    {
-      id: 'inputForDeviceName',
-      placeholder: language === 'english' ? 'Filter by Device Name...' : 'デバイス名前 フィルター',
-      name: language === 'english' ? 'Device Name' : 'デバイス名前',
-      // selected: {text:'OK', value: 'OK'}
-    },
-    {
-      id: 'inputForDate',
-      placeholder: language === 'english' ? 'Filter by Date' : '年月日 フィルター',
-      name: language === 'english' ? 'Date' : '年月日',
-      canHide: true,
-      showFieldText: language === 'english' ? 'Show Date Input' : '年月日 みる',
-    },
-  ];
-
-  const dropdowns: IFilterDropdownConfig[] = [
-    {
-      id: 'dropdownForStatus',
-      buttonText: language === 'english' ? 'Status' : 'ステータス',
-      list: language === 'english' ? statusValuesEng : statusValuesJp,
-      buttonIcon: 'Camera',
-      optionType: 'checkbox',
-      loadingText: language === 'english' ? 'Loading Status ...' : genericLoadingJp,
-      searchPlaceholder: language === 'english' ? 'Status...' : 'ステータス...',
-      searchResultText:
-        language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
-      emptyResultText: language === 'english' ? emptyResultsEnglish : emptyResultsJapanese,
-      onResetCallback: handleStatusReset,
-      onCancelCallback: handleStatusCancel,
-      hasReset: true,
-      hasApply: true,
-      resetText: language === 'english' ? 'Reset' : 'リセット',
-      cancelText: language === 'english' ? 'Cancel' : 'キャンセル',
-      closeText: language === 'english' ? 'Close' : '閉じる',
-      applyText: language === 'english' ? 'Apply' : '適用',
-      descendingText: language === 'english' ? 'Descending' : '降順',
-      ascendingText: language === 'english' ? 'Ascending' : '昇順',
-      isListAscending: true,
-      hasOptionsFilter: true,
-    },
-    {
-      id: 'priceFilter',
-      canHide: true,
-      buttonText: language === 'english' ? 'Cost' : '価格',
-      list: language === 'english' ? costRangeEng : costRangeJap,
-      buttonIcon: 'Usage',
-      optionType: 'radio',
-      loadingText: language === 'english' ? 'Loading Cost...' : genericLoadingJp,
-      searchPlaceholder: language === 'english' ? 'Cost...' : '価格...',
-      searchResultText:
-        language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
-      emptyResultText: language === 'english' ? emptyResultsEnglish : emptyResultsJapanese,
-      onResetCallback: handlePriceReset,
-      onCancelCallback: handlePriceCancel,
-      hasReset: true,
-      hasApply: true,
-      resetText: language === 'english' ? 'Reset' : 'リセット',
-      cancelText: language === 'english' ? 'Cancel' : 'キャンセル',
-      closeText: language === 'english' ? 'Close' : '閉じる',
-      applyText: language === 'english' ? 'Apply' : '適用',
-      descendingText: language === 'english' ? 'Descending' : '降順',
-      ascendingText: language === 'english' ? 'Ascending' : '昇順',
-      isListAscending: true,
-      hasOptionsFilter: true,
-    },
-  ];
-
-  const datePickers: IFilterDatePicker[] = [
-    {
-      id: 'datePickerForRuntime',
-      dateMode: 'interval',
-      buttonText: language === 'english' ? 'Date Range' : '日付範囲',
-      buttonIcon: 'DateTime',
-      dateTimeTextUpper: language === 'english' ? 'From' : 'から',
-      dateTimeTextLower: language === 'english' ? 'To' : 'まで',
-      timeZoneTitle: language === 'english' ? 'Timezone' : '時間帯',
-      cancelText: language === 'english' ? 'Cancel' : 'キャンセル',
-      applyText: language === 'english' ? 'Apply' : '完了',
-      lang: language === 'english' ? 'en' : 'ja',
-      selected: InitialSelectedDate,
-      availableRange: datesRange,
-      contentDays: dataContentDays,
-      hasApply: datePickerHasApply,
-    },
-  ];
-
-  /**
-   * objects only for display
-   */
-  const _searchersConfig = object('Search Filters', searchers);
-  const _dropdownsConfig = object('DropdownFilters', dropdowns);
-  const _datePickersConfig = object('DatePickers', datePickers);
-  const filtersValues = action('onChangeCallback');
-
   const handleFilters = useCallback(
     (currentSelected: IFilterResult[]) => {
-      filtersValues(currentSelected);
-      const localData =
-        language === 'english'
-          ? sortDataBy(tableData, 'deviceName', true)
-          : sortDataBy(tableDataJp, 'deviceName', true);
+      onChangeCallback?.(currentSelected);
+      const localData = en
+        ? sortDataBy(tableData, 'deviceName', true)
+        : sortDataBy(tableDataJp, 'deviceName', true);
       const tempData: ITableSampleData[] = [...localData];
 
       if (currentSelected.length === 0) {
@@ -286,42 +282,40 @@ export const _FilterBar = () => {
         setFilters(currentSelected);
       }
     },
-    [filtersValues, language]
+    [onChangeCallback, en]
   );
 
   useEffect(() => {
-    const localizeData =
-      language === 'english'
-        ? sortDataBy(tableData, 'deviceName', true)
-        : sortDataBy(tableDataJp, 'deviceName', true);
+    const localizeData = en
+      ? sortDataBy(tableData, 'deviceName', true)
+      : sortDataBy(tableDataJp, 'deviceName', true);
     const newData = getFilteredData(filters, localizeData);
     setData(newData);
-  }, [filters, language]);
+  }, [filters, en]);
 
   useEffect(() => {
     setRows(rowMaker(data));
   }, [data]);
 
   return (
-    <Container>
+    <>
       <FilterBar
-        {...{ singleFilter, hasShowMore }}
-        searchersConfig={searchers}
+        {...filterBarProps}
+        searchersConfig={localized(searchersConfig, JA_SEARCHERS)}
         dropdownsConfig={dropdowns}
         datePickersConfig={datePickers}
         onChangeCallback={handleFilters}
         totalResults={rows.length}
-        showMoreText={language === 'english' ? showMoreEng : showMoreJp}
-        showLessText={language === 'english' ? showLessEng : showLessJp}
-        filtersTitle={language === 'english' ? 'Filters' : 'フィルター'}
-        resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
-        clearText={language === 'english' ? clearEng : clearJp}
-        resultsDateFormat={resultsDateFormat}
+        showMoreText={localized(showMoreText, showMoreJp)}
+        showLessText={localized(showLessText, showLessJp)}
+        filtersTitle={localized(filtersTitle, 'フィルター')}
+        resultTextTemplate={localized(resultTextTemplate, resultTextTemplateJp)}
+        clearText={localized(clearText, clearJp)}
       />
       <TypeTableWrapper>
         <TypeTable
           {...{ selectCallback, toggleAllCallback, rows, sortCallback }}
-          columnConfig={language === 'english' ? columnConfigSample : columnConfigSampleJp}
+          columnConfig={en ? columnConfigSample : columnConfigSampleJp}
           hasStatus
           selectable
           hasThumbnail
@@ -330,8 +324,44 @@ export const _FilterBar = () => {
           hasHeaderGroups
         />
       </TypeTableWrapper>
-    </Container>
+    </>
   );
 };
 
-export default FilterBarStory;
+const meta = {
+  title: 'Filters/organisms/FilterBar',
+  component: FilterBar,
+  argTypes: {
+    language: { control: 'select', options: ['english', 'japanese'] },
+    totalResults: sceneOnly('Set by the scene: the rows left in the table below'),
+    // FilterBar declares isLoading but never reads it and spreads the received props onto its container,
+    // so a value here only reaches the DOM (React warning).
+    isLoading: sceneOnly('Declared but unused by the component'),
+  },
+  args: {
+    language: 'japanese',
+    singleFilter: false,
+    hasShowMore: true,
+    resultsDateFormat: 'yyyy-MM-dd HH:mm',
+    filtersTitle: 'Filters',
+    showMoreText: showMoreEng,
+    showLessText: showLessEng,
+    resultTextTemplate: resultTextTemplateEng,
+    clearText: clearEng,
+    totalResults: 0,
+    searchersConfig: buildSearchers(true),
+    dropdownsConfig: buildDropdowns(true),
+    datePickersConfig: buildDatePickers(true),
+    onChangeCallback: fn(),
+    onStatusReset: fn(),
+    onStatusCancel: fn(),
+    onPriceReset: fn(),
+    onPriceCancel: fn(),
+  },
+  render: (args) => <Scene {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

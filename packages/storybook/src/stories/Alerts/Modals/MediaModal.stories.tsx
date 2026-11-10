@@ -1,47 +1,18 @@
-import { boolean, text } from '@storybook/addon-knobs';
-import type React from 'react';
-import type { ReactElement } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { Button, MediaBox, ModalProvider, useModal } from 'scorer-ui-kit';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 import PlaceholderImage from '../../assets/placeholder.jpg';
 
-const MediaModalStory = {
-  title: 'Alerts/Modals',
-  components: MediaBox,
-  decorator: [],
-};
-
-const Container = styled.div``;
-
-interface IExampleModal {
-  hasModalLimitsValue: boolean;
-  imageSrc: string;
-  retryLoading: boolean;
-}
-
-const MediaImageModal: React.FC<IExampleModal> = ({
-  hasModalLimitsValue,
-  imageSrc,
-  retryLoading,
-}) => {
+const OpenModalButton = (args: ComponentProps<typeof MediaBox>) => {
   const { createModal } = useModal();
 
-  const mediaImage: ReactElement = (
-    <MediaBox
-      hasModalLimits={hasModalLimitsValue}
-      mediaType='img'
-      alt='city'
-      src={imageSrc}
-      retryLoading={retryLoading}
-      minHeight='300px'
-      minWidth='300px'
-    />
-  );
-
-  const modalWidth = hasModalLimitsValue ? 'auto' : '60%';
-
   const openImageModal = () => {
-    createModal({ customComponent: mediaImage, padding: false, width: modalWidth });
+    createModal({
+      customComponent: <MediaBox {...args} />,
+      padding: false,
+      width: args.hasModalLimits ? 'auto' : '60%',
+    });
   };
 
   return (
@@ -51,23 +22,44 @@ const MediaImageModal: React.FC<IExampleModal> = ({
   );
 };
 
-// Provider should be at main Index level, it's here just for the story example
-export const _MediaModal = () => {
-  const hasModalLimits = boolean('Has Modal Limits', true);
-  const imageSrc = text('Image Src', PlaceholderImage);
-  const retryLoading = boolean('Retry Loading', false);
+const meta = {
+  title: 'Alerts/Modals/MediaModal',
+  component: MediaBox,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A MediaBox inside a modal opened through the useModal() hook: the button calls `createModal({ customComponent, padding: false, width })` with a `MediaBox` built from these args; the width is `auto` while `hasModalLimits` is on and `60%` otherwise. ModalProvider is normally mounted once at the app root; it sits here only so the story is self-contained.',
+      },
+    },
+  },
+  argTypes: {
+    mediaType: { control: 'select' },
+    videoOptions: {
+      control: false,
+      table: { defaultValue: { summary: 'Not set: this example shows an image' } },
+    },
+  },
+  args: {
+    src: PlaceholderImage,
+    mediaType: 'img',
+    alt: 'city',
+    hasModalLimits: true,
+    retryLoading: false,
+    retryLimit: 5,
+    minWidth: '300px',
+    minHeight: '300px',
+    onError: fn(),
+    onMediaLoad: fn(),
+  },
+  render: (args) => (
+    <ModalProvider>
+      <OpenModalButton {...args} />
+    </ModalProvider>
+  ),
+} satisfies Meta<typeof MediaBox>;
 
-  return (
-    <Container>
-      <ModalProvider>
-        <MediaImageModal
-          hasModalLimitsValue={hasModalLimits}
-          imageSrc={imageSrc}
-          retryLoading={retryLoading}
-        />
-      </ModalProvider>
-    </Container>
-  );
-};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export default MediaModalStory;
+export const Default: Story = {};
