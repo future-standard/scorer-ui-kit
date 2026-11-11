@@ -44,16 +44,14 @@ const StyledButton = styled.button`
       font-style: normal;
   }
   line-height: 1.79;
-  color: var(--grey-9);
-  display: block;
 `;
 
 const ButtonGroup = styled.div`
-text-align: center;
-margin-top: 10px;
-${StyledButton} {
-  margin: 15px auto 0 auto;
-}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
 `;
 
 const CardCover = styled.div`

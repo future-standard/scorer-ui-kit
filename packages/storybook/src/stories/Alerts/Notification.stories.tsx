@@ -2,12 +2,7 @@ import { IconSVGs } from '@future-standard/icons';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type React from 'react';
 import { useRef } from 'react';
-import {
-  Button,
-  type INotificationProps,
-  NotificationProvider,
-  useNotification,
-} from 'scorer-ui-kit';
+import { Button, type INotificationProps, useNotification } from 'scorer-ui-kit';
 import { fn } from 'storybook/test';
 import styled from 'styled-components';
 
@@ -75,9 +70,7 @@ const meta = {
   },
   render: (args) => (
     <Container>
-      <NotificationProvider>
-        <NotificationExample {...args} />
-      </NotificationProvider>
+      <NotificationExample {...args} />
     </Container>
   ),
 } satisfies Meta<INotificationProps>;

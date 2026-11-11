@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, ModalProvider, NotificationProvider, useModal } from 'scorer-ui-kit';
+import { Button, useModal } from 'scorer-ui-kit';
 import CardModalExample from './CardModalExample';
 
 const OpenModalButton = () => {
@@ -27,17 +27,11 @@ const meta = {
     docs: {
       description: {
         component:
-          'useModal() and useNotification() together: the button opens a welcome card through `createModal()`, and the buttons inside the card (`CardModalExample.tsx` next to this story) send notifications through `useNotification()` and close the modal with `setModalOpen(false)`. Both providers are normally mounted once at the app root; they sit here only so the story is self-contained.',
+          'useModal() and useNotification() together: the button opens a welcome card through `createModal()`, and the buttons inside the card (`CardModalExample.tsx` next to this story) send notifications through `useNotification()` and close the modal with `setModalOpen(false)`.',
       },
     },
   },
-  render: () => (
-    <NotificationProvider>
-      <ModalProvider>
-        <OpenModalButton />
-      </ModalProvider>
-    </NotificationProvider>
-  ),
+  render: () => <OpenModalButton />,
 } satisfies Meta<Record<string, never>>;
 
 export default meta;

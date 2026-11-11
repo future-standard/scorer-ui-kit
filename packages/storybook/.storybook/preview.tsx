@@ -2,7 +2,7 @@ import { DocsContainer, type DocsContainerProps } from '@storybook/addon-docs/bl
 import type { Decorator, Preview } from '@storybook/react-vite';
 import React, { type PropsWithChildren, useEffect, useState } from 'react';
 import { MemoryRouter as Router } from 'react-router-dom';
-import { defaultTheme, ThemeVariables } from 'scorer-ui-kit';
+import { defaultTheme, ModalProvider, NotificationProvider, ThemeVariables } from 'scorer-ui-kit';
 import { themes } from 'storybook/theming';
 import { ThemeProvider } from 'styled-components';
 import Fonts from '../src/fonts';
@@ -11,6 +11,13 @@ import Style from '../src/style';
 // const { addDecorator } = require('@storybook/react-vite'); // Has been deprecated, need alternative or wait for update
 // import { jsxDecorator } from 'storybook-addon-jsx';
 // addDecorator(jsxDecorator);
+
+// The providers an app mounts once at its root (see AGENTS.md), so stories never wrap their own.
+const ProvidersDecorator: Decorator = (story) => (
+  <NotificationProvider>
+    <ModalProvider>{story()}</ModalProvider>
+  </NotificationProvider>
+);
 
 // Router Decorator
 const RouterDecorator: Decorator = (story) => (
@@ -104,7 +111,8 @@ const preview: Preview = {
   },
   // Every component story gets a docs page; reference pages opt out with tags: ['!autodocs'].
   tags: ['autodocs'],
-  decorators: [ThemeDecorator, RouterDecorator],
+  // The first decorator is the innermost one: the providers render inside the ThemeProvider.
+  decorators: [ProvidersDecorator, ThemeDecorator, RouterDecorator],
 };
 
 export default preview;

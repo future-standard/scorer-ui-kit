@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
-import { Button, MediaBox, ModalProvider, useModal } from 'scorer-ui-kit';
+import { Button, MediaBox, useModal } from 'scorer-ui-kit';
 import { fn } from 'storybook/test';
 import PlaceholderImage from '../../assets/placeholder.jpg';
 
@@ -29,7 +29,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A MediaBox inside a modal opened through the useModal() hook: the button calls `createModal({ customComponent, padding: false, width })` with a `MediaBox` built from these args; the width is `auto` while `hasModalLimits` is on and `60%` otherwise. ModalProvider is normally mounted once at the app root; it sits here only so the story is self-contained.',
+          'A MediaBox inside a modal opened through the useModal() hook: the button calls `createModal({ customComponent, padding: false, width })` with a `MediaBox` built from these args; the width is `auto` while `hasModalLimits` is on and `60%` otherwise.',
       },
     },
   },
@@ -52,11 +52,7 @@ const meta = {
     onError: fn(),
     onMediaLoad: fn(),
   },
-  render: (args) => (
-    <ModalProvider>
-      <OpenModalButton {...args} />
-    </ModalProvider>
-  ),
+  render: (args) => <OpenModalButton {...args} />,
 } satisfies Meta<typeof MediaBox>;
 
 export default meta;

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, type IModal, ModalProvider, useModal } from 'scorer-ui-kit';
+import { Button, type IModal, useModal } from 'scorer-ui-kit';
 import { fn } from 'storybook/test';
 
 const customComponentExample = <h1>Hello!</h1>;
@@ -29,7 +29,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Demonstrates the useModal() hook: the button calls `createModal()` with these args, so the modal shows the close text, padding and optional custom component you set. ModalProvider is normally mounted once at the app root; it sits here only so the story is self-contained.',
+          'Demonstrates the useModal() hook: the button calls `createModal()` with these args, so the modal shows the close text, padding and optional custom component you set.',
       },
     },
   },
@@ -48,11 +48,7 @@ const meta = {
     showCustomComponent: false,
     dismissCallback: fn(),
   },
-  render: (args) => (
-    <ModalProvider>
-      <OpenModalButton {...args} />
-    </ModalProvider>
-  ),
+  render: (args) => <OpenModalButton {...args} />,
 } satisfies Meta<Args>;
 
 export default meta;

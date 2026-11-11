@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ContentLayout, ModalProvider } from 'scorer-ui-kit';
+import { ContentLayout } from 'scorer-ui-kit';
 import { pageFrame } from '../../helpers/PageFrame';
 import MultiActionsExample from './MultiActionsExample';
 
@@ -10,11 +10,9 @@ const meta = {
   // the first decorator is the innermost one, so the page frame goes last
   decorators: [
     (Story) => (
-      <ModalProvider>
-        <ContentLayout>
-          <Story />
-        </ContentLayout>
-      </ModalProvider>
+      <ContentLayout>
+        <Story />
+      </ContentLayout>
     ),
     pageFrame,
   ],
