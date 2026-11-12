@@ -1,0 +1,9 @@
+import{n as e}from"./rolldown-runtime-DkW27tQK.js";import{t}from"./jsx-runtime-DeHZSEgm.js";import{a as n,i as r}from"./styled-components.browser.esm-DRoLZq3m.js";import{n as i,r as a,t as o}from"./Tag-BquL990e.js";var s,c,l;function u(){return(u=e((()=>{n(),a(),s=t(),c=r.div`
+  display: flex;
+  ${i} {
+    margin-right: 10px;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+  flex-wrap: wrap;
+`,l=({tagsConfig:e})=>(0,s.jsx)(c,{children:e.map((e,t)=>(0,s.jsx)(o,{...e},`tag-${t}`))});try{c.displayName=`TagListWrapper`,c.__docgenInfo={description:``,displayName:`TagListWrapper`,filePath:`/home/runner/work/scorer-ui-kit/scorer-ui-kit/packages/ui-lib/src/Misc/molecules/TagList.tsx`,methods:[],props:{as:{defaultValue:null,declarations:[{fileName:`scorer-ui-kit/node_modules/styled-components/dist/types.d.ts`,name:`TypeLiteral`}],description:``,name:`as`,required:!1,tags:{},type:{name:`void | WebTarget`}},forwardedAs:{defaultValue:null,declarations:[{fileName:`scorer-ui-kit/node_modules/styled-components/dist/types.d.ts`,name:`TypeLiteral`}],description:``,name:`forwardedAs`,required:!1,tags:{},type:{name:`void | WebTarget`}}},tags:{}}}catch{}try{l.displayName=`TagList`,l.__docgenInfo={description:``,displayName:`TagList`,filePath:`/home/runner/work/scorer-ui-kit/scorer-ui-kit/packages/ui-lib/src/Misc/molecules/TagList.tsx`,methods:[],props:{tagsConfig:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Misc/molecules/TagList.tsx`,name:`ITagList`}],description:``,name:`tagsConfig`,parent:{fileName:`packages/ui-lib/src/Misc/molecules/TagList.tsx`,name:`ITagList`},required:!0,tags:{},type:{name:`ITag[]`}}},tags:{}}}catch{}})))()}export{u as n,l as t};

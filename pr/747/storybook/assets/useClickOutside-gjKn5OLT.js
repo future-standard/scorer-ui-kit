@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-DkW27tQK.js";import{t}from"./react-Q1GcV6wX.js";function n(e,t){let n=(0,r.useRef)(t);n.current=t,(0,r.useEffect)(()=>{let t=t=>{e?.current?.contains(t.target)||n.current(t)};return document.addEventListener(`click`,t,!0),()=>{document.removeEventListener(`click`,t,!0)}},[e])}var r;function i(){return(i=e((()=>{r=t()})))()}export{n,i as t};
