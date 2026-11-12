@@ -51,7 +51,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Demonstrates the useNotification() hook. "Send random notification" cycles through five sample types and messages so repeated clicks show how notifications queue; "Send custom notification" sends exactly what the controls say. The provider is normally mounted once at the app root; it sits here only so the story is self-contained.',
+          'Demonstrates the useNotification() hook. "Send random notification" cycles through five sample types and messages so repeated clicks show how notifications queue; "Send custom notification" sends exactly what the controls say.',
       },
     },
   },

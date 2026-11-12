@@ -101,6 +101,7 @@ Stories live in `packages/storybook/src/stories/**/*.stories.tsx` and use CSF 3 
 - A new prop variant is a new arg on the existing story, not a new story. Add a second story only for a distinct use case.
 - Stateful demos keep React state in a small wrapper component inside the file and pass it `args`; call `useArgs()` only directly in `render` or a decorator. When a control and the component can both change the same value, keep it in the arg and update it with `updateArgs`, so the panel never shows a stale value.
 - Hook demos without a component keep autodocs on and explain the hook in `parameters.docs.description.component`.
+- `preview.tsx` wraps every story in the ThemeProvider, a MemoryRouter, NotificationProvider and ModalProvider, the same set an app mounts once at its root. Stories never add their own provider: a nested one would also show up in the docs page's code snippet as if the component needed it.
 - Autodocs is on project-wide (`tags: ['autodocs']` in `preview.tsx`), so story files carry no tag; only reference pages (Colors, Fonts, Icons) opt out with `tags: ['!autodocs']`. Docs pages are generated from the component's TypeScript props, so prop descriptions belong in JSDoc on the component interface in `packages/ui-lib/src`, not in the story.
 
 ```tsx
