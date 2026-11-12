@@ -22,7 +22,6 @@ type Args = ComponentProps<typeof SplitLayout> & { nested: boolean };
 const meta = {
   title: 'Global/organisms/SplitLayout',
   component: SplitLayout,
-  tags: ['autodocs'],
   parameters: { layout: 'fullscreen' },
   // the first decorator is the innermost one, so the page frame goes last
   decorators: [

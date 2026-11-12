@@ -4,7 +4,6 @@ import { PasswordField } from 'scorer-ui-kit';
 const meta = {
   title: 'Form/Input/PasswordField',
   component: PasswordField,
-  tags: ['autodocs'],
   argTypes: {
     fieldState: { control: 'select' },
   },

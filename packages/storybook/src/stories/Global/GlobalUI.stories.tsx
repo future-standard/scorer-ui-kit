@@ -1,5 +1,5 @@
-import { boolean, object, select, text } from '@storybook/addon-knobs';
-import { type ReactElement, useCallback, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 import {
   ButtonsStack,
@@ -8,35 +8,31 @@ import {
   type IButtonStack,
   type ICustomDrawer,
   type IHeaderContent,
+  type IMenuTop,
   type INotificationItem,
   type INotificationsHistory,
+  type ITableColumnConfig,
+  type ITypeTableData,
+  type IUserDrawerMeta,
+  type IUserSubmenuItem,
   PageHeader,
   Tab,
   TabList,
   TextAreaField,
   TypeTable,
-  useThemeToggle,
 } from 'scorer-ui-kit';
-import type { ITableColumnConfig, ITypeTableData } from 'scorer-ui-kit/dist/Tables';
-import { action } from 'storybook/actions';
+import { useArgs, useGlobals } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
 import logoMarkSvgRaw from '../assets/logo-mark.svg?raw';
 import logoTextSvgRaw from '../assets/logo-text.svg?raw';
 import photo from '../assets/placeholder.jpg';
+import { sceneOnly } from '../helpers';
+import { FramedDocsPage } from '../helpers/FramedDocsPage';
 
-// base64 encode avoids addon-knobs HTML-encoding ' → &#39; in data URIs, breaking <object> XML parsing.
-// Native controls don't have this HTML-encoding step — verify and simplify when migrating off addon-knobs.
+// base64 keeps the SVG source (quotes, #) valid inside the data URI
 const logoMarkSvg = `data:image/svg+xml;base64,${btoa(logoMarkSvgRaw)}`;
 const logoTextSvg = `data:image/svg+xml;base64,${btoa(logoTextSvgRaw)}`;
-
-const GlobalUIStory = {
-  title: 'Global',
-  component: GlobalUI,
-  parameters: {
-    layout: 'fullscreen',
-  },
-  decorators: [],
-};
 
 const Container = styled.div`
   flex: 1;
@@ -401,248 +397,242 @@ const allNotifications: INotificationsHistory = {
   unreadNotificationsText: 'Read',
 };
 
-const MyCustomDrawer: ReactElement = <h1>Hello Drawer</h1>;
-
 const customDrawer: ICustomDrawer = {
-  customComponent: MyCustomDrawer,
+  customComponent: <h1>Hello Drawer</h1>,
   icon: 'Add',
   status: 'danger',
   counter: 1001,
-  width: '280px;',
+  width: '280px',
 };
 
-export const _GlobalUI = () => {
-  const { isLightMode, onThemeToggle } = useThemeToggle();
-  const [attributeLanguage, setAttributeLanguage] = useState('ja');
+const menuContent: IMenuTop = {
+  items: [
+    {
+      icon: 'Home',
+      title: 'Welcome',
+      href: '/welcome',
+    },
+    {
+      icon: 'Detection',
+      title: 'Company',
+      href: '/company',
+      submenu: [
+        {
+          title: 'About us',
+          href: '/company/about',
+        },
+        {
+          title: 'Team',
+          href: '/company/team',
+        },
+        {
+          title: 'Contact',
+          href: '/company/contact',
+        },
+        {
+          title: 'Table Example',
+          href: '/company/table-example',
+        },
+        {
+          title: 'External link',
+          href: 'https://www.google.com/',
+          isExternalLink: true,
+        },
+      ],
+    },
+    {
+      icon: 'Usage',
+      title: 'Services',
+      href: '/services',
+      submenu: [
+        {
+          title: 'Online Services',
+        },
+        {
+          title: 'Service custom',
+          href: '/services/custom',
+        },
+        {
+          title: 'Service special',
+          href: '/services/special',
+        },
+        {
+          title: 'Service extra special',
+          href: '/services/extra-special',
+        },
+        {
+          title: 'On site Services',
+        },
+        {
+          title: 'Service special',
+          href: '/services/special',
+        },
+        {
+          title: 'Service extra special',
+          href: '/services/extra-special',
+        },
+      ],
+    },
+    {
+      icon: 'Zone',
+      title: 'External link',
+      href: 'https://www.google.com/maps',
+      isExternalLink: true,
+    },
+  ],
+};
 
-  const maxWidth = text('Max width', '1200px');
-  const paddingOverride = text('Padding Override', '70px 90px');
-  const loggedInUser = text('Logged In User', 'full.name@example.com');
-  const hasSearch = boolean('Has Search', true);
-  const hasLogout = boolean('Has Logout', true);
-  const hasNotifications = boolean('Has Notifications', true);
-  const hasCurrentUser = boolean('Has Current User', true);
-  const currentUserText = text('Current User Text', 'Current User');
-  const logoutLink = text('Logout Url', '#');
-  const logoutText = text('Logout Text', 'Logout');
-  const accountOptionText = text('Account Options Text', 'Account Options');
-  const searchPlaceholder = text('Search Placeholder', 'Search area names, etc.');
-  const logoMark = text('Logo Mark SVG', logoMarkSvg);
-  const logoText = text('Logo Text SVG', logoTextSvg);
-  const supportUrl = text('Support Url', '/support');
-  const menuHomeLink = text('Home Link', '/welcome');
-  const canAlwaysPin = boolean('Can Always Pin', true);
-  const defaultMenuOpen = boolean('Default menu open', false);
-  const hasLanguage = boolean('Has Language', true);
-  const hasSwitchTheme = boolean('Has Switch Theme', true);
-  const switchThemeText = text('Switch Theme Text', 'SWITCH THEME');
-  const selectedThemeText = text('Selected Theme Text', 'Light/Dark Mode');
-  const languageToggle = action('onLanguageToggle');
-  const hasUserDrawerMeta = boolean('Has User Drawer Meta', false);
-  const copySuccessMessage = text('Tooltip Text', 'Copied!');
-  const includeCopyTitle = boolean('Include Title Copy', true);
-  const hasUserDrawerFooter = boolean('Has User Drawer Footer', false);
-  const userDrawerFooter = object('User Drawer Footer', {
+const userSubmenu: IUserSubmenuItem[] = [
+  {
+    text: 'Accounts',
+    href: '/user/accounts',
+  },
+  {
+    text: 'Billing',
+    href: '/user/billing',
+  },
+  {
+    text: 'Payments',
+    href: '/user/payments',
+  },
+];
+
+const userDrawerMeta: IUserDrawerMeta[] = [
+  {
+    icon: '',
+    title: 'Device ID:',
+    subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
+    notes: '',
+    hasCopyIcon: true,
+  },
+  {
     icon: 'Information',
-    title: 'V12.3.4',
-  });
-  const badgeText = text('Badge Text', 'Guest');
-  const badgeColor = select(
-    'Badge Color',
-    ['primary', 'grey', 'info', 'success', 'caution', 'warning'],
-    'info'
-  );
-  const badgeLinkTo = text('Badge To', '/login');
-  const badgeLinkText = text('Badge Link Text', 'Login');
+    title: 'GPU machine with 4 GPU',
+    subTitle: 'Building B',
+    notes: `This is a GPU machine having 30 camera support`,
+    hasCopyIcon: true,
+  },
+  {
+    icon: 'Success',
+    title: 'Device is Live',
+    subTitle: 'Building C',
+    notes: `This is a GPU machine having 30 camera support`,
+  },
+];
 
-  const menuConfig = object('Menu Config', {
-    items: [
-      {
-        icon: 'Home',
-        title: 'Welcome',
-        href: '/welcome',
-      },
-      {
-        icon: 'Detection',
-        title: 'Company',
-        href: '/company',
-        submenu: [
-          {
-            title: 'About us',
-            href: '/company/about',
-          },
-          {
-            title: 'Team',
-            href: '/company/team',
-          },
-          {
-            title: 'Contact',
-            href: '/company/contact',
-          },
-          {
-            title: 'Table Example',
-            href: '/company/table-example',
-          },
-          {
-            icon: 'Language',
-            title: 'External link',
-            href: 'https://www.google.com/',
-            isExternalLink: true,
-          },
-        ],
-      },
-      {
-        icon: 'Usage',
-        title: 'Services',
-        href: '/services',
-        submenu: [
-          {
-            title: 'Online Services',
-          },
-          {
-            title: 'Service custom',
-            href: '/services/custom',
-          },
-          {
-            title: 'Service special',
-            href: '/services/special',
-          },
-          {
-            title: 'Service extra special',
-            href: '/services/extra-special',
-          },
-          {
-            title: 'On site Services',
-          },
-          {
-            title: 'Service special',
-            href: '/services/special',
-          },
-          {
-            title: 'Service extra special',
-            href: '/services/extra-special',
-          },
-        ],
-      },
-      {
-        icon: 'Zone',
-        title: 'External link',
-        href: 'https://www.google.com/maps',
-        isExternalLink: true,
-      },
-    ],
-  });
+type Props = ComponentProps<typeof GlobalUI>;
 
-  const userSubmenu = object('Submenu', [
-    {
-      text: 'Accounts',
-      href: '/user/accounts',
-    },
-    {
-      text: 'Billing',
-      href: '/user/billing',
-    },
-    {
-      text: 'Payments',
-      href: '/user/payments',
-    },
-  ]);
-  const notificationsHistory = object('Notifications History', allNotifications);
+const Scene = ({ selectedLangAttribute, ...props }: Props) => (
+  <Container>
+    <GlobalUI
+      {...props}
+      selectedLangAttribute={selectedLangAttribute}
+      selectedLanguageText={selectedLangAttribute === 'ja' ? '日本語' : 'ENGLISH'}
+    >
+      <ContentLayout layout='default' HeaderContent={ExampleContent}>
+        <ComponentLinks />
+      </ContentLayout>
+    </GlobalUI>
+  </Container>
+);
 
-  const onLanguageToggle = useCallback(() => {
-    setAttributeLanguage((prev: string) => {
-      const newLang = prev === 'en' ? 'ja' : 'en';
-      languageToggle(newLang);
-      return newLang;
-    });
-  }, [languageToggle]);
-
-  const getToggleValue = (isMenuOpen: boolean) => {
-    console.debug(isMenuOpen);
-  };
-
-  const userDrawerMetaConfig = object('User Drawer Meta', [
-    {
-      icon: '',
-      title: 'Device ID:',
-      subTitle: 'DEB-NUC8i7BE-G6BE935008VH',
-      notes: '',
-      hasCopyIcon: true,
+const meta = {
+  title: 'Global/GlobalUI',
+  component: GlobalUI,
+  parameters: {
+    layout: 'fullscreen',
+    // The drawers portal to document.body, so the docs preview needs its own frame (FramedDocsPage).
+    docs: {
+      page: FramedDocsPage,
+      story: { inline: false, iframeHeight: '720px' },
     },
-    {
-      icon: 'Information',
-      title: 'GPU machine with 4 GPU',
-      subTitle: 'Building B',
-      notes: `This is a GPU machine having 30 camera support`,
-      hasCopyIcon: true,
-    },
-    {
-      icon: 'Success',
-      title: 'Device is Live',
-      subTitle: 'Building C',
-      notes: `This is a GPU machine having 30 camera support`,
-    },
-  ]);
-
-  return (
-    <Container>
-      <GlobalUI
-        content={menuConfig}
-        home={menuHomeLink}
-        defaultMenuOpen={defaultMenuOpen}
-        onMenuToggle={getToggleValue}
-        canAlwaysPin={canAlwaysPin}
-        userDrawerMeta={userDrawerMetaConfig}
-        legacyLayout={false}
-        selectedLangAttribute={attributeLanguage}
-        selectedLanguageText={attributeLanguage === 'ja' ? '日本語' : 'ENGLISH'}
-        badge={{
-          text: badgeText,
-          color: badgeColor,
-          linkTo: badgeLinkTo,
-          linkText: badgeLinkText,
+  },
+  argTypes: {
+    selectedLangAttribute: { control: 'select', options: ['en', 'ja'] },
+    children: sceneOnly('The example page: a ContentLayout with routed content'),
+    selectedLanguageText: sceneOnly('Follows selectedLangAttribute: 日本語 or ENGLISH'),
+    isLightMode: sceneOnly('Follows the Theme toolbar; the drawer switch updates the toolbar'),
+    openWidth: sceneOnly('unused by the component'),
+    userDrawerBespoke: sceneOnly('Not set here; see Global/TopBar WithBespokeUserDrawer'),
+    leftAreaElement: sceneOnly('Not set here: the search bar fills the left area'),
+    bottomAreaElement: sceneOnly('Not set here: content for a second row below the bar'),
+    bottomAreaHeight: sceneOnly('Not set here: no bottom area in this story'),
+    sideDrawers: sceneOnly('Not set here; see Global/TopBar'),
+    activeDrawer: sceneOnly('Not set here: TopBar manages the open drawer itself'),
+  },
+  args: {
+    content: menuContent,
+    home: '/welcome',
+    logoMark: logoMarkSvg,
+    logoText: logoTextSvg,
+    supportUrl: '/support',
+    supportText: 'Help & Support',
+    keepOpenText: 'Keep Open',
+    autoHideText: 'Auto-Hide',
+    defaultMenuOpen: false,
+    canAlwaysPin: true,
+    maxWidth: '1200px',
+    paddingOverride: '70px 90px',
+    legacyLayout: false,
+    loggedInUser: 'full.name@example.com',
+    hasSearch: true,
+    hasLogout: true,
+    hasNotifications: true,
+    hasCurrentUser: true,
+    hasLanguage: true,
+    hasSwitchTheme: true,
+    hasUserDrawerMeta: false,
+    hasUserDrawerFooter: false,
+    includeCopyTitle: true,
+    currentUserText: 'Current User',
+    logoutLink: '#',
+    logoutText: 'Logout',
+    accountOptionText: 'Account Options',
+    searchPlaceholder: 'Search area names, etc.',
+    switchThemeText: 'SWITCH THEME',
+    selectedThemeText: 'Light/Dark Mode',
+    copySuccessMessage: 'Copied!',
+    selectedLangAttribute: 'ja',
+    languageOptionsText: 'LANGUAGE / 言語',
+    userSubmenu,
+    userDrawerFooter: { icon: 'Information', title: 'V12.3.4' },
+    userDrawerMeta,
+    notificationsHistory: allNotifications,
+    customDrawer,
+    badge: { text: 'Guest', color: 'info', linkTo: '/login', linkText: 'Login' },
+    onMenuToggle: fn(),
+    onLanguageToggle: fn(),
+    onThemeToggle: fn(),
+    onLogout: fn(),
+    onUserDrawerMetaClick: fn(),
+    onActiveDrawerChange: fn(),
+  },
+  render: function Render(args) {
+    const [{ selectedLangAttribute }, updateArgs] = useArgs<Props>();
+    // The drawer's theme switch sets the Theme toolbar global, not a local useThemeToggle state:
+    // ThemeDecorator re-applies the toolbar theme to <body> on every args change, so a local state
+    // would snap back the moment another control (or the language toggle) is used.
+    const [{ theme }, updateGlobals] = useGlobals();
+    const isLightMode = theme !== 'dark';
+    return (
+      <Scene
+        {...args}
+        selectedLangAttribute={selectedLangAttribute}
+        isLightMode={isLightMode}
+        onLanguageToggle={() => {
+          args.onLanguageToggle?.();
+          updateArgs({ selectedLangAttribute: selectedLangAttribute === 'en' ? 'ja' : 'en' });
         }}
-        {...{
-          logoMark,
-          logoText,
-          supportUrl,
-          maxWidth,
-          paddingOverride,
-          notificationsHistory,
-          customDrawer,
+        onThemeToggle={() => {
+          args.onThemeToggle?.();
+          updateGlobals({ theme: isLightMode ? 'dark' : 'light' });
         }}
-        {...{
-          loggedInUser,
-          userSubmenu,
-          hasSearch,
-          hasLogout,
-          hasNotifications,
-          logoutLink,
-          logoutText,
-          searchPlaceholder,
-          hasLanguage,
-          hasCurrentUser,
-          currentUserText,
-          accountOptionText,
-          userDrawerFooter,
-          hasUserDrawerMeta,
-          copySuccessMessage,
-          includeCopyTitle,
-          hasUserDrawerFooter,
-          hasSwitchTheme,
-          isLightMode,
-          switchThemeText,
-          selectedThemeText,
-          onThemeToggle,
-          onLanguageToggle,
-        }}
-      >
-        <ContentLayout layout='default' HeaderContent={ExampleContent}>
-          <ComponentLinks />
-        </ContentLayout>
-      </GlobalUI>
-    </Container>
-  );
-};
+      />
+    );
+  },
+} satisfies Meta<typeof GlobalUI>;
 
-export default GlobalUIStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

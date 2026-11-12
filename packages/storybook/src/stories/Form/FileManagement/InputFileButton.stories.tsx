@@ -5,7 +5,6 @@ import { fn } from 'storybook/test';
 const meta = {
   title: 'Form/FileManagement/InputFileButton',
   component: InputFileButton,
-  tags: ['autodocs'],
   argTypes: {
     buttonDesign: { control: 'select' },
     buttonSize: { control: 'select' },

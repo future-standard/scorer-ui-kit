@@ -55,7 +55,6 @@ const Scene = ({
 const meta = {
   title: 'Global/organisms/NestedSplitLayout',
   component: SplitLayout,
-  tags: ['autodocs'],
   parameters: { layout: 'fullscreen' },
   // the first decorator is the innermost one, so the page frame goes last
   decorators: [

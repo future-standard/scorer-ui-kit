@@ -1,14 +1,8 @@
 import { IconSVGs } from '@future-standard/icons';
-import { boolean, number, select } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { Icon } from 'scorer-ui-kit';
 import styled from 'styled-components';
-import { generateIconList } from '../helpers';
-
-const IconsStory = {
-  title: 'Misc',
-  component: Icon,
-  decorators: [],
-};
 
 const Container = styled.div`
   padding: 12px 24px;
@@ -30,55 +24,69 @@ const Grid = styled.div`
   text-align: center;
 `;
 
-export const _Icons = () => {
-  const iconList = generateIconList();
+type IconProps = ComponentProps<typeof Icon>;
+type Args = IconProps & { showAll: boolean };
 
-  const showAll = boolean('Show All', false);
-  const forSvgUsage = boolean('For SVG Usage', false);
-  const icon = select('Name', iconList, Object.keys(iconList)[0]);
-  const color = select(
-    'Color',
-    {
-      Mono: 'mono',
-      Dimmed: 'dimmed',
-      Subtle: 'subtle',
-      Inverse: 'inverse',
-      Primary: 'primary',
-      Danger: 'danger',
-    },
-    'mono'
-  );
-  const weight = select(
-    'Weight',
-    { Light: 'light', Regular: 'regular', Heavy: 'heavy', Strong: 'strong' },
-    'regular'
-  );
-  const size = number('Size', 24);
+// `color` is an open string in the icon package, so docgen offers no options. Icon reads it as
+// `var(--<color>)`: the six icon aliases from theme/variables/Colors.ts plus any palette step work.
+const ICON_ALIASES = ['mono', 'dimmed', 'subtle', 'inverse', 'primary', 'danger'];
+const PALETTE = [
+  'primary',
+  'secondary',
+  'grey',
+  'info',
+  'success',
+  'caution',
+  'warning',
+  'orange',
+  'red',
+  'green',
+  'black',
+  'white',
+];
+const colorOptions = [
+  ...ICON_ALIASES,
+  ...PALETTE.flatMap((name) => Array.from({ length: 12 }, (_, i) => `${name}-${i + 1}`)),
+];
 
-  /**
-   * Generate a grid of all the icons for easy browsing and hovering to find names.
-   */
-  const generateIconGrid = (props: {
-    color: 'mono' | 'dimmed' | 'subtle' | 'inverse' | 'primary' | 'danger';
-    weight: 'regular' | 'light' | 'heavy' | 'strong';
-    size: number;
-  }) => {
-    return Object.keys(IconSVGs).map((iconName) => (
-      <div title={iconName} key={iconName}>
-        <Icon icon={iconName} {...props}></Icon>
-      </div>
-    ));
-  };
+/**
+ * Generate a grid of all the icons for easy browsing and hovering to find names.
+ */
+const generateIconGrid = (props: Omit<IconProps, 'icon'>) =>
+  Object.keys(IconSVGs).map((iconName) => (
+    <div title={iconName} key={iconName}>
+      <Icon icon={iconName} {...props} />
+    </div>
+  ));
 
-  return (
-    <Container>
-      {showAll ? (
-        <Grid>{generateIconGrid({ ...{ color, weight, size, forSvgUsage } })}</Grid>
-      ) : (
-        <Icon {...{ icon, weight, color, size, forSvgUsage }} />
-      )}
-    </Container>
-  );
-};
+const IconSheet = ({ showAll, icon, ...sharedProps }: Args) => (
+  <Container>
+    {showAll ? <Grid>{generateIconGrid(sharedProps)}</Grid> : <Icon icon={icon} {...sharedProps} />}
+  </Container>
+);
 
-export default IconsStory;
+const meta = {
+  title: 'Misc/Icons',
+  component: Icon,
+  tags: ['!autodocs'],
+  argTypes: {
+    showAll: { name: 'Show all' },
+    icon: { control: 'select', options: Object.keys(IconSVGs) },
+    color: { control: 'select', options: colorOptions },
+    weight: { control: 'select' },
+  },
+  args: {
+    showAll: false,
+    icon: 'ActionPause',
+    color: 'mono',
+    weight: 'regular',
+    size: 24,
+    forSvgUsage: false,
+  },
+  render: (args) => <IconSheet {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

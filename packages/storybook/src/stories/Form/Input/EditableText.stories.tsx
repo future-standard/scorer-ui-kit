@@ -23,7 +23,6 @@ type Args = ComponentProps<typeof EditableText> & { saveDelay: number; rowMaxWid
 const meta = {
   title: 'Form/Input/EditableText',
   component: EditableText,
-  tags: ['autodocs'],
   argTypes: {
     saveDelay: { name: 'Save delay (ms)' },
     rowMaxWidth: { name: 'Row max width (demo band)' },

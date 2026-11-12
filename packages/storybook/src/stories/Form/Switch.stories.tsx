@@ -9,7 +9,6 @@ type Args = ComponentProps<typeof Switch> & { controlled: boolean };
 const meta = {
   title: 'Form/atoms/Switch',
   component: Switch,
-  tags: ['autodocs'],
   argTypes: {
     controlled: { name: 'Controlled (pass checked instead of defaultChecked)' },
     state: { control: 'select' },

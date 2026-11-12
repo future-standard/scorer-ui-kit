@@ -67,7 +67,6 @@ const Scene = ({ useZoneBreak, trailingBreak, onCellClick, ...args }: Args) => {
 const meta = {
   title: 'Chips/atoms/ChipZoneBreak',
   component: ChipZoneBreak,
-  tags: ['autodocs'],
   argTypes: {
     useZoneBreak: { name: 'Use zone break (off = plain 1px divider)' },
     trailingBreak: { name: 'Trailing zone break' },

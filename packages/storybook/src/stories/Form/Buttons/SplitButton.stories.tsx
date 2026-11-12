@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
-import { type ISplitButtonProps, ModalProvider, SplitButton, useModal } from 'scorer-ui-kit';
+import { type ISplitButtonProps, SplitButton, useModal } from 'scorer-ui-kit';
 import { fn } from 'storybook/test';
 
 const onMainActionClick = fn();
@@ -66,15 +66,12 @@ const SplitButtonWithModal = ({
 const meta = {
   title: 'Form/Buttons/SplitButton',
   component: SplitButton,
-  tags: ['autodocs'],
   decorators: [
     // room below the button so the open list is not cropped by the docs canvas
     (Story) => (
-      <ModalProvider>
-        <div style={{ paddingBottom: '200px' }}>
-          <Story />
-        </div>
-      </ModalProvider>
+      <div style={{ paddingBottom: '200px' }}>
+        <Story />
+      </div>
     ),
   ],
   argTypes: {

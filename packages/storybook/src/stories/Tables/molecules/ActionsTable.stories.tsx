@@ -5,7 +5,6 @@ import {
   type IconButtonData,
   type ITableColumnConfig,
   type ITypeTableData,
-  ModalProvider,
   MultilineContent,
   TypeTable,
 } from 'scorer-ui-kit';
@@ -122,14 +121,6 @@ type Args = ComponentProps<typeof TypeTable> & {
 const meta = {
   title: 'Tables/molecules/ActionsTable',
   component: TypeTable,
-  tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <ModalProvider>
-        <Story />
-      </ModalProvider>
-    ),
-  ],
   argTypes: {
     containerWidth: { name: 'Container width (px, 0 = fill)' },
   },

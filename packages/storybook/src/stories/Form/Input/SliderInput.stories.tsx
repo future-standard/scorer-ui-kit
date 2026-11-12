@@ -22,7 +22,6 @@ const exampleMarks: ISliderMark[] = [
 const meta = {
   title: 'Form/Input/SliderInput',
   component: SliderInput,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <Container>

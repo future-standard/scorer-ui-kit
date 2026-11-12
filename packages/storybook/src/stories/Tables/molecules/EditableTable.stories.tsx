@@ -6,7 +6,6 @@ import {
   type IRowData,
   type ITableColumnConfig,
   type ITypeTableData,
-  ModalProvider,
   TypeTable,
   useBreakpoints,
 } from 'scorer-ui-kit';
@@ -160,14 +159,6 @@ const EditableTableDemo = ({ saveDelay, onCameraNameSave, rows: _rows, ...args }
 const meta = {
   title: 'Tables/molecules/EditableTable',
   component: TypeTable,
-  tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <ModalProvider>
-        <Story />
-      </ModalProvider>
-    ),
-  ],
   argTypes: {
     saveDelay: { name: 'Save delay (ms)' },
     rows: {

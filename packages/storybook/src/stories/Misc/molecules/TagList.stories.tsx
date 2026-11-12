@@ -33,7 +33,6 @@ const defaultTags: ITag[] = [
 const meta = {
   title: 'Misc/molecules/TagList',
   component: TagList,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <Container>

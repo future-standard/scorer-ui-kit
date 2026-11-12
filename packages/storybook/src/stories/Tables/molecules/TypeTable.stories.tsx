@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ContentLayout, type ITypeTableData, ModalProvider, TypeTable } from 'scorer-ui-kit';
+import { ContentLayout, type ITypeTableData, TypeTable } from 'scorer-ui-kit';
 import { useArgs } from 'storybook/preview-api';
 import { fn } from 'storybook/test';
 import { columnConfigSample, type ITableSampleData, tableData } from '../../helpers/data_samples';
@@ -9,16 +9,13 @@ import { rowMaker, sortDataBy } from '../../helpers/sample_table_helpers';
 const meta = {
   title: 'Tables/molecules/TypeTable',
   component: TypeTable,
-  tags: ['autodocs'],
   parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '900px' } },
   // the first decorator is the innermost one, so the page frame goes last
   decorators: [
     (Story) => (
-      <ModalProvider>
-        <ContentLayout>
-          <Story />
-        </ContentLayout>
-      </ModalProvider>
+      <ContentLayout>
+        <Story />
+      </ContentLayout>
     ),
     pageFrame,
   ],

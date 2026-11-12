@@ -13,11 +13,7 @@ export default {
     options: {},
   },
   stories: ['../src/stories/Global/*.stories.tsx', '../src/stories/**/*.stories.tsx'],
-  addons: [
-    getAbsolutePath('@storybook/addon-links'),
-    getAbsolutePath('@storybook/addon-docs'),
-    getAbsolutePath('@storybook/addon-knobs'),
-  ],
+  addons: [getAbsolutePath('@storybook/addon-links'), getAbsolutePath('@storybook/addon-docs')],
   typescript: {
     // react-docgen (the default) cannot resolve prop unions that ui-lib re-exports from '..', so
     // Controls would fall back to free-text inputs. The explicit include is required: the plugin
@@ -44,10 +40,7 @@ export default {
       ...config.define,
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     };
-    // Alias legacy @storybook/* packages that addon-knobs still imports.
-    // resolve from repo root since the workspace storybook may be a symlink without core/
     const repoRoot = resolve(__dirname, '..', '..', '..');
-    const sbCore = resolve(repoRoot, 'node_modules', 'storybook', 'core');
     const existingAliases = Array.isArray(config.resolve.alias)
       ? config.resolve.alias
       : Object.entries(config.resolve.alias ?? {}).map(([find, replacement]) => ({
@@ -62,9 +55,6 @@ export default {
         replacement: resolve(repoRoot, 'packages', 'ui-lib', 'src', 'index.tsx'),
       },
       ...existingAliases,
-      { find: '@storybook/preview-api', replacement: resolve(sbCore, 'preview-api', 'index.cjs') },
-      { find: '@storybook/manager-api', replacement: resolve(sbCore, 'manager-api', 'index.cjs') },
-      { find: '@storybook/types', replacement: resolve(sbCore, 'types', 'index.cjs') },
     ];
     return config;
   },

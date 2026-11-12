@@ -486,7 +486,6 @@ const sceneOnly = (summary: string, detail?: string) => ({
 const meta = {
   title: 'Global/TopBar',
   component: TopBar,
-  tags: ['autodocs'],
   // The drawers portal to document.body, so the docs preview needs its own frame (FramedDocsPage).
   parameters: {
     docs: {

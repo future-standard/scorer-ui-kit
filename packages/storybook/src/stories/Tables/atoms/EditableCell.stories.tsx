@@ -28,7 +28,6 @@ type Args = ComponentProps<typeof EditCell> & { saveDelay: number };
 const meta = {
   title: 'Tables/atoms/EditCell',
   component: EditCell,
-  tags: ['autodocs'],
   argTypes: {
     saveDelay: { name: 'Save delay (ms)' },
     alignment: { control: 'select' },

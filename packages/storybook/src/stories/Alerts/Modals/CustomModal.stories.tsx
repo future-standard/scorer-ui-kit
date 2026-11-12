@@ -1,31 +1,12 @@
-import type { ReactElement } from 'react';
-import { Button, type IModal, ModalProvider, useModal } from 'scorer-ui-kit';
-import styled from 'styled-components';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Button, useModal } from 'scorer-ui-kit';
 import LoginModalExample from './LoginModalExample';
 
-const CustomModalStory = {
-  title: 'Alerts/Modals',
-  components: LoginModalExample,
-  decorator: [],
-};
-
-const Container = styled.div``;
-
-const LoginModal = (_modal?: IModal) => {
+const OpenModalButton = () => {
   const { createModal } = useModal();
 
-  //// ---- Form Validation example ---- ////
-  /**
-   * Please review this example inside the LoginModalExample Component
-   * Note the usage of "setModalOpen" with the useModal hook
-   * This form will only log with
-   * username: user
-   * password: 'fakepass123'
-   */
-  const FormModal: ReactElement = <LoginModalExample />;
-
   const openLoginModal = () => {
-    createModal({ customComponent: FormModal });
+    createModal({ customComponent: <LoginModalExample /> });
   };
 
   return (
@@ -35,15 +16,20 @@ const LoginModal = (_modal?: IModal) => {
   );
 };
 
-export const _CustomExampleModal = () => {
-  // Provider should be at main Index level, it's here just for the story example
-  return (
-    <Container>
-      <ModalProvider>
-        <LoginModal />
-      </ModalProvider>
-    </Container>
-  );
-};
+const meta = {
+  title: 'Alerts/Modals/CustomModal',
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A form inside a modal opened through the useModal() hook: the button calls `createModal({ customComponent })` with the `LoginModalExample` component. The example component (LoginModalExample.tsx next to this story) validates the form and closes the modal itself with `setModalOpen(false)` from the same hook; it only accepts the username "user" with the password "fakepass123".',
+      },
+    },
+  },
+  render: () => <OpenModalButton />,
+} satisfies Meta<Record<string, never>>;
 
-export default CustomModalStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

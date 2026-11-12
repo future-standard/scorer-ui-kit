@@ -4,7 +4,6 @@ import { TextAreaField } from 'scorer-ui-kit';
 const meta = {
   title: 'Form/Input/TextAreaField',
   component: TextAreaField,
-  tags: ['autodocs'],
   argTypes: {
     fieldState: { control: 'select' },
   },

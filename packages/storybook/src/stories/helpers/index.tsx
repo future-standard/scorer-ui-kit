@@ -1,24 +1,20 @@
-import { IconSVGs } from '@future-standard/icons';
-
 export const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay));
 
-/**
- * Overrides the toString on a function so that it addon-jsx prints
- * the callbacks in a copy-paste-able way.
- */
-export const emptyCallbackForStory = <T extends (...args: unknown[]) => unknown>(fn: T): T => {
-  /** A toString to render the function in storybook */
-  // eslint-disable-next-line no-param-reassign
-  fn.toString = () => '() => {}';
-  return fn;
-};
+// argTypes entry for a prop the scene sets itself: no control, the docs table shows the summary.
+export const sceneOnly = (summary: string, detail?: string) => ({
+  control: false as const,
+  table: { defaultValue: { summary, detail } },
+});
 
-export const generateIconList = () => {
-  const iconList: { [key: string]: string } = {};
-
-  for (const key in IconSVGs) {
-    iconList[key] = key;
+// The object controls edit JSON, so an edited value comes back with ISO strings where the
+// component expects Dates. Apply it to date-bearing fields only; any other string becomes Invalid Date.
+export const withDates = <T,>(value: T): T => {
+  if (typeof value === 'string') return new Date(value) as T;
+  if (Array.isArray(value)) return value.map((item) => withDates(item)) as T;
+  if (value && typeof value === 'object' && !(value instanceof Date)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, withDates(item)])
+    ) as T;
   }
-
-  return iconList;
+  return value;
 };

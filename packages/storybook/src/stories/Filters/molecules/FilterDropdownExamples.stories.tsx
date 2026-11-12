@@ -1,9 +1,9 @@
-import { boolean, number, select, text } from '@storybook/addon-knobs';
-import { useCallback, useState } from 'react';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type ComponentProps, useCallback, useState } from 'react';
 import { FilterDropdown, type IFilterValue, PageHeader } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
-import { generateIconList } from '../../helpers';
 import {
   emptyResultsEnglish,
   emptyResultsJapanese,
@@ -12,12 +12,6 @@ import {
   searchTemplateResultEnglish,
   searchTemplateResultJapanese,
 } from '../../helpers/data_samples';
-
-const FilterDropdownStory = {
-  title: 'Filters/molecules/FilterDropdownExamples',
-  component: FilterDropdown,
-  decorators: [],
-};
 
 const Content = styled.div``;
 const Divider = styled.div``;
@@ -97,32 +91,38 @@ const baseExample = [
   { text: 'Fugiat Nulla', value: 8 },
 ];
 
-export const MultipleDropdownExamples = () => {
-  const iconList = generateIconList();
+// Story-only inputs: the language switch and one spy per example's selection.
+type Args = ComponentProps<typeof FilterDropdown> & {
+  language: 'english' | 'japanese';
+  onBaseSelect: (selection: IFilterValue) => void;
+  onFoodSelect: (selection: IFilterValue) => void;
+  onSpiceSelect: (selection: IFilterValue) => void;
+  onPaymentSelect: (selection: IFilterValue) => void;
+  onYearSelect: (selection: IFilterValue) => void;
+};
 
-  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
-  const buttonText = text('Text', 'Department');
-  const buttonIcon = select('Button Icon', iconList, iconList.MetaCategories);
-  const disabled = boolean('disable', false);
-  const isLoading = boolean('Is Loading', false);
-  const design = select('Design type', { Default: 'default', Basic: 'basic' }, 'default');
-  const optionType = select(
-    'Option Type',
-    { text: 'text', checkbox: 'checkbox', radio: 'radio' },
-    'checkbox'
-  );
-  const loadingText = text('Loading Text', 'Loading Tags...');
-  const maxDisplayedItems = number('Max Displayed Items', 6);
-  const selectedItems = action('Currently Selected');
-  const foodSelection = action('Food selected');
-  const spiceAction = action('Spicy level');
-  const paymentAction = action('Payment type');
-  const yearAction = action('Years');
+const Scene = ({
+  language,
+  buttonText,
+  loadingText,
+  optionType,
+  onBaseSelect,
+  onFoodSelect,
+  onSpiceSelect,
+  onPaymentSelect,
+  onYearSelect,
+  list: _list,
+  selected: _selected,
+  onSelect: _onSelect,
+  ...shared
+}: Args) => {
+  const en = language === 'english';
+  const loading = en ? loadingText : genericLoadingJp;
 
   const [selectedObj, setSelectedObj] = useState<IFilterValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
   const [textArraySelected, setTextArraySelected] = useState<IFilterValue>(null); // this could also start with values ['Spicy','Sweet']
   const [wordSelected, setWordSelected] = useState<IFilterValue>(
-    language === 'english' ? { text: 'Card', value: 0 } : { text: 'カード', value: 0 }
+    en ? { text: 'Card', value: 0 } : { text: 'カード', value: 0 }
   ); // this could also start with value 'Card' or null
   const [numberSelected, setNumberSelected] = useState<IFilterValue>([
     { text: '1990', value: 1990 },
@@ -131,42 +131,42 @@ export const MultipleDropdownExamples = () => {
 
   const handleSelectItemType = useCallback(
     (newSelection: IFilterValue) => {
-      foodSelection(newSelection);
+      onFoodSelect(newSelection);
       setSelectedObj(newSelection);
     },
-    [foodSelection]
+    [onFoodSelect]
   );
 
   const handleTextListSelect = useCallback(
     (newSelection: IFilterValue) => {
-      spiceAction(newSelection);
+      onSpiceSelect(newSelection);
       setTextArraySelected(newSelection);
     },
-    [spiceAction]
+    [onSpiceSelect]
   );
 
   const handleNumberListSelect = useCallback(
     (newSelection: IFilterValue) => {
-      yearAction(newSelection);
+      onYearSelect(newSelection);
       setNumberSelected(newSelection);
     },
-    [yearAction]
+    [onYearSelect]
   );
 
   const handleWordSelect = useCallback(
     (newSelection: IFilterValue) => {
-      paymentAction(newSelection);
+      onPaymentSelect(newSelection);
       setWordSelected(newSelection);
     },
-    [paymentAction]
+    [onPaymentSelect]
   );
 
   const handleBaseExample = useCallback(
     (newSelection: IFilterValue) => {
-      selectedItems(newSelection);
+      onBaseSelect(newSelection);
       setBaseSelected(newSelection);
     },
-    [selectedItems]
+    [onBaseSelect]
   );
 
   return (
@@ -177,19 +177,13 @@ export const MultipleDropdownExamples = () => {
           introductionText="This example doesn't have filter for options."
         />
         <FilterDropdown
-          {...{
-            disabled,
-            isLoading,
-            buttonText,
-            maxDisplayedItems,
-            buttonIcon,
-            design,
-          }}
+          {...shared}
+          buttonText={buttonText}
           list={baseExample}
           onSelect={handleBaseExample}
           optionType='checkbox'
           selected={baseSelected}
-          loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
+          loadingText={loading}
         />
       </Wrapper>
       <Wrapper key='eje-1'>
@@ -198,24 +192,15 @@ export const MultipleDropdownExamples = () => {
           introductionText="Array of IFilterList [{text: 'Option1', value: 1 }, {text: 'Option2', value: 2 }]"
         />
         <FilterDropdown
-          {...{
-            buttonIcon,
-            disabled,
-            isLoading,
-            design,
-            loadingText,
-            maxDisplayedItems,
-          }}
-          list={language === 'english' ? englishDataList : japaneseDataList}
-          buttonText={language === 'english' ? 'Menu' : 'メニュー'}
+          {...shared}
+          list={en ? englishDataList : japaneseDataList}
+          buttonText={en ? 'Menu' : 'メニュー'}
           selected={selectedObj}
           optionType={optionType}
           onSelect={handleSelectItemType}
-          searchResultText={
-            language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese
-          }
-          searchPlaceholder={language === 'english' ? 'Menu options...' : 'メニュー...'}
-          loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
+          searchResultText={en ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+          searchPlaceholder={en ? 'Menu options...' : 'メニュー...'}
+          loadingText={loading}
           hasOptionsFilter
         />
       </Wrapper>
@@ -223,48 +208,30 @@ export const MultipleDropdownExamples = () => {
       <Wrapper key='eje-2'>
         <PageHeader title='Text type' introductionText='.' />
         <FilterDropdown
-          {...{
-            buttonIcon,
-            disabled,
-            isLoading,
-            design,
-            loadingText,
-            maxDisplayedItems,
-          }}
-          list={language === 'english' ? englishTextList : japaneseTextList}
-          buttonText={language === 'english' ? 'Spice level' : 'ピリ辛'}
+          {...shared}
+          list={en ? englishTextList : japaneseTextList}
+          buttonText={en ? 'Spice level' : 'ピリ辛'}
           selected={textArraySelected}
           onSelect={handleTextListSelect}
           optionType='text'
-          loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
-          searchResultText={
-            language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese
-          }
-          searchPlaceholder={language === 'english' ? 'Spice options...' : 'ピリ辛...'}
+          loadingText={loading}
+          searchResultText={en ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+          searchPlaceholder={en ? 'Spice options...' : 'ピリ辛...'}
           hasOptionsFilter
         />
       </Wrapper>
       <Wrapper key='eje-3'>
         <PageHeader title='Radio type' introductionText='.' />
         <FilterDropdown
-          {...{
-            buttonIcon,
-            disabled,
-            isLoading,
-            design,
-            loadingText,
-            maxDisplayedItems,
-          }}
-          list={language === 'english' ? englishPayList : japanesePayList}
-          buttonText={language === 'english' ? 'Pay Method' : '支払方法'}
+          {...shared}
+          list={en ? englishPayList : japanesePayList}
+          buttonText={en ? 'Pay Method' : '支払方法'}
           selected={wordSelected}
           onSelect={handleWordSelect}
           optionType='radio'
-          loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
-          searchResultText={
-            language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese
-          }
-          searchPlaceholder={language === 'english' ? 'Pay Methods...' : '支払方法...'}
+          loadingText={loading}
+          searchResultText={en ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+          searchPlaceholder={en ? 'Pay Methods...' : '支払方法...'}
           hasOptionsFilter
         />
       </Wrapper>
@@ -274,49 +241,31 @@ export const MultipleDropdownExamples = () => {
           introductionText="Array of IFilterList with numbers [{text: '1900', value:1910}, {text:'1910', value: 1910}]"
         />
         <FilterDropdown
-          {...{
-            buttonIcon,
-            disabled,
-            isLoading,
-            design,
-            loadingText,
-            maxDisplayedItems,
-          }}
-          buttonText={language === 'english' ? 'Year' : '年'}
+          {...shared}
+          buttonText={en ? 'Year' : '年'}
           selected={numberSelected}
           list={yearList}
           onSelect={handleNumberListSelect}
           optionType='checkbox'
-          loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
-          searchPlaceholder={language === 'english' ? 'Years...' : '2020...'}
-          searchResultText={
-            language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese
-          }
+          loadingText={loading}
+          searchPlaceholder={en ? 'Years...' : '2020...'}
+          searchResultText={en ? searchTemplateResultEnglish : searchTemplateResultJapanese}
           hasOptionsFilter
         />
       </Wrapper>
       <Wrapper key='eje-5'>
         <PageHeader title='Empty Example' introductionText='Empty list is been sent.' />
         <FilterDropdown
-          {...{
-            buttonIcon,
-            disabled,
-            isLoading,
-            design,
-            loadingText,
-            maxDisplayedItems,
-          }}
-          buttonText={language === 'english' ? 'Tags' : 'タグー'}
+          {...shared}
+          buttonText={en ? 'Tags' : 'タグー'}
           selected={numberSelected}
           list={[]}
           onSelect={handleNumberListSelect}
           optionType='checkbox'
-          loadingText={language === 'english' ? loadingTagsEnglish : genericLoadingJp}
-          searchPlaceholder={language === 'english' ? 'Filter tags…' : 'フィルタータグ...'}
-          searchResultText={
-            language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese
-          }
-          emptyResultText={language === 'english' ? emptyResultsEnglish : emptyResultsJapanese}
+          loadingText={loading}
+          searchPlaceholder={en ? 'Filter tags…' : 'フィルタータグ...'}
+          searchResultText={en ? searchTemplateResultEnglish : searchTemplateResultJapanese}
+          emptyResultText={en ? emptyResultsEnglish : emptyResultsJapanese}
           hasOptionsFilter
         />
       </Wrapper>
@@ -324,4 +273,66 @@ export const MultipleDropdownExamples = () => {
   );
 };
 
-export default FilterDropdownStory;
+const sceneOnly = (summary: string) => ({
+  control: false as const,
+  table: { defaultValue: { summary } },
+});
+const perExample = sceneOnly('Set per example by the scene');
+const notUsed = sceneOnly('Not used in these examples; see Filters/molecules/FilterDropdown');
+
+const meta = {
+  title: 'Filters/molecules/FilterDropdownExamples',
+  component: FilterDropdown,
+  argTypes: {
+    language: { control: 'select', options: ['english', 'japanese'] },
+    buttonText: { name: 'Button text (Base example)' },
+    optionType: { name: 'Option type (Data Object example)', control: 'select' },
+    buttonIcon: { control: 'select', options: Object.keys(IconSVGs) },
+    design: { control: 'select' },
+    list: perExample,
+    selected: perExample,
+    onSelect: perExample,
+    searchPlaceholder: perExample,
+    searchResultText: perExample,
+    hasOptionsFilter: sceneOnly('On for every example but the first'),
+    emptyResultText: sceneOnly('Set on the Empty example only'),
+    hasReset: notUsed,
+    hasApply: notUsed,
+    resetText: notUsed,
+    cancelText: notUsed,
+    closeText: notUsed,
+    applyText: notUsed,
+    disableApply: notUsed,
+    disableReset: notUsed,
+    onResetCallback: notUsed,
+    onCancelCallback: notUsed,
+    ascendingText: notUsed,
+    descendingText: notUsed,
+    isListAscending: notUsed,
+  },
+  args: {
+    language: 'japanese',
+    buttonText: 'Department',
+    buttonIcon: 'MetaCategories',
+    disabled: false,
+    isLoading: false,
+    design: 'default',
+    optionType: 'checkbox',
+    loadingText: loadingTagsEnglish,
+    maxDisplayedItems: 6,
+    list: [],
+    selected: null,
+    onSelect: fn(),
+    onBaseSelect: fn(),
+    onFoodSelect: fn(),
+    onSpiceSelect: fn(),
+    onPaymentSelect: fn(),
+    onYearSelect: fn(),
+  },
+  render: (args) => <Scene {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

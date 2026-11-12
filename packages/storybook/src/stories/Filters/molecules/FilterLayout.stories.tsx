@@ -14,7 +14,6 @@ type Args = ComponentProps<typeof FilterLayout> & { language: 'english' | 'japan
 const meta = {
   title: 'Filters/molecules/FilterLayout',
   component: FilterLayout,
-  tags: ['autodocs'],
   decorators: [
     // room below the button so the open panel is not cropped by the docs canvas
     (Story) => (
