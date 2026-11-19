@@ -52,9 +52,15 @@ const meta = {
       updateArgs({ defaultValue: value });
     };
 
+    // EditCell copies defaultValue into state on mount, so the control remounts it.
     return (
       <Cell>
-        <EditCell {...args} defaultValue={defaultValue} saveCallback={saveCallback} />
+        <EditCell
+          key={defaultValue}
+          {...args}
+          defaultValue={defaultValue}
+          saveCallback={saveCallback}
+        />
       </Cell>
     );
   },

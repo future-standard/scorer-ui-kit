@@ -81,34 +81,34 @@ type Args = ComponentProps<typeof DurationSlider> & { useDynamicFormat: boolean 
 
 const isTimeUnit = (unit: string): unit is ITimeUnit => unit in timeFormatData;
 
-// The format example rewrites its own timeFormat from the slider value, so the pattern lives in
-// state next to the slider instead of overwriting the timeFormat control.
-const DynamicFormatSlider = ({ useDynamicFormat, ...args }: Args) => {
-  const [dynamicFormat, setDynamicFormat] = useState(args.timeFormat);
-  const unitData = isTimeUnit(args.timeUnit) ? timeFormatData[args.timeUnit] : undefined;
+const formatFor = (value: number, unit: ITimeUnit | string) => {
+  const { hours, minutes, seconds } = getTimeValues(value, unit);
+  return [
+    `[H]hr${getPluralSuffix(hours)}`,
+    `[M]min${getPluralSuffix(minutes)}`,
+    `[S]sec${getPluralSuffix(seconds)}`,
+  ].join(' ');
+};
 
-  const inputCallback = (value: number) => {
-    args.inputCallback?.(value);
-    if (!useDynamicFormat) {
-      return;
-    }
-    const { hours, minutes, seconds } = getTimeValues(value, args.timeUnit);
-    setDynamicFormat(
-      [
-        `[H]hr${getPluralSuffix(hours)}`,
-        `[M]min${getPluralSuffix(minutes)}`,
-        `[S]sec${getPluralSuffix(seconds)}`,
-      ].join(' ')
-    );
+// The format example keeps the slider value in state and derives the pattern from it on every
+// render, instead of overwriting the timeFormat control; a stored pattern would be stale after a
+// remount until the next drag.
+const DynamicFormatSlider = ({ useDynamicFormat, ...args }: Args) => {
+  const unitData = isTimeUnit(args.timeUnit) ? timeFormatData[args.timeUnit] : undefined;
+  const defaultValue = unitData?.min ?? args.defaultValue ?? 0;
+  const [value, setValue] = useState(defaultValue);
+
+  const inputCallback = (next: number) => {
+    args.inputCallback?.(next);
+    setValue(next);
   };
 
   return (
     <DurationSlider
-      key={args.timeUnit}
       {...args}
       {...unitData}
-      defaultValue={unitData?.min ?? args.defaultValue}
-      timeFormat={useDynamicFormat ? dynamicFormat : args.timeFormat}
+      defaultValue={defaultValue}
+      timeFormat={useDynamicFormat ? formatFor(value, args.timeUnit) : args.timeFormat}
       inputCallback={inputCallback}
     />
   );
@@ -225,5 +225,7 @@ export const TimeFormat: Story = {
     ...timeFormatData.seconds,
     defaultValue: timeFormatData.seconds.min,
   },
-  render: (args) => <DynamicFormatSlider {...args} />,
+  // The unit changes defaultValue, which the DurationSlider label and the wrapper's value keep in
+  // state from mount, so the control remounts the whole example.
+  render: (args) => <DynamicFormatSlider key={args.timeUnit} {...args} />,
 };

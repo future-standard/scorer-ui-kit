@@ -23,9 +23,11 @@ const Scene = ({
   sideAreaACollapsed,
   sideAreaBCollapsed,
   onSideAreaAChange,
-  onSideAreaBChange: _b,
+  onSideAreaBChange,
   ...args
 }: Args) => (
+  // Both spies are attached here, not inside the sideArea arg: an edit in the object control
+  // re-creates nested functions as inert stubs that no longer log to the Actions panel.
   <SplitLayout
     key={`${sideAreaACollapsed}-${sideAreaBCollapsed}`}
     {...args}
@@ -48,7 +50,11 @@ const Scene = ({
         />
       ),
     }}
-    sideArea={{ ...args.sideArea, defaultCollapsed: sideAreaBCollapsed }}
+    sideArea={{
+      ...args.sideArea,
+      defaultCollapsed: sideAreaBCollapsed,
+      onSideAreaStateChange: onSideAreaBChange,
+    }}
   />
 );
 
@@ -89,7 +95,6 @@ const meta = {
       content: <FlexContentPlaceholder title='Side Area B' />,
       collapsable: true,
       minSize: 200,
-      onSideAreaStateChange: onSideAreaBChange,
     },
   },
   // defaultCollapsed is read only on mount, so the collapsed controls remount the layouts

@@ -4,6 +4,7 @@ import { type ComponentProps, useCallback, useState } from 'react';
 import { FilterDropdown, type IFilterValue, PageHeader } from 'scorer-ui-kit';
 import { fn } from 'storybook/test';
 import styled from 'styled-components';
+import { sceneOnly } from '../../helpers';
 import {
   emptyResultsEnglish,
   emptyResultsJapanese,
@@ -273,10 +274,6 @@ const Scene = ({
   );
 };
 
-const sceneOnly = (summary: string) => ({
-  control: false as const,
-  table: { defaultValue: { summary } },
-});
 const perExample = sceneOnly('Set per example by the scene');
 const notUsed = sceneOnly('Not used in these examples; see Filters/molecules/FilterDropdown');
 

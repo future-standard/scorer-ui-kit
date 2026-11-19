@@ -553,7 +553,9 @@ const meta = {
     selectedLanguageText: sceneOnly('Follows selectedLangAttribute: 日本語 or ENGLISH'),
     isLightMode: sceneOnly('Follows the Theme toolbar; the drawer switch updates the toolbar'),
     openWidth: sceneOnly('unused by the component'),
-    userDrawerBespoke: sceneOnly('Not set here; see Global/TopBar WithBespokeUserDrawer'),
+    userDrawerBespoke: sceneOnly(
+      'Not set here; see the Global/TopBar control Use bespoke user drawer'
+    ),
     leftAreaElement: sceneOnly('Not set here: the search bar fills the left area'),
     bottomAreaElement: sceneOnly('Not set here: content for a second row below the bar'),
     bottomAreaHeight: sceneOnly('Not set here: no bottom area in this story'),
@@ -609,9 +611,8 @@ const meta = {
   },
   render: function Render(args) {
     const [{ selectedLangAttribute }, updateArgs] = useArgs<Props>();
-    // The drawer's theme switch sets the Theme toolbar global, not a local useThemeToggle state:
-    // ThemeDecorator re-applies the toolbar theme to <body> on every args change, so a local state
-    // would snap back the moment another control (or the language toggle) is used.
+    // The drawer's theme switch sets the Theme toolbar global, not a local useThemeToggle state: a
+    // local state is overridden on every args change and snaps back after the language toggle.
     const [{ theme }, updateGlobals] = useGlobals();
     const isLightMode = theme !== 'dark';
     return (
