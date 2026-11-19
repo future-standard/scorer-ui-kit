@@ -215,8 +215,8 @@ describe('EditCell', () => {
   });
 
   /* TRAP, documented in COMPONENT_INVENTORY.md. `updatedValue` is seeded from `defaultValue` once
-     and never re-synced, so a value saved anywhere else stays invisible. The EditableTable story
-     works around it by rebuilding every row in an effect. */
+     and never re-synced, so a value saved anywhere else stays invisible until the cell is remounted
+     (the EditableTable story keys the cell on its value). */
   it('ignores defaultValue after mount', async () => {
     const container = await render(<EditCell defaultValue='First' rowKey='id-1' />);
     expect(container.textContent).toBe('First');
