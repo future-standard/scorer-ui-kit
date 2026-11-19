@@ -281,16 +281,23 @@ const SplitLayout: React.FC<ISplitLayoutProps> = ({
     }
   }, [initialised, persist, savedCollapsedState, savedSize, savedLastOpenSize]);
 
-  // Keyed on the callback, not on sideArea: consumers pass a fresh sideArea object on every render,
-  // which would re-fire the callback each time and loop if it sets state.
-  const { onSideAreaStateChange } = sideArea;
+  // Reports each state once, tracked in a ref rather than through effect dependencies: consumers
+  // pass a fresh sideArea object, usually with an inline arrow, on every render, and depending on
+  // either would re-fire the callback each render and loop if it sets state. A callback that arrives
+  // after mount is told the current state once.
+  const reportedStateRef = useRef<ISideAreaState | null>(null);
   useEffect(() => {
+    const { onSideAreaStateChange } = sideArea;
     if (!initialised || !onSideAreaStateChange) {
+      reportedStateRef.current = null;
       return;
     }
-
+    if (reportedStateRef.current === sideAreaState) {
+      return;
+    }
+    reportedStateRef.current = sideAreaState;
     onSideAreaStateChange(sideAreaState);
-  }, [initialised, onSideAreaStateChange, sideAreaState]);
+  });
 
   /*
   ---  Expose Controls To Parent (via Ref) ---

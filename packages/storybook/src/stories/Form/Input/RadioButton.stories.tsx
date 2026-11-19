@@ -13,7 +13,6 @@ const OPTIONS = ['option1', 'option2', 'option3'];
 const meta = {
   title: 'Form/Input/RadioButton',
   component: RadioButton,
-  tags: ['autodocs'],
   argTypes: {
     currentChecked: { control: 'select', options: ['', ...OPTIONS] },
     id: { control: false, table: { defaultValue: { summary: 'one per option' } } },

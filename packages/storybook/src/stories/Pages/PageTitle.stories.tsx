@@ -10,7 +10,6 @@ type Args = ComponentProps<typeof PageTitle> & { withAreaClick: boolean };
 const meta = {
   title: 'Pages/atoms/PageTitle',
   component: PageTitle,
-  tags: ['autodocs'],
   parameters: { layout: 'fullscreen' },
   // The icon hangs 44px into the left gutter, so the title needs ContentLayout's padding around
   // it; the first decorator is the innermost one, so the page frame goes last.

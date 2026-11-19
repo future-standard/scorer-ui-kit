@@ -1,24 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ContentLayout, type ITypeTableData, ModalProvider, TypeTable } from 'scorer-ui-kit';
+import { ContentLayout, type ITypeTableData, TypeTable } from 'scorer-ui-kit';
 import { useArgs } from 'storybook/preview-api';
 import { fn } from 'storybook/test';
-import { columnConfigSample, type ITableSampleData, tableData } from '../../helpers/data_samples';
+import { columnConfigSample, tableData } from '../../helpers/data_samples';
 import { pageFrame } from '../../helpers/PageFrame';
 import { rowMaker, sortDataBy } from '../../helpers/sample_table_helpers';
+
+const DATE_TEXT = /^[A-Z][a-z]{2} [A-Z][a-z]{2} \d{2} \d{4}$/;
 
 const meta = {
   title: 'Tables/molecules/TypeTable',
   component: TypeTable,
-  tags: ['autodocs'],
   parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '900px' } },
   // the first decorator is the innermost one, so the page frame goes last
   decorators: [
     (Story) => (
-      <ModalProvider>
-        <ContentLayout>
-          <Story />
-        </ContentLayout>
-      </ModalProvider>
+      <ContentLayout>
+        <Story />
+      </ContentLayout>
     ),
     pageFrame,
   ],
@@ -61,13 +60,27 @@ export const Default: Story = {
       updateArgs({ rows: rows.map((row) => ({ ...row, _checked: checked })) });
     };
 
+    // Sorts the current rows, not the sample data, so edits made in the rows control survive.
     const sortCallback = (ascending: boolean, columnId: string) => {
       args.sortCallback?.(ascending, columnId);
-      const checkedById = new Map(rows.map((row) => [row.id, row._checked]));
-      const sorted = rowMaker(
-        sortDataBy([...tableData], columnId as keyof ITableSampleData, ascending)
-      );
-      updateArgs({ rows: sorted.map((row) => ({ ...row, _checked: checkedById.get(row.id) })) });
+      // A column without a columnId reports its position as column_N.
+      const configIndex = args.columnConfig.findIndex((column) => column.columnId === columnId);
+      const index =
+        configIndex === -1 && columnId.startsWith('column_')
+          ? Number(columnId.slice('column_'.length))
+          : configIndex;
+      const sorted = [...rows].sort((rowA, rowB) => {
+        const textA = rowA.columns[index]?.text ?? '';
+        const textB = rowB.columns[index]?.text ?? '';
+        // Only toDateString output counts as a date: Date.parse also accepts '242' or 'Camera 3',
+        // and the Created column would otherwise sort by weekday name.
+        const order =
+          DATE_TEXT.test(textA) && DATE_TEXT.test(textB)
+            ? Date.parse(textA) - Date.parse(textB)
+            : textA.localeCompare(textB, undefined, { numeric: true });
+        return ascending ? order : -order;
+      });
+      updateArgs({ rows: sorted });
     };
 
     return (

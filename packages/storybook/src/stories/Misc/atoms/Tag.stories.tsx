@@ -9,7 +9,6 @@ type Args = ComponentProps<typeof Tag> & { useOnTagClick: boolean };
 const meta = {
   title: 'Misc/atoms/Tag',
   component: Tag,
-  tags: ['autodocs'],
   argTypes: {
     icon: { control: 'select', options: Object.keys(IconSVGs) },
     tagSize: {

@@ -5,7 +5,6 @@ import { fn } from 'storybook/test';
 const meta = {
   title: 'Misc/atoms/BasicSearchInput',
   component: BasicSearchInput,
-  tags: ['autodocs'],
   argTypes: {
     color: { control: 'select' },
   },

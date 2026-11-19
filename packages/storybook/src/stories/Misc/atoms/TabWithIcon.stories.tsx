@@ -8,7 +8,6 @@ type Args = ComponentProps<typeof TabWithIcon> & { selected: boolean };
 const meta = {
   title: 'Misc/atoms/TabWithIcon',
   component: TabWithIcon,
-  tags: ['autodocs'],
   argTypes: {
     icon: { control: 'select', options: Object.keys(IconSVGs) },
     selected: { name: 'Show selected' },

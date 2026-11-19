@@ -8,7 +8,6 @@ type Args = ComponentProps<typeof StatusIcon> & { showEmptyCounter: boolean };
 const meta = {
   title: 'Misc/StatusIcon',
   component: StatusIcon,
-  tags: ['autodocs'],
   argTypes: {
     icon: { control: 'select', options: Object.keys(IconSVGs) },
     status: { control: 'select' },

@@ -17,7 +17,6 @@ const HeaderCell = styled.div`
 const meta = {
   title: 'Tables/atoms/TableHeaderTitle',
   component: TableHeaderTitle,
-  tags: ['autodocs'],
   args: {
     header: 'Device Name',
     sortable: true,

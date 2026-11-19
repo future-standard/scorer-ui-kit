@@ -122,7 +122,6 @@ const Scene = ({
 const meta = {
   title: 'CameraPanels/organisms/CameraPanels',
   component: CameraPanels,
-  tags: ['autodocs'],
   argTypes: {
     panels: {
       control: false,

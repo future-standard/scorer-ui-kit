@@ -1,6 +1,6 @@
-import { boolean, number, select } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type React from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { type ComponentProps, useCallback, useMemo, useState } from 'react';
 import {
   FilterInputs,
   FiltersResults,
@@ -13,9 +13,8 @@ import {
   type ISearchFilter,
   isFilterItem,
 } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
-
+import { fn } from 'storybook/test';
+import { sceneOnly } from '../../helpers';
 import {
   clearEng,
   clearJp,
@@ -32,14 +31,6 @@ import {
   showMoreEng,
   showMoreJp,
 } from '../../helpers/data_samples';
-
-const FilterInputsStory = {
-  title: 'Filters/molecules',
-  component: 'FilterInputs',
-  decorators: [],
-};
-
-const Container = styled.div``;
 
 const depList: IFilterValue = [
   {
@@ -147,12 +138,21 @@ const isDifferentValue = (
   return true;
 };
 
-export const _FilterInputs = () => {
-  const language = select('Language', { English: 'english', Japanese: 'japanese' }, 'japanese');
-  const hasShowMore = boolean('Has ShowMore', true);
-  const totalResults = number('Total Results', 6);
-  const foodValue = action('food selection');
+type Args = ComponentProps<typeof FilterInputs> & {
+  language: 'english' | 'japanese';
+  totalResults: number;
+  onFoodSelect: (selection: IFilterValue) => void;
+};
 
+const Scene = ({
+  language,
+  totalResults,
+  onFoodSelect,
+  hasShowMore,
+  showMoreText,
+  showLessText,
+}: Args) => {
+  const en = language === 'english';
   const [selectedObj, setSelectedObj] = useState<IFilterValue>(null); // this could also start with values [{ text: 'Ramen', value: 0 }]
   const [categorySelected, setCategorySelected] = useState<IFilterValue>(null);
   const [nameVal, setNameVal] = useState('');
@@ -161,10 +161,10 @@ export const _FilterInputs = () => {
 
   const handleSelectItemType = useCallback(
     (newSelection: IFilterValue) => {
-      foodValue(newSelection);
+      onFoodSelect(newSelection);
       setSelectedObj(newSelection);
     },
-    [foodValue]
+    [onFoodSelect]
   );
 
   const handleCategorySelected = useCallback((newSelection: IFilterValue) => {
@@ -194,50 +194,47 @@ export const _FilterInputs = () => {
         buttonText: 'Department',
         buttonIcon: 'MetaCategories',
         list: depList,
-        loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
-        searchPlaceholder:
-          language === 'english' ? searchPlaceholderEnglish : searchPlaceholderJapanese,
-        searchResultText:
-          language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+        loadingText: en ? loadingTagsEnglish : genericLoadingJp,
+        searchPlaceholder: en ? searchPlaceholderEnglish : searchPlaceholderJapanese,
+        searchResultText: en ? searchTemplateResultEnglish : searchTemplateResultJapanese,
         onSelect: handleCategorySelected,
         selected: categorySelected,
       },
       {
         id: 'food',
         canHide: true,
-        buttonText: language === 'english' ? 'Menu' : 'メニュー',
+        buttonText: en ? 'Menu' : 'メニュー',
         buttonIcon: 'Zone',
-        list: language === 'english' ? englishDataList : japaneseDataList,
-        loadingText: language === 'english' ? loadingTagsEnglish : genericLoadingJp,
-        searchPlaceholder: language === 'english' ? 'Menu options...' : 'メニュー...',
-        searchResultText:
-          language === 'english' ? searchTemplateResultEnglish : searchTemplateResultJapanese,
+        list: en ? englishDataList : japaneseDataList,
+        loadingText: en ? loadingTagsEnglish : genericLoadingJp,
+        searchPlaceholder: en ? 'Menu options...' : 'メニュー...',
+        searchResultText: en ? searchTemplateResultEnglish : searchTemplateResultJapanese,
         optionType: 'checkbox',
         onSelect: handleSelectItemType,
         selected: selectedObj,
       },
     ],
-    [categorySelected, handleCategorySelected, handleSelectItemType, language, selectedObj]
+    [categorySelected, en, handleCategorySelected, handleSelectItemType, selectedObj]
   );
 
   const searchFilters: ISearchFilter[] = useMemo(
     () => [
       {
         id: 'search1',
-        placeholder: language === 'english' ? 'Filter by name...' : '名前 フィルター',
+        placeholder: en ? 'Filter by name...' : '名前 フィルター',
         value: nameVal,
-        name: language === 'english' ? 'Name filter' : '名前 フィルター',
+        name: en ? 'Name filter' : '名前 フィルター',
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
           handleSearcher(e.target.value, 'search1');
         },
       },
       {
         id: 'search2',
-        placeholder: language === 'english' ? 'Filter by food' : '食べ物 フィルター',
+        placeholder: en ? 'Filter by food' : '食べ物 フィルター',
         canHide: true,
         showFieldText: 'Search by food',
         value: foodSelected,
-        name: language === 'english' ? 'Menu filter' : 'メニュー  フィルター',
+        name: en ? 'Menu filter' : 'メニュー  フィルター',
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
           handleSearcher(e.target.value, 'search2');
         },
@@ -253,7 +250,7 @@ export const _FilterInputs = () => {
         },
       },
     ],
-    [exampleSearch, foodSelected, handleSearcher, language, nameVal]
+    [en, exampleSearch, foodSelected, handleSearcher, nameVal]
   );
 
   const labelLists = generateResultsLabelData(dropdownFilters, searchFilters);
@@ -291,19 +288,45 @@ export const _FilterInputs = () => {
   );
 
   return (
-    <Container>
+    <>
       <FilterInputs
         {...{ searchFilters, dropdownFilters, hasShowMore }}
-        showMoreText={language === 'english' ? showMoreEng : showMoreJp}
-        showLessText={language === 'english' ? showLessEng : showLessJp}
+        showMoreText={en ? showMoreText : showMoreJp}
+        showLessText={en ? showLessText : showLessJp}
       />
       <FiltersResults
         {...{ labelLists, totalResults, onClearAll, onRemoveFilter }}
-        resultTextTemplate={language === 'english' ? resultTextTemplateEng : resultTextTemplateJp}
-        clearText={language === 'english' ? clearEng : clearJp}
+        resultTextTemplate={en ? resultTextTemplateEng : resultTextTemplateJp}
+        clearText={en ? clearEng : clearJp}
       />
-    </Container>
+    </>
   );
 };
 
-export default FilterInputsStory;
+const meta = {
+  title: 'Filters/molecules/FilterInputs',
+  component: FilterInputs,
+  argTypes: {
+    language: { control: 'select', options: ['english', 'japanese'] },
+    totalResults: { name: 'Total results (FiltersResults)' },
+    searchFilters: sceneOnly('Built by the scene: three search inputs holding the live text'),
+    dropdownFilters: sceneOnly(
+      'Built by the scene: Department and Menu dropdowns holding the live selection'
+    ),
+    datePickerFilters: sceneOnly('Not set here'),
+  },
+  args: {
+    language: 'japanese',
+    hasShowMore: true,
+    showMoreText: showMoreEng,
+    showLessText: showLessEng,
+    totalResults: 6,
+    onFoodSelect: fn(),
+  },
+  render: (args) => <Scene {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

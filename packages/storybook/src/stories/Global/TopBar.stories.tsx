@@ -9,12 +9,12 @@ import {
   type ISideDrawer,
   SplitButton,
   TopBar,
-  useThemeToggle,
 } from 'scorer-ui-kit';
-import { useArgs } from 'storybook/preview-api';
+import { useArgs, useGlobals } from 'storybook/preview-api';
 import { fn } from 'storybook/test';
 import styled from 'styled-components';
 import placeholderImage from '../assets/placeholder.jpg';
+import { sceneOnly } from '../helpers';
 import { FramedDocsPage } from '../helpers/FramedDocsPage';
 
 const Container = styled.div`
@@ -147,6 +147,9 @@ const COPY = {
       { text: 'Billing', href: '#' },
       { text: 'Payments', href: '#' },
     ],
+    bespokeIntro:
+      'This area is yours: userDrawerBespoke renders any element inside the user drawer.',
+    bespokeHint: 'Use it for account details, a plan summary or links the menu does not cover.',
   },
   ja: {
     brand: 'スマートカフェテリア',
@@ -180,6 +183,9 @@ const COPY = {
       { text: '請求', href: '#' },
       { text: '支払い', href: '#' },
     ],
+    bespokeIntro:
+      'この領域は自由に使えます: userDrawerBespoke はユーザードロワー内に任意の要素を表示します。',
+    bespokeHint: 'アカウント情報やプラン概要、メニューにないリンクなどに使えます。',
   },
 };
 
@@ -305,6 +311,15 @@ const buildLeftAreaElement = (t: Copy, actions: LeftAreaActions) => (
   </LeftContent>
 );
 
+const buildBespokeDrawer = (t: Copy) => (
+  <BespokeDrawerContent>
+    <BespokeDrawerText>
+      <p>{t.bespokeIntro}</p>
+      <p>{t.bespokeHint}</p>
+    </BespokeDrawerText>
+  </BespokeDrawerContent>
+);
+
 // Icon-triggered drawer (opens from the top bar). The counter badge shows how many orders are
 // currently waiting.
 const buildOrdersDrawer = (t: Copy): ICustomDrawer => ({
@@ -386,10 +401,12 @@ const leftAreaActions = { onNewOrder: fn(), onPrintReceipt: fn(), onClearOrders:
 const JA_LEFT_AREA_ELEMENT = buildLeftAreaElement(COPY.ja, leftAreaActions);
 const JA_ORDERS_DRAWER = buildOrdersDrawer(COPY.ja);
 const JA_SIDE_DRAWERS = buildSideDrawers(COPY.ja);
+const JA_BESPOKE_DRAWER = buildBespokeDrawer(COPY.ja);
 
 // Story-only inputs that are not TopBar props.
 type Args = ComponentProps<typeof TopBar> & {
   useBadgeOnClick: boolean;
+  useBespokeDrawer: boolean;
   onBadgeClick: () => void;
   onNewOrder: () => void;
   onPrintReceipt: () => void;
@@ -401,7 +418,9 @@ const Scene = ({
   customDrawer,
   sideDrawers,
   leftAreaElement,
+  userDrawerBespoke,
   useBadgeOnClick,
+  useBespokeDrawer,
   onBadgeClick,
   onNewOrder: _n,
   onPrintReceipt: _p,
@@ -419,7 +438,6 @@ const Scene = ({
   userSubmenu,
   ...topBarProps
 }: Args) => {
-  const { onThemeToggle, isLightMode } = useThemeToggle();
   // Controlled drawer state: the page-content buttons open the side drawers by id,
   // while the Orders icon in the top bar still works via onActiveDrawerChange.
   const [activeDrawer, setActiveDrawer] = useState<IActiveDrawer>(null);
@@ -446,8 +464,6 @@ const Scene = ({
         <TopBar
           {...topBarProps}
           badge={activeBadge}
-          isLightMode={isLightMode}
-          onThemeToggle={onThemeToggle}
           onLanguageToggle={onLanguageToggle}
           selectedLangAttribute={selectedLangAttribute}
           selectedLanguageText={localized(selectedLanguageText, COPY.ja.selectedLanguageText)}
@@ -462,6 +478,9 @@ const Scene = ({
           leftAreaElement={localized(leftAreaElement, JA_LEFT_AREA_ELEMENT)}
           customDrawer={localized(customDrawer, JA_ORDERS_DRAWER)}
           sideDrawers={localized(sideDrawers, JA_SIDE_DRAWERS)}
+          userDrawerBespoke={
+            useBespokeDrawer ? localized(userDrawerBespoke, JA_BESPOKE_DRAWER) : undefined
+          }
           activeDrawer={activeDrawer}
           onActiveDrawerChange={setActiveDrawer}
         />
@@ -478,15 +497,9 @@ const Scene = ({
   );
 };
 
-const sceneOnly = (summary: string, detail?: string) => ({
-  control: false as const,
-  table: { defaultValue: { summary, detail } },
-});
-
 const meta = {
   title: 'Global/TopBar',
   component: TopBar,
-  tags: ['autodocs'],
   // The drawers portal to document.body, so the docs preview needs its own frame (FramedDocsPage).
   parameters: {
     docs: {
@@ -495,9 +508,9 @@ const meta = {
     },
   },
   argTypes: {
-    userDrawerBespoke: sceneOnly('Not set here; see the WithBespokeUserDrawer story'),
+    useBespokeDrawer: { name: 'Use bespoke user drawer' },
     bottomAreaElement: sceneOnly('Not set here: content for a second row below the bar'),
-    isLightMode: sceneOnly('Follows the Theme toolbar through useThemeToggle()'),
+    isLightMode: sceneOnly('Follows the Theme toolbar; the drawer switch sets the toolbar too'),
     activeDrawer: sceneOnly('Controlled by the story: null until a drawer is opened'),
   },
   args: {
@@ -536,8 +549,11 @@ const meta = {
     customDrawer: buildOrdersDrawer(COPY.en),
     sideDrawers: buildSideDrawers(COPY.en),
     leftAreaElement: buildLeftAreaElement(COPY.en, leftAreaActions),
+    userDrawerBespoke: buildBespokeDrawer(COPY.en),
     useBadgeOnClick: false,
+    useBespokeDrawer: false,
     onLanguageToggle: fn(),
+    onThemeToggle: fn(),
     onLogout: fn(),
     onUserDrawerMetaClick: fn(),
     onBadgeClick: fn(),
@@ -545,15 +561,25 @@ const meta = {
   },
   render: function Render(args) {
     const [{ selectedLangAttribute = 'en' }, updateArgs] = useArgs<Args>();
+    // The drawer's theme switch sets the Theme toolbar global, not a local useThemeToggle state: a
+    // local state is overridden on every args change and snaps back after the language toggle.
+    const [{ theme }, updateGlobals] = useGlobals();
+    const isLightMode = theme !== 'dark';
     const onLanguageToggle = () => {
       args.onLanguageToggle?.();
       updateArgs({ selectedLangAttribute: selectedLangAttribute === 'en' ? 'ja' : 'en' });
+    };
+    const onThemeToggle = () => {
+      args.onThemeToggle?.();
+      updateGlobals({ theme: isLightMode ? 'dark' : 'light' });
     };
     return (
       <Scene
         {...args}
         selectedLangAttribute={selectedLangAttribute}
+        isLightMode={isLightMode}
         onLanguageToggle={onLanguageToggle}
+        onThemeToggle={onThemeToggle}
       />
     );
   },
@@ -563,17 +589,3 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
-
-export const WithBespokeUserDrawer: Story = {
-  argTypes: { userDrawerBespoke: { control: 'object' } },
-  args: {
-    userDrawerBespoke: (
-      <BespokeDrawerContent>
-        <BespokeDrawerText>
-          <p>This area is yours: userDrawerBespoke renders any element inside the user drawer.</p>
-          <p>Use it for account details, a plan summary or links the menu does not cover.</p>
-        </BespokeDrawerText>
-      </BespokeDrawerContent>
-    ),
-  },
-};

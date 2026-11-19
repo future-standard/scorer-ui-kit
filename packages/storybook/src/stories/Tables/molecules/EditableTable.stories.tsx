@@ -6,7 +6,6 @@ import {
   type IRowData,
   type ITableColumnConfig,
   type ITypeTableData,
-  ModalProvider,
   TypeTable,
   useBreakpoints,
 } from 'scorer-ui-kit';
@@ -99,14 +98,18 @@ const EditableTableDemo = ({ saveDelay, onCameraNameSave, rows: _rows, ...args }
   const updateCameraName = useCallback(
     async (name: string, rowKey: string) => {
       onCameraNameSave(name, rowKey);
-      if (name.length === 0 || !data.some(({ id }) => id === rowKey)) {
+      if (name.length === 0) {
         return;
       }
       // Database wait example
       await sleep(saveDelay);
-      setData(data.map((row) => (row.id === rowKey ? { ...row, cameraName: name } : row)));
+      // Updates the latest data, not the array this save started from, so two saves made within
+      // the delay both survive.
+      setData((prev) =>
+        prev.map((row) => (row.id === rowKey ? { ...row, cameraName: name } : row))
+      );
     },
-    [data, onCameraNameSave, saveDelay]
+    [onCameraNameSave, saveDelay]
   );
 
   const buildDataRows = useCallback(
@@ -118,8 +121,11 @@ const EditableTableDemo = ({ saveDelay, onCameraNameSave, rows: _rows, ...args }
           columns: [
             { text: jobName },
             {
+              // EditCell shows its own state once mounted, so a name saved while the cell was
+              // reset by a click outside (a second edit within the delay) only shows after a remount.
               customComponent: (
                 <EditCell
+                  key={cameraName}
                   alignment='left'
                   defaultValue={cameraName}
                   rowKey={id}
@@ -140,12 +146,10 @@ const EditableTableDemo = ({ saveDelay, onCameraNameSave, rows: _rows, ...args }
   );
 
   /**
-   * If data is updated the table will be rebuild.
-   *
-   * Rebuilding in an effect, rather than deriving rows with useMemo, is what EditCell requires: it
-   * reads defaultValue once, so a row object has to be recreated to show an externally changed
-   * value. The side effect is that rows lag columnConfig by one render whenever the Uptime column
-   * appears or disappears, which is the mismatch TypeTable has to survive.
+   * Rows are rebuilt in an effect, not derived with useMemo, on purpose: rows then lag columnConfig
+   * by one render whenever the Uptime column appears or disappears, which is the mismatch TypeTable
+   * has to survive. A rebuilt row object does not refresh an EditCell by itself; the key on the
+   * cell above is what shows a name saved from outside.
    */
   useEffect(() => {
     setRows(buildDataRows(data));
@@ -160,14 +164,6 @@ const EditableTableDemo = ({ saveDelay, onCameraNameSave, rows: _rows, ...args }
 const meta = {
   title: 'Tables/molecules/EditableTable',
   component: TypeTable,
-  tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <ModalProvider>
-        <Story />
-      </ModalProvider>
-    ),
-  ],
   argTypes: {
     saveDelay: { name: 'Save delay (ms)' },
     rows: {
