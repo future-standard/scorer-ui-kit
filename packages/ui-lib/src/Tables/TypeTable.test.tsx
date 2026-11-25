@@ -158,8 +158,8 @@ describe('TypeTable rows/columnConfig contract', () => {
   });
 
   it('does not flash the empty state for a caller that fills rows in an effect', async () => {
-    /* Mirrors the shape EditableTable.stories.tsx uses, which EditCell forces: rows start empty and
-       arrive after the first commit. [] must not be read as "no data" for such a caller. */
+    /* Mirrors the shape EditableTable.stories.tsx uses: rows start empty and arrive after the first
+       commit. [] must not be read as "no data" for such a caller. */
     const RowsFromEffect = () => {
       const [rows, setRows] = useState<ITypeTableData>([]);
       useEffect(() => {

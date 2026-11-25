@@ -1,59 +1,14 @@
-import { select, text } from '@storybook/addon-knobs';
-import type React from 'react';
-import type { ReactElement } from 'react';
-import { Button, ConfirmationModal, ModalProvider, useModal } from 'scorer-ui-kit';
-import type { TypeButtonDesigns } from 'scorer-ui-kit/dist/Form';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
+import { Button, ConfirmationModal, useModal } from 'scorer-ui-kit';
+import { fn } from 'storybook/test';
 
-const Container = styled.div``;
-
-const ConfirmationModalStory = {
-  title: 'Alerts/Modals',
-  components: ConfirmationModal,
-  decorator: [],
-};
-
-interface IExampleModal {
-  message: string;
-  leftButtonDesign: TypeButtonDesigns;
-  rightButtonDesign: TypeButtonDesigns;
-  title?: string;
-  leftButtonText?: string;
-  leftButtonCallback?: () => void;
-  rightButtonText?: string;
-  rightButtonCallback?: () => void;
-}
-
-const ModalExample: React.FC<IExampleModal> = ({
-  message = 'Hello',
-  leftButtonDesign,
-  rightButtonDesign,
-  title = '',
-  leftButtonText = 'Back',
-  leftButtonCallback = () => {},
-  rightButtonText = 'Accept',
-  rightButtonCallback = () => {},
-}) => {
+const OpenModalButton = (args: ComponentProps<typeof ConfirmationModal>) => {
   const { createModal } = useModal();
 
   const openConfirmationModal = () => {
-    console.debug('creatingModal');
-    createModal({ isCloseEnable: false, customComponent: addPersonModal });
+    createModal({ isCloseEnable: false, customComponent: <ConfirmationModal {...args} /> });
   };
-
-  const addPersonModal: ReactElement = (
-    <ConfirmationModal
-      title={title}
-      message={message}
-      leftButtonText={leftButtonText}
-      leftButtonDesign={leftButtonDesign}
-      leftButtonCallback={leftButtonCallback}
-      rightButtonDesign={rightButtonDesign}
-      rightButtonText={rightButtonText}
-      rightButtonCallback={rightButtonCallback}
-    />
-  );
 
   return (
     <Button design='secondary' onClick={openConfirmationModal}>
@@ -62,44 +17,35 @@ const ModalExample: React.FC<IExampleModal> = ({
   );
 };
 
-export const _ConfirmationTemplate = () => {
-  const title = text('Title', 'Modal Title');
-  const msg = text(
-    'Message',
-    'This is an example of some information provided to the customer to confirm an option'
-  );
-  const leftBtnTxt = text('Left Button Text', 'Back');
-  const buttonDesignLeft = select(
-    'Left Button Design',
-    { Primary: 'primary', Secondary: 'secondary', Danger: 'danger' },
-    'secondary'
-  );
-  const leftBtnCallback = action('Back button pressed');
-  const RightBtnTxt = text('Right Button Text', 'I understand');
-  const buttonDesignRight = select(
-    'Right Button Design',
-    { Primary: 'primary', Secondary: 'secondary', Danger: 'danger' },
-    'primary'
-  );
-  const rightBtnCallback = action('Accept button pressed');
+const meta = {
+  title: 'Alerts/Modals/ConfirmationModal',
+  component: ConfirmationModal,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'ConfirmationModal is the content of a modal opened through the useModal() hook: the button calls `createModal({ isCloseEnable: false, customComponent })` with a `ConfirmationModal` built from these args. The two callbacks only log here; an app closes the modal from them with `setModalOpen(false)`.',
+      },
+    },
+  },
+  argTypes: {
+    leftButtonDesign: { control: 'select' },
+    rightButtonDesign: { control: 'select' },
+  },
+  args: {
+    title: 'Modal Title',
+    message: 'This is an example of some information provided to the customer to confirm an option',
+    leftButtonText: 'Back',
+    leftButtonDesign: 'secondary',
+    rightButtonText: 'I understand',
+    rightButtonDesign: 'primary',
+    leftButtonCallback: fn(),
+    rightButtonCallback: fn(),
+  },
+  render: (args) => <OpenModalButton {...args} />,
+} satisfies Meta<typeof ConfirmationModal>;
 
-  // Provider should be at main Index level, it's here just for the story example
-  return (
-    <Container>
-      <ModalProvider>
-        <ModalExample
-          title={title}
-          message={msg}
-          leftButtonText={leftBtnTxt}
-          leftButtonDesign={buttonDesignLeft}
-          leftButtonCallback={leftBtnCallback}
-          rightButtonText={RightBtnTxt}
-          rightButtonDesign={buttonDesignRight}
-          rightButtonCallback={rightBtnCallback}
-        />
-      </ModalProvider>
-    </Container>
-  );
-};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export default ConfirmationModalStory;
+export const Default: Story = {};

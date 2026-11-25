@@ -1,5 +1,5 @@
-import { boolean } from '@storybook/addon-knobs';
-import { useRef, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type ComponentProps, useRef, useState } from 'react';
 import {
   Button,
   ChipBar,
@@ -14,9 +14,10 @@ import {
   SplitButton,
   TopBar,
 } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
-import { sleep } from '../../helpers';
+import { sceneOnly, sleep } from '../../helpers';
+import { FramedDocsPage } from '../../helpers/FramedDocsPage';
 
 /* Spaces/Arrangement/Save/Reset content for the kit's real `TopBar`, passed in as
    `leftAreaElement`, plus the name bar passed in as `bottomAreaElement`. A demo, not a pattern
@@ -28,11 +29,6 @@ import { sleep } from '../../helpers';
      library: the kit ships the compact chip, the bottom slot and `EditableText`, nothing more.
    - The name's `1:` prefix is the selected chip's position in `spaces`, so it is app state and stays
      here. Only the name itself is editable. */
-const SpacesTopBarStory = {
-  title: 'Chips/organisms',
-  component: ChipBar,
-  decorators: [],
-};
 
 /* Save and Reset hold form controls rather than chips, so they sit outside any ChipBar with their
    own 56px geometry. Do not switch this to styled(SplitButton): it spreads ...rest after its own
@@ -134,13 +130,51 @@ interface ISpace {
   name: string;
 }
 
-export const _SpacesTopBar = () => {
-  const showWorkspace = boolean('Show workspace chip', true);
-  const canReset = boolean('Reset enabled (dirty)', true);
-  const showNameBar = boolean('Show name bar (bottom area)', true);
-  const isTallNameBar = boolean('Taller name bar (40px)', false);
-  const isSlowSave = boolean('Slow rename (shows Saving state)', false);
+type Args = ComponentProps<typeof ChipBar> & {
+  showWorkspace: boolean;
+  canReset: boolean;
+  showNameBar: boolean;
+  isTallNameBar: boolean;
+  isSlowSave: boolean;
+  onWorkspaceClick: () => void;
+  onSpaceClick: (number: string) => void;
+  onAdd: () => void;
+  onDuplicate: (number: string) => void;
+  onRemove: (number: string) => void;
+  onSpaceMenuOpenChange: (open: boolean) => void;
+  onArrangement: (id: string) => void;
+  onArrangementOpenChange: (open: boolean) => void;
+  onSave: (number: string) => void;
+  onSaveAs: () => void;
+  onReset: () => void;
+  onAdminClick: () => void;
+  onRename: (uid: string, name: string) => void;
+  onFitToggle: (fit: 'contain' | 'cover') => void;
+  onControlsToggle: (drawer: IActiveDrawer) => void;
+};
 
+const Scene = ({
+  showWorkspace,
+  canReset,
+  showNameBar,
+  isTallNameBar,
+  isSlowSave,
+  onWorkspaceClick,
+  onSpaceClick,
+  onAdd,
+  onDuplicate,
+  onRemove,
+  onSpaceMenuOpenChange,
+  onArrangement,
+  onArrangementOpenChange,
+  onSave,
+  onSaveAs,
+  onReset,
+  onAdminClick,
+  onRename,
+  onFitToggle,
+  onControlsToggle,
+}: Args) => {
   // a stable uid with the number taken from position, so the chip you remove is the one that
   // unmounts and the chips to its right really do renumber
   const [spaces, setSpaces] = useState<ISpace[]>([
@@ -162,20 +196,6 @@ export const _SpacesTopBar = () => {
   const selectedNumber = String(spaces.findIndex((space) => space.uid === selectedUid) + 1);
   const selectedSpace = spaces.find((space) => space.uid === selectedUid);
   const arrangement = ARRANGEMENTS.find(({ id }) => id === arrangementId);
-
-  const onWorkspaceClick = action('workspace-click');
-  const onSpaceClick = action('space-click');
-  const onAdd = action('add-space');
-  const onDuplicate = action('duplicate-space');
-  const onRemove = action('remove-space');
-  const onArrangement = action('arrangement-select');
-  const onSave = action('save-space');
-  const onSaveAs = action('save-space-as');
-  const onReset = action('reset-layout');
-  const onAdminClick = action('admin-click');
-  const onRename = action('rename-space');
-  const onFitToggle = action('fit-toggle');
-  const onControlsToggle = action('controls-toggle');
 
   const appendSpace = () => {
     const uid = `s${nextUid.current++}`;
@@ -317,7 +337,7 @@ export const _SpacesTopBar = () => {
         <ChipDropdown
           items={spaceMenuItems}
           disabled={workspaceActive}
-          onOpenChange={action('space-menu-open-change')}
+          onOpenChange={onSpaceMenuOpenChange}
         />
       </ChipBar>
 
@@ -331,7 +351,7 @@ export const _SpacesTopBar = () => {
           selectedId={arrangementId}
           // leads with the value on screen: an aria-label that dropped it would fail WCAG 2.5.3
           triggerLabel={arrangement ? `${arrangement.label} arrangement` : undefined}
-          onOpenChange={action('arrangement-open-change')}
+          onOpenChange={onArrangementOpenChange}
         />
       </ChipBar>
       <SaveCell>
@@ -410,4 +430,53 @@ export const _SpacesTopBar = () => {
   );
 };
 
-export default SpacesTopBarStory;
+const meta = {
+  title: 'Chips/organisms/SpacesTopBar',
+  component: ChipBar,
+  // The TopBar drawers portal to document.body, so the docs preview needs its own frame (FramedDocsPage).
+  parameters: {
+    docs: {
+      page: FramedDocsPage,
+      story: { inline: false, iframeHeight: '420px' },
+    },
+  },
+  argTypes: {
+    showWorkspace: { name: 'Show workspace chip' },
+    canReset: { name: 'Reset enabled (dirty)' },
+    showNameBar: { name: 'Show name bar (bottom area)' },
+    isTallNameBar: { name: 'Taller name bar (40px)' },
+    isSlowSave: { name: 'Slow rename (shows Saving state)' },
+    children: sceneOnly('built by the scene: Spaces, Layout and View controls bars'),
+    isCompact: sceneOnly('set per bar by the scene: only the View controls bar is compact'),
+    leadingDivider: sceneOnly('set per bar by the scene: only the View controls bar has it'),
+  },
+  args: {
+    children: null,
+    showWorkspace: true,
+    canReset: true,
+    showNameBar: true,
+    isTallNameBar: false,
+    isSlowSave: false,
+    onWorkspaceClick: fn(),
+    onSpaceClick: fn(),
+    onAdd: fn(),
+    onDuplicate: fn(),
+    onRemove: fn(),
+    onSpaceMenuOpenChange: fn(),
+    onArrangement: fn(),
+    onArrangementOpenChange: fn(),
+    onSave: fn(),
+    onSaveAs: fn(),
+    onReset: fn(),
+    onAdminClick: fn(),
+    onRename: fn(),
+    onFitToggle: fn(),
+    onControlsToggle: fn(),
+  },
+  render: (args) => <Scene {...args} />,
+} satisfies Meta<Args>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

@@ -2,12 +2,7 @@ import { IconSVGs } from '@future-standard/icons';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type React from 'react';
 import { useRef } from 'react';
-import {
-  Button,
-  type INotificationProps,
-  NotificationProvider,
-  useNotification,
-} from 'scorer-ui-kit';
+import { Button, type INotificationProps, useNotification } from 'scorer-ui-kit';
 import { fn } from 'storybook/test';
 import styled from 'styled-components';
 
@@ -52,12 +47,11 @@ const NotificationExample: React.FC<INotificationProps> = (notification) => {
 
 const meta = {
   title: 'Alerts/atoms/Notification',
-  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Demonstrates the useNotification() hook. "Send random notification" cycles through five sample types and messages so repeated clicks show how notifications queue; "Send custom notification" sends exactly what the controls say. The provider is normally mounted once at the app root; it sits here only so the story is self-contained.',
+          'Demonstrates the useNotification() hook. "Send random notification" cycles through five sample types and messages so repeated clicks show how notifications queue; "Send custom notification" sends exactly what the controls say.',
       },
     },
   },
@@ -76,9 +70,7 @@ const meta = {
   },
   render: (args) => (
     <Container>
-      <NotificationProvider>
-        <NotificationExample {...args} />
-      </NotificationProvider>
+      <NotificationExample {...args} />
     </Container>
   ),
 } satisfies Meta<INotificationProps>;

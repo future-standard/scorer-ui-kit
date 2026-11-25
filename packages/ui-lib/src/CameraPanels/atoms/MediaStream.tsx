@@ -25,6 +25,7 @@ const Container = styled.div`
       width: 100%;
       object-fit: cover;
     }
+  }
 `;
 
 const EmptyWithIcon = styled.div<{ $hasPadding: boolean }>`

@@ -1,59 +1,57 @@
-import { boolean, text } from '@storybook/addon-knobs';
-import { type ReactElement, useEffect, useState } from 'react';
-import { Button, type IModal, ModalProvider, useModal } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Button, type IModal, useModal } from 'scorer-ui-kit';
+import { fn } from 'storybook/test';
 
-const BaseModalStory = {
-  title: 'Alerts/Modals',
-  components: ModalProvider,
-  decorator: [],
-};
+const customComponentExample = <h1>Hello!</h1>;
 
-const Container = styled.div``;
+type Args = IModal & { showCustomComponent: boolean };
 
-const EmptyModal = (modal?: IModal) => {
-  const [modalProps, setModalProps] = useState(modal);
+const OpenModalButton = ({ showCustomComponent, ...modal }: Args) => {
   const { createModal } = useModal();
 
-  const openImageModal = () => {
-    createModal({ ...modalProps });
+  const openModal = () => {
+    createModal({
+      ...modal,
+      customComponent: showCustomComponent ? customComponentExample : undefined,
+    });
   };
 
-  useEffect(() => {
-    setModalProps(modal);
-  }, [modal]);
-
   return (
-    <Button design='secondary' onClick={openImageModal}>
+    <Button design='secondary' onClick={openModal}>
       Base Modal
     </Button>
   );
 };
 
-const customComponentExample: ReactElement = <h1>Hello!</h1>;
+const meta = {
+  title: 'Alerts/Modals/BaseModal',
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Demonstrates the useModal() hook: the button calls `createModal()` with these args, so the modal shows the close text, padding and optional custom component you set.',
+      },
+    },
+  },
+  argTypes: {
+    showCustomComponent: { name: 'Show custom component' },
+    customComponent: {
+      control: false,
+      table: { defaultValue: { summary: '<h1>Hello!</h1> while "Show custom component" is on' } },
+    },
+  },
+  args: {
+    closeText: 'Close',
+    isCloseEnable: true,
+    padding: true,
+    width: '',
+    showCustomComponent: false,
+    dismissCallback: fn(),
+  },
+  render: (args) => <OpenModalButton {...args} />,
+} satisfies Meta<Args>;
 
-export const _BaseModal = () => {
-  const closeTxt = text('Close text', 'Close');
-  const isCloseEnable = boolean('Is Close Enabled', true);
-  const padding = boolean('Padding', true);
-  const dismissAction = action('Modal dismissed');
-  const showCustom = boolean('Show Custom Component', false);
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  // Provider should be at main Index level, it's here just for the example
-  return (
-    <Container>
-      <ModalProvider>
-        <EmptyModal
-          closeText={closeTxt}
-          isCloseEnable={isCloseEnable}
-          padding={padding}
-          dismissCallback={dismissAction}
-          customComponent={showCustom ? customComponentExample : undefined}
-        />
-      </ModalProvider>
-    </Container>
-  );
-};
-
-export default BaseModalStory;
+export const Default: Story = {};
