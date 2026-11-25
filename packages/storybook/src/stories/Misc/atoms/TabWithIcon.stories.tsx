@@ -1,31 +1,37 @@
-import { boolean, text } from '@storybook/addon-knobs';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { TabList, Tabs, TabWithIcon } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
-import styled from 'styled-components';
+import { fn } from 'storybook/test';
 
-const TabWithIconStory = {
-  title: 'Misc/atoms',
+type Args = ComponentProps<typeof TabWithIcon> & { selected: boolean };
+
+const meta = {
+  title: 'Misc/atoms/TabWithIcon',
   component: TabWithIcon,
-  decorators: [],
-};
+  argTypes: {
+    icon: { control: 'select', options: Object.keys(IconSVGs) },
+    selected: { name: 'Show selected' },
+  },
+  args: {
+    icon: 'Success',
+    title: 'New Items',
+    subtitle: 'Selected 120 of 120',
+    tabFor: 'exampleTab',
+    selected: false,
+    onClick: fn(),
+  },
+  // The tab reads its active state from the Tabs context, so the story mounts the real wrappers.
+  render: ({ selected, ...args }) => (
+    <Tabs>
+      <TabList defaultTabId={selected ? args.tabFor : 'none'}>
+        <TabWithIcon {...args} />
+      </TabList>
+    </Tabs>
+  ),
+} satisfies Meta<Args>;
 
-const Container = styled.div``;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const _TabWithIcon = () => {
-  const icon = text('Icon', 'Success');
-  const title = text('Title', 'New Items');
-  const subtitle = text('Subtitle', 'Selected 120 of 120');
-  const selected = boolean('Show selected', false);
-  const tabOnClick = action('tab-click');
-  return (
-    <Container>
-      <Tabs>
-        <TabList defaultTabId={selected ? 'exampleTab' : 'none'}>
-          <TabWithIcon {...{ icon, title, subtitle }} tabFor='exampleTab' onClick={tabOnClick} />
-        </TabList>
-      </Tabs>
-    </Container>
-  );
-};
-
-export default TabWithIconStory;
+export const Default: Story = {};

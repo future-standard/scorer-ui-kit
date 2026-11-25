@@ -4,7 +4,8 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig(() => {
-  const skipDts = process.argv.includes('--watch') || process.env.SKIP_DTS === 'true';
+  const isWatch = process.argv.includes('--watch');
+  const skipDts = isWatch || process.env.SKIP_DTS === 'true';
   return {
     plugins: [
       react(),
@@ -17,6 +18,9 @@ export default defineConfig(() => {
           ]),
     ],
     build: {
+      // The watch build empties dist on every start; the example dev server then caches the
+      // missing chunk and keeps failing to resolve it until its cache is cleared.
+      emptyOutDir: !isWatch,
       lib: {
         entry: {
           index: resolve(import.meta.dirname, 'src/index.tsx'),

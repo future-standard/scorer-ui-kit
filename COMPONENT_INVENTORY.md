@@ -737,7 +737,7 @@ This document provides a comprehensive inventory of all React components in the 
   - Enter saves and Escape reverts; a click outside **discards** the edit rather than saving it
   - Save is a `ButtonWithLoading` that reads "Saving" while the promise is in flight; Cancel is **unmounted** during the save, so the panel's width changes mid-save
   - **Using it in a TypeTable:** there is no `componentType`/`cellType` API. Pass it through `ICellData.customComponent`, which `TypeTableRow` renders in place of the cell's `text`
-  - **Trap:** `defaultValue` is read **once**. It seeds internal state and is never re-synced, so a value changed from outside after mount is ignored, and the cell keeps showing whatever it last saved locally. The `EditableTable` story works around this by rebuilding every row in a `useEffect` when its data changes
+  - **Trap:** `defaultValue` is read **once**. It seeds internal state and is never re-synced, so a value changed from outside after mount is ignored, and the cell keeps showing whatever it last saved locally. Rebuilding the row object does **not** help: React keeps the cell's state. Remount it instead, as the `EditableTable` story does with `key={cameraName}` on the cell
   - **Trap:** a `saveCallback` that rejects leaves the cell stuck. `setLoading(false)` sits after the `await` with no `try`/`catch`, so a rejection skips it and the panel stays on "Saving" with the input disabled and no Cancel button - a dead end for the user, plus an unhandled promise rejection
   - **Trap:** the pencil is `opacity: 0`, revealed on the container's `:hover` only. Measured in the browser: with the pencil focused and `:focus-visible` matching, its computed opacity is still `0`, so a keyboard user tabs onto a target that is completely invisible
   - **Trap:** it reads `theme.fontFamily.ui` through the styled-components theme, so it throws without a `ThemeProvider`. The Chips family and `EditableText` take everything from CSS variables and render bare, so a test or a harness that works for those needs a provider added for this one
@@ -1154,13 +1154,11 @@ This document provides a comprehensive inventory of all React components in the 
   - `feedbackMessage`: `string` - Message text displayed in feedback bar
   - `actionCallback`: `() => void` - Callback for action icon click
   - `actionIcon`: `string` - Icon name for action button displayed inside input (right side)
-  - `postfix`: `string` - Text displayed after input value (e.g., units like "px", "%")
 - **Notable Features:**
   - **Base Input Component**: Foundation input with state-based styling
   - **Field States**: Six states with color-coded borders and shadows (default, disabled, required, valid, invalid, processing)
   - **Feedback System**: Optional feedback bar with state-specific icons (Required, Success, Invalid, Spinner)
   - **Action Icon**: Optional icon button inside input for actions (e.g., clear, show password, search)
-  - **Postfix Support**: Display text after input value for units or context
   - **State-Based Styling**: Border colors, shadows, and backgrounds change based on fieldState
   - **Auto-Disable**: Automatically disables input when fieldState is 'disabled' or 'processing'
   - **Focus Effects**: Enhanced box shadow on focus with state-specific colors
@@ -2379,7 +2377,6 @@ This document provides a comprehensive inventory of all React components in the 
   - `feedbackMessage`: `string` - Message text displayed in feedback bar
   - `actionCallback`: `() => void` - Callback for action icon click (from InputProps)
   - `actionIcon`: `string` - Icon name for action button (from InputProps)
-  - `postfix`: `string` - Text displayed after input value (from InputProps)
   - `required`: `boolean` - Shows required indicator in label
   - `alwaysShowRequiredDot?`: `boolean` - Keep the required dot visible even while the field has a value (default: false)
 - **Notable Features:**
@@ -2389,7 +2386,6 @@ This document provides a comprehensive inventory of all React components in the 
   - **State Management**: Passes fieldState to both Label and Input for consistent styling
   - **Feedback System**: Supports feedback messages with state-specific icons
   - **Action Icon**: Optional action button with icon (e.g., for password visibility toggle)
-  - **Postfix Support**: Can display text after input value (e.g., units)
   - **Composition**: Combines Label and Input components with proper prop forwarding
   - **HTML Attributes**: Supports all standard input HTML attributes (placeholder, maxLength, etc.)
   - **Default State**: fieldState defaults to 'default' if not provided
@@ -2600,7 +2596,7 @@ This document provides a comprehensive inventory of all React components in the 
   - **Copy Functionality**: Optional copy button per column
   - **Link Support**: Cells can be links via href property
   - **Responsive Design**: Table layout with flexible column widths
-  - **Trap:** `rows[].columns` and `columnConfig` are **parallel arrays matched by position**, and nothing enforces that their lengths agree. A row with more cells than the config has entries drops the extras and logs a `console.warn` naming the row and both lengths; a row with fewer cells simply renders short. If your column set changes at runtime - a column that only appears above a breakpoint, say - change the config and the rows in the **same render**, or the row shows values under the wrong headers for one frame. Building rows in a `useEffect` (which `EditCell` forces, see its entry) guarantees that lag; `_EditableTable` demonstrates it deliberately
+  - **Trap:** `rows[].columns` and `columnConfig` are **parallel arrays matched by position**, and nothing enforces that their lengths agree. A row with more cells than the config has entries drops the extras and logs a `console.warn` naming the row and both lengths; a row with fewer cells simply renders short. If your column set changes at runtime - a column that only appears above a breakpoint, say - change the config and the rows in the **same render**, or the row shows values under the wrong headers for one frame. Building rows in a `useEffect` guarantees that lag; the `EditableTable` story does it deliberately to show the mismatch
   - **Trap:** the header is **uncontrolled, with `sortActive` as its initial value**. Ship `sortActive: true` on one column to choose where the arrow starts; after that, clicks own it. The kit does **not** write `sortActive` back into your objects - it used to, which silently rewrote memoised and module-level configs (#703). If you want to own the active column, update `sortActive` in your own `sortCallback` and the header adopts each change
   - **Trap:** give every column a `columnId` if the column set changes at runtime. Without one a column's sort identity is its position (`column_${index}`, which is also the id passed to `sortCallback`), so inserting or removing a column moves the arrow to whatever now sits at that index
   - `defaultAscending` is a **default, not a control**: it seeds the direction, and changing it still takes effect while nobody has sorted yet. Once the user clicks a header, internal state owns the direction and later changes to the prop are ignored - otherwise a second click on the active column would stop flipping

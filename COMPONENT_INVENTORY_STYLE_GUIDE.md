@@ -14,7 +14,7 @@ This document defines the established pattern for documenting component props in
 
 ```markdown
 ### ComponentName
-- **Status:** ✅/❌ Has Storybook (context if needed)
+- **Status:** ✅/❌ Has Storybook (an autodocs page with Controls; context if needed)
 - **Component Path:** `relative/path/to/Component.tsx`
 - **Story Path:** `relative/path/to/Component.stories.tsx` or N/A
 - **Exported From:** `ModuleName`

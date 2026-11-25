@@ -1,30 +1,17 @@
-import { object, text } from '@storybook/addon-knobs';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { type ITabIcon, PageHeader, TabsWithIconBar } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
-
-const TabsWithIconBarStory = {
-  title: 'Misc/molecules',
-  component: TabsWithIconBar,
-  decorators: [],
-};
+import { pageFrame } from '../../helpers/PageFrame';
 
 const PADDING_LEFT = '87px';
-
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 30px 0;
-`;
 
 const LayoutWrapper = styled.div`
   padding: ${`30px 30px 30px ${PADDING_LEFT}`} ;
 `;
 
-const tabOnClick = action('tab-click');
-const onTabClick = (tabFor: string) => () => tabOnClick(tabFor);
+const onTabClick = fn();
 
 const list: ITabIcon[] = [
   {
@@ -32,7 +19,7 @@ const list: ITabIcon[] = [
     title: 'New People',
     subtitle: 'Selected 120 of 120',
     tabFor: 'newPeopleTab',
-    onClick: onTabClick('newPeopleTab'),
+    onClick: () => onTabClick('newPeopleTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -47,7 +34,7 @@ const list: ITabIcon[] = [
     title: 'Updates To People',
     subtitle: 'Selected 0 of 4',
     tabFor: 'updatesToPeopleTab',
-    onClick: onTabClick('updatesToPeopleTab'),
+    onClick: () => onTabClick('updatesToPeopleTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -62,7 +49,7 @@ const list: ITabIcon[] = [
     title: 'Missing Images',
     subtitle: '4 entries w/out images',
     tabFor: 'missingImagesTab',
-    onClick: onTabClick('missingImagesTab'),
+    onClick: () => onTabClick('missingImagesTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -77,7 +64,7 @@ const list: ITabIcon[] = [
     title: 'Errors',
     subtitle: '6 entries with errors',
     tabFor: 'errorsTab',
-    onClick: onTabClick('errorsTab'),
+    onClick: () => onTabClick('errorsTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -89,16 +76,24 @@ const list: ITabIcon[] = [
   },
 ];
 
-export const _TabWithIconBar = () => {
-  const defaultTabId = text('Default Tab Id', 'newPeopleTab');
-  const paddingLeft = text('Padding Left Override', PADDING_LEFT);
-  const tabList = object('TabList', list);
+type Args = ComponentProps<typeof TabsWithIconBar> & { onTabClick: (tabFor: string) => void };
 
-  return (
-    <Container>
-      <TabsWithIconBar {...{ defaultTabId, tabList, paddingLeft }} />
-    </Container>
-  );
-};
+const meta = {
+  title: 'Misc/molecules/TabsWithIconBar',
+  component: TabsWithIconBar,
+  // the bar brings its own page gutter (paddingLeft), so the page frame alone is its parent
+  parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '420px' } },
+  decorators: [pageFrame],
+  args: {
+    defaultTabId: 'newPeopleTab',
+    tabList: list,
+    paddingLeft: PADDING_LEFT,
+    onTabClick,
+  },
+  render: ({ onTabClick: _onTabClick, ...args }) => <TabsWithIconBar {...args} />,
+} satisfies Meta<Args>;
 
-export default TabsWithIconBarStory;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

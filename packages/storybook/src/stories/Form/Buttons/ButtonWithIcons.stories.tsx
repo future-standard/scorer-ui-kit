@@ -1,8 +1,9 @@
-import { boolean, number, select, text } from '@storybook/addon-knobs';
+import { IconSVGs } from '@future-standard/icons';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { ButtonWithIcon } from 'scorer-ui-kit';
-import { action } from 'storybook/actions';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
-import { generateIconList } from '../../helpers';
 
 const Panel = styled.div<{ $width: number }>`
   width: ${({ $width }) => $width}px;
@@ -24,91 +25,97 @@ const PanelTitle = styled.h2`
   color: var(--grey-12);
 `;
 
-const designOptions = {
-  Primary: 'primary',
-  Secondary: 'secondary',
-  Danger: 'danger',
-  TextOnly: 'text-only',
-  Outline: 'outline',
-} as const;
+type ButtonProps = ComponentProps<typeof ButtonWithIcon>;
 
-const sizeOptions = { Xsmall: 'xsmall', Small: 'small', Normal: 'normal', Large: 'large' } as const;
+interface IPanelButton {
+  id: string;
+  icon: string;
+  design: ButtonProps['design'];
+  label: string;
+}
 
-const ButtonWithIconsStory = {
-  title: 'Form/Buttons',
+const panelButtons: IPanelButton[] = [
+  { id: 'save', icon: 'Success', design: 'primary', label: 'Save changes' },
+  { id: 'discard', icon: 'Warning', design: 'warning', label: 'Discard changes' },
+  { id: 'cancel', icon: 'Invalid', design: 'secondary', label: 'Cancel' },
+];
+
+type Args = ButtonProps & {
+  containerWidth?: number;
+  panelTitle?: string;
+  buttons?: IPanelButton[];
+};
+
+const meta = {
+  title: 'Form/Buttons/ButtonWithIcon',
   component: ButtonWithIcon,
-  decorators: [],
-};
+  argTypes: {
+    children: { name: 'Button text', control: 'text' },
+    design: { control: 'select' },
+    size: { control: 'select' },
+    icon: { control: 'select', options: Object.keys(IconSVGs) },
+    position: { control: 'select' },
+    weight: { control: 'select' },
+  },
+  args: {
+    children: 'Example Title',
+    design: 'primary',
+    size: 'normal',
+    icon: 'ActionPause',
+    position: 'right',
+    weight: 'regular',
+    disabled: false,
+    loading: false,
+    shadow: false,
+    isFullWidth: false,
+    onClick: fn(),
+  },
+  render: ({ containerWidth: _width, panelTitle: _title, buttons: _buttons, ...args }) => (
+    <ButtonWithIcon {...args} />
+  ),
+} satisfies Meta<Args>;
 
-export const _WithIcon = () => {
-  const iconList = generateIconList();
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  const buttonText = text('Button Text', 'Example Title');
-  const buttonDesign = select('Design', designOptions, 'primary');
-  const buttonSize = select('Size', sizeOptions, 'normal');
-  const buttonDisabled = boolean('Disabled', false);
-  const buttonIcon = select('Icon', iconList, Object.keys(iconList)[0]);
-  const buttonIconPosition = select('Icon Position', { Left: 'left', Right: 'right' }, 'right');
-  const buttonLoading = boolean('Loading', false);
-  const buttonShadow = boolean('Shadow', false);
-  const buttonOnClick = action('button-click');
+export const Default: Story = {};
 
-  return (
-    <ButtonWithIcon
-      design={buttonDesign}
-      size={buttonSize}
-      shadow={buttonShadow}
-      onClick={buttonOnClick}
-      icon={buttonIcon}
-      position={buttonIconPosition}
-      disabled={buttonDisabled}
-      loading={buttonLoading}
-    >
-      {buttonText}
-    </ButtonWithIcon>
-  );
-};
-
-export const _WithIconFullWidth = () => {
-  const containerWidth = number('Container Width', 320);
-  const panelTitle = text('Panel Title', 'Save current work');
-  const buttons = [
-    {
-      id: 'save',
-      icon: 'Success',
-      design: 'primary',
-      label: text('Button 1 Text', 'Save changes'),
+export const FullWidth: Story = {
+  argTypes: {
+    containerWidth: { name: 'Container width' },
+    panelTitle: { name: 'Panel title' },
+    buttons: { name: 'Buttons' },
+    children: {
+      name: 'Button text',
+      control: false,
+      table: { defaultValue: { summary: 'label of each button' } },
     },
-    {
-      id: 'discard',
-      icon: 'Warning',
-      design: 'warning',
-      label: text('Button 2 Text', 'Discard changes'),
-    },
-    { id: 'cancel', icon: 'Invalid', design: 'secondary', label: text('Button 3 Text', 'Cancel') },
-  ] as const;
-  const buttonSize = select('Size', sizeOptions, 'normal');
-  const buttonIconPosition = select('Icon Position', { Left: 'left', Right: 'right' }, 'left');
-  const buttonOnClick = action('button-click');
-
-  return (
+    design: { control: false, table: { defaultValue: { summary: 'design of each button' } } },
+    icon: { control: false, table: { defaultValue: { summary: 'icon of each button' } } },
+  },
+  args: {
+    isFullWidth: true,
+    position: 'left',
+    containerWidth: 320,
+    panelTitle: 'Save current work',
+    buttons: panelButtons,
+  },
+  render: ({
+    containerWidth = 320,
+    panelTitle,
+    buttons = panelButtons,
+    children: _children,
+    design: _design,
+    icon: _icon,
+    ...args
+  }) => (
     <Panel $width={containerWidth}>
       <PanelTitle>{panelTitle}</PanelTitle>
       {buttons.map(({ id, icon, design, label }) => (
-        <ButtonWithIcon
-          key={id}
-          design={design}
-          size={buttonSize}
-          onClick={buttonOnClick}
-          icon={icon}
-          position={buttonIconPosition}
-          isFullWidth
-        >
+        <ButtonWithIcon key={id} {...args} icon={icon} design={design}>
           {label}
         </ButtonWithIcon>
       ))}
     </Panel>
-  );
+  ),
 };
-
-export default ButtonWithIconsStory;

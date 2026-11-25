@@ -13,7 +13,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "scorer-ui-kit": ["../ui-lib/src/index.tsx"],
+      "scorer-ui-kit/dist/*": ["../ui-lib/src/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "../ui-lib/src/**/*.d.ts"]
 }

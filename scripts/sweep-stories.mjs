@@ -82,7 +82,9 @@ if (!stories?.entries) {
   );
   process.exit(1);
 }
-const storyIds = Object.keys(stories.entries);
+const storyEntries = Object.values(stories.entries);
+const storyCount = storyEntries.filter((e) => e.type === 'story').length;
+const docsCount = storyEntries.filter((e) => e.type === 'docs').length;
 
 const exampleRoutes = [
   '/',
@@ -105,16 +107,18 @@ const exampleRoutes = [
 ];
 
 const targets = [
-  ...storyIds.map((id) => ({
-    kind: 'story',
-    id,
-    url: `${STORYBOOK}/iframe.html?id=${id}&viewMode=story`,
+  // Docs entries render every story of the file inline plus the generated props table, so they
+  // are swept too (viewMode=docs); opening them with viewMode=story would show only the first story.
+  ...storyEntries.map((e) => ({
+    kind: e.type,
+    id: e.id,
+    url: `${STORYBOOK}/iframe.html?id=${e.id}&viewMode=${e.type}`,
   })),
   ...exampleRoutes.map((r) => ({ kind: 'example', id: r, url: `${EXAMPLE}/#${r}` })),
 ];
 
 console.error(
-  `Sweeping ${targets.length} pages (${storyIds.length} stories + ${exampleRoutes.length} example routes)...`
+  `Sweeping ${targets.length} pages (${storyCount} stories + ${docsCount} docs pages + ${exampleRoutes.length} example routes)...`
 );
 
 const browser = await launchChromium();
