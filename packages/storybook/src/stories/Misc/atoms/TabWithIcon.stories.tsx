@@ -2,6 +2,7 @@ import { IconSVGs } from '@future-standard/icons';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
 import { TabList, Tabs, TabWithIcon } from 'scorer-ui-kit';
+import { fn } from 'storybook/test';
 
 type Args = ComponentProps<typeof TabWithIcon> & { selected: boolean };
 
@@ -18,6 +19,7 @@ const meta = {
     subtitle: 'Selected 120 of 120',
     tabFor: 'exampleTab',
     selected: false,
+    onClick: fn(),
   },
   // The tab reads its active state from the Tabs context, so the story mounts the real wrappers.
   render: ({ selected, ...args }) => (

@@ -198,8 +198,9 @@ This document provides a comprehensive inventory of all React components in the 
       - Plus all `IButtonProps` properties (`size`, `design`, `onClick`, `disabled`, etc.)
 - **Notable Features:**
   - Stacks multiple buttons vertically with 8px gap
+  - Every button gets the same width; icon buttons use `isFullWidth`, so their icons and labels line up
   - Supports both regular buttons and icon buttons
-  - Default size is 'small' for all buttons
+  - Buttons use their own default size ('normal') unless an entry sets `size`
   - Text wrapping disabled (nowrap)
   - Used in page headers and forms
 
@@ -212,9 +213,10 @@ This document provides a comprehensive inventory of all React components in the 
 - **Exported From:** `Form`
 - **Props:** (extends `IButtonProps` which extends `ButtonHTMLAttributes<HTMLButtonElement>`)
   - `icon`: `string` - Icon name (required)
-  - `position?`: `'left' | 'right'` - Icon position (default: 'left')
+  - `position?`: `'left' | 'right'` - Icon position (icon renders on the right when not set)
   - `shadow?`: `boolean` - Add shadow effect (default: false)
   - `weight?`: `IWeight` (`'light' | 'regular' | 'heavy' | 'strong'`) - Icon weight (default: 'regular')
+  - `isFullWidth?`: `boolean` - Fill the width the parent gives, with the label aligned to the left whichever side the icon is on (default: false, content width)
   - `size?`: `TypeButtonSizes` - Button size (default: 'normal')
   - `design?`: `TypeButtonDesigns` - Button design (default: 'primary')
   - `loading?`: `boolean` - Loading state (default: false)
@@ -2214,12 +2216,13 @@ This document provides a comprehensive inventory of all React components in the 
 - **Props:**
   - `defaultTabId`: `string` (required) - ID of the tab to select by default on mount
   - `tabList`: `ITabIcon[]` (required) - Array of tab configurations with icons and content
-    - **ITabIcon interface** (extends ITabWithIcon):
+    - **ITabIcon interface** (extends ITabWithIcon, which extends `HTMLAttributes<HTMLDivElement>`):
       - `icon`: `string` (required) - Icon name for the tab
       - `title`: `string` (required) - Main title text for the tab
       - `subtitle`: `string` - Optional subtitle text displayed below title
       - `tabFor`: `string` (required) - Unique identifier for the tab
-      - `customComponent`: `ReactElement` - Custom component to render as tab content
+      - `customComponent`: `ReactElement` - Custom component to render as tab content (held back, never forwarded to the DOM)
+      - Standard div attributes including `onClick` - forwarded per-entry to the rendered `TabWithIcon` and composed with tab selection, so a caller learns which tab was picked
   - `paddingLeft`: `string` - Left padding override for tab list wrapper (default: `'87px'`)
 - **Notable Features:**
   - **Complete Tab System**: Combines Tabs, TabList, TabWithIcon, and TabContent into single component
@@ -2242,12 +2245,13 @@ This document provides a comprehensive inventory of all React components in the 
   - `title`: `string` (required) - Main title text for the tab
   - `subtitle`: `string` - Optional subtitle text displayed below title in italic
   - `tabFor`: `string` (required) - Unique identifier for the tab (matches with TabContent's tabId)
+  - Also accepts standard `div` attributes (extends `HTMLAttributes<HTMLDivElement>`), including `onClick` - composed with the tab's own selection behaviour rather than dropped
 - **Notable Features:**
   - **Context-Based Active State**: Uses TabContext to determine if tab is active (selected === tabFor)
   - **Icon Integration**: Displays icon with dynamic color (primary when active, dimmed when inactive)
   - **Two-Line Layout**: Title and optional subtitle in vertical layout with icon on left
   - **Active Indicator**: 3px bottom border in primary color when active, transparent when inactive
-  - **Auto Click Handling**: Automatically calls setSelected from context on click
+  - **Composed Click Handling**: A caller-supplied `onClick` fires first, then `setSelected` from context runs
   - **Text Overflow**: Both title and subtitle use nowrap and text-overflow ellipsis
   - **Responsive Sizing**: Icon size 15px, title 14px, subtitle 12px
   - **Used In**: TabsWithIconBar component for icon-based tab navigation

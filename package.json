@@ -1,6 +1,6 @@
 {
   "name": "scorer-ui-kit",
-  "version": "3.0.11-beta.0",
+  "version": "3.1.0",
   "description": "This project is a ui library with an example project of use cases and storybook to showcase the components",
   "main": "index.js",
   "scripts": {
@@ -42,12 +42,17 @@
     "gh-pages": "6.3.0",
     "jsdom": "29.1.1",
     "playwright": "1.62.1",
-    "vite": "8.3.1"
+    "vite": "8.3.5"
   },
   "overrides": {
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0"
+  },
+  "allowScripts": {
+    "esbuild": false,
+    "core-js": false,
+    "fsevents": false
   }
 }

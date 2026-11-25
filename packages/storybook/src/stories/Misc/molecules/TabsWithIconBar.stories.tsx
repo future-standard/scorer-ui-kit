@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentProps } from 'react';
 import { type ITabIcon, PageHeader, TabsWithIconBar } from 'scorer-ui-kit';
+import { fn } from 'storybook/test';
 import styled from 'styled-components';
 import { pageFrame } from '../../helpers/PageFrame';
 
@@ -9,12 +11,15 @@ const LayoutWrapper = styled.div`
   padding: ${`30px 30px 30px ${PADDING_LEFT}`} ;
 `;
 
+const onTabClick = fn();
+
 const list: ITabIcon[] = [
   {
     icon: 'Success',
     title: 'New People',
     subtitle: 'Selected 120 of 120',
-    tabFor: 'example1',
+    tabFor: 'newPeopleTab',
+    onClick: () => onTabClick('newPeopleTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -28,7 +33,8 @@ const list: ITabIcon[] = [
     icon: 'RecognitionPhoto',
     title: 'Updates To People',
     subtitle: 'Selected 0 of 4',
-    tabFor: 'example2',
+    tabFor: 'updatesToPeopleTab',
+    onClick: () => onTabClick('updatesToPeopleTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -42,7 +48,8 @@ const list: ITabIcon[] = [
     icon: 'BigWarning',
     title: 'Missing Images',
     subtitle: '4 entries w/out images',
-    tabFor: 'example3',
+    tabFor: 'missingImagesTab',
+    onClick: () => onTabClick('missingImagesTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -56,7 +63,8 @@ const list: ITabIcon[] = [
     icon: 'Warning',
     title: 'Errors',
     subtitle: '6 entries with errors',
-    tabFor: 'example4',
+    tabFor: 'errorsTab',
+    onClick: () => onTabClick('errorsTab'),
     customComponent: (
       <LayoutWrapper>
         <PageHeader
@@ -68,6 +76,8 @@ const list: ITabIcon[] = [
   },
 ];
 
+type Args = ComponentProps<typeof TabsWithIconBar> & { onTabClick: (tabFor: string) => void };
+
 const meta = {
   title: 'Misc/molecules/TabsWithIconBar',
   component: TabsWithIconBar,
@@ -75,11 +85,13 @@ const meta = {
   parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '420px' } },
   decorators: [pageFrame],
   args: {
-    defaultTabId: 'example1',
+    defaultTabId: 'newPeopleTab',
     tabList: list,
     paddingLeft: PADDING_LEFT,
+    onTabClick,
   },
-} satisfies Meta<typeof TabsWithIconBar>;
+  render: ({ onTabClick: _onTabClick, ...args }) => <TabsWithIconBar {...args} />,
+} satisfies Meta<Args>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

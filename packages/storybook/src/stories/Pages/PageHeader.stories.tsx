@@ -1,6 +1,6 @@
 import { IconSVGs } from '@future-standard/icons';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { ComponentProps } from 'react';
+import { type ComponentProps, useEffect, useRef } from 'react';
 import {
   ButtonsStack,
   ContentLayout,
@@ -10,6 +10,7 @@ import {
   PageHeader,
   Switch,
 } from 'scorer-ui-kit';
+import { useArgs } from 'storybook/preview-api';
 import { fn } from 'storybook/test';
 import { pageFrame } from '../helpers/PageFrame';
 
@@ -40,9 +41,42 @@ const defaultButtons: IButtonStack[] = [
   },
 ];
 
+const leftIconStack: IButtonStack[] = [
+  { id: 'newClip', buttonType: 'icon-button', text: 'New Clip', icon: 'Add', iconPosition: 'left' },
+  {
+    id: 'jobDetails',
+    buttonType: 'icon-button',
+    text: 'Job Details',
+    design: 'secondary',
+    icon: 'Time',
+    iconPosition: 'left',
+  },
+];
+
+const rightIconStack: IButtonStack[] = leftIconStack.map((button) => ({
+  ...button,
+  iconPosition: 'right',
+}));
+
+const mixedStack: IButtonStack[] = [
+  { id: 'plainAction', buttonType: 'default', text: 'Example Action', design: 'secondary' },
+  leftIconStack[0],
+  rightIconStack[1],
+];
+
+const buttonStackPresets = {
+  Default: defaultButtons,
+  'Icons on the left': leftIconStack,
+  'Icons on the right': rightIconStack,
+  Mixed: mixedStack,
+} satisfies Record<string, IButtonStack[]>;
+
+type ButtonStackPreset = keyof typeof buttonStackPresets;
+
 type Args = ComponentProps<typeof PageHeader> & {
   showTags: boolean;
   showButtons: boolean;
+  buttonsPreset: ButtonStackPreset;
   buttons: IButtonStack[];
   showBottomLeftContent: boolean;
   withAreaClick: boolean;
@@ -71,6 +105,11 @@ const meta = {
     },
     showTags: { name: 'Show tags' },
     showButtons: { name: 'Show buttons' },
+    buttonsPreset: {
+      name: 'Buttons stack preset',
+      control: 'select',
+      options: Object.keys(buttonStackPresets),
+    },
     buttons: { name: 'Buttons stack' },
     showBottomLeftContent: { name: 'Show bottom left content' },
     withAreaClick: { name: 'Area title as button (onAreaClick)' },
@@ -98,6 +137,7 @@ const meta = {
     areaTitleBottom: false,
     tagList: defaultTags,
     showTags: true,
+    buttonsPreset: 'Default',
     buttons: defaultButtons,
     showButtons: true,
     showBottomLeftContent: false,
@@ -105,21 +145,43 @@ const meta = {
     onAreaClick: fn(),
     onEditTagClick,
   },
-  render: ({ showTags, showButtons, buttons, showBottomLeftContent, withAreaClick, ...args }) => (
-    <PageHeader
-      {...args}
-      onAreaClick={withAreaClick ? args.onAreaClick : undefined}
-      tagList={showTags ? args.tagList : undefined}
-      rightContent={showButtons ? <ButtonsStack buttons={buttons} /> : undefined}
-      bottomLeftContent={
-        showBottomLeftContent ? (
-          <Label htmlFor='id-switch' labelText='Enable' direction='row'>
-            <Switch key='id-switch' />
-          </Label>
-        ) : undefined
-      }
-    />
-  ),
+  render: function Render({
+    showTags,
+    showButtons,
+    buttonsPreset,
+    buttons,
+    showBottomLeftContent,
+    withAreaClick,
+    ...args
+  }) {
+    const [, updateArgs] = useArgs<Args>();
+    const appliedPreset = useRef<ButtonStackPreset>('Default');
+
+    // A new preset replaces the Buttons stack arg, so its object control shows what is rendered.
+    // The ref starts at the preset the arg is built from, not at the current one, so a story
+    // opened with another preset in its URL applies it too.
+    useEffect(() => {
+      if (appliedPreset.current === buttonsPreset) return;
+      appliedPreset.current = buttonsPreset;
+      updateArgs({ buttons: buttonStackPresets[buttonsPreset] });
+    }, [buttonsPreset, updateArgs]);
+
+    return (
+      <PageHeader
+        {...args}
+        onAreaClick={withAreaClick ? args.onAreaClick : undefined}
+        tagList={showTags ? args.tagList : undefined}
+        rightContent={showButtons ? <ButtonsStack buttons={buttons} /> : undefined}
+        bottomLeftContent={
+          showBottomLeftContent ? (
+            <Label htmlFor='id-switch' labelText='Enable' direction='row'>
+              <Switch key='id-switch' />
+            </Label>
+          ) : undefined
+        }
+      />
+    );
+  },
 } satisfies Meta<Args>;
 
 export default meta;
