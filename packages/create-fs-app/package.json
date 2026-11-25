@@ -1,0 +1,20 @@
+{
+  "name": "create-fs-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Scaffold a fully wired scorer-ui-kit project in one command",
+  "type": "module",
+  "bin": {
+    "create-fs-app": "bin/create-fs-app.mjs"
+  },
+  "files": [
+    "bin",
+    "template"
+  ],
+  "scripts": {
+    "prepack": "node scripts/prepare-template.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
