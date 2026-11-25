@@ -104,7 +104,7 @@ const initialRows: ITypeTableData = [
       { text: '2020/05/10 - 12:30' },
       { text: '00:00:12' },
       { text: 'Complete' },
-      { customComponent: <ActionButtons buttonsConfig={generateConfigButtons('device2')} /> },
+      { customComponent: <ActionButtons buttonsConfig={generateConfigButtons('device3')} /> },
     ],
   },
 ];
