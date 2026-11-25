@@ -1,0 +1,4 @@
+import{n as e}from"./rolldown-runtime-DkW27tQK.js";import{t}from"./jsx-runtime-DeHZSEgm.js";import{a as n,i as r}from"./styled-components.browser.esm-DRoLZq3m.js";import{n as i,t as a}from"./SmallInput-D3XzViWQ.js";var o,s,c,l,u;function d(){return(d=e((()=>{i(),n(),o=t(),s=r.div`
+  margin: 100px;
+  max-width: 200px;
+`,c={title:`Form/Input/SmallInput`,component:a,decorators:[e=>(0,o.jsx)(s,{children:(0,o.jsx)(e,{})})],argTypes:{type:{control:`select`,options:[`text`,`password`,`email`,`number`]},fieldState:{control:`select`}},args:{type:`text`,id:`my_input`,name:`my_input`,label:`My Input`,unit:`º`,placeholder:`Placeholder...`,fieldState:`default`,required:!1,alwaysShowRequiredDot:!1},render:e=>(0,o.jsx)(a,{...e,disabled:e.fieldState===`disabled`})},l={},u=[`Default`],l.parameters={...l.parameters,docs:{...l.parameters?.docs,source:{originalSource:`{}`,...l.parameters?.docs?.source}}}})))()}d();export{l as Default,u as __namedExportsOrder,c as default};

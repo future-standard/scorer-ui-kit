@@ -1,0 +1,91 @@
+import{n as e}from"./rolldown-runtime-DkW27tQK.js";import{t}from"./react-Q1GcV6wX.js";import{t as n}from"./jsx-runtime-DeHZSEgm.js";import{a as r,i}from"./styled-components.browser.esm-DRoLZq3m.js";import{n as a,t as o}from"./Button-CVePDF2Y.js";import{n as s,t as c}from"./ButtonWithIcon-BCMBZSh_.js";import{n as l,t as u}from"./FilterDropdownContainer-uG9v15Mx.js";import{a as d,i as f,n as p,o as m,r as ee,t as te}from"./LoadingBox-BfuT3CBE.js";import{n as h,t as ne}from"./BasicSearchInput-_YM_gta8.js";import{M as g,j as _}from"./data_samples-D4tf1liw.js";var v,y,b,x,S;function C(){return(C=e((()=>{r(),a(),v=n(),y=i.div`
+  display: flex;
+  padding: 8px;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-top: 1px solid var(--grey-6);
+  background: var(--grey-a2);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+`,b=i.div`
+  display: flex;
+  align-items: center;
+`,x=i.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`,S=({resetText:e=`Reset`,cancelText:t=`Cancel`,closeText:n=`Close`,applyText:r=`Apply`,hasReset:i=!1,hasApply:a=!1,disableApply:s=!1,disableReset:c=!0,onReset:l=()=>{},onCancel:u=()=>{},onApply:d=()=>{}})=>(0,v.jsxs)(y,{children:[(0,v.jsx)(b,{children:i&&(0,v.jsx)(o,{size:`small`,design:`text-only`,disabled:c,onClick:l,children:e})}),a&&(0,v.jsxs)(x,{children:[(0,v.jsx)(o,{size:`small`,design:`secondary`,onClick:u,children:s?n:t}),(0,v.jsx)(o,{size:`small`,onClick:d,disabled:s,children:r})]})]});try{S.displayName=`FooterControls`,S.__docgenInfo={description:``,displayName:`FooterControls`,filePath:`/home/runner/work/scorer-ui-kit/scorer-ui-kit/packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,methods:[],props:{onReset:{defaultValue:{value:`() => {}`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`OwnProps`}],description:``,name:`onReset`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`OwnProps`},required:!1,tags:{},type:{name:`(() => void)`}},onCancel:{defaultValue:{value:`() => {}`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`OwnProps`}],description:``,name:`onCancel`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`OwnProps`},required:!1,tags:{},type:{name:`(() => void)`}},onApply:{defaultValue:{value:`() => {}`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`OwnProps`}],description:``,name:`onApply`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`OwnProps`},required:!1,tags:{},type:{name:`(() => void)`}},resetText:{defaultValue:{value:`Reset`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`resetText`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`string`}},cancelText:{defaultValue:{value:`Cancel`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`cancelText`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`string`}},closeText:{defaultValue:{value:`Close`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`closeText`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`string`}},applyText:{defaultValue:{value:`Apply`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`applyText`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`string`}},hasReset:{defaultValue:{value:`false`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`hasReset`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`boolean`}},hasApply:{defaultValue:{value:`false`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`hasApply`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`boolean`}},disableApply:{defaultValue:{value:`false`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`disableApply`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`boolean`}},disableReset:{defaultValue:{value:`true`},declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`disableReset`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`boolean`}}},tags:{}}}catch{}})))()}var w,T,E,D,O,k,re,ie,A,j,M,N,P,F,I,L,R,z,B,V;function H(){return(H=e((()=>{w=t(),r(),s(),m(),h(),l(),f(),C(),p(),_(),T=n(),E=i.div`
+  display: inline-block;
+  position: relative;
+`,D=i(d)`
+  letter-spacing: 0.2px;
+`,O=i.div`
+  max-height: ${({$moreItem:e})=>e?`228px`:`196px`};
+  min-height: 40px;
+  position: relative;
+  overflow-y: auto;
+  padding: 8px 0;
+
+  ${D} {
+    height: 40px;
+    padding-left: 16px;
+  }
+`,k=i.div`
+  min-width: 252px;
+`,re=i.div`
+  display: flex;
+  height: 24px;
+  padding: 0px 8px;
+  align-items: center;
+  justify-content: left;
+  gap: 8px;
+  border-left: 1px solid var(--grey-6);
+  width: auto;
+`,ie=i.div`
+  display: flex;
+  height: 24px;
+  padding-left: 16px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border-top: 1px solid var(--grey-5);
+  border-bottom: 1px solid var(--grey-5);
+`,A=i.div`
+  font-family: var(--font-ui);
+  color: var(--grey-11);
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
+  &:lang(ja) {
+      font-style: normal;
+  }
+  line-height: 12px;
+`,j=i.div`
+  --search-input-font-size: 14px;
+  --search-input-font-family: var(--font-data);
+  --search-input-container-gap: 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 4px 4px 4px 14px;
+`,M=i.div`
+  display: block;
+  height: 24px;
+  color: var(--grey-11);
+  font-weight: 700;
+  margin-left: 12px;
+  user-select: none;
+  pointer-events: none;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+`,N=i.div`
+  position: absolute;
+  bottom: 0px;
+  height: 15px;
+  background-image: linear-gradient(to bottom, transparent, var(--grey-3));
+  width: 99%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+`,P=(e,t)=>{let n=!1;return Array.isArray(t)?t.forEach(t=>{t.value===e.value&&(n=!0)}):g(t)&&(n=e.value===t.value),n},F=(e,t,n)=>{let r=!1;if(n===`checkbox`){let n=Array.isArray(t)?t:g(t)?[t]:[],i=[];return n.forEach(t=>{e.value===t.value?r=!0:i.push(t)}),r||i.push(e),i.length===0?null:i}return e},I=(e,t)=>{if(e.length<=1)return e;let n=[...e],r=document.documentElement.lang||`en`;return n.sort((e,n)=>{let i=e.text.localeCompare(n.text,r);return t?i:-i}),n},L=(e,t,n,r)=>{if(e.length<=t||n===null)return I(e,r);if(g(n)){let i=e.findIndex(e=>e.value===n.value);if(i===-1||i<t)return I(e,r);let a=e.filter(e=>e.value!==n.value),o=I(a,r);return o.unshift(e[i]),o}if(Array.isArray(n)){let t=new Set(n.map(e=>e.value)),i=[],a=[];for(let n of e)t.has(n.value)?i.push(n):a.push(n);let o=I(i,r),s=I(a,r);return[...o,...s]}return e},R=(e,t)=>e.filter(e=>e.text.toLowerCase().includes(t.toLowerCase())),z=(e,t,n)=>e.replace(`[TOTAL]`,`${n}`).replace(`[VISIBLE]`,`${t}`),B=(e,t)=>e===null&&t===null?!0:e===null||t===null?!1:Array.isArray(e)&&Array.isArray(t)?e.length===t.length&&e.every(e=>t.some(t=>t.value===e.value)):Array.isArray(e)||Array.isArray(t)?!1:e.value===t.value,V=({buttonIcon:e,buttonText:t,list:n,selected:r=null,disabled:i=!1,isLoading:a=!1,loadingText:o,optionType:s=`text`,hasOptionsFilter:l,searchPlaceholder:d,maxDisplayedItems:f=5,searchResultText:p=`Showing [VISIBLE] of [TOTAL]`,emptyResultText:m,design:h=`default`,resetText:g,cancelText:_,closeText:v,applyText:y,hasReset:b,hasApply:x,descendingText:C=`Descending`,ascendingText:I=`Ascending`,isListAscending:V=!0,onSelect:H=()=>{},onResetCallback:U=()=>{},onCancelCallback:W=()=>{},...ae})=>{let[G,K]=(0,w.useState)(V),[q,J]=(0,w.useState)(L(n,f,r,G)),[Y,X]=(0,w.useState)(``),[Z,Q]=(0,w.useState)(r),$=(0,w.useRef)(null),oe=(0,w.useCallback)(()=>{J(L(n,f,Z,G))},[G,n,f,Z]),se=(0,w.useCallback)(()=>{X(``),Q(r),K(V),J(L(n,f,r,V))},[V,n,f,r]),ce=(0,w.useCallback)(e=>{let t=F(e,Z,s);x||H(t),Q(t),J(L(n,f,t,G)),X(``)},[Z,s,x,n,f,G,H]),le=(0,w.useCallback)(e=>{let t=e.target.value.replace(/<[^>]*>/g,``).trim();if(X(t),t===``){J(L(n,f,Z,G));return}let r=R(n,t);J(L(r,f,null,G))},[G,n,f,Z]),ue=(0,w.useCallback)(()=>{Q(r),W(),$.current?.imperativeClose()},[W,r]),de=(0,w.useCallback)(()=>{H(Z),$.current?.imperativeClose()},[H,Z]),fe=(0,w.useCallback)(()=>{x||H(null),X(``),J(L(n,f,null,V)),Q(null),K(V),U()},[x,n,f,V,U,H]),pe=(0,w.useCallback)(()=>{K(e=>(J(L(n,f,Z,!e)),!e))},[n,f,Z]);(0,w.useEffect)(()=>{X(``),J(L(n,f,Z,G))},[G,n,f,Z]),(0,w.useEffect)(()=>{Q(r)},[r]);let me=(0,w.useMemo)(()=>B(Z,r),[r,Z]);return(0,T.jsx)(E,{...ae,children:(0,T.jsx)(ee,{ref:$,buttonIcon:e,buttonText:t,disabled:i,design:h,onCloseCallback:oe,onToggleOpenCallback:se,noCloseOnClickOutside:x,children:(0,T.jsxs)(u,{children:[l&&(0,T.jsx)(j,{children:(0,T.jsx)(ne,{type:`text`,hasBorder:!1,placeholder:d,color:`dimmed`,iconSize:12,value:Y,onChange:le,noBackground:!0})}),a||!n?(0,T.jsx)(te,{loadingText:o}):(0,T.jsxs)(k,{children:[l&&(0,T.jsxs)(ie,{children:[(0,T.jsx)(A,{children:z(p,q.length,n.length)}),(0,T.jsx)(re,{children:(0,T.jsx)(c,{design:`text-only`,position:`left`,size:`xsmall`,weight:`light`,onClick:pe,icon:G?`FilterAscending`:`FilterDescending`,children:G?I:C})})]}),(0,T.jsx)(O,{$moreItem:n.length>5,children:q.length>0?q.map(e=>{let t=e.value,n=e.text;return(0,T.jsx)(D,{title:n,onClick:()=>ce(e),selected:P(e,Z),optionType:s,value:t},String(t))}):(0,T.jsx)(M,{children:m})}),n.length>5&&(0,T.jsx)(N,{})]}),(x||b)&&(0,T.jsx)(S,{hasApply:x,hasReset:b,resetText:g,cancelText:_,closeText:v,applyText:y,onCancel:ue,onApply:de,disableApply:me,onReset:fe,disableReset:Z===null&&G===V&&Y===``})]})})})};try{V.displayName=`FilterDropdown`,V.__docgenInfo={description:``,displayName:`FilterDropdown`,filePath:`/home/runner/work/scorer-ui-kit/scorer-ui-kit/packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,methods:[],props:{buttonIcon:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`buttonIcon`,required:!0,tags:{},type:{name:`string`}},buttonText:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`buttonText`,required:!0,tags:{},type:{name:`string`}},list:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`list`,required:!0,tags:{},type:{name:`IFilterItem[]`}},selected:{defaultValue:{value:`null`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`selected`,required:!1,tags:{},type:{name:`IFilterValue`}},disabled:{defaultValue:{value:`false`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`disabled`,required:!1,tags:{},type:{name:`boolean`}},optionType:{defaultValue:{value:`text`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`optionType`,required:!1,tags:{},type:{name:`enum`,raw:`IInputOptionsType`,value:[{value:`"checkbox"`},{value:`"radio"`},{value:`"text"`}]}},isLoading:{defaultValue:{value:`false`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`isLoading`,required:!1,tags:{},type:{name:`boolean`}},loadingText:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`loadingText`,required:!1,tags:{},type:{name:`string`}},hasOptionsFilter:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`hasOptionsFilter`,required:!1,tags:{},type:{name:`boolean`}},searchPlaceholder:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`searchPlaceholder`,required:!1,tags:{},type:{name:`string`}},maxDisplayedItems:{defaultValue:{value:`5`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`maxDisplayedItems`,required:!1,tags:{},type:{name:`number`}},searchResultText:{defaultValue:{value:`Showing [VISIBLE] of [TOTAL]`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`searchResultText`,required:!1,tags:{},type:{name:`string`}},emptyResultText:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`emptyResultText`,required:!1,tags:{},type:{name:`string`}},design:{defaultValue:{value:`default`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`design`,required:!1,tags:{},type:{name:`enum`,raw:`FilterButtonDesign`,value:[{value:`"default"`},{value:`"basic"`}]}},ascendingText:{defaultValue:{value:`Ascending`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`ascendingText`,required:!1,tags:{},type:{name:`string`}},descendingText:{defaultValue:{value:`Descending`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`descendingText`,required:!1,tags:{},type:{name:`string`}},isListAscending:{defaultValue:{value:`true`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`isListAscending`,required:!1,tags:{},type:{name:`boolean`}},onSelect:{defaultValue:{value:`() => {}`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`onSelect`,required:!1,tags:{},type:{name:`(newSelection: IFilterValue) => void`}},onResetCallback:{defaultValue:{value:`() => {}`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`onResetCallback`,required:!1,tags:{},type:{name:`(() => void)`}},onCancelCallback:{defaultValue:{value:`() => {}`},declarations:[{fileName:`packages/ui-lib/src/Filters/molecules/FilterDropdown.tsx`,name:`TypeLiteral`}],description:``,name:`onCancelCallback`,required:!1,tags:{},type:{name:`(() => void)`}},resetText:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`resetText`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`string`}},cancelText:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`cancelText`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`string`}},closeText:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`closeText`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`string`}},applyText:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`applyText`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`string`}},hasReset:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`hasReset`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`boolean`}},hasApply:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`hasApply`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`boolean`}},disableApply:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`disableApply`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`boolean`}},disableReset:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`}],description:``,name:`disableReset`,parent:{fileName:`packages/ui-lib/src/Filters/atoms/FooterControls.tsx`,name:`IFilterFooterControls`},required:!1,tags:{},type:{name:`boolean`}}},tags:{}}}catch{}})))()}export{H as n,V as t};
