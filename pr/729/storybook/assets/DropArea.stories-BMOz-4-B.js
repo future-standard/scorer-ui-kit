@@ -1,0 +1,3 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{t}from"./jsx-runtime-MKhVqBIO.js";import{a as n,i as r}from"./styled-components.browser.esm-DC6b-34H.js";import{n as i,t as a}from"./DropArea-C_teEgg4.js";var o,s,c,l,u,d;function f(){return(f=e((()=>{i(),n(),o=t(),{fn:s}=__STORYBOOK_MODULE_TEST__,c=r.div`
+  max-width: 500px;
+`,l={title:`Form/FileManagement/DropArea`,component:a,decorators:[e=>(0,o.jsx)(c,{children:(0,o.jsx)(e,{})})],args:{text:`Drop a file`,height:`300px`,dropCallback:s()}},u={},d=[`Default`],u.parameters={...u.parameters,docs:{...u.parameters?.docs,source:{originalSource:`{}`,...u.parameters?.docs?.source}}}})))()}f();export{u as Default,d as __namedExportsOrder,l as default};
