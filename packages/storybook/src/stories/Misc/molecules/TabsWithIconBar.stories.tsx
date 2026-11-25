@@ -71,7 +71,6 @@ const list: ITabIcon[] = [
 const meta = {
   title: 'Misc/molecules/TabsWithIconBar',
   component: TabsWithIconBar,
-  tags: ['autodocs'],
   // the bar brings its own page gutter (paddingLeft), so the page frame alone is its parent
   parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '420px' } },
   decorators: [pageFrame],

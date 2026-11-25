@@ -26,7 +26,6 @@ type Args = ComponentProps<typeof Spinner> & {
 const meta = {
   title: 'Misc/Spinner',
   component: Spinner,
-  tags: ['autodocs'],
   argTypes: {
     size: { control: 'select' },
     styling: { control: 'select', options: ['primary', 'grey', 'warning'] },

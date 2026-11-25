@@ -1,12 +1,8 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import styled from 'styled-components';
 
-const ColorsStory = {
-  title: 'Misc',
-  decorators: [],
-};
-
 const Container = styled.div`
-  width: 80%;
+  max-width: 1600px;
   margin: 0 auto;
 `;
 
@@ -19,20 +15,36 @@ const Title = styled.h2`
 `;
 
 const ColorContainer = styled.div`
+  container-type: inline-size;
   margin-bottom: 80px;
 `;
 
+// A swatch needs 90px for the longest name (--secondary-a12) on one line: 12 columns from 1124px,
+// otherwise halves, so a row never ends with a single orphan step.
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(12, calc(100%/12));
-  column-gap: 4px;
-  row-gap: 4px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
   text-align: center;
+
+  @container (width < 1124px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  @container (width < 560px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  & + & {
+    margin-top: 4px;
+  }
 `;
 
 const Swatch = styled.div<{ $color: string }>`
+  position: relative;
   height: 96px;
   border-radius: 4px;
+  overflow: hidden;
 
   ${({ $color }) =>
     $color &&
@@ -43,14 +55,21 @@ const Swatch = styled.div<{ $color: string }>`
 
 const SwatchName = styled.div`
   position: absolute;
-  font-size: 12px;
-  padding: 4px;
-  border-radius: 4px 0 2px 0;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  line-height: 1.4;
+  padding: 2px 3px;
+  border-radius: 4px 0 4px 0;
   background-color: var(--white-a10);
   color: var(--black-a10);
 `;
-
-export const _Colors = () => {
+const ColorSheet = () => {
   const palette: string[] = [
     'primary',
     'secondary',
@@ -84,10 +103,8 @@ export const _Colors = () => {
         return (
           <ColorContainer key={value}>
             <Title>{value}</Title>
-            <Grid>
-              {generatePalette(value)}
-              {generatePalette(value, true)}
-            </Grid>
+            <Grid>{generatePalette(value)}</Grid>
+            <Grid>{generatePalette(value, true)}</Grid>
           </ColorContainer>
         );
       })}
@@ -95,4 +112,13 @@ export const _Colors = () => {
   );
 };
 
-export default ColorsStory;
+const meta = {
+  title: 'Misc/Colors',
+  tags: ['!autodocs'],
+  render: () => <ColorSheet />,
+} satisfies Meta<Record<string, never>>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

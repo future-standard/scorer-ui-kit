@@ -15,7 +15,6 @@ type Args = ComponentProps<typeof AreaUploadManager> & { showCustomComponent: bo
 const meta = {
   title: 'Form/FileManagement/AreaUploadManager',
   component: AreaUploadManager,
-  tags: ['autodocs'],
   argTypes: {
     showCustomComponent: { name: 'Show custom component' },
     customComponent: {

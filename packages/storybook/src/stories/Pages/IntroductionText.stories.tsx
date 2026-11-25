@@ -4,7 +4,6 @@ import { IntroductionText } from 'scorer-ui-kit';
 const meta = {
   title: 'Pages/atoms/IntroductionText',
   component: IntroductionText,
-  tags: ['autodocs'],
   argTypes: {
     children: { name: 'Text', control: 'text' },
   },

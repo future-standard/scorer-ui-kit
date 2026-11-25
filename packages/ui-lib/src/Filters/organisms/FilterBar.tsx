@@ -296,6 +296,7 @@ interface IFilterBar {
   totalResults: number;
   clearText?: string;
   isLoading?: boolean;
+  /** Allows only one active filter at a time: once a filter has a value, the other inputs are disabled until it is cleared. */
   singleFilter?: boolean;
   resultsDateFormat?: string;
   onChangeCallback?: (currentSelected: IFilterResult[]) => void;

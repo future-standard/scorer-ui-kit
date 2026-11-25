@@ -23,7 +23,6 @@ const Scene = ({ language, actionIcon, actionCallback, ...args }: Args) => {
 const meta = {
   title: 'Form/Input/TextField',
   component: TextField,
-  tags: ['autodocs'],
   argTypes: {
     language: { control: 'select', options: ['en', 'ja'] },
     fieldState: { control: 'select' },

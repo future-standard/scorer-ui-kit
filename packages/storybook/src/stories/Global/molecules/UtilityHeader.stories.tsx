@@ -15,7 +15,6 @@ type Args = ComponentProps<typeof UtilityHeader> & {
 const meta = {
   title: 'Global/molecules/UtilityHeader',
   component: UtilityHeader,
-  tags: ['autodocs'],
   // The header's padding comes from CSS variables that only exist inside ContentLayout, which
   // renders it as the page's first child, so the story hands the args to ContentLayout.
   parameters: { layout: 'fullscreen', pageFrame: { docsHeight: '240px' } },

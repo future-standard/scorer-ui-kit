@@ -52,7 +52,6 @@ type Args = ComponentProps<typeof PageHeader> & {
 const meta = {
   title: 'Pages/molecules/PageHeader',
   component: PageHeader,
-  tags: ['autodocs'],
   parameters: { layout: 'fullscreen' },
   // The title icon hangs 44px into the left gutter, so the header needs ContentLayout's padding
   // around it; the first decorator is the innermost one, so the page frame goes last.
