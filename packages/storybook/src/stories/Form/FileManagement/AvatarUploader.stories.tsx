@@ -5,7 +5,6 @@ import { fn } from 'storybook/test';
 const meta = {
   title: 'Form/FileManagement/AvatarUploader',
   component: AvatarUploader,
-  tags: ['autodocs'],
   args: {
     title: 'Photograph',
     photoText: 'Drop Photo',

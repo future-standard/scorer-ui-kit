@@ -60,7 +60,6 @@ type Args = ComponentProps<typeof ToggleButton> & { disabled: boolean };
 const meta = {
   title: 'Filters/atoms/ToggleButton',
   component: ToggleButton,
-  tags: ['autodocs'],
   argTypes: {
     design: { control: 'select' },
     selectedIndex: { control: 'select', options: [0, 1] },

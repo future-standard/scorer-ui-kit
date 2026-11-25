@@ -10,7 +10,6 @@ const Container = styled.div`
 const meta = {
   title: 'Form/FileManagement/DropArea',
   component: DropArea,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <Container>

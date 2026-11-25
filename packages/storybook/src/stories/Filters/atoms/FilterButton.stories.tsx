@@ -6,7 +6,6 @@ import { fn } from 'storybook/test';
 const meta = {
   title: 'Filters/atoms/FilterButton',
   component: FilterButton,
-  tags: ['autodocs'],
   argTypes: {
     children: { name: 'Button text', control: 'text' },
     icon: { control: 'select', options: Object.keys(IconSVGs) },

@@ -39,7 +39,6 @@ const CropDemo = (args: Args) => {
 const meta = {
   title: 'Form/FileManagement/CropTool',
   component: CropTool,
-  tags: ['autodocs'],
   // The tool is a fixed full-viewport overlay, so an inline docs preview would cover the whole
   // page; it gets its own frame (FramedDocsPage).
   parameters: {

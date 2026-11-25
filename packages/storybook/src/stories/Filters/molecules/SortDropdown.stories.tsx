@@ -21,7 +21,6 @@ type Args = ComponentProps<typeof SortDropdown> & { language: 'english' | 'japan
 const meta = {
   title: 'Filters/molecules/SortDropdown',
   component: SortDropdown,
-  tags: ['autodocs'],
   decorators: [
     // room below the button so the open list is not cropped by the docs canvas
     (Story) => (

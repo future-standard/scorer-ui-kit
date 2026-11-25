@@ -5,7 +5,6 @@ import { fn } from 'storybook/test';
 const meta = {
   title: 'Misc/molecules/DebouncedSearcher',
   component: DebouncedSearcher,
-  tags: ['autodocs'],
   argTypes: {
     color: { control: 'select' },
     defaultValue: { control: 'text' },

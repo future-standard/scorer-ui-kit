@@ -46,7 +46,6 @@ type Args = ComponentProps<typeof PercentageSlider> & {
 const meta = {
   title: 'Form/Input/PercentageSlider',
   component: PercentageSlider,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <Container>

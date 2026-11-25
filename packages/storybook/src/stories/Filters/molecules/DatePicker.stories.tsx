@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
 import { DatePicker, FilterDropdownContainer } from 'scorer-ui-kit';
 import { fn } from 'storybook/test';
+import { withDates } from '../../helpers';
 import { dataContentDays, datesRange, InitialSelectedDate } from '../../helpers/datePicker_sample';
 
 type Args = ComponentProps<typeof DatePicker> & {
@@ -9,23 +10,9 @@ type Args = ComponentProps<typeof DatePicker> & {
   showContentDays: boolean;
 };
 
-// The object controls edit JSON, so an edited value comes back with ISO strings where the
-// component expects Dates.
-const withDates = <T,>(value: T): T => {
-  if (typeof value === 'string') return new Date(value) as T;
-  if (Array.isArray(value)) return value.map((item) => withDates(item)) as T;
-  if (value && typeof value === 'object' && !(value instanceof Date)) {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, item]) => [key, withDates(item)])
-    ) as T;
-  }
-  return value;
-};
-
 const meta = {
   title: 'Filters/molecules/DatePicker',
   component: DatePicker,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <FilterDropdownContainer>

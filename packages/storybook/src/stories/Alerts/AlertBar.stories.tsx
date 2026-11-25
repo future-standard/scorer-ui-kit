@@ -4,7 +4,6 @@ import { AlertBar } from 'scorer-ui-kit';
 const meta = {
   title: 'Alerts/atoms/AlertBar',
   component: AlertBar,
-  tags: ['autodocs'],
   argTypes: {
     type: { control: 'select' },
   },

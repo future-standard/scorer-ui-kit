@@ -17,7 +17,6 @@ const StyledCancelButton = styled(Button)`
 const meta = {
   title: 'Form/Buttons/StyledButton',
   component: Button,
-  tags: ['autodocs'],
   argTypes: {
     children: { name: 'Button text', control: 'text' },
     design: { control: 'select' },

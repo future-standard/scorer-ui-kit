@@ -37,7 +37,6 @@ const exampleContent: IHeaderContent = {
 const meta = {
   title: 'Global/organisms/ContentLayout',
   component: ContentLayout,
-  tags: ['autodocs'],
   parameters: { layout: 'fullscreen' },
   decorators: [pageFrame],
   argTypes: {

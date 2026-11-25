@@ -63,7 +63,6 @@ type Args = ComponentProps<typeof TypeTable> & {
 const meta = {
   title: 'Tables/molecules/LoadingTable',
   component: TypeTable,
-  tags: ['autodocs'],
   argTypes: {
     showEmptyTable: { name: 'Show empty table' },
     disableFirstCheckbox: { name: 'Disable 1st checkbox' },

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
-import { ModalProvider, TableRowThumbnail } from 'scorer-ui-kit';
+import { TableRowThumbnail } from 'scorer-ui-kit';
 import { fn } from 'storybook/test';
 import photo from '../../assets/placeholder.jpg';
 
@@ -11,15 +11,7 @@ type Args = ComponentProps<typeof TableRowThumbnail> & { withCustomClick: boolea
 const meta = {
   title: 'Tables/atoms/TableRowThumbnail',
   component: TableRowThumbnail,
-  tags: ['autodocs'],
   parameters: { layout: 'centered' },
-  decorators: [
-    (Story) => (
-      <ModalProvider>
-        <Story />
-      </ModalProvider>
-    ),
-  ],
   argTypes: {
     mediaType: { control: 'select' },
     aspect: { control: false, table: { defaultValue: { summary: 'unset' } } },
