@@ -20,7 +20,7 @@ packages/
 
 ### Prerequisites
 
-- **Node.js 24** — pinned in [`.nvmrc`](.nvmrc) and used by CI (run `nvm use`). The dev toolchain (Vite 8, TypeScript 6, Storybook 10, `concurrently` 10, jsdom 29) requires Node 22.12+, so Node 18/20 can no longer build the kit.
+- **Node.js 24** — pinned in [`.nvmrc`](.nvmrc) and used by CI (run `nvm use`). The dev toolchain (Vite 8, TypeScript 6, Storybook 10, `concurrently` 10, jsdom 30) requires Node 22.22.2+ on 22.x, 24.15+ on 24.x, or 26+, so Node 18/20 can no longer build the kit.
 - npm ≥ 10 (workspaces support)
 - Git
 
