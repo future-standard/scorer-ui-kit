@@ -16,7 +16,7 @@
 
 ## Development
 
-Developing this repo uses **Node 24** — the version pinned in [`.nvmrc`](../../.nvmrc) and used by CI (run `nvm use`). The dev toolchain (Vite 8, jsdom 29, `concurrently` 10, TypeScript 6, Storybook 10) requires **Node 22.12+**, so Node 18/20 are no longer supported for *developing* the kit.
+Developing this repo uses **Node 24** — the version pinned in [`.nvmrc`](../../.nvmrc) and used by CI (run `nvm use`). The dev toolchain (Vite 8, jsdom 30, `concurrently` 10, TypeScript 6, Storybook 10) requires **Node 22.22.2+ on 22.x, 24.15+ on 24.x, or 26+**, so Node 18/20 are no longer supported for *developing* the kit.
 
 > This is separate from the **published** library's support contract: `scorer-ui-kit` itself still targets Node 18+ for consumers (see `engines.node` in `package.json`). Only the contributor toolchain needs Node 24.
 
