@@ -1,0 +1,119 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{t}from"./jsx-runtime-MKhVqBIO.js";import{a as n,i as r,r as i}from"./styled-components.browser.esm--VspdHB0.js";import{r as a,t as o}from"./Icon-0ClkX7c4.js";import{n as s,t as c}from"./Button-BTOnA_HX.js";import{n as l,t as u}from"./Spinner-CobqEAPX.js";var d,f,p,m,h,g,_,v;function y(){return(y=e((()=>{n(),a(),l(),s(),d=t(),f=r.div`
+  display: ${({$isFullWidth:e})=>e?`block`:`inline`};
+
+  ${({$isFullWidth:e})=>e&&i`
+      width: 100%;
+
+      > button {
+        min-width: 100%;
+      }
+    `}
+`,p=r.div`
+  height: inherit;
+  flex: 1;
+  order: 1;
+  display: flex;
+  justify-content: ${({$isFullWidth:e})=>e?`flex-start`:`center`};
+  align-items: center;
+  white-space: nowrap;
+  padding: 0 var(--button-h-padding);
+  transition: padding var(--speed-slow) var(--easing-primary-in-out);
+  font-weight: ${({$weight:e})=>e===`light`?`500`:`600`};
+`,m=r.div`
+  opacity: 1;
+`,h=r.div`
+  background-color: var(--button-loading-area-background-color);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+`,g=r.div`
+  position: relative;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  flex: 0 0 calc((var(--button-h-padding)* 2) + var(--button-icon-size));
+  border: 0px solid var(--button-divider-color);
+  padding: 0 var(--button-h-padding);
+
+  ${({$position:e})=>i`
+    order: ${e&&e===`left`?0:2};
+    ${e===`left`?`border-right-width: 1px;`:`border-left-width: 1px;`};
+  `}
+
+  ${m}{
+    svg {
+      display:block;
+      width: var(--button-icon-size);
+      height: var(--button-icon-size);
+      path, rect, circle, d {
+        stroke: var(--button-text-color);
+      }
+    }
+  }
+
+  ${m}, ${h}{
+    transition: opacity var(--speed-fast) var(--easing-primary-out);
+  }
+
+  ${({$loading:e})=>e&&i`
+    border-color: var(--button-loading-area-divider-color);
+
+    ${h}{
+      opacity: 1;
+    }
+
+    ${m}{
+      opacity: 0;
+    };
+  `};
+
+`,_=r.div`
+  display: flex;
+  height: inherit;
+  ${({$isFullWidth:e})=>e&&`flex: 1;`}
+
+  &:hover {
+    ${({$disabled:e})=>!e&&i`
+      ${m}{
+        svg {
+          path, rect, circle, d {
+            stroke: var(--button-hover-text-color);
+          }
+        }
+      }
+    `};
+  }
+
+  &:active{
+    ${({$disabled:e})=>!e&&i`
+      ${m}{
+        svg {
+          path, rect, circle, d {
+            stroke: var(--button-active-text-color);
+          }
+        }
+      }
+    `};
+  }
+
+  ${({$disabled:e})=>e&&i`
+    ${m}{
+        svg {
+          path, rect, circle, d {
+            stroke: var(--button-disabled-text-color);
+          }
+      }
+    }
+  `};
+`,v=({design:e=`primary`,size:t=`normal`,loading:n=!1,shadow:r=!1,onClick:i,disabled:a,position:s,icon:l,weight:v=`regular`,isFullWidth:y=!1,children:b,...x})=>(0,d.jsx)(f,{$isFullWidth:y,children:(0,d.jsx)(c,{noPadding:!0,disabled:a||n,design:e,size:t,shadow:r,onClick:i,loading:n,...x,children:(0,d.jsxs)(_,{$disabled:a,$isFullWidth:y,children:[(0,d.jsx)(p,{$weight:v,$isFullWidth:y,children:b}),(0,d.jsxs)(g,{$loading:n,$position:s,children:[(0,d.jsx)(m,{children:(0,d.jsx)(o,{icon:l,weight:v})}),(0,d.jsx)(h,{children:(0,d.jsx)(u,{size:t===`xsmall`||t===`small`?`xsmall`:`small`,styling:e})})]})]})})});try{v.displayName=`ButtonWithIcon`,v.__docgenInfo={description:``,displayName:`ButtonWithIcon`,filePath:`/home/runner/work/scorer-ui-kit/scorer-ui-kit/packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,methods:[],props:{icon:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`}],description:``,name:`icon`,parent:{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`},required:!0,tags:{},type:{name:`string`}},position:{defaultValue:null,declarations:[{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`}],description:``,name:`position`,parent:{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`},required:!1,tags:{},type:{name:`enum`,raw:`"left" | "right"`,value:[{value:`"left"`},{value:`"right"`}]}},shadow:{defaultValue:{value:`false`},declarations:[{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`}],description:``,name:`shadow`,parent:{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`},required:!1,tags:{},type:{name:`boolean`}},weight:{defaultValue:{value:`regular`},declarations:[{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`}],description:``,name:`weight`,parent:{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`},required:!1,tags:{},type:{name:`enum`,raw:`IWeight`,value:[{value:`"light"`},{value:`"strong"`},{value:`"regular"`},{value:`"heavy"`}]}},isFullWidth:{defaultValue:{value:`false`},declarations:[{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`}],description:`fill the width the parent gives, with the label aligned to the left`,name:`isFullWidth`,parent:{fileName:`packages/ui-lib/src/Form/atoms/ButtonWithIcon.tsx`,name:`IButtonWithIcon`},required:!1,tags:{},type:{name:`boolean`}},size:{defaultValue:{value:`normal`},declarations:[{fileName:`packages/ui-lib/src/Form/index.ts`,name:`ButtonProps`}],description:``,name:`size`,parent:{fileName:`packages/ui-lib/src/Form/index.ts`,name:`ButtonProps`},required:!1,tags:{},type:{name:`enum`,raw:`TypeButtonSizes`,value:[{value:`"normal"`},{value:`"large"`},{value:`"small"`},{value:`"xsmall"`}]}},design:{defaultValue:{value:`primary`},declarations:[{fileName:`packages/ui-lib/src/Form/index.ts`,name:`ButtonProps`}],description:``,name:`design`,parent:{fileName:`packages/ui-lib/src/Form/index.ts`,name:`ButtonProps`},required:!1,tags:{},type:{name:`enum`,raw:`TypeButtonDesigns`,value:[{value:`"warning"`},{value:`"primary"`},{value:`"secondary"`},{value:`"danger"`},{value:`"text-only"`},{value:`"outline"`}]}},loading:{defaultValue:{value:`false`},declarations:[{fileName:`packages/ui-lib/src/Form/index.ts`,name:`ButtonProps`}],description:``,name:`loading`,parent:{fileName:`packages/ui-lib/src/Form/index.ts`,name:`ButtonProps`},required:!1,tags:{},type:{name:`boolean`}}},tags:{}}}catch{}})))()}export{y as n,v as t};
